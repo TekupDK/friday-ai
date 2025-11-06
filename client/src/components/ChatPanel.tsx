@@ -586,7 +586,7 @@ function ChatPanel() {
                         >
                           <Bot className="w-5 h-5" />
                         </div>
-                        <div className="flex-1 min-w-0 space-y-1">
+                        <div className="flex-1 min-w-0 space-y-1 pr-12">
                           {isRenaming ? (
                             <Input
                               value={newTitle}
@@ -634,7 +634,7 @@ function ChatPanel() {
                               </div>
                               {/* Message Preview */}
                               {(conv as any).lastMessage && (
-                                <p className="text-xs text-muted-foreground truncate leading-relaxed">
+                                <p className="text-xs text-muted-foreground truncate leading-relaxed max-w-[200px]">
                                   {(conv as any).lastMessage}
                                 </p>
                               )}

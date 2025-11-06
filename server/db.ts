@@ -182,7 +182,7 @@ export async function getUserConversations(
 
       return {
         ...conv,
-        lastMessage: lastMsg[0]?.content?.substring(0, 60) || undefined,
+        lastMessage: lastMsg[0]?.content?.substring(0, 40) || undefined,
       };
     })
   );
