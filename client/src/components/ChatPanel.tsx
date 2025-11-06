@@ -515,7 +515,7 @@ function ChatPanel() {
 
           {/* Conversations List */}
           <ScrollArea className="flex-1">
-            <div className="p-2 space-y-1">
+            <div className="p-3 space-y-2">
               {conversations && conversations.length > 0 ? (
                 conversations.map(conv => {
                   const isSelected = selectedConversationId === conv.id;
@@ -524,33 +524,33 @@ function ChatPanel() {
                   const formattedTitle =
                     conv.title && conv.title !== "New Conversation"
                       ? conv.title
-                      : `Ny samtale ${new Date(conv.createdAt).toLocaleTimeString("da-DK", { hour: "2-digit", minute: "2-digit" })}`;
+                      : `💬 Ny samtale ${new Date(conv.createdAt).toLocaleTimeString("da-DK", { hour: "2-digit", minute: "2-digit" })}`;
 
                   return (
                     <div
                       key={conv.id}
                       onMouseEnter={() => setHoveredConvId(conv.id)}
                       onMouseLeave={() => setHoveredConvId(null)}
-                      className={`relative group w-full text-left rounded-xl transition-all duration-200 ${
+                      className={`relative group w-full rounded-xl transition-all duration-200 ${
                         isSelected
-                          ? "bg-gradient-to-r from-blue-500/10 via-blue-500/5 to-transparent border-l-4 border-blue-500 shadow-sm"
-                          : "hover:bg-muted/60 hover:shadow-sm"
+                          ? "bg-gradient-to-r from-blue-500/10 via-blue-500/5 to-transparent border-l-4 border-blue-500 shadow-md"
+                          : "hover:bg-muted/60 hover:shadow-sm border-l-4 border-transparent"
                       }`}
                     >
                       <button
                         onClick={() => setSelectedConversationId(conv.id)}
-                        className="w-full px-3 py-3 flex items-start gap-3"
+                        className="w-full px-3 py-4 flex items-start gap-3 text-left"
                       >
                         <div
-                          className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center ${
+                          className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
                             isSelected
                               ? "bg-blue-500 text-white shadow-md"
                               : "bg-muted text-muted-foreground group-hover:bg-blue-500/20 group-hover:text-blue-500"
                           } transition-all duration-200`}
                         >
-                          <Bot className="w-4 h-4" />
+                          <Bot className="w-5 h-5" />
                         </div>
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 space-y-1">
                           {isRenaming ? (
                             <Input
                               value={newTitle}
@@ -571,12 +571,16 @@ function ChatPanel() {
                                 setNewTitle("");
                               }}
                               autoFocus
-                              className="h-7 text-sm"
+                              className="h-8 text-sm"
                             />
                           ) : (
                             <>
                               <div
-                                className={`font-semibold truncate ${isSelected ? "text-blue-700 dark:text-blue-300" : ""}`}
+                                className={`font-semibold truncate text-sm leading-snug ${
+                                  isSelected 
+                                    ? "text-blue-700 dark:text-blue-300" 
+                                    : "text-foreground"
+                                }`}
                               >
                                 {conv.title && conv.title !== "New Conversation" ? (
                                   conv.title
@@ -594,12 +598,16 @@ function ChatPanel() {
                               </div>
                               {/* Message Preview */}
                               {(conv as any).lastMessage && (
-                                <p className="text-xs text-muted-foreground truncate mt-0.5 leading-relaxed">
+                                <p className="text-xs text-muted-foreground truncate leading-relaxed">
                                   {(conv as any).lastMessage}
                                 </p>
                               )}
                               <div
-                                className={`text-xs mt-1 flex items-center gap-1.5 ${isSelected ? "text-blue-600/80 dark:text-blue-400/80" : "text-muted-foreground"}`}
+                                className={`text-xs flex items-center gap-1.5 ${
+                                  isSelected 
+                                    ? "text-blue-600/80 dark:text-blue-400/80" 
+                                    : "text-muted-foreground/80"
+                                }`}
                               >
                                 <span>{formatRelativeTime(new Date(conv.updatedAt))}</span>
                               </div>
@@ -610,7 +618,7 @@ function ChatPanel() {
                       
                       {/* Hover Actions */}
                       {isHovered && !isRenaming && (
-                        <div className="absolute right-2 top-3 flex items-center gap-1 bg-background/95 backdrop-blur-sm border border-border rounded-lg p-1 shadow-lg">
+                        <div className="absolute right-2 top-4 flex items-center gap-1 bg-background/95 backdrop-blur-sm border border-border rounded-lg p-1 shadow-lg z-10">
                           <Button
                             variant="ghost"
                             size="icon"
