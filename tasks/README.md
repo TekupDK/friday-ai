@@ -1,4 +1,6 @@
-![alt text](image.png)# Tasks Workspace
+# Tasks Workspace
+
+![alt text](image.png)
 
 This folder groups scoped workstreams into small, trackable plans that don’t interfere with ongoing feature work (e.g., Codex Chat).
 
@@ -7,7 +9,7 @@ This folder groups scoped workstreams into small, trackable plans that don’t i
 
 ## Areas
 
-- **🔴 Ops - Code Quality:** `tasks/ops/code-quality/PLAN.md` **CRITICAL** - 32 TypeScript errors blocking type safety
+- **✅ Ops - Code Quality:** `tasks/ops/code-quality/PLAN.md` — TypeScript check passes (0 errors)
 - Chat: `tasks/chat/PLAN.md` ✅ **Phase 3 Complete** + **Navigation modernization (Nov 6, 2025)** — Emoji titles, message preview, hover actions, visual polish. See `tasks/chat/NAVIGATION_MODERNIZATION.md`.
 - Docs lint (markdown): `tasks/docs-lint/PLAN.md`
 - Database & migrations: `tasks/db/PLAN.md`
