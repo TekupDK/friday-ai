@@ -15,12 +15,14 @@ Migrate `tekup-ai-v2` from being part of the monolithic `TekupDK/tekup` reposito
 ## 📊 Current State
 
 ### Repository Structure
+
 - **Current Remote**: `https://github.com/TekupDK/tekup.git`
 - **Current Branch**: `main`
 - **Latest Commit**: `0a94ec9` - "feat: Complete Friday AI branding & single-model architecture"
 - **Local Path**: `c:\Users\empir\Tekup\services\tekup-ai-v2`
 
 ### Issues with Current Setup
+
 - ❌ Part of monolithic repo with mixed concerns
 - ❌ Submodule confusion (Claude's branch trying to add `services/` structure)
 - ❌ Deployment complexity
@@ -88,6 +90,7 @@ Migrate `tekup-ai-v2` from being part of the monolithic `TekupDK/tekup` reposito
 ## 📦 Commands to Execute
 
 ### Step 1: Verify Clean State
+
 ```powershell
 git status
 git log --oneline -5
@@ -95,12 +98,14 @@ git remote -v
 ```
 
 ### Step 2: Create New GitHub Repo
+
 ```powershell
 # Using GitHub CLI
 gh repo create TekupDK/friday-ai --public --description "Friday AI - Intelligent Email Management System"
 ```
 
 ### Step 3: Add New Remote and Push
+
 ```powershell
 # Add new remote
 git remote add new-origin https://github.com/TekupDK/friday-ai.git
@@ -116,6 +121,7 @@ git remote -v
 ```
 
 ### Step 4: Update Origin
+
 ```powershell
 # Remove old origin
 git remote remove origin
@@ -132,6 +138,7 @@ git branch -vv
 ```
 
 ### Step 5: Update package.json
+
 ```powershell
 # Will be done programmatically in Phase 4
 ```
@@ -139,24 +146,28 @@ git branch -vv
 ## 🔍 Verification Checklist
 
 ### Repository Structure
+
 - [ ] All branches migrated (main, any feature branches)
 - [ ] All tags migrated
 - [ ] Full git history preserved
 - [ ] Remote points to new repository
 
 ### Code References
+
 - [ ] package.json repository field updated
 - [ ] README.md links updated
 - [ ] Documentation references updated
 - [ ] No hardcoded references to old repo
 
 ### Deployment
+
 - [ ] Railway pointing to new repo
 - [ ] Vercel pointing to new repo
 - [ ] Environment variables configured
 - [ ] Auto-deploy working
 
 ### Team Communication
+
 - [ ] Team notified of new repo
 - [ ] Old repo marked as deprecated/archived
 - [ ] Documentation updated across all platforms
@@ -166,6 +177,7 @@ git branch -vv
 If issues arise:
 
 1. **Immediate Rollback**:
+
    ```powershell
    git remote remove origin
    git remote add origin https://github.com/TekupDK/tekup.git

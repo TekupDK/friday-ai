@@ -280,20 +280,20 @@ The system recognizes 7 core intents with confidence scoring:
 
 12 tools are available to the AI for executing actions:
 
-| Tool Name                     | Description               | Parameters                            |
-| ----------------------------- | ------------------------- | ------------------------------------- |
-| `search_gmail`                | Search Gmail threads      | query, maxResults                     |
-| `get_gmail_thread`            | Get specific email thread | threadId                              |
-| `create_gmail_draft`          | Draft email reply         | to, subject, body                     |
-| `list_calendar_events`        | List calendar events      | timeMin, timeMax                      |
-| `create_calendar_event`       | Create calendar event     | summary, start, end, description      |
-| `check_calendar_availability` | Check availability        | date, duration                        |
-| `find_free_slots`             | Find free time slots      | startDate, endDate, duration          |
-| `get_billy_invoices`          | List Billy invoices       | status, customerId                    |
-| `create_billy_invoice`        | Create new invoice        | customer, items, dueDate              |
-| `create_lead`                 | Add sales lead            | name, email, phone, source            |
-| `create_task`                 | Create task               | title, description, dueDate, priority |
-| `get_leads`                   | List all leads            | status, source                        |
+| Tool Name               | Description               | Parameters                            |
+| ----------------------- | ------------------------- | ------------------------------------- |
+| `search_gmail`          | Search Gmail threads      | query, maxResults                     |
+| `get_gmail_thread`      | Get specific email thread | threadId                              |
+| `create_gmail_draft`    | Draft email reply         | to, subject, body                     |
+| `list_calendar_events`  | List calendar events      | timeMin, timeMax                      |
+| `create_calendar_event` | Create calendar event     | summary, start, end, description      |
+| `check_calendar`        | Check calendar events     | date, query                           |
+| `find_free_slots`       | Find free time slots      | startDate, endDate, duration          |
+| `get_billy_invoices`    | List Billy invoices       | status, customerId                    |
+| `create_billy_invoice`  | Create new invoice        | customer, items, dueDate              |
+| `create_lead`           | Add sales lead            | name, email, phone, source            |
+| `create_task`           | Create task               | title, description, dueDate, priority |
+| `get_leads`             | List all leads            | status, source                        |
 
 ### 5. Integration Architecture
 

@@ -148,8 +148,13 @@ function generateActionPreview(
       return `Afslut job:\n- Job ID: ${params.jobId || "Ikke angivet"}\n- Kunde: ${params.customerName || "Ikke angivet"}\n- Gennemfør 6-trins tjekliste`;
 
     case "check_calendar":
-      const dateStr = params.date 
-        ? new Date(params.date).toLocaleDateString("da-DK", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      const dateStr = params.date
+        ? new Date(params.date).toLocaleDateString("da-DK", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
         : "i dag";
       return `Hent kalenderbegivenheder:\n- Dato: ${dateStr}\n- Viser alle aftaler for denne dag`;
 
@@ -356,17 +361,17 @@ export async function routeAI(
   // Add critical date/time reminder as FIRST system message after initial system prompt
   // This ensures LLM sees it BEFORE any old messages with wrong dates
   const now = new Date();
-  const dateStr = now.toLocaleDateString('da-DK', { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  const dateStr = now.toLocaleDateString("da-DK", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
-  const timeStr = now.toLocaleTimeString('da-DK', { 
-    hour: '2-digit', 
-    minute: '2-digit' 
+  const timeStr = now.toLocaleTimeString("da-DK", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
-  
+
   const dateReminderMessage = {
     role: "system" as const,
     content: `🔴 KRITISK INFORMATION - LÆS DETTE FØRST:
@@ -383,7 +388,7 @@ DU SKAL ALTID bruge denne dato når du:
 IGNORER alle tidligere beskeder hvor du nævnte andre datoer (fx april 2024).
 Den korrekte dato er ${dateStr}. Brug ALTID denne dato.
 
-Hvis brugeren siger du har forkert dato, så TJEK DENNE BESKED IGEN! ⬆️`
+Hvis brugeren siger du har forkert dato, så TJEK DENNE BESKED IGEN! ⬆️`,
   };
 
   const messagesWithSystem = hasSystemPrompt

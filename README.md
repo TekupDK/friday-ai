@@ -27,9 +27,8 @@ Friday AI is an intelligent email management system inspired by Shortwave.ai. It
 
 - **🏗️ Standalone Repository**: Migrated to dedicated `TekupDK/friday-ai` repository
   - Clean git history without legacy secrets
-  - Independent deployment pipeline  
+  - Independent deployment pipeline
   - Focused development workflow
-  
 - **🤖 AI Email Features** (Phases 1-6 Complete):
 
 ## 🎯 Overview

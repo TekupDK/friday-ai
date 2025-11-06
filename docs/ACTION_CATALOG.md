@@ -65,7 +65,13 @@ interface ActionDef<P extends z.ZodTypeAny, R = unknown> {
 - Dry‑run: total/afrunding
 - Execute: `createBillyInvoice`
 
-6. `email.set_label` (low) / `email.archive` (low) / `email.mark_read` (low)
+6. `calendar.check_calendar` (medium)
+
+- Params: `date?: string`, `query?: string`
+- Dry‑run: preview af dato/tidsinterval som skal tjekkes
+- Execute: `listCalendarEvents` og formatér resultat med brugervenlig output
+
+7. `email.set_label` (low) / `email.archive` (low) / `email.mark_read` (low)
 
 - Execute: `addLabelToThread` / `archiveThread` / `googleMarkAsRead`
 

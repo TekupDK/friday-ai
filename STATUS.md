@@ -1,8 +1,37 @@
 # Friday Chat Interface - Project Status
 
 **Project:** TekupDK Friday AI Chat Interface  
-**Date:** November 3, 2025  
-**Version:** eda657b5
+**Date:** November 6, 2025  
+**Version:** fea96e5
+
+---
+
+## 🎉 Latest Updates (November 6, 2025)
+
+### Critical Bug Fixes - Friday AI Date Confusion & Calendar Modal
+
+**Fixed Issues:**
+
+- ✅ Friday AI dato confusion: Tror den er i april 2024 i stedet for november 2025
+- ✅ Kalender action approval modal vises men knapper virker ikke
+- ✅ TRPC routing fejl: inbox.email._ procedures flyttet til inbox._
+- ✅ ActionApprovalModal crashes ved undefined icon/riskColor props
+
+**Key Changes:**
+
+- 🔴 **Date Awareness:** Tilføjet KRITISK INFORMATION date reminder i message array position 2
+- 📅 **Calendar Action:** Implementeret `check_calendar` action med fuld support i modal og backend
+- 🎯 **Intent Parsing:** Detekterer "vis kalender" + dato extraction (DD/MM-YYYY, "i dag", "i morgen")
+- ⚡ **Performance:** Conversation history begrænset til 20 beskeder for at spare tokens
+- 🛡️ **Error Handling:** Try-catch wrappers og date validation i parseIntent() og executeCheckCalendar()
+
+**Files Modified:**
+
+- `server/ai-router.ts` - Date reminder + check_calendar support
+- `server/intent-actions.ts` - Calendar intent detection + error handling
+- `server/routers.ts` - Conversation history limiting
+- `server/friday-prompts.ts` - Removed duplicated date logic
+- `client/src/components/ActionApprovalModal.tsx` - check_calendar type + UI mappings
 
 ---
 

@@ -63,21 +63,25 @@
 ### 2025-11-06 - Migration Completed
 
 **Created:**
+
 - New GitHub repository: `TekupDK/friday-ai`
 - Clean git history starting from current codebase
 - Updated all repository references
 
 **Security Improvements:**
+
 - Avoided pushing `.env.backup` file with secrets
 - Started with clean commit history
 - GitHub secret scanning protection active
 
 **Changes:**
+
 - package.json: Updated name, version (2.0.0), added repository fields
 - README.md: Updated title, badges, overview text
 - Remote: Changed from `TekupDK/tekup` to `TekupDK/friday-ai`
 
 **Current State:**
+
 - Repository URL: https://github.com/TekupDK/friday-ai
 - Latest commit: `c2da21c` - "chore: Update repository references to friday-ai v2.0.0"
 - All code pushed successfully

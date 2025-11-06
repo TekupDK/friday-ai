@@ -114,8 +114,8 @@ export function SuggestionsBar({
                   className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border border-border bg-card/70 px-4 py-3 shadow-sm hover:bg-card/90 transition-colors"
                 >
                   <div className="flex items-start gap-3 flex-1">
-                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
-                      <Icon className="h-4 w-4 text-primary" />
+                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm">
+                      <Icon className="h-4 w-4 text-white" />
                     </div>
                     <div className="space-y-1 flex-1">
                       <div className="flex items-center gap-2">

@@ -247,14 +247,16 @@ export const appRouter = router({
         // Keep system messages + last 20 user/assistant messages
         const HISTORY_LIMIT = 20;
         let limitedMessages = messages;
-        
+
         if (messages.length > HISTORY_LIMIT) {
           const systemMessages = messages.filter(m => m.role === "system");
           const nonSystemMessages = messages.filter(m => m.role !== "system");
           const recentMessages = nonSystemMessages.slice(-HISTORY_LIMIT);
           limitedMessages = [...systemMessages, ...recentMessages];
-          
-          console.log(`[Chat] Conversation history limited: ${messages.length} -> ${limitedMessages.length} messages (kept last ${HISTORY_LIMIT})`);
+
+          console.log(
+            `[Chat] Conversation history limited: ${messages.length} -> ${limitedMessages.length} messages (kept last ${HISTORY_LIMIT})`
+          );
         }
 
         const aiMessages = limitedMessages.map(m => ({

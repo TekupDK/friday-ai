@@ -48,52 +48,75 @@ export function parseIntent(message: string): ParsedIntent {
 
   // Check Calendar Intent - NEW: Add patterns for viewing calendar
   if (
-    (lowerMessage.includes("vis") || 
-     lowerMessage.includes("tjek") || 
-     lowerMessage.includes("se") ||
-     lowerMessage.includes("show") ||
-     lowerMessage.includes("check")) &&
+    (lowerMessage.includes("vis") ||
+      lowerMessage.includes("tjek") ||
+      lowerMessage.includes("se") ||
+      lowerMessage.includes("show") ||
+      lowerMessage.includes("check")) &&
     (lowerMessage.includes("kalender") || lowerMessage.includes("calendar"))
   ) {
-    console.log(`[parseIntent] Detected calendar viewing request: "${message}"`);
+    console.log(
+      `[parseIntent] Detected calendar viewing request: "${message}"`
+    );
     const params: Record<string, any> = {};
-    
+
     // Extract date - support both DD/MM-YYYY and other formats
-    const dateMatch = message.match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.]?(\d{2,4})?/);
+    const dateMatch = message.match(
+      /(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.]?(\d{2,4})?/
+    );
     if (dateMatch) {
       const day = parseInt(dateMatch[1]);
       const month = parseInt(dateMatch[2]) - 1; // JS months are 0-indexed
-      const year = dateMatch[3] ? 
-        (dateMatch[3].length === 2 ? 2000 + parseInt(dateMatch[3]) : parseInt(dateMatch[3])) 
+      const year = dateMatch[3]
+        ? dateMatch[3].length === 2
+          ? 2000 + parseInt(dateMatch[3])
+          : parseInt(dateMatch[3])
         : new Date().getFullYear();
-      
+
       const targetDate = new Date(year, month, day);
-      
+
       // Validate the date is actually valid (catches 32/13/2025 etc)
-      if (isNaN(targetDate.getTime()) || 
-          targetDate.getMonth() !== month || 
-          targetDate.getDate() !== day) {
-        console.log(`[parseIntent] Invalid date detected: ${day}/${month + 1}/${year}, defaulting to today`);
-        params.date = new Date().toISOString().split('T')[0];
+      if (
+        isNaN(targetDate.getTime()) ||
+        targetDate.getMonth() !== month ||
+        targetDate.getDate() !== day
+      ) {
+        console.log(
+          `[parseIntent] Invalid date detected: ${day}/${month + 1}/${year}, defaulting to today`
+        );
+        params.date = new Date().toISOString().split("T")[0];
       } else {
-        params.date = targetDate.toISOString().split('T')[0]; // YYYY-MM-DD
-        console.log(`[parseIntent] Extracted date from pattern: ${params.date} (${targetDate.toLocaleDateString('da-DK')})`);
+        params.date = targetDate.toISOString().split("T")[0]; // YYYY-MM-DD
+        console.log(
+          `[parseIntent] Extracted date from pattern: ${params.date} (${targetDate.toLocaleDateString("da-DK")})`
+        );
       }
-    } else if (lowerMessage.includes("i dag") || lowerMessage.includes("idag") || lowerMessage.includes("today")) {
-      params.date = new Date().toISOString().split('T')[0];
+    } else if (
+      lowerMessage.includes("i dag") ||
+      lowerMessage.includes("idag") ||
+      lowerMessage.includes("today")
+    ) {
+      params.date = new Date().toISOString().split("T")[0];
       console.log(`[parseIntent] Using 'i dag': ${params.date}`);
-    } else if (lowerMessage.includes("i morgen") || lowerMessage.includes("tomorrow")) {
+    } else if (
+      lowerMessage.includes("i morgen") ||
+      lowerMessage.includes("tomorrow")
+    ) {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
-      params.date = tomorrow.toISOString().split('T')[0];
+      params.date = tomorrow.toISOString().split("T")[0];
       console.log(`[parseIntent] Using 'i morgen': ${params.date}`);
     } else {
       // Default to today if no date specified
-      params.date = new Date().toISOString().split('T')[0];
-      console.log(`[parseIntent] No date specified, defaulting to today: ${params.date}`);
+      params.date = new Date().toISOString().split("T")[0];
+      console.log(
+        `[parseIntent] No date specified, defaulting to today: ${params.date}`
+      );
     }
 
-    console.log(`[parseIntent] Returning check_calendar intent with confidence 0.95`);
+    console.log(
+      `[parseIntent] Returning check_calendar intent with confidence 0.95`
+    );
     return {
       intent: "check_calendar",
       params,
@@ -951,33 +974,43 @@ async function executeListLeads(
   };
 }
 
-async function executeCheckCalendar(userId: number, params?: Record<string, any>): Promise<ActionResult> {
+async function executeCheckCalendar(
+  userId: number,
+  params?: Record<string, any>
+): Promise<ActionResult> {
   try {
     const now = new Date();
     let targetDate = now;
-    
+
     // Use provided date if available
     if (params?.date) {
       targetDate = new Date(params.date);
-      
+
       // Validate that the date is valid
       if (isNaN(targetDate.getTime())) {
-        console.error(`[executeCheckCalendar] Invalid date provided: ${params.date}`);
+        console.error(
+          `[executeCheckCalendar] Invalid date provided: ${params.date}`
+        );
         return {
           success: false,
-          message: "Ugyldig dato angivet. Brug format DD/MM-YYYY eller skriv 'i dag'.",
+          message:
+            "Ugyldig dato angivet. Brug format DD/MM-YYYY eller skriv 'i dag'.",
         };
       }
-      
-      console.log(`[executeCheckCalendar] Using provided date: ${params.date} (${targetDate.toLocaleDateString('da-DK')})`);
+
+      console.log(
+        `[executeCheckCalendar] Using provided date: ${params.date} (${targetDate.toLocaleDateString("da-DK")})`
+      );
     } else {
-      console.log(`[executeCheckCalendar] No date provided, using today: ${now.toLocaleDateString('da-DK')}`);
+      console.log(
+        `[executeCheckCalendar] No date provided, using today: ${now.toLocaleDateString("da-DK")}`
+      );
     }
-    
+
     // Set time range for the specific day (00:00 to 23:59)
     const dayStart = new Date(targetDate);
     dayStart.setHours(0, 0, 0, 0);
-    
+
     const dayEnd = new Date(targetDate);
     dayEnd.setHours(23, 59, 59, 999);
 
@@ -985,12 +1018,12 @@ async function executeCheckCalendar(userId: number, params?: Record<string, any>
       timeMin: dayStart.toISOString(),
       timeMax: dayEnd.toISOString(),
     });
-    
-    const dateStr = targetDate.toLocaleDateString('da-DK', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+
+    const dateStr = targetDate.toLocaleDateString("da-DK", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
 
     return {
@@ -999,10 +1032,14 @@ async function executeCheckCalendar(userId: number, params?: Record<string, any>
       data: events,
     };
   } catch (error) {
-    console.error(`[executeCheckCalendar] Error fetching calendar events:`, error);
+    console.error(
+      `[executeCheckCalendar] Error fetching calendar events:`,
+      error
+    );
     return {
       success: false,
-      message: "Der opstod en fejl ved hentning af kalenderbegivenheder. Tjek at Google Calendar er forbundet korrekt.",
+      message:
+        "Der opstod en fejl ved hentning af kalenderbegivenheder. Tjek at Google Calendar er forbundet korrekt.",
       error: error instanceof Error ? error.message : String(error),
     };
   }
