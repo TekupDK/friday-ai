@@ -56,7 +56,8 @@ export interface PendingAction {
     | "create_invoice"
     | "search_gmail"
     | "request_flytter_photos"
-    | "job_completion";
+    | "job_completion"
+    | "check_calendar"; // Added for calendar viewing actions
   params: Record<string, any>;
   impact: string;
   preview: string;
@@ -107,6 +108,7 @@ function getRiskLevel(intentType: string): "low" | "medium" | "high" {
     search_gmail: "low",
     request_flytter_photos: "low",
     job_completion: "medium",
+    check_calendar: "medium", // Changed from 'low' to always show approval modal
   };
   return riskMap[intentType] || "medium";
 }
@@ -145,6 +147,12 @@ function generateActionPreview(
     case "job_completion":
       return `Afslut job:\n- Job ID: ${params.jobId || "Ikke angivet"}\n- Kunde: ${params.customerName || "Ikke angivet"}\n- Gennemfør 6-trins tjekliste`;
 
+    case "check_calendar":
+      const dateStr = params.date 
+        ? new Date(params.date).toLocaleDateString("da-DK", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+        : "i dag";
+      return `Hent kalenderbegivenheder:\n- Dato: ${dateStr}\n- Viser alle aftaler for denne dag`;
+
     default:
       return JSON.stringify(params, null, 2);
   }
@@ -178,6 +186,9 @@ function generateActionImpact(
 
     case "job_completion":
       return "Gennemfører 6-trins tjekliste for jobafslutning: faktura, team, betaling, tid, kalender, labels (MEMORY_24).";
+
+    case "check_calendar":
+      return "Henter kalenderbegivenheder fra Google Calendar. Ingen ændringer foretages - kun læsning.";
 
     default:
       return "Udfører den anmodede handling.";
@@ -342,6 +353,39 @@ export async function routeAI(
     }
   }
 
+  // Add critical date/time reminder as FIRST system message after initial system prompt
+  // This ensures LLM sees it BEFORE any old messages with wrong dates
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('da-DK', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+  const timeStr = now.toLocaleTimeString('da-DK', { 
+    hour: '2-digit', 
+    minute: '2-digit' 
+  });
+  
+  const dateReminderMessage = {
+    role: "system" as const,
+    content: `🔴 KRITISK INFORMATION - LÆS DETTE FØRST:
+
+Dagens dato er: ${dateStr}
+Klokken er: ${timeStr}
+
+DU SKAL ALTID bruge denne dato når du:
+- Svarer på spørgsmål om tid/dato
+- Tjekker kalender
+- Opretter begivenheder
+- Refererer til "i dag", "i morgen", "nu"
+
+IGNORER alle tidligere beskeder hvor du nævnte andre datoer (fx april 2024).
+Den korrekte dato er ${dateStr}. Brug ALTID denne dato.
+
+Hvis brugeren siger du har forkert dato, så TJEK DENNE BESKED IGEN! ⬆️`
+  };
+
   const messagesWithSystem = hasSystemPrompt
     ? messages
     : [
@@ -349,6 +393,7 @@ export async function routeAI(
           role: "system" as const,
           content: getFridaySystemPrompt() + contextString,
         },
+        dateReminderMessage, // Insert date reminder RIGHT AFTER system prompt
         ...messages,
       ];
 
@@ -363,7 +408,16 @@ export async function routeAI(
   } else if (pendingAction) {
     finalMessages.push({
       role: "system",
-      content: `[Pending Action] Du har foreslået en handling af typen "${pendingAction.type}". Brugeren skal godkende denne handling før den udføres. Forklar kort hvad handlingen vil gøre og hvorfor den er relevant for brugerens forespørgsel.`,
+      content: `Du har netop foreslået en handling af typen "${pendingAction.type}" til brugeren. En godkendelsesdialog vil blive vist automatisk. 
+
+VIGTIGT: Skriv IKKE "[Pending Action]" i din response! UI'en viser automatisk en modal.
+
+I stedet, forklar kort og naturligt:
+- Hvad du vil gøre
+- Hvorfor det er relevant
+- Hvad brugeren kan forvente at se
+
+Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pending Action])`,
     });
   }
 

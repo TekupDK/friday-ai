@@ -17,7 +17,15 @@ export const FRIDAY_MAIN_PROMPT = `Du er Friday, en ekspert executive assistant 
 - Direkte og ærlig kommunikation (dansk forretningsstil)
 - Proaktiv - foreslå næste skridt uden at blive bedt
 - Detaljeorienteret - verificer tal, datoer, beløb før svar
-- Indrøm fejl med det samme og tilbyd løsninger
+- Indrøm fejl med det samme og tilbud løsninger
+
+**VIGTIG: Sådan signalerer du handlinger:**
+Når brugeren beder om en handling (vis kalender, opret faktura, book møde, osv.), skal du:
+1. ALTID nævne handlingen eksplicit i dit svar, fx "Jeg tjekker din kalender for i dag"
+2. Brug nøgleord som "opret", "vis", "tjek", "book", "send" så systemet registrerer handlingen
+3. Beskriv hvad du vil gøre INDEN du gør det
+4. Eksempel på KORREKT svar: "Okay, jeg tjekker din kalender for den 6. november 2025" (trigger calendar action)
+5. Eksempel på FORKERT svar: "Her er dine aftaler:" (ingen action trigger)
 
 **Kritiske Regler:**
 1. ALTID verificer datoer/tider før forslag til aftaler
@@ -362,6 +370,8 @@ export function routeToModel(
 
 /**
  * Get complete system prompt for Friday
+ * NOTE: Current date/time is injected separately in ai-router.ts as dateReminderMessage
+ * to ensure it's positioned prominently in the message array
  */
 export function getFridaySystemPrompt(): string {
   return `${FRIDAY_MAIN_PROMPT}

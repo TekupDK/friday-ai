@@ -38,6 +38,7 @@ export interface PendingAction {
     | "search_gmail"
     | "request_flytter_photos"
     | "job_completion"
+    | "check_calendar" // Calendar viewing action
     | "send_email"
     | "delete_email"
     | "archive_email"
@@ -69,6 +70,7 @@ export const ACTION_ICONS = {
   search_gmail: Mail,
   request_flytter_photos: AlertTriangle,
   job_completion: FileCheck,
+  check_calendar: Calendar, // Calendar viewing
   send_email: Send,
   delete_email: Trash2,
   archive_email: Archive,
@@ -89,6 +91,7 @@ export const ACTION_LABELS = {
   search_gmail: "Søg i Gmail",
   request_flytter_photos: "Anmod om Billeder",
   job_completion: "Afslut Job",
+  check_calendar: "Vis Kalender", // Calendar viewing
   send_email: "Send E-mail",
   delete_email: "Slet E-mail",
   archive_email: "Arkiver E-mail",
@@ -146,10 +149,10 @@ export function ActionApprovalModal({
 
   if (!action) return null;
 
-  const Icon = ACTION_ICONS[action.type];
-  const label = ACTION_LABELS[action.type];
-  const riskColor = RISK_COLORS[action.riskLevel];
-  const riskLabel = RISK_LABELS[action.riskLevel];
+  const Icon = ACTION_ICONS[action.type] || Sparkles; // Fallback icon
+  const label = ACTION_LABELS[action.type] || action.type;
+  const riskColor = RISK_COLORS[action.riskLevel] || RISK_COLORS.low;
+  const riskLabel = RISK_LABELS[action.riskLevel] || "Lav risiko";
 
   return (
     <AlertDialog open={open}>

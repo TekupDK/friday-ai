@@ -46,6 +46,61 @@ export interface ActionResult {
 export function parseIntent(message: string): ParsedIntent {
   const lowerMessage = message.toLowerCase();
 
+  // Check Calendar Intent - NEW: Add patterns for viewing calendar
+  if (
+    (lowerMessage.includes("vis") || 
+     lowerMessage.includes("tjek") || 
+     lowerMessage.includes("se") ||
+     lowerMessage.includes("show") ||
+     lowerMessage.includes("check")) &&
+    (lowerMessage.includes("kalender") || lowerMessage.includes("calendar"))
+  ) {
+    console.log(`[parseIntent] Detected calendar viewing request: "${message}"`);
+    const params: Record<string, any> = {};
+    
+    // Extract date - support both DD/MM-YYYY and other formats
+    const dateMatch = message.match(/(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.]?(\d{2,4})?/);
+    if (dateMatch) {
+      const day = parseInt(dateMatch[1]);
+      const month = parseInt(dateMatch[2]) - 1; // JS months are 0-indexed
+      const year = dateMatch[3] ? 
+        (dateMatch[3].length === 2 ? 2000 + parseInt(dateMatch[3]) : parseInt(dateMatch[3])) 
+        : new Date().getFullYear();
+      
+      const targetDate = new Date(year, month, day);
+      
+      // Validate the date is actually valid (catches 32/13/2025 etc)
+      if (isNaN(targetDate.getTime()) || 
+          targetDate.getMonth() !== month || 
+          targetDate.getDate() !== day) {
+        console.log(`[parseIntent] Invalid date detected: ${day}/${month + 1}/${year}, defaulting to today`);
+        params.date = new Date().toISOString().split('T')[0];
+      } else {
+        params.date = targetDate.toISOString().split('T')[0]; // YYYY-MM-DD
+        console.log(`[parseIntent] Extracted date from pattern: ${params.date} (${targetDate.toLocaleDateString('da-DK')})`);
+      }
+    } else if (lowerMessage.includes("i dag") || lowerMessage.includes("idag") || lowerMessage.includes("today")) {
+      params.date = new Date().toISOString().split('T')[0];
+      console.log(`[parseIntent] Using 'i dag': ${params.date}`);
+    } else if (lowerMessage.includes("i morgen") || lowerMessage.includes("tomorrow")) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      params.date = tomorrow.toISOString().split('T')[0];
+      console.log(`[parseIntent] Using 'i morgen': ${params.date}`);
+    } else {
+      // Default to today if no date specified
+      params.date = new Date().toISOString().split('T')[0];
+      console.log(`[parseIntent] No date specified, defaulting to today: ${params.date}`);
+    }
+
+    console.log(`[parseIntent] Returning check_calendar intent with confidence 0.95`);
+    return {
+      intent: "check_calendar",
+      params,
+      confidence: 0.95,
+    };
+  }
+
   // Create Lead Intent
   if (
     lowerMessage.includes("opret") &&
@@ -380,7 +435,7 @@ export async function executeAction(
         return await executeListLeads(intent.params, userId);
 
       case "check_calendar":
-        return await executeCheckCalendar(userId);
+        return await executeCheckCalendar(userId, intent.params);
 
       case "request_flytter_photos":
         return await executeRequestFlytterPhotos(intent.params, userId);
@@ -896,21 +951,61 @@ async function executeListLeads(
   };
 }
 
-async function executeCheckCalendar(userId: number): Promise<ActionResult> {
-  const now = new Date();
-  const endOfWeek = new Date(now);
-  endOfWeek.setDate(now.getDate() + 7);
+async function executeCheckCalendar(userId: number, params?: Record<string, any>): Promise<ActionResult> {
+  try {
+    const now = new Date();
+    let targetDate = now;
+    
+    // Use provided date if available
+    if (params?.date) {
+      targetDate = new Date(params.date);
+      
+      // Validate that the date is valid
+      if (isNaN(targetDate.getTime())) {
+        console.error(`[executeCheckCalendar] Invalid date provided: ${params.date}`);
+        return {
+          success: false,
+          message: "Ugyldig dato angivet. Brug format DD/MM-YYYY eller skriv 'i dag'.",
+        };
+      }
+      
+      console.log(`[executeCheckCalendar] Using provided date: ${params.date} (${targetDate.toLocaleDateString('da-DK')})`);
+    } else {
+      console.log(`[executeCheckCalendar] No date provided, using today: ${now.toLocaleDateString('da-DK')}`);
+    }
+    
+    // Set time range for the specific day (00:00 to 23:59)
+    const dayStart = new Date(targetDate);
+    dayStart.setHours(0, 0, 0, 0);
+    
+    const dayEnd = new Date(targetDate);
+    dayEnd.setHours(23, 59, 59, 999);
 
-  const events = await listCalendarEvents({
-    timeMin: now.toISOString(),
-    timeMax: endOfWeek.toISOString(),
-  });
+    const events = await listCalendarEvents({
+      timeMin: dayStart.toISOString(),
+      timeMax: dayEnd.toISOString(),
+    });
+    
+    const dateStr = targetDate.toLocaleDateString('da-DK', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
 
-  return {
-    success: true,
-    message: `📅 Du har **${events.length} aftaler** i din kalender de næste 7 dage. Se dem i Calendar-fanen.`,
-    data: events,
-  };
+    return {
+      success: true,
+      message: `📅 Du har **${events.length} aftaler** for ${dateStr}. Se dem i Calendar-fanen.`,
+      data: events,
+    };
+  } catch (error) {
+    console.error(`[executeCheckCalendar] Error fetching calendar events:`, error);
+    return {
+      success: false,
+      message: "Der opstod en fejl ved hentning af kalenderbegivenheder. Tjek at Google Calendar er forbundet korrekt.",
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
 }
 
 async function executeRequestFlytterPhotos(
