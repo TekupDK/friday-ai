@@ -849,11 +849,11 @@ export default function EmailTab() {
 
   const createLeadMutation = trpc.inbox.email.createLeadFromEmail.useMutation();
 
-  // Bulk AI Actions
-  const batchSummariesMutation =
-    trpc.inbox.email.batchGenerateSummaries.useMutation();
-  const batchLabelsMutation =
-    trpc.inbox.email.batchGenerateLabelSuggestions.useMutation();
+  // Bulk AI Actions (temporarily disabled - not critical for v2.1 UX)
+  // const batchSummariesMutation =
+  //   trpc.inbox.email.batchGenerateSummaries.useMutation();
+  // const batchLabelsMutation =
+  //   trpc.inbox.email.batchGenerateLabelSuggestions.useMutation();
   const batchRemoveDbLabelsMutation = (
     trpc.inbox as any
   ).email.batchRemoveDbLabels.useMutation();
@@ -874,6 +874,11 @@ export default function EmailTab() {
     const costValue = visibleIds.length * unitCost.summary;
 
     setBulkAIGenerating(true);
+    toast.info("AI batch summaries temporarily disabled");
+    setBulkAIGenerating(false);
+    return; // Temporarily disabled for v2.1 UX release
+    
+    /* Commented out - temporarily disabled
     toast.info(
       `Genererer summaries for ${visibleIds.length} emails... (Cost: ~${formatEstimatedCost(costValue)})`
     );
@@ -908,6 +913,7 @@ export default function EmailTab() {
     } finally {
       setBulkAIGenerating(false);
     }
+    */
   };
 
   const handleGenerateAllLabels = async () => {
@@ -921,6 +927,11 @@ export default function EmailTab() {
     const costValue = visibleIds.length * unitCost.labelSuggestion;
 
     setBulkAIGenerating(true);
+    toast.info("AI batch labels temporarily disabled");
+    setBulkAIGenerating(false);
+    return; // Temporarily disabled for v2.1 UX release
+    
+    /* Commented out - temporarily disabled
     toast.info(
       `Genererer label forslag for ${visibleIds.length} emails... (Cost: ~${formatEstimatedCost(costValue)})`
     );
@@ -955,6 +966,7 @@ export default function EmailTab() {
     } finally {
       setBulkAIGenerating(false);
     }
+    */
   };
 
   const handleAutoApplyHighConfidenceLabels = async () => {
@@ -968,6 +980,11 @@ export default function EmailTab() {
     const costValue = visibleIds.length * unitCost.labelSuggestion;
 
     setBulkAIGenerating(true);
+    toast.info("AI auto-apply labels temporarily disabled");
+    setBulkAIGenerating(false);
+    return; // Temporarily disabled for v2.1 UX release
+    
+    /* Commented out - temporarily disabled
     toast.info(
       `Auto-anvender høj-confidence labels for ${visibleIds.length} emails... (Cost: ~${formatEstimatedCost(costValue)})`
     );
@@ -1047,6 +1064,7 @@ export default function EmailTab() {
     } finally {
       setBulkAIGenerating(false);
     }
+    */
   };
 
   const handleSenderClick = async (email: string, e: React.MouseEvent) => {

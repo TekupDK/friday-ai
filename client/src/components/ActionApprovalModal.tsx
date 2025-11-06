@@ -159,30 +159,62 @@ export function ActionApprovalModal({
       <AlertDialogContent className="max-w-2xl">
         <AlertDialogHeader>
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Icon className="w-5 h-5 text-blue-600" />
+            {/* Enhanced gradient icon with pulse animation */}
+            <div className="relative">
+              <div
+                className={`absolute inset-0 rounded-lg blur-md ${
+                  action.riskLevel === "high"
+                    ? "bg-red-500/30"
+                    : action.riskLevel === "medium"
+                      ? "bg-yellow-500/30"
+                      : "bg-green-500/30"
+                } animate-pulse`}
+              ></div>
+              <div
+                className={`relative p-2.5 rounded-lg ${
+                  action.riskLevel === "high"
+                    ? "bg-gradient-to-br from-red-500 to-red-600"
+                    : action.riskLevel === "medium"
+                      ? "bg-gradient-to-br from-yellow-500 to-orange-500"
+                      : "bg-gradient-to-br from-green-500 to-emerald-600"
+                } shadow-lg`}
+              >
+                <Icon className="w-6 h-6 text-white" />
+              </div>
             </div>
             <div className="flex-1">
-              <AlertDialogTitle className="text-lg">
+              <AlertDialogTitle className="text-xl font-bold">
                 Godkend Handling
               </AlertDialogTitle>
               <AlertDialogDescription className="text-sm">
                 Friday foreslår følgende handling baseret på din besked
               </AlertDialogDescription>
             </div>
-            <Badge variant="outline" className={riskColor}>
+            {/* Enhanced risk badge with gradient */}
+            <Badge
+              variant="outline"
+              className={`${riskColor} font-semibold border-2`}
+            >
               {riskLabel}
             </Badge>
           </div>
         </AlertDialogHeader>
 
-        <div className="space-y-4 py-4">
-          {/* Action Type */}
-          <div>
+        <div className="space-y-5 py-4">
+          {/* Action Type with visual indicator */}
+          <div
+            className={`p-4 rounded-xl border-2 ${
+              action.riskLevel === "high"
+                ? "bg-red-50/50 border-red-200"
+                : action.riskLevel === "medium"
+                  ? "bg-yellow-50/50 border-yellow-200"
+                  : "bg-green-50/50 border-green-200"
+            }`}
+          >
             <Label className="text-sm font-semibold text-gray-700">
               Handlingstype
             </Label>
-            <p className="text-base mt-1">{label}</p>
+            <p className="text-base mt-1 font-medium">{label}</p>
             {/* Selection hint for inbox AI actions */}
             {(action.type === "ai_generate_summaries" ||
               action.type === "ai_suggest_labels") && (
@@ -199,16 +231,18 @@ export function ActionApprovalModal({
             <Label className="text-sm font-semibold text-gray-700">
               Påvirkning
             </Label>
-            <p className="text-sm text-gray-600 mt-1">{action.impact}</p>
+            <p className="text-sm text-gray-600 mt-2">{action.impact}</p>
           </div>
 
-          {/* Preview */}
+          {/* Preview - Enlarged with better styling */}
           <div>
             <Label className="text-sm font-semibold text-gray-700">
               Forhåndsvisning
             </Label>
-            <div className="mt-2 p-3 bg-gray-50 border border-gray-200 rounded-lg">
-              <p className="text-sm whitespace-pre-wrap">{action.preview}</p>
+            <div className="mt-2 p-5 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl shadow-sm">
+              <p className="text-sm whitespace-pre-wrap leading-relaxed">
+                {action.preview}
+              </p>
             </div>
           </div>
 
@@ -217,26 +251,27 @@ export function ActionApprovalModal({
             <Label className="text-sm font-semibold text-gray-700">
               Detaljer
             </Label>
-            <div className="mt-2 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+            <div className="mt-2 p-4 bg-gray-50 border border-gray-200 rounded-lg">
               <pre className="text-xs font-mono overflow-x-auto">
                 {JSON.stringify(action.params, null, 2)}
               </pre>
             </div>
           </div>
 
-          {/* Always Approve Option */}
+          {/* Always Approve Option - Better positioned */}
           {action.riskLevel === "low" && (
-            <div className="flex items-center space-x-2 pt-2 border-t">
+            <div className="flex items-start space-x-3 pt-3 px-4 py-3 border-2 border-green-200 bg-green-50/50 rounded-xl">
               <Checkbox
                 id="always-approve"
                 checked={alwaysApprove}
                 onCheckedChange={checked =>
                   setAlwaysApprove(checked as boolean)
                 }
+                className="mt-0.5"
               />
               <Label
                 htmlFor="always-approve"
-                className="text-sm text-gray-600 cursor-pointer"
+                className="text-sm text-gray-700 cursor-pointer leading-relaxed"
               >
                 Godkend altid denne type handling automatisk (kun for lav
                 risiko)
@@ -259,7 +294,13 @@ export function ActionApprovalModal({
             <AlertDialogCancel onClick={onReject}>Afvis</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => onApprove(alwaysApprove)}
-              className="bg-blue-600 hover:bg-blue-700"
+              className={`font-semibold ${
+                action.riskLevel === "high"
+                  ? "bg-red-600 hover:bg-red-700"
+                  : action.riskLevel === "medium"
+                    ? "bg-yellow-600 hover:bg-yellow-700"
+                    : "bg-green-600 hover:bg-green-700"
+              }`}
             >
               Godkend og Udfør
             </AlertDialogAction>

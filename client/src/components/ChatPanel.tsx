@@ -15,12 +15,32 @@ import { Switch } from "@/components/ui/switch";
 import { useEmailContext } from "@/contexts/EmailContext";
 import { useActionSuggestions } from "@/hooks/useActionSuggestions";
 import { trpc } from "@/lib/trpc";
-import { Bot, Cog, Info, Mic, Paperclip, Plus, Send } from "lucide-react";
+import {
+  Bot,
+  Calendar,
+  Cog,
+  Copy,
+  FileText,
+  Info,
+  Mail,
+  Mic,
+  Paperclip,
+  Plus,
+  RefreshCw,
+  Send,
+  Sparkles,
+  Tag,
+  ThumbsDown,
+  ThumbsUp,
+  User,
+  Users,
+} from "lucide-react";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { ActionApprovalModal, type PendingAction } from "./ActionApprovalModal";
 import { SafeStreamdown } from "./SafeStreamdown";
 import { SuggestionsBar } from "./SuggestionsBar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 type ChatModel = "gemma-3-27b-free";
 
@@ -29,6 +49,41 @@ interface Message {
   role: "user" | "assistant" | "system";
   content: string;
   createdAt: Date;
+}
+
+// Helper: Format relative time (e.g., "2 min siden")
+function formatRelativeTime(date: Date): string {
+  const now = new Date();
+  const diff = now.getTime() - new Date(date).getTime();
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (seconds < 60) return "lige nu";
+  if (minutes < 60) return `${minutes} min siden`;
+  if (hours < 24) return `${hours} t siden`;
+  if (days < 7) return `${days} d siden`;
+  return new Date(date).toLocaleDateString("da-DK", {
+    day: "numeric",
+    month: "short",
+  });
+}
+
+// Helper: Format time (e.g., "14:23")
+function formatTime(date: Date): string {
+  return new Date(date).toLocaleTimeString("da-DK", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+// Helper: Copy to clipboard
+function copyToClipboard(text: string): void {
+  navigator.clipboard.writeText(text).then(
+    () => toast.success("Kopieret til udklipsholder"),
+    () => toast.error("Kunne ikke kopiere")
+  );
 }
 
 function ChatPanel() {
@@ -135,7 +190,7 @@ function ChatPanel() {
       if (!selectedThreads || selectedThreads.length === 0)
         return [] as number[];
       const ids = await utils.inbox.email.mapThreadsToEmailIds.fetch({
-        threadIds: selectedThreads,
+        threadIds: selectedThreads as string[],
       });
       return Array.isArray(ids) ? (ids as number[]) : [];
     } catch (err) {
@@ -182,9 +237,10 @@ function ChatPanel() {
           );
           let actionParams = data.pendingAction.params || {};
           // Inject selected email IDs for inbox AI actions when not provided
+          const actionType = data.pendingAction.type as string;
           if (
-            (data.pendingAction.type === "ai_generate_summaries" ||
-              data.pendingAction.type === "ai_suggest_labels") &&
+            (actionType === "ai_generate_summaries" ||
+              actionType === "ai_suggest_labels") &&
             (!actionParams.emailIds || actionParams.emailIds.length === 0)
           ) {
             const emailIds = await resolveSelectedEmailIds();
@@ -585,44 +641,264 @@ function ChatPanel() {
                   {conversationData?.messages.map((message, index) => (
                     <div
                       key={message.id}
-                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}
+                      className="group animate-in fade-in slide-in-from-bottom-2 duration-300"
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
-                      <div
-                        className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-sm ${
-                          message.role === "user"
-                            ? "bg-primary text-primary-foreground"
-                            : message.role === "system"
-                              ? "bg-muted/50 text-muted-foreground text-xs border border-border"
-                              : "bg-muted border border-border"
-                        }`}
-                      >
-                        {message.role === "assistant" ? (
-                          <div className="prose prose-sm max-w-none dark:prose-invert">
-                            <SafeStreamdown content={message.content} />
-                          </div>
-                        ) : (
-                          <p className="whitespace-pre-wrap text-sm leading-relaxed">
+                      {message.role === "system" ? (
+                        // System messages - keep compact
+                        <div className="bg-muted/50 text-muted-foreground text-xs border border-border rounded-lg px-3 py-2 max-w-[80%] mx-auto">
+                          <p className="whitespace-pre-wrap leading-relaxed">
                             {message.content}
                           </p>
-                        )}
-                      </div>
+                        </div>
+                      ) : (
+                        // Rich message cards for user and assistant
+                        <div
+                          className={`flex gap-3 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                        >
+                          {message.role === "assistant" && (
+                            <Avatar className="shrink-0 mt-1">
+                              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                                <Bot className="w-4 h-4" />
+                              </AvatarFallback>
+                            </Avatar>
+                          )}
+
+                          <div className="flex-1 max-w-[85%]">
+                            {/* Message header with timestamp */}
+                            <div className="flex items-center gap-2 mb-1">
+                              {message.role === "assistant" && (
+                                <span className="text-sm font-medium">
+                                  Friday
+                                </span>
+                              )}
+                              {message.role === "user" && (
+                                <User className="w-4 h-4 text-muted-foreground" />
+                              )}
+                              <span className="text-xs text-muted-foreground">
+                                {formatRelativeTime(new Date(message.createdAt))} ·{" "}
+                                {formatTime(new Date(message.createdAt))}
+                              </span>
+                            </div>
+
+                            {/* Message content */}
+                            <div
+                              className={`rounded-2xl px-4 py-3 shadow-sm ${
+                                message.role === "user"
+                                  ? "bg-gradient-to-br from-blue-600 to-purple-600 text-white"
+                                  : "bg-muted border border-border"
+                              }`}
+                            >
+                              {message.role === "assistant" ? (
+                                <div className="prose prose-sm max-w-none dark:prose-invert">
+                                  <SafeStreamdown content={message.content} />
+                                </div>
+                              ) : (
+                                <p className="whitespace-pre-wrap text-sm leading-relaxed">
+                                  {message.content}
+                                </p>
+                              )}
+                            </div>
+
+                            {/* Message actions - visible on hover */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity mt-2 flex gap-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => copyToClipboard(message.content)}
+                                className="h-7 text-xs"
+                              >
+                                <Copy className="w-3 h-3 mr-1" />
+                                Kopier
+                              </Button>
+                              {message.role === "assistant" && (
+                                <>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 text-xs"
+                                  >
+                                    <ThumbsUp className="w-3 h-3" />
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 text-xs"
+                                  >
+                                    <ThumbsDown className="w-3 h-3" />
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          </div>
+
+                          {message.role === "user" && (
+                            <Avatar className="shrink-0 mt-1">
+                              <AvatarFallback className="bg-gradient-to-br from-gray-600 to-gray-800 text-white">
+                                <User className="w-4 h-4" />
+                              </AvatarFallback>
+                            </Avatar>
+                          )}
+                        </div>
+                      )}
                     </div>
                   ))}
                   {sendMessage.isPending && (
-                    <div className="flex justify-start animate-in fade-in slide-in-from-bottom-2 duration-300">
-                      <div className="bg-muted border border-border rounded-2xl px-4 py-3 shadow-sm">
-                        <div className="flex gap-1.5">
-                          <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"></div>
-                          <div
-                            className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.1s" }}
-                          ></div>
-                          <div
-                            className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
+                    <div className="flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                      <Avatar className="shrink-0 mt-1">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white animate-pulse">
+                          <Bot className="w-4 h-4" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 max-w-[85%]">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm font-medium">Friday</span>
+                          <span className="text-xs text-muted-foreground">
+                            lige nu
+                          </span>
                         </div>
+                        <div className="bg-muted border border-border rounded-2xl px-4 py-3 shadow-sm">
+                          <div className="flex gap-1.5">
+                            <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"></div>
+                            <div
+                              className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                              style={{ animationDelay: "0.1s" }}
+                            ></div>
+                            <div
+                              className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                              style={{ animationDelay: "0.2s" }}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Context-Aware Suggested Actions */}
+                  {conversationData && conversationData.messages.length > 0 && (
+                    <div className="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Sparkles className="w-4 h-4 text-purple-500" />
+                        <span className="text-sm font-medium text-muted-foreground">
+                          Foreslåede handlinger
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {emailContext.state.selectedThreads.size > 0 && (
+                          <>
+                            <Button
+                              variant="outline"
+                              className="justify-start h-auto py-3 px-4 text-left"
+                              onClick={() => {
+                                const count = emailContext.state.selectedThreads.size;
+                                setInputMessage(`Opsummer de ${count} valgte emails`);
+                              }}
+                            >
+                              <FileText className="w-4 h-4 mr-2 shrink-0 text-blue-500" />
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-medium truncate">
+                                  Opsummer valgte emails
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  {emailContext.state.selectedThreads.size} emails valgt
+                                </div>
+                              </div>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              className="justify-start h-auto py-3 px-4 text-left"
+                              onClick={() => {
+                                setInputMessage(
+                                  "Opret en opfølgningsmail til de valgte emails"
+                                );
+                              }}
+                            >
+                              <Mail className="w-4 h-4 mr-2 shrink-0 text-green-500" />
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-medium truncate">
+                                  Opret opfølgning
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  Til valgte emails
+                                </div>
+                              </div>
+                            </Button>
+                          </>
+                        )}
+                        {emailContext.state.openThreadId && (
+                          <Button
+                            variant="outline"
+                            className="justify-start h-auto py-3 px-4 text-left"
+                            onClick={() => {
+                              setInputMessage("Hvad er konteksten i denne email?");
+                            }}
+                          >
+                            <Tag className="w-4 h-4 mr-2 shrink-0 text-orange-500" />
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium truncate">
+                                Analysér email
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                Åben tråd
+                              </div>
+                            </div>
+                          </Button>
+                        )}
+                        {emailContext.state.folder === "inbox" && (
+                          <Button
+                            variant="outline"
+                            className="justify-start h-auto py-3 px-4 text-left"
+                            onClick={() => {
+                              setInputMessage(
+                                "Find alle ulæste emails fra i dag"
+                              );
+                            }}
+                          >
+                            <Mail className="w-4 h-4 mr-2 shrink-0 text-red-500" />
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium truncate">
+                                Find ulæste emails
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                Fra i dag
+                              </div>
+                            </div>
+                          </Button>
+                        )}
+                        <Button
+                          variant="outline"
+                          className="justify-start h-auto py-3 px-4 text-left"
+                          onClick={() => {
+                            setInputMessage("Book et møde baseret på seneste emails");
+                          }}
+                        >
+                          <Calendar className="w-4 h-4 mr-2 shrink-0 text-purple-500" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-medium truncate">
+                              Book møde
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Fra email kontekst
+                            </div>
+                          </div>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="justify-start h-auto py-3 px-4 text-left"
+                          onClick={() => {
+                            setInputMessage("Find alle emails fra denne kunde");
+                          }}
+                        >
+                          <Users className="w-4 h-4 mr-2 shrink-0 text-cyan-500" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-medium truncate">
+                              Find kunde emails
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Hele historikken
+                            </div>
+                          </div>
+                        </Button>
                       </div>
                     </div>
                   )}
@@ -719,12 +995,177 @@ function ChatPanel() {
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-muted-foreground">
-              <div className="text-center space-y-4">
-                <div className="text-6xl">💬</div>
-                <p className="text-lg">
-                  Select a conversation or start a new chat
-                </p>
+            <div className="flex-1 flex items-center justify-center p-6">
+              <div className="max-w-2xl w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                {/* Hero Section */}
+                <div className="text-center space-y-4">
+                  <div className="relative inline-block">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full blur-2xl animate-pulse"></div>
+                    <div className="relative w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-xl">
+                      <Bot className="w-12 h-12 text-white" />
+                    </div>
+                  </div>
+                  <div>
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                      Velkommen til Friday AI
+                    </h1>
+                    <p className="text-lg text-muted-foreground mt-2">
+                      Din intelligente assistent til emails, møder og opgaver
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quick Start Guide */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-purple-500" />
+                    <h2 className="text-xl font-semibold">
+                      Kom hurtigt i gang
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button
+                      onClick={() => {
+                        // Create new conversation and set message
+                        createConversation.mutate(
+                          { title: "Email Opsummering" },
+                          {
+                            onSuccess: data => {
+                              setSelectedConversationId(data.id);
+                              setInputMessage("Opsummer mine ulæste emails fra i dag");
+                            },
+                          }
+                        );
+                      }}
+                      className="group p-4 rounded-xl border-2 border-border hover:border-blue-500/50 hover:bg-blue-500/5 transition-all text-left"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                          <Mail className="w-5 h-5 text-blue-500" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold mb-1">
+                            Opsummer emails
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            Få et hurtigt overblik over dine ulæste beskeder
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        createConversation.mutate(
+                          { title: "Møde Booking" },
+                          {
+                            onSuccess: data => {
+                              setSelectedConversationId(data.id);
+                              setInputMessage("Book et møde baseret på seneste emails");
+                            },
+                          }
+                        );
+                      }}
+                      className="group p-4 rounded-xl border-2 border-border hover:border-purple-500/50 hover:bg-purple-500/5 transition-all text-left"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                          <Calendar className="w-5 h-5 text-purple-500" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold mb-1">Book møde</h3>
+                          <p className="text-sm text-muted-foreground">
+                            Lad Friday finde det perfekte tidspunkt
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        createConversation.mutate(
+                          { title: "Kunde Analyse" },
+                          {
+                            onSuccess: data => {
+                              setSelectedConversationId(data.id);
+                              setInputMessage("Find alle emails fra denne kunde");
+                            },
+                          }
+                        );
+                      }}
+                      className="group p-4 rounded-xl border-2 border-border hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all text-left"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition-colors">
+                          <Users className="w-5 h-5 text-cyan-500" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold mb-1">
+                            Analysér kunde
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            Se hele historikken med en kunde
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        createConversation.mutate(
+                          { title: "Email Udkast" },
+                          {
+                            onSuccess: data => {
+                              setSelectedConversationId(data.id);
+                              setInputMessage("Hjælp mig med at skrive en professionel email");
+                            },
+                          }
+                        );
+                      }}
+                      className="group p-4 rounded-xl border-2 border-border hover:border-green-500/50 hover:bg-green-500/5 transition-all text-left"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
+                          <FileText className="w-5 h-5 text-green-500" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold mb-1">
+                            Skriv email
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            Få hjælp til at formulere den perfekte besked
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Stats Cards */}
+                {conversations && conversations.length > 0 && (
+                  <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+                    <div className="text-center space-y-1">
+                      <p className="text-2xl font-bold text-blue-500">
+                        {conversations.length}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Samtaler
+                      </p>
+                    </div>
+                    <div className="text-center space-y-1">
+                      <p className="text-2xl font-bold text-purple-500">
+                        {emailContext.state.selectedThreads.size}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Valgte emails
+                      </p>
+                    </div>
+                    <div className="text-center space-y-1">
+                      <p className="text-2xl font-bold text-green-500">AI</p>
+                      <p className="text-xs text-muted-foreground">Aktiv</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
