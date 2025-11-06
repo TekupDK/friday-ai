@@ -160,15 +160,34 @@ export async function createConversation(
 
 export async function getUserConversations(
   userId: number
-): Promise<Conversation[]> {
+): Promise<(Conversation & { lastMessage?: string })[]> {
   const db = await getDb();
   if (!db) return [];
 
-  return db
+  const conversationsList = await db
     .select()
     .from(conversations)
     .where(eq(conversations.userId, userId))
     .orderBy(desc(conversations.updatedAt));
+
+  // Fetch last message for each conversation
+  const conversationsWithLastMessage = await Promise.all(
+    conversationsList.map(async (conv) => {
+      const lastMsg = await db
+        .select()
+        .from(messages)
+        .where(eq(messages.conversationId, conv.id))
+        .orderBy(desc(messages.createdAt))
+        .limit(1);
+
+      return {
+        ...conv,
+        lastMessage: lastMsg[0]?.content?.substring(0, 60) || undefined,
+      };
+    })
+  );
+
+  return conversationsWithLastMessage;
 }
 
 export async function getConversation(
@@ -193,6 +212,17 @@ export async function updateConversationTitle(
   if (!db) return;
 
   await db.update(conversations).set({ title }).where(eq(conversations.id, id));
+}
+
+export async function deleteConversation(id: number): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+
+  // Delete all messages first (cascade)
+  await db.delete(messages).where(eq(messages.conversationId, id));
+  
+  // Then delete the conversation
+  await db.delete(conversations).where(eq(conversations.id, id));
 }
 
 // ============= Message Functions =============

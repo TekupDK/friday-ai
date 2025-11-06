@@ -22,6 +22,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { getLoginUrl } from "@/const";
 import { Bot, LogOut, Menu, Settings, User } from "lucide-react";
 import { memo, useCallback, useMemo, useState } from "react";
+import { InvoiceProvider } from "@/context/InvoiceContext";
 
 /**
  * Friday Chat Interface - Main Layout
@@ -89,7 +90,9 @@ function ChatInterface() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-background">
+    <InvoiceProvider>
+      <div className="h-screen flex flex-col bg-background">
+
       {/* Header */}
       <header className="border-b border-border px-4 sm:px-6 py-3 flex items-center justify-between bg-muted/20">
         <div className="flex items-center gap-3">
@@ -223,7 +226,8 @@ function ChatInterface() {
       <div className="flex md:hidden flex-1 overflow-hidden min-h-0">
         <ChatPanel />
       </div>
-    </div>
+      </div>
+    </InvoiceProvider>
   );
 }
 

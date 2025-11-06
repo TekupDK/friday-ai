@@ -13,6 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useEmailContext } from "@/contexts/EmailContext";
+import { useInvoiceContext } from "@/context/InvoiceContext";
 import { useActionSuggestions } from "@/hooks/useActionSuggestions";
 import { trpc } from "@/lib/trpc";
 import {
@@ -20,11 +21,14 @@ import {
   Calendar,
   Cog,
   Copy,
+  Edit2,
   FileText,
   Info,
   Mail,
   Mic,
+  MoreVertical,
   Paperclip,
+  Pin,
   Plus,
   RefreshCw,
   Send,
@@ -32,6 +36,7 @@ import {
   Tag,
   ThumbsDown,
   ThumbsUp,
+  Trash2,
   User,
   Users,
 } from "lucide-react";
@@ -104,9 +109,15 @@ function ChatPanel() {
       ? localStorage.getItem("auto-approve-low-risk") === "true"
       : false
   );
+  const [hoveredConvId, setHoveredConvId] = useState<number | null>(null);
+  const [renamingConvId, setRenamingConvId] = useState<number | null>(null);
+  const [newTitle, setNewTitle] = useState("");
 
   // Get email context for Shortwave-style tracking
   const emailContext = useEmailContext();
+  
+  // Get invoice context for Friday AI to interact with invoices
+  const invoiceContext = useInvoiceContext();
 
   const { data: conversations, refetch: refetchConversations } =
     trpc.chat.list.useQuery(undefined, {
@@ -177,6 +188,25 @@ function ChatPanel() {
     onSuccess: data => {
       setSelectedConversationId(data.id);
       refetchConversations();
+    },
+  });
+
+  const updateTitle = trpc.chat.updateTitle.useMutation({
+    onSuccess: () => {
+      refetchConversations();
+      setRenamingConvId(null);
+      setNewTitle("");
+      toast.success("Titel opdateret");
+    },
+  });
+
+  const deleteConversation = trpc.chat.delete.useMutation({
+    onSuccess: () => {
+      refetchConversations();
+      if (selectedConversationId) {
+        setSelectedConversationId(null);
+      }
+      toast.success("Samtale slettet");
     },
   });
 
@@ -489,63 +519,126 @@ function ChatPanel() {
               {conversations && conversations.length > 0 ? (
                 conversations.map(conv => {
                   const isSelected = selectedConversationId === conv.id;
+                  const isHovered = hoveredConvId === conv.id;
+                  const isRenaming = renamingConvId === conv.id;
                   const formattedTitle =
                     conv.title && conv.title !== "New Conversation"
                       ? conv.title
                       : `Ny samtale ${new Date(conv.createdAt).toLocaleTimeString("da-DK", { hour: "2-digit", minute: "2-digit" })}`;
-                  const formattedDate = new Date(
-                    conv.updatedAt
-                  ).toLocaleDateString("da-DK", {
-                    day: "2-digit",
-                    month: "short",
-                  });
 
                   return (
-                    <button
+                    <div
                       key={conv.id}
-                      onClick={() => setSelectedConversationId(conv.id)}
-                      className={`group w-full text-left px-3 py-3 rounded-xl text-sm transition-all duration-200 ${
+                      onMouseEnter={() => setHoveredConvId(conv.id)}
+                      onMouseLeave={() => setHoveredConvId(null)}
+                      className={`relative group w-full text-left rounded-xl transition-all duration-200 ${
                         isSelected
-                          ? "bg-blue-500/10 border-2 border-blue-500/30 shadow-sm"
-                          : "border-2 border-transparent hover:bg-accent/60 hover:border-border/50 hover:shadow-sm"
+                          ? "bg-gradient-to-r from-blue-500/10 via-blue-500/5 to-transparent border-l-4 border-blue-500 shadow-sm"
+                          : "hover:bg-muted/60 hover:shadow-sm"
                       }`}
                     >
-                      <div className="flex items-start gap-3">
+                      <button
+                        onClick={() => setSelectedConversationId(conv.id)}
+                        className="w-full px-3 py-3 flex items-start gap-3"
+                      >
                         <div
                           className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center ${
                             isSelected
-                              ? "bg-blue-500 text-white"
+                              ? "bg-blue-500 text-white shadow-md"
                               : "bg-muted text-muted-foreground group-hover:bg-blue-500/20 group-hover:text-blue-500"
-                          } transition-colors`}
+                          } transition-all duration-200`}
                         >
                           <Bot className="w-4 h-4" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div
-                            className={`font-semibold truncate ${isSelected ? "text-blue-700 dark:text-blue-300" : ""}`}
-                          >
-                            {conv.title && conv.title !== "New Conversation" ? (
-                              conv.title
-                            ) : (
-                              <span
-                                className={
-                                  isSelected
-                                    ? "opacity-90"
-                                    : "text-muted-foreground italic font-normal"
+                          {isRenaming ? (
+                            <Input
+                              value={newTitle}
+                              onChange={(e) => setNewTitle(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  updateTitle.mutate({
+                                    conversationId: conv.id,
+                                    title: newTitle,
+                                  });
+                                } else if (e.key === "Escape") {
+                                  setRenamingConvId(null);
+                                  setNewTitle("");
                                 }
+                              }}
+                              onBlur={() => {
+                                setRenamingConvId(null);
+                                setNewTitle("");
+                              }}
+                              autoFocus
+                              className="h-7 text-sm"
+                            />
+                          ) : (
+                            <>
+                              <div
+                                className={`font-semibold truncate ${isSelected ? "text-blue-700 dark:text-blue-300" : ""}`}
                               >
-                                {formattedTitle}
-                              </span>
-                            )}
-                          </div>
-                          <div
-                            className={`text-xs mt-1 flex items-center gap-1.5 ${isSelected ? "text-blue-600/80 dark:text-blue-400/80" : "text-muted-foreground"}`}
-                          >
-                            <span>{formattedDate}</span>
-                          </div>
+                                {conv.title && conv.title !== "New Conversation" ? (
+                                  conv.title
+                                ) : (
+                                  <span
+                                    className={
+                                      isSelected
+                                        ? "opacity-90"
+                                        : "text-muted-foreground italic font-normal"
+                                    }
+                                  >
+                                    {formattedTitle}
+                                  </span>
+                                )}
+                              </div>
+                              {/* Message Preview */}
+                              {(conv as any).lastMessage && (
+                                <p className="text-xs text-muted-foreground truncate mt-0.5 leading-relaxed">
+                                  {(conv as any).lastMessage}
+                                </p>
+                              )}
+                              <div
+                                className={`text-xs mt-1 flex items-center gap-1.5 ${isSelected ? "text-blue-600/80 dark:text-blue-400/80" : "text-muted-foreground"}`}
+                              >
+                                <span>{formatRelativeTime(new Date(conv.updatedAt))}</span>
+                              </div>
+                            </>
+                          )}
                         </div>
-                      </div>
-                    </button>
+                      </button>
+                      
+                      {/* Hover Actions */}
+                      {isHovered && !isRenaming && (
+                        <div className="absolute right-2 top-3 flex items-center gap-1 bg-background/95 backdrop-blur-sm border border-border rounded-lg p-1 shadow-lg">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 hover:bg-blue-500/10 hover:text-blue-500"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setRenamingConvId(conv.id);
+                              setNewTitle(conv.title || "");
+                            }}
+                          >
+                            <Edit2 className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 hover:bg-red-500/10 hover:text-red-500"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (confirm("Er du sikker på at du vil slette denne samtale?")) {
+                                deleteConversation.mutate({ conversationId: conv.id });
+                              }
+                            }}
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
                   );
                 })
               ) : (
@@ -942,7 +1035,8 @@ function ChatPanel() {
                     emailContext.state.viewMode ||
                     (emailContext.state.selectedLabels &&
                       emailContext.state.selectedLabels.length > 0) ||
-                    emailContext.state.selectedThreads.size > 0) && (
+                    emailContext.state.selectedThreads.size > 0 ||
+                    invoiceContext.selectedInvoice) && (
                     <div className="flex items-center flex-wrap gap-2 text-xs text-muted-foreground">
                       {emailContext.state.folder && (
                         <Badge variant="secondary">
@@ -964,6 +1058,13 @@ function ChatPanel() {
                         <Badge variant="secondary">
                           Valgte mails:{" "}
                           {emailContext.state.selectedThreads.size}
+                        </Badge>
+                      )}
+                      {invoiceContext.selectedInvoice && (
+                        <Badge variant="secondary" className="gap-1">
+                          <FileText className="w-3 h-3" />
+                          Faktura: {invoiceContext.selectedInvoice.invoiceNo || 
+                                   invoiceContext.selectedInvoice.id.slice(0, 8)}
                         </Badge>
                       )}
                     </div>

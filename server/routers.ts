@@ -10,6 +10,7 @@ import { customerRouter } from "./customer-router";
 import {
   createConversation,
   createMessage,
+  deleteConversation,
   getConversation,
   getConversationMessages,
   getUserConversations,
@@ -294,6 +295,12 @@ export const appRouter = router({
       .input(z.object({ conversationId: z.number(), title: z.string() }))
       .mutation(async ({ input }) => {
         await updateConversationTitle(input.conversationId, input.title);
+        return { success: true };
+      }),
+    delete: protectedProcedure
+      .input(z.object({ conversationId: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteConversation(input.conversationId);
         return { success: true };
       }),
     analyzeInvoice: protectedProcedure

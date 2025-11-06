@@ -7,7 +7,7 @@ import { parseIntent, type Intent } from "./intent-actions";
 import { invokeLLM } from "./_core/llm";
 
 /**
- * Generate title from intent and parameters
+ * Generate title from intent and parameters with emoji
  */
 function generateIntentTitle(
   intent: Intent,
@@ -17,12 +17,12 @@ function generateIntentTitle(
     create_lead: p => {
       const name = p.name || "Ukendt";
       const source = p.source || "";
-      return source ? `Lead: ${name} - ${source}` : `Lead: ${name}`;
+      return source ? `💼 Lead: ${name} - ${source}` : `💼 Lead: ${name}`;
     },
     create_task: p => {
       const title = p.title || "Ny opgave";
-      const priority = p.priority === "high" ? "🔴 " : "";
-      return `${priority}Opgave: ${title}`;
+      const priority = p.priority === "high" ? "🔴 " : "✅ ";
+      return `${priority}${title}`;
     },
     book_meeting: p => {
       const summary = p.summary || "Møde";
@@ -32,41 +32,41 @@ function generateIntentTitle(
             month: "2-digit",
           })
         : "";
-      return date ? `${summary} - ${date}` : summary;
+      return date ? `📅 ${summary} - ${date}` : `📅 ${summary}`;
     },
     create_invoice: p => {
       const customer = p.customerName || p.contactId || "Kunde";
-      return `Faktura: ${customer}`;
+      return `💰 Faktura: ${customer}`;
     },
     search_email: p => {
       const query = p.query || "søgning";
-      return `Email: ${query}`;
+      return `📧 Email: ${query}`;
     },
     request_flytter_photos: p => {
       const address = p.address || p.leadName || "flytterengøring";
-      return `Flytter: ${address} (afventer billeder)`;
+      return `🏠 Flytter: ${address}`;
     },
     job_completion: p => {
       const customer = p.customerName || p.jobId || "job";
-      return `Afsluttet: ${customer}`;
+      return `✅ Afsluttet: ${customer}`;
     },
-    list_tasks: () => "Mine opgaver",
-    list_leads: () => "Mine leads",
-    check_calendar: () => "Kalender oversigt",
+    list_tasks: () => "📋 Mine opgaver",
+    list_leads: () => "💼 Mine leads",
+    check_calendar: () => "📅 Kalender oversigt",
     ai_generate_summaries: p => {
       const count = Array.isArray(p.emailIds) ? p.emailIds.length : undefined;
       return count && count > 0
-        ? `AI: Resuméer for ${count} mails`
-        : "AI: Generér resuméer";
+        ? `🤖 AI: Resuméer (${count} mails)`
+        : "🤖 AI: Generér resuméer";
     },
     ai_suggest_labels: p => {
       const count = Array.isArray(p.emailIds) ? p.emailIds.length : undefined;
       const auto = p.autoApply ? " (auto)" : "";
       return count && count > 0
-        ? `AI: Labels for ${count} mails${auto}`
-        : `AI: Foreslå labels${auto}`;
+        ? `🏷️ AI: Labels (${count} mails)${auto}`
+        : `🏷️ AI: Foreslå labels${auto}`;
     },
-    unknown: () => "Ny samtale",
+    unknown: () => "💬 Ny samtale",
   };
 
   const generator = titleMap[intent];
@@ -82,22 +82,22 @@ function generateIntentTitle(
 }
 
 /**
- * Generate title from domain-specific keywords
+ * Generate title from domain-specific keywords with emoji
  */
 function generateKeywordTitle(message: string): string | null {
   const lowerMessage = message.toLowerCase();
 
   const keywordMap: Record<string, string> = {
-    flytterengøring: "Flytterengøring forespørgsel",
-    hovedrengøring: "Hovedrengøring forespørgsel",
-    "fast rengøring": "Fast rengøring aftale",
-    tilbud: "Tilbudsforespørgsel",
-    faktura: "Faktura spørgsmål",
-    betaling: "Betalingshenvendelse",
-    klage: "Kundeservice sag",
-    "rengøring.nu": "Lead fra Rengøring.nu",
-    adhelp: "Lead fra AdHelp",
-    google: "Lead fra Google",
+    flytterengøring: "🏠 Flytterengøring forespørgsel",
+    hovedrengøring: "✨ Hovedrengøring forespørgsel",
+    "fast rengøring": "🔄 Fast rengøring aftale",
+    tilbud: "💰 Tilbudsforespørgsel",
+    faktura: "🧾 Faktura spørgsmål",
+    betaling: "💳 Betalingshenvendelse",
+    klage: "⚠️ Kundeservice sag",
+    "rengøring.nu": "🌐 Lead fra Rengøring.nu",
+    adhelp: "📢 Lead fra AdHelp",
+    google: "🔍 Lead fra Google",
   };
 
   for (const [keyword, title] of Object.entries(keywordMap)) {
@@ -110,25 +110,40 @@ function generateKeywordTitle(message: string): string | null {
 }
 
 /**
- * Generate title using AI (fallback)
+ * Generate title using AI (fallback) with emoji
  */
 async function generateAITitle(
   message: string,
   model: string = "gemma-3-27b-free"
 ): Promise<string | null> {
   try {
-    const prompt = `Generer kort titel (max 35 tegn) for Rendetalje kundesamtale.
+    const prompt = `Generer kort titel (max 32 tegn inkl. emoji) for Rendetalje kundesamtale.
 Besked: "${message}"
-Format: [Type]: [Kunde/Emne]
-Eksempler: "Flytter: Vestergade 12", "Lead: Marie Hansen", "Tilbud: 85m² lejlighed"
-Returner KUN titlen, ingen forklaring.`;
+
+Format: [Emoji] [Type]: [Kunde/Emne]
+
+Brug relevante emoji:
+🏠 Flytter/hovedrengøring
+💼 Lead/kunde
+📅 Møde/kalender  
+💰 Tilbud/faktura
+📧 Email/besked
+✨ Generel rengøring
+📋 Opgave
+
+Eksempler: 
+"🏠 Flytter: Vestergade 12"
+"💼 Lead: Marie Hansen"
+"💰 Tilbud: 85m² lejlighed"
+
+Returner KUN titlen med emoji først, ingen forklaring.`;
 
     const response = await invokeLLM({
       messages: [
         {
           role: "system",
           content:
-            "Du er en hjælpsom assistent der genererer korte, præcise titler på dansk.",
+            "Du er en hjælpsom assistent der genererer korte, præcise titler med emoji på dansk.",
         },
         { role: "user", content: prompt },
       ],
@@ -156,7 +171,7 @@ function truncateTitle(title: string): string {
 }
 
 /**
- * Generate fallback title with timestamp
+ * Generate fallback title with emoji and timestamp
  */
 function generateFallbackTitle(): string {
   const now = new Date();
@@ -164,7 +179,7 @@ function generateFallbackTitle(): string {
     hour: "2-digit",
     minute: "2-digit",
   });
-  return `Samtale ${time}`;
+  return `💬 Samtale ${time}`;
 }
 
 /**

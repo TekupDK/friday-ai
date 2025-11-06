@@ -40,6 +40,7 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { SafeStreamdown } from "../SafeStreamdown";
+import { useInvoiceContext } from "@/context/InvoiceContext";
 
 /**
  * InvoicesTab - Displays and manages Billy.dk invoices
@@ -95,14 +96,24 @@ export default function InvoicesTab() {
       rateLimit.handleRateLimitError(error);
     }
   }, [error, rateLimit]);
+  
+  // Use shared context for invoice selection and AI analysis
+  const {
+    selectedInvoice,
+    setSelectedInvoice,
+    aiAnalysis,
+    setAiAnalysis,
+    analyzingInvoice,
+    setAnalyzingInvoice,
+    currentAnalysisId,
+    setCurrentAnalysisId,
+  } = useInvoiceContext();
+
   const analyzeInvoiceMutation = trpc.chat.analyzeInvoice.useMutation();
   const [searchInput, setSearchInput] = useState("");
   const debouncedSearch = useDebouncedValue(searchInput, 300);
   const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [selectedInvoice, setSelectedInvoice] = useState<BillyInvoice | null>(null);
-  const [currentAnalysisId, setCurrentAnalysisId] = useState<string | null>(null);
-  const [aiAnalysis, setAiAnalysis] = useState<string>("");
-  const [analyzingInvoice, setAnalyzingInvoice] = useState(false);
+  // Local state for feedback (not shared with ChatPanel)
   const [feedbackGiven, setFeedbackGiven] = useState<"up" | "down" | null>(
     null
   );
