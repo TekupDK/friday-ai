@@ -6,8 +6,31 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
+# Friday AI
+
+**Intelligent Email Management & Automation System** - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
+
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
+
 > **⚡ Quick Start:** Copy `.env.dev.template` → `.env.dev`, fill secrets, run `pnpm dev`  
-> **🔧 Environment Guide:** [QUICK_ENV_REFERENCE.md](QUICK_ENV_REFERENCE.md) | **� Full Setup:** [ENV_SETUP_GUIDE.md](ENV_SETUP_GUIDE.md)
+> **🔧 Environment Guide:** [QUICK_ENV_REFERENCE.md](QUICK_ENV_REFERENCE.md) | **📘 Full Setup:** [ENV_SETUP_GUIDE.md](ENV_SETUP_GUIDE.md)
+
+## 🎯 Overview
+
+Friday AI is an intelligent email management system inspired by Shortwave.ai. It combines AI-powered conversation with real-time inbox management, calendar bookings, invoice handling, and lead tracking.
+
+## ✨ Features
+
+### 🆕 What's New in v2.0.0
+
+- **🏗️ Standalone Repository**: Migrated to dedicated `TekupDK/friday-ai` repository
+  - Clean git history without legacy secrets
+  - Independent deployment pipeline  
+  - Focused development workflow
+  
+- **🤖 AI Email Features** (Phases 1-6 Complete):
 
 ## 🎯 Overview
 
