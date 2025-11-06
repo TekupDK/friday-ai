@@ -11,11 +11,11 @@ This analysis provides comprehensive insights into the invoicing patterns and fi
 
 ### Key Findings
 
-- **Total Revenue:** 256,435.08 DKK
-- **Total Paid:** 217,324.61 DKK (84.7% collection rate)
-- **Total Outstanding:** 55,489.97 DKK
+- **Total Revenue:** 240,055.58 DKK (net of credit notes)
+- **Total Paid:** 195,035.61 DKK (81.2% collection rate)
+- **Total Outstanding:** 45,019.97 DKK
 - **Payment Rate:** 76.03% (92 out of 121 invoices paid)
-- **Average Invoice Value:** 2,119.30 DKK
+- **Average Invoice Value:** 1,983.93 DKK
 
 ## 💰 Financial Overview
 
@@ -23,17 +23,18 @@ This analysis provides comprehensive insights into the invoicing patterns and fi
 
 | Metric | Amount (DKK) | Percentage |
 |--------|--------------|------------|
-| Total Revenue | 256,435.08 | 100% |
-| Revenue Collected | 217,324.61 | 84.7% |
-| Outstanding | 55,489.97 | 21.6% |
-| Tax Collected | 52,738.90 | 20.6% of revenue |
+| Total Revenue | 240,055.58 | 100% |
+| Revenue Collected | 195,035.61 | 81.2% |
+| Outstanding | 45,019.97 | 18.8% |
+| Tax Collected | 46,187.10 | 19.2% of revenue |
 
 ### Invoice Types
 
 | Type | Count | Revenue (DKK) | Avg Value (DKK) |
 |------|-------|---------------|-----------------|
 | Regular Invoices | 112 | 256,435.08 | 2,289.60 |
-| Credit Notes | 9 | 16,379.50 | 1,819.94 |
+| Credit Notes | 9 | -16,379.50 | -1,819.94 |
+| **Net Total** | **121** | **240,055.58** | **1,983.93** |
 
 ## 📈 Trends & Insights
 
@@ -44,36 +45,36 @@ The business shows seasonal variation with peak activity in September 2025:
 | Month | Invoices | Revenue (DKK) | Paid (DKK) | Unpaid (DKK) | Collection Rate |
 |-------|----------|---------------|------------|--------------|-----------------|
 | Jun 2025 | 2 | 2,617.50 | 2,617.50 | 0.00 | 100% |
-| Jul 2025 | 21 | 54,922.13 | 38,390.00 | 16,532.13 | 69.9% |
-| Aug 2025 | 26 | 73,904.98 | 64,481.98 | 9,423.00 | 87.3% |
-| Sep 2025 | 37 | 82,725.43 | 80,456.93 | 2,268.50 | 97.3% |
-| Oct 2025 | 29 | 50,230.20 | 26,341.20 | 23,889.00 | 52.4% |
+| Jul 2025 | 21 | 46,546.13 | 38,390.00 | 8,156.13 | 82.5% |
+| Aug 2025 | 26 | 62,038.98 | 52,615.98 | 9,423.00 | 84.8% |
+| Sep 2025 | 37 | 77,141.43 | 74,872.93 | 2,268.50 | 97.1% |
+| Oct 2025 | 29 | 45,391.20 | 21,502.20 | 23,889.00 | 47.4% |
 | Nov 2025 | 3 | 5,622.34 | 4,339.00 | 1,283.34 | 77.2% |
 
 ### Key Observations
 
-1. **Peak Performance:** September 2025 showed the highest revenue (82,725.43 DKK) and excellent collection rate (97.3%)
-2. **Recent Decline:** November shows an 88.8% revenue decrease from October, though this may be due to incomplete month data
-3. **Collection Concerns:** October has a significantly lower collection rate (52.4%) with 23,889 DKK outstanding
-4. **Credit Note Rate:** 7.4% of all invoices are credit notes, which is within normal range but worth monitoring
+1. **Peak Performance:** September 2025 showed the highest revenue (77,141.43 DKK) and excellent collection rate (97.1%)
+2. **Recent Decline:** November shows an 87.6% revenue decrease from October, though this may be due to incomplete month data
+3. **Collection Concerns:** October has a significantly lower collection rate (47.4%) with 23,889 DKK outstanding
+4. **Credit Note Rate:** 7.4% of all invoices are credit notes (16,379.50 DKK in refunds), worth monitoring
 
 ## 📋 Invoice States
 
 | State | Count | Revenue (DKK) | Percentage |
 |-------|-------|---------------|------------|
-| Approved | 102 | 237,394.11 | 84.3% |
-| Voided | 19 | 35,420.47 | 15.7% |
+| Approved | 102 | 215,105.11 | 89.6% |
+| Voided | 19 | 24,950.47 | 10.4% |
 
-**Note:** 19 invoices (15.7%) are voided, representing 35,420.47 DKK. This requires investigation to understand cancellation reasons.
+**Note:** 19 invoices (15.7%) are voided, representing 24,950.47 DKK. This requires investigation to understand cancellation reasons.
 
 ## 💳 Payment Analysis
 
 ### Payment Status Breakdown
 
 - **Paid Invoices:** 92 (76.03%)
-  - Total Amount: 217,324.61 DKK
+  - Total Amount: 195,035.61 DKK
 - **Unpaid Invoices:** 29 (23.97%)
-  - Total Amount: 55,489.97 DKK
+  - Total Amount: 45,019.97 DKK
 
 ### Notable Invoices
 
@@ -85,11 +86,11 @@ The business shows seasonal variation with peak activity in September 2025:
 ### Immediate Actions
 
 1. **Follow up on Outstanding Payments:**
-   - 55,489.97 DKK is outstanding across 29 invoices
+   - 45,019.97 DKK is outstanding across 29 invoices
    - Focus on October invoices with 23,889 DKK unpaid
 
 2. **Investigate Voided Invoices:**
-   - 19 voided invoices (35,420.47 DKK) represent potential lost revenue
+   - 19 voided invoices (24,950.47 DKK) represent potential lost revenue
    - Analyze reasons for cancellations to improve processes
 
 3. **November Performance:**

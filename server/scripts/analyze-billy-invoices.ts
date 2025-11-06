@@ -72,10 +72,25 @@ function analyzeInvoices(data: BillyApiResponse): InvoiceAnalysis {
 
   // Summary calculations
   const totalRevenue = invoices.reduce(
-    (sum, inv) => sum + (inv.type === "invoice" ? inv.grossAmount : 0),
+    (sum, inv) =>
+      sum +
+      (inv.type === "invoice"
+        ? inv.grossAmount
+        : inv.type === "creditNote"
+          ? -inv.grossAmount
+          : 0),
     0
   );
-  const totalTax = invoices.reduce((sum, inv) => sum + inv.tax, 0);
+  const totalTax = invoices.reduce(
+    (sum, inv) =>
+      sum +
+      (inv.type === "invoice"
+        ? inv.tax
+        : inv.type === "creditNote"
+          ? -inv.tax
+          : 0),
+    0
+  );
   const totalOutstanding = invoices.reduce(
     (sum, inv) => sum + (inv.isPaid ? 0 : inv.balance),
     0
@@ -92,7 +107,9 @@ function analyzeInvoices(data: BillyApiResponse): InvoiceAnalysis {
       byType[inv.type] = { count: 0, revenue: 0 };
     }
     byType[inv.type].count++;
-    byType[inv.type].revenue += inv.grossAmount;
+    const amount =
+      inv.type === "creditNote" ? -inv.grossAmount : inv.grossAmount;
+    byType[inv.type].revenue += amount;
   });
 
   // Breakdown by state
@@ -102,7 +119,9 @@ function analyzeInvoices(data: BillyApiResponse): InvoiceAnalysis {
       byState[inv.state] = { count: 0, revenue: 0 };
     }
     byState[inv.state].count++;
-    byState[inv.state].revenue += inv.grossAmount;
+    const amount =
+      inv.type === "creditNote" ? -inv.grossAmount : inv.grossAmount;
+    byState[inv.state].revenue += amount;
   });
 
   // Payment status
@@ -111,11 +130,21 @@ function analyzeInvoices(data: BillyApiResponse): InvoiceAnalysis {
   const byPaymentStatus = {
     paid: {
       count: paidInvoices.length,
-      revenue: paidInvoices.reduce((sum, inv) => sum + inv.grossAmount, 0),
+      revenue: paidInvoices.reduce(
+        (sum, inv) =>
+          sum +
+          (inv.type === "creditNote" ? -inv.grossAmount : inv.grossAmount),
+        0
+      ),
     },
     unpaid: {
       count: unpaidInvoices.length,
-      revenue: unpaidInvoices.reduce((sum, inv) => sum + inv.grossAmount, 0),
+      revenue: unpaidInvoices.reduce(
+        (sum, inv) =>
+          sum +
+          (inv.type === "creditNote" ? -inv.grossAmount : inv.grossAmount),
+        0
+      ),
     },
   };
 
@@ -130,11 +159,13 @@ function analyzeInvoices(data: BillyApiResponse): InvoiceAnalysis {
       byMonth[month] = { count: 0, revenue: 0, paid: 0, unpaid: 0 };
     }
     byMonth[month].count++;
-    byMonth[month].revenue += inv.grossAmount;
+    const amount =
+      inv.type === "creditNote" ? -inv.grossAmount : inv.grossAmount;
+    byMonth[month].revenue += amount;
     if (inv.isPaid) {
-      byMonth[month].paid += inv.grossAmount;
+      byMonth[month].paid += amount;
     } else {
-      byMonth[month].unpaid += inv.grossAmount;
+      byMonth[month].unpaid += amount;
     }
   });
 

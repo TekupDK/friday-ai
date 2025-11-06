@@ -29,9 +29,9 @@ This document summarizes the comprehensive data analysis performed on the Friday
 - **Source:** `billy-api-response.json`
 - **Scope:** 121 invoices from June-November 2025
 - **Key Metrics:**
-  - Total Revenue: 256,435.08 DKK
+  - Total Revenue: 240,055.58 DKK (net of credit notes)
   - Collection Rate: 76.03%
-  - Outstanding: 55,489.97 DKK
+  - Outstanding: 45,019.97 DKK
 
 ## 🔧 Scripts Created
 
@@ -74,15 +74,15 @@ pnpm run analyze:customer
 ### Financial Health
 
 **Strengths:**
-- ✅ Steady revenue generation: 256,435 DKK over 5 months
+- ✅ Steady revenue generation: 240,055 DKK over 5 months (net of refunds)
 - ✅ Good payment rate: 76% of invoices paid
-- ✅ Low credit note rate: 7.4% (within normal range)
+- ✅ Low credit note rate: 7.4% (16,379 DKK in refunds)
 
 **Concerns:**
-- ⚠️ 55,490 DKK outstanding across 29 invoices
-- ⚠️ October collection rate dropped to 52.4%
-- ⚠️ 15.7% of invoices voided (35,420 DKK)
-- ⚠️ November revenue down 88.8% (may be incomplete data)
+- ⚠️ 45,020 DKK outstanding across 29 invoices
+- ⚠️ October collection rate dropped to 47.4%
+- ⚠️ 10.4% of invoices voided (24,950 DKK)
+- ⚠️ November revenue down 87.6% (may be incomplete data)
 
 ### Customer Service Patterns
 
@@ -101,13 +101,13 @@ pnpm run analyze:customer
 | Month | Invoices | Revenue | Collection Rate |
 |-------|----------|---------|-----------------|
 | June | 2 | 2,618 DKK | 100% |
-| July | 21 | 54,922 DKK | 69.9% |
-| August | 26 | 73,905 DKK | 87.3% |
-| September | 37 | 82,725 DKK | 97.3% ⭐ |
-| October | 29 | 50,230 DKK | 52.4% ⚠️ |
+| July | 21 | 46,546 DKK | 82.5% |
+| August | 26 | 62,039 DKK | 84.8% |
+| September | 37 | 77,141 DKK | 97.1% ⭐ |
+| October | 29 | 45,391 DKK | 47.4% ⚠️ |
 | November | 3 | 5,622 DKK | 77.2% |
 
-**Peak Performance:** September 2025 (37 invoices, 97.3% collection)  
+**Peak Performance:** September 2025 (37 invoices, 97.1% collection)  
 **Needs Attention:** October 2025 (low collection rate)
 
 ## 💡 Recommendations
@@ -115,12 +115,12 @@ pnpm run analyze:customer
 ### Immediate Actions
 
 1. **Collections Focus**
-   - Follow up on 29 unpaid invoices (55,490 DKK)
+   - Follow up on 29 unpaid invoices (45,020 DKK)
    - Prioritize October invoices (23,889 DKK outstanding)
    - Send payment reminders with clear payment terms
 
 2. **Voided Invoice Investigation**
-   - Analyze 19 voided invoices (35,420 DKK)
+   - Analyze 19 voided invoices (24,950 DKK)
    - Identify cancellation patterns
    - Implement preventive measures
 

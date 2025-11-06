@@ -1,17 +1,17 @@
 {
   "summary": {
     "totalInvoices": 121,
-    "totalRevenue": 256435.08,
-    "totalTax": 52738.9,
+    "totalRevenue": 240055.58,
+    "totalTax": 46187.1,
     "totalOutstanding": 55489.97,
     "totalPaid": 217324.61,
-    "analysisDate": "2025-11-06T20:34:29.249Z"
+    "analysisDate": "2025-11-06T20:37:14.408Z"
   },
   "breakdown": {
     "byType": {
       "creditNote": {
         "count": 9,
-        "revenue": 16379.5
+        "revenue": -16379.5
       },
       "invoice": {
         "count": 112,
@@ -21,21 +21,21 @@
     "byState": {
       "voided": {
         "count": 19,
-        "revenue": 35420.47
+        "revenue": 24950.47
       },
       "approved": {
         "count": 102,
-        "revenue": 237394.11000000002
+        "revenue": 215105.11000000002
       }
     },
     "byPaymentStatus": {
       "paid": {
         "count": 92,
-        "revenue": 217324.61000000002
+        "revenue": 195035.61000000002
       },
       "unpaid": {
         "count": 29,
-        "revenue": 55489.97
+        "revenue": 45019.97
       }
     }
   },
@@ -43,9 +43,9 @@
     "byMonth": {
       "2025-05": {
         "count": 3,
-        "revenue": 2792,
+        "revenue": 698,
         "paid": 698,
-        "unpaid": 2094
+        "unpaid": 0
       },
       "2025-06": {
         "count": 2,
@@ -55,26 +55,26 @@
       },
       "2025-07": {
         "count": 21,
-        "revenue": 54922.13,
+        "revenue": 46546.130000000005,
         "paid": 38390,
-        "unpaid": 16532.13
+        "unpaid": 8156.13
       },
       "2025-08": {
         "count": 26,
-        "revenue": 73904.98,
-        "paid": 64481.979999999996,
+        "revenue": 62038.979999999996,
+        "paid": 52615.979999999996,
         "unpaid": 9423
       },
       "2025-09": {
         "count": 37,
-        "revenue": 82725.43,
-        "paid": 80456.93,
+        "revenue": 77141.43,
+        "paid": 74872.93,
         "unpaid": 2268.5
       },
       "2025-10": {
         "count": 29,
-        "revenue": 50230.2,
-        "paid": 26341.2,
+        "revenue": 45391.2,
+        "paid": 21502.2,
         "unpaid": 23889
       },
       "2025-11": {
@@ -158,7 +158,7 @@
     ]
   },
   "insights": {
-    "averageInvoiceValue": 2119.3,
+    "averageInvoiceValue": 1983.93,
     "largestInvoice": {
       "invoiceNo": "1030",
       "amount": 8376,
@@ -172,7 +172,7 @@
     "paymentRate": 76.03,
     "mostCommonState": "approved",
     "trends": [
-      "Revenue decreased by 88.8% from previous month"
+      "Revenue decreased by 87.6% from previous month"
     ]
   }
 }
