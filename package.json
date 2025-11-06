@@ -36,6 +36,7 @@
     "migrate:emails:prod": "dotenv -e .env.prod -- tsx server/scripts/migrate-gmail-to-database.ts",
     "analyze:customer": "dotenv -e .env.dev -- tsx server/scripts/analyze-emil-laerke.ts",
     "analyze:customer:prod": "dotenv -e .env.prod -- tsx server/scripts/analyze-emil-laerke.ts",
+    "analyze:billy": "tsx server/scripts/analyze-billy-invoices.ts",
     "logs": "powershell -File scripts/monitor-logs.ps1",
     "logs:ai": "powershell -File scripts/monitor-logs.ps1 -Filter '\\[AI|\\[Chat|\\[LLM'",
     "logs:email": "powershell -File scripts/monitor-logs.ps1 -Filter '\\[Email|\\[Gmail|\\[Calendar'",
