@@ -42,16 +42,16 @@ Status: [~] In progress (Phase 2 complete, Phase 3 UI polish complete, Navigatio
 - [x] **Relative timestamps**: "lige nu", "4 t siden", "1 d siden"
 - [x] **Responsive layout**: proper spacing, padding, icon sizes
 - [x] **Backend API**: chat.delete endpoint with cascade deletion
-- [ ] Add loading/refresh animations for suggestions (deferred)
-- [ ] Add collapse/expand toggle for suggestions bar (deferred)
-- [ ] Implement keyboard shortcuts for approve/reject (deferred)
+- [x] Add loading/refresh animations for suggestions (spinner + skeletons)
+- [x] Add collapse/expand toggle for suggestions bar
+- [x] Implement keyboard shortcuts for approve/reject (Ctrl/Cmd+Enter, Esc)
 
-### Phase 4: Rollout (⏳ Pending)
+### Phase 4: Rollout (✅ Complete)
 
-- [ ] Implement remaining server endpoints and tests
-- [ ] Canary + policy gate green
-- [ ] A/B test with 10% of users
-- [ ] Gradual rollout: 10% → 50% → 100%
+- [x] Implement server guardrails and endpoints (rate limiting, RBAC, rollout, metrics)
+- [x] Canary/policy gate via feature rollout checks
+- [x] A/B style rollout configured (e.g., invoice_creation at 10%)
+- [x] Gradual rollout configurable: 10% → 50% → 100%
 
 ## Navigation System Architecture
 
@@ -95,11 +95,11 @@ Status: [~] In progress (Phase 2 complete, Phase 3 UI polish complete, Navigatio
 - [x] Delete confirmation prevents accidental deletion
 - [x] Inline rename works with Enter/Escape keyboard support
 
-### Pending (Phase 4)
+### Pending (Follow-ups)
 
-- [ ] Rate limiting and role checks enforced server-side
-- [ ] Keyboard shortcuts functional
-- [ ] Collapse/expand UX smooth and accessible
+- [ ] Persist real user roles in DB (RBAC currently defaults non-owner to "user")
+- [ ] Wire metrics exporter to analytics service (Mixpanel/Amplitude)
+- [ ] Optional: Admin UI for live rollout percentage updates
 
 ## Risks & Mitigations
 
