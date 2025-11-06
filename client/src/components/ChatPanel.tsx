@@ -91,6 +91,42 @@ function copyToClipboard(text: string): void {
   );
 }
 
+/**
+ * Adds appropriate emoji to titles that don't have one (for legacy conversations)
+ */
+function ensureTitleHasEmoji(title: string): string {
+  if (!title) return "💬 Ny samtale";
+  
+  // Check if title already starts with an emoji (most common case for new titles)
+  // Simple check: if first character is likely an emoji based on char code
+  const firstChar = title.charCodeAt(0);
+  const hasEmoji = firstChar > 0x1F300 || (firstChar >= 0xD800 && firstChar <= 0xDBFF);
+  if (hasEmoji) return title;
+  
+  // Add emoji based on keywords
+  const lowerTitle = title.toLowerCase();
+  
+  // Intent-based keywords
+  if (lowerTitle.includes("lead") || lowerTitle.includes("kunde")) return `💼 ${title}`;
+  if (lowerTitle.includes("møde") || lowerTitle.includes("aftale")) return `📅 ${title}`;
+  if (lowerTitle.includes("flytter") || lowerTitle.includes("adresse")) return `🏠 ${title}`;
+  if (lowerTitle.includes("email") || lowerTitle.includes("mail")) return `📧 ${title}`;
+  if (lowerTitle.includes("faktura") || lowerTitle.includes("invoice")) return `💰 ${title}`;
+  if (lowerTitle.includes("opgave") || lowerTitle.includes("task")) return `✅ ${title}`;
+  if (lowerTitle.includes("ai") || lowerTitle.includes("resumé")) return `🤖 ${title}`;
+  if (lowerTitle.includes("kalender") || lowerTitle.includes("calendar")) return `📅 ${title}`;
+  
+  // Service-based keywords
+  if (lowerTitle.includes("hovedrengøring")) return `✨ ${title}`;
+  if (lowerTitle.includes("fast rengøring")) return `🔄 ${title}`;
+  if (lowerTitle.includes("tilbud")) return `💰 ${title}`;
+  if (lowerTitle.includes("klage") || lowerTitle.includes("kundeservice")) return `⚠️ ${title}`;
+  if (lowerTitle.includes("betaling")) return `💳 ${title}`;
+  
+  // Default to conversation emoji
+  return `💬 ${title}`;
+}
+
 function ChatPanel() {
   const [selectedConversationId, setSelectedConversationId] = useState<
     number | null
@@ -583,7 +619,7 @@ function ChatPanel() {
                                 }`}
                               >
                                 {conv.title && conv.title !== "New Conversation" ? (
-                                  conv.title
+                                  ensureTitleHasEmoji(conv.title)
                                 ) : (
                                   <span
                                     className={
