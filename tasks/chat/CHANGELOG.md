@@ -16,7 +16,8 @@ Format: YYYY-MM-DD · type(scope): description
 - style(chat): improve spacing and readability (padding, icon sizes)
 - refactor(chat): create ensureTitleHasEmoji() for backward compatibility
 
-### Navigation Improvements Detail:
+### Navigation improvements detail
+
 - **Emoji Title System** (3-tier fallback):
   - Tier 1: Intent-based (💼 Lead, 📅 Møde, 🏠 Flytter, 📧 Email, etc.)
   - Tier 2: Keyword-based (✨ Hovedrengøring, 🔄 Fast rengøring, etc.)
@@ -27,7 +28,8 @@ Format: YYYY-MM-DD · type(scope): description
 - **Hover actions**: Edit (inline rename) and Delete (with confirmation)
 - **Visual polish**: Gradient borders, blue highlights, improved spacing
 
-### Commits:
+### Commits
+
 - c544059: Modern chat navigation: Emoji titles + Message preview + Hover actions
 - 6608d4e: UI Fix: Forbedret chat navigation layout og læsbarhed
 - b1ce9c5: Frontend emoji injection: Tilføj emoji til legacy conversation titles

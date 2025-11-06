@@ -20,10 +20,10 @@ Context: see `docs/CHAT_APPROVALS_SPEC.md` and `docs/FRIDAY_ACTION_ROLLOUT.md`.
 
 ## Acceptance criteria
 
-- [ ] Actions require matching allowlist entry in ActionCatalog.
-- [ ] `dryRunAction` blocks approve on failure.
-- [ ] `executeAction` enforces idempotencyKey.
-- [ ] Audit logs include conversationId and correlationId.
+- [x] Actions require matching allowlist entry in ActionCatalog.
+- [x] `dryRunAction` blocks approve on failure.
+- [x] `executeAction` enforces idempotencyKey.
+- [x] Audit logs include conversationId and correlationId.
 - [ ] Supabase tabeller (users, conversations, messages, analytics_events, audit_logs) matcher Drizzle-schema inden rollout.
 
 ## Risks & mitigations
@@ -52,14 +52,14 @@ Context: see `docs/CHAT_APPROVALS_SPEC.md` and `docs/FRIDAY_ACTION_ROLLOUT.md`.
 - [x] Create `getSuggestions` TRPC endpoint with Gemini analysis (`server/routers.ts`).
 - [x] Replace static suggestions with AI-powered context-aware suggestions (`client/src/hooks/useActionSuggestions.ts`).
 
-### Phase 3: UI Polish (✅ Completed)
+### Phase 3: UI polish (✅ Completed)
 
 - [x] Add icons to suggestion cards with proper styling and hover states (`client/src/components/SuggestionsBar.tsx`).
 - [x] Add loading/refresh animations and skeleton loaders for suggestions (`client/src/components/SuggestionsBar.tsx`).
 - [x] Add collapse/expand toggle for suggestions bar (`client/src/components/SuggestionsBar.tsx`).
 - [x] Implement keyboard shortcuts for approve/reject (`client/src/components/ActionApprovalModal.tsx` - Ctrl+Enter to approve, Esc to reject).
 
-### Phase 3.5: Production Configuration (✅ Completed)
+### Phase 3.5: Production configuration (✅ Completed)
 
 - [x] Configure all API keys via tekup secret manager (OpenAI, Gemini, Billy, Google Workspace, Supabase).
 - [x] Sørg for at `.env.prod` i repo kun er template uden hemmeligheder; deployment læser fra secrets.
@@ -106,3 +106,14 @@ Context: see `docs/CHAT_APPROVALS_SPEC.md` and `docs/FRIDAY_ACTION_ROLLOUT.md`.
 - [x] Create comprehensive test script (`test-phase-4.ps1`).
 - [x] Document rate limiting, RBAC, rollout strategy, metrics.
 - [x] Update PLAN.md with Phase 4 completion details.
+
+### Phase 3b: Navigation modernization (✅ Completed — Nov 6, 2025)
+
+- [x] Emoji-based auto titles (intent → keyword → AI → fallback)
+- [x] Message preview in conversation list (40 chars)
+- [x] Hover actions: inline rename + delete with confirm
+- [x] Modern visual states: gradient border, shadows, spacing
+- [x] Relative timestamps ("4 t siden", "1 d siden")
+- [x] Frontend emoji injection for legacy titles
+
+Docs: see `tasks/chat/NAVIGATION_MODERNIZATION.md` and updates in `STATUS.md` and `CHANGELOG.md`.

@@ -8,7 +8,7 @@ This folder groups scoped workstreams into small, trackable plans that don’t i
 ## Areas
 
 - **🔴 Ops - Code Quality:** `tasks/ops/code-quality/PLAN.md` **CRITICAL** - 32 TypeScript errors blocking type safety
-- Chat: `tasks/chat/PLAN.md` ✅ **Phase 3 Complete** - All UI polish features implemented (icons, loading, collapse, keyboard shortcuts). Ready for Phase 4 rollout.
+- Chat: `tasks/chat/PLAN.md` ✅ **Phase 3 Complete** + **Navigation modernization (Nov 6, 2025)** — Emoji titles, message preview, hover actions, visual polish. See `tasks/chat/NAVIGATION_MODERNIZATION.md`.
 - Docs lint (markdown): `tasks/docs-lint/PLAN.md`
 - Database & migrations: `tasks/db/PLAN.md`
 - Testing (Vitest/Playwright): `tasks/testing/PLAN.md`
@@ -47,10 +47,11 @@ This folder groups scoped workstreams into small, trackable plans that don’t i
 
 ## Task index
 
-- Chat — Approval flow and AI-powered suggestions (🔄 In Progress)
+- Chat — Approval flow and AI-powered suggestions (✅ Phase 3 complete; Navigation modernization done)
   - Plan: chat/PLAN.md
   - Status: chat/STATUS.md
   - Changelog: chat/CHANGELOG.md
+  - Navigation: chat/NAVIGATION_MODERNIZATION.md
 
 - Invoices UI — Dialogs, modals, and UX polish (⏳ Ready to Start)
   - Plan: invoices-ui/PLAN.md

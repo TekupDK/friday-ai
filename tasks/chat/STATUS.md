@@ -55,14 +55,16 @@ Status: [~] In progress (Phase 2 complete, Phase 3 UI polish complete, Navigatio
 
 ## Navigation System Architecture
 
-### Files Modified (Nov 6, 2025):
+### Files modified (Nov 6, 2025)
+
 - `server/title-generator.ts`: Emoji title generation (3-tier system)
 - `server/db.ts`: getUserConversations with lastMessage, deleteConversation cascade
 - `server/routers.ts`: chat.delete endpoint
 - `client/src/components/ChatPanel.tsx`: Navigation UI, hover actions, emoji injection
 - `client/src/context/InvoiceContext.tsx`: Invoice integration support
 
-### Key Features:
+### Key features
+
 1. **Emoji Title System**: Automatic, intelligent emoji selection based on intent/keywords/AI
 2. **Message Preview**: Shows last message content (40 chars) for quick identification
 3. **Hover Actions**: Edit (inline rename) and Delete (with confirmation) buttons
@@ -70,7 +72,8 @@ Status: [~] In progress (Phase 2 complete, Phase 3 UI polish complete, Navigatio
 5. **Backward Compatibility**: `ensureTitleHasEmoji()` adds emoji to old titles without DB migration
 6. **Performance**: Optimized message fetching with Promise.all, truncation in backend
 
-### Technical Details:
+### Technical details
+
 - **Auto-title generation**: Runs asynchronously after first message
 - **Emoji detection**: Char code check for efficiency (firstChar > 0x1F300)
 - **Keyword matching**: 20+ patterns for service types (hovedrengøring, flytter, faktura, etc.)
@@ -79,7 +82,8 @@ Status: [~] In progress (Phase 2 complete, Phase 3 UI polish complete, Navigatio
 
 ## Acceptance Criteria
 
-### Core Features (✅ Complete):
+### Core features (✅ Complete)
+
 - [x] Actions require matching allowlist entry in ActionCatalog
 - [x] `dryRunAction` blocks approve on failure
 - [x] `executeAction` enforces idempotencyKey
@@ -91,7 +95,8 @@ Status: [~] In progress (Phase 2 complete, Phase 3 UI polish complete, Navigatio
 - [x] Delete confirmation prevents accidental deletion
 - [x] Inline rename works with Enter/Escape keyboard support
 
-### Pending (Phase 4):
+### Pending (Phase 4)
+
 - [ ] Rate limiting and role checks enforced server-side
 - [ ] Keyboard shortcuts functional
 - [ ] Collapse/expand UX smooth and accessible
