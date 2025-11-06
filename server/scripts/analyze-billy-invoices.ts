@@ -191,6 +191,7 @@ function analyzeInvoices(data: BillyApiResponse): InvoiceAnalysis {
   const largestInvoice = sortedByAmount[0];
   const smallestInvoice = sortedByAmount[sortedByAmount.length - 1];
 
+  // Average invoice value (using net revenue including credit notes)
   const averageInvoiceValue =
     invoices.length > 0 ? totalRevenue / invoices.length : 0;
   const paymentRate =
@@ -208,16 +209,19 @@ function analyzeInvoices(data: BillyApiResponse): InvoiceAnalysis {
   if (monthKeys.length >= 2) {
     const lastMonth = byMonth[monthKeys[monthKeys.length - 1]];
     const prevMonth = byMonth[monthKeys[monthKeys.length - 2]];
-    const revenueChange =
-      ((lastMonth.revenue - prevMonth.revenue) / prevMonth.revenue) * 100;
-    if (revenueChange > 10) {
-      trends.push(
-        `Revenue increased by ${revenueChange.toFixed(1)}% from previous month`
-      );
-    } else if (revenueChange < -10) {
-      trends.push(
-        `Revenue decreased by ${Math.abs(revenueChange).toFixed(1)}% from previous month`
-      );
+    // Prevent division by zero
+    if (prevMonth.revenue !== 0) {
+      const revenueChange =
+        ((lastMonth.revenue - prevMonth.revenue) / prevMonth.revenue) * 100;
+      if (revenueChange > 10) {
+        trends.push(
+          `Revenue increased by ${revenueChange.toFixed(1)}% from previous month`
+        );
+      } else if (revenueChange < -10) {
+        trends.push(
+          `Revenue decreased by ${Math.abs(revenueChange).toFixed(1)}% from previous month`
+        );
+      }
     }
   }
 
