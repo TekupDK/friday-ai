@@ -504,22 +504,26 @@ function ChatPanel() {
                     <button
                       key={conv.id}
                       onClick={() => setSelectedConversationId(conv.id)}
-                      className={`group w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all duration-200 ${
+                      className={`group w-full text-left px-3 py-3 rounded-xl text-sm transition-all duration-200 ${
                         isSelected
-                          ? "bg-primary text-primary-foreground shadow-md"
-                          : "hover:bg-accent/60 hover:shadow-sm"
+                          ? "bg-blue-500/10 border-2 border-blue-500/30 shadow-sm"
+                          : "border-2 border-transparent hover:bg-accent/60 hover:border-border/50 hover:shadow-sm"
                       }`}
                     >
-                      <div className="flex items-start gap-2">
-                        <Bot
-                          className={`w-4 h-4 mt-0.5 shrink-0 ${
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center ${
                             isSelected
-                              ? "text-primary-foreground"
-                              : "text-muted-foreground group-hover:text-foreground"
-                          }`}
-                        />
+                              ? "bg-blue-500 text-white"
+                              : "bg-muted text-muted-foreground group-hover:bg-blue-500/20 group-hover:text-blue-500"
+                          } transition-colors`}
+                        >
+                          <Bot className="w-4 h-4" />
+                        </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium truncate">
+                          <div
+                            className={`font-semibold truncate ${isSelected ? "text-blue-700 dark:text-blue-300" : ""}`}
+                          >
                             {conv.title && conv.title !== "New Conversation" ? (
                               conv.title
                             ) : (
@@ -527,7 +531,7 @@ function ChatPanel() {
                                 className={
                                   isSelected
                                     ? "opacity-90"
-                                    : "text-muted-foreground italic"
+                                    : "text-muted-foreground italic font-normal"
                                 }
                               >
                                 {formattedTitle}
@@ -535,9 +539,9 @@ function ChatPanel() {
                             )}
                           </div>
                           <div
-                            className={`text-xs mt-0.5 ${isSelected ? "opacity-80" : "opacity-60"}`}
+                            className={`text-xs mt-1 flex items-center gap-1.5 ${isSelected ? "text-blue-600/80 dark:text-blue-400/80" : "text-muted-foreground"}`}
                           >
-                            {formattedDate}
+                            <span>{formattedDate}</span>
                           </div>
                         </div>
                       </div>
@@ -577,14 +581,26 @@ function ChatPanel() {
           {selectedConversationId ? (
             <>
               {/* Chat Header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/20">
-                <div className="flex items-center gap-2">
-                  <Bot className="w-5 h-5 text-primary" />
-                  <span className="text-lg font-semibold">Friday</span>
-                  <Badge variant="secondary" className="gap-1.5 ml-2">
-                    <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    Aktiv
-                  </Badge>
+              <div className="flex items-center justify-between px-4 py-3.5 border-b border-border bg-gradient-to-r from-background via-muted/20 to-background">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+                    <Bot className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-bold">Friday AI</span>
+                      <Badge
+                        variant="secondary"
+                        className="gap-1.5 bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20"
+                      >
+                        <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                        Online
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Din intelligente assistent
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <DropdownMenu>
@@ -658,7 +674,7 @@ function ChatPanel() {
                         >
                           {message.role === "assistant" && (
                             <Avatar className="shrink-0 mt-1">
-                              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
                                 <Bot className="w-4 h-4" />
                               </AvatarFallback>
                             </Avatar>
@@ -685,7 +701,7 @@ function ChatPanel() {
                             <div
                               className={`rounded-2xl px-4 py-3 shadow-sm ${
                                 message.role === "user"
-                                  ? "bg-gradient-to-br from-blue-600 to-purple-600 text-white"
+                                  ? "bg-gradient-to-br from-blue-600 to-blue-700 text-white"
                                   : "bg-muted border border-border"
                               }`}
                             >
@@ -746,7 +762,7 @@ function ChatPanel() {
                   {sendMessage.isPending && (
                     <div className="flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
                       <Avatar className="shrink-0 mt-1">
-                        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white animate-pulse">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white animate-pulse">
                           <Bot className="w-4 h-4" />
                         </AvatarFallback>
                       </Avatar>
@@ -778,7 +794,7 @@ function ChatPanel() {
                   {conversationData && conversationData.messages.length > 0 && (
                     <div className="mt-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                       <div className="flex items-center gap-2 mb-3">
-                        <Sparkles className="w-4 h-4 text-purple-500" />
+                        <Sparkles className="w-4 h-4 text-blue-500" />
                         <span className="text-sm font-medium text-muted-foreground">
                           Foreslåede handlinger
                         </span>
@@ -872,7 +888,7 @@ function ChatPanel() {
                             setInputMessage("Book et møde baseret på seneste emails");
                           }}
                         >
-                          <Calendar className="w-4 h-4 mr-2 shrink-0 text-purple-500" />
+                          <Calendar className="w-4 h-4 mr-2 shrink-0 text-blue-500" />
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-medium truncate">
                               Book møde
@@ -1000,13 +1016,13 @@ function ChatPanel() {
                 {/* Hero Section */}
                 <div className="text-center space-y-4">
                   <div className="relative inline-block">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full blur-2xl animate-pulse"></div>
-                    <div className="relative w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-xl">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-full blur-2xl animate-pulse"></div>
+                    <div className="relative w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-xl">
                       <Bot className="w-12 h-12 text-white" />
                     </div>
                   </div>
                   <div>
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
                       Velkommen til Friday AI
                     </h1>
                     <p className="text-lg text-muted-foreground mt-2">
@@ -1018,7 +1034,7 @@ function ChatPanel() {
                 {/* Quick Start Guide */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-purple-500" />
+                    <Sparkles className="w-5 h-5 text-blue-500" />
                     <h2 className="text-xl font-semibold">
                       Kom hurtigt i gang
                     </h2>
@@ -1066,11 +1082,11 @@ function ChatPanel() {
                           }
                         );
                       }}
-                      className="group p-4 rounded-xl border-2 border-border hover:border-purple-500/50 hover:bg-purple-500/5 transition-all text-left"
+                      className="group p-4 rounded-xl border-2 border-border hover:border-blue-500/50 hover:bg-blue-500/5 transition-all text-left"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                          <Calendar className="w-5 h-5 text-purple-500" />
+                        <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                          <Calendar className="w-5 h-5 text-blue-500" />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-semibold mb-1">Book møde</h3>
@@ -1153,7 +1169,7 @@ function ChatPanel() {
                       </p>
                     </div>
                     <div className="text-center space-y-1">
-                      <p className="text-2xl font-bold text-purple-500">
+                      <p className="text-2xl font-bold text-blue-500">
                         {emailContext.state.selectedThreads.size}
                       </p>
                       <p className="text-xs text-muted-foreground">
