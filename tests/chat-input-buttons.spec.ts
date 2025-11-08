@@ -8,24 +8,38 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('ChatInput Button Functionality', () => {
-  test.beforeEach(async ({ page }) => {
-    // Login first (dev mode)
-    await page.goto('/api/dev-login');
-    await page.waitForTimeout(1000); // Wait for auth cookie
+  test.beforeEach(async ({ page, context }) => {
+    // Set auth cookies directly (simulating logged-in state)
+    await context.addCookies([
+      {
+        name: 'app_session_id',
+        value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuSWQiOiJvd25lci1mcmlkYXktYWktZGV2IiwiYXBwSWQiOiJ0ZWt1cC1mcmlkYXktZGV2IiwibmFtZSI6Ik93bmVyIiwiZXhwIjoxNzk0MTI5NTU3fQ.fVV4eNeYjAUGF9yFoi82U7vKbo3hgiCg1NwY64-IRKs',
+        domain: 'localhost',
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        sameSite: 'Lax'
+      }
+    ]);
     
     // Navigate to workspace (Friday AI panel)
-    await page.goto('/');
+    await page.goto('http://localhost:3000/');
     
     // Wait for workspace and Friday panel to load
     await page.waitForLoadState('networkidle');
-    await page.waitForSelector('[data-testid="friday-chat-input"]', { timeout: 15000 });
+    
+    // Target the Friday AI panel specifically (the right-most panel, last one)
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    await fridayPanel.waitFor({ state: 'visible', timeout: 15000 });
+    await fridayPanel.locator('[data-testid="friday-chat-input"]').waitFor({ state: 'visible' });
   });
 
   test('should show disabled buttons with "kommer snart" tooltips', async ({ page }) => {
-    const chatInput = page.locator('[data-testid="friday-chat-input-wrapper"]');
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const chatInput = fridayPanel.locator('[data-testid="friday-chat-input-wrapper"]');
     
     // Find left icons (Paperclip, Apps)
-    const leftIcons = chatInput.locator('[data-testid="friday-input-left-icons"] button');
+    const leftIcons = fridayPanel.locator('[data-testid="friday-input-left-icons"] button');
     
     // Should have 2 disabled buttons
     await expect(leftIcons).toHaveCount(2);
@@ -46,13 +60,10 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('should have disabled voice button with tooltip', async ({ page }) => {
-    const chatInput = page.locator('[data-testid="friday-chat-input-wrapper"]');
-    
-    // Find right icons (Mic, Send/Stop)
-    const rightIcons = chatInput.locator('[data-testid="friday-input-right-icons"]');
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
     
     // Find Mic button (should be first of right icons, before Send)
-    const micButton = rightIcons.locator('button').first();
+    const micButton = fridayPanel.locator('[data-testid="friday-input-right-icons"] button').first();
     
     // Should be disabled
     await expect(micButton).toBeDisabled();
@@ -63,7 +74,8 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('Send button should be disabled when input is empty', async ({ page }) => {
-    const sendButton = page.locator('[data-testid="friday-send-button"]');
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const sendButton = fridayPanel.locator('[data-testid="friday-send-button"]');
     
     // Should exist
     await expect(sendButton).toBeVisible();
@@ -73,8 +85,9 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('Send button should be enabled when input has text', async ({ page }) => {
-    const chatInput = page.locator('[data-testid="friday-chat-input"]');
-    const sendButton = page.locator('[data-testid="friday-send-button"]');
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const chatInput = fridayPanel.locator('[data-testid="friday-chat-input"]');
+    const sendButton = fridayPanel.locator('[data-testid="friday-send-button"]');
     
     // Type some text
     await chatInput.fill('Test besked');
@@ -84,18 +97,19 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('Stop button should appear during streaming', async ({ page }) => {
-    const chatInput = page.locator('[data-testid="friday-chat-input"]');
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const chatInput = fridayPanel.locator('[data-testid="friday-chat-input"]');
     
     // Type and send a message
     await chatInput.fill('Hvad kan du hjælpe med?');
     await chatInput.press('Enter');
     
     // Stop button should appear while AI is thinking
-    const stopButton = page.locator('[data-testid="friday-stop-button"]');
+    const stopButton = fridayPanel.locator('[data-testid="friday-stop-button"]');
     await expect(stopButton).toBeVisible({ timeout: 5000 });
     
     // Loading indicator should be visible
-    const loadingIndicator = page.locator('[data-testid="loading-indicator"]');
+    const loadingIndicator = fridayPanel.locator('[data-testid="loading-indicator"]');
     await expect(loadingIndicator).toBeVisible();
   });
 
@@ -108,8 +122,8 @@ test.describe('ChatInput Button Functionality', () => {
       }
     });
     
-    const chatInput = page.locator('[data-testid="friday-chat-input-wrapper"]');
-    const leftIcons = chatInput.locator('[data-testid="friday-input-left-icons"] button');
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const leftIcons = fridayPanel.locator('[data-testid="friday-input-left-icons"] button');
     
     // Try to click disabled Paperclip button (should still trigger console.log)
     await leftIcons.first().click({ force: true });
@@ -125,18 +139,19 @@ test.describe('ChatInput Button Functionality', () => {
     // Resize to narrow panel width (20% of 1920px = 384px)
     await page.setViewportSize({ width: 400, height: 800 });
     
-    const chatInput = page.locator('[data-testid="friday-chat-input-wrapper"]');
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const chatInput = fridayPanel.locator('[data-testid="friday-chat-input-wrapper"]');
     
     // Input should be visible and functional
     await expect(chatInput).toBeVisible();
     
     // Should have compact padding (check class)
-    const container = page.locator('[data-testid="friday-chat-input-container"]');
+    const container = fridayPanel.locator('[data-testid="friday-chat-input-container"]');
     await expect(container).toHaveClass(/p-3/);
     
     // Welcome screen should be compact
-    if (await page.locator('[data-testid="welcome-screen"]').isVisible()) {
-      const welcomeScreen = page.locator('[data-testid="welcome-screen"]');
+    if (await fridayPanel.locator('[data-testid="welcome-screen"]').isVisible()) {
+      const welcomeScreen = fridayPanel.locator('[data-testid="welcome-screen"]');
       
       // Should have compact spacing
       await expect(welcomeScreen).toHaveClass(/space-y-4/);
@@ -145,13 +160,14 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('messages should use compact styling', async ({ page }) => {
+    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
     // Send a test message
-    const chatInput = page.locator('[data-testid="friday-chat-input"]');
+    const chatInput = fridayPanel.locator('[data-testid="friday-chat-input"]');
     await chatInput.fill('Test for kompakt styling');
     await chatInput.press('Enter');
     
     // Wait for message to appear
-    const userMessage = page.locator('[data-testid="user-message"]').first();
+    const userMessage = fridayPanel.locator('[data-testid="user-message"]').last();
     await expect(userMessage).toBeVisible({ timeout: 5000 });
     
     // Check compact styling

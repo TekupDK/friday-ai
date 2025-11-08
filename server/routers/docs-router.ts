@@ -24,7 +24,9 @@ export const docsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
+      
       const conditions = [];
 
       if (input.category) {
@@ -73,7 +75,8 @@ export const docsRouter = router({
   get: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       const doc = await db
         .select()
         .from(documents)
@@ -99,7 +102,8 @@ export const docsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       const id = nanoid();
 
       const doc = await db
@@ -145,7 +149,8 @@ export const docsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       const { id, ...updates } = input;
 
       // Get current version
@@ -191,7 +196,8 @@ export const docsRouter = router({
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
 
       // Get document before deletion for audit log
       const doc = await db
@@ -227,7 +233,8 @@ export const docsRouter = router({
   history: protectedProcedure
     .input(z.object({ documentId: z.string() }))
     .query(async ({ input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       return db
         .select()
         .from(documentChanges)
@@ -245,7 +252,8 @@ export const docsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
 
       const comment = await db
         .insert(documentComments)
@@ -271,7 +279,8 @@ export const docsRouter = router({
   getComments: protectedProcedure
     .input(z.object({ documentId: z.string() }))
     .query(async ({ input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       return db
         .select()
         .from(documentComments)
@@ -283,7 +292,8 @@ export const docsRouter = router({
   resolveComment: protectedProcedure
     .input(z.object({ commentId: z.string() }))
     .mutation(async ({ input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
 
       const updated = await db
         .update(documentComments)
@@ -301,7 +311,9 @@ export const docsRouter = router({
 
   // Get all conflicts
   getConflicts: protectedProcedure.query(async () => {
-    const db = getDb();
+    const db = await getDb();
+    if (!db) throw new Error("Database not available");
+    
     return db
       .select()
       .from(documentConflicts)
@@ -318,7 +330,8 @@ export const docsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
 
       const updated = await db
         .update(documentConflicts)
@@ -352,7 +365,8 @@ export const docsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const db = getDb();
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       const conditions = [];
 
       if (input.query) {

@@ -29,6 +29,13 @@
       "when": 1762119323244,
       "tag": "0003_minor_lester",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1731095280000,
+      "tag": "0004_add_documentation_tables",
+      "breakpoints": true
     }
   ]
 }

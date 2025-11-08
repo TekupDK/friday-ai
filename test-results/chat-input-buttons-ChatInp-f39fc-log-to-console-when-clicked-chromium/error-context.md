@@ -1,18 +1,384 @@
 # Page snapshot
 
 ```yaml
-- generic [ref=e3]:
-  - generic [ref=e4]: "[plugin:vite:import-analysis] Failed to resolve import \"@/components/docs/ConflictList\" from \"client/src/pages/docs/DocsPage.tsx\". Does the file exist?"
-  - generic [ref=e5]: C:/Users/empir/Tekup/services/tekup-ai-v2/client/src/pages/docs/DocsPage.tsx:19:29
-  - generic [ref=e6]: "19 | import { DocumentViewer } from \"@/components/docs/DocumentViewer\"; 20 | import { DocumentEditor } from \"@/components/docs/DocumentEditor\"; 21 | import { ConflictList } from \"@/components/docs/ConflictList\"; | ^ 22 | import { useDocuments, useConflicts } from \"@/hooks/docs/useDocuments\"; 23 | import { useDocsWebSocket } from \"@/hooks/docs/useDocsWebSocket\";"
-  - generic [ref=e7]: at TransformPluginContext._formatLog (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:31106:43) at TransformPluginContext.error (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:31103:14) at normalizeUrl (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:29590:18) at process.processTicksAndRejections (node:internal/process/task_queues:105:5) at async <anonymous> (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:29648:32) at async Promise.all (index 11) at async TransformPluginContext.transform (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:29616:4) at async EnvironmentPluginContainer.transform (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:30905:14) at async loadAndTransform (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:26043:26) at async viteTransformMiddleware (C:\Users\empir\Tekup\node_modules\.pnpm\vite@7.1.12_@types+node@24._5ccb86b18a05f8e9bca972dc23163fd3\node_modules\vite\dist\node\chunks\config.js:27118:20)
-  - generic [ref=e8]:
-    - text: Click outside, press Esc key, or fix the code to dismiss.
-    - text: You can also disable this overlay by setting
-    - code [ref=e9]: server.hmr.overlay
-    - text: to
-    - code [ref=e10]: "false"
-    - text: in
-    - code [ref=e11]: vite.config.js
-    - text: .
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - heading "Friday AI" [level=1] [ref=e9]
+        - generic [ref=e10]: Workspace
+      - button [ref=e11] [cursor=pointer]:
+        - img
+    - generic [ref=e13]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]:
+            - heading "Hvad kan jeg hjælpe med?" [level=1] [ref=e20]
+            - paragraph [ref=e21]: Vælg handling eller skriv
+          - generic [ref=e22]:
+            - button "Tjek min kalender i dag" [ref=e23] [cursor=pointer]:
+              - img [ref=e24]
+              - generic [ref=e26]: Tjek min kalender i dag
+            - button "Vis ubetalte fakturaer" [ref=e27] [cursor=pointer]:
+              - img [ref=e28]
+              - generic [ref=e31]: Vis ubetalte fakturaer
+            - button "Find nye leads" [ref=e32] [cursor=pointer]:
+              - img [ref=e33]
+              - generic [ref=e38]: Find nye leads
+            - button "Hvad kan Friday?" [ref=e39] [cursor=pointer]:
+              - img [ref=e40]
+              - generic [ref=e43]: Hvad kan Friday?
+          - generic [ref=e44]:
+            - paragraph [ref=e45]: Standard • Gemma 3 27B Free
+            - paragraph [ref=e46]: Gmail, Kalender, Billy • 35 værktøjer
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - button "Vedhæft fil (kommer snart)" [disabled] [ref=e54]:
+                - img [ref=e55]
+              - button "Apps (kommer snart)" [disabled] [ref=e57]:
+                - img [ref=e58]
+            - textbox "Type your message..." [ref=e60]
+            - generic [ref=e61]:
+              - button "Stemme input (kommer snart)" [disabled] [ref=e62]:
+                - img [ref=e63]
+              - button [disabled]:
+                - img
+          - generic [ref=e66]: 100% Accuracy • GLM-4.5 Air Free
+      - separator [ref=e67]:
+        - generic [ref=e68]:
+          - img
+      - generic [ref=e77]:
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - heading "Email Center" [level=2] [ref=e83]
+          - paragraph [ref=e84]: AI-powered email workspace
+        - generic [ref=e86]:
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - img [ref=e89]
+              - textbox "Søg i emails..." [ref=e92]
+            - generic [ref=e93]:
+              - button "Indbakke" [ref=e94] [cursor=pointer]:
+                - img
+                - text: Indbakke
+                - img
+              - button "Labels" [ref=e95] [cursor=pointer]:
+                - img
+                - text: Labels
+                - img
+          - generic [ref=e96]:
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - generic [ref=e100]:
+                  - img [ref=e101]
+                  - textbox "Søg emails..." [ref=e104]
+                - button "Score" [ref=e105] [cursor=pointer]:
+                  - img
+                  - text: Score
+              - generic [ref=e106]:
+                - button "All (20)" [ref=e107] [cursor=pointer]
+                - button "Rengøring.nu (0)" [ref=e108] [cursor=pointer]:
+                  - img
+                  - text: Rengøring.nu (0)
+                - button "Direct (20)" [ref=e109] [cursor=pointer]:
+                  - img
+                  - text: Direct (20)
+              - generic [ref=e110]:
+                - generic [ref=e111]:
+                  - img [ref=e112]
+                  - generic [ref=e114]: "0"
+                  - generic [ref=e115]: Hot Leads
+                - generic [ref=e116]:
+                  - img [ref=e117]
+                  - generic [ref=e119]: 40.000 kr.
+                  - generic [ref=e120]: Est. Value
+                - generic [ref=e121]:
+                  - img [ref=e122]
+                  - generic [ref=e126]: "2000"
+                  - generic [ref=e127]: Avg Value
+            - generic [ref=e129]:
+              - button "75 info@rendetalje.dk • TEST - Booking fast rengÃƒÂ¸ring Direct 19.06" [ref=e131] [cursor=pointer]:
+                - generic [ref=e132]:
+                  - checkbox [ref=e134]
+                  - generic [ref=e136]:
+                    - generic [ref=e137]:
+                      - generic [ref=e138]:
+                        - img
+                        - text: "75"
+                      - button "info@rendetalje.dk" [ref=e140]
+                      - generic [ref=e141]: •
+                      - heading "TEST - Booking fast rengÃƒÂ¸ring" [level=3] [ref=e142]
+                    - generic [ref=e143]:
+                      - generic [ref=e144]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e145]: "19.06"
+              - 'button "75 Hanne Andersen • Re: hanne andersen fra Rengøring.nu - Nettbureau AS Direct 17.39" [ref=e147] [cursor=pointer]':
+                - generic [ref=e148]:
+                  - checkbox [ref=e150]
+                  - generic [ref=e152]:
+                    - generic [ref=e153]:
+                      - generic [ref=e154]:
+                        - img
+                        - text: "75"
+                      - button "Hanne Andersen" [ref=e155]
+                      - generic [ref=e156]: •
+                      - 'heading "Re: hanne andersen fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e157]'
+                    - generic [ref=e158]:
+                      - generic [ref=e159]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e160]: "17.39"
+              - 'button "75 Rendetalje .dk • Re: Formular via Rengøring Aarhus Direct 12.24" [ref=e162] [cursor=pointer]':
+                - generic [ref=e163]:
+                  - checkbox [ref=e165]
+                  - generic [ref=e167]:
+                    - generic [ref=e168]:
+                      - generic [ref=e169]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e170]
+                      - generic [ref=e171]: •
+                      - 'heading "Re: Formular via Rengøring Aarhus" [level=3] [ref=e172]'
+                    - generic [ref=e173]:
+                      - generic [ref=e174]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e175]: "12.24"
+              - 'button "75 Rendetalje .dk • Re: Niels Ulrik Drescher fra Rengøring.nu - Nettbureau AS Direct 12.20" [ref=e177] [cursor=pointer]':
+                - generic [ref=e178]:
+                  - checkbox [ref=e180]
+                  - generic [ref=e182]:
+                    - generic [ref=e183]:
+                      - generic [ref=e184]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e185]
+                      - generic [ref=e186]: •
+                      - 'heading "Re: Niels Ulrik Drescher fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e187]'
+                    - generic [ref=e188]:
+                      - generic [ref=e189]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e190]: "12.20"
+              - 'button "75 Rendetalje .dk • Re: Anne Myken fra Rengøring.nu - Nettbureau AS Direct 12.19" [ref=e192] [cursor=pointer]':
+                - generic [ref=e193]:
+                  - checkbox [ref=e195]
+                  - generic [ref=e197]:
+                    - generic [ref=e198]:
+                      - generic [ref=e199]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e200]
+                      - generic [ref=e201]: •
+                      - 'heading "Re: Anne Myken fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e202]'
+                    - generic [ref=e203]:
+                      - generic [ref=e204]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e205]: "12.19"
+              - 'button "75 Rendetalje .dk • Re: Re: Niels Thaibert fra Rengøring.nu - Nettbureau AS Direct 21.03" [ref=e207] [cursor=pointer]':
+                - generic [ref=e208]:
+                  - checkbox [ref=e210]
+                  - generic [ref=e212]:
+                    - generic [ref=e213]:
+                      - generic [ref=e214]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e215]
+                      - generic [ref=e216]: •
+                      - 'heading "Re: Re: Niels Thaibert fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e217]'
+                    - generic [ref=e218]:
+                      - generic [ref=e219]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e220]: "21.03"
+              - 'button "75 Rendetalje .dk • Re: Louise Severin fra Rengøring.nu - Nettbureau AS Direct 12.06" [ref=e222] [cursor=pointer]':
+                - generic [ref=e223]:
+                  - checkbox [ref=e225]
+                  - generic [ref=e227]:
+                    - generic [ref=e228]:
+                      - generic [ref=e229]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e230]
+                      - generic [ref=e231]: •
+                      - 'heading "Re: Louise Severin fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e232]'
+                    - generic [ref=e233]:
+                      - generic [ref=e234]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e235]: "12.06"
+              - 'button "75 Rendetalje .dk • Re: RE: Daniel Kofoed fra Rengøring.nu - Nettbureau AS Direct 22.55" [ref=e237] [cursor=pointer]':
+                - generic [ref=e238]:
+                  - checkbox [ref=e240]
+                  - generic [ref=e242]:
+                    - generic [ref=e243]:
+                      - generic [ref=e244]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e245]
+                      - generic [ref=e246]: •
+                      - 'heading "Re: RE: Daniel Kofoed fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e247]'
+                    - generic [ref=e248]:
+                      - generic [ref=e249]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e250]: "22.55"
+              - 'button "75 Rendetalje .dk • Re: Mads Hollænder fra Rengøring.nu - Nettbureau AS Direct 13.34" [ref=e252] [cursor=pointer]':
+                - generic [ref=e253]:
+                  - checkbox [ref=e255]
+                  - generic [ref=e257]:
+                    - generic [ref=e258]:
+                      - generic [ref=e259]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e260]
+                      - generic [ref=e261]: •
+                      - 'heading "Re: Mads Hollænder fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e262]'
+                    - generic [ref=e263]:
+                      - generic [ref=e264]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e265]: "13.34"
+              - 'button "75 Rendetalje .dk • Re: Ole Vistisen fra Rengøring.nu - Nettbureau AS Direct 11.56" [ref=e267] [cursor=pointer]':
+                - generic [ref=e268]:
+                  - checkbox [ref=e270]
+                  - generic [ref=e272]:
+                    - generic [ref=e273]:
+                      - generic [ref=e274]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e275]
+                      - generic [ref=e276]: •
+                      - 'heading "Re: Ole Vistisen fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e277]'
+                    - generic [ref=e278]:
+                      - generic [ref=e279]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e280]: "11.56"
+              - 'button "75 Rendetalje .dk • Re: Nanna Silke Ploug fra Rengøring.nu - Nettbureau AS Direct 13.11" [ref=e282] [cursor=pointer]':
+                - generic [ref=e283]:
+                  - checkbox [ref=e285]
+                  - generic [ref=e287]:
+                    - generic [ref=e288]:
+                      - generic [ref=e289]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e290]
+                      - generic [ref=e291]: •
+                      - 'heading "Re: Nanna Silke Ploug fra Rengøring.nu - Nettbureau AS" [level=3] [ref=e292]'
+                    - generic [ref=e293]:
+                      - generic [ref=e294]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e295]: "13.11"
+              - 'button "75 Rendetalje .dk • Re: Formular via Rengøring Aarhus Direct 18.54" [ref=e297] [cursor=pointer]':
+                - generic [ref=e298]:
+                  - checkbox [ref=e300]
+                  - generic [ref=e302]:
+                    - generic [ref=e303]:
+                      - generic [ref=e304]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e305]
+                      - generic [ref=e306]: •
+                      - 'heading "Re: Formular via Rengøring Aarhus" [level=3] [ref=e307]'
+                    - generic [ref=e308]:
+                      - generic [ref=e309]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e310]: "18.54"
+              - 'button "75 Rendetalje .dk • Re: Re: Re: Re: November opstart - fast rengøring Risskov Direct 08.49" [ref=e312] [cursor=pointer]':
+                - generic [ref=e313]:
+                  - checkbox [ref=e315]
+                  - generic [ref=e317]:
+                    - generic [ref=e318]:
+                      - generic [ref=e319]:
+                        - img
+                        - text: "75"
+                      - button "Rendetalje .dk" [ref=e320]
+                      - generic [ref=e321]: •
+                      - 'heading "Re: Re: Re: Re: November opstart - fast rengøring Risskov" [level=3] [ref=e322]'
+                    - generic [ref=e323]:
+                      - generic [ref=e324]:
+                        - img
+                        - text: Direct
+                      - generic [ref=e325]: "08.49"
+      - separator [ref=e326]:
+        - generic [ref=e327]:
+          - img
+      - generic [ref=e336]:
+        - generic [ref=e339]:
+          - img [ref=e340]
+          - heading "Business Dashboard" [level=2] [ref=e351]
+        - generic [ref=e355]:
+          - generic [ref=e357]:
+            - generic [ref=e358]:
+              - img [ref=e360]
+              - heading "Dashboard" [level=3] [ref=e363]
+            - generic [ref=e365]:
+              - generic [ref=e366]: "0"
+              - generic [ref=e367]: Idag
+          - generic [ref=e368]:
+            - generic [ref=e369]:
+              - generic [ref=e370]:
+                - img [ref=e371]
+                - heading "📅" [level=4] [ref=e373]
+              - generic [ref=e374]: "0"
+            - generic [ref=e376]: Ingen bookings i dag
+          - generic [ref=e378]:
+            - img [ref=e379]
+            - heading "⚠️ Kræver Handling" [level=4] [ref=e381]
+          - generic [ref=e382]:
+            - generic [ref=e383]:
+              - img [ref=e384]
+              - heading "📈 Denne Uge" [level=4] [ref=e387]
+            - generic [ref=e388]:
+              - generic [ref=e389]:
+                - generic [ref=e390]: "0"
+                - generic [ref=e391]: Bookings
+              - generic [ref=e392]:
+                - generic [ref=e393]: 0%
+                - generic [ref=e394]: Conversion
+              - generic [ref=e395]:
+                - generic [ref=e396]: "0"
+                - generic [ref=e397]: Revenue (kr)
+              - generic [ref=e398]:
+                - generic [ref=e399]: "0"
+                - generic [ref=e400]: New Leads
+              - generic [ref=e401]:
+                - generic [ref=e402]: 0 kr
+                - generic [ref=e403]: Estimeret Profit
+          - generic [ref=e405]:
+            - generic [ref=e406]:
+              - heading "🚀 Smart Actions" [level=4] [ref=e408]
+              - generic [ref=e409]: "4"
+            - generic [ref=e410]:
+              - generic [ref=e411]:
+                - img [ref=e412]
+                - generic [ref=e415]: Anbefalede
+              - button "Se Alle Bookinger 0 i dag" [ref=e417] [cursor=pointer]:
+                - img
+                - generic [ref=e418]: Se Alle Bookinger
+                - generic [ref=e419]: 0 i dag
+            - generic [ref=e420]:
+              - generic [ref=e421]:
+                - img [ref=e422]
+                - generic [ref=e425]: Andre
+              - generic [ref=e426]:
+                - button "Håndter Ubetalte Fakturaer" [ref=e427] [cursor=pointer]:
+                  - img
+                  - generic [ref=e428]: Håndter Ubetalte Fakturaer
+                - button "Håndter Presserende Handlinger" [ref=e429] [cursor=pointer]:
+                  - img
+                  - generic [ref=e430]: Håndter Presserende Handlinger
+                - button "Ugentlig Rapport 0 kr" [ref=e431] [cursor=pointer]:
+                  - img
+                  - generic [ref=e432]: Ugentlig Rapport
+                  - generic [ref=e433]: 0 kr
 ```
