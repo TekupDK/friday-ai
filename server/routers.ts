@@ -47,34 +47,20 @@ export const appRouter = router({
         limit: z.number().min(1).max(50).default(20)
       }))
       .query(async ({ ctx, input }) => {
-        const db = await getDb();
-        if (!db) throw new Error("Database not available");
-
-        let query = `
-          SELECT id, conversation_id as "conversationId", role, content, created_at as "createdAt"
-          FROM friday_ai.messages
-          WHERE conversation_id = $1
-        `;
-
-        const params = [input.conversationId];
-
-        if (input.cursor) {
-          query += ` AND id < $2`;
-          params.push(input.cursor);
-        }
-
-        query += ` ORDER BY created_at DESC LIMIT $${params.length + 1}`;
-        params.push(input.limit + 1);
-
-        const messages = await db.query(query, params as any[]);
+        const allMessages = await getConversationMessages(input.conversationId);
         
-        const hasMore = messages.length > input.limit;
-        const actualMessages = hasMore ? messages.slice(0, input.limit) : messages;
-
+        // Simple pagination: slice messages based on limit
+        const startIndex = input.cursor || 0;
+        const endIndex = startIndex + input.limit + 1;
+        const slicedMessages = allMessages.slice(startIndex, endIndex);
+        
+        const hasMore = slicedMessages.length > input.limit;
+        const messages = hasMore ? slicedMessages.slice(0, input.limit) : slicedMessages;
+        
         return {
-          messages: actualMessages.reverse(),
+          messages,
           hasMore,
-          nextCursor: hasMore ? actualMessages[actualMessages.length - 1]?.id : undefined
+          nextCursor: hasMore ? endIndex - 1 : undefined
         };
       }),
     
