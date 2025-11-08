@@ -25,7 +25,7 @@ import {
   emailPrioritiesInFridayAi,
   responseSuggestionsInFridayAi,
 } from "../../drizzle/schema";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, inArray } from "drizzle-orm";
 
 export const emailIntelligenceRouter = router({
   /**
@@ -362,5 +362,64 @@ export const emailIntelligenceRouter = router({
 
       const quickReplies = await generateQuickReplies(email, ctx.user.id);
       return quickReplies;
+    }),
+
+  /**
+   * Get batch intelligence data for multiple emails
+   * Efficient endpoint for email list view
+   */
+  getBatchIntelligence: protectedProcedure
+    .input(z.object({ 
+      threadIds: z.array(z.string()).max(50) // Limit to 50 for performance
+    }))
+    .query(async ({ input }) => {
+      if (input.threadIds.length === 0) {
+        return {};
+      }
+
+      const db = await getDb();
+      
+      // Fetch all intelligence data in parallel
+      const [categories, priorities] = await Promise.all([
+        // Get categories for all threadIds
+        db!
+          .select()
+          .from(emailCategoriesInFridayAi)
+          .where(inArray(emailCategoriesInFridayAi.threadId, input.threadIds))
+          .orderBy(desc(emailCategoriesInFridayAi.createdAt)),
+        // Get priorities for all threadIds
+        db!
+          .select()
+          .from(emailPrioritiesInFridayAi)
+          .where(inArray(emailPrioritiesInFridayAi.threadId, input.threadIds))
+          .orderBy(desc(emailPrioritiesInFridayAi.createdAt)),
+      ]);
+
+      // Build result map
+      const result: Record<string, {
+        category?: { category: string; subcategory: string | null; confidence: number };
+        priority?: { level: string; score: number; reasoning: string | null };
+      }> = {};
+
+      // Group by threadId
+      categories.forEach((cat: any) => {
+        if (!result[cat.threadId]) result[cat.threadId] = {};
+        result[cat.threadId].category = {
+          category: cat.category,
+          subcategory: cat.subcategory,
+          confidence: parseFloat(cat.confidence),
+        };
+      });
+
+      priorities.forEach((pri: any) => {
+        if (!result[pri.threadId]) result[pri.threadId] = {};
+        result[pri.threadId].priority = {
+          level: pri.priorityLevel,
+          score: pri.priorityScore,
+          reasoning: pri.reasoning,
+        };
+      });
+
+      return result;
     }),
 });
