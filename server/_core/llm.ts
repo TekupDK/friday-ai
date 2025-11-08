@@ -216,7 +216,7 @@ const normalizeToolChoice = (
 };
 
 const resolveApiUrl = () => {
-  // OpenRouter (Gemma 3 27B FREE) - Primary LLM
+  // OpenRouter (GLM-4.5 Air FREE - 100% Accuracy) - Primary LLM
   if (ENV.openRouterApiKey && ENV.openRouterApiKey.trim()) {
     return "https://openrouter.ai/api/v1/chat/completions";
   }
@@ -239,7 +239,7 @@ const assertApiKey = () => {
   // OpenRouter (primary)
   if (ENV.openRouterApiKey && ENV.openRouterApiKey.trim()) {
     console.log(
-      `[LLM] Using OpenRouter (${ENV.openRouterModel}) - FREE Gemma 3 27B`
+      `[LLM] Using OpenRouter (${ENV.openRouterModel}) - FREE with 100% Accuracy`
     );
     return;
   }

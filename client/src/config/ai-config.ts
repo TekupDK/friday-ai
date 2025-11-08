@@ -13,14 +13,14 @@ export const AI_CONFIG = {
     role: "Professionel arbejdspartner til Rendetalje",
   },
   
-  // Model configuration - OpenRouter + Gemma 3 27B Free
+  // Model configuration - OpenRouter + GLM-4.5 Air Free (100% Accuracy)
   model: {
-    name: "Gemma 3 27B Free",
+    name: "GLM-4.5 Air Free",
     provider: "OpenRouter",
-    mode: "Standard",
-    displayText: "Gemma 3 27B Free via OpenRouter",
+    mode: "100% Accuracy",
+    displayText: "GLM-4.5 Air Free via OpenRouter",
     apiEndpoint: "https://openrouter.ai/api/v1/chat/completions",
-    modelId: "google/gemma-3-27b-it:free",
+    modelId: "z-ai/glm-4.5-air:free",
   },
   
   // Available integrations

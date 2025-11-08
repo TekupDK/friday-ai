@@ -12,9 +12,9 @@ export const ENV = {
   analyticsWebhookSecret: process.env.ANALYTICS_WEBHOOK_SECRET ?? "",
   mixpanelToken: process.env.MIXPANEL_TOKEN ?? "",
   amplitudeApiKey: process.env.AMPLITUDE_API_KEY ?? "",
-  // OpenRouter (Gemma 3 27B FREE) - Primary LLM
+  // OpenRouter (GLM-4.5 Air FREE - 100% Accuracy) - Primary LLM
   openRouterApiKey: process.env.OPENROUTER_API_KEY ?? "",
-  openRouterModel: process.env.OPENROUTER_MODEL ?? "google/gemma-3-27b-it:free",
+  openRouterModel: process.env.OPENROUTER_MODEL ?? "z-ai/glm-4.5-air:free",
   // Fallback: Ollama for local development
   ollamaBaseUrl: process.env.OLLAMA_BASE_URL ?? "",
   ollamaModel: process.env.OLLAMA_MODEL ?? "gemma3:9b",

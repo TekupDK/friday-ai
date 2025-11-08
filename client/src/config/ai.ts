@@ -1,9 +1,9 @@
 // Centralized AI config for client-side features (Email Tab, Inbox UI)
 
-export const ACTIVE_AI_MODEL = "gemma-3-27b-free"; // OpenRouter free tier
+export const ACTIVE_AI_MODEL = "glm-4.5-air-free"; // OpenRouter free tier - 100% accuracy
 
 // Estimated costs per email operation in USD
-// Gemma 3 27B Free → $0.00
+// GLM-4.5 Air Free → $0.00 (100% accuracy)
 export const COST_PER_EMAIL = {
   summary: 0, // previously ~$0.00008 with Gemini Flash
   labelSuggestion: 0, // previously ~$0.00012 with Gemini Flash

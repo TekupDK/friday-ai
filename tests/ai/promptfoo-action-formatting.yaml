@@ -1,0 +1,119 @@
+# Promptfoo Config: Test LLM Action Result Formatting
+# Tests that AI responses don't contain raw JSON after action execution
+
+description: "Test that formatActionResultForAI produces clean, natural responses"
+
+prompts:
+  - |
+    Du er Friday, en dansk AI assistent for Rendetalje.
+    Du har netop udført en handling og fået dette resultat:
+    
+    {{actionResult}}
+    
+    Præsenter resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
+
+providers:
+  # Test with new free models
+  - id: openrouter:glm-4.5-air-free
+    config:
+      temperature: 0.3
+  - id: openrouter:deepseek-chat-v3.1-free
+    config:
+      temperature: 0.3
+  - id: openrouter:gemma-3-27b-free # Legacy for comparison
+    config:
+      temperature: 0.3
+
+tests:
+  # Test 1: Calendar event result (from screenshot)
+  - vars:
+      actionResult: |
+        [Handling Udført] ✅ Succes: Du har **1 aftale** i dag
+        
+        Resultater (1 element):
+        1. Religiøs vielse (Nikah / قران) - Fouad Amer Hodaifa og Diana El Zahr - Fredens Moske, Edwin Rahrs Vej 1, Brønderslev Brøndersslev
+        
+        💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
+    assert:
+      - type: not-contains
+        value: "{"
+      - type: not-contains
+        value: "[Handling Udført]"
+      - type: not-contains
+        value: "💡"
+      - type: contains
+        value: "kalender"
+      - type: contains
+        value: "aftale"
+      - type: javascript
+        value: |
+          output.split('\n').length <= 5  # Should be concise
+
+  # Test 2: Multiple results (leads/emails)
+  - vars:
+      actionResult: |
+        [Handling Udført] ✅ Succes: Fundet 3 nye leads
+        
+        Resultater (3 elementer):
+        1. Flytterengøring - København
+        2. Vinduespudsning - Aarhus
+        3. Kontorrengøring - Odense
+        
+        💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
+    assert:
+      - type: not-contains
+        value: "{"
+      - type: not-contains
+        value: "[Handling"
+      - type: contains-any
+        value: ["leads", "opgaver", "henvendelser"]
+      - type: javascript
+        value: |
+          const lines = output.split('\n').filter(l => l.trim());
+          lines.length >= 2 && lines.length <= 6  # Structured but concise
+
+  # Test 3: Error case
+  - vars:
+      actionResult: |
+        [Handling Udført] ❌ Fejl: Kunne ikke oprette faktura
+        
+        ⚠️ Teknisk fejl: Billy API returned 401 Unauthorized
+        
+        💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
+    assert:
+      - type: not-contains
+        value: "{"
+      - type: not-contains
+        value: "Billy API"
+      - type: not-contains
+        value: "401"
+      - type: contains-any
+        value: ["fejl", "problem", "ikke"]
+      - type: javascript
+        value: |
+          !output.toLowerCase().includes('unauthorized')  # No technical errors
+
+  # Test 4: Simple success
+  - vars:
+      actionResult: |
+        [Handling Udført] ✅ Succes: Opgave oprettet
+        
+        💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
+    assert:
+      - type: not-contains
+        value: "{"
+      - type: not-contains
+        value: "[Handling"
+      - type: contains-any
+        value: ["oprettet", "tilføjet", "gemt", "færdig"]
+      - type: is-json
+        value: false
+
+defaultTest:
+  options:
+    # Ensure no raw JSON in any output
+    postprocess: |
+      if (output.includes('{') && output.includes('}') && output.includes('"')) {
+        throw new Error('Output contains raw JSON structure');
+      }
+      return output;
