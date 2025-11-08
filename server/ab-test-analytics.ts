@@ -125,6 +125,8 @@ export const abTestAnalyticsRouter = router({
       })
     )
     .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       const result = await db.query(
         `SELECT 
           test_group,
