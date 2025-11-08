@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Save, X, Eye, Code } from "lucide-react";
 import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
 import ReactMarkdown from "react-markdown";
+import { useKeyboardShortcuts } from "@/hooks/docs/useKeyboardShortcuts";
 
 interface DocumentEditorProps {
   documentId: string | null; // null = create new
@@ -215,6 +216,22 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
   const [content, setContent] = useState("");
+  const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
+  
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    onSave: () => {
+      if (title && content) {
+        handleSave();
+      }
+    },
+    onPreview: () => {
+      setActiveTab(activeTab === 'edit' ? 'preview' : 'edit');
+    },
+    onEscape: () => {
+      onCancel();
+    },
+  });
 
   // Load template for new docs
   useEffect(() => {

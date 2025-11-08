@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +30,7 @@ import { DocumentEditor } from "@/components/docs/DocumentEditor";
 import { ConflictList } from "@/components/docs/ConflictList";
 import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
+import { useKeyboardShortcuts } from "@/hooks/docs/useKeyboardShortcuts";
 
 /**
  * Documentation Management Page
@@ -80,6 +81,8 @@ export default function DocsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>('All');
   const [tagFilter, setTagFilter] = useState<string>('all');
+  
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const { documents, total, isLoading } = useDocuments({
     search: searchQuery || undefined,
@@ -90,6 +93,25 @@ export default function DocsPage() {
 
   const { conflicts } = useConflicts();
   const { isConnected } = useDocsWebSocket();
+  
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    onSearch: () => {
+      if (view === 'list') {
+        searchInputRef.current?.focus();
+      }
+    },
+    onNew: () => {
+      if (view === 'list') {
+        handleCreateDocument();
+      }
+    },
+    onEscape: () => {
+      if (view !== 'list') {
+        handleBackToList();
+      }
+    },
+  });
 
   const handleViewDocument = (docId: string) => {
     setSelectedDocId(docId);
@@ -183,7 +205,8 @@ export default function DocsPage() {
                 <div className="flex-1 relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search documentation..."
+                    ref={searchInputRef}
+                    placeholder="Search documentation... (Ctrl+K)"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-9"

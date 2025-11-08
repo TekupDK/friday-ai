@@ -29,6 +29,7 @@ import { workspaceRouter } from './routers/workspace-router';
 import { chatStreamingRouter } from './routers/chat-streaming';
 import { docsRouter } from './routers/docs-router';
 import { aiMetricsRouter } from './routers/ai-metrics-router';
+import { emailIntelligenceRouter } from './routers/email-intelligence-router';
 import { z } from "zod";
 
 export const appRouter = router({
@@ -39,6 +40,7 @@ export const appRouter = router({
   inbox: inboxRouter,
   docs: docsRouter,
   aiMetrics: aiMetricsRouter,
+  emailIntelligence: emailIntelligenceRouter,
   chat: router({
     getConversations: protectedProcedure.query(async ({ ctx }) => {
       return getUserConversations(ctx.user.id);

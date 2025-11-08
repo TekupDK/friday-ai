@@ -767,3 +767,81 @@ export type DocumentComment = typeof documentCommentsInFridayAi.$inferSelect;
 export type InsertDocumentComment = typeof documentCommentsInFridayAi.$inferInsert;
 export type DocumentConflict = typeof documentConflictsInFridayAi.$inferSelect;
 export type InsertDocumentConflict = typeof documentConflictsInFridayAi.$inferInsert;
+
+// Email Intelligence Enums
+export const emailCategoryInFridayAi = fridayAi.enum("email_category", [
+  "work",
+  "personal",
+  "finance",
+  "marketing",
+  "important",
+  "other",
+]);
+
+export const priorityLevelInFridayAi = fridayAi.enum("priority_level", [
+  "urgent",
+  "high",
+  "normal",
+  "low",
+]);
+
+export const responseSuggestionTypeInFridayAi = fridayAi.enum(
+  "response_suggestion_type",
+  ["quick_reply", "detailed", "forward", "schedule"]
+);
+
+export const responseToneInFridayAi = fridayAi.enum("response_tone", [
+  "professional",
+  "friendly",
+  "formal",
+]);
+
+// Email Intelligence Tables
+export const emailCategoriesInFridayAi = fridayAi.table("email_categories", {
+  id: serial().primaryKey().notNull(),
+  threadId: varchar({ length: 255 }).notNull(),
+  category: emailCategoryInFridayAi().notNull(),
+  subcategory: varchar({ length: 100 }),
+  confidence: numeric({ precision: 3, scale: 2 }).notNull(), // 0.00 to 1.00
+  reasoning: text(),
+  createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+});
+
+export const emailPrioritiesInFridayAi = fridayAi.table("email_priorities", {
+  id: serial().primaryKey().notNull(),
+  threadId: varchar({ length: 255 }).notNull(),
+  priorityScore: integer().notNull(), // 0-100
+  priorityLevel: priorityLevelInFridayAi().notNull(),
+  senderImportance: numeric({ precision: 3, scale: 2 }), // 0.00 to 1.00
+  contentUrgency: numeric({ precision: 3, scale: 2 }), // 0.00 to 1.00
+  deadlineMentioned: boolean().default(false),
+  requiresAction: boolean().default(false),
+  timeSensitive: boolean().default(false),
+  reasoning: text(),
+  createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+});
+
+export const responseSuggestionsInFridayAi = fridayAi.table(
+  "response_suggestions",
+  {
+    id: serial().primaryKey().notNull(),
+    threadId: varchar({ length: 255 }).notNull(),
+    suggestionText: text().notNull(),
+    suggestionType: responseSuggestionTypeInFridayAi().notNull(),
+    tone: responseToneInFridayAi().notNull(),
+    confidence: numeric({ precision: 3, scale: 2 }).notNull(), // 0.00 to 1.00
+    reasoning: text(),
+    used: boolean().default(false),
+    usedAt: timestamp({ mode: "string" }),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  }
+);
+
+// Email Intelligence Types
+export type EmailCategory = typeof emailCategoriesInFridayAi.$inferSelect;
+export type InsertEmailCategory = typeof emailCategoriesInFridayAi.$inferInsert;
+export type EmailPriority = typeof emailPrioritiesInFridayAi.$inferSelect;
+export type InsertEmailPriority = typeof emailPrioritiesInFridayAi.$inferInsert;
+export type ResponseSuggestion = typeof responseSuggestionsInFridayAi.$inferSelect;
+export type InsertResponseSuggestion =
+  typeof responseSuggestionsInFridayAi.$inferInsert;
