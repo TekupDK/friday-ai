@@ -3,6 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { 
   FileText, 
   Search, 
@@ -10,7 +17,11 @@ import {
   Home, 
   AlertCircle,
   Filter,
-  BookOpen
+  BookOpen,
+  Target,
+  Bug,
+  Book,
+  Calendar
 } from "lucide-react";
 import { useLocation } from "wouter";
 import { DocumentList } from "@/components/docs/DocumentList";
@@ -30,16 +41,50 @@ import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
  * - Conflict resolution
  * - Search and filters
  */
+// Templates configuration
+const DOC_TEMPLATES = [
+  { id: 'feature', name: 'Feature Spec', icon: Target, color: 'text-blue-500' },
+  { id: 'bug', name: 'Bug Report', icon: Bug, color: 'text-red-500' },
+  { id: 'guide', name: 'Guide', icon: Book, color: 'text-green-500' },
+  { id: 'meeting', name: 'Meeting Notes', icon: Calendar, color: 'text-purple-500' },
+];
+
+// Categories from our recategorization
+const CATEGORIES = [
+  'All',
+  'Invoices & Billy',
+  'Email System',
+  'Database & Migrations',
+  'Testing & QA',
+  'AI & Friday',
+  'DevOps & Deployment',
+  'Frontend & UI',
+  'API & Backend',
+  'Planning & Roadmap',
+  'General',
+];
+
+const TAG_FILTERS = [
+  { value: 'all', label: 'All Docs' },
+  { value: 'outdated', label: '⚠️ Needs Review', badge: true },
+  { value: 'urgent', label: '🔴 Urgent' },
+  { value: 'completed', label: '✅ Completed' },
+  { value: 'guide', label: '📖 Guides' },
+];
+
 export default function DocsPage() {
   const [, navigate] = useLocation();
   const [view, setView] = useState<'list' | 'view' | 'edit' | 'create'>('list');
   const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
+  const [categoryFilter, setCategoryFilter] = useState<string>('All');
+  const [tagFilter, setTagFilter] = useState<string>('all');
 
   const { documents, total, isLoading } = useDocuments({
     search: searchQuery || undefined,
-    category: categoryFilter,
+    category: categoryFilter !== 'All' ? categoryFilter : undefined,
+    tags: tagFilter !== 'all' ? [tagFilter] : undefined,
     limit: 50,
   });
 
@@ -56,8 +101,9 @@ export default function DocsPage() {
     setView('edit');
   };
 
-  const handleCreateDocument = () => {
+  const handleCreateDocument = (template?: string) => {
     setSelectedDocId(null);
+    setSelectedTemplate(template || null);
     setView('create');
   };
 
@@ -103,32 +149,71 @@ export default function DocsPage() {
                 </Badge>
               )}
 
-              {/* Create button */}
+              {/* Create button with template dropdown */}
               {view === 'list' && (
-                <Button onClick={handleCreateDocument}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  New Document
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button onClick={() => handleCreateDocument()}>
+                    <Plus className="h-4 w-4 mr-2" />
+                    New Document
+                  </Button>
+                  <Select onValueChange={(value) => handleCreateDocument(value)}>
+                    <SelectTrigger className="w-[140px]">
+                      <SelectValue placeholder="Template" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {DOC_TEMPLATES.map((template) => (
+                        <SelectItem key={template.id} value={template.id}>
+                          <div className="flex items-center gap-2">
+                            <template.icon className={`h-4 w-4 ${template.color}`} />
+                            {template.name}
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               )}
             </div>
           </div>
 
           {/* Search & Filters (only in list view) */}
           {view === 'list' && (
-            <div className="mt-4 flex items-center gap-3">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search documentation..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9"
-                />
+            <div className="mt-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search documentation..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-9"
+                  />
+                </div>
+                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CATEGORIES.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select value={tagFilter} onValueChange={setTagFilter}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filter" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TAG_FILTERS.map((filter) => (
+                      <SelectItem key={filter.value} value={filter.value}>
+                        {filter.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filters
-              </Button>
             </div>
           )}
         </div>
@@ -187,6 +272,7 @@ export default function DocsPage() {
         {view === 'create' && (
           <DocumentEditor
             documentId={null}
+            template={selectedTemplate}
             onSave={handleBackToList}
             onCancel={handleBackToList}
           />

@@ -22,20 +22,27 @@ test.describe('ChatInput Button Functionality', () => {
       }
     ]);
     
-    // Navigate to workspace (Friday AI panel)
+    // Navigate to workspace
     await page.goto('http://localhost:3000/');
     
-    // Wait for workspace and Friday panel to load
+    // Wait for workspace to load
     await page.waitForLoadState('networkidle');
     
-    // Target the Friday AI panel specifically (the right-most panel, last one)
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
-    await fridayPanel.waitFor({ state: 'visible', timeout: 15000 });
-    await fridayPanel.locator('[data-testid="friday-chat-input"]').waitFor({ state: 'visible' });
+    // Wait for AI Assistant panel container (left panel, always visible on desktop)
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    await aiPanel.waitFor({ state: 'visible', timeout: 10000 });
+    
+    // Wait for Friday chat panel inside (should be there by default)
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
+    await fridayPanel.waitFor({ state: 'visible', timeout: 10000 });
+    
+    // Wait for chat input to be ready
+    await fridayPanel.locator('[data-testid="friday-chat-input"]').waitFor({ state: 'visible', timeout: 5000 });
   });
 
   test('should show disabled buttons with "kommer snart" tooltips', async ({ page }) => {
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     const chatInput = fridayPanel.locator('[data-testid="friday-chat-input-wrapper"]');
     
     // Find left icons (Paperclip, Apps)
@@ -60,7 +67,8 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('should have disabled voice button with tooltip', async ({ page }) => {
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     
     // Find Mic button (should be first of right icons, before Send)
     const micButton = fridayPanel.locator('[data-testid="friday-input-right-icons"] button').first();
@@ -74,7 +82,8 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('Send button should be disabled when input is empty', async ({ page }) => {
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     const sendButton = fridayPanel.locator('[data-testid="friday-send-button"]');
     
     // Should exist
@@ -85,7 +94,8 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('Send button should be enabled when input has text', async ({ page }) => {
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     const chatInput = fridayPanel.locator('[data-testid="friday-chat-input"]');
     const sendButton = fridayPanel.locator('[data-testid="friday-send-button"]');
     
@@ -97,7 +107,8 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('Stop button should appear during streaming', async ({ page }) => {
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     const chatInput = fridayPanel.locator('[data-testid="friday-chat-input"]');
     
     // Type and send a message
@@ -122,7 +133,8 @@ test.describe('ChatInput Button Functionality', () => {
       }
     });
     
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     const leftIcons = fridayPanel.locator('[data-testid="friday-input-left-icons"] button');
     
     // Try to click disabled Paperclip button (should still trigger console.log)
@@ -139,7 +151,8 @@ test.describe('ChatInput Button Functionality', () => {
     // Resize to narrow panel width (20% of 1920px = 384px)
     await page.setViewportSize({ width: 400, height: 800 });
     
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     const chatInput = fridayPanel.locator('[data-testid="friday-chat-input-wrapper"]');
     
     // Input should be visible and functional
@@ -160,7 +173,8 @@ test.describe('ChatInput Button Functionality', () => {
   });
 
   test('messages should use compact styling', async ({ page }) => {
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]').last();
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel.locator('[data-testid="friday-ai-panel"]');
     // Send a test message
     const chatInput = fridayPanel.locator('[data-testid="friday-chat-input"]');
     await chatInput.fill('Test for kompakt styling');
