@@ -15,20 +15,20 @@ export default function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps)
   return (
     <div 
       data-testid="welcome-screen"
-      className="flex flex-col items-center justify-center min-h-[60vh] space-y-8 px-4"
+      className="flex flex-col items-center justify-center min-h-[50vh] space-y-4 px-3"
     >
-      {/* Centered header with more breathing room */}
-      <div className="text-center space-y-2">
-        <h1 className="text-xl sm:text-2xl font-medium text-foreground">
-          Hvad kan jeg hjælpe med i dag?
+      {/* Compact header for narrow panel */}
+      <div className="text-center space-y-1">
+        <h1 className="text-base font-medium text-foreground">
+          Hvad kan jeg hjælpe med?
         </h1>
-        <p className="text-sm text-muted-foreground">
-          Vælg en handling eller skriv din egen besked
+        <p className="text-xs text-muted-foreground">
+          Vælg handling eller skriv
         </p>
       </div>
       
-      {/* Suggestion pills with icons - Shortwave style */}
-      <div className="flex flex-col gap-3 w-full max-w-md">
+      {/* Compact suggestion pills - optimized for 20% width */}
+      <div className="flex flex-col gap-2 w-full">
         {suggestions.map((suggestion, i) => {
           const Icon = suggestion.icon;
           return (

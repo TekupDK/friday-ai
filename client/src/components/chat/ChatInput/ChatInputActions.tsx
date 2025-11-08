@@ -71,18 +71,18 @@ export default function ChatInputActions({
   isStreaming,
   onSend,
   onStop,
-  onAttach = () => {},
-  onApps = () => {},
-  onVoice = () => {},
+  onAttach = () => console.log("Attach - coming soon"),
+  onApps = () => console.log("Apps - coming soon"),
+  onVoice = () => console.log("Voice - coming soon"),
   hasContent = false,
 }: ChatInputActionsProps) {
   const leftActions = [
-    { icon: Paperclip, onClick: onAttach, title: "Vedhæft fil" },
-    { icon: Grid3X3, onClick: onApps, title: "Apps" },
+    { icon: Paperclip, onClick: onAttach, title: "Vedhæft fil (kommer snart)", disabled: true },
+    { icon: Grid3X3, onClick: onApps, title: "Apps (kommer snart)", disabled: true },
   ];
 
   const rightActions = [
-    { icon: Mic, onClick: onVoice, title: "Stemme input" },
+    { icon: Mic, onClick: onVoice, title: "Stemme input (kommer snart)", disabled: true },
   ];
 
   return {

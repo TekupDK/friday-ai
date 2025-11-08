@@ -628,6 +628,93 @@ export const userSettings = userSettingsInFridayAi;
 export const webhooks = webhooksInFridayAi;
 export const customers = customersInFridayAi;
 
+// =============================================================================
+// DOCUMENTATION SYSTEM TABLES
+// =============================================================================
+
+export const documentSyncStatusInFridayAi = fridayAi.enum("document_sync_status", [
+  "idle",
+  "syncing",
+  "conflict",
+  "error",
+]);
+
+export const documentConflictResolutionInFridayAi = fridayAi.enum(
+  "document_conflict_resolution",
+  ["accept_local", "accept_remote", "manual"]
+);
+
+export const documentsInFridayAi = fridayAi.table(
+  "documents",
+  {
+    id: text().primaryKey().notNull(), // UUID
+    path: text().notNull(),
+    title: varchar({ length: 255 }).notNull(),
+    content: text().notNull(),
+    category: varchar({ length: 100 }).notNull(),
+    tags: jsonb().$type<string[]>().default([]).notNull(),
+    author: varchar({ length: 255 }).notNull(),
+    gitHash: varchar({ length: 40 }),
+    version: integer().default(1).notNull(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("documents_path_idx").on(table.path),
+    index("documents_category_idx").on(table.category),
+    index("documents_author_idx").on(table.author),
+  ]
+);
+
+export const documentChangesInFridayAi = fridayAi.table("document_changes", {
+  id: text().primaryKey().notNull(), // UUID
+  documentId: text().notNull(),
+  userId: varchar({ length: 255 }).notNull(),
+  operation: varchar({ length: 20 }).notNull(), // 'create', 'update', 'delete'
+  diff: text().notNull(),
+  gitHash: varchar({ length: 40 }),
+  timestamp: timestamp({ mode: "string" }).defaultNow().notNull(),
+});
+
+export const documentCommentsInFridayAi = fridayAi.table(
+  "document_comments",
+  {
+    id: text().primaryKey().notNull(), // UUID
+    documentId: text().notNull(),
+    userId: varchar({ length: 255 }).notNull(),
+    content: text().notNull(),
+    lineNumber: integer(),
+    resolved: boolean().default(false).notNull(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }),
+  },
+  table => [
+    index("document_comments_doc_idx").on(table.documentId),
+    index("document_comments_user_idx").on(table.userId),
+  ]
+);
+
+export const documentConflictsInFridayAi = fridayAi.table("document_conflicts", {
+  id: text().primaryKey().notNull(), // UUID
+  documentId: text().notNull(),
+  path: text().notNull(),
+  localContent: text().notNull(),
+  remoteContent: text().notNull(),
+  baseContent: text(),
+  conflictMarkers: text().notNull(),
+  resolution: documentConflictResolutionInFridayAi(),
+  mergedContent: text(),
+  resolvedAt: timestamp({ mode: "string" }),
+  resolvedBy: varchar({ length: 255 }),
+  createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+});
+
+// Exports for documentation tables
+export const documents = documentsInFridayAi;
+export const documentChanges = documentChangesInFridayAi;
+export const documentComments = documentCommentsInFridayAi;
+export const documentConflicts = documentConflictsInFridayAi;
+
 // Type aliases
 export type EmailPipelineState =
   typeof emailPipelineStateInFridayAi.$inferSelect;
@@ -672,3 +759,11 @@ export type CustomerProfile = typeof customerProfilesInFridayAi.$inferSelect;
 export type InsertCustomerProfile = typeof customerProfilesInFridayAi.$inferInsert;
 export type CustomerNote = typeof customerNotesInFridayAi.$inferSelect;
 export type InsertCustomerNote = typeof customerNotesInFridayAi.$inferInsert;
+export type Document = typeof documentsInFridayAi.$inferSelect;
+export type InsertDocument = typeof documentsInFridayAi.$inferInsert;
+export type DocumentChange = typeof documentChangesInFridayAi.$inferSelect;
+export type InsertDocumentChange = typeof documentChangesInFridayAi.$inferInsert;
+export type DocumentComment = typeof documentCommentsInFridayAi.$inferSelect;
+export type InsertDocumentComment = typeof documentCommentsInFridayAi.$inferInsert;
+export type DocumentConflict = typeof documentConflictsInFridayAi.$inferSelect;
+export type InsertDocumentConflict = typeof documentConflictsInFridayAi.$inferInsert;

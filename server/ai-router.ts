@@ -397,13 +397,46 @@ Hvis brugeren siger du har forkert dato, så TJEK DENNE BESKED IGEN! ⬆️`,
         ...messages,
       ];
 
+  // Helper function to format action results for AI
+  const formatActionResultForAI = (result: ActionResult): string => {
+    let content = `[Handling Udført] ${result.success ? "✅ Succes" : "❌ Fejl"}: ${result.message}`;
+    
+    if (result.data) {
+      // Format data based on type instead of raw JSON
+      if (Array.isArray(result.data)) {
+        content += `\n\nResultater (${result.data.length} elementer):`;
+        result.data.slice(0, 3).forEach((item, i) => {
+          if (item.summary) content += `\n${i + 1}. ${item.summary}`;
+          else if (item.title) content += `\n${i + 1}. ${item.title}`;
+          else if (item.subject) content += `\n${i + 1}. ${item.subject}`;
+        });
+        if (result.data.length > 3) content += `\n... og ${result.data.length - 3} flere`;
+      } else if (typeof result.data === 'object') {
+        // Extract key info without showing full JSON
+        const keys = Object.keys(result.data);
+        if (keys.length <= 5) {
+          content += `\n\nDetaljer: ${keys.map(k => `${k}: ${result.data[k]}`).join(', ')}`;
+        } else {
+          content += `\n\nData modtaget (${keys.length} felter)`;
+        }
+      }
+    }
+    
+    if (result.error) {
+      content += `\n\n⚠️ Teknisk fejl: ${result.error}`;
+    }
+    
+    content += `\n\n💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.`;
+    return content;
+  };
+
   // If action was executed, add result to context
   // If pending action, add note to AI
   const finalMessages: Message[] = [...messagesWithSystem];
   if (actionResult) {
     finalMessages.push({
       role: "system",
-      content: `[Action Result] ${actionResult.success ? "Success" : "Failed"}: ${actionResult.message}${actionResult.data ? "\nData: " + JSON.stringify(actionResult.data, null, 2) : ""}${actionResult.error ? "\nError: " + actionResult.error : ""}`,
+      content: formatActionResultForAI(actionResult),
     });
   } else if (pendingAction) {
     finalMessages.push({

@@ -98,9 +98,9 @@ export default function ShortWaveChatPanel({
         <WelcomeScreen onSuggestionClick={handleSuggestionClick} />
       )}
 
-      {/* Messages */}
-      <ScrollArea className="flex-1 p-4">
-        <div className="space-y-4">
+      {/* Messages - compact for narrow panel */}
+      <ScrollArea className="flex-1 p-2">
+        <div className="space-y-2">
           {chatMessages.map((message: any) => (
             <div
               key={message.id}
@@ -110,17 +110,17 @@ export default function ShortWaveChatPanel({
               }`}
             >
               <div
-                className={`max-w-[80%] rounded-lg p-3 ${
+                className={`max-w-[90%] rounded-lg p-2 ${
                   message.role === "user"
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted"
                 }`}
               >
-                <p className="text-sm whitespace-pre-wrap">
+                <p className="text-xs whitespace-pre-wrap leading-relaxed">
                   {message.content}
                 </p>
-                <p className="text-xs opacity-70 mt-1">
-                  {new Date(message.createdAt).toLocaleTimeString()}
+                <p className="text-[10px] opacity-60 mt-1">
+                  {new Date(message.createdAt).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}
                 </p>
               </div>
             </div>
