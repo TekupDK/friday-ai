@@ -64,7 +64,8 @@ export default function EmailHtmlViewWithCid({
     return () => {
       cancelled = true;
     };
-  }, [safe, messageId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [safe, messageId]); // Resolve CID images and constrain image sizes
 
   if (!safe) return null;
 

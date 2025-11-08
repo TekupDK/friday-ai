@@ -51,7 +51,7 @@ function HydrationReady() {
   useEffect(() => {
     (window as any).__FRIDAY_READY__ = true;
     document.dispatchEvent(new Event("friday:ready"));
-  }, []);
+  }, []); // Signal hydration complete for testing and external integrations
   return null;
 }
 
