@@ -10,11 +10,201 @@ import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
 
 interface DocumentEditorProps {
   documentId: string | null; // null = create new
+  template?: string | null; // template id for new docs
   onSave: () => void;
   onCancel: () => void;
 }
 
-export function DocumentEditor({ documentId, onSave, onCancel }: DocumentEditorProps) {
+// Template content
+const TEMPLATES: Record<string, { title: string; content: string; category: string; tags: string[] }> = {
+  feature: {
+    title: "Feature Spec",
+    content: `# [Feature Name]
+
+## Overview
+Brief description of what this feature does and why it's needed.
+
+## Requirements
+- [ ] Requirement 1
+- [ ] Requirement 2
+- [ ] Requirement 3
+
+## Technical Design
+
+### Architecture
+\`\`\`
+[Diagram or description]
+\`\`\`
+
+### API Endpoints
+- \`POST /api/feature\` - Create
+- \`GET /api/feature/:id\` - Read
+
+## Implementation Plan
+
+### Phase 1: Backend
+- [ ] Database schema
+- [ ] API endpoints
+- [ ] Tests
+
+### Phase 2: Frontend
+- [ ] UI components
+- [ ] Integration
+
+## Testing Strategy
+- Unit tests: [What to test]
+- Integration tests: [What to test]
+- E2E tests: [What to test]
+
+## Timeline
+- Week 1: Backend
+- Week 2: Frontend
+- Week 3: Testing
+
+---
+**Status:** Draft  
+**Created:** ${new Date().toISOString().split('T')[0]}`,
+    category: "Planning & Roadmap",
+    tags: ["feature", "planning", "draft"],
+  },
+  bug: {
+    title: "Bug Report",
+    content: `# 🐛 Bug: [Short Description]
+
+## Summary
+Clear, concise description of the bug.
+
+## Steps to Reproduce
+1. Go to...
+2. Click on...
+3. See error
+
+## Expected Behavior
+What should happen?
+
+## Actual Behavior
+What actually happens?
+
+## Screenshots/Logs
+\`\`\`
+[Paste error logs]
+\`\`\`
+
+## Environment
+- Browser: [e.g., Chrome 120]
+- OS: [e.g., Windows 11]
+- Version: [e.g., v2.0.0]
+
+## Fix
+- [ ] Identified root cause
+- [ ] Implemented fix
+- [ ] Added tests
+- [ ] Verified in production
+
+---
+**Priority:** [Low/Medium/High/Critical]  
+**Status:** Open  
+**Date:** ${new Date().toISOString().split('T')[0]}`,
+    category: "Testing & QA",
+    tags: ["bug", "urgent"],
+  },
+  guide: {
+    title: "Guide",
+    content: `# 📖 Guide: [Topic]
+
+## Overview
+What will this guide teach you?
+
+## Prerequisites
+- Knowledge: [What you need to know]
+- Tools: [What you need installed]
+
+## Step-by-Step Instructions
+
+### Step 1: [Title]
+Description of what we're doing and why.
+
+\`\`\`bash
+# Commands
+\`\`\`
+
+**Expected output:**
+\`\`\`
+[What you should see]
+\`\`\`
+
+### Step 2: [Title]
+Continue...
+
+## Verification
+How to verify everything is working:
+
+\`\`\`bash
+# Test commands
+\`\`\`
+
+## Troubleshooting
+
+### Issue: [Common problem]
+**Symptoms:** [What you see]  
+**Solution:** [How to fix]
+
+## Next Steps
+- [What to do next]
+- [Related guides]
+
+---
+**Difficulty:** [Beginner/Intermediate/Advanced]  
+**Est. time:** [X minutes]  
+**Updated:** ${new Date().toISOString().split('T')[0]}`,
+    category: "Documentation",
+    tags: ["guide", "tutorial"],
+  },
+  meeting: {
+    title: "Meeting Notes",
+    content: `# 📝 Meeting Notes: [Topic]
+
+**Date:** ${new Date().toISOString().split('T')[0]}  
+**Time:** [HH:MM - HH:MM]  
+**Attendees:** [Names]  
+
+## Agenda
+1. Topic 1
+2. Topic 2
+
+---
+
+## Discussion
+
+### Topic 1: [Title]
+**Summary:** [What was discussed]
+
+**Key points:**
+- Point 1
+- Point 2
+
+**Decisions:**
+- ✅ Decision 1
+
+---
+
+## Action Items
+- [ ] [Person]: [Task] - Due: [Date]
+- [ ] [Person]: [Task] - Due: [Date]
+
+## Next Meeting
+**Date:** [YYYY-MM-DD]  
+**Agenda:**
+- Follow up on action items
+
+---
+**Meeting Type:** [Planning/Standup/Review]`,
+    category: "Planning & Roadmap",
+    tags: ["meeting", "notes"],
+  },
+};
+
+export function DocumentEditor({ documentId, template, onSave, onCancel }: DocumentEditorProps) {
   const { document, isLoading } = useDocument(documentId);
   const { createDocument, updateDocument, isCreating, isUpdating } = useDocuments();
 
@@ -23,6 +213,17 @@ export function DocumentEditor({ documentId, onSave, onCancel }: DocumentEditorP
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
   const [content, setContent] = useState("");
+
+  // Load template for new docs
+  useEffect(() => {
+    if (!documentId && template && TEMPLATES[template]) {
+      const tmpl = TEMPLATES[template];
+      setTitle(tmpl.title);
+      setCategory(tmpl.category);
+      setTags(tmpl.tags.join(", "));
+      setContent(tmpl.content);
+    }
+  }, [documentId, template]);
 
   // Load document data when editing
   useEffect(() => {

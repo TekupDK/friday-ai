@@ -1,146 +1,32 @@
-<testsuites id="" name="" tests="8" failures="3" skipped="0" errors="0" time="24.015477999999998">
-<testsuite name="chat-input-buttons.spec.ts" timestamp="2025-11-08T21:58:10.724Z" hostname="chromium" tests="8" failures="3" skipped="0" time="64.427" errors="0">
-<testcase name="ChatInput Button Functionality › should show disabled buttons with &quot;kommer snart&quot; tooltips" classname="chat-input-buttons.spec.ts" time="6.636">
+<testsuites id="" name="" tests="8" failures="0" skipped="2" errors="0" time="11.818788999999999">
+<testsuite name="chat-input-buttons.spec.ts" timestamp="2025-11-08T22:02:58.497Z" hostname="chromium" tests="8" failures="0" skipped="2" time="31.148" errors="0">
+<testcase name="ChatInput Button Functionality › should show disabled buttons with &quot;kommer snart&quot; tooltips" classname="chat-input-buttons.spec.ts" time="5.407">
 </testcase>
-<testcase name="ChatInput Button Functionality › should have disabled voice button with tooltip" classname="chat-input-buttons.spec.ts" time="6.644">
+<testcase name="ChatInput Button Functionality › should have disabled voice button with tooltip" classname="chat-input-buttons.spec.ts" time="5.236">
 </testcase>
-<testcase name="ChatInput Button Functionality › Send button should be disabled when input is empty" classname="chat-input-buttons.spec.ts" time="6.499">
+<testcase name="ChatInput Button Functionality › Send button should be disabled when input is empty" classname="chat-input-buttons.spec.ts" time="5.146">
 </testcase>
-<testcase name="ChatInput Button Functionality › Send button should be enabled when input has text" classname="chat-input-buttons.spec.ts" time="6.972">
+<testcase name="ChatInput Button Functionality › Send button should be enabled when input has text" classname="chat-input-buttons.spec.ts" time="5.199">
 </testcase>
-<testcase name="ChatInput Button Functionality › Stop button should appear during streaming" classname="chat-input-buttons.spec.ts" time="10.648">
-<failure message="chat-input-buttons.spec.ts:109:3 Stop button should appear during streaming" type="FAILURE">
-<![CDATA[  [chromium] › chat-input-buttons.spec.ts:109:3 › ChatInput Button Functionality › Stop button should appear during streaming 
-
-    Error: expect(locator).toBeVisible() failed
-
-    Locator: locator('[data-testid="ai-assistant-panel"]').locator('[data-testid="friday-ai-panel"]').locator('[data-testid="friday-stop-button"]')
-    Expected: visible
-    Timeout: 5000ms
-    Error: element(s) not found
-
-    Call log:
-      - Expect "toBeVisible" with timeout 5000ms
-      - waiting for locator('[data-testid="ai-assistant-panel"]').locator('[data-testid="friday-ai-panel"]').locator('[data-testid="friday-stop-button"]')
-
-
-      118 |     // Stop button should appear while AI is thinking
-      119 |     const stopButton = fridayPanel.locator('[data-testid="friday-stop-button"]');
-    > 120 |     await expect(stopButton).toBeVisible({ timeout: 5000 });
-          |                              ^
-      121 |     
-      122 |     // Loading indicator should be visible
-      123 |     const loadingIndicator = fridayPanel.locator('[data-testid="loading-indicator"]');
-        at C:\Users\empir\Tekup\services\tekup-ai-v2\tests\chat-input-buttons.spec.ts:120:30
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ..\test-results\chat-input-buttons-ChatInp-086ef-uld-appear-during-streaming-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ..\test-results\chat-input-buttons-ChatInp-086ef-uld-appear-during-streaming-chromium\video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ..\test-results\chat-input-buttons-ChatInp-086ef-uld-appear-during-streaming-chromium\error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|chat-input-buttons-ChatInp-086ef-uld-appear-during-streaming-chromium\test-failed-1.png]]
-
-[[ATTACHMENT|chat-input-buttons-ChatInp-086ef-uld-appear-during-streaming-chromium\video.webm]]
-
-[[ATTACHMENT|chat-input-buttons-ChatInp-086ef-uld-appear-during-streaming-chromium\error-context.md]]
-]]>
-</system-out>
+<testcase name="ChatInput Button Functionality › Stop button should appear during streaming" classname="chat-input-buttons.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
 </testcase>
-<testcase name="ChatInput Button Functionality › disabled buttons should log to console when clicked" classname="chat-input-buttons.spec.ts" time="6.07">
-<failure message="chat-input-buttons.spec.ts:127:3 disabled buttons should log to console when clicked" type="FAILURE">
-<![CDATA[  [chromium] › chat-input-buttons.spec.ts:127:3 › ChatInput Button Functionality › disabled buttons should log to console when clicked 
-
-    Error: expect(received).toBeTruthy()
-
-    Received: false
-
-      145 |     
-      146 |     // Should have logged "coming soon" message
-    > 147 |     expect(consoleLogs.some(log => log.includes('coming soon') || log.includes('kommer snart'))).toBeTruthy();
-          |                                                                                                  ^
-      148 |   });
-      149 |
-      150 |   test('compact UI should be visible in narrow panel', async ({ page }) => {
-        at C:\Users\empir\Tekup\services\tekup-ai-v2\tests\chat-input-buttons.spec.ts:147:98
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ..\test-results\chat-input-buttons-ChatInp-f39fc-log-to-console-when-clicked-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ..\test-results\chat-input-buttons-ChatInp-f39fc-log-to-console-when-clicked-chromium\video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ..\test-results\chat-input-buttons-ChatInp-f39fc-log-to-console-when-clicked-chromium\error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|chat-input-buttons-ChatInp-f39fc-log-to-console-when-clicked-chromium\test-failed-1.png]]
-
-[[ATTACHMENT|chat-input-buttons-ChatInp-f39fc-log-to-console-when-clicked-chromium\video.webm]]
-
-[[ATTACHMENT|chat-input-buttons-ChatInp-f39fc-log-to-console-when-clicked-chromium\error-context.md]]
-]]>
-</system-out>
+<testcase name="ChatInput Button Functionality › disabled buttons should log to console when clicked" classname="chat-input-buttons.spec.ts" time="5.57">
 </testcase>
-<testcase name="ChatInput Button Functionality › compact UI should be visible in narrow panel" classname="chat-input-buttons.spec.ts" time="15.513">
-<failure message="chat-input-buttons.spec.ts:150:3 compact UI should be visible in narrow panel" type="FAILURE">
-<![CDATA[  [chromium] › chat-input-buttons.spec.ts:150:3 › ChatInput Button Functionality › compact UI should be visible in narrow panel 
-
-    Error: expect(locator).toBeVisible() failed
-
-    Locator:  locator('[data-testid="ai-assistant-panel"]').locator('[data-testid="friday-ai-panel"]').locator('[data-testid="friday-chat-input-wrapper"]')
-    Expected: visible
-    Received: hidden
-    Timeout:  10000ms
-
-    Call log:
-      - Expect "toBeVisible" with timeout 10000ms
-      - waiting for locator('[data-testid="ai-assistant-panel"]').locator('[data-testid="friday-ai-panel"]').locator('[data-testid="friday-chat-input-wrapper"]')
-        13 × locator resolved to <div data-testid="friday-chat-input-wrapper" class="bg-muted/50 rounded-xl px-2 py-2 flex items-center gap-1.5" data-loc="client\src\components\chat\ChatInput\ChatInputField.tsx:30">…</div>
-           - unexpected value "hidden"
-
-
-      157 |     
-      158 |     // Input should be visible and functional
-    > 159 |     await expect(chatInput).toBeVisible();
-          |                             ^
-      160 |     
-      161 |     // Should have compact padding (check class)
-      162 |     const container = fridayPanel.locator('[data-testid="friday-chat-input-container"]');
-        at C:\Users\empir\Tekup\services\tekup-ai-v2\tests\chat-input-buttons.spec.ts:159:29
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ..\test-results\chat-input-buttons-ChatInp-47745--be-visible-in-narrow-panel-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ..\test-results\chat-input-buttons-ChatInp-47745--be-visible-in-narrow-panel-chromium\video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ..\test-results\chat-input-buttons-ChatInp-47745--be-visible-in-narrow-panel-chromium\error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|chat-input-buttons-ChatInp-47745--be-visible-in-narrow-panel-chromium\test-failed-1.png]]
-
-[[ATTACHMENT|chat-input-buttons-ChatInp-47745--be-visible-in-narrow-panel-chromium\video.webm]]
-
-[[ATTACHMENT|chat-input-buttons-ChatInp-47745--be-visible-in-narrow-panel-chromium\error-context.md]]
-]]>
-</system-out>
+<testcase name="ChatInput Button Functionality › compact UI should be visible in narrow panel" classname="chat-input-buttons.spec.ts" time="0">
+<properties>
+<property name="skip" value="">
+</property>
+</properties>
+<skipped>
+</skipped>
 </testcase>
-<testcase name="ChatInput Button Functionality › messages should use compact styling" classname="chat-input-buttons.spec.ts" time="5.445">
+<testcase name="ChatInput Button Functionality › messages should use compact styling" classname="chat-input-buttons.spec.ts" time="4.59">
 </testcase>
 </testsuite>
 </testsuites>
