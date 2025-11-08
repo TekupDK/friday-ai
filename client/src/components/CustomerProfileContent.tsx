@@ -118,7 +118,8 @@ export default function CustomerProfileContent({
     } else {
       setAutoSyncDone(true);
     }
-  }, [profile?.id, autoSyncDone]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.id, autoSyncDone]); // Auto-sync customer data with 5-minute cache
 
   // Auto-generate AI resume on first open if missing
   useEffect(() => {
@@ -135,7 +136,8 @@ export default function CustomerProfileContent({
       console.log(`[CustomerProfile] Auto-generating AI resume for customer ${profile.id}`);
       generateResume.mutate({ customerId: profile.id });
     }
-  }, [profile?.id, profile?.aiResume, profile?.emailCount, profile?.invoiceCount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile?.id, profile?.aiResume, profile?.emailCount, profile?.invoiceCount]); // Auto-generate AI resume if missing
 
   // Generate AI resume
   const generateResume = trpc.customer.generateResume.useMutation({

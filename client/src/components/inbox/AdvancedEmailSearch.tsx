@@ -137,7 +137,7 @@ export default function AdvancedEmailSearch({
         setIsOpen(true);
       }
     }
-  }, [value, isOpen]);
+  }, [value, isOpen]); // Detect if user is typing a search operator
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;

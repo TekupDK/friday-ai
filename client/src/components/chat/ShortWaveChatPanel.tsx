@@ -60,7 +60,7 @@ export default function ShortWaveChatPanel({
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [chatMessages, isLoading]);
+  }, [chatMessages, isLoading]); // Auto-scroll to bottom when new messages arrive
 
   const handleSendMessage = useCallback(async () => {
     if (!inputMessage.trim() || isLoading || !conversationId) return;
