@@ -155,21 +155,21 @@
   },
   "suites": [
     {
-      "title": "chat-input-buttons.spec.ts",
-      "file": "chat-input-buttons.spec.ts",
+      "title": "docs-system.spec.ts",
+      "file": "docs-system.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "ChatInput Button Functionality",
-          "file": "chat-input-buttons.spec.ts",
-          "line": 10,
+          "title": "📚 Documentation System",
+          "file": "docs-system.spec.ts",
+          "line": 17,
           "column": 6,
           "specs": [
             {
-              "title": "should show disabled buttons with \"kommer snart\" tooltips",
-              "ok": true,
+              "title": "should navigate to docs page and show documents",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -182,28 +182,68 @@
                     {
                       "workerIndex": 0,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 5407,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 18624,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-08T22:02:59.139Z",
+                      "startTime": "2025-11-08T22:07:58.316Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-b945f-ocs-page-and-show-documents-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-b945f-ocs-page-and-show-documents-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-b945f-ocs-page-and-show-documents-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
-              "id": "df1aaac9622de673f326-10fe5554e4ea23bde8b2",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 43,
+              "id": "a9f6e862a3656ac4c227-51642e53c9dde39a95f0",
+              "file": "docs-system.spec.ts",
+              "line": 25,
               "column": 3
             },
             {
-              "title": "should have disabled voice button with tooltip",
-              "ok": true,
+              "title": "should filter by category",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -216,28 +256,68 @@
                     {
                       "workerIndex": 1,
                       "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 5236,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 18895,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-08T22:02:59.154Z",
+                      "startTime": "2025-11-08T22:07:58.332Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-c8727-m-should-filter-by-category-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-c8727-m-should-filter-by-category-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-c8727-m-should-filter-by-category-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
-              "id": "df1aaac9622de673f326-8727a11df53a8d6cec76",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 69,
+              "id": "a9f6e862a3656ac4c227-8d389cb5c87324fa02f0",
+              "file": "docs-system.spec.ts",
+              "line": 41,
               "column": 3
             },
             {
-              "title": "Send button should be disabled when input is empty",
-              "ok": true,
+              "title": "should filter by outdated tag",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -250,28 +330,68 @@
                     {
                       "workerIndex": 2,
                       "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 5146,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 18570,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-08T22:02:59.174Z",
+                      "startTime": "2025-11-08T22:07:58.299Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-43077-ould-filter-by-outdated-tag-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-43077-ould-filter-by-outdated-tag-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-43077-ould-filter-by-outdated-tag-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
-              "id": "df1aaac9622de673f326-21b6ff7bede8cd2e8143",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 84,
+              "id": "a9f6e862a3656ac4c227-a93678f44c1acdf96546",
+              "file": "docs-system.spec.ts",
+              "line": 63,
               "column": 3
             },
             {
-              "title": "Send button should be enabled when input has text",
-              "ok": true,
+              "title": "should search for documents",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -284,71 +404,68 @@
                     {
                       "workerIndex": 3,
                       "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 5199,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 18447,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-08T22:02:59.156Z",
+                      "startTime": "2025-11-08T22:07:58.315Z",
                       "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "df1aaac9622de673f326-e46748c73ac30974082a",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 96,
-              "column": 3
-            },
-            {
-              "title": "Stop button should appear during streaming",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "location": {
-                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\chat-input-buttons.spec.ts",
-                        "line": 109,
-                        "column": 8
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-6c238-should-search-for-documents-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-6c238-should-search-for-documents-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-6c238-should-search-for-documents-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
                       }
                     }
                   ],
-                  "expectedStatus": "skipped",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-11-08T22:03:04.447Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
+                  "status": "unexpected"
                 }
               ],
-              "id": "df1aaac9622de673f326-6ef2e8b2edf5201a8c7c",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 109,
-              "column": 8
+              "id": "a9f6e862a3656ac4c227-8b1972a70386dd84568f",
+              "file": "docs-system.spec.ts",
+              "line": 86,
+              "column": 3
             },
             {
-              "title": "disabled buttons should log to console when clicked",
-              "ok": true,
+              "title": "should open template dropdown and show templates",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -359,73 +476,292 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 17843,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:18.599Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-110ee-dropdown-and-show-templates-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-110ee-dropdown-and-show-templates-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-110ee-dropdown-and-show-templates-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-0bfa2505d9321da6f7e7",
+              "file": "docs-system.spec.ts",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "should create document with Bug Report template",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 17960,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:18.626Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-4dc92-nt-with-Bug-Report-template-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-4dc92-nt-with-Bug-Report-template-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-4dc92-nt-with-Bug-Report-template-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-c9faff015c404be0ee16",
+              "file": "docs-system.spec.ts",
+              "line": 120,
+              "column": 3
+            },
+            {
+              "title": "should toggle between Edit and Preview tabs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 18071,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:18.625Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-a2067-tween-Edit-and-Preview-tabs-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-a2067-tween-Edit-and-Preview-tabs-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-a2067-tween-Edit-and-Preview-tabs-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-9db0cc026f0f2390e422",
+              "file": "docs-system.spec.ts",
+              "line": 159,
+              "column": 3
+            },
+            {
+              "title": "should show quick actions menu on doc card",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
                       "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 5570,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 17673,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-08T22:03:04.451Z",
+                      "startTime": "2025-11-08T22:08:19.051Z",
                       "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "df1aaac9622de673f326-32dedbbac5f2d5db8375",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 131,
-              "column": 3
-            },
-            {
-              "title": "compact UI should be visible in narrow panel",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "skip",
-                      "location": {
-                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\chat-input-buttons.spec.ts",
-                        "line": 165,
-                        "column": 8
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-7df93-ck-actions-menu-on-doc-card-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-7df93-ck-actions-menu-on-doc-card-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-7df93-ck-actions-menu-on-doc-card-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
                       }
                     }
                   ],
-                  "expectedStatus": "skipped",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-11-08T22:03:04.464Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
+                  "status": "unexpected"
                 }
               ],
-              "id": "df1aaac9622de673f326-33e2120ed044dfaa6608",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 165,
-              "column": 8
+              "id": "a9f6e862a3656ac4c227-2b63c4d76ebe42249e38",
+              "file": "docs-system.spec.ts",
+              "line": 184,
+              "column": 3
             },
             {
-              "title": "messages should use compact styling",
-              "ok": true,
+              "title": "should view a document",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -436,25 +772,1715 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
+                      "workerIndex": 8,
                       "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 4590,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 18184,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-11-08T22:03:04.469Z",
+                      "startTime": "2025-11-08T22:08:37.786Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentation-System-should-view-a-document-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentation-System-should-view-a-document-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentation-System-should-view-a-document-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-89ada7e37c64e0564edb",
+              "file": "docs-system.spec.ts",
+              "line": 200,
+              "column": 3
+            },
+            {
+              "title": "should show correct count after filtering",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 17765,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:37.893Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-5d102-rrect-count-after-filtering-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-5d102-rrect-count-after-filtering-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-5d102-rrect-count-after-filtering-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-fa75e32f46d9be102bb4",
+              "file": "docs-system.spec.ts",
+              "line": 222,
+              "column": 3
+            },
+            {
+              "title": "should navigate to docs page and show documents",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 17,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:56.738Z",
                       "annotations": [],
                       "attachments": []
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
-              "id": "df1aaac9622de673f326-531222fd54619d5f1a75",
-              "file": "chat-input-buttons.spec.ts",
-              "line": 195,
+              "id": "a9f6e862a3656ac4c227-881dd3585266fc5bb833",
+              "file": "docs-system.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "should filter by category",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 25,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:57.145Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-b107ce2e61de98d5b5ac",
+              "file": "docs-system.spec.ts",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "should filter by outdated tag",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 32,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:57.376Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-b2a97d77ac09ecaeb375",
+              "file": "docs-system.spec.ts",
+              "line": 63,
+              "column": 3
+            },
+            {
+              "title": "should search for documents",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 31,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:57.452Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-90f20b2b7f71e9625b08",
+              "file": "docs-system.spec.ts",
+              "line": 86,
+              "column": 3
+            },
+            {
+              "title": "should open template dropdown and show templates",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 35,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:00.029Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-68303855bbd613aa29b2",
+              "file": "docs-system.spec.ts",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "should create document with Bug Report template",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 32,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:00.988Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-f2d2bb1f60bd480fa643",
+              "file": "docs-system.spec.ts",
+              "line": 120,
+              "column": 3
+            },
+            {
+              "title": "should toggle between Edit and Preview tabs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 33,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:01.087Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-ceef1ebece14b88cf995",
+              "file": "docs-system.spec.ts",
+              "line": 159,
+              "column": 3
+            },
+            {
+              "title": "should show quick actions menu on doc card",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 29,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:01.931Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-6162d51269647ed8d525",
+              "file": "docs-system.spec.ts",
+              "line": 184,
+              "column": 3
+            },
+            {
+              "title": "should view a document",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 36,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:02.859Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-1e09e32c40703bb4ce05",
+              "file": "docs-system.spec.ts",
+              "line": 200,
+              "column": 3
+            },
+            {
+              "title": "should show correct count after filtering",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 29,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:04.226Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-e798e4dc849d27eba874",
+              "file": "docs-system.spec.ts",
+              "line": 222,
+              "column": 3
+            },
+            {
+              "title": "should navigate to docs page and show documents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 24,
+                      "parallelIndex": 0,
+                      "status": "interrupted",
+                      "duration": 8178,
+                      "error": {
+                        "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:06.100Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-b945f-ocs-page-and-show-documents-webkit\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-b945f-ocs-page-and-show-documents-webkit\\video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-533f3cf34fa4119e20e5",
+              "file": "docs-system.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "should filter by category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 25,
+                      "parallelIndex": 2,
+                      "status": "interrupted",
+                      "duration": 7209,
+                      "error": {
+                        "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:07.059Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-c8727-m-should-filter-by-category-webkit\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-c8727-m-should-filter-by-category-webkit\\video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-cf8542b4850a747a68d4",
+              "file": "docs-system.spec.ts",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "should filter by outdated tag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 26,
+                      "parallelIndex": 1,
+                      "status": "interrupted",
+                      "duration": 6722,
+                      "error": {
+                        "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:07.592Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-43077-ould-filter-by-outdated-tag-webkit\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-43077-ould-filter-by-outdated-tag-webkit\\video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-7a864a6e11952c1f433b",
+              "file": "docs-system.spec.ts",
+              "line": 63,
+              "column": 3
+            },
+            {
+              "title": "should search for documents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 27,
+                      "parallelIndex": 3,
+                      "status": "interrupted",
+                      "duration": 6142,
+                      "error": {
+                        "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 21
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 21
+                          },
+                          "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 19 |\u001b[39m     \u001b[90m// Login first (using dev login)\u001b[39m\n \u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 22 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 24 |\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:21:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:08.198Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-6c238-should-search-for-documents-webkit\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📚-Documentati-6c238-should-search-for-documents-webkit\\video.webm"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 21
+                      }
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-f7e7f5af5676cc888426",
+              "file": "docs-system.spec.ts",
+              "line": 86,
+              "column": 3
+            },
+            {
+              "title": "should open template dropdown and show templates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-576c5b0894ade5b336b6",
+              "file": "docs-system.spec.ts",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "should create document with Bug Report template",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-515a097b67a19505723a",
+              "file": "docs-system.spec.ts",
+              "line": 120,
+              "column": 3
+            },
+            {
+              "title": "should toggle between Edit and Preview tabs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-9541df512fb6ac37d6dd",
+              "file": "docs-system.spec.ts",
+              "line": 159,
+              "column": 3
+            },
+            {
+              "title": "should show quick actions menu on doc card",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-bf98b94c23f7a477a706",
+              "file": "docs-system.spec.ts",
+              "line": 184,
+              "column": 3
+            },
+            {
+              "title": "should view a document",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-29eabf182c917a2a60ca",
+              "file": "docs-system.spec.ts",
+              "line": 200,
+              "column": 3
+            },
+            {
+              "title": "should show correct count after filtering",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-196e2575f893f0b2a6ae",
+              "file": "docs-system.spec.ts",
+              "line": 222,
+              "column": 3
+            },
+            {
+              "title": "should navigate to docs page and show documents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-651750a466b22e4d62a0",
+              "file": "docs-system.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "should filter by category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-bd5f815d2ebabb64c8c7",
+              "file": "docs-system.spec.ts",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "should filter by outdated tag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-d2e749731a348ff0ca86",
+              "file": "docs-system.spec.ts",
+              "line": 63,
+              "column": 3
+            },
+            {
+              "title": "should search for documents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-e50bcc9bfd23e71a7c13",
+              "file": "docs-system.spec.ts",
+              "line": 86,
+              "column": 3
+            },
+            {
+              "title": "should open template dropdown and show templates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-37dd38cb4570b7a44c97",
+              "file": "docs-system.spec.ts",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "should create document with Bug Report template",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-39da0349974641207696",
+              "file": "docs-system.spec.ts",
+              "line": 120,
+              "column": 3
+            },
+            {
+              "title": "should toggle between Edit and Preview tabs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-43d161100b9605965ebd",
+              "file": "docs-system.spec.ts",
+              "line": 159,
+              "column": 3
+            },
+            {
+              "title": "should show quick actions menu on doc card",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-25c9a84ff4068866b2b9",
+              "file": "docs-system.spec.ts",
+              "line": 184,
+              "column": 3
+            },
+            {
+              "title": "should view a document",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-a94e8db1b67f8dfedc9b",
+              "file": "docs-system.spec.ts",
+              "line": 200,
+              "column": 3
+            },
+            {
+              "title": "should show correct count after filtering",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-315cbb1ab17a09761b49",
+              "file": "docs-system.spec.ts",
+              "line": 222,
+              "column": 3
+            },
+            {
+              "title": "should navigate to docs page and show documents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-ee39c51163e86e779b4f",
+              "file": "docs-system.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "should filter by category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-30b75dec0e6cdd2a2891",
+              "file": "docs-system.spec.ts",
+              "line": 41,
+              "column": 3
+            },
+            {
+              "title": "should filter by outdated tag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-394014efd08d0c2a6753",
+              "file": "docs-system.spec.ts",
+              "line": 63,
+              "column": 3
+            },
+            {
+              "title": "should search for documents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-9a61d93a236f26551355",
+              "file": "docs-system.spec.ts",
+              "line": 86,
+              "column": 3
+            },
+            {
+              "title": "should open template dropdown and show templates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-aa4a90fc070f45f15278",
+              "file": "docs-system.spec.ts",
+              "line": 104,
+              "column": 3
+            },
+            {
+              "title": "should create document with Bug Report template",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-0f903bdbd92de1fabe93",
+              "file": "docs-system.spec.ts",
+              "line": 120,
+              "column": 3
+            },
+            {
+              "title": "should toggle between Edit and Preview tabs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-7ec0f669856359f91d90",
+              "file": "docs-system.spec.ts",
+              "line": 159,
+              "column": 3
+            },
+            {
+              "title": "should show quick actions menu on doc card",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-44b34b5ff0816410c86b",
+              "file": "docs-system.spec.ts",
+              "line": 184,
+              "column": 3
+            },
+            {
+              "title": "should view a document",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-719f51744a5102f3db36",
+              "file": "docs-system.spec.ts",
+              "line": 200,
+              "column": 3
+            },
+            {
+              "title": "should show correct count after filtering",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-2ff0190ad5b544f31f0f",
+              "file": "docs-system.spec.ts",
+              "line": 222,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "📊 Docs System - Performance",
+          "file": "docs-system.spec.ts",
+          "line": 249,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load docs page quickly",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 16995,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:254:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 254
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 252 |\u001b[39m     \n \u001b[90m 253 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 254 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 255 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 256 |\u001b[39m     \n \u001b[90m 257 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/docs'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 254
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 252 |\u001b[39m     \n \u001b[90m 253 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 254 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 255 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 256 |\u001b[39m     \n \u001b[90m 257 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/docs'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:254:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:37.940Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📊-Docs-System-64d2e-ould-load-docs-page-quickly-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📊-Docs-System-64d2e-ould-load-docs-page-quickly-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📊-Docs-System-64d2e-ould-load-docs-page-quickly-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 254
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-63db82d1dce901a243ee",
+              "file": "docs-system.spec.ts",
+              "line": 250,
+              "column": 3
+            },
+            {
+              "title": "should handle search debouncing",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 17175,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:269:60",
+                        "location": {
+                          "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                          "column": 60,
+                          "line": 269
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 267 |\u001b[39m   test(\u001b[32m'should handle search debouncing'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 268 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 269 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 270 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 271 |\u001b[39m     \n \u001b[90m 272 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/docs'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                            "column": 60,
+                            "line": 269
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /dev login/i })\u001b[22m\n\n\n\u001b[0m \u001b[90m 267 |\u001b[39m   test(\u001b[32m'should handle search debouncing'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 268 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/login'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 269 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/dev login/i\u001b[39m })\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 270 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[32m'http://localhost:3000/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 271 |\u001b[39m     \n \u001b[90m 272 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'http://localhost:3000/docs'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts:269:60\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:08:38.734Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📊-Docs-System-9fe93-ld-handle-search-debouncing-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📊-Docs-System-9fe93-ld-handle-search-debouncing-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\docs-system-📊-Docs-System-9fe93-ld-handle-search-debouncing-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\tests\\docs-system.spec.ts",
+                        "column": 60,
+                        "line": 269
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-9fa6572df38b1df517f2",
+              "file": "docs-system.spec.ts",
+              "line": 267,
+              "column": 3
+            },
+            {
+              "title": "should load docs page quickly",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 23,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:04.630Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-be507ce615e976c7c4b0",
+              "file": "docs-system.spec.ts",
+              "line": 250,
+              "column": 3
+            },
+            {
+              "title": "should handle search debouncing",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 23,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 42,
+                      "error": {
+                        "message": "Error: browser.newContext: Unknown permission: clipboard-read",
+                        "stack": "Error: browser.newContext: Unknown permission: clipboard-read"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: browser.newContext: Unknown permission: clipboard-read"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-08T22:09:05.284Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-a7b5f87b37a74150173e",
+              "file": "docs-system.spec.ts",
+              "line": 267,
+              "column": 3
+            },
+            {
+              "title": "should load docs page quickly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-431c3d1322b7a6d9cc35",
+              "file": "docs-system.spec.ts",
+              "line": 250,
+              "column": 3
+            },
+            {
+              "title": "should handle search debouncing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-2396a51b0cfafcdc8aab",
+              "file": "docs-system.spec.ts",
+              "line": 267,
+              "column": 3
+            },
+            {
+              "title": "should load docs page quickly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-a6bdfbbc309362b10c5b",
+              "file": "docs-system.spec.ts",
+              "line": 250,
+              "column": 3
+            },
+            {
+              "title": "should handle search debouncing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-f29734f2ddc40b96911a",
+              "file": "docs-system.spec.ts",
+              "line": 267,
+              "column": 3
+            },
+            {
+              "title": "should load docs page quickly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-ead89c50b469efb5df7c",
+              "file": "docs-system.spec.ts",
+              "line": 250,
+              "column": 3
+            },
+            {
+              "title": "should handle search debouncing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9f6e862a3656ac4c227-e0d620ddd4cb80d58eb5",
+              "file": "docs-system.spec.ts",
+              "line": 267,
               "column": 3
             }
           ]
@@ -464,11 +2490,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-08T22:02:58.294Z",
-    "duration": 11818.788999999999,
-    "expected": 6,
-    "skipped": 2,
-    "unexpected": 0,
+    "startTime": "2025-11-08T22:07:57.381Z",
+    "duration": 77080.721,
+    "expected": 0,
+    "skipped": 36,
+    "unexpected": 24,
     "flaky": 0
   }
 }
