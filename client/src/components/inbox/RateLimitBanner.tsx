@@ -43,7 +43,7 @@ export default function RateLimitBanner({
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, [retryAfter, onClear]);
+  }, [retryAfter, onClear]); // Update countdown every second and clear on expiry
 
   if (!retryAfter) return null;
 

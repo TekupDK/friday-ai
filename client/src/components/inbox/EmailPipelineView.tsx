@@ -337,7 +337,7 @@ export default function EmailPipelineView({
       next[state.threadId] = state.stage as PipelineStage;
     });
     setPipelineState(prev => ({ ...prev, ...next }));
-  }, [pipelineStates]);
+  }, [pipelineStates]); // Sync pipeline states from backend
   const updatePipelineMutation =
     trpc.inbox.email.updatePipelineStage.useMutation({
       onSuccess: () => {
@@ -357,7 +357,7 @@ export default function EmailPipelineView({
       });
       return next;
     });
-  }, [emails]);
+  }, [emails]); // Initialize pipeline state for new emails
 
   const getStageTitle = (stage: PipelineStage) =>
     columns.find(column => column.id === stage)?.title ?? stage;

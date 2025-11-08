@@ -105,7 +105,7 @@ export default function InvoicesTab() {
     if (error && rateLimit.isRateLimitError(error)) {
       rateLimit.handleRateLimitError(error);
     }
-  }, [error, rateLimit]);
+  }, [error, rateLimit]); // Handle rate limit errors from API
 
   // Use shared context for invoice selection and AI analysis
   const {

@@ -89,7 +89,7 @@ export default function EmailThreadView({
         JSON.stringify({ ts: Date.now(), data: thread })
       );
     } catch {}
-  }, [thread, threadStorageKey]);
+  }, [thread, threadStorageKey]); // Persist thread to localStorage for instant reloads
 
   // PERFORMANCE: Show optimistic preview while loading full thread
   if (isLoading && initialPreview) {
