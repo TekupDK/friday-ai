@@ -103,7 +103,7 @@ ${finalHtml}
     };
     process();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [html, messageId, imagesEnabled]);
+  }, [html, messageId, imagesEnabled]); // Process email HTML and resolve CID images
 
   // Auto-resize iframe height
   React.useEffect(() => {
@@ -124,7 +124,7 @@ ${finalHtml}
     };
     iframe.addEventListener("load", onLoad);
     return () => iframe.removeEventListener("load", onLoad);
-  }, [docHtml]);
+  }, [docHtml]); // Auto-resize iframe height on content load
 
   return (
     <div className={className}>

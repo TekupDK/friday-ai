@@ -145,7 +145,7 @@ export function ActionApprovalModal({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [open, action, onApprove, onReject, alwaysApprove]);
+  }, [open, action, onApprove, onReject, alwaysApprove]); // Keyboard shortcuts: Cmd/Ctrl+Enter to approve, Escape to reject
 
   if (!action) return null;
 

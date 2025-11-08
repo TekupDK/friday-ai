@@ -33,7 +33,7 @@ export function LoginDialog({
     if (!onOpenChange) {
       setInternalOpen(open);
     }
-  }, [open, onOpenChange]);
+  }, [open, onOpenChange]); // Sync internal state when not controlled
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (onOpenChange) {

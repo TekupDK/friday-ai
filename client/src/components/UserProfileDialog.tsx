@@ -64,7 +64,7 @@ export function UserProfileDialog({
         name: user.name || "",
       });
     }
-  }, [open, user, reset]);
+  }, [open, user, reset]); // Reset form when dialog opens or user changes
 
   const onSubmit = async (data: ProfileFormData) => {
     await updateProfileMutation.mutateAsync({ name: data.name });
