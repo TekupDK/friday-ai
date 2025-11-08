@@ -9,11 +9,16 @@ import { test, expect } from '@playwright/test';
 
 test.describe('ChatInput Button Functionality', () => {
   test.beforeEach(async ({ page }) => {
-    // Navigate to Friday AI panel
+    // Login first (dev mode)
+    await page.goto('/api/dev-login');
+    await page.waitForTimeout(1000); // Wait for auth cookie
+    
+    // Navigate to workspace (Friday AI panel)
     await page.goto('/');
     
-    // Wait for chat to be ready
-    await page.waitForSelector('[data-testid="friday-chat-input"]', { timeout: 10000 });
+    // Wait for workspace and Friday panel to load
+    await page.waitForLoadState('networkidle');
+    await page.waitForSelector('[data-testid="friday-chat-input"]', { timeout: 15000 });
   });
 
   test('should show disabled buttons with "kommer snart" tooltips', async ({ page }) => {

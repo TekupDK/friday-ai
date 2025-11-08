@@ -23,7 +23,8 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { getLoginUrl } from "@/const";
 import { InvoiceProvider } from "@/context/InvoiceContext";
-import { Bot, LogOut, Menu, Settings, User } from "lucide-react";
+import { Bot, LogOut, Menu, Settings, User, BookOpen } from "lucide-react";
+import { useLocation } from "wouter";
 
 // Lazy load panels for code splitting optimization
 const AIAssistantPanel = lazy(() => import("@/components/panels/AIAssistantPanelV2"));
@@ -59,6 +60,7 @@ const PanelSkeleton = ({ name }: { name: string }) => (
 function WorkspaceLayout() {
   const { user, isAuthenticated, loading } = useAuth();
   const { state: emailState } = useEmailContext();
+  const [, navigate] = useLocation();
   const [showMobileInbox, setShowMobileInbox] = useState(false);
 
   // Dialog and Sheet state management
@@ -190,6 +192,11 @@ function WorkspaceLayout() {
               <DropdownMenuItem onClick={() => setShowSettingsDialog(true)}>
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate('/docs')}>
+                <BookOpen className="w-4 h-4 mr-2" />
+                Documentation
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>

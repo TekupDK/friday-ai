@@ -40,7 +40,7 @@ export default defineConfig({
     
     // Geolocation and permissions
     geolocation: { latitude: 55.6761, longitude: 12.5683 }, // Copenhagen
-    permissions: ['clipboard-read', 'clipboard-write'],
+    permissions: ['clipboard-read'],
     launchOptions: {
       args: ['--enable-precise-memory-info', '--js-flags=--expose-gc'],
     },

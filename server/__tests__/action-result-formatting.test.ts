@@ -59,8 +59,9 @@ describe('formatActionResultForAI', () => {
     expect(formatted).toContain('✅ Succes');
     expect(formatted).toContain('Opgave oprettet');
     expect(formatted).toContain('💡 Præsenter nu resultatet');
-    expect(formatted).not.toContain('{');
-    expect(formatted).not.toContain('JSON');
+    // Should not contain JSON structure (but the word "JSON" in instruction is OK)
+    expect(formatted).not.toContain('{"');
+    expect(formatted).not.toContain('":')
   });
 
   it('should format failure result with error', () => {

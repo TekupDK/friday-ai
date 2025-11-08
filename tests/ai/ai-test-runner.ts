@@ -28,7 +28,7 @@ export const test = base.extend<AITestFixtures>({
     const context = await browser.newContext({
       viewport: { width: 1920, height: 1080 },
       // Enable AI-specific features
-      permissions: ['clipboard-read', 'clipboard-write'],
+      permissions: ['clipboard-read'],
       // Set Danish locale for testing
       locale: 'da-DK',
       timezoneId: 'Europe/Copenhagen',

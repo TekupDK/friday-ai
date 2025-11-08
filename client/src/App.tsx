@@ -9,6 +9,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 // V2: Renamed from ChatInterface to WorkspaceLayout for clarity
 import WorkspaceLayout from "./pages/WorkspaceLayout";
 import LoginPage from "./pages/LoginPage";
+import DocsPage from "./pages/docs/DocsPage";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import { warmupCache } from "./lib/cacheStrategy";
@@ -35,6 +36,7 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={WorkspaceLayout} />
+      <Route path={"/docs"} component={DocsPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
