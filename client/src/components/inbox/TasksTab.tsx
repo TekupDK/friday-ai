@@ -514,7 +514,7 @@ export default function TasksTab() {
   // Clear selection when filters change
   useEffect(() => {
     setSelectedTasks(new Set());
-  }, [searchQuery, statusFilter, priorityFilter]);
+  }, [searchQuery, statusFilter, priorityFilter]); // Clear selection when filters change
 
   const isAllSelected = useMemo(() => {
     if (filteredTasks.length === 0) return false;
