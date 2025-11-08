@@ -85,7 +85,8 @@ export function EmailAssistant({
   // Analyze email when data changes
   useEffect(() => {
     analyzeEmail();
-  }, [emailData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [emailData]); // Analyze email when data changes
 
   const analyzeEmail = async () => {
     setIsAnalyzing(true);

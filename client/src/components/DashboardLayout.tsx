@@ -128,7 +128,7 @@ function DashboardLayoutContent({
     if (isCollapsed) {
       setIsResizing(false);
     }
-  }, [isCollapsed]);
+  }, [isCollapsed]); // Stop resizing when sidebar collapses
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -158,7 +158,7 @@ function DashboardLayoutContent({
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
     };
-  }, [isResizing, setSidebarWidth]);
+  }, [isResizing, setSidebarWidth]); // Handle sidebar resize with mouse
 
   return (
     <>

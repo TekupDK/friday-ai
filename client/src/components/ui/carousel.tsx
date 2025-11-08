@@ -89,7 +89,7 @@ function Carousel({
   React.useEffect(() => {
     if (!api || !setApi) return;
     setApi(api);
-  }, [api, setApi]);
+  }, [api, setApi]); // Update carousel API reference
 
   React.useEffect(() => {
     if (!api) return;
@@ -100,7 +100,7 @@ function Carousel({
     return () => {
       api?.off("select", onSelect);
     };
-  }, [api, onSelect]);
+  }, [api, onSelect]); // Setup carousel event listeners
 
   return (
     <CarouselContext.Provider

@@ -94,7 +94,8 @@ export function EmailAssistant3Panel({
     if (!isCollapsed) {
       analyzeEmail();
     }
-  }, [emailData, isCollapsed]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [emailData, isCollapsed]); // Analyze email when data changes or panel expands
 
   const analyzeEmail = async () => {
     setIsAnalyzing(true);

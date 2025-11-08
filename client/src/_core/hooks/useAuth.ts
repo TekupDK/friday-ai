@@ -70,7 +70,7 @@ export function useAuth(options?: UseAuthOptions) {
     logoutMutation.isPending,
     meQuery.isLoading,
     state.user,
-  ]);
+  ]); // Redirect to login if unauthenticated
 
   return {
     ...state,

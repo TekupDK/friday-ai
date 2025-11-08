@@ -90,7 +90,7 @@ export function useAdaptivePolling({
         document.removeEventListener(event, updateActivity);
       });
     };
-  }, [enabled, currentInterval, minInterval]);
+  }, [enabled, currentInterval, minInterval]); // Track user activity for adaptive polling
 
   // Track page visibility
   useEffect(() => {
@@ -118,7 +118,7 @@ export function useAdaptivePolling({
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [enabled, pauseOnHidden, minInterval, onPoll]);
+  }, [enabled, pauseOnHidden, minInterval, onPoll]); // Handle page visibility for adaptive polling
 
   // Adaptive polling logic
   useEffect(() => {
@@ -194,7 +194,7 @@ export function useAdaptivePolling({
     maxInterval,
     pauseOnHidden,
     onPoll,
-  ]); // Removed currentInterval from deps to prevent loop
+  ]); // Adaptive polling logic with interval adjustment // Removed currentInterval from deps to prevent loop
 
   return {
     currentInterval,
