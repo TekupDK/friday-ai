@@ -127,15 +127,16 @@ export function MapView({
         onMapReady(map.current);
       }
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only initialize map once on mount
 
   useEffect(() => {
-    // TODO: Update map properties when props change
+    // Update map properties when props change
     if (map.current) {
       map.current.setCenter(center);
       map.current.setZoom(zoom);
     }
-  }, [center, zoom]);
+  }, [center, zoom]); // Update map when center or zoom changes
 
   return <div ref={mapContainer} className={className} />;
 }

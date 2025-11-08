@@ -41,7 +41,7 @@ export function ThemeProvider({
     if (switchable) {
       localStorage.setItem("theme", theme);
     }
-  }, [theme, switchable]);
+  }, [theme, switchable]); // Apply theme to DOM and persist to localStorage
 
   const toggleTheme = switchable
     ? () => {

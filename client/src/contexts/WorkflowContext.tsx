@@ -177,7 +177,7 @@ export function WorkflowContextProvider({ children }: { children: ReactNode }) {
         console.error('Failed to save workflow context to storage:', error);
       }
     }
-  }, [state]);
+  }, [state]); // Persist workflow state to localStorage
 
   const setActiveTab = useCallback((tab: "tasks" | "calendar" | "projects" | "automation" | "customer") => {
     setState(prev => ({ ...prev, activeTab: tab }));

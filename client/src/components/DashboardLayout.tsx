@@ -50,7 +50,7 @@ export default function DashboardLayout({
 
   useEffect(() => {
     localStorage.setItem(SIDEBAR_WIDTH_KEY, sidebarWidth.toString());
-  }, [sidebarWidth]);
+  }, [sidebarWidth]); // Persist sidebar width to localStorage
 
   if (loading) {
     return <DashboardLayoutSkeleton />;
