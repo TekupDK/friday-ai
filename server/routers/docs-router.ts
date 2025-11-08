@@ -5,6 +5,7 @@ import { documents, documentComments, documentChanges, documentConflicts } from 
 import { eq, like, and, or, desc, sql } from "drizzle-orm";
 import { logger } from "../_core/logger";
 import { nanoid } from "nanoid";
+import { autoCreateLeadDoc, updateLeadDoc, generateWeeklyDigest, bulkGenerateLeadDocs } from "../docs/ai/auto-create";
 
 /**
  * Documentation System Router
@@ -435,5 +436,39 @@ export const docsRouter = router({
           ),
         },
       };
+    }),
+
+  // AI: Generate documentation for a lead
+  generateLeadDoc: protectedProcedure
+    .input(z.object({ leadId: z.string() }))
+    .mutation(async ({ input }) => {
+      logger.info({ leadId: input.leadId }, "[Docs Router] Generating lead doc");
+      const result = await autoCreateLeadDoc(input.leadId);
+      return result;
+    }),
+
+  // AI: Update existing lead documentation
+  updateLeadDoc: protectedProcedure
+    .input(z.object({ leadId: z.string(), docId: z.string() }))
+    .mutation(async ({ input }) => {
+      logger.info({ leadId: input.leadId, docId: input.docId }, "[Docs Router] Updating lead doc");
+      const result = await updateLeadDoc(input.leadId, input.docId);
+      return result;
+    }),
+
+  // AI: Generate weekly digest
+  generateWeeklyDigest: protectedProcedure
+    .mutation(async () => {
+      logger.info("[Docs Router] Generating weekly digest");
+      const result = await generateWeeklyDigest();
+      return result;
+    }),
+
+  // AI: Bulk generate for all leads
+  bulkGenerateLeadDocs: protectedProcedure
+    .mutation(async () => {
+      logger.info("[Docs Router] Bulk generating lead docs");
+      const result = await bulkGenerateLeadDocs();
+      return result;
     }),
 });
