@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FileText, Eye, Edit, Calendar, Tag, User, MoreVertical, Link2, Archive, AlertTriangle } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { toast } from "sonner";
 
 interface Document {
   id: string;
@@ -99,7 +100,10 @@ export function DocumentList({ documents, isLoading, onView, onEdit }: DocumentL
                       Edit
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigator.clipboard.writeText(`${window.location.origin}/docs/${doc.id}`)}>
+                    <DropdownMenuItem onClick={() => {
+                      navigator.clipboard.writeText(`${window.location.origin}/docs/${doc.id}`);
+                      toast.success('Link copied to clipboard!');
+                    }}>
                       <Link2 className="h-4 w-4 mr-2" />
                       Copy Link
                     </DropdownMenuItem>

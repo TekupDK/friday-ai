@@ -10,6 +10,7 @@ import { ArrowLeft, Save, X, Eye, Code } from "lucide-react";
 import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
 import ReactMarkdown from "react-markdown";
 import { useKeyboardShortcuts } from "@/hooks/docs/useKeyboardShortcuts";
+import { toast } from "sonner";
 
 interface DocumentEditorProps {
   documentId: string | null; // null = create new
@@ -272,7 +273,13 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
           tags: tagsArray,
         },
         {
-          onSuccess: onSave,
+          onSuccess: () => {
+            toast.success('Document updated successfully!');
+            onSave();
+          },
+          onError: (error: any) => {
+            toast.error(`Failed to update document: ${error.message}`);
+          },
         }
       );
     } else {
@@ -286,7 +293,13 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
           tags: tagsArray,
         },
         {
-          onSuccess: onSave,
+          onSuccess: () => {
+            toast.success('Document created successfully!');
+            onSave();
+          },
+          onError: (error: any) => {
+            toast.error(`Failed to create document: ${error.message}`);
+          },
         }
       );
     }
@@ -321,9 +334,9 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
             <X className="h-4 w-4 mr-2" />
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={isSaving || !title || !content}>
+          <Button onClick={handleSave} disabled={isSaving || !title || !content} title="Save (Ctrl+S)">
             <Save className="h-4 w-4 mr-2" />
-            {isSaving ? "Saving..." : "Save"}
+            {isSaving ? "Saving..." : "Save (Ctrl+S)"}
           </Button>
         </div>
       </div>
@@ -409,11 +422,11 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
           <CardTitle>Content</CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="edit" className="w-full">
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'edit' | 'preview')} className="w-full">
             <TabsList className="mb-4">
               <TabsTrigger value="edit">
                 <Code className="h-4 w-4 mr-2" />
-                Edit
+                Edit (Ctrl+P to toggle)
               </TabsTrigger>
               <TabsTrigger value="preview">
                 <Eye className="h-4 w-4 mr-2" />
