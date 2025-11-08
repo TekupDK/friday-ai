@@ -225,7 +225,8 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
     };
 
     analyzeLead();
-  }, [context.emailId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [context.emailId]); // Only re-analyze when email changes, not on every context update
 
   if (isAnalyzing) {
     return <WorkspaceSkeleton type="lead" />;

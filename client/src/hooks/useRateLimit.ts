@@ -152,7 +152,7 @@ export function useRateLimit() {
   useEffect(() => {
     return () => {
       if (retryTimeoutRef.current) {
-        clearTimeout(retryTimeoutRef.current);
+        clearTimeout(retryTimeoutRef.current); // Clear retry timeout
       }
     };
   }, []);

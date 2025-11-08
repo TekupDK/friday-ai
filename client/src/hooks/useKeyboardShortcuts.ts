@@ -76,7 +76,7 @@ export function useKeyboardShortcuts(
 
   useEffect(() => {
     shortcutsRef.current = shortcuts;
-  }, [shortcuts]);
+  }, [shortcuts]); // Update ref when shortcuts change
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -109,7 +109,7 @@ export function useKeyboardShortcuts(
   useEffect(() => {
     if (!enabled) return;
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown); // Register keyboard shortcuts
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);

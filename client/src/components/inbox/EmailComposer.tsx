@@ -101,7 +101,7 @@ export default function EmailComposer({
       setSelectedTemplate("none");
     }
     prevOpenRef.current = open;
-  }, [open, mode, replyTo, forwardFrom]);
+  }, [open, mode, replyTo, forwardFrom]); // All deps needed for compose initialization
 
   // Email templates
   const templates = [

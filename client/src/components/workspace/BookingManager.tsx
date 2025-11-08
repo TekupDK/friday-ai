@@ -149,7 +149,7 @@ export function BookingManager({ context }: BookingManagerProps) {
       });
       setIsLoading(false);
     }
-  }, [calendarEvents, calendarError, customerName, customerEmail, month, bookingType, address]);
+  }, [calendarEvents, calendarError, customerName, customerEmail, month, bookingType, address]); // All deps needed for booking data
 
   // Loading state
   if (isLoading) {

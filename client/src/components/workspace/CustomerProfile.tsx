@@ -154,7 +154,7 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
       setError("Kunne ikke hente kunde data");
       setIsLoading(false);
     }
-  }, [invoices, calendarEvents, customerName, customerEmail, address]);
+  }, [invoices, calendarEvents, customerName, customerEmail, address]); // All deps needed for customer stats
 
   // Loading state
   if (isLoading) {

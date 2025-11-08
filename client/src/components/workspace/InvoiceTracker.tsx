@@ -93,7 +93,7 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
       });
       setIsLoading(false);
     }
-  }, [invoiceNumber, billyInvoice, billyError, from, body]);
+  }, [invoiceNumber, billyInvoice, billyError, from, body]); // All deps needed for invoice processing
 
   // Loading state
   if (isLoading || isBillyLoading) {

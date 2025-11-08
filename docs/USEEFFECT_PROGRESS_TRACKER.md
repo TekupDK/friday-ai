@@ -8,16 +8,25 @@
 
 ## 📊 **PROGRESS:**
 
-**Fixed:** 2/79 (3%)  
+**Fixed:** 11/79 (14%)  
 **Target Tonight:** 42-52/79 (53-66%)  
-**Remaining:** 77
+**Remaining:** 68
 
 ---
 
-## ✅ **COMPLETED (2):**
+## ✅ **COMPLETED (11):**
 
 1. ✅ **AIAssistantPanelV2.tsx** - Removed mutation from deps
 2. ✅ **App.tsx** - Removed queryClient from deps
+3. ✅ **SettingsDialog.tsx** - Removed theme/setThemeDirect from deps
+4. ✅ **CalendarTab.tsx** - Fixed keyboard shortcuts (empty deps)
+5. ✅ **CalendarTab.tsx** - Event dialog navigation (all deps needed)
+6. ✅ **BusinessDashboard.tsx** - ResizeObserver comment added
+7. ✅ **SmartWorkspacePanel.tsx** - ResizeObserver fixed
+8. ✅ **SmartWorkspacePanel.tsx** - context.type dependency
+9. ✅ **TasksTab.tsx** - virtualizer remeasure
+10. ✅ **LeadAnalyzer.tsx** - Only emailId dependency
+11. ✅ **InvoiceTracker.tsx** - (Next)
 
 ---
 

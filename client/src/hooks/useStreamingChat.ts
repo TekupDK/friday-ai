@@ -200,7 +200,7 @@ export function useStreamingChat(options: StreamingChatOptions) {
     return () => {
       stopStreaming();
     };
-  }, [stopStreaming]);
+  }, [stopStreaming]); // Cleanup streaming connection on unmount
 
   return {
     startStreaming,

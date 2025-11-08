@@ -78,7 +78,7 @@ export function useFridayChat({
   useEffect(() => {
     return () => {
       if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
+        abortControllerRef.current.abort(); // Abort pending requests
       }
     };
   }, []);
@@ -86,7 +86,7 @@ export function useFridayChat({
   // Memory management - limit messages
   useEffect(() => {
     if (messages.length > maxMessages) {
-      setMessages(prev => prev.slice(-maxMessages));
+      setMessages(prev => prev.slice(-maxMessages)); // Keep only recent messages
     }
   }, [messages.length, maxMessages]);
 
