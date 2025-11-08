@@ -6,8 +6,9 @@ import { ArrowLeft, Edit, Calendar, Tag, User, GitBranch } from "lucide-react";
 import { useDocument, useDocumentComments } from "@/hooks/docs/useDocuments";
 import { formatDistanceToNow } from "date-fns";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+// TODO: Install react-syntax-highlighter
+// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface DocumentViewerProps {
   documentId: string;
@@ -72,7 +73,7 @@ export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerPro
             {document.tags && document.tags.length > 0 && (
               <div className="flex items-center gap-2">
                 <Tag className="h-4 w-4 text-muted-foreground" />
-                {document.tags.map((tag) => (
+                {document.tags.map((tag: string) => (
                   <Badge key={tag} variant="outline">
                     {tag}
                   </Badge>
@@ -110,19 +111,11 @@ export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerPro
         <CardContent className="prose prose-slate dark:prose-invert max-w-none p-8">
           <ReactMarkdown
             components={{
-              code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || "");
-                return !inline && match ? (
-                  <SyntaxHighlighter
-                    style={oneDark}
-                    language={match[1]}
-                    PreTag="div"
-                    {...props}
-                  >
-                    {String(children).replace(/\n$/, "")}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code className={className} {...props}>
+              code({ className, children, ...props }: any) {
+                // Simple code rendering without syntax highlighting
+                // TODO: Add syntax highlighting when react-syntax-highlighter is installed
+                return (
+                  <code className={`${className} bg-muted p-1 rounded`} {...props}>
                     {children}
                   </code>
                 );

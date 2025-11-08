@@ -50,89 +50,19 @@ providers:
 # Test prompts for different use cases
 prompts:
   # Danish Business Communication
-  - label: "Danish Business Email"
-    prompt: |
-      Du er Friday, en professionel dansk executive assistant for Rendetalje.
-      Skriv et kortfattet, professionelt svar på denne email:
-      
-      "Hej, jeg vil gerne have et tilbud på en badværelsesrenovering. 
-      Hvornår kan I komme ud og se på det?"
-      
-      Dit svar skal være:
-      - På dansk
-      - Professionelt men venligt
-      - Inkludere forslag til næste skridt
-      - Maksimalt 3-4 linjer
+  - "Du er Friday, en professionel dansk executive assistant for Rendetalje. Skriv et kortfattet, professionelt svar på denne email: 'Hej, jeg vil gerne have et tilbud på en badværelsesrenovering. Hvornår kan I komme ud og se på det?' Dit svar skal være på dansk, professionelt men venligt, inkludere forslag til næste skridt, og være maksimalt 3-4 linjer."
   
   # Calendar/Time Reasoning
-  - label: "Calendar Reasoning"
-    prompt: |
-      Jeg skal have et møde med Peter næste uge. 
-      Mødet skal være 2 timer langt og kan kun være om onsdagen mellem 10-16.
-      Peters kalender viser: 
-      - Onsdag 10:00-11:30: Eksisterende møde
-      - Onsdag 14:00-15:00: Eksisterende møde
-      
-      Hvornår kan mødet placeres? Giv 2 forslag på dansk.
+  - "Jeg skal have et møde med Peter næste uge. Mødet skal være 2 timer langt og kan kun være om onsdagen mellem 10-16. Peters kalender viser: Onsdag 10:00-11:30 eksisterende møde, og Onsdag 14:00-15:00 eksisterende møde. Hvornår kan mødet placeres? Giv 2 forslag på dansk."
   
   # Data Extraction & Analysis
-  - label: "Invoice Data Extraction"
-    prompt: |
-      Udtræk faktura-information fra denne tekst:
-      
-      "Vi har leveret følgende:
-      - Badekar installation: 15.000 kr
-      - Fliser (materialer + arbejde): 28.500 kr
-      - VVS arbejde: 12.000 kr
-      
-      Arbejdet blev udført d. 15. marts 2024.
-      Kunde: Tomas Jensen, Hovedgaden 42, 2100 København Ø"
-      
-      Returner som JSON med felter: items, amounts, customer, address, date
+  - "Udtræk faktura-information fra denne tekst: Vi har leveret følgende: Badekar installation 15.000 kr, Fliser 28.500 kr, VVS arbejde 12.000 kr. Arbejdet blev udført d. 15. marts 2024. Kunde: Tomas Jensen, Hovedgaden 42, 2100 København Ø. Returner som JSON med felter: items, amounts, customer, address, date"
   
   # Complex Reasoning
-  - label: "Complex Project Planning"
-    prompt: |
-      En kunde ønsker en komplet badeværelsesrenovering. 
-      Projektet inkluderer: nedrivning, VVS, fliser, inventar.
-      
-      Baseret på typiske projekter:
-      - Nedrivning: 1-2 dage
-      - VVS: 2-3 dage (skal vente 24t efter nedrivning)
-      - Fliser: 3-4 dage (kan starte samtidig med VVS dag 2)
-      - Inventar: 1 dag (skal vente til fliser er færdige)
-      
-      Hvad er den korteste projektvarighed? Forklar din reasoning på dansk.
+  - "En kunde ønsker en komplet badeværelsesrenovering med nedrivning, VVS, fliser, inventar. Nedrivning tager 1-2 dage, VVS 2-3 dage (skal vente 24t efter nedrivning), Fliser 3-4 dage (kan starte samtidig med VVS dag 2), Inventar 1 dag (skal vente til fliser er færdige). Hvad er den korteste projektvarighed? Forklar din reasoning på dansk."
   
-  # Code Generation
-  - label: "TypeScript Function"
-    prompt: |
-      Skriv en TypeScript funktion der:
-      1. Tager en liste af fakturaer med beløb og datoer
-      2. Grupperer dem efter måned
-      3. Returnerer total per måned sorteret efter dato
-      
-      Type: Invoice = { amount: number; date: string; }
-      Inkluder typer og JSDoc comments.
-  
-  # Email Thread Analysis
-  - label: "Email Thread Summary"
-    prompt: |
-      Opsummer denne email-tråd på dansk (max 2 linjer):
-      
-      Email 1: "Hej, jeg vil gerne have et tilbud på tagarbejde"
-      Email 2: "Tak for din henvendelse. Vi kan komme ud d. 15/3"
-      Email 3: "Perfekt, det passer fint"
-      Email 4: "Bekræfter aftale d. 15/3 kl 10:00"
-  
-  # Multi-language Support
-  - label: "English to Danish Translation"
-    prompt: |
-      Oversæt følgende professionelle email til dansk:
-      
-      "Thank you for your inquiry regarding our bathroom renovation services. 
-      We would be happy to provide you with a detailed quote. 
-      Our team can visit your property next week to assess the scope of work."
+  # Email Thread Summary
+  - "Opsummer denne email-tråd på dansk (max 2 linjer): Email 1: Hej, jeg vil gerne have et tilbud på tagarbejde. Email 2: Tak for din henvendelse. Vi kan komme ud d. 15/3. Email 3: Perfekt, det passer fint. Email 4: Bekræfter aftale d. 15/3 kl 10:00"
 
 # Evaluation criteria
 tests:
