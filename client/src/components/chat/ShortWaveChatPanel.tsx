@@ -55,7 +55,6 @@ export default function ShortWaveChatPanel({
     context: memoizedContext 
   });
 
-  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });

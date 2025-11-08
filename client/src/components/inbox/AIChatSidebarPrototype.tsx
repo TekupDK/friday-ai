@@ -1,3 +1,10 @@
+/**
+ * @deprecated Use ShortWaveChatPanel from ../chat/ShortWaveChatPanel.tsx
+ * 
+ * This Phase 0 prototype has been replaced by the new modular chat system.
+ * See EmailThreadView.tsx for integration example.
+ */
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";

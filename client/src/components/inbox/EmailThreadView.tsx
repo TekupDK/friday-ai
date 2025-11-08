@@ -10,7 +10,7 @@ import { Bot } from "lucide-react";
 import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import EmailIframeView from "../EmailIframeView";
 import { SafeStreamdown } from "../SafeStreamdown";
-import { AIChatSidebarPrototype } from "./AIChatSidebarPrototype";
+import ShortWaveChatPanel from "../chat/ShortWaveChatPanel";
 import EmailActions from "./EmailActions";
 import { EmailAssistant3Panel } from "../workspace/EmailAssistant3Panel";
 const EmailAISummary = lazy(() => import("./EmailAISummary"));
@@ -42,12 +42,26 @@ export default function EmailThreadView({
   initialPreview,
 }: EmailThreadViewProps) {
   const [showAISidebar, setShowAISidebar] = useState(false);
+  const [conversationId, setConversationId] = useState<number | undefined>(undefined);
   const [emailContext, setEmailContext] = useState<{
     threadId: string;
     subject: string;
     from: string;
     body: string;
   } | null>(null);
+
+  // Create conversation for AI sidebar
+  const createConversation = trpc.chat.createConversation.useMutation({
+    onSuccess: (newConv) => {
+      setConversationId(newConv.id);
+    },
+  });
+
+  useEffect(() => {
+    if (showAISidebar && !conversationId && !createConversation.isPending) {
+      createConversation.mutate({ title: "Email AI Assistant" });
+    }
+  }, [showAISidebar, conversationId, createConversation]); // Create conversation when AI sidebar opens
 
   // LocalStorage-backed initialData for instant reloads
   const threadStorageKey = useMemo(
@@ -347,10 +361,33 @@ export default function EmailThreadView({
 
       {/* AI Sidebar */}
       {showAISidebar && emailContext && (
-        <AIChatSidebarPrototype
-          emailContext={emailContext}
-          onClose={() => setShowAISidebar(false)}
-        />
+        <div className="w-80 border-l border-border bg-background h-full flex flex-col">
+          {/* Header with close button */}
+          <div className="p-4 border-b border-border flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Bot className="w-5 h-5 text-primary" />
+              <h3 className="font-semibold">Friday AI</h3>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setShowAISidebar(false)}
+            >
+              <span className="sr-only">Close</span>
+              ✕
+            </Button>
+          </div>
+          
+          {/* Chat Panel */}
+          <div className="flex-1 overflow-hidden">
+            <ShortWaveChatPanel 
+              conversationId={conversationId}
+              context={{
+                selectedEmails: [emailContext.threadId],
+              }}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
