@@ -15,6 +15,10 @@ Format: YYYY-MM-DD · type(scope): description
 - perf(chat): optimize message preview truncation (60→40 chars)
 - style(chat): improve spacing and readability (padding, icon sizes)
 - refactor(chat): create ensureTitleHasEmoji() for backward compatibility
+- feat(tools): add ToolRegistry with zod validation + approval gating
+- sec(tools): require approval for destructive tools (create/update/delete calendar, create_billy_invoice)
+- feat(analytics): audit log tool calls via trackEvent (tool_call with correlationId)
+- fix(gmail): add bcc to create_gmail_draft schema; clarify search_gmail description
 
 ### Navigation improvements detail
 
@@ -53,4 +57,3 @@ Format: YYYY-MM-DD · type(scope): description
 - feat(chat): finalize ActionCatalog schema and validators
 - feat(chat): build and deploy MVP UI (ApprovalModal, SuggestionsBar)
 - feat(chat): gate chat features with FRIDAY_ACTION_SUGGESTIONS flag
-

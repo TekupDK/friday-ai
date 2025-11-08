@@ -1,4 +1,5 @@
 import { trpc } from "@/lib/trpc";
+import { InvoiceProvider } from "@/context/InvoiceContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, type RenderOptions } from "@testing-library/react";
 import { httpBatchLink } from "@trpc/client";
@@ -47,7 +48,7 @@ function customRender(
     return (
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <InvoiceProvider>{children}</InvoiceProvider>
         </QueryClientProvider>
       </trpc.Provider>
     );

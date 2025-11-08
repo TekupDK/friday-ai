@@ -8,6 +8,7 @@ export interface KeyboardShortcut {
   ctrlKey?: boolean;
   metaKey?: boolean;
   shiftKey?: boolean;
+  altKey?: boolean;
   handler: (event: KeyboardEvent) => void;
   description: string;
   category: "navigation" | "action" | "search" | "modal" | "help";
@@ -91,8 +92,9 @@ export function useKeyboardShortcuts(
         const ctrlMatches = !!s.ctrlKey === event.ctrlKey;
         const metaMatches = !!s.metaKey === event.metaKey;
         const shiftMatches = !!s.shiftKey === event.shiftKey;
+        const altMatches = !!s.altKey === event.altKey;
 
-        return keyMatches && ctrlMatches && metaMatches && shiftMatches;
+        return keyMatches && ctrlMatches && metaMatches && shiftMatches && altMatches;
       });
 
       if (shortcut) {

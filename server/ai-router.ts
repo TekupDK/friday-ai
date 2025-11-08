@@ -6,22 +6,16 @@
 import { randomBytes } from "crypto";
 import { invokeLLM, type Message } from "./_core/llm";
 import { getFridaySystemPrompt } from "./friday-prompts";
+import { invokeLLMWithRouting, selectModel, type TaskType, type AIModel } from "./model-router";
 import {
   executeAction,
   parseIntent,
   type ActionResult,
 } from "./intent-actions";
+import { getFeatureFlags } from "./_core/feature-flags";
 
-export type AIModel = "gemma-3-27b-free";
-
-export type TaskType =
-  | "chat"
-  | "email-draft"
-  | "invoice-create"
-  | "calendar-check"
-  | "lead-analysis"
-  | "data-analysis"
-  | "code-generation";
+// Re-export types from model-router for backward compatibility
+export type { AIModel, TaskType } from "./model-router";
 
 export interface EmailContext {
   page?: string; // Current page/tab
@@ -45,6 +39,7 @@ export interface AIRouterOptions {
   userId?: number;
   requireApproval?: boolean; // NEW: If true, return pendingAction instead of executing
   context?: EmailContext; // Shortwave-style context tracking
+  correlationId?: string;
 }
 
 export interface PendingAction {
@@ -80,20 +75,18 @@ export interface AIResponse {
 }
 
 /**
- * Select the best model for a given task type
+ * Enhanced model selection with routing and feature flags
  */
-function selectModelForTask(taskType: TaskType): AIModel {
-  const modelMap: Record<TaskType, AIModel> = {
-    chat: "gemma-3-27b-free", // FREE + Claude-quality for general chat
-    "email-draft": "gemma-3-27b-free", // Good at professional writing
-    "invoice-create": "gemma-3-27b-free", // Structured data generation
-    "calendar-check": "gemma-3-27b-free", // Simple logic
-    "lead-analysis": "gemma-3-27b-free", // Complex analysis
-    "data-analysis": "gemma-3-27b-free", // Data processing
-    "code-generation": "gemma-3-27b-free", // Code quality
-  };
-
-  return modelMap[taskType] || "gemma-3-27b-free";
+function selectModelForTask(taskType: TaskType, userId?: number, explicitModel?: AIModel): AIModel {
+  const flags = getFeatureFlags(userId);
+  
+  // If model routing is disabled or explicit model provided, use legacy logic
+  if (!flags.enableModelRouting || explicitModel) {
+    return explicitModel || "gemma-3-27b-free";
+  }
+  
+  // Use new model routing system
+  return selectModel(taskType, userId, explicitModel);
 }
 
 /**
@@ -230,15 +223,17 @@ export async function routeAI(
     userId,
     requireApproval = true, // DEFAULT: Require approval for all actions
     context,
+    correlationId,
   } = options;
 
   // Use preferred model first, then explicit model, then select based on task type
-  const selectedModel =
-    preferredModel || explicitModel || selectModelForTask(taskType);
+  const selectedModel = selectModelForTask(taskType, userId, explicitModel || preferredModel);
 
-  console.log(
-    `[AI Router] Using model: ${selectedModel} for task: ${taskType}`
-  );
+  const logPrefix = correlationId
+    ? `[AI Router][${correlationId}]`
+    : `[AI Router]`;
+
+  console.log(`${logPrefix} Using model: ${selectedModel} for task: ${taskType}`);
 
   // Get the last user message to check for intents
   const lastUserMessage = messages.filter(m => m.role === "user").pop();
@@ -248,16 +243,16 @@ export async function routeAI(
   // Parse intent from user message
   const intent = parseIntent(userMessageText);
   console.log(
-    `[AI Router] Detected intent: ${intent.intent} (confidence: ${intent.confidence})`
+    `${logPrefix} Detected intent: ${intent.intent} (confidence: ${intent.confidence})`
   );
-  console.log(`[AI Router] Intent params:`, intent.params);
+  console.log(`${logPrefix} Intent params:`, intent.params);
 
   let actionResult: ActionResult | null = null;
   let pendingAction: PendingAction | undefined = undefined;
 
   // Debug: Check execution conditions (only if DEBUG=true)
   if (process.env.DEBUG === "true") {
-    console.log(`[AI Router] Execution conditions:`, {
+    console.log(`${logPrefix} Execution conditions:`, {
       confidence: intent.confidence,
       confidenceCheck: intent.confidence > 0.7,
       intentNotUnknown: intent.intent !== "unknown",
@@ -277,18 +272,18 @@ export async function routeAI(
     if (requireApproval) {
       // Return pending action for user approval
       console.log(
-        `[AI Router] CREATING pending action for intent: ${intent.intent}`
+        `${logPrefix} CREATING pending action for intent: ${intent.intent}`
       );
       pendingAction = createPendingAction(intent);
-      console.log(`[AI Router] Pending action created:`, pendingAction);
+      console.log(`${logPrefix} Pending action created:`, pendingAction);
     } else {
       // Execute action immediately (legacy mode)
-      console.log(`[AI Router] EXECUTING action for intent: ${intent.intent}`);
+      console.log(`${logPrefix} EXECUTING action for intent: ${intent.intent}`);
       try {
-        actionResult = await executeAction(intent, userId);
-        console.log(`[AI Router] Action SUCCESS:`, actionResult);
+        actionResult = await executeAction(intent, userId, { correlationId });
+        console.log(`${logPrefix} Action SUCCESS:`, actionResult);
       } catch (error) {
-        console.error(`[AI Router] Action execution FAILED:`, error);
+        console.error(`${logPrefix} Action execution FAILED:`, error);
         actionResult = {
           success: false,
           message: "Der opstod en fejl under udførelsen af handlingen.",
@@ -427,33 +422,80 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
   }
 
   try {
-    // Call AI to generate response (with action context if available)
-    const response = await invokeLLM({
-      messages: finalMessages,
-    });
+    // Call AI with enhanced routing and fallbacks
+    const flags = getFeatureFlags(userId);
+    let response;
 
-    const messageContent = response.choices[0]?.message?.content;
-    let content = typeof messageContent === "string" ? messageContent : "";
-
-    // If action was executed successfully, prepend action confirmation
-    if (actionResult && actionResult.success) {
-      content = actionResult.message + "\n\n" + content;
+    if (flags.enableModelRouting && !explicitModel && !preferredModel) {
+      // Use new model routing system with fallbacks
+      response = await invokeLLMWithRouting(taskType, finalMessages, {
+        userId,
+        stream: false,
+        maxRetries: 2,
+      });
+    } else {
+      // Use legacy LLM invocation
+      response = await invokeLLM({
+        messages: finalMessages,
+        model: selectedModel,
+      });
     }
 
-    return {
-      content,
-      model: selectedModel,
-      usage: response.usage
-        ? {
-            promptTokens: response.usage.prompt_tokens,
-            completionTokens: response.usage.completion_tokens,
-            totalTokens: response.usage.total_tokens,
-          }
-        : undefined,
-      pendingAction, // Include pending action if created
-    };
+    // Handle both streaming and non-streaming responses
+    if (Symbol.asyncIterator in response) {
+      // Streaming response - accumulate chunks
+      let accumulatedContent = "";
+      for await (const chunk of response) {
+        accumulatedContent += chunk;
+      }
+      
+      const messageContent = accumulatedContent;
+      let content = typeof messageContent === "string" ? messageContent : "";
+
+      // If action was executed successfully, prepend action confirmation
+      if (actionResult && actionResult.success) {
+        content = actionResult.message + "\n\n" + content;
+      }
+
+      return {
+        content,
+        model: selectedModel,
+        usage: {
+          promptTokens: 0,
+          completionTokens: content.length,
+          totalTokens: content.length,
+        },
+        pendingAction, // Include pending action if created
+      };
+    } else {
+      // Non-streaming response
+      const messageContent = response.choices[0]?.message?.content;
+      let content = typeof messageContent === "string" ? messageContent : "";
+
+      // If action was executed successfully, prepend action confirmation
+      if (actionResult && actionResult.success) {
+        content = actionResult.message + "\n\n" + content;
+      }
+
+      return {
+        content,
+        model: selectedModel,
+        usage: response.usage
+          ? {
+              promptTokens: response.usage.prompt_tokens,
+              completionTokens: response.usage.completion_tokens,
+              totalTokens: response.usage.total_tokens,
+            }
+          : {
+              promptTokens: 0,
+              completionTokens: content.length,
+              totalTokens: content.length,
+            },
+        pendingAction, // Include pending action if created
+      };
+    }
   } catch (error) {
-    console.error(`[AI Router] Error with model ${selectedModel}:`, error);
+    console.error(`${logPrefix} Error with model ${selectedModel}:`, error);
 
     // If action succeeded but AI failed, return action result
     if (actionResult && actionResult.success) {

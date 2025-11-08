@@ -35,6 +35,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { trpc } from "@/lib/trpc";
+import { parseCalendarEvent, BUSINESS_CONSTANTS } from "@/lib/business-logic";
 import {
   Bell,
   Brush,
@@ -961,10 +962,10 @@ export default function CalendarTab() {
                                   {estimate.hours && (
                                     <div className="flex justify-between gap-4">
                                       <span className="text-muted-foreground">
-                                        Timer ({estimate.hours}t × 450 kr/t)
+                                        Timer ({estimate.hours}t × {BUSINESS_CONSTANTS.HOURLY_RATE} kr/t)
                                       </span>
                                       <span className="font-medium">
-                                        {parseFloat(estimate.hours) * 450} kr
+                                        {parseFloat(estimate.hours) * BUSINESS_CONSTANTS.HOURLY_RATE} kr
                                       </span>
                                     </div>
                                   )}

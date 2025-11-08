@@ -7,13 +7,14 @@ import { trpc } from "@/lib/trpc";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
 import { Bot } from "lucide-react";
-import { useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import EmailIframeView from "../EmailIframeView";
 import { SafeStreamdown } from "../SafeStreamdown";
 import { AIChatSidebarPrototype } from "./AIChatSidebarPrototype";
 import EmailActions from "./EmailActions";
-import EmailAISummary from "./EmailAISummary";
-import EmailLabelSuggestions from "./EmailLabelSuggestions";
+import { EmailAssistant3Panel } from "../workspace/EmailAssistant3Panel";
+const EmailAISummary = lazy(() => import("./EmailAISummary"));
+const EmailLabelSuggestions = lazy(() => import("./EmailLabelSuggestions"));
 
 interface EmailThreadViewProps {
   threadId: string;
@@ -48,21 +49,47 @@ export default function EmailThreadView({
     body: string;
   } | null>(null);
 
+  // LocalStorage-backed initialData for instant reloads
+  const threadStorageKey = useMemo(
+    () => `inbox:thread:${encodeURIComponent(threadId)}`,
+    [threadId]
+  );
+  const initialThread = useMemo(() => {
+    try {
+      const raw = localStorage.getItem(threadStorageKey);
+      if (!raw) return undefined;
+      const parsed = JSON.parse(raw) as { ts: number; data: any };
+      if (!parsed?.data) return undefined;
+      const age = Date.now() - (parsed.ts || 0);
+      if (age > 5 * 60 * 1000) return undefined; // 5 minutes
+      return parsed.data;
+    } catch {
+      return undefined;
+    }
+  }, [threadStorageKey]);
+
   const { data: thread, isLoading } = trpc.inbox.email.getThread.useQuery(
+    { threadId },
     {
-      threadId,
-    },
-    {
-      // PERFORMANCE OPTIMIZATION: Cache threads for 5 minutes
-      // Cached threads load in ~10ms instead of ~615ms (98% faster)
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes (React Query v5)
-      // Don't refetch automatically - user can manually refresh if needed
+      staleTime: 5 * 60 * 1000,
+      gcTime: 10 * 60 * 1000,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
+      initialData: initialThread,
     }
   );
+
+  // Persist latest thread
+  useEffect(() => {
+    if (!thread) return;
+    try {
+      localStorage.setItem(
+        threadStorageKey,
+        JSON.stringify({ ts: Date.now(), data: thread })
+      );
+    } catch {}
+  }, [thread, threadStorageKey]);
 
   // PERFORMANCE: Show optimistic preview while loading full thread
   if (isLoading && initialPreview) {
@@ -226,28 +253,73 @@ export default function EmailThreadView({
                 )}
 
                 {/* AI Summary - below subject */}
-                {isLast && message.id && (
-                  <EmailAISummary
-                    emailId={parseInt(message.id, 10)}
-                    collapsed={false}
-                    className="mb-3"
-                  />
+                {isLast && (
+                  <Suspense fallback={<div className="h-3 bg-muted/40 rounded w-3/4 mb-3" />}>
+                    <EmailAISummary
+                      threadId={message.threadId || threadId}
+                      collapsed={false}
+                      className="mb-3"
+                    />
+                  </Suspense>
                 )}
 
                 {/* AI Label Suggestions - below summary */}
-                {isLast && message.id && (
-                  <EmailLabelSuggestions
-                    emailId={parseInt(message.id, 10)}
-                    currentLabels={thread.labels || []}
-                    onLabelApplied={() => {
-                      // Trigger label change callback
-                      if (onLabelChange) {
-                        onLabelChange();
-                      }
-                    }}
-                    collapsed={false}
-                    className="mb-3"
-                  />
+                {isLast && (
+                  <Suspense fallback={<div className="h-6 bg-muted/30 rounded w-40 mb-3" />}>
+                    <EmailLabelSuggestions
+                      threadId={message.threadId || threadId}
+                      currentLabels={thread.labels || []}
+                      onLabelApplied={() => {
+                        // Trigger label change callback
+                        if (onLabelChange) {
+                          onLabelChange();
+                        }
+                      }}
+                      collapsed={false}
+                      className="mb-3"
+                    />
+                  </Suspense>
+                )}
+
+                {/* Phase 9.9: AI Email Assistant - below label suggestions */}
+                {isLast && (
+                  <Suspense fallback={<div className="h-20 bg-muted/30 rounded-lg mb-3 animate-pulse" />}>
+                    <EmailAssistant3Panel
+                      emailData={{
+                        from: message.from || "",
+                        subject: message.subject || "",
+                        body: (message as any).bodyText || message.body || "",
+                        threadId: message.threadId || threadId,
+                      }}
+                      onInsertReply={(content) => {
+                        // Insert content i reply system
+                        if (onReply) {
+                          onReply({
+                            content,
+                            threadId: message.threadId || threadId,
+                            messageId: message.id,
+                            to: message.from,
+                            subject: `Re: ${message.subject}`,
+                          });
+                        }
+                      }}
+                      onSendEmail={async (content) => {
+                        // Send email direkte via Gmail
+                        try {
+                          await trpc.inbox.send.mutate({
+                            threadId: message.threadId || threadId,
+                            to: message.from,
+                            subject: `Re: ${message.subject}`,
+                            content,
+                          });
+                          // Success feedback
+                          console.log("Email sent successfully");
+                        } catch (error) {
+                          console.error("Error sending email:", error);
+                        }
+                      }}
+                    />
+                  </Suspense>
                 )}
 
                 {/* Message Body */}

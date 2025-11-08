@@ -3,11 +3,12 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
+import { visualizer } from "rollup-plugin-visualizer";
 
 const plugins = [react(), tailwindcss(), jsxLocPlugin()];
 
 export default defineConfig({
-  plugins,
+  plugins: [...plugins, visualizer({ filename: "stats.html", open: true })],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -28,19 +29,28 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Separate vendor chunks for better caching
           "react-vendor": ["react", "react-dom"],
           "ui-vendor": [
             "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu",
+            "@radix-ui/react-dropdown-menu", 
             "@radix-ui/react-select",
           ],
           "trpc-vendor": ["@trpc/client", "@trpc/react-query", "@trpc/server"],
+          // Split workspace components to reduce main bundle size
+          "workspace-lead": ["@/components/workspace/LeadAnalyzer"],
+          "workspace-booking": ["@/components/workspace/BookingManager"],
+          "workspace-invoice": ["@/components/workspace/InvoiceTracker"],
+          "workspace-customer": ["@/components/workspace/CustomerProfile"],
+          "workspace-dashboard": ["@/components/workspace/BusinessDashboard"],
+          // Split large UI components
+          "email-components": ["@/components/inbox/EmailTabV2"],
+          "ai-components": ["@/components/panels/AIAssistantPanelV2"],
         },
+        compact: true,
       },
     },
-    // Reduce chunk size warnings
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
+    reportCompressedSize: true,
   },
   server: {
     host: true,

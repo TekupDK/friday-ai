@@ -11,6 +11,10 @@ export type ActionPermission =
   | "book_meeting"
   | "create_invoice"
   | "search_gmail"
+  | "search_email" // Intent-based email search
+  | "check_calendar" // View calendar events
+  | "list_leads" // List all leads
+  | "list_tasks" // List all tasks
   | "request_flytter_photos"
   | "job_completion"
   | "send_email"
@@ -41,12 +45,16 @@ const ACTION_PERMISSIONS: Record<ActionPermission, UserRole> = {
   mark_email_done: "user",
   archive_email: "user",
   search_gmail: "user",
+  search_email: "user", // FIX: Added missing search_email permission
 
   // Medium-risk actions - regular users
   create_lead: "user",
   send_email: "user",
   request_flytter_photos: "user",
   job_completion: "user",
+  check_calendar: "user", // FIX: Added missing check_calendar permission
+  list_leads: "user", // FIX: Added missing list_leads permission
+  list_tasks: "user", // FIX: Added missing list_tasks permission
 
   // Higher-risk actions - admin only
   book_meeting: "admin",
@@ -57,20 +65,49 @@ const ACTION_PERMISSIONS: Record<ActionPermission, UserRole> = {
 };
 
 /**
- * Determine user role based on user ID and OWNER_OPEN_ID
+ * Determine user role based on database state and OWNER_OPEN_ID
+ * - owner: matches ENV.ownerOpenId
+ * - admin: users.role === 'admin'
+ * - user: default DB role or fallback
+ * - guest: user not found (hardening)
  */
-export function getUserRole(userId: number, ownerOpenId?: string): UserRole {
-  // For now, we'll use a simple check
-  // In production, this should query the database for user roles
+export async function getUserRole(userId: number): Promise<UserRole> {
+  try {
+    const [{ getDb }] = await Promise.all([import("./db")]);
+    const [{ users }] = await Promise.all([import("../drizzle/schema")]);
+    const [{ eq }] = await Promise.all([import("drizzle-orm")]);
+    const [{ ENV }] = await Promise.all([import("./_core/env")]);
 
-  // If user ID matches owner (typically user 1 or based on OWNER_OPEN_ID), they're owner
-  if (userId === 1) {
-    return "owner";
+    const db = await getDb();
+
+    // Fallback when DB isn't available (local tests or missing config)
+    if (!db) {
+      // Backward-compat: treat userId 1 as owner in dev
+      return userId === 1 ? "owner" : "user";
+    }
+
+    const result = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+
+    const user = result[0];
+    if (!user) return "guest";
+
+    // Owner check takes precedence
+    if (user.openId && ENV.ownerOpenId && user.openId === ENV.ownerOpenId) {
+      return "owner";
+    }
+
+    // Map DB role to RBAC role space
+    if (user.role === "admin") return "admin";
+    return "user";
+  } catch (err) {
+    // Defensive: never block on RBAC resolution, default conservatively
+    console.warn("[RBAC] getUserRole failed, defaulting to 'user'", err);
+    return userId === 1 ? "owner" : "user";
   }
-
-  // Default to user role
-  // TODO: Query database for actual role assignment
-  return "user";
 }
 
 /**

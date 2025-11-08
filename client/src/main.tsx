@@ -1,44 +1,83 @@
 import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from "@shared/const";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink, TRPCClientError } from "@trpc/client";
+import { QueryClient, QueryClientProvider, dehydrate, hydrate } from "@tanstack/react-query";
+import { httpBatchLink, httpLink, splitLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";
 import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
 import { requestQueue } from "./lib/requestQueue";
+import { chatSendAbort } from "./lib/abortSignals";
 import { intelligentRetryDelay, shouldRetry } from "./lib/retryStrategy";
+import { createOptimizedQueryClient, invalidateAuthQueries, warmupCache, getCacheConfig } from "./lib/cacheStrategy";
 
-// Optimized QueryClient for better performance
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // Intelligent caching: Different staleTime based on data type
-      // Can be overridden per-query for emails (30-60s), labels (5min), etc.
-      staleTime: 60 * 1000, // 1 minute default (opdateret fra 30s)
-      // Keep unused data for 15 minutes (opdateret fra 5 minutter)
-      gcTime: 15 * 60 * 1000,
-      // Enable structural sharing for better cache hit rates
-      structuralSharing: true,
-      // Don't refetch on window focus for better performance
-      refetchOnWindowFocus: false,
-      // Don't refetch on reconnect immediately
-      refetchOnReconnect: false,
-      // Intelligent retry with exponential backoff and jitter
-      retry: shouldRetry,
-      // Custom retry delay with rate limit handling and jitter
-      retryDelay: intelligentRetryDelay,
-    },
-    mutations: {
-      // Retry failed mutations with intelligent strategy
-      retry: shouldRetry,
-      retryDelay: intelligentRetryDelay,
-    },
-  },
+// Phase 7.2: Optimized QueryClient with intelligent cache strategy
+const queryClient = createOptimizedQueryClient();
+
+// Lightweight cache persistence (localStorage) to speed up reloads
+const PERSIST_KEY = "rq:dehydrated:v1";
+
+function safeLoadPersistedState() {
+  try {
+    if (typeof window === "undefined" || !window.localStorage) return null;
+    const raw = localStorage.getItem(PERSIST_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { ts: number; state: unknown } | null;
+    // Only reuse if not too old (5 minutes)
+    if (!parsed || !parsed.state || !parsed.ts) return null;
+    if (Date.now() - parsed.ts > 5 * 60 * 1000) return null;
+    return parsed.state as unknown;
+  } catch {
+    return null;
+  }
+}
+
+const persistedState = safeLoadPersistedState();
+if (persistedState) {
+  try {
+    hydrate(queryClient, persistedState as any);
+  } catch {}
+}
+
+function persistNow() {
+  try {
+    if (typeof window === "undefined" || !window.localStorage) return;
+    const state = dehydrate(queryClient, {
+      // Persist all queries for simplicity; adjust later if needed
+      shouldDehydrateQuery: () => true,
+    });
+    localStorage.setItem(
+      PERSIST_KEY,
+      JSON.stringify({ ts: Date.now(), state })
+    );
+  } catch {}
+}
+
+// Throttle persistence to avoid excessive writes
+let persistTimer: number | null = null;
+function schedulePersist() {
+  if (persistTimer) return;
+  persistTimer = window.setTimeout(() => {
+    persistTimer = null;
+    persistNow();
+  }, 800);
+}
+
+// Persist on query updates and before unload
+queryClient.getQueryCache().subscribe(event => {
+  if (event.type === "added" || event.type === "updated") {
+    schedulePersist();
+  }
 });
 
-const redirectToLoginIfUnauthorized = (error: unknown) => {
+window.addEventListener("beforeunload", () => {
+  try {
+    persistNow();
+  } catch {}
+});
+
+const redirectToLoginIfUnauthorized = async (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
 
@@ -46,6 +85,31 @@ const redirectToLoginIfUnauthorized = (error: unknown) => {
 
   if (!isUnauthorized) return;
 
+  // Phase 7.1: Try silent refresh before redirecting
+  try {
+    console.log("[Auth] Attempting silent session refresh before login redirect");
+    const refreshResponse = await fetch("/api/auth/refresh", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (refreshResponse.ok) {
+      const refreshData = await refreshResponse.json();
+      if (refreshData.refreshed) {
+        console.log("[Auth] Session refreshed successfully - avoiding login redirect");
+        // Phase 7.2: Intelligent auth-aware cache invalidation
+        invalidateAuthQueries(queryClient);
+        return;
+      }
+    }
+  } catch (refreshError) {
+    console.warn("[Auth] Silent refresh failed, proceeding with login redirect", refreshError);
+  }
+
+  // If refresh failed or wasn't needed, redirect to login
   window.location.href = getLoginUrl();
 };
 
@@ -181,15 +245,31 @@ setInterval(() => {
 
 const trpcClient = trpc.createClient({
   links: [
-    httpBatchLink({
-      url: "/api/trpc",
-      transformer: superjson,
-      fetch(input, init) {
-        return globalThis.fetch(input, {
-          ...(init ?? {}),
-          credentials: "include",
-        });
+    splitLink({
+      condition(op) {
+        return op.type === "mutation" && op.path === "chat.sendMessage";
       },
+      true: httpLink({
+        url: "/api/trpc",
+        transformer: superjson,
+        fetch(input, init) {
+          return globalThis.fetch(input, {
+            ...(init ?? {}),
+            credentials: "include",
+            signal: chatSendAbort.controller?.signal ?? undefined,
+          });
+        },
+      }),
+      false: httpBatchLink({
+        url: "/api/trpc",
+        transformer: superjson,
+        fetch(input, init) {
+          return globalThis.fetch(input, {
+            ...(init ?? {}),
+            credentials: "include",
+          });
+        },
+      }),
     }),
   ],
 });

@@ -61,7 +61,8 @@ export type ToolChoice =
   | ToolChoiceExplicit;
 
 export type InvokeParams = {
-  messages: Message[];
+  messages?: Message[];
+  model?: string;
   tools?: Tool[];
   toolChoice?: ToolChoice;
   tool_choice?: ToolChoice;
@@ -342,19 +343,19 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     // OpenRouter format (OpenAI-compatible)
     payload = {
       model: ENV.openRouterModel,
-      messages: messages.map(normalizeMessage),
+      messages: messages?.map(normalizeMessage) || [],
     };
   } else if (useOllamaApi) {
     // Ollama format (OpenAI-compatible)
     payload = {
       model: ENV.ollamaModel,
-      messages: messages.map(normalizeMessage),
+      messages: messages?.map(normalizeMessage) || [],
       stream: false,
     };
   } else if (useGeminiApi) {
     // Gemini format
     payload = {
-      contents: messages.map(normalizeMessage).map(msg => ({
+      contents: messages?.map(normalizeMessage).map(msg => ({
         parts: [
           {
             text:
@@ -370,7 +371,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     // OpenAI format (fallback)
     payload = {
       model: "gpt-4o-mini",
-      messages: messages.map(normalizeMessage),
+      messages: messages?.map(normalizeMessage) || [],
     };
   }
 
@@ -429,4 +430,152 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   }
 
   return (await response.json()) as InvokeResult;
+}
+
+export async function* streamResponse(
+  messages: Message[],
+  params?: Omit<InvokeParams, "messages"> & { stream?: boolean }
+): AsyncGenerator<string, void, unknown> {
+  const {
+    tools,
+    toolChoice,
+    tool_choice,
+    outputSchema,
+    output_schema,
+    responseFormat,
+    response_format,
+    stream = true,
+  } = params || {};
+
+  // Check which API we're using (priority: OpenRouter > Ollama > Gemini > OpenAI)
+  const useOpenRouter = ENV.openRouterApiKey && ENV.openRouterApiKey.trim();
+  const useOllamaApi = !useOpenRouter && ENV.ollamaBaseUrl;
+  const useGeminiApi =
+    !useOpenRouter &&
+    !useOllamaApi &&
+    ENV.geminiApiKey &&
+    ENV.geminiApiKey.trim();
+
+  let payload: Record<string, unknown>;
+
+  if (useOpenRouter) {
+    // OpenRouter format (OpenAI-compatible)
+    payload = {
+      model: ENV.openRouterModel,
+      messages: messages.map(normalizeMessage),
+      stream,
+    };
+  } else if (useOllamaApi) {
+    // Ollama format (OpenAI-compatible)
+    payload = {
+      model: ENV.ollamaModel,
+      messages: messages.map(normalizeMessage),
+      stream,
+    };
+  } else if (useGeminiApi) {
+    // Gemini format
+    payload = {
+      contents: messages.map(normalizeMessage).map(msg => ({
+        parts: [
+          {
+            text:
+              typeof msg.content === "string"
+                ? msg.content
+                : JSON.stringify(msg.content),
+          },
+        ],
+        role: msg.role === "assistant" ? "model" : "user",
+      })),
+      generationConfig: {
+        temperature: 0.7,
+      },
+    };
+  } else {
+    // OpenAI format (fallback)
+    payload = {
+      model: "gpt-4o-mini",
+      messages: messages.map(normalizeMessage),
+      stream,
+    };
+  }
+
+  // Add tools if provided
+  if (tools && tools.length > 0) {
+    payload.tools = tools;
+    if (toolChoice || tool_choice) {
+      payload.tool_choice = toolChoice || tool_choice;
+    }
+  }
+
+  // Add response format if provided (only for OpenAI/OpenRouter)
+  if ((useOpenRouter || (!useOllamaApi && !useGeminiApi)) && responseFormat) {
+    const normalizedResponseFormat = normalizeResponseFormat({ responseFormat });
+    if (normalizedResponseFormat) {
+      payload.response_format = normalizedResponseFormat;
+    }
+  }
+
+  const headers: Record<string, string> = {
+    "content-type": "application/json",
+  };
+
+  // Add authorization header
+  if (useOpenRouter) {
+    headers.authorization = `Bearer ${ENV.openRouterApiKey}`;
+    headers["HTTP-Referer"] = "https://tekup.dk"; // Optional: For rankings
+    headers["X-Title"] = "Friday AI"; // Optional: For rankings
+  } else if (!useOllamaApi && !useGeminiApi) {
+    headers.authorization = `Bearer ${ENV.openAiApiKey}`;
+  }
+
+  const response = await fetch(resolveApiUrl(), {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(
+      `LLM stream failed: ${response.status} ${response.statusText} – ${errorText}`
+    );
+  }
+
+  if (!response.body) {
+    throw new Error("Response body is null");
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value, { stream: true });
+      const lines = chunk.split('\n');
+
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6).trim();
+          if (data === '[DONE]') return;
+
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices?.[0]?.delta?.content || 
+                           parsed.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            if (content) {
+              yield content;
+            }
+          } catch (e) {
+            // Ignore parsing errors for malformed chunks
+            continue;
+          }
+        }
+      }
+    }
+  } finally {
+    reader.releaseLock();
+  }
 }

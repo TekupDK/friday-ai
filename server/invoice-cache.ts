@@ -72,26 +72,24 @@ export async function cacheInvoicesToDatabase(
         continue;
       }
 
-      // Calculate amounts from invoice lines
-      // Billy API unitPrice is in the invoice currency (not øre), convert to øre
-      const amount = invoice.lines
-        ? Math.round(
-            invoice.lines.reduce(
-              (sum: number, line) => sum + line.quantity * line.unitPrice,
-              0
-            ) * 100
-          ).toString()
-        : "0";
+      // Amounts: use values directly from Billy response (DKK -> øre)
+      // Billy list responses often omit lines; relying on lines caused zeros.
+      const amount = Number.isFinite(invoice.amount as any)
+        ? (invoice.amount as number).toFixed(2)
+        : "0.00";
 
       // Calculate due date from entry date and payment terms
       const entryDate = invoice.entryDate
         ? new Date(invoice.entryDate)
         : new Date();
-      const dueDate = invoice.paymentTermsDays
-        ? new Date(
-            entryDate.getTime() + invoice.paymentTermsDays * 24 * 60 * 60 * 1000
-          ).toISOString()
-        : undefined;
+      const dueDate = invoice.dueDate
+        ? new Date(invoice.dueDate).toISOString()
+        : invoice.paymentTermsDays
+          ? new Date(
+              entryDate.getTime() +
+                invoice.paymentTermsDays * 24 * 60 * 60 * 1000
+            ).toISOString()
+          : undefined;
 
       // Add invoice to database
       try {
@@ -101,10 +99,18 @@ export async function cacheInvoicesToDatabase(
           billyInvoiceId: invoice.id,
           invoiceNumber: invoice.invoiceNo || undefined,
           amount,
+          // Use gross amounts consistently: paid = grossAmount - balance (store as DKK string)
+          paidAmount: (
+            (invoice.grossAmount || 0) - (invoice.balance || 0)
+          ).toFixed(2),
+          grossAmount: (invoice.grossAmount ?? Number(amount)).toFixed(2),
+          taxAmount: (invoice.tax ?? 0).toFixed(2),
           status: mapInvoiceStatus(invoice.state),
+          entryDate: invoice.entryDate || entryDate.toISOString(),
           dueDate,
-          paidAt:
-            invoice.state === "paid" ? entryDate.toISOString() : undefined,
+          paymentTermsDays: invoice.paymentTermsDays || undefined,
+          // Billy list payload doesn't include paid timestamp; don't guess
+          paidAt: undefined,
         });
       } catch (error) {
         console.error(

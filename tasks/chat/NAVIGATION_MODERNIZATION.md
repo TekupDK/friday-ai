@@ -106,17 +106,18 @@ export async function generateConversationTitle(
 // client/src/components/ChatPanel.tsx
 function ensureTitleHasEmoji(title: string): string {
   if (!title) return "💬 Ny samtale";
-  
+
   // Check if title already has emoji
   const firstChar = title.charCodeAt(0);
-  const hasEmoji = firstChar > 0x1F300 || (firstChar >= 0xD800 && firstChar <= 0xDBFF);
+  const hasEmoji =
+    firstChar > 0x1f300 || (firstChar >= 0xd800 && firstChar <= 0xdbff);
   if (hasEmoji) return title;
-  
+
   // Add emoji based on keywords
   if (lowerTitle.includes("lead")) return `💼 ${title}`;
   if (lowerTitle.includes("møde")) return `📅 ${title}`;
   // ... 20+ keyword patterns
-  
+
   return `💬 ${title}`; // Default
 }
 ```
@@ -132,7 +133,7 @@ function ensureTitleHasEmoji(title: string): string {
 export async function getUserConversations(userId: string) {
   // ...
   const conversationsWithLastMessage = await Promise.all(
-    conversationsList.map(async (conv) => {
+    conversationsList.map(async conv => {
       const lastMsg = await db
         .select()
         .from(messages)
@@ -153,12 +154,16 @@ export async function getUserConversations(userId: string) {
 **Frontend:**
 
 ```tsx
-{/* Message Preview */}
-{(conv as any).lastMessage && (
-  <p className="text-xs text-muted-foreground truncate leading-relaxed max-w-[200px]">
-    {(conv as any).lastMessage}
-  </p>
-)}
+{
+  /* Message Preview */
+}
+{
+  (conv as any).lastMessage && (
+    <p className="text-xs text-muted-foreground truncate leading-relaxed max-w-[200px]">
+      {(conv as any).lastMessage}
+    </p>
+  );
+}
 ```
 
 **Performance:**
@@ -199,10 +204,10 @@ export async function getUserConversations(userId: string) {
 export async function deleteConversation(id: number) {
   const db = await getDb();
   if (!db) return;
-  
+
   // Delete messages first (referential integrity)
   await db.delete(messages).where(eq(messages.conversationId, id));
-  
+
   // Then delete conversation
   await db.delete(conversations).where(eq(conversations.id, id));
 }
@@ -244,7 +249,7 @@ export function formatRelativeTime(date: Date): string {
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
   const diffMins = Math.floor(diffMs / 60000);
-  
+
   if (diffMins < 1) return "lige nu";
   if (diffMins < 60) return `${diffMins} min siden`;
   if (diffMins < 1440) return `${Math.floor(diffMins / 60)} t siden`;
@@ -300,7 +305,6 @@ export function formatRelativeTime(date: Date): string {
   - Active: `blue-500`, `blue-600`, `blue-700`
   - Light: `blue-500/10`, `blue-500/5`
   - Text: `blue-700` (light), `blue-300` (dark)
-  
 - **Muted/Gray:**
   - Background: `muted`, `muted/60`
   - Text: `muted-foreground`, `muted-foreground/80`

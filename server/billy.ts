@@ -291,7 +291,7 @@ export async function createInvoice(invoice: {
     unitPrice: number;
     productId?: string;
   }>;
-}): Promise<BillyInvoice> {
+}, options?: { correlationId?: string }): Promise<BillyInvoice> {
   const bodyWithOrg = {
     invoice: {
       ...invoice,
@@ -306,6 +306,9 @@ export async function createInvoice(invoice: {
     const data = await billyRequest<{ invoice: BillyInvoice }>("/invoices", {
       method: "POST",
       body: JSON.stringify(bodyWithOrg),
+      headers: options?.correlationId
+        ? { "X-Correlation-ID": options.correlationId }
+        : undefined,
     });
     return data.invoice;
   } catch (e: any) {
@@ -317,6 +320,9 @@ export async function createInvoice(invoice: {
           body: JSON.stringify({
             invoice: { ...bodyWithOrg.invoice, organizationId: undefined },
           }),
+          headers: options?.correlationId
+            ? { "X-Correlation-ID": options.correlationId }
+            : undefined,
         }
       );
       return fallback.invoice;

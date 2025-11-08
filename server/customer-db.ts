@@ -4,10 +4,12 @@ import {
   customerConversations,
   customerEmails,
   customerInvoices,
+  customerNotesInFridayAi,
   customerProfiles,
   InsertCustomerConversation,
   InsertCustomerEmail,
   InsertCustomerInvoice,
+  InsertCustomerNote,
   InsertCustomerProfile,
 } from "../drizzle/schema";
 import { getDb } from "./db";
@@ -249,17 +251,20 @@ export async function updateCustomerBalance(customerId: number) {
     .from(customerInvoices)
     .where(eq(customerInvoices.customerId, customerId));
 
-  // amount is numeric (string|null) in schema; store profile totals as integer (cents)
-  const toCents = (v: string | null) => Math.round((Number(v ?? 0) || 0) * 100);
+  // Amount fields are stored as DKK decimals in DB; profile totals stored as integer cents
+  const toCents = (v: string | number | null) =>
+    Math.round((Number(v ?? 0) || 0) * 100);
   const totalInvoiced = invoices.reduce(
-    (sum, inv) => sum + toCents(inv.amount as any),
+    (sum, inv) => sum + toCents((inv as any).amount),
     0
   );
-  const totalPaid = invoices.reduce(
-    (sum, inv) =>
-      sum + (inv.status === "paid" ? toCents(inv.amount as any) : 0),
-    0
-  );
+  // Prefer paidAmount column when present; fallback to status
+  const totalPaid = invoices.reduce((sum, inv) => {
+    const paid =
+      (inv as any).paidAmount ??
+      (inv.status === "paid" ? (inv as any).amount : 0);
+    return sum + toCents(paid as any);
+  }, 0);
   const balance = totalInvoiced - totalPaid;
   const invoiceCount = invoices.length;
 
@@ -406,4 +411,89 @@ export async function getCustomerCalendarEvents(
     console.error("Error fetching customer calendar events:", error);
     return [];
   }
+}
+
+// Customer Notes functions
+export async function getCustomerNotes(customerId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select()
+    .from(customerNotesInFridayAi)
+    .where(
+      and(
+        eq(customerNotesInFridayAi.customerId, customerId),
+        eq(customerNotesInFridayAi.userId, userId)
+      )
+    )
+    .orderBy(desc(customerNotesInFridayAi.createdAt));
+
+  return result;
+}
+
+export async function addCustomerNote(
+  customerId: number,
+  userId: number,
+  note: string
+) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const insertNote: InsertCustomerNote = {
+    customerId,
+    userId,
+    note,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  const result = await db
+    .insert(customerNotesInFridayAi)
+    .values(insertNote)
+    .returning();
+
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function updateCustomerNote(
+  noteId: number,
+  userId: number,
+  note: string
+) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db
+    .update(customerNotesInFridayAi)
+    .set({
+      note,
+      updatedAt: new Date().toISOString(),
+    })
+    .where(
+      and(
+        eq(customerNotesInFridayAi.id, noteId),
+        eq(customerNotesInFridayAi.userId, userId)
+      )
+    )
+    .returning();
+
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function deleteCustomerNote(noteId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return false;
+
+  const result = await db
+    .delete(customerNotesInFridayAi)
+    .where(
+      and(
+        eq(customerNotesInFridayAi.id, noteId),
+        eq(customerNotesInFridayAi.userId, userId)
+      )
+    )
+    .returning();
+
+  return result.length > 0;
 }

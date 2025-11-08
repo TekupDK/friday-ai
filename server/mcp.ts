@@ -333,21 +333,17 @@ export async function createGmailDraft(params: {
   bcc?: string;
 }): Promise<{ draftId: string }> {
   try {
-    const messages = [
-      {
-        to: [params.to],
-        subject: params.subject,
-        content: params.body,
-        cc: params.cc ? [params.cc] : undefined,
-        bcc: params.bcc ? [params.bcc] : undefined,
-      },
-    ];
-    const result = await callMCPTool(GMAIL_MCP_URL, "gmail_send_messages", {
-      messages,
-    });
-
-    const draft = parseMCPResult(result);
-    return draft;
+    // Use direct Google API for safety (ensures a DRAFT, not a send)
+    const { createGmailDraft: directCreateDraft } = await import("./google-api");
+    const res = await directCreateDraft({
+      to: params.to,
+      subject: params.subject,
+      body: params.body,
+      cc: params.cc,
+      bcc: params.bcc,
+    } as any);
+    // Map to legacy shape
+    return { draftId: (res as any).id || (res as any).draftId || "" };
   } catch (error) {
     console.error("Error creating Gmail draft:", error);
     throw error;

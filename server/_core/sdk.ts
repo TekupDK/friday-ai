@@ -243,6 +243,48 @@ class SDKServer {
     }
   }
 
+  async verifySessionWithExp(
+    cookieValue: string | undefined | null
+  ): Promise<{ openId: string; appId: string; name: string; exp: number; remainingMs: number } | null> {
+    if (!cookieValue) {
+      console.warn("[Auth] Missing session cookie");
+      return null;
+    }
+
+    try {
+      const secretKey = this.getSessionSecret();
+      const { payload } = await jwtVerify(cookieValue, secretKey, {
+        algorithms: ["HS256"],
+      });
+      const { openId, appId, name, exp } = payload as Record<string, unknown>;
+
+      if (
+        !isNonEmptyString(openId) ||
+        !isNonEmptyString(appId) ||
+        !isNonEmptyString(name) ||
+        typeof exp !== "number"
+      ) {
+        console.warn("[Auth] Session payload missing required fields or exp");
+        return null;
+      }
+
+      const now = Date.now();
+      const expMs = exp * 1000;
+      const remainingMs = expMs - now;
+
+      return {
+        openId,
+        appId,
+        name,
+        exp,
+        remainingMs,
+      };
+    } catch (error) {
+      console.warn("[Auth] Session verification failed", String(error));
+      return null;
+    }
+  }
+
   async getUserInfoWithJwt(
     jwtToken: string
   ): Promise<GetUserInfoWithJwtResponse> {

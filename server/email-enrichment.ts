@@ -16,7 +16,7 @@ import {
 import { searchCustomerByEmail } from "./billy";
 import { getDb } from "./db";
 import { addLabelToThread } from "./gmail-labels";
-import { detectLeadSource } from "./lead-source-detector";
+import { detectLeadSource, detectLeadSourceIntelligent } from "./lead-source-detector";
 
 /**
  * Enrich email with customer data, lead source, and auto-labeling
@@ -94,13 +94,25 @@ export async function enrichEmailFromSources(
       // Continue even if Billy lookup fails
     }
 
-    // 2. Detect lead source
-    const source = detectLeadSource({
+    // 2. Phase 9.2: Intelligent lead source detection
+    const sourceDetection = detectLeadSourceIntelligent({
       from: email.fromEmail || "",
       to: email.toEmail || "",
       subject: email.subject || "",
       body: email.text || email.html || "",
     });
+    
+    const source = sourceDetection.source;
+    
+    // Phase 9.2: Log confidence and reasoning for analytics
+    console.log(`[EmailEnrichment] Lead source detected: ${source} (confidence: ${sourceDetection.confidence}%)`);
+    console.log(`[EmailEnrichment] Detection reasoning: ${sourceDetection.reasoning}`);
+    
+    // Phase 9.2: Store detection metadata for analytics
+    if (sourceDetection.confidence > 80) {
+      console.log(`[EmailEnrichment] High confidence detection - auto-applying workflow`);
+      // TODO: Trigger source-specific workflow automation
+    }
 
     // 3. Determine if this is a new lead (not a reply)
     const isNewLead =

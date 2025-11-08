@@ -6,18 +6,22 @@ import { syncBillyInvoicesForCustomer } from "./billy-sync";
 import {
   addCustomerEmail,
   addCustomerInvoice,
+  addCustomerNote,
   createCustomerConversation,
   createOrUpdateCustomerProfile,
+  deleteCustomerNote,
   getAllCustomerProfiles,
   getCustomerCalendarEvents,
   getCustomerConversation,
   getCustomerEmails,
   getCustomerInvoices,
+  getCustomerNotes,
   getCustomerProfileByEmail,
   getCustomerProfileById,
   getCustomerProfileByLeadId,
   updateCustomerBalance,
   updateCustomerEmailCount,
+  updateCustomerNote,
 } from "./customer-db";
 import { createConversation, getUserLeads } from "./db";
 import { searchGmailThreadsByEmail } from "./mcp";
@@ -29,6 +33,19 @@ import type { CustomerCaseAnalysis } from "./types/case-analysis";
  */
 
 export const customerRouter = router({
+  /**
+   * Get customer profile by lead ID
+   */
+  getByLeadId: protectedProcedure
+    .input(z.object({ leadId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const profile = await getCustomerProfileByLeadId(input.leadId, ctx.user.id);
+      if (!profile) {
+        throw new Error("Customer not found");
+      }
+      return profile;
+    }),
+
   /**
    * Get customer profile with case analysis (by email)
    * Returns DB customer, live email threads from MCP/Google, matched calendar events, and analyzed case
@@ -147,7 +164,94 @@ export const customerRouter = router({
   getEmails: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .query(async ({ ctx, input }) => {
-      return await getCustomerEmails(input.customerId, ctx.user.id);
+      const emails = await getCustomerEmails(input.customerId, ctx.user.id);
+      // Ensure gmailThreadId is included for clickable navigation
+      return emails.map(email => ({
+        ...email,
+        gmailThreadId: email.gmailThreadId || undefined,
+      }));
+    }),
+
+  /**
+   * Get activity timeline - unified chronological view of emails, invoices, and calendar
+   */
+  getActivityTimeline: protectedProcedure
+    .input(z.object({ 
+      customerId: z.number(),
+      limit: z.number().optional().default(50),
+    }))
+    .query(async ({ ctx, input }) => {
+      const [emails, invoices, calendarEvents] = await Promise.all([
+        getCustomerEmails(input.customerId, ctx.user.id),
+        getCustomerInvoices(input.customerId, ctx.user.id),
+        getCustomerCalendarEvents(input.customerId, ctx.user.id),
+      ]);
+
+      // Transform to unified activity items
+      const activities: Array<{
+        id: string;
+        type: 'email' | 'invoice' | 'calendar';
+        date: string;
+        title: string;
+        description?: string;
+        metadata: any;
+      }> = [];
+
+      // Add emails
+      emails.forEach(email => {
+        activities.push({
+          id: `email-${email.id}`,
+          type: 'email',
+          date: email.lastMessageDate || new Date().toISOString(),
+          title: email.subject || '(No Subject)',
+          description: email.snippet || undefined,
+          metadata: {
+            gmailThreadId: email.gmailThreadId || undefined,
+            isRead: email.isRead,
+          },
+        });
+      });
+
+      // Add invoices
+      invoices.forEach(invoice => {
+        activities.push({
+          id: `invoice-${invoice.id}`,
+          type: 'invoice',
+          date: invoice.createdAt || new Date().toISOString(),
+          title: `Invoice ${invoice.invoiceNumber || invoice.billyInvoiceId}`,
+          description: `${invoice.amount ? (parseFloat(invoice.amount) / 100).toFixed(2) : '0.00'} DKK - ${invoice.status}`,
+          metadata: {
+            amount: invoice.amount,
+            status: invoice.status,
+            dueDate: invoice.dueDate,
+            paidAt: invoice.paidAt,
+          },
+        });
+      });
+
+      // Add calendar events
+      calendarEvents.forEach(event => {
+        activities.push({
+          id: `calendar-${event.id}`,
+          type: 'calendar',
+          date: (event as any).startTime || new Date().toISOString(),
+          title: (event as any).title || '(No Title)',
+          description: (event as any).description || (event as any).location,
+          metadata: {
+            startTime: (event as any).startTime,
+            endTime: (event as any).endTime,
+            location: (event as any).location,
+          },
+        });
+      });
+
+      // Sort by date descending (newest first)
+      activities.sort((a, b) => 
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+      // Apply limit
+      return activities.slice(0, input.limit);
     }),
 
   /**
@@ -401,6 +505,9 @@ Format as clear, concise bullet points in Danish.`;
         name: z.string().optional(),
         phone: z.string().optional(),
         billyCustomerId: z.string().optional(),
+        status: z.enum(["new", "active", "inactive", "vip", "at_risk"]).optional(),
+        tags: z.array(z.string()).optional(),
+        customerType: z.enum(["private", "erhverv"]).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -417,10 +524,75 @@ Format as clear, concise bullet points in Danish.`;
         name: input.name || customer.name,
         phone: input.phone || customer.phone,
         billyCustomerId: input.billyCustomerId || customer.billyCustomerId,
+        status: input.status || customer.status,
+        tags: input.tags || customer.tags,
+        customerType: input.customerType || customer.customerType,
       });
 
       return {
         success: true,
       };
+    }),
+
+  // Customer Notes endpoints
+  getNotes: protectedProcedure
+    .input(z.object({ customerId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      return await getCustomerNotes(input.customerId, ctx.user.id);
+    }),
+
+  addNote: protectedProcedure
+    .input(z.object({ customerId: z.number(), note: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      const result = await addCustomerNote(
+        input.customerId,
+        ctx.user.id,
+        input.note
+      );
+      if (!result) {
+        throw new Error("Failed to add note");
+      }
+      return result;
+    }),
+
+  updateNote: protectedProcedure
+    .input(z.object({ noteId: z.number(), note: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      const result = await updateCustomerNote(
+        input.noteId,
+        ctx.user.id,
+        input.note
+      );
+      if (!result) {
+        throw new Error("Failed to update note");
+      }
+      return result;
+    }),
+
+  deleteNote: protectedProcedure
+    .input(z.object({ noteId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const success = await deleteCustomerNote(input.noteId, ctx.user.id);
+      if (!success) {
+        throw new Error("Failed to delete note");
+      }
+      return { success: true };
+    }),
+
+  // Sync endpoints
+  syncGmail: protectedProcedure
+    .input(z.object({ customerId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      // Mock implementation for now
+      console.log(`[Sync] Gmail sync for customer ${input.customerId}`);
+      return { success: true, synced: 0 };
+    }),
+
+  syncBilly: protectedProcedure
+    .input(z.object({ customerId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      // Mock implementation for now  
+      console.log(`[Sync] Billy sync for customer ${input.customerId}`);
+      return { success: true, synced: 0 };
     }),
 });

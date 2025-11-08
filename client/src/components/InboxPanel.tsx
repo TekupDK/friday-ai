@@ -1,10 +1,28 @@
+/**
+ * ⚠️ DEPRECATED - DO NOT USE IN V2
+ * 
+ * This file is kept for reference only.
+ * In V2 architecture, EmailCenterPanel directly uses EmailTab.
+ * 
+ * Migration path:
+ * - Old: EmailCenterPanel → InboxPanel → EmailTab (+ 4 other tabs)
+ * - New: EmailCenterPanel → EmailTab (dedicated to emails only)
+ * 
+ * Other tabs moved to:
+ * - Fakturaer, Kalender, Leads, Opgaver → Mini-tabs system (future)
+ * 
+ * @deprecated Use EmailCenterPanel directly in V2
+ * @see client/src/components/panels/EmailCenterPanel.tsx
+ * @see docs/V2-MIGRATION-COMPLETE-PLAN.md
+ */
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, CheckSquare, FileText, Mail, Users } from "lucide-react";
 import { lazy, Suspense, memo } from "react";
 
 // Lazy load tabs for better initial performance
-const EmailTab = lazy(() =>
-  import("@/components/inbox/EmailTab").then(m => ({ default: m.default }))
+const EmailTabV2 = lazy(() =>
+  import("@/components/inbox/EmailTabV2")
 );
 const InvoicesTab = lazy(() =>
   import("@/components/inbox/InvoicesTab").then(m => ({ default: m.default }))
@@ -70,15 +88,17 @@ function InboxPanel({ activeTab, onTabChange }: InboxPanelProps) {
         <div className="flex-1 overflow-hidden">
           <TabsContent
             value="email"
-            className="m-0 p-3 sm:p-4 h-full overflow-auto"
+            className="m-0 p-3 sm:p-4 h-full overflow-hidden"
+            forceMount
+            style={{ display: activeTab === "email" ? "block" : "none" }}
           >
             <Suspense fallback={<TabSkeleton />}>
-              <EmailTab />
+              <EmailTabV2 />
             </Suspense>
           </TabsContent>
           <TabsContent
             value="invoices"
-            className="m-0 p-3 sm:p-4 h-full overflow-auto"
+            className="m-0 p-3 sm:p-4 h-full overflow-hidden"
           >
             <Suspense fallback={<TabSkeleton />}>
               <InvoicesTab />
@@ -86,7 +106,7 @@ function InboxPanel({ activeTab, onTabChange }: InboxPanelProps) {
           </TabsContent>
           <TabsContent
             value="calendar"
-            className="m-0 p-3 sm:p-4 h-full overflow-auto"
+            className="m-0 p-3 sm:p-4 h-full overflow-hidden"
           >
             <Suspense fallback={<TabSkeleton />}>
               <CalendarTab />
@@ -97,12 +117,12 @@ function InboxPanel({ activeTab, onTabChange }: InboxPanelProps) {
             className="m-0 p-3 sm:p-4 h-full overflow-hidden"
           >
             <Suspense fallback={<TabSkeleton />}>
-              <LeadsTab />
+              <LeadsTab onRequestTabChange={onTabChange} />
             </Suspense>
           </TabsContent>
           <TabsContent
             value="tasks"
-            className="m-0 p-3 sm:p-4 h-full overflow-auto"
+            className="m-0 p-3 sm:p-4 h-full overflow-hidden"
           >
             <Suspense fallback={<TabSkeleton />}>
               <TasksTab />

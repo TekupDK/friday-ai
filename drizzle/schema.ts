@@ -134,9 +134,14 @@ export const customerInvoicesInFridayAi = fridayAi.table("customer_invoices", {
   billyInvoiceId: varchar({ length: 100 }),
   invoiceNumber: varchar({ length: 50 }),
   amount: numeric({ precision: 10, scale: 2 }),
+  paidAmount: numeric({ precision: 10, scale: 2 }).default("0"),
+  grossAmount: numeric({ precision: 10, scale: 2 }),
+  taxAmount: numeric({ precision: 10, scale: 2 }).default("0"),
   currency: varchar({ length: 3 }).default("DKK"),
   status: customerInvoiceStatusInFridayAi().default("draft"),
+  entryDate: timestamp({ mode: "string" }),
   dueDate: timestamp({ mode: "string" }),
+  paymentTermsDays: integer(),
   paidAt: timestamp({ mode: "string" }),
   createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
@@ -440,6 +445,14 @@ export const customerConversationsInFridayAi = fridayAi.table(
   ]
 );
 
+export const customerStatusInFridayAi = fridayAi.enum("customer_status", [
+  "new",
+  "active",
+  "inactive",
+  "vip",
+  "at_risk",
+]);
+
 export const customerProfilesInFridayAi = fridayAi.table(
   "customer_profiles",
   {
@@ -451,6 +464,9 @@ export const customerProfilesInFridayAi = fridayAi.table(
     email: varchar({ length: 320 }).notNull(),
     name: varchar({ length: 255 }),
     phone: varchar({ length: 32 }),
+    status: customerStatusInFridayAi().default("new").notNull(),
+    tags: text().array().default([]).notNull(),
+    customerType: varchar({ length: 20 }).default("private").notNull(),
     totalInvoiced: integer().default(0).notNull(),
     totalPaid: integer().default(0).notNull(),
     balance: integer().default(0).notNull(),
@@ -472,6 +488,28 @@ export const customerProfilesInFridayAi = fridayAi.table(
       table.leadId.asc().nullsLast().op("int4_ops")
     ),
     index("idx_customer_profiles_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+  ]
+);
+
+export const customerNotesInFridayAi = fridayAi.table(
+  "customer_notes",
+  {
+    id: serial().primaryKey().notNull(),
+    customerId: integer().notNull(),
+    userId: integer().notNull(),
+    note: text().notNull(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_customer_notes_customer").using(
+      "btree",
+      table.customerId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_customer_notes_user").using(
       "btree",
       table.userId.asc().nullsLast().op("int4_ops")
     ),
@@ -631,5 +669,6 @@ export type CustomerInvoice = typeof customerInvoicesInFridayAi.$inferSelect;
 export type InsertCustomerInvoice =
   typeof customerInvoicesInFridayAi.$inferInsert;
 export type CustomerProfile = typeof customerProfilesInFridayAi.$inferSelect;
-export type InsertCustomerProfile =
-  typeof customerProfilesInFridayAi.$inferInsert;
+export type InsertCustomerProfile = typeof customerProfilesInFridayAi.$inferInsert;
+export type CustomerNote = typeof customerNotesInFridayAi.$inferSelect;
+export type InsertCustomerNote = typeof customerNotesInFridayAi.$inferInsert;

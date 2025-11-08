@@ -100,12 +100,19 @@ Analyser emailen og foreslå relevante labels med confidence score (0-100%):
 - Confidence 70-85%: Foreslå til manual review
 - Confidence <70%: Ikke relevant nok
 
-Returner JSON array med objekter:
-{
-  "label": "Lead" | "Booking" | "Finance" | "Support" | "Newsletter",
-  "confidence": 0-100,
-  "reasoning": "Kort begrundelse på dansk"
-}`,
+Returner KUN et gyldigt JSON array, intet andet tekst:
+[
+  {
+    "label": "Lead",
+    "confidence": 90,
+    "reasoning": "Kunde forespørger om rengøring"
+  },
+  {
+    "label": "Booking", 
+    "confidence": 75,
+    "reasoning": "Spørger om tid"
+  }
+]`,
       },
       {
         role: "user",
@@ -116,15 +123,14 @@ Emne: ${emailSubject}
 
 ${emailBody.slice(0, 1500)}
 
-Returner JSON array med label suggestions.`,
+Returner KUN et JSON array, ingen ekstra tekst:`,
       },
     ];
 
-    // Call Friday AI (Gemma 3 27B) with JSON mode
+    // Call Friday AI (Gemma 3 27B) without JSON mode (not supported by OpenRouter)
     const response = await invokeLLM({
       messages,
       maxTokens: 500,
-      responseFormat: { type: "json_object" },
     });
 
     const content = response.choices[0]?.message?.content;

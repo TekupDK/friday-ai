@@ -59,7 +59,7 @@ function validateCalendarConfiguration() {
 
   // Report results
   if (errors.length > 0) {
-    console.error("[Calendar] ❌ Configuration errors:");
+    console.error("[Calendar] Configuration errors:");
     errors.forEach(err => console.error(`  - ${err}`));
     console.error(
       "[Calendar] Please check your .env.dev file and restart the server"
@@ -68,20 +68,20 @@ function validateCalendarConfiguration() {
   }
 
   if (warnings.length > 0) {
-    console.warn("[Calendar] ⚠️  Configuration warnings:");
+    console.warn("[Calendar] Configuration warnings:");
     warnings.forEach(warn => console.warn(`  - ${warn}`));
   }
 
-  console.log("[Calendar] ✅ Configuration valid");
-  console.log(`[Calendar] 📧 Impersonating user: ${IMPERSONATED_USER}`);
-  console.log(`[Calendar] 📅 Default calendar: ${CALENDAR_ID}`);
+  console.log("[Calendar] Configuration valid");
+  console.log(`[Calendar] Impersonating user: ${IMPERSONATED_USER}`);
+  console.log(`[Calendar] Default calendar: ${CALENDAR_ID}`);
 }
 
 // Call validation at module initialization
 try {
   validateCalendarConfiguration();
 } catch (error) {
-  console.error("[Calendar] ❌ FATAL: Configuration validation failed");
+  console.error("[Calendar] FATAL: Configuration validation failed");
   // Don't throw - let server start but log the error prominently
 }
 
@@ -110,7 +110,7 @@ function getCachedEvents(params: any, calendarIds: string[]): any[] | null {
   if (age > CACHE_TTL_MS) {
     calendarCache.delete(cacheKey);
     console.log(
-      `[Calendar] 💾 Cache EXPIRED for ${cacheKey} (age: ${Math.round(age / 1000)}s)`
+      `[Calendar] Cache EXPIRED for ${cacheKey} (age: ${Math.round(age / 1000)}s)`
     );
     return null;
   }
@@ -121,13 +121,13 @@ function getCachedEvents(params: any, calendarIds: string[]): any[] | null {
   if (cachedIds !== currentIds) {
     calendarCache.delete(cacheKey);
     console.log(
-      `[Calendar] 💾 Cache INVALIDATED for ${cacheKey} (calendar list changed)`
+      `[Calendar] Cache INVALIDATED for ${cacheKey} (calendar list changed)`
     );
     return null;
   }
 
   console.log(
-    `[Calendar] 💾 Cache HIT for ${cacheKey} (age: ${Math.round(age / 1000)}s, ${cached.events.length} events)`
+    `[Calendar] Cache HIT for ${cacheKey} (age: ${Math.round(age / 1000)}s, ${cached.events.length} events)`
   );
   return cached.events;
 }
@@ -144,7 +144,7 @@ function setCachedEvents(
     calendarIds: [...calendarIds],
   });
   console.log(
-    `[Calendar] 💾 Cache SET for ${cacheKey} (${events.length} events, TTL: ${CACHE_TTL_MS / 1000}s)`
+    `[Calendar] Cache SET for ${cacheKey} (${events.length} events, TTL: ${CACHE_TTL_MS / 1000}s)`
   );
 }
 
@@ -505,6 +505,87 @@ export async function searchGmailThreads(params: {
 
     throw error;
   }
+}
+
+/**
+ * Search Gmail threads (paginated)
+ */
+export async function searchGmailThreadsPaged(params: {
+  query: string;
+  maxResults?: number;
+  pageToken?: string;
+}): Promise<{ threads: GmailThread[]; nextPageToken?: string }> {
+  const auth = await getAuthClient();
+  const gmail = google.gmail({ version: "v1", auth });
+
+  const response = await gmail.users.threads.list({
+    userId: "me",
+    q: params.query,
+    maxResults: params.maxResults || 10,
+    pageToken: params.pageToken,
+  });
+
+  if (!response.data.threads) {
+    return { threads: [], nextPageToken: undefined };
+  }
+
+  const threads: GmailThread[] = [];
+  for (const thread of response.data.threads) {
+    if (!thread.id) continue;
+    const threadDetail = await gmail.users.threads.get({ userId: "me", id: thread.id });
+
+    const messages: GmailMessage[] = [];
+    let threadHasAttachments = false;
+    if (threadDetail.data.messages) {
+      for (const msg of threadDetail.data.messages) {
+        const headers = msg.payload?.headers || [];
+        const fromHeader = headers.find(h => h.name?.toLowerCase() === "from");
+        const toHeader = headers.find(h => h.name?.toLowerCase() === "to");
+        const subjectHeader = headers.find(h => h.name?.toLowerCase() === "subject");
+        const dateHeader = headers.find(h => h.name?.toLowerCase() === "date");
+
+        const bodies = extractBodiesFromPayload(msg.payload as any);
+        if (!threadHasAttachments && payloadHasAttachments(msg.payload)) {
+          threadHasAttachments = true;
+        }
+        const bodyText = bodies.text || (bodies.html ? stripHtmlToText(bodies.html) : "");
+        const bodyHtml = bodies.html;
+        const body = (bodyText || "").substring(0, 500);
+
+        messages.push({
+          id: msg.id || "",
+          threadId: msg.threadId || "",
+          from: fromHeader?.value || "",
+          to: toHeader?.value || "",
+          subject: subjectHeader?.value || "",
+          body,
+          bodyText,
+          bodyHtml,
+          contentType: bodies.contentType,
+          date: dateHeader?.value || "",
+        });
+      }
+    }
+
+    const lastMsg = threadDetail.data.messages?.[threadDetail.data.messages.length - 1];
+    const labelIds = lastMsg && Array.isArray(lastMsg.labelIds) ? (lastMsg.labelIds as string[]) : [];
+    const { mapLabelIdsToNames } = await import("./gmail-labels");
+    const labels = await mapLabelIdsToNames(labelIds);
+
+    threads.push({
+      id: thread.id,
+      snippet: threadDetail.data.snippet || "",
+      messages,
+      labels,
+      unread: labelIds.includes("UNREAD"),
+      subject: messages.length > 0 ? messages[messages.length - 1].subject : "",
+      from: messages.length > 0 ? messages[messages.length - 1].from : "",
+      date: messages.length > 0 ? messages[messages.length - 1].date : "",
+      hasAttachments: threadHasAttachments,
+    });
+  }
+
+  return { threads, nextPageToken: response.data.nextPageToken || undefined };
 }
 
 /**
@@ -919,9 +1000,13 @@ export async function listCalendarEvents(
     calendarIds?: string[];
     /** Optional single calendar override (back-compat short-hand) */
     calendarId?: string;
-  } = {}
+  } = {},
+  options?: { correlationId?: string }
 ): Promise<CalendarEvent[]> {
-  console.log("[Calendar] listCalendarEvents called with params:", {
+  const logPrefix = options?.correlationId
+    ? `[Calendar][${options.correlationId}]`
+    : `[Calendar]`;
+  console.log(`${logPrefix} listCalendarEvents called with params:`, {
     timeMin: params.timeMin,
     timeMax: params.timeMax,
     maxResults: params.maxResults,
@@ -942,22 +1027,22 @@ export async function listCalendarEvents(
       // NEW: Fetch ALL accessible calendars and query them all
       try {
         console.log(
-          "[Calendar] 🔍 Fetching list of all accessible calendars..."
+          `${logPrefix} 🔍 Fetching list of all accessible calendars...`
         );
         const calendarList = await calendar.calendarList.list();
         const allCalendars = calendarList.data.items || [];
         console.log(
-          "[Calendar] 📅 Found",
+          `${logPrefix} 📅 Found`,
           allCalendars.length,
           "accessible calendars:"
         );
         allCalendars.forEach(cal => {
-          console.log(`  - ${cal.id} (${cal.summary})`);
+          console.log(`${logPrefix}   - ${cal.id} (${cal.summary})`);
           if (cal.id) calendarsToQuery.push(cal.id);
         });
       } catch (err) {
         console.error(
-          "[Calendar] ❌ Failed to fetch calendar list, using fallback:",
+          `${logPrefix} ❌ Failed to fetch calendar list, using fallback:`,
           err
         );
         // Fallback to configured calendar + primary
@@ -980,7 +1065,7 @@ export async function listCalendarEvents(
 
     // FIX 1: Parallel calendar queries with per-calendar error handling
     console.log(
-      `[Calendar] 🚀 Querying ${calendarsToQuery.length} calendars in parallel...`
+      `${logPrefix} 🚀 Querying ${calendarsToQuery.length} calendars in parallel...`
     );
 
     const calendarPromises = calendarsToQuery.map(async calId => {

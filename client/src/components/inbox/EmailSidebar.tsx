@@ -6,11 +6,16 @@ import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc";
 import {
   Archive,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  Circle,
   Clock,
   DollarSign,
   Filter,
   Inbox,
   Mail,
+  PenSquare,
   Send,
   Sparkles,
   Star,
@@ -18,11 +23,13 @@ import {
 } from "lucide-react";
 
 interface EmailSidebarProps {
-  selectedFolder: "inbox" | "sent" | "archive" | "starred";
-  onFolderChange: (folder: "inbox" | "sent" | "archive" | "starred") => void;
+  selectedFolder: string;
+  onFolderChange: (folderId: string) => void;
   selectedLabels: string[];
   onLabelToggle: (labelName: string) => void;
-  onCompose?: () => void;
+  onCompose: () => void;
+  collapsed?: boolean;
+  onToggleCollapsed?: () => void;
   aiStatsToday?: {
     summariesCount: number;
     labelsCount: number;
@@ -37,6 +44,8 @@ export default function EmailSidebar({
   selectedLabels,
   onLabelToggle,
   onCompose,
+  collapsed = false,
+  onToggleCollapsed,
   aiStatsToday,
 }: EmailSidebarProps) {
   const { data: labels, isLoading: labelsLoading } =
@@ -96,14 +105,89 @@ export default function EmailSidebar({
         ].includes(label.name)
     ) || [];
 
+  // If collapsed, show icon-only version
+  if (collapsed) {
+    return (
+      <div className="h-full flex flex-col bg-background">
+        {/* Toggle button */}
+        <div className="p-2 border-b border-border/30">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggleCollapsed}
+            className="w-full h-8 p-0"
+            title="Udvid sidebar"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </Button>
+        </div>
+        
+        {/* Compose button */}
+        <div className="p-2">
+          <Button
+            onClick={onCompose}
+            size="sm"
+            className="w-full h-8 p-0"
+            title="Skriv ny email"
+          >
+            <PenSquare className="w-4 h-4" />
+          </Button>
+        </div>
+        
+        {/* Icon-only folders */}
+        <div className="flex-1 overflow-y-auto nice-scrollbar">
+          <div className="p-2 space-y-1">
+            {folders.map(folder => {
+              const Icon = folder.icon;
+              const isSelected = selectedFolder === folder.id;
+              const unreadCount = unreadCounts?.folders[folder.id] || 0;
+              return (
+                <Button
+                  key={folder.id}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onFolderChange(folder.id)}
+                  className={`w-full h-8 p-0 relative ${
+                    isSelected ? 'bg-primary/10 text-primary' : ''
+                  }`}
+                  title={`${folder.label}${unreadCount > 0 ? ` (${unreadCount})` : ''}`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {unreadCount > 0 && (
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full" />
+                  )}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col h-full border-r bg-muted/30">
-      {/* Compose Button */}
-      <div className="p-4 border-b shrink-0">
-        <Button className="w-full" size="sm" onClick={onCompose}>
-          <Mail className="w-4 h-4 mr-2" />
-          Ny mail
-        </Button>
+    <div className="h-full flex flex-col bg-background">
+      {/* Header with Compose Button and Toggle */}
+      <div className="p-4 border-b border-border/30">
+        <div className="flex items-center gap-2 mb-3">
+          <Button
+            onClick={onCompose}
+            className="flex-1 gap-2"
+            size="sm"
+          >
+            <PenSquare className="w-4 h-4" />
+            Ny mail
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggleCollapsed}
+            className="h-8 w-8 p-0"
+            title="Kollaps sidebar"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* AI Stats Card */}
@@ -167,14 +251,14 @@ export default function EmailSidebar({
           </div>
         )}
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        <div className="p-4 space-y-6">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden nice-scrollbar">
+        <div className="p-3 space-y-4">
           {/* Folders */}
           <div>
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase mb-2 px-2">
+            <h3 className="text-xs font-medium text-muted-foreground uppercase mb-1.5 px-2 tracking-wide">
               Mapper
             </h3>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {folders.map(folder => {
                 const Icon = folder.icon;
                 const isSelected = selectedFolder === folder.id;
@@ -183,16 +267,16 @@ export default function EmailSidebar({
                   <button
                     key={folder.id}
                     onClick={() => onFolderChange(folder.id)}
-                    className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
+                    className={`w-full flex items-center gap-2 px-2 py-1 rounded-sm text-sm transition-colors ${
                       isSelected
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-accent text-foreground"
+                        ? "border-l-2 border-l-primary bg-primary/5 text-primary"
+                        : "hover:bg-accent/50 text-foreground"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
                     <span className="flex-1 text-left">{folder.label}</span>
                     {unreadCount > 0 && (
-                      <Badge variant="secondary" className="ml-auto text-xs">
+                      <Badge variant="outline" className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground">
                         {unreadCount}
                       </Badge>
                     )}
@@ -206,7 +290,7 @@ export default function EmailSidebar({
 
           {/* Standard Labels */}
           <div>
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase mb-2 px-2 flex items-center gap-2">
+            <h3 className="text-xs font-medium text-muted-foreground uppercase mb-1.5 px-2 flex items-center gap-2 tracking-wide">
               <Filter className="w-3 h-3" />
               Labels
             </h3>
@@ -217,7 +301,7 @@ export default function EmailSidebar({
                 ))}
               </div>
             ) : standardLabels.length > 0 ? (
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {standardLabels.map(label => {
                   const isChecked = selectedLabels.includes(label.name);
                   const unreadCount =
@@ -242,23 +326,23 @@ export default function EmailSidebar({
                   return (
                     <div
                       key={label.id}
-                      className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors ${
-                        isChecked ? "bg-accent" : "hover:bg-accent/50"
+                      className={`flex items-center gap-2 px-2 py-1 rounded-sm transition-colors ${
+                        isChecked ? "border-l-2 border-l-primary bg-primary/5" : "hover:bg-accent/30"
                       }`}
                     >
                       <Checkbox
                         id={`label-${label.id}`}
                         checked={isChecked}
                         onCheckedChange={() => onLabelToggle(label.name)}
-                        className="h-4 w-4"
+                        className="h-3.5 w-3.5"
                       />
                       <label
                         htmlFor={`label-${label.id}`}
-                        className="flex-1 text-sm cursor-pointer flex items-center gap-2"
+                        className="flex-1 text-xs cursor-pointer flex items-center gap-2"
                       >
                         {/* Color dot indicator */}
                         <div
-                          className={`w-2 h-2 rounded-full shrink-0 ${
+                          className={`w-1.5 h-1.5 rounded-full shrink-0 ${
                             label.name === "Leads"
                               ? "bg-blue-500"
                               : label.name === "Needs Reply" ||
@@ -275,10 +359,7 @@ export default function EmailSidebar({
                         />
                         <span className="flex-1">{label.name}</span>
                         {unreadCount > 0 && (
-                          <Badge
-                            variant="secondary"
-                            className="ml-auto text-xs"
-                          >
+                          <Badge variant="outline" className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground">
                             {unreadCount}
                           </Badge>
                         )}
@@ -304,10 +385,10 @@ export default function EmailSidebar({
             <>
               <Separator />
               <div>
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase mb-2 px-2">
+                <h3 className="text-xs font-medium text-muted-foreground uppercase mb-1.5 px-2 tracking-wide">
                   Andre Labels
                 </h3>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   {otherLabels.slice(0, 10).map(label => {
                     const isChecked = selectedLabels.includes(label.name);
                     const unreadCount =
@@ -316,24 +397,23 @@ export default function EmailSidebar({
                     return (
                       <div
                         key={label.id}
-                        className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-accent transition-colors"
+                        className={`flex items-center gap-2 px-2 py-1 rounded-sm transition-colors ${
+                          isChecked ? "border-l-2 border-l-primary bg-primary/5" : "hover:bg-accent/30"
+                        }`}
                       >
                         <Checkbox
                           id={`label-other-${label.id}`}
                           checked={isChecked}
                           onCheckedChange={() => onLabelToggle(label.name)}
-                          className="h-4 w-4"
+                          className="h-3.5 w-3.5"
                         />
                         <label
                           htmlFor={`label-other-${label.id}`}
-                          className="flex-1 text-sm cursor-pointer flex items-center gap-2"
+                          className="flex-1 text-xs cursor-pointer flex items-center gap-2"
                         >
                           <span className="flex-1">{label.name}</span>
                           {unreadCount > 0 && (
-                            <Badge
-                              variant="secondary"
-                              className="ml-auto text-xs"
-                            >
+                            <Badge variant="outline" className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground">
                               {unreadCount}
                             </Badge>
                           )}

@@ -9,7 +9,8 @@ import { and, eq } from "drizzle-orm";
 import { emails, emailThreads } from "../drizzle/schema";
 import { createInvoice } from "./billy";
 import { getDb, getPipelineState } from "./db";
-import { detectLeadSource } from "./lead-source-detector";
+import { detectLeadSource, detectLeadSourceIntelligent } from "./lead-source-detector";
+import { getSourceWorkflow, getWorkflowFromDetection } from "./lead-source-workflows";
 import { createCalendarEvent } from "./mcp";
 
 /**
@@ -294,13 +295,25 @@ export async function checkCriticalRules(
   needsSpecialHandling: boolean;
   customerEmail?: string;
   action: string;
+  workflow?: any;
+  confidence?: number;
 }> {
-  const source = detectLeadSource({
+  // Phase 9.2: Use intelligent source detection
+  const sourceDetection = detectLeadSourceIntelligent({
     from: fromEmail,
     to: "",
     subject,
     body,
   });
+  
+  const source = sourceDetection.source;
+  const confidence = sourceDetection.confidence;
+  
+  // Phase 9.3: Get source-specific workflow
+  const workflow = getWorkflowFromDetection(sourceDetection);
+  
+  console.log(`[CriticalRules] ${source} lead detected with ${confidence}% confidence`);
+  console.log(`[CriticalRules] Workflow: ${workflow.workflow.priority} priority, ${workflow.workflow.responseTime} response time`);
 
   // Rengøring.nu and AdHelp require special handling
   if (source === "rengoring_nu" || source === "adhelp") {
@@ -325,8 +338,15 @@ export async function checkCriticalRules(
         source === "rengoring_nu"
           ? "CREATE_NEW_EMAIL_TO_CUSTOMER"
           : "CREATE_NEW_EMAIL_TO_CUSTOMER",
+      workflow,
+      confidence,
     };
   }
 
-  return { needsSpecialHandling: false, action: "REPLY_NORMALLY" };
+  return { 
+    needsSpecialHandling: false, 
+    action: "REPLY_NORMALLY",
+    workflow,
+    confidence,
+  };
 }

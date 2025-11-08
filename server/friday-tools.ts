@@ -17,7 +17,7 @@ export const FRIDAY_TOOLS = [
           query: {
             type: "string",
             description:
-              "Gmail søgequery (f.eks. 'from:kunde@example.com' eller 'subject:rengøring' eller 'after:2025/10/01')",
+              "Gmail søgequery. VIGTIG: after: operatoren betyder 'efter denne dato ER SLUT', så after:YYYY-MM-DD viser kun emails fra næste dag. For 'ulæste emails fra en specifik dato', brug: 'is:unread after:YYYY-MM-DD-1 before:YYYY-MM-DD+1'. Eksempler: 'from:kunde@example.com', 'subject:rengøring', 'is:unread newer_than:1d' (i dag), 'is:unread after:2025-11-05 before:2025-11-07' (6. nov 2025)",
           },
           maxResults: {
             type: "number",
@@ -71,6 +71,10 @@ export const FRIDAY_TOOLS = [
           cc: {
             type: "string",
             description: "CC email adresser (kommasepareret)",
+          },
+          bcc: {
+            type: "string",
+            description: "BCC email adresser (kommasepareret)",
           },
         },
         required: ["to", "subject", "body"],
@@ -401,7 +405,8 @@ export const FRIDAY_TOOLS = [
         properties: {
           status: {
             type: "string",
-            description: "Filter på status (new, contacted, quoted, won, lost)",
+            description: "Filter på status (new, contacted, qualified, proposal, won, lost)",
+            enum: ["new", "contacted", "qualified", "proposal", "won", "lost"],
           },
           source: {
             type: "string",
@@ -467,7 +472,8 @@ export const FRIDAY_TOOLS = [
           },
           status: {
             type: "string",
-            description: "Ny status (new, contacted, quoted, won, lost)",
+            description: "Ny status (new, contacted, qualified, proposal, won, lost)",
+            enum: ["new", "contacted", "qualified", "proposal", "won", "lost"],
           },
         },
         required: ["leadId", "status"],
@@ -487,7 +493,8 @@ export const FRIDAY_TOOLS = [
         properties: {
           status: {
             type: "string",
-            description: "Filter på status (pending, in_progress, completed)",
+            description: "Filter på status (todo, in_progress, done, cancelled)",
+            enum: ["todo", "in_progress", "done", "cancelled"],
           },
         },
       },
@@ -516,7 +523,8 @@ export const FRIDAY_TOOLS = [
           },
           priority: {
             type: "string",
-            description: "Prioritet (low, medium, high)",
+            description: "Prioritet (low, medium, high, urgent)",
+            enum: ["low", "medium", "high", "urgent"],
           },
         },
         required: ["title"],

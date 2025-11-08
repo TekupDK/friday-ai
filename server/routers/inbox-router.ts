@@ -284,6 +284,133 @@ export const inboxRouter = router({
 
         return threads;
       }),
+
+    // Paginated list endpoint for infinite scroll
+    listPaged: protectedProcedure
+      .input(
+        z.object({
+          maxResults: z.number().optional(),
+          query: z.string().optional(),
+          pageToken: z.string().optional(),
+        })
+      )
+      .query(async ({ ctx, input }) => {
+        const hasGmailQuery =
+          input.query &&
+          (input.query.includes("in:") ||
+            input.query.includes("label:") ||
+            input.query.includes("is:") ||
+            input.query.includes("-in:"));
+
+        // If first page and no Gmail-specific filters, try DB first
+        if (!input.pageToken && !hasGmailQuery) {
+          const db = await getDb();
+          if (db) {
+            try {
+              const emailRecords = await db
+                .select({
+                  id: emails.id,
+                  userId: emails.userId,
+                  gmailId: emails.gmailId,
+                  threadKey: emails.threadKey,
+                  subject: emails.subject,
+                  fromEmail: emails.fromEmail,
+                  toEmail: emails.toEmail,
+                  text: emails.text,
+                  html: emails.html,
+                  providerId: emails.providerId,
+                  emailThreadId: emails.emailThreadId,
+                  receivedAt: emails.receivedAt,
+                  hasAttachments: emails.hasAttachments,
+                  aiSummary: emails.aiSummary,
+                  aiSummaryGeneratedAt: emails.aiSummaryGeneratedAt,
+                  aiLabelSuggestions: emails.aiLabelSuggestions,
+                  aiLabelsGeneratedAt: emails.aiLabelsGeneratedAt,
+                })
+                .from(emails)
+                .where(eq(emails.userId, ctx.user.id))
+                .orderBy(desc(emails.receivedAt))
+                .limit(input.maxResults || 25)
+                .execute();
+
+              if (emailRecords.length > 0) {
+                const emailThreadIds = Array.from(
+                  new Set(
+                    emailRecords
+                      .map((e: any) => e.emailThreadId)
+                      .filter((id: any) => id != null)
+                  )
+                );
+
+                let threadIdMap: Record<number, string> = {};
+                if (emailThreadIds.length > 0) {
+                  const threadRows = await db
+                    .select({ id: emailThreads.id, gmailThreadId: emailThreads.gmailThreadId })
+                    .from(emailThreads)
+                    .where(inArray(emailThreads.id, emailThreadIds))
+                    .execute();
+                  threadIdMap = Object.fromEntries(
+                    threadRows.map((r: any) => [r.id, r.gmailThreadId])
+                  );
+                }
+
+                const threads = emailRecords.map((email: any) => {
+                  const gmailThreadId =
+                    (email.emailThreadId != null ? threadIdMap[email.emailThreadId] : undefined) ||
+                    email.threadKey ||
+                    undefined;
+                  const threadId = gmailThreadId || String(email.emailThreadId || email.providerId);
+
+                  return {
+                    id: threadId,
+                    snippet: email.text?.substring(0, 200) || email.subject || "",
+                    subject: email.subject,
+                    from: email.fromEmail,
+                    date:
+                      typeof email.receivedAt === "string"
+                        ? email.receivedAt
+                        : new Date(email.receivedAt as any).toISOString(),
+                    labels: [],
+                    unread: true,
+                    hasAttachments: !!email.hasAttachments,
+                    aiSummary: email.aiSummary || undefined,
+                    aiSummaryGeneratedAt: email.aiSummaryGeneratedAt || undefined,
+                    aiLabelSuggestions: email.aiLabelSuggestions || undefined,
+                    aiLabelsGeneratedAt: email.aiLabelsGeneratedAt || undefined,
+                    messages: [
+                      {
+                        id: email.providerId,
+                        threadId,
+                        from: email.fromEmail,
+                        to: email.toEmail,
+                        subject: email.subject || "",
+                        body: email.text || email.html || "",
+                        date:
+                          typeof email.receivedAt === "string"
+                            ? email.receivedAt
+                            : new Date(email.receivedAt as any).toISOString(),
+                      },
+                    ],
+                  } as any;
+                });
+
+                return { threads, nextPageToken: undefined as string | undefined };
+              }
+            } catch (error) {
+              console.warn("[Email ListPaged] DB path failed, using Gmail API", error);
+            }
+          }
+        }
+
+        // Gmail paginated API
+        const { searchGmailThreadsPaged } = await import("../google-api");
+        const result = await searchGmailThreadsPaged({
+          query: input.query || "in:inbox",
+          maxResults: input.maxResults || 25,
+          pageToken: input.pageToken,
+        });
+        return result;
+      }),
     get: protectedProcedure
       .input(z.object({ threadId: z.string() }))
       .query(async ({ input }) => getGmailThread(input.threadId)),
@@ -1066,6 +1193,17 @@ export const inboxRouter = router({
       } as const;
     }),
   invoices: router({
+    sync: protectedProcedure.mutation(async ({ ctx }) => {
+      const db = await getDb();
+      if (!db)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database not available",
+        });
+      const fresh = await getBillyInvoices();
+      await cacheInvoicesToDatabase(fresh, ctx.user.id, db);
+      return { success: true, count: fresh.length } as const;
+    }),
     list: protectedProcedure.query(async ({ ctx }) => {
       // DATABASE-FIRST STRATEGY: Try database first, only fallback if empty
       const db = await getDb();
@@ -1108,6 +1246,7 @@ export const inboxRouter = router({
                   // Dates
                   createdTime: invoice.createdAt || new Date().toISOString(),
                   entryDate:
+                    invoice.entryDate?.split("T")[0] ||
                     invoice.createdAt?.split("T")[0] ||
                     new Date().toISOString().split("T")[0],
                   dueDate: invoice.dueDate?.split("T")[0] || null,
@@ -1121,15 +1260,22 @@ export const inboxRouter = router({
                     | "overdue"
                     | "voided",
                   sentState: "unsent" as const, // Not stored in DB cache
-                  isPaid: invoice.paidAt !== null,
+                  isPaid:
+                    (invoice.status as any) === "paid" ||
+                    parseFloat(invoice.grossAmount || invoice.amount || "0") -
+                      parseFloat(invoice.paidAmount || "0") <=
+                      0,
 
-                  // Amounts (using database cache fields where available)
+                  // Amounts stored as DKK decimals in DB
                   amount: parseFloat(invoice.amount || "0"),
                   tax: 0, // Not stored in DB cache - use Billy API for accurate tax
-                  grossAmount: parseFloat(invoice.amount || "0"),
-                  balance: invoice.paidAt
-                    ? 0
-                    : parseFloat(invoice.amount || "0"),
+                  grossAmount: parseFloat(
+                    invoice.grossAmount || invoice.amount || "0"
+                  ),
+                  // Use gross - paid to avoid net/gross mismatch
+                  balance:
+                    parseFloat(invoice.grossAmount || invoice.amount || "0") -
+                    parseFloat(invoice.paidAmount || "0"),
 
                   // Currency
                   currencyId: invoice.currency || "DKK",
@@ -1148,7 +1294,7 @@ export const inboxRouter = router({
                   // Lines not stored in customer_invoices table
                   lines: [],
 
-                  // Backwards compatibility
+                  // Backwards compatibility (DKK)
                   totalAmount: parseFloat(invoice.amount || "0"),
                   createdAt: invoice.createdAt,
                 }) as BillyInvoice
@@ -1195,6 +1341,34 @@ export const inboxRouter = router({
         })
       )
       .mutation(async ({ input }) => createBillyInvoice(input)),
+    stats: protectedProcedure.query(async () => {
+      // Always use Billy API for accurate states and balances (DKK units)
+      const invoices = await getBillyInvoices();
+      const { computeInvoiceStats } = await import("../utils/invoice-stats");
+      return computeInvoiceStats(invoices);
+    }),
+    getByNumber: protectedProcedure
+      .input(z.object({ invoiceNumber: z.string() }))
+      .query(async ({ input }) => {
+        // Get all invoices from Billy API
+        const invoices = await getBillyInvoices();
+        
+        // Find invoice by number
+        const invoice = invoices.find(inv => 
+          inv.invoiceNo === input.invoiceNumber || 
+          inv.invoiceNo === `#${input.invoiceNumber}` ||
+          inv.invoiceNo?.includes(input.invoiceNumber)
+        );
+        
+        if (!invoice) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: `Invoice ${input.invoiceNumber} not found`,
+          });
+        }
+        
+        return invoice;
+      }),
   }),
   calendar: router({
     list: protectedProcedure

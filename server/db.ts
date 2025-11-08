@@ -172,7 +172,7 @@ export async function getUserConversations(
 
   // Fetch last message for each conversation
   const conversationsWithLastMessage = await Promise.all(
-    conversationsList.map(async (conv) => {
+    conversationsList.map(async conv => {
       const lastMsg = await db
         .select()
         .from(messages)
@@ -220,7 +220,7 @@ export async function deleteConversation(id: number): Promise<void> {
 
   // Delete all messages first (cascade)
   await db.delete(messages).where(eq(messages.conversationId, id));
-  
+
   // Then delete the conversation
   await db.delete(conversations).where(eq(conversations.id, id));
 }

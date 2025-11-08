@@ -46,6 +46,7 @@ async function startDevServerIfNeeded() {
     stdio: "inherit",
     shell: isWindows, // use shell on Windows to resolve pnpm properly
     env: { ...process.env, FORCE_COLOR: "1" },
+    windowsHide: true, // Hide the console window on Windows
   });
 
   // Handle dev server exit
@@ -224,8 +225,27 @@ setTimeout(async () => {
   log("[TUNNEL]", colors.cyan, `Using ngrok binary: ${ngrokCmd}`);
 
   const ngrokProcess = spawn(ngrokCmd, ngrokArgs, {
-    stdio: "inherit",
+    stdio: ["inherit", "pipe", "inherit"], // Capture stdout separately
     shell: false,
+  });
+
+  // Process ngrok output to extract and display clean URLs
+  ngrokProcess.stdout.on("data", (data) => {
+    const output = data.toString();
+    log("[TUNNEL]", colors.green, output.trim());
+    
+    // Extract and save the public URL
+    const urlMatch = output.match(/https:\/\/[^\s]+\.ngrok(-free)?\.dev/);
+    if (urlMatch) {
+      const publicUrl = urlMatch[0];
+      log("[TUNNEL]", colors.cyan, `🌐 Public URL: ${publicUrl}`);
+      log("[TUNNEL]", colors.cyan, `📊 Web Interface: http://127.0.0.1:4040`);
+      
+      // Save to file for reference
+      const outDir = path.resolve("tmp");
+      fs.mkdirSync(outDir, { recursive: true });
+      fs.writeFileSync(path.join(outDir, "tunnel-url.txt"), publicUrl, "utf8");
+    }
   });
 
   ngrokProcess.on("error", err => {

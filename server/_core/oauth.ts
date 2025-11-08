@@ -4,6 +4,9 @@ import * as db from "../db";
 import { ENV } from "./env";
 import { sdk } from "./sdk";
 
+// Phase 7.1: Rolling session refresh window (7 days)
+const ROLLING_WINDOW_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
   return typeof value === "string" ? value : undefined;
@@ -142,6 +145,94 @@ export function registerOAuthRoutes(app: Express) {
         error: "Login failed",
         details:
           process.env.NODE_ENV === "development" ? errorMessage : undefined,
+      });
+    }
+  });
+
+  // Phase 7.1: Silent session refresh endpoint
+  app.post("/api/auth/refresh", async (req: Request, res: Response) => {
+    console.log("[Auth] Session refresh endpoint called");
+
+    try {
+      // Extract session cookie
+      const cookieHeader = req.headers.cookie;
+      const cookies = cookieHeader ? cookieHeader.split(';').reduce((acc, cookie) => {
+        const [key, value] = cookie.trim().split('=');
+        acc[key] = value;
+        return acc;
+      }, {} as Record<string, string>) : {};
+
+      const sessionCookie = cookies[COOKIE_NAME];
+      if (!sessionCookie) {
+        return res.status(401).json({ 
+          error: "No session cookie",
+          refreshed: false 
+        });
+      }
+
+      // Verify session and check expiration
+      const sessionData = await sdk.verifySessionWithExp(sessionCookie);
+      if (!sessionData) {
+        return res.status(401).json({ 
+          error: "Invalid session",
+          refreshed: false 
+        });
+      }
+
+      // Check if we should refresh (within rolling window)
+      const shouldRefresh = sessionData.remainingMs < ROLLING_WINDOW_MS;
+      
+      if (!shouldRefresh) {
+        return res.json({ 
+          refreshed: false,
+          remainingMs: sessionData.remainingMs,
+          message: "Session still valid"
+        });
+      }
+
+      // Get user for token creation
+      const user = await db.getUserByOpenId(sessionData.openId);
+      if (!user) {
+        return res.status(401).json({ 
+          error: "User not found",
+          refreshed: false 
+        });
+      }
+
+      // Create new session token
+      const newSessionToken = await sdk.createSessionToken(sessionData.openId, {
+        name: user.name || sessionData.name,
+        expiresInMs: ONE_YEAR_MS,
+      });
+
+      // Set new cookie with same options as login
+      const finalCookieOptions = {
+        maxAge: ONE_YEAR_MS,
+        httpOnly: true,
+        path: "/",
+        domain: undefined,
+        sameSite: "lax" as const,
+        secure: process.env.NODE_ENV === "production",
+      };
+
+      res.cookie(COOKIE_NAME, newSessionToken, finalCookieOptions);
+
+      console.log("[Auth] Session refreshed successfully:", {
+        openId: sessionData.openId,
+        oldRemainingMs: sessionData.remainingMs,
+        newExpiry: "1 year"
+      });
+
+      return res.json({ 
+        refreshed: true,
+        message: "Session refreshed"
+      });
+
+    } catch (error) {
+      console.error("[Auth] Session refresh failed", error);
+      return res.status(500).json({ 
+        error: "Refresh failed",
+        refreshed: false 
       });
     }
   });

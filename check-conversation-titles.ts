@@ -1,10 +1,10 @@
-import { getDb } from "./server/db";
-import { conversations, messages } from "./drizzle/schema";
 import { desc, eq, sql } from "drizzle-orm";
+import { conversations, messages } from "./drizzle/schema";
+import { getDb } from "./server/db";
 
 async function checkConversationTitles() {
   const db = await getDb();
-  
+
   // Get recent conversations with message count
   const recentConversations = await db
     .select({
@@ -31,10 +31,10 @@ async function checkConversationTitles() {
       .select({ count: sql<number>`count(*)` })
       .from(messages)
       .where(eq(messages.conversationId, conv.id));
-    
+
     const hasEmoji = /[\p{Emoji}]/u.test(conv.title || "");
     const isNewConversation = conv.title === "New Conversation" || !conv.title;
-    
+
     if (isNewConversation) {
       newConversation++;
     } else if (hasEmoji) {
@@ -42,17 +42,21 @@ async function checkConversationTitles() {
     } else {
       withoutEmoji++;
     }
-    
+
     if (!conv.title) {
       nullTitle++;
     }
-    
+
     console.log(`ID ${conv.id}:`);
     console.log(`  Title: "${conv.title || "NULL"}"`);
     console.log(`  Messages: ${messageCount[0]?.count || 0}`);
     console.log(`  Has Emoji: ${hasEmoji ? "✅" : "❌"}`);
-    console.log(`  Created: ${new Date(conv.createdAt).toLocaleString("da-DK")}`);
-    console.log(`  Updated: ${new Date(conv.updatedAt).toLocaleString("da-DK")}`);
+    console.log(
+      `  Created: ${new Date(conv.createdAt).toLocaleString("da-DK")}`
+    );
+    console.log(
+      `  Updated: ${new Date(conv.updatedAt).toLocaleString("da-DK")}`
+    );
     console.log("");
   }
 

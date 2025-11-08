@@ -1,5 +1,4 @@
 import type { BillyInvoice } from "@/../../shared/types";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -18,29 +17,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useInvoiceContext } from "@/context/InvoiceContext";
 import { useAdaptivePolling } from "@/hooks/useAdaptivePolling";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useRateLimit } from "@/hooks/useRateLimit";
 import { trpc } from "@/lib/trpc";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import {
-  CheckCircle2,
+  AlertCircle,
   Clock,
   Download,
-  ExternalLink,
-  FileEdit,
   FileText,
+  Loader2,
   Search,
-  Send,
   Sparkles,
   ThumbsDown,
   ThumbsUp,
+  TrendingUp,
   X,
 } from "lucide-react";
-import { Loader2 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SafeStreamdown } from "../SafeStreamdown";
-import { useInvoiceContext } from "@/context/InvoiceContext";
+import { InvoiceCard } from "./InvoiceCard";
+
+/**
+ * Type-safe invoice list item
+ */
+type InvoiceListItem = BillyInvoice;
 
 /**
  * InvoicesTab - Displays and manages Billy.dk invoices
@@ -49,7 +53,7 @@ import { useInvoiceContext } from "@/context/InvoiceContext";
  * - Base URL: https://tekup-billy-production.up.railway.app
  * - API Version: 2.0.0
  * - Authentication: X-API-Key header
- * - Features: Automatic pagination, search, filter, AI analysis
+ * - Features: Automatic pagination, search, filter, AI analysis, virtual scrolling
  */
 export default function InvoicesTab() {
   // Rate limit handling
@@ -75,6 +79,12 @@ export default function InvoicesTab() {
     },
   });
 
+  // Get invoice statistics
+  const { data: stats } = trpc.inbox.invoices.stats.useQuery(undefined, {
+    enabled: !rateLimit.isRateLimited,
+    refetchInterval: false,
+  });
+
   // Adaptive polling based on user activity
   useAdaptivePolling({
     baseInterval: 60000, // 60 seconds base
@@ -96,7 +106,7 @@ export default function InvoicesTab() {
       rateLimit.handleRateLimitError(error);
     }
   }, [error, rateLimit]);
-  
+
   // Use shared context for invoice selection and AI analysis
   const {
     selectedInvoice,
@@ -122,14 +132,18 @@ export default function InvoicesTab() {
   const submitFeedbackMutation = trpc.chat.submitAnalysisFeedback.useMutation();
 
   // Filter invoices based on search and status
-  const filteredInvoices = useMemo(() => {
+  const filteredInvoices = useMemo((): InvoiceListItem[] => {
     if (!invoices) return [];
 
-    return invoices.filter((invoice: BillyInvoice) => {
+    return invoices.filter((invoice: InvoiceListItem): boolean => {
       const matchesSearch =
         debouncedSearch === "" ||
-        invoice.invoiceNo?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-        invoice.contactId?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        invoice.invoiceNo
+          ?.toLowerCase()
+          .includes(debouncedSearch.toLowerCase()) ||
+        invoice.contactId
+          ?.toLowerCase()
+          .includes(debouncedSearch.toLowerCase()) ||
         invoice.id?.toLowerCase().includes(debouncedSearch.toLowerCase());
 
       const matchesStatus =
@@ -138,6 +152,16 @@ export default function InvoicesTab() {
       return matchesSearch && matchesStatus;
     });
   }, [invoices, debouncedSearch, statusFilter]);
+
+  // Virtual scrolling setup for performance with 100+ invoices
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: filteredInvoices.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 120, // Estimated card height in pixels
+    overscan: 5, // Render 5 extra items above/below viewport
+  });
 
   const handleFeedback = async (rating: "up" | "down") => {
     if (!selectedInvoice) return;
@@ -178,13 +202,14 @@ export default function InvoicesTab() {
     }
   };
 
-  const csvEscape = (val: any) => {
+  const csvEscape = (val: unknown): string => {
     const s = val == null ? "" : String(val);
     const escaped = s.replace(/"/g, '""');
     return `"${escaped}"`;
   };
 
-  const formatDate = (d: any) => {
+  const formatDate = (d: string | Date | null | undefined): string => {
+    if (!d) return "";
     const dt = new Date(d);
     return isNaN(dt.getTime()) ? "" : dt.toLocaleDateString("da-DK");
   };
@@ -332,37 +357,6 @@ Please analyze this invoice and provide:
     }
   };
 
-  const getStatusBadge = (state: string) => {
-    switch (state) {
-      case "paid":
-        return {
-          variant: "default" as const,
-          icon: CheckCircle2,
-          label: "Betalt",
-        };
-      case "approved":
-        return { variant: "secondary" as const, icon: CheckCircle2, label: "Godkendt" };
-      case "sent":
-        return { variant: "secondary" as const, icon: Send, label: "Afsendt" };
-      case "overdue":
-        return {
-          variant: "destructive" as const,
-          icon: Clock,
-          label: "Forfalden",
-        };
-      case "draft":
-        return { variant: "outline" as const, icon: FileEdit, label: "Kladde" };
-      case "voided":
-        return { variant: "outline" as const, icon: FileText, label: "Annulleret" };
-      default:
-        return {
-          variant: "secondary" as const,
-          icon: FileText,
-          label: state,
-        };
-    }
-  };
-
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("da-DK", {
       style: "currency",
@@ -376,16 +370,6 @@ Please analyze this invoice and provide:
     const copy = new Date(d);
     copy.setDate(copy.getDate() + (days || 0));
     return copy;
-  };
-
-  const formatDueInfo = (entryDate: string, paymentTermsDays?: number | null) => {
-    const due = addDays(entryDate, paymentTermsDays ?? 0);
-    if (!due) return "";
-    const now = new Date();
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const days = Math.ceil((due.getTime() - now.getTime()) / msPerDay);
-    const when = days >= 0 ? `om ${days} dage` : `for ${Math.abs(days)} dage siden`;
-    return `${due.toLocaleDateString("da-DK")} (${when})`;
   };
 
   if (isLoading) {
@@ -402,6 +386,61 @@ Please analyze this invoice and provide:
 
   return (
     <div className="space-y-4">
+      {/* Statistics Header */}
+      {stats && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Card className="p-4">
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <p className="text-2xl font-bold">{stats.total}</p>
+                <p className="text-sm text-muted-foreground">Total Fakturaer</p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4">
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-yellow-500" />
+              <div>
+                <p className="text-2xl font-bold">{stats.unpaidCount}</p>
+                <p className="text-sm text-muted-foreground">Ubetalte</p>
+                <p className="text-xs text-muted-foreground">
+                  {formatCurrency(stats.unpaidAmount)}
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-red-500" />
+              <div>
+                <p className="text-2xl font-bold">{stats.overdueCount}</p>
+                <p className="text-sm text-muted-foreground">Forfaldne</p>
+                <p className="text-xs text-red-500">
+                  {formatCurrency(stats.overdueAmount)}
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-green-500" />
+              <div>
+                <p className="text-2xl font-bold">
+                  {formatCurrency(stats.paidThisMonth)}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Betalt denne måned
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
       {/* Search and Filter Controls */}
       <div className="flex gap-2">
         <div className="relative flex-1">
@@ -455,108 +494,46 @@ Please analyze this invoice and provide:
         )}
       </div>
 
-      {/* Invoice List */}
-      <div className="space-y-2" data-testid="invoice-list">
+      {/* Invoice List with Virtual Scrolling */}
+      <div
+        ref={parentRef}
+        className="h-[calc(100vh-280px)] overflow-auto"
+        data-testid="invoice-list"
+      >
         {filteredInvoices.length > 0 ? (
-          filteredInvoices.map((invoice: BillyInvoice) => {
-            const badge = getStatusBadge(invoice.state);
-            const StatusIcon = badge.icon;
-
-            return (
-              <Card
-                key={invoice.id}
-                className="group p-2.5 hover:bg-accent/50 transition-all duration-200 hover:scale-[1.01] hover:shadow-md cursor-pointer"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <FileText className="h-4 w-4 text-muted-foreground" />
-                      <p className="font-medium">
-                        {invoice.invoiceNo
-                          ? `Faktura #${invoice.invoiceNo}`
-                          : `Kladde ${invoice.id.slice(0, 8)}`}
-                      </p>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Kunde: {invoice.contactId}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Dato: {new Date(invoice.entryDate).toLocaleDateString("da-DK")} • Forfalder: {formatDueInfo( invoice.entryDate, invoice.paymentTermsDays )}
-
-
-                    </p>
-                  </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <div className="flex items-center gap-2">
-                      <Badge variant={badge.variant} className="gap-1">
-                        <StatusIcon className="h-3 w-3" />
-                        {badge.label}
-                      </Badge>
-                      {/* Quick actions - visible on hover */}
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7"
-                          title="Open in Billy.dk"
-                          onClick={e => {
-                            e.stopPropagation();
-                            window.open(
-                              `https://app.billy.dk/invoices/${invoice.id}`,
-                              "_blank"
-                            );
-                          }}
-                        >
-                          <ExternalLink className="h-3 w-3" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-7 w-7"
-                          title="Download CSV"
-                          onClick={async (e) => {
-                            e.stopPropagation();
-                            try {
-                              exportToCSV(invoice, "");
-                              toast.success("CSV exported successfully");
-                            } catch (error) {
-                              console.error("CSV export failed:", error);
-                              toast.error("Failed to export CSV. Please try again.");
-                            }
-                          }}
-                        >
-                          <Download className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleAnalyzeInvoice(invoice)}
-                      disabled={analyzingInvoice}
-                      aria-busy={analyzingInvoice && selectedInvoice?.id === invoice.id}
-                      className="gap-1"
-                    >
-                      {analyzingInvoice && selectedInvoice?.id === invoice.id ? (
-                        <Loader2 className="h-3 w-3 animate-spin" />
-                      ) : (
-                        <Sparkles className="h-3 w-3" />
-                      )}
-                      {analyzingInvoice && selectedInvoice?.id === invoice.id
-                        ? "Analyserer…"
-                        : "Analyser"}
-                    </Button>
-                  </div>
+          <div
+            style={{
+              height: `${virtualizer.getTotalSize()}px`,
+              width: "100%",
+              position: "relative",
+            }}
+          >
+            {virtualizer.getVirtualItems().map(virtualRow => {
+              const invoice = filteredInvoices[virtualRow.index];
+              return (
+                <div
+                  key={invoice.id}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: `${virtualRow.size}px`,
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                  className="px-0.5 pb-2"
+                >
+                  <InvoiceCard
+                    invoice={invoice}
+                    isAnalyzing={analyzingInvoice}
+                    isSelected={selectedInvoice?.id === invoice.id}
+                    onAnalyze={handleAnalyzeInvoice}
+                    onExportCSV={exportToCSV}
+                  />
                 </div>
-                {invoice.lines && invoice.lines.length > 0 && (
-                  <div className="text-xs text-muted-foreground mt-2 pt-2 border-t">
-                    {invoice.lines.length} line
-                    {invoice.lines.length !== 1 ? "s" : ""}
-                  </div>
-                )}
-              </Card>
-            );
-          })
+              );
+            })}
+          </div>
         ) : (
           <div className="text-center py-12 text-muted-foreground">
             <div className="flex justify-center mb-4">
@@ -671,7 +648,9 @@ Please analyze this invoice and provide:
                             toast.success("CSV exported successfully");
                           } catch (error) {
                             console.error("CSV export failed:", error);
-                            toast.error("Failed to export CSV. Please try again.");
+                            toast.error(
+                              "Failed to export CSV. Please try again."
+                            );
                           }
                         }}
                         className="gap-2"
@@ -721,9 +700,3 @@ Please analyze this invoice and provide:
     </div>
   );
 }
-
-
-
-
-
-

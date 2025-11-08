@@ -3,8 +3,8 @@
  * 3-tier fallback system: Intent → Keywords → AI → Fallback
  */
 
-import { parseIntent, type Intent } from "./intent-actions";
 import { invokeLLM } from "./_core/llm";
+import { parseIntent, type Intent } from "./intent-actions";
 
 /**
  * Generate title from intent and parameters with emoji

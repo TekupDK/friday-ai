@@ -58,13 +58,13 @@ export function SuggestionsBar({
   return (
     <div className={cn("space-y-2", className)}>
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-          Anbefalede handlinger
-        </h3>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="text-xs">
-            Friday foreslår
-          </Badge>
+          <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+          <h3 className="text-xs font-medium text-muted-foreground">
+            Friday foreslår handlinger
+          </h3>
+        </div>
+        <div className="flex items-center gap-1">
           <Button
             variant="ghost"
             size="icon"
@@ -111,38 +111,34 @@ export function SuggestionsBar({
               return (
                 <div
                   key={suggestion.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border border-border bg-card/70 px-4 py-3 shadow-sm hover:bg-card/90 transition-colors"
+                  className="flex items-center justify-between gap-3 rounded-lg border border-border bg-card px-3 py-2 hover:bg-muted/50 transition-colors"
                 >
-                  <div className="flex items-start gap-3 flex-1">
-                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm">
-                      <Icon className="h-4 w-4 text-white" />
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-100 text-blue-600">
+                      <Icon className="h-3.5 w-3.5" />
                     </div>
-                    <div className="space-y-1 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium">{label}</span>
-                        <Badge
-                          variant="outline"
-                          className={cn("text-xs", riskClass)}
-                        >
-                          {riskLabel}
-                        </Badge>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-medium truncate">{label}</span>
+                        {suggestion.riskLevel === "high" && (
+                          <Badge variant="outline" className="text-xs bg-red-50 text-red-600 border-red-200">
+                            Høj risiko
+                          </Badge>
+                        )}
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs text-muted-foreground truncate">
                         {suggestion.impact}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 sm:shrink-0">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onApprove(suggestion)}
-                      className="gap-2"
-                    >
-                      <Sparkles className="h-3.5 w-3.5" />
-                      Godkend
-                    </Button>
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onApprove(suggestion)}
+                    className="shrink-0 h-7 text-xs"
+                  >
+                    Godkend
+                  </Button>
                 </div>
               );
             })

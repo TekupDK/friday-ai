@@ -1,0 +1,52 @@
+{
+  "name": "Friday AI Testing - Auto-Run Configuration",
+  "version": "1.0.0",
+  "description": "Auto-approved commands for Friday AI testing framework",
+  "autoRunCommands": [
+    "pnpm test:ai",
+    "pnpm test:ai:quick",
+    "pnpm test:ai:vibium",
+    "pnpm test:ai:basic",
+    "pnpm test:ai:redirect-safe",
+    "pnpm test:ai:real",
+    "pnpm test:ai:run-all",
+    "pnpm test:ai:conversation",
+    "pnpm test:ai:visual",
+    "pnpm test:ai:performance",
+    "pnpm test:ai:accessibility",
+    "pnpm test:ai:all",
+    "pnpm test:playwright",
+    "pnpm test:playwright:ui",
+    "tsx run-ai-tests.ts",
+    "pnpm exec playwright show-report",
+    "pnpm exec playwright show-trace"
+  ],
+  "safeCommands": [
+    "pnpm dev",
+    "pnpm build",
+    "pnpm start",
+    "pnpm check",
+    "pnpm format",
+    "pnpm test:email-smoke",
+    "pnpm test:screens"
+  ],
+  "testCategories": {
+    "quick": "pnpm test:ai:quick",
+    "basic": "pnpm test:ai:basic", 
+    "vibium": "pnpm test:ai:vibium",
+    "redirect-safe": "pnpm test:ai:redirect-safe",
+    "real": "pnpm test:ai:real",
+    "all": "pnpm test:ai:run-all",
+    "conversation": "pnpm test:ai:conversation",
+    "visual": "pnpm test:ai:visual",
+    "performance": "pnpm test:ai:performance",
+    "accessibility": "pnpm test:ai:accessibility"
+  },
+  "notes": [
+    "All Friday AI testing commands are auto-approved",
+    "No manual approval needed for test execution",
+    "Safe for CI/CD automation",
+    "Includes Playwright and AI testing framework"
+  ],
+  "lastUpdated": "2025-11-08T10:06:00.000Z"
+}

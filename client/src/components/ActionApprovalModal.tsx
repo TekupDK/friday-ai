@@ -155,112 +155,77 @@ export function ActionApprovalModal({
   const riskLabel = RISK_LABELS[action.riskLevel] || "Lav risiko";
 
   return (
-    <AlertDialog open={open}>
-      <AlertDialogContent className="max-w-2xl">
+    <AlertDialog
+      open={open}
+      onOpenChange={isOpen => {
+        // When dialog tries to close (isOpen = false), call onReject
+        if (!isOpen) {
+          onReject();
+        }
+      }}
+    >
+      <AlertDialogContent className="max-w-md">
         <AlertDialogHeader>
-          <div className="flex items-center gap-3 mb-2">
-            {/* Enhanced gradient icon with pulse animation */}
-            <div className="relative">
-              <div
-                className={`absolute inset-0 rounded-lg blur-md ${
-                  action.riskLevel === "high"
-                    ? "bg-red-500/30"
-                    : action.riskLevel === "medium"
-                      ? "bg-yellow-500/30"
-                      : "bg-green-500/30"
-                } animate-pulse`}
-              ></div>
-              <div
-                className={`relative p-2.5 rounded-lg ${
-                  action.riskLevel === "high"
-                    ? "bg-gradient-to-br from-red-500 to-red-600"
-                    : action.riskLevel === "medium"
-                      ? "bg-gradient-to-br from-yellow-500 to-orange-500"
-                      : "bg-gradient-to-br from-green-500 to-emerald-600"
-                } shadow-lg`}
-              >
-                <Icon className="w-6 h-6 text-white" />
-              </div>
+          <div className="flex items-start gap-3">
+            <div
+              className={`p-2 rounded-lg ${
+                action.riskLevel === "high"
+                  ? "bg-red-100 text-red-600"
+                  : action.riskLevel === "medium"
+                    ? "bg-yellow-100 text-yellow-600"
+                    : "bg-green-100 text-green-600"
+              }`}
+            >
+              <Icon className="w-5 h-5" />
             </div>
             <div className="flex-1">
-              <AlertDialogTitle className="text-xl font-bold">
-                Godkend Handling
+              <AlertDialogTitle className="text-lg font-semibold">
+                {label}
               </AlertDialogTitle>
-              <AlertDialogDescription className="text-sm">
-                Friday foreslår følgende handling baseret på din besked
+              <AlertDialogDescription className="text-sm mt-1">
+                Friday vil udføre denne handling
               </AlertDialogDescription>
             </div>
-            {/* Enhanced risk badge with gradient */}
-            <Badge
-              variant="outline"
-              className={`${riskColor} font-semibold border-2`}
-            >
-              {riskLabel}
-            </Badge>
           </div>
         </AlertDialogHeader>
 
-        <div className="space-y-5 py-4">
-          {/* Action Type with visual indicator */}
-          <div
-            className={`p-4 rounded-xl border-2 ${
-              action.riskLevel === "high"
-                ? "bg-red-50/50 border-red-200"
-                : action.riskLevel === "medium"
-                  ? "bg-yellow-50/50 border-yellow-200"
-                  : "bg-green-50/50 border-green-200"
-            }`}
-          >
-            <Label className="text-sm font-semibold text-gray-700">
-              Handlingstype
-            </Label>
-            <p className="text-base mt-1 font-medium">{label}</p>
-            {/* Selection hint for inbox AI actions */}
-            {(action.type === "ai_generate_summaries" ||
-              action.type === "ai_suggest_labels") && (
-              <p className="text-xs text-muted-foreground mt-1">
-                {selectedCount > 0
-                  ? `Du har ${selectedCount} tråd(e) valgt – de bruges ved godkendelse (ellers seneste 25).`
-                  : "Ingen tråde valgt – seneste 25 i Indbakken bruges."}
-              </p>
-            )}
-          </div>
-
+        <div className="space-y-3 py-3">
           {/* Impact */}
           <div>
-            <Label className="text-sm font-semibold text-gray-700">
-              Påvirkning
-            </Label>
-            <p className="text-sm text-gray-600 mt-2">{action.impact}</p>
+            <p className="text-sm text-muted-foreground">{action.impact}</p>
           </div>
 
-          {/* Preview - Enlarged with better styling */}
-          <div>
-            <Label className="text-sm font-semibold text-gray-700">
-              Forhåndsvisning
-            </Label>
-            <div className="mt-2 p-5 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl shadow-sm">
-              <p className="text-sm whitespace-pre-wrap leading-relaxed">
-                {action.preview}
+          {/* Preview */}
+          {action.preview && (
+            <div className="p-3 bg-muted/50 border border-border rounded-lg">
+              <p className="text-sm whitespace-pre-wrap">{action.preview}</p>
+            </div>
+          )}
+
+          {/* Selection hint for inbox AI actions */}
+          {(action.type === "ai_generate_summaries" ||
+            action.type === "ai_suggest_labels") &&
+            selectedCount > 0 && (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <Badge variant="secondary" className="text-xs">
+                  {selectedCount} emails valgt
+                </Badge>
+              </div>
+            )}
+
+          {/* Risk warning for high risk actions */}
+          {action.riskLevel === "high" && (
+            <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
+              <p className="text-xs text-red-700">
+                Dette er en høj risiko handling. Dobbelttjek at alt er korrekt.
               </p>
             </div>
-          </div>
+          )}
 
-          {/* Parameters */}
-          <div>
-            <Label className="text-sm font-semibold text-gray-700">
-              Detaljer
-            </Label>
-            <div className="mt-2 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-              <pre className="text-xs font-mono overflow-x-auto">
-                {JSON.stringify(action.params, null, 2)}
-              </pre>
-            </div>
-          </div>
-
-          {/* Always Approve Option - Better positioned */}
+          {/* Always Approve Option */}
           {action.riskLevel === "low" && (
-            <div className="flex items-start space-x-3 pt-3 px-4 py-3 border-2 border-green-200 bg-green-50/50 rounded-xl">
+            <div className="flex items-start gap-2 pt-2">
               <Checkbox
                 id="always-approve"
                 checked={alwaysApprove}
@@ -271,40 +236,28 @@ export function ActionApprovalModal({
               />
               <Label
                 htmlFor="always-approve"
-                className="text-sm text-gray-700 cursor-pointer leading-relaxed"
+                className="text-xs text-muted-foreground cursor-pointer"
               >
-                Godkend altid denne type handling automatisk (kun for lav
-                risiko)
+                Godkend altid automatisk
               </Label>
             </div>
           )}
         </div>
 
-        <AlertDialogFooter className="flex-col sm:flex-row gap-2">
-          <div className="text-xs text-muted-foreground sm:mr-auto">
-            <kbd className="px-2 py-1 bg-muted rounded border text-xs">Esc</kbd>{" "}
-            for at afvise
-            {" · "}
-            <kbd className="px-2 py-1 bg-muted rounded border text-xs">
-              Ctrl+Enter
-            </kbd>{" "}
-            for at godkende
-          </div>
-          <div className="flex gap-2">
-            <AlertDialogCancel onClick={onReject}>Afvis</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => onApprove(alwaysApprove)}
-              className={`font-semibold ${
-                action.riskLevel === "high"
-                  ? "bg-red-600 hover:bg-red-700"
-                  : action.riskLevel === "medium"
-                    ? "bg-yellow-600 hover:bg-yellow-700"
-                    : "bg-green-600 hover:bg-green-700"
-              }`}
-            >
-              Godkend og Udfør
-            </AlertDialogAction>
-          </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={onReject}>Afvis</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() => onApprove(alwaysApprove)}
+            className={`${
+              action.riskLevel === "high"
+                ? "bg-red-600 hover:bg-red-700"
+                : action.riskLevel === "medium"
+                  ? "bg-yellow-600 hover:bg-yellow-700"
+                  : ""
+            }`}
+          >
+            {action.riskLevel === "high" ? "Ja, udfør" : "Godkend"}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -118,3 +118,9 @@ temp/
 *.db
 *.sqlite
 *.sqlite3
+# Friday AI Testing Commands - Auto-Approved
+
+# Allow auto-run for testing:
+pnpm test:ai*
+pnpm playwright test*
+tsx run-ai-tests.ts

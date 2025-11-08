@@ -10,6 +10,7 @@ export type MetricEvent =
   | "suggestion_ignored"
   | "action_executed"
   | "action_failed"
+  | "action_rejected"
   | "dry_run_performed"
   | "rollout_check";
 
@@ -67,8 +68,24 @@ export function trackMetric(
     metricsStore.shift(); // Remove oldest
   }
 
-  // TODO: Send to analytics service
-  // Example: mixpanel.track(event, { userId, ...data });
+  // Best-effort export to external analytics (fire-and-forget)
+  // Does nothing unless analytics are enabled and a provider is configured
+  import("./analytics").then(({ trackAnalytics }) =>
+    trackAnalytics({
+      name: event,
+      userId,
+      properties: {
+        feature: data?.feature,
+        actionType: data?.actionType,
+        suggestionId: data?.suggestionId,
+        conversationId: data?.conversationId,
+        timeToAction: data?.timeToAction,
+        errorMessage: data?.errorMessage,
+        ...(data?.metadata || {}),
+      },
+      timestamp: metric.timestamp,
+    }).catch(() => {})
+  );
 }
 
 /**

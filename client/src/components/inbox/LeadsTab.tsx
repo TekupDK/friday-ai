@@ -1,6 +1,8 @@
-import CustomerProfile from "@/components/CustomerProfile";
+import { CustomerProfile } from "@/components/workspace/CustomerProfile";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useEmailContext } from "@/contexts/EmailContext";
+import { useWorkflowContext } from "@/contexts/WorkflowContext";
 import {
   Dialog,
   DialogContent,
@@ -365,7 +367,12 @@ const LeadRow = memo(function LeadRow({
   );
 });
 
-export default function LeadsTab() {
+interface LeadsTabProps {
+  onRequestTabChange?: (tab: "email") => void;
+}
+
+export default function LeadsTab({ onRequestTabChange }: LeadsTabProps = {}) {
+  const emailContext = useEmailContext();
   const [statusFilter, setStatusFilter] = useState<LeadStatus | "all">("all");
   const [sourceFilter, setSourceFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -406,6 +413,7 @@ export default function LeadsTab() {
   });
 
   const [selectedLeadId, setSelectedLeadId] = useState<number | null>(null);
+  const { openCustomerProfile } = useWorkflowContext();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isPerformanceModalOpen, setIsPerformanceModalOpen] = useState(false);
   const [newLeadForm, setNewLeadForm] = useState({
@@ -732,7 +740,10 @@ export default function LeadsTab() {
                       lead={lead}
                       index={virtualRow.index}
                       onStatusChange={handleStatusChange}
-                      onSelectLead={setSelectedLeadId}
+                      onSelectLead={(leadId) => {
+                        // Open customer profile in WorkflowPanel
+                        openCustomerProfile(leadId);
+                      }}
                     />
                   </div>
                 );
@@ -742,14 +753,7 @@ export default function LeadsTab() {
         </div>
       )}
 
-      {/* Customer Profile Modal */}
-      {selectedLeadId && (
-        <CustomerProfile
-          leadId={selectedLeadId}
-          open={!!selectedLeadId}
-          onClose={() => setSelectedLeadId(null)}
-        />
-      )}
+      {/* Customer Profile now opens in WorkflowPanel */}
 
       {/* Calendar Events Info */}
       {selectedLeadId && calendarEvents && calendarEvents.length > 0 && (

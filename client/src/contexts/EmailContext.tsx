@@ -19,6 +19,9 @@ import {
 } from "react";
 
 export interface EmailContextState {
+  // Active tab in EmailCenter
+  activeTab: "email" | "invoices" | "calendar" | "leads" | "tasks";
+
   // Selected emails (by thread ID)
   selectedThreads: Set<string>;
 
@@ -40,21 +43,41 @@ export interface EmailContextState {
 
   // Preview modal
   previewThreadId: string | null;
+
+  // Cross-tab navigation: pending thread to open (from LeadsTab, etc.)
+  pendingThreadToOpen: string | null;
+
+  // V2: Selected email for Smart Workspace context detection
+  selectedEmail: {
+    id: string;
+    threadId: string;
+    subject: string;
+    from: string;
+    snippet: string;
+    labels: string[];
+    threadLength: number;
+  } | null;
 }
 
 interface EmailContextValue {
   state: EmailContextState;
   updateState: (updates: Partial<EmailContextState>) => void;
+  setActiveTab: (tab: "email" | "invoices" | "calendar" | "leads" | "tasks") => void;
   selectThread: (threadId: string, add?: boolean) => void;
   deselectThread: (threadId: string) => void;
   clearSelection: () => void;
   getContextForAI: () => string;
+  requestOpenThread: (threadId: string) => void;
+  clearPendingThread: () => void;
+  // V2: Set selected email for workspace
+  setSelectedEmail: (email: EmailContextState['selectedEmail']) => void;
 }
 
 const EmailContext = createContext<EmailContextValue | null>(null);
 
 export function EmailContextProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<EmailContextState>({
+    activeTab: "email",
     selectedThreads: new Set(),
     openThreadId: null,
     folder: "inbox",
@@ -63,6 +86,8 @@ export function EmailContextProvider({ children }: { children: ReactNode }) {
     searchQuery: "",
     openDrafts: 0,
     previewThreadId: null,
+    pendingThreadToOpen: null,
+    selectedEmail: null, // V2
   });
 
   const updateState = useCallback((updates: Partial<EmailContextState>) => {
@@ -72,6 +97,10 @@ export function EmailContextProvider({ children }: { children: ReactNode }) {
       // Handle Set updates properly
       selectedThreads: updates.selectedThreads ?? prev.selectedThreads,
     }));
+  }, []);
+
+  const setActiveTab = useCallback((tab: "email" | "invoices" | "calendar" | "leads" | "tasks") => {
+    setState(prev => ({ ...prev, activeTab: tab }));
   }, []);
 
   const selectThread = useCallback((threadId: string, add = true) => {
@@ -96,6 +125,19 @@ export function EmailContextProvider({ children }: { children: ReactNode }) {
 
   const clearSelection = useCallback(() => {
     setState(prev => ({ ...prev, selectedThreads: new Set() }));
+  }, []);
+
+  const requestOpenThread = useCallback((threadId: string) => {
+    setState(prev => ({ ...prev, pendingThreadToOpen: threadId }));
+  }, []);
+
+  const clearPendingThread = useCallback(() => {
+    setState(prev => ({ ...prev, pendingThreadToOpen: null }));
+  }, []);
+
+  // V2: Set selected email for Smart Workspace
+  const setSelectedEmail = useCallback((email: EmailContextState['selectedEmail']) => {
+    setState(prev => ({ ...prev, selectedEmail: email }));
   }, []);
 
   const getContextForAI = useCallback(() => {
@@ -153,10 +195,14 @@ export function EmailContextProvider({ children }: { children: ReactNode }) {
       value={{
         state,
         updateState,
+        setActiveTab,
         selectThread,
         deselectThread,
         clearSelection,
         getContextForAI,
+        requestOpenThread,
+        clearPendingThread,
+        setSelectedEmail, // V2
       }}
     >
       {children}
@@ -170,6 +216,7 @@ export function useEmailContext() {
     // Return a safe default if not within provider (prevents crashes)
     return {
       state: {
+        activeTab: "email",
         selectedThreads: new Set(),
         openThreadId: null,
         folder: "inbox",
@@ -178,12 +225,18 @@ export function useEmailContext() {
         searchQuery: "",
         openDrafts: 0,
         previewThreadId: null,
+        pendingThreadToOpen: null,
+        selectedEmail: null, // V2
       },
       updateState: () => {},
+      setActiveTab: () => {},
       selectThread: () => {},
       deselectThread: () => {},
       clearSelection: () => {},
       getContextForAI: () => "",
+      requestOpenThread: () => {},
+      clearPendingThread: () => {},
+      setSelectedEmail: () => {}, // V2
     };
   }
   return context;

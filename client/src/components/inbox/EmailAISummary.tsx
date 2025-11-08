@@ -4,7 +4,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 interface EmailAISummaryProps {
-  emailId: number;
+  emailId?: number;
+  /** Gmail thread id; will be mapped to internal email id */
+  threadId?: string;
   /** Optional: Preloaded summary from email list */
   summary?: string;
   generatedAt?: string;
@@ -27,6 +29,7 @@ interface EmailAISummaryProps {
  */
 export default function EmailAISummary({
   emailId,
+  threadId,
   summary: preloadedSummary,
   generatedAt: preloadedGeneratedAt,
   collapsed = false,
@@ -38,6 +41,19 @@ export default function EmailAISummary({
   // Only fetch from API if data not preloaded
   const shouldFetch = expanded && !preloadedSummary;
 
+  // Resolve numeric emailId from threadId when needed
+  const { data: mappedIds } = (trpc.inbox as any).email.mapThreadsToEmailIds.useQuery(
+    { threadIds: threadId ? [threadId] : [] },
+    { enabled: shouldFetch && !!threadId }
+  );
+  const validEmailId =
+    typeof emailId === "number" && !Number.isNaN(emailId) ? emailId : undefined;
+  const resolvedEmailId =
+    validEmailId ??
+    (Array.isArray(mappedIds) && typeof mappedIds[0] === "number"
+      ? (mappedIds[0] as number)
+      : undefined);
+
   // Fetch summary (cached or generate new) - only if not preloaded
   const {
     data: summaryData,
@@ -45,9 +61,9 @@ export default function EmailAISummary({
     error,
     refetch,
   } = (trpc.inbox as any).getEmailSummary.useQuery(
-    { emailId },
+    { emailId: resolvedEmailId as number },
     {
-      enabled: shouldFetch, // Only load when expanded AND not preloaded
+      enabled: shouldFetch && typeof resolvedEmailId === "number", // Only load when expanded AND not preloaded
       retry: 1, // Retry once on failure
       staleTime: Infinity, // Permanent cache
     }
@@ -87,7 +103,9 @@ export default function EmailAISummary({
   // Handle manual retry
   const handleRetry = () => {
     setShowRetry(false);
-    generateMutation.mutate({ emailId });
+    if (typeof resolvedEmailId === "number") {
+      generateMutation.mutate({ emailId: resolvedEmailId });
+    }
   };
 
   // Handle toggle for collapsed mode
@@ -123,13 +141,13 @@ export default function EmailAISummary({
   }
 
   // Error state
-  if (error || (shouldFetch && summaryData && !summaryData?.success)) {
+  if (error) {
     return (
       <div className={`flex items-start gap-2 mt-1.5 ${className}`}>
         <Sparkles className="h-3.5 w-3.5 text-muted-foreground/50 mt-0.5" />
         <div className="flex-1 flex items-center justify-between">
           <p className="text-xs text-muted-foreground/70 italic">
-            {summaryData?.reason || "Kunne ikke hente AI resumé"}
+            {"Kunne ikke hente AI resumé"}
           </p>
           {showRetry && (
             <button

@@ -12,7 +12,8 @@ interface LabelSuggestion {
 }
 
 interface EmailLabelSuggestionsProps {
-  emailId: number;
+  emailId?: number;
+  threadId?: string;
   /** Current labels on the email */
   currentLabels?: string[];
   /** Callback when label is applied */
@@ -39,10 +40,13 @@ interface EmailLabelSuggestionsProps {
  */
 export default function EmailLabelSuggestions({
   emailId,
+  threadId,
   currentLabels = [],
   onLabelApplied,
   collapsed = false,
   className = "",
+  suggestions: preloadedSuggestions,
+  generatedAt: preloadedGeneratedAt,
 }: EmailLabelSuggestionsProps) {
   const [expanded, setExpanded] = useState(!collapsed);
   const [appliedLabels, setAppliedLabels] = useState<Set<string>>(
@@ -50,15 +54,31 @@ export default function EmailLabelSuggestions({
   );
 
   // Fetch label suggestions (cached or generate new)
+  // Resolve numeric emailId from threadId when needed
+  const { data: mappedIds } = (trpc.inbox as any).email.mapThreadsToEmailIds.useQuery(
+    { threadIds: threadId ? [threadId] : [] },
+    { enabled: !!threadId }
+  );
+  const validEmailId =
+    typeof emailId === "number" && !Number.isNaN(emailId) ? emailId : undefined;
+  const resolvedEmailId =
+    validEmailId ??
+    (Array.isArray(mappedIds) && typeof mappedIds[0] === "number"
+      ? (mappedIds[0] as number)
+      : undefined);
+
+  // Only fetch if not preloaded
+  const shouldFetch = expanded && !preloadedSuggestions;
+
   const {
     data: suggestionsData,
     isLoading,
     error,
     refetch,
   } = (trpc.inbox as any).getLabelSuggestions.useQuery(
-    { emailId },
+    { emailId: resolvedEmailId as number },
     {
-      enabled: expanded,
+      enabled: shouldFetch && typeof resolvedEmailId === "number",
       retry: 1,
       staleTime: 24 * 60 * 60 * 1000, // 24 hours
     }
@@ -69,12 +89,12 @@ export default function EmailLabelSuggestions({
     trpc.inbox as any
   ).generateLabelSuggestions.useMutation({
     onSuccess: (data: any) => {
-      if (data.success) {
+      if (data && data.suggestions && data.suggestions.length >= 0) {
         toast.success("AI mærkater genereret!");
         refetch();
       } else {
         toast.error("Kunne ikke generere mærkater", {
-          description: data.reason || "Prøv igen senere.",
+          description: data?.reason || "Prøv igen senere.",
         });
       }
     },
@@ -109,16 +129,17 @@ export default function EmailLabelSuggestions({
 
   // Handle apply label
   const handleApplyLabel = (label: string, confidence: number) => {
-    applyLabelMutation.mutate({ emailId, label, confidence });
+    if (typeof resolvedEmailId === "number") {
+      applyLabelMutation.mutate({ emailId: resolvedEmailId, label, confidence });
+    }
   };
 
   // Handle auto-apply all high confidence labels
   const handleAutoApplyAll = () => {
     if (!suggestionsData?.suggestions) return;
 
-    const highConfidenceLabels = suggestionsData.suggestions.filter(
-      (s: LabelSuggestion) =>
-        s.confidence >= 0.85 && !appliedLabels.has(s.label)
+    const highConfidenceLabels = suggestions.filter(
+      (s: LabelSuggestion) => s.confidence >= 85 && !appliedLabels.has(s.label)
     );
 
     if (highConfidenceLabels.length === 0) {
@@ -160,9 +181,9 @@ export default function EmailLabelSuggestions({
 
   // Get confidence color
   const getConfidenceColor = (confidence: number): string => {
-    if (confidence >= 0.85)
+    if (confidence >= 85)
       return "bg-green-500/10 text-green-700 border-green-500/20";
-    if (confidence >= 0.7)
+    if (confidence >= 70)
       return "bg-yellow-500/10 text-yellow-700 border-yellow-500/20";
     return "bg-gray-500/10 text-gray-700 border-gray-500/20";
   };
@@ -195,18 +216,20 @@ export default function EmailLabelSuggestions({
   }
 
   // Error state
-  if (error || !suggestionsData?.success) {
+  if (error) {
     return (
       <div className={`flex items-start gap-2 mt-2 ${className}`}>
         <Sparkles className="h-3.5 w-3.5 text-muted-foreground/50 mt-0.5" />
         <p className="text-xs text-muted-foreground/70 italic">
-          {suggestionsData?.reason || "Kunne ikke hente AI mærkater"}
+          {"Kunne ikke hente AI mærkater"}
         </p>
       </div>
     );
   }
 
-  const { suggestions, generatedAt, cached } = suggestionsData;
+  const suggestions = preloadedSuggestions || suggestionsData?.suggestions;
+  const generatedAt = preloadedGeneratedAt || suggestionsData?.generatedAt;
+  const cached = suggestionsData?.cached ?? (preloadedSuggestions ? true : false);
 
   if (!suggestions || suggestions.length === 0) {
     return null;
@@ -218,7 +241,7 @@ export default function EmailLabelSuggestions({
   );
 
   const highConfidenceCount = availableSuggestions.filter(
-    (s: LabelSuggestion) => s.confidence >= 0.85
+    (s: LabelSuggestion) => s.confidence >= 85
   ).length;
 
   if (availableSuggestions.length === 0) {
@@ -276,14 +299,14 @@ export default function EmailLabelSuggestions({
               }
               title={
                 suggestion.reason
-                  ? `${suggestion.reason} (${Math.round(suggestion.confidence * 100)}% confidence)`
-                  : `${Math.round(suggestion.confidence * 100)}% confidence`
+                  ? `${suggestion.reason} (${Math.round(suggestion.confidence)}% confidence)`
+                  : `${Math.round(suggestion.confidence)}% confidence`
               }
             >
               <span className="text-xs">{getLabelEmoji(suggestion.label)}</span>
               <span className="text-xs font-medium">{suggestion.label}</span>
               <span className="text-[10px] opacity-60">
-                {Math.round(suggestion.confidence * 100)}%
+                {Math.round(suggestion.confidence)}%
               </span>
               {isApplying ? (
                 <div className="h-3 w-3 border-2 border-current border-t-transparent rounded-full animate-spin ml-1" />

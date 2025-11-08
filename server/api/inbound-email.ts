@@ -20,6 +20,21 @@ const STORAGE_PATH = ENV.INBOUND_STORAGE_PATH || "./storage/attachments";
 const WEBHOOK_SECRET = ENV.INBOUND_EMAIL_WEBHOOK_SECRET;
 
 /**
+ * Get userId from email account mapping
+ * Maps receiving email addresses to user IDs
+ */
+async function getUserIdFromEmailAccount(emailAddress: string): Promise<number> {
+  // TODO: Implement proper email account to user mapping from database
+  // For now, use a simple mapping based on environment variables
+  const emailAccountMap: Record<string, number> = {
+    [ENV.PRIMARY_EMAIL_ACCOUNT || ""]: 1,
+    // Add more mappings as needed
+  };
+  
+  return emailAccountMap[emailAddress.toLowerCase()] || 1; // Default to user 1 if not found
+}
+
+/**
  * Generate threadKey from email headers for grouping
  */
 function generateThreadKey(from: string, to: string, subject: string): string {
@@ -170,9 +185,9 @@ export async function handleInboundEmail(req: Request, res: Response) {
     const providerId = `inbound-${body.messageId}`;
     const threadKey = generateThreadKey(body.from, body.to, body.subject || "");
 
-    // Get or create user (for now, use first user or default userId = 1)
-    // TODO: Get userId from context or email account mapping
-    const userId = 1; // This should be determined from email account
+    // Get userId from email account mapping
+    // For inbound emails, determine user by the receiving email address
+    const userId = await getUserIdFromEmailAccount(body.to);
 
     // Insert email into database
     const emailResult = await db

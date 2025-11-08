@@ -5,6 +5,7 @@
  */
 
 import { createInvoice, getCustomers } from "./billy";
+import { checkIdempotency, storeIdempotencyRecord } from "./idempotency";
 import { createLead, createTask, getUserLeads, getUserTasks } from "./db";
 import {
   createCalendarEvent,
@@ -432,7 +433,8 @@ export function parseIntent(message: string): ParsedIntent {
  */
 export async function executeAction(
   intent: ParsedIntent,
-  userId: number
+  userId: number,
+  options?: { correlationId?: string }
 ): Promise<ActionResult> {
   try {
     switch (intent.intent) {
@@ -443,7 +445,7 @@ export async function executeAction(
         return await executeCreateTask(intent.params, userId);
 
       case "create_invoice":
-        return await executeCreateInvoice(intent.params, userId);
+        return await executeCreateInvoice(intent.params, userId, options);
 
       case "book_meeting":
         return await executeBookMeeting(intent.params, userId);
@@ -458,7 +460,7 @@ export async function executeAction(
         return await executeListLeads(intent.params, userId);
 
       case "check_calendar":
-        return await executeCheckCalendar(userId, intent.params);
+        return await executeCheckCalendar(userId, intent.params, options);
 
       case "request_flytter_photos":
         return await executeRequestFlytterPhotos(intent.params, userId);
@@ -634,9 +636,12 @@ async function executeCreateTask(
 
 async function executeCreateInvoice(
   params: Record<string, any>,
-  userId: number
+  userId: number,
+  options?: { correlationId?: string }
 ): Promise<ActionResult> {
   const { customerName, amount, description } = params;
+  const correlationId = options?.correlationId;
+  const logPrefix = correlationId ? `[Invoice][${correlationId}]` : `[Invoice]`;
 
   // CRITICAL RULE: Validate required parameters
   if (!customerName) {
@@ -728,12 +733,19 @@ async function executeCreateInvoice(
   const unitPrice = 349; // CRITICAL: 349 kr/time/person (MEMORY_17)
   const totalAmount = workHours * unitPrice;
 
-  // STEP 3: Create invoice as DRAFT (CRITICAL: NEVER auto-approve - MEMORY_17)
+  // STEP 3: Idempotency guard and Create invoice as DRAFT (CRITICAL)
   let invoice: any;
+  const entryDate = new Date().toISOString().split("T")[0];
+  const idempotencyKey = `invoice:${userId}:${customer.id}:${entryDate}:${workHours}:${jobType}`;
+  const dupCheck = checkIdempotency(idempotencyKey);
+  if (dupCheck.isDuplicate) {
+    console.log(`${logPrefix} Duplicate invoice creation prevented for key ${idempotencyKey}`);
+    return dupCheck.result as ActionResult;
+  }
   try {
     invoice = await createInvoice({
       contactId: customer.id,
-      entryDate: new Date().toISOString().split("T")[0],
+      entryDate,
       paymentTermsDays: 1, // 1 day for one-time jobs
       lines: [
         {
@@ -744,7 +756,7 @@ async function executeCreateInvoice(
         },
       ],
       // state: "draft" is default - DO NOT set to "approved"
-    });
+    }, { correlationId });
   } catch (error) {
     return {
       success: false,
@@ -755,11 +767,13 @@ async function executeCreateInvoice(
   }
 
   // STEP 4: Return for REVIEW (CRITICAL: User must approve manually)
-  return {
+  const result: ActionResult = {
     success: true,
     message: `✅ **Faktura DRAFT oprettet** (ikke godkendt endnu)\n\n💼 **Kunde:** ${customer.name}\n📝 **Type:** ${jobDescription} (${jobType})\n⏱️ **Arbejdstimer:** ${workHours}t\n💰 **Pris:** ${unitPrice} kr/time\n💵 **Total:** ${totalAmount} kr inkl. moms\n\n⚠️ **Næste skridt:**\n1. Gå til Invoices-fanen og gennemse fakturaen\n2. Godkend manuelt i Billy.dk hvis alt ser rigtigt ud\n3. Send faktura til kunden\n\n✅ **VERIFICERET:** Faktura oprettet som draft (ikke auto-godkendt)`,
     data: { invoice, customer, workHours, totalAmount },
   };
+  storeIdempotencyRecord(idempotencyKey, "create_invoice", userId, result);
+  return result;
 }
 
 async function executeBookMeeting(
@@ -907,9 +921,14 @@ async function executeSearchEmail(
   if (subject) query += `subject:${subject} `;
 
   // Add time range
+  // IMPORTANT: Gmail's after: operator means "after this date ENDS"
+  // So after:2025-11-06 shows emails from Nov 7 onwards
+  // To get emails from Nov 6-onwards, use after:2025-11-05
   if (timeRange === "last_week" || timeRange === "last_7_days") {
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
+    // Subtract one more day to include the target date
+    weekAgo.setDate(weekAgo.getDate() - 1);
     query += `after:${weekAgo.toISOString().split("T")[0]}`;
   }
 
@@ -976,8 +995,12 @@ async function executeListLeads(
 
 async function executeCheckCalendar(
   userId: number,
-  params?: Record<string, any>
+  params?: Record<string, any>,
+  options?: { correlationId?: string }
 ): Promise<ActionResult> {
+  const logPrefix = options?.correlationId
+    ? `[executeCheckCalendar][${options.correlationId}]`
+    : `[executeCheckCalendar]`;
   try {
     const now = new Date();
     let targetDate = now;
@@ -999,11 +1022,11 @@ async function executeCheckCalendar(
       }
 
       console.log(
-        `[executeCheckCalendar] Using provided date: ${params.date} (${targetDate.toLocaleDateString("da-DK")})`
+        `${logPrefix} Using provided date: ${params.date} (${targetDate.toLocaleDateString("da-DK")})`
       );
     } else {
       console.log(
-        `[executeCheckCalendar] No date provided, using today: ${now.toLocaleDateString("da-DK")}`
+        `${logPrefix} No date provided, using today: ${now.toLocaleDateString("da-DK")}`
       );
     }
 
@@ -1033,7 +1056,7 @@ async function executeCheckCalendar(
     };
   } catch (error) {
     console.error(
-      `[executeCheckCalendar] Error fetching calendar events:`,
+      `${logPrefix} Error fetching calendar events:`,
       error
     );
     return {

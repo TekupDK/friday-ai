@@ -97,8 +97,8 @@ Status: [~] In progress (Phase 2 complete, Phase 3 UI polish complete, Navigatio
 
 ### Pending (Follow-ups)
 
-- [ ] Persist real user roles in DB (RBAC currently defaults non-owner to "user")
-- [ ] Wire metrics exporter to analytics service (Mixpanel/Amplitude)
+- [x] Persist real user roles in DB (RBAC now reads from `users.role` and OWNER_OPEN_ID)
+- [x] Wire metrics exporter to analytics service (feature-flagged; providers: webhook, Mixpanel, Amplitude)
 - [ ] Optional: Admin UI for live rollout percentage updates
 
 ## Risks & Mitigations

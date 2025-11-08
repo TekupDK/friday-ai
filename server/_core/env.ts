@@ -4,6 +4,14 @@ export const ENV = {
   databaseUrl: process.env.DATABASE_URL ?? "",
   ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
   isProduction: process.env.NODE_ENV === "production",
+  // Analytics & Telemetry
+  analyticsEnabled:
+    (process.env.ANALYTICS_ENABLED || "").toLowerCase() === "true",
+  analyticsProvider: process.env.ANALYTICS_PROVIDER ?? "",
+  analyticsWebhookUrl: process.env.ANALYTICS_WEBHOOK_URL ?? "",
+  analyticsWebhookSecret: process.env.ANALYTICS_WEBHOOK_SECRET ?? "",
+  mixpanelToken: process.env.MIXPANEL_TOKEN ?? "",
+  amplitudeApiKey: process.env.AMPLITUDE_API_KEY ?? "",
   // OpenRouter (Gemma 3 27B FREE) - Primary LLM
   openRouterApiKey: process.env.OPENROUTER_API_KEY ?? "",
   openRouterModel: process.env.OPENROUTER_MODEL ?? "google/gemma-3-27b-it:free",

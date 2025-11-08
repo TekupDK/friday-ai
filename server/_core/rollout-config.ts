@@ -1,0 +1,330 @@
+/**
+ * Rollout Configuration for Friday AI Features
+ * Controls gradual rollout and emergency rollback procedures
+ */
+
+import { getFeatureFlags } from "./feature-flags";
+import { getABTestStatus } from "./ab-testing";
+
+export interface RolloutPhase {
+  name: string;
+  percentage: number;
+  startDate: Date;
+  duration: number; // days
+  successCriteria: {
+    maxErrorRate: number; // percentage
+    minSatisfactionScore: number; // 1-5
+    maxResponseTimeRegression: number; // percentage
+  };
+  rollbackTriggers: {
+    errorRateThreshold: number;
+    responseTimeThreshold: number;
+    userComplaintsThreshold: number;
+  };
+}
+
+export interface RolloutStatus {
+  currentPhase: string;
+  percentage: number;
+  isActive: boolean;
+  canRollback: boolean;
+  emergencyRollback: boolean;
+  metrics: {
+    errorRate: number;
+    avgResponseTime: number;
+    satisfactionScore: number;
+    userCount: number;
+  };
+  nextPhaseDate?: Date;
+}
+
+// Rollout phases for chat flow migration
+const CHAT_FLOW_ROLLOUT_PHASES: RolloutPhase[] = [
+  {
+    name: "internal_testing",
+    percentage: 0.01, // 1% - internal team only
+    startDate: new Date(),
+    duration: 3,
+    successCriteria: {
+      maxErrorRate: 5,
+      minSatisfactionScore: 3.5,
+      maxResponseTimeRegression: 20,
+    },
+    rollbackTriggers: {
+      errorRateThreshold: 10,
+      responseTimeThreshold: 5000,
+      userComplaintsThreshold: 3,
+    },
+  },
+  {
+    name: "beta_testing",
+    percentage: 0.05, // 5% - power users
+    startDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+    duration: 7,
+    successCriteria: {
+      maxErrorRate: 3,
+      minSatisfactionScore: 4.0,
+      maxResponseTimeRegression: 15,
+    },
+    rollbackTriggers: {
+      errorRateThreshold: 8,
+      responseTimeThreshold: 4000,
+      userComplaintsThreshold: 10,
+    },
+  },
+  {
+    name: "gradual_rollout",
+    percentage: 0.20, // 20% - general users
+    startDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
+    duration: 14,
+    successCriteria: {
+      maxErrorRate: 2,
+      minSatisfactionScore: 4.2,
+      maxResponseTimeRegression: 10,
+    },
+    rollbackTriggers: {
+      errorRateThreshold: 5,
+      responseTimeThreshold: 3000,
+      userComplaintsThreshold: 25,
+    },
+  },
+  {
+    name: "full_rollout",
+    percentage: 1.0, // 100% - all users
+    startDate: new Date(Date.now() + 24 * 24 * 60 * 60 * 1000), // 24 days from now
+    duration: 7,
+    successCriteria: {
+      maxErrorRate: 1,
+      minSatisfactionScore: 4.5,
+      maxResponseTimeRegression: 5,
+    },
+    rollbackTriggers: {
+      errorRateThreshold: 3,
+      responseTimeThreshold: 2000,
+      userComplaintsThreshold: 50,
+    },
+  },
+];
+
+// Streaming rollout phases (after chat flow is stable)
+const STREAMING_ROLLOUT_PHASES: RolloutPhase[] = [
+  {
+    name: "streaming_internal",
+    percentage: 0.01,
+    startDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+    duration: 2,
+    successCriteria: {
+      maxErrorRate: 5,
+      minSatisfactionScore: 4.0,
+      maxResponseTimeRegression: 10,
+    },
+    rollbackTriggers: {
+      errorRateThreshold: 10,
+      responseTimeThreshold: 3000,
+      userComplaintsThreshold: 2,
+    },
+  },
+  {
+    name: "streaming_beta",
+    percentage: 0.10,
+    startDate: new Date(Date.now() + 32 * 24 * 60 * 60 * 1000), // 32 days from now
+    duration: 5,
+    successCriteria: {
+      maxErrorRate: 3,
+      minSatisfactionScore: 4.3,
+      maxResponseTimeRegression: 5,
+    },
+    rollbackTriggers: {
+      errorRateThreshold: 7,
+      responseTimeThreshold: 2500,
+      userComplaintsThreshold: 8,
+    },
+  },
+  {
+    name: "streaming_full",
+    percentage: 1.0,
+    startDate: new Date(Date.now() + 37 * 24 * 60 * 60 * 1000), // 37 days from now
+    duration: 3,
+    successCriteria: {
+      maxErrorRate: 2,
+      minSatisfactionScore: 4.5,
+      maxResponseTimeRegression: 0,
+    },
+    rollbackTriggers: {
+      errorRateThreshold: 5,
+      responseTimeThreshold: 2000,
+      userComplaintsThreshold: 15,
+    },
+  },
+];
+
+/**
+ * Get current rollout phase for a feature
+ */
+export function getCurrentRolloutPhase(feature: "chat_flow" | "streaming" | "model_routing"): RolloutPhase | null {
+  const phases = feature === "chat_flow" ? CHAT_FLOW_ROLLOUT_PHASES :
+                 feature === "streaming" ? STREAMING_ROLLOUT_PHASES :
+                 []; // Model routing comes after streaming
+
+  const now = new Date();
+  
+  for (const phase of phases) {
+    const phaseEnd = new Date(phase.startDate.getTime() + phase.duration * 24 * 60 * 60 * 1000);
+    
+    if (now >= phase.startDate && now <= phaseEnd) {
+      return phase;
+    }
+  }
+  
+  return null;
+}
+
+/**
+ * Get rollout status for monitoring
+ */
+export function getRolloutStatus(): Record<string, RolloutStatus> {
+  const now = new Date();
+  const status: Record<string, RolloutStatus> = {};
+
+  // Chat flow status
+  const chatPhase = getCurrentRolloutPhase("chat_flow");
+  if (chatPhase) {
+    status.chat_flow = {
+      currentPhase: chatPhase.name,
+      percentage: chatPhase.percentage,
+      isActive: true,
+      canRollback: true,
+      emergencyRollback: false,
+      metrics: {
+        errorRate: 0, // TODO: Get from monitoring
+        avgResponseTime: 0,
+        satisfactionScore: 0,
+        userCount: 0,
+      },
+      nextPhaseDate: getNextPhaseDate("chat_flow"),
+    };
+  }
+
+  // Streaming status
+  const streamingPhase = getCurrentRolloutPhase("streaming");
+  if (streamingPhase) {
+    status.streaming = {
+      currentPhase: streamingPhase.name,
+      percentage: streamingPhase.percentage,
+      isActive: true,
+      canRollback: true,
+      emergencyRollback: false,
+      metrics: {
+        errorRate: 0,
+        avgResponseTime: 0,
+        satisfactionScore: 0,
+        userCount: 0,
+      },
+      nextPhaseDate: getNextPhaseDate("streaming"),
+    };
+  }
+
+  return status;
+}
+
+/**
+ * Get next phase date for a feature
+ */
+function getNextPhaseDate(feature: "chat_flow" | "streaming"): Date | undefined {
+  const phases = feature === "chat_flow" ? CHAT_FLOW_ROLLOUT_PHASES :
+                 feature === "streaming" ? STREAMING_ROLLOUT_PHASES :
+                 [];
+
+  const currentPhase = getCurrentRolloutPhase(feature);
+  if (!currentPhase) return undefined;
+
+  const currentIndex = phases.findIndex(p => p.name === currentPhase.name);
+  if (currentIndex < phases.length - 1) {
+    return phases[currentIndex + 1].startDate;
+  }
+
+  return undefined;
+}
+
+/**
+ * Check if rollback should be triggered
+ */
+export function shouldTriggerRollback(feature: "chat_flow" | "streaming"): boolean {
+  const phase = getCurrentRolloutPhase(feature);
+  if (!phase) return false;
+
+  // Check emergency rollback conditions
+  const emergencyRollback = process.env.EMERGENCY_ROLLBACK === "true";
+  if (emergencyRollback) {
+    console.warn(`🚨 Emergency rollback triggered for ${feature}`);
+    return true;
+  }
+
+  // TODO: Check actual metrics against rollback triggers
+  // For now, return false
+  return false;
+}
+
+/**
+ * Execute rollback for a feature
+ */
+export async function executeRollback(feature: "chat_flow" | "streaming"): Promise<void> {
+  console.log(`🔄 Executing rollback for ${feature}`);
+  
+  // Set environment variable to force rollback
+  process.env[`ROLLBACK_${feature.toUpperCase()}`] = "true";
+  
+  // TODO: Notify monitoring systems
+  // TODO: Log rollback event
+  // TODO: Notify team members
+  
+  console.log(`✅ Rollback completed for ${feature}`);
+}
+
+/**
+ * Get user's rollout group based on phases
+ */
+export function getUserRolloutGroup(userId: number, feature: "chat_flow" | "streaming"): "control" | "variant" | "excluded" {
+  const phase = getCurrentRolloutPhase(feature);
+  if (!phase) return "excluded";
+
+  // Use consistent hash for user assignment
+  const hash = hashUserId(userId, feature);
+  const threshold = phase.percentage * 100;
+
+  return hash < threshold ? "variant" : "control";
+}
+
+/**
+ * Hash function for consistent user assignment in rollout
+ */
+function hashUserId(userId: number, feature: string): number {
+  const str = `${userId}-${feature}-rollout`;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash) % 100;
+}
+
+/**
+ * Manual override for testing
+ */
+export function setManualRolloutOverride(feature: string, percentage: number): void {
+  process.env[`MANUAL_ROLLOUT_${feature.toUpperCase()}`] = percentage.toString();
+  console.log(`🔧 Manual override set: ${feature} = ${percentage}%`);
+}
+
+/**
+ * Get all rollout configurations
+ */
+export function getRolloutConfigurations() {
+  return {
+    chat_flow: CHAT_FLOW_ROLLOUT_PHASES,
+    streaming: STREAMING_ROLLOUT_PHASES,
+    current_status: getRolloutStatus(),
+    ab_tests: getABTestStatus(),
+  };
+}
