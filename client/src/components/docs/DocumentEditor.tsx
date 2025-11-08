@@ -5,8 +5,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Save, X } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, Save, X, Eye, Code } from "lucide-react";
 import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
+import ReactMarkdown from "react-markdown";
 
 interface DocumentEditorProps {
   documentId: string | null; // null = create new
@@ -384,16 +386,29 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
         </CardContent>
       </Card>
 
-      {/* Content Editor */}
+      {/* Content Editor with Preview */}
       <Card>
         <CardHeader>
-          <CardTitle>Content (Markdown)</CardTitle>
+          <CardTitle>Content</CardTitle>
         </CardHeader>
         <CardContent>
-          <Textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="# My Document
+          <Tabs defaultValue="edit" className="w-full">
+            <TabsList className="mb-4">
+              <TabsTrigger value="edit">
+                <Code className="h-4 w-4 mr-2" />
+                Edit
+              </TabsTrigger>
+              <TabsTrigger value="preview">
+                <Eye className="h-4 w-4 mr-2" />
+                Preview
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="edit" className="mt-0">
+              <Textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="# My Document
 
 ## Introduction
 
@@ -405,9 +420,26 @@ Write your documentation in Markdown...
 const example = 'Hello World';
 ```
 "
-            className="min-h-[500px] font-mono text-sm"
-            required
-          />
+                className="min-h-[500px] font-mono text-sm"
+                required
+              />
+              <p className="text-xs text-muted-foreground mt-2">
+                💡 Tip: Use Markdown syntax. Switch to Preview tab to see formatted output.
+              </p>
+            </TabsContent>
+            
+            <TabsContent value="preview" className="mt-0">
+              <div className="min-h-[500px] border rounded-md p-4 prose prose-sm max-w-none dark:prose-invert">
+                {content ? (
+                  <ReactMarkdown>{content}</ReactMarkdown>
+                ) : (
+                  <p className="text-muted-foreground italic">
+                    No content yet. Switch to Edit tab to start writing.
+                  </p>
+                )}
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>

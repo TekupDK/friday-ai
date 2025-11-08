@@ -7,7 +7,14 @@ import {
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
-import { FileText, Eye, Edit, Calendar, Tag, User } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { FileText, Eye, Edit, Calendar, Tag, User, MoreVertical, Link2, Archive, AlertTriangle } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 interface Document {
@@ -62,14 +69,54 @@ export function DocumentList({ documents, isLoading, onView, onEdit }: DocumentL
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {documents.map((doc) => (
-        <Card key={doc.id} className="hover:border-primary/50 transition-colors">
+        <Card 
+          key={doc.id} 
+          className={`hover:border-primary/50 transition-colors ${
+            doc.tags?.includes('outdated') ? 'opacity-75 border-orange-500/30' : ''
+          }`}
+        >
           <CardHeader>
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1">
                 <CardTitle className="text-lg line-clamp-2">{doc.title}</CardTitle>
                 <CardDescription className="mt-1">{doc.path}</CardDescription>
               </div>
-              <Badge variant="secondary">{doc.category}</Badge>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary">{doc.category}</Badge>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => onView(doc.id)}>
+                      <Eye className="h-4 w-4 mr-2" />
+                      View
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onEdit(doc.id)}>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigator.clipboard.writeText(`${window.location.origin}/docs/${doc.id}`)}>
+                      <Link2 className="h-4 w-4 mr-2" />
+                      Copy Link
+                    </DropdownMenuItem>
+                    {doc.tags?.includes('outdated') ? (
+                      <DropdownMenuItem>
+                        <Archive className="h-4 w-4 mr-2" />
+                        Archive
+                      </DropdownMenuItem>
+                    ) : (
+                      <DropdownMenuItem>
+                        <AlertTriangle className="h-4 w-4 mr-2" />
+                        Mark Outdated
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </CardHeader>
           <CardContent className="space-y-3">
