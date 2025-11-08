@@ -135,26 +135,17 @@ export async function recordTestMetrics(metrics: TestMetrics, db?: any): Promise
       completionRate: metrics.completionRate,
     });
 
-    // Store metrics in database for analysis
+    // TODO: Store metrics in database for analysis
+    // NOTE: ab_test_metrics table not yet created in Drizzle schema
+    // Will implement when Phase 2 A/B testing is fully activated
     if (db) {
-      await db.query(
-        `INSERT INTO ab_test_metrics (
-          test_name, user_id, test_group, response_time, 
-          error_count, message_count, completion_rate, 
-          user_satisfaction, timestamp
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-        [
-          'chat_flow_migration',
-          metrics.userId,
-          metrics.testGroup,
-          metrics.responseTime,
-          metrics.errorCount,
-          metrics.messageCount,
-          metrics.completionRate,
-          metrics.userSatisfaction,
-          metrics.timestamp,
-        ]
-      );
+      console.log('[A/B Testing] Metrics recorded (in-memory only):', {
+        testName: 'chat_flow_migration',
+        userId: metrics.userId,
+        testGroup: metrics.testGroup,
+        responseTime: metrics.responseTime,
+      });
+      // await db.insert(abTestMetrics).values({...}) // TODO: Implement with Drizzle schema
     }
   } catch (error) {
     console.error("Failed to record A/B test metrics:", error);
@@ -170,21 +161,20 @@ export async function calculateTestResults(testName: string, db?: any): Promise<
     return null;
   }
 
-  // Fetch actual metrics from database
+  // TODO: Fetch actual metrics from database
+  // NOTE: ab_test_metrics table not yet created in Drizzle schema
   let controlMetrics: TestMetrics[] = [];
   let variantMetrics: TestMetrics[] = [];
 
   if (db) {
-    const result = await db.query(
-      `SELECT * FROM ab_test_metrics 
-       WHERE test_name = $1 
-       AND timestamp >= NOW() - INTERVAL '7 days'
-       ORDER BY timestamp DESC`,
-      [testName]
-    );
-
-    controlMetrics = result.rows.filter((r: any) => r.test_group === 'control').map(rowToMetrics);
-    variantMetrics = result.rows.filter((r: any) => r.test_group === 'variant').map(rowToMetrics);
+    console.log('[A/B Testing] Skipping database query - table not yet implemented');
+    // TODO: Implement with Drizzle ORM when schema is ready
+    // const metrics = await db.select().from(abTestMetrics)
+    //   .where(and(
+    //     eq(abTestMetrics.testName, testName),
+    //     gte(abTestMetrics.timestamp, new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
+    //   ))
+    //   .orderBy(desc(abTestMetrics.timestamp));
   }
 
   if (controlMetrics.length === 0 || variantMetrics.length === 0) {
