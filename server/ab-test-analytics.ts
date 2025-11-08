@@ -116,6 +116,7 @@ export const abTestAnalyticsRouter = router({
 
   /**
    * Get metrics dashboard data
+   * TODO: Implement with Drizzle ORM once ab_test_metrics schema is added
    */
   getMetricsDashboard: publicProcedure
     .input(
@@ -125,41 +126,17 @@ export const abTestAnalyticsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("Database not available");
-      const result = await db.query(
-        `SELECT 
-          test_group,
-          DATE(timestamp) as date,
-          COUNT(*) as sample_count,
-          AVG(response_time) as avg_response_time,
-          SUM(error_count)::float / COUNT(*) as error_rate,
-          AVG(completion_rate) as completion_rate,
-          AVG(user_satisfaction) as avg_satisfaction
-        FROM ab_test_metrics
-        WHERE test_name = $1 
-        AND timestamp >= NOW() - INTERVAL '$2 days'
-        GROUP BY test_group, DATE(timestamp)
-        ORDER BY date DESC`,
-        [input.testName, input.days]
-      );
-
+      // TODO: Query from ab_test_metrics table using Drizzle
+      // For now, return empty data structure
       return {
         testName: input.testName,
-        metrics: result.rows.map((row: any) => ({
-          testGroup: row.test_group,
-          date: row.date,
-          sampleCount: parseInt(row.sample_count),
-          avgResponseTime: parseFloat(row.avg_response_time),
-          errorRate: parseFloat(row.error_rate),
-          completionRate: parseFloat(row.completion_rate),
-          avgSatisfaction: row.avg_satisfaction ? parseFloat(row.avg_satisfaction) : null,
-        })),
+        metrics: [],
       };
     }),
 
   /**
    * Get hourly metrics for real-time monitoring
+   * TODO: Implement with Drizzle ORM once ab_test_metrics schema is added
    */
   getHourlyMetrics: publicProcedure
     .input(
@@ -169,32 +146,11 @@ export const abTestAnalyticsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("Database not available");
-      const result = await db.query(
-        `SELECT 
-          test_group,
-          DATE_TRUNC('hour', timestamp) as hour,
-          COUNT(*) as sample_count,
-          AVG(response_time) as avg_response_time,
-          SUM(error_count)::float / COUNT(*) as error_rate
-        FROM ab_test_metrics
-        WHERE test_name = $1 
-        AND timestamp >= NOW() - INTERVAL '$2 hours'
-        GROUP BY test_group, DATE_TRUNC('hour', timestamp)
-        ORDER BY hour DESC`,
-        [input.testName, input.hours]
-      );
-
+      // TODO: Query from ab_test_metrics table using Drizzle
+      // For now, return empty data structure
       return {
         testName: input.testName,
-        metrics: result.rows.map((row: any) => ({
-          testGroup: row.test_group,
-          hour: row.hour,
-          sampleCount: parseInt(row.sample_count),
-          avgResponseTime: parseFloat(row.avg_response_time),
-          errorRate: parseFloat(row.error_rate),
-        })),
+        metrics: [],
       };
     }),
 });
