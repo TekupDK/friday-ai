@@ -202,10 +202,8 @@ async function triggerRollback(
   // Execute rollback
   await executeRollback("chat_flow");
 
-  // TODO: Send alerts
-  // - Email to team
-  // - Slack notification
-  // - PagerDuty alert (if critical)
+  // Send Slack notification
+  await sendRollbackAlert(event);
   
   // TODO: Store in database
   // await db.insert(rollbackEvents).values(event);
@@ -249,4 +247,34 @@ export function getMonitoringStatus() {
     rollbackCount: rollbackHistory.length,
     lastCheck: rollbackHistory.length > 0 ? rollbackHistory[rollbackHistory.length - 1].timestamp : null,
   };
+}
+
+/**
+ * Send rollback alert to Slack
+ */
+async function sendRollbackAlert(event: RollbackEvent) {
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+  if (!webhookUrl) return;
+
+  const message = {
+    text: `🚨 Rollback: ${event.testName}`,
+    blocks: [
+      { type: 'header', text: { type: 'plain_text', text: '🚨 A/B Test Rollback' } },
+      { type: 'section', text: { type: 'mrkdwn', text: `*Test:* ${event.testName}\n*Reason:* ${event.reason}` } },
+      { type: 'section', fields: [
+        { type: 'mrkdwn', text: `*Error Rate:* ${(event.metrics.variantErrorRate * 100).toFixed(2)}%` },
+        { type: 'mrkdwn', text: `*Response Time:* ${event.metrics.variantResponseTime.toFixed(0)}ms` },
+      ]},
+    ],
+  };
+
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(message),
+    });
+  } catch (error) {
+    console.error('[RollbackMonitor] Failed to send Slack alert:', error);
+  }
 }
