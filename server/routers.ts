@@ -28,6 +28,7 @@ import { authRouter } from './routers/auth-router';
 import { workspaceRouter } from './routers/workspace-router';
 import { chatStreamingRouter } from './routers/chat-streaming';
 import { docsRouter } from './routers/docs-router';
+import { aiMetricsRouter } from './routers/ai-metrics-router';
 import { z } from "zod";
 
 export const appRouter = router({
@@ -37,6 +38,7 @@ export const appRouter = router({
   workspace: workspaceRouter,
   inbox: inboxRouter,
   docs: docsRouter,
+  aiMetrics: aiMetricsRouter,
   chat: router({
     getConversations: protectedProcedure.query(async ({ ctx }) => {
       return getUserConversations(ctx.user.id);

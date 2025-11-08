@@ -45,11 +45,23 @@ export class GitSyncEngine extends EventEmitter {
 
   async initialize(): Promise<void> {
     try {
+      await this.git.cwd(this.config.repoPath);
       const isRepo = await this.git.checkIsRepo();
       if (!isRepo) throw new Error(`Not a git repo: ${this.config.repoPath}`);
 
       await this.git.checkout(this.config.branch);
-      await this.pullChanges();
+      
+      // Try to pull, but don't fail if there are unstaged changes
+      try {
+        await this.pullChanges();
+      } catch (pullErr: any) {
+        if (pullErr.message?.includes('unstaged changes')) {
+          logger.warn({ err: pullErr }, "[GitSync] Skipping pull due to unstaged changes - will continue anyway");
+        } else {
+          logger.warn({ err: pullErr }, "[GitSync] Pull failed - continuing without pull");
+        }
+      }
+      
       this.startWatcher();
 
       logger.info(

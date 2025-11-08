@@ -163,14 +163,17 @@ async function startServer() {
     });
 
     // Start Documentation service (optional)
+    logger.info({ docsEnable: process.env.DOCS_ENABLE }, "[Server] Checking DOCS_ENABLE");
     if (process.env.DOCS_ENABLE === "true") {
       try {
+        logger.info("[Server] Starting docs service...");
         await startDocsService();
+        logger.info("[Server] Docs service started successfully");
       } catch (err) {
         logger.error({ err }, "[Docs] Failed to start docs service");
       }
     } else {
-      logger.debug("[Docs] DOCS_ENABLE is not set to true, skipping docs service");
+      logger.info("[Docs] DOCS_ENABLE is not 'true', skipping docs service");
     }
   });
 }

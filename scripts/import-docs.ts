@@ -116,7 +116,12 @@ async function importDocs() {
   
   console.log(`📄 Found ${files.length} markdown files`);
 
-  const db = getDb();
+  const db = await getDb();
+  if (!db) {
+    console.error("❌ Database not available");
+    process.exit(1);
+  }
+  
   let imported = 0;
   let skipped = 0;
 

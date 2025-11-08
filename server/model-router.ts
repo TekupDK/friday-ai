@@ -5,6 +5,7 @@
 
 import { invokeLLM, streamResponse } from "./_core/llm";
 import { getFeatureFlags } from "./_core/feature-flags";
+import { trackAIMetric } from "./ai-metrics";
 
 export type AIModel = 
   // FREE TIER - 100% Accuracy Models (Recommended)
@@ -147,7 +148,13 @@ export function selectModel(
 ): AIModel {
   const flags = getFeatureFlags(userId);
   
-  // If model routing is disabled, use default
+  // If OpenRouter models are disabled, fallback to legacy Gemma 3 27B
+  if (!flags.enableOpenRouterModels) {
+    console.log(`🔄 OpenRouter disabled (rollout: ${flags.openRouterRolloutPercentage}%), using Gemma 3 27B`);
+    return "gemma-3-27b-free";
+  }
+  
+  // If model routing is disabled, use default OpenRouter model
   if (!flags.enableModelRouting) {
     return "glm-4.5-air-free";
   }
@@ -163,8 +170,7 @@ export function selectModel(
     return "glm-4.5-air-free";
   }
 
-  // TODO: Implement cost/usage tracking for model selection
-  // For now, return primary model
+  // Return primary model from routing matrix
   return config.primary;
 }
 
@@ -202,18 +208,45 @@ export async function invokeLLMWithRouting(
   const modelsToTry = [selectedModel, ...config.fallbacks.slice(0, maxRetries)];
   
   for (const model of modelsToTry) {
+    const startTime = Date.now();
+    
     try {
       // TODO: Update invokeLLM/streamResponse to accept model parameter
       // For now, model selection via ENV.openRouterModel (set before server start)
       console.log(`🔄 Attempting with model: ${model}`);
       
+      let result;
       if (stream) {
-        return await streamResponse(messages);
+        result = await streamResponse(messages);
       } else {
-        return await invokeLLM({ messages });
+        result = await invokeLLM({ messages });
       }
+      
+      // Track successful metric
+      const responseTime = Date.now() - startTime;
+      trackAIMetric({
+        userId,
+        modelId: model,
+        taskType,
+        responseTime,
+        success: true,
+      });
+      
+      return result;
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
+      const responseTime = Date.now() - startTime;
+      
+      // Track failed metric
+      trackAIMetric({
+        userId,
+        modelId: model,
+        taskType,
+        responseTime,
+        success: false,
+        errorMessage: lastError.message,
+      });
+      
       console.warn(`⚠️ Model ${model} failed, trying next fallback:`, lastError.message);
       continue;
     }
