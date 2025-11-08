@@ -12,6 +12,7 @@ import { ENV } from "./env";
 import { logger } from "./logger";
 import { registerOAuthRoutes } from "./oauth";
 import { serveStatic, setupVite } from "./vite";
+import { startDocsService } from "../docs/service";
 
 /**
  * Check if historical data import is needed and run it automatically
@@ -160,6 +161,17 @@ async function startServer() {
         "[Auto-Import] Failed to run automatic import"
       );
     });
+
+    // Start Documentation service (optional)
+    if (process.env.DOCS_ENABLE === "true") {
+      try {
+        await startDocsService();
+      } catch (err) {
+        logger.error({ err }, "[Docs] Failed to start docs service");
+      }
+    } else {
+      logger.debug("[Docs] DOCS_ENABLE is not set to true, skipping docs service");
+    }
   });
 }
 

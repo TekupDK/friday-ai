@@ -165,9 +165,9 @@ export const SearchResultSchema = z.object({
   documents: z.array(DocumentSchema),
   total: z.number().int().nonnegative(),
   facets: z.object({
-    categories: z.record(z.number()),
-    tags: z.record(z.number()),
-    authors: z.record(z.number()),
+    categories: z.record(z.string(), z.number()),
+    tags: z.record(z.string(), z.number()),
+    authors: z.record(z.string(), z.number()),
   }),
 });
 
@@ -203,7 +203,7 @@ export type AISummarizeRequest = z.infer<typeof AISummarizeRequestSchema>;
 
 export const AIResponseSchema = z.object({
   content: z.string(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
   confidence: z.number().min(0).max(1).optional(),
 });
 
@@ -228,7 +228,7 @@ export const CLICommandSchema = z.object({
     'resolve',
   ]),
   args: z.array(z.string()),
-  options: z.record(z.any()),
+  options: z.record(z.string(), z.any()),
 });
 
 export type CLICommand = z.infer<typeof CLICommandSchema>;

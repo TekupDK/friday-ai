@@ -1,0 +1,47 @@
+{
+  "name": "@tekup/docs-cli",
+  "version": "1.0.0",
+  "description": "CLI tool for managing Tekup AI documentation",
+  "type": "module",
+  "bin": {
+    "tekup-docs": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod +x dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "test": "vitest run",
+    "link": "pnpm link --global"
+  },
+  "keywords": [
+    "documentation",
+    "cli",
+    "tekup",
+    "ai",
+    "git"
+  ],
+  "author": "TekupDK",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.1",
+    "simple-git": "^3.20.0",
+    "axios": "^1.6.2",
+    "markdown-it": "^14.0.0",
+    "gray-matter": "^4.0.3",
+    "nanoid": "^5.0.4",
+    "date-fns": "^3.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/inquirer": "^9.0.7",
+    "@types/markdown-it": "^13.0.7",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

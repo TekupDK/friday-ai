@@ -155,7 +155,7 @@ export function useRateLimit() {
         clearTimeout(retryTimeoutRef.current); // Clear retry timeout
       }
     };
-  }, []);
+  }, []); // Cleanup rate-limit timeout on unmount
 
   return {
     ...rateLimitState,

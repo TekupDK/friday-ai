@@ -53,13 +53,14 @@ export function useFridayChat({
   const [cursor, setCursor] = useState<number | undefined>(undefined);
 
   const abortControllerRef = useRef<AbortController | null>(null);
+  const utils = trpc.useUtils();
 
   // Load messages with pagination
   const loadMoreMessages = useCallback(async () => {
     if (!conversationId || !hasMoreMessages) return;
 
     try {
-      const result = await trpc.chat.getMessages.query({
+      const result = await utils.client.chat.getMessages.query({
         conversationId,
         cursor,
         limit: 20
@@ -81,14 +82,14 @@ export function useFridayChat({
         abortControllerRef.current.abort(); // Abort pending requests
       }
     };
-  }, []);
+  }, []); // Cleanup pending requests on unmount
 
   // Memory management - limit messages
   useEffect(() => {
     if (messages.length > maxMessages) {
       setMessages(prev => prev.slice(-maxMessages)); // Keep only recent messages
     }
-  }, [messages.length, maxMessages]);
+  }, [messages.length, maxMessages]); // Enforce max message history length
 
   const sendMessage = useCallback(async (content: string, options?: { streaming?: boolean }) => {
     if (!conversationId) {
@@ -107,20 +108,21 @@ export function useFridayChat({
 
     try {
       // For now, use basic non-streaming implementation
-      const response = await trpc.chat.sendMessage.mutate({
+      const response = await utils.client.chat.sendMessage.mutate({
         conversationId,
         content,
       });
 
-      if (response.pendingAction) {
-        setPendingAction(response.pendingAction);
-        onPendingAction?.(response.pendingAction);
+      const anyResp = response as any;
+      if (anyResp?.pendingAction) {
+        setPendingAction(anyResp.pendingAction);
+        onPendingAction?.(anyResp.pendingAction);
       } else {
         setMessages(prev => [
           ...prev,
-          { role: 'assistant', content: response.content }
+          { role: 'assistant', content: anyResp.content }
         ]);
-        onComplete?.(response.content);
+        onComplete?.(anyResp.content);
       }
     } catch (error) {
       setError(error as Error);

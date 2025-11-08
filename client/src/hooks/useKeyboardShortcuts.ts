@@ -114,7 +114,7 @@ export function useKeyboardShortcuts(
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [enabled, handleKeyDown]);
+  }, [enabled, handleKeyDown]); // Register/unregister keydown handler when enabled or handler changes
 }
 
 /**
