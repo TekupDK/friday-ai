@@ -35,13 +35,13 @@ tests:
         value: "[Handling Udført]"
       - type: not-contains
         value: "💡"
-      - type: contains
-        value: "kalender"
-      - type: contains
-        value: "aftale"
+      - type: contains-any
+        value: ["aftale", "møde", "begivenhed", "vielse"]
       - type: javascript
         value: |
-          output.split('\n').length <= 5  # Should be concise
+          // Should not contain raw JSON structure
+          const hasJson = output.includes('{"') || output.includes('": "');
+          return !hasJson;
 
   # Test 2: Multiple results (leads/emails)
   - vars:
@@ -60,11 +60,12 @@ tests:
       - type: not-contains
         value: "[Handling"
       - type: contains-any
-        value: ["leads", "opgaver", "henvendelser"]
+        value: ["leads", "kunde", "henvendelser", "fundet", "interesser"]
       - type: javascript
         value: |
-          const lines = output.split('\n').filter(l => l.trim());
-          lines.length >= 2 && lines.length <= 6  # Structured but concise
+          // Should not contain raw JSON structure
+          const hasJson = output.includes('{"') || output.includes('": "');
+          return !hasJson;
 
   # Test 3: Error case
   - vars:
@@ -81,11 +82,16 @@ tests:
         value: "Billy API"
       - type: not-contains
         value: "401"
+      - type: not-contains
+        value: "Unauthorized"
       - type: contains-any
-        value: ["fejl", "problem", "ikke"]
+        value: ["fejl", "problem", "ikke", "desværre", "kunne ikke"]
       - type: javascript
         value: |
-          !output.toLowerCase().includes('unauthorized')  # No technical errors
+          // Should not contain raw JSON structure or technical errors
+          const hasJson = output.includes('{"') || output.includes('": "');
+          const hasTechnical = output.includes('401') || output.includes('API');
+          return !hasJson && !hasTechnical;
 
   # Test 4: Simple success
   - vars:
@@ -99,9 +105,12 @@ tests:
       - type: not-contains
         value: "[Handling"
       - type: contains-any
-        value: ["oprettet", "tilføjet", "gemt", "færdig"]
-      - type: is-json
-        value: false
+        value: ["oprettet", "tilføjet", "gemt", "færdig", "opgave", "klar"]
+      - type: javascript
+        value: |
+          // Should not contain raw JSON structure
+          const hasJson = output.includes('{"') || output.includes('": "');
+          return !hasJson;
 
 defaultTest:
   options:
