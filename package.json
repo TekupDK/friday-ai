@@ -164,6 +164,7 @@
     "pnpm": "^10.15.1",
     "postcss": "^8.4.47",
     "prettier": "^3.6.2",
+    "promptfoo": "^0.119.4",
     "rollup-plugin-visualizer": "^6.0.5",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.19.1",
