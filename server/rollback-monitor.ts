@@ -113,7 +113,7 @@ async function checkAllTestsForRollback() {
       if (results) {
         const shouldRollback = await evaluateRollbackConditions(results);
         
-        if (shouldRollback.should) {
+        if (shouldRollback.should && shouldRollback.reason) {
           console.warn(`[RollbackMonitor] 🚨 Triggering rollback for ${test.name}: ${shouldRollback.reason}`);
           await triggerRollback(test.name, shouldRollback.reason, results);
         }
