@@ -12,7 +12,7 @@ import {
   getTestGroup,
   type TestMetrics 
 } from "./_core/ab-testing";
-import { db } from "./db";
+import { getDb } from "./db";
 
 export const abTestAnalyticsRouter = router({
   /**
@@ -36,6 +36,7 @@ export const abTestAnalyticsRouter = router({
         timestamp: new Date(),
       };
 
+      const db = await getDb();
       await recordTestMetrics(metrics, db);
 
       return {
@@ -54,6 +55,7 @@ export const abTestAnalyticsRouter = router({
       })
     )
     .query(async ({ input }) => {
+      const db = await getDb();
       const results = await calculateTestResults(input.testName, db);
 
       if (!results) {
@@ -165,6 +167,8 @@ export const abTestAnalyticsRouter = router({
       })
     )
     .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) throw new Error("Database not available");
       const result = await db.query(
         `SELECT 
           test_group,
