@@ -64,19 +64,30 @@ npx playwright test tests/chat-input-buttons.spec.ts  # In terminal 2
 
 ### 3. Promptfoo LLM Quality Tests: `promptfoo-action-formatting.yaml`
 
-**Status:** ⏸️ **BLOCKED - Better-sqlite3 Native Bindings**
+**Status:** ⏸️ **BLOCKED - OpenRouter API Configuration**
 
-**Reason:** Promptfoo requires better-sqlite3 which has native binding issues on Node.js v24.8.0
+**Reason:** OpenRouter API key needs data policy configured for free models
+- Error: "No endpoints found matching your data policy (Free model publication)"
+- Solution: Configure at https://openrouter.ai/settings/privacy
 
-**Tests Created (12 total):**
-- 4 test cases × 3 models = 12 assertions
-- Models: glm-4.5-air-free, deepseek-chat-v3.1-free, gemma-3-27b-free
+**Tests Created (4 total):**
+- 4 test cases validating LLM output formatting
+- Model: deepseek/deepseek-chat-v3.1:free (verified working model ID)
 - Validates no raw JSON in responses
 - Tests natural Danish formatting
 - Checks calendar/email/lead formatting
 
+**Infrastructure:**
+- ✅ better-sqlite3 rebuilt successfully
+- ✅ Promptfoo runs without errors
+- ✅ Model IDs validated against MODEL_ID_MAPPING
+- ⏸️ Waiting for OpenRouter account configuration
+
 **To Run When Fixed:**
 ```bash
+# 1. Configure OpenRouter: https://openrouter.ai/settings/privacy
+# 2. Enable "Free model publication" in data policy
+# 3. Run tests:
 cd tests/ai
 promptfoo eval -c promptfoo-action-formatting.yaml
 promptfoo view  # See results

@@ -13,14 +13,8 @@ prompts:
     Præsenter resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
 
 providers:
-  # Test with new free models
-  - id: openrouter:glm-4.5-air-free
-    config:
-      temperature: 0.3
-  - id: openrouter:deepseek-chat-v3.1-free
-    config:
-      temperature: 0.3
-  - id: openrouter:gemma-3-27b-free # Legacy for comparison
+  # Test with single free tier model to avoid rate limits
+  - id: openrouter:deepseek/deepseek-chat-v3.1:free
     config:
       temperature: 0.3
 

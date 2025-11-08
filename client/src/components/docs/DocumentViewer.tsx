@@ -6,9 +6,8 @@ import { ArrowLeft, Edit, Calendar, Tag, User, GitBranch } from "lucide-react";
 import { useDocument, useDocumentComments } from "@/hooks/docs/useDocuments";
 import { formatDistanceToNow } from "date-fns";
 import ReactMarkdown from "react-markdown";
-// TODO: Install react-syntax-highlighter
-// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface DocumentViewerProps {
   documentId: string;
@@ -111,11 +110,19 @@ export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerPro
         <CardContent className="prose prose-slate dark:prose-invert max-w-none p-8">
           <ReactMarkdown
             components={{
-              code({ className, children, ...props }: any) {
-                // Simple code rendering without syntax highlighting
-                // TODO: Add syntax highlighting when react-syntax-highlighter is installed
-                return (
-                  <code className={`${className} bg-muted p-1 rounded`} {...props}>
+              code({ node, inline, className, children, ...props }: any) {
+                const match = /language-(\w+)/.exec(className || "");
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    style={oneDark}
+                    language={match[1]}
+                    PreTag="div"
+                    {...props}
+                  >
+                    {String(children).replace(/\n$/, "")}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code className={className} {...props}>
                     {children}
                   </code>
                 );
