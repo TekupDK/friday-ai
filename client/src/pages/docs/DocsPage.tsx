@@ -30,7 +30,15 @@ import { DocumentEditor } from "@/components/docs/DocumentEditor";
 import { ConflictList } from "@/components/docs/ConflictList";
 import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
-import { useKeyboardShortcuts } from "@/hooks/docs/useKeyboardShortcuts";
+import { useKeyboardShortcuts, KeyboardShortcutsHint } from "@/hooks/docs/useKeyboardShortcuts";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Keyboard } from "lucide-react";
 
 /**
  * Documentation Management Page
@@ -157,6 +165,21 @@ export default function DocsPage() {
             </div>
 
             <div className="flex items-center gap-3">
+              {/* Keyboard shortcuts help */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="icon" title="Keyboard Shortcuts">
+                    <Keyboard className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Keyboard Shortcuts</DialogTitle>
+                  </DialogHeader>
+                  <KeyboardShortcutsHint />
+                </DialogContent>
+              </Dialog>
+
               {/* Connection status */}
               <Badge variant={isConnected ? "default" : "secondary"}>
                 <div className={`h-2 w-2 rounded-full mr-2 ${isConnected ? 'bg-green-500' : 'bg-gray-400'}`} />

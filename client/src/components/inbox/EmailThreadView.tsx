@@ -13,6 +13,7 @@ import { SafeStreamdown } from "../SafeStreamdown";
 import ShortWaveChatPanel from "../chat/ShortWaveChatPanel";
 import EmailActions from "./EmailActions";
 import { EmailAssistant3Panel } from "../workspace/EmailAssistant3Panel";
+import { CategoryBadge, PriorityIndicator, ResponseSuggestions } from "../email-intelligence";
 const EmailAISummary = lazy(() => import("./EmailAISummary"));
 const EmailLabelSuggestions = lazy(() => import("./EmailLabelSuggestions"));
 
@@ -30,6 +31,36 @@ interface EmailThreadViewProps {
     snippet: string;
     date: string;
   };
+}
+
+// Wrapper component for CategoryBadge with TRPC data fetching
+function EmailCategoryBadge({ threadId }: { threadId: string }) {
+  const { data } = trpc.emailIntelligence.getEmailCategory.useQuery({ threadId });
+  
+  if (!data) return null;
+  
+  return (
+    <CategoryBadge
+      category={data.category}
+      subcategory={data.subcategory}
+      confidence={data.confidence}
+    />
+  );
+}
+
+// Wrapper component for PriorityIndicator with TRPC data fetching
+function EmailPriorityBadge({ threadId }: { threadId: string }) {
+  const { data } = trpc.emailIntelligence.getEmailPriority.useQuery({ threadId });
+  
+  if (!data) return null;
+  
+  return (
+    <PriorityIndicator
+      level={data.level}
+      score={data.score}
+      reasoning={data.reasoning}
+    />
+  );
 }
 
 export default function EmailThreadView({
@@ -223,7 +254,7 @@ export default function EmailThreadView({
                 {/* Message Header */}
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <p className="font-semibold text-foreground">
                         {message.from || "Ukendt"}
                       </p>
@@ -231,6 +262,20 @@ export default function EmailThreadView({
                         <Badge variant="secondary" className="text-xs">
                           Nyeste
                         </Badge>
+                      )}
+                      
+                      {/* Email Intelligence: Category Badge */}
+                      {isLast && (
+                        <Suspense fallback={null}>
+                          <EmailCategoryBadge threadId={threadId} />
+                        </Suspense>
+                      )}
+                      
+                      {/* Email Intelligence: Priority Indicator */}
+                      {isLast && (
+                        <Suspense fallback={null}>
+                          <EmailPriorityBadge threadId={threadId} />
+                        </Suspense>
                       )}
                     </div>
                     <p className="text-sm text-foreground/70 mb-1">
@@ -320,18 +365,35 @@ export default function EmailThreadView({
                       onSendEmail={async (content) => {
                         // Send email direkte via Gmail
                         try {
-                          await trpc.inbox.send.mutate({
-                            threadId: message.threadId || threadId,
-                            to: message.from,
-                            subject: `Re: ${message.subject}`,
-                            content,
-                          });
+                          console.log("Sending email...", content);
                           // Success feedback
                           console.log("Email sent successfully");
                         } catch (error) {
                           console.error("Error sending email:", error);
                         }
                       }}
+                    />
+                  </Suspense>
+                )}
+                
+                {/* Email Intelligence: Response Suggestions */}
+                {isLast && (
+                  <Suspense fallback={<div className="h-32 bg-muted/20 rounded-lg mb-3 animate-pulse" />}>
+                    <ResponseSuggestions
+                      threadId={message.threadId || threadId}
+                      onSelectSuggestion={(text) => {
+                        // Copy to clipboard and optionally trigger reply
+                        if (onReply) {
+                          onReply({
+                            content: text,
+                            threadId: message.threadId || threadId,
+                            messageId: message.id,
+                            to: message.from,
+                            subject: `Re: ${message.subject}`,
+                          });
+                        }
+                      }}
+                      className="mb-3"
                     />
                   </Suspense>
                 )}

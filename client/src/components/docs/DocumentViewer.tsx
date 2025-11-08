@@ -18,18 +18,24 @@ interface DocumentViewerProps {
 
 export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerProps) {
   const { document, isLoading } = useDocument(documentId);
-  const { comments } = useDocumentComments(documentId);
-  const { addComment, resolveComment } = useDocuments();
+  const { comments, addComment, resolveComment } = useDocumentComments(documentId);
   
   const handleAddComment = async (content: string) => {
-    await addComment({
-      documentId,
-      content,
+    return new Promise<void>((resolve, reject) => {
+      addComment(
+        { documentId, content },
+        { onSuccess: () => resolve(), onError: (error) => reject(error) }
+      );
     });
   };
   
   const handleResolveComment = async (commentId: string) => {
-    await resolveComment({ commentId });
+    return new Promise<void>((resolve, reject) => {
+      resolveComment(
+        { commentId },
+        { onSuccess: () => resolve(), onError: (error) => reject(error) }
+      );
+    });
   };
 
   if (isLoading) {
@@ -147,36 +153,13 @@ export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerPro
         </CardContent>
       </Card>
 
-      {/* Comments */}
-      {comments && comments.length > 0 && (
-        <Card>
-          <CardHeader>
-            <h3 className="text-lg font-semibold">Comments ({comments.length})</h3>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {comments.map((comment: any) => (
-              <div key={comment.id} className="border-l-2 border-primary pl-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                  <User className="h-3 w-3" />
-                  {comment.userId}
-                  <span>•</span>
-                  {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
-                  {comment.lineNumber && (
-                    <>
-                      <span>•</span>
-                      <span>Line {comment.lineNumber}</span>
-                    </>
-                  )}
-                  {comment.resolved && (
-                    <Badge variant="secondary" className="ml-2">Resolved</Badge>
-                  )}
-                </div>
-                <p className="text-sm">{comment.content}</p>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      )}
+      {/* Comments Section */}
+      <CommentsSection
+        documentId={documentId}
+        comments={comments || []}
+        onAddComment={handleAddComment}
+        onResolveComment={handleResolveComment}
+      />
     </div>
   );
 }
