@@ -336,10 +336,10 @@ Overall sentiment positive with increasing engagement levels.
 - Timestamps
 
 ### AI Service
-✅ **OpenAI GPT-4o-mini**
-- Model: `gpt-4o-mini` (cheap & fast)
+✅ **OpenRouter (GLM-4.5-Air FREE)**
+- Model: `z-ai/glm-4.5-air:free` (100% FREE!)
 - JSON response format
-- Temperature: 0.3 (consistent)
+- Via existing `invokeLLM` infrastructure
 - Fallback handling
 
 ---
@@ -369,14 +369,12 @@ Overall sentiment positive with increasing engagement levels.
 
 ## 💰 Cost Estimate
 
-**OpenAI API:**
-- GPT-4o-mini: $0.15 per 1M input tokens, $0.60 per 1M output tokens
-- Average lead doc: ~5,000 input + 2,000 output tokens
-- Cost per doc: ~$0.002 (2 øre!)
-- 100 leads: ~$0.20
-- Monthly (assuming 500 docs): ~$1
+**OpenRouter (GLM-4.5-Air FREE):**
+- Cost per doc: **$0.00** (100% GRATIS! 🎉)
+- 100 leads: **$0.00**
+- Monthly (unlimited docs): **$0.00**
 
-**Super billigt! 🎉**
+**HELT GRATIS! INGEN COSTS! 🎉🎉🎉**
 
 ---
 

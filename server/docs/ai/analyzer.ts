@@ -1,16 +1,12 @@
 /**
  * AI Docs Generator - Analyzer
  * 
- * Uses OpenAI to analyze collected data and extract insights
+ * Uses OpenRouter (FREE GLM-4.5-Air) to analyze collected data and extract insights
  */
 
-import OpenAI from "openai";
 import type { CollectedData } from "./data-collector";
 import { logger } from "../../_core/logger";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+import { invokeLLM } from "../../_core/llm";
 
 export interface Analysis {
   summary: string;
@@ -33,8 +29,7 @@ export async function analyzeLeadData(data: CollectedData): Promise<Analysis> {
     
     logger.info({ leadId: data.lead.id }, "[AI Analyzer] Starting analysis");
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini", // Cheap & fast
+    const response = await invokeLLM({
       messages: [
         {
           role: "system",
@@ -59,12 +54,15 @@ Format your response as JSON with this structure:
         },
       ],
       response_format: { type: "json_object" },
-      temperature: 0.3, // More consistent
     });
 
-    const content = response.choices[0].message.content;
+    const message = response.choices[0].message;
+    const content = typeof message.content === "string" 
+      ? message.content 
+      : JSON.stringify(message.content);
+    
     if (!content) {
-      throw new Error("No response from OpenAI");
+      throw new Error("No response from LLM");
     }
 
     const analysis: Analysis = JSON.parse(content);
@@ -228,8 +226,7 @@ Provide JSON with:
   "topLeads": ["lead name 1", "lead name 2", ...]
 }`;
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+    const response = await invokeLLM({
       messages: [
         {
           role: "system",
@@ -241,11 +238,14 @@ Provide JSON with:
         },
       ],
       response_format: { type: "json_object" },
-      temperature: 0.3,
     });
 
-    const content = response.choices[0].message.content;
-    if (!content) throw new Error("No response");
+    const message = response.choices[0].message;
+    const content = typeof message.content === "string"
+      ? message.content
+      : JSON.stringify(message.content);
+    
+    if (!content) throw new Error("No response from LLM");
 
     const analysis = JSON.parse(content);
 

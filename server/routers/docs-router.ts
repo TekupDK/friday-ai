@@ -440,7 +440,7 @@ export const docsRouter = router({
 
   // AI: Generate documentation for a lead
   generateLeadDoc: protectedProcedure
-    .input(z.object({ leadId: z.string() }))
+    .input(z.object({ leadId: z.number() }))
     .mutation(async ({ input }) => {
       logger.info({ leadId: input.leadId }, "[Docs Router] Generating lead doc");
       const result = await autoCreateLeadDoc(input.leadId);
@@ -449,7 +449,7 @@ export const docsRouter = router({
 
   // AI: Update existing lead documentation
   updateLeadDoc: protectedProcedure
-    .input(z.object({ leadId: z.string(), docId: z.string() }))
+    .input(z.object({ leadId: z.number(), docId: z.string() }))
     .mutation(async ({ input }) => {
       logger.info({ leadId: input.leadId, docId: input.docId }, "[Docs Router] Updating lead doc");
       const result = await updateLeadDoc(input.leadId, input.docId);

@@ -21,7 +21,9 @@ import {
   Target,
   Bug,
   Book,
-  Calendar
+  Calendar,
+  Sparkles,
+  Zap
 } from "lucide-react";
 import { useLocation } from "wouter";
 import { DocumentList } from "@/components/docs/DocumentList";
@@ -31,6 +33,7 @@ import { ConflictList } from "@/components/docs/ConflictList";
 import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
 import { useKeyboardShortcuts, KeyboardShortcutsHint } from "@/hooks/docs/useKeyboardShortcuts";
+import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 import {
   Dialog,
   DialogContent,
@@ -101,6 +104,7 @@ export default function DocsPage() {
 
   const { conflicts } = useConflicts();
   const { isConnected } = useDocsWebSocket();
+  const { generateWeeklyDigest, bulkGenerateLeadDocs, isGenerating } = useAIGeneration();
   
   // Keyboard shortcuts
   useKeyboardShortcuts({
@@ -216,6 +220,26 @@ export default function DocsPage() {
                       ))}
                     </SelectContent>
                   </Select>
+                  
+                  {/* AI Generation Buttons */}
+                  <div className="h-6 w-px bg-border" />
+                  <Button 
+                    variant="outline" 
+                    onClick={() => generateWeeklyDigest.mutate()}
+                    disabled={isGenerating}
+                  >
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Weekly Digest
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => bulkGenerateLeadDocs.mutate()}
+                    disabled={isGenerating}
+                    title="Generate AI docs for all leads"
+                  >
+                    <Zap className="h-4 w-4 mr-2" />
+                    {isGenerating ? 'Generating...' : 'Bulk Generate'}
+                  </Button>
                 </div>
               )}
             </div>

@@ -10,17 +10,17 @@
 
 import { nanoid } from "nanoid";
 import { getDb } from "../../db";
-import { documents, documentChanges } from "../../../drizzle/schema";
+import { documents, documentChanges, leads } from "../../../drizzle/schema";
 import { collectLeadData, collectWeeklyData } from "./data-collector";
 import { analyzeLeadData, analyzeWeeklyData } from "./analyzer";
-import { generateLeadDocument, generateWeeklyDigest } from "./generator";
+import { generateLeadDocument, generateWeeklyDigest as generateWeeklyDigestMarkdown } from "./generator";
 import { logger } from "../../_core/logger";
 import { eq } from "drizzle-orm";
 
 /**
  * Auto-generate and create lead documentation
  */
-export async function autoCreateLeadDoc(leadId: string): Promise<{
+export async function autoCreateLeadDoc(leadId: number): Promise<{
   success: boolean;
   docId?: string;
   error?: string;
@@ -83,7 +83,7 @@ export async function autoCreateLeadDoc(leadId: string): Promise<{
 /**
  * Update existing lead documentation
  */
-export async function updateLeadDoc(leadId: string, docId: string): Promise<{
+export async function updateLeadDoc(leadId: number, docId: string): Promise<{
   success: boolean;
   error?: string;
 }> {
@@ -103,9 +103,13 @@ export async function updateLeadDoc(leadId: string, docId: string): Promise<{
     const db = await getDb();
     if (!db) throw new Error("Database not available");
 
-    const existingDoc = await db.query.documents.findFirst({
-      where: eq(documents.id, docId),
-    });
+    const existingDocResults = await db
+      .select()
+      .from(documents)
+      .where(eq(documents.id, docId))
+      .limit(1);
+    
+    const existingDoc = existingDocResults[0];
 
     if (!existingDoc) {
       return { success: false, error: "Document not found" };
@@ -156,7 +160,7 @@ export async function generateWeeklyDigest(): Promise<{
     const analysis = await analyzeWeeklyData(data);
 
     // Step 3: Generate markdown
-    const markdown = generateWeeklyDigest(data, analysis);
+    const markdown = generateWeeklyDigestMarkdown(data, analysis);
 
     // Step 4: Create doc
     const db = await getDb();
@@ -215,8 +219,11 @@ export async function bulkGenerateLeadDocs(): Promise<{
     const db = await getDb();
     if (!db) throw new Error("Database not available");
 
-    // Get all leads without docs
-    const allLeads = await db.query.leads.findMany({ limit: 100 });
+    // Get all leads
+    const allLeads = await db
+      .select()
+      .from(leads)
+      .limit(100);
 
     const results = {
       success: true,

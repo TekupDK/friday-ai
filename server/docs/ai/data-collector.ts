@@ -9,30 +9,30 @@
  */
 
 import { getDb } from "../../db";
-import { leads, email_threads, conversations } from "../../../drizzle/schema";
-import { eq, or, like, and, gte } from "drizzle-orm";
-import { getCalendarClient } from "../../google-api";
+import { leads, emailThreads, conversations } from "../../../drizzle/schema";
+import { eq, or, like, and, gte, sql } from "drizzle-orm";
+// Calendar integration will be added when getCalendarClient is available
+// import { getCalendarClient } from "../../google-api";
 import { logger } from "../../_core/logger";
 
 export interface LeadData {
-  id: string;
+  id: number;
   name: string;
-  email: string;
+  email: string | null;
   phone: string | null;
   company: string | null;
-  status: string;
+  status: string | null;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface EmailThreadData {
-  id: string;
-  subject: string;
-  snippet: string;
-  from_email: string;
-  to_email: string;
-  date: string;
-  body: string | null;
+  id: number;
+  subject: string | null;
+  snippet: string | null;
+  participants: any;
+  lastMessageAt: string | null;
+  gmailThreadId: string;
 }
 
 export interface CalendarEventData {
@@ -45,10 +45,10 @@ export interface CalendarEventData {
 }
 
 export interface ChatMessageData {
-  id: string;
+  id: number;
   content: string;
   timestamp: string;
-  userId: string;
+  userId: number;
 }
 
 export interface CollectedData {
@@ -61,71 +61,44 @@ export interface CollectedData {
 /**
  * Collect all data related to a lead
  */
-export async function collectLeadData(leadId: string): Promise<CollectedData | null> {
+export async function collectLeadData(leadId: number): Promise<CollectedData | null> {
   try {
     const db = await getDb();
     if (!db) throw new Error("Database not available");
 
     // 1. Fetch lead
-    const lead = await db.query.leads.findFirst({
-      where: eq(leads.id, leadId),
-    });
+    const leadResults = await db
+      .select()
+      .from(leads)
+      .where(eq(leads.id, leadId))
+      .limit(1);
+    
+    const lead = leadResults[0];
 
     if (!lead) {
       logger.warn({ leadId }, "[AI Collector] Lead not found");
       return null;
     }
 
-    // 2. Fetch email threads
-    const emailThreads = await db.query.email_threads.findMany({
-      where: or(
-        eq(email_threads.from_email, lead.email),
-        like(email_threads.to_email, `%${lead.email}%`)
-      ),
-      limit: 50,
-      orderBy: (threads, { desc }) => [desc(threads.date)],
-    });
+    // 2. Fetch email threads (search in participants jsonb field)
+    const threads = await db
+      .select()
+      .from(emailThreads)
+      .where(sql`${emailThreads.participants}::text ILIKE ${`%${lead.email}%`}`)
+      .orderBy(sql`${emailThreads.lastMessageAt} DESC NULLS LAST`)
+      .limit(50);
 
-    // 3. Fetch calendar events (if Google Calendar configured)
-    let calendarEvents: CalendarEventData[] = [];
-    
-    try {
-      const calendar = await getCalendarClient();
-      const now = new Date();
-      const sixMonthsAgo = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+    // 3. Calendar events - temporarily disabled until getCalendarClient is available
+    const calendarEvents: CalendarEventData[] = [];
+    logger.info({ leadId }, "[AI Collector] Calendar integration disabled - will be added in future");
 
-      const response = await calendar.events.list({
-        calendarId: process.env.CALENDAR_ID || "primary",
-        q: lead.email, // Search for email in events
-        timeMin: sixMonthsAgo.toISOString(),
-        maxResults: 50,
-        singleEvents: true,
-        orderBy: "startTime",
-      });
-
-      calendarEvents = (response.data.items || []).map(event => ({
-        id: event.id!,
-        summary: event.summary || "Untitled Event",
-        description: event.description || null,
-        start: event.start?.dateTime || event.start?.date || "",
-        end: event.end?.dateTime || event.end?.date || "",
-        attendees: (event.attendees || []).map(a => a.email!).filter(Boolean),
-      }));
-    } catch (error) {
-      logger.warn({ error, leadId }, "[AI Collector] Failed to fetch calendar events");
-      // Continue without calendar data
-    }
-
-    // 4. Fetch chat conversations (search in context field)
-    const chatMessages = await db.query.conversations.findMany({
-      where: or(
-        like(conversations.context, `%${lead.email}%`),
-        like(conversations.context, `%${lead.name}%`),
-        like(conversations.context, `%${lead.company}%`)
-      ),
-      limit: 20,
-      orderBy: (conv, { desc }) => [desc(conv.createdAt)],
-    });
+    // 4. Fetch conversations related to this lead (by userId matching lead)
+    const chatMessages = await db
+      .select()
+      .from(conversations)
+      .where(eq(conversations.userId, lead.id))
+      .orderBy(sql`${conversations.createdAt} DESC`)
+      .limit(20);
 
     const result: CollectedData = {
       lead: {
@@ -135,22 +108,21 @@ export async function collectLeadData(leadId: string): Promise<CollectedData | n
         phone: lead.phone,
         company: lead.company,
         status: lead.status,
-        createdAt: lead.createdAt,
-        updatedAt: lead.updatedAt,
+        createdAt: lead.createdAt || new Date().toISOString(),
+        updatedAt: lead.updatedAt || new Date().toISOString(),
       },
-      emailThreads: emailThreads.map(thread => ({
+      emailThreads: threads.map(thread => ({
         id: thread.id,
-        subject: thread.subject,
+        subject: thread.subject || "No subject",
         snippet: thread.snippet || "",
-        from_email: thread.from_email,
-        to_email: thread.to_email,
-        date: thread.date,
-        body: thread.body,
+        participants: thread.participants,
+        lastMessageAt: thread.lastMessageAt || new Date().toISOString(),
+        gmailThreadId: thread.gmailThreadId,
       })),
       calendarEvents,
       chatMessages: chatMessages.map(msg => ({
         id: msg.id,
-        content: msg.context || "",
+        content: msg.title || "Conversation",
         timestamp: msg.createdAt,
         userId: msg.userId,
       })),
@@ -189,48 +161,29 @@ export async function collectWeeklyData(): Promise<{
     const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
     // Recent leads
-    const recentLeads = await db.query.leads.findMany({
-      where: gte(leads.createdAt, oneWeekAgo),
-      limit: 50,
-    });
+    const recentLeads = await db
+      .select()
+      .from(leads)
+      .where(sql`${leads.createdAt} >= ${oneWeekAgo}`)
+      .limit(50);
 
     // Recent email threads
-    const recentEmails = await db.query.email_threads.findMany({
-      where: gte(email_threads.date, oneWeekAgo),
-      limit: 100,
-    });
+    const recentEmails = await db
+      .select()
+      .from(emailThreads)
+      .where(sql`${emailThreads.lastMessageAt} >= ${oneWeekAgo}`)
+      .limit(100);
 
     // Recent conversations
-    const recentConvs = await db.query.conversations.findMany({
-      where: gte(conversations.createdAt, oneWeekAgo),
-      limit: 50,
-    });
+    const recentConvs = await db
+      .select()
+      .from(conversations)
+      .where(sql`${conversations.createdAt} >= ${oneWeekAgo}`)
+      .limit(50);
 
-    // Calendar events (this week)
-    let calendarEvents: CalendarEventData[] = [];
-    
-    try {
-      const calendar = await getCalendarClient();
-      const response = await calendar.events.list({
-        calendarId: process.env.CALENDAR_ID || "primary",
-        timeMin: oneWeekAgo,
-        timeMax: new Date().toISOString(),
-        maxResults: 100,
-        singleEvents: true,
-        orderBy: "startTime",
-      });
-
-      calendarEvents = (response.data.items || []).map(event => ({
-        id: event.id!,
-        summary: event.summary || "Untitled Event",
-        description: event.description || null,
-        start: event.start?.dateTime || event.start?.date || "",
-        end: event.end?.dateTime || event.end?.date || "",
-        attendees: (event.attendees || []).map(a => a.email!).filter(Boolean),
-      }));
-    } catch (error) {
-      logger.warn({ error }, "[AI Collector] Failed to fetch calendar events for digest");
-    }
+    // Calendar events - temporarily disabled
+    const calendarEvents: CalendarEventData[] = [];
+    logger.info("[AI Collector] Calendar integration for weekly digest disabled - will be added in future");
 
     return {
       leads: recentLeads.map(l => ({
@@ -240,22 +193,21 @@ export async function collectWeeklyData(): Promise<{
         phone: l.phone,
         company: l.company,
         status: l.status,
-        createdAt: l.createdAt,
-        updatedAt: l.updatedAt,
+        createdAt: l.createdAt || new Date().toISOString(),
+        updatedAt: l.updatedAt || new Date().toISOString(),
       })),
       emailThreads: recentEmails.map(thread => ({
         id: thread.id,
-        subject: thread.subject,
+        subject: thread.subject || "No subject",
         snippet: thread.snippet || "",
-        from_email: thread.from_email,
-        to_email: thread.to_email,
-        date: thread.date,
-        body: thread.body,
+        participants: thread.participants,
+        lastMessageAt: thread.lastMessageAt || new Date().toISOString(),
+        gmailThreadId: thread.gmailThreadId,
       })),
       calendarEvents,
       recentConversations: recentConvs.map(msg => ({
         id: msg.id,
-        content: msg.context || "",
+        content: msg.title || "Conversation",
         timestamp: msg.createdAt,
         userId: msg.userId,
       })),

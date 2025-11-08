@@ -15,12 +15,14 @@
 import { useState, useCallback, useMemo } from "react";
 import { useEmailContext } from "@/contexts/EmailContext";
 import { useRateLimit } from "@/hooks/useRateLimit";
+import { useEmailKeyboardShortcuts } from "@/hooks/useEmailKeyboardShortcuts";
 import { trpc } from "@/lib/trpc";
 import { UI_CONSTANTS } from "@/constants/business";
 import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
 import EmailBulkActionsV2, { type BulkAction } from "./EmailBulkActionsV2";
 import EmailListV2, { type EmailMessage } from "./EmailListV2";
 import EmailListAI from "./EmailListAI";
+import EmailSplits, { type SplitId } from "./EmailSplits";
 import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -45,6 +47,7 @@ export default function EmailTabV2({
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [selectedEmails, setSelectedEmails] = useState<Set<string>>(new Set());
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
+  const [activeSplit, setActiveSplit] = useState<SplitId>('all');
 
   // Context integration
   const emailContext = useEmailContext();
@@ -130,6 +133,57 @@ export default function EmailTabV2({
     }));
   }, [emailData]);
 
+  // Fetch batch intelligence data for all visible emails
+  const visibleThreadIds = useMemo(() => 
+    emails.map((e: EnhancedEmailMessage) => e.threadId).slice(0, 50), // Limit to 50 for performance
+    [emails]
+  );
+
+  const { data: batchIntelligence } = trpc.emailIntelligence.getBatchIntelligence.useQuery(
+    { threadIds: visibleThreadIds },
+    {
+      enabled: visibleThreadIds.length > 0 && useAIEnhancedList,
+      staleTime: 5 * 60 * 1000, // 5 min cache
+      gcTime: 10 * 60 * 1000, // 10 min garbage collection
+    }
+  );
+
+  // Filter emails based on active split
+  const filteredEmails = useMemo(() => {
+    if (activeSplit === 'all') return emails;
+
+    return emails.filter((email: EnhancedEmailMessage) => {
+      const intel = batchIntelligence?.[email.threadId];
+      
+      switch (activeSplit) {
+        case 'hot-leads':
+          const isHighPriority = intel?.priority?.level === 'urgent' || 
+                                intel?.priority?.level === 'high' ||
+                                (intel?.priority?.score && intel.priority.score >= 70);
+          const notReplied = !email.labels?.includes('replied') && 
+                            !email.labels?.includes('sent-offer');
+          return isHighPriority && notReplied && email.unread;
+        
+        case 'waiting':
+          const hasSentOffer = email.labels?.includes('sent-offer') || 
+                              email.labels?.includes('pending');
+          const stillWaiting = !email.labels?.includes('replied');
+          return hasSentOffer && stillWaiting;
+        
+        case 'finance':
+          return intel?.category?.category === 'finance';
+        
+        case 'done':
+          return email.labels?.includes('archived') || 
+                 email.labels?.includes('done') ||
+                 email.labels?.includes('completed');
+        
+        default:
+          return true;
+      }
+    });
+  }, [emails, batchIntelligence, activeSplit]);
+
   // Extract available labels from emails
   const availableLabels = useMemo(() => {
     const labelSet = new Set<string>();
@@ -205,6 +259,38 @@ export default function EmailTabV2({
     setSelectedEmails(new Set()); // Clear selection when labels change
   }, []);
 
+  // Keyboard shortcuts
+  useEmailKeyboardShortcuts({
+    enabled: true,
+    selectedThreadId,
+    onArchive: () => {
+      if (selectedThreadId) {
+        console.log('Archive:', selectedThreadId);
+        // TODO: Implement archive via TRPC
+      }
+    },
+    onStar: () => {
+      if (selectedThreadId) {
+        console.log('Star:', selectedThreadId);
+        // TODO: Implement star via TRPC
+      }
+    },
+    onDelete: () => {
+      if (selectedThreadId) {
+        console.log('Delete:', selectedThreadId);
+        // TODO: Implement delete via TRPC
+      }
+    },
+    onClearSelection: () => {
+      setSelectedEmails(new Set());
+      setSelectedThreadId(null);
+    },
+    onSelectAll: () => {
+      const allThreadIds = new Set(emails.map((e: EnhancedEmailMessage) => e.threadId));
+      setSelectedEmails(allThreadIds as Set<string>);
+    },
+  });
+
   // Error state
   if (isError) {
     return (
@@ -234,7 +320,21 @@ export default function EmailTabV2({
   }
 
   return (
-    <div className="h-full flex flex-col bg-background">
+    <div className="h-full flex bg-background">
+      {/* Sidebar with SPLITS */}
+      <div className="w-64 border-r border-border/20 shrink-0 overflow-y-auto">
+        <div className="p-4">
+          <EmailSplits
+            emails={emails}
+            intelligence={batchIntelligence || {}}
+            activeSplit={activeSplit}
+            onSplitChange={setActiveSplit}
+          />
+        </div>
+      </div>
+
+      {/* Main email area */}
+      <div className="flex-1 flex flex-col min-w-0">
       {/* Search and Filtering */}
       <EmailSearchV2
         searchQuery={searchQuery}
@@ -258,7 +358,7 @@ export default function EmailTabV2({
       {/* Email List */}
       {useAIEnhancedList ? (
         <EmailListAI
-          emails={emails}
+          emails={filteredEmails}
           onEmailSelect={handleEmailSelect}
           selectedThreadId={selectedThreadId}
           selectedEmails={selectedEmails}
@@ -268,7 +368,7 @@ export default function EmailTabV2({
         />
       ) : (
         <EmailListV2
-          emails={emails}
+          emails={filteredEmails}
           onEmailSelect={handleEmailSelect}
           selectedThreadId={selectedThreadId}
           selectedEmails={selectedEmails}
@@ -278,6 +378,7 @@ export default function EmailTabV2({
           isLoading={isLoading}
         />
       )}
+      </div>
     </div>
   );
 }
