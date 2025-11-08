@@ -37,7 +37,7 @@ export function BusinessDashboard() {
     }
 
     return () => resizeObserver.disconnect();
-  }, []);
+  }, []); // Empty deps - ResizeObserver handles updates
 
   // Responsive breakpoints
   const isCompact = panelWidth < 280;

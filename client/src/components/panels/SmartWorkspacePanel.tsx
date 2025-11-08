@@ -87,7 +87,7 @@ const SmartWorkspacePanel = memo(function SmartWorkspacePanel() {
     }
 
     return () => resizeObserver.disconnect();
-  }, []);
+  }, []); // Empty deps - ResizeObserver handles updates
 
   // Responsive breakpoints
   const isCompact = panelWidth < 280;
@@ -140,7 +140,7 @@ const SmartWorkspacePanel = memo(function SmartWorkspacePanel() {
     }, 300);
     
     return () => clearTimeout(timer);
-  }, [context.type]); // Only retrigger when context type changes
+  }, [context.type]); // Only retrigger when context type changes // Only retrigger when context type changes
 
   // Memoized rendering function for performance
   const renderWorkspaceContent = useCallback(() => {

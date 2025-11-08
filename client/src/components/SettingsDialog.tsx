@@ -70,7 +70,8 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         setLanguage(preferences.language as Language);
       }
     }
-  }, [preferences, theme, setThemeDirect]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preferences]); // Only re-run when preferences change, not theme/setThemeDirect
 
   const updatePreferencesMutation = trpc.auth.updatePreferences.useMutation({
     onSuccess: () => {

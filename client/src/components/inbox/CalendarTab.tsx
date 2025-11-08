@@ -242,7 +242,8 @@ export default function CalendarTab() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [selectedDate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty deps - navigateDay/Week use latest state via closure
 
   // Week helpers (Monday as first day)
   const getStartOfWeek = (d: Date) => {
@@ -321,7 +322,7 @@ export default function CalendarTab() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isEventDialogOpen, selectedEvent, dayEvents, weekEvents, viewMode]);
+  }, [isEventDialogOpen, selectedEvent, dayEvents, weekEvents, viewMode]); // All deps needed for event navigation
 
   // Cleaning events for the selected day
   const cleaningEvents = useMemo(() => {

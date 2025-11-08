@@ -421,7 +421,7 @@ export default function TasksTab() {
     if (shouldVirtualize && virtualizer) {
       virtualizer.measureElement(undefined); // Force remeasure
     }
-  }, [flatTaskList.length, shouldVirtualize, virtualizer]);
+  }, [flatTaskList.length, shouldVirtualize, virtualizer]); // Remeasure when list changes
 
   const handleCreateTask = () => {
     if (!newTaskForm.title.trim()) {
