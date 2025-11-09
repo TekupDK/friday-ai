@@ -6,6 +6,7 @@ import { eq, like, and, or, desc, sql } from "drizzle-orm";
 import { logger } from "../_core/logger";
 import { nanoid } from "nanoid";
 import { autoCreateLeadDoc, updateLeadDoc, generateWeeklyDigest, bulkGenerateLeadDocs } from "../docs/ai/auto-create";
+import { getAIDocMetrics, getGenerationStats, calculateSavings } from "../docs/ai/analytics";
 
 /**
  * Documentation System Router
@@ -470,5 +471,39 @@ export const docsRouter = router({
       logger.info("[Docs Router] Bulk generating lead docs");
       const result = await bulkGenerateLeadDocs();
       return result;
+    }),
+
+  // Analytics: Get AI doc metrics
+  getAIMetrics: protectedProcedure
+    .query(async () => {
+      logger.info("[Docs Router] Fetching AI doc metrics");
+      const metrics = await getAIDocMetrics();
+      return metrics;
+    }),
+
+  // Analytics: Get generation stats for period
+  getGenerationStats: protectedProcedure
+    .input(
+      z.object({
+        period: z.enum(["day", "week", "month"]),
+      })
+    )
+    .query(async ({ input }) => {
+      logger.info({ period: input.period }, "[Docs Router] Fetching generation stats");
+      const stats = await getGenerationStats(input.period);
+      return stats;
+    }),
+
+  // Analytics: Calculate savings
+  calculateSavings: protectedProcedure
+    .input(
+      z.object({
+        totalDocs: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      logger.info({ totalDocs: input.totalDocs }, "[Docs Router] Calculating savings");
+      const savings = calculateSavings(input.totalDocs);
+      return savings;
     }),
 });

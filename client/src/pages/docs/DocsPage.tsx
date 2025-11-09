@@ -23,13 +23,15 @@ import {
   Book,
   Calendar,
   Sparkles,
-  Zap
+  Zap,
+  TrendingUp
 } from "lucide-react";
 import { useLocation } from "wouter";
 import { DocumentList } from "@/components/docs/DocumentList";
 import { DocumentViewer } from "@/components/docs/DocumentViewer";
 import { DocumentEditor } from "@/components/docs/DocumentEditor";
 import { ConflictList } from "@/components/docs/ConflictList";
+import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
 import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
 import { useKeyboardShortcuts, KeyboardShortcutsHint } from "@/hooks/docs/useKeyboardShortcuts";
@@ -304,6 +306,10 @@ export default function DocsPage() {
                   Conflicts ({conflicts.length})
                 </TabsTrigger>
               )}
+              <TabsTrigger value="analytics">
+                <TrendingUp className="h-4 w-4 mr-2" />
+                AI Analytics
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="documents" className="mt-6">
@@ -320,6 +326,10 @@ export default function DocsPage() {
                 <ConflictList conflicts={conflicts} />
               </TabsContent>
             )}
+
+            <TabsContent value="analytics" className="mt-6">
+              <AIAnalyticsDashboard />
+            </TabsContent>
           </Tabs>
         )}
 
