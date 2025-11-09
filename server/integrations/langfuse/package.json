@@ -1,0 +1,30 @@
+{
+  "name": "@friday-ai/langfuse-integration",
+  "version": "1.0.0",
+  "description": "Langfuse LLM observability integration for Friday AI",
+  "main": "client.ts",
+  "scripts": {
+    "start": "cd docker && docker compose -f docker-compose.langfuse.yml up -d",
+    "stop": "cd docker && docker compose -f docker-compose.langfuse.yml down",
+    "restart": "cd docker && docker compose -f docker-compose.langfuse.yml restart",
+    "logs": "cd docker && docker compose -f docker-compose.langfuse.yml logs -f",
+    "status": "cd docker && docker compose -f docker-compose.langfuse.yml ps",
+    "health": "curl -f http://localhost:3000/api/public/health || exit 1"
+  },
+  "dependencies": {
+    "langfuse": "^3.0.0",
+    "langfuse-node": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "keywords": [
+    "langfuse",
+    "observability",
+    "llm",
+    "monitoring",
+    "tracing"
+  ],
+  "author": "Friday AI Team",
+  "license": "MIT"
+}

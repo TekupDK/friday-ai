@@ -40,6 +40,11 @@ export const ENV = {
   litellmMasterKey: process.env.LITELLM_MASTER_KEY ?? "",
   enableLiteLLM: process.env.ENABLE_LITELLM === "true",
   litellmRolloutPercentage: parseInt(process.env.LITELLM_ROLLOUT_PERCENTAGE || "0", 10),
+  // Langfuse Observability
+  langfuseEnabled: process.env.LANGFUSE_ENABLED === "true",
+  langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY ?? "",
+  langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY ?? "",
+  langfuseBaseUrl: process.env.LANGFUSE_BASE_URL ?? "http://localhost:3001",
 };
 
 // Validate required environment variables

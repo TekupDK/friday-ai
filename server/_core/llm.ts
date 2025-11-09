@@ -328,6 +328,27 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     response_format,
   } = params;
 
+  // Import Langfuse for tracing
+  const { getLangfuseClient } = await import('../integrations/langfuse/client');
+  const langfuse = getLangfuseClient();
+  
+  // Create trace if Langfuse is enabled
+  const trace = langfuse?.trace({
+    name: 'llm-invocation',
+    metadata: {
+      hasTools: !!tools && tools.length > 0,
+      toolCount: tools?.length || 0,
+    },
+  });
+
+  // Create generation span
+  const generation = trace?.generation({
+    name: 'llm-call',
+    input: messages,
+  });
+
+  const startTime = Date.now();
+
   // Check which API we're using (priority: OpenRouter > Ollama > Gemini > OpenAI)
   const useOpenRouter = ENV.openRouterApiKey && ENV.openRouterApiKey.trim();
   const useOllamaApi = !useOpenRouter && ENV.ollamaBaseUrl;
@@ -416,20 +437,62 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     headers.authorization = `Bearer ${ENV.openAiApiKey}`;
   }
 
-  const response = await fetch(resolveApiUrl(), {
-    method: "POST",
-    headers,
-    body: JSON.stringify(payload),
-  });
+  try {
+    const response = await fetch(resolveApiUrl(), {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(
-      `LLM invoke failed: ${response.status} ${response.statusText} – ${errorText}`
-    );
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `LLM invoke failed: ${response.status} ${response.statusText} – ${errorText}`
+      );
+    }
+
+    const result = (await response.json()) as InvokeResult;
+    
+    // Track success in Langfuse
+    const responseTime = Date.now() - startTime;
+    generation?.end({
+      output: result,
+      usage: result.usage ? {
+        promptTokens: result.usage.prompt_tokens,
+        completionTokens: result.usage.completion_tokens,
+        totalTokens: result.usage.total_tokens,
+      } : undefined,
+      metadata: {
+        responseTime,
+        model: useOpenRouter ? ENV.openRouterModel : 
+               useOllamaApi ? ENV.ollamaModel :
+               useGeminiApi ? 'gemini-2.0-flash-exp' : 'gpt-4o-mini',
+      },
+    });
+    
+    // Flush to Langfuse
+    const { flushLangfuse } = await import('../integrations/langfuse/client');
+    await flushLangfuse();
+    
+    return result;
+  } catch (error) {
+    // Track error in Langfuse
+    const responseTime = Date.now() - startTime;
+    generation?.end({
+      level: 'ERROR',
+      statusMessage: error instanceof Error ? error.message : String(error),
+      metadata: {
+        responseTime,
+        error: error instanceof Error ? error.message : String(error),
+      },
+    });
+    
+    // Flush to Langfuse
+    const { flushLangfuse } = await import('../integrations/langfuse/client');
+    await flushLangfuse();
+    
+    throw error;
   }
-
-  return (await response.json()) as InvokeResult;
 }
 
 export async function* streamResponse(
