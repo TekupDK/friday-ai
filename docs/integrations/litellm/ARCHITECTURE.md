@@ -69,9 +69,7 @@ server/integrations/litellm/
 │   ├── retry.ts                # Retry mechanism
 │   └── circuit-breaker.ts      # Circuit breaker pattern
 ├── adapters/
-│   ├── openrouter-adapter.ts   # OpenRouter normalization
-│   ├── anthropic-adapter.ts    # Anthropic normalization
-│   └── openai-adapter.ts       # OpenAI normalization
+│   └── openrouter-adapter.ts   # OpenRouter response normalization
 ├── monitoring/
 │   ├── metrics.ts              # Metrics collection
 │   ├── logger.ts               # Structured logging
@@ -120,20 +118,21 @@ docs/integrations/litellm/
 1. Friday AI → LiteLLM Client
    └─ Same request
 
-2. LiteLLM Proxy → OpenRouter (Primary)
+2. LiteLLM Proxy → OpenRouter DeepSeek (Primary)
    └─ ❌ Timeout / Rate Limit / Error
 
 3. Circuit Breaker Activates
-   └─ Mark OpenRouter as degraded
+   └─ Mark DeepSeek as degraded
 
-4. LiteLLM Proxy → Anthropic (Fallback #1)
-   └─ Use claude-3-opus model
+4. LiteLLM Proxy → OpenRouter GLM-4.5 (Fallback #1 FREE!)
+   └─ Use GLM-4.5-air:free model
 
-5. Anthropic → LiteLLM Proxy
+5. OpenRouter → LiteLLM Proxy
    └─ Success response
 
 6. LiteLLM Client → Friday AI
    └─ Success ✅ (with fallback metadata)
+   └─ Still $0.00 cost! 🎉
 ```
 
 ### All Providers Fail
@@ -209,13 +208,14 @@ export class FallbackStrategy {
 - Different strategies per error type
 - Metrics tracking
 
-### 5. Adapters (`adapters/*.ts`)
-**Purpose:** Normalize provider responses  
-**Max Lines:** 80 each  
+### 5. OpenRouter Adapter (`adapters/openrouter-adapter.ts`)
+**Purpose:** Normalize OpenRouter responses  
+**Max Lines:** 80  
 **Responsibilities:**
-- Convert provider format → OpenAI format
-- Handle provider-specific quirks
-- Maintain backward compatibility
+- Convert OpenRouter format → Standard format
+- Handle different FREE model quirks
+- Ensure consistent response structure
+- Map model-specific parameters
 
 ---
 
