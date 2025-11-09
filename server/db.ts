@@ -257,7 +257,97 @@ export async function createEmailThread(
   if (!db) throw new Error("Database not available");
 
   const result = await db.insert(emailThreads).values(data).returning();
-  return result[0];
+  const newThread = result[0];
+  
+  // Index email in ChromaDB for context retrieval
+  if (ENV.chromaEnabled && newThread) {
+    try {
+      const { addDocuments, formatEmailForEmbedding } = await import('./integrations/chromadb');
+      
+      // Extract first participant as 'from'
+      const participants = (newThread.participants as any) || [];
+      const fromEmail = Array.isArray(participants) && participants.length > 0 
+        ? participants[0].email || '' 
+        : '';
+      
+      const emailText = formatEmailForEmbedding({
+        from: fromEmail,
+        subject: newThread.subject || '',
+        body: newThread.snippet || '', // Use snippet as body
+      });
+      
+      await addDocuments('friday_emails', [{
+        id: `email-${newThread.id}`,
+        text: emailText,
+        metadata: {
+          emailId: newThread.id,
+          userId: newThread.userId,
+          from: fromEmail,
+          subject: newThread.subject || '',
+          threadId: newThread.gmailThreadId || '',
+          lastMessageAt: newThread.lastMessageAt,
+        }
+      }]);
+      
+      console.log(`[ChromaDB] Indexed email thread #${newThread.id}`);
+    } catch (error) {
+      console.error('[ChromaDB] Failed to index email:', error);
+      // Don't fail the entire operation if indexing fails
+    }
+  }
+  
+  return newThread;
+}
+
+/**
+ * Get related email threads using semantic search
+ * Useful for providing context to AI responses
+ */
+export async function getRelatedEmailThreads(
+  emailThread: EmailThread,
+  limit: number = 5
+): Promise<EmailThread[]> {
+  if (!ENV.chromaEnabled) return [];
+  
+  try {
+    const { searchSimilar, formatEmailForEmbedding } = await import('./integrations/chromadb');
+    
+    // Extract first participant as 'from'
+    const participants = (emailThread.participants as any) || [];
+    const fromEmail = Array.isArray(participants) && participants.length > 0 
+      ? participants[0].email || '' 
+      : '';
+    
+    const emailText = formatEmailForEmbedding({
+      from: fromEmail,
+      subject: emailThread.subject || '',
+      body: emailThread.snippet || '',
+    });
+    
+    const similar = await searchSimilar('friday_emails', emailText, limit + 1); // +1 because it might include itself
+    
+    if (!similar || similar.ids.length === 0) return [];
+    
+    // Get email IDs from metadata (exclude current email)
+    const relatedIds = similar.metadatas
+      .map(meta => meta?.emailId)
+      .filter((id): id is number => id !== null && id !== undefined && id !== emailThread.id)
+      .slice(0, limit);
+    
+    if (relatedIds.length === 0) return [];
+    
+    const db = await getDb();
+    if (!db) return [];
+    
+    return db
+      .select()
+      .from(emailThreads)
+      .where(inArray(emailThreads.id, relatedIds));
+    
+  } catch (error) {
+    console.error('[ChromaDB] Failed to get related emails:', error);
+    return [];
+  }
 }
 
 export async function getUserEmailThreads(
@@ -359,8 +449,82 @@ export async function createLead(data: InsertLead): Promise<Lead> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
+  // Check for duplicate leads using ChromaDB semantic search
+  if (ENV.chromaEnabled) {
+    try {
+      const { searchSimilar, formatLeadForEmbedding } = await import('./integrations/chromadb');
+      
+      const leadText = formatLeadForEmbedding({
+        name: data.name || '',
+        email: data.email || '',
+        phone: data.phone || '',
+        company: data.company || '',
+      });
+      
+      const similar = await searchSimilar('friday_leads', leadText, 3);
+      
+      // If very similar lead found (likely duplicate)
+      if (similar && similar.distances.length > 0) {
+        const similarity = 1 - (similar.distances[0] / 2); // Convert distance to similarity (0-1)
+        
+        if (similarity > 0.85) {
+          // Very likely duplicate - return existing lead
+          const existingLeadId = similar.metadatas[0]?.leadId;
+          if (existingLeadId) {
+            console.log(`[ChromaDB] Duplicate lead detected (similarity: ${similarity.toFixed(3)}), returning existing lead #${existingLeadId}`);
+            const existing = await db.select().from(leads).where(eq(leads.id, Number(existingLeadId))).limit(1);
+            if (existing.length > 0) {
+              return existing[0];
+            }
+          }
+        } else if (similarity > 0.70) {
+          console.log(`[ChromaDB] Similar lead found (similarity: ${similarity.toFixed(3)}), creating new lead anyway`);
+        }
+      }
+    } catch (error) {
+      console.error('[ChromaDB] Failed to check for duplicates:', error);
+      // Continue with creation if ChromaDB fails
+    }
+  }
+
+  // Insert new lead
   const result = await db.insert(leads).values(data).returning();
-  return result[0];
+  const newLead = result[0];
+  
+  // Add to ChromaDB for future duplicate detection
+  if (ENV.chromaEnabled && newLead) {
+    try {
+      const { addDocuments, formatLeadForEmbedding } = await import('./integrations/chromadb');
+      
+      const leadText = formatLeadForEmbedding({
+        name: newLead.name || '',
+        email: newLead.email || '',
+        phone: newLead.phone || '',
+        company: newLead.company || '',
+      });
+      
+      await addDocuments('friday_leads', [{
+        id: `lead-${newLead.id}`,
+        text: leadText,
+        metadata: {
+          leadId: newLead.id,
+          userId: newLead.userId,
+          name: newLead.name || '',
+          email: newLead.email || '',
+          company: newLead.company || '',
+          status: newLead.status,
+          createdAt: newLead.createdAt,
+        }
+      }]);
+      
+      console.log(`[ChromaDB] Indexed new lead #${newLead.id}`);
+    } catch (error) {
+      console.error('[ChromaDB] Failed to index lead:', error);
+      // Don't fail the entire operation if indexing fails
+    }
+  }
+  
+  return newLead;
 }
 
 export async function getUserLeads(

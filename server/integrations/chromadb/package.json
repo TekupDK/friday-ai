@@ -1,0 +1,28 @@
+{
+  "name": "@friday-ai/chromadb-integration",
+  "version": "1.0.0",
+  "description": "ChromaDB vector database integration for Friday AI",
+  "private": true,
+  "main": "client.ts",
+  "scripts": {
+    "start": "docker compose -f docker/docker-compose.chromadb.yml up -d",
+    "stop": "docker compose -f docker/docker-compose.chromadb.yml down",
+    "restart": "npm run stop && npm run start",
+    "logs": "docker compose -f docker/docker-compose.chromadb.yml logs -f chromadb",
+    "status": "docker compose -f docker/docker-compose.chromadb.yml ps",
+    "health": "curl -f http://localhost:8000/api/v1/heartbeat || echo 'ChromaDB not responding'"
+  },
+  "dependencies": {
+    "chromadb": "^1.8.1"
+  },
+  "keywords": [
+    "chromadb",
+    "vector-database",
+    "embeddings",
+    "semantic-search",
+    "ai",
+    "friday-ai"
+  ],
+  "author": "Friday AI Team",
+  "license": "MIT"
+}

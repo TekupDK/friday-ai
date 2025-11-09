@@ -45,6 +45,10 @@ export const ENV = {
   langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY ?? "",
   langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY ?? "",
   langfuseBaseUrl: process.env.LANGFUSE_BASE_URL ?? "http://localhost:3001",
+  // ChromaDB Vector Database
+  chromaEnabled: process.env.CHROMA_ENABLED === "true",
+  chromaUrl: process.env.CHROMA_URL ?? "http://localhost:8000",
+  chromaAuthToken: process.env.CHROMA_AUTH_TOKEN ?? "friday-chromadb-token-dev",
 };
 
 // Validate required environment variables

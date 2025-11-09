@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # ChromaDB Vector Database
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: friday-chromadb
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - chromadb-data:/chroma/chroma
+    environment:
+      # Anonymous telemetry (set to 0 to disable)
+      ANONYMIZED_TELEMETRY: "false"
+      
+      # Allow CORS for local development
+      CHROMA_SERVER_CORS_ALLOW_ORIGINS: '["http://localhost:3000","http://localhost:5173"]'
+      
+      # Authentication (disabled for local dev)
+      CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER: chromadb.auth.token_authn.TokenAuthenticationServerProvider
+      CHROMA_SERVER_AUTH_CREDENTIALS: "friday-chromadb-token-dev"
+      CHROMA_SERVER_AUTH_PROVIDER: chromadb.auth.token_authn.TokenAuthClientProvider
+      
+      # Persistence settings
+      IS_PERSISTENT: "TRUE"
+      PERSIST_DIRECTORY: /chroma/chroma
+      
+      # Performance settings
+      CHROMA_SERVER_HOST: 0.0.0.0
+      CHROMA_SERVER_PORT: 8000
+      
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v2/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - friday-chromadb-network
+
+volumes:
+  chromadb-data:
+    name: friday-chromadb-data
+
+networks:
+  friday-chromadb-network:
+    name: friday-chromadb-network
+    driver: bridge
