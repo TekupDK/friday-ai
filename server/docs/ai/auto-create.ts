@@ -19,14 +19,21 @@ import { eq } from "drizzle-orm";
 
 /**
  * Auto-generate and create lead documentation
+ * With retry logic for AI failures
  */
-export async function autoCreateLeadDoc(leadId: number): Promise<{
+export async function autoCreateLeadDoc(
+  leadId: number,
+  retryCount: number = 0
+): Promise<{
   success: boolean;
   docId?: string;
   error?: string;
+  retries?: number;
 }> {
+  const MAX_RETRIES = 2;
+  
   try {
-    logger.info({ leadId }, "[AI Auto-Create] Starting lead doc generation");
+    logger.info({ leadId, retryCount }, "[AI Auto-Create] Starting lead doc generation");
 
     // Step 1: Collect data
     const data = await collectLeadData(leadId);
@@ -73,10 +80,22 @@ export async function autoCreateLeadDoc(leadId: number): Promise<{
       "[AI Auto-Create] Lead doc created successfully"
     );
 
-    return { success: true, docId };
+    return { success: true, docId, retries: retryCount };
   } catch (error: any) {
-    logger.error({ error, leadId }, "[AI Auto-Create] Failed to create lead doc");
-    return { success: false, error: error.message };
+    logger.error({ error, leadId, retryCount }, "[AI Auto-Create] Failed to create lead doc");
+    
+    // Retry on AI failures
+    if (retryCount < MAX_RETRIES && (
+      error.message?.includes('AI') ||
+      error.message?.includes('OpenRouter') ||
+      error.message?.includes('timeout')
+    )) {
+      logger.info({ leadId, retryCount }, "[AI Auto-Create] Retrying after error...");
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2s before retry
+      return autoCreateLeadDoc(leadId, retryCount + 1);
+    }
+    
+    return { success: false, error: error.message, retries: retryCount };
   }
 }
 

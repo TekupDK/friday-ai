@@ -13,6 +13,7 @@ import { trpc } from "@/lib/trpc";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useMemo, useState, useEffect, useRef } from "react";
 import type { EnhancedEmailMessage, SortOption, FilterSource, Density } from "@/types/enhanced-email";
+import EmailQuickActions from "./EmailQuickActions";
 import {
   Archive,
   CheckCircle2,
@@ -361,143 +362,121 @@ export default function EmailListAI({
 
                     <div className="flex-1 min-w-0">
                       {density === 'compact' ? (
-                        // Compact layout
-                        <div className="flex items-center justify-between gap-2">
+                        // Compact layout - Shortwave-inspired minimal design
+                        <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-2 min-w-0 flex-1">
-                            {/* Lead Score Badge */}
-                            {leadScoreConfig && (
-                              <Badge variant="outline" className={`shrink-0 ${leadScoreConfig.color}`}>
-                                <leadScoreConfig.icon className="w-3 h-3 mr-1" />
-                                {aiData?.leadScore}
-                              </Badge>
-                            )}
-                            
                             {email.unread && (
                               <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
                             )}
                             
-                            <button
-                              onClick={e => e.stopPropagation()}
-                              className="font-medium text-sm text-foreground shrink-0 hover:underline hover:text-primary transition-colors"
-                            >
+                            <span className="font-medium text-sm text-foreground shrink-0">
                               {getDisplayName(email.from || email.sender)}
-                            </button>
+                            </span>
                             
-                            <span className="text-muted-foreground/70 text-sm">•</span>
-                            
-                            <h3 className="text-sm text-foreground/90 truncate">
+                            <h3 className="text-sm text-foreground/90 truncate flex-1">
                               {email.subject}
                             </h3>
                             
                             {email.hasAttachment && (
-                              <Paperclip className="w-3 h-3 text-muted-foreground shrink-0" />
+                              <Paperclip className="w-3 h-3 text-muted-foreground/60 shrink-0" />
                             )}
                           </div>
                           
-                          <div className="flex items-center gap-2 shrink-0">
-                            {/* Source Badge */}
-                            {sourceConfig && (
-                              <Badge variant="outline" className={`shrink-0 ${sourceConfig.color}`}>
-                                <sourceConfig.icon className="w-3 h-3 mr-1" />
-                                {sourceConfig.label}
-                              </Badge>
-                            )}
-                            
+                          <div className="flex items-center gap-3 shrink-0">
                             <span className="text-xs text-muted-foreground/70 whitespace-nowrap tabular-nums">
                               {new Date(email.internalDate || email.date).toLocaleString("da-DK", {
                                 hour: "2-digit",
                                 minute: "2-digit",
                               })}
                             </span>
+                            
+                            {/* Hot Lead Badge - Only for hot leads (score >= 70) */}
+                            {aiData && aiData.leadScore >= 70 && leadScoreConfig && (
+                              <Badge variant="outline" className={`shrink-0 ${leadScoreConfig.color}`}>
+                                <leadScoreConfig.icon className="w-3 h-3" />
+                              </Badge>
+                            )}
+                            
+                            {/* Quick Actions - visible on hover */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                              <EmailQuickActions
+                                threadId={email.threadId}
+                                isStarred={email.labels?.includes('starred')}
+                                isRead={!email.unread}
+                                onArchive={() => console.log('Archive:', email.threadId)}
+                                onStar={() => console.log('Star:', email.threadId)}
+                                onDelete={() => console.log('Delete:', email.threadId)}
+                                onSnooze={(threadId, until) => console.log('Snooze:', threadId, until)}
+                                onMarkAsRead={() => console.log('Mark read:', email.threadId)}
+                                onMarkAsUnread={() => console.log('Mark unread:', email.threadId)}
+                              />
+                            </div>
                           </div>
                         </div>
                       ) : (
-                        // Comfortable layout
+                        // Comfortable layout - Shortwave-inspired clean design
                         <>
-                          {/* First row: Name, score, source, time */}
-                          <div className="flex items-baseline gap-2 mb-2">
-                            {/* Lead Score Badge */}
-                            {leadScoreConfig && (
-                              <Badge variant="outline" className={`shrink-0 ${leadScoreConfig.color}`}>
-                                <leadScoreConfig.icon className="w-3 h-3 mr-1" />
-                                {aiData?.leadScore}
-                              </Badge>
-                            )}
+                          {/* First row: Name, time, hot badge, quick actions */}
+                          <div className="flex items-center justify-between gap-2 mb-1.5">
+                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                              {email.unread && (
+                                <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                              )}
+                              
+                              <span className={`font-medium text-sm shrink-0 ${
+                                email.unread ? 'text-foreground' : 'text-foreground/90'
+                              }`}>
+                                {getDisplayName(email.from || email.sender)}
+                              </span>
+                            </div>
                             
-                            {email.unread && (
-                              <div className="w-2 h-2 rounded-full bg-blue-500" />
-                            )}
-                            
-                            <button
-                              onClick={e => e.stopPropagation()}
-                              className="font-medium text-sm text-foreground hover:underline hover:text-primary transition-colors"
-                            >
-                              {getDisplayName(email.from || email.sender)}
-                            </button>
-                            
-                            <span className="text-muted-foreground/70 text-xs">
-                              {new Date(email.internalDate || email.date).toLocaleString("da-DK", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </span>
-                            
-                            {/* Source Badge */}
-                            {sourceConfig && (
-                              <Badge variant="outline" className={`shrink-0 ${sourceConfig.color}`}>
-                                <sourceConfig.icon className="w-3 h-3 mr-1" />
-                                {sourceConfig.label}
-                              </Badge>
-                            )}
-                            
-                            {/* Urgency Badge */}
-                            {urgencyConfig && aiData?.urgency !== 'low' && (
-                              <Badge variant="secondary" className={`shrink-0 ${urgencyConfig.color}`}>
-                                <Clock className="w-3 h-3 mr-1" />
-                                {urgencyConfig.label}
-                              </Badge>
-                            )}
+                            <div className="flex items-center gap-3 shrink-0">
+                              <span className="text-xs text-muted-foreground/70 whitespace-nowrap tabular-nums">
+                                {new Date(email.internalDate || email.date).toLocaleString("da-DK", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </span>
+                              
+                              {/* Hot Lead Badge - Only for hot leads (score >= 70) */}
+                              {aiData && aiData.leadScore >= 70 && leadScoreConfig && (
+                                <Badge variant="outline" className={`shrink-0 ${leadScoreConfig.color} text-xs`}>
+                                  <leadScoreConfig.icon className="w-3 h-3 mr-1" />
+                                  {aiData.leadScore}
+                                </Badge>
+                              )}
+                              
+                              {/* Quick Actions - visible on hover */}
+                              <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                <EmailQuickActions
+                                  threadId={email.threadId}
+                                  isStarred={email.labels?.includes('starred')}
+                                  isRead={!email.unread}
+                                  onArchive={() => console.log('Archive:', email.threadId)}
+                                  onStar={() => console.log('Star:', email.threadId)}
+                                  onDelete={() => console.log('Delete:', email.threadId)}
+                                  onSnooze={(threadId, until) => console.log('Snooze:', threadId, until)}
+                                  onMarkAsRead={() => console.log('Mark read:', email.threadId)}
+                                  onMarkAsUnread={() => console.log('Mark unread:', email.threadId)}
+                                />
+                              </div>
+                            </div>
                           </div>
                           
-                          {/* Second row: Subject */}
-                          <div className="flex items-center gap-2 mb-2">
-                            <h3 className={`text-sm truncate ${
+                          {/* Second row: Subject with attachment icon */}
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <h3 className={`text-sm truncate flex-1 ${
                               email.unread ? 'font-semibold text-foreground' : 'text-foreground/90'
                             }`}>
                               {email.subject}
                             </h3>
                             {email.hasAttachment && (
-                              <Paperclip className="w-3 h-3 text-muted-foreground shrink-0" />
+                              <Paperclip className="w-3 h-3 text-muted-foreground/60 shrink-0" />
                             )}
                           </div>
                           
-                          {/* Third row: AI Intelligence */}
-                          {aiData && (
-                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                              <div className="flex items-center gap-1">
-                                <MapPin className="w-3 h-3" />
-                                <span>{aiData.location}</span>
-                              </div>
-                              
-                              <div className="flex items-center gap-1">
-                                <Target className="w-3 h-3" />
-                                <span>{aiData.jobType}</span>
-                              </div>
-                              
-                              <div className="flex items-center gap-1">
-                                <DollarSign className="w-3 h-3" />
-                                <span>{formatCurrency(aiData.estimatedValue)}</span>
-                              </div>
-                              
-                              <div className="flex items-center gap-1">
-                                <Target className="w-3 h-3" />
-                                <span>{aiData.confidence}%</span>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {/* Snippet */}
-                          <p className="text-xs text-muted-foreground/70 line-clamp-2 mt-1">
+                          {/* Third row: Snippet */}
+                          <p className="text-xs text-muted-foreground/70 line-clamp-2">
                             {email.snippet}
                           </p>
                         </>
