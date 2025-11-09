@@ -21,22 +21,29 @@ import type { EnhancedEmailMessage } from '../../client/src/types/enhanced-email
 import type { EmailThread } from '../../client/src/types/email-thread';
 
 // Helper to create mock emails
-const createMockEmail = (overrides: Partial<EnhancedEmailMessage> = {}): EnhancedEmailMessage => ({
-  id: `email-${Math.random()}`,
-  threadId: 'thread-1',
-  subject: 'Test Subject',
-  from: 'test@example.com',
-  to: 'user@example.com',
-  sender: 'Test User',
-  date: new Date().toISOString(),
-  internalDate: Date.now(),
-  body: 'Test body',
-  snippet: 'Test snippet',
-  unread: false,
-  labels: [],
-  hasAttachment: false,
-  ...overrides,
-});
+const createMockEmail = (overrides: Partial<EnhancedEmailMessage> = {}): EnhancedEmailMessage => {
+  const date = overrides.date || new Date().toISOString();
+  const internalDate = overrides.internalDate !== undefined 
+    ? overrides.internalDate 
+    : new Date(date).getTime();
+  
+  return {
+    id: `email-${Math.random()}`,
+    threadId: 'thread-1',
+    subject: 'Test Subject',
+    from: 'test@example.com',
+    to: 'user@example.com',
+    sender: 'Test User',
+    date,
+    internalDate,
+    body: 'Test body',
+    snippet: 'Test snippet',
+    unread: false,
+    labels: [],
+    hasAttachment: false,
+    ...overrides,
+  };
+};
 
 describe('Phase 2: Thread Grouping Logic', () => {
   

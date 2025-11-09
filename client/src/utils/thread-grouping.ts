@@ -107,6 +107,13 @@ export function groupEmailsByThread(
       const dateB = new Date(b.internalDate || b.date).getTime();
       return dateA - dateB;
     });
+    
+    // Fix: Ensure latestMessage is actually the newest message
+    // (not just the first one we encountered during iteration)
+    if (thread.messages.length > 0) {
+      thread.latestMessage = thread.messages[thread.messages.length - 1];
+      thread.source = thread.latestMessage.aiAnalysis?.source || null;
+    }
   });
   
   // Apply filtering options
@@ -144,21 +151,26 @@ export function sortThreads(
       case 'date': {
         const dateA = new Date(a.latestMessage.internalDate || a.latestMessage.date).getTime();
         const dateB = new Date(b.latestMessage.internalDate || b.latestMessage.date).getTime();
-        comparison = dateB - dateA; // Default: newest first
+        // Sort by date: B - A means newer dates (higher numbers) come first
+        comparison = dateB - dateA;
         break;
       }
       
       case 'leadScore': {
-        comparison = b.maxLeadScore - a.maxLeadScore; // Default: highest score first
+        // Sort by score: B - A means higher scores come first
+        comparison = b.maxLeadScore - a.maxLeadScore;
         break;
       }
       
       case 'unreadCount': {
-        comparison = b.unreadCount - a.unreadCount; // Default: most unread first
+        // Sort by unread: B - A means more unread come first
+        comparison = b.unreadCount - a.unreadCount;
         break;
       }
     }
     
+    // If direction is 'asc', reverse the comparison
+    // If direction is 'desc' (default), keep comparison as is
     return direction === 'asc' ? -comparison : comparison;
   });
   

@@ -125,7 +125,7 @@ trackAIMetric({
 
 ## 🧪 Test Results
 
-### Test Script: `test-model-router-litellm.mjs`
+### Test 1: Basic Task-Based Routing (`test-model-router-litellm.mjs`)
 
 ```
 📝 Testing: chat
@@ -144,11 +144,47 @@ Result: 3/3 passed ✅
 Total Cost: $0.00 🎉
 ```
 
+### Test 2: Real-World Lead Scenarios (`test-real-leads-sim.mjs`)
+
+**Tested with 5 realistic leads from actual sources:**
+- rengøring.nu (2 leads)
+- Rengøring Århus (1 lead)
+- Leadpoint (1 lead)
+- Netberrau (1 lead)
+
+**Test Types:**
+1. **Lead Analysis** (all 5 leads) - ✅ 5/5 passed
+2. **Email Draft Generation** (5 leads) - ✅ 5/5 passed (NOT SENT!)
+3. **Task Planning** (2 qualified leads) - ✅ 1/2 passed (1 rate limit)
+
+```
+Total Tests:   12
+✅ Passed:     11 (92%)
+❌ Failed:     1 (8% - rate limit on FREE tier)
+💰 Total Cost: $0.00
+⚠️  NO EMAILS SENT - Read only mode
+```
+
+**Sample Lead Tested:**
+```
+Lead: Mette Hansen (rengøring.nu)
+Service: Flytterengøring, 3-værelses, Aarhus C
+Status: New
+
+✅ Lead Analysis: Success in 11.6s
+   "Prioritet: Mellem-høj. God lead med konkret behov..."
+
+✅ Email Draft: Success in 7.2s
+   "Hej Mette, Tak for din henvendelse om flytterengøring..."
+   ⚠️ NOT SENT - Read only mode!
+```
+
 ### Performance Metrics
-- **Average response time:** ~5s (acceptable for FREE models)
-- **Success rate:** 100% (3/3 passed)
+- **Average response time:** ~7s (acceptable for FREE models)
+- **Success rate:** 92% (11/12 passed)
 - **Cost per request:** $0.00 ✅
 - **Fallback triggered:** 0 times (all primary models worked)
+- **Rate limit:** Hit once (expected with FREE tier high usage)
 
 ---
 
