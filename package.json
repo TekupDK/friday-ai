@@ -94,6 +94,7 @@
     "@trpc/server": "^11.6.0",
     "@upstash/redis": "^1.35.6",
     "chokidar": "^4.0.3",
+    "chromadb": "^3.1.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
