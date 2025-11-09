@@ -201,13 +201,13 @@ export async function tracedOperation<T>(
     // Log error
     if (trace) {
       trace.update({
-        level: 'ERROR',
-        statusMessage: error instanceof Error ? error.message : String(error),
         metadata: {
           ...metadata?.data,
           duration: Date.now() - startTime,
           success: false,
           error: error instanceof Error ? error.message : String(error),
+          level: 'ERROR',
+          statusMessage: error instanceof Error ? error.message : String(error),
         },
       });
     }

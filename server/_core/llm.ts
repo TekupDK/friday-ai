@@ -332,23 +332,6 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   const { getLangfuseClient } = await import('../integrations/langfuse/client');
   const langfuse = getLangfuseClient();
   
-  // Create trace if Langfuse is enabled
-  const trace = langfuse?.trace({
-    name: 'llm-invocation',
-    metadata: {
-      hasTools: !!tools && tools.length > 0,
-      toolCount: tools?.length || 0,
-    },
-  });
-
-  // Create generation span
-  const generation = trace?.generation({
-    name: 'llm-call',
-    input: messages,
-  });
-
-  const startTime = Date.now();
-
   // Check which API we're using (priority: OpenRouter > Ollama > Gemini > OpenAI)
   const useOpenRouter = ENV.openRouterApiKey && ENV.openRouterApiKey.trim();
   const useOllamaApi = !useOpenRouter && ENV.ollamaBaseUrl;
@@ -357,6 +340,35 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     !useOllamaApi &&
     ENV.geminiApiKey &&
     ENV.geminiApiKey.trim();
+    
+  // Determine model name for tracking
+  const modelName = useOpenRouter ? ENV.openRouterModel : 
+                    useOllamaApi ? ENV.ollamaModel :
+                    useGeminiApi ? 'gemini-2.0-flash-exp' : 'gpt-4o-mini';
+  
+  // Create trace if Langfuse is enabled
+  const trace = langfuse?.trace({
+    name: 'llm-invocation',
+    metadata: {
+      hasTools: !!tools && tools.length > 0,
+      toolCount: tools?.length || 0,
+      model: modelName,
+    },
+  });
+
+  // Create generation span (stringify input for Langfuse compatibility)
+  const inputForLangfuse = messages?.map(m => ({
+    role: m.role,
+    content: typeof m.content === 'string' ? m.content : JSON.stringify(m.content)
+  })) || [];
+  
+  const generation = trace?.generation({
+    name: 'llm-call',
+    input: inputForLangfuse,
+    model: modelName,
+  });
+
+  const startTime = Date.now();
 
   let payload: Record<string, unknown>;
 
@@ -455,8 +467,14 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     
     // Track success in Langfuse
     const responseTime = Date.now() - startTime;
+    
+    // Extract text content from result for logging
+    const outputText = result.choices?.[0]?.message?.content || 
+                       result.choices?.[0]?.message?.tool_calls?.map(tc => tc.function.name).join(', ') ||
+                       'No output';
+    
     generation?.end({
-      output: result,
+      output: outputText,
       usage: result.usage ? {
         promptTokens: result.usage.prompt_tokens,
         completionTokens: result.usage.completion_tokens,
@@ -464,9 +482,8 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
       } : undefined,
       metadata: {
         responseTime,
-        model: useOpenRouter ? ENV.openRouterModel : 
-               useOllamaApi ? ENV.ollamaModel :
-               useGeminiApi ? 'gemini-2.0-flash-exp' : 'gpt-4o-mini',
+        hasToolCalls: !!(result.choices?.[0]?.message?.tool_calls),
+        finishReason: result.choices?.[0]?.finish_reason,
       },
     });
     
