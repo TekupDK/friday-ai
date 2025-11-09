@@ -47,25 +47,28 @@ const createMockEmail = (overrides: Partial<EnhancedEmailMessage> = {}): Enhance
 
 describe('Phase 2: Thread Grouping Logic', () => {
   
-  it('should group emails by threadId correctly', () => {
+  it('should group emails by SENDER correctly', () => {
     const emails: EnhancedEmailMessage[] = [
-      createMockEmail({ threadId: 'thread-1', subject: 'RE: Test' }),
-      createMockEmail({ threadId: 'thread-1', subject: 'RE: RE: Test' }),
-      createMockEmail({ threadId: 'thread-2', subject: 'Different Thread' }),
+      createMockEmail({ from: 'customer1@example.com', subject: 'First email' }),
+      createMockEmail({ from: 'customer1@example.com', subject: 'Second email' }),
+      createMockEmail({ from: 'customer2@example.com', subject: 'Different customer' }),
     ];
     
     const threads = groupEmailsByThread(emails);
     
+    // Should have 2 threads (one per unique sender)
     expect(threads).toHaveLength(2);
-    expect(threads[0].messageCount).toBe(2);
-    expect(threads[1].messageCount).toBe(1);
+    // First thread should have 2 messages from customer1
+    expect(threads.find(t => t.id === 'customer1@example.com')?.messageCount).toBe(2);
+    // Second thread should have 1 message from customer2
+    expect(threads.find(t => t.id === 'customer2@example.com')?.messageCount).toBe(1);
   });
 
   it('should calculate unread count per thread', () => {
     const emails: EnhancedEmailMessage[] = [
-      createMockEmail({ threadId: 'thread-1', unread: true }),
-      createMockEmail({ threadId: 'thread-1', unread: true }),
-      createMockEmail({ threadId: 'thread-1', unread: false }),
+      createMockEmail({ from: 'customer@example.com', unread: true }),
+      createMockEmail({ from: 'customer@example.com', unread: true }),
+      createMockEmail({ from: 'customer@example.com', unread: false }),
     ];
     
     const threads = groupEmailsByThread(emails);
@@ -76,17 +79,17 @@ describe('Phase 2: Thread Grouping Logic', () => {
   it('should track latest message correctly', () => {
     const emails: EnhancedEmailMessage[] = [
       createMockEmail({ 
-        threadId: 'thread-1', 
+        from: 'customer@example.com',
         date: '2025-11-09T10:00:00Z',
         subject: 'Oldest'
       }),
       createMockEmail({ 
-        threadId: 'thread-1', 
+        from: 'customer@example.com',
         date: '2025-11-09T12:00:00Z',
         subject: 'Latest'
       }),
       createMockEmail({ 
-        threadId: 'thread-1', 
+        from: 'customer@example.com',
         date: '2025-11-09T11:00:00Z',
         subject: 'Middle'
       }),
@@ -100,15 +103,15 @@ describe('Phase 2: Thread Grouping Logic', () => {
   it('should calculate max lead score for thread', () => {
     const emails: EnhancedEmailMessage[] = [
       createMockEmail({ 
-        threadId: 'thread-1',
+        from: 'customer@example.com',
         aiAnalysis: { leadScore: 50, source: null, estimatedValue: 0, urgency: 'low', jobType: '', location: '', confidence: 0 }
       }),
       createMockEmail({ 
-        threadId: 'thread-1',
+        from: 'customer@example.com',
         aiAnalysis: { leadScore: 85, source: null, estimatedValue: 0, urgency: 'high', jobType: '', location: '', confidence: 0 }
       }),
       createMockEmail({ 
-        threadId: 'thread-1',
+        from: 'customer@example.com',
         aiAnalysis: { leadScore: 60, source: null, estimatedValue: 0, urgency: 'medium', jobType: '', location: '', confidence: 0 }
       }),
     ];
@@ -119,24 +122,25 @@ describe('Phase 2: Thread Grouping Logic', () => {
   });
 
   it('should track participants in thread', () => {
+    // Note: With sender-based grouping, each sender gets their own thread
+    // This test now verifies a single participant per thread
     const emails: EnhancedEmailMessage[] = [
-      createMockEmail({ threadId: 'thread-1', from: 'alice@example.com' }),
-      createMockEmail({ threadId: 'thread-1', from: 'bob@example.com' }),
-      createMockEmail({ threadId: 'thread-1', from: 'alice@example.com' }),
+      createMockEmail({ from: 'alice@example.com' }),
+      createMockEmail({ from: 'alice@example.com' }),
+      createMockEmail({ from: 'alice@example.com' }),
     ];
     
     const threads = groupEmailsByThread(emails);
     
-    expect(threads[0].participants).toHaveLength(2);
+    expect(threads[0].participants).toHaveLength(1);
     expect(threads[0].participants).toContain('alice@example.com');
-    expect(threads[0].participants).toContain('bob@example.com');
   });
 
   it('should detect attachments in thread', () => {
     const emails: EnhancedEmailMessage[] = [
-      createMockEmail({ threadId: 'thread-1', hasAttachment: false }),
-      createMockEmail({ threadId: 'thread-1', hasAttachment: true }),
-      createMockEmail({ threadId: 'thread-1', hasAttachment: false }),
+      createMockEmail({ from: 'customer@example.com', hasAttachment: false }),
+      createMockEmail({ from: 'customer@example.com', hasAttachment: true }),
+      createMockEmail({ from: 'customer@example.com', hasAttachment: false }),
     ];
     
     const threads = groupEmailsByThread(emails);
@@ -146,9 +150,9 @@ describe('Phase 2: Thread Grouping Logic', () => {
 
   it('should detect starred messages in thread', () => {
     const emails: EnhancedEmailMessage[] = [
-      createMockEmail({ threadId: 'thread-1', labels: [] }),
-      createMockEmail({ threadId: 'thread-1', labels: ['starred'] }),
-      createMockEmail({ threadId: 'thread-1', labels: [] }),
+      createMockEmail({ from: 'customer@example.com', labels: [] }),
+      createMockEmail({ from: 'customer@example.com', labels: ['starred'] }),
+      createMockEmail({ from: 'customer@example.com', labels: [] }),
     ];
     
     const threads = groupEmailsByThread(emails);
@@ -520,29 +524,29 @@ describe('Phase 2: Thread Helper Functions', () => {
 describe('Phase 2: Integration Tests', () => {
   
   it('should handle complete thread workflow', () => {
-    // Create diverse emails
+    // Create diverse emails from different senders
     const emails: EnhancedEmailMessage[] = [
       createMockEmail({ 
-        threadId: 'thread-1', 
+        from: 'rendstelsje@example.com',
         subject: 'Rengøring tilbud',
         unread: true,
         aiAnalysis: { leadScore: 85, source: 'rengoring_nu', estimatedValue: 2000, urgency: 'high', jobType: '', location: '', confidence: 0 }
       }),
       createMockEmail({ 
-        threadId: 'thread-1', 
+        from: 'rendstelsje@example.com',
         subject: 'RE: Rengøring tilbud',
         unread: false,
         aiAnalysis: { leadScore: 70, source: 'rengoring_nu', estimatedValue: 0, urgency: 'medium', jobType: '', location: '', confidence: 0 }
       }),
       createMockEmail({ 
-        threadId: 'thread-2', 
+        from: 'another@example.com',
         subject: 'Another email',
         unread: false,
         aiAnalysis: { leadScore: 40, source: 'direct', estimatedValue: 500, urgency: 'low', jobType: '', location: '', confidence: 0 }
       }),
     ];
     
-    // Group emails
+    // Group emails by sender
     const threads = groupEmailsByThread(emails, {
       sortBy: 'leadScore',
       sortDirection: 'desc'
@@ -551,7 +555,7 @@ describe('Phase 2: Integration Tests', () => {
     // Calculate stats
     const stats = calculateThreadStats(threads);
     
-    // Verify results
+    // Verify results - should have 2 threads (one per unique sender)
     expect(threads).toHaveLength(2);
     expect(threads[0].maxLeadScore).toBe(85); // Sorted by lead score
     expect(stats.hotLeadThreads).toBe(1);

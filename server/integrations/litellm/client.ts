@@ -33,13 +33,15 @@ export class LiteLLMClient {
   /**
    * Main chat completion method
    * Compatible with Friday AI's invokeLLM signature
+   * Now with smart rate limiting!
    */
   async chatCompletion(
     params: InvokeParams,
-    options?: RequestOptions
+    options?: RequestOptions & { priority?: 'high' | 'medium' | 'low' }
   ): Promise<InvokeResult> {
     const { messages, tools, toolChoice, tool_choice } = params;
     const model = options?.model || LITELLM_DEFAULTS.DEFAULT_MODEL;
+    const priority = options?.priority || 'medium';
 
     const request: ChatCompletionRequest = {
       model,
@@ -53,14 +55,22 @@ export class LiteLLMClient {
       request.tool_choice = toolChoice || tool_choice;
     }
 
+    // Use rate limiter for smart queuing
+    const { rateLimiter } = await import('./rate-limiter');
+    
     try {
-      const response = await this.makeRequest<ChatCompletionResponse>(
-        LITELLM_ENDPOINTS.CHAT,
-        {
-          method: 'POST',
-          body: JSON.stringify(request),
+      const response = await rateLimiter.enqueue(
+        async () => {
+          return await this.makeRequest<ChatCompletionResponse>(
+            LITELLM_ENDPOINTS.CHAT,
+            {
+              method: 'POST',
+              body: JSON.stringify(request),
+            },
+            options?.timeout || this.timeout
+          );
         },
-        options?.timeout || this.timeout
+        priority
       );
 
       return this.mapToInvokeResult(response);

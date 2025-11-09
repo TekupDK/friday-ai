@@ -9,7 +9,8 @@ import type { EnhancedEmailMessage } from '@/types/enhanced-email';
 import type { EmailThread, ThreadGroupingOptions, ThreadStats } from '@/types/email-thread';
 
 /**
- * Groups emails by threadId into conversation threads
+ * Groups emails by SENDER (from address) into conversation threads
+ * This groups all emails from the same customer/sender together
  * 
  * @param emails - Array of enhanced email messages
  * @param options - Optional grouping configuration
@@ -19,12 +20,18 @@ export function groupEmailsByThread(
   emails: EnhancedEmailMessage[],
   options?: ThreadGroupingOptions
 ): EmailThread[] {
-  // Create a map of threadId -> thread data
+  // Create a map of sender email -> thread data
   const threadsMap = new Map<string, EmailThread>();
   
-  // Group emails by threadId
+  // Group emails by SENDER (from address) instead of threadId
   emails.forEach(email => {
-    const threadId = email.threadId;
+    // Extract email address from "Name <email@domain.com>" format
+    const senderEmail = email.from.match(/<(.+?)>/) 
+      ? email.from.match(/<(.+?)>/)![1] 
+      : email.from;
+    
+    // Use sender email as the grouping key
+    const threadId = senderEmail;
     
     if (!threadsMap.has(threadId)) {
       // Initialize new thread
