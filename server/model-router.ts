@@ -6,6 +6,8 @@
 import { invokeLLM, streamResponse } from "./_core/llm";
 import { getFeatureFlags } from "./_core/feature-flags";
 import { trackAIMetric } from "./ai-metrics";
+import { ENV } from "./_core/env";
+import { litellmClient, mapToLiteLLMModel, getFallbackModels } from "./integrations/litellm";
 
 export type AIModel = 
   // FREE TIER - 100% Accuracy Models (Recommended)
@@ -183,6 +185,7 @@ export function getModelConfig(taskType: TaskType): ModelRoutingConfig {
 
 /**
  * Execute LLM call with model routing and fallbacks
+ * Now supports LiteLLM integration with gradual rollout
  */
 export async function invokeLLMWithRouting(
   taskType: TaskType,
@@ -202,17 +205,22 @@ export async function invokeLLMWithRouting(
   
   console.log(`🧠 Model Routing: Task=${taskType}, Model=${selectedModel}, Reason=${config.reasoning}`);
 
-  let lastError: Error | null = null;
+  // Check if we should use LiteLLM (gradual rollout)
+  const useLiteLLM = shouldUseLiteLLM(userId);
   
-  // Try primary model first, then fallbacks
+  if (useLiteLLM) {
+    console.log(`🚀 [LiteLLM] Routing through LiteLLM proxy (rollout: ${ENV.litellmRolloutPercentage}%)`);
+    return await invokeLLMWithLiteLLM(taskType, selectedModel, messages, config, { userId, stream, maxRetries });
+  }
+
+  // Legacy path: Original routing logic
+  let lastError: Error | null = null;
   const modelsToTry = [selectedModel, ...config.fallbacks.slice(0, maxRetries)];
   
   for (const model of modelsToTry) {
     const startTime = Date.now();
     
     try {
-      // TODO: Update invokeLLM/streamResponse to accept model parameter
-      // For now, model selection via ENV.openRouterModel (set before server start)
       console.log(`🔄 Attempting with model: ${model}`);
       
       let result;
@@ -267,4 +275,102 @@ export function getModelStats() {
     averageResponseTime: 0,
     errorRate: 0,
   };
+}
+
+/**
+ * Determine if we should use LiteLLM for this request
+ * Based on feature flag and gradual rollout percentage
+ */
+function shouldUseLiteLLM(userId?: number): boolean {
+  // Feature flag must be enabled
+  if (!ENV.enableLiteLLM) {
+    return false;
+  }
+
+  // 0% = disabled, 100% = all users
+  const rolloutPercentage = ENV.litellmRolloutPercentage;
+  
+  if (rolloutPercentage === 0) {
+    return false;
+  }
+  
+  if (rolloutPercentage === 100) {
+    return true;
+  }
+  
+  // Gradual rollout: use userId hash for consistent assignment
+  if (userId) {
+    const hash = userId % 100;
+    return hash < rolloutPercentage;
+  }
+  
+  // No userId: use random (for anonymous requests)
+  return Math.random() * 100 < rolloutPercentage;
+}
+
+/**
+ * Invoke LLM through LiteLLM proxy with automatic fallback
+ */
+async function invokeLLMWithLiteLLM(
+  taskType: TaskType,
+  primaryModel: AIModel,
+  messages: any[],
+  config: ModelRoutingConfig,
+  options: { userId?: number; stream?: boolean; maxRetries?: number }
+) {
+  const { userId, stream = false, maxRetries = 2 } = options;
+  const startTime = Date.now();
+  
+  try {
+    // Convert Friday AI model name to LiteLLM format
+    const litellmModel = mapToLiteLLMModel(primaryModel);
+    
+    console.log(`🚀 [LiteLLM] Using model: ${litellmModel} (Friday: ${primaryModel})`);
+    
+    // Call LiteLLM client
+    const result = await litellmClient.chatCompletion(
+      { messages },
+      { model: litellmModel }
+    );
+    
+    // Track success
+    const responseTime = Date.now() - startTime;
+    trackAIMetric({
+      userId,
+      modelId: primaryModel,
+      taskType,
+      responseTime,
+      success: true,
+    });
+    
+    console.log(`✅ [LiteLLM] Success in ${responseTime}ms`);
+    
+    return result;
+  } catch (error) {
+    const responseTime = Date.now() - startTime;
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    console.error(`❌ [LiteLLM] Failed after ${responseTime}ms:`, errorMessage);
+    
+    // Track failure
+    trackAIMetric({
+      userId,
+      modelId: primaryModel,
+      taskType,
+      responseTime,
+      success: false,
+      errorMessage,
+    });
+    
+    // LiteLLM already handles fallback internally, but if it completely fails,
+    // we can fall back to the legacy path
+    console.warn(`⚠️ [LiteLLM] All LiteLLM attempts failed, falling back to direct API`);
+    
+    // Fallback to legacy invokeLLM
+    if (stream) {
+      return await streamResponse(messages);
+    } else {
+      return await invokeLLM({ messages });
+    }
+  }
 }

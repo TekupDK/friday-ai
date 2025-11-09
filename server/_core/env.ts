@@ -35,6 +35,11 @@ export const ENV = {
   // Inbound email webhook/server integration
   INBOUND_STORAGE_PATH: process.env.INBOUND_STORAGE_PATH ?? "",
   INBOUND_EMAIL_WEBHOOK_SECRET: process.env.INBOUND_EMAIL_WEBHOOK_SECRET ?? "",
+  // LiteLLM Integration
+  litellmBaseUrl: process.env.LITELLM_BASE_URL ?? "http://localhost:4000",
+  litellmMasterKey: process.env.LITELLM_MASTER_KEY ?? "",
+  enableLiteLLM: process.env.ENABLE_LITELLM === "true",
+  litellmRolloutPercentage: parseInt(process.env.LITELLM_ROLLOUT_PERCENTAGE || "0", 10),
 };
 
 // Validate required environment variables
