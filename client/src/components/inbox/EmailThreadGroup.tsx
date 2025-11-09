@@ -26,12 +26,28 @@ import {
   Circle,
 } from "lucide-react";
 
-// Lead score badge configuration (from Phase 1)
+// Lead score badge configuration (Phase 2.1: Simplified from 4 → 2 types)
+// Only show badges for important leads (score >= 70)
+// Solid colors (no 3-shade system) for cleaner visual
 const getLeadScoreConfig = (score: number) => {
-  if (score >= 80) return { color: 'bg-red-100 text-red-800 border-red-200', icon: Flame, label: 'Hot' };
-  if (score >= 60) return { color: 'bg-green-100 text-green-800 border-green-200', icon: TrendingUp, label: 'High' };
-  if (score >= 40) return { color: 'bg-blue-100 text-blue-800 border-blue-200', icon: Target, label: 'Medium' };
-  return { color: 'bg-gray-100 text-gray-800 border-gray-200', icon: Circle, label: 'Low' };
+  if (score >= 80) {
+    // 🔥 HOT (solid red, high impact)
+    return { 
+      color: 'bg-red-500 text-white hover:bg-red-600 transition-colors', 
+      icon: Flame, 
+      label: 'Hot' 
+    };
+  }
+  if (score >= 70) {
+    // ⚡ WARM (solid amber, medium-high priority)
+    return { 
+      color: 'bg-amber-500 text-white hover:bg-amber-600 transition-colors', 
+      icon: TrendingUp, 
+      label: 'Warm' 
+    };
+  }
+  // ✅ NO badge for scores < 70 (reduces clutter!)
+  return null;
 };
 
 interface EmailThreadGroupProps {
@@ -98,10 +114,10 @@ export default function EmailThreadGroup({
         isSelected ? "bg-primary/5 border-primary/20" : "hover:bg-muted/30"
       }`}
     >
-      {/* Thread Header - Always visible */}
+      {/* Thread Header - Always visible (Phase 2.1: improved spacing) */}
       <div
-        className={`group p-3 cursor-pointer ${
-          density === 'compact' ? 'py-2' : 'py-3'
+        className={`group p-4 cursor-pointer ${
+          density === 'compact' ? 'py-2' : 'py-4'
         }`}
         onClick={(e) => onClick(thread, e)}
         role="button"
@@ -135,8 +151,8 @@ export default function EmailThreadGroup({
           </div>
           
           <div className="flex-1 min-w-0">
-            {/* Header Row - Shortwave-inspired from Phase 1 */}
-            <div className="flex items-center justify-between gap-2 mb-1">
+            {/* Header Row - Shortwave-inspired (Phase 2.1: more spacing) */}
+            <div className="flex items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2 min-w-0 flex-1">
                 {/* Message Count Badge (if thread) */}
                 {messageCount > 1 && (
@@ -151,9 +167,9 @@ export default function EmailThreadGroup({
                   <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
                 )}
                 
-                {/* Sender name */}
-                <span className={`font-medium text-sm shrink-0 ${
-                  latestMessage.unread ? 'text-foreground' : 'text-foreground/90'
+                {/* Sender name (Phase 2.1: bigger, bolder, better hierarchy) */}
+                <span className={`font-semibold text-base leading-relaxed shrink-0 ${
+                  latestMessage.unread ? 'text-foreground' : 'text-foreground/80'
                 }`}>
                   {getDisplayName(latestMessage.from || latestMessage.sender)}
                 </span>
@@ -165,14 +181,14 @@ export default function EmailThreadGroup({
               </div>
               
               <div className="flex items-center gap-3 shrink-0">
-                {/* Timestamp */}
-                <span className="text-xs text-muted-foreground/70 whitespace-nowrap tabular-nums">
+                {/* Timestamp (Phase 2.1: simplified color) */}
+                <span className="text-xs text-muted-foreground whitespace-nowrap tabular-nums">
                   {formatTime(latestMessage.internalDate || latestMessage.date)}
                 </span>
                 
-                {/* Hot Lead Badge - Phase 1 improvement (only >= 70) */}
+                {/* Hot Lead Badge - Phase 2.1: Simplified (solid color, no border) */}
                 {leadScoreConfig && (
-                  <Badge variant="outline" className={`shrink-0 ${leadScoreConfig.color} text-xs`}>
+                  <Badge className={`shrink-0 ${leadScoreConfig.color} text-xs font-semibold border-0 shadow-sm`}>
                     <leadScoreConfig.icon className="w-3 h-3 mr-1" />
                     {maxLeadScore}
                   </Badge>
@@ -195,16 +211,16 @@ export default function EmailThreadGroup({
               </div>
             </div>
             
-            {/* Subject Row */}
-            <h3 className={`text-sm mb-1 truncate ${
-              latestMessage.unread ? 'font-semibold text-foreground' : 'text-foreground/90'
+            {/* Subject Row (Phase 2.1: normal weight, more space, line-height) */}
+            <h3 className={`text-sm leading-relaxed mb-2 truncate ${
+              latestMessage.unread ? 'font-semibold text-foreground' : 'font-normal text-foreground/80'
             }`}>
               {latestMessage.subject}
             </h3>
             
             {/* Thread Summary (only for multi-message threads) */}
             {threadSummary && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground mb-1">
+              <div className="flex items-center gap-1 text-xs leading-relaxed text-muted-foreground mb-1.5">
                 <Clock className="w-3 h-3" />
                 <span>{threadSummary}</span>
                 {unreadCount > 0 && (
@@ -215,9 +231,9 @@ export default function EmailThreadGroup({
               </div>
             )}
             
-            {/* Snippet (only in comfortable mode when collapsed) */}
+            {/* Snippet (only in comfortable mode when collapsed) (Phase 2.1: line-height) */}
             {density === 'comfortable' && !expanded && (
-              <p className="text-xs text-muted-foreground/70 line-clamp-2">
+              <p className="text-xs leading-relaxed text-muted-foreground line-clamp-2">
                 {latestMessage.snippet}
               </p>
             )}
@@ -250,19 +266,19 @@ export default function EmailThreadGroup({
                   )}
                   
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className={`text-xs shrink-0 ${
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-xs leading-relaxed shrink-0 ${
                         message.unread ? 'font-medium text-foreground' : 'text-foreground/70'
                       }`}>
                         {getDisplayName(message.from || message.sender)}
                       </span>
                       
-                      <span className="text-xs text-muted-foreground/60 whitespace-nowrap tabular-nums ml-auto">
+                      <span className="text-xs leading-relaxed text-muted-foreground whitespace-nowrap tabular-nums ml-auto">
                         {formatTime(message.internalDate || message.date)}
                       </span>
                     </div>
                     
-                    <p className="text-xs text-muted-foreground/80 line-clamp-2">
+                    <p className="text-xs leading-relaxed text-muted-foreground line-clamp-2">
                       {message.snippet}
                     </p>
                   </div>

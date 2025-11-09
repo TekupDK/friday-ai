@@ -19,6 +19,7 @@ import type { EnhancedEmailMessage, SortOption, FilterSource, Density } from "@/
 import type { EmailThread } from "@/types/email-thread";
 import { groupEmailsByThread, searchThreads, calculateThreadStats } from "@/utils/thread-grouping";
 import EmailThreadGroup from "./EmailThreadGroup";
+import EmailStickyActionBar from "./EmailStickyActionBar";
 import {
   DollarSign,
   Target,
@@ -135,6 +136,46 @@ export default function EmailListAI({
   const handleEmailInThreadClick = useCallback((email: EnhancedEmailMessage) => {
     onEmailSelect(email);
   }, [onEmailSelect]);
+
+  // Get selected threads list for actionbar
+  const selectedThreadsList = useMemo(() => {
+    return threads.filter(thread => selectedEmails.has(thread.id));
+  }, [threads, selectedEmails]);
+
+  // Bulk action handlers
+  const handleDeselectAll = useCallback(() => {
+    onEmailSelectionChange(new Set());
+  }, [onEmailSelectionChange]);
+
+  const handleBulkReply = useCallback(() => {
+    // TODO: Implement bulk reply logic
+    console.log('Bulk reply to', selectedThreadsList.length, 'threads');
+    // For now, just select first thread for reply
+    if (selectedThreadsList.length > 0) {
+      onEmailSelect(selectedThreadsList[0].latestMessage);
+    }
+  }, [selectedThreadsList, onEmailSelect]);
+
+  const handleBulkBook = useCallback(() => {
+    // TODO: Open booking dialog with selected threads
+    console.log('Bulk book for', selectedThreadsList.length, 'threads');
+  }, [selectedThreadsList]);
+
+  const handleBulkCreateTask = useCallback(() => {
+    // TODO: Create tasks from selected threads
+    console.log('Create tasks for', selectedThreadsList.length, 'threads');
+  }, [selectedThreadsList]);
+
+  const handleBulkLabel = useCallback(() => {
+    // TODO: Open label dialog
+    console.log('Label', selectedThreadsList.length, 'threads');
+  }, [selectedThreadsList]);
+
+  const handleBulkArchive = useCallback(() => {
+    // TODO: Archive selected threads
+    console.log('Archive', selectedThreadsList.length, 'threads');
+    handleDeselectAll();
+  }, [selectedThreadsList, handleDeselectAll]);
 
   // Get display name
   const getDisplayName = useCallback((email: string) => {
@@ -261,6 +302,19 @@ export default function EmailListAI({
           </div>
         </div>
       </div>
+
+      {/* NEW: Sticky ActionBar - only when threads selected (Phase 2.1) */}
+      {selectedThreadsList.length > 0 && (
+        <EmailStickyActionBar
+          selectedThreads={selectedThreadsList}
+          onReply={handleBulkReply}
+          onBook={handleBulkBook}
+          onCreateTask={handleBulkCreateTask}
+          onLabel={handleBulkLabel}
+          onArchive={handleBulkArchive}
+          onDeselectAll={handleDeselectAll}
+        />
+      )}
 
       {/* Email List */}
       <div
