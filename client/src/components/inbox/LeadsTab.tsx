@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEmailContext } from "@/contexts/EmailContext";
 import { useWorkflowContext } from "@/contexts/WorkflowContext";
+import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 import {
   Dialog,
   DialogContent,
@@ -134,6 +135,7 @@ interface LeadRowProps {
   index: number;
   onStatusChange: (leadId: number, newStatus: LeadStatus) => void;
   onSelectLead: (leadId: number) => void;
+  onGenerateDoc: (leadId: number) => void;
 }
 
 const LeadRow = memo(function LeadRow({
@@ -141,6 +143,7 @@ const LeadRow = memo(function LeadRow({
   index,
   onStatusChange,
   onSelectLead,
+  onGenerateDoc,
 }: LeadRowProps) {
   const statusConfig =
     STATUS_CONFIG[lead.status as LeadStatus] || STATUS_CONFIG.new;
@@ -360,6 +363,15 @@ const LeadRow = memo(function LeadRow({
               <Phone className="w-4 h-4 mr-2" />
               Ring op
             </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={e => {
+                e.stopPropagation();
+                onGenerateDoc(lead.id);
+              }}
+            >
+              <SparklesIcon className="w-4 h-4 mr-2" />
+              Generer AI Dok
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -373,6 +385,7 @@ interface LeadsTabProps {
 
 export default function LeadsTab({ onRequestTabChange }: LeadsTabProps = {}) {
   const emailContext = useEmailContext();
+  const { generateLeadDoc, isGenerating } = useAIGeneration();
   const [statusFilter, setStatusFilter] = useState<LeadStatus | "all">("all");
   const [sourceFilter, setSourceFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -743,6 +756,9 @@ export default function LeadsTab({ onRequestTabChange }: LeadsTabProps = {}) {
                       onSelectLead={(leadId) => {
                         // Open customer profile in WorkflowPanel
                         openCustomerProfile(leadId);
+                      }}
+                      onGenerateDoc={(leadId) => {
+                        generateLeadDoc.mutate({ leadId });
                       }}
                     />
                   </div>
