@@ -97,9 +97,8 @@ general_settings:
   # Master key for API authentication (optional)
   master_key: os.environ/LITELLM_MASTER_KEY
   
-  # Database settings (optional - using in-memory for now)
-  database_url: null
-  store_model_in_db: false
+  # Disable database completely
+  use_queue: false
   
   # Logging
   set_verbose: true

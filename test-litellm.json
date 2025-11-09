@@ -1,0 +1,9 @@
+{
+  "model": "openrouter/z-ai/glm-4.5-air:free",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Sig hej på dansk"
+    }
+  ]
+}

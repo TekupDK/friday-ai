@@ -16,8 +16,9 @@ services:
       # Logging
       - LITELLM_LOG_LEVEL=${LITELLM_LOG_LEVEL:-INFO}
       
-      # Database (optional - we'll use in-memory for now)
-      - DATABASE_URL=${LITELLM_DATABASE_URL:-}
+      # Disable database (use in-memory)
+      - DATABASE_URL=
+      - STORE_MODEL_IN_DB=False
       
     volumes:
       # Mount config file

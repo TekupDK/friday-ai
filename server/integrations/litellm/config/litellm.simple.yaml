@@ -1,0 +1,12 @@
+# LiteLLM Simple Config - Test Setup
+
+model_list:
+  - model_name: glm-4.5-air
+    litellm_params:
+      model: openrouter/z-ai/glm-4.5-air:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+litellm_settings:
+  drop_params: true
+  success_callback: []
+  failure_callback: []

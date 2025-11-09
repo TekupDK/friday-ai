@@ -1,8 +1,11 @@
 /**
- * EmailListAI - AI-Enhanced Email List Component
+ * EmailListAI - AI-Enhanced Email List Component (Phase 2: Thread View)
  * 
- * Enhanced email list with lead scoring, source detection, and AI-powered prioritization
- * Integrates with Email Assistant for complete workflow optimization
+ * Enhanced email list with thread grouping for Shortwave-style conversations
+ * - Groups emails by threadId into collapsible threads
+ * - Lead scoring, source detection, and AI-powered prioritization
+ * - Phase 1 improvements: Quick Actions, minimal badges, clean design
+ * - Phase 2 improvements: Thread conversations, expand/collapse
  */
 
 import { Badge } from "@/components/ui/badge";
@@ -13,24 +16,15 @@ import { trpc } from "@/lib/trpc";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useMemo, useState, useEffect, useRef } from "react";
 import type { EnhancedEmailMessage, SortOption, FilterSource, Density } from "@/types/enhanced-email";
-import EmailQuickActions from "./EmailQuickActions";
+import type { EmailThread } from "@/types/email-thread";
+import { groupEmailsByThread, searchThreads, calculateThreadStats } from "@/utils/thread-grouping";
+import EmailThreadGroup from "./EmailThreadGroup";
 import {
-  Archive,
-  CheckCircle2,
-  Circle,
-  Paperclip,
-  Star,
-  Trash2,
-  Flame,
-  TrendingUp,
-  MapPin,
-  Clock,
   DollarSign,
   Target,
-  Building,
-  Globe,
+  Flame,
+  TrendingUp,
   Mail,
-  Filter,
   SortAsc,
   Search,
 } from "lucide-react";
@@ -47,39 +41,7 @@ interface EmailListAIProps {
   isLoading?: boolean;
 }
 
-// Source badge colors and icons
-const getSourceConfig = (source: string | null) => {
-  switch (source) {
-    case 'rengoring_nu':
-      return { color: 'bg-green-100 text-green-800 border-green-200', icon: TrendingUp, label: 'Rengøring.nu' };
-    case 'rengoring_aarhus':
-      return { color: 'bg-blue-100 text-blue-800 border-blue-200', icon: MapPin, label: 'Aarhus' };
-    case 'adhelp':
-      return { color: 'bg-orange-100 text-orange-800 border-orange-200', icon: Building, label: 'Adhelp' };
-    case 'direct':
-      return { color: 'bg-purple-100 text-purple-800 border-purple-200', icon: Mail, label: 'Direct' };
-    default:
-      return { color: 'bg-gray-100 text-gray-800 border-gray-200', icon: Mail, label: 'Unknown' };
-  }
-};
-
-// Lead score badge colors
-const getLeadScoreConfig = (score: number) => {
-  if (score >= 80) return { color: 'bg-red-100 text-red-800 border-red-200', icon: Flame, label: 'Hot' };
-  if (score >= 60) return { color: 'bg-green-100 text-green-800 border-green-200', icon: TrendingUp, label: 'High' };
-  if (score >= 40) return { color: 'bg-blue-100 text-blue-800 border-blue-200', icon: Target, label: 'Medium' };
-  return { color: 'bg-gray-100 text-gray-800 border-gray-200', icon: Circle, label: 'Low' };
-};
-
-// Urgency colors
-const getUrgencyConfig = (urgency: string) => {
-  switch (urgency) {
-    case 'high': return { color: 'bg-red-100 text-red-800', label: 'Urgent' };
-    case 'medium': return { color: 'bg-yellow-100 text-yellow-800', label: 'Medium' };
-    case 'low': return { color: 'bg-gray-100 text-gray-800', label: 'Low' };
-    default: return { color: 'bg-gray-100 text-gray-800', label: 'Unknown' };
-  }
-};
+// Note: Helper functions moved to EmailThreadGroup component (Phase 2)
 
 export default function EmailListAI({
   emails,
@@ -93,6 +55,7 @@ export default function EmailListAI({
   const [sortBy, setSortBy] = useState<SortOption>('leadScore');
   const [filterSource, setFilterSource] = useState<FilterSource>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [expandedThreads, setExpandedThreads] = useState<Set<string>>(new Set());
   
   const parentRef = useRef<HTMLDivElement>(null);
   
@@ -120,63 +83,58 @@ export default function EmailListAI({
   //   });
   // }, [emails, analyzeEmail]);
 
-  // Filter and sort emails
-  const processedEmails = useMemo(() => {
-    let filtered = emails;
+  // Phase 2: Group emails into threads
+  const threads = useMemo(() => {
+    // First group all emails into threads
+    let groupedThreads = groupEmailsByThread(emails, {
+      sortBy: sortBy === 'leadScore' ? 'leadScore' : 'date',
+      sortDirection: 'desc',
+    });
     
     // Apply source filter
     if (filterSource !== 'all') {
-      filtered = filtered.filter((email: EnhancedEmailMessage) => email.aiAnalysis?.source === filterSource);
+      groupedThreads = groupedThreads.filter(thread => thread.source === filterSource);
     }
     
     // Apply search filter
     if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter((email: EnhancedEmailMessage) => 
-        email.subject.toLowerCase().includes(query) ||
-        email.from.toLowerCase().includes(query) ||
-        email.snippet.toLowerCase().includes(query)
-      );
+      groupedThreads = searchThreads(groupedThreads, searchQuery);
     }
     
-    // Apply sorting
-    return filtered.sort((a: EnhancedEmailMessage, b: EnhancedEmailMessage) => {
-      switch (sortBy) {
-        case 'leadScore':
-          return (b.aiAnalysis?.leadScore || 0) - (a.aiAnalysis?.leadScore || 0);
-        case 'value':
-          return (b.aiAnalysis?.estimatedValue || 0) - (a.aiAnalysis?.estimatedValue || 0);
-        case 'date':
-        default:
-          return new Date(b.internalDate || b.date).getTime() - new Date(a.internalDate || a.date).getTime();
-      }
-    });
+    return groupedThreads;
   }, [emails, filterSource, searchQuery, sortBy]);
 
-  // Virtual scrolling setup
+  // Virtual scrolling setup for threads
   const virtualizer = useVirtualizer({
-    count: processedEmails.length,
+    count: threads.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => density === 'compact' ? 60 : 80,
     overscan: 5,
   });
-
-  // Handle email selection
-  const handleEmailClick = useCallback((email: EnhancedEmailMessage, event: React.MouseEvent) => {
-    if (event.ctrlKey || event.metaKey) {
-      // Multi-select
-      const newSelection = new Set(selectedEmails);
-      if (newSelection.has(email.threadId)) {
-        newSelection.delete(email.threadId);
+  
+  // Thread expansion handlers
+  const toggleThread = useCallback((threadId: string) => {
+    setExpandedThreads(prev => {
+      const next = new Set(prev);
+      if (next.has(threadId)) {
+        next.delete(threadId);
       } else {
-        newSelection.add(email.threadId);
+        next.add(threadId);
       }
-      onEmailSelectionChange(newSelection);
-    } else {
-      // Single selection
-      onEmailSelect(email);
-    }
-  }, [selectedEmails, onEmailSelect, onEmailSelectionChange]);
+      return next;
+    });
+  }, []);
+
+  // Handle thread click (Phase 2: clicks on thread, not individual email)
+  const handleThreadClick = useCallback((thread: EmailThread, event: React.MouseEvent) => {
+    // Select the latest message in the thread
+    onEmailSelect(thread.latestMessage);
+  }, [onEmailSelect]);
+  
+  // Handle individual email selection within expanded thread
+  const handleEmailInThreadClick = useCallback((email: EnhancedEmailMessage) => {
+    onEmailSelect(email);
+  }, [onEmailSelect]);
 
   // Get display name
   const getDisplayName = useCallback((email: string) => {
@@ -192,10 +150,9 @@ export default function EmailListAI({
     }).format(amount);
   }, []);
 
-  // Intelligence summary
+  // Phase 2: Intelligence summary based on threads
   const intelligenceSummary = useMemo(() => {
-    const totalValue = emails.reduce((sum, email) => sum + (email.aiAnalysis?.estimatedValue || 0), 0);
-    const hotLeads = emails.filter(email => (email.aiAnalysis?.leadScore || 0) >= 80).length;
+    const stats = calculateThreadStats(threads);
     const sourceCounts = emails.reduce((acc, email) => {
       const source = email.aiAnalysis?.source || 'unknown';
       acc[source] = (acc[source] || 0) + 1;
@@ -203,12 +160,14 @@ export default function EmailListAI({
     }, {} as Record<string, number>);
     
     return {
-      totalValue,
-      hotLeads,
+      totalValue: stats.totalValue,
+      hotLeads: stats.hotLeadThreads,
       sourceCounts,
-      totalEmails: emails.length,
+      totalEmails: threads.length, // Show thread count instead of email count
+      totalMessages: stats.totalMessages,
+      unreadThreads: stats.unreadThreads,
     };
-  }, [emails]);
+  }, [threads, emails]);
 
   // Loading state
   if (isLoading) {
@@ -315,19 +274,17 @@ export default function EmailListAI({
             position: "relative",
           }}
         >
+          {/* Phase 2: Render threads instead of flat emails */}
           {virtualizer.getVirtualItems().map(virtualRow => {
-            const email = processedEmails[virtualRow.index];
-            if (!email) return null;
+            const thread = threads[virtualRow.index];
+            if (!thread) return null;
 
-            const isSelected = selectedThreadId === email.threadId;
-            const aiData = email.aiAnalysis;
-            const leadScoreConfig = aiData ? getLeadScoreConfig(aiData.leadScore) : null;
-            const sourceConfig = aiData ? getSourceConfig(aiData.source) : null;
-            const urgencyConfig = aiData ? getUrgencyConfig(aiData.urgency) : null;
+            const isSelected = selectedThreadId === thread.id;
+            const isChecked = selectedEmails.has(thread.id);
 
             return (
               <div
-                key={email.threadId}
+                key={thread.id}
                 data-index={virtualRow.index}
                 ref={virtualizer.measureElement}
                 style={{
@@ -337,153 +294,27 @@ export default function EmailListAI({
                   width: "100%",
                   transform: `translateY(${virtualRow.start}px)`,
                 }}
-                className={`group border-b border-border/20 transition-colors ${
-                  isSelected ? "bg-primary/5 border-primary/20" : "hover:bg-muted/30"
-                }`}
               >
-                <div
-                  className={`p-3 cursor-pointer ${
-                    density === 'compact' ? 'py-2' : 'py-3'
-                  }`}
-                  onClick={(e) => handleEmailClick(email, e)}
-                  role="button"
-                  tabIndex={0}
-                  aria-selected={isSelected}
-                >
-                  <div className="flex items-start gap-3">
-                    {/* Checkbox */}
-                    <div className="pt-1">
-                      <Checkbox
-                        checked={selectedEmails.has(email.threadId)}
-                        onClick={e => e.stopPropagation()}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity"
-                      />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      {density === 'compact' ? (
-                        // Compact layout - Shortwave-inspired minimal design
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-2 min-w-0 flex-1">
-                            {email.unread && (
-                              <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-                            )}
-                            
-                            <span className="font-medium text-sm text-foreground shrink-0">
-                              {getDisplayName(email.from || email.sender)}
-                            </span>
-                            
-                            <h3 className="text-sm text-foreground/90 truncate flex-1">
-                              {email.subject}
-                            </h3>
-                            
-                            {email.hasAttachment && (
-                              <Paperclip className="w-3 h-3 text-muted-foreground/60 shrink-0" />
-                            )}
-                          </div>
-                          
-                          <div className="flex items-center gap-3 shrink-0">
-                            <span className="text-xs text-muted-foreground/70 whitespace-nowrap tabular-nums">
-                              {new Date(email.internalDate || email.date).toLocaleString("da-DK", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </span>
-                            
-                            {/* Hot Lead Badge - Only for hot leads (score >= 70) */}
-                            {aiData && aiData.leadScore >= 70 && leadScoreConfig && (
-                              <Badge variant="outline" className={`shrink-0 ${leadScoreConfig.color}`}>
-                                <leadScoreConfig.icon className="w-3 h-3" />
-                              </Badge>
-                            )}
-                            
-                            {/* Quick Actions - visible on hover */}
-                            <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                              <EmailQuickActions
-                                threadId={email.threadId}
-                                isStarred={email.labels?.includes('starred')}
-                                isRead={!email.unread}
-                                onArchive={() => console.log('Archive:', email.threadId)}
-                                onStar={() => console.log('Star:', email.threadId)}
-                                onDelete={() => console.log('Delete:', email.threadId)}
-                                onSnooze={(threadId, until) => console.log('Snooze:', threadId, until)}
-                                onMarkAsRead={() => console.log('Mark read:', email.threadId)}
-                                onMarkAsUnread={() => console.log('Mark unread:', email.threadId)}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        // Comfortable layout - Shortwave-inspired clean design
-                        <>
-                          {/* First row: Name, time, hot badge, quick actions */}
-                          <div className="flex items-center justify-between gap-2 mb-1.5">
-                            <div className="flex items-center gap-2 min-w-0 flex-1">
-                              {email.unread && (
-                                <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-                              )}
-                              
-                              <span className={`font-medium text-sm shrink-0 ${
-                                email.unread ? 'text-foreground' : 'text-foreground/90'
-                              }`}>
-                                {getDisplayName(email.from || email.sender)}
-                              </span>
-                            </div>
-                            
-                            <div className="flex items-center gap-3 shrink-0">
-                              <span className="text-xs text-muted-foreground/70 whitespace-nowrap tabular-nums">
-                                {new Date(email.internalDate || email.date).toLocaleString("da-DK", {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })}
-                              </span>
-                              
-                              {/* Hot Lead Badge - Only for hot leads (score >= 70) */}
-                              {aiData && aiData.leadScore >= 70 && leadScoreConfig && (
-                                <Badge variant="outline" className={`shrink-0 ${leadScoreConfig.color} text-xs`}>
-                                  <leadScoreConfig.icon className="w-3 h-3 mr-1" />
-                                  {aiData.leadScore}
-                                </Badge>
-                              )}
-                              
-                              {/* Quick Actions - visible on hover */}
-                              <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                                <EmailQuickActions
-                                  threadId={email.threadId}
-                                  isStarred={email.labels?.includes('starred')}
-                                  isRead={!email.unread}
-                                  onArchive={() => console.log('Archive:', email.threadId)}
-                                  onStar={() => console.log('Star:', email.threadId)}
-                                  onDelete={() => console.log('Delete:', email.threadId)}
-                                  onSnooze={(threadId, until) => console.log('Snooze:', threadId, until)}
-                                  onMarkAsRead={() => console.log('Mark read:', email.threadId)}
-                                  onMarkAsUnread={() => console.log('Mark unread:', email.threadId)}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          
-                          {/* Second row: Subject with attachment icon */}
-                          <div className="flex items-center gap-2 mb-1.5">
-                            <h3 className={`text-sm truncate flex-1 ${
-                              email.unread ? 'font-semibold text-foreground' : 'text-foreground/90'
-                            }`}>
-                              {email.subject}
-                            </h3>
-                            {email.hasAttachment && (
-                              <Paperclip className="w-3 h-3 text-muted-foreground/60 shrink-0" />
-                            )}
-                          </div>
-                          
-                          {/* Third row: Snippet */}
-                          <p className="text-xs text-muted-foreground/70 line-clamp-2">
-                            {email.snippet}
-                          </p>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <EmailThreadGroup
+                  thread={thread}
+                  isSelected={isSelected}
+                  isChecked={isChecked}
+                  expanded={expandedThreads.has(thread.id)}
+                  onClick={handleThreadClick}
+                  onToggle={() => toggleThread(thread.id)}
+                  onCheckboxChange={(checked) => {
+                    const newSelection = new Set(selectedEmails);
+                    if (checked) {
+                      newSelection.add(thread.id);
+                    } else {
+                      newSelection.delete(thread.id);
+                    }
+                    onEmailSelectionChange(newSelection);
+                  }}
+                  onEmailSelect={handleEmailInThreadClick}
+                  selectedEmails={selectedEmails}
+                  density={density}
+                />
               </div>
             );
           })}
