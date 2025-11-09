@@ -57,13 +57,15 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./vitest.setup.ts"],
+    setupFiles: ["./vitest.setup.ts", "./tests/setup.ts"],
     include: [
       "server/**/*.test.ts",
       "server/**/*.spec.ts",
       "client/**/*.test.ts",
       "client/**/*.test.tsx",
       "client/**/*.spec.tsx",
+      "tests/**/*.test.ts",
+      "tests/**/*.test.tsx",
     ],
     deps: {
       // Inline these dependencies so Vite transforms their CSS imports under test

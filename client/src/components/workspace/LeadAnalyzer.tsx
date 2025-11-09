@@ -251,7 +251,7 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
       {showPhotoWarning && (
         <Card className="p-3 border-orange-200 dark:border-orange-900 bg-orange-50 dark:bg-orange-950/20">
           <div className="flex items-start gap-2">
-            <AlertTriangle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
             <div className="space-y-1">
               <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
                 ⚠️ CRITICAL: Flytterengøring - Request Photos First!
