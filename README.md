@@ -1,8 +1,8 @@
 # Friday AI
 
-**Intelligent AI assistant for Rendetalje.dk** - A production-ready chat interface with unified inbox, multi-AI support, and business automation.
+**Intelligent Email Management & Automation System** - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
 
-[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/TekupDK/tekup/releases)
+[![Version](https://img.shields.io/badge/version-1.7.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
