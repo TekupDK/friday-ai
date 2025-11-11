@@ -2,7 +2,7 @@
 
 **Intelligent Email Management & Automation System** - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
 
-[![Version](https://img.shields.io/badge/version-1.7.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
+[![Version](https://img.shields.io/badge/version-1.8.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 

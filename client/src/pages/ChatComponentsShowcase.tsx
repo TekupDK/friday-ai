@@ -40,6 +40,12 @@ import { CrossReferenceCard } from "@/components/chat/cards/CrossReferenceCard";
 import { LeadTrackingCard } from "@/components/chat/cards/LeadTrackingCard";
 import { CustomerHistoryCard } from "@/components/chat/cards/CustomerHistoryCard";
 import { DataVerificationCard } from "@/components/chat/cards/DataVerificationCard";
+import { PredictiveInsightsCard } from "@/components/chat/cards/PredictiveInsightsCard";
+import { AnomalyDetectionCard } from "@/components/chat/cards/AnomalyDetectionCard";
+import { SentimentAnalysisCard } from "@/components/chat/cards/SentimentAnalysisCard";
+import { RecommendationEngineCard } from "@/components/chat/cards/RecommendationEngineCard";
+import { PatternRecognitionCard } from "@/components/chat/cards/PatternRecognitionCard";
+import { RiskAssessmentCard } from "@/components/chat/cards/RiskAssessmentCard";
 
 // Advanced Chat (4)
 import { MentionSystem } from "@/components/chat/advanced/MentionSystem";
@@ -58,6 +64,7 @@ import { SmartSuggestions } from "@/components/chat/smart/SmartSuggestions";
 import { AIAssistant } from "@/components/chat/smart/AIAssistant";
 import { ContextAwareness } from "@/components/chat/smart/ContextAwareness";
 import { AutoComplete } from "@/components/chat/smart/AutoComplete";
+import { ContextualHelpCard } from "@/components/chat/smart/ContextualHelpCard";
 
 // Realtime (4)
 import { LiveCollaboration } from "@/components/chat/realtime/LiveCollaboration";
@@ -73,6 +80,9 @@ import { SettingsPanel } from "@/components/chat/other/SettingsPanel";
 import { HelpCenter } from "@/components/chat/other/HelpCenter";
 import { UserProfile } from "@/components/chat/other/UserProfile";
 import { AboutInfo } from "@/components/chat/other/AboutInfo";
+import { KeyboardShortcutsCard } from "@/components/chat/other/KeyboardShortcutsCard";
+import { ThemeCustomizerCard } from "@/components/chat/other/ThemeCustomizerCard";
+import { ExportImportCard } from "@/components/chat/other/ExportImportCard";
 
 // Dialog host to power all modals
 import { DialogHost, ChatDialogType } from "@/pages/ChatDialogsHost";
@@ -125,10 +135,10 @@ export default function ChatComponentsShowcase() {
             Chat Components Showcase
           </h1>
           <p className="text-xl text-muted-foreground">
-            Alle 81 komponenter til Tekup AI v2 Chat System - inkl. data visualisering
+            Alle 84 komponenter til Tekup AI v2 Chat System - komplet implementeret
           </p>
           <div className="flex justify-center gap-4">
-            <Badge className="bg-green-500 text-lg px-4 py-2">81/81 Komponenter ✅</Badge>
+            <Badge className="bg-green-500 text-lg px-4 py-2">84/84 Komponenter ✅</Badge>
             <Badge className="bg-violet-500 text-lg px-4 py-2">5 ChatGPT-Style 🤖</Badge>
             <Badge className="bg-blue-500 text-lg px-4 py-2">9 Advanced Layouts 🎨</Badge>
             <Badge className="bg-purple-500 text-lg px-4 py-2">3 Data Viz 📊</Badge>
@@ -269,8 +279,8 @@ export default function ChatComponentsShowcase() {
                       <span>Andet (10/10)</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Badge className="bg-purple-500">🆕</Badge>
-                      <span>Data Visualization (3/3) - NYE!</span>
+                      <Badge className="bg-green-500">✅</Badge>
+                      <span>Data Visualization (3/3)</span>
                     </li>
                   </ul>
                 </div>
@@ -1515,6 +1525,221 @@ Vil du have mere detaljeret analyse af en specifik periode eller lead-kategori?"
                   <h3 className="font-semibold">4. Data Verification Card</h3>
                   <DataVerificationCard />
                 </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">5. Predictive Insights Card</h3>
+                  <PredictiveInsightsCard
+                    insights={[
+                      {
+                        id: '1',
+                        type: 'opportunity',
+                        title: 'Lead Conversion Opportunity',
+                        description: 'Anne Sofie Feldberg har været kvalificeret i 3 dage uden opfølgning',
+                        confidence: 85,
+                        impact: 'high',
+                        category: 'Sales'
+                      },
+                      {
+                        id: '2',
+                        type: 'risk',
+                        title: 'Customer Churn Risk',
+                        description: 'Ingen aktivitet fra Tommy Callesen i 45 dage',
+                        confidence: 78,
+                        impact: 'medium',
+                        category: 'Retention'
+                      },
+                      {
+                        id: '3',
+                        type: 'trend',
+                        title: 'Revenue Trend',
+                        description: 'Månedlig omsætning viser 12.9% vækst',
+                        confidence: 92,
+                        impact: 'high',
+                        category: 'Analytics'
+                      }
+                    ]}
+                    onInsightClick={(insight) => console.log('Insight clicked:', insight)}
+                    onGenerateReport={() => console.log('Generate report')}
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">6. Anomaly Detection Card</h3>
+                  <AnomalyDetectionCard
+                    anomalies={[
+                      {
+                        id: '1',
+                        type: 'performance',
+                        severity: 'medium',
+                        title: 'Unormal lav konverteringsrate',
+                        description: 'Lead konvertering er 15% under gennemsnittet denne uge',
+                        detectedAt: '2 timer siden',
+                        confidence: 87,
+                        affected: 'Sales Pipeline',
+                        status: 'new'
+                      },
+                      {
+                        id: '2',
+                        type: 'data',
+                        severity: 'low',
+                        title: 'Manglende email validering',
+                        description: '23 leads har ugyldige email adresser',
+                        detectedAt: '1 dag siden',
+                        confidence: 94,
+                        affected: 'Data Quality',
+                        status: 'investigating'
+                      }
+                    ]}
+                    onAnomalyClick={(anomaly) => console.log('Anomaly clicked:', anomaly)}
+                    onMarkResolved={(id) => console.log('Mark resolved:', id)}
+                    onInvestigate={(id) => console.log('Investigate:', id)}
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">7. Sentiment Analysis Card</h3>
+                  <SentimentAnalysisCard
+                    context="Customer feedback analysis"
+                    sentiments={[
+                      {
+                        id: '1',
+                        source: 'Email',
+                        content: 'Tak for den hurtige og professionelle rengøring!',
+                        sentiment: 'positive',
+                        confidence: 92,
+                        timestamp: '2 timer siden',
+                        category: 'Service'
+                      },
+                      {
+                        id: '2',
+                        source: 'Review',
+                        content: 'Prisen er lidt høj, men kvaliteten er god',
+                        sentiment: 'neutral',
+                        confidence: 78,
+                        timestamp: '5 timer siden',
+                        category: 'Pricing'
+                      },
+                      {
+                        id: '3',
+                        source: 'Chat',
+                        content: 'Meget utilfreds med responstiden',
+                        sentiment: 'negative',
+                        confidence: 85,
+                        timestamp: '1 dag siden',
+                        category: 'Support'
+                      }
+                    ]}
+                    overallSentiment={{
+                      positive: 45,
+                      negative: 15,
+                      neutral: 40,
+                      total: 100
+                    }}
+                    onViewDetails={(sentiment) => console.log('View sentiment:', sentiment)}
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">8. Recommendation Engine Card</h3>
+                  <RecommendationEngineCard
+                    recommendations={[
+                      {
+                        id: '1',
+                        type: 'action',
+                        priority: 'high',
+                        title: 'Send follow-up til inaktive kunder',
+                        description: '45 kunder har ikke haft aktivitet i 30+ dage',
+                        impact: '3stars',
+                        effort: 'medium',
+                        category: 'Retention',
+                        confidence: 88
+                      },
+                      {
+                        id: '2',
+                        type: 'improvement',
+                        priority: 'medium',
+                        title: 'Optimer prisstruktur',
+                        description: 'Data viser potentiale for 15% højere margin på store opgaver',
+                        impact: '4stars',
+                        effort: 'high',
+                        category: 'Pricing',
+                        confidence: 76
+                      }
+                    ]}
+                    onRecommendationClick={(rec) => console.log('Recommendation clicked:', rec)}
+                    onImplement={(id) => console.log('Implement:', id)}
+                    onDismiss={(id) => console.log('Dismiss:', id)}
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">9. Pattern Recognition Card</h3>
+                  <PatternRecognitionCard
+                    patterns={[
+                      {
+                        id: '1',
+                        name: 'Weekly Booking Peak',
+                        type: 'seasonal',
+                        description: 'Booking aktivitet topper hver onsdag og torsdag',
+                        confidence: 89,
+                        strength: 78,
+                        frequency: 'Weekly',
+                        impact: 'medium',
+                        category: 'Scheduling',
+                        lastDetected: '2 dage siden'
+                      },
+                      {
+                        id: '2',
+                        name: 'Price Sensitivity Trend',
+                        type: 'trend',
+                        description: 'Konverteringsrate falder med 8% når priser > 2000 kr',
+                        confidence: 82,
+                        strength: 65,
+                        frequency: 'Monthly',
+                        impact: 'high',
+                        category: 'Pricing',
+                        lastDetected: '1 uge siden'
+                      }
+                    ]}
+                    onPatternClick={(pattern) => console.log('Pattern clicked:', pattern)}
+                    onAnalyze={(id) => console.log('Analyze pattern:', id)}
+                    onExport={(id) => console.log('Export pattern:', id)}
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">10. Risk Assessment Card</h3>
+                  <RiskAssessmentCard
+                    risks={[
+                      {
+                        id: '1',
+                        category: 'financial',
+                        level: 'medium',
+                        title: 'Cash Flow Risk',
+                        description: '15 fakturaer på 45.000 kr udestående over 30 dage',
+                        impact: 'Medium revenue impact',
+                        probability: 65,
+                        mitigation: 'Implementere automated reminders',
+                        status: 'identified'
+                      },
+                      {
+                        id: '2',
+                        category: 'operational',
+                        level: 'low',
+                        title: 'Resource Strain',
+                        description: 'Booking rate overstiger kapacitet med 25%',
+                        impact: 'Service quality impact',
+                        probability: 45,
+                        mitigation: 'Hire additional staff',
+                        status: 'mitigating'
+                      }
+                    ]}
+                    overallRiskScore={42}
+                    onRiskClick={(risk) => console.log('Risk clicked:', risk)}
+                    onStartMitigation={(id) => console.log('Start mitigation:', id)}
+                    onViewDetails={(id) => console.log('View risk details:', id)}
+                  />
+                </div>
               </div>
             </div>
           </TabsContent>
@@ -1619,6 +1844,33 @@ Vil du have mere detaljeret analyse af en specifik periode eller lead-kategori?"
                   <h3 className="font-semibold">4. Auto Complete</h3>
                   <AutoComplete />
                 </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">5. Contextual Help Card</h3>
+                  <ContextualHelpCard
+                    context="Lead management and customer onboarding"
+                    suggestions={[
+                      {
+                        id: '1',
+                        question: 'Hvordan opretter jeg en ny lead?',
+                        answer: 'Brug "Opret lead" knappen eller skriv "@lead" efterfulgt af kundens information.',
+                        category: 'Leads',
+                        confidence: 95
+                      },
+                      {
+                        id: '2',
+                        question: 'Hvordan sender jeg et tilbud?',
+                        answer: 'Vælg en kvalificeret lead og klik "Send tilbud" eller brug "/tilbud" kommandoen.',
+                        category: 'Offers',
+                        confidence: 88
+                      }
+                    ]}
+                    onSuggestionClick={(suggestion) => console.log('Suggestion clicked:', suggestion)}
+                    onSearch={(query) => console.log('Search:', query)}
+                    onFeedback={(id, helpful) => console.log('Feedback:', id, helpful)}
+                    onAskQuestion={(question) => console.log('Question:', question)}
+                  />
+                </div>
               </div>
             </div>
           </TabsContent>
@@ -1697,6 +1949,108 @@ Vil du have mere detaljeret analyse af en specifik periode eller lead-kategori?"
                 <div className="space-y-2">
                   <h3 className="font-semibold">7. About Info</h3>
                   <AboutInfo />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">8. Keyboard Shortcuts Card</h3>
+                  <KeyboardShortcutsCard
+                    shortcuts={[
+                      {
+                        id: 'nav-up',
+                        keys: ['j'],
+                        description: 'Navigate to next item',
+                        category: 'Navigation',
+                        enabled: true
+                      },
+                      {
+                        id: 'nav-down',
+                        keys: ['k'],
+                        description: 'Navigate to previous item',
+                        category: 'Navigation',
+                        enabled: true
+                      },
+                      {
+                        id: 'search',
+                        keys: ['/'],
+                        description: 'Focus search field',
+                        category: 'Search',
+                        enabled: true
+                      },
+                      {
+                        id: 'reply',
+                        keys: ['r'],
+                        description: 'Reply to selected item',
+                        category: 'Messages',
+                        enabled: true
+                      },
+                      {
+                        id: 'help',
+                        keys: ['?'],
+                        description: 'Show keyboard shortcuts',
+                        category: 'Navigation',
+                        enabled: true
+                      }
+                    ]}
+                    onShortcutClick={(shortcut) => console.log('Shortcut clicked:', shortcut)}
+                    onCustomize={() => console.log('Customize shortcuts')}
+                    onReset={() => console.log('Reset shortcuts')}
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">9. Theme Customizer Card</h3>
+                  <ThemeCustomizerCard
+                    currentTheme="system"
+                    customColors={{
+                      primary: '#3b82f6',
+                      secondary: '#6b7280',
+                      accent: '#10b981'
+                    }}
+                    onThemeChange={(theme) => console.log('Theme changed:', theme)}
+                    onColorChange={(type, color) => console.log('Color changed:', type, color)}
+                    onReset={() => console.log('Reset theme')}
+                    onSave={() => console.log('Save theme')}
+                  />
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <h3 className="font-semibold">10. Export Import Card</h3>
+                  <ExportImportCard
+                    exports={[
+                      {
+                        id: 'export-1',
+                        name: 'Customer Data Export',
+                        type: 'data',
+                        format: 'csv',
+                        size: '2.4 MB',
+                        createdAt: '2 timer siden',
+                        status: 'ready'
+                      },
+                      {
+                        id: 'export-2',
+                        name: 'Financial Report',
+                        type: 'report',
+                        format: 'pdf',
+                        size: '1.8 MB',
+                        createdAt: '1 dag siden',
+                        status: 'ready'
+                      }
+                    ]}
+                    imports={[
+                      {
+                        id: 'import-1',
+                        name: 'Lead Data Import',
+                        type: 'data',
+                        progress: 75,
+                        status: 'processing',
+                        createdAt: '5 min siden'
+                      }
+                    ]}
+                    onExport={(type, format) => console.log('Export:', type, format)}
+                    onImport={(file) => console.log('Import file:', file)}
+                    onDownload={(id) => console.log('Download:', id)}
+                    onDelete={(id) => console.log('Delete:', id)}
+                  />
                 </div>
               </div>
             </div>
