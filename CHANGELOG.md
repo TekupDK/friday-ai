@@ -98,7 +98,7 @@ None - all components are additive and backward-compatible.
 
 ### 🚀 Autonomous Lead Intelligence System (Complete)
 
-#### Added
+#### New Features Added
 
 - **Autonomous Lead Data Import** (v4.3.5 AI Pipeline Integration):
   - `server/scripts/import-pipeline-v4_3_5.ts` (596 lines): Idempotent import of 231 AI-enriched leads
@@ -181,7 +181,7 @@ None - all components are additive and backward-compatible.
 - **Task Management**: Automated task creation with priority assignment
 - **Monitoring**: Comprehensive logging and status tracking
 
-#### Files Modified
+#### Files Changed (v1.5.0)
 
 - `server/routers.ts`: Added `fridayLeads: fridayLeadsRouter`
 - `friday-ai-leads/tsconfig.json`: Removed `jest` type reference
@@ -200,7 +200,7 @@ None - all components are additive and backward-compatible.
 - `AUTONOMOUS-QUICK-START.md` - Quick start guide
 - `AUTONOMOUS-COMPLETION-SUMMARY.md` - Completion summary
 
-#### Breaking Changes
+#### Breaking Changes (v1.5.0)
 
 None - all changes are additive and backward-compatible.
 
@@ -272,7 +272,7 @@ None - all changes are additive and backward-compatible.
   - Total: 152 new test cases covering all AI features
   - Test suite execution: 173 passed, 1 skipped, 1 failed (pre-existing EmailTab timeout - unrelated)
 
-#### Technical Details
+### Technical Details (v1.4.0)
 
 - **Total Development Time:** 3.5 hours (2h 45min implementation + 45min testing)
 - **Lines of Code:** 1,360 lines (643 backend + 457 UI + 1,360 tests)
@@ -349,7 +349,7 @@ None - all changes are additive and backward-compatible.
 
 ### 🎉 PostgreSQL Migration - Complete
 
-#### Added (PostgreSQL Migration)
+#### Migration Features
 
 - **PostgreSQL Support**: Full migration from MySQL/TiDB to Supabase PostgreSQL
 - **Schema Conversion**: All 20 tables converted from MySQL to PostgreSQL syntax

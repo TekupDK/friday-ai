@@ -1,4 +1,4 @@
-# Friday AI Chat
+# Friday AI
 
 **Intelligent AI assistant for Rendetalje.dk** - A production-ready chat interface with unified inbox, multi-AI support, and business automation.
 
@@ -6,18 +6,8 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
-# Friday AI
-
-**Intelligent Email Management & Automation System** - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
-
-[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
-
 > **⚡ Quick Start:** Copy `.env.dev.template` → `.env.dev`, fill secrets, run `pnpm dev`  
 > **🔧 Environment Guide:** [QUICK_ENV_REFERENCE.md](QUICK_ENV_REFERENCE.md) | **📘 Full Setup:** [ENV_SETUP_GUIDE.md](ENV_SETUP_GUIDE.md)
-
-## 🎯 Overview
 
 Friday AI is an intelligent email management system inspired by Shortwave.ai. It combines AI-powered conversation with real-time inbox management, calendar bookings, invoice handling, and lead tracking.
 
@@ -45,39 +35,17 @@ Friday AI is an intelligent email management system inspired by Shortwave.ai. It
 - **Business Focused**: Realistic mock data from `complete-leads-v4.3.3.json`
 - **Modular Architecture**: Easy to customize and extend for your applications
 
-## ✨ Features
+### 🆕 What's New in v1.6.0
 
-### 🆕 What's New in v2.0.0
-
-- **🏗️ Standalone Repository**: Migrated to dedicated `TekupDK/friday-ai` repository
-  - Clean git history without legacy secrets
-  - Independent deployment pipeline
-  - Focused development workflow
-- **📚 Friday Docs System** (v1.0.0 - November 2025) ✨ NEW:
-  - **AI Documentation Generation**: Auto-generate professional docs from leads
-    - Smart data collection (emails, chat, calendar)
-    - AI analysis with sentiment & priority scoring
-    - Professional Markdown output with emojis
-    - **Cost: $0.00/month** (FREE OpenRouter model!)
-  - **Analytics Dashboard**: Track metrics, savings, and ROI
-    - Comprehensive metrics (total, success rate, time saved)
-    - Savings calculator (29.5 min/doc = 24,600 DKK/month saved)
-    - Activity feed and top leads tracking
-  - **Core Documentation**: Full-featured docs management
-    - CRUD operations, search, markdown editing
-    - Real-time sync, comments, version control
-    - Keyboard shortcuts (Ctrl+K, Ctrl+N)
-  - **Status**: ✅ Production Ready | **Files**: 35+ | **Tests**: 70+ | **ROI**: ∞
-  - **Learn More**: [FRIDAY_DOCS_SYSTEM.md](FRIDAY_DOCS_SYSTEM.md)
-- **🤖 AI Email Features** (Phases 1-6 Complete):
-
-## 🎯 Overview
-
-Friday is a Shortwave.ai-inspired chat interface built specifically for Rendetalje.dk cleaning business operations. It combines AI-powered conversation with real-time inbox management, calendar bookings, invoice handling, and lead tracking.
-
-**Live Demo:** [https://3000-ijhgukurr5hhbd1h5s5sk-e0f84be7.manusvm.computer](https://3000-ijhgukurr5hhbd1h5s5sk-e0f84be7.manusvm.computer)
-
-## ✨ Features
+- **🎨 Complete Chat Components Showcase** (78+ Components):
+  - **Advanced Layouts**: SplitViewPanel, MessageThread, FloatingChatWindow, DocumentViewer, MessageToolbar, NotificationSystem, PanelSizeVariants, IntegrationPanel, ChatSkeleton variants
+  - **Interactive Components**: ApprovalCard, ThinkingIndicator, SyncStatusCard, PhaseTracker, ActionButtonsGroup
+  - **ChatGPT-Style Features**: StreamingMessage, AdvancedComposer, MemoryManager, SourcesPanel, ToolsPanel
+  - **Email & Business Cards**: EmailSearchCard, LabelManagementCard, BillyCustomerCard, BillyAnalyticsCard, CrossReferenceCard, LeadTrackingCard
+  - **Input & Smart Features**: SlashCommandsMenu, MentionAutocomplete, SmartSuggestions, AIAssistant, ContextAwareness
+  - **Real-time & Utility**: LiveCollaboration, RealtimeNotifications, QuickActions, SearchEverywhere, CommandPalette
+  - **Production Ready**: TypeScript strict mode, Tailwind CSS, Radix UI, Friday AI theme compliance
+  - **Live Demo**: [Chat Components Showcase](https://3000-ijhgukurr5hhbd1h5s5sk-e0f84be7.manusvm.computer/chat-components-showcase)
 
 ### 🆕 What's New in v1.5.0
 
