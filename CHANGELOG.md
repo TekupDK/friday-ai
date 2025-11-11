@@ -310,7 +310,7 @@ None - all changes are additive and backward-compatible.
 
 ### 🚀 Major Features
 
-#### Added
+#### Features Added (v1.3.0)
 
 - **Database-First Strategy for Invoices**: Invoice caching from Billy API to Supabase database
   - `server/invoice-cache.ts`: Background caching of Billy invoices

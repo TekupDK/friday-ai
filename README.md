@@ -431,28 +431,28 @@ pnpm build
 
 ### Creating a Lead
 
-```
+```bash
 User: "Ny lead fra Rengøring.nu: Hans Jensen, hans@email.dk, 12345678"
 Friday: [Creates lead in database] "Lead oprettet! Skal jeg sende en tilbudsmail?"
 ```
 
 ### Booking Calendar
 
-```
+```bash
 User: "Book møde med kunde i morgen kl 14"
 Friday: [Checks calendar, creates event] "Møde booket 14:00 i morgen ✓"
 ```
 
 ### Invoice Creation
 
-```
+```bash
 User: "Lav faktura til Hans Jensen for 3 timer rengøring"
 Friday: [Creates Billy draft at 349 kr/hour] "Faktura-udkast oprettet i Billy (1047 kr)"
 ```
 
 ### Flytterengøring Workflow
 
-```
+```bash
 User: "Kunde vil have tilbud på flytterengøring"
 Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejligheden?"
 [Blocks quote sending until photos received]
@@ -514,7 +514,7 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 
 ### 🚀 Quick Wins (30 minutes each)
 
-**Priority 1: UI Polish**
+#### Priority 1: UI Polish
 
 1. **Add "Compose" Button to Toolbar**
    - Component: `EmailComposer.tsx` (exists, just needs trigger)
@@ -532,7 +532,9 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 
 ### 💪 High-Impact Features (2 hours)
 
-**Priority 2: Power User Features** 1. **Keyboard Shortcuts** 🔥
+#### Priority 2: Power User Features
+
+1. **Keyboard Shortcuts** 🔥
 
 - `j`/`k` - Navigate emails up/down
 - `r` - Reply to current email
@@ -554,7 +556,9 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 
 ### 🎨 Polish Features (1 hour)
 
-**Priority 3: Nice-to-Have** 1. **Email Preview on Hover**
+#### Priority 3: Nice-to-Have
+
+1. **Email Preview on Hover**
 
 - `EmailPreviewModal` exists
 - Could add tooltip-style quick preview
