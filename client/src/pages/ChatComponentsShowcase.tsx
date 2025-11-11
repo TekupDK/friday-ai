@@ -107,6 +107,11 @@ import { NotificationSystem } from "@/components/chat/advanced/controls/Notifica
 import { PanelSizeVariants } from "@/components/chat/advanced/layouts/PanelSizeVariants";
 import { IntegrationPanel } from "@/components/chat/advanced/integrations/IntegrationPanel";
 
+// New Data Visualization components
+import { MetricsDashboard } from "@/components/chat/data-visualization/MetricsDashboard";
+import { ChartComponent } from "@/components/chat/data-visualization/ChartComponent";
+import { DataTable } from "@/components/chat/data-visualization/DataTable";
+
 export default function ChatComponentsShowcase() {
   const [activeTab, setActiveTab] = useState("overview");
   const [dialog, setDialog] = useState<{ type: ChatDialogType; data?: any } | null>(null);
@@ -120,12 +125,13 @@ export default function ChatComponentsShowcase() {
             Chat Components Showcase
           </h1>
           <p className="text-xl text-muted-foreground">
-            Alle 59 komponenter til Tekup AI v2 Chat System
+            Alle 81 komponenter til Tekup AI v2 Chat System - inkl. data visualisering
           </p>
           <div className="flex justify-center gap-4">
-            <Badge className="bg-green-500 text-lg px-4 py-2">78/78 Komponenter ✅</Badge>
+            <Badge className="bg-green-500 text-lg px-4 py-2">81/81 Komponenter ✅</Badge>
             <Badge className="bg-violet-500 text-lg px-4 py-2">5 ChatGPT-Style 🤖</Badge>
             <Badge className="bg-blue-500 text-lg px-4 py-2">9 Advanced Layouts 🎨</Badge>
+            <Badge className="bg-purple-500 text-lg px-4 py-2">3 Data Viz 📊</Badge>
           </div>
         </div>
 
@@ -163,6 +169,10 @@ export default function ChatComponentsShowcase() {
             <div className="text-4xl font-bold text-pink-600">10</div>
             <div className="text-sm text-muted-foreground">Other</div>
           </Card>
+          <Card className="p-6 text-center bg-card border border-border">
+            <div className="text-4xl font-bold text-purple-600">3</div>
+            <div className="text-sm text-muted-foreground">Data Viz</div>
+          </Card>
         </div>
 
         {/* Main Tabs */}
@@ -182,6 +192,9 @@ export default function ChatComponentsShowcase() {
             </TabsTrigger>
             <TabsTrigger value="advanced-layouts" className="data-[state=active]:bg-cyan-500 data-[state=active]:text-white">
               🎨 Advanced
+            </TabsTrigger>
+            <TabsTrigger value="data-visualization" className="data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+              📊 Data Viz
             </TabsTrigger>
             <TabsTrigger value="email" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
               📧 Email
@@ -255,6 +268,10 @@ export default function ChatComponentsShowcase() {
                       <Badge className="bg-green-500">✅</Badge>
                       <span>Andet (10/10)</span>
                     </li>
+                    <li className="flex items-center gap-2">
+                      <Badge className="bg-purple-500">🆕</Badge>
+                      <span>Data Visualization (3/3) - NYE!</span>
+                    </li>
                   </ul>
                 </div>
 
@@ -277,12 +294,13 @@ export default function ChatComponentsShowcase() {
                     <li>🤖 Memory & project scopes</li>
                     <li>🤖 Sources/citations panel</li>
                     <li>🤖 Tools execution (Search, Analyze, Code)</li>
-                    <li>🆕 Split view panels med drag & drop justering</li>
-                    <li>🆕 Trådede samtaler med reaktioner og svar</li>
-                    <li>🆕 Dokument viewer med zoom og navigation</li>
-                    <li>🆕 Skeleton loaders for alle komponent typer</li>
-                    <li>🆕 Rich text toolbar med formatering</li>
-                    <li>🆕 Flydende chat vinduer med drag & drop</li>
+                    <li>🆕 Metrics dashboards med KPI kort og trends</li>
+                    <li>🆕 Interaktive charts (linje, søjle, cirkel diagrammer)</li>
+                    <li>🆕 Avancerede data tabeller med sortering og filtrering</li>
+                    <li>🆕 Draggbare, resizable panel layouts</li>
+                    <li>🆕 Integration panels med health monitoring</li>
+                    <li>🆕 Rich text toolbars og dokument viewers</li>
+                    <li>🆕 Floating chat windows med animations</li>
                   </ul>
                 </div>
               </div>
@@ -1151,6 +1169,256 @@ Vil du have mere detaljeret analyse af en specifik periode eller lead-kategori?"
                       }
                     ]}
                     onRunTool={(tool, input) => console.log('Run:', tool, input)}
+                  />
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Data Visualization Tab */}
+          <TabsContent value="data-visualization" className="space-y-6">
+            <div className="grid gap-6">
+              <div>
+                <h2 className="text-2xl font-bold mb-4">📊 Data Visualisering (3 komponenter)</h2>
+                <p className="text-muted-foreground mb-6">Metrics dashboards, charts og interaktive data tabeller</p>
+              </div>
+
+              <div className="grid gap-6">
+                <div className="space-y-2">
+                  <h3 className="font-semibold">1. Metrics Dashboard - KPI Oversigt</h3>
+                  <MetricsDashboard
+                    title="Business Performance"
+                    subtitle="Nøgle metrics for Rendetalje.dk"
+                    metrics={[
+                      {
+                        id: 'revenue',
+                        title: 'Total Omsætning',
+                        value: 224132,
+                        previousValue: 198450,
+                        change: 12.9,
+                        format: 'currency',
+                        icon: 'DollarSign',
+                        color: 'success',
+                        trend: 'up',
+                        description: 'Inkl. moms og afgifter'
+                      },
+                      {
+                        id: 'leads',
+                        title: 'Nye Leads',
+                        value: 231,
+                        previousValue: 198,
+                        change: 16.7,
+                        icon: 'Users',
+                        color: 'info',
+                        trend: 'up',
+                        description: 'Fra alle kilder'
+                      },
+                      {
+                        id: 'conversion',
+                        title: 'Conversion Rate',
+                        value: 36.4,
+                        previousValue: 34.2,
+                        change: 6.4,
+                        format: 'percentage',
+                        icon: 'Target',
+                        color: 'warning',
+                        trend: 'up'
+                      },
+                      {
+                        id: 'bookings',
+                        title: 'Aktive Bookings',
+                        value: 152,
+                        previousValue: 167,
+                        change: -9.0,
+                        icon: 'Calendar',
+                        color: 'danger',
+                        trend: 'down'
+                      }
+                    ]}
+                    layout="grid"
+                    columns={4}
+                    showTrends={true}
+                    showRefresh={true}
+                    onRefresh={() => console.log('Refreshing metrics...')}
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <h3 className="font-semibold">2. Chart Component - Lead Kilder</h3>
+                    <ChartComponent
+                      title="Lead Distribution"
+                      subtitle="Fordeling af leads pr. kilde"
+                      config={{
+                        type: 'pie',
+                        data: [
+                          { label: 'Rengøring.nu', value: 150, color: '#3b82f6' },
+                          { label: 'Leadpoint.dk', value: 81, color: '#ef4444' },
+                          { label: 'Direkte', value: 25, color: '#10b981' },
+                          { label: 'Andet', value: 15, color: '#f59e0b' }
+                        ],
+                        showLegend: true,
+                        animated: true,
+                        height: 300
+                      }}
+                      showControls={true}
+                      onExport={() => console.log('Exporting chart...')}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="font-semibold">3. Chart Component - Månedlig Omsætning</h3>
+                    <ChartComponent
+                      title="Revenue Trend"
+                      subtitle="Sidste 6 måneder"
+                      config={{
+                        type: 'line',
+                        data: [
+                          { label: 'Jun', value: 185000 },
+                          { label: 'Jul', value: 192000 },
+                          { label: 'Aug', value: 178000 },
+                          { label: 'Sep', value: 201000 },
+                          { label: 'Okt', value: 215000 },
+                          { label: 'Nov', value: 224132 }
+                        ],
+                        xAxis: { label: 'Måned' },
+                        yAxis: { label: 'DKK', format: (v) => `${(v/1000).toFixed(0)}K` },
+                        showGrid: true,
+                        showLegend: false,
+                        animated: true,
+                        height: 300
+                      }}
+                      showControls={true}
+                      onRefresh={() => console.log('Refreshing chart...')}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <h3 className="font-semibold">4. Data Table - Lead Oversigt</h3>
+                  <DataTable
+                    title="Seneste Leads"
+                    data={[
+                      {
+                        id: '1',
+                        name: 'Anne Sofie Feldberg',
+                        email: 'annesofiefelberg@hotmail.com',
+                        phone: '40137619',
+                        source: 'Rengøring.nu',
+                        status: 'converted',
+                        value: 2000,
+                        date: '2025-11-10'
+                      },
+                      {
+                        id: '2',
+                        name: 'Nadia Nørgård Steiner',
+                        email: 'nadiasteiner94@gmail.com',
+                        phone: '42709859',
+                        source: 'Rengøring.nu',
+                        status: 'qualified',
+                        value: 0,
+                        date: '2025-11-10'
+                      },
+                      {
+                        id: '3',
+                        name: 'Tommy Callesen',
+                        email: 'tommy_callesen1234@hotmail.com',
+                        phone: '26365352',
+                        source: 'Leadpoint.dk',
+                        status: 'booked',
+                        value: 2000,
+                        date: '2025-11-08'
+                      },
+                      {
+                        id: '4',
+                        name: 'Marie Christensen',
+                        email: 'marie.christensen@email.dk',
+                        phone: '28937461',
+                        source: 'Direkte',
+                        status: 'contacted',
+                        value: 0,
+                        date: '2025-11-07'
+                      },
+                      {
+                        id: '5',
+                        name: 'Lars Jensen',
+                        email: 'lars.jensen85@gmail.com',
+                        phone: '31549287',
+                        source: 'Rengøring.nu',
+                        status: 'qualified',
+                        value: 0,
+                        date: '2025-11-06'
+                      }
+                    ]}
+                    columns={[
+                      {
+                        id: 'name',
+                        label: 'Navn',
+                        accessor: 'name',
+                        sortable: true
+                      },
+                      {
+                        id: 'email',
+                        label: 'Email',
+                        accessor: 'email',
+                        sortable: true
+                      },
+                      {
+                        id: 'source',
+                        label: 'Kilde',
+                        accessor: 'source',
+                        sortable: true,
+                        render: (value) => (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {value}
+                          </span>
+                        )
+                      },
+                      {
+                        id: 'status',
+                        label: 'Status',
+                        accessor: 'status',
+                        sortable: true,
+                        render: (value) => {
+                          const colors = {
+                            converted: 'bg-green-100 text-green-800',
+                            qualified: 'bg-yellow-100 text-yellow-800',
+                            booked: 'bg-blue-100 text-blue-800',
+                            contacted: 'bg-purple-100 text-purple-800'
+                          }
+                          return (
+                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${colors[value as keyof typeof colors] || 'bg-gray-100 text-gray-800'}`}>
+                              {value}
+                            </span>
+                          )
+                        }
+                      },
+                      {
+                        id: 'value',
+                        label: 'Værdi',
+                        accessor: 'value',
+                        sortable: true,
+                        align: 'right',
+                        format: (value) => value > 0 ? `${value.toLocaleString('da-DK')} kr` : '-'
+                      },
+                      {
+                        id: 'date',
+                        label: 'Dato',
+                        accessor: 'date',
+                        sortable: true,
+                        render: (value) => new Date(value).toLocaleDateString('da-DK')
+                      }
+                    ]}
+                    searchable={true}
+                    sortable={true}
+                    paginated={true}
+                    pageSize={5}
+                    selectable={true}
+                    onSelectionChange={(selected) => console.log('Selected:', selected)}
+                    onRowClick={(row) => console.log('Clicked:', row)}
+                    showControls={true}
+                    onRefresh={() => console.log('Refreshing table...')}
+                    onExport={() => console.log('Exporting table...')}
                   />
                 </div>
               </div>
