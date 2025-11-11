@@ -2,7 +2,7 @@
 
 **Intelligent AI assistant for Rendetalje.dk** - A production-ready chat interface with unified inbox, multi-AI support, and business automation.
 
-[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/TekupDK/tekup/releases)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/TekupDK/tekup/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
@@ -10,7 +10,7 @@
 
 **Intelligent Email Management & Automation System** - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
 
-[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
@@ -20,6 +20,30 @@
 ## 🎯 Overview
 
 Friday AI is an intelligent email management system inspired by Shortwave.ai. It combines AI-powered conversation with real-time inbox management, calendar bookings, invoice handling, and lead tracking.
+
+### 🎨 Chat Components Showcase (78+ Components)
+
+**Complete UI Component Library** for modern chat interfaces and business applications.
+
+**Live Demo:** [Chat Components Showcase](https://3000-ijhgukurr5hhbd1h5s5sk-e0f84be7.manusvm.computer/chat-components-showcase)
+
+#### 📦 Component Categories:
+
+- **💬 Chat Cards (12)**: MessageCard, EmailCard, NotificationCard, TaskCard, CalendarCard, DocumentCard, ContactCard, FileCard, InvoiceCard, AnalyticsCard, StatusCard, QuickReplyCard
+- **⚡ Interactive (5)**: ApprovalCard, ThinkingIndicator, SyncStatusCard, PhaseTracker, ActionButtonsGroup
+- **🤖 ChatGPT-Style (5)**: StreamingMessage, AdvancedComposer, MemoryManager, SourcesPanel, ToolsPanel
+- **📧 Email Center (10)**: EmailSearchCard, LabelManagementCard, TodoFromEmailCard, UnsubscribeCard, CalendarEventEditCard, FreeBusyCard, ConflictCheckCard, BillyCustomerCard, BillyProductCard, BillyAnalyticsCard
+- **🧠 Intelligence (10)**: CrossReferenceCard, LeadTrackingCard, CustomerHistoryCard, DataVerificationCard
+- **🎨 Advanced Layouts (9)**: SplitViewPanel, MessageThread, FloatingChatWindow, DocumentViewer, MessageToolbar, NotificationSystem, PanelSizeVariants, IntegrationPanel, ChatSkeleton variants
+- **Input/Smart/Realtime/Other (29)**: SlashCommandsMenu, MentionAutocomplete, MarkdownPreview, AttachmentPreview, SmartSuggestions, AIAssistant, ContextAwareness, AutoComplete, LiveCollaboration, RealtimeNotifications, LiveTypingIndicators, LiveActivityFeed, QuickActions, SearchEverywhere, CommandPalette, SettingsPanel, HelpCenter, UserProfile, AboutInfo
+
+#### ✨ Key Features:
+
+- **Production-Ready**: TypeScript strict mode, Tailwind CSS, Radix UI primitives
+- **Theme Compliant**: Friday AI solid colors (no gradients), dark mode support
+- **Interactive**: Drag-and-drop panels, real-time notifications, animated workflows
+- **Business Focused**: Realistic mock data from `complete-leads-v4.3.3.json`
+- **Modular Architecture**: Easy to customize and extend for your applications
 
 ## ✨ Features
 
@@ -589,7 +613,7 @@ This is a private project for Rendetalje.dk. For questions or issues, contact Te
 - **AUTONOMOUS-OPERATIONS.md** - Complete autonomous lead intelligence implementation guide ✨ NEW
 - **AUTONOMOUS-QUICK-START.md** - 5-minute setup guide for autonomous operations ✨ NEW
 - **AUTONOMOUS-COMPLETION-SUMMARY.md** - Implementation summary and technical details ✨ NEW
-- **CHANGELOG.md** - Version history with v1.5.0 autonomous features
+- **CHANGELOG.md** - Version history with v1.6.0 chat components showcase
 - **TESTING_REPORT.md** - Complete test status and results
 - **IMPROVEMENTS_PLAN.md** - 541 lines of roadmap and features
 - **LOGIN_DEBUG_GUIDE.md** - Authentication troubleshooting
