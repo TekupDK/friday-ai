@@ -532,7 +532,7 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 
 ### 💪 High-Impact Features (2 hours)
 
-**Priority 2: Power User Features** 4. **Keyboard Shortcuts** 🔥
+**Priority 2: Power User Features** 1. **Keyboard Shortcuts** 🔥
 
 - `j`/`k` - Navigate emails up/down
 - `r` - Reply to current email
@@ -542,27 +542,27 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 - `Escape` - Close email thread
 - Implementation: Global keyboard listener in EmailTab
 
-5. **Unread Count Badges**
+2. **Unread Count Badges**
    - Show unread count on each folder/label in sidebar
    - Example: "Inbox (5)", "Leads (2)"
    - Helps prioritize where to focus attention
 
-6. **Rate Limit Countdown Timer**
+3. **Rate Limit Countdown Timer**
    - Current: Disabled refresh button during rate limit
    - Proposed: Show "Refresh available in 30s..."
    - Better feedback for polling restrictions
 
 ### 🎨 Polish Features (1 hour)
 
-**Priority 3: Nice-to-Have** 7. **Email Preview on Hover**
+**Priority 3: Nice-to-Have** 1. **Email Preview on Hover**
 
 - `EmailPreviewModal` exists
 - Could add tooltip-style quick preview
 
-8. **Compact Density Toggle**
+2. **Compact Density Toggle**
    - Switch between comfortable/compact list view
    - More emails visible at once
-9. **Active Filter Feedback**
+3. **Active Filter Feedback**
    - Show which labels are currently filtering emails
    - Example: "Filtering by: Leads, Finance"
 
