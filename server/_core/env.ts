@@ -46,9 +46,15 @@ export const ENV = {
   langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY ?? "",
   langfuseBaseUrl: process.env.LANGFUSE_BASE_URL ?? "http://localhost:3001",
   // ChromaDB Vector Database
-  chromaEnabled: process.env.CHROMA_ENABLED === "true",
-  chromaUrl: process.env.CHROMA_URL ?? "http://localhost:8000",
-  chromaAuthToken: process.env.CHROMA_AUTH_TOKEN ?? "friday-chromadb-token-dev",
+  get chromaEnabled() {
+    return process.env.CHROMA_ENABLED === "true";
+  },
+  get chromaUrl() {
+    return process.env.CHROMA_URL ?? "http://localhost:8000";
+  },
+  get chromaAuthToken() {
+    return process.env.CHROMA_AUTH_TOKEN ?? "friday-chromadb-token-dev";
+  },
 };
 
 // Validate required environment variables

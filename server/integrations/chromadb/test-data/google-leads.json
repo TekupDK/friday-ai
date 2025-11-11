@@ -1,0 +1,2513 @@
+{
+  "metadata": {
+    "collected": "2025-11-09T22:29:38.599Z",
+    "dateRange": {
+      "start": "2025-07-01T00:00:00.000Z",
+      "end": "2025-12-31T23:59:59.000Z"
+    },
+    "sources": {
+      "calendar": 253,
+      "gmail": 598
+    },
+    "totalLeads": 851,
+    "uniqueLeads": 206
+  },
+  "leads": [
+    {
+      "source": "calendar",
+      "name": "Hanne Qvist",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Hanne Qvist Flytterengøring møde",
+        "eventStart": "2025-07-09T15:30:00+02:00",
+        "eventLocation": "Broloftet 14 8240 Risskov, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Fast Rengøring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Fast Rengøring - Jørn Haagensen",
+        "eventStart": "2025-07-10T10:00:00+02:00",
+        "eventLocation": "Sølykken 16 8530 Hjortshøj, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jørn Haagensen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Fast Rengøring - Jørn Haagensen",
+        "eventStart": "2025-07-10T10:00:00+02:00",
+        "eventLocation": "Sølykken 16 8530 Hjortshøj, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Marie Thode",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Marie Thode - Fast Rengøring",
+        "eventStart": "2025-07-10T15:00:00+02:00",
+        "eventLocation": "Jægergårdsgade 90B 8000 Aarhus C, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Restaurant Rengøring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Restaurant Rengøring - Amigos",
+        "eventStart": "2025-07-15T08:00:00+02:00",
+        "eventLocation": "Sankt Pauls Kirkeplads 19 8000 Aarhus C, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Gitte Windfeld",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Gitte Windfeld - Flytterengøring",
+        "eventStart": "2025-07-16T12:00:00+02:00",
+        "eventLocation": "Holme Parkvej 57, 8270 Højbjerg, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jane Allermann",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Jane Allermann - Hovedrengøring",
+        "eventStart": "2025-07-18T15:00:00+02:00",
+        "eventLocation": "Kastbjerg Byvej 8 Kastbjerg, 8585 Glesborg, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Kasper Munk",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Kasper Munk - Flytterengøring",
+        "eventStart": "2025-07-20T10:00:00+02:00"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Benedikte Boye",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Benedikte Boye - Hurtig Rengøring",
+        "eventStart": "2025-07-20T15:00:00+02:00",
+        "eventLocation": "Lokesvej 2M, 8230 Åbyhøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Hurtig Rengøring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Benedikte Boye - Hurtig Rengøring",
+        "eventStart": "2025-07-20T15:00:00+02:00",
+        "eventLocation": "Lokesvej 2M, 8230 Åbyhøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Lasse Marling",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Lasse Marling – Fast Rengøring",
+        "eventStart": "2025-07-21T08:00:00+02:00",
+        "eventLocation": "Grønnegade 71, 8000 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Casper Thygesen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Casper Thygesen - Fast Rengøring",
+        "eventStart": "2025-07-24T11:00:00+02:00",
+        "eventLocation": "Hoffmannsvej 3, 8220 Brabrand, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Bente Overgaard",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Bente Overgaard - Flytterengøring",
+        "eventStart": "2025-07-26T12:00:00+02:00",
+        "eventLocation": "Arnegårdsvej 21, 8230 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Clara Maria",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Clara Maria Lyngkilde - Flytterengøring",
+        "eventStart": "2025-07-27T16:00:00+02:00",
+        "eventLocation": "Vilhelm Bergsøes Vej 25, 3, 8210 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Henrik Brøsted",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Henrik Brøsted Flytterengøring",
+        "eventStart": "2025-07-31T12:00:00+02:00",
+        "eventLocation": "Langelinieparken 3A, 1, 8000 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Peder Kjær",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Peder Kjær - Fast Rengøring Første gang (MANGLER BETALING)",
+        "eventStart": "2025-08-05T10:00:00+02:00",
+        "eventLocation": "Sifsgade 51, 4.1, 8230 Åbyhøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jonas Sloth",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Jonas Sloth - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-06T10:00:00+02:00",
+        "eventLocation": "Ferdinand Sallings Stræde 17, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Ane Johanne",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Ane Johanne Davidsen - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-08T10:00:00+02:00",
+        "eventLocation": "Græsvangen 56, 8381 Tilst, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Check Out",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Kindred - Check Out Cleaning",
+        "eventStart": "2025-08-29T12:00:00+02:00",
+        "eventLocation": "Lone Kellermanns Gade #11 st., 8000 Aarhus, Denmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Torben Munk",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 HUSTJEK VURDERING - Torben Munk Mørk",
+        "eventStart": "2025-09-23T09:00:00+02:00",
+        "eventLocation": "Holtvadvej 11, Gedved Mark, 8751"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Check In",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Kindred - Check In Cleaning",
+        "eventStart": "2025-09-26T09:30:00+02:00",
+        "eventLocation": "Det Store Havnehus, Grete Løchtes Gade #8-2 1, 8000 Aarhus, Denmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Nikolaj Madsen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Nikolaj Madsen & David Nepper",
+        "eventStart": "2025-11-15T08:00:00+01:00",
+        "eventLocation": "Gøteborg Allé 7S, 8200 Aarhus N"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "David Nepper",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Nikolaj Madsen & David Nepper",
+        "eventStart": "2025-11-15T08:00:00+01:00",
+        "eventLocation": "Gøteborg Allé 7S, 8200 Aarhus N"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Nadia Møllebjerg",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Fast rengøring #1 – Nadia Møllebjerg (ID: NM01)",
+        "eventStart": "2025-07-30T09:00:00+02:00",
+        "eventLocation": "Enghavevej 21, 8680 Ry"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Maria Herold",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Maria Herold - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-09T08:00:00+02:00",
+        "eventLocation": "Montanagade 55, 1 tv, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Amalie Lønborg",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Amalie Lønborg Holst - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-10T08:00:00+02:00",
+        "eventLocation": "Schleppegrellsgade 18B, 4 th, 8000 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jørgen Pragh",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Jørgen Pragh - Fast Rengøring (MANGLER BETALING)",
+        "eventStart": "2025-08-11T10:30:00+02:00",
+        "eventLocation": "Sølykken 20, 8530 Hjortshøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Tobias Hansen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Tobias Hansen - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-12T08:00:00+02:00",
+        "eventLocation": "Lønvejen 12, 8000 Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Kristine Nielsen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Kristine Nielsen - Bad afkalkning (BETALT)",
+        "eventStart": "2025-08-13T08:00:00+02:00",
+        "eventLocation": "Vistihøjen 30 St., 8200 Aarhus N"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jens Kristensen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Jens Kristensen - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-13T08:00:00+02:00",
+        "eventLocation": "Olfert Fischers Gade 3, 2. sal tv, Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Lena Rasmussen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Lena Rasmussen - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-13T10:00:00+02:00",
+        "eventLocation": "Kaserneboulevarden 16, 1. tv, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Cecilie Krogsgaard",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Cecilie Krogsgaard - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-14T13:00:00+02:00",
+        "eventLocation": "Hans Hartvig Seedorffs Stræde 16B, 1.4, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Thor Sporring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Thor Sporring - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-15T08:00:00+02:00",
+        "eventLocation": "Krekærlundsvej 70, 8230 Malling"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Mette Nielsen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Mette Nielsen - Fast Rengøring Første gang (MANGLER BETALING)",
+        "eventStart": "2025-08-15T10:00:00+02:00",
+        "eventLocation": "Gefionsvej 31, 8230 Åbyhøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Ken Stenbæk",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Ken Stenbæk - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-16T12:00:00+02:00",
+        "eventLocation": "Søndergade 25, 8464 Galten"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Dorte Elgaard",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Dorte Elgaard - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-17T10:00:00+02:00",
+        "eventLocation": "Kaj Munks Vej 20, 2. th., 8260 Viby J"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jørgen Porse",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Jørgen Porse - Bruser afkalkning",
+        "eventStart": "2025-08-18T08:00:00+02:00",
+        "eventLocation": "Guldbjergvej 12, 8270 Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Preben Kristensen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Preben Kristensen – Flytterengøring",
+        "eventStart": "2025-08-18T15:00:00+02:00",
+        "eventLocation": "Vestre Ringgade 174, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Tommy Callesen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Tommy Callesen - Første Rengøring (BETALT)",
+        "eventStart": "2025-08-19T09:30:00+02:00",
+        "eventLocation": "Risdalsvej 7A, 8260 Viby J"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Første Rengøring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Tommy Callesen - Første Rengøring (BETALT)",
+        "eventStart": "2025-08-19T09:30:00+02:00",
+        "eventLocation": "Risdalsvej 7A, 8260 Viby J"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Ken Gustavsen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Ken Gustavsen - Flytterengøring (BETALT)",
+        "eventStart": "2025-08-20T14:00:00+02:00",
+        "eventLocation": "Nørre Allé 89 1Th, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Elisabeth Vestenaa",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Elisabeth Vestenaa - Flytterengøring Dag 1 (BETALT)",
+        "eventStart": "2025-08-22T10:00:00+02:00",
+        "eventLocation": "Bogensegade 6, stuen til højre, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Flytterengøring Dag",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Elisabeth Vestenaa - Flytterengøring Dag 1 (BETALT)",
+        "eventStart": "2025-08-22T10:00:00+02:00",
+        "eventLocation": "Bogensegade 6, stuen til højre, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Møde Babylon",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Møde Babylon huset lokale ",
+        "eventStart": "2025-08-22T13:00:00+02:00"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jes Vestergaard",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Jes Vestergaard - Fast Rengøring + Vinduespudsning (BETALT)",
+        "eventStart": "2025-08-25T08:30:00+02:00",
+        "eventLocation": "Silkeborgvej 218, 1. sal, 8230 Åbyhøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Pia Duffy",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Pia Duffy - Slutrengøring Hans Caspersen (MANGLER BETALING)",
+        "eventStart": "2025-08-26T10:00:00+02:00",
+        "eventLocation": "Plejehjemmet Thorsgaarden, Thorsvej 30, Lejlighed nr. 40, 8230 Åbyhøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Slutrengøring Hans",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Pia Duffy - Slutrengøring Hans Caspersen (MANGLER BETALING)",
+        "eventStart": "2025-08-26T10:00:00+02:00",
+        "eventLocation": "Plejehjemmet Thorsgaarden, Thorsvej 30, Lejlighed nr. 40, 8230 Åbyhøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Kenneth Jon",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Kenneth Jon - Hovedrengøring (BETALT)",
+        "eventStart": "2025-08-29T15:00:00+02:00",
+        "eventLocation": "Doris Kæraas Gade 6 St, 8240 Risskov"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Ivan Thomsen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Ivan Thomsen - Flytterengøring (FB rengøring) (BETALT)",
+        "eventStart": "2025-08-30T12:00:00+02:00",
+        "eventLocation": "Koldkilde 125, 8520 Lystrup"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Mette Jønstrup",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Mette Jønstrup Dollerup - Flytterengøring (MANGLER BETALING)",
+        "eventStart": "2025-08-30T14:00:00+02:00",
+        "eventLocation": "Park Allé 11, 6. tv., 8000 Århus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Tina Lunds",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Flytterengøring (Tina Lunds søn)",
+        "eventStart": "2025-09-02T17:00:00+02:00",
+        "eventLocation": "Nørre Alle 42L, 8000 Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Patrick Ville",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Patrick Ville",
+        "eventStart": "2025-09-03T12:00:00+02:00",
+        "eventLocation": "Jens Baggesens Vej 40 St.Th, 8210 Aarhus V"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Karin Dons",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Fast rengøring #1 – Karin Dons (ID: KD01)",
+        "eventStart": "2025-09-04T06:30:00+02:00",
+        "eventLocation": "Qvistgaardsvej 4, 8220 Brabrand"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Lis Hauerbach",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "⏳ AFVENTER BETALING - Lis Hauerbach Rengøring",
+        "eventStart": "2025-09-05T13:00:00+02:00",
+        "eventLocation": "Pilebækvej 1, 8520 Lystrup, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jonas Dejgaard",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ FÆRDIG - Jonas Dejgaard Flytterengøring",
+        "eventStart": "2025-09-09T14:00:00+02:00",
+        "eventLocation": "Marselis Boulevard 74, 3. tv., 8000 Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Mette Grøn",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Mette Grøn - Nøglelevering",
+        "eventStart": "2025-09-10T18:15:00+02:00",
+        "eventLocation": "Jens Baggesens Vej 4 1. Th., 8210 Aarhus V"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jens Ravn",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Jens Ravn - Flytterengøring",
+        "eventStart": "2025-09-12T13:00:00+02:00",
+        "eventLocation": "Tilst Skolevej 19A, 8381 Tilst"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Katrine Galsgaard",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Katrine Galsgaard Villumsen - Rengøring badeværelse",
+        "eventStart": "2025-09-14T12:00:00+02:00",
+        "eventLocation": "Sejrøgade 16, 4 tv, 8000 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Julie Gravesen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Julie Gravesen - Flytterengøring",
+        "eventStart": "2025-09-14T12:00:00+02:00",
+        "eventLocation": "Store Torv 10, 5, 8000 Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Anne Sofie",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Anne Sofie Kristensen - Fast rengøring (første gang)",
+        "eventStart": "2025-09-15T10:00:00+02:00",
+        "eventLocation": "Elverdalsvej 24, Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Sebastian Fuhlendorff",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 HOVEDRENGØRING #1 - Sebastian Fuhlendorff Christensen",
+        "eventStart": "2025-09-22T09:15:00+02:00",
+        "eventLocation": "Stadion Allé 20, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Henrik Holm",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Henrik Holm",
+        "eventStart": "2025-09-23T08:00:00+02:00",
+        "eventLocation": "Skanderborgvej 94, St. 2., 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Hans Henrik",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FAST RENGØRING #1 - Hans Henrik Schou",
+        "eventStart": "2025-09-24T11:00:00+02:00",
+        "eventLocation": "Forsythiavej 8, 8270 Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Emil Lærke",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 HOVEDRENGØRING #1 - Emil Lærke - AFLYST",
+        "eventStart": "2025-09-26T09:00:00+02:00",
+        "eventLocation": "Hans Broges Gade 3, 1. Tv, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Kate Fouts",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING #2 - Kate Fouts (FÆRDIGGØRELSE)",
+        "eventStart": "2025-09-28T10:00:00+02:00",
+        "eventLocation": "Fredensborgparken 23, 8260 Viby J"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Bente Andersen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 HOVEDRENGØRING - Bente Andersen",
+        "eventStart": "2025-09-29T12:00:00+02:00",
+        "eventLocation": "Rydersvej 13, 8200 Aarhus N"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Martin Holm",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - FAST RENGØRING #1 - Martin Holm",
+        "eventStart": "2025-10-03T11:00:00+02:00",
+        "eventLocation": "Pilegårdsvej 201, Hasselager"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Mi Duborg",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - FAST RENGØRING #1 - Mi Duborg",
+        "eventStart": "2025-10-06T10:00:00+02:00",
+        "eventLocation": "Virupvej 46G, 8530 Hjortshøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Jørgen Pagh",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FAST RENGØRING #3 - Jørgen Pagh (ik fortaget)",
+        "eventStart": "2025-10-09T08:00:00+02:00",
+        "eventLocation": "Sølykken 20, 8530 Hjortshøj"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Michael Roach",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Michael Roach Flytterengøring",
+        "eventStart": "2025-10-11T10:00:00+02:00",
+        "eventLocation": "Telefonsmøgen 24B, Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Eoin Galligan",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Eoin Galligan Flytterengøring",
+        "eventStart": "2025-10-12T08:00:00+02:00",
+        "eventLocation": "Vestergaardsringen 69, 8260 Viby J"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Sowdo Flytterengøring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Sowdo Flytterengøring",
+        "eventStart": "2025-10-13T10:00:00+02:00",
+        "eventLocation": "Rydevænget 73, 8210 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Fanny Sørensen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Fanny Sørensen Flytterengøring",
+        "eventStart": "2025-10-13T14:00:00+02:00",
+        "eventLocation": "Vestre Ringgade 60, 1 th, 8000 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Andersen Flytterengøring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Rasmus F. Andersen Flytterengøring",
+        "eventStart": "2025-10-15T12:00:00+02:00",
+        "eventLocation": "Høiriisgårdsvej 101, 8220 Brabrand"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Bashar Nasouri",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Bashar Nasouri Hovedrengøring",
+        "eventStart": "2025-10-16T09:00:00+02:00",
+        "eventLocation": "Gudenåvej 60, 8660 Skanderborg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Livie Yumeng",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Livie Yumeng Li Fokuseret Rengøring",
+        "eventStart": "2025-10-17T12:30:00+02:00",
+        "eventLocation": "Holbergsgade 10, 2 Tv, 8000 Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Li Fokuseret",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Livie Yumeng Li Fokuseret Rengøring",
+        "eventStart": "2025-10-17T12:30:00+02:00",
+        "eventLocation": "Holbergsgade 10, 2 Tv, 8000 Aarhus"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Mathias Pedersen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "✅ AFSLUTTET - Mathias Pedersen Flytterengøring",
+        "eventStart": "2025-10-17T13:00:00+02:00",
+        "eventLocation": "Mariane Thomsens G. 30, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Vinni Hansen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING #1 - Vinni Hansen",
+        "eventStart": "2025-10-20T09:00:00+02:00",
+        "eventLocation": "Tendrup Møllevej 103, 8543 Hornslet"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Vibeke Bregnballe",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Hovedrengøring #1 - Vibeke Bregnballe (REBOOKING)",
+        "eventStart": "2025-10-21T08:00:00+02:00",
+        "eventLocation": "Rågevænget 14, 8270 Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Juliane Wibroe",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FAST RENGØRING #2 - Juliane Wibroe",
+        "eventStart": "2025-10-22T10:00:00+02:00",
+        "eventLocation": "Højlundsparken 32, 8355 Solbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Birgit Joost",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FAST RENGØRING #1 - Birgit Joost Blak ✅",
+        "eventStart": "2025-10-22T14:00:00+02:00",
+        "eventLocation": "Emiliedalen 163, 8270 Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Henrik Grostholm",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 HOVEDRENGØRING - Henrik Grostholm",
+        "eventStart": "2025-10-23T11:30:00+02:00",
+        "eventLocation": "Siimtoften 8 Hårby, 8660 Skanderborg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Anita Faurholt",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Flytterengøring - Anita Faurholt",
+        "eventStart": "2025-10-27T07:00:00+01:00",
+        "eventLocation": "Stenaldervej 199, 1, 1, 8220 Brabrand"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Lars Joenstrup",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Fast Rengøring #1 - Lars Joenstrup Dollerup",
+        "eventStart": "2025-10-28T08:30:00+01:00",
+        "eventLocation": "Park Alle 11, 6. tv, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Lone Beck",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 HOVEDRENGØRING #1 - Lone Beck",
+        "eventStart": "2025-10-29T12:00:00+01:00",
+        "eventLocation": "Reventlowsvej, 8260 Viby J"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "John Kirk",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "📞 Opfølgning: John Kirk Nielsen - Unibrew",
+        "eventStart": "2025-10-30T10:00:00+01:00"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Erik Gideon",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 POST-RENOVERINGS RENGØRING - Erik Gideon",
+        "eventStart": "2025-10-31T08:00:00+01:00",
+        "eventLocation": "Ringgårdsvej 6, 8270 Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Marianne Bukhave",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Flytterengøring - Marianne Bukhave",
+        "eventStart": "2025-11-01T10:00:00+01:00",
+        "eventLocation": "Nørreskovvej 59, 8382 Hinnerup"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Mathias Skovsbol",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING #1 - Mathias Skovsbol",
+        "eventStart": "2025-11-02T09:30:00+01:00",
+        "eventLocation": "Skovvej 7A, 8751 Gedved"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Simon Leminen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Fast Rengøring #1 - Simon Leminen ✅ UDFØRT",
+        "eventStart": "2025-11-04T09:05:00+01:00",
+        "eventLocation": "Broloftet 8, Risskov"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Rene Fly",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Fast Rengøring #1 - Rene Fly Jensen",
+        "eventStart": "2025-11-06T09:00:00+01:00",
+        "eventLocation": "Ahornvej 1, 8370 Hadsten"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Birgitte Fly",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 INTRODUKTIONSRENGØRING #1 - René & Birgitte Fly Jensen",
+        "eventStart": "2025-11-07T09:00:00+01:00",
+        "eventLocation": "Ahornvej 1, 8370 Hadsten"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Fouad Amer",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "عقد قران – Fouad Amer Hodaifa & Diana El Zahr",
+        "eventStart": "2025-11-08T15:00:00+01:00",
+        "eventLocation": "Fredens Moske, Edwin Rahrs Vej 32, 8220 Brabrand"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Diana El",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "عقد قران – Fouad Amer Hodaifa & Diana El Zahr",
+        "eventStart": "2025-11-08T15:00:00+01:00",
+        "eventLocation": "Fredens Moske, Edwin Rahrs Vej 32, 8220 Brabrand"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Bjarne Kristensen",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "Bjarne Kristensen - Flytterengøring",
+        "eventStart": "2025-11-11T12:45:00+01:00",
+        "eventLocation": "Thit Jensens Gade 5, 2 5, 8000 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Claus Toft",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Claus Toft-Nielsen",
+        "eventStart": "2025-11-12T08:00:00+01:00",
+        "eventLocation": "Tranekærvej 57, 8240 Risskov, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Daniel Kofoed",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Daniel Kofoed",
+        "eventStart": "2025-11-12T14:00:00+01:00",
+        "eventLocation": "Brendstrupvej 7, 8200 Aarhus, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Emilie Birkeholm",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FAST RENGØRING #1 - Emilie Birkeholm Blach",
+        "eventStart": "2025-11-14T10:00:00+01:00",
+        "eventLocation": "Lystrupvej 221D, 8520 Lystrup, Danmark"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Niels Thaibert",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Niels Thaibert",
+        "eventStart": "2025-11-15T12:00:00+01:00",
+        "eventLocation": "Peder Skrams Gade 53a, 8200 Aarhus N"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Månedlig Rengøring",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Månedlig Rengøring #1 - Mads Hollænder",
+        "eventStart": "2025-11-18T09:00:00+01:00",
+        "eventLocation": "Grumstolsvej 44B, 8270 Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Mads Hollænder",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Månedlig Rengøring #1 - Mads Hollænder",
+        "eventStart": "2025-11-18T09:00:00+01:00",
+        "eventLocation": "Grumstolsvej 44B, 8270 Højbjerg"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Florian Keppeler",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Florian Keppeler",
+        "eventStart": "2025-11-22T09:00:00+01:00",
+        "eventLocation": "Kalmargade 16B, 8200 Aarhus N"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Line Rohde",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 Flytterengøring - Line Rohde Jensen",
+        "eventStart": "2025-12-10T12:00:00+01:00",
+        "eventLocation": "Finderupvej 8, 3.1, 8000 Aarhus C"
+      }
+    },
+    {
+      "source": "calendar",
+      "name": "Heidi Laila",
+      "email": null,
+      "phone": null,
+      "company": null,
+      "rawData": {
+        "eventTitle": "🏠 FLYTTERENGØRING - Heidi Laila Madsen",
+        "eventStart": "2025-12-10T14:00:00+01:00",
+        "eventLocation": "Kristrupvej 7, 8960 Randers SØ"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Anne Sofie Kristensen",
+      "email": "as_vk1@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a68c9b5b9bbb44",
+        "subject": "Rengøring 21/11",
+        "snippet": "",
+        "date": "Sun, 9 Nov 2025 13:23:59 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Rendetalje.dk\"",
+      "email": "rendetalje@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a67e823b62c62b",
+        "subject": "Your WP Statistics Reportfor 2025-11-08",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Google Kalender",
+      "email": "calendar-notification@google.com",
+      "phone": null,
+      "company": "google.com",
+      "rawData": {
+        "threadId": "19a66f612a4b4329",
+        "subject": "Du har ikke nogen planlagte begivenheder i dag.",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Andrew Lee",
+      "email": "andrew@tasklet.ai",
+      "phone": null,
+      "company": "tasklet.ai",
+      "rawData": {
+        "threadId": "19a5fedb8e93b60c",
+        "subject": "Tasklet is hiring — $20k referral bonus",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Nichole at Bubble",
+      "email": "newsletter@mail.bubble.io",
+      "phone": null,
+      "company": "mail.bubble.io",
+      "rawData": {
+        "threadId": "19a5fe82a97d3cfd",
+        "subject": "Mark your calendar 📅 RSVP to watch AI for Good Demo Day on Nov 19",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Rengøring Aarhus\"",
+      "email": "system@leadpoint.dk",
+      "phone": null,
+      "company": "leadpoint.dk",
+      "rawData": {
+        "threadId": "19a5e0de33d2bc2c",
+        "subject": "Opkald via Rengøring Aarhus",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Team Bonzer",
+      "email": "kontakt@bonzer.dk",
+      "phone": null,
+      "company": "bonzer.dk",
+      "rawData": {
+        "threadId": "19a5dab584511d2b",
+        "subject": "Skræddersyet SEO-strategi styrker Meyers’ organiske B2B-tilstedeværelse",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Leadmail.no\"",
+      "email": "kontakt@leadmail.no",
+      "phone": null,
+      "company": "leadmail.no",
+      "rawData": {
+        "threadId": "19a5afb7ef78f424",
+        "subject": "Sevina Keinicke Gerlach fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Thu, 06 Nov 2025 21:03:38 +0000 (UTC)"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Zapier Events",
+      "email": "events@send.zapier.com",
+      "phone": null,
+      "company": "send.zapier.com",
+      "rawData": {
+        "threadId": "19a5ae1f5cf8a686",
+        "subject": "You're invited to Zapier's All Hands call",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Kilo Code",
+      "email": "kilocode@substack.com",
+      "phone": null,
+      "company": "substack.com",
+      "rawData": {
+        "threadId": "19a5aa80045844f6",
+        "subject": "Your Team Is Already Using AI. Now What?",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Matilde Skinneholm",
+      "email": "matildeskinneholm@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a59add57355ef9",
+        "subject": "Re: Matilde Skinneholm fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "BLS Hafnia",
+      "email": "newsletter@blshafnia.com",
+      "phone": null,
+      "company": "blshafnia.com",
+      "rawData": {
+        "threadId": "19a5996d00a4d65d",
+        "subject": "THE TRIESTE POLO IS BACK IN STOCK!",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Jorn Steen Larsen",
+      "email": "11jsteen80@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a5838232a5e000",
+        "subject": "Re: Jørn steen Larsen fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Sat, 8 Nov 2025 13:39:35 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Kristina Brosolat",
+      "email": "kristina.brosolat@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a5827fcb8ae4ea",
+        "subject": "Re: Kristina Brosolat fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Ruth Marcher Andersen",
+      "email": "ruth.22.marcher@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a559cc9720ac76",
+        "subject": "Re: RuthAndersen fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Zapier",
+      "email": "learn@send.zapier.com",
+      "phone": null,
+      "company": "send.zapier.com",
+      "rawData": {
+        "threadId": "19a54bbf03ff1e13",
+        "subject": "Turn your Yelp leads into new customers automatically for free 🎉",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Nikol (UptimeRobot)\"",
+      "email": "info@ses.uptimerobot.com",
+      "phone": null,
+      "company": "ses.uptimerobot.com",
+      "rawData": {
+        "threadId": "19a545edb37d03af",
+        "subject": "Urgent: Update firewall rules within 14 days to avoid false alerts",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Mobbin",
+      "email": "newsletter@mobbin.com",
+      "phone": null,
+      "company": "mobbin.com",
+      "rawData": {
+        "threadId": "19a53bf0e62e3660",
+        "subject": "Wednesday Web Drop",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Fliki",
+      "email": "support@fliki.ai",
+      "phone": null,
+      "company": "fliki.ai",
+      "rawData": {
+        "threadId": "19a5267d1fb3d05f",
+        "subject": "⚠️ Your 40% discount expires in 2 days",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Niels Thaibert",
+      "email": "niels-thaibert@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a50d5e1eb72a87",
+        "subject": "Re: Niels Thaibert fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Wed, 5 Nov 2025 11:58:51 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "norepl",
+      "email": "y@viaplay.com",
+      "phone": null,
+      "company": "viaplay.com",
+      "rawData": {
+        "threadId": "19a50684df87c3c0",
+        "subject": "Din betaling mislykkedes – Opdatér dine betalingsoplysninger",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "BoligPortal",
+      "email": "info@campaign.boligportal.dk",
+      "phone": null,
+      "company": "campaign.boligportal.dk",
+      "rawData": {
+        "threadId": "19a4fdbd2d47fa1e",
+        "subject": "Se hvad vi har fundet frem til dig, Jonas 😀",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "norepl",
+      "email": "y@azets.com",
+      "phone": null,
+      "company": "azets.com",
+      "rawData": {
+        "threadId": "19a4fc646b59252b",
+        "subject": "Invoice from Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Daniel Kofoed",
+      "email": "DanielKofoed35@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a4fc4ddac4a741",
+        "subject": "RE: Daniel Kofoed fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Wed, 5 Nov 2025 21:51:04 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Mads Rydahl Hollænder\"",
+      "email": "m.hollaender@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a4f836b6604ff3",
+        "subject": "Re: Mads Hollænder fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Wed, 5 Nov 2025 12:01:16 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Hanne Andersen",
+      "email": "h.lindtoft@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a4ead8310cb1c4",
+        "subject": "Re: hanne andersen fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "betul karakaya",
+      "email": "B.karakaya99@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a4d83067921a81",
+        "subject": "Re: Betül Kocak fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Privyr Updates",
+      "email": "support@privyr.com",
+      "phone": null,
+      "company": "privyr.com",
+      "rawData": {
+        "threadId": "19a4ca750b813ef1",
+        "subject": "Introducing WhatsApp Campaigns 🌟",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Benjamin from Framer",
+      "email": "team@framer.com",
+      "phone": null,
+      "company": "framer.com",
+      "rawData": {
+        "threadId": "19a4c7902d8c8421",
+        "subject": "Framer Monthly",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Mail Delivery Subsystem",
+      "email": "mailer-daemon@googlemail.com",
+      "phone": null,
+      "company": "googlemail.com",
+      "rawData": {
+        "threadId": "19a4b0bafb68addd",
+        "subject": "Delivery Status Notification (Failure)",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Google",
+      "email": "no-reply@accounts.google.com",
+      "phone": null,
+      "company": "accounts.google.com",
+      "rawData": {
+        "threadId": "19a4a2d3a84355b2",
+        "subject": "Sikkerhedsunderretning",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Leadpoint ApS",
+      "email": "post@dinero.dk",
+      "phone": null,
+      "company": "dinero.dk",
+      "rawData": {
+        "threadId": "19a49fa2fadd44e0",
+        "subject": "[Købsbilag automatisk oprettet i Dinero] Faktura 1957",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Kristoffer fra Conversio | Hub\"",
+      "email": "kristoffer.n@conversio.dk",
+      "phone": null,
+      "company": "conversio.dk",
+      "rawData": {
+        "threadId": "19a49921bf1aad9e",
+        "subject": "✨ New Feature ✨ Find dine bedste annonce-kreativer med vores Creative Report",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"fm.dll.collectiondk\"",
+      "email": "inkasso@dllgroup.com",
+      "phone": null,
+      "company": "dllgroup.com",
+      "rawData": {
+        "threadId": "19a49916d24d36c3",
+        "subject": "SAGEN ER PÅ VEJ TIL INKASSO - CVR 45564096 RENDETALJE",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Mads Risbjerg",
+      "email": "mr@leadpoint.dk",
+      "phone": null,
+      "company": "leadpoint.dk",
+      "rawData": {
+        "threadId": "19a493920871c6cf",
+        "subject": "Opsigelse af samarbejdsaftale mellem Leadpoint ApS og Rendetalje",
+        "snippet": "",
+        "date": "Mon, 3 Nov 2025 11:17:39 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Leadpoint ApS",
+      "email": "partner@leadpoint.dk",
+      "phone": null,
+      "company": "leadpoint.dk",
+      "rawData": {
+        "threadId": "19a4932388cefc69",
+        "subject": "Leads for oktober 2025 – Rendetalje",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Faktura - Total rent.dk\"",
+      "email": "faktura@totalrent.dk",
+      "phone": null,
+      "company": "totalrent.dk",
+      "rawData": {
+        "threadId": "19a48f59d8b6ca49",
+        "subject": "Faktura fra TotalRent.dk",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Bjarne Anthon",
+      "email": "bjarneanthon@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a482a1aefe7390",
+        "subject": "Re: Bjarne Anthon fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Ann Maj Kjær-Rasmussen\"",
+      "email": "amkkr1989@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a463ee04bfc158",
+        "subject": "Re: Formular via Rengøring Aarhus",
+        "snippet": "",
+        "date": "Mon, 3 Nov 2025 08:51:01 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Lucas Staunstrup Nielsen",
+      "email": "samarbejde@samarbejde.3match.dk",
+      "phone": null,
+      "company": "samarbejde.3match.dk",
+      "rawData": {
+        "threadId": "19a45b34f14d53c9",
+        "subject": "Jeg kan se i har adresse i Tilst",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "michael svend bendix",
+      "email": "spendix@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a4598ee45c319e",
+        "subject": "Sv: Michael Svend Bendix fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Mon, 3 Nov 2025 12:59:25 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Birgit Joost Blak",
+      "email": "birgit@joost-blak.dk",
+      "phone": null,
+      "company": "joost-blak.dk",
+      "rawData": {
+        "threadId": "19a443f4ce9a161f",
+        "subject": "Jeg træffes igen tirsdag den 4. november 2025 Re: Faktura nr. 1114",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "GitGuardian",
+      "email": "security@getgitguardian.com",
+      "phone": null,
+      "company": "getgitguardian.com",
+      "rawData": {
+        "threadId": "19a41616970b6330",
+        "subject": "[TekupDK/tekup] Generic High Entropy Secret exposed on GitHub",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Clerk",
+      "email": "systems@clerk.com",
+      "phone": null,
+      "company": "clerk.com",
+      "rawData": {
+        "threadId": "19a3d1e162a41a90",
+        "subject": "Clerk Update – Oct 31, 2025",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Andy from Framer",
+      "email": "andy@framer.com",
+      "phone": null,
+      "company": "framer.com",
+      "rawData": {
+        "threadId": "19a3c528a6db959f",
+        "subject": "Invite to Framer’s Halloween Party",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"René Vendel Nielsen\"",
+      "email": "renevendelnielsen@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a3c3a5dea4711c",
+        "subject": "Re: René Vendel Nielsen fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Mon, 3 Nov 2025 08:26:01 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "UptimeRobot",
+      "email": "alert@uptimerobot.com",
+      "phone": null,
+      "company": "uptimerobot.com",
+      "rawData": {
+        "threadId": "19a3a7a32c0d9f00",
+        "subject": "Monitor is DOWN: tekup-billy.onrender.com/health",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Lunar Business",
+      "email": "hello@hello.lunar.app",
+      "phone": null,
+      "company": "hello.lunar.app",
+      "rawData": {
+        "threadId": "19a3a63e95155f62",
+        "subject": "Hjælp os med at forme fremtidens erhvervsbank",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"merete Graabæk\"",
+      "email": "meretegraa@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a3a1c9225b027f",
+        "subject": "Re: Formular via Rengøring Aarhus",
+        "snippet": "",
+        "date": "Fri, 31 Oct 2025 13:22:24 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Jørgen Pagh\"",
+      "email": "joergenpagh1948@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a394293d5a76ef",
+        "subject": "Re: Faktura nr. 1110",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Lunar",
+      "email": "service@service.lunar.app",
+      "phone": null,
+      "company": "service.lunar.app",
+      "rawData": {
+        "threadId": "19a393118336ad35",
+        "subject": "Dit Visa-kort er bestilt 💳",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Aaron from Privyr",
+      "email": "blog@privyr.com",
+      "phone": null,
+      "company": "privyr.com",
+      "rawData": {
+        "threadId": "19a3812340fa61ce",
+        "subject": "How I execute follow-ups perfectly for every lead 👏",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Eric at Bolt.new\"",
+      "email": "ericsimons@stackblitz.com",
+      "phone": null,
+      "company": "stackblitz.com",
+      "rawData": {
+        "threadId": "19a367d2ebe59b96",
+        "subject": "New in Bolt: Security scans, Google sign-in for users, and verified experts on Contra 🚀",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Manus AI",
+      "email": "invoice+statements+acct_1R15XBHkfKp4fCS9@stripe.com",
+      "phone": null,
+      "company": "stripe.com",
+      "rawData": {
+        "threadId": "19a36344f89e90d4",
+        "subject": "Din kvittering fra Manus AI nr.2472-1957",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"René Fly Jensen\"",
+      "email": "refj@dalgas.com",
+      "phone": null,
+      "company": "dalgas.com",
+      "rawData": {
+        "threadId": "19a351ca382afd20",
+        "subject": "SV: [EXT] Re: Rene Fly Jensen fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Mon, 3 Nov 2025 11:55:06 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Cursor Team",
+      "email": "hi@mail.cursor.com",
+      "phone": null,
+      "company": "mail.cursor.com",
+      "rawData": {
+        "threadId": "19a34d5f80d994d2",
+        "subject": "Introducing Cursor 2.0 and Composer",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "BoligPortal",
+      "email": "info@boligportal.dk",
+      "phone": null,
+      "company": "boligportal.dk",
+      "rawData": {
+        "threadId": "19a345d132516d26",
+        "subject": "Ny besked på BoligPortal",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "CleanManager",
+      "email": "cleanmanager@cleanmanager.dk",
+      "phone": null,
+      "company": "cleanmanager.dk",
+      "rawData": {
+        "threadId": "19a34243f0087004",
+        "subject": "Den ultimative firma-julegave? ",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Team Lindy",
+      "email": "newsletter@lindy.ai",
+      "phone": null,
+      "company": "lindy.ai",
+      "rawData": {
+        "threadId": "19a315f141696fbd",
+        "subject": "Inside Lindy: 90-min workshop, churn prediction, and we're hiring!",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Simon from FeedHive",
+      "email": "info@feedhive.com",
+      "phone": null,
+      "company": "feedhive.com",
+      "rawData": {
+        "threadId": "19a2f0507e09ee65",
+        "subject": "FeedHive Lifetime Deal (last chance!)",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Link",
+      "email": "notifications@link.com",
+      "phone": null,
+      "company": "link.com",
+      "rawData": {
+        "threadId": "19a2c850116bba60",
+        "subject": "Your Link verification code: 641 286",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Lone Beck Sønderby\"",
+      "email": "lonesonderbys@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a2b1c80246e461",
+        "subject": "Re: Formular via Rengøring Aarhus",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Mathias Skovsbøl Pedersen\"",
+      "email": "mathiassbp@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a2ad68e163b7e4",
+        "subject": "Re: Mathias Skovsbøl fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Wed, 29 Oct 2025 14:21:04 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Shortwave Communications, Inc.\"",
+      "email": "upcoming-invoice+acct_1GBWpFBqS1J54pGC@stripe.com",
+      "phone": null,
+      "company": "stripe.com",
+      "rawData": {
+        "threadId": "19a2a301e7cb1a9d",
+        "subject": "Dit Shortwave Communications, Inc.-abonnement vil snart blive fornyet",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Ea Russell",
+      "email": "eamarie59@aol.co.uk",
+      "phone": null,
+      "company": "aol.co.uk",
+      "rawData": {
+        "threadId": "19a2997f4dbe3eb6",
+        "subject": "Sv.: Re: Dominic Russell fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Tue, 28 Oct 2025 06:53:23 +0000 (UTC)"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"Aron @ Gumloop\"",
+      "email": "aron@gumloopmail.com",
+      "phone": null,
+      "company": "gumloopmail.com",
+      "rawData": {
+        "threadId": "19a27231d3f3f6f4",
+        "subject": "New: Gumloop Agents",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Morten Schmidt",
+      "email": "morten.schmidt@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a25b63ceb7c2b8",
+        "subject": "Sv: Morten fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Tue, 28 Oct 2025 12:23:17 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Maja Lomborg",
+      "email": "majaolomborg@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a25468cd3db7f6",
+        "subject": "Re: Formular via Rengøring Aarhus",
+        "snippet": "",
+        "date": "Mon, 27 Oct 2025 12:19:54 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Sandra Beck",
+      "email": "sbeck8722@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a21e42cd6f04b7",
+        "subject": "Re: Sandra Beck fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Mon, 27 Oct 2025 17:54:34 +0100"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Katrine Reeberg Storm",
+      "email": "reebergstorm@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a1fd31d4ed2ff5",
+        "subject": "Re: Katrine Reeberg Storm fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Ticketmaster",
+      "email": "customer_support@email.ticketmaster.com",
+      "phone": null,
+      "company": "email.ticketmaster.com",
+      "rawData": {
+        "threadId": "19a1b6706b907171",
+        "subject": "Welcome to Ticketmaster!",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "norepl",
+      "email": "y@booking.com",
+      "phone": null,
+      "company": "booking.com",
+      "rawData": {
+        "threadId": "19a1b601393fb69d",
+        "subject": "🛄 Tak! Din booking hos Crowne Plaza Copenhagen Towers by IHG er bekræftet",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Ticketmaster",
+      "email": "no-reply@ticketmaster.dk",
+      "phone": null,
+      "company": "ticketmaster.dk",
+      "rawData": {
+        "threadId": "19a1a81c09250e82",
+        "subject": "Ordrebekræftelse. Ordrenummer: RE18705035 (TESSA - 25. oktober 2025 20.00)",
+        "snippet": "",
+        "date": "Sat, 25 Oct 2025 08:34:58 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Ticketmaster",
+      "email": "no-reply@info.ticketmaster.dk",
+      "phone": null,
+      "company": "info.ticketmaster.dk",
+      "rawData": {
+        "threadId": "19a1a7450cbab7a2",
+        "subject": "Velkommen til Ticketmaster!",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "support",
+      "email": "support@jace.ai",
+      "phone": null,
+      "company": "jace.ai",
+      "rawData": {
+        "threadId": "19a19528409cb37c",
+        "subject": "Your Jace AI account will be deleted in 5 days",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Ebbe Mehlby",
+      "email": "emehlby@yahoo.dk",
+      "phone": null,
+      "company": "yahoo.dk",
+      "rawData": {
+        "threadId": "19a16d1364d1a16a",
+        "subject": "Re: November opstart - fast rengøring Silkeborg",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Simon Rands Leminen",
+      "email": "leminen@live.dk",
+      "phone": null,
+      "company": "live.dk",
+      "rawData": {
+        "threadId": "19a16d10af051bc7",
+        "subject": "Re: November opstart - fast rengøring Risskov",
+        "snippet": "",
+        "date": "Sun, 2 Nov 2025 20:36:47 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "andreas madsen",
+      "email": "lundoermadsen@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a16d0cf6dd243f",
+        "subject": "Re: November opstart - fast rengøring Sanglærkevej, Randers",
+        "snippet": "",
+        "date": "Fri, 24 Oct 2025 15:34:22 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Hans Henrik Schou",
+      "email": "hanshenrik.schou1@googlemail.com",
+      "phone": null,
+      "company": "googlemail.com",
+      "rawData": {
+        "threadId": "19a16c5b5bb8d84c",
+        "subject": "Re: November rengøringer - Forsythiavej 8",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Zapier Updates",
+      "email": "updates@send.zapier.com",
+      "phone": null,
+      "company": "send.zapier.com",
+      "rawData": {
+        "threadId": "19a1252f914d6fc3",
+        "subject": "What’s new with Zapier MCP: higher access + success stories",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Lars Joenstrup Dollerup",
+      "email": "lars.joenstrup@live.dk",
+      "phone": null,
+      "company": "live.dk",
+      "rawData": {
+        "threadId": "19a1108ef71817b9",
+        "subject": "Sv: Formular via Rengøring Aarhus",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Johanna Luige",
+      "email": "luigejo@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a0fd1132eb2bf7",
+        "subject": "Re: Tilbud på flytterengøring - Kappelvænget 12, Aarhus V",
+        "snippet": "",
+        "date": "Thu, 23 Oct 2025 10:27:53 +0200"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Marianne Agerlund Petersen",
+      "email": "marianne.agerlund@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a0fd158466a491",
+        "subject": "Re: Tilbud på ugentlig rengøring - Elevvej 110, Aarhus N",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Lise Christensen",
+      "email": "hurtig79@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a0fd139a776913",
+        "subject": "Re: Tilbud på fast rengøring hver 14. dag - Viby J",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"mail@florian-keppeler.com\"",
+      "email": "mail@florian-keppeler.com",
+      "phone": null,
+      "company": "florian-keppeler.com",
+      "rawData": {
+        "threadId": "19a07cbf35445ec8",
+        "subject": "Re: Formular via Rengøring Aarhus",
+        "snippet": "",
+        "date": "Fri, 24 Oct 2025 18:30:24 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "vibsen bregnballe",
+      "email": "vbregnballe@hotmail.com",
+      "phone": null,
+      "company": "hotmail.com",
+      "rawData": {
+        "threadId": "19a07351053ea128",
+        "subject": "Re: Faktura nr. 1097",
+        "snippet": "",
+        "date": "Tue, 21 Oct 2025 14:46:02 +0000"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "jesper vestergaard",
+      "email": "jesper.vestergaard324@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "19a03a3ab24fab8f",
+        "subject": "Re: Formular via Rengøring Aarhus",
+        "snippet": "",
+        "date": "Tue, 21 Oct 2025 18:21:38 +0200"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "glassau-hanse",
+      "email": "n@sol.dk",
+      "phone": null,
+      "company": "sol.dk",
+      "rawData": {
+        "threadId": "199fca59aea89e86",
+        "subject": "Re: Updated invitation: 🏠 FLYTTERENGØRING - Vinni @ Mon Oct 20, 2025 9am - 5pm (GMT+2) (glassau-hansen@sol.dk)",
+        "snippet": "",
+        "date": "Sun, 19 Oct 2025 15:25:34 +0200"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "mab",
+      "email": "e@paradis.dk",
+      "phone": null,
+      "company": "paradis.dk",
+      "rawData": {
+        "threadId": "199f75a24d46ee1d",
+        "subject": "Din mail fra igår.",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Replit",
+      "email": "notifications@replit.com",
+      "phone": null,
+      "company": "replit.com",
+      "rawData": {
+        "threadId": "199f37f79bd37229",
+        "subject": "Replit: 100% of Credits used on your Core Plan",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Smartsupp",
+      "email": "newsletter@smartsupp.com",
+      "phone": null,
+      "company": "smartsupp.com",
+      "rawData": {
+        "threadId": "199f36926c403c7b",
+        "subject": "📢​: Smartsupp Services Recovered",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Sara El-Natour",
+      "email": "elnatoursara00@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "199f2cbd4fd8aa15",
+        "subject": "Re: Sara El-Natour fra Rengøring.nu - Nettbureau AS",
+        "snippet": "",
+        "date": "Fri, 17 Oct 2025 19:56:29 +0200"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "AM SW",
+      "email": "annemaries@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "199f2b6228fb07fb",
+        "subject": "Re: Anne Marie Schwartz Wiig fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Magny og Bent",
+      "email": "mabe@paradis.dk",
+      "phone": null,
+      "company": "paradis.dk",
+      "rawData": {
+        "threadId": "199f17d5c83c37c7",
+        "subject": "Re: Updated invitation: 🏠 FAST RENGØRING #3 - Magney Madsen @ fre. 3. okt. 2025 9am - 10am (CEST) (mabe@paradis.dk)",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Trae",
+      "email": "notify@mail.trae.ai",
+      "phone": null,
+      "company": "mail.trae.ai",
+      "rawData": {
+        "threadId": "199ec1e1f81e6b9b",
+        "subject": "[TRAE] 10/16 Weekly Newsletter",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Anita Faurholt",
+      "email": "anita@timfaurholt.dk",
+      "phone": null,
+      "company": "timfaurholt.dk",
+      "rawData": {
+        "threadId": "199ebf8d2d2dd089",
+        "subject": "Re: Formular via Rengøring Aarhus",
+        "snippet": "",
+        "date": "Thu, 16 Oct 2025 16:31:17 +0200"
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Nicolaj Haslev-Vortvedt",
+      "email": "nicolaj@nettbureau.no",
+      "phone": null,
+      "company": "nettbureau.no",
+      "rawData": {
+        "threadId": "199ebac9fdca8dc0",
+        "subject": "Ubetalt faktura",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "\"leadbox.no\"",
+      "email": "kontakt@leadbox.no",
+      "phone": null,
+      "company": "leadbox.no",
+      "rawData": {
+        "threadId": "199e6d72dc0a5dc1",
+        "subject": "Kunden ønsker ikke at modtage tilbud",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Jette Ginderskov hansen",
+      "email": "jette7hansen@gmail.com",
+      "phone": null,
+      "company": "gmail.com",
+      "rawData": {
+        "threadId": "199e64e222088a9e",
+        "subject": "Re: Jette Ginderskov Hansen fra Rengøring.nu - Nettbureau AS",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Frappe Cloud",
+      "email": "notifications@frappecloud.com",
+      "phone": null,
+      "company": "frappecloud.com",
+      "rawData": {
+        "threadId": "199e626e0593738a",
+        "subject": "Your Frappe CRM trial just expired",
+        "snippet": ""
+      }
+    },
+    {
+      "source": "gmail",
+      "name": "Michael from Cursor",
+      "email": "michael@mail.cursor.com",
+      "phone": null,
+      "company": "mail.cursor.com",
+      "rawData": {
+        "threadId": "199e36fe6788d499",
+        "subject": "New in Cursor: Plan Mode, Slash Commands, and more",
+        "snippet": ""
+      }
+    }
+  ]
+}

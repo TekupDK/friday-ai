@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "generated": "2025-11-10T12:18:01.167Z",
+    "timeWindow": {
+      "start": "2025-07-01T00:00:00Z",
+      "end": "2025-11-30T23:59:59Z",
+      "startDate": "2025-07-01",
+      "endDate": "2025-11-30"
+    },
+    "totalLeads": 169
+  },
+  "kpis": {
+    "totalLeads": 169,
+    "totalRevenue": 169422.13,
+    "totalLeadCost": 7415,
+    "totalLaborCost": 0,
+    "totalGrossProfit": 169422.13,
+    "totalNetProfit": 162007.13,
+    "avgGrossMargin": 100,
+    "avgNetMargin": 95.62335805835991,
+    "avgRevenuePerLead": 1002.4978106508876,
+    "conversionRate": 37.278106508875744,
+    "avgDaysToBooking": 22.933333333333334,
+    "avgDaysToPayment": 0
+  },
+  "funnel": [
+    {
+      "stage": "Inbox",
+      "count": 82,
+      "percentage": 48.5207100591716,
+      "dropoffFromPrevious": 0
+    },
+    {
+      "stage": "Contacted",
+      "count": 12,
+      "percentage": 7.100591715976331,
+      "dropoffFromPrevious": 85.36585365853658
+    },
+    {
+      "stage": "Scheduled",
+      "count": 6,
+      "percentage": 3.5502958579881656,
+      "dropoffFromPrevious": 50
+    },
+    {
+      "stage": "Invoiced",
+      "count": 4,
+      "percentage": 2.366863905325444,
+      "dropoffFromPrevious": 33.33333333333333
+    },
+    {
+      "stage": "Won",
+      "count": 63,
+      "percentage": 37.278106508875744,
+      "dropoffFromPrevious": -1475
+    }
+  ],
+  "leadSourceROI": [
+    {
+      "source": "Rengøring.nu (Leadmail.no)",
+      "totalLeads": 108,
+      "wonLeads": 28,
+      "conversionRate": 25.925925925925924,
+      "totalRevenue": 67127.7,
+      "totalLeadCost": 2015,
+      "totalProfit": 65112.7,
+      "roi": 3231.3995037220843,
+      "avgRevenuePerLead": 621.5527777777778,
+      "avgCostPerLead": 18.65740740740741
+    },
+    {
+      "source": "Leadpoint.dk (Rengøring Aarhus)",
+      "totalLeads": 61,
+      "wonLeads": 35,
+      "conversionRate": 57.377049180327866,
+      "totalRevenue": 102294.43000000001,
+      "totalLeadCost": 5400,
+      "totalProfit": 96894.43,
+      "roi": 1794.3412962962964,
+      "avgRevenuePerLead": 1676.9578688524591,
+      "avgCostPerLead": 88.52459016393442
+    }
+  ],
+  "timeAccuracy": [],
+  "pipelineHealth": {
+    "activeLeads": 104,
+    "staleLeads": 0,
+    "deadLeads": 2,
+    "avgDataCompleteness": 52.337278106508876,
+    "highConfidenceLinks": 67,
+    "lowConfidenceLinks": 84
+  },
+  "customerValue": {
+    "totalCustomers": 169,
+    "repeatCustomers": 1,
+    "repeatCustomerRate": 0.591715976331361,
+    "avgLifetimeValue": 37.171597633136095,
+    "avgBookingsPerCustomer": 0.005917159763313609,
+    "topCustomers": [
+      {
+        "name": "Jesper Vestergaard",
+        "email": "jesper vestergaard <system@leadpoint.dk",
+        "lifetimeValue": 3490,
+        "totalBookings": 0
+      },
+      {
+        "name": "Pia Duffy",
+        "email": "pia duffy <system@leadpoint.dk",
+        "lifetimeValue": 1745,
+        "totalBookings": 0
+      },
+      {
+        "name": "\"Rengøring Aarhus\"",
+        "email": "\"rengøring aarhus\" <system@leadpoint.dk",
+        "lifetimeValue": 1047,
+        "totalBookings": 0
+      }
+    ]
+  }
+}

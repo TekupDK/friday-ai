@@ -2,7 +2,7 @@
 
 **Intelligent AI assistant for Rendetalje.dk** - A production-ready chat interface with unified inbox, multi-AI support, and business automation.
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/TekupDK/tekup/releases)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/TekupDK/tekup/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
@@ -10,7 +10,7 @@
 
 **Intelligent Email Management & Automation System** - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
@@ -55,7 +55,37 @@ Friday is a Shortwave.ai-inspired chat interface built specifically for Rendetal
 
 ## ✨ Features
 
-### 🆕 What's New in v1.4.0
+### 🆕 What's New in v1.5.0
+
+- **🤖 Autonomous Lead Intelligence System** (Complete Implementation):
+  - **Daily AI Lead Import**: Automatic import of 231 AI-enriched leads from v4.3.5 pipeline
+    - Idempotent upserts using `datasetLeadId` tracking (no duplicates)
+    - Synthetic email generation for missing data
+    - Customer profile auto-creation with invoice history
+    - Cost: $0.00/month (FREE OpenRouter AI models)
+  - **Friday AI Lead Intelligence API**: 4 new tRPC endpoints for AI integration
+    - `lookupCustomer`: Search customers by name/email/phone with invoice history
+    - `getCustomerIntelligence`: 15+ data points per customer for AI conversations
+    - `getActionableInsights`: Autonomous detection of missing bookings, at-risk customers, upsell opportunities
+    - `getDashboardStats`: Real-time business metrics for AI context
+  - **Autonomous Action Handler**: Automated task creation from insights (every 4 hours)
+    - **Missing Bookings**: Detects recurring customers without activity (90+ days) → creates follow-up tasks
+    - **At-Risk Customers**: Flags customers with "at_risk" status → creates review tasks
+    - **Upsell Opportunities**: Identifies VIP customers (>10K kr lifetime value) → creates upsell tasks
+  - **Windows Task Scheduler Integration**: Fully autonomous operation
+    - Daily import at 02:30 via `register-import-schedule.ps1`
+    - Action handler every 4 hours via `register-action-schedule.ps1`
+    - Comprehensive logging to `logs/` directory
+  - **Data Quality Assurance**: Import validation and monitoring
+    - `validate-import.ts`: Verifies lead counts, profile linkage, data completeness
+    - Real-time statistics: 231 leads → 231 profiles → 95 invoices (100% success)
+    - Financial tracking: Total invoiced, paid amounts, customer balances
+  - **Complete Documentation Suite**: Production-ready guides and troubleshooting
+    - `docs/AUTONOMOUS-OPERATIONS.md`: 500+ lines implementation guide
+    - `AUTONOMOUS-QUICK-START.md`: 5-minute setup guide
+    - Full API reference, monitoring, and automation scripts
+
+### What's New in v1.4.0
 
 - **🤖 AI Email Features** (Phases 1-6 Complete):
   - **AI Email Summaries**: 150-char Danish summaries with Gemini 2.0 Flash
@@ -223,6 +253,11 @@ Critical business logic embedded in AI system prompt:
 - **OpenAI** - GPT-4o model
 - **Anthropic** - Claude 3.5 Sonnet
 - **Google Gemini** - Gemini 2.5 Flash
+- **Autonomous Lead Intelligence** - AI-enriched customer data with insights automation
+  - Daily import of 231 leads from v4.3.5 AI pipeline
+  - Real-time customer intelligence for AI conversations
+  - Autonomous task creation for missing bookings, at-risk customers, upsell opportunities
+  - Windows Task Scheduler integration for 100% autonomous operation
 
 ## 📦 Installation
 
@@ -551,7 +586,10 @@ This is a private project for Rendetalje.dk. For questions or issues, contact Te
 
 ### Comprehensive Guides (54 MD files)
 
-- **CHANGELOG.md** - Version history with v1.3.0 features
+- **AUTONOMOUS-OPERATIONS.md** - Complete autonomous lead intelligence implementation guide ✨ NEW
+- **AUTONOMOUS-QUICK-START.md** - 5-minute setup guide for autonomous operations ✨ NEW
+- **AUTONOMOUS-COMPLETION-SUMMARY.md** - Implementation summary and technical details ✨ NEW
+- **CHANGELOG.md** - Version history with v1.5.0 autonomous features
 - **TESTING_REPORT.md** - Complete test status and results
 - **IMPROVEMENTS_PLAN.md** - 541 lines of roadmap and features
 - **LOGIN_DEBUG_GUIDE.md** - Authentication troubleshooting

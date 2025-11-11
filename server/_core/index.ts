@@ -119,6 +119,9 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  // Leads API for ChromaDB integration
+  const leadsApi = (await import("../routes/leads-api")).default;
+  app.use("/api/leads", leadsApi);
   // Inbound email webhook endpoint
   const { handleInboundEmail } = await import("../api/inbound-email");
   app.post("/api/inbound/email", handleInboundEmail);

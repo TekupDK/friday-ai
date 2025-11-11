@@ -449,8 +449,14 @@ export async function createLead(data: InsertLead): Promise<Lead> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
+  // Debug: Log ChromaDB status
+  console.log(`[ChromaDB DEBUG] chromaEnabled: ${ENV.chromaEnabled}`);
+  console.log(`[ChromaDB DEBUG] chromaUrl: ${ENV.chromaUrl}`);
+  console.log(`[ChromaDB DEBUG] process.env.CHROMA_ENABLED: ${process.env.CHROMA_ENABLED}`);
+
   // Check for duplicate leads using ChromaDB semantic search
   if (ENV.chromaEnabled) {
+    console.log('[ChromaDB] Starting duplicate detection...');
     try {
       const { searchSimilar, formatLeadForEmbedding } = await import('./integrations/chromadb');
       

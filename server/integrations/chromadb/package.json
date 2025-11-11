@@ -13,7 +13,8 @@
     "health": "curl -f http://localhost:8000/api/v1/heartbeat || echo 'ChromaDB not responding'"
   },
   "dependencies": {
-    "chromadb": "^1.8.1"
+    "chromadb": "^1.8.1",
+    "fuse.js": "^7.1.0"
   },
   "keywords": [
     "chromadb",

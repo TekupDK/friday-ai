@@ -10,6 +10,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import WorkspaceLayout from "./pages/WorkspaceLayout";
 import LoginPage from "./pages/LoginPage";
 import DocsPage from "./pages/docs/DocsPage";
+import ComponentShowcase from "./pages/ComponentShowcase";
+import ChatComponentsShowcase from "./pages/ChatComponentsShowcase";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import { warmupCache } from "./lib/cacheStrategy";
@@ -36,6 +38,8 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={WorkspaceLayout} />
+      <Route path={"/showcase"} component={ComponentShowcase} />
+      <Route path={"/chat-components"} component={ChatComponentsShowcase} />
       <Route path={"/docs"} component={DocsPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
