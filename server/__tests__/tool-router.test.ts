@@ -10,12 +10,12 @@ vi.mock("../mcp", () => ({
 
 vi.mock("../billy", () => ({
   getInvoices: vi.fn(async () => []),
-  createInvoice: vi.fn(async (x) => ({ id: "inv-1", ...x })),
+  createInvoice: vi.fn(async x => ({ id: "inv-1", ...x })),
   searchCustomerByEmail: vi.fn(async () => ({ id: "cust-1" })),
 }));
 
 vi.mock("../db", () => ({
-  createTask: vi.fn(async (x) => ({ id: 1, ...x })),
+  createTask: vi.fn(async x => ({ id: 1, ...x })),
   getUserLeads: vi.fn(async () => []),
   updateLeadStatus: vi.fn(async () => {}),
   trackEvent: vi.fn(async () => {}),
@@ -23,7 +23,7 @@ vi.mock("../db", () => ({
 
 vi.mock("../google-api", () => ({
   listCalendarEvents: vi.fn(async () => []),
-  updateCalendarEvent: vi.fn(async (x) => ({ id: "evt-1", ...x })),
+  updateCalendarEvent: vi.fn(async x => ({ id: "evt-1", ...x })),
   deleteCalendarEvent: vi.fn(async () => {}),
 }));
 
@@ -89,7 +89,10 @@ describe("Tool router (executeToolCall)", () => {
     const db = await import("../db");
 
     await executeToolCall("list_leads", { status: "won" }, 7);
-    expect(db.getUserLeads).toHaveBeenCalledWith(7, { status: "won", source: undefined });
+    expect(db.getUserLeads).toHaveBeenCalledWith(7, {
+      status: "won",
+      source: undefined,
+    });
   });
 
   it("returns UNKNOWN_TOOL for unknown tool name", async () => {

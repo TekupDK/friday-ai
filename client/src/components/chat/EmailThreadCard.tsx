@@ -13,7 +13,7 @@ export interface EmailThreadData {
   messageCount: number;
   summary: string;
   labels: string[];
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
   hasAttachments?: boolean;
 }
 
@@ -24,13 +24,13 @@ interface EmailThreadCardProps {
 
 export function EmailThreadCard({ data, onClick }: EmailThreadCardProps) {
   const priorityColors = {
-    high: 'border-l-red-500',
-    medium: 'border-l-yellow-500',
-    low: 'border-l-blue-500',
+    high: "border-l-red-500",
+    medium: "border-l-yellow-500",
+    low: "border-l-blue-500",
   };
 
   return (
-    <Card 
+    <Card
       className={cn(
         "hover:shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom-2 border-l-4 cursor-pointer",
         priorityColors[data.priority]
@@ -43,7 +43,9 @@ export function EmailThreadCard({ data, onClick }: EmailThreadCardProps) {
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
               <h4 className="font-semibold text-sm truncate">{data.subject}</h4>
-              <p className="text-xs text-muted-foreground truncate">{data.from}</p>
+              <p className="text-xs text-muted-foreground truncate">
+                {data.from}
+              </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {data.hasAttachments && <span className="text-lg">📎</span>}

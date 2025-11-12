@@ -9,6 +9,7 @@
 ## 🎯 **OVERVIEW**
 
 This guide will help you clean up the workspace by:
+
 1. Deleting 19 unnecessary files
 2. Organizing 18 test files
 3. Consolidating documentation
@@ -29,6 +30,7 @@ Delete files that are definitely not needed:
 ```
 
 **What it does:**
+
 - Deletes 11 empty files (0 bytes)
 - Deletes 1 backup file
 - Deletes 2 deprecated docs
@@ -48,6 +50,7 @@ Move test scripts to proper location:
 ```
 
 **What it does:**
+
 - Creates `tests/manual/` directory
 - Moves 18 test scripts from root to `tests/manual/`
 
@@ -114,6 +117,7 @@ Remove-Item setup-enums-via-cli.ts
 ## 📊 **BEFORE & AFTER**
 
 ### **Before Cleanup:**
+
 ```
 Root directory:
 - ~150 files
@@ -124,6 +128,7 @@ Root directory:
 ```
 
 ### **After Cleanup:**
+
 ```
 Root directory:
 - ~80 files (47% reduction)
@@ -178,6 +183,7 @@ git commit -m "chore: cleanup workspace"
 ## 📝 **WHAT GETS DELETED**
 
 ### **Empty Files (11):**
+
 - `DEBUG_AKTUEL_STATUS.md`
 - `FIX_500_ERROR.md`
 - `LOGIN_FIXES_COMPLETE.md`
@@ -191,13 +197,16 @@ git commit -m "chore: cleanup workspace"
 - `test-database.js`
 
 ### **Backup Files (1):**
+
 - `drizzle/schema.backup.ts`
 
 ### **Deprecated Docs (2):**
+
 - `docs/DEPRECATED_CODE_CLEANUP.md`
 - `docs/DEPRECATED_FILES.md`
 
 ### **Temporary Files (5):**
+
 - `analysis-emil-laerke.json`
 - `billy-api-response.json` (187KB)
 - `cookies.txt`
@@ -209,6 +218,7 @@ git commit -m "chore: cleanup workspace"
 ## 📦 **WHAT GETS MOVED**
 
 ### **Test Files → tests/manual/ (18):**
+
 - `test-all-email-functions.mjs`
 - `test-billy-api.ts`
 - `test-billy-invoice-response.mjs`
@@ -242,6 +252,7 @@ git commit -m "chore: cleanup workspace"
 ## 🎉 **EXPECTED RESULTS**
 
 After cleanup:
+
 - ✅ 19 unnecessary files deleted
 - ✅ 18 test files properly organized
 - ✅ Cleaner root directory
@@ -260,6 +271,7 @@ Run the first cleanup script:
 ```
 
 **It will:**
+
 1. Show you what will be deleted
 2. Ask for confirmation
 3. Delete files

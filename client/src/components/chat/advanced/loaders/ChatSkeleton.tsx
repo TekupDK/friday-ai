@@ -1,13 +1,18 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Skeleton } from "@/components/ui/skeleton"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
-type SkeletonVariant = 'message' | 'document' | 'sidebar' | 'search' | 'datagrid'
+type SkeletonVariant =
+  | "message"
+  | "document"
+  | "sidebar"
+  | "search"
+  | "datagrid";
 
 interface ChatSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: SkeletonVariant
-  count?: number
-  className?: string
+  variant?: SkeletonVariant;
+  count?: number;
+  className?: string;
 }
 
 const variants: Record<SkeletonVariant, React.ReactNode> = {
@@ -71,49 +76,60 @@ const variants: Record<SkeletonVariant, React.ReactNode> = {
         </div>
       ))}
     </div>
-  )
-}
+  ),
+};
 
-export function ChatSkeleton({ 
-  variant = 'message', 
+export function ChatSkeleton({
+  variant = "message",
   count = 1,
   className,
-  ...props 
+  ...props
 }: ChatSkeletonProps) {
   return (
-    <div 
-      className={cn(
-        "animate-pulse space-y-2",
-        className
-      )} 
-      {...props}
-    >
+    <div className={cn("animate-pulse space-y-2", className)} {...props}>
       {Array.from({ length: count }).map((_, i) => (
-        <React.Fragment key={i}>
-          {variants[variant]}
-        </React.Fragment>
+        <React.Fragment key={i}>{variants[variant]}</React.Fragment>
       ))}
     </div>
-  )
+  );
 }
 
 // Specific skeleton components for convenience
-export function MessageSkeleton({ count = 1, className }: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
-  return <ChatSkeleton variant="message" count={count} className={className} />
+export function MessageSkeleton({
+  count = 1,
+  className,
+}: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return <ChatSkeleton variant="message" count={count} className={className} />;
 }
 
-export function DocumentSkeleton({ count = 1, className }: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
-  return <ChatSkeleton variant="document" count={count} className={className} />
+export function DocumentSkeleton({
+  count = 1,
+  className,
+}: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <ChatSkeleton variant="document" count={count} className={className} />
+  );
 }
 
-export function SidebarSkeleton({ count = 1, className }: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
-  return <ChatSkeleton variant="sidebar" count={count} className={className} />
+export function SidebarSkeleton({
+  count = 1,
+  className,
+}: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return <ChatSkeleton variant="sidebar" count={count} className={className} />;
 }
 
-export function SearchResultsSkeleton({ count = 1, className }: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
-  return <ChatSkeleton variant="search" count={count} className={className} />
+export function SearchResultsSkeleton({
+  count = 1,
+  className,
+}: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return <ChatSkeleton variant="search" count={count} className={className} />;
 }
 
-export function DataGridSkeleton({ count = 1, className }: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
-  return <ChatSkeleton variant="datagrid" count={count} className={className} />
+export function DataGridSkeleton({
+  count = 1,
+  className,
+}: { count?: number } & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <ChatSkeleton variant="datagrid" count={count} className={className} />
+  );
 }

@@ -6,21 +6,21 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Calendar, 
-  UserPlus, 
-  CheckCircle2, 
-  FileText, 
+import {
+  Calendar,
+  UserPlus,
+  CheckCircle2,
+  FileText,
   Mail,
   Sun,
   Clock,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface AIMemoryItem {
   id: string;
-  type: 'lead' | 'task' | 'meeting' | 'invoice' | 'email' | 'info';
+  type: "lead" | "task" | "meeting" | "invoice" | "email" | "info";
   title: string;
   subtitle?: string;
   timestamp: Date;
@@ -43,12 +43,12 @@ const MEMORY_ICONS = {
 } as const;
 
 const MEMORY_COLORS = {
-  lead: 'text-green-600 bg-green-100',
-  task: 'text-blue-600 bg-blue-100',
-  meeting: 'text-purple-600 bg-purple-100',
-  invoice: 'text-yellow-600 bg-yellow-100',
-  email: 'text-gray-600 bg-gray-100',
-  info: 'text-orange-600 bg-orange-100',
+  lead: "text-green-600 bg-green-100",
+  task: "text-blue-600 bg-blue-100",
+  meeting: "text-purple-600 bg-purple-100",
+  invoice: "text-yellow-600 bg-yellow-100",
+  email: "text-gray-600 bg-gray-100",
+  info: "text-orange-600 bg-orange-100",
 } as const;
 
 function getRelativeTime(date: Date): string {
@@ -58,37 +58,45 @@ function getRelativeTime(date: Date): string {
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffMins < 1) return 'Lige nu';
+  if (diffMins < 1) return "Lige nu";
   if (diffMins < 60) return `${diffMins} min siden`;
-  if (diffHours < 24) return `${diffHours} ${diffHours === 1 ? 'time' : 'timer'} siden`;
-  if (diffDays < 7) return `${diffDays} ${diffDays === 1 ? 'dag' : 'dage'} siden`;
-  
-  return date.toLocaleDateString('da-DK', { 
-    day: 'numeric', 
-    month: 'short' 
+  if (diffHours < 24)
+    return `${diffHours} ${diffHours === 1 ? "time" : "timer"} siden`;
+  if (diffDays < 7)
+    return `${diffDays} ${diffDays === 1 ? "dag" : "dage"} siden`;
+
+  return date.toLocaleDateString("da-DK", {
+    day: "numeric",
+    month: "short",
   });
 }
 
-function MemoryItemComponent({ 
-  item, 
-  onClick 
-}: { 
-  item: AIMemoryItem; 
+function MemoryItemComponent({
+  item,
+  onClick,
+}: {
+  item: AIMemoryItem;
   onClick?: () => void;
 }) {
   const Icon = MEMORY_ICONS[item.type];
   const colorClass = MEMORY_COLORS[item.type];
 
   return (
-    <div 
+    <div
       className={cn(
         "flex items-start gap-3 p-3 rounded-lg transition-all border border-transparent",
-        onClick && "cursor-pointer hover:bg-muted/50 hover:border-primary/20 hover:shadow-sm"
+        onClick &&
+          "cursor-pointer hover:bg-muted/50 hover:border-primary/20 hover:shadow-sm"
       )}
       onClick={onClick}
     >
       {/* Icon */}
-      <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center shrink-0 shadow-sm", colorClass)}>
+      <div
+        className={cn(
+          "w-9 h-9 rounded-lg flex items-center justify-center shrink-0 shadow-sm",
+          colorClass
+        )}
+      >
         <Icon className="w-4 h-4" />
       </div>
 
@@ -96,40 +104,47 @@ function MemoryItemComponent({
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-1">
           <p className="text-sm font-semibold truncate">{item.title}</p>
-          <span className="text-xs text-muted-foreground ml-2 shrink-0">{getRelativeTime(item.timestamp)}</span>
+          <span className="text-xs text-muted-foreground ml-2 shrink-0">
+            {getRelativeTime(item.timestamp)}
+          </span>
         </div>
         {item.subtitle && (
-          <p className="text-xs text-muted-foreground truncate">{item.subtitle}</p>
+          <p className="text-xs text-muted-foreground truncate">
+            {item.subtitle}
+          </p>
         )}
       </div>
     </div>
   );
 }
 
-export function AIMemoryPanel({ 
-  items, 
+export function AIMemoryPanel({
+  items,
   onItemClick,
-  className 
+  className,
 }: AIMemoryPanelProps) {
   // Group items by date
-  const groupedItems = items.reduce((acc, item) => {
-    const dateKey = item.timestamp.toDateString();
-    if (!acc[dateKey]) {
-      acc[dateKey] = [];
-    }
-    acc[dateKey].push(item);
-    return acc;
-  }, {} as Record<string, AIMemoryItem[]>);
+  const groupedItems = items.reduce(
+    (acc, item) => {
+      const dateKey = item.timestamp.toDateString();
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(item);
+      return acc;
+    },
+    {} as Record<string, AIMemoryItem[]>
+  );
 
   const today = new Date().toDateString();
   const yesterday = new Date(Date.now() - 86400000).toDateString();
 
   const getDateLabel = (dateKey: string): string => {
-    if (dateKey === today) return 'I dag';
-    if (dateKey === yesterday) return 'I går';
-    return new Date(dateKey).toLocaleDateString('da-DK', { 
-      day: 'numeric', 
-      month: 'long' 
+    if (dateKey === today) return "I dag";
+    if (dateKey === yesterday) return "I går";
+    return new Date(dateKey).toLocaleDateString("da-DK", {
+      day: "numeric",
+      month: "long",
     });
   };
 
@@ -170,7 +185,9 @@ export function AIMemoryPanel({
                     <MemoryItemComponent
                       key={item.id}
                       item={item}
-                      onClick={onItemClick ? () => onItemClick(item) : undefined}
+                      onClick={
+                        onItemClick ? () => onItemClick(item) : undefined
+                      }
                     />
                   ))}
                 </div>
@@ -192,66 +209,70 @@ export function createMemoryItem(
   const timestamp = new Date();
 
   switch (actionType) {
-    case 'create_lead':
+    case "create_lead":
       return {
         id: `lead-${actionData.id}-${timestamp.getTime()}`,
-        type: 'lead',
-        title: 'Oprettet lead:',
+        type: "lead",
+        title: "Oprettet lead:",
         subtitle: actionData.name,
         timestamp,
         messageId,
       };
 
-    case 'create_task':
+    case "create_task":
       return {
         id: `task-${actionData.id}-${timestamp.getTime()}`,
-        type: 'task',
-        title: 'Oprettet opgave:',
+        type: "task",
+        title: "Oprettet opgave:",
         subtitle: actionData.title,
         timestamp,
         messageId,
       };
 
-    case 'book_meeting':
+    case "book_meeting":
       return {
         id: `meeting-${actionData.id}-${timestamp.getTime()}`,
-        type: 'meeting',
-        title: 'Booket møde:',
-        subtitle: actionData.startTime ? new Date(actionData.startTime).toLocaleString('da-DK', {
-          weekday: 'short',
-          hour: '2-digit',
-          minute: '2-digit'
-        }) : undefined,
+        type: "meeting",
+        title: "Booket møde:",
+        subtitle: actionData.startTime
+          ? new Date(actionData.startTime).toLocaleString("da-DK", {
+              weekday: "short",
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          : undefined,
         timestamp,
         messageId,
       };
 
-    case 'create_invoice':
+    case "create_invoice":
       return {
         id: `invoice-${actionData.id}-${timestamp.getTime()}`,
-        type: 'invoice',
-        title: 'Oprettet faktura:',
+        type: "invoice",
+        title: "Oprettet faktura:",
         subtitle: `${actionData.customerName} - ${actionData.amount} kr`,
         timestamp,
         messageId,
       };
 
-    case 'search_email':
+    case "search_email":
       return {
         id: `email-${timestamp.getTime()}`,
-        type: 'email',
-        title: 'Søgte i emails',
+        type: "email",
+        title: "Søgte i emails",
         subtitle: `${actionData.resultCount || 0} resultater`,
         timestamp,
         messageId,
       };
 
-    case 'check_calendar':
+    case "check_calendar":
       return {
         id: `calendar-${timestamp.getTime()}`,
-        type: 'info',
-        title: 'Tjekkede kalender',
-        subtitle: actionData.date ? new Date(actionData.date).toLocaleDateString('da-DK') : undefined,
+        type: "info",
+        title: "Tjekkede kalender",
+        subtitle: actionData.date
+          ? new Date(actionData.date).toLocaleDateString("da-DK")
+          : undefined,
         timestamp,
         messageId,
       };

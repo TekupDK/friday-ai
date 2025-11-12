@@ -5,9 +5,17 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { 
-  Inbox, Send, FileText, Archive, Star, Trash2,
-  Reply, Forward, Flag, Clock
+import {
+  Inbox,
+  Send,
+  FileText,
+  Archive,
+  Star,
+  Trash2,
+  Reply,
+  Forward,
+  Flag,
+  Clock,
 } from "lucide-react";
 
 /**
@@ -31,23 +39,63 @@ interface Email {
 }
 
 const folders = [
-  { id: 'inbox', label: 'Inbox', icon: Inbox, count: 3 },
-  { id: 'sent', label: 'Sent', icon: Send, count: 0 },
-  { id: 'drafts', label: 'Drafts', icon: FileText, count: 1 },
-  { id: 'archive', label: 'Archive', icon: Archive, count: 12 },
-  { id: 'trash', label: 'Trash', icon: Trash2, count: 0 },
+  { id: "inbox", label: "Inbox", icon: Inbox, count: 3 },
+  { id: "sent", label: "Sent", icon: Send, count: 0 },
+  { id: "drafts", label: "Drafts", icon: FileText, count: 1 },
+  { id: "archive", label: "Archive", icon: Archive, count: 12 },
+  { id: "trash", label: "Trash", icon: Trash2, count: 0 },
 ];
 
 const emails: Email[] = [
-  { id: '1', from: 'Matilde Skinneholm', subject: 'Tilbud på rengøring for kontor', preview: 'Hej – vi vil gerne have et tilbud på rengøring for vores kontor i København. Vi er ca. 250 m²...', time: '22:08', unread: true, flagged: true, hasAttachment: false },
-  { id: '2', from: 'Hanne Andersen', subject: 'Follow-up på tidligere mail', preview: 'Hej, jeg følger op på vores tidligere mail vedrørende tilbuddet. Har I haft mulighed for at se på det?', time: '17:39', unread: true, flagged: true, hasAttachment: false },
-  { id: '3', from: 'Rendetalje.dk', subject: 'Booking af besigtigelse', preview: 'Vi kan tirsdag eller torsdag denne uge. Hvad passer jer bedst? Vi er fleksible med tidspunkter.', time: '20:53', unread: false, flagged: false, hasAttachment: true },
-  { id: '4', from: 'Lars Nielsen', subject: 'Møde i morgen kl. 10:00', preview: 'Bekræftelse på mødet i morgen kl. 10 i vores kontor. Jeg medbringer nøgletallene fra sidste måned.', time: 'Igår', unread: false, flagged: false, hasAttachment: false },
+  {
+    id: "1",
+    from: "Matilde Skinneholm",
+    subject: "Tilbud på rengøring for kontor",
+    preview:
+      "Hej – vi vil gerne have et tilbud på rengøring for vores kontor i København. Vi er ca. 250 m²...",
+    time: "22:08",
+    unread: true,
+    flagged: true,
+    hasAttachment: false,
+  },
+  {
+    id: "2",
+    from: "Hanne Andersen",
+    subject: "Follow-up på tidligere mail",
+    preview:
+      "Hej, jeg følger op på vores tidligere mail vedrørende tilbuddet. Har I haft mulighed for at se på det?",
+    time: "17:39",
+    unread: true,
+    flagged: true,
+    hasAttachment: false,
+  },
+  {
+    id: "3",
+    from: "Rendetalje.dk",
+    subject: "Booking af besigtigelse",
+    preview:
+      "Vi kan tirsdag eller torsdag denne uge. Hvad passer jer bedst? Vi er fleksible med tidspunkter.",
+    time: "20:53",
+    unread: false,
+    flagged: false,
+    hasAttachment: true,
+  },
+  {
+    id: "4",
+    from: "Lars Nielsen",
+    subject: "Møde i morgen kl. 10:00",
+    preview:
+      "Bekræftelse på mødet i morgen kl. 10 i vores kontor. Jeg medbringer nøgletallene fra sidste måned.",
+    time: "Igår",
+    unread: false,
+    flagged: false,
+    hasAttachment: false,
+  },
 ];
 
 export function EmailCenterAppleStyle() {
-  const [activeFolder, setActiveFolder] = useState('inbox');
-  const [selectedEmail, setSelectedEmail] = useState<string>('1');
+  const [activeFolder, setActiveFolder] = useState("inbox");
+  const [selectedEmail, setSelectedEmail] = useState<string>("1");
 
   const selected = emails.find(e => e.id === selectedEmail);
 
@@ -80,7 +128,10 @@ export function EmailCenterAppleStyle() {
                         <span>{folder.label}</span>
                       </div>
                       {folder.count > 0 && (
-                        <Badge variant="secondary" className="h-5 min-w-[20px] text-xs">
+                        <Badge
+                          variant="secondary"
+                          className="h-5 min-w-[20px] text-xs"
+                        >
                           {folder.count}
                         </Badge>
                       )}
@@ -95,7 +146,9 @@ export function EmailCenterAppleStyle() {
           <div className="w-[320px] border-r bg-background/80 backdrop-blur-sm">
             <div className="border-b px-4 py-3 flex items-center justify-between">
               <h3 className="font-semibold">Inbox</h3>
-              <Badge variant="outline" className="text-xs">{emails.length}</Badge>
+              <Badge variant="outline" className="text-xs">
+                {emails.length}
+              </Badge>
             </div>
             <ScrollArea className="h-[calc(100%-57px)]">
               {emails.map(email => (
@@ -111,21 +164,33 @@ export function EmailCenterAppleStyle() {
                   )}
                 >
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <span className={cn(
-                      "text-sm truncate",
-                      email.unread ? "font-semibold text-foreground" : "font-medium text-muted-foreground"
-                    )}>
+                    <span
+                      className={cn(
+                        "text-sm truncate",
+                        email.unread
+                          ? "font-semibold text-foreground"
+                          : "font-medium text-muted-foreground"
+                      )}
+                    >
                       {email.from}
                     </span>
                     <div className="flex items-center gap-1 shrink-0">
-                      {email.flagged && <Flag className="h-3 w-3 fill-orange-500 text-orange-500" />}
-                      <span className="text-xs text-muted-foreground">{email.time}</span>
+                      {email.flagged && (
+                        <Flag className="h-3 w-3 fill-orange-500 text-orange-500" />
+                      )}
+                      <span className="text-xs text-muted-foreground">
+                        {email.time}
+                      </span>
                     </div>
                   </div>
-                  <div className={cn(
-                    "text-sm mb-1 truncate",
-                    email.unread ? "font-medium text-foreground" : "text-muted-foreground"
-                  )}>
+                  <div
+                    className={cn(
+                      "text-sm mb-1 truncate",
+                      email.unread
+                        ? "font-medium text-foreground"
+                        : "text-muted-foreground"
+                    )}
+                  >
                     {email.subject}
                   </div>
                   <div className="text-xs text-muted-foreground line-clamp-2">
@@ -144,12 +209,18 @@ export function EmailCenterAppleStyle() {
                 <div className="border-b p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <h2 className="text-xl font-semibold mb-2">{selected.subject}</h2>
+                      <h2 className="text-xl font-semibold mb-2">
+                        {selected.subject}
+                      </h2>
                       <div className="flex items-center gap-2 text-sm">
                         <span className="font-medium">From:</span>
-                        <span className="text-muted-foreground">{selected.from}</span>
+                        <span className="text-muted-foreground">
+                          {selected.from}
+                        </span>
                         <Separator orientation="vertical" className="h-4" />
-                        <span className="text-muted-foreground">{selected.time}</span>
+                        <span className="text-muted-foreground">
+                          {selected.time}
+                        </span>
                       </div>
                     </div>
                     {selected.flagged && (
@@ -183,10 +254,13 @@ export function EmailCenterAppleStyle() {
                   <div className="max-w-2xl">
                     <p className="mb-4">Hej,</p>
                     <p className="mb-4">{selected.preview}</p>
-                    <p className="mb-4">Vi er ca. 250 m² og ønsker ugentlig rengøring.</p>
+                    <p className="mb-4">
+                      Vi er ca. 250 m² og ønsker ugentlig rengøring.
+                    </p>
                     <p className="mb-4">Kan I sende et tilbud?</p>
                     <p className="mt-6">
-                      Venlig hilsen,<br />
+                      Venlig hilsen,
+                      <br />
                       <span className="font-medium">{selected.from}</span>
                     </p>
                   </div>

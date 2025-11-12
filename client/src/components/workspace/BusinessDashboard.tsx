@@ -3,16 +3,30 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { AlertTriangle, BarChart3, TrendingUp, Users, Calendar, DollarSign, AlertCircle, Mail, Phone } from "lucide-react";
+import {
+  AlertTriangle,
+  BarChart3,
+  TrendingUp,
+  Users,
+  Calendar,
+  DollarSign,
+  AlertCircle,
+  Mail,
+  Phone,
+} from "lucide-react";
 import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
 import { trpc } from "@/lib/trpc";
-import { parseCalendarEvent, formatTimeRange, calculateTotalRevenue } from "@/lib/business-logic";
+import {
+  parseCalendarEvent,
+  formatTimeRange,
+  calculateTotalRevenue,
+} from "@/lib/business-logic";
 import { BUSINESS_CONSTANTS, ERROR_MESSAGES } from "@/constants/business";
 import SmartActionBar, { type DashboardData } from "./SmartActionBar";
 
 /**
  * Business Dashboard - Default Workspace View
- * 
+ *
  * Shown when no email is selected.
  * Provides overview of today's activities and urgent actions.
  */
@@ -30,7 +44,7 @@ export function BusinessDashboard() {
     };
 
     updateWidth();
-    
+
     const resizeObserver = new ResizeObserver(updateWidth);
     if (dashboardRef.current) {
       resizeObserver.observe(dashboardRef.current);
@@ -45,10 +59,10 @@ export function BusinessDashboard() {
 
   // Get today's date
   const today = new Date();
-  const dateStr = today.toLocaleDateString('da-DK', { 
-    day: 'numeric', 
-    month: 'short', 
-    year: 'numeric' 
+  const dateStr = today.toLocaleDateString("da-DK", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
 
   // State for business data
@@ -69,12 +83,17 @@ export function BusinessDashboard() {
   const [error, setError] = useState<string | null>(null);
 
   // Fetch real business data
-  const { data: invoices, isLoading: isInvoicesLoading, error: invoicesError } = trpc.inbox.invoices.list.useQuery(
-    undefined,
-    { retry: 1 }
-  );
+  const {
+    data: invoices,
+    isLoading: isInvoicesLoading,
+    error: invoicesError,
+  } = trpc.inbox.invoices.list.useQuery(undefined, { retry: 1 });
 
-  const { data: calendarEvents, isLoading: isCalendarLoading, error: calendarError } = trpc.inbox.calendar.list.useQuery(
+  const {
+    data: calendarEvents,
+    isLoading: isCalendarLoading,
+    error: calendarError,
+  } = trpc.inbox.calendar.list.useQuery(
     {
       timeMin: new Date(today.setHours(0, 0, 0, 0)).toISOString(),
       timeMax: new Date(today.setHours(23, 59, 59, 999)).toISOString(),
@@ -83,17 +102,26 @@ export function BusinessDashboard() {
     { retry: 1 }
   );
 
-  const { data: weekEvents, isLoading: isWeekLoading } = trpc.inbox.calendar.list.useQuery(
-    {
-      timeMin: new Date(today.setDate(today.getDate() - today.getDay())).toISOString(), // Start of week
-      timeMax: new Date(today.setDate(today.getDate() - today.getDay() + 6)).toISOString(), // End of week
-      maxResults: 100,
-    },
-    { retry: 1 }
-  );
+  const { data: weekEvents, isLoading: isWeekLoading } =
+    trpc.inbox.calendar.list.useQuery(
+      {
+        timeMin: new Date(
+          today.setDate(today.getDate() - today.getDay())
+        ).toISOString(), // Start of week
+        timeMax: new Date(
+          today.setDate(today.getDate() - today.getDay() + 6)
+        ).toISOString(), // End of week
+        maxResults: 100,
+      },
+      { retry: 1 }
+    );
 
   // Fetch real leads data
-  const { data: leads, isLoading: isLeadsLoading, error: leadsError } = trpc.inbox.leads.list.useQuery(
+  const {
+    data: leads,
+    isLoading: isLeadsLoading,
+    error: leadsError,
+  } = trpc.inbox.leads.list.useQuery(
     {
       status: "new", // Only get new leads that need reply
     },
@@ -103,7 +131,7 @@ export function BusinessDashboard() {
   // Memoize today's events parsing to avoid unnecessary recalculations
   const todayEvents = useMemo(() => {
     if (!calendarEvents) return [];
-    
+
     return calendarEvents.map(event => {
       const booking = parseCalendarEvent(event);
       return {
@@ -122,7 +150,9 @@ export function BusinessDashboard() {
   // Memoize unpaid invoices count
   const unpaidCount = useMemo(() => {
     if (!invoices) return 0;
-    return invoices.filter(inv => !inv.isPaid && inv.dueDate && new Date(inv.dueDate) < new Date()).length;
+    return invoices.filter(
+      inv => !inv.isPaid && inv.dueDate && new Date(inv.dueDate) < new Date()
+    ).length;
   }, [invoices]);
 
   // Memoize tomorrow events count
@@ -130,7 +160,7 @@ export function BusinessDashboard() {
     if (!weekEvents) return 0;
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
+
     return weekEvents.filter(event => {
       const eventDate = new Date(event.start);
       return eventDate.toDateString() === tomorrow.toDateString();
@@ -139,23 +169,27 @@ export function BusinessDashboard() {
 
   // Memoize week statistics
   const weekStatsData = useMemo(() => {
-    if (!weekEvents) return { bookings: 0, revenue: 0, profit: 0, newLeads: 0, conversion: 0 };
-    
+    if (!weekEvents)
+      return { bookings: 0, revenue: 0, profit: 0, newLeads: 0, conversion: 0 };
+
     const weekBookings = weekEvents.length;
-    
+
     // Filter events for current week and calculate revenue
     const weekStart = new Date(today.setDate(today.getDate() - today.getDay()));
-    const weekEnd = new Date(today.setDate(today.getDate() - today.getDay() + 6));
-    
+    const weekEnd = new Date(
+      today.setDate(today.getDate() - today.getDay() + 6)
+    );
+
     const currentWeekEvents = weekEvents.filter(event => {
       const eventDate = new Date(event.start);
       return eventDate >= weekStart && eventDate <= weekEnd;
     });
-    
+
     const weekRevenue = calculateTotalRevenue(currentWeekEvents);
     const newLeads = Math.round(weekBookings * 1.5);
-    const conversion = weekBookings > 0 ? Math.round((weekBookings / newLeads) * 100) : 0;
-    
+    const conversion =
+      weekBookings > 0 ? Math.round((weekBookings / newLeads) * 100) : 0;
+
     return {
       bookings: weekBookings,
       revenue: Math.round(weekRevenue),
@@ -169,10 +203,10 @@ export function BusinessDashboard() {
   // useEffect(() => {
   //   setIsLoading(true);
   //   setError(null);
-  //   
+  //
   //   try {
   //     // Calculate real leads needing reply
-  //     const leadsNeedingReply = leads ? leads.filter(lead => 
+  //     const leadsNeedingReply = leads ? leads.filter(lead =>
   //       lead.status === "new" || lead.status === "contacted"
   //     ).length : 0;
 
@@ -207,8 +241,12 @@ export function BusinessDashboard() {
             <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-lg">📊 Business Dashboard</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">Fejl ved hentning af business data</p>
-              <p className="text-sm text-red-800 dark:text-red-200 mt-2">{error}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Fejl ved hentning af business data
+              </p>
+              <p className="text-sm text-red-800 dark:text-red-200 mt-2">
+                {error}
+              </p>
             </div>
           </div>
         </Card>
@@ -227,15 +265,23 @@ export function BusinessDashboard() {
   return (
     <div ref={dashboardRef} className="space-y-4">
       {/* Responsive Header */}
-      <Card className={`${isCompact ? 'p-3' : 'p-4'} bg-linear-to-r from-primary/5 to-primary/10 border-primary/20`}>
+      <Card
+        className={`${isCompact ? "p-3" : "p-4"} bg-linear-to-r from-primary/5 to-primary/10 border-primary/20`}
+      >
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
-            <div className={`${isCompact ? 'w-8 h-8' : 'w-10 h-10'} rounded-lg bg-primary/10 flex items-center justify-center`}>
-              <BarChart3 className={`${isCompact ? 'w-4 h-4' : 'w-5 h-5'} text-primary`} />
+            <div
+              className={`${isCompact ? "w-8 h-8" : "w-10 h-10"} rounded-lg bg-primary/10 flex items-center justify-center`}
+            >
+              <BarChart3
+                className={`${isCompact ? "w-4 h-4" : "w-5 h-5"} text-primary`}
+              />
             </div>
             <div>
-              <h3 className={`font-semibold ${isCompact ? 'text-sm' : 'text-lg'} text-foreground`}>
-                {isCompact ? 'Dashboard' : 'Business Dashboard'}
+              <h3
+                className={`font-semibold ${isCompact ? "text-sm" : "text-lg"} text-foreground`}
+              >
+                {isCompact ? "Dashboard" : "Business Dashboard"}
               </h3>
               {!isCompact && (
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -244,25 +290,33 @@ export function BusinessDashboard() {
               )}
             </div>
           </div>
-          
+
           {/* Responsive Quick Stats */}
-          <div className={`flex ${isCompact ? 'flex-col gap-1' : 'flex-row gap-4'} text-right`}>
+          <div
+            className={`flex ${isCompact ? "flex-col gap-1" : "flex-row gap-4"} text-right`}
+          >
             <div>
-              <div className={`${isCompact ? 'text-sm' : 'text-lg'} font-semibold text-primary`}>
+              <div
+                className={`${isCompact ? "text-sm" : "text-lg"} font-semibold text-primary`}
+              >
                 {todayBookings.length}
               </div>
               <div className="text-xs text-muted-foreground">
-                {isCompact ? 'Idag' : 'I dag'}
+                {isCompact ? "Idag" : "I dag"}
               </div>
             </div>
             {!isCompact && (
               <>
                 <div>
-                  <div className="text-lg font-semibold text-green-600">{weekStats.bookings}</div>
+                  <div className="text-lg font-semibold text-green-600">
+                    {weekStats.bookings}
+                  </div>
                   <div className="text-xs text-muted-foreground">Denne uge</div>
                 </div>
                 <div>
-                  <div className="text-lg font-semibold text-orange-600">{unpaidCount}</div>
+                  <div className="text-lg font-semibold text-orange-600">
+                    {unpaidCount}
+                  </div>
                   <div className="text-xs text-muted-foreground">Ubetalte</div>
                 </div>
               </>
@@ -272,12 +326,16 @@ export function BusinessDashboard() {
       </Card>
 
       {/* Responsive Today's Bookings */}
-      <Card className={`${isCompact ? 'p-3' : 'p-4'}`}>
+      <Card className={`${isCompact ? "p-3" : "p-4"}`}>
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Calendar className={`${isCompact ? 'w-3 h-3' : 'w-4 h-4'} text-primary`} />
-            <h4 className={`font-semibold ${isCompact ? 'text-sm' : 'text-base'}`}>
-              {isCompact ? '📅' : '📅 I Dag'}
+            <Calendar
+              className={`${isCompact ? "w-3 h-3" : "w-4 h-4"} text-primary`}
+            />
+            <h4
+              className={`font-semibold ${isCompact ? "text-sm" : "text-base"}`}
+            >
+              {isCompact ? "📅" : "📅 I Dag"}
             </h4>
           </div>
           <Badge variant="outline" className="text-xs">
@@ -294,7 +352,9 @@ export function BusinessDashboard() {
               >
                 <div className="flex items-start justify-between mb-1">
                   <div className="flex-1">
-                    <div className="font-medium text-sm">{booking.customer}</div>
+                    <div className="font-medium text-sm">
+                      {booking.customer}
+                    </div>
                     <div className="text-xs text-muted-foreground">
                       {booking.type} • {booking.duration}
                     </div>
@@ -304,8 +364,17 @@ export function BusinessDashboard() {
                       {booking.time}
                     </Badge>
                     {booking.calendarUrl && (
-                      <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" asChild>
-                        <a href={booking.calendarUrl} target="_blank" rel="noopener noreferrer">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs"
+                        asChild
+                      >
+                        <a
+                          href={booking.calendarUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           📅
                         </a>
                       </Button>
@@ -315,7 +384,7 @@ export function BusinessDashboard() {
                 <div className="flex items-center justify-between mt-2 pt-2 border-t border-border/30">
                   <span className="text-xs text-muted-foreground">Pris:</span>
                   <span className="text-sm font-medium">
-                    {booking.price.toLocaleString('da-DK')} kr
+                    {booking.price.toLocaleString("da-DK")} kr
                   </span>
                 </div>
               </div>
@@ -334,7 +403,7 @@ export function BusinessDashboard() {
                 <span className="text-lg font-bold text-primary">
                   {todayBookings
                     .reduce((sum, b) => sum + b.price, 0)
-                    .toLocaleString('da-DK')}{" "}
+                    .toLocaleString("da-DK")}{" "}
                   kr
                 </span>
               </div>
@@ -357,7 +426,9 @@ export function BusinessDashboard() {
                 <DollarSign className="w-4 h-4 text-red-600" />
                 <span className="text-sm font-medium">Ubetalte fakturaer</span>
               </div>
-              <Badge variant="destructive">{urgentActions.unpaidInvoices}</Badge>
+              <Badge variant="destructive">
+                {urgentActions.unpaidInvoices}
+              </Badge>
             </div>
           )}
 
@@ -411,9 +482,11 @@ export function BusinessDashboard() {
 
           <div className="p-2 rounded-md bg-muted/30 text-center">
             <div className="text-lg font-bold">
-              {weekStats.revenue.toLocaleString('da-DK')}
+              {weekStats.revenue.toLocaleString("da-DK")}
             </div>
-            <div className="text-xs text-muted-foreground mt-1">Revenue (kr)</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              Revenue (kr)
+            </div>
           </div>
 
           <div className="p-2 rounded-md bg-muted/30 text-center">
@@ -425,9 +498,11 @@ export function BusinessDashboard() {
 
           <div className="p-2 rounded-md bg-muted/30 text-center col-span-2">
             <div className="text-lg font-bold text-green-600">
-              {weekStats.profit.toLocaleString('da-DK')} kr
+              {weekStats.profit.toLocaleString("da-DK")} kr
             </div>
-            <div className="text-xs text-muted-foreground mt-1">Estimeret Profit</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              Estimeret Profit
+            </div>
           </div>
         </div>
       </Card>
@@ -439,7 +514,7 @@ export function BusinessDashboard() {
         onAction={async (actionId: string, data: any) => {
           // Handle smart actions
           console.log("Smart action executed:", actionId, data);
-          
+
           switch (actionId) {
             case "view-all-bookings":
               // View all bookings

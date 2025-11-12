@@ -8,6 +8,7 @@
 ## 🎉 HVAD ER 100% FÆRDIGT
 
 ### Backend Infrastructure ✅
+
 - ✅ Git Sync Engine (`server/docs/sync/git-sync-engine.ts`)
 - ✅ WebSocket Hub (`server/docs/ws/websocket-hub.ts`)
 - ✅ Service Wrapper (`server/docs/service.ts`)
@@ -16,6 +17,7 @@
 - ✅ tRPC API Router (14 endpoints)
 
 ### CLI Tool ✅
+
 - ✅ 8 Core Commands (list, create, view, search, edit, delete, status, resolve)
 - ✅ API Client wrapper
 - ✅ Pretty formatters med Chalk
@@ -23,6 +25,7 @@
 - ✅ Interactive prompts med Inquirer
 
 ### Frontend Integration ✅
+
 - ✅ React Hooks (`useDocuments`, `useDocument`, `useDocumentSearch`, `useDocumentComments`, `useConflicts`, `useDocsWebSocket`)
 - ✅ Components:
   - `DocumentList` - Grid view af docs
@@ -44,6 +47,7 @@
 **Valg:** Documentation er på `/docs` som separat full-screen side
 
 **Rationale:**
+
 1. **3-panel er til daglig workflow** (Email/AI/Workspace)
 2. **Docs er administration** - ikke daglig ops
 3. **Behøver fuld skærm** for markdown editing
@@ -51,6 +55,7 @@
 5. **Nemt at finde** via user dropdown menu
 
 **Navigation:**
+
 - User menu → Documentation → `/docs`
 - Back to Workspace → `/`
 
@@ -58,25 +63,26 @@
 
 ## 📊 Komplet Feature Matrix
 
-| Feature | Backend | CLI | Frontend | Status |
-|---------|---------|-----|----------|--------|
-| List documents | ✅ | ✅ | ✅ | 100% |
-| View document | ✅ | ✅ | ✅ | 100% |
-| Create document | ✅ | ✅ | ✅ | 100% |
-| Edit document | ✅ | ✅ | ✅ | 100% |
-| Delete document | ✅ | ✅ | 🔴 | 66% |
-| Search + Facets | ✅ | ✅ | 🔴 | 66% |
-| Comments | ✅ | ✅ | ✅ | 100% |
-| Version History | ✅ | ✅ | 🔴 | 66% |
-| Conflicts | ✅ | ✅ | ✅ | 100% |
-| Git Sync | ✅ | N/A | 🔴 | 66% |
-| WebSocket Live | ✅ | N/A | ✅ | 100% |
-| Templates | N/A | ✅ | 🔴 | 50% |
-| AI Generate | 🔴 | 🔴 | 🔴 | 0% |
-| AI Improve | 🔴 | 🔴 | 🔴 | 0% |
-| AI Summarize | 🔴 | 🔴 | 🔴 | 0% |
+| Feature         | Backend | CLI | Frontend | Status |
+| --------------- | ------- | --- | -------- | ------ |
+| List documents  | ✅      | ✅  | ✅       | 100%   |
+| View document   | ✅      | ✅  | ✅       | 100%   |
+| Create document | ✅      | ✅  | ✅       | 100%   |
+| Edit document   | ✅      | ✅  | ✅       | 100%   |
+| Delete document | ✅      | ✅  | 🔴       | 66%    |
+| Search + Facets | ✅      | ✅  | 🔴       | 66%    |
+| Comments        | ✅      | ✅  | ✅       | 100%   |
+| Version History | ✅      | ✅  | 🔴       | 66%    |
+| Conflicts       | ✅      | ✅  | ✅       | 100%   |
+| Git Sync        | ✅      | N/A | 🔴       | 66%    |
+| WebSocket Live  | ✅      | N/A | ✅       | 100%   |
+| Templates       | N/A     | ✅  | 🔴       | 50%    |
+| AI Generate     | 🔴      | 🔴  | 🔴       | 0%     |
+| AI Improve      | 🔴      | 🔴  | 🔴       | 0%     |
+| AI Summarize    | 🔴      | 🔴  | 🔴       | 0%     |
 
 **Legend:**
+
 - ✅ Fully implemented
 - 🟡 Partially implemented
 - 🔴 Not implemented
@@ -100,6 +106,7 @@ psql $DATABASE_URL -c "\dt friday_ai.*" | grep document
 ```
 
 **Forventet output:**
+
 ```
 friday_ai | documents         | table
 friday_ai | document_changes  | table
@@ -110,6 +117,7 @@ friday_ai | document_conflicts| table
 ### 2. Enable Docs Service
 
 Tilføj til `.env.dev`:
+
 ```env
 DOCS_ENABLE=true
 DOCS_REPO_PATH=./
@@ -127,6 +135,7 @@ pnpm dev
 ```
 
 **Se efter i logs:**
+
 ```
 ✅ [Docs] Service started
 ✅ [GitSync] Initialized
@@ -159,12 +168,14 @@ tekup-docs list
 ### 6. Create First Document
 
 **Via Frontend:**
+
 1. Go to `/docs`
 2. Click "New Document"
 3. Fill in form
 4. Save
 
 **Via CLI:**
+
 ```bash
 tekup-docs create "My First Doc" \
   --category="Test" \
@@ -190,6 +201,7 @@ git log -1 --oneline
 ## 📁 Alle Nye Filer (Total: 28)
 
 ### Backend (7)
+
 - `server/docs/types.ts`
 - `server/docs/sync/git-sync-engine.ts`
 - `server/docs/ws/websocket-hub.ts`
@@ -199,6 +211,7 @@ git log -1 --oneline
 - `drizzle/migrations/create-documentation-tables.sql`
 
 ### CLI (12)
+
 - `cli/tekup-docs/package.json`
 - `cli/tekup-docs/tsconfig.json`
 - `cli/tekup-docs/src/index.ts`
@@ -214,6 +227,7 @@ git log -1 --oneline
 - `cli/tekup-docs/src/utils/formatter.ts`
 
 ### Frontend (8)
+
 - `client/src/pages/docs/DocsPage.tsx`
 - `client/src/components/docs/DocumentList.tsx`
 - `client/src/components/docs/DocumentViewer.tsx`
@@ -229,6 +243,7 @@ git log -1 --oneline
 ## ⏳ Hvad Mangler
 
 ### Minor Frontend Features (2-3 timer)
+
 - Delete confirmation dialog
 - Advanced search UI med filters
 - Version history viewer
@@ -236,6 +251,7 @@ git log -1 --oneline
 - Markdown preview i editor
 
 ### AI Integration (3-4 timer)
+
 - `server/docs/ai/docs-agent.ts`
 - AI generate endpoint
 - AI improve endpoint
@@ -244,12 +260,14 @@ git log -1 --oneline
 - Frontend AI buttons/dialogs
 
 ### Testing (1 uge)
+
 - Unit tests (backend)
 - Unit tests (CLI)
 - Integration tests
 - E2E tests (Playwright)
 
 ### Documentation (1-2 timer)
+
 - API documentation
 - User guide
 - Video tutorial
@@ -261,15 +279,15 @@ git log -1 --oneline
 
 **Overall: 75% Complete**
 
-| Kategori | Progress |
-|----------|----------|
-| Backend | 100% ✅ |
-| Database | 100% ✅ |
-| CLI | 100% ✅ |
-| Frontend Core | 100% ✅ |
-| Frontend Polish | 50% 🟡 |
-| AI Integration | 0% 🔴 |
-| Testing | 0% 🔴 |
+| Kategori        | Progress |
+| --------------- | -------- |
+| Backend         | 100% ✅  |
+| Database        | 100% ✅  |
+| CLI             | 100% ✅  |
+| Frontend Core   | 100% ✅  |
+| Frontend Polish | 50% 🟡   |
+| AI Integration  | 0% 🔴    |
+| Testing         | 0% 🔴    |
 
 **Estimeret tid brugt:** ~10 timer  
 **Estimeret tid tilbage:** ~8-10 timer for 100%
@@ -279,6 +297,7 @@ git log -1 --oneline
 ## 💡 Næste Steps (Prioriteret)
 
 ### Umiddelbart (Nu)
+
 1. ✅ Kør database migration
 2. ✅ Start server med `DOCS_ENABLE=true`
 3. ✅ Test Git sync ved at redigere en `.md` fil
@@ -286,11 +305,13 @@ git log -1 --oneline
 5. ✅ Test CLI commands
 
 ### Kort Sigt (Denne Uge)
+
 1. Add missing dependencies (`react-markdown`, `react-syntax-highlighter`, `date-fns`)
 2. Minor frontend polish
 3. AI integration (generate/improve/summarize)
 
 ### Lang Sigt (Næste Uge)
+
 1. Testing suite
 2. Production deployment
 3. User documentation
@@ -300,18 +321,21 @@ git log -1 --oneline
 ## 🎯 Dependencies at Installere
 
 ### Root Project
+
 ```bash
 # Already installed
 # simple-git, chokidar, ws
 ```
 
 ### CLI
+
 ```bash
 cd cli/tekup-docs
 pnpm install
 ```
 
 ### Frontend (Mangler)
+
 ```bash
 # Til root package.json
 pnpm add react-markdown react-syntax-highlighter date-fns
@@ -323,6 +347,7 @@ pnpm add -D @types/react-syntax-highlighter
 ## 🎨 Screenshots (Når Klar)
 
 ### DocsPage - List View
+
 - Grid layout af documents
 - Search bar
 - Filters
@@ -330,6 +355,7 @@ pnpm add -D @types/react-syntax-highlighter
 - Live status indicator
 
 ### DocsPage - Viewer
+
 - Markdown rendered
 - Syntax highlighting
 - Metadata badges
@@ -337,6 +363,7 @@ pnpm add -D @types/react-syntax-highlighter
 - Edit button
 
 ### DocsPage - Editor
+
 - Form fields (title, category, tags)
 - Markdown textarea
 - Save/Cancel buttons
@@ -351,6 +378,7 @@ usion
 **Status:** Klar til test! 🚀
 
 **Hvad virker:**
+
 - ✅ Backend med Git sync + WebSocket
 - ✅ Database schema + migration
 - ✅ tRPC API (14 endpoints)
@@ -360,6 +388,7 @@ usion
 - ✅ Conflict resolution
 
 **Hvad mangler:**
+
 - Minor frontend polish
 - AI integration
 - Testing

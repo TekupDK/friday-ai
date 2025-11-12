@@ -6,16 +6,25 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { 
-  Calendar, FileText, Users, Mail, Phone, Search,
-  TrendingUp, Clock, MessageSquare, Sparkles, Zap
+import {
+  Calendar,
+  FileText,
+  Users,
+  Mail,
+  Phone,
+  Search,
+  TrendingUp,
+  Clock,
+  MessageSquare,
+  Sparkles,
+  Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 interface Suggestion {
   text: string;
   icon: LucideIcon;
-  category: 'quick' | 'business' | 'info';
+  category: "quick" | "business" | "info";
   gradient: string;
 }
 
@@ -26,24 +35,67 @@ interface WelcomeScreenProps {
 
 const suggestions: Suggestion[] = [
   // Quick Actions
-  { text: "Tjek min kalender i dag", icon: Calendar, category: 'quick', gradient: "from-blue-500 to-cyan-500" },
-  { text: "Søg i mine emails", icon: Mail, category: 'quick', gradient: "from-purple-500 to-pink-500" },
-  { text: "Find nye leads", icon: Users, category: 'quick', gradient: "from-green-500 to-emerald-500" },
-  
+  {
+    text: "Tjek min kalender i dag",
+    icon: Calendar,
+    category: "quick",
+    gradient: "from-blue-500 to-cyan-500",
+  },
+  {
+    text: "Søg i mine emails",
+    icon: Mail,
+    category: "quick",
+    gradient: "from-purple-500 to-pink-500",
+  },
+  {
+    text: "Find nye leads",
+    icon: Users,
+    category: "quick",
+    gradient: "from-green-500 to-emerald-500",
+  },
+
   // Business
-  { text: "Vis ubetalte fakturaer", icon: FileText, category: 'business', gradient: "from-orange-500 to-yellow-500" },
-  { text: "Opret nyt tilbud", icon: TrendingUp, category: 'business', gradient: "from-red-500 to-pink-500" },
-  { text: "Planlæg møde", icon: Clock, category: 'business', gradient: "from-indigo-500 to-purple-500" },
-  
+  {
+    text: "Vis ubetalte fakturaer",
+    icon: FileText,
+    category: "business",
+    gradient: "from-orange-500 to-yellow-500",
+  },
+  {
+    text: "Opret nyt tilbud",
+    icon: TrendingUp,
+    category: "business",
+    gradient: "from-red-500 to-pink-500",
+  },
+  {
+    text: "Planlæg møde",
+    icon: Clock,
+    category: "business",
+    gradient: "from-indigo-500 to-purple-500",
+  },
+
   // Info
-  { text: "Hvad kan Friday?", icon: Sparkles, category: 'info', gradient: "from-cyan-500 to-blue-500" },
-  { text: "Status på opgaver", icon: MessageSquare, category: 'info', gradient: "from-violet-500 to-purple-500" },
+  {
+    text: "Hvad kan Friday?",
+    icon: Sparkles,
+    category: "info",
+    gradient: "from-cyan-500 to-blue-500",
+  },
+  {
+    text: "Status på opgaver",
+    icon: MessageSquare,
+    category: "info",
+    gradient: "from-violet-500 to-purple-500",
+  },
 ];
 
-export function WelcomeScreenUpgraded({ onSuggestionClick, userName }: WelcomeScreenProps) {
-  const quickActions = suggestions.filter(s => s.category === 'quick');
-  const businessActions = suggestions.filter(s => s.category === 'business');
-  const infoActions = suggestions.filter(s => s.category === 'info');
+export function WelcomeScreenUpgraded({
+  onSuggestionClick,
+  userName,
+}: WelcomeScreenProps) {
+  const quickActions = suggestions.filter(s => s.category === "quick");
+  const businessActions = suggestions.filter(s => s.category === "business");
+  const infoActions = suggestions.filter(s => s.category === "info");
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -61,11 +113,12 @@ export function WelcomeScreenUpgraded({ onSuggestionClick, userName }: WelcomeSc
             <Sparkles className="w-7 h-7 text-white" />
           </div>
         </div>
-        
+
         <h1 className="text-3xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-          {getGreeting()}{userName ? `, ${userName}` : ''}!
+          {getGreeting()}
+          {userName ? `, ${userName}` : ""}!
         </h1>
-        
+
         <p className="text-base text-muted-foreground max-w-md">
           Jeg er Friday AI - din intelligente assistent til Rendetalje
         </p>
@@ -91,9 +144,11 @@ export function WelcomeScreenUpgraded({ onSuggestionClick, userName }: WelcomeSc
       <div className="w-full max-w-2xl space-y-4 animate-in fade-in slide-in-from-bottom-3 duration-700">
         <div className="flex items-center gap-2 px-2">
           <Zap className="w-4 h-4 text-yellow-500" />
-          <h3 className="text-sm font-semibold text-foreground">Hurtige Handlinger</h3>
+          <h3 className="text-sm font-semibold text-foreground">
+            Hurtige Handlinger
+          </h3>
         </div>
-        
+
         <div className="grid grid-cols-3 gap-3">
           {quickActions.map((suggestion, i) => {
             const Icon = suggestion.icon;
@@ -111,17 +166,21 @@ export function WelcomeScreenUpgraded({ onSuggestionClick, userName }: WelcomeSc
                 )}
               >
                 {/* Gradient overlay on hover */}
-                <div className={cn(
-                  "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-10 transition-opacity",
-                  suggestion.gradient
-                )} />
-                
-                <div className="relative space-y-3">
-                  <div className={cn(
-                    "w-10 h-10 rounded-lg bg-linear-to-br flex items-center justify-center shadow-md",
-                    "group-hover:scale-110 transition-transform",
+                <div
+                  className={cn(
+                    "absolute inset-0 bg-linear-to-br opacity-0 group-hover:opacity-10 transition-opacity",
                     suggestion.gradient
-                  )}>
+                  )}
+                />
+
+                <div className="relative space-y-3">
+                  <div
+                    className={cn(
+                      "w-10 h-10 rounded-lg bg-linear-to-br flex items-center justify-center shadow-md",
+                      "group-hover:scale-110 transition-transform",
+                      suggestion.gradient
+                    )}
+                  >
                     <Icon className="w-5 h-5 text-white" />
                   </div>
                   <p className="text-sm font-medium text-foreground">
@@ -140,7 +199,7 @@ export function WelcomeScreenUpgraded({ onSuggestionClick, userName }: WelcomeSc
           <TrendingUp className="w-4 h-4 text-blue-500" />
           <h3 className="text-sm font-semibold text-foreground">Business</h3>
         </div>
-        
+
         <div className="grid grid-cols-3 gap-2">
           {businessActions.map((suggestion, i) => {
             const Icon = suggestion.icon;
@@ -150,14 +209,18 @@ export function WelcomeScreenUpgraded({ onSuggestionClick, userName }: WelcomeSc
                 onClick={() => onSuggestionClick(suggestion.text)}
                 className="group flex items-center gap-3 px-4 py-3 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-muted/50 transition-all text-left"
               >
-                <div className={cn(
-                  "w-8 h-8 rounded-lg bg-linear-to-br flex items-center justify-center shadow-sm shrink-0",
-                  "group-hover:scale-110 transition-transform",
-                  suggestion.gradient
-                )}>
+                <div
+                  className={cn(
+                    "w-8 h-8 rounded-lg bg-linear-to-br flex items-center justify-center shadow-sm shrink-0",
+                    "group-hover:scale-110 transition-transform",
+                    suggestion.gradient
+                  )}
+                >
                   <Icon className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-sm font-medium truncate">{suggestion.text}</span>
+                <span className="text-sm font-medium truncate">
+                  {suggestion.text}
+                </span>
               </button>
             );
           })}

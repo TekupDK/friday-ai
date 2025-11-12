@@ -3,7 +3,7 @@
  * Shared types for the real-time documentation system
  */
 
-import { z } from 'zod';
+import { z } from "zod";
 
 // ============================================================================
 // Core Document Types
@@ -34,7 +34,9 @@ export const CreateDocumentSchema = DocumentSchema.omit({
 
 export type CreateDocument = z.infer<typeof CreateDocumentSchema>;
 
-export const UpdateDocumentSchema = DocumentSchema.partial().required({ id: true });
+export const UpdateDocumentSchema = DocumentSchema.partial().required({
+  id: true,
+});
 
 export type UpdateDocument = z.infer<typeof UpdateDocumentSchema>;
 
@@ -46,7 +48,7 @@ export const DocumentChangeSchema = z.object({
   id: z.string().uuid(),
   document_id: z.string().uuid(),
   user_id: z.string(),
-  operation: z.enum(['create', 'update', 'delete']),
+  operation: z.enum(["create", "update", "delete"]),
   diff: z.string(),
   git_hash: z.string().optional(),
   timestamp: z.date(),
@@ -97,7 +99,7 @@ export type Presence = z.infer<typeof PresenceSchema>;
 // ============================================================================
 
 export const SyncStatusSchema = z.object({
-  status: z.enum(['idle', 'syncing', 'conflict', 'error']),
+  status: z.enum(["idle", "syncing", "conflict", "error"]),
   last_sync: z.date().optional(),
   pending_changes: z.number().int().nonnegative(),
   conflicts: z.array(z.string()),
@@ -119,7 +121,7 @@ export type Conflict = z.infer<typeof ConflictSchema>;
 
 export const ConflictResolutionSchema = z.object({
   document_id: z.string().uuid(),
-  resolution: z.enum(['accept_local', 'accept_remote', 'manual']),
+  resolution: z.enum(["accept_local", "accept_remote", "manual"]),
   merged_content: z.string().optional(),
 });
 
@@ -130,19 +132,19 @@ export type ConflictResolution = z.infer<typeof ConflictResolutionSchema>;
 // ============================================================================
 
 export type WSClientEvent =
-  | { type: 'doc:subscribe'; document_id: string }
-  | { type: 'doc:unsubscribe'; document_id: string }
-  | { type: 'doc:edit'; document_id: string; user_id: string }
-  | { type: 'comment:add'; comment: CreateComment }
-  | { type: 'presence:update'; presence: Presence };
+  | { type: "doc:subscribe"; document_id: string }
+  | { type: "doc:unsubscribe"; document_id: string }
+  | { type: "doc:edit"; document_id: string; user_id: string }
+  | { type: "comment:add"; comment: CreateComment }
+  | { type: "presence:update"; presence: Presence };
 
 export type WSServerEvent =
-  | { type: 'doc:updated'; document: Document }
-  | { type: 'doc:conflict'; conflict: Conflict }
-  | { type: 'comment:new'; comment: Comment }
-  | { type: 'presence:joined'; user_id: string; document_id: string }
-  | { type: 'presence:left'; user_id: string; document_id: string }
-  | { type: 'sync:status'; status: SyncStatus };
+  | { type: "doc:updated"; document: Document }
+  | { type: "doc:conflict"; conflict: Conflict }
+  | { type: "comment:new"; comment: Comment }
+  | { type: "presence:joined"; user_id: string; document_id: string }
+  | { type: "presence:left"; user_id: string; document_id: string }
+  | { type: "sync:status"; status: SyncStatus };
 
 // ============================================================================
 // Search Types
@@ -189,7 +191,9 @@ export type AIGenerateRequest = z.infer<typeof AIGenerateRequestSchema>;
 
 export const AIImproveRequestSchema = z.object({
   document_id: z.string().uuid(),
-  focus_areas: z.array(z.enum(['clarity', 'completeness', 'examples', 'structure'])).optional(),
+  focus_areas: z
+    .array(z.enum(["clarity", "completeness", "examples", "structure"]))
+    .optional(),
 });
 
 export type AIImproveRequest = z.infer<typeof AIImproveRequestSchema>;
@@ -215,17 +219,17 @@ export type AIResponse = z.infer<typeof AIResponseSchema>;
 
 export const CLICommandSchema = z.object({
   command: z.enum([
-    'list',
-    'create',
-    'edit',
-    'delete',
-    'search',
-    'view',
-    'sync',
-    'push',
-    'pull',
-    'status',
-    'resolve',
+    "list",
+    "create",
+    "edit",
+    "delete",
+    "search",
+    "view",
+    "sync",
+    "push",
+    "pull",
+    "status",
+    "resolve",
   ]),
   args: z.array(z.string()),
   options: z.record(z.string(), z.any()),
@@ -266,7 +270,7 @@ export type BatchOperationResult = z.infer<typeof BatchOperationResultSchema>;
 // ============================================================================
 
 export const ExportConfigSchema = z.object({
-  format: z.enum(['markdown', 'html', 'pdf']),
+  format: z.enum(["markdown", "html", "pdf"]),
   documents: z.array(z.string().uuid()).optional(),
   category: z.string().optional(),
   include_toc: z.boolean().default(true),

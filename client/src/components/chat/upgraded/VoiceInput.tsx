@@ -14,12 +14,16 @@ interface VoiceInputProps {
   className?: string;
 }
 
-export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputProps) {
+export function VoiceInput({
+  onTranscript,
+  onAudioBlob,
+  className,
+}: VoiceInputProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [duration, setDuration] = useState(0);
   const [audioLevel, setAudioLevel] = useState(0);
-  
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -30,14 +34,15 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
     return () => {
       // Cleanup
       if (timerRef.current) clearInterval(timerRef.current);
-      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      if (animationFrameRef.current)
+        cancelAnimationFrame(animationFrameRef.current);
     };
   }, []);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
+
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
@@ -53,18 +58,21 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
       // Start visualization
       visualizeAudio();
 
-      mediaRecorder.ondataavailable = (event) => {
+      mediaRecorder.ondataavailable = event => {
         audioChunksRef.current.push(event.data);
       };
 
       mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        const audioBlob = new Blob(audioChunksRef.current, {
+          type: "audio/webm",
+        });
         onAudioBlob?.(audioBlob);
-        
+
         // Simulate transcription (replace with real API)
         setIsProcessing(true);
         setTimeout(() => {
-          const mockTranscript = "Dette er en test transkription af tale input.";
+          const mockTranscript =
+            "Dette er en test transkription af tale input.";
           onTranscript?.(mockTranscript);
           setIsProcessing(false);
         }, 1500);
@@ -81,10 +89,9 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
       timerRef.current = setInterval(() => {
         setDuration(prev => prev + 1);
       }, 1000);
-
     } catch (error) {
-      console.error('Microphone access denied:', error);
-      alert('Kan ikke få adgang til mikrofon');
+      console.error("Microphone access denied:", error);
+      alert("Kan ikke få adgang til mikrofon");
     }
   };
 
@@ -92,12 +99,12 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
-      
+
       if (timerRef.current) {
         clearInterval(timerRef.current);
         timerRef.current = null;
       }
-      
+
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
@@ -109,10 +116,10 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
     if (!analyserRef.current) return;
 
     const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
-    
+
     const animate = () => {
       if (!analyserRef.current) return;
-      
+
       analyserRef.current.getByteFrequencyData(dataArray);
       const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
       setAudioLevel(average / 255); // Normalize to 0-1
@@ -126,16 +133,18 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   if (isProcessing) {
     return (
-      <div className={cn(
-        "flex items-center gap-3 p-4 rounded-xl border",
-        "bg-linear-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20",
-        className
-      )}>
+      <div
+        className={cn(
+          "flex items-center gap-3 p-4 rounded-xl border",
+          "bg-linear-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20",
+          className
+        )}
+      >
         <Loader2 className="w-5 h-5 text-purple-600 animate-spin" />
         <span className="text-sm font-medium">Transkriberer...</span>
       </div>
@@ -159,12 +168,14 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
   }
 
   return (
-    <div className={cn(
-      "flex items-center gap-4 p-4 rounded-xl border-2 border-red-500",
-      "bg-linear-to-r from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20",
-      "animate-in fade-in zoom-in-95",
-      className
-    )}>
+    <div
+      className={cn(
+        "flex items-center gap-4 p-4 rounded-xl border-2 border-red-500",
+        "bg-linear-to-r from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20",
+        "animate-in fade-in zoom-in-95",
+        className
+      )}
+    >
       {/* Pulsing Mic Icon */}
       <div className="relative">
         <div className="w-12 h-12 rounded-full bg-linear-to-br from-red-500 to-pink-600 flex items-center justify-center shadow-lg">
@@ -181,7 +192,7 @@ export function VoiceInput({ onTranscript, onAudioBlob, className }: VoiceInputP
             className="flex-1 bg-linear-to-t from-red-500 to-pink-600 rounded-full transition-all duration-100"
             style={{
               height: `${Math.max(4, audioLevel * 40 * (0.5 + Math.random() * 0.5))}px`,
-              opacity: 0.5 + audioLevel * 0.5
+              opacity: 0.5 + audioLevel * 0.5,
             }}
           />
         ))}

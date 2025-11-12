@@ -12,20 +12,41 @@ async function checkTables() {
     // Set search path
     await client`SET search_path TO ${client(schema)}`;
 
-    // Check if customer_profiles exists
-    const result = await client`
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = ${schema}
-        AND table_name = 'customer_profiles'
-    `;
+    const tablesToCheck = [
+      "customer_profiles",
+      "customer_properties",
+      "service_templates",
+      "bookings",
+    ];
 
-    if (result.length > 0) {
-      console.log(`✅ Table customer_profiles exists in schema ${schema}`);
-    } else {
-      console.log(`❌ Table customer_profiles NOT found in schema ${schema}`);
+    for (const tbl of tablesToCheck) {
+      const result = await client`
+        SELECT table_name 
+        FROM information_schema.tables 
+        WHERE table_schema = ${schema}
+          AND table_name = ${tbl}
+      `;
 
-      // List all tables in the schema
+      if (result.length > 0) {
+        console.log(`✅ Table ${tbl} exists in schema ${schema}`);
+      } else {
+        console.log(`❌ Table ${tbl} NOT found in schema ${schema}`);
+      }
+    }
+
+    // If any are missing, list all tables for debugging
+    const missing = [];
+    for (const tbl of tablesToCheck) {
+      const check = await client`
+        SELECT table_name 
+        FROM information_schema.tables 
+        WHERE table_schema = ${schema}
+          AND table_name = ${tbl}
+      `;
+      if (check.length === 0) missing.push(tbl);
+    }
+
+    if (missing.length) {
       const allTables = await client`
         SELECT table_name 
         FROM information_schema.tables 

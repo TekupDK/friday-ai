@@ -64,11 +64,13 @@ npm run dev
 **Symptom:** Ingen `[EmailTab]` eller `[SmartWorkspace]` logs
 
 **Mulige årsager:**
+
 1. Dev server ikke startet korrekt
 2. Browser cache
 3. TypeScript compile errors
 
 **Løsning:**
+
 ```bash
 # Stop server (Ctrl+C)
 # Clear cache
@@ -81,11 +83,13 @@ npm run dev
 **Symptom:** Ser `[EmailTab] Setting selected email` men IKKE `[SmartWorkspace] useEffect triggered`
 
 **Mulige årsager:**
+
 1. SmartWorkspacePanel ikke mounted
 2. WorkflowPanelV2 ikke brugt i WorkspaceLayout
 3. EmailContext ikke delt korrekt
 
 **Løsning:**
+
 ```typescript
 // Check WorkspaceLayout.tsx bruger WorkflowPanelV2
 // Check App.tsx bruger WorkspaceLayout (ikke ChatInterface)
@@ -96,15 +100,17 @@ npm run dev
 **Symptom:** Ser `[SmartWorkspace] No email selected, showing dashboard`
 
 **Mulige årsager:**
+
 1. `emailState.selectedEmail` er null/undefined
 2. EmailContext ikke opdateret korrekt
 3. Timing issue
 
 **Løsning:**
+
 ```javascript
 // I console, check EmailContext state:
 // (Kun for debugging - dette virker ikke i prod)
-console.log('Email Context:', window.__emailContext);
+console.log("Email Context:", window.__emailContext);
 ```
 
 ### Problem 4: Context detected men workspace skifter ikke
@@ -112,11 +118,13 @@ console.log('Email Context:', window.__emailContext);
 **Symptom:** Ser `[SmartWorkspace] Context detected: lead` men workspace viser stadig dashboard
 
 **Mulige årsager:**
+
 1. `setContext()` virker ikke
 2. Component render issue
 3. State update timing
 
 **Løsning:**
+
 ```typescript
 // Check SmartWorkspacePanel renderWorkspaceContent()
 // Verify switch statement har alle cases
@@ -189,6 +197,7 @@ setSelectedEmail: (email: EmailContextState['selectedEmail']) => void;
 **Setup:** Find email med "rengoring.nu" i from eller "Leads" label
 
 **Expected logs:**
+
 ```javascript
 [EmailTab] Setting selected email: { ..., from: "...@rengoring.nu", labels: ["Leads"] }
 [SmartWorkspace] useEffect triggered
@@ -204,6 +213,7 @@ setSelectedEmail: (email: EmailContextState['selectedEmail']) => void;
 **Setup:** Find email med "I kalender" label
 
 **Expected logs:**
+
 ```javascript
 [EmailTab] Setting selected email: { ..., labels: ["I kalender"] }
 [SmartWorkspace] Context detected: booking
@@ -216,6 +226,7 @@ setSelectedEmail: (email: EmailContextState['selectedEmail']) => void;
 **Setup:** Find email med "Finance" label eller "faktura" i subject
 
 **Expected logs:**
+
 ```javascript
 [EmailTab] Setting selected email: { ..., labels: ["Finance"] }
 [SmartWorkspace] Context detected: invoice
@@ -245,13 +256,16 @@ setSelectedEmail: (email: EmailContextState['selectedEmail']) => void;
 
 ```javascript
 // Check if EmailContext is available
-console.log('EmailContext:', window.__emailContext);
+console.log("EmailContext:", window.__emailContext);
 
 // Check current route
-console.log('Current route:', window.location.pathname);
+console.log("Current route:", window.location.pathname);
 
 // Check if WorkspaceLayout is mounted
-console.log('WorkspaceLayout:', document.querySelector('[data-workspace-layout]'));
+console.log(
+  "WorkspaceLayout:",
+  document.querySelector("[data-workspace-layout]")
+);
 ```
 
 ---
@@ -331,6 +345,7 @@ Du ved det virker når:
 ## 🎊 Næste Skridt
 
 Når debugging virker:
+
 1. Test alle 5 workspace states
 2. Test forskellige email typer
 3. Verify context detection logic

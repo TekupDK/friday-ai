@@ -7,7 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { User, Mail, Phone, Calendar, MapPin, Briefcase, Shield, Settings, Edit3, Save, Camera, Award, Activity, Clock } from "lucide-react";
+import {
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  MapPin,
+  Briefcase,
+  Shield,
+  Settings,
+  Edit3,
+  Save,
+  Camera,
+  Award,
+  Activity,
+  Clock,
+} from "lucide-react";
 import { useState } from "react";
 
 export interface UserProfileData {
@@ -21,7 +36,7 @@ export interface UserProfileData {
   location: string;
   joinDate: string;
   lastActive: string;
-  status: 'online' | 'away' | 'busy' | 'offline';
+  status: "online" | "away" | "busy" | "offline";
   bio?: string;
   skills: string[];
   stats: {
@@ -52,49 +67,57 @@ interface UserProfileProps {
   onPasswordChange?: () => void;
 }
 
-export function UserProfile({ 
+export function UserProfile({
   profile,
   onEdit,
   onSave,
   onAvatarChange,
-  onPasswordChange 
+  onPasswordChange,
 }: UserProfileProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedProfile, setEditedProfile] = useState<UserProfileData | null>(null);
+  const [editedProfile, setEditedProfile] = useState<UserProfileData | null>(
+    null
+  );
 
   // Default user profile
   const defaultProfile: UserProfileData = {
-    id: '1',
-    name: 'John Smith',
-    email: 'john.smith@tekup.dk',
-    phone: '+45 1234 5678',
-    avatar: '',
-    role: 'Senior Consultant',
-    department: 'Customer Success',
-    location: 'Aarhus, Denmark',
-    joinDate: '15. januar 2023',
-    lastActive: 'Lige nu',
-    status: 'online',
-    bio: 'Erfaren konsulent med speciale i kunde succes og procesoptimering. Hjælper virksomheder med at implementere effektive workflows.',
-    skills: ['Kunde Success', 'Procesoptimering', 'Project Management', 'AI Integration', 'Data Analyse'],
+    id: "1",
+    name: "John Smith",
+    email: "john.smith@tekup.dk",
+    phone: "+45 1234 5678",
+    avatar: "",
+    role: "Senior Consultant",
+    department: "Customer Success",
+    location: "Aarhus, Denmark",
+    joinDate: "15. januar 2023",
+    lastActive: "Lige nu",
+    status: "online",
+    bio: "Erfaren konsulent med speciale i kunde succes og procesoptimering. Hjælper virksomheder med at implementere effektive workflows.",
+    skills: [
+      "Kunde Success",
+      "Procesoptimering",
+      "Project Management",
+      "AI Integration",
+      "Data Analyse",
+    ],
     stats: {
       emailsSent: 1234,
       documentsCreated: 567,
       meetingsBooked: 234,
-      tasksCompleted: 890
+      tasksCompleted: 890,
     },
     preferences: {
-      language: 'Dansk',
-      timezone: 'CET (GMT+1)',
-      theme: 'Light',
-      notifications: true
+      language: "Dansk",
+      timezone: "CET (GMT+1)",
+      theme: "Light",
+      notifications: true,
     },
     security: {
       twoFactorEnabled: true,
-      lastLogin: 'I dag kl. 09:15',
+      lastLogin: "I dag kl. 09:15",
       loginCount: 156,
-      activeSessions: 2
-    }
+      activeSessions: 2,
+    },
   };
 
   const userProfile = profile || defaultProfile;
@@ -117,31 +140,41 @@ export function UserProfile({
     onEdit?.(field, value);
   };
 
-  const getStatusColor = (status: UserProfileData['status']) => {
+  const getStatusColor = (status: UserProfileData["status"]) => {
     switch (status) {
-      case 'online': return 'bg-green-500';
-      case 'away': return 'bg-yellow-500';
-      case 'busy': return 'bg-red-500';
-      case 'offline': return 'bg-gray-500';
-      default: return 'bg-gray-500';
+      case "online":
+        return "bg-green-500";
+      case "away":
+        return "bg-yellow-500";
+      case "busy":
+        return "bg-red-500";
+      case "offline":
+        return "bg-gray-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const getStatusLabel = (status: UserProfileData['status']) => {
+  const getStatusLabel = (status: UserProfileData["status"]) => {
     switch (status) {
-      case 'online': return 'Online';
-      case 'away': return 'Away';
-      case 'busy': return 'Busy';
-      case 'offline': return 'Offline';
-      default: return status;
+      case "online":
+        return "Online";
+      case "away":
+        return "Away";
+      case "busy":
+        return "Busy";
+      case "offline":
+        return "Offline";
+      default:
+        return status;
     }
   };
 
   const getRoleColor = (role: string) => {
-    if (role.includes('Senior')) return 'bg-purple-500';
-    if (role.includes('Manager')) return 'bg-blue-500';
-    if (role.includes('Lead')) return 'bg-green-500';
-    return 'bg-gray-500';
+    if (role.includes("Senior")) return "bg-purple-500";
+    if (role.includes("Manager")) return "bg-blue-500";
+    if (role.includes("Lead")) return "bg-green-500";
+    return "bg-gray-500";
   };
 
   return (
@@ -155,7 +188,9 @@ export function UserProfile({
             </div>
             <div>
               <h4 className="font-semibold">User Profile</h4>
-              <p className="text-xs text-muted-foreground">Bruger profil og konto information</p>
+              <p className="text-xs text-muted-foreground">
+                Bruger profil og konto information
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -163,7 +198,11 @@ export function UserProfile({
               {getStatusLabel(currentProfile.status)}
             </Badge>
             <Button size="sm" variant="ghost" onClick={handleEdit}>
-              {isEditing ? <Save className="w-3 h-3" /> : <Edit3 className="w-3 h-3" />}
+              {isEditing ? (
+                <Save className="w-3 h-3" />
+              ) : (
+                <Edit3 className="w-3 h-3" />
+              )}
             </Button>
           </div>
         </div>
@@ -175,31 +214,33 @@ export function UserProfile({
               {currentProfile.name.charAt(0)}
             </div>
             <button
-              onClick={() => onAvatarChange?.('')}
+              onClick={() => onAvatarChange?.("")}
               className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50"
             >
               <Camera className="w-3 h-3 text-gray-600" />
             </button>
           </div>
-          
+
           <div className="flex-1">
             {isEditing ? (
               <Input
                 value={currentProfile.name}
-                onChange={(e) => handleFieldChange('name', e.target.value)}
+                onChange={e => handleFieldChange("name", e.target.value)}
                 className="text-lg font-semibold mb-1"
               />
             ) : (
-              <h5 className="text-lg font-semibold mb-1">{currentProfile.name}</h5>
+              <h5 className="text-lg font-semibold mb-1">
+                {currentProfile.name}
+              </h5>
             )}
-            
+
             <div className="flex items-center gap-2 mb-2">
               <Badge className={getRoleColor(currentProfile.role)}>
                 {currentProfile.role}
               </Badge>
               <Badge variant="outline">{currentProfile.department}</Badge>
             </div>
-            
+
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <span>{currentProfile.location}</span>
               <span>•</span>
@@ -219,7 +260,7 @@ export function UserProfile({
                 {isEditing ? (
                   <Input
                     value={currentProfile.email}
-                    onChange={(e) => handleFieldChange('email', e.target.value)}
+                    onChange={e => handleFieldChange("email", e.target.value)}
                     className="text-sm h-6"
                   />
                 ) : (
@@ -227,23 +268,25 @@ export function UserProfile({
                 )}
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3 p-2 rounded-lg bg-background border border-border">
               <Phone className="w-4 h-4 text-green-600" />
               <div className="flex-1">
                 <span className="text-xs text-muted-foreground">Telefon</span>
                 {isEditing ? (
                   <Input
-                    value={currentProfile.phone || ''}
-                    onChange={(e) => handleFieldChange('phone', e.target.value)}
+                    value={currentProfile.phone || ""}
+                    onChange={e => handleFieldChange("phone", e.target.value)}
                     className="text-sm h-6"
                   />
                 ) : (
-                  <p className="text-sm">{currentProfile.phone || 'Ikke angivet'}</p>
+                  <p className="text-sm">
+                    {currentProfile.phone || "Ikke angivet"}
+                  </p>
                 )}
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3 p-2 rounded-lg bg-background border border-border">
               <MapPin className="w-4 h-4 text-orange-600" />
               <div className="flex-1">
@@ -259,15 +302,15 @@ export function UserProfile({
           <h5 className="text-sm font-semibold">Bio:</h5>
           {isEditing ? (
             <textarea
-              value={currentProfile.bio || ''}
-              onChange={(e) => handleFieldChange('bio', e.target.value)}
+              value={currentProfile.bio || ""}
+              onChange={e => handleFieldChange("bio", e.target.value)}
               className="w-full p-2 border rounded-lg text-sm resize-none"
               rows={3}
               placeholder="Fortæl lidt om dig selv..."
             />
           ) : (
             <p className="text-sm text-muted-foreground p-2 rounded-lg bg-background border border-border">
-              {currentProfile.bio || 'Ingen bio tilføjet'}
+              {currentProfile.bio || "Ingen bio tilføjet"}
             </p>
           )}
         </div>
@@ -292,25 +335,33 @@ export function UserProfile({
               <p className="font-bold text-blue-700 dark:text-blue-300">
                 {currentProfile.stats.emailsSent}
               </p>
-              <p className="text-xs text-blue-600 dark:text-blue-400">Emails sendt</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400">
+                Emails sendt
+              </p>
             </div>
             <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950/20 text-center">
               <p className="font-bold text-green-700 dark:text-green-300">
                 {currentProfile.stats.documentsCreated}
               </p>
-              <p className="text-xs text-green-600 dark:text-green-400">Dokumenter oprettet</p>
+              <p className="text-xs text-green-600 dark:text-green-400">
+                Dokumenter oprettet
+              </p>
             </div>
             <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/20 text-center">
               <p className="font-bold text-purple-700 dark:text-purple-300">
                 {currentProfile.stats.meetingsBooked}
               </p>
-              <p className="text-xs text-purple-600 dark:text-purple-400">Møder booket</p>
+              <p className="text-xs text-purple-600 dark:text-purple-400">
+                Møder booket
+              </p>
             </div>
             <div className="p-2 rounded-lg bg-orange-50 dark:bg-orange-950/20 text-center">
               <p className="font-bold text-orange-700 dark:text-orange-300">
                 {currentProfile.stats.tasksCompleted}
               </p>
-              <p className="text-xs text-orange-600 dark:text-orange-400">Opgaver fuldført</p>
+              <p className="text-xs text-orange-600 dark:text-orange-400">
+                Opgaver fuldført
+              </p>
             </div>
           </div>
         </div>
@@ -321,20 +372,32 @@ export function UserProfile({
           <div className="space-y-1">
             <div className="flex justify-between items-center p-2 rounded-lg bg-background border border-border">
               <span className="text-sm">Sprog</span>
-              <Badge variant="outline">{currentProfile.preferences.language}</Badge>
+              <Badge variant="outline">
+                {currentProfile.preferences.language}
+              </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-background border border-border">
               <span className="text-sm">Tidszone</span>
-              <Badge variant="outline">{currentProfile.preferences.timezone}</Badge>
+              <Badge variant="outline">
+                {currentProfile.preferences.timezone}
+              </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-background border border-border">
               <span className="text-sm">Tema</span>
-              <Badge variant="outline">{currentProfile.preferences.theme}</Badge>
+              <Badge variant="outline">
+                {currentProfile.preferences.theme}
+              </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-background border border-border">
               <span className="text-sm">Notifikationer</span>
-              <Badge className={currentProfile.preferences.notifications ? 'bg-green-500' : 'bg-red-500'}>
-                {currentProfile.preferences.notifications ? 'Aktiv' : 'Inaktiv'}
+              <Badge
+                className={
+                  currentProfile.preferences.notifications
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }
+              >
+                {currentProfile.preferences.notifications ? "Aktiv" : "Inaktiv"}
               </Badge>
             </div>
           </div>
@@ -349,8 +412,14 @@ export function UserProfile({
                 <Shield className="w-4 h-4 text-gray-600" />
                 <span className="text-sm">To-faktor auth</span>
               </div>
-              <Badge className={currentProfile.security.twoFactorEnabled ? 'bg-green-500' : 'bg-red-500'}>
-                {currentProfile.security.twoFactorEnabled ? 'Aktiv' : 'Inaktiv'}
+              <Badge
+                className={
+                  currentProfile.security.twoFactorEnabled
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }
+              >
+                {currentProfile.security.twoFactorEnabled ? "Aktiv" : "Inaktiv"}
               </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-background border border-border">
@@ -358,14 +427,18 @@ export function UserProfile({
                 <Clock className="w-4 h-4 text-gray-600" />
                 <span className="text-sm">Seneste login</span>
               </div>
-              <span className="text-xs text-muted-foreground">{currentProfile.security.lastLogin}</span>
+              <span className="text-xs text-muted-foreground">
+                {currentProfile.security.lastLogin}
+              </span>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-background border border-border">
               <div className="flex items-center gap-2">
                 <Activity className="w-4 h-4 text-gray-600" />
                 <span className="text-sm">Aktive sessioner</span>
               </div>
-              <Badge variant="outline">{currentProfile.security.activeSessions}</Badge>
+              <Badge variant="outline">
+                {currentProfile.security.activeSessions}
+              </Badge>
             </div>
           </div>
         </div>
@@ -375,14 +448,22 @@ export function UserProfile({
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-blue-600" />
             <span className="text-xs text-blue-700 dark:text-blue-400">
-              Senest aktiv: {currentProfile.lastActive} • {currentProfile.security.loginCount} logins totalt
+              Senest aktiv: {currentProfile.lastActive} •{" "}
+              {currentProfile.security.loginCount} logins totalt
             </span>
           </div>
         </div>
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-2 pt-2 border-t">
-          <Button onClick={handleEdit} className={isEditing ? "bg-green-600" : "bg-linear-to-r from-blue-600 to-indigo-600"}>
+          <Button
+            onClick={handleEdit}
+            className={
+              isEditing
+                ? "bg-green-600"
+                : "bg-linear-to-r from-blue-600 to-indigo-600"
+            }
+          >
             {isEditing ? (
               <>
                 <Save className="w-4 h-4 mr-2" />

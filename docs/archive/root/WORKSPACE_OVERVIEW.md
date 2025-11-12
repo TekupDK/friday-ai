@@ -19,6 +19,7 @@
 ### 🔧 **1. CORE APPLICATION CODE**
 
 #### **Client (Frontend)**
+
 ```
 client/
 ├── public/              # Static assets
@@ -55,6 +56,7 @@ client/
 **Purpose:** React frontend with Shortwave-inspired UI
 
 **Key Files:**
+
 - `AIAssistantPanelV2.tsx` - Main Friday AI chat panel
 - `ShortWaveChatPanel.tsx` - Chat UI component
 - `useFridayChatSimple.ts` - Chat hook with optimistic updates
@@ -63,6 +65,7 @@ client/
 ---
 
 #### **Server (Backend)**
+
 ```
 server/
 ├── __tests__/           # Server-side tests
@@ -100,6 +103,7 @@ server/
 **Purpose:** Node.js backend with tRPC, AI routing, and integrations
 
 **Key Files:**
+
 - `routers.ts` - Main tRPC router (chat, analytics, rate limiting)
 - `ai-router.ts` - AI orchestration with tools
 - `friday-tools.ts` - 35+ AI function definitions
@@ -109,6 +113,7 @@ server/
 ---
 
 #### **Shared Code**
+
 ```
 shared/
 ├── _core/
@@ -152,6 +157,7 @@ drizzle/
 **Purpose:** PostgreSQL database with Drizzle ORM
 
 **Key Tables:**
+
 - `conversations` - Chat conversations
 - `messages` - Chat messages
 - `email_threads` - Email data
@@ -196,6 +202,7 @@ server/__tests__/
 **Purpose:** Comprehensive test suite
 
 **Test Coverage:**
+
 - **116 total tests**
 - E2E tests (Playwright)
 - Unit tests (Vitest)
@@ -203,6 +210,7 @@ server/__tests__/
 - Real AI tests (integration)
 
 **Test Files:**
+
 - Phase 1: Core functionality (21 tests)
 - Phase 2: AI integration (39 tests)
 - Phase 3: Error handling & UX (33 tests)
@@ -245,6 +253,7 @@ docs/
 **Purpose:** Complete project documentation
 
 **Key Docs:**
+
 - `FRIDAY_AI_COMPLETE.md` - Friday AI overview
 - `PHASE_*_COMPLETE.md` - Phase completion reports
 - `PHASE_*_TEST_REPORT.md` - Test reports
@@ -277,6 +286,7 @@ Root Configuration Files:
 **Purpose:** Project configuration
 
 **Key Files:**
+
 - `.env.dev` - Development environment variables
 - `package.json` - 50+ dependencies
 - `tsconfig.json` - TypeScript settings
@@ -306,6 +316,7 @@ scripts/
 **Purpose:** Automation and deployment
 
 **Key Scripts:**
+
 - `backup-db.ps1` - Database backup
 - `migrate-db.mjs` - Run migrations
 - GitHub Actions for CI/CD
@@ -337,6 +348,7 @@ tasks/
 **Purpose:** Task tracking and planning
 
 **Structure:**
+
 - Each task has: PLAN.md, STATUS.md, IMPACT.md, CHANGELOG.md
 
 ---
@@ -387,6 +399,7 @@ tmp/                     # Temporary files
 ## 🎯 **KEY FEATURES BY CATEGORY**
 
 ### **💬 Chat Features**
+
 - ✅ Auto-create conversations
 - ✅ Send/receive messages
 - ✅ Full conversation history
@@ -398,6 +411,7 @@ tmp/                     # Temporary files
 - ✅ Auto-scroll
 
 ### **🤖 AI Features**
+
 - ✅ 35+ tools (Gmail, Calendar, Billy)
 - ✅ Context-aware responses
 - ✅ Function calling
@@ -406,6 +420,7 @@ tmp/                     # Temporary files
 - ✅ Action approval system
 
 ### **📊 Analytics & Security**
+
 - ✅ Event tracking
 - ✅ Performance monitoring
 - ✅ Rate limiting (10 msg/min)
@@ -413,6 +428,7 @@ tmp/                     # Temporary files
 - ✅ Error tracking
 
 ### **📧 Email Features**
+
 - ✅ Gmail integration
 - ✅ Email sync
 - ✅ Thread management
@@ -421,12 +437,14 @@ tmp/                     # Temporary files
 - ✅ Smart suggestions
 
 ### **📅 Calendar Features**
+
 - ✅ Google Calendar integration
 - ✅ Event management
 - ✅ Meeting scheduling
 - ✅ Calendar context
 
 ### **💼 Business Features**
+
 - ✅ Billy integration (invoicing)
 - ✅ Customer management
 - ✅ Lead tracking
@@ -438,6 +456,7 @@ tmp/                     # Temporary files
 ## 📊 **PROJECT STATISTICS**
 
 ### **Code Stats**
+
 - **Total Files:** 500+
 - **Lines of Code:** ~50,000+
 - **Components:** 50+
@@ -446,6 +465,7 @@ tmp/                     # Temporary files
 - **AI Tools:** 35+
 
 ### **Test Stats**
+
 - **Total Tests:** 116
 - **E2E Tests:** 60+
 - **Unit Tests:** 40+
@@ -453,6 +473,7 @@ tmp/                     # Temporary files
 - **Coverage:** 95%+
 
 ### **Dependencies**
+
 - **Production:** 40+
 - **Development:** 30+
 - **Total:** 70+
@@ -462,6 +483,7 @@ tmp/                     # Temporary files
 ## 🚀 **QUICK START COMMANDS**
 
 ### **Development**
+
 ```bash
 # Install dependencies
 pnpm install
@@ -477,6 +499,7 @@ pnpm build
 ```
 
 ### **Testing**
+
 ```bash
 # Run all tests
 pnpm test
@@ -492,6 +515,7 @@ npx playwright test tests/phase-1-*.spec.ts
 ```
 
 ### **Database**
+
 ```bash
 # Run migrations
 pnpm db:migrate
@@ -508,12 +532,14 @@ pnpm db:push
 ## 📁 **IMPORTANT FILES TO KNOW**
 
 ### **Configuration**
+
 1. `.env.dev` - Development environment
 2. `package.json` - Dependencies & scripts
 3. `tsconfig.json` - TypeScript config
 4. `vite.config.ts` - Build config
 
 ### **Core Application**
+
 1. `client/src/App.tsx` - Main app
 2. `client/src/components/panels/AIAssistantPanelV2.tsx` - Friday AI
 3. `server/routers.ts` - Main API router
@@ -521,12 +547,14 @@ pnpm db:push
 5. `server/friday-tools.ts` - AI tools
 
 ### **Documentation**
+
 1. `README.md` - Project overview
 2. `docs/FRIDAY_AI_COMPLETE.md` - Friday AI docs
 3. `docs/API_DOCUMENTATION.md` - API reference
 4. `docs/DEPLOYMENT_GUIDE.md` - Deployment guide
 
 ### **Testing**
+
 1. `tests/phase-1-chat.spec.ts` - Core tests
 2. `tests/helpers/mock-ai.ts` - Test utilities
 3. `playwright.config.ts` - Test config
@@ -536,6 +564,7 @@ pnpm db:push
 ## 🎯 **PROJECT STATUS**
 
 ### **Completed Phases**
+
 - ✅ Phase 1: Core Functionality (30 min)
 - ✅ Phase 2: AI Integration (25 min)
 - ✅ Phase 3: Error Handling & UX (20 min)
@@ -543,12 +572,14 @@ pnpm db:push
 - ✅ Phase 5: Advanced Features (Already existed)
 
 ### **Total Development Time**
+
 - **Implementation:** 115 min
 - **Testing:** 50 min
 - **Documentation:** 30 min
 - **Total:** ~195 min (3.25 hours)
 
 ### **Production Readiness**
+
 - ✅ All features implemented
 - ✅ 116 tests passing
 - ✅ Documentation complete
@@ -595,6 +626,7 @@ pnpm db:push
 ## 📝 **NOTES**
 
 ### **What's Gitignored**
+
 - `node_modules/`
 - `dist/`
 - `.env` (active config)
@@ -602,6 +634,7 @@ pnpm db:push
 - Build artifacts
 
 ### **What's in Git**
+
 - All source code
 - Documentation
 - Tests
@@ -609,6 +642,7 @@ pnpm db:push
 - Database schema
 
 ### **What's Important**
+
 - Keep `.env.dev` and `.env.prod` separate
 - Run tests before deploying
 - Check `docs/` for detailed info

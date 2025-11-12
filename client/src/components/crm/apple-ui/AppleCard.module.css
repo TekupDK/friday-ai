@@ -1,0 +1,141 @@
+/**
+ * AppleCard Styles
+ *
+ * Apple-inspired card styling with variants
+ */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+/* ============================================================================
+   VARIANTS
+   ============================================================================ */
+
+/* Elevated (shadow) */
+.elevated {
+  /* background and box-shadow controlled by theme */
+  border: none;
+}
+
+/* Filled (solid) */
+.filled {
+  /* background controlled by theme */
+  box-shadow: none;
+  border: none;
+}
+
+/* Glass (frosted) */
+.glass {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(20px)) {
+  .glass {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+/* Outlined */
+.outlined {
+  /* background and border controlled by theme */
+  box-shadow: none;
+}
+
+/* ============================================================================
+   PADDING
+   ============================================================================ */
+
+.padding-none {
+  padding: 0;
+}
+
+.padding-sm {
+  padding: 12px;
+}
+
+.padding-md {
+  padding: 20px;
+}
+
+.padding-lg {
+  padding: 24px;
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+/* Dark mode via data-theme attribute (highest priority) */
+[data-theme="dark"] .elevated {
+  background: #1c1c1e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .filled {
+  background: #2c2c2e;
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@supports not (backdrop-filter: blur(30px)) {
+  [data-theme="dark"] .glass {
+    background: rgba(0, 0, 0, 0.85);
+  }
+}
+
+[data-theme="dark"] .outlined {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Light mode via data-theme attribute (explicit override for OS dark mode) */
+[data-theme="light"] .elevated {
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .filled {
+  background: #f2f2f7;
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@supports not (backdrop-filter: blur(20px)) {
+  [data-theme="light"] .glass {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+[data-theme="light"] .outlined {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}

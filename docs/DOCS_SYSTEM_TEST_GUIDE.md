@@ -18,6 +18,7 @@ pnpm db:migrate:dev
 ```
 
 **Forventet output:**
+
 ```
 ✓ Generated SQL migration
 ✓ Applied migration: create-documentation-tables
@@ -26,6 +27,7 @@ pnpm db:migrate:dev
 ### 2. Enable Docs Service
 
 Tilføj til `.env.dev`:
+
 ```env
 DOCS_ENABLE=true
 DOCS_REPO_PATH=./
@@ -43,6 +45,7 @@ pnpm dev
 ```
 
 **Forventet i logs:**
+
 ```
 [Docs] Service started { repoPath: './', docsPath: 'docs', branch: 'main', wsPort: 3002 }
 [GitSync] Initialized { repoPath: './', branch: 'main' }
@@ -83,6 +86,7 @@ git log -1 --oneline
 ```
 
 **Logs at se efter:**
+
 ```
 [Docs] file added { path: 'TEST_DOC.md' }
 [GitSync] Committed changes { count: 1 }
@@ -110,6 +114,7 @@ tekup-docs create "Test Document" \
 ```
 
 **Eller test direkte i browser/Postman:**
+
 ```
 GET http://localhost:3000/api/trpc/docs.list?input={}
 ```
@@ -211,16 +216,16 @@ tekup-docs resolve <conflict-id> --local
 
 ## ✅ Success Criteria
 
-| Test | Criteria | Status |
-|------|----------|--------|
-| Migration | Tables created i database | ⏳ |
-| Server Start | Docs service logs visible | ⏳ |
-| Git Sync | Auto-commit efter file change | ⏳ |
-| WebSocket | Connection established | ⏳ |
-| API | List/Create/Update/Delete virker | ⏳ |
-| CLI | All commands executable | ⏳ |
-| Comments | Can add/view comments | ⏳ |
-| Search | Full-text + facets virker | ⏳ |
+| Test         | Criteria                         | Status |
+| ------------ | -------------------------------- | ------ |
+| Migration    | Tables created i database        | ⏳     |
+| Server Start | Docs service logs visible        | ⏳     |
+| Git Sync     | Auto-commit efter file change    | ⏳     |
+| WebSocket    | Connection established           | ⏳     |
+| API          | List/Create/Update/Delete virker | ⏳     |
+| CLI          | All commands executable          | ⏳     |
+| Comments     | Can add/view comments            | ⏳     |
+| Search       | Full-text + facets virker        | ⏳     |
 
 ---
 
@@ -229,6 +234,7 @@ tekup-docs resolve <conflict-id> --local
 ### Database Issues
 
 **Problem:** Migration fejler
+
 ```bash
 # Reset database (CAUTION!)
 pnpm db:drop
@@ -241,6 +247,7 @@ psql $DATABASE_URL -f drizzle/migrations/create-documentation-tables.sql
 ### Git Sync Issues
 
 **Problem:** File watcher ikke reagerer
+
 ```bash
 # Check at docs path er korrekt
 ls -la docs/
@@ -255,6 +262,7 @@ git status
 ### WebSocket Issues
 
 **Problem:** Connection refused
+
 ```bash
 # Check om port 3002 er ledig
 netstat -an | grep 3002
@@ -266,6 +274,7 @@ DOCS_WS_PORT=3003
 ### CLI Issues
 
 **Problem:** Command not found
+
 ```bash
 # Re-link
 cd cli/tekup-docs
@@ -276,6 +285,7 @@ node dist/index.js --help
 ```
 
 **Problem:** TypeScript fejl
+
 ```bash
 # Rebuild
 pnpm build
@@ -312,6 +322,7 @@ Brug denne til at tracke test progress:
 ## 🎯 Næste Efter Tests
 
 Når alle tests er grønne:
+
 1. ✅ Backend verified
 2. ✅ CLI verified
 3. 🚀 **Start frontend portal**

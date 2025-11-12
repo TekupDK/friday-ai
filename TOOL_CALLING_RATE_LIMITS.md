@@ -7,6 +7,7 @@
 ## 📊 Hvordan Tool Calling Fungerer
 
 ### Normal Request (UDEN tools)
+
 ```
 User: "Hvad koster rengøring?"
   ↓
@@ -18,6 +19,7 @@ Total API Calls: 1 ✅
 ```
 
 ### Tool Calling Request (MED tools)
+
 ```
 User: "Book rengøring til i morgen kl 10"
   ↓
@@ -43,6 +45,7 @@ Total API Calls: 3 ⚠️
 ## ⚠️ Rate Limit Impact
 
 ### OpenRouter FREE Tier
+
 ```
 Limit: 16 API calls per minut
 
@@ -55,6 +58,7 @@ MED Tools (average 3 API calls per conversation):
 ```
 
 ### Real-World Example
+
 ```
 10 leads med tool calling på 2 minutter:
   ↓
@@ -78,18 +82,21 @@ OVER LIMIT! ❌ (kun 16/min tilladt)
 ## 🔧 Vores Optimizations
 
 ### 1. Conservative Rate Limit
+
 ```typescript
 // rate-limiter.ts
-maxRequestsPerMinute: 12  // Was 14, now 12 for tool safety
-maxConcurrent: 2          // Was 3, now 2 (tools spawn multiple calls)
+maxRequestsPerMinute: 12; // Was 14, now 12 for tool safety
+maxConcurrent: 2; // Was 3, now 2 (tools spawn multiple calls)
 ```
 
 **Hvorfor?**
+
 - Giver buffer for uventede tool calls
 - 12/min = ~4 safe tool conversations/min
 - Mindre risk for hitting limit
 
 ### 2. Tool Call Batching
+
 ```typescript
 // tool-optimizer.ts
 // Execute multiple tools in parallel, not sequential
@@ -98,11 +105,12 @@ maxConcurrent: 2          // Was 3, now 2 (tools spawn multiple calls)
 ```
 
 ### 3. Smart Priority
+
 ```typescript
 // Conversations with tools get higher priority
-conversation.hasTools && toolCount >= 3 
-  ? priority = 'high'
-  : priority = 'medium'
+conversation.hasTools && toolCount >= 3
+  ? (priority = "high")
+  : (priority = "medium");
 ```
 
 ---
@@ -112,15 +120,17 @@ conversation.hasTools && toolCount >= 3
 ### ✅ DO's
 
 1. **Batch tool calls** når muligt
+
    ```typescript
    // God praksis: Parallel tool execution
    const [availability, pricing] = await Promise.all([
      checkAvailability(),
-     getPricing()
+     getPricing(),
    ]);
    ```
 
 2. **Cache tool results** for stabile data
+
    ```typescript
    // Pricing ændrer sig ikke hvert minut
    const pricing = await getCachedPricing(); // ✅
@@ -131,13 +141,14 @@ conversation.hasTools && toolCount >= 3
    await litellmClient.chatCompletion({
      messages,
      tools,
-     priority: 'high' // Tool calls får priority
+     priority: "high", // Tool calls får priority
    });
    ```
 
 ### ❌ DON'Ts
 
 1. **Undgå sekventielle tool calls**
+
    ```typescript
    // Dårlig praksis: Sequential
    const avail = await checkAvailability();
@@ -159,8 +170,9 @@ conversation.hasTools && toolCount >= 3
 ## 📊 Monitoring Tool Usage
 
 ### Check Stats
+
 ```typescript
-import { rateLimiter, toolOptimizer } from './integrations/litellm';
+import { rateLimiter, toolOptimizer } from "./integrations/litellm";
 
 // Se hvor mange requests bruger tools
 const stats = rateLimiter.getStats();
@@ -182,12 +194,14 @@ console.log(`3 tools = ~${estimatedCalls} API calls`);
 ### For Din Use Case (Rengøring/Booking)
 
 **Typiske Tools:**
+
 1. `checkAvailability` - Tjek kalender
 2. `getPricing` - Få priser
 3. `createBooking` - Book opgave
 4. `sendConfirmation` - Send bekræftelse
 
 **Expected API Calls per Lead:**
+
 ```
 Lead UDEN booking: 1 API call ✅
 Lead MED booking:  3-4 API calls ⚠️
@@ -198,6 +212,7 @@ Safe rate: 12 calls/min = 6 leads/min ✅
 ```
 
 ### Anbefalet Setup
+
 ```typescript
 // For batch processing af leads med tools
 const leads = await getNewLeads();
@@ -205,10 +220,10 @@ const leads = await getNewLeads();
 for (const lead of leads) {
   // Process med automatic rate limiting
   await processLeadWithTools(lead, {
-    priority: 'medium',  // Let queue handle it
-    maxTools: 3,         // Limit tool sprawl
+    priority: "medium", // Let queue handle it
+    maxTools: 3, // Limit tool sprawl
   });
-  
+
   // Queue handles waiting automatically! ✅
 }
 ```
@@ -224,18 +239,20 @@ for (const lead of leads) {
 3. ✅ Priority queue håndterer tool-heavy requests
 4. ✅ Automatic retry hvis rate limit hit
 
-**Du behøver IKKE bekymre dig!** 
+**Du behøver IKKE bekymre dig!**
 
 Systemet håndterer det automatisk! 🎉
 
 ---
 
 **Anbefalinger:**
+
 - Normal brug: Ingen ændringer nødvendige ✅
 - Batch operations: Brug priority levels
 - Monitor: Check `rateLimiter.getStats()` periodisk
 
 **Safe Throughput:**
+
 - UDEN tools: ~12 leads/min
 - MED tools (avg 2.5 API calls): ~5 leads/min
 - Stadig hurtigere end manual processing! ✅

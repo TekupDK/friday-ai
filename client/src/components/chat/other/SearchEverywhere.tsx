@@ -7,12 +7,30 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Search, Filter, FileText, Mail, Users, Calendar, MessageSquare, Clock, TrendingUp, Star } from "lucide-react";
+import {
+  Search,
+  Filter,
+  FileText,
+  Mail,
+  Users,
+  Calendar,
+  MessageSquare,
+  Clock,
+  TrendingUp,
+  Star,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 export interface SearchResult {
   id: string;
-  type: 'email' | 'document' | 'contact' | 'calendar' | 'chat' | 'invoice' | 'task';
+  type:
+    | "email"
+    | "document"
+    | "contact"
+    | "calendar"
+    | "chat"
+    | "invoice"
+    | "task";
   title: string;
   description: string;
   content?: string;
@@ -35,20 +53,20 @@ interface SearchEverywhereProps {
   onAdvancedSearch?: () => void;
 }
 
-export function SearchEverywhere({ 
+export function SearchEverywhere({
   onSearch,
   onResultClick,
-  onAdvancedSearch 
+  onAdvancedSearch,
 }: SearchEverywhereProps) {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<string>('all');
+  const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [recentSearches, setRecentSearches] = useState<string[]>([
-    'faktura ABC Corporation',
-    'møde med salgsteam',
-    'email support template',
-    'kunde database',
-    'prisliste REN-003'
+    "faktura ABC Corporation",
+    "møde med salgsteam",
+    "email support template",
+    "kunde database",
+    "prisliste REN-003",
   ]);
   const [searchHistory, setSearchHistory] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -56,69 +74,100 @@ export function SearchEverywhere({
   // Mock search results
   const mockResults: SearchResult[] = [
     {
-      id: '1',
-      type: 'email',
-      title: 'Faktura til ABC Corporation',
-      description: 'Sendt faktura for rengøringsservice',
-      content: 'Kære ABC Corporation, Vedhæftet finder I faktura for januar måned...',
-      timestamp: 'for 2 timer siden',
+      id: "1",
+      type: "email",
+      title: "Faktura til ABC Corporation",
+      description: "Sendt faktura for rengøringsservice",
+      content:
+        "Kære ABC Corporation, Vedhæftet finder I faktura for januar måned...",
+      timestamp: "for 2 timer siden",
       relevance: 95,
-      metadata: { sender: 'john@company.com', recipient: 'billing@abc.com' }
+      metadata: { sender: "john@company.com", recipient: "billing@abc.com" },
     },
     {
-      id: '2',
-      type: 'document',
-      title: 'Prisliste REN-003',
-      description: 'Opdateret prisliste for vinduespudsning',
-      content: 'REN-003: Standard vinduespudsning - 150 kr. pr. time...',
-      timestamp: 'for 1 dag siden',
+      id: "2",
+      type: "document",
+      title: "Prisliste REN-003",
+      description: "Opdateret prisliste for vinduespudsning",
+      content: "REN-003: Standard vinduespudsning - 150 kr. pr. time...",
+      timestamp: "for 1 dag siden",
       relevance: 88,
-      metadata: { category: 'pricing', version: 'v2.1' }
+      metadata: { category: "pricing", version: "v2.1" },
     },
     {
-      id: '3',
-      type: 'contact',
-      title: 'John Smith',
-      description: 'Sales Manager at ABC Corporation',
-      content: 'john.smith@abc.com - +45 1234 5678',
-      timestamp: 'for 3 dage siden',
+      id: "3",
+      type: "contact",
+      title: "John Smith",
+      description: "Sales Manager at ABC Corporation",
+      content: "john.smith@abc.com - +45 1234 5678",
+      timestamp: "for 3 dage siden",
       relevance: 82,
-      metadata: { company: 'ABC Corporation', role: 'Sales Manager' }
+      metadata: { company: "ABC Corporation", role: "Sales Manager" },
     },
     {
-      id: '4',
-      type: 'calendar',
-      title: 'Møde med salgsteam',
-      description: 'Ugentligt møde for salgsteamet',
-      content: 'Agenda: Salgsreview, Kunder, Q1 mål',
-      timestamp: 'for 5 dage siden',
+      id: "4",
+      type: "calendar",
+      title: "Møde med salgsteam",
+      description: "Ugentligt møde for salgsteamet",
+      content: "Agenda: Salgsreview, Kunder, Q1 mål",
+      timestamp: "for 5 dage siden",
       relevance: 76,
-      metadata: { date: '2024-01-20', time: '14:00', location: 'Meeting Room A' }
+      metadata: {
+        date: "2024-01-20",
+        time: "14:00",
+        location: "Meeting Room A",
+      },
     },
     {
-      id: '5',
-      type: 'chat',
-      title: 'Support chat med Kunde A',
-      description: 'Kunde spurgte om rengøringsplan',
-      content: 'Kunde: Hvornår kommer I næste gang?...',
-      timestamp: 'for 1 uge siden',
+      id: "5",
+      type: "chat",
+      title: "Support chat med Kunde A",
+      description: "Kunde spurgte om rengøringsplan",
+      content: "Kunde: Hvornår kommer I næste gang?...",
+      timestamp: "for 1 uge siden",
       relevance: 71,
-      metadata: { chatId: 'chat-123', duration: '15 min' }
-    }
+      metadata: { chatId: "chat-123", duration: "15 min" },
+    },
   ];
 
   const searchTypes = [
-    { id: 'all', label: 'Alle', icon: Search, count: mockResults.length },
-    { id: 'email', label: 'Emails', icon: Mail, count: mockResults.filter(r => r.type === 'email').length },
-    { id: 'document', label: 'Dokumenter', icon: FileText, count: mockResults.filter(r => r.type === 'document').length },
-    { id: 'contact', label: 'Kontakter', icon: Users, count: mockResults.filter(r => r.type === 'contact').length },
-    { id: 'calendar', label: 'Kalender', icon: Calendar, count: mockResults.filter(r => r.type === 'calendar').length },
-    { id: 'chat', label: 'Chats', icon: MessageSquare, count: mockResults.filter(r => r.type === 'chat').length }
+    { id: "all", label: "Alle", icon: Search, count: mockResults.length },
+    {
+      id: "email",
+      label: "Emails",
+      icon: Mail,
+      count: mockResults.filter(r => r.type === "email").length,
+    },
+    {
+      id: "document",
+      label: "Dokumenter",
+      icon: FileText,
+      count: mockResults.filter(r => r.type === "document").length,
+    },
+    {
+      id: "contact",
+      label: "Kontakter",
+      icon: Users,
+      count: mockResults.filter(r => r.type === "contact").length,
+    },
+    {
+      id: "calendar",
+      label: "Kalender",
+      icon: Calendar,
+      count: mockResults.filter(r => r.type === "calendar").length,
+    },
+    {
+      id: "chat",
+      label: "Chats",
+      icon: MessageSquare,
+      count: mockResults.filter(r => r.type === "chat").length,
+    },
   ];
 
-  const filteredResults = selectedFilter === 'all' 
-    ? mockResults 
-    : mockResults.filter(result => result.type === selectedFilter);
+  const filteredResults =
+    selectedFilter === "all"
+      ? mockResults
+      : mockResults.filter(result => result.type === selectedFilter);
 
   useEffect(() => {
     if (query.length > 2) {
@@ -134,30 +183,34 @@ export function SearchEverywhere({
 
   const handleSearch = () => {
     if (query.trim()) {
-      onSearch?.(query, { type: selectedFilter === 'all' ? undefined : selectedFilter });
-      
+      onSearch?.(query, {
+        type: selectedFilter === "all" ? undefined : selectedFilter,
+      });
+
       // Add to recent searches
-      setRecentSearches(prev => [query, ...prev.filter(s => s !== query)].slice(0, 5));
-      
+      setRecentSearches(prev =>
+        [query, ...prev.filter(s => s !== query)].slice(0, 5)
+      );
+
       // Add to search history
       const newSearch: SearchResult = {
         id: `search-${Date.now()}`,
-        type: 'email',
+        type: "email",
         title: `Søgning: "${query}"`,
         description: `${filteredResults.length} resultater fundet`,
-        timestamp: 'lige nu',
-        relevance: 100
+        timestamp: "lige nu",
+        relevance: 100,
       };
       setSearchHistory(prev => [newSearch, ...prev].slice(0, 10));
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       setShowResults(false);
-      setQuery('');
+      setQuery("");
     }
   };
 
@@ -166,36 +219,52 @@ export function SearchEverywhere({
     inputRef.current?.focus();
   };
 
-  const getResultIcon = (type: SearchResult['type']) => {
+  const getResultIcon = (type: SearchResult["type"]) => {
     switch (type) {
-      case 'email': return Mail;
-      case 'document': return FileText;
-      case 'contact': return Users;
-      case 'calendar': return Calendar;
-      case 'chat': return MessageSquare;
-      case 'invoice': return FileText;
-      case 'task': return FileText;
-      default: return FileText;
+      case "email":
+        return Mail;
+      case "document":
+        return FileText;
+      case "contact":
+        return Users;
+      case "calendar":
+        return Calendar;
+      case "chat":
+        return MessageSquare;
+      case "invoice":
+        return FileText;
+      case "task":
+        return FileText;
+      default:
+        return FileText;
     }
   };
 
-  const getResultColor = (type: SearchResult['type']) => {
+  const getResultColor = (type: SearchResult["type"]) => {
     switch (type) {
-      case 'email': return 'bg-blue-500';
-      case 'document': return 'bg-green-500';
-      case 'contact': return 'bg-purple-500';
-      case 'calendar': return 'bg-orange-500';
-      case 'chat': return 'bg-cyan-500';
-      case 'invoice': return 'bg-red-500';
-      case 'task': return 'bg-indigo-500';
-      default: return 'bg-gray-500';
+      case "email":
+        return "bg-blue-500";
+      case "document":
+        return "bg-green-500";
+      case "contact":
+        return "bg-purple-500";
+      case "calendar":
+        return "bg-orange-500";
+      case "chat":
+        return "bg-cyan-500";
+      case "invoice":
+        return "bg-red-500";
+      case "task":
+        return "bg-indigo-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
   const getRelevanceColor = (relevance: number) => {
-    if (relevance >= 90) return 'text-green-600';
-    if (relevance >= 75) return 'text-yellow-600';
-    return 'text-red-600';
+    if (relevance >= 90) return "text-green-600";
+    if (relevance >= 75) return "text-yellow-600";
+    return "text-red-600";
   };
 
   return (
@@ -209,7 +278,9 @@ export function SearchEverywhere({
             </div>
             <div>
               <h4 className="font-semibold">Search Everywhere</h4>
-              <p className="text-xs text-muted-foreground">Universal søgning på tværs af systemet</p>
+              <p className="text-xs text-muted-foreground">
+                Universal søgning på tværs af systemet
+              </p>
             </div>
           </div>
           <Button size="sm" variant="ghost" onClick={onAdvancedSearch}>
@@ -225,7 +296,7 @@ export function SearchEverywhere({
             <Input
               ref={inputRef}
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={e => setQuery(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Søg i emails, dokumenter, kontakter, kalender..."
               className="pl-9 pr-10 h-10"
@@ -243,9 +314,11 @@ export function SearchEverywhere({
 
         {/* Search Type Filters */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Søg i:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Søg i:
+          </label>
           <div className="flex flex-wrap gap-1">
-            {searchTypes.map((type) => {
+            {searchTypes.map(type => {
               const Icon = type.icon;
               return (
                 <button
@@ -271,14 +344,17 @@ export function SearchEverywhere({
         {showResults && filteredResults.length > 0 && (
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <h5 className="text-sm font-semibold">Resultater ({filteredResults.length}):</h5>
+              <h5 className="text-sm font-semibold">
+                Resultater ({filteredResults.length}):
+              </h5>
               <Badge className="bg-indigo-500">
-                {filteredResults.filter(r => r.relevance >= 90).length} høj relevans
+                {filteredResults.filter(r => r.relevance >= 90).length} høj
+                relevans
               </Badge>
             </div>
-            
+
             <div className="border rounded-lg bg-background max-h-64 overflow-y-auto">
-              {filteredResults.map((result) => {
+              {filteredResults.map(result => {
                 const Icon = getResultIcon(result.type);
                 return (
                   <button
@@ -286,23 +362,39 @@ export function SearchEverywhere({
                     onClick={() => onResultClick?.(result)}
                     className="w-full text-left p-3 flex items-start gap-3 border-b last:border-b-0 hover:bg-muted/50 transition-colors"
                   >
-                    <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center text-white", getResultColor(result.type))}>
+                    <div
+                      className={cn(
+                        "w-8 h-8 rounded-lg flex items-center justify-center text-white",
+                        getResultColor(result.type)
+                      )}
+                    >
                       <Icon className="w-4 h-4" />
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-medium text-sm">{result.title}</span>
+                        <span className="font-medium text-sm">
+                          {result.title}
+                        </span>
                         <Badge variant="outline" className="text-xs">
                           {result.type}
                         </Badge>
-                        <span className={cn("text-xs font-medium", getRelevanceColor(result.relevance))}>
+                        <span
+                          className={cn(
+                            "text-xs font-medium",
+                            getRelevanceColor(result.relevance)
+                          )}
+                        >
                           {result.relevance}% match
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground mb-1">{result.description}</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        {result.description}
+                      </p>
                       {result.content && (
-                        <p className="text-xs text-muted-foreground truncate">{result.content}</p>
+                        <p className="text-xs text-muted-foreground truncate">
+                          {result.content}
+                        </p>
                       )}
                       <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
                         <Clock className="w-3 h-3" />
@@ -341,13 +433,21 @@ export function SearchEverywhere({
             <p className="font-bold text-indigo-700 dark:text-indigo-300">
               {searchHistory.length}
             </p>
-            <p className="text-indigo-600 dark:text-indigo-400">Søgninger i dag</p>
+            <p className="text-indigo-600 dark:text-indigo-400">
+              Søgninger i dag
+            </p>
           </div>
           <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/20 text-center">
             <p className="font-bold text-purple-700 dark:text-purple-300">
-              {Math.round(mockResults.reduce((sum, r) => sum + r.relevance, 0) / mockResults.length)}%
+              {Math.round(
+                mockResults.reduce((sum, r) => sum + r.relevance, 0) /
+                  mockResults.length
+              )}
+              %
             </p>
-            <p className="text-purple-600 dark:text-purple-400">Gns. relevans</p>
+            <p className="text-purple-600 dark:text-purple-400">
+              Gns. relevans
+            </p>
           </div>
           <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/20 text-center">
             <p className="font-bold text-blue-700 dark:text-blue-300">
@@ -364,7 +464,13 @@ export function SearchEverywhere({
             <div className="text-xs text-indigo-700 dark:text-indigo-400">
               <p className="font-semibold mb-1">Søgetips:</p>
               <ul className="space-y-1">
-                <li>• Brug <kbd className="px-1 py-0.5 bg-white rounded text-xs">Ctrl+K</kbd> for hurtig søgning</li>
+                <li>
+                  • Brug{" "}
+                  <kbd className="px-1 py-0.5 bg-white rounded text-xs">
+                    Ctrl+K
+                  </kbd>{" "}
+                  for hurtig søgning
+                </li>
                 <li>• Filtrer results efter type for bedre præcision</li>
                 <li>• Brug quotes for eksakte søgninger: "faktura ABC"</li>
                 <li>• Kombiner søgeord: email + faktura + januar</li>
@@ -375,11 +481,18 @@ export function SearchEverywhere({
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button onClick={handleSearch} className="flex-1 bg-linear-to-r from-indigo-600 to-purple-600">
+          <Button
+            onClick={handleSearch}
+            className="flex-1 bg-linear-to-r from-indigo-600 to-purple-600"
+          >
             <Search className="w-4 h-4 mr-2" />
             Søg
           </Button>
-          <Button onClick={onAdvancedSearch} variant="outline" className="flex-1">
+          <Button
+            onClick={onAdvancedSearch}
+            variant="outline"
+            className="flex-1"
+          >
             <Filter className="w-4 h-4 mr-2" />
             Avanceret søgning
           </Button>

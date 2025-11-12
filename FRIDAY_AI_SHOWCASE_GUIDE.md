@@ -23,12 +23,14 @@ Scroll ned til bunden af siden for at se de nye Friday AI komponenter.
 ### 1. Tool Execution Modal
 
 **Hvad det viser:**
+
 - Real-time progress bar (0-100%)
 - 4 subtasks der completes én efter én
 - Status badges (Running → Completed)
 - Cancel button (simuleret)
 
 **Test steps:**
+
 1. Scroll til "🛠️ Friday AI: Tool Execution Modal" section
 2. Klik på **"👤 Simuler Lead Creation"** knappen
 3. Observér at modal åbner med:
@@ -38,6 +40,7 @@ Scroll ned til bunden af siden for at se de nye Friday AI komponenter.
    - Modal auto-lukker efter 2 sekunder når færdig
 
 **Forventet output:**
+
 ```
 Modalen viser:
 ┌─────────────────────────────────┐
@@ -59,6 +62,7 @@ Modalen viser:
 ### 2. Response Cards
 
 **Hvad det viser:**
+
 - 5 forskellige card types:
   - Lead created card (👤 grøn)
   - Task created card (✓ blå)
@@ -67,6 +71,7 @@ Modalen viser:
   - Calendar events card (📅)
 
 **Test steps:**
+
 1. Scroll til "🎴 Friday AI: Response Cards" section
 2. Observér de 5 cards i grid layout
 3. Hover over cards for at se hover effect
@@ -76,6 +81,7 @@ Modalen viser:
    - Struktureret data (email, phone, dates, etc.)
 
 **Forventet output:**
+
 ```
 Grid med 5 cards:
 [👤 Lead: Hans Jensen]  [✓ Task: Ring kunde]
@@ -88,12 +94,14 @@ Grid med 5 cards:
 ### 3. AI Memory Panel
 
 **Hvad det viser:**
+
 - Timeline af seneste AI actions
 - Grupperet by date (I dag, I går)
 - Relative timestamps (5 min siden, 30 min siden)
 - Clickable items (viser toast)
 
 **Test steps:**
+
 1. Scroll til "📜 Friday AI: Memory Panel" section
 2. Observér timeline med 4 items:
    - Lead (5 min siden)
@@ -104,16 +112,17 @@ Grid med 5 cards:
 4. Check at timestamps er relative (ikke absolute dates)
 
 **Forventet output:**
+
 ```
 AI Memory                       [4]
 ───────────────────────────────────
 I dag
   👤 Oprettet lead:      5 min siden
      Hans Jensen, 12345678
-  
+
   ✓ Oprettet opgave:    30 min siden
      Ring kunde i morgen
-  
+
   📅 Booket møde:       2 timer siden
      Ons 10:00
 
@@ -168,6 +177,7 @@ Efter test, sammenlign med Figma design:
 https://trout-cling-66917018.figma.site/
 
 **Skal matche:**
+
 - ✅ Progress bar animation (0-100%)
 - ✅ Subtask tracking med status icons
 - ✅ Card layouts med icons og structured data
@@ -182,6 +192,7 @@ Når showcase tests er passed, følg integration guiden i:
 `TOOL_EXECUTION_IMPLEMENTATION.md`
 
 **Key integration steps:**
+
 1. Tilføj `toolExecutionRouter` til `appRouter`
 2. Update `intent-actions.ts` med tracking
 3. Integrer i `ShortWaveChatPanel.tsx`

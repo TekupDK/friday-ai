@@ -9,6 +9,7 @@
 ## 🎉 **WHAT WE ACCOMPLISHED TODAY**
 
 ### **Session Stats:**
+
 - **Duration:** 75 minutes total
 - **Documentation:** 16 files created (5,000+ lines)
 - **Code fixes:** 6 critical issues resolved
@@ -16,6 +17,7 @@
 - **Confidence:** 95%
 
 ### **Key Achievements:**
+
 1. ✅ Complete workspace review & audit
 2. ✅ 74 TODOs catalogued
 3. ✅ Critical user ID fix
@@ -88,6 +90,7 @@ git push
 ```
 
 **Why Critical:**
+
 - 75 minutes of work
 - 16 documentation files
 - 6 code fixes
@@ -116,6 +119,7 @@ git push
 ```
 
 **Result:**
+
 - 19 files deleted
 - 18 tests moved to `tests/manual/`
 - 47% fewer root files
@@ -133,12 +137,14 @@ git push
 4. Copy credentials
 
 5. Add to `.env.dev`:
+
 ```env
 UPSTASH_REDIS_REST_URL=https://your-url.upstash.io
 UPSTASH_REDIS_REST_TOKEN=your-token
 ```
 
 6. Test:
+
 ```bash
 pnpm dev
 # Try sending 11 messages quickly
@@ -167,6 +173,7 @@ pnpm promptfoo init
 ```
 
 **Tasks:**
+
 1. [ ] Install promptfoo
 2. [ ] Create promptfooconfig.yaml
 3. [ ] Add 10 intent parsing tests
@@ -183,11 +190,13 @@ pnpm promptfoo init
 **Goal:** Fix 10 more useEffect issues
 
 **Priority files:**
+
 1. `client/src/components/inbox/EmailTabV2.tsx` (6 issues)
 2. `client/src/components/Map.tsx` (3 issues)
 3. `client/src/components/workspace/LeadAnalyzer.tsx` (2 issues)
 
 **Process:**
+
 1. Read file
 2. Identify issue
 3. Apply fix from USEEFFECT_FIX_PLAN.md
@@ -203,9 +212,11 @@ pnpm promptfoo init
 **Goal:** Store A/B test metrics in database
 
 **Files to fix:**
+
 - `server/_core/ab-testing.ts`
 
 **Tasks:**
+
 1. [ ] Create metrics table (if needed)
 2. [ ] Implement storeMetrics()
 3. [ ] Implement fetchMetrics()
@@ -222,9 +233,11 @@ pnpm promptfoo init
 **Goal:** Implement automatic rollback on failures
 
 **Files to fix:**
+
 - `server/_core/rollout-config.ts`
 
 **Tasks:**
+
 1. [ ] Implement checkMetrics()
 2. [ ] Add monitoring integration
 3. [ ] Add notification system
@@ -241,6 +254,7 @@ pnpm promptfoo init
 **Goal:** Verify all Week 1 work
 
 **Tasks:**
+
 1. [ ] Run full test suite
 2. [ ] Manual testing
 3. [ ] Update documentation
@@ -256,26 +270,31 @@ pnpm promptfoo init
 ### **Focus: Performance & Optimization**
 
 **Day 6: Context Optimization** (3-4 hours)
+
 - Reduce context re-renders
 - Implement context splitting
 - Add memoization
 
 **Day 7: Caching Layer** (3-4 hours)
+
 - Add React Query caching
 - Implement cache warming
 - Add cache invalidation
 
 **Day 8: Code Splitting** (2-3 hours)
+
 - Implement lazy loading
 - Split large bundles
 - Optimize imports
 
 **Day 9: Bundle Optimization** (2-3 hours)
+
 - Analyze bundle size
 - Remove unused code
 - Optimize dependencies
 
 **Day 10: Testing & Review** (2-3 hours)
+
 - Performance testing
 - Load testing
 - Week 2 summary
@@ -287,26 +306,31 @@ pnpm promptfoo init
 ### **Focus: AI Improvements**
 
 **Day 11: Intent Parsing** (3-4 hours)
+
 - Improve accuracy
 - Add fallback chain
 - Better error handling
 
 **Day 12: Replace Mock Data** (3-4 hours)
+
 - Real AI for lead scoring
 - Real calendar checks
 - Real email analysis
 
 **Day 13: Multi-language Support** (2-3 hours)
+
 - Add language detection
 - Support English
 - Support Danish
 
 **Day 14: Giskard Integration** (3-4 hours)
+
 - Setup security scanning
 - RAG evaluation
 - Production monitoring
 
 **Day 15: Testing & Review** (2-3 hours)
+
 - AI quality testing
 - Week 3 summary
 
@@ -317,26 +341,31 @@ pnpm promptfoo init
 ### **Focus: Polish & Production**
 
 **Day 16: Error Tracking** (2-3 hours)
+
 - Setup Sentry
 - Add error boundaries
 - Configure alerts
 
 **Day 17: Performance Tracking** (2-3 hours)
+
 - Add metrics
 - Setup dashboards
 - Configure monitoring
 
 **Day 18: Documentation** (2-3 hours)
+
 - Consolidate docs
 - Update README
 - Create guides
 
 **Day 19: Security Audit** (2-3 hours)
+
 - Run security scans
 - Fix vulnerabilities
 - Document security
 
 **Day 20: Final Testing** (3-4 hours)
+
 - Full regression testing
 - Load testing
 - Production deployment
@@ -346,6 +375,7 @@ pnpm promptfoo init
 ## 🎯 **SUCCESS METRICS**
 
 ### **After Week 1:**
+
 - [ ] 15+ promptfoo tests passing
 - [ ] 12/79 useEffect issues fixed
 - [ ] A/B testing metrics stored
@@ -354,18 +384,21 @@ pnpm promptfoo init
 - [ ] No regressions
 
 ### **After Week 2:**
+
 - [ ] 50% faster load time
 - [ ] 30% smaller bundle
 - [ ] Better caching
 - [ ] Improved performance
 
 ### **After Week 3:**
+
 - [ ] 95%+ intent accuracy
 - [ ] No mock data
 - [ ] Multi-language support
 - [ ] Security scan passing
 
 ### **After Week 4:**
+
 - [ ] Production ready
 - [ ] Full monitoring
 - [ ] Complete documentation
@@ -376,16 +409,19 @@ pnpm promptfoo init
 ## 📚 **KEY DOCUMENTS TO REVIEW**
 
 ### **Before Starting:**
+
 1. **NEXT_SESSION_PLAN.md** (this file) - Start here
 2. **FINAL_SESSION_SUMMARY.md** - What we did
 3. **DEPRECATED_CODE_AUDIT.md** - All technical debt
 
 ### **During Work:**
+
 4. **USEEFFECT_FIX_PLAN.md** - How to fix useEffect
 5. **AI_TEST_TOOLS_EVALUATION.md** - AI testing guide
 6. **CRITICAL_FIXES_SETUP.md** - Redis & validation setup
 
 ### **For Reference:**
+
 7. **DEEP_DIVE_ANALYSIS.md** - Architecture insights
 8. **AREA_1_CORE_APPLICATION.md** - Client/server structure
 9. **AREA_2_AI_SYSTEM.md** - AI system details
@@ -395,6 +431,7 @@ pnpm promptfoo init
 ## 🔧 **QUICK COMMANDS**
 
 ### **Development:**
+
 ```bash
 # Start dev server
 pnpm dev
@@ -410,6 +447,7 @@ pnpm check
 ```
 
 ### **AI Testing:**
+
 ```bash
 # Run promptfoo tests
 pnpm promptfoo eval
@@ -422,6 +460,7 @@ pnpm promptfoo eval --ci
 ```
 
 ### **Database:**
+
 ```bash
 # Push schema
 pnpm db:push:dev
@@ -435,18 +474,21 @@ pnpm db:migrate:dev
 ## 🚨 **KNOWN ISSUES**
 
 ### **Critical:**
+
 1. ⚠️ 77 useEffect issues remaining (2/79 fixed)
 2. ⚠️ A/B testing metrics not stored
 3. ⚠️ No automatic rollback
 4. ⚠️ Workflow auto-actions incomplete
 
 ### **Medium:**
+
 1. ⚠️ Mock data still in use
 2. ⚠️ No error tracking (Sentry)
 3. ⚠️ 1,448 console.logs
 4. ⚠️ 16 @deprecated markers
 
 ### **Low:**
+
 1. ⚠️ Large bundle size (536 KB)
 2. ⚠️ No code splitting
 3. ⚠️ Context overuse
@@ -457,6 +499,7 @@ pnpm db:migrate:dev
 ## 💡 **TIPS FOR NEXT SESSION**
 
 ### **Start Fresh:**
+
 1. Review NEXT_SESSION_PLAN.md (this file)
 2. Review FINAL_SESSION_SUMMARY.md
 3. Commit any uncommitted work
@@ -464,12 +507,14 @@ pnpm db:migrate:dev
 5. Start with Day 1 tasks
 
 ### **Stay Focused:**
+
 - One task at a time
 - Test after each change
 - Commit frequently
 - Document as you go
 
 ### **Track Progress:**
+
 - Update WEEK1_PROGRESS.md
 - Check off completed tasks
 - Note any blockers
@@ -480,6 +525,7 @@ pnpm db:migrate:dev
 ## 📊 **CURRENT STATUS**
 
 ### **Completed:** ✅
+
 - [x] Workspace review
 - [x] Technical debt audit
 - [x] Critical user ID fix
@@ -490,10 +536,12 @@ pnpm db:migrate:dev
 - [x] Build verification
 
 ### **In Progress:** ⏳
+
 - [ ] Cleanup scripts (waiting for confirmation)
 - [ ] useEffect fixes (2/79 done)
 
 ### **Pending:** 📋
+
 - [ ] AI testing setup
 - [ ] A/B testing metrics
 - [ ] Rollback monitoring
@@ -507,6 +555,7 @@ pnpm db:migrate:dev
 ### **Next Session - First 30 Minutes:**
 
 1. **Commit work** (2 min)
+
    ```bash
    git add .
    git commit -m "..."
@@ -514,6 +563,7 @@ pnpm db:migrate:dev
    ```
 
 2. **Run cleanup** (5 min)
+
    ```bash
    .\scripts\cleanup-phase1.ps1
    .\scripts\organize-test-files.ps1
@@ -538,6 +588,7 @@ pnpm db:migrate:dev
 **Everything is ready to go.**
 
 **Next session:**
+
 1. Commit
 2. Cleanup
 3. Start Week 1

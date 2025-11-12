@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import fs from 'fs';
+import fs from "fs";
 
-const file = 'server/routers/docs-router.ts';
-let content = fs.readFileSync(file, 'utf-8');
+const file = "server/routers/docs-router.ts";
+let content = fs.readFileSync(file, "utf-8");
 
 // Add null check after every getDb() call
 content = content.replace(
@@ -11,4 +11,4 @@ content = content.replace(
 );
 
 fs.writeFileSync(file, content);
-console.log('✅ Added null checks to docs-router.ts');
+console.log("✅ Added null checks to docs-router.ts");

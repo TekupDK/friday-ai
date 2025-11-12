@@ -13,6 +13,7 @@
 **Lokation:** `InvoicesTab.tsx:252-261`
 
 **Problem:**
+
 ```typescript
 const url = URL.createObjectURL(blob);
 link.setAttribute("href", url);
@@ -23,11 +24,13 @@ document.body.removeChild(link);
 ```
 
 **Konsekvens:**
+
 - Hver CSV export lækker memory
 - Browser holder blob URL i memory indtil page reload
 - Ved mange exports kan dette påvirke performance
 
 **Fix:**
+
 ```typescript
 link.click();
 document.body.removeChild(link);
@@ -43,6 +46,7 @@ URL.revokeObjectURL(url); // Add this line
 **Lokation:** Multiple locations (linje 98, 112, 264, 431)
 
 **Problem:**
+
 ```typescript
 const [selectedInvoice, setSelectedInvoice] = useState<any | null>(null);
 // ❌ Brug af 'any' fjerner alle type garantier
@@ -52,6 +56,7 @@ filteredInvoices.map((invoice: any) => {
 ```
 
 **Konsekvens:**
+
 - Ingen IntelliSense/autocomplete
 - Runtime errors ikke fanget ved compile time
 - Refactoring er farlig og fejltilbøjelig
@@ -66,7 +71,7 @@ interface BillyInvoice {
   id: string;
   invoiceNo: string | null;
   contactId: string;
-  state: 'draft' | 'approved' | 'sent' | 'paid' | 'overdue' | 'voided';
+  state: "draft" | "approved" | "sent" | "paid" | "overdue" | "voided";
   entryDate: string; // ISO 8601
   paymentTermsDays: number;
   lines?: BillyInvoiceLine[];
@@ -93,6 +98,7 @@ interface BillyInvoiceLine {
 **Lokation:** `InvoicesTab.tsx:264-303`
 
 **Problem:**
+
 ```typescript
 const handleAnalyzeInvoice = async (invoice: any) => {
   setSelectedInvoice(invoice);
@@ -107,10 +113,11 @@ const handleAnalyzeInvoice = async (invoice: any) => {
   } catch (error) {
     // ...
   }
-}
+};
 ```
 
 **Konsekvens:**
+
 - Hvis bruger klikker "Analyser" på faktura A, derefter hurtigt på faktura B:
   - Dialog viser faktura B
   - Men AI resultat fra faktura A overskriver analyse for B
@@ -145,7 +152,7 @@ const handleAnalyzeInvoice = async (invoice: BillyInvoice) => {
       setAnalyzingInvoice(false);
     }
   }
-}
+};
 ```
 
 **Prioritet:** 🔴 HIGH — Påvirker data integritet
@@ -157,6 +164,7 @@ const handleAnalyzeInvoice = async (invoice: BillyInvoice) => {
 **Lokation:** `InvoicesTab.tsx:487-492`
 
 **Problem:**
+
 ```typescript
 <Button
   onClick={e => {
@@ -167,10 +175,12 @@ const handleAnalyzeInvoice = async (invoice: BillyInvoice) => {
 ```
 
 **Konsekvens:**
+
 - Hvis `exportToCSV` fejler (invalid data, browser security policy), crasher komponenten
 - Bruger får ingen feedback
 
 **Fix:**
+
 ```typescript
 <Button
   onClick={async (e) => {
@@ -197,6 +207,7 @@ const handleAnalyzeInvoice = async (invoice: BillyInvoice) => {
 **Lokation:** `InvoicesTab.tsx:379-384`
 
 **Problem:**
+
 ```typescript
 <Input
   placeholder="Søg fakturaer…"
@@ -207,15 +218,18 @@ const handleAnalyzeInvoice = async (invoice: BillyInvoice) => {
 ```
 
 **Konsekvens:**
+
 - Ved stor invoice liste (100+ items) bliver UI langsom
 - `filteredInvoices` useMemo kører på hvert tastetryk
 - Alle invoice cards re-renderer
 
 **Måling:**
+
 - 100 invoices × 10 tastetryk = 1000 komponent renders
 - Med debouncing (300ms): 100 invoices × 1-2 renders = 100-200 renders
 
 **Fix:**
+
 ```typescript
 import { useMemo, useState } from 'react';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'; // or implement
@@ -254,6 +268,7 @@ const filteredInvoices = useMemo(() => {
 **Lokation:** `InvoicesTab.tsx:454`
 
 **Problem:**
+
 ```typescript
 <p className="text-xs text-muted-foreground">
   Dato: {new Date(invoice.entryDate).toLocaleDateString("da-DK")} •
@@ -262,14 +277,16 @@ const filteredInvoices = useMemo(() => {
 ```
 
 **Konsekvens:**
+
 - `new Date()` og `toLocaleDateString()` kaldes ved hvert render
 - For 50 invoices = 100 date parsing operations per render
 - Kan optimeres med memoization
 
 **Fix:**
+
 ```typescript
 // Create memoized formatter outside component or use useMemo
-const dateFormatter = new Intl.DateTimeFormat('da-DK');
+const dateFormatter = new Intl.DateTimeFormat("da-DK");
 
 const formattedDate = useMemo(
   () => dateFormatter.format(new Date(invoice.entryDate)),
@@ -288,6 +305,7 @@ const formattedDate = useMemo(
 **Lokation:** `InvoicesTab.tsx:96-105`
 
 **Problem:**
+
 ```typescript
 const [selectedInvoice, setSelectedInvoice] = useState<any | null>(null);
 const [aiAnalysis, setAiAnalysis] = useState<string>("");
@@ -298,6 +316,7 @@ const [showCommentInput, setShowCommentInput] = useState(false);
 ```
 
 **Konsekvens:**
+
 - 6 separate states der skal holdes synkroniserede
 - Svært at sikre konsistent state
 - Risiko for bugs når states opdateres i forkert rækkefølge
@@ -307,18 +326,20 @@ Brug `useReducer` til relateret state:
 
 ```typescript
 type AnalysisState =
-  | { status: 'idle' }
-  | { status: 'analyzing'; invoice: BillyInvoice }
+  | { status: "idle" }
+  | { status: "analyzing"; invoice: BillyInvoice }
   | {
-      status: 'complete';
+      status: "complete";
       invoice: BillyInvoice;
       analysis: string;
-      feedback?: { rating: 'up' | 'down'; comment?: string };
+      feedback?: { rating: "up" | "down"; comment?: string };
       showCommentInput: boolean;
     }
-  | { status: 'error'; invoice: BillyInvoice; error: string };
+  | { status: "error"; invoice: BillyInvoice; error: string };
 
-const [analysisState, dispatch] = useReducer(analysisReducer, { status: 'idle' });
+const [analysisState, dispatch] = useReducer(analysisReducer, {
+  status: "idle",
+});
 ```
 
 **Prioritet:** 🟡 MEDIUM — Forbedrer maintainability
@@ -330,6 +351,7 @@ const [analysisState, dispatch] = useReducer(analysisReducer, { status: 'idle' }
 **Lokation:** Multiple locations
 
 **Problem:**
+
 ```typescript
 getStatusBadge(invoice.state) {
   // ...
@@ -340,15 +362,17 @@ getStatusBadge(invoice.state) {
 ```
 
 **Konsekvens:**
+
 - Ikke muligt at skifte sprog
 - Svært at vedligeholde tekster
 - Inkonsistent med resten af app (hvis den bruger i18n)
 
 **Fix:**
-```typescript
-import { useTranslation } from 'react-i18next'; // eller jeres i18n system
 
-const { t } = useTranslation('invoices');
+```typescript
+import { useTranslation } from "react-i18next"; // eller jeres i18n system
+
+const { t } = useTranslation("invoices");
 
 const getStatusBadge = (state: string) => {
   switch (state) {
@@ -356,7 +380,7 @@ const getStatusBadge = (state: string) => {
       return {
         variant: "default" as const,
         icon: CheckCircle2,
-        label: t('status.paid') // → "Betalt" (da) / "Paid" (en)
+        label: t("status.paid"), // → "Betalt" (da) / "Paid" (en)
       };
     // ...
   }
@@ -372,23 +396,25 @@ const getStatusBadge = (state: string) => {
 **Lokation:** `InvoicesTab.tsx:76-80`
 
 **Problem:**
+
 ```typescript
 useAdaptivePolling({
-  baseInterval: 60000,       // ❌ What does 60000 mean?
-  minInterval: 30000,        // ❌ Magic number
-  maxInterval: 180000,       // ❌ Magic number
+  baseInterval: 60000, // ❌ What does 60000 mean?
+  minInterval: 30000, // ❌ Magic number
+  maxInterval: 180000, // ❌ Magic number
   inactivityThreshold: 60000,
   // ...
 });
 ```
 
 **Fix:**
+
 ```typescript
 // At top of file or separate constants file
 const POLLING_CONFIG = {
-  BASE_INTERVAL_MS: 60_000,      // 1 minute
-  MIN_INTERVAL_MS: 30_000,       // 30 seconds
-  MAX_INTERVAL_MS: 180_000,      // 3 minutes
+  BASE_INTERVAL_MS: 60_000, // 1 minute
+  MIN_INTERVAL_MS: 30_000, // 30 seconds
+  MAX_INTERVAL_MS: 180_000, // 3 minutes
   INACTIVITY_THRESHOLD_MS: 60_000, // 1 minute
 } as const;
 
@@ -412,11 +438,13 @@ useAdaptivePolling({
 **Lokation:** Invoice liste (linje 429-555)
 
 **Problem:**
+
 - Invoice cards kan ikke navigeres med keyboard (Tab/Arrow keys)
 - Ingen focus indicators
 - "Analyze" button er clickable, men cards selv har `cursor-pointer` uden onClick
 
 **Fix:**
+
 ```typescript
 <Card
   key={invoice.id}
@@ -443,6 +471,7 @@ useAdaptivePolling({
 **Lokation:** Multiple buttons
 
 **Problem:**
+
 ```typescript
 <Button
   size="icon"
@@ -456,6 +485,7 @@ useAdaptivePolling({
 ```
 
 **Fix:**
+
 ```typescript
 <Button
   size="icon"
@@ -480,25 +510,28 @@ useAdaptivePolling({
 **Lokation:** Database schema mismatch
 
 **Problem:**
+
 ```typescript
 // InvoicesTab.tsx expects:
-invoice.invoiceNo
-invoice.entryDate
-invoice.paymentTermsDays
+invoice.invoiceNo;
+invoice.entryDate;
+invoice.paymentTermsDays;
 
 // But drizzle/schema.ts only has:
 customerInvoicesInFridayAi = {
-  invoiceNumber: varchar({ length: 50 }),  // ❌ Not 'invoiceNo'
+  invoiceNumber: varchar({ length: 50 }), // ❌ Not 'invoiceNo'
   // ❌ Missing: entryDate, paymentTermsDays, paidAmount
-}
+};
 ```
 
 **Konsekvens:**
+
 - Data fra Billy API kan ikke gemmes korrekt i database
 - `updateCustomerBalance` returnerer `NaN`
 - Invoice numbers vises ikke i UI
 
 **Fix:**
+
 1. Add migration to create missing columns
 2. Update Drizzle schema
 3. Backfill data from Billy API
@@ -510,14 +543,17 @@ customerInvoicesInFridayAi = {
 ## 💡 FORESLÅEDE NYE FEATURES
 
 ### Feature 1: Bulk Actions
+
 **Beskrivelse:** Vælg flere fakturaer og udfør actions (export, analyze, mark as paid)
 
 **Use case:**
+
 - Bruger har 20 forfaldne fakturaer
 - Vil eksportere dem alle til CSV på én gang
 - Eller sende påmindelser til alle
 
 **Implementation:**
+
 ```typescript
 const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set());
 
@@ -547,13 +583,16 @@ const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set())
 ---
 
 ### Feature 2: Invoice Timeline View
+
 **Beskrivelse:** Vis fakturaer på en tidslinje (Gantt-style) for overblik over forfaldsdatoer
 
 **Use case:**
+
 - Bruger vil se alle fakturaer der forfalder næste uge
 - Visuelt overblik over cash flow
 
 **Implementation:**
+
 - Brug library som `react-calendar-timeline`
 - Gruppér efter måned/uge
 - Farvekodning efter status
@@ -563,14 +602,17 @@ const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set())
 ---
 
 ### Feature 3: Smart Filters & Saved Views
+
 **Beskrivelse:** Gem ofte brugte filter kombinationer
 
 **Use case:**
+
 - "Forfaldne fakturaer over 10.000 DKK"
 - "Kladder fra sidste måned"
 - "Alle betalte i Q4 2024"
 
 **Implementation:**
+
 ```typescript
 const savedFilters = [
   {
@@ -596,14 +638,17 @@ const savedFilters = [
 ---
 
 ### Feature 4: AI Suggestions (Proactive)
+
 **Beskrivelse:** AI foreslår actions baseret på invoice data (uden at bruger skal klikke "Analyze")
 
 **Use case:**
+
 - Faktura er 30 dage forfalden → "Send reminder?"
 - Faktura har usædvanlig høj værdi → "Double-check with customer"
 - Customer har betalt 3 fakturaer til tiden → "Good payment history, consider credit increase"
 
 **Implementation:**
+
 ```typescript
 // Background job that runs AI analysis on all invoices
 // Stores suggestions in database
@@ -622,14 +667,17 @@ const savedFilters = [
 ---
 
 ### Feature 5: Email Integration
+
 **Beskrivelse:** Send invoice direkte via email fra UI
 
 **Use case:**
+
 - Bruger ser faktura i InvoicesTab
 - Klikker "Send Email"
 - Pre-filled email med faktura PDF og standard besked
 
 **Implementation:**
+
 ```typescript
 <Button
   onClick={() => {
@@ -653,6 +701,7 @@ const savedFilters = [
 ## 📊 PRIORITERET ACTION PLAN
 
 ### Phase 1: Critical Fixes (1-2 dage)
+
 1. ✅ Fix memory leak i CSV export
 2. ✅ Add TypeScript interfaces for invoices
 3. ✅ Fix race condition i AI analysis
@@ -660,6 +709,7 @@ const savedFilters = [
 5. ✅ Add debouncing til search input
 
 ### Phase 2: Performance & Quality (2-3 dage)
+
 6. ✅ Refactor til useReducer for analysis state
 7. ✅ Add accessibility (keyboard nav, ARIA labels)
 8. ⏸️ Add i18n support (hvis required)
@@ -667,12 +717,14 @@ const savedFilters = [
 10. ✅ Optimize date formatting
 
 ### Phase 3: Database Fix (1 dag - koordiner med backend team)
+
 11. ⏸️ Create migration for missing columns
 12. ⏸️ Update Drizzle schema
 13. ⏸️ Backfill data fra Billy API
 14. ⏸️ Test end-to-end flow
 
 ### Phase 4: New Features (vælg 1-2 baseret på bruger feedback)
+
 15. 🎯 Bulk actions (highest ROI)
 16. 🎯 Smart filters & saved views
 17. 🔮 AI suggestions (mest ambitiøs)
@@ -684,18 +736,19 @@ const savedFilters = [
 ## 🧪 TESTING STRATEGI
 
 ### Unit Tests
+
 ```typescript
 // InvoicesTab.test.tsx
-describe('InvoicesTab', () => {
-  it('should filter invoices by search query', () => {
+describe("InvoicesTab", () => {
+  it("should filter invoices by search query", () => {
     // Test search functionality
   });
 
-  it('should not have memory leaks on CSV export', () => {
+  it("should not have memory leaks on CSV export", () => {
     // Mock URL.createObjectURL and verify revokeObjectURL is called
   });
 
-  it('should handle race conditions in AI analysis', () => {
+  it("should handle race conditions in AI analysis", () => {
     // Click analyze on invoice A, then quickly on invoice B
     // Verify correct analysis is shown
   });
@@ -703,11 +756,13 @@ describe('InvoicesTab', () => {
 ```
 
 ### Integration Tests
+
 - Test Billy API integration
 - Test AI analysis flow end-to-end
 - Test feedback submission
 
 ### E2E Tests (Playwright/Cypress)
+
 - Search and filter flow
 - AI analysis + feedback flow
 - CSV export flow
@@ -718,16 +773,19 @@ describe('InvoicesTab', () => {
 ## 📈 SUCCESS METRICS
 
 **Performance:**
+
 - Search input response time: < 100ms (with debouncing)
 - Invoice list render time: < 200ms for 100 items
 - Memory usage: Stable over time (no leaks)
 
 **Quality:**
+
 - 0 TypeScript `any` types in invoice-related code
 - Lighthouse Accessibility score: > 90
 - Test coverage: > 80% for critical paths
 
 **User Experience:**
+
 - AI analysis success rate: > 95%
 - CSV export success rate: > 99%
 - User satisfaction (feedback): > 4.0/5.0

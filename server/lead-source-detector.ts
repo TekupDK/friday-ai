@@ -184,7 +184,7 @@ export function detectLeadSourceIntelligent(email: EmailData): SourceDetection {
   if (matches.length > 0) {
     matches.sort((a, b) => b.confidence - a.confidence);
     const best = matches[0];
-    
+
     return {
       source: best.source,
       confidence: best.confidence,

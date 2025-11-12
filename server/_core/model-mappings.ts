@@ -16,10 +16,10 @@ export const MODEL_ID_MAPPING: Record<AIModel, string> = {
   "minimax-m2-free": "minimax/minimax-m2:free",
   "qwen3-coder-free": "qwen/qwen3-coder:free",
   "kimi-k2-free": "moonshotai/kimi-k2:free",
-  
+
   // FREE TIER - Legacy
   "gemma-3-27b-free": "google/gemma-3-27b-it:free",
-  
+
   // PAID TIER - Fallbacks
   "gpt-4o-mini": "openai/gpt-4o-mini",
   "gemini-2.0-flash-exp": "google/gemini-2.0-flash-exp",
@@ -30,14 +30,17 @@ export const MODEL_ID_MAPPING: Record<AIModel, string> = {
 /**
  * Model metadata for display and evaluation
  */
-export const MODEL_METADATA: Record<AIModel, {
-  displayName: string;
-  provider: string;
-  accuracy?: string;
-  specialization?: string;
-  contextWindow?: number;
-  costTier: "free" | "paid";
-}> = {
+export const MODEL_METADATA: Record<
+  AIModel,
+  {
+    displayName: string;
+    provider: string;
+    accuracy?: string;
+    specialization?: string;
+    contextWindow?: number;
+    costTier: "free" | "paid";
+  }
+> = {
   "glm-4.5-air-free": {
     displayName: "GLM-4.5 Air",
     provider: "Z-AI",
@@ -147,7 +150,7 @@ export function getFreeTierModels(): AIModel[] {
  */
 export function getModelsBySpecialization(specialization: string): AIModel[] {
   return Object.entries(MODEL_METADATA)
-    .filter(([_, meta]) => 
+    .filter(([_, meta]) =>
       meta.specialization?.toLowerCase().includes(specialization.toLowerCase())
     )
     .map(([model]) => model as AIModel);

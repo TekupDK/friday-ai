@@ -7,14 +7,44 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { 
-  Mail, Send, Sparkles, Bot, User, Calendar, DollarSign,
-  Phone, Clock, Building2, MapPin, FileText, Zap, Star,
-  Search, Archive, CheckCircle2, AlertCircle, TrendingUp, Plus
+import {
+  Mail,
+  Send,
+  Sparkles,
+  Bot,
+  User,
+  Calendar,
+  DollarSign,
+  Phone,
+  Clock,
+  Building2,
+  MapPin,
+  FileText,
+  Zap,
+  Star,
+  Search,
+  Archive,
+  CheckCircle2,
+  AlertCircle,
+  TrendingUp,
+  Plus,
 } from "lucide-react";
 
 /**
@@ -23,7 +53,12 @@ import {
  * Complete with dialogs, modals, animations
  */
 
-type PipelineStage = 'needs_action' | 'venter' | 'kalender' | 'finance' | 'done';
+type PipelineStage =
+  | "needs_action"
+  | "venter"
+  | "kalender"
+  | "finance"
+  | "done";
 
 interface Email {
   id: string;
@@ -40,60 +75,78 @@ interface Email {
 
 interface ChatMessage {
   id: string;
-  type: 'ai' | 'user';
+  type: "ai" | "user";
   content: string;
   timestamp: string;
 }
 
 const sampleEmails: Email[] = [
   {
-    id: '1',
-    from: 'Matilde Skinneholm',
-    subject: 'Tilbud på kontorrengøring',
-    preview: 'Hej, vi vil gerne have et tilbud på ugentlig rengøring...',
-    time: 'Nu',
-    stage: 'needs_action',
+    id: "1",
+    from: "Matilde Skinneholm",
+    subject: "Tilbud på kontorrengøring",
+    preview: "Hej, vi vil gerne have et tilbud på ugentlig rengøring...",
+    time: "Nu",
+    stage: "needs_action",
     aiScore: 95,
     estimatedValue: 40000,
-    serviceType: 'Fast Rengøring',
-    unread: true
+    serviceType: "Fast Rengøring",
+    unread: true,
   },
   {
-    id: '2',
-    from: 'Hanne Andersen',
-    subject: 'Re: Tilbud flytterengøring',
-    preview: 'Tak for tilbuddet. Vi vil gerne gå videre...',
-    time: '2t',
-    stage: 'venter',
+    id: "2",
+    from: "Hanne Andersen",
+    subject: "Re: Tilbud flytterengøring",
+    preview: "Tak for tilbuddet. Vi vil gerne gå videre...",
+    time: "2t",
+    stage: "venter",
     aiScore: 88,
     estimatedValue: 25000,
-    serviceType: 'Flytterengøring',
-    unread: true
-  }
+    serviceType: "Flytterengøring",
+    unread: true,
+  },
 ];
 
 const chatMessages: ChatMessage[] = [
-  { id: '1', type: 'ai', content: '👋 Hej! Du har 2 nye emails der kræver handling.', timestamp: '09:00' },
-  { id: '2', type: 'user', content: 'Vis mig de vigtigste', timestamp: '09:01' },
-  { id: '3', type: 'ai', content: 'Matilde fra TechCorp vil have et tilbud på kontorrengøring - 95% win probability, 40.000 kr potentiel værdi', timestamp: '09:01' }
+  {
+    id: "1",
+    type: "ai",
+    content: "👋 Hej! Du har 2 nye emails der kræver handling.",
+    timestamp: "09:00",
+  },
+  {
+    id: "2",
+    type: "user",
+    content: "Vis mig de vigtigste",
+    timestamp: "09:01",
+  },
+  {
+    id: "3",
+    type: "ai",
+    content:
+      "Matilde fra TechCorp vil have et tilbud på kontorrengøring - 95% win probability, 40.000 kr potentiel værdi",
+    timestamp: "09:01",
+  },
 ];
 
 export function EmailCenterShowcase() {
-  const [activeStage, setActiveStage] = useState<PipelineStage>('needs_action');
-  const [selectedEmail, setSelectedEmail] = useState<Email | null>(sampleEmails[0]);
+  const [activeStage, setActiveStage] = useState<PipelineStage>("needs_action");
+  const [selectedEmail, setSelectedEmail] = useState<Email | null>(
+    sampleEmails[0]
+  );
   const [showReplyDialog, setShowReplyDialog] = useState(false);
   const [showQuoteDialog, setShowQuoteDialog] = useState(false);
   const [showBookingDialog, setShowBookingDialog] = useState(false);
-  const [chatInput, setChatInput] = useState('');
+  const [chatInput, setChatInput] = useState("");
 
   const filteredEmails = sampleEmails.filter(e => e.stage === activeStage);
 
   const stages = [
-    { id: 'needs_action', label: 'Needs Action', count: 1, color: 'red' },
-    { id: 'venter', label: 'Venter', count: 1, color: 'yellow' },
-    { id: 'kalender', label: 'Kalender', count: 0, color: 'blue' },
-    { id: 'finance', label: 'Finance', count: 0, color: 'green' },
-    { id: 'done', label: 'Done', count: 0, color: 'gray' }
+    { id: "needs_action", label: "Needs Action", count: 1, color: "red" },
+    { id: "venter", label: "Venter", count: 1, color: "yellow" },
+    { id: "kalender", label: "Kalender", count: 0, color: "blue" },
+    { id: "finance", label: "Finance", count: 0, color: "green" },
+    { id: "done", label: "Done", count: 0, color: "gray" },
   ] as const;
 
   return (
@@ -122,11 +175,11 @@ export function EmailCenterShowcase() {
                   key={msg.id}
                   className={cn(
                     "flex gap-2 animate-in slide-in-from-bottom-2",
-                    msg.type === 'user' && "flex-row-reverse"
+                    msg.type === "user" && "flex-row-reverse"
                   )}
                   style={{ animationDelay: `${idx * 100}ms` }}
                 >
-                  {msg.type === 'ai' ? (
+                  {msg.type === "ai" ? (
                     <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shrink-0 shadow-md">
                       <Sparkles className="w-4 h-4 text-white" />
                     </div>
@@ -135,12 +188,14 @@ export function EmailCenterShowcase() {
                       <User className="w-4 h-4 text-white" />
                     </div>
                   )}
-                  <div className={cn(
-                    "rounded-xl p-3 text-xs max-w-[80%] shadow-md",
-                    msg.type === 'ai' 
-                      ? "bg-white border border-gray-200" 
-                      : "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
-                  )}>
+                  <div
+                    className={cn(
+                      "rounded-xl p-3 text-xs max-w-[80%] shadow-md",
+                      msg.type === "ai"
+                        ? "bg-white border border-gray-200"
+                        : "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+                    )}
+                  >
                     {msg.content}
                   </div>
                 </div>
@@ -153,11 +208,14 @@ export function EmailCenterShowcase() {
             <div className="flex gap-2">
               <Input
                 value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
+                onChange={e => setChatInput(e.target.value)}
                 placeholder="Chat with AI..."
                 className="text-sm"
               />
-              <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 shrink-0">
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 shrink-0"
+              >
                 <Send className="w-4 h-4" />
               </Button>
             </div>
@@ -226,9 +284,12 @@ export function EmailCenterShowcase() {
                     onClick={() => setSelectedEmail(email)}
                     className={cn(
                       "p-4 border-b cursor-pointer transition-all hover:bg-gray-50",
-                      selectedEmail?.id === email.id && "bg-blue-50 border-l-4 border-l-blue-600"
+                      selectedEmail?.id === email.id &&
+                        "bg-blue-50 border-l-4 border-l-blue-600"
                     )}
-                    style={{ animation: `fadeIn 0.3s ease-out ${idx * 0.1}s both` }}
+                    style={{
+                      animation: `fadeIn 0.3s ease-out ${idx * 0.1}s both`,
+                    }}
                   >
                     <div className="flex items-start gap-3">
                       <Avatar className="w-10 h-10">
@@ -238,14 +299,24 @@ export function EmailCenterShowcase() {
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-semibold text-sm truncate">{email.from}</span>
-                          <span className="text-xs text-gray-500">{email.time}</span>
+                          <span className="font-semibold text-sm truncate">
+                            {email.from}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {email.time}
+                          </span>
                         </div>
-                        <h4 className="text-sm font-medium text-gray-900 truncate mb-1">{email.subject}</h4>
-                        <p className="text-xs text-gray-600 line-clamp-2 mb-2">{email.preview}</p>
+                        <h4 className="text-sm font-medium text-gray-900 truncate mb-1">
+                          {email.subject}
+                        </h4>
+                        <p className="text-xs text-gray-600 line-clamp-2 mb-2">
+                          {email.preview}
+                        </p>
                         <div className="flex gap-2 flex-wrap">
                           {email.serviceType && (
-                            <Badge variant="outline" className="text-xs">{email.serviceType}</Badge>
+                            <Badge variant="outline" className="text-xs">
+                              {email.serviceType}
+                            </Badge>
                           )}
                           {email.estimatedValue && (
                             <Badge className="text-xs bg-green-100 text-green-700">
@@ -278,8 +349,12 @@ export function EmailCenterShowcase() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
-                        <h2 className="text-lg font-bold mb-1">{selectedEmail.from}</h2>
-                        <h3 className="text-base font-semibold text-gray-800">{selectedEmail.subject}</h3>
+                        <h2 className="text-lg font-bold mb-1">
+                          {selectedEmail.from}
+                        </h2>
+                        <h3 className="text-base font-semibold text-gray-800">
+                          {selectedEmail.subject}
+                        </h3>
                       </div>
                     </div>
 
@@ -287,8 +362,12 @@ export function EmailCenterShowcase() {
                     <div className="p-4 rounded-xl bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200">
                       <div className="flex items-center gap-2 mb-3">
                         <Sparkles className="w-4 h-4 text-purple-600" />
-                        <span className="text-sm font-semibold text-purple-900">AI Suggested Actions</span>
-                        <Badge className="bg-purple-600 text-white text-xs">{selectedEmail.aiScore}%</Badge>
+                        <span className="text-sm font-semibold text-purple-900">
+                          AI Suggested Actions
+                        </span>
+                        <Badge className="bg-purple-600 text-white text-xs">
+                          {selectedEmail.aiScore}%
+                        </Badge>
                       </div>
                       <div className="flex gap-2">
                         <Button
@@ -321,15 +400,23 @@ export function EmailCenterShowcase() {
                   <ScrollArea className="flex-1 p-6">
                     <Card className="mb-6 border-2">
                       <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 border-b">
-                        <h4 className="font-semibold text-sm">Customer Context</h4>
+                        <h4 className="font-semibold text-sm">
+                          Customer Context
+                        </h4>
                       </div>
                       <div className="p-4 grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">Service Type</div>
-                          <div className="font-semibold">{selectedEmail.serviceType}</div>
+                          <div className="text-xs text-gray-500 mb-1">
+                            Service Type
+                          </div>
+                          <div className="font-semibold">
+                            {selectedEmail.serviceType}
+                          </div>
                         </div>
                         <div>
-                          <div className="text-xs text-gray-500 mb-1">Estimated Value</div>
+                          <div className="text-xs text-gray-500 mb-1">
+                            Estimated Value
+                          </div>
                           <div className="font-semibold text-green-600 flex items-center gap-1">
                             <DollarSign className="w-4 h-4" />
                             {selectedEmail.estimatedValue?.toLocaleString()} kr
@@ -340,7 +427,9 @@ export function EmailCenterShowcase() {
 
                     <div className="prose prose-sm">
                       <p>{selectedEmail.preview}</p>
-                      <p className="mt-4">Vi er interesseret i at høre mere om jeres tjenester...</p>
+                      <p className="mt-4">
+                        Vi er interesseret i at høre mere om jeres tjenester...
+                      </p>
                     </div>
                   </ScrollArea>
 
@@ -391,7 +480,9 @@ export function EmailCenterShowcase() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowReplyDialog(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setShowReplyDialog(false)}>
+              Cancel
+            </Button>
             <Button className="bg-blue-600">
               <Send className="w-4 h-4 mr-2" />
               Send Email
@@ -405,7 +496,9 @@ export function EmailCenterShowcase() {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Send Tilbud til {selectedEmail?.from}</DialogTitle>
-            <DialogDescription>Generer og send tilbud automatisk</DialogDescription>
+            <DialogDescription>
+              Generer og send tilbud automatisk
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -433,7 +526,9 @@ export function EmailCenterShowcase() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowQuoteDialog(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setShowQuoteDialog(false)}>
+              Cancel
+            </Button>
             <Button className="bg-green-600">
               <FileText className="w-4 h-4 mr-2" />
               Send Tilbud
@@ -447,7 +542,9 @@ export function EmailCenterShowcase() {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Book Møde med {selectedEmail?.from}</DialogTitle>
-            <DialogDescription>Opret kalender event og send invitation</DialogDescription>
+            <DialogDescription>
+              Opret kalender event og send invitation
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -470,7 +567,12 @@ export function EmailCenterShowcase() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowBookingDialog(false)}>Cancel</Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowBookingDialog(false)}
+            >
+              Cancel
+            </Button>
             <Button className="bg-blue-600">
               <Calendar className="w-4 h-4 mr-2" />
               Book & Send

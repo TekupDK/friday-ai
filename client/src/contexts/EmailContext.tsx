@@ -62,7 +62,9 @@ export interface EmailContextState {
 interface EmailContextValue {
   state: EmailContextState;
   updateState: (updates: Partial<EmailContextState>) => void;
-  setActiveTab: (tab: "email" | "invoices" | "calendar" | "leads" | "tasks") => void;
+  setActiveTab: (
+    tab: "email" | "invoices" | "calendar" | "leads" | "tasks"
+  ) => void;
   selectThread: (threadId: string, add?: boolean) => void;
   deselectThread: (threadId: string) => void;
   clearSelection: () => void;
@@ -70,7 +72,7 @@ interface EmailContextValue {
   requestOpenThread: (threadId: string) => void;
   clearPendingThread: () => void;
   // V2: Set selected email for workspace
-  setSelectedEmail: (email: EmailContextState['selectedEmail']) => void;
+  setSelectedEmail: (email: EmailContextState["selectedEmail"]) => void;
 }
 
 const EmailContext = createContext<EmailContextValue | null>(null);
@@ -99,9 +101,12 @@ export function EmailContextProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
-  const setActiveTab = useCallback((tab: "email" | "invoices" | "calendar" | "leads" | "tasks") => {
-    setState(prev => ({ ...prev, activeTab: tab }));
-  }, []);
+  const setActiveTab = useCallback(
+    (tab: "email" | "invoices" | "calendar" | "leads" | "tasks") => {
+      setState(prev => ({ ...prev, activeTab: tab }));
+    },
+    []
+  );
 
   const selectThread = useCallback((threadId: string, add = true) => {
     setState(prev => {
@@ -136,9 +141,12 @@ export function EmailContextProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // V2: Set selected email for Smart Workspace
-  const setSelectedEmail = useCallback((email: EmailContextState['selectedEmail']) => {
-    setState(prev => ({ ...prev, selectedEmail: email }));
-  }, []);
+  const setSelectedEmail = useCallback(
+    (email: EmailContextState["selectedEmail"]) => {
+      setState(prev => ({ ...prev, selectedEmail: email }));
+    },
+    []
+  );
 
   const getContextForAI = useCallback(() => {
     const parts: string[] = [];

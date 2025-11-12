@@ -7,63 +7,73 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { 
-  Search, 
-  BarChart3, 
-  Globe, 
-  Code, 
-  Play, 
-  CheckCircle, 
+import {
+  Search,
+  BarChart3,
+  Globe,
+  Code,
+  Play,
+  CheckCircle,
   Loader2,
   FileCode,
   Table,
-  Image as ImageIcon
+  Image as ImageIcon,
 } from "lucide-react";
 
 export interface ToolExecution {
   id: string;
-  tool: 'search' | 'analyze' | 'browse' | 'code';
-  status: 'running' | 'completed' | 'error';
+  tool: "search" | "analyze" | "browse" | "code";
+  status: "running" | "completed" | "error";
   input: string;
   output?: any;
   startTime: string;
   endTime?: string;
-  steps?: Array<{ label: string; status: 'completed' | 'active' | 'pending' }>;
+  steps?: Array<{ label: string; status: "completed" | "active" | "pending" }>;
 }
 
 interface ToolsPanelProps {
   executions: ToolExecution[];
-  onRunTool?: (tool: ToolExecution['tool'], input: string) => void;
+  onRunTool?: (tool: ToolExecution["tool"], input: string) => void;
 }
 
 export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
-  const getToolIcon = (tool: ToolExecution['tool']) => {
+  const getToolIcon = (tool: ToolExecution["tool"]) => {
     switch (tool) {
-      case 'search': return Search;
-      case 'analyze': return BarChart3;
-      case 'browse': return Globe;
-      case 'code': return Code;
-      default: return Play;
+      case "search":
+        return Search;
+      case "analyze":
+        return BarChart3;
+      case "browse":
+        return Globe;
+      case "code":
+        return Code;
+      default:
+        return Play;
     }
   };
 
-  const getToolName = (tool: ToolExecution['tool']) => {
+  const getToolName = (tool: ToolExecution["tool"]) => {
     switch (tool) {
-      case 'search': return 'Web Search';
-      case 'analyze': return 'Data Analysis';
-      case 'browse': return 'Browser';
-      case 'code': return 'Code Interpreter';
-      default: return 'Tool';
+      case "search":
+        return "Web Search";
+      case "analyze":
+        return "Data Analysis";
+      case "browse":
+        return "Browser";
+      case "code":
+        return "Code Interpreter";
+      default:
+        return "Tool";
     }
   };
 
-  const getStatusIcon = (status: ToolExecution['status']) => {
+  const getStatusIcon = (status: ToolExecution["status"]) => {
     switch (status) {
-      case 'running':
+      case "running":
         return <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />;
-      case 'completed':
+      case "completed":
         return <CheckCircle className="w-4 h-4 text-emerald-600" />;
-      case 'error':
+      case "error":
         return <span className="text-xs text-red-600">Error</span>;
     }
   };
@@ -74,7 +84,9 @@ export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
         <div className="flex items-center justify-between">
           <h3 className="font-semibold">AI Tools</h3>
           <TabsList className="h-8">
-            <TabsTrigger value="all" className="text-xs">All</TabsTrigger>
+            <TabsTrigger value="all" className="text-xs">
+              All
+            </TabsTrigger>
             <TabsTrigger value="search" className="text-xs">
               <Search className="w-3 h-3 mr-1" />
               Search
@@ -101,14 +113,11 @@ export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
               </p>
             </div>
           ) : (
-            executions.map((exec) => {
+            executions.map(exec => {
               const ToolIcon = getToolIcon(exec.tool);
-              
+
               return (
-                <div
-                  key={exec.id}
-                  className="p-3 rounded-lg border space-y-3"
-                >
+                <div key={exec.id} className="p-3 rounded-lg border space-y-3">
                   {/* Header */}
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
@@ -116,8 +125,12 @@ export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
                         <ToolIcon className="w-4 h-4 text-blue-600" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium">{getToolName(exec.tool)}</p>
-                        <p className="text-xs text-muted-foreground">{exec.startTime}</p>
+                        <p className="text-sm font-medium">
+                          {getToolName(exec.tool)}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {exec.startTime}
+                        </p>
                       </div>
                     </div>
                     {getStatusIcon(exec.status)}
@@ -125,7 +138,9 @@ export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
 
                   {/* Input */}
                   <div className="p-2 rounded bg-slate-50 dark:bg-slate-900">
-                    <p className="text-xs font-medium text-muted-foreground mb-1">Input:</p>
+                    <p className="text-xs font-medium text-muted-foreground mb-1">
+                      Input:
+                    </p>
                     <p className="text-xs">{exec.input}</p>
                   </div>
 
@@ -133,19 +148,24 @@ export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
                   {exec.steps && exec.steps.length > 0 && (
                     <div className="space-y-1">
                       {exec.steps.map((step, i) => (
-                        <div key={i} className="flex items-center gap-2 text-xs">
-                          {step.status === 'completed' && (
+                        <div
+                          key={i}
+                          className="flex items-center gap-2 text-xs"
+                        >
+                          {step.status === "completed" && (
                             <CheckCircle className="w-3 h-3 text-emerald-600" />
                           )}
-                          {step.status === 'active' && (
+                          {step.status === "active" && (
                             <Loader2 className="w-3 h-3 text-blue-600 animate-spin" />
                           )}
-                          {step.status === 'pending' && (
+                          {step.status === "pending" && (
                             <div className="w-3 h-3 rounded-full border-2" />
                           )}
-                          <span className={cn(
-                            step.status === 'active' && "font-medium"
-                          )}>
+                          <span
+                            className={cn(
+                              step.status === "active" && "font-medium"
+                            )}
+                          >
                             {step.label}
                           </span>
                         </div>
@@ -154,9 +174,9 @@ export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
                   )}
 
                   {/* Output */}
-                  {exec.output && exec.status === 'completed' && (
+                  {exec.output && exec.status === "completed" && (
                     <div className="pt-2 border-t">
-                      {exec.tool === 'analyze' && (
+                      {exec.tool === "analyze" && (
                         <div className="space-y-2">
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
                             <Table className="w-4 h-4" />
@@ -178,20 +198,20 @@ export function ToolsPanel({ executions, onRunTool }: ToolsPanelProps) {
                           </div>
                         </div>
                       )}
-                      
-                      {exec.tool === 'code' && (
+
+                      {exec.tool === "code" && (
                         <div className="space-y-2">
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
                             <FileCode className="w-4 h-4" />
                             <span>Code Executed Successfully</span>
                           </div>
                           <div className="p-2 rounded bg-slate-100 dark:bg-slate-800 font-mono text-xs">
-                            {exec.output.result || 'Success'}
+                            {exec.output.result || "Success"}
                           </div>
                         </div>
                       )}
 
-                      {exec.tool === 'search' && (
+                      {exec.tool === "search" && (
                         <div className="text-xs text-muted-foreground">
                           Found {exec.output.count || 0} results
                         </div>

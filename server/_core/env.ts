@@ -4,6 +4,27 @@ export const ENV = {
   databaseUrl: process.env.DATABASE_URL ?? "",
   ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
   isProduction: process.env.NODE_ENV === "production",
+  // CORS configuration
+  get corsAllowedOrigins(): string[] {
+    const origins = process.env.CORS_ALLOWED_ORIGINS;
+    if (origins) {
+      return origins.split(",").map(o => o.trim());
+    }
+    // Default production origins
+    if (this.isProduction) {
+      return [
+        "https://friday-ai.tekup.dk",
+        "https://tekup.dk",
+        "https://app.tekup.dk",
+      ];
+    }
+    // Default development origins
+    return [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://localhost:4173",
+    ];
+  },
   // Analytics & Telemetry
   analyticsEnabled:
     (process.env.ANALYTICS_ENABLED || "").toLowerCase() === "true",
@@ -39,7 +60,10 @@ export const ENV = {
   litellmBaseUrl: process.env.LITELLM_BASE_URL ?? "http://localhost:4000",
   litellmMasterKey: process.env.LITELLM_MASTER_KEY ?? "",
   enableLiteLLM: process.env.ENABLE_LITELLM === "true",
-  litellmRolloutPercentage: parseInt(process.env.LITELLM_ROLLOUT_PERCENTAGE || "0", 10),
+  litellmRolloutPercentage: parseInt(
+    process.env.LITELLM_ROLLOUT_PERCENTAGE || "0",
+    10
+  ),
   // Langfuse Observability
   langfuseEnabled: process.env.LANGFUSE_ENABLED === "true",
   langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY ?? "",

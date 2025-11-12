@@ -1,6 +1,6 @@
 /**
  * @deprecated Tests moved to ./chat/ folder
- * 
+ *
  * New test structure:
  * - ./chat/ShortWaveChatPanel.test.tsx
  * - ./chat/ChatInput/ChatInput.test.tsx

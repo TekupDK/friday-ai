@@ -3,7 +3,7 @@
 **Version:** 1.0.0  
 **Date:** November 9, 2025  
 **Status:** CRITICAL SUPPLEMENT  
-**Priority:** Must Read Before Implementation  
+**Priority:** Must Read Before Implementation
 
 ---
 
@@ -22,14 +22,14 @@ Friday AI har ALLEREDE et intelligent routing system:
 ```typescript
 // server/model-router.ts (271 linjer)
 
-export type AIModel = 
-  | "glm-4.5-air-free"        // Primary (100% accuracy)
-  | "gpt-oss-20b-free"        // Fast analysis
+export type AIModel =
+  | "glm-4.5-air-free" // Primary (100% accuracy)
+  | "gpt-oss-20b-free" // Fast analysis
   | "deepseek-chat-v3.1-free" // Coding
-  | "minimax-m2-free"         // Fast
-  | "qwen3-coder-free"        // Code specialist
-  | "kimi-k2-free"            // Long context (200K)
-  | "gemma-3-27b-free";       // Legacy
+  | "minimax-m2-free" // Fast
+  | "qwen3-coder-free" // Code specialist
+  | "kimi-k2-free" // Long context (200K)
+  | "gemma-3-27b-free"; // Legacy
 
 export type TaskType =
   | "chat"
@@ -56,14 +56,14 @@ const MODEL_ROUTING_MATRIX: Record<TaskType, ModelRoutingConfig> = {
     reasoning: "100% accuracy, excellent Danish",
     costLevel: "free",
   },
-  
+
   "code-generation": {
     primary: "qwen3-coder-free",
     fallbacks: ["deepseek-chat-v3.1-free", "claude-3-haiku"],
     reasoning: "Specialized code model",
     costLevel: "free",
   },
-  
+
   "email-draft": {
     primary: "glm-4.5-air-free",
     fallbacks: ["gpt-oss-20b-free", "claude-3-haiku"],
@@ -91,11 +91,11 @@ export async function invokeLLMWithRouting(
 ) {
   const { userId, stream = false, forceModel, maxRetries = 2 } = options;
   const flags = getFeatureFlags(userId);
-  
+
   // Select model based on task type
   const model = selectModel(taskType, userId, forceModel);
   const config = getModelConfig(taskType);
-  
+
   // Try primary model
   try {
     if (stream) {
@@ -129,13 +129,13 @@ export async function invokeLLMWithRouting(
 export async function routeAI(options: AIRouterOptions) {
   const { messages, taskType, userId, model } = options;
   const flags = getFeatureFlags(userId);
-  
+
   // Parse intent from message
   const intent = parseIntent(lastMessage);
   const actionResult = await executeAction(intent);
-  
+
   let response;
-  
+
   if (flags.enableModelRouting && !explicitModel) {
     // Use new model routing system with fallbacks
     response = await invokeLLMWithRouting(taskType, finalMessages, {
@@ -150,12 +150,13 @@ export async function routeAI(options: AIRouterOptions) {
       model: selectedModel,
     });
   }
-  
+
   return response;
 }
 ```
 
 **Dette betyder:**
+
 - Nogle calls går gennem `invokeLLMWithRouting()`
 - Andre går direkte til `invokeLLM()`
 - Feature flag: `enableModelRouting` styrer dette
@@ -165,6 +166,7 @@ export async function routeAI(options: AIRouterOptions) {
 ## 📋 KOMPLET Liste af Filer
 
 ### Gruppe 1: Direct `invokeLLM()` (8 filer)
+
 ```
 1. server/_core/llm.ts                    (DEFINITION)
 2. server/docs/ai/analyzer.ts             (2 calls)
@@ -177,12 +179,14 @@ export async function routeAI(options: AIRouterOptions) {
 ```
 
 ### Gruppe 2: Via `invokeLLMWithRouting()` (indirect)
+
 ```
 1. server/ai-router.ts                    (calls routing)
 2. server/_core/streaming.ts              (uses routing)
 ```
 
 ### Gruppe 3: `streamResponse()` (3 filer)
+
 ```
 1. server/_core/streaming.ts
 2. server/routers/chat-streaming.ts
@@ -194,6 +198,7 @@ export async function routeAI(options: AIRouterOptions) {
 ## 🎯 OPDATERET INTEGRATION STRATEGI
 
 ### Original Plan (Ikke Optimal)
+
 ```typescript
 // Wrapper på invokeLLM level
 export async function invokeLLM(params) {
@@ -203,6 +208,7 @@ export async function invokeLLM(params) {
   return originalInvokeLLM(params);
 }
 ```
+
 **Problem:** Bypasser model router logic! ❌
 
 ### BEDRE Plan (Respekterer Model Router)
@@ -215,11 +221,11 @@ export async function invokeLLM(params) {
 export async function invokeLLMWithRouting(
   taskType: TaskType,
   messages: any[],
-  options: { userId, stream, maxRetries }
+  options: { userId; stream; maxRetries }
 ) {
   const model = selectModel(taskType, userId);
   const config = getModelConfig(taskType);
-  
+
   if (ENV.enableLiteLLM) {
     // LiteLLM håndterer fallback automatisk
     return litellmClient.chatCompletion({
@@ -229,7 +235,7 @@ export async function invokeLLMWithRouting(
       maxRetries: options.maxRetries || 2,
     });
   }
-  
+
   // Original fallback logic
   try {
     return await invokeLLM({ messages, model });
@@ -245,6 +251,7 @@ export async function invokeLLMWithRouting(
 ```
 
 **Fordele:**
+
 - ✅ Respekterer task-based routing
 - ✅ Bevar intelligent model selection
 - ✅ LiteLLM håndterer fallback
@@ -269,10 +276,12 @@ export async function invokeLLMWithRouting(...) {
 ```
 
 **Fordele:**
+
 - ✅ Minimal code changes
 - ✅ Both paths get LiteLLM
 
 **Ulemper:**
+
 - ⚠️ Duplicate fallback logic
 - ⚠️ More complex debugging
 
@@ -296,7 +305,7 @@ export function mapToLiteLLMModel(fridayModel: AIModel): string {
     "gpt-oss-20b-free": "openrouter/openai/gpt-oss-20b:free",
     "gemma-3-27b-free": "openrouter/google/gemma-3-27b-it:free",
   };
-  
+
   return mapping[fridayModel] || mapping["glm-4.5-air-free"];
 }
 ```
@@ -320,6 +329,7 @@ enableModelRouting=true
 ```
 
 **LiteLLM skal tilføje:**
+
 ```bash
 # New for LiteLLM
 ENABLE_LITELLM=false
@@ -332,6 +342,7 @@ LITELLM_ROLLOUT_PERCENTAGE=0
 ## 🎯 OPDATERET MIGRATION STRATEGI
 
 ### Phase 1: Setup (Unchanged)
+
 - Install LiteLLM
 - Configure FREE models
 - Create Docker setup
@@ -339,6 +350,7 @@ LITELLM_ROLLOUT_PERCENTAGE=0
 ### Phase 2: Integration (UPDATED!)
 
 **Task 2.1: Model Mapping Module**
+
 ```typescript
 // NEW FILE: server/integrations/litellm/model-mappings.ts
 export function mapToLiteLLMModel(model: AIModel): string;
@@ -346,6 +358,7 @@ export function mapToFridayModel(litellmModel: string): AIModel;
 ```
 
 **Task 2.2: Integration i Model Router** (CRITICAL!)
+
 ```typescript
 // MODIFY: server/model-router.ts
 
@@ -354,19 +367,20 @@ export async function invokeLLMWithRouting(...) {
     // Route through LiteLLM with task-based config
     const model = selectModel(taskType);
     const config = getModelConfig(taskType);
-    
+
     return litellmClient.chatCompletion({
       model: mapToLiteLLMModel(model),
       messages,
       fallbacks: config.fallbacks.map(mapToLiteLLMModel),
     });
   }
-  
+
   // Original logic
 }
 ```
 
 **Task 2.3: Fallback Wrapper (Backup)**
+
 ```typescript
 // MODIFY: server/_core/llm.ts (as backup)
 
@@ -374,7 +388,7 @@ export async function invokeLLM(params: InvokeParams) {
   if (ENV.enableLiteLLM && !calledFromRouter) {
     return litellmClient.chatCompletion(params);
   }
-  
+
   // Original implementation
 }
 ```
@@ -382,6 +396,7 @@ export async function invokeLLM(params: InvokeParams) {
 ### Phase 3: Testing (UPDATED!)
 
 **Test Matrix:**
+
 ```
 1. Direct invokeLLM() calls → LiteLLM
 2. invokeLLMWithRouting() calls → LiteLLM with routing
@@ -395,20 +410,24 @@ export async function invokeLLM(params: InvokeParams) {
 ## ✅ KRITISKE TAKEAWAYS
 
 ### 1. Model Router ER Friday AI's Hjerte
+
 - **10 task types** med optimerede modeller
 - **Automatisk fallback** allerede implementeret
 - **Feature flag kontrol** allerede på plads
 
 ### 2. To Integration Points
+
 - **Primary:** `invokeLLMWithRouting()` i model-router.ts
-- **Backup:** `invokeLLM()` i _core/llm.ts
+- **Backup:** `invokeLLM()` i \_core/llm.ts
 
 ### 3. Eksisterende Rollout System
+
 - **OPENROUTER_ROLLOUT_PERCENTAGE** allerede fungerer
 - **enableModelRouting** feature flag eksisterer
 - Kan genbruge samme pattern til LiteLLM
 
 ### 4. Model Mapping Påkrævet
+
 - Friday AI: `"glm-4.5-air-free"`
 - LiteLLM: `"openrouter/z-ai/glm-4.5-air:free"`
 - Mapping layer nødvendig
@@ -418,6 +437,7 @@ export async function invokeLLM(params: InvokeParams) {
 ## 📝 OPDATEREDE FILER TIL MIGRATION
 
 ### Must Modify (3 filer)
+
 ```
 1. server/model-router.ts              - KRITISK! Main integration point
 2. server/_core/llm.ts                 - Backup wrapper
@@ -425,6 +445,7 @@ export async function invokeLLM(params: InvokeParams) {
 ```
 
 ### Should Review (5 filer)
+
 ```
 4. server/ai-router.ts                 - Uses routing
 5. server/_core/streaming.ts           - Streaming logic
@@ -434,6 +455,7 @@ export async function invokeLLM(params: InvokeParams) {
 ```
 
 ### Auto-Covered via Router (2 filer)
+
 ```
 9. server/docs/ai/analyzer.ts          - Via routing
 10. server/ai-email-summary.ts         - Via routing
@@ -446,6 +468,7 @@ export async function invokeLLM(params: InvokeParams) {
 ### Strategi: **Respekt Model Router** ✅
 
 **Fordele:**
+
 - ✅ Minimal disruption
 - ✅ Bevar intelligent routing
 - ✅ Single integration point
@@ -453,6 +476,7 @@ export async function invokeLLM(params: InvokeParams) {
 - ✅ Cleaner code
 
 **Implementation:**
+
 1. Integrer LiteLLM i `invokeLLMWithRouting()`
 2. Tilføj model mapping layer
 3. Test med alle task types
@@ -465,11 +489,13 @@ export async function invokeLLM(params: InvokeParams) {
 ## 📊 IMPACT ASSESSMENT
 
 ### Original Plan Impact
+
 - **Files to change:** 6-8
 - **Integration complexity:** Medium
 - **Risk:** Medium
 
-### Updated Plan Impact  
+### Updated Plan Impact
+
 - **Files to change:** 3-5 (færre!)
 - **Integration complexity:** Low-Medium
 - **Risk:** Low (respects existing architecture)
@@ -489,7 +515,7 @@ export async function invokeLLM(params: InvokeParams) {
 **Status:** ✅ CRITICAL INFORMATION ADDED  
 **Impact:** HIGH - Changes migration approach  
 **Action Required:** Review & approve updated strategy  
-**Timeline Impact:** +1 day (6 days total for Phase 1)  
+**Timeline Impact:** +1 day (6 days total for Phase 1)
 
 **Last Updated:** November 9, 2025  
-**Author:** Friday AI Implementation Team  
+**Author:** Friday AI Implementation Team

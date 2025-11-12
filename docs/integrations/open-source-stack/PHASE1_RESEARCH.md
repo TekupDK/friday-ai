@@ -22,9 +22,11 @@ We are integrating **3 powerful open source tools** to enhance Friday AI:
 ## 🎯 Integration Goals
 
 ### 1. Langfuse - Observability
+
 **Purpose:** Monitor all LiteLLM calls and AI operations
 
 **Use Cases:**
+
 - Track response times per model
 - Monitor cost (even though we use FREE models)
 - Error rate tracking
@@ -33,15 +35,18 @@ We are integrating **3 powerful open source tools** to enhance Friday AI:
 - Token usage analytics
 
 **Expected Impact:**
+
 - 100% visibility into AI operations
 - Debug issues 10x faster
 - Optimize model selection
 - Track user satisfaction
 
 ### 2. ChromaDB - Semantic Search
+
 **Purpose:** Replace paid RAG services with free vector database
 
 **Use Cases:**
+
 - Friday Docs intelligent search
 - Lead similarity matching
 - Email thread context retrieval
@@ -49,21 +54,25 @@ We are integrating **3 powerful open source tools** to enhance Friday AI:
 - Customer profile matching
 
 **Expected Impact:**
+
 - 50% better document search
 - 70% faster lead matching
 - Semantic understanding vs keyword search
 - Save $240-600/year (vs Ragie.ai)
 
 ### 3. Crawl4AI - Web Scraping
+
 **Purpose:** Enrich leads and documents automatically
 
 **Use Cases:**
+
 - Automatic lead enrichment (scrape company websites)
 - Competitive intelligence
 - Import external docs to Friday Docs
 - Market research automation
 
 **Expected Impact:**
+
 - 70% reduction in manual research
 - Better lead qualification
 - Automatic data enrichment
@@ -78,6 +87,7 @@ We are integrating **3 powerful open source tools** to enhance Friday AI:
 Based on code search, Friday AI has AI integrated in these areas:
 
 #### 1. Core LLM Layer (`_core/llm.ts`)
+
 ```typescript
 // Primary functions:
 - invokeLLM() - Main AI call function
@@ -89,11 +99,13 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 ```
 
 **Integration Point for Langfuse:**
+
 - Wrap `invokeLLM` and `streamResponse` with Langfuse tracing
 - Track every AI call automatically
 - Zero code changes needed elsewhere!
 
 #### 2. Model Router (`model-router.ts`)
+
 ```typescript
 // Task-based routing:
 - 10 task types (chat, email-draft, lead-analysis, etc.)
@@ -111,47 +123,58 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 ```
 
 **Integration Point for Langfuse:**
+
 - Track which models are used most
 - Monitor success rates per model
 - Compare performance across models
 
 #### 3. Lead Processing
+
 **Files:**
+
 - `lead-source-detector.ts` - Pattern matching for lead sources
 - `lead-source-workflows.ts` - Source-specific workflows
 - `workflow-automation.ts` - End-to-end lead processing
 
 **Integration Point for ChromaDB:**
+
 - Index all leads for semantic search
 - Find similar leads automatically
 - Match leads to existing customers
 - Smart duplicate detection
 
 #### 4. Email Intelligence
+
 **Files:**
+
 - `ai-email-summary.ts` - Generate email summaries
 - `ai-label-suggestions.ts` - Auto-label emails
 - `email-intelligence/categorizer.ts` - Categorize emails
 
 **Integration Point for ChromaDB:**
+
 - Semantic email search
 - Find related conversations
 - Context-aware responses
 - Thread similarity detection
 
 #### 5. Document Processing (Friday Docs)
+
 **Current state:** Not found in code search
 **Assumption:** Friday Docs is separate or planned feature
 
 **Integration Point for ChromaDB:**
+
 - Document vector storage
 - Semantic document search
 - RAG for document Q&A
 
 #### 6. Lead Enrichment
+
 **Current state:** Manual or minimal automation
 
 **Integration Point for Crawl4AI:**
+
 - Automatic website scraping
 - Company info extraction
 - Contact detail discovery
@@ -162,6 +185,7 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 ## 📊 Integration Architecture
 
 ### Current Architecture
+
 ```
 ┌─────────────┐
 │   User UI   │
@@ -185,6 +209,7 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 ```
 
 ### Proposed Architecture with New Stack
+
 ```
 ┌─────────────┐
 │   User UI   │
@@ -240,50 +265,51 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 ### 1. Langfuse Integration Points
 
 #### A. Wrap Core LLM Functions
+
 ```typescript
 // server/_core/llm.ts
 
-import { Langfuse } from 'langfuse';
+import { Langfuse } from "langfuse";
 
 const langfuse = new Langfuse({
   publicKey: ENV.langfusePublicKey,
   secretKey: ENV.langfuseSecretKey,
-  baseUrl: ENV.langfuseBaseUrl || 'http://localhost:3000' // Self-hosted
+  baseUrl: ENV.langfuseBaseUrl || "http://localhost:3000", // Self-hosted
 });
 
 export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   // START TRACE
   const trace = langfuse.trace({
-    name: 'llm-invocation',
+    name: "llm-invocation",
     userId: params.userId?.toString(),
     metadata: {
       taskType: params.taskType,
       model: params.model,
-    }
+    },
   });
 
   const span = trace.span({
-    name: 'llm-call',
+    name: "llm-call",
     input: params.messages,
   });
 
   try {
     const result = await actualInvokeLLM(params);
-    
+
     // END TRACE WITH SUCCESS
     span.end({
       output: result,
       metadata: {
         usage: result.usage,
         model: result.model,
-      }
+      },
     });
 
     return result;
   } catch (error) {
     // END TRACE WITH ERROR
     span.end({
-      level: 'ERROR',
+      level: "ERROR",
       statusMessage: error.message,
     });
     throw error;
@@ -292,6 +318,7 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
 ```
 
 #### B. Track Model Router Decisions
+
 ```typescript
 // server/model-router.ts
 
@@ -321,19 +348,20 @@ export async function invokeLLMWithRouting(...) {
 ### 2. ChromaDB Integration Points
 
 #### A. Lead Indexing
+
 ```typescript
 // server/integrations/chromadb/lead-indexer.ts
 
-import { ChromaClient } from 'chromadb';
+import { ChromaClient } from "chromadb";
 
 const client = new ChromaClient({
-  path: ENV.chromaUrl || 'http://localhost:8000'
+  path: ENV.chromaUrl || "http://localhost:8000",
 });
 
 export async function indexLead(lead: Lead) {
   const collection = await client.getOrCreateCollection({
-    name: 'leads',
-    metadata: { 'hnsw:space': 'cosine' }
+    name: "leads",
+    metadata: { "hnsw:space": "cosine" },
   });
 
   // Create embedding-ready text
@@ -349,20 +377,22 @@ export async function indexLead(lead: Lead) {
   await collection.add({
     ids: [lead.id.toString()],
     documents: [leadText],
-    metadatas: [{
-      leadId: lead.id,
-      source: lead.source,
-      status: lead.status,
-      createdAt: lead.createdAt,
-    }]
+    metadatas: [
+      {
+        leadId: lead.id,
+        source: lead.source,
+        status: lead.status,
+        createdAt: lead.createdAt,
+      },
+    ],
   });
 }
 
 export async function findSimilarLeads(lead: Lead, limit = 5) {
-  const collection = await client.getCollection({ name: 'leads' });
-  
+  const collection = await client.getCollection({ name: "leads" });
+
   const leadText = `${lead.name} ${lead.email} ${lead.company}`;
-  
+
   const results = await collection.query({
     queryTexts: [leadText],
     nResults: limit,
@@ -373,12 +403,13 @@ export async function findSimilarLeads(lead: Lead, limit = 5) {
 ```
 
 #### B. Email Semantic Search
+
 ```typescript
 // server/integrations/chromadb/email-indexer.ts
 
 export async function indexEmail(email: EmailMessage) {
   const collection = await client.getOrCreateCollection({
-    name: 'emails',
+    name: "emails",
   });
 
   const emailText = `
@@ -390,19 +421,21 @@ export async function indexEmail(email: EmailMessage) {
   await collection.add({
     ids: [email.id.toString()],
     documents: [emailText],
-    metadatas: [{
-      emailId: email.id,
-      threadId: email.threadId,
-      from: email.from,
-      subject: email.subject,
-      receivedAt: email.receivedAt,
-    }]
+    metadatas: [
+      {
+        emailId: email.id,
+        threadId: email.threadId,
+        from: email.from,
+        subject: email.subject,
+        receivedAt: email.receivedAt,
+      },
+    ],
   });
 }
 
 export async function searchEmails(query: string, limit = 10) {
-  const collection = await client.getCollection({ name: 'emails' });
-  
+  const collection = await client.getCollection({ name: "emails" });
+
   const results = await collection.query({
     queryTexts: [query],
     nResults: limit,
@@ -415,14 +448,15 @@ export async function searchEmails(query: string, limit = 10) {
 ### 3. Crawl4AI Integration Points
 
 #### A. Lead Enrichment Service
+
 ```typescript
 // server/integrations/crawl4ai/lead-enricher.ts
 
-import { AsyncWebCrawler, LLMExtractionStrategy } from 'crawl4ai';
+import { AsyncWebCrawler, LLMExtractionStrategy } from "crawl4ai";
 
 export async function enrichLeadFromWebsite(lead: Lead) {
   if (!lead.website) {
-    return { success: false, message: 'No website provided' };
+    return { success: false, message: "No website provided" };
   }
 
   const crawler = new AsyncWebCrawler({
@@ -435,7 +469,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
     const result = await crawler.arun({
       url: lead.website,
       extractionStrategy: new LLMExtractionStrategy({
-        provider: 'openrouter/glm-4.5-air-free', // Use our FREE model!
+        provider: "openrouter/glm-4.5-air-free", // Use our FREE model!
         apiToken: ENV.openRouterApiKey,
         instruction: `Extract company information:
           - Company name
@@ -445,7 +479,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
           - Team size (if mentioned)
           - Key products/services
           
-          Return as JSON.`
+          Return as JSON.`,
       }),
       wordCountThreshold: 10,
     });
@@ -464,7 +498,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
       data,
     };
   } catch (error) {
-    console.error('Lead enrichment failed:', error);
+    console.error("Lead enrichment failed:", error);
     return {
       success: false,
       error: error.message,
@@ -480,6 +514,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 ## 📅 Implementation Phases
 
 ### Phase 1: Research & Planning (Current) - Day 1
+
 - [x] Analyze codebase structure
 - [x] Identify integration points
 - [ ] Create detailed architecture
@@ -487,6 +522,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 - [ ] Document API contracts
 
 ### Phase 2: Langfuse Setup - Day 2-3 (2-4 hours)
+
 - [ ] Deploy Langfuse (Docker self-hosted)
 - [ ] Wrap `invokeLLM` with tracing
 - [ ] Wrap `streamResponse` with tracing
@@ -495,6 +531,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 - [ ] Test with real AI calls
 
 ### Phase 3: ChromaDB Integration - Day 4-6 (6-8 hours)
+
 - [ ] Deploy ChromaDB (Docker)
 - [ ] Create lead indexer
 - [ ] Create email indexer
@@ -504,6 +541,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 - [ ] Performance optimization
 
 ### Phase 4: Crawl4AI Integration - Day 7-9 (4-6 hours)
+
 - [ ] Setup Crawl4AI
 - [ ] Create lead enrichment service
 - [ ] Integrate with lead creation flow
@@ -512,6 +550,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 - [ ] Error handling & retries
 
 ### Phase 5: Testing & Validation - Day 10-11 (4-6 hours)
+
 - [ ] Unit tests for all new services
 - [ ] Integration tests
 - [ ] Performance benchmarks
@@ -519,6 +558,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 - [ ] Error scenario testing
 
 ### Phase 6: Documentation - Day 12 (2-3 hours)
+
 - [ ] API documentation
 - [ ] Integration guides
 - [ ] Deployment procedures
@@ -526,6 +566,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 - [ ] Troubleshooting guide
 
 ### Phase 7: Production Rollout - Week 3-4
+
 - [ ] Deploy to staging
 - [ ] Monitor for 48 hours
 - [ ] Gradual production rollout
@@ -536,6 +577,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 ## 🎯 Success Metrics
 
 ### Langfuse Metrics
+
 ```
 - 100% of AI calls tracked
 - <10ms tracing overhead
@@ -544,6 +586,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 ```
 
 ### ChromaDB Metrics
+
 ```
 - <500ms semantic search
 - >80% relevance score
@@ -552,6 +595,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 ```
 
 ### Crawl4AI Metrics
+
 ```
 - >80% successful scrapes
 - <30s per website
@@ -564,6 +608,7 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 ## 💰 Cost Analysis
 
 ### Current Costs (Without Integration)
+
 ```
 Manual lead research:    10 hours/month × $50/hour = $500/month
 Manual document work:    5 hours/month × $50/hour = $250/month
@@ -573,6 +618,7 @@ Total hidden cost:       ~$750/month
 ```
 
 ### Proposed Costs (With Integration)
+
 ```
 Langfuse (self-hosted):  $0/month (FREE)
 ChromaDB (self-hosted):  $0/month (FREE)
@@ -584,6 +630,7 @@ Annual savings:          $9,000/year
 ```
 
 ### ROI Analysis
+
 ```
 Development time:        ~30-40 hours (1-2 weeks)
 Development cost:        ~$2,000 (if outsourced)
@@ -597,28 +644,36 @@ Break-even:              3 months
 ## 🚨 Risks & Mitigations
 
 ### Risk 1: Self-Hosting Complexity
+
 **Mitigation:**
+
 - Use Docker Compose for easy deployment
 - Provide detailed documentation
 - Test on staging first
 - Have cloud backup options (Langfuse Cloud, Qdrant Cloud)
 
 ### Risk 2: Performance Impact
+
 **Mitigation:**
+
 - Async processing for heavy operations
 - Caching for frequent queries
 - Performance monitoring
 - Gradual rollout
 
 ### Risk 3: Data Privacy
+
 **Mitigation:**
+
 - Self-hosted = full control
 - No data leaves your infrastructure
 - GDPR compliant by design
 - Encryption at rest
 
 ### Risk 4: Integration Bugs
+
 **Mitigation:**
+
 - Comprehensive testing
 - Gradual rollout (feature flags)
 - Easy rollback procedures
@@ -647,6 +702,6 @@ Break-even:              3 months
 
 **Status:** ✅ Phase 1 In Progress (60% complete)  
 **Next:** Complete codebase analysis, create architecture diagram  
-**Timeline:** On track for 2-3 week completion  
+**Timeline:** On track for 2-3 week completion
 
 **Last Updated:** November 9, 2025 12:06 PM

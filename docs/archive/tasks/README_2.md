@@ -102,17 +102,17 @@ Send notifikationer når:
 
 ## 📊 Metrics vi tracker nu
 
-| Event                 | Description           | Properties                               |
-| --------------------- | --------------------- | ---------------------------------------- |
-| `suggestion_shown`    | AI viser et forslag   | actionType, suggestionId, conversationId |
-| `suggestion_accepted` | Bruger godkender      | actionType, suggestionId, timeToAction   |
-| `suggestion_rejected` | Bruger afviser        | actionType, suggestionId                 |
-| `suggestion_ignored`  | Bruger ignorerer      | actionType, suggestionId                 |
-| `action_executed`     | Handling udført       | actionType, conversationId, timeToAction |
-| `action_failed`       | Handling fejlede      | actionType, errorMessage                 |
-| `dry_run_performed`   | Preview af handling   | actionType                               |
-| `rollout_check`       | Feature rollout check | feature, userId                          |
-| `tool_call`           | Tool execution (audit)| toolName, requiresApproval, approved, success, code, durationMs |
+| Event                 | Description            | Properties                                                      |
+| --------------------- | ---------------------- | --------------------------------------------------------------- |
+| `suggestion_shown`    | AI viser et forslag    | actionType, suggestionId, conversationId                        |
+| `suggestion_accepted` | Bruger godkender       | actionType, suggestionId, timeToAction                          |
+| `suggestion_rejected` | Bruger afviser         | actionType, suggestionId                                        |
+| `suggestion_ignored`  | Bruger ignorerer       | actionType, suggestionId                                        |
+| `action_executed`     | Handling udført        | actionType, conversationId, timeToAction                        |
+| `action_failed`       | Handling fejlede       | actionType, errorMessage                                        |
+| `dry_run_performed`   | Preview af handling    | actionType                                                      |
+| `rollout_check`       | Feature rollout check  | feature, userId                                                 |
+| `tool_call`           | Tool execution (audit) | toolName, requiresApproval, approved, success, code, durationMs |
 
 ## 🔧 Quick Commands
 

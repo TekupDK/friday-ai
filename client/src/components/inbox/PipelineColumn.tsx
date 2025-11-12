@@ -37,11 +37,16 @@ interface PipelineColumnProps {
 
 // Stage colors
 const STAGE_COLORS: Record<PipelineStage, string> = {
-  needs_action: "bg-red-100 dark:bg-red-900/20 border-red-300 dark:border-red-700",
-  venter_pa_svar: "bg-yellow-100 dark:bg-yellow-900/20 border-yellow-300 dark:border-yellow-700",
-  i_kalender: "bg-blue-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700",
-  finance: "bg-green-100 dark:bg-green-900/20 border-green-300 dark:border-green-700",
-  afsluttet: "bg-gray-100 dark:bg-gray-900/20 border-gray-300 dark:border-gray-700",
+  needs_action:
+    "bg-red-100 dark:bg-red-900/20 border-red-300 dark:border-red-700",
+  venter_pa_svar:
+    "bg-yellow-100 dark:bg-yellow-900/20 border-yellow-300 dark:border-yellow-700",
+  i_kalender:
+    "bg-blue-100 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700",
+  finance:
+    "bg-green-100 dark:bg-green-900/20 border-green-300 dark:border-green-700",
+  afsluttet:
+    "bg-gray-100 dark:bg-gray-900/20 border-gray-300 dark:border-gray-700",
 };
 
 const STAGE_TEXT_COLORS: Record<PipelineStage, string> = {
@@ -62,7 +67,7 @@ export function PipelineColumn({
     id: stage,
   });
 
-  const threadIds = emails.map((email) => email.threadId);
+  const threadIds = emails.map(email => email.threadId);
 
   return (
     <Card
@@ -72,15 +77,9 @@ export function PipelineColumn({
       )}
     >
       {/* Column Header */}
-      <div className={cn(
-        "p-4 border-b-2 rounded-t-lg",
-        STAGE_COLORS[stage]
-      )}>
+      <div className={cn("p-4 border-b-2 rounded-t-lg", STAGE_COLORS[stage])}>
         <div className="flex items-center justify-between">
-          <h3 className={cn(
-            "font-semibold text-sm",
-            STAGE_TEXT_COLORS[stage]
-          )}>
+          <h3 className={cn("font-semibold text-sm", STAGE_TEXT_COLORS[stage])}>
             {title}
           </h3>
           <Badge
@@ -98,12 +97,12 @@ export function PipelineColumn({
       {/* Droppable Email List */}
       <div
         ref={setNodeRef}
-        className={cn(
-          "flex-1 p-3 transition-colors",
-          isOver && "bg-accent/50"
-        )}
+        className={cn("flex-1 p-3 transition-colors", isOver && "bg-accent/50")}
       >
-        <SortableContext items={threadIds} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={threadIds}
+          strategy={verticalListSortingStrategy}
+        >
           <ScrollArea className="h-full">
             <div className="space-y-2">
               {emails.length === 0 ? (
@@ -113,7 +112,7 @@ export function PipelineColumn({
                   <p className="text-xs">Træk emails hertil</p>
                 </div>
               ) : (
-                emails.map((email) => (
+                emails.map(email => (
                   <EmailCard
                     key={email.threadId}
                     email={email}

@@ -20,7 +20,10 @@ interface DocumentEditorProps {
 }
 
 // Template content
-const TEMPLATES: Record<string, { title: string; content: string; category: string; tags: string[] }> = {
+const TEMPLATES: Record<
+  string,
+  { title: string; content: string; category: string; tags: string[] }
+> = {
   feature: {
     title: "Feature Spec",
     content: `# [Feature Name]
@@ -67,7 +70,7 @@ Brief description of what this feature does and why it's needed.
 
 ---
 **Status:** Draft  
-**Created:** ${new Date().toISOString().split('T')[0]}`,
+**Created:** ${new Date().toISOString().split("T")[0]}`,
     category: "Planning & Roadmap",
     tags: ["feature", "planning", "draft"],
   },
@@ -108,7 +111,7 @@ What actually happens?
 ---
 **Priority:** [Low/Medium/High/Critical]  
 **Status:** Open  
-**Date:** ${new Date().toISOString().split('T')[0]}`,
+**Date:** ${new Date().toISOString().split("T")[0]}`,
     category: "Testing & QA",
     tags: ["bug", "urgent"],
   },
@@ -160,7 +163,7 @@ How to verify everything is working:
 ---
 **Difficulty:** [Beginner/Intermediate/Advanced]  
 **Est. time:** [X minutes]  
-**Updated:** ${new Date().toISOString().split('T')[0]}`,
+**Updated:** ${new Date().toISOString().split("T")[0]}`,
     category: "Documentation",
     tags: ["guide", "tutorial"],
   },
@@ -168,7 +171,7 @@ How to verify everything is working:
     title: "Meeting Notes",
     content: `# 📝 Meeting Notes: [Topic]
 
-**Date:** ${new Date().toISOString().split('T')[0]}  
+**Date:** ${new Date().toISOString().split("T")[0]}  
 **Time:** [HH:MM - HH:MM]  
 **Attendees:** [Names]  
 
@@ -208,17 +211,23 @@ How to verify everything is working:
   },
 };
 
-export function DocumentEditor({ documentId, template, onSave, onCancel }: DocumentEditorProps) {
+export function DocumentEditor({
+  documentId,
+  template,
+  onSave,
+  onCancel,
+}: DocumentEditorProps) {
   const { document, isLoading } = useDocument(documentId);
-  const { createDocument, updateDocument, isCreating, isUpdating } = useDocuments();
+  const { createDocument, updateDocument, isCreating, isUpdating } =
+    useDocuments();
 
   const [title, setTitle] = useState("");
   const [path, setPath] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
   const [content, setContent] = useState("");
-  const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
-  
+  const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
+
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onSave: () => {
@@ -227,7 +236,7 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
       }
     },
     onPreview: () => {
-      setActiveTab(activeTab === 'edit' ? 'preview' : 'edit');
+      setActiveTab(activeTab === "edit" ? "preview" : "edit");
     },
     onEscape: () => {
       onCancel();
@@ -259,8 +268,8 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
   const handleSave = () => {
     const tagsArray = tags
       .split(",")
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0);
+      .map(t => t.trim())
+      .filter(t => t.length > 0);
 
     if (documentId) {
       // Update existing
@@ -274,7 +283,7 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
         },
         {
           onSuccess: () => {
-            toast.success('Document updated successfully!');
+            toast.success("Document updated successfully!");
             onSave();
           },
           onError: (error: any) => {
@@ -294,7 +303,7 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
         },
         {
           onSuccess: () => {
-            toast.success('Document created successfully!');
+            toast.success("Document created successfully!");
             onSave();
           },
           onError: (error: any) => {
@@ -334,7 +343,11 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
             <X className="h-4 w-4 mr-2" />
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={isSaving || !title || !content} title="Save (Ctrl+S)">
+          <Button
+            onClick={handleSave}
+            disabled={isSaving || !title || !content}
+            title="Save (Ctrl+S)"
+          >
             <Save className="h-4 w-4 mr-2" />
             {isSaving ? "Saving..." : "Save (Ctrl+S)"}
           </Button>
@@ -353,7 +366,7 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
             <Input
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={e => setTitle(e.target.value)}
               placeholder="Enter document title..."
               required
             />
@@ -365,7 +378,7 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
             <Input
               id="path"
               value={path}
-              onChange={(e) => setPath(e.target.value)}
+              onChange={e => setPath(e.target.value)}
               placeholder="docs/my-document.md"
               disabled={!!documentId}
             />
@@ -383,7 +396,7 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
               <Input
                 id="category"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={e => setCategory(e.target.value)}
                 placeholder="API, Guide, Tutorial..."
               />
             </div>
@@ -393,7 +406,7 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
               <Input
                 id="tags"
                 value={tags}
-                onChange={(e) => setTags(e.target.value)}
+                onChange={e => setTags(e.target.value)}
                 placeholder="feature, auth, api (comma-separated)"
               />
             </div>
@@ -404,9 +417,9 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
             <div className="flex items-center gap-2 flex-wrap">
               {tags
                 .split(",")
-                .map((t) => t.trim())
-                .filter((t) => t.length > 0)
-                .map((tag) => (
+                .map(t => t.trim())
+                .filter(t => t.length > 0)
+                .map(tag => (
                   <Badge key={tag} variant="secondary">
                     {tag}
                   </Badge>
@@ -422,7 +435,11 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
           <CardTitle>Content</CardTitle>
         </CardHeader>
         <CardContent>
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'edit' | 'preview')} className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={v => setActiveTab(v as "edit" | "preview")}
+            className="w-full"
+          >
             <TabsList className="mb-4">
               <TabsTrigger value="edit">
                 <Code className="h-4 w-4 mr-2" />
@@ -433,11 +450,11 @@ export function DocumentEditor({ documentId, template, onSave, onCancel }: Docum
                 Preview
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="edit" className="mt-0">
               <Textarea
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
+                onChange={e => setContent(e.target.value)}
                 placeholder="# My Document
 
 ## Introduction
@@ -454,10 +471,11 @@ const example = 'Hello World';
                 required
               />
               <p className="text-xs text-muted-foreground mt-2">
-                💡 Tip: Use Markdown syntax. Switch to Preview tab to see formatted output.
+                💡 Tip: Use Markdown syntax. Switch to Preview tab to see
+                formatted output.
               </p>
             </TabsContent>
-            
+
             <TabsContent value="preview" className="mt-0">
               <div className="min-h-[500px] border rounded-md p-4 prose prose-sm max-w-none dark:prose-invert">
                 {content ? (

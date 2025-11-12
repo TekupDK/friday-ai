@@ -1,6 +1,6 @@
 /**
  * useEmailKeyboardShortcuts - Keyboard Shortcuts for Email Management
- * 
+ *
  * Shortwave-inspired keyboard shortcuts for efficient email management:
  * - e: Archive
  * - s: Star/unstar
@@ -10,7 +10,7 @@
  * - x: Select
  * - a: Select all
  * - Escape: Clear selection
- * 
+ *
  * Usage:
  * useEmailKeyboardShortcuts({
  *   onArchive: () => { ... },
@@ -36,7 +36,9 @@ export interface EmailKeyboardShortcutsConfig {
   onNavigateDown?: () => void;
 }
 
-export function useEmailKeyboardShortcuts(config: EmailKeyboardShortcutsConfig) {
+export function useEmailKeyboardShortcuts(
+  config: EmailKeyboardShortcutsConfig
+) {
   const {
     enabled = true,
     selectedThreadId,
@@ -72,72 +74,72 @@ export function useEmailKeyboardShortcuts(config: EmailKeyboardShortcutsConfig) 
 
       // Handle shortcuts
       switch (key) {
-        case 'e':
+        case "e":
           if (onArchive && selectedThreadId) {
             event.preventDefault();
             onArchive();
           }
           break;
-        
-        case 's':
+
+        case "s":
           if (onStar && selectedThreadId) {
             event.preventDefault();
             onStar();
           }
           break;
-        
-        case 'r':
+
+        case "r":
           if (onReply && selectedThreadId) {
             event.preventDefault();
             onReply();
           }
           break;
-        
-        case 'l':
+
+        case "l":
           if (onMarkAsLead && selectedThreadId) {
             event.preventDefault();
             onMarkAsLead();
           }
           break;
-        
-        case 'd':
+
+        case "d":
           if (onDelete && selectedThreadId) {
             event.preventDefault();
             onDelete();
           }
           break;
-        
-        case 'x':
+
+        case "x":
           if (onSelect && selectedThreadId) {
             event.preventDefault();
             onSelect();
           }
           break;
-        
-        case 'a':
+
+        case "a":
           if (onSelectAll && !event.shiftKey) {
             event.preventDefault();
             onSelectAll();
           }
           break;
-        
-        case 'escape':
+
+        case "escape":
           if (onClearSelection) {
             event.preventDefault();
             onClearSelection();
           }
           break;
-        
-        case 'arrowup':
-        case 'k':
+
+        case "arrowup":
+        case "k":
           if (onNavigateUp) {
             event.preventDefault();
             onNavigateUp();
           }
           break;
-        
-        case 'arrowdown':
-        case 'j':
+
+        case "arrowdown":
+        case "j":
           if (onNavigateDown) {
             event.preventDefault();
             onNavigateDown();
@@ -163,24 +165,24 @@ export function useEmailKeyboardShortcuts(config: EmailKeyboardShortcutsConfig) 
   useEffect(() => {
     if (!enabled) return;
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [enabled, handleKeyDown]);
 
   return {
     shortcuts: [
-      { key: 'e', description: 'Arkivér' },
-      { key: 's', description: 'Stjerne' },
-      { key: 'r', description: 'Svar' },
-      { key: 'l', description: 'Marker som lead' },
-      { key: 'd', description: 'Slet' },
-      { key: 'x', description: 'Vælg' },
-      { key: 'a', description: 'Vælg alle' },
-      { key: 'Esc', description: 'Ryd valg' },
-      { key: '↑/k', description: 'Naviger op' },
-      { key: '↓/j', description: 'Naviger ned' },
+      { key: "e", description: "Arkivér" },
+      { key: "s", description: "Stjerne" },
+      { key: "r", description: "Svar" },
+      { key: "l", description: "Marker som lead" },
+      { key: "d", description: "Slet" },
+      { key: "x", description: "Vælg" },
+      { key: "a", description: "Vælg alle" },
+      { key: "Esc", description: "Ryd valg" },
+      { key: "↑/k", description: "Naviger op" },
+      { key: "↓/j", description: "Naviger ned" },
     ],
   };
 }

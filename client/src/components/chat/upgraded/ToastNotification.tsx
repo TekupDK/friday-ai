@@ -3,15 +3,25 @@
  * Toast notifications med auto-dismiss og actions
  */
 
-import { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from "react";
 import { cn } from "@/lib/utils";
-import { 
-  CheckCircle2, XCircle, AlertCircle, Info, X, 
-  Loader2 
+import {
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+  Info,
+  X,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export type ToastType = 'success' | 'error' | 'warning' | 'info' | 'loading';
+export type ToastType = "success" | "error" | "warning" | "info" | "loading";
 
 export interface Toast {
   id: string;
@@ -27,7 +37,7 @@ export interface Toast {
 
 interface ToastContextType {
   toasts: Toast[];
-  addToast: (toast: Omit<Toast, 'id'>) => string;
+  addToast: (toast: Omit<Toast, "id">) => string;
   removeToast: (id: string) => void;
   updateToast: (id: string, updates: Partial<Toast>) => void;
 }
@@ -37,12 +47,12 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
+  const addToast = useCallback((toast: Omit<Toast, "id">) => {
     const id = Math.random().toString(36).substring(7);
     const newToast: Toast = {
       ...toast,
       id,
-      duration: toast.duration ?? 5000
+      duration: toast.duration ?? 5000,
     };
 
     setToasts(prev => [...prev, newToast]);
@@ -61,11 +71,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updateToast = useCallback((id: string, updates: Partial<Toast>) => {
-    setToasts(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t));
+    setToasts(prev => prev.map(t => (t.id === id ? { ...t, ...updates } : t)));
   }, []);
 
   return (
-    <ToastContext.Provider value={{ toasts, addToast, removeToast, updateToast }}>
+    <ToastContext.Provider
+      value={{ toasts, addToast, removeToast, updateToast }}
+    >
       {children}
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </ToastContext.Provider>
@@ -75,16 +87,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 export function useToast() {
   const context = useContext(ToastContext);
   if (!context) {
-    throw new Error('useToast must be used within ToastProvider');
+    throw new Error("useToast must be used within ToastProvider");
   }
   return context;
 }
 
-function ToastContainer({ 
-  toasts, 
-  onRemove 
-}: { 
-  toasts: Toast[]; 
+function ToastContainer({
+  toasts,
+  onRemove,
+}: {
+  toasts: Toast[];
   onRemove: (id: string) => void;
 }) {
   return (
@@ -106,40 +118,40 @@ const toastConfig = {
     icon: CheckCircle2,
     gradient: "from-green-500 to-emerald-600",
     bg: "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800",
-    color: "text-green-700 dark:text-green-400"
+    color: "text-green-700 dark:text-green-400",
   },
   error: {
     icon: XCircle,
     gradient: "from-red-500 to-rose-600",
     bg: "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800",
-    color: "text-red-700 dark:text-red-400"
+    color: "text-red-700 dark:text-red-400",
   },
   warning: {
     icon: AlertCircle,
     gradient: "from-yellow-500 to-orange-600",
     bg: "bg-yellow-50 dark:bg-yellow-950/20 border-yellow-200 dark:border-yellow-800",
-    color: "text-yellow-700 dark:text-yellow-400"
+    color: "text-yellow-700 dark:text-yellow-400",
   },
   info: {
     icon: Info,
     gradient: "from-blue-500 to-cyan-600",
     bg: "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800",
-    color: "text-blue-700 dark:text-blue-400"
+    color: "text-blue-700 dark:text-blue-400",
   },
   loading: {
     icon: Loader2,
     gradient: "from-purple-500 to-pink-600",
     bg: "bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800",
-    color: "text-purple-700 dark:text-purple-400"
-  }
+    color: "text-purple-700 dark:text-purple-400",
+  },
 };
 
-function ToastItem({ 
-  toast, 
+function ToastItem({
+  toast,
   index,
-  onRemove 
-}: { 
-  toast: Toast; 
+  onRemove,
+}: {
+  toast: Toast;
   index: number;
   onRemove: () => void;
 }) {
@@ -156,15 +168,19 @@ function ToastItem({
       style={{ animationDelay: `${index * 100}ms` }}
     >
       {/* Icon */}
-      <div className={cn(
-        "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-md",
-        "bg-linear-to-br",
-        config.gradient
-      )}>
-        <Icon className={cn(
-          "w-5 h-5 text-white",
-          toast.type === 'loading' && "animate-spin"
-        )} />
+      <div
+        className={cn(
+          "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-md",
+          "bg-linear-to-br",
+          config.gradient
+        )}
+      >
+        <Icon
+          className={cn(
+            "w-5 h-5 text-white",
+            toast.type === "loading" && "animate-spin"
+          )}
+        />
       </div>
 
       {/* Content */}
@@ -173,9 +189,7 @@ function ToastItem({
           {toast.title}
         </p>
         {toast.description && (
-          <p className="text-xs text-muted-foreground">
-            {toast.description}
-          </p>
+          <p className="text-xs text-muted-foreground">{toast.description}</p>
         )}
         {toast.action && (
           <Button
@@ -200,10 +214,10 @@ function ToastItem({
       {/* Progress Bar */}
       {toast.duration && toast.duration > 0 && (
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 dark:bg-black/20 overflow-hidden rounded-b-xl">
-          <div 
+          <div
             className={cn("h-full bg-linear-to-r", config.gradient)}
             style={{
-              animation: `shrink ${toast.duration}ms linear forwards`
+              animation: `shrink ${toast.duration}ms linear forwards`,
             }}
           />
         </div>
@@ -221,8 +235,8 @@ const styles = `
 `;
 
 // Add to global styles or inject
-if (typeof document !== 'undefined') {
-  const styleSheet = document.createElement('style');
+if (typeof document !== "undefined") {
+  const styleSheet = document.createElement("style");
   styleSheet.textContent = styles;
   document.head.appendChild(styleSheet);
 }

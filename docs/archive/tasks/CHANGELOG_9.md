@@ -31,7 +31,7 @@ Format: YYYY-MM-DD · type(scope): description
 - refactor(InvoicesTab): replaced `getStatusVariant` with `getStatusBadge` returning icon/label
 - style(InvoicesTab): added `group` class for coordinated hover states
 - **Impact**: Tættere layout, professionelle animationer, hurtigere actions uden dialog
-**23:10 - Bug Triage**
+  **23:10 - Bug Triage**
 
 - bug: document Supabase schema drift (missing `invoiceNo`, `paidAmount`, `entryDate`, `paidDate`) causing NaN balances + empty invoice numbers.
 - chore: add plan/status checklist items for migration + Drizzle update + data backfill.

@@ -20,6 +20,7 @@
 ## 📊 **Nuværende vs Fremtidig Layout Sammenligning**
 
 ### 🎯 **Koncept: "Email Command Center"**
+
 Inspireret af **Shortwave.ai** - men med AI som dedikeret assistant og workflow integration.
 
 ---
@@ -61,6 +62,7 @@ Inspireret af **Shortwave.ai** - men med AI som dedikeret assistant og workflow 
 ### 📊 **Component Size Sammenligning:**
 
 #### ❌ **Nuværende (Monolitisk):**
+
 ```
 ├── App.tsx (50 linjer)
 ├── EmailTab.tsx (2200+ linjer) ❌ Monolit
@@ -74,6 +76,7 @@ Problemer:
 ```
 
 #### ✅ **Fremtidig (Separation of Concerns):**
+
 ```
 ├── App.tsx (100 linjer) - Layout orchestrator
 ├── panels/
@@ -106,48 +109,56 @@ Fordele:
 ## 🔄 **Data Flow Evolution:**
 
 ### 📡 **Nuværende Context:**
+
 ```typescript
 // Monolitisk EmailContext - alt i én
 const EmailContext = {
   state: {
     selectedThreads: new Set(),
-    selectedFolder: 'inbox',
-    searchQuery: '',
+    selectedFolder: "inbox",
+    searchQuery: "",
     selectedLabels: [],
     // ... 20+ andre properties
   },
   actions: {
-    selectThread, archiveThread, deleteThread,
+    selectThread,
+    archiveThread,
+    deleteThread,
     // ... 30+ andre functions
-  }
+  },
 };
 ```
 
 ### 🎯 **Fremtidig Context Arkitektur:**
+
 ```typescript
 // Focused contexts - separation af concerns
 const AIContext = {
   state: {
-    activeMode: 'chat', // chat | voice | agent | smart
+    activeMode: "chat", // chat | voice | agent | smart
     conversations: [],
     currentConversation: null,
-    voiceEnabled: false
+    voiceEnabled: false,
   },
   actions: {
-    sendMessage, startVoice, executeAgent
-  }
+    sendMessage,
+    startVoice,
+    executeAgent,
+  },
 };
 
 const EmailContext = {
   state: {
     selectedEmails: new Set(),
-    currentView: 'inbox', // inbox | sent | drafts | archive
+    currentView: "inbox", // inbox | sent | drafts | archive
     selectedEmail: null,
-    composeMode: false
+    composeMode: false,
   },
   actions: {
-    selectEmail, archiveEmail, composeReply
-  }
+    selectEmail,
+    archiveEmail,
+    composeReply,
+  },
 };
 
 const WorkflowContext = {
@@ -155,11 +166,13 @@ const WorkflowContext = {
     tasks: [],
     projects: [],
     calendarEvents: [],
-    activeTab: 'tasks' // tasks | calendar | projects | automation
+    activeTab: "tasks", // tasks | calendar | projects | automation
   },
   actions: {
-    createTask, scheduleEvent, updateProject
-  }
+    createTask,
+    scheduleEvent,
+    updateProject,
+  },
 };
 ```
 
@@ -168,13 +181,14 @@ const WorkflowContext = {
 ## 🎨 **UI/UX Forbedringer:**
 
 ### 🌟 **Visuelle Fordele:**
+
 ```typescript
 // Nuværende: Email er "secondary" til chat
 // Fremtid: Email er "primary" - AI er assistant
 
 Layout Prioritet:
 1. 📧 Email Center (main focus) - 60% width
-2. 🤖 AI Assistant (always available) - 25% width  
+2. 🤖 AI Assistant (always available) - 25% width
 3. 🛠️ Workflow (support tools) - 15% width
 
 Brugerflow:
@@ -184,11 +198,12 @@ Brugerflow:
 ```
 
 ### 📱 **Responsive Strategy:**
+
 ```typescript
 // Mobile: Collapse til single panel med navigation
 const MobileLayout = () => {
   const [activePanel, setActivePanel] = useState('email');
-  
+
   return (
     <div className="h-screen flex flex-col">
       {/* Active Panel */}
@@ -197,9 +212,9 @@ const MobileLayout = () => {
         {activePanel === 'email' && <EmailCenterPanel />}
         {activePanel === 'workflow' && <WorkflowPanel />}
       </div>
-      
+
       {/* Bottom Navigation */}
-      <BottomNav 
+      <BottomNav
         panels={['ai', 'email', 'workflow']}
         active={activePanel}
         onChange={setActivePanel}
@@ -223,20 +238,22 @@ const DesktopLayout = () => (
 ## ⚡ **Performance Fordele:**
 
 ### 🚀 **Code Splitting:**
+
 ```typescript
 // Nuværende: Alt loades på én gang
-import EmailTab from './EmailTab'; // 2200 linjer, ~800KB
-import ChatPanel from './ChatPanel'; // 1348 linjer, ~500KB
+import EmailTab from "./EmailTab"; // 2200 linjer, ~800KB
+import ChatPanel from "./ChatPanel"; // 1348 linjer, ~500KB
 // Total: ~1.3MB initial load
 
 // Fremtid: Lazy loading af panels
-const AIAssistantPanel = lazy(() => import('./panels/AIAssistantPanel')); // ~300KB
-const WorkflowPanel = lazy(() => import('./panels/WorkflowPanel')); // ~250KB
-const EmailCenterPanel = lazy(() => import('./panels/EmailCenterPanel')); // ~400KB
+const AIAssistantPanel = lazy(() => import("./panels/AIAssistantPanel")); // ~300KB
+const WorkflowPanel = lazy(() => import("./panels/WorkflowPanel")); // ~250KB
+const EmailCenterPanel = lazy(() => import("./panels/EmailCenterPanel")); // ~400KB
 // Core: ~600KB | Panels: ~950KB (lazy)
 ```
 
 ### 🎯 **Bundle Optimization:**
+
 ```
 Initial Load:
 • Nuværende: 1.3MB (alt på én gang)
@@ -255,10 +272,11 @@ Performance Gain: 54% hurtigere initial load!
 ## 🧪 **Testability Forbedring:**
 
 ### ❌ **Nuværende Testing Udfordringer:**
+
 ```typescript
 // EmailTab.test.tsx - næsten umulig at teste isoleret
-describe('EmailTab', () => {
-  it('should handle email workflow', () => {
+describe("EmailTab", () => {
+  it("should handle email workflow", () => {
     // Skal mocke:
     // • Gmail API (trpc.inbox.email.*)
     // • Virtual scrolling (useVirtualizer)
@@ -272,10 +290,11 @@ describe('EmailTab', () => {
 ```
 
 ### ✅ **Fremtidig Testing (Focused):**
+
 ```typescript
 // EmailList.test.tsx - kun email liste logik
-describe('EmailList', () => {
-  it('should display emails correctly', () => {
+describe("EmailList", () => {
+  it("should display emails correctly", () => {
     // Mocker kun:
     // • Email data
     // • Selection logic
@@ -283,9 +302,9 @@ describe('EmailList', () => {
   });
 });
 
-// AIChat.test.tsx - kun chat funktionalitet  
-describe('AIChat', () => {
-  it('should handle chat messages', () => {
+// AIChat.test.tsx - kun chat funktionalitet
+describe("AIChat", () => {
+  it("should handle chat messages", () => {
     // Mocker kun:
     // • Chat messages
     // • Send logic
@@ -294,8 +313,8 @@ describe('AIChat', () => {
 });
 
 // TaskManager.test.tsx - kun task management
-describe('TaskManager', () => {
-  it('should manage tasks', () => {
+describe("TaskManager", () => {
+  it("should manage tasks", () => {
     // Mocker kun:
     // • Task CRUD operations
     // • Drag & drop
@@ -309,10 +328,11 @@ describe('TaskManager', () => {
 ## 🔄 **Migration Plan:**
 
 ### 🟢 **Fase 1: Low Risk (1-2 dage)**
+
 ```typescript
 // 1. Udtræk små components (ingen breaking changes)
 • Extract ConversationSidebar fra ChatPanel
-• Extract EmailList fra EmailTab  
+• Extract EmailList fra EmailTab
 • Extract EmailDetail fra EmailTab
 • Opdater styling (flat design)
 
@@ -321,6 +341,7 @@ describe('TaskManager', () => {
 ```
 
 ### 🟡 **Fase 2: Medium Risk (3-5 dage)**
+
 ```typescript
 // 2. Opdater App.tsx layout
 • Implementer 3-panel structure
@@ -332,6 +353,7 @@ describe('TaskManager', () => {
 ```
 
 ### 🔴 **Fase 3: High Risk (1-2 uger)**
+
 ```typescript
 // 3. Byg nye features
 • AIAssistantPanel med multiple modes
@@ -348,21 +370,23 @@ describe('TaskManager', () => {
 ## 🎯 **Business Value:**
 
 ### 💼 **User Experience:**
+
 ```typescript
 // Nuværende: "Email client med chat"
 // Fremtid: "AI-powered workspace center"
 
 Værdi proposition:
 • Email er primære workflow (60% focus)
-• AI er altid tilgængelig assistant (25% focus)  
+• AI er altid tilgængelig assistant (25% focus)
 • Workflow tools supporterer tasks (15% focus)
 • Professional "command center" følelse
 ```
 
 ### 🚀 **Competitive Advantage:**
+
 ```typescript
 // vs Gmail: AI integration + workflow tools
-// vs Superhuman: Modern UI + task management  
+// vs Superhuman: Modern UI + task management
 // vs Shortwave: Better workflow integration
 // vs Notion: Email-first approach
 
@@ -374,12 +398,14 @@ Unik position: "Email workspace med AI assistant"
 ## 📊 **Success Metrics:**
 
 ### 🎯 **Technical KPIs:**
+
 - **Bundle size**: -54% (1.3MB → 600KB)
 - **First load**: -40% faster
 - **Component complexity**: -70% (3000+ linjer → 1000+ linjer pr component)
 - **Test coverage**: +200% (muligt at teste små components)
 
 ### 👥 **User KPIs:**
+
 - **Email processing speed**: +30% (better layout)
 - **AI usage frequency**: +50% (altid synlig)
 - **Task completion rate**: +25% (workflow integration)
@@ -390,11 +416,13 @@ Unik position: "Email workspace med AI assistant"
 ## 🎯 **Anbefaling:**
 
 ### 🚀 **Start med Quick Wins:**
+
 1. **Flat redesign færdiggøres** (allerede startet)
 2. **Udtræk ConversationSidebar** (nem refaktor)
 3. **Opdel EmailTab** (medium effort, high value)
 
 ### 📈 **Så Big Features:**
+
 4. **Implementer 3-panel layout** (transformerende)
 5. **Byg AIAssistantPanel** (unique selling point)
 6. **Tilføj WorkflowPanel** (business value)
@@ -448,14 +476,16 @@ Unik position: "Email workspace med AI assistant"
 **3-Panel layout vil transformere Friday fra en "email client med chat" til et "AI-powered workspace center".**
 
 ### 🏆 **Key Benefits:**
+
 - **Email-first approach** - primære workflow får fokus
-- **AI altid tilgængelig** - ikke gemt bag sidebar  
+- **AI altid tilgængelig** - ikke gemt bag sidebar
 - **Workflow integration** - tasks og projects tæt på email
 - **Professional appearance** - som moderne business tools
 - **Better performance** - code splitting og smaller components
 - **Easier maintenance** - separation of concerns
 
 ### 🚀 **Next Steps:**
+
 1. **Færdiggør flat redesign** (nuværende task)
 2. **Start med component extraction** (lav risiko)
 3. **Implementer 3-panel layout** (medium risiko, høj værdi)
@@ -464,4 +494,4 @@ Unik position: "Email workspace med AI assistant"
 
 ---
 
-*Analysen viser at teknisk set er det en overskuelig migration med enorm business value.*
+_Analysen viser at teknisk set er det en overskuelig migration med enorm business value._

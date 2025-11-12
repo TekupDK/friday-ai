@@ -32,7 +32,7 @@
   ],
   "testCategories": {
     "quick": "pnpm test:ai:quick",
-    "basic": "pnpm test:ai:basic", 
+    "basic": "pnpm test:ai:basic",
     "vibium": "pnpm test:ai:vibium",
     "redirect-safe": "pnpm test:ai:redirect-safe",
     "real": "pnpm test:ai:real",

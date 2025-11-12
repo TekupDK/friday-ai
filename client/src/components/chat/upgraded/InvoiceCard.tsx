@@ -8,9 +8,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { 
-  FileText, Download, Send, Eye, CheckCircle2, Clock,
-  AlertCircle, TrendingUp, Calendar, User, DollarSign
+import {
+  FileText,
+  Download,
+  Send,
+  Eye,
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  TrendingUp,
+  Calendar,
+  User,
+  DollarSign,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -21,7 +30,7 @@ export interface InvoiceData {
   customerEmail?: string;
   amount: number;
   currency: string;
-  status: 'draft' | 'sent' | 'viewed' | 'overdue' | 'paid';
+  status: "draft" | "sent" | "viewed" | "overdue" | "paid";
   dueDate: Date;
   createdDate: Date;
   paidDate?: Date;
@@ -43,79 +52,81 @@ interface InvoiceCardProps {
 const statusConfig = {
   draft: {
     icon: FileText,
-    color: 'bg-gray-500',
-    textColor: 'text-gray-700 dark:text-gray-300',
-    label: 'Kladde',
-    border: 'border-l-gray-500'
+    color: "bg-gray-500",
+    textColor: "text-gray-700 dark:text-gray-300",
+    label: "Kladde",
+    border: "border-l-gray-500",
   },
   sent: {
     icon: Send,
-    color: 'bg-blue-500',
-    textColor: 'text-blue-700 dark:text-blue-300',
-    label: 'Sendt',
-    border: 'border-l-blue-500'
+    color: "bg-blue-500",
+    textColor: "text-blue-700 dark:text-blue-300",
+    label: "Sendt",
+    border: "border-l-blue-500",
   },
   viewed: {
     icon: Eye,
-    color: 'bg-purple-500',
-    textColor: 'text-purple-700 dark:text-purple-300',
-    label: 'Åbnet',
-    border: 'border-l-purple-500'
+    color: "bg-purple-500",
+    textColor: "text-purple-700 dark:text-purple-300",
+    label: "Åbnet",
+    border: "border-l-purple-500",
   },
   overdue: {
     icon: AlertCircle,
-    color: 'bg-red-500',
-    textColor: 'text-red-700 dark:text-red-300',
-    label: 'Forfalden',
-    border: 'border-l-red-500'
+    color: "bg-red-500",
+    textColor: "text-red-700 dark:text-red-300",
+    label: "Forfalden",
+    border: "border-l-red-500",
   },
   paid: {
     icon: CheckCircle2,
-    color: 'bg-green-500',
-    textColor: 'text-green-700 dark:text-green-300',
-    label: 'Betalt',
-    border: 'border-l-green-500'
-  }
+    color: "bg-green-500",
+    textColor: "text-green-700 dark:text-green-300",
+    label: "Betalt",
+    border: "border-l-green-500",
+  },
 };
 
-export function InvoiceCardUpgraded({ 
-  data, 
+export function InvoiceCardUpgraded({
+  data,
   onView,
   onSend,
-  onDownload
+  onDownload,
 }: InvoiceCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const config = statusConfig[data.status];
   const StatusIcon = config.icon;
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('da-DK', {
-      style: 'currency',
+    return new Intl.NumberFormat("da-DK", {
+      style: "currency",
       currency: data.currency,
       minimumFractionDigits: 0,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(amount);
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('da-DK', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric'
+    return date.toLocaleDateString("da-DK", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     });
   };
 
   const getDaysUntilDue = () => {
     const now = new Date();
     const due = new Date(data.dueDate);
-    const diff = Math.ceil((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+    const diff = Math.ceil(
+      (due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+    );
     return diff;
   };
 
   const daysUntilDue = getDaysUntilDue();
 
   return (
-    <Card 
+    <Card
       className={cn(
         "group relative overflow-hidden border-l-4 transition-all duration-300",
         "hover:shadow-xl hover:scale-[1.01]",
@@ -125,16 +136,18 @@ export function InvoiceCardUpgraded({
     >
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
+
       <div className="relative p-4 space-y-3">
         {/* Header */}
         <div className="flex items-start gap-3">
           {/* Icon */}
-          <div className={cn(
-            "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-md",
-            "bg-linear-to-br from-yellow-400 to-orange-500",
-            "group-hover:scale-110 transition-transform duration-300"
-          )}>
+          <div
+            className={cn(
+              "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-md",
+              "bg-linear-to-br from-yellow-400 to-orange-500",
+              "group-hover:scale-110 transition-transform duration-300"
+            )}
+          >
             <FileText className="w-6 h-6 text-white" />
           </div>
 
@@ -144,11 +157,9 @@ export function InvoiceCardUpgraded({
               <h4 className="font-semibold text-base">
                 Faktura #{data.invoiceNumber}
               </h4>
-              <Badge className={config.color}>
-                {config.label}
-              </Badge>
+              <Badge className={config.color}>{config.label}</Badge>
             </div>
-            
+
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
               <User className="w-3.5 h-3.5" />
               <span className="font-medium">{data.customerName}</span>
@@ -164,15 +175,17 @@ export function InvoiceCardUpgraded({
         </div>
 
         {/* Payment Progress */}
-        {data.paymentProgress !== undefined && data.paymentProgress > 0 && data.paymentProgress < 100 && (
-          <div className="space-y-1">
-            <div className="flex justify-between text-xs">
-              <span className="text-muted-foreground">Delvist betalt</span>
-              <span className="font-medium">{data.paymentProgress}%</span>
+        {data.paymentProgress !== undefined &&
+          data.paymentProgress > 0 &&
+          data.paymentProgress < 100 && (
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="text-muted-foreground">Delvist betalt</span>
+                <span className="font-medium">{data.paymentProgress}%</span>
+              </div>
+              <Progress value={data.paymentProgress} className="h-2" />
             </div>
-            <Progress value={data.paymentProgress} className="h-2" />
-          </div>
-        )}
+          )}
 
         {/* Dates Grid */}
         <div className="grid grid-cols-2 gap-2">
@@ -180,25 +193,35 @@ export function InvoiceCardUpgraded({
             <Calendar className="w-4 h-4 text-muted-foreground" />
             <div>
               <p className="text-xs text-muted-foreground">Oprettet</p>
-              <p className="text-xs font-medium">{formatDate(data.createdDate)}</p>
+              <p className="text-xs font-medium">
+                {formatDate(data.createdDate)}
+              </p>
             </div>
           </div>
-          
-          <div className={cn(
-            "flex items-center gap-2 p-2 rounded-lg",
-            daysUntilDue < 0 ? "bg-red-50 dark:bg-red-950/20" : "bg-muted/50"
-          )}>
-            <Clock className={cn(
-              "w-4 h-4",
-              daysUntilDue < 0 ? "text-red-500" : "text-muted-foreground"
-            )} />
+
+          <div
+            className={cn(
+              "flex items-center gap-2 p-2 rounded-lg",
+              daysUntilDue < 0 ? "bg-red-50 dark:bg-red-950/20" : "bg-muted/50"
+            )}
+          >
+            <Clock
+              className={cn(
+                "w-4 h-4",
+                daysUntilDue < 0 ? "text-red-500" : "text-muted-foreground"
+              )}
+            />
             <div>
               <p className="text-xs text-muted-foreground">Forfald</p>
-              <p className={cn(
-                "text-xs font-medium",
-                daysUntilDue < 0 && "text-red-600 dark:text-red-400"
-              )}>
-                {daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} dage over` : formatDate(data.dueDate)}
+              <p
+                className={cn(
+                  "text-xs font-medium",
+                  daysUntilDue < 0 && "text-red-600 dark:text-red-400"
+                )}
+              >
+                {daysUntilDue < 0
+                  ? `${Math.abs(daysUntilDue)} dage over`
+                  : formatDate(data.dueDate)}
               </p>
             </div>
           </div>
@@ -207,9 +230,14 @@ export function InvoiceCardUpgraded({
         {/* Items Preview - Expandable */}
         {data.items && data.items.length > 0 && isExpanded && (
           <div className="pt-3 border-t border-border/50 space-y-2 animate-in slide-in-from-top-2">
-            <p className="text-xs font-semibold text-muted-foreground">Linjer:</p>
+            <p className="text-xs font-semibold text-muted-foreground">
+              Linjer:
+            </p>
             {data.items.map((item, idx) => (
-              <div key={idx} className="flex justify-between items-center p-2 rounded bg-muted/50">
+              <div
+                key={idx}
+                className="flex justify-between items-center p-2 rounded bg-muted/50"
+              >
                 <div className="flex-1">
                   <p className="text-sm font-medium">{item.description}</p>
                   <p className="text-xs text-muted-foreground">
@@ -235,8 +263,8 @@ export function InvoiceCardUpgraded({
             <Eye className="w-3.5 h-3.5 mr-1.5" />
             Vis
           </Button>
-          
-          {data.status === 'draft' && (
+
+          {data.status === "draft" && (
             <Button
               size="sm"
               onClick={() => onSend?.(data.id)}
@@ -246,7 +274,7 @@ export function InvoiceCardUpgraded({
               Send
             </Button>
           )}
-          
+
           <Button
             variant="outline"
             size="sm"
@@ -263,13 +291,13 @@ export function InvoiceCardUpgraded({
               size="sm"
               onClick={() => setIsExpanded(!isExpanded)}
             >
-              {isExpanded ? '▲' : '▼'}
+              {isExpanded ? "▲" : "▼"}
             </Button>
           )}
         </div>
 
         {/* Paid Checkmark */}
-        {data.status === 'paid' && data.paidDate && (
+        {data.status === "paid" && data.paidDate && (
           <div className="flex items-center justify-center gap-2 p-2 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
             <CheckCircle2 className="w-4 h-4 text-green-600" />
             <span className="text-sm font-medium text-green-700 dark:text-green-400">

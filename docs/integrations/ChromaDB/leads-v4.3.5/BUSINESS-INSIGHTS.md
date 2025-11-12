@@ -22,6 +22,7 @@ V4.3.5 uses **AI-enhanced parsing** to deliver unprecedented insights into custo
 ## 💰 Financial Overview
 
 ### **Revenue Metrics:**
+
 ```
 Total Revenue:    224,132 kr
 Total Profit:     215,622 kr
@@ -30,12 +31,14 @@ Avg Deal Value:   2,368 kr
 ```
 
 ### **Lead Sources:**
+
 ```
 Rengøring.nu (Leadmail.no):  150 leads (65%)
 Leadpoint.dk (Aarhus):       81 leads (35%)
 ```
 
 ### **Conversion:**
+
 ```
 Total Leads:  231
 Won:          84 (36%)
@@ -49,14 +52,14 @@ Active:       122 (52.8%)
 
 ### **Frequency Distribution:**
 
-| Frequency  | Count | % of Total | Avg Revenue |
-|------------|-------|------------|-------------|
-| 🟢 Weekly  | 4     | 17%        | 5,185 kr    |
-| 🟡 Biweekly| 7     | 29%        | 1,382 kr    |
-| 🟠 Triweekly| 9    | 38%        | 2,018 kr    |
-| 🔵 Monthly | 3     | 12%        | 2,586 kr    |
-| ⚪ Irregular| 1    | 4%         | 2,792 kr    |
-| **TOTAL**  | **24**| **100%**   | **2,114 kr**|
+| Frequency    | Count  | % of Total | Avg Revenue  |
+| ------------ | ------ | ---------- | ------------ |
+| 🟢 Weekly    | 4      | 17%        | 5,185 kr     |
+| 🟡 Biweekly  | 7      | 29%        | 1,382 kr     |
+| 🟠 Triweekly | 9      | 38%        | 2,018 kr     |
+| 🔵 Monthly   | 3      | 12%        | 2,586 kr     |
+| ⚪ Irregular | 1      | 4%         | 2,792 kr     |
+| **TOTAL**    | **24** | **100%**   | **2,114 kr** |
 
 ### **Top Recurring Customers:**
 
@@ -67,6 +70,7 @@ Active:       122 (52.8%)
 5. **Fast Rengøring (MANGLER BETALING)** - 7 bookings, weekly, 7,329 kr
 
 ### **Revenue Impact:**
+
 ```
 Recurring Customers:    24 (10.4% of leads)
 Recurring Revenue:      50,738 kr (22.6% of total)
@@ -80,6 +84,7 @@ Avg Recurring Value:    2,114 kr
 ### **Problematic Customers (4):**
 
 #### **1. Birgit Joost Blak** ⚠️
+
 - **Issue:** First cleaning not satisfactory, communication error
 - **Bookings:** 2 (#2)
 - **Frequency:** Triweekly
@@ -87,6 +92,7 @@ Avg Recurring Value:    2,114 kr
 - **Action:** Extra quality check, improved communication
 
 #### **2-4. Additional Customers**
+
 - 3 additional customers flagged with complaints
 - Total exposure: ~8,000 kr
 - **Recommended:** Quality review process
@@ -103,12 +109,14 @@ Avg Recurring Value:    2,114 kr
 ### **Premium Segment (28 customers):**
 
 **Characteristics:**
+
 - High booking frequency (biweekly+)
 - Special requirements (sæbespåner, egen nøgle)
 - Larger properties (120+ m²)
 - Consistent revenue stream
 
 **Revenue Potential:**
+
 - Current Avg: 2,500+ kr per premium customer
 - **Upsell Opportunity:** Additional services, priority scheduling
 - **Retention Strategy:** Dedicated contact, quality assurance
@@ -127,12 +135,12 @@ Avg Recurring Value:    2,114 kr
 
 AI detected significant data gaps:
 
-| Customer | Visible Bookings | AI Booking # | Missing |
-|----------|------------------|--------------|---------|
-| Tommy Callesen | 4 | #7 | 3 bookings |
-| Vindunor | 8 | #11 | 3 bookings |
-| Nadia Møllebjerg | 3 | #7 | 4 bookings |
-| Lasse Marling | 2 | #8 | 6 bookings |
+| Customer         | Visible Bookings | AI Booking # | Missing    |
+| ---------------- | ---------------- | ------------ | ---------- |
+| Tommy Callesen   | 4                | #7           | 3 bookings |
+| Vindunor         | 8                | #11          | 3 bookings |
+| Nadia Møllebjerg | 3                | #7           | 4 bookings |
+| Lasse Marling    | 2                | #8           | 6 bookings |
 
 **Potential Lost Revenue:** ~15,000-20,000 kr
 **Action:** Data audit, historical booking recovery
@@ -162,6 +170,7 @@ Customers with potential for increased frequency:
 ## 🎯 Strategic Recommendations
 
 ### **Priority 1: Data Quality (High Impact)**
+
 ```
 ✅ Investigate missing bookings (15-20k kr at stake)
 ✅ Implement automated booking tracking
@@ -169,6 +178,7 @@ Customers with potential for increased frequency:
 ```
 
 ### **Priority 2: Customer Retention (Medium Impact)**
+
 ```
 ✅ Problematic customer quality review
 ✅ Premium customer loyalty program
@@ -176,6 +186,7 @@ Customers with potential for increased frequency:
 ```
 
 ### **Priority 3: Revenue Optimization (High Impact)**
+
 ```
 ✅ Frequency upsell campaigns
 ✅ Single-booking re-engagement
@@ -183,6 +194,7 @@ Customers with potential for increased frequency:
 ```
 
 ### **Priority 4: Operational Excellence (Medium Impact)**
+
 ```
 ✅ Payment collection automation
 ✅ AI-powered quality alerts
@@ -194,24 +206,28 @@ Customers with potential for increased frequency:
 ## 📊 Customer Segmentation
 
 ### **Segment 1: VIP Recurring (24 customers)**
+
 - **Value:** High lifetime value, predictable revenue
 - **Strategy:** Priority service, loyalty rewards
 - **Risk:** Low churn risk
 - **Revenue:** 50,738 kr (22.6%)
 
 ### **Segment 2: Premium One-Time (28 customers)**
+
 - **Value:** High deal size, conversion potential
 - **Strategy:** Recurring conversion campaigns
 - **Risk:** Medium churn risk
 - **Revenue:** ~70,000 kr (31%)
 
 ### **Segment 3: Standard Active (70 customers)**
+
 - **Value:** Volume-based revenue
 - **Strategy:** Efficiency optimization
 - **Risk:** Medium churn risk
 - **Revenue:** ~80,000 kr (36%)
 
 ### **Segment 4: At-Risk (4 customers)**
+
 - **Value:** Complaint history
 - **Strategy:** Win-back, quality improvement
 - **Risk:** High churn risk
@@ -245,16 +261,19 @@ Total Potential Impact:    65-85k kr annually
 ## 🚀 Next Steps
 
 ### **Week 1-2:**
+
 - ✅ Audit missing bookings data
 - ✅ Contact at-risk customers
 - ✅ Implement payment collection for outstanding invoices
 
 ### **Week 3-4:**
+
 - ✅ Launch premium customer program
 - ✅ Re-engagement campaign for single-booking recurring
 - ✅ Frequency upsell outreach
 
 ### **Month 2-3:**
+
 - ✅ Automated quality monitoring
 - ✅ Predictive booking system
 - ✅ AI-powered customer insights dashboard
@@ -264,16 +283,19 @@ Total Potential Impact:    65-85k kr annually
 ## 📞 Action Items
 
 ### **For Sales Team:**
+
 1. Contact customers with missing bookings
 2. Re-engage single-booking recurring customers
 3. Upsell frequency to monthly customers
 
 ### **For Operations:**
+
 1. Quality review for problematic customers
 2. Payment collection for outstanding invoices
 3. Implement booking tracking improvements
 
 ### **For Management:**
+
 1. Review AI findings for data accuracy
 2. Approve premium customer program
 3. Set KPIs for recurring customer growth

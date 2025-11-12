@@ -5,13 +5,21 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { 
-  Mail, Calendar, FileText, User, Clock, DollarSign,
-  CheckCircle, Inbox, Send, Archive
+import {
+  Mail,
+  Calendar,
+  FileText,
+  User,
+  Clock,
+  DollarSign,
+  CheckCircle,
+  Inbox,
+  Send,
+  Archive,
 } from "lucide-react";
 
 /**
- * DESIGN 10: Unified Workspace  
+ * DESIGN 10: Unified Workspace
  * - Email + Calendar + Invoices i ét view
  * - Kontekstuel integration (email → calendar → invoice)
  * - Timeline view af al aktivitet
@@ -20,27 +28,85 @@ import {
 
 const mockData = {
   emails: [
-    { id: '1', from: 'Matilde S.', subject: 'Tilbud rengøring', time: '22:08', unread: true },
-    { id: '2', from: 'Lars N.', subject: 'Booking bekræftet', time: '17:20', unread: false }
+    {
+      id: "1",
+      from: "Matilde S.",
+      subject: "Tilbud rengøring",
+      time: "22:08",
+      unread: true,
+    },
+    {
+      id: "2",
+      from: "Lars N.",
+      subject: "Booking bekræftet",
+      time: "17:20",
+      unread: false,
+    },
   ],
   calendar: [
-    { id: 'c1', title: 'Rengøring - Matilde', date: 'I dag 14:00', customer: 'Matilde S.' },
-    { id: 'c2', title: 'Besigtigelse - Lars', date: 'I morgen 10:00', customer: 'Lars N.' }
+    {
+      id: "c1",
+      title: "Rengøring - Matilde",
+      date: "I dag 14:00",
+      customer: "Matilde S.",
+    },
+    {
+      id: "c2",
+      title: "Besigtigelse - Lars",
+      date: "I morgen 10:00",
+      customer: "Lars N.",
+    },
   ],
   invoices: [
-    { id: 'i1', customer: 'Maria H.', amount: 8500, status: 'unpaid', due: 'Om 5 dage' },
-    { id: 'i2', customer: 'Lars N.', amount: 12000, status: 'paid', due: 'Betalt' }
+    {
+      id: "i1",
+      customer: "Maria H.",
+      amount: 8500,
+      status: "unpaid",
+      due: "Om 5 dage",
+    },
+    {
+      id: "i2",
+      customer: "Lars N.",
+      amount: 12000,
+      status: "paid",
+      due: "Betalt",
+    },
   ],
   timeline: [
-    { time: '22:08', type: 'email', icon: Mail, text: 'Email fra Matilde S.', color: 'text-blue-600' },
-    { time: '17:20', type: 'calendar', icon: Calendar, text: 'Booking bekræftet - Lars N.', color: 'text-green-600' },
-    { time: '15:30', type: 'invoice', icon: FileText, text: 'Faktura sendt til Maria H.', color: 'text-purple-600' },
-    { time: '10:00', type: 'email', icon: Send, text: 'Tilbud sendt til Hanne A.', color: 'text-blue-600' }
-  ]
+    {
+      time: "22:08",
+      type: "email",
+      icon: Mail,
+      text: "Email fra Matilde S.",
+      color: "text-blue-600",
+    },
+    {
+      time: "17:20",
+      type: "calendar",
+      icon: Calendar,
+      text: "Booking bekræftet - Lars N.",
+      color: "text-green-600",
+    },
+    {
+      time: "15:30",
+      type: "invoice",
+      icon: FileText,
+      text: "Faktura sendt til Maria H.",
+      color: "text-purple-600",
+    },
+    {
+      time: "10:00",
+      type: "email",
+      icon: Send,
+      text: "Tilbud sendt til Hanne A.",
+      color: "text-blue-600",
+    },
+  ],
 };
 
 export function EmailCenterUnified() {
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState("all");
 
   return (
     <Card>
@@ -54,26 +120,44 @@ export function EmailCenterUnified() {
             </div>
 
             <div className="p-3 space-y-1 flex-1">
-              <Button variant={activeTab === 'all' ? 'default' : 'ghost'} className="w-full justify-start gap-2" onClick={() => setActiveTab('all')}>
+              <Button
+                variant={activeTab === "all" ? "default" : "ghost"}
+                className="w-full justify-start gap-2"
+                onClick={() => setActiveTab("all")}
+              >
                 <Inbox className="h-4 w-4" />
                 Alt ({mockData.timeline.length})
               </Button>
-              <Button variant={activeTab === 'emails' ? 'default' : 'ghost'} className="w-full justify-start gap-2" onClick={() => setActiveTab('emails')}>
+              <Button
+                variant={activeTab === "emails" ? "default" : "ghost"}
+                className="w-full justify-start gap-2"
+                onClick={() => setActiveTab("emails")}
+              >
                 <Mail className="h-4 w-4" />
                 Emails ({mockData.emails.length})
               </Button>
-              <Button variant={activeTab === 'calendar' ? 'default' : 'ghost'} className="w-full justify-start gap-2" onClick={() => setActiveTab('calendar')}>
+              <Button
+                variant={activeTab === "calendar" ? "default" : "ghost"}
+                className="w-full justify-start gap-2"
+                onClick={() => setActiveTab("calendar")}
+              >
                 <Calendar className="h-4 w-4" />
                 Kalender ({mockData.calendar.length})
               </Button>
-              <Button variant={activeTab === 'invoices' ? 'default' : 'ghost'} className="w-full justify-start gap-2" onClick={() => setActiveTab('invoices')}>
+              <Button
+                variant={activeTab === "invoices" ? "default" : "ghost"}
+                className="w-full justify-start gap-2"
+                onClick={() => setActiveTab("invoices")}
+              >
                 <FileText className="h-4 w-4" />
                 Fakturaer ({mockData.invoices.length})
               </Button>
             </div>
 
             <div className="p-3 border-t">
-              <div className="text-xs text-muted-foreground mb-2">Quick Stats</div>
+              <div className="text-xs text-muted-foreground mb-2">
+                Quick Stats
+              </div>
               <div className="space-y-1 text-xs">
                 <div className="flex justify-between">
                   <span>Unread</span>
@@ -94,7 +178,11 @@ export function EmailCenterUnified() {
           {/* Main Content Area */}
           <div className="flex-1 flex flex-col">
             <div className="border-b p-4">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <Tabs
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="w-full"
+              >
                 <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="all">All Activity</TabsTrigger>
                   <TabsTrigger value="emails">Emails</TabsTrigger>
@@ -106,19 +194,29 @@ export function EmailCenterUnified() {
 
             <ScrollArea className="flex-1 p-4">
               {/* All Activity Timeline */}
-              {activeTab === 'all' && (
+              {activeTab === "all" && (
                 <div className="space-y-4">
                   <h3 className="font-semibold mb-4">Activity Timeline</h3>
                   {mockData.timeline.map((item, idx) => {
                     const Icon = item.icon;
                     return (
-                      <div key={idx} className="flex gap-3 p-3 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer">
-                        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center bg-muted", item.color)}>
+                      <div
+                        key={idx}
+                        className="flex gap-3 p-3 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer"
+                      >
+                        <div
+                          className={cn(
+                            "w-10 h-10 rounded-lg flex items-center justify-center bg-muted",
+                            item.color
+                          )}
+                        >
                           <Icon className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
                           <div className="font-medium text-sm">{item.text}</div>
-                          <div className="text-xs text-muted-foreground mt-1">{item.time}</div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {item.time}
+                          </div>
                         </div>
                       </div>
                     );
@@ -127,22 +225,37 @@ export function EmailCenterUnified() {
               )}
 
               {/* Emails View */}
-              {activeTab === 'emails' && (
+              {activeTab === "emails" && (
                 <div className="space-y-2">
                   <h3 className="font-semibold mb-4">Emails</h3>
                   {mockData.emails.map(email => (
-                    <div key={email.id} className={cn(
-                      "p-4 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer",
-                      email.unread && "bg-accent/20 border-primary/50"
-                    )}>
+                    <div
+                      key={email.id}
+                      className={cn(
+                        "p-4 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer",
+                        email.unread && "bg-accent/20 border-primary/50"
+                      )}
+                    >
                       <div className="flex items-start justify-between mb-2">
-                        <div className="font-semibold text-sm">{email.from}</div>
-                        <span className="text-xs text-muted-foreground">{email.time}</span>
+                        <div className="font-semibold text-sm">
+                          {email.from}
+                        </div>
+                        <span className="text-xs text-muted-foreground">
+                          {email.time}
+                        </span>
                       </div>
-                      <div className="text-sm text-muted-foreground">{email.subject}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {email.subject}
+                      </div>
                       <div className="flex gap-2 mt-3">
-                        <Button size="sm" variant="outline"><Send className="h-3 w-3 mr-1" />Reply</Button>
-                        <Button size="sm" variant="outline"><Archive className="h-3 w-3 mr-1" />Archive</Button>
+                        <Button size="sm" variant="outline">
+                          <Send className="h-3 w-3 mr-1" />
+                          Reply
+                        </Button>
+                        <Button size="sm" variant="outline">
+                          <Archive className="h-3 w-3 mr-1" />
+                          Archive
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -150,18 +263,25 @@ export function EmailCenterUnified() {
               )}
 
               {/* Calendar View */}
-              {activeTab === 'calendar' && (
+              {activeTab === "calendar" && (
                 <div className="space-y-2">
                   <h3 className="font-semibold mb-4">Kommende Events</h3>
                   {mockData.calendar.map(event => (
-                    <div key={event.id} className="p-4 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer">
+                    <div
+                      key={event.id}
+                      className="p-4 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer"
+                    >
                       <div className="flex items-start gap-3">
                         <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
                           <Calendar className="h-5 w-5 text-blue-600" />
                         </div>
                         <div className="flex-1">
-                          <div className="font-semibold text-sm mb-1">{event.title}</div>
-                          <div className="text-xs text-muted-foreground">{event.date}</div>
+                          <div className="font-semibold text-sm mb-1">
+                            {event.title}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {event.date}
+                          </div>
                           <div className="flex items-center gap-1 mt-2">
                             <User className="h-3 w-3 text-muted-foreground" />
                             <span className="text-xs">{event.customer}</span>
@@ -174,21 +294,38 @@ export function EmailCenterUnified() {
               )}
 
               {/* Invoices View */}
-              {activeTab === 'invoices' && (
+              {activeTab === "invoices" && (
                 <div className="space-y-2">
                   <h3 className="font-semibold mb-4">Fakturaer</h3>
                   {mockData.invoices.map(invoice => (
-                    <div key={invoice.id} className="p-4 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer">
+                    <div
+                      key={invoice.id}
+                      className="p-4 rounded-lg border hover:bg-accent/30 transition-colors cursor-pointer"
+                    >
                       <div className="flex items-center justify-between mb-2">
-                        <div className="font-semibold text-sm">{invoice.customer}</div>
-                        <div className="text-lg font-bold text-green-600">{invoice.amount.toLocaleString('da-DK')} kr</div>
+                        <div className="font-semibold text-sm">
+                          {invoice.customer}
+                        </div>
+                        <div className="text-lg font-bold text-green-600">
+                          {invoice.amount.toLocaleString("da-DK")} kr
+                        </div>
                       </div>
                       <div className="flex items-center justify-between">
-                        <Badge variant={invoice.status === 'paid' ? 'default' : 'secondary'}>
-                          {invoice.status === 'paid' ? <CheckCircle className="h-3 w-3 mr-1" /> : <Clock className="h-3 w-3 mr-1" />}
-                          {invoice.status === 'paid' ? 'Betalt' : 'Ubetalt'}
+                        <Badge
+                          variant={
+                            invoice.status === "paid" ? "default" : "secondary"
+                          }
+                        >
+                          {invoice.status === "paid" ? (
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                          ) : (
+                            <Clock className="h-3 w-3 mr-1" />
+                          )}
+                          {invoice.status === "paid" ? "Betalt" : "Ubetalt"}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">{invoice.due}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {invoice.due}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -207,14 +344,18 @@ export function EmailCenterUnified() {
                     <Mail className="h-4 w-4 text-blue-600" />
                     <span className="text-sm font-medium">1 ny email</span>
                   </div>
-                  <div className="text-xs text-muted-foreground">Matilde S. - Tilbud</div>
+                  <div className="text-xs text-muted-foreground">
+                    Matilde S. - Tilbud
+                  </div>
                 </div>
                 <div className="p-3 rounded-lg border bg-background">
                   <div className="flex items-center gap-2 mb-1">
                     <Calendar className="h-4 w-4 text-green-600" />
                     <span className="text-sm font-medium">1 møde</span>
                   </div>
-                  <div className="text-xs text-muted-foreground">Kl. 14:00 - Matilde S.</div>
+                  <div className="text-xs text-muted-foreground">
+                    Kl. 14:00 - Matilde S.
+                  </div>
                 </div>
               </div>
             </div>

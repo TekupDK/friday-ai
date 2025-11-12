@@ -6,7 +6,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Globe, FileText, CheckCircle, Clock } from "lucide-react";
+import {
+  ExternalLink,
+  Globe,
+  FileText,
+  CheckCircle,
+  Clock,
+} from "lucide-react";
 
 export interface Source {
   id: string;
@@ -14,8 +20,8 @@ export interface Source {
   url: string;
   domain: string;
   snippet?: string;
-  type: 'web' | 'document' | 'database';
-  reliability: 'high' | 'medium' | 'low';
+  type: "web" | "document" | "database";
+  reliability: "high" | "medium" | "low";
   accessedAt: string;
 }
 
@@ -28,25 +34,33 @@ interface SourcesPanelProps {
 export function SourcesPanel({
   sources,
   onOpenSource,
-  showReliability = true
+  showReliability = true,
 }: SourcesPanelProps) {
-  const getTypeIcon = (type: Source['type']) => {
+  const getTypeIcon = (type: Source["type"]) => {
     switch (type) {
-      case 'web': return Globe;
-      case 'document': return FileText;
-      case 'database': return FileText;
-      default: return Globe;
+      case "web":
+        return Globe;
+      case "document":
+        return FileText;
+      case "database":
+        return FileText;
+      default:
+        return Globe;
     }
   };
 
-  const getReliabilityBadge = (reliability: Source['reliability']) => {
+  const getReliabilityBadge = (reliability: Source["reliability"]) => {
     switch (reliability) {
-      case 'high':
+      case "high":
         return <Badge className="bg-emerald-600 text-xs">High</Badge>;
-      case 'medium':
+      case "medium":
         return <Badge className="bg-amber-500 text-xs">Medium</Badge>;
-      case 'low':
-        return <Badge variant="outline" className="text-xs">Low</Badge>;
+      case "low":
+        return (
+          <Badge variant="outline" className="text-xs">
+            Low
+          </Badge>
+        );
     }
   };
 
@@ -79,7 +93,7 @@ export function SourcesPanel({
       <div className="space-y-3">
         {sources.map((source, index) => {
           const TypeIcon = getTypeIcon(source.type);
-          
+
           return (
             <div
               key={source.id}
@@ -88,7 +102,9 @@ export function SourcesPanel({
               <div className="flex gap-3">
                 {/* Index Badge */}
                 <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
-                  <span className="text-xs font-bold text-blue-600">{index + 1}</span>
+                  <span className="text-xs font-bold text-blue-600">
+                    {index + 1}
+                  </span>
                 </div>
 
                 {/* Content */}
@@ -101,7 +117,8 @@ export function SourcesPanel({
                       </h4>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span className="truncate">{source.domain}</span>
-                        {showReliability && getReliabilityBadge(source.reliability)}
+                        {showReliability &&
+                          getReliabilityBadge(source.reliability)}
                       </div>
                     </div>
                   </div>

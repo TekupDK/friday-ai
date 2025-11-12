@@ -1,22 +1,25 @@
 # Friday AI - Current LLM State Analysis
 
 **Analyzed:** November 9, 2025  
-**Files Reviewed:** `server/_core/llm.ts`, `env.ts`, `model-mappings.ts`  
+**Files Reviewed:** `server/_core/llm.ts`, `env.ts`, `model-mappings.ts`
 
 ---
 
 ## 🔍 CURRENT IMPLEMENTATION
 
 ### Primary LLM Function
+
 **File:** `server/_core/llm.ts` (582 lines)
 
 **Core Functions:**
+
 ```typescript
 export async function invokeLLM(params: InvokeParams): Promise<InvokeResult>
 export async function* streamResponse(messages, params): AsyncGenerator<string>
 ```
 
 ### Current Provider Hierarchy
+
 ```
 1. OpenRouter (Primary)
    └─ Model: z-ai/glm-4.5-air:free (GLM-4.5 Air FREE)
@@ -24,7 +27,7 @@ export async function* streamResponse(messages, params): AsyncGenerator<string>
    └─ Key: process.env.OPENROUTER_API_KEY
 
 2. Ollama (Fallback - Local Dev)
-   └─ Model: gemma3:9b  
+   └─ Model: gemma3:9b
    └─ API: {OLLAMA_BASE_URL}/api/chat
    └─ Used when: OpenRouter key missing
 
@@ -44,9 +47,10 @@ export async function* streamResponse(messages, params): AsyncGenerator<string>
 Friday AI har **7 FREE OpenRouter modeller** konfigureret:
 
 ### Tier 1: 100% Accuracy FREE Models
+
 ```typescript
 "glm-4.5-air-free": "z-ai/glm-4.5-air:free"        // PRIMARY
-"gpt-oss-20b-free": "openai/gpt-oss-20b:free"      
+"gpt-oss-20b-free": "openai/gpt-oss-20b:free"
 "deepseek-chat-v3.1-free": "deepseek/deepseek-chat-v3.1:free"
 "minimax-m2-free": "minimax/minimax-m2:free"
 "qwen3-coder-free": "qwen/qwen3-coder:free"
@@ -54,11 +58,13 @@ Friday AI har **7 FREE OpenRouter modeller** konfigureret:
 ```
 
 ### Tier 2: Legacy FREE Model
+
 ```typescript
 "gemma-3-27b-free": "google/gemma-3-27b-it:free"
 ```
 
 ### Model Metadata (from model-mappings.ts)
+
 ```typescript
 "glm-4.5-air-free": {
   displayName: "GLM-4.5 Air",
@@ -75,27 +81,29 @@ Friday AI har **7 FREE OpenRouter modeller** konfigureret:
 ## 🏗️ CURRENT ARCHITECTURE
 
 ### Direct API Calls
+
 ```typescript
 // Current flow (llm.ts:419-432)
 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
   method: "POST",
   headers: {
-    "authorization": `Bearer ${ENV.openRouterApiKey}`,
+    authorization: `Bearer ${ENV.openRouterApiKey}`,
     "HTTP-Referer": "https://tekup.dk",
     "X-Title": "Friday AI",
-    "content-type": "application/json"
+    "content-type": "application/json",
   },
   body: JSON.stringify({
     model: ENV.openRouterModel, // "z-ai/glm-4.5-air:free"
     messages: messages.map(normalizeMessage),
     max_tokens: 32768,
     tools: tools,
-    response_format: responseFormat
-  })
+    response_format: responseFormat,
+  }),
 });
 ```
 
 ### No Retry/Fallback Logic
+
 - ❌ Single provider per request
 - ❌ No automatic retry
 - ❌ No circuit breaker
@@ -108,6 +116,7 @@ const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
 ## 🎯 WHERE LITELLM FITS IN
 
 ### Replace invokeLLM() Flow
+
 ```
 BEFORE:
 Friday AI → OpenRouter API directly
@@ -117,6 +126,7 @@ Friday AI → LiteLLM Proxy → OpenRouter FREE models (with fallback)
 ```
 
 ### Keep Using Same FREE Models
+
 ```yaml
 # LiteLLM Config will use:
 - z-ai/glm-4.5-air:free          (Primary - Current)
@@ -127,6 +137,7 @@ Friday AI → LiteLLM Proxy → OpenRouter FREE models (with fallback)
 ```
 
 ### Benefits
+
 ✅ Automatic fallback between FREE models
 ✅ Retry logic with exponential backoff
 ✅ Circuit breaker prevents cascading failures
@@ -139,9 +150,10 @@ Friday AI → LiteLLM Proxy → OpenRouter FREE models (with fallback)
 ## 📍 FILES USING invokeLLM()
 
 ### Core AI Features
+
 ```
 server/ai-email-summary.ts          - Email AI summaries
-server/ai-label-suggestions.ts      - Smart label suggestions  
+server/ai-label-suggestions.ts      - Smart label suggestions
 server/ai-metrics.ts                - AI usage metrics
 server/docs/ai/analyzer.ts          - Friday Docs analyzer
 server/docs/ai/auto-create.ts       - Friday Docs generator
@@ -149,6 +161,7 @@ server/routers/chat-streaming.ts    - Chat streaming
 ```
 
 ### All Need Migration
+
 **Estimated:** ~6-10 files to update
 **Pattern:** Replace `invokeLLM()` with `litellm.chatCompletion()`
 
@@ -157,6 +170,7 @@ server/routers/chat-streaming.ts    - Chat streaming
 ## 🔧 INTEGRATION STRATEGY
 
 ### Phase 1: Wrapper Layer (Non-Breaking)
+
 ```typescript
 // server/integrations/litellm/client.ts
 export async function invokeLLM(params: InvokeParams) {
@@ -168,15 +182,17 @@ export async function invokeLLM(params: InvokeParams) {
 ```
 
 ### Phase 2: Gradual Migration
+
 ```typescript
 // Old code works unchanged:
-import { invokeLLM } from '@/server/_core/llm';
+import { invokeLLM } from "@/server/_core/llm";
 
 // New code uses LiteLLM:
-import { invokeLLM } from '@/server/integrations/litellm';
+import { invokeLLM } from "@/server/integrations/litellm";
 ```
 
 ### Phase 3: Feature Flag Rollout
+
 ```typescript
 if (featureFlags.useLiteLLM) {
   return litellmClient.chatCompletion(params);
@@ -190,6 +206,7 @@ if (featureFlags.useLiteLLM) {
 ## 💰 COST IMPACT
 
 ### Current Cost
+
 ```
 OpenRouter FREE: $0.00/month
 No fallback cost
@@ -197,6 +214,7 @@ Total: $0.00/month
 ```
 
 ### With LiteLLM
+
 ```
 OpenRouter FREE models only: $0.00/month
 LiteLLM Proxy: $0.00 (self-hosted)
@@ -210,6 +228,7 @@ STILL FREE! 🎉
 ## 🎯 LITELLM CONFIGURATION
 
 ### Updated Provider Cascade (All FREE!)
+
 ```yaml
 model_list:
   # Primary - Current model
@@ -247,7 +266,7 @@ model_list:
       api_key: os.environ/OPENROUTER_API_KEY
 
 router_settings:
-  routing_strategy: fallback  # Try in order
+  routing_strategy: fallback # Try in order
   retry_after: 0.5
   allowed_fails: 2
   cooldown_time: 60
@@ -258,11 +277,13 @@ router_settings:
 ## 📋 MIGRATION CHECKLIST
 
 ### Environment Variables (Already Set)
+
 - [x] OPENROUTER_API_KEY (existing)
 - [x] OPENROUTER_MODEL (existing)
 - [ ] LITELLM_MASTER_KEY (new - optional)
 
 ### Code Changes Needed
+
 - [ ] Install LiteLLM proxy
 - [ ] Create wrapper client
 - [ ] Update invokeLLM() calls (6-10 files)
@@ -272,12 +293,13 @@ router_settings:
 - [ ] Test all AI features
 
 ### Files to Update
+
 ```
 server/_core/llm.ts                 - Core wrapper
 server/ai-email-summary.ts          - Email AI
 server/ai-label-suggestions.ts      - Labels
 server/docs/ai/analyzer.ts          - Docs analyzer
-server/docs/ai/auto-create.ts       - Docs generator  
+server/docs/ai/auto-create.ts       - Docs generator
 server/routers/chat-streaming.ts    - Chat
 ```
 
@@ -286,6 +308,7 @@ server/routers/chat-streaming.ts    - Chat
 ## ✅ SUCCESS CRITERIA
 
 ### Must Have
+
 - [x] Uses same FREE OpenRouter models
 - [ ] Automatic fallback works
 - [ ] No cost increase ($0.00 → $0.00)
@@ -293,6 +316,7 @@ server/routers/chat-streaming.ts    - Chat
 - [ ] Better reliability (>99% uptime)
 
 ### Nice to Have
+
 - [ ] Metrics dashboard
 - [ ] Cost tracking (even at $0)
 - [ ] Error rate monitoring
@@ -303,6 +327,7 @@ server/routers/chat-streaming.ts    - Chat
 ## 🚀 NEXT STEPS
 
 ### Recommended Approach
+
 1. **Keep it simple** - Wrapper pattern
 2. **No breaking changes** - Same function signatures
 3. **Gradual rollout** - Feature flag controlled
@@ -310,6 +335,7 @@ server/routers/chat-streaming.ts    - Chat
 5. **Monitor closely** - Metrics & alerts
 
 ### Timeline
+
 - **Day 1**: Setup LiteLLM proxy locally
 - **Day 2**: Create wrapper layer
 - **Day 3**: Migrate 1-2 features (test)
@@ -321,4 +347,4 @@ server/routers/chat-streaming.ts    - Chat
 **Analysis Complete:** ✅  
 **Ready for Implementation:** ✅  
 **Cost Impact:** $0.00 (no change)  
-**Risk Level:** LOW (wrapper pattern)  
+**Risk Level:** LOW (wrapper pattern)

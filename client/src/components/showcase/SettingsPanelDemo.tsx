@@ -1,7 +1,19 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Bell, Moon, Globe, Zap, Shield, Database } from "lucide-react";
 
@@ -29,7 +41,7 @@ export function SettingsPanelDemo() {
             </div>
             <Switch id="email-notif" defaultChecked />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="push-notif">Push notifikationer</Label>
@@ -39,7 +51,7 @@ export function SettingsPanelDemo() {
             </div>
             <Switch id="push-notif" defaultChecked />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="ai-notif">AI Assistant updates</Label>
@@ -59,9 +71,7 @@ export function SettingsPanelDemo() {
             <Moon className="w-5 h-5" />
             Udseende
           </CardTitle>
-          <CardDescription>
-            Tilpas appens visuelle fremtoning
-          </CardDescription>
+          <CardDescription>Tilpas appens visuelle fremtoning</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -77,7 +87,7 @@ export function SettingsPanelDemo() {
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="language">Sprog</Label>
             <Select defaultValue="da">
@@ -101,9 +111,7 @@ export function SettingsPanelDemo() {
             <Zap className="w-5 h-5" />
             Friday AI Indstillinger
           </CardTitle>
-          <CardDescription>
-            Tilpas din AI assistents adfærd
-          </CardDescription>
+          <CardDescription>Tilpas din AI assistents adfærd</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -114,12 +122,14 @@ export function SettingsPanelDemo() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="gpt4">GPT-4 Turbo (Hurtigst)</SelectItem>
-                <SelectItem value="claude">Claude 3.5 Sonnet (Bedst)</SelectItem>
+                <SelectItem value="claude">
+                  Claude 3.5 Sonnet (Bedst)
+                </SelectItem>
                 <SelectItem value="gemini">Gemini Pro (Balance)</SelectItem>
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="auto-suggest">Automatiske forslag</Label>
@@ -129,7 +139,7 @@ export function SettingsPanelDemo() {
             </div>
             <Switch id="auto-suggest" defaultChecked />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="context-aware">Kontekst bevidst</Label>
@@ -163,7 +173,7 @@ export function SettingsPanelDemo() {
             </div>
             <Switch id="analytics" defaultChecked />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="data-sharing">Data deling</Label>
@@ -173,7 +183,7 @@ export function SettingsPanelDemo() {
             </div>
             <Switch id="data-sharing" defaultChecked />
           </div>
-          
+
           <div className="pt-4 border-t">
             <Button variant="outline" className="w-full" size="sm">
               <Database className="w-4 h-4 mr-2" />

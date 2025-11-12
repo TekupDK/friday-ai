@@ -24,6 +24,7 @@
 ### What is LiteLLM?
 
 LiteLLM integration provides:
+
 - **6 FREE OpenRouter models** (zero cost!)
 - **Intelligent rate limiting** (12 requests/min safe)
 - **Response caching** (40% API call reduction)
@@ -82,6 +83,7 @@ curl http://localhost:4000/health
 ```
 
 **Expected Response:**
+
 ```json
 {
   "healthy_endpoints": [],
@@ -128,6 +130,7 @@ node test-real-leads-sim.mjs
 ```
 
 **Expected Results:**
+
 - ✅ All health checks passing
 - ✅ 6 models responding
 - ✅ Task routing working
@@ -152,6 +155,7 @@ pnpm dev
 ```
 
 **Verify Integration:**
+
 1. Open http://localhost:5173
 2. Navigate to Leads tab
 3. Request lead analysis (should use LiteLLM)
@@ -203,23 +207,23 @@ spec:
         app: friday-litellm
     spec:
       containers:
-      - name: litellm
-        image: ghcr.io/berriai/litellm:main-latest
-        ports:
-        - containerPort: 4000
-        env:
-        - name: OPENROUTER_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: litellm-secrets
-              key: openrouter-api-key
-        volumeMounts:
-        - name: config
-          mountPath: /app/config
+        - name: litellm
+          image: ghcr.io/berriai/litellm:main-latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: OPENROUTER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: litellm-secrets
+                  key: openrouter-api-key
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
       volumes:
-      - name: config
-        configMap:
-          name: litellm-config
+        - name: config
+          configMap:
+            name: litellm-config
 ```
 
 #### 1.2 Configure Staging Environment
@@ -272,6 +276,7 @@ curl -X POST https://staging.friday-ai.com/api/litellm/test \
 #### 2.2 Functional Tests
 
 **Test Cases:**
+
 1. Lead analysis with LiteLLM
 2. Email draft generation
 3. Task planning with tools
@@ -281,6 +286,7 @@ curl -X POST https://staging.friday-ai.com/api/litellm/test \
 7. Rate limit resilience
 
 **Success Criteria:**
+
 - ✅ 95%+ success rate
 - ✅ < 10s average response time
 - ✅ $0.00 cost
@@ -309,6 +315,7 @@ curl -X POST https://staging.friday-ai.com/api/litellm/test \
 ```
 
 **Tools:**
+
 - Application logs
 - `rateLimiter.getStats()`
 - `responseCache.getStats()`
@@ -328,36 +335,36 @@ k6 run tests/load-test-litellm.js
 
 ```javascript
 // tests/load-test-litellm.js
-import http from 'k6/http';
-import { check, sleep } from 'k6';
+import http from "k6/http";
+import { check, sleep } from "k6";
 
 export const options = {
   stages: [
-    { duration: '2m', target: 10 },  // Ramp up to 10 users
-    { duration: '5m', target: 10 },  // Stay at 10 users
-    { duration: '2m', target: 0 },   // Ramp down
+    { duration: "2m", target: 10 }, // Ramp up to 10 users
+    { duration: "5m", target: 10 }, // Stay at 10 users
+    { duration: "2m", target: 0 }, // Ramp down
   ],
   thresholds: {
-    http_req_duration: ['p(95)<10000'], // 95% requests < 10s
-    http_req_failed: ['rate<0.05'],     // <5% failures
+    http_req_duration: ["p(95)<10000"], // 95% requests < 10s
+    http_req_failed: ["rate<0.05"], // <5% failures
   },
 };
 
 export default function () {
   const res = http.post(
-    'https://staging.friday-ai.com/api/ai/analyze-lead',
+    "https://staging.friday-ai.com/api/ai/analyze-lead",
     JSON.stringify({
       leadId: 123,
-      taskType: 'lead-analysis',
+      taskType: "lead-analysis",
     }),
     {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
     }
   );
 
   check(res, {
-    'status is 200': (r) => r.status === 200,
-    'response time < 10s': (r) => r.timings.duration < 10000,
+    "status is 200": r => r.status === 200,
+    "response time < 10s": r => r.timings.duration < 10000,
   });
 
   sleep(1);
@@ -365,6 +372,7 @@ export default function () {
 ```
 
 **Expected Results:**
+
 - ✅ 95%+ requests successful
 - ✅ p95 response time < 10s
 - ✅ No rate limit errors
@@ -384,12 +392,14 @@ LITELLM_ROLLOUT_PERCENTAGE=10
 ```
 
 **Monitoring Focus:**
+
 - Error rates
 - Response times
 - User feedback
 - Cost validation ($0.00)
 
 **Success Criteria:**
+
 - ✅ <1% error rate
 - ✅ Similar response times to baseline
 - ✅ No negative user feedback
@@ -402,6 +412,7 @@ LITELLM_ROLLOUT_PERCENTAGE=25
 ```
 
 **Additional Checks:**
+
 - Cache performance
 - Rate limit behavior
 - Queue stats
@@ -413,6 +424,7 @@ LITELLM_ROLLOUT_PERCENTAGE=50
 ```
 
 **Full Week Monitoring:**
+
 - Daily metrics review
 - Weekly cost analysis
 - Performance comparison
@@ -427,6 +439,7 @@ LITELLM_ROLLOUT_PERCENTAGE=75
 ```
 
 **Validation:**
+
 - Compare with non-LiteLLM users
 - Verify no degradation
 - Cost still $0.00
@@ -440,6 +453,7 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 **🎉 Production Complete!**
 
 **Final Verification:**
+
 - ✅ All users on LiteLLM
 - ✅ 99.9% success rate
 - ✅ $0.00/month cost
@@ -484,24 +498,29 @@ curl http://localhost:4000/health
 # LiteLLM Monthly Report - [Month Year]
 
 ## Summary
+
 - Total API Calls: [X]
 - Success Rate: [Y%]
 - Cost: $0.00
 - Cache Savings: [Z%]
 
 ## Performance
+
 - Avg Response Time: [X]ms
 - p95 Response Time: [Y]ms
 - Rate Limit Incidents: [Z]
 
 ## Highlights
+
 - [Achievement 1]
 - [Achievement 2]
 
 ## Issues
+
 - [Issue 1 + Resolution]
 
 ## Next Month Goals
+
 - [Goal 1]
 - [Goal 2]
 ```
@@ -513,6 +532,7 @@ curl http://localhost:4000/health
 ### Issue 1: LiteLLM Container Won't Start
 
 **Symptoms:**
+
 ```
 Error: Container friday-litellm exited with code 1
 ```
@@ -520,21 +540,25 @@ Error: Container friday-litellm exited with code 1
 **Solutions:**
 
 1. Check Docker is running:
+
 ```bash
 docker info
 ```
 
 2. Check logs:
+
 ```bash
 docker logs friday-litellm
 ```
 
 3. Verify config file:
+
 ```bash
 cat server/integrations/litellm/config/litellm.config.yaml
 ```
 
 4. Restart container:
+
 ```bash
 docker restart friday-litellm
 ```
@@ -542,6 +566,7 @@ docker restart friday-litellm
 ### Issue 2: Rate Limit Errors
 
 **Symptoms:**
+
 ```
 Error: Rate limit exceeded: free-models-per-min
 ```
@@ -549,16 +574,19 @@ Error: Rate limit exceeded: free-models-per-min
 **Solutions:**
 
 1. Check queue stats:
+
 ```typescript
 console.log(rateLimiter.getStats());
 ```
 
 2. Increase wait time (already configured to 12/min):
+
 ```typescript
 // Already optimal at 12/min
 ```
 
 3. Wait 60 seconds for reset:
+
 ```bash
 # Rate limits reset every minute
 ```
@@ -566,6 +594,7 @@ console.log(rateLimiter.getStats());
 ### Issue 3: High Response Times
 
 **Symptoms:**
+
 ```
 Lead analysis taking > 15 seconds
 ```
@@ -573,16 +602,19 @@ Lead analysis taking > 15 seconds
 **Solutions:**
 
 1. Check queue length:
+
 ```typescript
-rateLimiter.getStats().queueLength
+rateLimiter.getStats().queueLength;
 ```
 
 2. Check cache hit rate:
+
 ```typescript
-responseCache.getStats().totalHits
+responseCache.getStats().totalHits;
 ```
 
 3. Verify model selection:
+
 ```bash
 # Check logs for model used
 grep "\[LiteLLM\]" logs/friday-ai.log
@@ -591,6 +623,7 @@ grep "\[LiteLLM\]" logs/friday-ai.log
 ### Issue 4: Cache Not Working
 
 **Symptoms:**
+
 ```
 Cache hit rate = 0%
 ```
@@ -598,16 +631,19 @@ Cache hit rate = 0%
 **Solutions:**
 
 1. Verify cache is enabled:
+
 ```typescript
 // Check in client.ts
 ```
 
 2. Clear and restart:
+
 ```typescript
 responseCache.clear();
 ```
 
 3. Check TTL settings:
+
 ```typescript
 // Default: 5 minutes
 ```
@@ -755,10 +791,10 @@ User Satisfaction: > 90%
 
 ```typescript
 // Get stats at runtime
-import { rateLimiter, responseCache } from './integrations/litellm';
+import { rateLimiter, responseCache } from "./integrations/litellm";
 
-console.log('Rate Limiter:', rateLimiter.getStats());
-console.log('Cache:', responseCache.getStats());
+console.log("Rate Limiter:", rateLimiter.getStats());
+console.log("Cache:", responseCache.getStats());
 ```
 
 ---

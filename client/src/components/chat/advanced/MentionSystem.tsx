@@ -14,7 +14,7 @@ export interface MentionUser {
   name: string;
   avatar?: string;
   role?: string;
-  status: 'online' | 'offline' | 'away';
+  status: "online" | "offline" | "away";
 }
 
 interface MentionSystemProps {
@@ -23,10 +23,10 @@ interface MentionSystemProps {
   placeholder?: string;
 }
 
-export function MentionSystem({ 
+export function MentionSystem({
   users = [],
   onMention,
-  placeholder = "Skriv @ for at mentionere..."
+  placeholder = "Skriv @ for at mentionere...",
 }: MentionSystemProps) {
   const [input, setInput] = useState("");
   const [showMentions, setShowMentions] = useState(false);
@@ -36,20 +36,25 @@ export function MentionSystem({
 
   // Default users for demo
   const defaultUsers: MentionUser[] = [
-    { id: '1', name: 'John Smith', role: 'Sales Manager', status: 'online' },
-    { id: '2', name: 'Sarah Johnson', role: 'Customer Success', status: 'online' },
-    { id: '3', name: 'Mike Wilson', role: 'Technical Lead', status: 'away' },
-    { id: '4', name: 'Emma Davis', role: 'Marketing', status: 'offline' },
-    { id: '5', name: 'Alex Chen', role: 'Developer', status: 'online' }
+    { id: "1", name: "John Smith", role: "Sales Manager", status: "online" },
+    {
+      id: "2",
+      name: "Sarah Johnson",
+      role: "Customer Success",
+      status: "online",
+    },
+    { id: "3", name: "Mike Wilson", role: "Technical Lead", status: "away" },
+    { id: "4", name: "Emma Davis", role: "Marketing", status: "offline" },
+    { id: "5", name: "Alex Chen", role: "Developer", status: "online" },
   ];
 
   const mentionUsers = users.length > 0 ? users : defaultUsers;
 
   useEffect(() => {
-    const lastWord = input.split(' ').pop() || '';
-    if (lastWord.startsWith('@')) {
+    const lastWord = input.split(" ").pop() || "";
+    if (lastWord.startsWith("@")) {
       const query = lastWord.substring(1).toLowerCase();
-      const filtered = mentionUsers.filter(user => 
+      const filtered = mentionUsers.filter(user =>
         user.name.toLowerCase().includes(query)
       );
       setFilteredUsers(filtered);
@@ -69,51 +74,61 @@ export function MentionSystem({
     if (!showMentions) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
         setSelectedUserIndex(prev => (prev + 1) % filteredUsers.length);
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
-        setSelectedUserIndex(prev => (prev - 1 + filteredUsers.length) % filteredUsers.length);
+        setSelectedUserIndex(
+          prev => (prev - 1 + filteredUsers.length) % filteredUsers.length
+        );
         break;
-      case 'Enter':
-      case 'Tab':
+      case "Enter":
+      case "Tab":
         e.preventDefault();
         if (filteredUsers[selectedUserIndex]) {
           selectUser(filteredUsers[selectedUserIndex]);
         }
         break;
-      case 'Escape':
+      case "Escape":
         setShowMentions(false);
         break;
     }
   };
 
   const selectUser = (user: MentionUser) => {
-    const words = input.split(' ');
+    const words = input.split(" ");
     words[words.length - 1] = `@${user.name}`;
-    const newInput = words.join(' ');
+    const newInput = words.join(" ");
     setInput(newInput);
     setShowMentions(false);
     onMention?.(user.id);
   };
 
-  const getStatusColor = (status: MentionUser['status']) => {
+  const getStatusColor = (status: MentionUser["status"]) => {
     switch (status) {
-      case 'online': return 'bg-green-500';
-      case 'away': return 'bg-yellow-500';
-      case 'offline': return 'bg-gray-500';
-      default: return 'bg-gray-500';
+      case "online":
+        return "bg-green-500";
+      case "away":
+        return "bg-yellow-500";
+      case "offline":
+        return "bg-gray-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const getStatusLabel = (status: MentionUser['status']) => {
+  const getStatusLabel = (status: MentionUser["status"]) => {
     switch (status) {
-      case 'online': return 'Online';
-      case 'away': return 'Away';
-      case 'offline': return 'Offline';
-      default: return status;
+      case "online":
+        return "Online";
+      case "away":
+        return "Away";
+      case "offline":
+        return "Offline";
+      default:
+        return status;
     }
   };
 
@@ -133,7 +148,9 @@ export function MentionSystem({
 
         {/* Mention Input */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Skriv en besked:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Skriv en besked:
+          </label>
           <div className="relative">
             <input
               ref={inputRef}
@@ -143,7 +160,7 @@ export function MentionSystem({
               placeholder={placeholder}
               className="w-full h-10 px-3 border rounded-lg text-sm pr-10"
               onFocus={() => {
-                if (input.split(' ').pop()?.startsWith('@')) {
+                if (input.split(" ").pop()?.startsWith("@")) {
                   setShowMentions(true);
                 }
               }}
@@ -163,8 +180,8 @@ export function MentionSystem({
                 onClick={() => selectUser(user)}
                 className={cn(
                   "w-full text-left p-3 flex items-center gap-3 transition-colors",
-                  index === selectedUserIndex 
-                    ? "bg-blue-50 dark:bg-blue-950/20 border-l-2 border-l-blue-500" 
+                  index === selectedUserIndex
+                    ? "bg-blue-50 dark:bg-blue-950/20 border-l-2 border-l-blue-500"
                     : "hover:bg-muted/50"
                 )}
               >
@@ -172,9 +189,14 @@ export function MentionSystem({
                   <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white text-sm font-medium">
                     {user.name.charAt(0)}
                   </div>
-                  <div className={cn("absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-background", getStatusColor(user.status))} />
+                  <div
+                    className={cn(
+                      "absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-background",
+                      getStatusColor(user.status)
+                    )}
+                  />
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-sm">{user.name}</span>
@@ -184,9 +206,11 @@ export function MentionSystem({
                       </Badge>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground">{getStatusLabel(user.status)}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {getStatusLabel(user.status)}
+                  </p>
                 </div>
-                
+
                 {index === selectedUserIndex && (
                   <Check className="w-4 h-4 text-blue-600" />
                 )}
@@ -197,25 +221,27 @@ export function MentionSystem({
 
         {/* Recent Mentions */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Online brugere:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Online brugere:
+          </label>
           <div className="flex flex-wrap gap-2">
             {mentionUsers
-              .filter(user => user.status === 'online')
-              .map((user) => (
-              <button
-                key={user.id}
-                onClick={() => selectUser(user)}
-                className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors"
-              >
-                <div className="relative">
-                  <div className="w-6 h-6 rounded-full bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-xs font-medium">
-                    {user.name.charAt(0)}
+              .filter(user => user.status === "online")
+              .map(user => (
+                <button
+                  key={user.id}
+                  onClick={() => selectUser(user)}
+                  className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors"
+                >
+                  <div className="relative">
+                    <div className="w-6 h-6 rounded-full bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-xs font-medium">
+                      {user.name.charAt(0)}
+                    </div>
+                    <div className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-green-500 border border-white" />
                   </div>
-                  <div className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-green-500 border border-white" />
-                </div>
-                <span className="text-xs font-medium">{user.name}</span>
-              </button>
-            ))}
+                  <span className="text-xs font-medium">{user.name}</span>
+                </button>
+              ))}
           </div>
         </div>
 
@@ -241,7 +267,11 @@ export function MentionSystem({
             <AtSign className="w-4 h-4 mr-2" />
             Send besked
           </Button>
-          <Button onClick={() => setInput('')} variant="outline" className="flex-1">
+          <Button
+            onClick={() => setInput("")}
+            variant="outline"
+            className="flex-1"
+          >
             <X className="w-4 h-4 mr-2" />
             Ryd
           </Button>

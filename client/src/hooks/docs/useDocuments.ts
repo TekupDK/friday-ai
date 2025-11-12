@@ -24,7 +24,7 @@ export function useDocuments(params?: {
       queryClient.invalidateQueries({ queryKey: ["docs", "list"] });
       toast.success("Document created successfully");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to create document: ${error.message}`);
     },
   });
@@ -35,7 +35,7 @@ export function useDocuments(params?: {
       queryClient.invalidateQueries({ queryKey: ["docs"] });
       toast.success("Document updated successfully");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to update document: ${error.message}`);
     },
   });
@@ -46,7 +46,7 @@ export function useDocuments(params?: {
       queryClient.invalidateQueries({ queryKey: ["docs", "list"] });
       toast.success("Document deleted successfully");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to delete document: ${error.message}`);
     },
   });
@@ -119,7 +119,7 @@ export function useDocumentComments(documentId: string | null) {
       queryClient.invalidateQueries({ queryKey: ["docs", "comments"] });
       toast.success("Comment added");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to add comment: ${error.message}`);
     },
   });
@@ -129,7 +129,7 @@ export function useDocumentComments(documentId: string | null) {
       queryClient.invalidateQueries({ queryKey: ["docs", "comments"] });
       toast.success("Comment resolved");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to resolve comment: ${error.message}`);
     },
   });
@@ -157,7 +157,7 @@ export function useConflicts() {
       queryClient.invalidateQueries({ queryKey: ["docs", "conflicts"] });
       toast.success("Conflict resolved");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to resolve conflict: ${error.message}`);
     },
   });

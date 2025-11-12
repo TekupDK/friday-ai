@@ -69,7 +69,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
 **File:** `server/routers.ts`
 
 ```typescript
-import { toolExecutionRouter } from './routers/tool-execution-router';
+import { toolExecutionRouter } from "./routers/tool-execution-router";
 
 export const appRouter = router({
   system: systemRouter,
@@ -93,51 +93,59 @@ export const appRouter = router({
 **File:** `server/intent-actions.ts`
 
 ```typescript
-import { executeWithTracking, startToolExecution, updateSubtask, completeToolExecution } from './tool-execution-tracker';
+import {
+  executeWithTracking,
+  startToolExecution,
+  updateSubtask,
+  completeToolExecution,
+} from "./tool-execution-tracker";
 
 // Eksempel: Update executeCreateLead function
-async function executeCreateLead(params: any, userId: number): Promise<ActionResult> {
-  const executionId = startToolExecution('create_lead', userId, 0); // 0 = conversationId (fix later)
+async function executeCreateLead(
+  params: any,
+  userId: number
+): Promise<ActionResult> {
+  const executionId = startToolExecution("create_lead", userId, 0); // 0 = conversationId (fix later)
 
   try {
     // Subtask 0: Validerer email format
-    updateSubtask(executionId, 0, 'running');
-    if (params.email && !params.email.includes('@')) {
-      throw new Error('Invalid email format');
+    updateSubtask(executionId, 0, "running");
+    if (params.email && !params.email.includes("@")) {
+      throw new Error("Invalid email format");
     }
-    updateSubtask(executionId, 0, 'completed');
+    updateSubtask(executionId, 0, "completed");
 
     // Subtask 1: Tjekker for duplikater
-    updateSubtask(executionId, 1, 'running');
+    updateSubtask(executionId, 1, "running");
     const existing = await getUserLeads(userId);
     const duplicate = existing.find(l => l.email === params.email);
     if (duplicate) {
-      throw new Error('Lead already exists');
+      throw new Error("Lead already exists");
     }
-    updateSubtask(executionId, 1, 'completed');
+    updateSubtask(executionId, 1, "completed");
 
     // Subtask 2: Indsætter i database
-    updateSubtask(executionId, 2, 'running');
+    updateSubtask(executionId, 2, "running");
     const lead = await createLead({
       userId,
       name: params.name,
       email: params.email,
       phone: params.phone,
-      source: params.source || 'Friday AI',
-      status: 'new'
+      source: params.source || "Friday AI",
+      status: "new",
     });
-    updateSubtask(executionId, 2, 'completed');
+    updateSubtask(executionId, 2, "completed");
 
     // Subtask 3: Opretter lead entry
-    updateSubtask(executionId, 3, 'running');
-    updateSubtask(executionId, 3, 'completed');
+    updateSubtask(executionId, 3, "running");
+    updateSubtask(executionId, 3, "completed");
 
     completeToolExecution(executionId, true);
 
     return {
       success: true,
       message: `Lead oprettet: ${params.name}`,
-      data: lead
+      data: lead,
     };
   } catch (error) {
     completeToolExecution(executionId, false, error.message);
@@ -350,13 +358,14 @@ Hvis du vil gemme cardData permanent:
 **File:** `drizzle/schema.ts`
 
 ```typescript
-export const messages = pgTable('messages', {
+export const messages = pgTable("messages", {
   // ... existing columns
-  cardData: text('card_data'), // JSON string of ResponseCardData
+  cardData: text("card_data"), // JSON string of ResponseCardData
 });
 ```
 
 **Migration:**
+
 ```bash
 pnpm db:push
 ```
@@ -368,6 +377,7 @@ pnpm db:push
 ### Manual Test Flow
 
 1. **Start dev server:**
+
    ```bash
    pnpm dev
    ```
@@ -412,7 +422,7 @@ describe('ToolExecutionModal', () => {
     };
 
     render(<ToolExecutionModal execution={execution} />);
-    
+
     expect(screen.getByText('Opretter lead')).toBeInTheDocument();
     expect(screen.getByText('50%')).toBeInTheDocument();
   });
@@ -424,22 +434,26 @@ describe('ToolExecutionModal', () => {
 ## 🚀 Rollout Plan
 
 ### Phase 1: Core Implementation (2-3 timer)
+
 - ✅ Komponenter oprettet
 - ⏳ Tilføj toolExecutionRouter til appRouter
 - ⏳ Test tRPC subscription lokalt
 
 ### Phase 2: Tool Integration (3-4 timer)
+
 - ⏳ Update `executeCreateLead` med tracking
 - ⏳ Update `executeCreateTask` med tracking
 - ⏳ Update `executeBookMeeting` med tracking
 - ⏳ Update `executeCreateInvoice` med tracking
 
 ### Phase 3: Response Cards (2 timer)
+
 - ⏳ Add `cardData` column til messages table
 - ⏳ Update message creation logic
 - ⏳ Test all card types
 
 ### Phase 4: Polish & Testing (2 timer)
+
 - ⏳ AI Memory scroll-to-message
 - ⏳ Cancel functionality
 - ⏳ Error handling
@@ -452,6 +466,7 @@ describe('ToolExecutionModal', () => {
 ## 💡 Tips & Best Practices
 
 1. **Progress Simulation:** Hvis subtask er hurtig (<100ms), tilføj artificial delay:
+
    ```typescript
    await new Promise(resolve => setTimeout(resolve, 300));
    ```
@@ -461,29 +476,32 @@ describe('ToolExecutionModal', () => {
 3. **Cleanup:** Tool executions cleanes automatisk efter 30 sekunder
 
 4. **Redis Integration:** For multi-instance, erstat in-memory Map med Redis:
+
    ```typescript
    // server/tool-execution-tracker.ts
-   import { redis } from './redis';
-   
+   import { redis } from "./redis";
+
    const activeExecutions = {
      get: (id: string) => redis.get(`tool:${id}`).then(JSON.parse),
-     set: (id: string, data: ToolExecution) => redis.set(`tool:${id}`, JSON.stringify(data), 'EX', 30)
+     set: (id: string, data: ToolExecution) =>
+       redis.set(`tool:${id}`, JSON.stringify(data), "EX", 30),
    };
    ```
 
 5. **WebSocket Alternative:** Hvis tRPC subscriptions ikke virker, brug Server-Sent Events (SSE):
+
    ```typescript
    // server/routers/tool-execution-router.ts
    export async function toolExecutionSSE(req: Request, res: Response) {
-     res.setHeader('Content-Type', 'text/event-stream');
-     res.setHeader('Cache-Control', 'no-cache');
-     res.setHeader('Connection', 'keep-alive');
+     res.setHeader("Content-Type", "text/event-stream");
+     res.setHeader("Cache-Control", "no-cache");
+     res.setHeader("Connection", "keep-alive");
 
-     const unsubscribe = subscribeToExecutions(userId, (execution) => {
+     const unsubscribe = subscribeToExecutions(userId, execution => {
        res.write(`data: ${JSON.stringify(execution)}\n\n`);
      });
 
-     req.on('close', unsubscribe);
+     req.on("close", unsubscribe);
    }
    ```
 
@@ -492,6 +510,7 @@ describe('ToolExecutionModal', () => {
 ## 🎯 Success Metrics
 
 **After implementation:**
+
 - ✅ Brugeren ser tool execution i real-time
 - ✅ Progress bar viser faktisk fremskridt
 - ✅ Subtasks viser hvad Friday AI laver
@@ -500,6 +519,7 @@ describe('ToolExecutionModal', () => {
 - ✅ Cancel button virker til long-running tasks
 
 **UX Improvement:**
+
 - Transparency: 10/10 ⭐
 - Trust: 10/10 ⭐
 - Professional look: 10/10 ⭐

@@ -1,4 +1,12 @@
-import { lazy, memo, Suspense, useCallback, useMemo, useRef, useState } from "react";
+import {
+  lazy,
+  memo,
+  Suspense,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useEmailContext } from "@/contexts/EmailContext";
@@ -27,9 +35,15 @@ import { Bot, LogOut, Menu, Settings, User, BookOpen } from "lucide-react";
 import { useLocation } from "wouter";
 
 // Lazy load panels for code splitting optimization
-const AIAssistantPanel = lazy(() => import("@/components/panels/AIAssistantPanelV2"));
-const EmailCenterPanel = lazy(() => import("@/components/panels/EmailCenterPanel"));
-const WorkflowPanelV2 = lazy(() => import("@/components/panels/SmartWorkspacePanel"));
+const AIAssistantPanel = lazy(
+  () => import("@/components/panels/AIAssistantPanelV2")
+);
+const EmailCenterPanel = lazy(
+  () => import("@/components/panels/EmailCenterPanel")
+);
+const WorkflowPanelV2 = lazy(
+  () => import("@/components/panels/SmartWorkspacePanel")
+);
 
 // Loading skeleton component
 const PanelSkeleton = ({ name }: { name: string }) => (
@@ -43,14 +57,14 @@ const PanelSkeleton = ({ name }: { name: string }) => (
 
 /**
  * Workspace Layout - Main 3-Panel Interface
- * 
+ *
  * Replaces old "ChatInterface" with proper naming.
- * 
+ *
  * Layout:
  * - Left (20%): AI Assistant (Friday)
  * - Center (60%): Email Center (dedicated to emails only)
  * - Right (20%): Smart Workspace (context-aware)
- * 
+ *
  * Features:
  * - Resizable panels with min/max constraints
  * - Keyboard shortcuts (Alt+1/2/3 for panel focus)
@@ -74,13 +88,13 @@ function WorkspaceLayout() {
   const workflowPanelRef = useRef<HTMLDivElement>(null);
 
   // Panel focus management
-  const focusPanel = useCallback((panel: 'ai' | 'email' | 'workflow') => {
+  const focusPanel = useCallback((panel: "ai" | "email" | "workflow") => {
     const refs = {
       ai: aiPanelRef,
       email: emailPanelRef,
       workflow: workflowPanelRef,
     };
-    
+
     const targetRef = refs[panel];
     if (targetRef?.current) {
       targetRef.current.focus();
@@ -90,25 +104,25 @@ function WorkspaceLayout() {
   // Keyboard shortcuts for panel navigation
   useKeyboardShortcuts([
     {
-      key: '1',
+      key: "1",
       ctrlKey: true,
-      handler: () => focusPanel('ai'),
-      description: 'Focus AI Assistant panel',
-      category: 'navigation',
+      handler: () => focusPanel("ai"),
+      description: "Focus AI Assistant panel",
+      category: "navigation",
     },
     {
-      key: '2',
+      key: "2",
       ctrlKey: true,
-      handler: () => focusPanel('email'),
-      description: 'Focus Email Center panel',
-      category: 'navigation',
+      handler: () => focusPanel("email"),
+      description: "Focus Email Center panel",
+      category: "navigation",
     },
     {
-      key: '3',
+      key: "3",
       ctrlKey: true,
-      handler: () => focusPanel('workflow'),
-      description: 'Focus Workspace panel',
-      category: 'navigation',
+      handler: () => focusPanel("workflow"),
+      description: "Focus Workspace panel",
+      category: "navigation",
     },
   ]);
 
@@ -117,17 +131,11 @@ function WorkspaceLayout() {
   }, []);
 
   // Memoize panel components to prevent unnecessary re-renders
-  const AIAssistantPanelMemo = useMemo(() => (
-    <AIAssistantPanel />
-  ), []);
+  const AIAssistantPanelMemo = useMemo(() => <AIAssistantPanel />, []);
 
-  const EmailCenterPanelMemo = useMemo(() => (
-    <EmailCenterPanel />
-  ), []);
+  const EmailCenterPanelMemo = useMemo(() => <EmailCenterPanel />, []);
 
-  const WorkflowPanelMemo = useMemo(() => (
-    <WorkflowPanelV2 />
-  ), []);
+  const WorkflowPanelMemo = useMemo(() => <WorkflowPanelV2 />, []);
 
   // Auth check
   if (loading) {
@@ -194,7 +202,7 @@ function WorkspaceLayout() {
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate('/docs')}>
+              <DropdownMenuItem onClick={() => navigate("/docs")}>
                 <BookOpen className="w-4 h-4 mr-2" />
                 Documentation
               </DropdownMenuItem>
@@ -213,7 +221,7 @@ function WorkspaceLayout() {
           <ResizablePanelGroup direction="horizontal" className="flex-1">
             {/* AI Assistant Panel (Left - 20%) */}
             <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
-              <div 
+              <div
                 ref={aiPanelRef}
                 data-testid="ai-assistant-panel"
                 tabIndex={0}
@@ -231,7 +239,7 @@ function WorkspaceLayout() {
 
             {/* Email Center Panel (Middle - 60%) */}
             <ResizablePanel defaultSize={60} minSize={40}>
-              <div 
+              <div
                 ref={emailPanelRef}
                 data-testid="email-center-panel"
                 tabIndex={0}
@@ -249,7 +257,7 @@ function WorkspaceLayout() {
 
             {/* Smart Workspace Panel (Right - 20%) */}
             <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
-              <div 
+              <div
                 ref={workflowPanelRef}
                 data-testid="workspace-panel"
                 tabIndex={0}

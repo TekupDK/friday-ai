@@ -50,30 +50,35 @@
 ## 🚨 KRITISKE PROBLEMER (Fix Først!)
 
 ### Problem 1: Memory Leak 🔴
+
 **Impact:** High — Memory vokser ved mange CSV exports
 **File:** `InvoicesTab.tsx:261`
 **Fix:** Add `URL.revokeObjectURL(url)`
 **Estimat:** 15 min
 
 ### Problem 2: Type Safety 🔴
+
 **Impact:** Critical — Ingen compile-time checks, fejltilbøjelig kode
 **File:** `InvoicesTab.tsx` + `shared/types.ts`
 **Fix:** Create `BillyInvoice` interface, remove all `any` types
 **Estimat:** 1-2 timer
 
 ### Problem 3: Race Condition 🔴
+
 **Impact:** High — Forkert invoice analyse vises til bruger
 **File:** `InvoicesTab.tsx:264-303`
 **Fix:** Track `currentAnalysisId`, check før state update
 **Estimat:** 1 time
 
 ### Problem 4: Performance 🟠
+
 **Impact:** Medium — Langsom UI ved store invoice lister
 **File:** `InvoicesTab.tsx:379-384`
 **Fix:** Add debouncing til search input (300ms)
 **Estimat:** 1 time
 
 ### Problem 5: Database Schema 🔴
+
 **Impact:** Blocker — NaN balances, missing invoice numbers
 **Files:** `drizzle/schema.ts`, `server/invoice-cache.ts`
 **Fix:** Migration + backfill (koordinér med backend team)
@@ -83,20 +88,21 @@
 
 ## 📊 QUICK STATS
 
-| Metric | Current | Target | Status |
-|--------|---------|--------|--------|
-| Memory leaks | 1 | 0 | 🔴 |
-| TypeScript `any` | ~8 | 0 | 🔴 |
-| Race conditions | 1 | 0 | 🔴 |
-| Accessibility score | ~60 | >90 | 🟡 |
-| Search debounce | None | 300ms | 🔴 |
-| Test coverage | ~20% | >80% | 🟡 |
+| Metric              | Current | Target | Status |
+| ------------------- | ------- | ------ | ------ |
+| Memory leaks        | 1       | 0      | 🔴     |
+| TypeScript `any`    | ~8      | 0      | 🔴     |
+| Race conditions     | 1       | 0      | 🔴     |
+| Accessibility score | ~60     | >90    | 🟡     |
+| Search debounce     | None    | 300ms  | 🔴     |
+| Test coverage       | ~20%    | >80%   | 🟡     |
 
 ---
 
 ## 🗓️ TIDSPLAN
 
 ### Uge 1 (Dag 1-2): Critical Fixes
+
 - [ ] Fix memory leak
 - [ ] Add TypeScript interfaces
 - [ ] Fix race condition
@@ -106,6 +112,7 @@
 **Estimat:** 4-5 timer spread over 2 dage
 
 ### Uge 1-2 (Dag 3-4): Code Quality
+
 - [ ] Refactor til useReducer
 - [ ] Add accessibility (keyboard + ARIA)
 - [ ] Extract constants
@@ -113,6 +120,7 @@
 **Estimat:** 4-5 timer
 
 ### Uge 2 (Dag 5): Database Fix
+
 - [ ] Create migration
 - [ ] Update backend cache
 - [ ] Run backfill script
@@ -120,6 +128,7 @@
 **Estimat:** 4-5 timer (koordinér med backend)
 
 ### Uge 3+ (Dag 6+): Features (optional)
+
 - [ ] Bulk actions
 - [ ] Smart filters
 - [ ] AI suggestions
@@ -131,6 +140,7 @@
 ## 🛠️ HVORDAN STARTER JEG?
 
 ### Option A: Fix Alt På Én Gang (Fuld Sprint)
+
 ```bash
 # 1. Læs TECHNICAL_ANALYSIS.md grundigt
 # 2. Følg IMPLEMENTATION_PLAN.md trin for trin
@@ -143,6 +153,7 @@ pnpm dev  # Start dev server
 ```
 
 ### Option B: Inkrementelle Fixes (Anbefalet)
+
 ```bash
 # Dag 1: Fix kun memory leak + TypeScript
 git checkout -b fix/invoices-memory-leak
@@ -160,6 +171,7 @@ git push
 ```
 
 ### Option C: Kun Database Fix (Backend Focus)
+
 ```bash
 # Koordinér med backend team
 # Følg Phase 3 i IMPLEMENTATION_PLAN.md
@@ -182,6 +194,7 @@ Fixes #<issue-number>
 ```
 
 **Types:**
+
 - `fix`: Bug fixes (memory leak, race condition)
 - `feat`: New features (bulk actions, filters)
 - `refactor`: Code improvements (useReducer, constants)
@@ -192,6 +205,7 @@ Fixes #<issue-number>
 - `chore`: Maintenance (deps, config)
 
 **Eksempler:**
+
 ```bash
 git commit -m "fix(invoices): memory leak in CSV export
 
@@ -214,6 +228,7 @@ Fixes #124"
 ## 🧪 TESTING
 
 ### Run Tests
+
 ```bash
 # Unit tests
 pnpm test InvoicesTab
@@ -229,6 +244,7 @@ pnpm lighthouse --view
 ```
 
 ### Manual Testing Checklist
+
 - [ ] Search invoices (type fast, verify debouncing)
 - [ ] Filter by status
 - [ ] Click "Analyze" on invoice
@@ -243,6 +259,7 @@ pnpm lighthouse --view
 ## 🚀 DEPLOYMENT
 
 ### Pre-deployment Checklist
+
 - [ ] All critical fixes merged
 - [ ] Tests passing
 - [ ] Database migration tested in staging
@@ -250,6 +267,7 @@ pnpm lighthouse --view
 - [ ] Performance benchmarks recorded
 
 ### Deploy Commands
+
 ```bash
 # 1. Database migration (prod)
 pnpm drizzle-kit push --prod
@@ -265,6 +283,7 @@ pnpm build
 ```
 
 ### Rollback Plan
+
 ```bash
 # If issues found:
 git revert <commit-hash>
@@ -279,12 +298,14 @@ pnpm drizzle-kit rollback
 ## 📞 SUPPORT
 
 ### Spørgsmål?
+
 - **Frontend:** Tag @frontend-team
 - **Backend/DB:** Tag @backend-team
 - **UX:** Tag @design-team
 - **Urgent:** Tag @on-call
 
 ### Useful Links
+
 - [Billy API Docs](https://github.com/TekupDK/tekup-billy)
 - [Drizzle ORM Docs](https://orm.drizzle.team/)
 - [shadcn/ui Components](https://ui.shadcn.com/)

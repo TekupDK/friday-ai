@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
-import { describe, it, expect, vi } from 'vitest';
-import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
+import { render, screen } from "@testing-library/react";
 
 // V2: Mock EmailTab instead of InboxPanel
-vi.mock('@/components/inbox/EmailTab', () => ({
+vi.mock("@/components/inbox/EmailTab", () => ({
   default: () => (
     <div data-testid="email-tab">
       <div>Mock EmailTab</div>
@@ -13,24 +13,24 @@ vi.mock('@/components/inbox/EmailTab', () => ({
   ),
 }));
 
-import EmailCenterPanel from '../EmailCenterPanel';
+import EmailCenterPanel from "../EmailCenterPanel";
 
-describe('EmailCenterPanel V2', () => {
-  it('renders email center header', () => {
+describe("EmailCenterPanel V2", () => {
+  it("renders email center header", () => {
     render(<EmailCenterPanel />);
 
     expect(screen.getByText(/Email Center/i)).toBeInTheDocument();
     expect(screen.getByText(/AI-powered email workspace/i)).toBeInTheDocument();
   });
 
-  it('renders EmailTab component', () => {
+  it("renders EmailTab component", () => {
     render(<EmailCenterPanel />);
 
-    expect(screen.getByTestId('email-tab')).toBeInTheDocument();
+    expect(screen.getByTestId("email-tab")).toBeInTheDocument();
     expect(screen.getByText(/Mock EmailTab/i)).toBeInTheDocument();
   });
 
-  it('has no tabs - dedicated to emails only', () => {
+  it("has no tabs - dedicated to emails only", () => {
     render(<EmailCenterPanel />);
 
     // Should NOT have tab navigation (V2 design)

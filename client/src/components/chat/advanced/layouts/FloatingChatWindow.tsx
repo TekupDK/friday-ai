@@ -1,22 +1,22 @@
-import * as React from "react"
-import { X, Minus, Maximize2, MessageSquare } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import * as React from "react";
+import { X, Minus, Maximize2, MessageSquare } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export interface FloatingChatWindowProps {
-  isOpen: boolean
-  onClose: () => void
-  onMinimize: () => void
-  onMaximize: () => void
-  position?: { x: number; y: number }
-  isMinimized?: boolean
-  isMaximized?: boolean
-  title?: string
-  avatar?: string
-  status?: 'online' | 'away' | 'offline' | 'busy'
-  className?: string
-  children?: React.ReactNode
+  isOpen: boolean;
+  onClose: () => void;
+  onMinimize: () => void;
+  onMaximize: () => void;
+  position?: { x: number; y: number };
+  isMinimized?: boolean;
+  isMaximized?: boolean;
+  title?: string;
+  avatar?: string;
+  status?: "online" | "away" | "offline" | "busy";
+  className?: string;
+  children?: React.ReactNode;
 }
 
 export function FloatingChatWindow({
@@ -29,71 +29,71 @@ export function FloatingChatWindow({
   isMaximized = false,
   title = "Chat",
   avatar,
-  status = 'online',
+  status = "online",
   className,
   children,
 }: FloatingChatWindowProps) {
-  const [isDragging, setIsDragging] = React.useState(false)
-  const [dragOffset, setDragOffset] = React.useState({ x: 0, y: 0 })
-  const [currentPos, setCurrentPos] = React.useState(position)
-  const windowRef = React.useRef<HTMLDivElement>(null)
+  const [isDragging, setIsDragging] = React.useState(false);
+  const [dragOffset, setDragOffset] = React.useState({ x: 0, y: 0 });
+  const [currentPos, setCurrentPos] = React.useState(position);
+  const windowRef = React.useRef<HTMLDivElement>(null);
 
   const statusColors = {
-    online: 'bg-green-500',
-    away: 'bg-yellow-500',
-    offline: 'bg-gray-400',
-    busy: 'bg-red-500',
-  }
+    online: "bg-green-500",
+    away: "bg-yellow-500",
+    offline: "bg-gray-400",
+    busy: "bg-red-500",
+  };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (windowRef.current) {
-      const rect = windowRef.current.getBoundingClientRect()
+      const rect = windowRef.current.getBoundingClientRect();
       setDragOffset({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
-      })
-      setIsDragging(true)
-      document.body.style.userSelect = 'none'
+      });
+      setIsDragging(true);
+      document.body.style.userSelect = "none";
     }
-  }
+  };
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return
-    
-    const newX = e.clientX - dragOffset.x
-    const newY = e.clientY - dragOffset.y
-    
+    if (!isDragging) return;
+
+    const newX = e.clientX - dragOffset.x;
+    const newY = e.clientY - dragOffset.y;
+
     // Keep window within viewport
-    const maxX = window.innerWidth - (windowRef.current?.offsetWidth || 0)
-    const maxY = window.innerHeight - 40 // Leave space for the header
-    
-    const boundedX = Math.max(0, Math.min(newX, maxX))
-    const boundedY = Math.max(0, Math.min(newY, maxY))
-    
-    setCurrentPos({ x: boundedX, y: boundedY })
-  }
+    const maxX = window.innerWidth - (windowRef.current?.offsetWidth || 0);
+    const maxY = window.innerHeight - 40; // Leave space for the header
+
+    const boundedX = Math.max(0, Math.min(newX, maxX));
+    const boundedY = Math.max(0, Math.min(newY, maxY));
+
+    setCurrentPos({ x: boundedX, y: boundedY });
+  };
 
   const handleMouseUp = () => {
-    setIsDragging(false)
-    document.body.style.userSelect = ''
-  }
+    setIsDragging(false);
+    document.body.style.userSelect = "";
+  };
 
   React.useEffect(() => {
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove)
-      document.addEventListener('mouseup', handleMouseUp)
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
     }
-    
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-    }
-  }, [isDragging, dragOffset])
 
-  if (!isOpen) return null
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, dragOffset]);
+
+  if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       ref={windowRef}
       className={cn(
         "fixed flex flex-col bg-background rounded-lg shadow-xl border border-border overflow-hidden",
@@ -109,7 +109,7 @@ export function FloatingChatWindow({
       }}
     >
       {/* Header */}
-      <div 
+      <div
         className="flex items-center justify-between p-2 bg-muted/50 border-b border-border cursor-move select-none"
         onMouseDown={handleMouseDown}
       >
@@ -120,7 +120,7 @@ export function FloatingChatWindow({
                 <AvatarImage src={avatar} alt={title} />
                 <AvatarFallback>{title.charAt(0)}</AvatarFallback>
               </Avatar>
-              <span 
+              <span
                 className={cn(
                   "absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-background",
                   statusColors[status]
@@ -130,33 +130,35 @@ export function FloatingChatWindow({
           ) : (
             <MessageSquare className="h-5 w-5 text-muted-foreground" />
           )}
-          <span className="font-medium text-sm truncate">
-            {title}
-          </span>
+          <span className="font-medium text-sm truncate">{title}</span>
         </div>
-        
+
         <div className="flex items-center gap-1">
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="h-7 w-7"
             onClick={onMinimize}
           >
-            {isMinimized ? <Maximize2 className="h-3.5 w-3.5" /> : <Minus className="h-3.5 w-3.5" />}
+            {isMinimized ? (
+              <Maximize2 className="h-3.5 w-3.5" />
+            ) : (
+              <Minus className="h-3.5 w-3.5" />
+            )}
           </Button>
           {!isMinimized && (
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               className="h-7 w-7"
               onClick={onMaximize}
             >
               <Maximize2 className="h-3.5 w-3.5" />
             </Button>
           )}
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             className="h-7 w-7 hover:bg-destructive/10 hover:text-destructive"
             onClick={onClose}
           >
@@ -164,7 +166,7 @@ export function FloatingChatWindow({
           </Button>
         </div>
       </div>
-      
+
       {/* Content */}
       {!isMinimized && (
         <div className="flex-1 flex flex-col overflow-hidden">
@@ -175,23 +177,18 @@ export function FloatingChatWindow({
           )}
         </div>
       )}
-      
+
       {/* Minimized state */}
       {isMinimized && (
         <div className="absolute inset-0 flex items-center px-3">
-          <div className="flex-1 truncate text-sm">
-            {title}
-          </div>
-          <div 
-            className={cn(
-              "h-2 w-2 rounded-full mx-2",
-              statusColors[status]
-            )} 
+          <div className="flex-1 truncate text-sm">{title}</div>
+          <div
+            className={cn("h-2 w-2 rounded-full mx-2", statusColors[status])}
           />
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // Usage example:

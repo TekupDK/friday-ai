@@ -41,7 +41,12 @@ const AB_TESTS: Record<string, ABTestConfig> = {
     enabled: true,
     trafficSplit: 0.1, // Start with 10% on new flow
     startDate: new Date(),
-    metrics: ["response_time", "error_rate", "user_satisfaction", "completion_rate"],
+    metrics: [
+      "response_time",
+      "error_rate",
+      "user_satisfaction",
+      "completion_rate",
+    ],
   },
   streaming_enabled: {
     testName: "streaming_enabled",
@@ -62,7 +67,10 @@ const AB_TESTS: Record<string, ABTestConfig> = {
 /**
  * Determine which test group a user belongs to
  */
-export function getTestGroup(userId: number, testName: string): "control" | "variant" | "excluded" {
+export function getTestGroup(
+  userId: number,
+  testName: string
+): "control" | "variant" | "excluded" {
   const testConfig = AB_TESTS[testName];
   if (!testConfig || !testConfig.enabled) {
     return "excluded";
@@ -93,7 +101,7 @@ function hashUserId(userId: number, testName: string): number {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash; // Convert to 32-bit integer
   }
   return Math.abs(hash) % 100;
@@ -113,7 +121,8 @@ export function getFeatureFlagsWithABTest(userId: number) {
     // Override based on A/B test groups
     useServerSideChat: chatGroup === "variant" || baseFlags.useServerSideChat,
     enableStreaming: streamingGroup === "variant" || baseFlags.enableStreaming,
-    enableModelRouting: modelRoutingGroup === "variant" || baseFlags.enableModelRouting,
+    enableModelRouting:
+      modelRoutingGroup === "variant" || baseFlags.enableModelRouting,
     // Test metadata
     abTestGroups: {
       chat_flow_migration: chatGroup,
@@ -126,7 +135,10 @@ export function getFeatureFlagsWithABTest(userId: number) {
 /**
  * Record metrics for A/B testing
  */
-export async function recordTestMetrics(metrics: TestMetrics, db?: any): Promise<void> {
+export async function recordTestMetrics(
+  metrics: TestMetrics,
+  db?: any
+): Promise<void> {
   try {
     console.log(`📊 A/B Test Metrics: ${metrics.testGroup}`, {
       userId: metrics.userId,
@@ -139,8 +151,8 @@ export async function recordTestMetrics(metrics: TestMetrics, db?: any): Promise
     // NOTE: ab_test_metrics table not yet created in Drizzle schema
     // Will implement when Phase 2 A/B testing is fully activated
     if (db) {
-      console.log('[A/B Testing] Metrics recorded (in-memory only):', {
-        testName: 'chat_flow_migration',
+      console.log("[A/B Testing] Metrics recorded (in-memory only):", {
+        testName: "chat_flow_migration",
         userId: metrics.userId,
         testGroup: metrics.testGroup,
         responseTime: metrics.responseTime,
@@ -155,7 +167,10 @@ export async function recordTestMetrics(metrics: TestMetrics, db?: any): Promise
 /**
  * Calculate test results and recommendations
  */
-export async function calculateTestResults(testName: string, db?: any): Promise<ABTestResult | null> {
+export async function calculateTestResults(
+  testName: string,
+  db?: any
+): Promise<ABTestResult | null> {
   const testConfig = AB_TESTS[testName];
   if (!testConfig) {
     return null;
@@ -167,7 +182,9 @@ export async function calculateTestResults(testName: string, db?: any): Promise<
   let variantMetrics: TestMetrics[] = [];
 
   if (db) {
-    console.log('[A/B Testing] Skipping database query - table not yet implemented');
+    console.log(
+      "[A/B Testing] Skipping database query - table not yet implemented"
+    );
     // TODO: Implement with Drizzle ORM when schema is ready
     // const metrics = await db.select().from(abTestMetrics)
     //   .where(and(
@@ -188,11 +205,19 @@ export async function calculateTestResults(testName: string, db?: any): Promise<
   }
 
   // Calculate basic statistics
-  const controlAvgResponseTime = controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) / controlMetrics.length;
-  const variantAvgResponseTime = variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) / variantMetrics.length;
+  const controlAvgResponseTime =
+    controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
+    controlMetrics.length;
+  const variantAvgResponseTime =
+    variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
+    variantMetrics.length;
 
-  const controlErrorRate = controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) / controlMetrics.length;
-  const variantErrorRate = variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) / variantMetrics.length;
+  const controlErrorRate =
+    controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
+    controlMetrics.length;
+  const variantErrorRate =
+    variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
+    variantMetrics.length;
 
   // Calculate statistical significance using Welch's t-test approximation
   const significance = calculateStatisticalSignificance(
@@ -201,13 +226,20 @@ export async function calculateTestResults(testName: string, db?: any): Promise<
   );
 
   // Recommendation logic with statistical significance check
-  let recommendation: "keep_control" | "deploy_variant" | "continue_test" = "continue_test";
-  
+  let recommendation: "keep_control" | "deploy_variant" | "continue_test" =
+    "continue_test";
+
   // Need at least 95% confidence to make a decision
   if (significance >= 0.95) {
-    if (variantAvgResponseTime < controlAvgResponseTime * 0.8 && variantErrorRate <= controlErrorRate) {
+    if (
+      variantAvgResponseTime < controlAvgResponseTime * 0.8 &&
+      variantErrorRate <= controlErrorRate
+    ) {
       recommendation = "deploy_variant";
-    } else if (variantErrorRate > controlErrorRate * 1.5 || variantAvgResponseTime > controlAvgResponseTime * 1.2) {
+    } else if (
+      variantErrorRate > controlErrorRate * 1.5 ||
+      variantAvgResponseTime > controlAvgResponseTime * 1.2
+    ) {
       recommendation = "keep_control";
     }
   }
@@ -241,7 +273,10 @@ function rowToMetrics(row: any): TestMetrics {
  * Calculate statistical significance using Welch's t-test
  * Returns p-value (0-1, where closer to 1 means more significant)
  */
-function calculateStatisticalSignificance(control: number[], variant: number[]): number {
+function calculateStatisticalSignificance(
+  control: number[],
+  variant: number[]
+): number {
   if (control.length < 30 || variant.length < 30) {
     return 0; // Need sufficient sample size
   }
@@ -251,11 +286,17 @@ function calculateStatisticalSignificance(control: number[], variant: number[]):
   const variantMean = variant.reduce((a, b) => a + b, 0) / variant.length;
 
   // Calculate variances
-  const controlVariance = control.reduce((sum, x) => sum + Math.pow(x - controlMean, 2), 0) / (control.length - 1);
-  const variantVariance = variant.reduce((sum, x) => sum + Math.pow(x - variantMean, 2), 0) / (variant.length - 1);
+  const controlVariance =
+    control.reduce((sum, x) => sum + Math.pow(x - controlMean, 2), 0) /
+    (control.length - 1);
+  const variantVariance =
+    variant.reduce((sum, x) => sum + Math.pow(x - variantMean, 2), 0) /
+    (variant.length - 1);
 
   // Calculate standard error
-  const se = Math.sqrt(controlVariance / control.length + variantVariance / variant.length);
+  const se = Math.sqrt(
+    controlVariance / control.length + variantVariance / variant.length
+  );
 
   if (se === 0) return 0;
 
@@ -263,18 +304,21 @@ function calculateStatisticalSignificance(control: number[], variant: number[]):
   const t = Math.abs(controlMean - variantMean) / se;
 
   // Approximate degrees of freedom (Welch-Satterthwaite equation)
-  const df = Math.pow(
-    controlVariance / control.length + variantVariance / variant.length,
-    2
-  ) / (
-    Math.pow(controlVariance / control.length, 2) / (control.length - 1) +
-    Math.pow(variantVariance / variant.length, 2) / (variant.length - 1)
-  );
+  const df =
+    Math.pow(
+      controlVariance / control.length + variantVariance / variant.length,
+      2
+    ) /
+    (Math.pow(controlVariance / control.length, 2) / (control.length - 1) +
+      Math.pow(variantVariance / variant.length, 2) / (variant.length - 1));
 
   // Convert t-statistic to approximate confidence level
   // Using rough approximation: confidence ≈ 1 - 2 * P(T > |t|)
   // For t > 2, confidence is typically > 95%
-  const confidence = Math.min(0.999, Math.max(0, 1 - 2 / (1 + Math.pow(t, 2) / df)));
+  const confidence = Math.min(
+    0.999,
+    Math.max(0, 1 - 2 / (1 + Math.pow(t, 2) / df))
+  );
 
   return confidence;
 }
@@ -293,7 +337,7 @@ export function createABTestMiddleware() {
 
     // Override res.end to track metrics
     const originalEnd = res.end;
-    res.end = function(...args: any[]) {
+    res.end = function (...args: any[]) {
       const responseTime = Date.now() - startTime;
       const testGroup = getTestGroup(userId, "chat_flow_migration");
 

@@ -18,24 +18,34 @@ export class ToolCallOptimizer {
     toolCalls: any[],
     executor: (toolName: string, args: any) => Promise<any>
   ): Promise<ToolCallResult[]> {
-    console.log(`🔧 [ToolOptimizer] Batching ${toolCalls.length} tool calls into parallel execution`);
-    
+    console.log(
+      `🔧 [ToolOptimizer] Batching ${toolCalls.length} tool calls into parallel execution`
+    );
+
     // Execute all tools in parallel
     const results = await Promise.all(
-      toolCalls.map(async (call) => {
+      toolCalls.map(async call => {
         try {
-          const result = await executor(call.function.name, call.function.arguments);
+          const result = await executor(
+            call.function.name,
+            call.function.arguments
+          );
           return {
             tool_call_id: call.id,
             name: call.function.name,
             result,
           };
         } catch (error) {
-          console.error(`❌ [ToolOptimizer] Tool ${call.function.name} failed:`, error);
+          console.error(
+            `❌ [ToolOptimizer] Tool ${call.function.name} failed:`,
+            error
+          );
           return {
             tool_call_id: call.id,
             name: call.function.name,
-            result: { error: error instanceof Error ? error.message : 'Unknown error' },
+            result: {
+              error: error instanceof Error ? error.message : "Unknown error",
+            },
           };
         }
       })
@@ -52,10 +62,10 @@ export class ToolCallOptimizer {
   canCacheToolResult(toolName: string): boolean {
     // These tools have stable results that can be cached
     const cacheableTools = [
-      'getBusinessHours',
-      'getServicePricing',
-      'getCompanyInfo',
-      'getAvailableServices',
+      "getBusinessHours",
+      "getServicePricing",
+      "getCompanyInfo",
+      "getAvailableServices",
     ];
 
     return cacheableTools.includes(toolName);
@@ -72,13 +82,16 @@ export class ToolCallOptimizer {
   /**
    * Suggest priority based on tool usage
    */
-  suggestPriority(hasTools: boolean, toolCount: number): 'high' | 'medium' | 'low' {
-    if (!hasTools) return 'medium';
-    
+  suggestPriority(
+    hasTools: boolean,
+    toolCount: number
+  ): "high" | "medium" | "low" {
+    if (!hasTools) return "medium";
+
     // More tools = higher priority (to avoid timeout)
-    if (toolCount >= 3) return 'high';
-    if (toolCount >= 1) return 'medium';
-    return 'low';
+    if (toolCount >= 3) return "high";
+    if (toolCount >= 1) return "medium";
+    return "low";
   }
 
   /**
@@ -87,7 +100,7 @@ export class ToolCallOptimizer {
   getStats() {
     return {
       // Could track tool usage patterns here
-      note: 'Tool optimizer active',
+      note: "Tool optimizer active",
     };
   }
 }

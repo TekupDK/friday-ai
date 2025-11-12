@@ -55,7 +55,9 @@ export default function EmailLabelSuggestions({
 
   // Fetch label suggestions (cached or generate new)
   // Resolve numeric emailId from threadId when needed
-  const { data: mappedIds } = (trpc.inbox as any).email.mapThreadsToEmailIds.useQuery(
+  const { data: mappedIds } = (
+    trpc.inbox as any
+  ).email.mapThreadsToEmailIds.useQuery(
     { threadIds: threadId ? [threadId] : [] },
     { enabled: !!threadId }
   );
@@ -130,7 +132,11 @@ export default function EmailLabelSuggestions({
   // Handle apply label
   const handleApplyLabel = (label: string, confidence: number) => {
     if (typeof resolvedEmailId === "number") {
-      applyLabelMutation.mutate({ emailId: resolvedEmailId, label, confidence });
+      applyLabelMutation.mutate({
+        emailId: resolvedEmailId,
+        label,
+        confidence,
+      });
     }
   };
 
@@ -229,7 +235,8 @@ export default function EmailLabelSuggestions({
 
   const suggestions = preloadedSuggestions || suggestionsData?.suggestions;
   const generatedAt = preloadedGeneratedAt || suggestionsData?.generatedAt;
-  const cached = suggestionsData?.cached ?? (preloadedSuggestions ? true : false);
+  const cached =
+    suggestionsData?.cached ?? (preloadedSuggestions ? true : false);
 
   if (!suggestions || suggestions.length === 0) {
     return null;

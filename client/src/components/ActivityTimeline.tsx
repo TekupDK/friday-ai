@@ -3,13 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { trpc } from "@/lib/trpc";
-import {
-  Calendar,
-  FileText,
-  Loader2,
-  Mail,
-  MoreVertical,
-} from "lucide-react";
+import { Calendar, FileText, Loader2, Mail, MoreVertical } from "lucide-react";
 import { useMemo, useState } from "react";
 
 interface ActivityTimelineProps {
@@ -27,15 +21,16 @@ export function ActivityTimeline({
 }: ActivityTimelineProps) {
   const [filter, setFilter] = useState<ActivityType | "all">("all");
 
-  const { data: activities, isLoading } = trpc.customer.getActivityTimeline.useQuery({
-    customerId,
-    limit: 50,
-  });
+  const { data: activities, isLoading } =
+    trpc.customer.getActivityTimeline.useQuery({
+      customerId,
+      limit: 50,
+    });
 
   const filteredActivities = useMemo(() => {
     if (!activities) return [];
     if (filter === "all") return activities;
-    return activities.filter((a) => a.type === filter);
+    return activities.filter(a => a.type === filter);
   }, [activities, filter]);
 
   if (isLoading) {
@@ -72,7 +67,7 @@ export function ActivityTimeline({
           className="gap-1.5"
         >
           <Mail className="w-3.5 h-3.5" />
-          Emails ({activities.filter((a) => a.type === "email").length})
+          Emails ({activities.filter(a => a.type === "email").length})
         </Button>
         <Button
           variant={filter === "invoice" ? "default" : "outline"}
@@ -81,7 +76,7 @@ export function ActivityTimeline({
           className="gap-1.5"
         >
           <FileText className="w-3.5 h-3.5" />
-          Fakturaer ({activities.filter((a) => a.type === "invoice").length})
+          Fakturaer ({activities.filter(a => a.type === "invoice").length})
         </Button>
         <Button
           variant={filter === "calendar" ? "default" : "outline"}
@@ -90,7 +85,7 @@ export function ActivityTimeline({
           className="gap-1.5"
         >
           <Calendar className="w-3.5 h-3.5" />
-          Kalender ({activities.filter((a) => a.type === "calendar").length})
+          Kalender ({activities.filter(a => a.type === "calendar").length})
         </Button>
       </div>
 
@@ -120,10 +115,17 @@ export function ActivityTimeline({
                   isEmail && onEmailClick ? "cursor-pointer" : ""
                 }`}
                 onClick={() => {
-                  if (isEmail && onEmailClick && activity.metadata.gmailThreadId) {
+                  if (
+                    isEmail &&
+                    onEmailClick &&
+                    activity.metadata.gmailThreadId
+                  ) {
                     onEmailClick(activity.metadata.gmailThreadId);
                   } else if (isInvoice && onInvoiceClick) {
-                    const invoiceId = parseInt(activity.id.replace("invoice-", ""), 10);
+                    const invoiceId = parseInt(
+                      activity.id.replace("invoice-", ""),
+                      10
+                    );
                     onInvoiceClick(invoiceId);
                   }
                 }}
@@ -153,14 +155,20 @@ export function ActivityTimeline({
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-medium truncate">{activity.title}</h4>
+                          <h4 className="font-medium truncate">
+                            {activity.title}
+                          </h4>
                           {activity.description && (
                             <p className="text-sm text-muted-foreground line-clamp-2 mt-0.5">
                               {activity.description}
                             </p>
                           )}
                         </div>
-                        <Button variant="ghost" size="icon" className="w-8 h-8 shrink-0">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="w-8 h-8 shrink-0"
+                        >
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </div>
@@ -168,7 +176,11 @@ export function ActivityTimeline({
                       {/* Metadata & Date */}
                       <div className="flex items-center gap-2 mt-2 flex-wrap">
                         <Badge variant="secondary" className="text-xs">
-                          {isEmail ? "Email" : isInvoice ? "Faktura" : "Kalender"}
+                          {isEmail
+                            ? "Email"
+                            : isInvoice
+                              ? "Faktura"
+                              : "Kalender"}
                         </Badge>
 
                         {isEmail && !activity.metadata.isRead && (
@@ -186,11 +198,12 @@ export function ActivityTimeline({
                           </Badge>
                         )}
 
-                        {isInvoice && activity.metadata.status === "overdue" && (
-                          <Badge variant="destructive" className="text-xs">
-                            Forfald
-                          </Badge>
-                        )}
+                        {isInvoice &&
+                          activity.metadata.status === "overdue" && (
+                            <Badge variant="destructive" className="text-xs">
+                              Forfald
+                            </Badge>
+                          )}
 
                         <span className="text-xs text-muted-foreground ml-auto">
                           {dateStr} • {timeStr}

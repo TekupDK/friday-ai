@@ -1,12 +1,12 @@
 /**
  * Langfuse Client - LLM Observability Integration
- * 
+ *
  * Provides complete tracing and monitoring for all AI operations in Friday AI.
  * Self-hosted, zero cost, complete control.
  */
 
-import { Langfuse } from 'langfuse';
-import { ENV } from '../../_core/env';
+import { Langfuse } from "langfuse";
+import { ENV } from "../../_core/env";
 
 // Singleton client instance
 let langfuseClient: Langfuse | null = null;
@@ -27,7 +27,7 @@ export function getLangfuseClient(): Langfuse | null {
 
   // Validate configuration
   if (!ENV.langfusePublicKey || !ENV.langfuseSecretKey) {
-    console.warn('[Langfuse] Missing API keys, tracing disabled');
+    console.warn("[Langfuse] Missing API keys, tracing disabled");
     return null;
   }
 
@@ -36,18 +36,20 @@ export function getLangfuseClient(): Langfuse | null {
     langfuseClient = new Langfuse({
       publicKey: ENV.langfusePublicKey,
       secretKey: ENV.langfuseSecretKey,
-      baseUrl: ENV.langfuseBaseUrl || 'http://localhost:3001',
+      baseUrl: ENV.langfuseBaseUrl || "http://localhost:3001",
       flushAt: 1, // Flush after 1 event (or use higher number for batching)
       flushInterval: 1000, // Flush every 1 second
       requestTimeout: 5000, // 5 second timeout
       enabled: ENV.langfuseEnabled,
     });
 
-    console.log(`[Langfuse] ✅ Client initialized (${ENV.langfuseBaseUrl || 'http://localhost:3001'})`);
-    
+    console.log(
+      `[Langfuse] ✅ Client initialized (${ENV.langfuseBaseUrl || "http://localhost:3001"})`
+    );
+
     return langfuseClient;
   } catch (error) {
-    console.error('[Langfuse] Failed to initialize client:', error);
+    console.error("[Langfuse] Failed to initialize client:", error);
     return null;
   }
 }
@@ -76,7 +78,7 @@ export function createTrace(params: {
 
     return trace;
   } catch (error) {
-    console.error('[Langfuse] Failed to create trace:', error);
+    console.error("[Langfuse] Failed to create trace:", error);
     return null;
   }
 }
@@ -95,7 +97,7 @@ export function createGeneration(params: {
     totalTokens?: number;
   };
   metadata?: Record<string, any>;
-  level?: 'DEBUG' | 'DEFAULT' | 'WARNING' | 'ERROR';
+  level?: "DEBUG" | "DEFAULT" | "WARNING" | "ERROR";
   statusMessage?: string;
   startTime?: Date;
   endTime?: Date;
@@ -109,11 +111,13 @@ export function createGeneration(params: {
       model: params.model,
       input: params.input,
       output: params.output,
-      usage: params.usage ? {
-        promptTokens: params.usage.promptTokens,
-        completionTokens: params.usage.completionTokens,
-        totalTokens: params.usage.totalTokens,
-      } : undefined,
+      usage: params.usage
+        ? {
+            promptTokens: params.usage.promptTokens,
+            completionTokens: params.usage.completionTokens,
+            totalTokens: params.usage.totalTokens,
+          }
+        : undefined,
       metadata: params.metadata,
       level: params.level,
       statusMessage: params.statusMessage,
@@ -123,7 +127,7 @@ export function createGeneration(params: {
 
     return generation;
   } catch (error) {
-    console.error('[Langfuse] Failed to create generation:', error);
+    console.error("[Langfuse] Failed to create generation:", error);
     return null;
   }
 }
@@ -138,7 +142,7 @@ export async function flushLangfuse(): Promise<void> {
   try {
     await client.flushAsync();
   } catch (error) {
-    console.error('[Langfuse] Failed to flush:', error);
+    console.error("[Langfuse] Failed to flush:", error);
   }
 }
 
@@ -152,9 +156,9 @@ export async function shutdownLangfuse(): Promise<void> {
   try {
     await client.shutdownAsync();
     langfuseClient = null;
-    console.log('[Langfuse] Client shutdown complete');
+    console.log("[Langfuse] Client shutdown complete");
   } catch (error) {
-    console.error('[Langfuse] Failed to shutdown:', error);
+    console.error("[Langfuse] Failed to shutdown:", error);
   }
 }
 
@@ -183,7 +187,7 @@ export async function tracedOperation<T>(
 
   try {
     const result = await operation();
-    
+
     // Log success
     if (trace) {
       trace.update({
@@ -206,7 +210,7 @@ export async function tracedOperation<T>(
           duration: Date.now() - startTime,
           success: false,
           error: error instanceof Error ? error.message : String(error),
-          level: 'ERROR',
+          level: "ERROR",
           statusMessage: error instanceof Error ? error.message : String(error),
         },
       });

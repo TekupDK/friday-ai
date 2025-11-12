@@ -27,25 +27,23 @@ import {
   type InsertLead,
   type Lead,
 } from "../../drizzle/schema";
-import type { V4_3_Dataset, V4_3_Lead } from "../integrations/chromadb/v4_3-types";
+import type {
+  V4_3_Dataset,
+  V4_3_Lead,
+} from "../integrations/chromadb/v4_3-types";
 
 import {
   addCustomerInvoice,
   createOrUpdateCustomerProfile,
 } from "../customer-db";
-import {
-  createLead,
-  getDb,
-  getUserByOpenId,
-  upsertUser,
-} from "../db";
+import { createLead, getDb, getUserByOpenId, upsertUser } from "../db";
 
 dotenv.config({ path: ".env.supabase" });
 dotenv.config();
 
 const DEFAULT_DATASET_PATH = resolve(
   process.cwd(),
-  "server/integrations/chromadb/test-data/complete-leads-v4.3.3.json",
+  "server/integrations/chromadb/test-data/complete-leads-v4.3.3.json"
 );
 
 const DATASET_VERSION = "4.3.5";
@@ -72,7 +70,7 @@ async function main() {
 
   const dataset: V4_3_Dataset = JSON.parse(readFileSync(datasetPath, "utf-8"));
   console.log(
-    `✅ Dataset loaded (version ${dataset.metadata.version} → import as ${DATASET_VERSION})`,
+    `✅ Dataset loaded (version ${dataset.metadata.version} → import as ${DATASET_VERSION})`
   );
   console.log(`   Leads: ${dataset.leads.length}`);
 
@@ -94,7 +92,7 @@ async function main() {
   }
   if (!ownerUser) {
     throw new Error(
-      "Owner user still not found after upsert. Please verify OWNER_OPEN_ID.",
+      "Owner user still not found after upsert. Please verify OWNER_OPEN_ID."
     );
   }
 
@@ -135,7 +133,7 @@ async function main() {
       stats.errors += 1;
       console.error(
         `❌ Failed to import lead ${lead.id}:`,
-        error instanceof Error ? error.message : error,
+        error instanceof Error ? error.message : error
       );
     }
   }
@@ -167,7 +165,7 @@ type UpsertResult =
 async function upsertLeadAndCustomer(
   db: DbClient,
   userId: number,
-  datasetLead: V4_3_Lead,
+  datasetLead: V4_3_Lead
 ): Promise<UpsertResult> {
   const customerEmail = resolveCustomerEmail(datasetLead);
 
@@ -176,7 +174,7 @@ async function upsertLeadAndCustomer(
   if (!customerEmail) {
     syntheticEmail = true;
     console.warn(
-      `⚠️  Lead ${datasetLead.id} missing email – using synthetic placeholder (${email}).`,
+      `⚠️  Lead ${datasetLead.id} missing email – using synthetic placeholder (${email}).`
     );
   }
 
@@ -201,8 +199,8 @@ async function upsertLeadAndCustomer(
     .where(
       and(
         eq(leads.userId, userId),
-        sql`(${leads.metadata} ->> 'datasetLeadId') = ${datasetLead.id}`,
-      ),
+        sql`(${leads.metadata} ->> 'datasetLeadId') = ${datasetLead.id}`
+      )
     )
     .limit(1);
 
@@ -244,8 +242,17 @@ async function upsertLeadAndCustomer(
     console.log(`♻️  Lead updated #${leadRecord.id} • ${name}`);
   }
 
-  const customerResult = await linkCustomerProfile(userId, leadRecord, datasetLead, email);
-  const invoiceCount = await upsertInvoice(userId, customerResult?.customerId ?? null, datasetLead);
+  const customerResult = await linkCustomerProfile(
+    userId,
+    leadRecord,
+    datasetLead,
+    email
+  );
+  const invoiceCount = await upsertInvoice(
+    userId,
+    customerResult?.customerId ?? null,
+    datasetLead
+  );
 
   return {
     action: existing.length === 0 ? "created" : "updated",
@@ -260,21 +267,21 @@ async function linkCustomerProfile(
   userId: number,
   lead: Lead,
   datasetLead: V4_3_Lead,
-  email: string,
+  email: string
 ): Promise<{ customerId: number } | null> {
   try {
     const customerData = buildCustomerProfileData(
       userId,
       lead,
       datasetLead,
-      email,
+      email
     );
     const customerId = await createOrUpdateCustomerProfile(customerData);
     return { customerId };
   } catch (error) {
     console.error(
       `⚠️  Failed to link customer profile for lead ${lead.id}:`,
-      error instanceof Error ? error.message : error,
+      error instanceof Error ? error.message : error
     );
     return null;
   }
@@ -283,7 +290,7 @@ async function linkCustomerProfile(
 async function upsertInvoice(
   userId: number,
   customerId: number | null,
-  datasetLead: V4_3_Lead,
+  datasetLead: V4_3_Lead
 ): Promise<number> {
   if (!customerId) return 0;
   const invoice = datasetLead.billy;
@@ -296,7 +303,11 @@ async function upsertInvoice(
       billyInvoiceId: invoice.invoiceId,
       invoiceNumber: invoice.invoiceNo ?? undefined,
       amount: toCurrencyString(invoice.invoicedPrice),
-      paidAmount: toCurrencyString(invoice.isPaid ? invoice.invoicedPrice : invoice.invoicedPrice - (invoice.balance ?? 0)),
+      paidAmount: toCurrencyString(
+        invoice.isPaid
+          ? invoice.invoicedPrice
+          : invoice.invoicedPrice - (invoice.balance ?? 0)
+      ),
       grossAmount: toCurrencyString(invoice.invoicedPrice),
       taxAmount: toCurrencyString(0),
       status: mapInvoiceStatus(invoice.state, invoice.isPaid),
@@ -309,7 +320,7 @@ async function upsertInvoice(
   } catch (error) {
     console.error(
       `⚠️  Failed to upsert invoice ${invoice.invoiceId}:`,
-      error instanceof Error ? error.message : error,
+      error instanceof Error ? error.message : error
     );
     return 0;
   }
@@ -333,11 +344,7 @@ function resolveCustomerName(lead: V4_3_Lead): string | null {
 }
 
 function resolveCustomerPhone(lead: V4_3_Lead): string | null {
-  return (
-    lead.customerPhone ||
-    lead.calendar?.aiParsed?.customer?.phone ||
-    null
-  );
+  return lead.customerPhone || lead.calendar?.aiParsed?.customer?.phone || null;
 }
 
 function resolveLeadSource(lead: V4_3_Lead): string {
@@ -395,9 +402,7 @@ function resolveLeadScore(lead: V4_3_Lead): number {
 }
 
 function buildLeadNotes(lead: V4_3_Lead): string {
-  const lines: string[] = [
-    `Imported from AI pipeline v${DATASET_VERSION}`,
-  ];
+  const lines: string[] = [`Imported from AI pipeline v${DATASET_VERSION}`];
 
   if (lead.customer?.recurringFrequency) {
     lines.push(`Frequency: ${lead.customer.recurringFrequency}`);
@@ -407,7 +412,7 @@ function buildLeadNotes(lead: V4_3_Lead): string {
   }
   if (lead.calendar?.aiParsed?.specialRequirements?.length) {
     lines.push(
-      `Special requirements: ${lead.calendar.aiParsed.specialRequirements.join(", ")}`,
+      `Special requirements: ${lead.calendar.aiParsed.specialRequirements.join(", ")}`
     );
   }
   if (lead.calculated?.timeline?.leadReceivedDate) {
@@ -438,7 +443,8 @@ function buildLeadMetadata(lead: V4_3_Lead, syntheticEmail: boolean) {
           eventId: lead.calendar.eventId,
           summary: lead.calendar.summary,
           startTime: lead.calendar.startTime,
-          bookingNumber: lead.calendar.aiParsed?.qualitySignals?.bookingNumber ?? null,
+          bookingNumber:
+            lead.calendar.aiParsed?.qualitySignals?.bookingNumber ?? null,
         }
       : null,
     gmailThreadId: lead.gmail?.threadId ?? null,
@@ -453,7 +459,7 @@ function buildCustomerProfileData(
   userId: number,
   lead: Lead,
   datasetLead: V4_3_Lead,
-  email: string,
+  email: string
 ) {
   const tags = new Set<string>();
   if (datasetLead.customer?.customerType) {
@@ -509,9 +515,10 @@ function determineCustomerStatus(lead: V4_3_Lead): CustomerProfile["status"] {
 }
 
 function determineCustomerType(
-  lead: V4_3_Lead,
+  lead: V4_3_Lead
 ): CustomerProfile["customerType"] {
-  const category = lead.calendar?.aiParsed?.service?.category?.toLowerCase() ?? "";
+  const category =
+    lead.calendar?.aiParsed?.service?.category?.toLowerCase() ?? "";
   if (category.includes("erhverv")) return "erhverv";
   const source = lead.gmail?.leadSource?.toLowerCase() ?? "";
   if (source.includes("erhverv")) return "erhverv";
@@ -528,7 +535,9 @@ function buildCustomerResume(lead: V4_3_Lead): string {
     parts.push(`Frekvens: ${metrics.recurringFrequency}`);
   }
   if (metrics?.lifetimeValue) {
-    parts.push(`Lifetime value: ${metrics.lifetimeValue.toLocaleString("da-DK")} kr`);
+    parts.push(
+      `Lifetime value: ${metrics.lifetimeValue.toLocaleString("da-DK")} kr`
+    );
   }
   if (lead.customer?.hasSpecialNeeds) {
     parts.push("Har specialbehov");
@@ -545,8 +554,11 @@ function mergeMetadata(existing: Lead["metadata"], incoming: unknown) {
   return { ...existingClean, ...incomingClean };
 }
 
-function toCurrencyString(value: number | null | undefined): string | undefined {
-  if (value === null || value === undefined || Number.isNaN(value)) return undefined;
+function toCurrencyString(
+  value: number | null | undefined
+): string | undefined {
+  if (value === null || value === undefined || Number.isNaN(value))
+    return undefined;
   return Number(value).toFixed(2);
 }
 
@@ -564,7 +576,7 @@ function toIsoString(value: string | null | undefined): string | undefined {
 
 function mapInvoiceStatus(
   state: string,
-  isPaid: boolean,
+  isPaid: boolean
 ): CustomerInvoice["status"] {
   if (isPaid) return "paid";
   switch (state) {
@@ -581,10 +593,12 @@ function mapInvoiceStatus(
   }
 }
 
-function extractNameFromSummary(summary: string | null | undefined): string | null {
+function extractNameFromSummary(
+  summary: string | null | undefined
+): string | null {
   if (!summary) return null;
   const match = summary.match(/[-–]\s*(.+)$/);
-  return match ? match[1]?.trim() ?? null : summary.trim();
+  return match ? (match[1]?.trim() ?? null) : summary.trim();
 }
 
 function generateSyntheticEmail(datasetLeadId: string): string {

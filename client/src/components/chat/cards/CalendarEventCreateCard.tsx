@@ -26,7 +26,11 @@ interface CalendarEventCreateCardProps {
   onCancel?: () => void;
 }
 
-export function CalendarEventCreateCard({ data: initial, onCreate, onCancel }: CalendarEventCreateCardProps) {
+export function CalendarEventCreateCard({
+  data: initial,
+  onCreate,
+  onCancel,
+}: CalendarEventCreateCardProps) {
   const [data, setData] = useState(initial);
 
   const update = (field: keyof CalendarEventData, value: any) => {
@@ -43,7 +47,9 @@ export function CalendarEventCreateCard({ data: initial, onCreate, onCancel }: C
             </div>
             <div>
               <h4 className="font-semibold">Create Event</h4>
-              <p className="text-xs text-muted-foreground">Ny kalenderbegivenhed</p>
+              <p className="text-xs text-muted-foreground">
+                Ny kalenderbegivenhed
+              </p>
             </div>
           </div>
           <Badge variant="secondary">Ny</Badge>
@@ -54,7 +60,11 @@ export function CalendarEventCreateCard({ data: initial, onCreate, onCancel }: C
             <label className="text-xs text-muted-foreground flex items-center gap-1.5">
               📌 Titel
             </label>
-            <Input value={data.title} onChange={(e) => update('title', e.target.value)} className="h-9 mt-1" />
+            <Input
+              value={data.title}
+              onChange={e => update("title", e.target.value)}
+              className="h-9 mt-1"
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -62,13 +72,23 @@ export function CalendarEventCreateCard({ data: initial, onCreate, onCancel }: C
               <label className="text-xs text-muted-foreground flex items-center gap-1.5">
                 📅 Dato
               </label>
-              <Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className="h-9 mt-1" />
+              <Input
+                type="date"
+                value={data.date}
+                onChange={e => update("date", e.target.value)}
+                className="h-9 mt-1"
+              />
             </div>
             <div>
               <label className="text-xs text-muted-foreground flex items-center gap-1.5">
                 ⏰ Tid
               </label>
-              <Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className="h-9 mt-1" />
+              <Input
+                type="time"
+                value={data.time}
+                onChange={e => update("time", e.target.value)}
+                className="h-9 mt-1"
+              />
             </div>
           </div>
 
@@ -76,23 +96,38 @@ export function CalendarEventCreateCard({ data: initial, onCreate, onCancel }: C
             <label className="text-xs text-muted-foreground flex items-center gap-1.5">
               <MapPin className="w-3 h-3" /> Lokation
             </label>
-            <Input value={data.location || ''} onChange={(e) => update('location', e.target.value)} placeholder="Optional..." className="h-9 mt-1" />
+            <Input
+              value={data.location || ""}
+              onChange={e => update("location", e.target.value)}
+              placeholder="Optional..."
+              className="h-9 mt-1"
+            />
           </div>
 
           <div>
             <label className="text-xs text-muted-foreground flex items-center gap-1.5">
               📝 Beskrivelse
             </label>
-            <Textarea value={data.description || ''} onChange={(e) => update('description', e.target.value)} placeholder="Optional..." className="min-h-[60px] mt-1" />
+            <Textarea
+              value={data.description || ""}
+              onChange={e => update("description", e.target.value)}
+              placeholder="Optional..."
+              className="min-h-[60px] mt-1"
+            />
           </div>
         </div>
 
         <div className="flex gap-2 pt-2 border-t">
-          <Button onClick={() => onCreate?.(data)} className="flex-1 bg-linear-to-r from-purple-600 to-pink-600">
-            <Calendar className="w-4 h-4 mr-2" />Create
+          <Button
+            onClick={() => onCreate?.(data)}
+            className="flex-1 bg-linear-to-r from-purple-600 to-pink-600"
+          >
+            <Calendar className="w-4 h-4 mr-2" />
+            Create
           </Button>
           <Button onClick={onCancel} variant="outline" className="flex-1">
-            <X className="w-4 h-4 mr-2" />Cancel
+            <X className="w-4 h-4 mr-2" />
+            Cancel
           </Button>
         </div>
       </div>

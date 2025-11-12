@@ -79,25 +79,36 @@ export class WebSocketHub extends EventEmitter {
           break;
         case "doc:edit":
           // broadcast lightweight presence update to others
-          this.broadcastDoc(msg.document_id, {
-            type: "presence:joined",
-            user_id: client.userId,
-            document_id: msg.document_id,
-          }, client.id);
+          this.broadcastDoc(
+            msg.document_id,
+            {
+              type: "presence:joined",
+              user_id: client.userId,
+              document_id: msg.document_id,
+            },
+            client.id
+          );
           break;
         case "comment:add":
           this.emit("comment:add", msg.comment);
           break;
         case "presence:update":
           client.presence.set(msg.presence.document_id, msg.presence);
-          this.broadcastDoc(msg.presence.document_id, {
-            type: "presence:joined",
-            user_id: client.userId,
-            document_id: msg.presence.document_id,
-          }, client.id);
+          this.broadcastDoc(
+            msg.presence.document_id,
+            {
+              type: "presence:joined",
+              user_id: client.userId,
+              document_id: msg.presence.document_id,
+            },
+            client.id
+          );
           break;
         default:
-          logger.warn({ type: (msg as any).type }, "[WSHub] Unknown message type");
+          logger.warn(
+            { type: (msg as any).type },
+            "[WSHub] Unknown message type"
+          );
       }
     } catch (err) {
       logger.error({ err }, "[WSHub] Failed to parse message");
@@ -109,11 +120,15 @@ export class WebSocketHub extends EventEmitter {
     if (!this.subscribers.has(docId)) this.subscribers.set(docId, new Set());
     this.subscribers.get(docId)!.add(client.id);
 
-    this.broadcastDoc(docId, {
-      type: "presence:joined",
-      user_id: client.userId,
-      document_id: docId,
-    }, client.id);
+    this.broadcastDoc(
+      docId,
+      {
+        type: "presence:joined",
+        user_id: client.userId,
+        document_id: docId,
+      },
+      client.id
+    );
 
     logger.debug({ clientId: client.id, docId }, "[WSHub] Subscribed");
   }
@@ -128,11 +143,15 @@ export class WebSocketHub extends EventEmitter {
 
     client.presence.delete(docId);
 
-    this.broadcastDoc(docId, {
-      type: "presence:left",
-      user_id: client.userId,
-      document_id: docId,
-    }, client.id);
+    this.broadcastDoc(
+      docId,
+      {
+        type: "presence:left",
+        user_id: client.userId,
+        document_id: docId,
+      },
+      client.id
+    );
 
     logger.debug({ clientId: client.id, docId }, "[WSHub] Unsubscribed");
   }
@@ -157,7 +176,11 @@ export class WebSocketHub extends EventEmitter {
     logger.debug({ clients: this.clients.size }, "[WSHub] Broadcast all");
   }
 
-  public broadcastDoc(docId: string, message: WSServerEvent, excludeId?: string): void {
+  public broadcastDoc(
+    docId: string,
+    message: WSServerEvent,
+    excludeId?: string
+  ): void {
     const set = this.subscribers.get(docId);
     if (!set) return;
     const payload = JSON.stringify(message);
@@ -166,7 +189,10 @@ export class WebSocketHub extends EventEmitter {
       const c = this.clients.get(clientId);
       if (c && c.ws.readyState === WebSocket.OPEN) c.ws.send(payload);
     }
-    logger.debug({ docId, count: set.size, excludeId }, "[WSHub] Broadcast doc");
+    logger.debug(
+      { docId, count: set.size, excludeId },
+      "[WSHub] Broadcast doc"
+    );
   }
 
   private id(): string {

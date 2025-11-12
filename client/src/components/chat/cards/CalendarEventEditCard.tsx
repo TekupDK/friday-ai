@@ -28,11 +28,11 @@ interface CalendarEventEditCardProps {
   onCancel?: () => void;
 }
 
-export function CalendarEventEditCard({ 
+export function CalendarEventEditCard({
   event: initialEvent,
   onUpdate,
   onDelete,
-  onCancel 
+  onCancel,
 }: CalendarEventEditCardProps) {
   const [event, setEvent] = useState(initialEvent);
   const [isEditing, setIsEditing] = useState(false);
@@ -66,7 +66,9 @@ export function CalendarEventEditCard({
             </div>
             <div>
               <h4 className="font-semibold">Edit Event</h4>
-              <p className="text-xs text-muted-foreground">Opdater kalenderbegivenhed</p>
+              <p className="text-xs text-muted-foreground">
+                Opdater kalenderbegivenhed
+              </p>
             </div>
           </div>
           <Badge variant="secondary">#{event.id}</Badge>
@@ -77,7 +79,11 @@ export function CalendarEventEditCard({
           <div>
             <label className="text-xs text-muted-foreground">📌 Titel</label>
             {isEditing ? (
-              <Input value={event.title} onChange={(e) => update('title', e.target.value)} className="h-9 mt-1" />
+              <Input
+                value={event.title}
+                onChange={e => update("title", e.target.value)}
+                className="h-9 mt-1"
+              />
             ) : (
               <p className="font-semibold text-sm mt-1">{event.title}</p>
             )}
@@ -87,7 +93,12 @@ export function CalendarEventEditCard({
             <div>
               <label className="text-xs text-muted-foreground">📅 Dato</label>
               {isEditing ? (
-                <Input type="date" value={event.date} onChange={(e) => update('date', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  type="date"
+                  value={event.date}
+                  onChange={e => update("date", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
                 <p className="text-sm mt-1">{event.date}</p>
               )}
@@ -95,7 +106,12 @@ export function CalendarEventEditCard({
             <div>
               <label className="text-xs text-muted-foreground">⏰ Tid</label>
               {isEditing ? (
-                <Input type="time" value={event.time} onChange={(e) => update('time', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  type="time"
+                  value={event.time}
+                  onChange={e => update("time", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
                 <p className="text-sm mt-1">{event.time}</p>
               )}
@@ -104,9 +120,16 @@ export function CalendarEventEditCard({
 
           {event.endTime && (
             <div>
-              <label className="text-xs text-muted-foreground">⏰ Slut tid</label>
+              <label className="text-xs text-muted-foreground">
+                ⏰ Slut tid
+              </label>
               {isEditing ? (
-                <Input type="time" value={event.endTime} onChange={(e) => update('endTime', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  type="time"
+                  value={event.endTime}
+                  onChange={e => update("endTime", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
                 <p className="text-sm mt-1">{event.endTime}</p>
               )}
@@ -116,18 +139,34 @@ export function CalendarEventEditCard({
           <div>
             <label className="text-xs text-muted-foreground">📍 Lokation</label>
             {isEditing ? (
-              <Input value={event.location || ''} onChange={(e) => update('location', e.target.value)} placeholder="Optional..." className="h-9 mt-1" />
+              <Input
+                value={event.location || ""}
+                onChange={e => update("location", e.target.value)}
+                placeholder="Optional..."
+                className="h-9 mt-1"
+              />
             ) : (
-              <p className="text-sm mt-1">{event.location || 'Ingen lokation'}</p>
+              <p className="text-sm mt-1">
+                {event.location || "Ingen lokation"}
+              </p>
             )}
           </div>
 
           <div>
-            <label className="text-xs text-muted-foreground">📝 Beskrivelse</label>
+            <label className="text-xs text-muted-foreground">
+              📝 Beskrivelse
+            </label>
             {isEditing ? (
-              <Textarea value={event.description || ''} onChange={(e) => update('description', e.target.value)} placeholder="Optional..." className="min-h-[60px] mt-1" />
+              <Textarea
+                value={event.description || ""}
+                onChange={e => update("description", e.target.value)}
+                placeholder="Optional..."
+                className="min-h-[60px] mt-1"
+              />
             ) : (
-              <p className="text-sm mt-1 whitespace-pre-wrap">{event.description || 'Ingen beskrivelse'}</p>
+              <p className="text-sm mt-1 whitespace-pre-wrap">
+                {event.description || "Ingen beskrivelse"}
+              </p>
             )}
           </div>
         </div>
@@ -137,20 +176,23 @@ export function CalendarEventEditCard({
           {!isEditing ? (
             <>
               <Button onClick={() => setIsEditing(true)} className="flex-1">
-                <Edit2 className="w-4 h-4 mr-2" />Rediger
+                <Edit2 className="w-4 h-4 mr-2" />
+                Rediger
               </Button>
-              <Button 
-                onClick={handleDelete} 
-                variant="outline" 
+              <Button
+                onClick={handleDelete}
+                variant="outline"
                 className="flex-1 text-red-600 border-red-200 hover:bg-red-50"
               >
                 {showDeleteConfirm ? (
                   <>
-                    <Trash2 className="w-4 h-4 mr-2" />Bekræft slet
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Bekræft slet
                   </>
                 ) : (
                   <>
-                    <Trash2 className="w-4 h-4 mr-2" />Slet
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Slet
                   </>
                 )}
               </Button>
@@ -160,11 +202,20 @@ export function CalendarEventEditCard({
             </>
           ) : (
             <>
-              <Button onClick={handleSave} className="flex-1 bg-linear-to-r from-purple-600 to-pink-600">
-                <Save className="w-4 h-4 mr-2" />Gem
+              <Button
+                onClick={handleSave}
+                className="flex-1 bg-linear-to-r from-purple-600 to-pink-600"
+              >
+                <Save className="w-4 h-4 mr-2" />
+                Gem
               </Button>
-              <Button onClick={() => setIsEditing(false)} variant="outline" className="flex-1">
-                <X className="w-4 h-4 mr-2" />Annuller
+              <Button
+                onClick={() => setIsEditing(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                <X className="w-4 h-4 mr-2" />
+                Annuller
               </Button>
             </>
           )}

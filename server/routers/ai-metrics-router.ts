@@ -5,11 +5,11 @@
 
 import { router, protectedProcedure } from "../_core/trpc";
 import { z } from "zod";
-import { 
-  getMetricsSummary, 
-  checkHealthThresholds, 
+import {
+  getMetricsSummary,
+  checkHealthThresholds,
   getRolloutRecommendation,
-  logMetricsSummary 
+  logMetricsSummary,
 } from "../ai-metrics";
 import { getFeatureFlags } from "../_core/feature-flags";
 
@@ -26,7 +26,7 @@ export const aiMetricsRouter = router({
     .query(async ({ input }) => {
       const summary = getMetricsSummary(input.lastMinutes);
       const health = checkHealthThresholds(summary);
-      
+
       return {
         ...summary,
         health,
@@ -39,7 +39,9 @@ export const aiMetricsRouter = router({
   getRolloutStatus: protectedProcedure.query(async ({ ctx }) => {
     const flags = getFeatureFlags(ctx.user.id);
     const summary = getMetricsSummary(60);
-    const recommendation = getRolloutRecommendation(flags.openRouterRolloutPercentage);
+    const recommendation = getRolloutRecommendation(
+      flags.openRouterRolloutPercentage
+    );
 
     return {
       currentPercentage: flags.openRouterRolloutPercentage,
@@ -69,7 +71,7 @@ export const aiMetricsRouter = router({
     const summary = getMetricsSummary(60);
     const health = checkHealthThresholds(summary);
     const recommendation = getRolloutRecommendation(
-      parseInt(process.env.OPENROUTER_ROLLOUT_PERCENTAGE || '0', 10)
+      parseInt(process.env.OPENROUTER_ROLLOUT_PERCENTAGE || "0", 10)
     );
 
     return {

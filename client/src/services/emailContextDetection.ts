@@ -4,9 +4,9 @@
  * Replaces hardcoded logic in SmartWorkspacePanel with maintainable patterns
  */
 
-export type WorkspaceContext = 
+export type WorkspaceContext =
   | "lead"
-  | "booking" 
+  | "booking"
   | "invoice"
   | "customer"
   | "dashboard";
@@ -46,7 +46,13 @@ export interface DetectionPatterns {
 export const DETECTION_PATTERNS: DetectionPatterns = {
   leads: {
     domains: ["rengoring.nu", "leadpoint", "adhelp"],
-    keywords: ["lead", "forespørgsel", "tilbud", "rengøring.nu", "rengoring.nu"],
+    keywords: [
+      "lead",
+      "forespørgsel",
+      "tilbud",
+      "rengøring.nu",
+      "rengoring.nu",
+    ],
     labels: ["Leads", "Needs Reply"],
   },
   bookings: {
@@ -87,8 +93,11 @@ export function detectEmailContext(email: any): EmailContextData {
   };
 
   // Find highest scoring context
-  const bestContext = Object.entries(scores).reduce((best, [context, score]) => 
-    score > best.score ? { context: context as WorkspaceContext, score } : best,
+  const bestContext = Object.entries(scores).reduce(
+    (best, [context, score]) =>
+      score > best.score
+        ? { context: context as WorkspaceContext, score }
+        : best,
     { context: "dashboard" as WorkspaceContext, score: 0 }
   );
 
@@ -104,71 +113,78 @@ export function detectEmailContext(email: any): EmailContextData {
   };
 }
 
-function calculateLeadScore(subject: string, from: string, labels: string[]): number {
+function calculateLeadScore(
+  subject: string,
+  from: string,
+  labels: string[]
+): number {
   let score = 0;
-  
+
   // Domain matches (high confidence)
   DETECTION_PATTERNS.leads.domains.forEach(domain => {
     if (from.includes(domain)) score += 0.4;
   });
-  
+
   // Keyword matches (medium confidence)
   DETECTION_PATTERNS.leads.keywords.forEach(keyword => {
     if (subject.includes(keyword)) score += 0.3;
   });
-  
+
   // Label matches (high confidence)
   DETECTION_PATTERNS.leads.labels.forEach(label => {
     if (labels.includes(label)) score += 0.3;
   });
-  
+
   return Math.min(score, 1.0);
 }
 
 function calculateBookingScore(subject: string, labels: string[]): number {
   let score = 0;
-  
+
   DETECTION_PATTERNS.bookings.keywords.forEach(keyword => {
     if (subject.includes(keyword)) score += 0.4;
   });
-  
+
   DETECTION_PATTERNS.bookings.labels.forEach(label => {
     if (labels.includes(label)) score += 0.6;
   });
-  
+
   return Math.min(score, 1.0);
 }
 
 function calculateInvoiceScore(subject: string, labels: string[]): number {
   let score = 0;
-  
+
   DETECTION_PATTERNS.invoices.keywords.forEach(keyword => {
     if (subject.includes(keyword)) score += 0.4;
   });
-  
+
   DETECTION_PATTERNS.invoices.labels.forEach(label => {
     if (labels.includes(label)) score += 0.6;
   });
-  
+
   return Math.min(score, 1.0);
 }
 
-function calculateCustomerScore(labels: string[], threadLength: number): number {
+function calculateCustomerScore(
+  labels: string[],
+  threadLength: number
+): number {
   let score = 0;
-  
+
   DETECTION_PATTERNS.customers.labels.forEach(label => {
     if (labels.includes(label)) score += 0.5;
   });
-  
+
   if (threadLength >= DETECTION_PATTERNS.customers.minThreadLength) {
     score += 0.3;
   }
-  
+
   // Check for FAST customer labels
   labels.forEach(label => {
     if (label.includes("FAST")) score += 0.2;
   });
-  
+
   return Math.min(score, 1.0);
 }
 
@@ -186,10 +202,10 @@ export function validateContext(context: EmailContextData): boolean {
 export function getContextName(context: WorkspaceContext): string {
   const names = {
     lead: "Lead Analysis",
-    booking: "Booking Management", 
+    booking: "Booking Management",
     invoice: "Invoice Tracking",
     customer: "Customer Profile",
-    dashboard: "Business Dashboard"
+    dashboard: "Business Dashboard",
   };
   return names[context];
 }
@@ -203,7 +219,7 @@ export function getContextDescription(context: WorkspaceContext): string {
     booking: "Managing booking details and team coordination",
     invoice: "Tracking payment status and financial data",
     customer: "Viewing customer history and preferences",
-    dashboard: "Overview of business activities and urgent actions"
+    dashboard: "Overview of business activities and urgent actions",
   };
   return descriptions[context];
 }

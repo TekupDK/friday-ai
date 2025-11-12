@@ -17,41 +17,44 @@ interface UseFridayChatSimpleOptions {
 
 export function useFridayChatSimple({
   conversationId,
-  context
+  context,
 }: UseFridayChatSimpleOptions) {
   const utils = trpc.useUtils();
-  
+
   // Basic message loading with tRPC
-  const { 
-    data: messagesData, 
+  const {
+    data: messagesData,
     isLoading: messagesLoading,
-    error: messagesError
-  } = trpc.chat.getMessages.useQuery({ 
-    conversationId: conversationId || 0,
-    limit: 20 
-  }, {
-    enabled: !!conversationId
-  });
+    error: messagesError,
+  } = trpc.chat.getMessages.useQuery(
+    {
+      conversationId: conversationId || 0,
+      limit: 20,
+    },
+    {
+      enabled: !!conversationId,
+    }
+  );
 
   // Message sending with auto-refetch and optimistic updates
   const sendMessageMutation = trpc.chat.sendMessage.useMutation({
-    onMutate: async (variables) => {
+    onMutate: async variables => {
       // Cancel any outgoing refetches
-      await utils.chat.getMessages.cancel({ 
+      await utils.chat.getMessages.cancel({
         conversationId: conversationId || 0,
-        limit: 20 
+        limit: 20,
       });
 
       // Snapshot the previous value
-      const previousMessages = utils.chat.getMessages.getData({ 
+      const previousMessages = utils.chat.getMessages.getData({
         conversationId: conversationId || 0,
-        limit: 20 
+        limit: 20,
       });
 
       // Optimistically update to the new value
       utils.chat.getMessages.setData(
         { conversationId: conversationId || 0, limit: 20 },
-        (old) => {
+        old => {
           if (!old) return old;
           return {
             ...old,
@@ -60,7 +63,7 @@ export function useFridayChatSimple({
               {
                 id: Date.now(), // Temporary ID
                 conversationId: conversationId || 0,
-                role: 'user' as const,
+                role: "user" as const,
                 content: variables.content,
                 createdAt: new Date().toISOString(),
               },
@@ -83,33 +86,36 @@ export function useFridayChatSimple({
     },
     onSuccess: () => {
       // Invalidate and refetch messages to show AI response
-      utils.chat.getMessages.invalidate({ 
+      utils.chat.getMessages.invalidate({
         conversationId: conversationId || 0,
-        limit: 20 
+        limit: 20,
       });
     },
   });
 
-  const sendMessage = useCallback(async (content: string) => {
-    if (!conversationId) return;
-    
-    try {
-      await sendMessageMutation.mutateAsync({
-        conversationId,
-        content,
-        context, // Send context to server
-      });
-      // Query will auto-refetch due to onSuccess invalidation
-    } catch (error) {
-      console.error('Failed to send message:', error);
-      throw error;
-    }
-  }, [conversationId, sendMessageMutation, context]);
+  const sendMessage = useCallback(
+    async (content: string) => {
+      if (!conversationId) return;
+
+      try {
+        await sendMessageMutation.mutateAsync({
+          conversationId,
+          content,
+          context, // Send context to server
+        });
+        // Query will auto-refetch due to onSuccess invalidation
+      } catch (error) {
+        console.error("Failed to send message:", error);
+        throw error;
+      }
+    },
+    [conversationId, sendMessageMutation, context]
+  );
 
   return {
     messages: messagesData?.messages || [],
     isLoading: messagesLoading || sendMessageMutation.isPending,
     error: messagesError || sendMessageMutation.error,
-    sendMessage
+    sendMessage,
   };
 }

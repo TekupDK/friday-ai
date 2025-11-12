@@ -1,15 +1,15 @@
 /**
  * ChromaDB Client - Vector Database Integration
- * 
+ *
  * Provides semantic search and similarity matching for:
  * - Lead deduplication
  * - Email context retrieval
  * - Document search
  */
 
-import { ChromaClient, Collection, EmbeddingFunction } from 'chromadb';
-import { ENV } from '../../_core/env';
-import { generateEmbeddings } from './embeddings';
+import { ChromaClient, Collection, EmbeddingFunction } from "chromadb";
+import { ENV } from "../../_core/env";
+import { generateEmbeddings } from "./embeddings";
 
 // Singleton client instance
 let chromaClient: ChromaClient | null = null;
@@ -42,18 +42,22 @@ export function getChromaClient(): ChromaClient | null {
   try {
     // Create new client
     chromaClient = new ChromaClient({
-      path: ENV.chromaUrl || 'http://localhost:8000',
-      auth: ENV.chromaAuthToken ? {
-        provider: 'token',
-        credentials: ENV.chromaAuthToken,
-      } : undefined,
+      path: ENV.chromaUrl || "http://localhost:8000",
+      auth: ENV.chromaAuthToken
+        ? {
+            provider: "token",
+            credentials: ENV.chromaAuthToken,
+          }
+        : undefined,
     });
 
-    console.log(`[ChromaDB] ✅ Client initialized (${ENV.chromaUrl || 'http://localhost:8000'})`);
-    
+    console.log(
+      `[ChromaDB] ✅ Client initialized (${ENV.chromaUrl || "http://localhost:8000"})`
+    );
+
     return chromaClient;
   } catch (error) {
-    console.error('[ChromaDB] Failed to initialize client:', error);
+    console.error("[ChromaDB] Failed to initialize client:", error);
     return null;
   }
 }
@@ -104,7 +108,9 @@ export async function addDocuments(
       metadatas: documents.map(d => d.metadata || {}),
     });
 
-    console.log(`[ChromaDB] ✅ Added ${documents.length} documents to "${collectionName}"`);
+    console.log(
+      `[ChromaDB] ✅ Added ${documents.length} documents to "${collectionName}"`
+    );
     return true;
   } catch (error) {
     console.error(`[ChromaDB] Failed to add documents:`, error);
@@ -138,9 +144,15 @@ export async function searchSimilar(
 
     return {
       ids: (results.ids[0] || []).filter((id): id is string => id !== null),
-      documents: (results.documents[0] || []).filter((doc): doc is string => doc !== null),
-      distances: (results.distances?.[0] || []).filter((dist): dist is number => dist !== null),
-      metadatas: (results.metadatas?.[0] || []).filter((meta): meta is Record<string, any> => meta !== null),
+      documents: (results.documents[0] || []).filter(
+        (doc): doc is string => doc !== null
+      ),
+      distances: (results.distances?.[0] || []).filter(
+        (dist): dist is number => dist !== null
+      ),
+      metadatas: (results.metadatas?.[0] || []).filter(
+        (meta): meta is Record<string, any> => meta !== null
+      ),
     };
   } catch (error) {
     console.error(`[ChromaDB] Search failed:`, error);
@@ -167,7 +179,9 @@ export async function updateDocument(
       metadatas: metadata ? [metadata] : undefined,
     });
 
-    console.log(`[ChromaDB] ✅ Updated document "${id}" in "${collectionName}"`);
+    console.log(
+      `[ChromaDB] ✅ Updated document "${id}" in "${collectionName}"`
+    );
     return true;
   } catch (error) {
     console.error(`[ChromaDB] Failed to update document:`, error);
@@ -190,7 +204,9 @@ export async function deleteDocument(
       ids: [id],
     });
 
-    console.log(`[ChromaDB] ✅ Deleted document "${id}" from "${collectionName}"`);
+    console.log(
+      `[ChromaDB] ✅ Deleted document "${id}" from "${collectionName}"`
+    );
     return true;
   } catch (error) {
     console.error(`[ChromaDB] Failed to delete document:`, error);
@@ -221,7 +237,7 @@ export async function getDocument(
 
     return {
       id: results.ids[0],
-      document: results.documents?.[0] as string || '',
+      document: (results.documents?.[0] as string) || "",
       metadata: results.metadatas?.[0] || {},
     };
   } catch (error) {
@@ -233,9 +249,7 @@ export async function getDocument(
 /**
  * Count documents in collection
  */
-export async function countDocuments(
-  collectionName: string
-): Promise<number> {
+export async function countDocuments(collectionName: string): Promise<number> {
   const collection = await getCollection(collectionName);
   if (!collection) return 0;
 
@@ -250,9 +264,7 @@ export async function countDocuments(
 /**
  * Delete entire collection
  */
-export async function deleteCollection(
-  name: string
-): Promise<boolean> {
+export async function deleteCollection(name: string): Promise<boolean> {
   const client = getChromaClient();
   if (!client) return false;
 
@@ -291,14 +303,14 @@ export function formatLeadForEmbedding(lead: {
   message?: string;
 }): string {
   const parts: string[] = [];
-  
+
   if (lead.name) parts.push(`Name: ${lead.name}`);
   if (lead.company) parts.push(`Company: ${lead.company}`);
   if (lead.email) parts.push(`Email: ${lead.email}`);
   if (lead.phone) parts.push(`Phone: ${lead.phone}`);
   if (lead.message) parts.push(`Message: ${lead.message}`);
-  
-  return parts.join('\n');
+
+  return parts.join("\n");
 }
 
 // Helper: Format email for embedding
@@ -308,10 +320,10 @@ export function formatEmailForEmbedding(email: {
   body?: string;
 }): string {
   const parts: string[] = [];
-  
+
   if (email.from) parts.push(`From: ${email.from}`);
   if (email.subject) parts.push(`Subject: ${email.subject}`);
   if (email.body) parts.push(`Body: ${email.body}`);
-  
-  return parts.join('\n');
+
+  return parts.join("\n");
 }

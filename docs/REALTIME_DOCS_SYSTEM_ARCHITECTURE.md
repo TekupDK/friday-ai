@@ -48,6 +48,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
 ## 📋 Core Components
 
 ### 1. Documentation API Server (`server/docs/`)
+
 - **Purpose:** RESTful API for documentation CRUD operations
 - **Technology:** Express + tRPC
 - **Features:**
@@ -58,6 +59,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
   - AI-powered content suggestions
 
 ### 2. Real-time Sync Engine (`server/docs/sync/`)
+
 - **Purpose:** Bidirectional Git synchronization
 - **Technology:** Node.js + simple-git
 - **Features:**
@@ -68,6 +70,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
   - Change queue with retry logic
 
 ### 3. WebSocket Hub (`server/docs/ws/`)
+
 - **Purpose:** Real-time collaboration and live updates
 - **Technology:** ws (WebSocket library)
 - **Features:**
@@ -78,6 +81,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
   - Live preview synchronization
 
 ### 4. CLI Tool (`cli/tekup-docs/`)
+
 - **Purpose:** Terminal-based documentation management
 - **Technology:** Commander.js + Inquirer
 - **Features:**
@@ -88,6 +92,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
   - Interactive TUI for browsing
 
 ### 5. AI Documentation Agent (`server/docs/ai/`)
+
 - **Purpose:** Automated documentation workflows
 - **Technology:** OpenRouter + LangChain
 - **Features:**
@@ -98,6 +103,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
   - Context-aware updates
 
 ### 6. Documentation Portal (`client/src/pages/docs/`)
+
 - **Purpose:** Web-based documentation browser
 - **Technology:** React + TanStack Query
 - **Features:**
@@ -160,43 +166,46 @@ This document describes the architecture for the Tekup AI real-time documentatio
 ## 🗄️ Database Schema
 
 ### Documents Table
+
 ```typescript
 interface Document {
-  id: string;              // UUID
-  path: string;            // Relative path in repo
-  title: string;           // Document title
-  content: string;         // Markdown content
-  category: string;        // Category/folder
-  tags: string[];          // Search tags
-  author: string;          // Last author
+  id: string; // UUID
+  path: string; // Relative path in repo
+  title: string; // Document title
+  content: string; // Markdown content
+  category: string; // Category/folder
+  tags: string[]; // Search tags
+  author: string; // Last author
   created_at: Date;
   updated_at: Date;
-  git_hash: string;        // Latest commit hash
-  version: number;         // Version counter
+  git_hash: string; // Latest commit hash
+  version: number; // Version counter
 }
 ```
 
 ### Document Changes Table
+
 ```typescript
 interface DocumentChange {
   id: string;
   document_id: string;
   user_id: string;
-  operation: 'create' | 'update' | 'delete';
-  diff: string;            // Git diff
+  operation: "create" | "update" | "delete";
+  diff: string; // Git diff
   git_hash: string;
   timestamp: Date;
 }
 ```
 
 ### Comments Table
+
 ```typescript
 interface Comment {
   id: string;
   document_id: string;
   user_id: string;
   content: string;
-  line_number?: number;    // For line-specific comments
+  line_number?: number; // For line-specific comments
   resolved: boolean;
   created_at: Date;
 }
@@ -241,19 +250,19 @@ DELETE /api/docs/:id/comments/:cid  // Delete comment
 
 ```typescript
 // Client → Server
-'doc:subscribe'      // Subscribe to document updates
-'doc:unsubscribe'    // Unsubscribe from document
-'doc:edit'           // Notify editing start
-'comment:add'        // Add real-time comment
-'presence:update'    // Update user presence
+"doc:subscribe"; // Subscribe to document updates
+"doc:unsubscribe"; // Unsubscribe from document
+"doc:edit"; // Notify editing start
+"comment:add"; // Add real-time comment
+"presence:update"; // Update user presence
 
 // Server → Client
-'doc:updated'        // Document content changed
-'doc:conflict'       // Conflict detected
-'comment:new'        // New comment added
-'presence:joined'    // User joined document
-'presence:left'      // User left document
-'sync:status'        // Sync status update
+"doc:updated"; // Document content changed
+"doc:conflict"; // Conflict detected
+"comment:new"; // New comment added
+"presence:joined"; // User joined document
+"presence:left"; // User left document
+"sync:status"; // Sync status update
 ```
 
 ## 🖥️ CLI Commands
@@ -331,12 +340,14 @@ Focus on:
 ## 🔐 Security & Permissions
 
 ### Access Levels
+
 - **Read:** View documentation
 - **Write:** Create and edit documents
 - **Admin:** Manage categories, approve AI changes
 - **System:** Automated operations (CI/CD, AI agents)
 
 ### Git Integration
+
 - Use SSH keys for authentication
 - Sign commits with GPG
 - Branch protection rules
@@ -345,6 +356,7 @@ Focus on:
 ## 📊 Monitoring & Analytics
 
 ### Metrics to Track
+
 - Document views and edit frequency
 - Search queries and results
 - Sync latency and conflicts
@@ -352,6 +364,7 @@ Focus on:
 - User engagement (comments, annotations)
 
 ### Health Checks
+
 - Git sync status
 - WebSocket connection count
 - API response times
@@ -361,6 +374,7 @@ Focus on:
 ## 🚀 Deployment Architecture
 
 ### Production Setup
+
 ```
 ┌──────────────┐
 │ Load Balancer│
@@ -390,24 +404,28 @@ Focus on:
 ## 🔄 Migration Plan
 
 ### Phase 1: Core Infrastructure (Week 1)
+
 - [ ] Set up Git sync engine
 - [ ] Create API endpoints
 - [ ] Implement file watching
 - [ ] Basic CLI tool
 
 ### Phase 2: Real-time Features (Week 2)
+
 - [ ] WebSocket hub
 - [ ] Live updates
 - [ ] Presence tracking
 - [ ] Conflict detection
 
 ### Phase 3: AI Integration (Week 3)
+
 - [ ] AI documentation agent
 - [ ] Auto-generation workflows
 - [ ] Content improvement
 - [ ] Quality analysis
 
 ### Phase 4: Portal & Polish (Week 4)
+
 - [ ] Documentation portal UI
 - [ ] Advanced search
 - [ ] Comments and annotations
@@ -416,6 +434,7 @@ Focus on:
 ## 📚 Technology Stack
 
 ### Backend
+
 - **Runtime:** Node.js 20+
 - **Framework:** Express + tRPC
 - **Git:** simple-git
@@ -425,6 +444,7 @@ Focus on:
 - **AI:** OpenRouter API
 
 ### Frontend
+
 - **Framework:** React 19
 - **State:** TanStack Query
 - **Markdown:** remark + rehype
@@ -432,6 +452,7 @@ Focus on:
 - **Styling:** TailwindCSS
 
 ### CLI
+
 - **Framework:** Commander.js
 - **Prompts:** Inquirer.js
 - **TUI:** Ink (React for CLI)
@@ -448,6 +469,7 @@ Focus on:
 ---
 
 **Next Steps:**
+
 1. Review and approve architecture
 2. Set up development environment
 3. Implement Phase 1 components

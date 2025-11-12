@@ -7,17 +7,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  User, 
-  Building, 
-  MapPin, 
-  DollarSign, 
-  Clock, 
+import {
+  User,
+  Building,
+  MapPin,
+  DollarSign,
+  Clock,
   Lightbulb,
   CheckCircle,
   Mail,
   Send,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 
 export function AIEmailAssistantDemo() {
@@ -30,7 +30,7 @@ export function AIEmailAssistantDemo() {
     urgency: "high" as const,
     estimatedPrice: 1500,
     estimatedHours: "2-3 timer",
-    source: "rengoring_nu"
+    source: "rengoring_nu",
   };
 
   const suggestions = [
@@ -40,22 +40,22 @@ export function AIEmailAssistantDemo() {
       category: "quote",
       confidence: 95,
       reasoning: "Kunde efterspørger direkte pris for vinduespudsning",
-      metadata: { estimatedPrice: 1500, estimatedHours: "2-3 timer" }
+      metadata: { estimatedPrice: 1500, estimatedHours: "2-3 timer" },
     },
     {
       id: "2",
       title: "Book møde",
       category: "booking",
       confidence: 85,
-      reasoning: "Kunde ønsker besøg for at vurdere omfang"
+      reasoning: "Kunde ønsker besøg for at vurdere omfang",
     },
     {
       id: "3",
       title: "Spørg om detaljer",
       category: "question",
       confidence: 75,
-      reasoning: "Behov for flere oplysninger om vinduesmængde"
-    }
+      reasoning: "Behov for flere oplysninger om vinduesmængde",
+    },
   ];
 
   const getSourceBadgeColor = (source: string) => {
@@ -70,10 +70,14 @@ export function AIEmailAssistantDemo() {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "quote": return <DollarSign className="w-4 h-4" />;
-      case "question": return <Lightbulb className="w-4 h-4" />;
-      case "booking": return <Clock className="w-4 h-4" />;
-      default: return <Mail className="w-4 h-4" />;
+      case "quote":
+        return <DollarSign className="w-4 h-4" />;
+      case "question":
+        return <Lightbulb className="w-4 h-4" />;
+      case "booking":
+        return <Clock className="w-4 h-4" />;
+      default:
+        return <Mail className="w-4 h-4" />;
     }
   };
 
@@ -97,9 +101,13 @@ export function AIEmailAssistantDemo() {
           <div className="flex items-center gap-2 text-sm">
             <User className="w-4 h-4 text-muted-foreground" />
             <span className="font-medium">{analysis.customerName}</span>
-            <span className="text-muted-foreground text-xs">({analysis.customerEmail})</span>
+            <span className="text-muted-foreground text-xs">
+              ({analysis.customerEmail})
+            </span>
             {analysis.customerPhone && (
-              <span className="text-muted-foreground text-xs">• {analysis.customerPhone}</span>
+              <span className="text-muted-foreground text-xs">
+                • {analysis.customerPhone}
+              </span>
             )}
           </div>
 
@@ -113,14 +121,21 @@ export function AIEmailAssistantDemo() {
               <MapPin className="w-4 h-4 text-muted-foreground" />
               <span>{analysis.location}</span>
             </div>
-            <Badge variant={analysis.urgency === "high" ? "destructive" : "secondary"} className="text-xs">
+            <Badge
+              variant={
+                analysis.urgency === "high" ? "destructive" : "secondary"
+              }
+              className="text-xs"
+            >
               {analysis.urgency === "high" ? "Haster" : "Normal"}
             </Badge>
           </div>
 
           {/* Estimates and Source */}
           <div className="flex items-center gap-4 text-sm">
-            <Badge className={`${getSourceBadgeColor(analysis.source)} text-white`}>
+            <Badge
+              className={`${getSourceBadgeColor(analysis.source)} text-white`}
+            >
               {analysis.source}
             </Badge>
             <div className="flex items-center gap-1.5">
@@ -146,19 +161,25 @@ export function AIEmailAssistantDemo() {
             <div
               key={suggestion.id}
               className={`shrink-0 p-4 border rounded-lg min-w-[220px] transition-all ${
-                idx === 0 ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
+                idx === 0
+                  ? "border-primary bg-primary/5"
+                  : "border-border hover:border-primary/50"
               }`}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   {getCategoryIcon(suggestion.category)}
-                  <span className="font-medium text-sm">{suggestion.title}</span>
+                  <span className="font-medium text-sm">
+                    {suggestion.title}
+                  </span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Badge variant="outline" className="text-xs">
                     {suggestion.confidence}%
                   </Badge>
-                  {idx === 0 && <CheckCircle className="w-4 h-4 text-primary" />}
+                  {idx === 0 && (
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                  )}
                 </div>
               </div>
 
@@ -213,7 +234,8 @@ export function AIEmailAssistantDemo() {
           </div>
 
           <p className="text-xs text-muted-foreground text-center">
-            Du kan redigere teksten før afsendelse. AI forslaget er automatisk genereret.
+            Du kan redigere teksten før afsendelse. AI forslaget er automatisk
+            genereret.
           </p>
         </CardContent>
       </Card>

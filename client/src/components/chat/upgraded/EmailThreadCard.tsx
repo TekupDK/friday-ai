@@ -7,9 +7,19 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { 
-  Mail, Paperclip, Star, Archive, Trash2, Reply, Forward,
-  ExternalLink, Clock, User, ChevronDown, ChevronUp
+import {
+  Mail,
+  Paperclip,
+  Star,
+  Archive,
+  Trash2,
+  Reply,
+  Forward,
+  ExternalLink,
+  Clock,
+  User,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -24,7 +34,7 @@ export interface EmailThreadData {
   summary: string;
   aiInsights?: string;
   labels: Array<{ name: string; color: string }>;
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
   hasAttachments?: boolean;
   attachmentCount?: number;
   timestamp: Date;
@@ -42,33 +52,34 @@ interface EmailThreadCardProps {
   onStar?: (id: string) => void;
 }
 
-export function EmailThreadCardUpgraded({ 
-  data, 
+export function EmailThreadCardUpgraded({
+  data,
   onOpen,
   onReply,
   onArchive,
   onDelete,
-  onStar
+  onStar,
 }: EmailThreadCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [starred, setStarred] = useState(data.isStarred || false);
 
   const priorityConfig = {
     high: {
-      border: 'border-l-red-500',
-      badge: 'bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-400',
-      icon: '🔴'
+      border: "border-l-red-500",
+      badge: "bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-400",
+      icon: "🔴",
     },
     medium: {
-      border: 'border-l-yellow-500',
-      badge: 'bg-yellow-100 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-400',
-      icon: '🟡'
+      border: "border-l-yellow-500",
+      badge:
+        "bg-yellow-100 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-400",
+      icon: "🟡",
     },
     low: {
-      border: 'border-l-blue-500',
-      badge: 'bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400',
-      icon: '🔵'
-    }
+      border: "border-l-blue-500",
+      badge: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400",
+      icon: "🔵",
+    },
   };
 
   const config = priorityConfig[data.priority];
@@ -88,15 +99,15 @@ export function EmailThreadCardUpgraded({
     const now = new Date();
     const diff = now.getTime() - date.getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
-    
-    if (hours < 1) return 'Lige nu';
+
+    if (hours < 1) return "Lige nu";
     if (hours < 24) return `${hours}t siden`;
-    if (hours < 48) return 'I går';
-    return date.toLocaleDateString('da-DK', { day: 'numeric', month: 'short' });
+    if (hours < 48) return "I går";
+    return date.toLocaleDateString("da-DK", { day: "numeric", month: "short" });
   };
 
   return (
-    <Card 
+    <Card
       className={cn(
         "group relative overflow-hidden border-l-4 transition-all duration-300",
         "hover:shadow-xl hover:scale-[1.01]",
@@ -112,16 +123,18 @@ export function EmailThreadCardUpgraded({
     >
       {/* Gradient overlay on hover */}
       <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
+
       <div className="relative p-4 space-y-3">
         {/* Header Row */}
         <div className="flex items-start gap-3">
           {/* Email Icon */}
-          <div className={cn(
-            "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-md",
-            "bg-linear-to-br from-blue-500 to-purple-600",
-            "group-hover:scale-110 transition-transform duration-300"
-          )}>
+          <div
+            className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-md",
+              "bg-linear-to-br from-blue-500 to-purple-600",
+              "group-hover:scale-110 transition-transform duration-300"
+            )}
+          >
             <Mail className="w-5 h-5 text-white" />
           </div>
 
@@ -129,10 +142,12 @@ export function EmailThreadCardUpgraded({
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2 mb-1">
               <div className="flex items-center gap-2 min-w-0 flex-1">
-                <h4 className={cn(
-                  "font-semibold text-sm truncate",
-                  data.isUnread && "font-bold"
-                )}>
+                <h4
+                  className={cn(
+                    "font-semibold text-sm truncate",
+                    data.isUnread && "font-bold"
+                  )}
+                >
                   {data.subject}
                 </h4>
                 {data.messageCount > 1 && (
@@ -141,17 +156,19 @@ export function EmailThreadCardUpgraded({
                   </Badge>
                 )}
               </div>
-              
+
               {/* Star & Time */}
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={handleStar}
                   className="opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <Star 
+                  <Star
                     className={cn(
                       "w-4 h-4 transition-colors",
-                      starred ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground hover:text-yellow-400"
+                      starred
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-muted-foreground hover:text-yellow-400"
                     )}
                   />
                 </button>
@@ -160,12 +177,14 @@ export function EmailThreadCardUpgraded({
                 </span>
               </div>
             </div>
-            
+
             {/* From */}
             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
               <User className="w-3.5 h-3.5" />
               <span className="font-medium">{data.from.name}</span>
-              <span className="text-muted-foreground/60">&lt;{data.from.email}&gt;</span>
+              <span className="text-muted-foreground/60">
+                &lt;{data.from.email}&gt;
+              </span>
             </div>
 
             {/* Summary */}
@@ -179,13 +198,18 @@ export function EmailThreadCardUpgraded({
         <div className="flex items-center gap-2 flex-wrap">
           {/* Priority Badge */}
           <Badge className={config.badge}>
-            {config.icon} {data.priority === 'high' ? 'Høj' : data.priority === 'medium' ? 'Medium' : 'Lav'}
+            {config.icon}{" "}
+            {data.priority === "high"
+              ? "Høj"
+              : data.priority === "medium"
+                ? "Medium"
+                : "Lav"}
           </Badge>
 
           {/* Labels */}
           {data.labels.map((label, idx) => (
-            <Badge 
-              key={idx} 
+            <Badge
+              key={idx}
               variant="outline"
               style={{ borderColor: label.color, color: label.color }}
               className="text-xs"
@@ -212,18 +236,22 @@ export function EmailThreadCardUpgraded({
               </div>
               <div className="flex-1">
                 <p className="text-xs font-semibold mb-1">AI Insights</p>
-                <p className="text-xs text-muted-foreground">{data.aiInsights}</p>
+                <p className="text-xs text-muted-foreground">
+                  {data.aiInsights}
+                </p>
               </div>
             </div>
           </div>
         )}
 
         {/* Actions - Show on hover or when expanded */}
-        <div className={cn(
-          "flex items-center gap-2 pt-2 border-t border-border/50",
-          "opacity-0 group-hover:opacity-100 transition-opacity",
-          isExpanded && "opacity-100"
-        )}>
+        <div
+          className={cn(
+            "flex items-center gap-2 pt-2 border-t border-border/50",
+            "opacity-0 group-hover:opacity-100 transition-opacity",
+            isExpanded && "opacity-100"
+          )}
+        >
           <Button
             variant="ghost"
             size="sm"
@@ -233,7 +261,7 @@ export function EmailThreadCardUpgraded({
             <Reply className="w-3.5 h-3.5 mr-1.5" />
             Svar
           </Button>
-          
+
           <Button
             variant="ghost"
             size="sm"
@@ -243,7 +271,7 @@ export function EmailThreadCardUpgraded({
             <Archive className="w-3.5 h-3.5 mr-1.5" />
             Arkiver
           </Button>
-          
+
           <Button
             variant="ghost"
             size="sm"
@@ -254,11 +282,7 @@ export function EmailThreadCardUpgraded({
             Slet
           </Button>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="shrink-0"
-          >
+          <Button variant="ghost" size="icon" className="shrink-0">
             {isExpanded ? (
               <ChevronUp className="w-4 h-4" />
             ) : (

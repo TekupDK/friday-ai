@@ -28,12 +28,12 @@ interface EmailDraftCardProps {
   onImprove?: () => void;
 }
 
-export function EmailDraftCard({ 
+export function EmailDraftCard({
   data: initialData,
   onSend,
   onEdit,
   onCancel,
-  onImprove
+  onImprove,
 }: EmailDraftCardProps) {
   const [data, setData] = useState(initialData);
   const [isEditing, setIsEditing] = useState(false);
@@ -67,7 +67,11 @@ export function EmailDraftCard({
           <div>
             <label className="text-xs text-muted-foreground">Til:</label>
             {isEditing ? (
-              <Input value={data.to} onChange={(e) => handleEdit('to', e.target.value)} className="h-9 mt-1" />
+              <Input
+                value={data.to}
+                onChange={e => handleEdit("to", e.target.value)}
+                className="h-9 mt-1"
+              />
             ) : (
               <p className="font-medium text-sm mt-1">{data.to}</p>
             )}
@@ -76,7 +80,11 @@ export function EmailDraftCard({
           <div>
             <label className="text-xs text-muted-foreground">Emne:</label>
             {isEditing ? (
-              <Input value={data.subject} onChange={(e) => handleEdit('subject', e.target.value)} className="h-9 mt-1" />
+              <Input
+                value={data.subject}
+                onChange={e => handleEdit("subject", e.target.value)}
+                className="h-9 mt-1"
+              />
             ) : (
               <p className="font-semibold text-sm mt-1">{data.subject}</p>
             )}
@@ -85,9 +93,15 @@ export function EmailDraftCard({
           <div className="border-t pt-3">
             <label className="text-xs text-muted-foreground">Besked:</label>
             {isEditing ? (
-              <Textarea value={data.body} onChange={(e) => handleEdit('body', e.target.value)} className="min-h-[120px] mt-1" />
+              <Textarea
+                value={data.body}
+                onChange={e => handleEdit("body", e.target.value)}
+                className="min-h-[120px] mt-1"
+              />
             ) : (
-              <div className="p-3 rounded-lg bg-muted/50 text-sm whitespace-pre-wrap mt-1">{data.body}</div>
+              <div className="p-3 rounded-lg bg-muted/50 text-sm whitespace-pre-wrap mt-1">
+                {data.body}
+              </div>
             )}
           </div>
         </div>
@@ -100,7 +114,11 @@ export function EmailDraftCard({
               <span className="text-xs font-semibold">AI Forslag:</span>
             </div>
             {data.aiSuggestions.map((s, i) => (
-              <button key={i} onClick={() => handleEdit('body', s)} className="w-full text-left p-2 rounded bg-white dark:bg-slate-900 hover:bg-purple-100 text-sm">
+              <button
+                key={i}
+                onClick={() => handleEdit("body", s)}
+                className="w-full text-left p-2 rounded bg-white dark:bg-slate-900 hover:bg-purple-100 text-sm"
+              >
                 {s}
               </button>
             ))}
@@ -111,24 +129,42 @@ export function EmailDraftCard({
         <div className="flex gap-2 pt-2 border-t">
           {!isEditing ? (
             <>
-              <Button onClick={() => onSend?.(data)} className="flex-1 bg-linear-to-r from-blue-600 to-cyan-600">
-                <Send className="w-4 h-4 mr-2" />Send
+              <Button
+                onClick={() => onSend?.(data)}
+                className="flex-1 bg-linear-to-r from-blue-600 to-cyan-600"
+              >
+                <Send className="w-4 h-4 mr-2" />
+                Send
               </Button>
-              <Button onClick={() => setIsEditing(true)} variant="outline" className="flex-1">
-                <Edit2 className="w-4 h-4 mr-2" />Rediger
+              <Button
+                onClick={() => setIsEditing(true)}
+                variant="outline"
+                className="flex-1"
+              >
+                <Edit2 className="w-4 h-4 mr-2" />
+                Rediger
               </Button>
             </>
           ) : (
             <>
               <Button onClick={() => setIsEditing(false)} className="flex-1">
-                <CheckCircle2 className="w-4 h-4 mr-2" />Gem
+                <CheckCircle2 className="w-4 h-4 mr-2" />
+                Gem
               </Button>
               <Button onClick={onCancel} variant="outline" className="flex-1">
-                <X className="w-4 h-4 mr-2" />Annuller
+                <X className="w-4 h-4 mr-2" />
+                Annuller
               </Button>
             </>
           )}
-          <Button onClick={() => { onImprove?.(); setShowSuggestions(true); }} variant="ghost" size="icon">
+          <Button
+            onClick={() => {
+              onImprove?.();
+              setShowSuggestions(true);
+            }}
+            variant="ghost"
+            size="icon"
+          >
             <Sparkles className="w-4 h-4" />
           </Button>
         </div>

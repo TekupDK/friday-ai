@@ -1,6 +1,6 @@
 /**
  * AI Verification Layer - Shortwave-Inspired
- * 
+ *
  * Implements verification checks before AI actions:
  * - MEMORY_1: Verify date/time
  * - MEMORY_5: Check calendar availability
@@ -8,7 +8,7 @@
  * - MEMORY_18: Check for calendar overlaps
  */
 
-import { trpc } from './trpc';
+import { trpc } from "./trpc";
 
 export interface VerificationResult {
   passed: boolean;
@@ -28,13 +28,13 @@ export interface VerificationContext {
  */
 export async function verifyDateTime(): Promise<VerificationResult> {
   const now = new Date();
-  const formatted = now.toLocaleString('da-DK', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+  const formatted = now.toLocaleString("da-DK", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 
   console.log(`[VERIFICATION] Current time: ${formatted}`);
@@ -72,14 +72,17 @@ export async function verifyNoExistingCommunication(
 
     return {
       passed: true,
-      message: '✅ Ingen tidligere emails fundet',
+      message: "✅ Ingen tidligere emails fundet",
       details: { existingEmails: [] },
     };
   } catch (error) {
-    console.error('[VERIFICATION] Error checking existing communication:', error);
+    console.error(
+      "[VERIFICATION] Error checking existing communication:",
+      error
+    );
     return {
       passed: false,
-      message: '❌ Kunne ikke verificere tidligere kommunikation',
+      message: "❌ Kunne ikke verificere tidligere kommunikation",
       details: { error },
     };
   }
@@ -112,14 +115,14 @@ export async function verifyCalendarAvailability(
 
     return {
       passed: true,
-      message: '✅ Kalender er ledig',
+      message: "✅ Kalender er ledig",
       details: { conflictingEvents: [] },
     };
   } catch (error) {
-    console.error('[VERIFICATION] Error checking calendar:', error);
+    console.error("[VERIFICATION] Error checking calendar:", error);
     return {
       passed: false,
-      message: '❌ Kunne ikke verificere kalender',
+      message: "❌ Kunne ikke verificere kalender",
       details: { error },
     };
   }
@@ -154,7 +157,7 @@ export async function runCompleteVerification(
     );
   }
 
-  const allPassed = Object.values(results).every((r) => r.passed);
+  const allPassed = Object.values(results).every(r => r.passed);
 
   return { allPassed, results };
 }
@@ -167,7 +170,7 @@ export function formatVerificationResults(
 ): string {
   return Object.entries(results)
     .map(([key, result]) => `${result.message}`)
-    .join('\n');
+    .join("\n");
 }
 
 /**
@@ -177,9 +180,11 @@ export const VerificationPresets = {
   /**
    * Verify before writing offer to new lead
    */
-  async beforeOfferToNewLead(customerEmail: string): Promise<VerificationResult> {
+  async beforeOfferToNewLead(
+    customerEmail: string
+  ): Promise<VerificationResult> {
     const results = await runCompleteVerification({ customerEmail });
-    
+
     if (!results.allPassed) {
       return {
         passed: false,
@@ -190,7 +195,7 @@ export const VerificationPresets = {
 
     return {
       passed: true,
-      message: '✅ Alle verificeringer bestået - klar til at skrive tilbud',
+      message: "✅ Alle verificeringer bestået - klar til at skrive tilbud",
       details: results.results,
     };
   },
@@ -217,7 +222,7 @@ export const VerificationPresets = {
 
     return {
       passed: true,
-      message: '✅ Alle verificeringer bestået - klar til at booke møde',
+      message: "✅ Alle verificeringer bestået - klar til at booke møde",
       details: results.results,
     };
   },

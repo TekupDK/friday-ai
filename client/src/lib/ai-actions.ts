@@ -1,19 +1,19 @@
 /**
  * AI Actions System - Context-Aware Quick Actions
- * 
+ *
  * Implements Shortwave-style intelligent actions that adapt
  * based on selected email, current view, and user context
  */
 
-import type { EnhancedEmailMessage } from '@/types/enhanced-email';
-import { VerificationPresets } from './ai-verification';
+import type { EnhancedEmailMessage } from "@/types/enhanced-email";
+import { VerificationPresets } from "./ai-verification";
 
 export interface AIAction {
   id: string;
   label: string;
   description?: string;
   icon: string;
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary';
+  variant?: "default" | "destructive" | "outline" | "secondary";
   count?: number;
   requiresSelection?: boolean;
   execute: (context: AIActionContext) => Promise<AIActionResult>;
@@ -22,7 +22,7 @@ export interface AIAction {
 export interface AIActionContext {
   selectedEmail?: EnhancedEmailMessage;
   allEmails?: EnhancedEmailMessage[];
-  currentView?: 'inbox' | 'leads' | 'needs-reply';
+  currentView?: "inbox" | "leads" | "needs-reply";
   userQuery?: string;
 }
 
@@ -38,15 +38,16 @@ export interface AIActionResult {
  */
 export const AI_ACTIONS: Record<string, AIAction> = {
   findHotLeads: {
-    id: 'find-hot-leads',
-    label: 'Find hot leads',
-    description: 'Score 85+',
-    icon: 'Flame',
-    variant: 'default',
-    execute: async (context) => {
-      const hotLeads = context.allEmails?.filter(
-        (email) => (email.aiAnalysis?.leadScore || 0) >= 85
-      ) || [];
+    id: "find-hot-leads",
+    label: "Find hot leads",
+    description: "Score 85+",
+    icon: "Flame",
+    variant: "default",
+    execute: async context => {
+      const hotLeads =
+        context.allEmails?.filter(
+          email => (email.aiAnalysis?.leadScore || 0) >= 85
+        ) || [];
 
       return {
         success: true,
@@ -58,15 +59,16 @@ export const AI_ACTIONS: Record<string, AIAction> = {
   },
 
   showUrgentEmails: {
-    id: 'show-urgent-emails',
-    label: 'Show urgent emails',
-    description: 'Deadline < 48h',
-    icon: 'Clock',
-    variant: 'destructive',
-    execute: async (context) => {
-      const urgentEmails = context.allEmails?.filter(
-        (email) => email.aiAnalysis?.urgency === 'high'
-      ) || [];
+    id: "show-urgent-emails",
+    label: "Show urgent emails",
+    description: "Deadline < 48h",
+    icon: "Clock",
+    variant: "destructive",
+    execute: async context => {
+      const urgentEmails =
+        context.allEmails?.filter(
+          email => email.aiAnalysis?.urgency === "high"
+        ) || [];
 
       return {
         success: true,
@@ -77,37 +79,42 @@ export const AI_ACTIONS: Record<string, AIAction> = {
   },
 
   organizeBySource: {
-    id: 'organize-by-source',
-    label: 'Organize by source',
-    description: 'Group by Rengøring.nu, etc.',
-    icon: 'TrendingUp',
-    variant: 'outline',
-    execute: async (context) => {
-      const grouped = context.allEmails?.reduce((acc, email) => {
-        const source = email.aiAnalysis?.source || 'unknown';
-        if (!acc[source]) acc[source] = [];
-        acc[source].push(email);
-        return acc;
-      }, {} as Record<string, EnhancedEmailMessage[]>) || {};
+    id: "organize-by-source",
+    label: "Organize by source",
+    description: "Group by Rengøring.nu, etc.",
+    icon: "TrendingUp",
+    variant: "outline",
+    execute: async context => {
+      const grouped =
+        context.allEmails?.reduce(
+          (acc, email) => {
+            const source = email.aiAnalysis?.source || "unknown";
+            if (!acc[source]) acc[source] = [];
+            acc[source].push(email);
+            return acc;
+          },
+          {} as Record<string, EnhancedEmailMessage[]>
+        ) || {};
 
       return {
         success: true,
-        message: 'Inbox organiseret efter kilde',
+        message: "Inbox organiseret efter kilde",
         data: { grouped },
       };
     },
   },
 
   showHighValueLeads: {
-    id: 'show-high-value-leads',
-    label: 'High-value leads',
-    description: '> 2000 kr.',
-    icon: 'DollarSign',
-    variant: 'secondary',
-    execute: async (context) => {
-      const highValueLeads = context.allEmails?.filter(
-        (email) => (email.aiAnalysis?.estimatedValue || 0) > 2000
-      ) || [];
+    id: "show-high-value-leads",
+    label: "High-value leads",
+    description: "> 2000 kr.",
+    icon: "DollarSign",
+    variant: "secondary",
+    execute: async context => {
+      const highValueLeads =
+        context.allEmails?.filter(
+          email => (email.aiAnalysis?.estimatedValue || 0) > 2000
+        ) || [];
 
       return {
         success: true,
@@ -118,17 +125,17 @@ export const AI_ACTIONS: Record<string, AIAction> = {
   },
 
   writeOfferToSelected: {
-    id: 'write-offer-to-selected',
-    label: 'Skriv tilbud',
-    description: 'Med verification',
-    icon: 'Mail',
-    variant: 'default',
+    id: "write-offer-to-selected",
+    label: "Skriv tilbud",
+    description: "Med verification",
+    icon: "Mail",
+    variant: "default",
     requiresSelection: true,
-    execute: async (context) => {
+    execute: async context => {
       if (!context.selectedEmail) {
         return {
           success: false,
-          message: 'Ingen email valgt',
+          message: "Ingen email valgt",
         };
       }
 
@@ -159,21 +166,21 @@ export const AI_ACTIONS: Record<string, AIAction> = {
   },
 
   checkCalendarAvailability: {
-    id: 'check-calendar-availability',
-    label: 'Tjek ledige tider',
-    description: 'Find available slots',
-    icon: 'Calendar',
-    variant: 'outline',
-    execute: async (context) => {
+    id: "check-calendar-availability",
+    label: "Tjek ledige tider",
+    description: "Find available slots",
+    icon: "Calendar",
+    variant: "outline",
+    execute: async context => {
       // TODO: Implement actual calendar check
       return {
         success: true,
-        message: 'Kalender tjekket - 5 ledige tider fundet',
+        message: "Kalender tjekket - 5 ledige tider fundet",
         data: {
           availableSlots: [
-            { date: '2024-01-15', time: '10:00' },
-            { date: '2024-01-15', time: '14:00' },
-            { date: '2024-01-16', time: '09:00' },
+            { date: "2024-01-15", time: "10:00" },
+            { date: "2024-01-15", time: "14:00" },
+            { date: "2024-01-16", time: "09:00" },
           ],
         },
       };
@@ -191,7 +198,7 @@ export function getContextAwareActions(context: AIActionContext): AIAction[] {
   if (context.selectedEmail) {
     actions.push({
       ...AI_ACTIONS.writeOfferToSelected,
-      label: `Skriv tilbud til ${context.selectedEmail.from.split('<')[0].trim()}`,
+      label: `Skriv tilbud til ${context.selectedEmail.from.split("<")[0].trim()}`,
     });
     actions.push(AI_ACTIONS.checkCalendarAvailability);
   }
@@ -207,19 +214,19 @@ export function getContextAwareActions(context: AIActionContext): AIAction[] {
   // Add counts if emails are available
   if (context.allEmails) {
     const hotLeadsCount = context.allEmails.filter(
-      (e) => (e.aiAnalysis?.leadScore || 0) >= 85
+      e => (e.aiAnalysis?.leadScore || 0) >= 85
     ).length;
     const urgentCount = context.allEmails.filter(
-      (e) => e.aiAnalysis?.urgency === 'high'
+      e => e.aiAnalysis?.urgency === "high"
     ).length;
     const highValueCount = context.allEmails.filter(
-      (e) => (e.aiAnalysis?.estimatedValue || 0) > 2000
+      e => (e.aiAnalysis?.estimatedValue || 0) > 2000
     ).length;
 
-    actions.forEach((action) => {
-      if (action.id === 'find-hot-leads') action.count = hotLeadsCount;
-      if (action.id === 'show-urgent-emails') action.count = urgentCount;
-      if (action.id === 'show-high-value-leads') action.count = highValueCount;
+    actions.forEach(action => {
+      if (action.id === "find-hot-leads") action.count = hotLeadsCount;
+      if (action.id === "show-urgent-emails") action.count = urgentCount;
+      if (action.id === "show-high-value-leads") action.count = highValueCount;
     });
   }
 
@@ -234,7 +241,7 @@ export async function executeAIAction(
   context: AIActionContext
 ): Promise<AIActionResult> {
   const action = AI_ACTIONS[actionId];
-  
+
   if (!action) {
     return {
       success: false,
@@ -245,7 +252,7 @@ export async function executeAIAction(
   if (action.requiresSelection && !context.selectedEmail) {
     return {
       success: false,
-      message: 'Denne action kræver at du vælger en email først',
+      message: "Denne action kræver at du vælger en email først",
     };
   }
 

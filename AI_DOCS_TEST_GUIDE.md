@@ -3,25 +3,28 @@
 ## 🚀 Kør Test
 
 ### Option 1: Fuld Test (Anbefalet)
+
 ```bash
 node scripts/test-ai-docs.mjs
 ```
 
 Dette tester:
+
 1. ✅ Data collection (leads, emails, conversations)
 2. ✅ AI analysis (OpenRouter FREE model)
 3. ✅ Markdown generation
 4. ✅ Database insertion
 
 ### Option 2: Manual Test via tRPC
+
 ```typescript
 // I browser console eller Postman
-await fetch('/api/trpc/docs.generateLeadDoc', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+await fetch("/api/trpc/docs.generateLeadDoc", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    leadId: 1  // Brug faktisk lead ID
-  })
+    leadId: 1, // Brug faktisk lead ID
+  }),
 });
 ```
 
@@ -75,9 +78,9 @@ await fetch('/api/trpc/docs.generateLeadDoc', {
   Preview:
   ----------------------------------------------------------
   # 🤝 Lead: Acme Corp
-  
+
   > 🟠 **Priority:** HIGH | 😊 **Sentiment:** positive
-  
+
   ## 📋 Overview
   - **Contact:** John Doe
   - **Company:** Acme Corp
@@ -114,19 +117,24 @@ await fetch('/api/trpc/docs.generateLeadDoc', {
 ## ⚠️ Hvis Test Fejler
 
 ### Error: "No leads found in database"
+
 **Fix:** Opret en test lead først:
+
 ```sql
 INSERT INTO friday_ai.leads (name, email, company, status)
 VALUES ('Test Lead', 'test@example.com', 'Test Corp', 'active');
 ```
 
 ### Error: "Database not available"
+
 **Fix:** Check `.env` filen har korrekt `DATABASE_URL`
 
 ### Error: "No response from LLM"
+
 **Fix:** Check at `OPENROUTER_API_KEY` er sat i `.env`
 
 ### Error: "Module not found"
+
 **Fix:** Kør `pnpm install` først
 
 ---
@@ -134,11 +142,13 @@ VALUES ('Test Lead', 'test@example.com', 'Test Corp', 'active');
 ## 🎯 Næste Steps Efter Test
 
 ### Hvis Test Passer ✅
+
 1. **Add UI buttons** - Gør det tilgængeligt i frontend
 2. **Test med flere leads** - Bulk generation
 3. **Review output quality** - Adjust prompts hvis nødvendigt
 
 ### Hvis Test Fejler ❌
+
 1. Check error message
 2. Verify database connection
 3. Verify OpenRouter API key
@@ -161,6 +171,7 @@ VALUES ('Test Lead', 'test@example.com', 'Test Corp', 'active');
 ## 💡 Tips
 
 **Test med forskelligt lead data:**
+
 ```bash
 # Lead med mange emails
 node scripts/test-ai-docs.mjs
@@ -170,12 +181,14 @@ node scripts/test-ai-docs.mjs
 ```
 
 **Check generated doc:**
+
 ```bash
 # Efter test, åbn docs page
 # Navigate to: http://localhost:3000/docs?id=<docId>
 ```
 
 **Check database:**
+
 ```sql
 -- Se alle genererede docs
 SELECT id, title, category, tags, author, created_at

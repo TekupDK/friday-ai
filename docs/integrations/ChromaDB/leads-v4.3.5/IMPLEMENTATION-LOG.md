@@ -14,6 +14,7 @@
 **Objective:** Establish basic multi-source data collection pipeline
 
 **Activities:**
+
 - Set up Gmail API integration
 - Google Calendar API integration
 - Billy invoices API integration
@@ -21,14 +22,16 @@
 - ChromaDB vector storage setup
 
 **Results:**
+
 ```
 Gmail threads collected:    537
-Calendar events:           218  
+Calendar events:           218
 Billy invoices:            100
 Basic linking:             Email matching only
 ```
 
 **Issues Identified:**
+
 - Low calendar coverage (18%)
 - No recurring customer detection
 - Manual analysis required
@@ -41,6 +44,7 @@ Basic linking:             Email matching only
 **Objective:** Improve data quality through targeted Gmail search
 
 **Activities:**
+
 - Implemented targeted Gmail queries
 - Filter by known lead sources (Leadpoint, Leadmail, Adhelp)
 - Added date-range filtering
@@ -48,6 +52,7 @@ Basic linking:             Email matching only
 - Automatic lead source classification
 
 **Results:**
+
 ```
 Lead Source Detection:
   Rengøring.nu (Leadmail.no): 150 leads (65%)
@@ -57,6 +62,7 @@ Noise Reduction: ~40% fewer non-lead emails
 ```
 
 **Improvements:**
+
 - Better Gmail query targeting
 - Reduced processing time
 - Cleaner dataset
@@ -68,6 +74,7 @@ Noise Reduction: ~40% fewer non-lead emails
 **Objective:** Parse structured RenOS Calendar format
 
 **Activities:**
+
 - Added RenOS Calendar format parser
 - Extract customer email, phone, service type, price from descriptions
 - Handle emoji markers (🏠/🏢)
@@ -75,6 +82,7 @@ Noise Reduction: ~40% fewer non-lead emails
 - Duration calculation improvements
 
 **Results:**
+
 ```
 RenOS Format Support: Yes
 Customer Info Extraction: Email, phone, service, price
@@ -83,6 +91,7 @@ Spam Filtering: Test events excluded
 ```
 
 **Calendar Data Enhanced:**
+
 - Customer email from descriptions
 - Phone numbers extracted
 - Service type identified
@@ -95,6 +104,7 @@ Spam Filtering: Test events excluded
 **Objective:** Improve data linking across sources
 
 **Activities:**
+
 - Implemented fuzzy address matching (Billy ↔ Calendar)
 - Extended date proximity window (±14 days)
 - Amount matching logic (Calendar price ≈ Billy grossAmount)
@@ -104,6 +114,7 @@ Spam Filtering: Test events excluded
 - Lowered matching thresholds for better coverage
 
 **Results:**
+
 ```
 BEFORE v4.3.3:
   Calendar coverage: 18%
@@ -117,6 +128,7 @@ AFTER v4.3.3:
 ```
 
 **Technical Improvements:**
+
 - Scoring system for matching:
   - Email exact match: +100 points
   - Attendee email: +80 points
@@ -128,6 +140,7 @@ AFTER v4.3.3:
 - Detailed logging of data quality
 
 **Dependencies Added:**
+
 - `fuse.js` for fuzzy matching
 
 ---
@@ -137,6 +150,7 @@ AFTER v4.3.3:
 **Objective:** Identify recurring customers from calendar bookings
 
 **Activities:**
+
 - Grouped leads by normalized calendar customer names
 - Calculated booking frequencies
 - Implemented frequency classification (weekly/biweekly/triweekly/monthly/irregular)
@@ -144,6 +158,7 @@ AFTER v4.3.3:
 - Name normalization to handle status tags (✅ UDFØRT, aflyst, etc.)
 
 **Results:**
+
 ```
 Recurring Customers Found: 19
 
@@ -158,6 +173,7 @@ Active Leads (Oct-Nov): 122 (52.8%)
 ```
 
 **Customer Value Metrics Added:**
+
 - `totalBookings` - Count of calendar bookings
 - `lifetimeValue` - Total revenue from customer
 - `avgBookingValue` - Average per booking
@@ -167,6 +183,7 @@ Active Leads (Oct-Nov): 122 (52.8%)
 - `recurringFrequency` - Pattern type
 
 **Name Normalization Rules:**
+
 - Remove: ✅ UDFØRT, aflyst, (REBOOKING), (FÆRDIGGØRELSE)
 - Remove: (BETALT), (MANGLER BETALING), Første gang
 - Trim whitespace and normalize
@@ -180,12 +197,14 @@ Active Leads (Oct-Nov): 122 (52.8%)
 #### **Phase 1: AI Parser Development**
 
 **Activities:**
+
 - Integrated OpenRouter SDK
 - Implemented GLM-4.5-Air FREE tier model
 - Created hybrid AI + regex parser
 - Added comprehensive test suite
 
 **AI Parser Capabilities:**
+
 - Customer extraction (name, email, phone, address, property size/type)
 - Service details (type, frequency, hours, price, workers)
 - Quality signals (customer type, complaints, special needs, confidence)
@@ -193,29 +212,42 @@ Active Leads (Oct-Nov): 122 (52.8%)
 - Booking number detection
 
 **Technical Implementation:**
+
 ```typescript
 interface AICalendarParsing {
   customer: {
-    name, email, phone, address,
-    propertySize, propertyType
+    name;
+    email;
+    phone;
+    address;
+    propertySize;
+    propertyType;
   };
   service: {
-    type, category, frequency,
-    estimatedHours, estimatedPrice,
-    actualHours, actualPrice,
-    numberOfWorkers
+    type;
+    category;
+    frequency;
+    estimatedHours;
+    estimatedPrice;
+    actualHours;
+    actualPrice;
+    numberOfWorkers;
   };
   specialRequirements: string[];
   qualitySignals: {
-    isRepeatBooking, bookingNumber,
-    hasComplaints, hasSpecialNeeds,
-    customerType, confidence
+    isRepeatBooking;
+    bookingNumber;
+    hasComplaints;
+    hasSpecialNeeds;
+    customerType;
+    confidence;
   };
   notes: string | null;
 }
 ```
 
 **Results:**
+
 ```
 Calendar Events Parsed: 218
 AI Success Rate:        100% (218/218)
@@ -228,30 +260,32 @@ Cost:                   $0 (FREE tier)
 #### **Phase 2: AI-Validated Recurring Detection**
 
 **Activities:**
+
 - Integrated AI frequency data into recurring detection
 - Added AI booking number validation
 - Implemented missing bookings detection
 - Enhanced logging with AI insights
 
 **Algorithm Enhancement:**
+
 ```typescript
 // Old: Only calculated frequency
 const isRecurring = bookings.length >= 2;
 
 // New: AI validation + calculated frequency
-const aiSaysRepeat = bookings.some(b => 
-  b.lead.calendar?.aiParsed?.qualitySignals?.isRepeatBooking
+const aiSaysRepeat = bookings.some(
+  b => b.lead.calendar?.aiParsed?.qualitySignals?.isRepeatBooking
 );
-const maxAIBookingNumber = Math.max(...bookings.map(b => 
-  b.aiBookingNumber || 0
-));
+const maxAIBookingNumber = Math.max(
+  ...bookings.map(b => b.aiBookingNumber || 0)
+);
 
-const isRecurring = bookings.length >= 2 || 
-                    aiSaysRepeat || 
-                    maxAIBookingNumber > 1;
+const isRecurring =
+  bookings.length >= 2 || aiSaysRepeat || maxAIBookingNumber > 1;
 ```
 
 **Results:**
+
 ```
 BEFORE (v4.3.4): 19 recurring customers
 AFTER (v4.3.5):  24 recurring customers (+26% improvement)
@@ -265,6 +299,7 @@ New Distribution:
 ```
 
 **AI Insights Discovered:**
+
 ```
 Missing Bookings Flagged: 8+ customers
   Tommy Callesen:    4 visible, AI says #7 → 3 missing
@@ -284,18 +319,20 @@ Potential Lost Revenue: 15-20k kr
 #### **Phase 3: Quality Intelligence Integration**
 
 **Activities:**
+
 - Added AI quality signals to customer metrics
 - Aggregated quality data across all bookings
 - Implemented customer type classification
 - Flagged problematic customers
 
 **Customer Metrics Extended:**
+
 ```typescript
 interface CustomerValueMetrics {
   // Existing fields...
-  
+
   // V4.3.5: AI Quality Signals
-  customerType?: 'standard' | 'premium' | 'problematic' | 'unknown';
+  customerType?: "standard" | "premium" | "problematic" | "unknown";
   hasComplaints?: boolean;
   hasSpecialNeeds?: boolean;
   specialRequirements?: string[];
@@ -303,6 +340,7 @@ interface CustomerValueMetrics {
 ```
 
 **Quality Intelligence Results:**
+
 ```
 Premium Customers:       28 (18%)
 Problematic Customers:   4 (3%)
@@ -321,11 +359,13 @@ Special Requirements:    Various (sæbespåner, egen nøgle, afkalkning, etc.)
 ### **Challenge 1: Low Calendar Coverage (18%)**
 
 **Problem:**
+
 - Only 18% of leads had matching calendar events
 - Strict matching criteria
 - Date proximity too narrow
 
 **Solution (v4.3.3):**
+
 - Extended date proximity from ±7 to ±14 days
 - Lowered matching thresholds
 - Added fuzzy name matching
@@ -338,11 +378,13 @@ Special Requirements:    Various (sæbespåner, egen nøgle, afkalkning, etc.)
 ### **Challenge 2: Missing Recurring Customers**
 
 **Problem:**
+
 - Only detecting customers with 2+ visible bookings
 - Missed customers with partial data
 - No validation of frequency calculations
 
 **Solution (v4.3.5):**
+
 - AI-powered booking number detection
 - Single-booking recurring detection
 - Frequency validation with AI data
@@ -355,11 +397,13 @@ Special Requirements:    Various (sæbespåner, egen nøgle, afkalkning, etc.)
 ### **Challenge 3: Quality Issues Not Detected**
 
 **Problem:**
+
 - Manual review required for complaints
 - No automated quality monitoring
 - Problematic customers identified too late
 
 **Solution (v4.3.5):**
+
 - AI complaint detection
 - Customer type classification
 - Proactive quality flagging
@@ -372,11 +416,13 @@ Special Requirements:    Various (sæbespåner, egen nøgle, afkalkning, etc.)
 ### **Challenge 4: Unstructured Calendar Data**
 
 **Problem:**
+
 - Event descriptions in free-form text
 - No consistent format
 - Manual extraction required
 
 **Solution (v4.3.5):**
+
 - AI-powered natural language parsing
 - Structured data extraction
 - Hybrid AI + regex fallback
@@ -389,11 +435,13 @@ Special Requirements:    Various (sæbespåner, egen nøgle, afkalkning, etc.)
 ### **Challenge 5: Cost Concerns**
 
 **Problem:**
+
 - AI parsing could be expensive
 - Budget constraints
 - ROI uncertain
 
 **Solution:**
+
 - Selected OpenRouter GLM-4.5-Air FREE tier
 - 100% accuracy model at $0 cost
 - Implemented efficient batching
@@ -407,11 +455,13 @@ Special Requirements:    Various (sæbespåner, egen nøgle, afkalkning, etc.)
 ### **TypeScript Errors:**
 
 **Issue:** Missing `aiParsed` field in types
+
 ```
 Property 'aiParsed' does not exist on type 'CalendarData'
 ```
 
 **Fix:** Extended `CalendarData` and `RawCalendarEvent` interfaces:
+
 ```typescript
 interface CalendarData {
   // ... existing fields
@@ -424,18 +474,20 @@ interface CalendarData {
 ### **Import Errors:**
 
 **Issue:** `V4_3_CONFIG.timeWindow` not found
+
 ```
 Cannot find name 'V4_3_CONFIG'
 ```
 
 **Fix:** Changed import and reference:
+
 ```typescript
 // Before
-import { V4_3_CONFIG } from '../v4_3-config';
+import { V4_3_CONFIG } from "../v4_3-config";
 const { start, end } = V4_3_CONFIG.timeWindow;
 
 // After
-import { TIME_WINDOW } from '../v4_3-config';
+import { TIME_WINDOW } from "../v4_3-config";
 const { start, end } = TIME_WINDOW;
 ```
 
@@ -444,19 +496,21 @@ const { start, end } = TIME_WINDOW;
 ### **API Key Errors:**
 
 **Issue:** Invalid OpenAI API key
+
 ```
 Error: Invalid API key
 ```
 
 **Fix:** Switched to OpenRouter:
+
 ```typescript
 // Before
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// After  
+// After
 const openai = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY,
-  baseURL: 'https://openrouter.ai/api/v1'
+  baseURL: "https://openrouter.ai/api/v1",
 });
 ```
 
@@ -465,11 +519,13 @@ const openai = new OpenAI({
 ### **Missing Dependencies:**
 
 **Issue:** `fuse.js` not installed
+
 ```
 Cannot find module 'fuse.js'
 ```
 
-**Fix:** 
+**Fix:**
+
 ```bash
 npm install fuse.js
 ```
@@ -481,11 +537,15 @@ npm install fuse.js
 **Issue:** Irregular frequencies misclassified
 
 **Fix:** AI validation:
+
 ```typescript
 // Validate with AI frequency (override if AI is more specific)
 if (mostCommonAIFrequency && mostCommonAIFrequency !== frequency) {
   const aiFreq = mostCommonAIFrequency as typeof frequency;
-  if (frequency === 'irregular' || Math.abs(avgDays - getExpectedDays(aiFreq)) < 5) {
+  if (
+    frequency === "irregular" ||
+    Math.abs(avgDays - getExpectedDays(aiFreq)) < 5
+  ) {
     frequency = aiFreq;
   }
 }
@@ -496,21 +556,23 @@ if (mostCommonAIFrequency && mostCommonAIFrequency !== frequency) {
 ### **Name Normalization Issues:**
 
 **Issue:** Status tags preventing customer grouping
+
 ```
 "✅ UDFØRT - Tommy Callesen" !== "Tommy Callesen"
 ```
 
 **Fix:** Comprehensive normalization:
+
 ```typescript
 function normalizeCalendarName(name: string): string {
   return name
-    .replace(/✅\s*UDFØRT\s*-?\s*/i, '')
-    .replace(/aflyst\s*-?\s*/i, '')
-    .replace(/\(REBOOKING\)/i, '')
-    .replace(/\(FÆRDIGGØRELSE\)/i, '')
-    .replace(/\(BETALT\)/i, '')
-    .replace(/\(MANGLER BETALING\)/i, '')
-    .replace(/Første gang/i, '')
+    .replace(/✅\s*UDFØRT\s*-?\s*/i, "")
+    .replace(/aflyst\s*-?\s*/i, "")
+    .replace(/\(REBOOKING\)/i, "")
+    .replace(/\(FÆRDIGGØRELSE\)/i, "")
+    .replace(/\(BETALT\)/i, "")
+    .replace(/\(MANGLER BETALING\)/i, "")
+    .replace(/Første gang/i, "")
     .trim();
 }
 ```
@@ -559,14 +621,14 @@ Coverage:
 
 ### **Quantifiable Improvements:**
 
-| Metric | v4.3.0 | v4.3.5 | Improvement |
-|--------|--------|--------|-------------|
-| Recurring Customers | 0 | 24 | +24 |
-| Calendar Coverage | 18% | 66% | +48% |
-| AI Parsing | 0% | 100% | +100% |
-| Data Completeness | 52% | 68% | +16% |
-| Quality Detection | Manual | Auto | 100% |
-| Cost per Parse | N/A | $0 | Free |
+| Metric              | v4.3.0 | v4.3.5 | Improvement |
+| ------------------- | ------ | ------ | ----------- |
+| Recurring Customers | 0      | 24     | +24         |
+| Calendar Coverage   | 18%    | 66%    | +48%        |
+| AI Parsing          | 0%     | 100%   | +100%       |
+| Data Completeness   | 52%    | 68%    | +16%        |
+| Quality Detection   | Manual | Auto   | 100%        |
+| Cost per Parse      | N/A    | $0     | Free        |
 
 ### **Business Impact:**
 
@@ -596,24 +658,28 @@ Time to Value:            Immediate
 ## 📚 Documentation Delivered
 
 ### **For Management:**
+
 - Executive Summary (this document)
 - Business Insights Report
 - ROI Analysis
 - Action Plan
 
 ### **For Developers:**
+
 - Technical Guide
 - API Reference
 - Code Examples
 - Type Definitions
 
 ### **For Operations:**
+
 - User Guide
 - Troubleshooting Guide
 - Data Quality Report
 - Integration Guide
 
 ### **Project Management:**
+
 - Complete Changelog (v4.3.0 → v4.3.5)
 - Implementation Log (this document)
 - Version History
@@ -656,16 +722,19 @@ Time to Value:            Immediate
 ## ⚠️ Known Limitations
 
 ### **Data Coverage:**
+
 - Calendar: 66% (goal: 80%)
 - Billy invoices: 41% (goal: 60%)
 - Missing historical bookings flagged but not recovered
 
 ### **Manual Review Required:**
+
 - Validate AI findings against historical records
 - Verify missing bookings (15-20k kr at stake)
 - Review problematic customers (4 flagged)
 
 ### **Future Enhancements:**
+
 - Real-time AI parsing for new events
 - Automated quality monitoring
 - Predictive analytics
@@ -707,18 +776,21 @@ Time to Value:            Immediate
 ## 📞 Support & Maintenance
 
 ### **Production Support:**
+
 - System is self-contained and automated
 - Runs independently via npm scripts
 - Logs all operations comprehensively
 - Error handling implemented
 
 ### **Monitoring Recommendations:**
+
 1. Daily data quality checks
 2. Weekly AI parsing validation
 3. Monthly coverage audits
 4. Quarterly system review
 
 ### **Contact:**
+
 - Technical Issues: Development Team
 - Business Questions: Project Manager
 - Documentation: See docs folder

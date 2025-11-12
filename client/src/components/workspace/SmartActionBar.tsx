@@ -1,9 +1,9 @@
 /**
  * SmartActionBar - Context-Aware Action System
- * 
+ *
  * Phase 5.1: Centralized action system for all workspace components.
  * Replaces hardcoded quick actions with intelligent, context-aware actions.
- * 
+ *
  * Features:
  * - Context-based action generation
  * - Permission-aware actions
@@ -17,7 +17,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BUSINESS_CONSTANTS, UI_CONSTANTS } from "@/constants/business";
-import { EmailContextData, WorkspaceContext } from "@/services/emailContextDetection";
+import {
+  EmailContextData,
+  WorkspaceContext,
+} from "@/services/emailContextDetection";
 import { useCallback, useMemo } from "react";
 import {
   Calendar,
@@ -50,7 +53,12 @@ export interface SmartAction {
   disabled?: boolean;
   disabledReason?: string;
   handler: () => void | Promise<void>;
-  category?: "communication" | "scheduling" | "financial" | "administrative" | "analytics";
+  category?:
+    | "communication"
+    | "scheduling"
+    | "financial"
+    | "administrative"
+    | "analytics";
 }
 
 // Workspace data types
@@ -115,7 +123,12 @@ export interface DashboardData {
 
 interface SmartActionBarProps {
   context: EmailContextData;
-  workspaceData: LeadData | BookingData | InvoiceData | CustomerData | DashboardData;
+  workspaceData:
+    | LeadData
+    | BookingData
+    | InvoiceData
+    | CustomerData
+    | DashboardData;
   onAction: (actionId: string, data: any) => void | Promise<void>;
   userRole?: "admin" | "user";
   permissions?: string[];
@@ -123,7 +136,10 @@ interface SmartActionBarProps {
 }
 
 // Action generators for each context type
-const generateLeadActions = (data: LeadData, permissions: string[] = []): SmartAction[] => {
+const generateLeadActions = (
+  data: LeadData,
+  permissions: string[] = []
+): SmartAction[] => {
   const actions: SmartAction[] = [
     {
       id: "send-standard-offer",
@@ -181,7 +197,10 @@ const generateLeadActions = (data: LeadData, permissions: string[] = []): SmartA
   return actions;
 };
 
-const generateBookingActions = (data: BookingData, permissions: string[] = []): SmartAction[] => {
+const generateBookingActions = (
+  data: BookingData,
+  permissions: string[] = []
+): SmartAction[] => {
   const actions: SmartAction[] = [];
 
   // Status-specific actions
@@ -298,14 +317,20 @@ const generateBookingActions = (data: BookingData, permissions: string[] = []): 
   return actions;
 };
 
-const generateInvoiceActions = (data: InvoiceData, permissions: string[] = []): SmartAction[] => {
+const generateInvoiceActions = (
+  data: InvoiceData,
+  permissions: string[] = []
+): SmartAction[] => {
   const actions: SmartAction[] = [];
 
   if (!data.isPaid) {
     actions.push(
       {
         id: "send-payment-reminder",
-        label: data.status === "overdue" ? "Send Rykker" : "Send Betaling Påmindelse",
+        label:
+          data.status === "overdue"
+            ? "Send Rykker"
+            : "Send Betaling Påmindelse",
         icon: DollarSign,
         variant: data.status === "overdue" ? "destructive" : "default",
         priority: data.status === "overdue" ? "high" : "medium",
@@ -351,7 +376,10 @@ const generateInvoiceActions = (data: InvoiceData, permissions: string[] = []): 
   return actions;
 };
 
-const generateCustomerActions = (data: CustomerData, permissions: string[] = []): SmartAction[] => {
+const generateCustomerActions = (
+  data: CustomerData,
+  permissions: string[] = []
+): SmartAction[] => {
   const actions: SmartAction[] = [
     {
       id: "send-email",
@@ -409,7 +437,10 @@ const generateCustomerActions = (data: CustomerData, permissions: string[] = [])
   return actions;
 };
 
-const generateDashboardActions = (data: DashboardData, permissions: string[] = []): SmartAction[] => {
+const generateDashboardActions = (
+  data: DashboardData,
+  permissions: string[] = []
+): SmartAction[] => {
   const actions: SmartAction[] = [
     {
       id: "view-all-bookings",
@@ -483,9 +514,15 @@ const generateSmartActions = (
     case "invoice":
       return generateInvoiceActions(workspaceData as InvoiceData, permissions);
     case "customer":
-      return generateCustomerActions(workspaceData as CustomerData, permissions);
+      return generateCustomerActions(
+        workspaceData as CustomerData,
+        permissions
+      );
     case "dashboard":
-      return generateDashboardActions(workspaceData as DashboardData, permissions);
+      return generateDashboardActions(
+        workspaceData as DashboardData,
+        permissions
+      );
     default:
       return [];
   }
@@ -509,21 +546,24 @@ export default function SmartActionBar({
     const high = actions.filter(a => a.priority === "high");
     const medium = actions.filter(a => a.priority === "medium");
     const low = actions.filter(a => a.priority === "low");
-    
+
     return { high, medium, low };
   }, [actions]);
 
   // Handle action execution
-  const handleAction = useCallback(async (action: SmartAction) => {
-    if (action.disabled || isLoading) return;
-    
-    try {
-      await action.handler();
-      await onAction(action.id, { context, workspaceData, action });
-    } catch (error) {
-      console.error("Smart action failed:", error);
-    }
-  }, [onAction, context, workspaceData, isLoading]);
+  const handleAction = useCallback(
+    async (action: SmartAction) => {
+      if (action.disabled || isLoading) return;
+
+      try {
+        await action.handler();
+        await onAction(action.id, { context, workspaceData, action });
+      } catch (error) {
+        console.error("Smart action failed:", error);
+      }
+    },
+    [onAction, context, workspaceData, isLoading]
+  );
 
   // No actions available
   if (actions.length === 0) {
@@ -547,7 +587,9 @@ export default function SmartActionBar({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-3 h-3 text-red-500" />
-              <span className="text-xs font-medium text-muted-foreground">Presserende</span>
+              <span className="text-xs font-medium text-muted-foreground">
+                Presserende
+              </span>
             </div>
             <div className="space-y-2">
               {groupedActions.high.map(action => (
@@ -562,7 +604,10 @@ export default function SmartActionBar({
                   <action.icon className="w-4 h-4" />
                   <span className="flex-1 text-left">{action.label}</span>
                   {action.badge && (
-                    <Badge variant="secondary" className="text-xs h-4 px-1.5 py-0">
+                    <Badge
+                      variant="secondary"
+                      className="text-xs h-4 px-1.5 py-0"
+                    >
                       {action.badge}
                     </Badge>
                   )}
@@ -577,7 +622,9 @@ export default function SmartActionBar({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Clock className="w-3 h-3 text-yellow-500" />
-              <span className="text-xs font-medium text-muted-foreground">Anbefalede</span>
+              <span className="text-xs font-medium text-muted-foreground">
+                Anbefalede
+              </span>
             </div>
             <div className="space-y-2">
               {groupedActions.medium.map(action => (
@@ -592,7 +639,10 @@ export default function SmartActionBar({
                   <action.icon className="w-4 h-4" />
                   <span className="flex-1 text-left">{action.label}</span>
                   {action.badge && (
-                    <Badge variant="secondary" className="text-xs h-4 px-1.5 py-0">
+                    <Badge
+                      variant="secondary"
+                      className="text-xs h-4 px-1.5 py-0"
+                    >
                       {action.badge}
                     </Badge>
                   )}
@@ -607,7 +657,9 @@ export default function SmartActionBar({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Settings className="w-3 h-3 text-blue-500" />
-              <span className="text-xs font-medium text-muted-foreground">Andre</span>
+              <span className="text-xs font-medium text-muted-foreground">
+                Andre
+              </span>
             </div>
             <div className="space-y-2">
               {groupedActions.low.map(action => (
@@ -622,7 +674,10 @@ export default function SmartActionBar({
                   <action.icon className="w-4 h-4" />
                   <span className="flex-1 text-left">{action.label}</span>
                   {action.badge && (
-                    <Badge variant="secondary" className="text-xs h-4 px-1.5 py-0">
+                    <Badge
+                      variant="secondary"
+                      className="text-xs h-4 px-1.5 py-0"
+                    >
                       {action.badge}
                     </Badge>
                   )}

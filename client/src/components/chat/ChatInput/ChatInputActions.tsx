@@ -1,18 +1,12 @@
 /**
  * ChatInputActions
- * 
+ *
  * Reusable action buttons for chat inputs
  * Can be used in different contexts
  */
 
 import { Button } from "@/components/ui/button";
-import { 
-  Send, 
-  Paperclip, 
-  Grid3X3,
-  Mic,
-  StopCircle 
-} from "lucide-react";
+import { Send, Paperclip, Grid3X3, Mic, StopCircle } from "lucide-react";
 
 interface ActionButtonProps {
   icon: React.ComponentType<{ className?: string }>;
@@ -22,12 +16,12 @@ interface ActionButtonProps {
   variant?: "button" | "icon";
 }
 
-function ActionButton({ 
-  icon: Icon, 
-  onClick, 
-  title, 
+function ActionButton({
+  icon: Icon,
+  onClick,
+  title,
   disabled = false,
-  variant = "icon"
+  variant = "icon",
 }: ActionButtonProps) {
   if (variant === "button") {
     return (
@@ -45,9 +39,9 @@ function ActionButton({
   }
 
   return (
-    <button 
+    <button
       data-testid={title === "Stop" ? "friday-stop-button" : undefined}
-      className="p-1 hover:bg-muted rounded-md transition-colors disabled:opacity-50" 
+      className="p-1 hover:bg-muted rounded-md transition-colors disabled:opacity-50"
       title={title}
       onClick={onClick}
       disabled={disabled}
@@ -77,12 +71,27 @@ export default function ChatInputActions({
   hasContent = false,
 }: ChatInputActionsProps) {
   const leftActions = [
-    { icon: Paperclip, onClick: onAttach, title: "Vedhæft fil (kommer snart)", disabled: true },
-    { icon: Grid3X3, onClick: onApps, title: "Apps (kommer snart)", disabled: true },
+    {
+      icon: Paperclip,
+      onClick: onAttach,
+      title: "Vedhæft fil (kommer snart)",
+      disabled: true,
+    },
+    {
+      icon: Grid3X3,
+      onClick: onApps,
+      title: "Apps (kommer snart)",
+      disabled: true,
+    },
   ];
 
   const rightActions = [
-    { icon: Mic, onClick: onVoice, title: "Stemme input (kommer snart)", disabled: true },
+    {
+      icon: Mic,
+      onClick: onVoice,
+      title: "Stemme input (kommer snart)",
+      disabled: true,
+    },
   ];
 
   return {
@@ -95,17 +104,17 @@ export default function ChatInputActions({
           <ActionButton key={`right-${i}`} {...action} />
         ))}
         {isStreaming ? (
-          <ActionButton 
-            icon={StopCircle} 
-            onClick={onStop} 
-            title="Stop" 
+          <ActionButton
+            icon={StopCircle}
+            onClick={onStop}
+            title="Stop"
             variant="button"
           />
         ) : (
-          <ActionButton 
-            icon={Send} 
-            onClick={onSend} 
-            title="Send" 
+          <ActionButton
+            icon={Send}
+            onClick={onSend}
+            title="Send"
             variant="button"
             disabled={!hasContent} // Only enable if there's content
           />

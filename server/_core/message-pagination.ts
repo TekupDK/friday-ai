@@ -26,7 +26,7 @@ export interface PaginatedMessages {
 export interface PaginationOptions {
   cursor?: number;
   limit?: number;
-  direction?: 'before' | 'after';
+  direction?: "before" | "after";
   includeTotal?: boolean;
 }
 
@@ -40,7 +40,12 @@ export async function getMessagesPaginated(
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const { cursor, limit = 20, direction = 'before', includeTotal = false } = options;
+  const {
+    cursor,
+    limit = 20,
+    direction = "before",
+    includeTotal = false,
+  } = options;
 
   // Build base query
   let query = db
@@ -50,7 +55,7 @@ export async function getMessagesPaginated(
 
   // Add cursor filtering
   if (cursor) {
-    if (direction === 'before') {
+    if (direction === "before") {
       query = query.where(lt(messagesInFridayAi.id, cursor));
     } else {
       query = query.where(gt(messagesInFridayAi.id, cursor));
@@ -74,16 +79,18 @@ export async function getMessagesPaginated(
       .select({ count: db.fn.count() })
       .from(messagesInFridayAi)
       .where(eq(messagesInFridayAi.conversationId, conversationId));
-    
+
     totalCount = Number(countResult[0]?.count || 0);
   }
 
   return {
     messages: actualMessages,
     hasMore,
-    nextCursor: hasMore ? actualMessages[actualMessages.length - 1]?.id : undefined,
+    nextCursor: hasMore
+      ? actualMessages[actualMessages.length - 1]?.id
+      : undefined,
     prevCursor: actualMessages[0]?.id,
-    totalCount
+    totalCount,
   };
 }
 
@@ -124,7 +131,7 @@ export async function getMessageCount(conversationId: number): Promise<number> {
  * Database indexes for performance
  */
 export const messageIndexes = {
-  conversationId: 'idx_messages_conversation_id',
-  createdAt: 'idx_messages_created_at',
-  conversationCreated: 'idx_messages_conversation_created'
+  conversationId: "idx_messages_conversation_id",
+  createdAt: "idx_messages_created_at",
+  conversationCreated: "idx_messages_conversation_created",
 };

@@ -245,7 +245,13 @@ class SDKServer {
 
   async verifySessionWithExp(
     cookieValue: string | undefined | null
-  ): Promise<{ openId: string; appId: string; name: string; exp: number; remainingMs: number } | null> {
+  ): Promise<{
+    openId: string;
+    appId: string;
+    name: string;
+    exp: number;
+    remainingMs: number;
+  } | null> {
     if (!cookieValue) {
       console.warn("[Auth] Missing session cookie");
       return null;

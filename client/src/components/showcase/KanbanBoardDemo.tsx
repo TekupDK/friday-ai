@@ -9,7 +9,7 @@ interface Task {
   title: string;
   assignee?: string;
   dueDate?: string;
-  priority: 'low' | 'medium' | 'high';
+  priority: "low" | "medium" | "high";
 }
 
 interface Column {
@@ -21,51 +21,81 @@ interface Column {
 
 const initialColumns: Column[] = [
   {
-    id: 'todo',
-    title: 'To Do',
-    color: 'bg-gray-500',
+    id: "todo",
+    title: "To Do",
+    color: "bg-gray-500",
     tasks: [
-      { id: 1, title: 'Analyser nye leads', assignee: 'Hans', dueDate: 'I dag', priority: 'high' },
-      { id: 2, title: 'Send tilbud til kunde', assignee: 'Maria', dueDate: 'I morgen', priority: 'medium' }
-    ]
+      {
+        id: 1,
+        title: "Analyser nye leads",
+        assignee: "Hans",
+        dueDate: "I dag",
+        priority: "high",
+      },
+      {
+        id: 2,
+        title: "Send tilbud til kunde",
+        assignee: "Maria",
+        dueDate: "I morgen",
+        priority: "medium",
+      },
+    ],
   },
   {
-    id: 'in-progress',
-    title: 'In Progress',
-    color: 'bg-blue-500',
+    id: "in-progress",
+    title: "In Progress",
+    color: "bg-blue-500",
     tasks: [
-      { id: 3, title: 'Opret faktura', assignee: 'Peter', priority: 'high' },
-      { id: 4, title: 'Book møde med team', priority: 'low' }
-    ]
+      { id: 3, title: "Opret faktura", assignee: "Peter", priority: "high" },
+      { id: 4, title: "Book møde med team", priority: "low" },
+    ],
   },
   {
-    id: 'review',
-    title: 'Review',
-    color: 'bg-purple-500',
+    id: "review",
+    title: "Review",
+    color: "bg-purple-500",
     tasks: [
-      { id: 5, title: 'Gennemse kontrakt', assignee: 'Hans', priority: 'medium' }
-    ]
+      {
+        id: 5,
+        title: "Gennemse kontrakt",
+        assignee: "Hans",
+        priority: "medium",
+      },
+    ],
   },
   {
-    id: 'done',
-    title: 'Done',
-    color: 'bg-green-500',
+    id: "done",
+    title: "Done",
+    color: "bg-green-500",
     tasks: [
-      { id: 6, title: 'Email til kunde sendt', assignee: 'Maria', priority: 'low' },
-      { id: 7, title: 'Kundemøde afholdt', assignee: 'Peter', priority: 'medium' }
-    ]
-  }
+      {
+        id: 6,
+        title: "Email til kunde sendt",
+        assignee: "Maria",
+        priority: "low",
+      },
+      {
+        id: 7,
+        title: "Kundemøde afholdt",
+        assignee: "Peter",
+        priority: "medium",
+      },
+    ],
+  },
 ];
 
 const priorityColors = {
-  low: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
-  medium: 'bg-orange-500/10 text-orange-600 dark:text-orange-400',
-  high: 'bg-red-500/10 text-red-600 dark:text-red-400'
+  low: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+  medium: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  high: "bg-red-500/10 text-red-600 dark:text-red-400",
 };
 
 export function KanbanBoardDemo() {
   const [columns, setColumns] = useState(initialColumns);
-  const [draggedTask, setDraggedTask] = useState<{ task: Task; fromColumn: string } | null>(null);
+  const [draggedTask, setDraggedTask] = useState<{
+    task: Task;
+    fromColumn: string;
+  } | null>(null);
 
   const handleDragStart = (task: Task, columnId: string) => {
     setDraggedTask({ task, fromColumn: columnId });
@@ -84,14 +114,14 @@ export function KanbanBoardDemo() {
         if (col.id === draggedTask.fromColumn) {
           return {
             ...col,
-            tasks: col.tasks.filter(t => t.id !== draggedTask.task.id)
+            tasks: col.tasks.filter(t => t.id !== draggedTask.task.id),
           };
         }
         // Add to destination column
         if (col.id === toColumnId) {
           return {
             ...col,
-            tasks: [...col.tasks, draggedTask.task]
+            tasks: [...col.tasks, draggedTask.task],
           };
         }
         return col;
@@ -104,7 +134,7 @@ export function KanbanBoardDemo() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {columns.map((column) => (
+      {columns.map(column => (
         <div
           key={column.id}
           className="flex flex-col gap-3"
@@ -134,7 +164,7 @@ export function KanbanBoardDemo() {
                 )}
                 style={{
                   animationDelay: `${idx * 50}ms`,
-                  animationDuration: '300ms'
+                  animationDuration: "300ms",
                 }}
               >
                 <CardContent className="p-3">
@@ -144,13 +174,13 @@ export function KanbanBoardDemo() {
                   </div>
 
                   <div className="flex items-center gap-2 flex-wrap">
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className={cn("text-xs", priorityColors[task.priority])}
                     >
-                      {task.priority === 'high' && '🔥'}
-                      {task.priority === 'medium' && '⚡'}
-                      {task.priority === 'low' && '📋'}
+                      {task.priority === "high" && "🔥"}
+                      {task.priority === "medium" && "⚡"}
+                      {task.priority === "low" && "📋"}
                       {task.priority}
                     </Badge>
 

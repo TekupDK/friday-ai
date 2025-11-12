@@ -7,6 +7,7 @@
 ## ✅ HVAD ER PERFEKT (9/10)
 
 ### 🎯 **DESIGN & UX:**
+
 - ✅ **Minimal & clean** - Ingen unødvendig visual clutter
 - ✅ **"How can I help you today?"** - Perfekt centreret header
 - ✅ **Suggestion pills** - Rounded, hover states, god spacing
@@ -16,6 +17,7 @@
 - ✅ **Spacing & padding** - Professionel og konsistent
 
 ### 🔧 **TEKNISK KVALITET:**
+
 - ✅ **Modulær struktur** - Ingen korrupte filer
 - ✅ **TypeScript sikkerhed** - Korrekte typer
 - ✅ **Genanvendelige komponenter** - ChatInput, WelcomeScreen
@@ -23,6 +25,7 @@
 - ✅ **Performance** - Minimal re-renders
 
 ### 📦 **KOMPONENTER:**
+
 ```
 client/src/components/chat/
 ├── ShortWaveChatPanel.tsx    ✅ Hovedkomponent (125 lines)
@@ -38,19 +41,23 @@ client/src/config/
 ## ⚠️ SMÅ FORBEDRINGER (Hvad kan gøres bedre)
 
 ### 1. **DANSKE VS ENGELSKE TEKSTER:**
+
 - ⚠️ Header: "How can I help you today?" (engelsk)
 - ✅ Suggestions: "Organiser min indbakke" (dansk)
 - **Fix:** Beslut om alt skal være dansk eller engelsk
 
 ### 2. **PLACEHOLDER TEXT:**
+
 - ⚠️ "Find, write, schedule, organize, ask anything..." (engelsk)
 - **Fix:** Overvej dansk version
 
 ### 3. **INTEGRATION IKONER:**
+
 - ⚠️ Kunne være mere interaktive
 - **Fix:** Tilføj tooltips eller dropdown menus
 
 ### 4. **VOICE KNAP:**
+
 - ⚠️ Voice input knap er ikke implementeret endnu
 - **Fix:** Tilføj voice recording functionality
 
@@ -59,11 +66,13 @@ client/src/config/
 ## 🐛 KENDTE ISSUES (Ikke-kritiske)
 
 ### TypeScript Warnings:
+
 - ⚠️ Gamle `ChatPanel.tsx` har stadig type errors
 - **Impact:** Ingen - vi bruger den nye ShortWaveChatPanel
 - **Fix:** Kan ignoreres eller slettes
 
 ### Missing Features:
+
 - ⚠️ Saved prompts (fra Shortwave billede 3)
 - ⚠️ Conversation history
 - ⚠️ Integration settings modal
@@ -72,32 +81,35 @@ client/src/config/
 
 ## 🎯 SAMMENLIGNING MED SHORTWAVE
 
-| Feature | Shortwave | Vores UI | Status |
-|---------|-----------|----------|--------|
-| Minimal header | ✅ | ✅ | Perfect |
-| Clean input | ✅ | ✅ | Perfect |
-| Integration icons | ✅ | ✅ | Perfect |
-| Model selector | ✅ | ✅ | Perfect (Gemma) |
-| Suggestion pills | ✅ | ✅ | Perfect |
-| Saved prompts | ✅ | ❌ | Missing |
-| Voice input | ✅ | 🔄 | Placeholder |
-| Dark theme | ✅ | ✅ | Perfect |
+| Feature           | Shortwave | Vores UI | Status          |
+| ----------------- | --------- | -------- | --------------- |
+| Minimal header    | ✅        | ✅       | Perfect         |
+| Clean input       | ✅        | ✅       | Perfect         |
+| Integration icons | ✅        | ✅       | Perfect         |
+| Model selector    | ✅        | ✅       | Perfect (Gemma) |
+| Suggestion pills  | ✅        | ✅       | Perfect         |
+| Saved prompts     | ✅        | ❌       | Missing         |
+| Voice input       | ✅        | 🔄       | Placeholder     |
+| Dark theme        | ✅        | ✅       | Perfect         |
 
 ---
 
 ## 📈 ANBEFALET NÆSTE SKRIDT
 
 ### Prioritet 1 (Kritisk):
+
 1. ✅ **Gemma model integration** - Tilslut til OpenRouter
 2. ✅ **Test send message** - Verificer AI response virker
 3. ✅ **Error handling** - Håndter API fejl elegant
 
 ### Prioritet 2 (Vigtigt):
+
 1. **Saved prompts feature** - Som vist i Shortwave billede 3
 2. **Conversation history** - Gem tidligere samtaler
 3. **Integration modals** - Settings for Gmail, Calendar, Billy
 
 ### Prioritet 3 (Nice to have):
+
 1. **Voice recording** - Implementer voice input
 2. **Markdown support** - I AI responses
 3. **Copy/share buttons** - På beskeder
@@ -107,6 +119,7 @@ client/src/config/
 ## 🎨 DESIGN BESLUTNINGER
 
 ### Farver & Styling:
+
 ```css
 - Background: bg-background (dynamisk fra theme)
 - Muted areas: bg-muted/50 (50% opacity)
@@ -116,6 +129,7 @@ client/src/config/
 ```
 
 ### Spacing:
+
 ```css
 - Content max-width: 3xl (48rem/768px)
 - Padding: p-4 (1rem)
@@ -124,6 +138,7 @@ client/src/config/
 ```
 
 ### Typography:
+
 ```css
 - Header: text-2xl font-medium
 - Body: text-sm
@@ -137,6 +152,7 @@ client/src/config/
 ### Samlet vurdering: **9/10** ⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
 **Styrker:**
+
 - Meget professionel og clean UI
 - Matcher Shortwave's minimalistiske filosofi
 - Modulær og maintainable kode struktur
@@ -144,6 +160,7 @@ client/src/config/
 - Konfigurationsdriven (nem at ændre model)
 
 **Svagheder:**
+
 - Mangler nogle Shortwave features (saved prompts, conversation history)
 - Blanding af dansk/engelsk tekster
 - Voice input ikke implementeret
@@ -161,7 +178,7 @@ Nu er det nemt at ændre model og integrations:
 // client/src/config/ai-config.ts
 export const AI_CONFIG = {
   model: {
-    name: "Gemma 3 27B Free",  // ← Skift her
+    name: "Gemma 3 27B Free", // ← Skift her
     provider: "OpenRouter",
     mode: "Standard",
   },

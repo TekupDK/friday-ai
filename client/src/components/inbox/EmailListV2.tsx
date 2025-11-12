@@ -1,6 +1,6 @@
 /**
  * EmailListV2 - Modular Email List Component
- * 
+ *
  * Extracted from EmailTab for better maintainability and performance.
  * Handles virtual scrolling, email rendering, and selection logic.
  */
@@ -48,7 +48,7 @@ interface EmailListV2Props {
   selectedThreadId: string | null;
   selectedEmails: Set<string>;
   onEmailSelectionChange: (threadIds: Set<string>) => void;
-  density: 'comfortable' | 'compact';
+  density: "comfortable" | "compact";
   showAIFeatures: boolean;
   isLoading?: boolean;
 }
@@ -79,41 +79,49 @@ export default function EmailListV2({
   const virtualizer = useVirtualizer({
     count: virtualizedItems.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => density === 'compact' ? 60 : 80,
+    estimateSize: () => (density === "compact" ? 60 : 80),
     overscan: 5, // Render 5 extra items for smooth scrolling
   });
 
   // Handle email selection with performance optimization
-  const handleEmailClick = useCallback((email: EmailMessage, event: React.MouseEvent) => {
-    const checkbox = (event.target as HTMLElement).closest('input[type="checkbox"]');
-    
-    if (checkbox) {
-      event.stopPropagation();
-      // Handle checkbox selection
-      const newSelection = new Set(selectedEmails);
-      if (newSelection.has(email.threadId)) {
-        newSelection.delete(email.threadId);
+  const handleEmailClick = useCallback(
+    (email: EmailMessage, event: React.MouseEvent) => {
+      const checkbox = (event.target as HTMLElement).closest(
+        'input[type="checkbox"]'
+      );
+
+      if (checkbox) {
+        event.stopPropagation();
+        // Handle checkbox selection
+        const newSelection = new Set(selectedEmails);
+        if (newSelection.has(email.threadId)) {
+          newSelection.delete(email.threadId);
+        } else {
+          newSelection.add(email.threadId);
+        }
+        onEmailSelectionChange(newSelection);
       } else {
-        newSelection.add(email.threadId);
+        // Handle email selection
+        onEmailSelect(email);
       }
-      onEmailSelectionChange(newSelection);
-    } else {
-      // Handle email selection
-      onEmailSelect(email);
-    }
-  }, [selectedEmails, onEmailSelect, onEmailSelectionChange]);
+    },
+    [selectedEmails, onEmailSelect, onEmailSelectionChange]
+  );
 
   // Handle keyboard navigation
-  const handleKeyDown = useCallback((event: React.KeyboardEvent, email: EmailMessage) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      onEmailSelect(email);
-    }
-  }, [onEmailSelect]);
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent, email: EmailMessage) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        onEmailSelect(email);
+      }
+    },
+    [onEmailSelect]
+  );
 
   // Memoized display name function
   const getDisplayName = useCallback((email: string) => {
-    return email.split('<')[0].trim().replace(/"/g, '');
+    return email.split("<")[0].trim().replace(/"/g, "");
   }, []);
 
   // Loading skeleton
@@ -176,15 +184,17 @@ export default function EmailListV2({
                 transform: `translateY(${virtualRow.start}px)`,
               }}
               className={`group border-b border-border/20 transition-colors ${
-                isSelected ? "bg-primary/5 border-primary/20" : "hover:bg-muted/30"
+                isSelected
+                  ? "bg-primary/5 border-primary/20"
+                  : "hover:bg-muted/30"
               }`}
             >
               <div
                 className={`p-3 cursor-pointer ${
-                  density === 'compact' ? 'py-2' : 'py-3'
+                  density === "compact" ? "py-2" : "py-3"
                 }`}
-                onClick={(e) => handleEmailClick(email, e)}
-                onKeyDown={(e) => handleKeyDown(e, email)}
+                onClick={e => handleEmailClick(email, e)}
+                onKeyDown={e => handleKeyDown(e, email)}
                 role="button"
                 tabIndex={0}
                 aria-selected={isSelected}
@@ -200,7 +210,7 @@ export default function EmailListV2({
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    {density === 'compact' ? (
+                    {density === "compact" ? (
                       // Compact layout
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -213,7 +223,9 @@ export default function EmailListV2({
                           >
                             {getDisplayName(email.from || email.sender)}
                           </button>
-                          <span className="text-muted-foreground/70 text-sm">•</span>
+                          <span className="text-muted-foreground/70 text-sm">
+                            •
+                          </span>
                           <h3 className="text-sm text-foreground/90 truncate">
                             {email.subject}
                           </h3>
@@ -223,7 +235,9 @@ export default function EmailListV2({
                         </div>
                         <div className="flex items-center gap-2 shrink-0">
                           <span className="text-xs text-muted-foreground/70 whitespace-nowrap tabular-nums">
-                            {new Date(email.internalDate || email.date).toLocaleString("da-DK", {
+                            {new Date(
+                              email.internalDate || email.date
+                            ).toLocaleString("da-DK", {
                               hour: "2-digit",
                               minute: "2-digit",
                             })}
@@ -244,7 +258,9 @@ export default function EmailListV2({
                             {getDisplayName(email.from || email.sender)}
                           </button>
                           <span className="text-muted-foreground/70 text-xs">
-                            {new Date(email.internalDate || email.date).toLocaleString("da-DK", {
+                            {new Date(
+                              email.internalDate || email.date
+                            ).toLocaleString("da-DK", {
                               hour: "2-digit",
                               minute: "2-digit",
                             })}
@@ -263,12 +279,19 @@ export default function EmailListV2({
                     {email.labels && email.labels.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {email.labels.slice(0, 3).map(label => (
-                          <Badge key={label} variant="outline" className="text-[10px] h-4 px-1.5 py-0 border-border/40">
+                          <Badge
+                            key={label}
+                            variant="outline"
+                            className="text-[10px] h-4 px-1.5 py-0 border-border/40"
+                          >
                             {label}
                           </Badge>
                         ))}
                         {email.labels.length > 3 && (
-                          <Badge variant="outline" className="text-[10px] h-4 px-1.5 py-0 border-border/40">
+                          <Badge
+                            variant="outline"
+                            className="text-[10px] h-4 px-1.5 py-0 border-border/40"
+                          >
                             +{email.labels.length - 3}
                           </Badge>
                         )}
@@ -278,7 +301,11 @@ export default function EmailListV2({
                     {/* AI Features */}
                     {showAIFeatures && (
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity mt-2">
-                        <Suspense fallback={<div className="h-3 bg-muted/40 rounded w-3/4" />}>
+                        <Suspense
+                          fallback={
+                            <div className="h-3 bg-muted/40 rounded w-3/4" />
+                          }
+                        >
                           <EmailAISummary
                             threadId={email.threadId || email.id}
                             collapsed={!isKeyboardSelected}

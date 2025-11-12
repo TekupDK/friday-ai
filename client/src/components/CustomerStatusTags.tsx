@@ -35,7 +35,7 @@ const TYPE_OPTIONS = [
 
 const COMMON_TAGS = [
   "Erhverv",
-  "Flytterengøring", 
+  "Flytterengøring",
   "Fast rengøring",
   "Hovedrengøring",
   "Vinduespudsning",
@@ -76,7 +76,7 @@ export function CustomerStatusTags({
       onUpdate();
       toast.success("Kundeoplysninger opdateret");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error("Kunne ikke opdatere: " + error.message);
       // Reset to original values on error
       setStatus(currentStatus);
@@ -105,7 +105,7 @@ export function CustomerStatusTags({
 
   const handleAddTag = () => {
     if (!newTag.trim() || tags.includes(newTag.trim())) return;
-    
+
     const updatedTags = [...tags, newTag.trim()];
     setTags(updatedTags);
     updateProfileMutation.mutate({
@@ -126,7 +126,7 @@ export function CustomerStatusTags({
 
   const handleAddCommonTag = (tag: string) => {
     if (tags.includes(tag)) return;
-    
+
     const updatedTags = [...tags, tag];
     setTags(updatedTags);
     updateProfileMutation.mutate({
@@ -136,7 +136,10 @@ export function CustomerStatusTags({
   };
 
   const getStatusColor = (statusValue: string) => {
-    return STATUS_OPTIONS.find(opt => opt.value === statusValue)?.color || "bg-gray-500";
+    return (
+      STATUS_OPTIONS.find(opt => opt.value === statusValue)?.color ||
+      "bg-gray-500"
+    );
   };
 
   return (
@@ -155,8 +158,11 @@ export function CustomerStatusTags({
               )}
             >
               <div className="flex items-center gap-2">
-                <div className={cn("w-2 h-2 rounded-full", getStatusColor(status))} />
-                {STATUS_OPTIONS.find(opt => opt.value === status)?.label || "Vælg status"}
+                <div
+                  className={cn("w-2 h-2 rounded-full", getStatusColor(status))}
+                />
+                {STATUS_OPTIONS.find(opt => opt.value === status)?.label ||
+                  "Vælg status"}
               </div>
               <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -166,14 +172,16 @@ export function CustomerStatusTags({
               <CommandInput placeholder="Søg status..." />
               <CommandEmpty>Ingen status fundet.</CommandEmpty>
               <CommandGroup>
-                {STATUS_OPTIONS.map((option) => (
+                {STATUS_OPTIONS.map(option => (
                   <CommandItem
                     key={option.value}
                     value={option.value}
                     onSelect={() => handleStatusChange(option.value)}
                   >
                     <div className="flex items-center gap-2">
-                      <div className={cn("w-2 h-2 rounded-full", option.color)} />
+                      <div
+                        className={cn("w-2 h-2 rounded-full", option.color)}
+                      />
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
@@ -203,7 +211,8 @@ export function CustomerStatusTags({
                 !customerType && "text-muted-foreground"
               )}
             >
-              {TYPE_OPTIONS.find(opt => opt.value === customerType)?.label || "Vælg type"}
+              {TYPE_OPTIONS.find(opt => opt.value === customerType)?.label ||
+                "Vælg type"}
               <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -212,7 +221,7 @@ export function CustomerStatusTags({
               <CommandInput placeholder="Søg type..." />
               <CommandEmpty>Ingen type fundet.</CommandEmpty>
               <CommandGroup>
-                {TYPE_OPTIONS.map((option) => (
+                {TYPE_OPTIONS.map(option => (
                   <CommandItem
                     key={option.value}
                     value={option.value}
@@ -221,7 +230,9 @@ export function CustomerStatusTags({
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        customerType === option.value ? "opacity-100" : "opacity-0"
+                        customerType === option.value
+                          ? "opacity-100"
+                          : "opacity-0"
                       )}
                     />
                     {option.label}
@@ -236,11 +247,11 @@ export function CustomerStatusTags({
       {/* Tags */}
       <div className="space-y-2">
         <Label>Tags</Label>
-        
+
         {/* Current Tags */}
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-2">
-            {tags.map((tag) => (
+            {tags.map(tag => (
               <Badge
                 key={tag}
                 variant="secondary"
@@ -266,8 +277,8 @@ export function CustomerStatusTags({
           <Input
             placeholder="Tilføj tag..."
             value={newTag}
-            onChange={(e) => setNewTag(e.target.value)}
-            onKeyDown={(e) => {
+            onChange={e => setNewTag(e.target.value)}
+            onKeyDown={e => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 handleAddTag();
@@ -288,7 +299,7 @@ export function CustomerStatusTags({
         <div className="space-y-1">
           <p className="text-xs text-muted-foreground">Almindelige tags:</p>
           <div className="flex flex-wrap gap-1">
-            {COMMON_TAGS.map((tag) => (
+            {COMMON_TAGS.map(tag => (
               <Badge
                 key={tag}
                 variant="outline"

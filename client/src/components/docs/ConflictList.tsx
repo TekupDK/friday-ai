@@ -13,7 +13,10 @@ interface ConflictListProps {
 export function ConflictList({ conflicts }: ConflictListProps) {
   const { resolveConflict, isResolving } = useConflicts();
 
-  const handleResolve = (conflictId: string, resolution: "accept_local" | "accept_remote") => {
+  const handleResolve = (
+    conflictId: string,
+    resolution: "accept_local" | "accept_remote"
+  ) => {
     resolveConflict({
       conflictId,
       resolution,
@@ -33,7 +36,7 @@ export function ConflictList({ conflicts }: ConflictListProps) {
 
   return (
     <div className="space-y-4">
-      {conflicts.map((conflict) => (
+      {conflicts.map(conflict => (
         <Card key={conflict.id} className="border-destructive">
           <CardHeader>
             <div className="flex items-start justify-between">
@@ -50,7 +53,9 @@ export function ConflictList({ conflicts }: ConflictListProps) {
                   {conflict.path}
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {formatDistanceToNow(new Date(conflict.createdAt), { addSuffix: true })}
+                  {formatDistanceToNow(new Date(conflict.createdAt), {
+                    addSuffix: true,
+                  })}
                 </p>
               </div>
             </div>
@@ -88,7 +93,12 @@ export function ConflictList({ conflicts }: ConflictListProps) {
                   Resolved using: <strong>{conflict.resolution}</strong>
                   {conflict.resolvedBy && ` by ${conflict.resolvedBy}`}
                   {conflict.resolvedAt && (
-                    <> {formatDistanceToNow(new Date(conflict.resolvedAt), { addSuffix: true })}</>
+                    <>
+                      {" "}
+                      {formatDistanceToNow(new Date(conflict.resolvedAt), {
+                        addSuffix: true,
+                      })}
+                    </>
                   )}
                 </AlertDescription>
               </Alert>
@@ -97,14 +107,18 @@ export function ConflictList({ conflicts }: ConflictListProps) {
             {/* Conflict preview */}
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
-                <div className="font-semibold text-green-600 mb-2">Local Version</div>
+                <div className="font-semibold text-green-600 mb-2">
+                  Local Version
+                </div>
                 <pre className="bg-muted p-3 rounded overflow-x-auto max-h-32">
                   {conflict.localContent?.slice(0, 200)}
                   {conflict.localContent?.length > 200 && "..."}
                 </pre>
               </div>
               <div>
-                <div className="font-semibold text-blue-600 mb-2">Remote Version</div>
+                <div className="font-semibold text-blue-600 mb-2">
+                  Remote Version
+                </div>
                 <pre className="bg-muted p-3 rounded overflow-x-auto max-h-32">
                   {conflict.remoteContent?.slice(0, 200)}
                   {conflict.remoteContent?.length > 200 && "..."}

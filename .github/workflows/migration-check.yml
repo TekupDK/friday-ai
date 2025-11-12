@@ -8,6 +8,7 @@ on:
       - "run-pipeline-migration.mjs"
       - "server/**"
       - "drizzle/schema.ts"
+      - "drizzle.config.ts"
 
 jobs:
   check:
@@ -25,12 +26,57 @@ jobs:
           corepack prepare pnpm@10.20.0 --activate
       - name: Install deps
         run: pnpm install --frozen-lockfile=false
+      
+      - name: Generate migration plan
+        id: migration-plan
+        run: |
+          echo "📝 Generating migration plan..."
+          mkdir -p migration-plan
+          
+          # Generate migrations from schema (drizzle-kit generate)
+          echo "Running drizzle-kit generate..." > migration-plan/generate-output.txt
+          pnpm drizzle-kit generate >> migration-plan/generate-output.txt 2>&1 || true
+          
+          # Capture schema config
+          if [ -f "drizzle.config.ts" ]; then
+            echo "Schema config found" > migration-plan/schema-info.txt
+            cat drizzle.config.ts >> migration-plan/schema-info.txt
+          fi
+          
+          # List migration files with details
+          if [ -d "drizzle/migrations" ]; then
+            echo "Migration files:" > migration-plan/migration-files.txt
+            ls -lh drizzle/migrations/ >> migration-plan/migration-files.txt 2>&1
+            
+            # Get latest migration content
+            LATEST_MIGRATION=$(ls -t drizzle/migrations/*.sql 2>/dev/null | head -1)
+            if [ -n "$LATEST_MIGRATION" ]; then
+              echo -e "\n=== Latest migration: $LATEST_MIGRATION ===" >> migration-plan/migration-files.txt
+              cat "$LATEST_MIGRATION" >> migration-plan/migration-files.txt 2>&1
+            fi
+          fi
+          
+          # Capture Drizzle schema file for reference
+          if [ -f "drizzle/schema.ts" ]; then
+            cp drizzle/schema.ts migration-plan/schema.ts
+          fi
+          
+          echo "✅ Migration plan generated"
+
+      - name: Upload migration plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: migration-plan
+          path: migration-plan/
+          retention-days: 30
+      
       - name: Migration dry-run (skips if no preview DB secret)
         env:
           DATABASE_URL: ${{ secrets.PREVIEW_DATABASE_URL }}
         run: |
           if [ -z "$DATABASE_URL" ]; then
-            echo "No PREVIEW_DATABASE_URL secret set. Skipping migration check."
+            echo "ℹ️ No PREVIEW_DATABASE_URL secret set. Skipping database dry-run."
+            echo "📦 Migration plan artifacts uploaded for review."
             exit 0
           fi
           node scripts/migration-check.mjs --dry-run

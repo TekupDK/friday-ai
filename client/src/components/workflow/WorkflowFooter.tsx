@@ -1,11 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import {
-  TrendingUp,
-  Clock,
-  DollarSign,
-  Users,
-} from "lucide-react";
+import { TrendingUp, Clock, DollarSign, Users } from "lucide-react";
 import { useWorkflowContext } from "@/contexts/WorkflowContext";
 
 /**
@@ -97,7 +92,7 @@ export default function WorkflowFooter() {
           </Badge>
         </div>
         <div className="text-xs text-gray-500 dark:text-gray-500">
-          Sidst opdateret: {new Date().toLocaleTimeString('da-DK')}
+          Sidst opdateret: {new Date().toLocaleTimeString("da-DK")}
         </div>
       </div>
     </div>

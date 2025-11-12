@@ -24,15 +24,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Ageras DK ApS"
-      ],
+      "companies": ["Ageras DK ApS"],
       "billyCustomerId": "wo654yjMSrmU5mKEq89F6A",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -85,13 +81,9 @@
       "name": "Amalie Lønborg Holst",
       "normalizedName": "amalie lønborg holst",
       "emails": [],
-      "phones": [
-        "41 83 71 69"
-      ],
+      "phones": ["41 83 71 69"],
       "addresses": [],
-      "companies": [
-        "Amalie Lønborg Holst"
-      ],
+      "companies": ["Amalie Lønborg Holst"],
       "billyCustomerId": "NU26ckBRT7ii92I11VnCkw",
       "calendarEvents": [
         {
@@ -103,10 +95,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -171,15 +160,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Amigo pizza & grill"
-      ],
+      "companies": ["Amigo pizza & grill"],
       "billyCustomerId": "n0bUOodrTjX9SJCu3gVbog",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -232,19 +217,13 @@
       "name": "Ane Johanne Davidsen Dahlberg",
       "normalizedName": "ane johanne davidsen dahlberg",
       "emails": [],
-      "phones": [
-        "5166700"
-      ],
+      "phones": ["5166700"],
       "addresses": [],
-      "companies": [
-        "Ane Johanne Davidsen Dahlberg"
-      ],
+      "companies": ["Ane Johanne Davidsen Dahlberg"],
       "billyCustomerId": "X4pCV8BAQdyZGUErSxuycA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -297,19 +276,13 @@
       "name": "Anne Otte",
       "normalizedName": "anne otte",
       "emails": [],
-      "phones": [
-        "26390762"
-      ],
+      "phones": ["26390762"],
       "addresses": [],
-      "companies": [
-        "Anne Otte"
-      ],
+      "companies": ["Anne Otte"],
       "billyCustomerId": "terFRNwUSgCWU1XH4xSEQw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -361,16 +334,10 @@
       "id": "PROFILE_0006",
       "name": "Anne Sofie Kristensen",
       "normalizedName": "anne sofie kristensen",
-      "emails": [
-        "as_vk1@hotmail.com"
-      ],
-      "phones": [
-        "23844904"
-      ],
+      "emails": ["as_vk1@hotmail.com"],
+      "phones": ["23844904"],
       "addresses": [],
-      "companies": [
-        "Anne Sofie Kristensen"
-      ],
+      "companies": ["Anne Sofie Kristensen"],
       "billyCustomerId": "LMJEFNPDS1e2FiiBSuKBfw",
       "calendarEvents": [
         {
@@ -438,11 +405,7 @@
           "email": "as_vk1@hotmail.com"
         }
       ],
-      "sources": [
-        "billy",
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["billy", "calendar", "gmail"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -568,19 +531,13 @@
       "name": "Annette",
       "normalizedName": "annette",
       "emails": [],
-      "phones": [
-        "50921220"
-      ],
+      "phones": ["50921220"],
       "addresses": [],
-      "companies": [
-        "Annette"
-      ],
+      "companies": ["Annette"],
       "billyCustomerId": "iX35SQxVRuufQnzySk63yw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -635,15 +592,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Anthropic, PBC"
-      ],
+      "companies": ["Anthropic, PBC"],
       "billyCustomerId": "6G7VHuc3QU2E00sEsSlQoQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -698,15 +651,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "AUDIT SUCCESS - Jonas 22:29"
-      ],
+      "companies": ["AUDIT SUCCESS - Jonas 22:29"],
       "billyCustomerId": "6Sqc7Mz4SGCEzabab6rhsA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -758,16 +707,10 @@
       "id": "PROFILE_0010",
       "name": "Benedikte  Boye",
       "normalizedName": "benedikte boye",
-      "emails": [
-        "kontaktbenedikte@gmail.com"
-      ],
-      "phones": [
-        "29914626"
-      ],
+      "emails": ["kontaktbenedikte@gmail.com"],
+      "phones": ["29914626"],
       "addresses": [],
-      "companies": [
-        "Benedikte  Boye"
-      ],
+      "companies": ["Benedikte  Boye"],
       "billyCustomerId": "57iBgqCxQE66gFJMkNy7vg",
       "calendarEvents": [
         {
@@ -786,10 +729,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -859,16 +799,10 @@
       "id": "PROFILE_0011",
       "name": "Bente Andersen",
       "normalizedName": "bente andersen",
-      "emails": [
-        "bba64@outlook.dk"
-      ],
-      "phones": [
-        "50701233"
-      ],
+      "emails": ["bba64@outlook.dk"],
+      "phones": ["50701233"],
       "addresses": [],
-      "companies": [
-        "Bente Andersen"
-      ],
+      "companies": ["Bente Andersen"],
       "billyCustomerId": "lGHeXKkWR0yMGPLJuVWhPw",
       "calendarEvents": [
         {
@@ -880,10 +814,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -945,16 +876,10 @@
       "id": "PROFILE_0012",
       "name": "Bente Overgaard",
       "normalizedName": "bente overgaard",
-      "emails": [
-        "benteogmingo@gmail.com"
-      ],
-      "phones": [
-        "28958423"
-      ],
+      "emails": ["benteogmingo@gmail.com"],
+      "phones": ["28958423"],
       "addresses": [],
-      "companies": [
-        "Bente Overgaard"
-      ],
+      "companies": ["Bente Overgaard"],
       "billyCustomerId": "fbcnMiMESCu2WohGzj0K4g",
       "calendarEvents": [
         {
@@ -973,10 +898,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1049,15 +971,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Bird Bird Thai Food ApS"
-      ],
+      "companies": ["Bird Bird Thai Food ApS"],
       "billyCustomerId": "U30lJRThSO2t0HYSJK3ybg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1109,16 +1027,10 @@
       "id": "PROFILE_0014",
       "name": "Birgit Joost Blak",
       "normalizedName": "birgit joost blak",
-      "emails": [
-        "birgit@joost-blak.dk"
-      ],
-      "phones": [
-        "26805339"
-      ],
+      "emails": ["birgit@joost-blak.dk"],
+      "phones": ["26805339"],
       "addresses": [],
-      "companies": [
-        "Birgit Joost Blak"
-      ],
+      "companies": ["Birgit Joost Blak"],
       "billyCustomerId": "ISZNzpIPRoehXdZ88cUVaw",
       "calendarEvents": [
         {
@@ -1151,11 +1063,7 @@
           "email": "birgit@joost-blak.dk"
         }
       ],
-      "sources": [
-        "billy",
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["billy", "calendar", "gmail"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1242,15 +1150,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Blink"
-      ],
+      "companies": ["Blink"],
       "billyCustomerId": "4ZnW16ctRduPN8SbvRZVdg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1305,15 +1209,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Brabrand Frugt ApS"
-      ],
+      "companies": ["Brabrand Frugt ApS"],
       "billyCustomerId": "3kSNKAPEQjyPf2hiLpGMrw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1368,15 +1268,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Cafe Skytten ApS"
-      ],
+      "companies": ["Cafe Skytten ApS"],
       "billyCustomerId": "qQvRt9lSRXKMiktQQf8RlA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1431,15 +1327,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Caja og Torben Rosenkvist"
-      ],
+      "companies": ["Caja og Torben Rosenkvist"],
       "billyCustomerId": "jGYGkcPRSFeimoYmEUuGfA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1491,16 +1383,10 @@
       "id": "PROFILE_0019",
       "name": "Casper Thygesen",
       "normalizedName": "casper thygesen",
-      "emails": [
-        "caspert@gmail.com"
-      ],
-      "phones": [
-        "50497101"
-      ],
+      "emails": ["caspert@gmail.com"],
+      "phones": ["50497101"],
       "addresses": [],
-      "companies": [
-        "Casper Thygesen"
-      ],
+      "companies": ["Casper Thygesen"],
       "billyCustomerId": "Spy9fYUxRZOHi6I8kpdPHg",
       "calendarEvents": [
         {
@@ -1575,10 +1461,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1713,19 +1596,13 @@
       "name": "Cecilie Bøgh",
       "normalizedName": "cecilie bøgh",
       "emails": [],
-      "phones": [
-        "30 66 97 48"
-      ],
+      "phones": ["30 66 97 48"],
       "addresses": [],
-      "companies": [
-        "Cecilie Bøgh"
-      ],
+      "companies": ["Cecilie Bøgh"],
       "billyCustomerId": "ENBeHNwMTUqObRfuhkPwrg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1778,19 +1655,13 @@
       "name": "Cecilie Krogsgaard Nielsen",
       "normalizedName": "cecilie krogsgaard nielsen",
       "emails": [],
-      "phones": [
-        "50894229"
-      ],
+      "phones": ["50894229"],
       "addresses": [],
-      "companies": [
-        "Cecilie Krogsgaard Nielsen"
-      ],
+      "companies": ["Cecilie Krogsgaard Nielsen"],
       "billyCustomerId": "hhly8N56Smyo0hA23sFKHA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1843,19 +1714,13 @@
       "name": "Chadis køkken",
       "normalizedName": "chadis køkken",
       "emails": [],
-      "phones": [
-        "86252233"
-      ],
+      "phones": ["86252233"],
       "addresses": [],
-      "companies": [
-        "Chadis køkken"
-      ],
+      "companies": ["Chadis køkken"],
       "billyCustomerId": "6sJ7ouZWTUqLcZc7F4NptQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1910,15 +1775,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "CIRCLE K"
-      ],
+      "companies": ["CIRCLE K"],
       "billyCustomerId": "iHe5ZFpYSXSybvxlzFFASQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -1973,15 +1834,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Circle K Tilst"
-      ],
+      "companies": ["Circle K Tilst"],
       "billyCustomerId": "JMb2A5kXRWmaLk6qMbO36w",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2033,17 +1890,10 @@
       "id": "PROFILE_0025",
       "name": "Clara Maria Lyngkilde",
       "normalizedName": "clara maria lyngkilde",
-      "emails": [
-        "cmpytberg@gmail.com"
-      ],
-      "phones": [
-        "22 48 75 98",
-        "22487598"
-      ],
+      "emails": ["cmpytberg@gmail.com"],
+      "phones": ["22 48 75 98", "22487598"],
       "addresses": [],
-      "companies": [
-        "Clara Maria Lyngkilde"
-      ],
+      "companies": ["Clara Maria Lyngkilde"],
       "billyCustomerId": "d0t0xE3vRP2JrSsvdMSnlA",
       "calendarEvents": [
         {
@@ -2062,10 +1912,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2136,19 +1983,13 @@
       "name": "COOP DANMARK A/S",
       "normalizedName": "coop danmark as",
       "emails": [],
-      "phones": [
-        "43864386"
-      ],
+      "phones": ["43864386"],
       "addresses": [],
-      "companies": [
-        "COOP DANMARK A/S"
-      ],
+      "companies": ["COOP DANMARK A/S"],
       "billyCustomerId": "iWsRwW0bQzaZC3S5wwlKuA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2203,15 +2044,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Cursor"
-      ],
+      "companies": ["Cursor"],
       "billyCustomerId": "P7zxLobSSViz9tZWZo4tqw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2264,9 +2101,7 @@
       "name": "DE LAGE LANDEN FINANS DANMARK FILIAL AF DE LAGE LANDEN FINANS AB, SVERIGE",
       "normalizedName": "de lage landen finans danmark filial af de lage landen finans ab sverige",
       "emails": [],
-      "phones": [
-        "44700700"
-      ],
+      "phones": ["44700700"],
       "addresses": [],
       "companies": [
         "DE LAGE LANDEN FINANS DANMARK FILIAL AF DE LAGE LANDEN FINANS AB, SVERIGE"
@@ -2274,9 +2109,7 @@
       "billyCustomerId": "UISLzxNmRnCso6txcNXI2A",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2331,15 +2164,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Debug Test Customer"
-      ],
+      "companies": ["Debug Test Customer"],
       "billyCustomerId": "nOvVyOdQRbemormx5n01Bw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2394,15 +2223,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Direct Test NoEmail"
-      ],
+      "companies": ["Direct Test NoEmail"],
       "billyCustomerId": "uyzZzuvOSJuBYoApF7U0Tw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2455,19 +2280,13 @@
       "name": "Divan Restaurant I/S",
       "normalizedName": "divan restaurant is",
       "emails": [],
-      "phones": [
-        "28960577"
-      ],
+      "phones": ["28960577"],
       "addresses": [],
-      "companies": [
-        "Divan Restaurant I/S"
-      ],
+      "companies": ["Divan Restaurant I/S"],
       "billyCustomerId": "joCHXY6ITpHre4k2PZI3aw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2520,19 +2339,13 @@
       "name": "Domen - Inge Lehmanns Gade 22, 8000\nAarhus",
       "normalizedName": "domen  inge lehmanns gade 22 8000 aarhus",
       "emails": [],
-      "phones": [
-        "41 87 46 98"
-      ],
+      "phones": ["41 87 46 98"],
       "addresses": [],
-      "companies": [
-        "Domen - Inge Lehmanns Gade 22, 8000\nAarhus"
-      ],
+      "companies": ["Domen - Inge Lehmanns Gade 22, 8000\nAarhus"],
       "billyCustomerId": "l7E1ihxwTN2rCv0iBIKXeA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2587,15 +2400,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Dominic Russell"
-      ],
+      "companies": ["Dominic Russell"],
       "billyCustomerId": "T9HeeQ5tRXy1RKhxJjasXQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2647,16 +2456,10 @@
       "id": "PROFILE_0034",
       "name": "Dorte Elgaard",
       "normalizedName": "dorte elgaard",
-      "emails": [
-        "doel67@yahoo.dk"
-      ],
-      "phones": [
-        "61189565"
-      ],
+      "emails": ["doel67@yahoo.dk"],
+      "phones": ["61189565"],
       "addresses": [],
-      "companies": [
-        "Dorte Elgaard"
-      ],
+      "companies": ["Dorte Elgaard"],
       "billyCustomerId": "o0RYfB3CSM2ZWtNdrzP1Fg",
       "calendarEvents": [
         {
@@ -2675,10 +2478,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2751,15 +2551,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "DUSTIN A/S"
-      ],
+      "companies": ["DUSTIN A/S"],
       "billyCustomerId": "kOrnPbImRxmtVGM3U5vZEA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2814,15 +2610,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "ELGIGANTEN A/S"
-      ],
+      "companies": ["ELGIGANTEN A/S"],
       "billyCustomerId": "7KO9A4wkSi6DzQn8hpk4DQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2874,16 +2666,10 @@
       "id": "PROFILE_0037",
       "name": "Elisabeth Vestenaa",
       "normalizedName": "elisabeth vestenaa",
-      "emails": [
-        "olavvestenaa@gmail.com"
-      ],
-      "phones": [
-        "23355271"
-      ],
+      "emails": ["olavvestenaa@gmail.com"],
+      "phones": ["23355271"],
       "addresses": [],
-      "companies": [
-        "Elisabeth Vestenaa"
-      ],
+      "companies": ["Elisabeth Vestenaa"],
       "billyCustomerId": "uyckaIeNSpyyYiTM3lVgxg",
       "calendarEvents": [
         {
@@ -2909,10 +2695,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -2993,15 +2776,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Email Customer Test"
-      ],
+      "companies": ["Email Customer Test"],
       "billyCustomerId": "BAlnWDMwRbm45Nyvj8Lv7A",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3056,15 +2835,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Email Final Test"
-      ],
+      "companies": ["Email Final Test"],
       "billyCustomerId": "t4FGkXROT0GPl0G1qY5RIw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3119,15 +2894,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Email Success Test"
-      ],
+      "companies": ["Email Success Test"],
       "billyCustomerId": "JcpXCdQJQKCMM7y5kDhx4Q",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3182,15 +2953,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Email Test Fixed"
-      ],
+      "companies": ["Email Test Fixed"],
       "billyCustomerId": "ZvUZbfQZRO29svXzJR3BHg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3245,15 +3012,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "EMERGENT LABS INC"
-      ],
+      "companies": ["EMERGENT LABS INC"],
       "billyCustomerId": "dDNc6IItSwyFJVu99oLxHA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3305,16 +3068,10 @@
       "id": "PROFILE_0043",
       "name": "Emil Lærke",
       "normalizedName": "emil lærke",
-      "emails": [
-        "emilovic99@hotmail.com"
-      ],
-      "phones": [
-        "20020561"
-      ],
+      "emails": ["emilovic99@hotmail.com"],
+      "phones": ["20020561"],
       "addresses": [],
-      "companies": [
-        "Emil Lærke"
-      ],
+      "companies": ["Emil Lærke"],
       "billyCustomerId": "8qZjNMFURSxLkfLGUWgy6g",
       "calendarEvents": [
         {
@@ -3333,10 +3090,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3407,19 +3161,13 @@
       "name": "Erik Damsgaard",
       "normalizedName": "erik damsgaard",
       "emails": [],
-      "phones": [
-        "24239615"
-      ],
+      "phones": ["24239615"],
       "addresses": [],
-      "companies": [
-        "Erik Damsgaard"
-      ],
+      "companies": ["Erik Damsgaard"],
       "billyCustomerId": "KxMsZB8LS6udOwpNbpmkPA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3471,16 +3219,10 @@
       "id": "PROFILE_0045",
       "name": "Erik Gideon",
       "normalizedName": "erik gideon",
-      "emails": [
-        "erik.gideon@hotmail.com"
-      ],
-      "phones": [
-        "29857006"
-      ],
+      "emails": ["erik.gideon@hotmail.com"],
+      "phones": ["29857006"],
       "addresses": [],
-      "companies": [
-        "Erik Gideon"
-      ],
+      "companies": ["Erik Gideon"],
       "billyCustomerId": "JSFp3EiaTkCEpV1DO0RxYg",
       "calendarEvents": [
         {
@@ -3492,10 +3234,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3560,15 +3299,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Exafunction, Inc."
-      ],
+      "companies": ["Exafunction, Inc."],
       "billyCustomerId": "8OCX0lJvTKqeVnvxDV6MKg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3623,15 +3358,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Facility Service"
-      ],
+      "companies": ["Facility Service"],
       "billyCustomerId": "CJBUcw00T92hPcPrp2tAlQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3686,15 +3417,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Fanny Sørensen"
-      ],
+      "companies": ["Fanny Sørensen"],
       "billyCustomerId": "MOvwtA59QeecHTM0MYL7xw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3749,15 +3476,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "FINAL Email Test"
-      ],
+      "companies": ["FINAL Email Test"],
       "billyCustomerId": "CaJQIyELTPeK5WXtWB1Z5Q",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3809,16 +3532,10 @@
       "id": "PROFILE_0050",
       "name": "Gitte Windfeld",
       "normalizedName": "gitte windfeld",
-      "emails": [
-        "g.windfeld@gmail.cc"
-      ],
-      "phones": [
-        "27900697"
-      ],
+      "emails": ["g.windfeld@gmail.cc"],
+      "phones": ["27900697"],
       "addresses": [],
-      "companies": [
-        "Gitte Windfeld"
-      ],
+      "companies": ["Gitte Windfeld"],
       "billyCustomerId": "5K3agWXGSzuavrtXveGnNg",
       "calendarEvents": [
         {
@@ -3837,10 +3554,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3913,15 +3627,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Google Ads"
-      ],
+      "companies": ["Google Ads"],
       "billyCustomerId": "l1oAfPxURZCzavFLMK2meA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -3976,15 +3686,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Google Cloud EMEA Limited"
-      ],
+      "companies": ["Google Cloud EMEA Limited"],
       "billyCustomerId": "ShCpDKI5QDeqlsxHs7O0cQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4039,15 +3745,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Google Commerce Limited"
-      ],
+      "companies": ["Google Commerce Limited"],
       "billyCustomerId": "Oa3Bg6XwRuqhPg6tvWVlHg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4102,15 +3804,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "GOOGLE DENMARK ApS"
-      ],
+      "companies": ["GOOGLE DENMARK ApS"],
       "billyCustomerId": "L8mIba2oRtiYIHoTQhYchQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4165,9 +3863,7 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Hanne  Qvist"
-      ],
+      "companies": ["Hanne  Qvist"],
       "billyCustomerId": "tIeSydACQquSDsjLRL5IKA",
       "calendarEvents": [
         {
@@ -4179,10 +3875,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4244,16 +3937,10 @@
       "id": "PROFILE_0056",
       "name": "Hans Henrik Schou",
       "normalizedName": "hans henrik schou",
-      "emails": [
-        "hanshenrik.schou1@gmail.com"
-      ],
-      "phones": [
-        "42682660"
-      ],
+      "emails": ["hanshenrik.schou1@gmail.com"],
+      "phones": ["42682660"],
       "addresses": [],
-      "companies": [
-        "Hans Henrik Schou"
-      ],
+      "companies": ["Hans Henrik Schou"],
       "billyCustomerId": "eLqWTdBrR3Cj7e9s61guaQ",
       "calendarEvents": [
         {
@@ -4265,10 +3952,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4331,19 +4015,13 @@
       "name": "HARALD NYBORG A/S",
       "normalizedName": "harald nyborg as",
       "emails": [],
-      "phones": [
-        "63959595"
-      ],
+      "phones": ["63959595"],
       "addresses": [],
-      "companies": [
-        "HARALD NYBORG A/S"
-      ],
+      "companies": ["HARALD NYBORG A/S"],
       "billyCustomerId": "CgvK5QsQSBmtzjYNTx6Hvw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4396,19 +4074,13 @@
       "name": "Henrik Brøsted",
       "normalizedName": "henrik brøsted",
       "emails": [],
-      "phones": [
-        "60464822"
-      ],
+      "phones": ["60464822"],
       "addresses": [],
-      "companies": [
-        "Henrik Brøsted"
-      ],
+      "companies": ["Henrik Brøsted"],
       "billyCustomerId": "khpHmhAKTWOTqrkHfGBmtw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4460,16 +4132,10 @@
       "id": "PROFILE_0059",
       "name": "Jes Vestergaard",
       "normalizedName": "jes vestergaard",
-      "emails": [
-        "jvevestergaard@gmail.com"
-      ],
-      "phones": [
-        "60213463"
-      ],
+      "emails": ["jvevestergaard@gmail.com"],
+      "phones": ["60213463"],
       "addresses": [],
-      "companies": [
-        "Jes Vestergaard"
-      ],
+      "companies": ["Jes Vestergaard"],
       "billyCustomerId": "VOUrbFX4QYm0dIHh9d7DbA",
       "calendarEvents": [
         {
@@ -4537,10 +4203,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4669,15 +4332,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Jetbrains"
-      ],
+      "companies": ["Jetbrains"],
       "billyCustomerId": "CszIcA0LTNKpa6FiHX7T6g",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4730,19 +4389,13 @@
       "name": "Jonas Dejgaard",
       "normalizedName": "jonas dejgaard",
       "emails": [],
-      "phones": [
-        "21938171"
-      ],
+      "phones": ["21938171"],
       "addresses": [],
-      "companies": [
-        "Jonas Dejgaard"
-      ],
+      "companies": ["Jonas Dejgaard"],
       "billyCustomerId": "186jSSduQEaB5xBS9W8B7Q",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4795,19 +4448,13 @@
       "name": "Jonas Sloth Pedersen",
       "normalizedName": "jonas sloth pedersen",
       "emails": [],
-      "phones": [
-        "22970309"
-      ],
+      "phones": ["22970309"],
       "addresses": [],
-      "companies": [
-        "Jonas Sloth Pedersen"
-      ],
+      "companies": ["Jonas Sloth Pedersen"],
       "billyCustomerId": "ufCJ8JWqRAiE4oqRJAPdDg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -4859,14 +4506,10 @@
       "id": "PROFILE_0063",
       "name": "Juliane Wibroe",
       "normalizedName": "juliane wibroe",
-      "emails": [
-        "julianea01@gmail.com"
-      ],
+      "emails": ["julianea01@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Juliane Wibroe"
-      ],
+      "companies": ["Juliane Wibroe"],
       "billyCustomerId": "vHhLHaIeRDqz8vVHdiCqvg",
       "calendarEvents": [
         {
@@ -4913,10 +4556,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5019,19 +4659,13 @@
       "name": "Julie Gravensen",
       "normalizedName": "julie gravensen",
       "emails": [],
-      "phones": [
-        "20351367"
-      ],
+      "phones": ["20351367"],
       "addresses": [],
-      "companies": [
-        "Julie Gravensen"
-      ],
+      "companies": ["Julie Gravensen"],
       "billyCustomerId": "BUJTwSpPQHOITGX2DrpcYA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5084,19 +4718,13 @@
       "name": "Jørgen Pagh",
       "normalizedName": "jørgen pagh",
       "emails": [],
-      "phones": [
-        "30666685"
-      ],
+      "phones": ["30666685"],
       "addresses": [],
-      "companies": [
-        "Jørgen Pagh"
-      ],
+      "companies": ["Jørgen Pagh"],
       "billyCustomerId": "KRVyT9maQLWqMrb6mWAsgg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5148,16 +4776,10 @@
       "id": "PROFILE_0066",
       "name": "Jørgen Porse",
       "normalizedName": "jørgen porse",
-      "emails": [
-        "j.porse@outlook.dk"
-      ],
-      "phones": [
-        "53893616"
-      ],
+      "emails": ["j.porse@outlook.dk"],
+      "phones": ["53893616"],
       "addresses": [],
-      "companies": [
-        "Jørgen Porse"
-      ],
+      "companies": ["Jørgen Porse"],
       "billyCustomerId": "Xbn0TGhjRpS50MIfOdFYQA",
       "calendarEvents": [
         {
@@ -5169,10 +4791,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5234,16 +4853,10 @@
       "id": "PROFILE_0067",
       "name": "Jørn Haagensen",
       "normalizedName": "jørn haagensen",
-      "emails": [
-        "jhaa@mail.dk"
-      ],
-      "phones": [
-        "22454903"
-      ],
+      "emails": ["jhaa@mail.dk"],
+      "phones": ["22454903"],
       "addresses": [],
-      "companies": [
-        "Jørn Haagensen"
-      ],
+      "companies": ["Jørn Haagensen"],
       "billyCustomerId": "wcgcmBfqSSiIX8EBtNjQww",
       "calendarEvents": [
         {
@@ -5311,10 +4924,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5440,17 +5050,10 @@
       "id": "PROFILE_0068",
       "name": "Karin  Dons",
       "normalizedName": "karin dons",
-      "emails": [
-        "mail@karindons.dk"
-      ],
-      "phones": [
-        "61 66 13 39",
-        "61661339"
-      ],
+      "emails": ["mail@karindons.dk"],
+      "phones": ["61 66 13 39", "61661339"],
       "addresses": [],
-      "companies": [
-        "Karin  Dons"
-      ],
+      "companies": ["Karin  Dons"],
       "billyCustomerId": "jwUr5Q7qRQKynde22CLoMQ",
       "calendarEvents": [
         {
@@ -5462,10 +5065,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5528,19 +5128,13 @@
       "name": "Kasper  Munk Hansen",
       "normalizedName": "kasper munk hansen",
       "emails": [],
-      "phones": [
-        "60127352"
-      ],
+      "phones": ["60127352"],
       "addresses": [],
-      "companies": [
-        "Kasper  Munk Hansen"
-      ],
+      "companies": ["Kasper  Munk Hansen"],
       "billyCustomerId": "noxXF3efQ1evTg2Lqni8TA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5593,19 +5187,13 @@
       "name": "Kate Fouts",
       "normalizedName": "kate fouts",
       "emails": [],
-      "phones": [
-        "25787342"
-      ],
+      "phones": ["25787342"],
       "addresses": [],
-      "companies": [
-        "Kate Fouts"
-      ],
+      "companies": ["Kate Fouts"],
       "billyCustomerId": "OiExoBIqT2iKuPS5NHvHiw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5658,19 +5246,13 @@
       "name": "Katrine  Bilde",
       "normalizedName": "katrine bilde",
       "emails": [],
-      "phones": [
-        "27321244"
-      ],
+      "phones": ["27321244"],
       "addresses": [],
-      "companies": [
-        "Katrine  Bilde"
-      ],
+      "companies": ["Katrine  Bilde"],
       "billyCustomerId": "bptiU5HYTFSMcusIP9zJJQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5722,16 +5304,10 @@
       "id": "PROFILE_0072",
       "name": "Katrine Galsgaard Villumsen",
       "normalizedName": "katrine galsgaard villumsen",
-      "emails": [
-        "katrine.vill@gmail.com"
-      ],
-      "phones": [
-        "28960601"
-      ],
+      "emails": ["katrine.vill@gmail.com"],
+      "phones": ["28960601"],
       "addresses": [],
-      "companies": [
-        "Katrine Galsgaard Villumsen"
-      ],
+      "companies": ["Katrine Galsgaard Villumsen"],
       "billyCustomerId": "azm4hUy9TxWXy0R5EXjhnA",
       "calendarEvents": [
         {
@@ -5743,10 +5319,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5808,16 +5381,10 @@
       "id": "PROFILE_0073",
       "name": "Ken Gustavsen",
       "normalizedName": "ken gustavsen",
-      "emails": [
-        "kengustavsen@gmail.com"
-      ],
-      "phones": [
-        "41817799"
-      ],
+      "emails": ["kengustavsen@gmail.com"],
+      "phones": ["41817799"],
       "addresses": [],
-      "companies": [
-        "Ken Gustavsen"
-      ],
+      "companies": ["Ken Gustavsen"],
       "billyCustomerId": "yheJ2I5TTwC8nLaBeKa72g",
       "calendarEvents": [
         {
@@ -5836,10 +5403,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5909,17 +5473,10 @@
       "id": "PROFILE_0074",
       "name": "Ken Stenbæk",
       "normalizedName": "ken stenbæk",
-      "emails": [
-        "mygstenbaek@gmail.com"
-      ],
-      "phones": [
-        "+4524610466",
-        "24610466"
-      ],
+      "emails": ["mygstenbaek@gmail.com"],
+      "phones": ["+4524610466", "24610466"],
       "addresses": [],
-      "companies": [
-        "Ken Stenbæk"
-      ],
+      "companies": ["Ken Stenbæk"],
       "billyCustomerId": "mRj8wVIWQR2SX9vCHjgySQ",
       "calendarEvents": [
         {
@@ -5931,10 +5488,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -5997,19 +5551,13 @@
       "name": "Kindred Concepts Europe Limited",
       "normalizedName": "kindred concepts europe limited",
       "emails": [],
-      "phones": [
-        "14987410"
-      ],
+      "phones": ["14987410"],
       "addresses": [],
-      "companies": [
-        "Kindred Concepts Europe Limited"
-      ],
+      "companies": ["Kindred Concepts Europe Limited"],
       "billyCustomerId": "IaZs2QIbT6yostCX6tRSxQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6062,13 +5610,9 @@
       "name": "Kristine Nielsen",
       "normalizedName": "kristine nielsen",
       "emails": [],
-      "phones": [
-        "42452663"
-      ],
+      "phones": ["42452663"],
       "addresses": [],
-      "companies": [
-        "Kristine Nielsen"
-      ],
+      "companies": ["Kristine Nielsen"],
       "billyCustomerId": "WFv3lWIXSTiUl6XLkyfUwA",
       "calendarEvents": [
         {
@@ -6080,10 +5624,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6146,19 +5687,13 @@
       "name": "Kødstaden's Burger Joint ApS",
       "normalizedName": "kødstadens burger joint aps",
       "emails": [],
-      "phones": [
-        "86102836"
-      ],
+      "phones": ["86102836"],
       "addresses": [],
-      "companies": [
-        "Kødstaden's Burger Joint ApS"
-      ],
+      "companies": ["Kødstaden's Burger Joint ApS"],
       "billyCustomerId": "6Z9nPitUTiqpHVIo9jixGQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6210,16 +5745,10 @@
       "id": "PROFILE_0078",
       "name": "Lasse  Marling",
       "normalizedName": "lasse marling",
-      "emails": [
-        "lassemarling@hotmail.com"
-      ],
-      "phones": [
-        "53624086"
-      ],
+      "emails": ["lassemarling@hotmail.com"],
+      "phones": ["53624086"],
       "addresses": [],
-      "companies": [
-        "Lasse  Marling"
-      ],
+      "companies": ["Lasse  Marling"],
       "billyCustomerId": "TmTIvQ2pRUOUagrHKzAGFA",
       "calendarEvents": [
         {
@@ -6301,10 +5830,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6447,19 +5973,13 @@
       "name": "Leadpoint ApS",
       "normalizedName": "leadpoint aps",
       "emails": [],
-      "phones": [
-        "70305880"
-      ],
+      "phones": ["70305880"],
       "addresses": [],
-      "companies": [
-        "Leadpoint ApS"
-      ],
+      "companies": ["Leadpoint ApS"],
       "billyCustomerId": "NoycKzxFRtCXG8kBRRHb9g",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6512,19 +6032,13 @@
       "name": "Lidl Danmark K/S",
       "normalizedName": "lidl danmark ks",
       "emails": [],
-      "phones": [
-        "76350000"
-      ],
+      "phones": ["76350000"],
       "addresses": [],
-      "companies": [
-        "Lidl Danmark K/S"
-      ],
+      "companies": ["Lidl Danmark K/S"],
       "billyCustomerId": "5xPB29OVT9usxK6P61iM2A",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6577,19 +6091,13 @@
       "name": "Lis Hauerbach",
       "normalizedName": "lis hauerbach",
       "emails": [],
-      "phones": [
-        "21285402"
-      ],
+      "phones": ["21285402"],
       "addresses": [],
-      "companies": [
-        "Lis Hauerbach"
-      ],
+      "companies": ["Lis Hauerbach"],
       "billyCustomerId": "70UA6l4ETdquKSoDQXTDKg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6644,15 +6152,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Local Restaurant"
-      ],
+      "companies": ["Local Restaurant"],
       "billyCustomerId": "F3Ul3c20RuSHt7KzXkdqXA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6707,15 +6211,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Lunar Bank A/S"
-      ],
+      "companies": ["Lunar Bank A/S"],
       "billyCustomerId": "tbJdXMDQQl4gLlOAanb8UQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6770,15 +6270,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Magney Madsen"
-      ],
+      "companies": ["Magney Madsen"],
       "billyCustomerId": "PQAkLwTYQvCsB4JAPlxukQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6831,19 +6327,13 @@
       "name": "Magny Madsen",
       "normalizedName": "magny madsen",
       "emails": [],
-      "phones": [
-        "24255615"
-      ],
+      "phones": ["24255615"],
       "addresses": [],
-      "companies": [
-        "Magny Madsen"
-      ],
+      "companies": ["Magny Madsen"],
       "billyCustomerId": "aZItF7R9RLaNQSFknqxbjQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6896,13 +6386,9 @@
       "name": "Maria Herold",
       "normalizedName": "maria herold",
       "emails": [],
-      "phones": [
-        "22661854"
-      ],
+      "phones": ["22661854"],
       "addresses": [],
-      "companies": [
-        "Maria Herold"
-      ],
+      "companies": ["Maria Herold"],
       "billyCustomerId": "BXomTA4ETWyHkQPTyDxzhA",
       "calendarEvents": [
         {
@@ -6914,10 +6400,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -6979,17 +6462,10 @@
       "id": "PROFILE_0087",
       "name": "Marie  Thode",
       "normalizedName": "marie thode",
-      "emails": [
-        "mth@holst-law.com"
-      ],
-      "phones": [
-        "20909709",
-        "30181053"
-      ],
+      "emails": ["mth@holst-law.com"],
+      "phones": ["20909709", "30181053"],
       "addresses": [],
-      "companies": [
-        "Marie  Thode"
-      ],
+      "companies": ["Marie  Thode"],
       "billyCustomerId": "Kruj1MzmS2OLZxvFTr8amQ",
       "calendarEvents": [
         {
@@ -7022,10 +6498,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7111,16 +6584,10 @@
       "id": "PROFILE_0088",
       "name": "Martin Holm",
       "normalizedName": "martin holm",
-      "emails": [
-        "martiholm@gmail.com"
-      ],
-      "phones": [
-        "22650226"
-      ],
+      "emails": ["martiholm@gmail.com"],
+      "phones": ["22650226"],
       "addresses": [],
-      "companies": [
-        "Martin Holm"
-      ],
+      "companies": ["Martin Holm"],
       "billyCustomerId": "rzeIyWSYSsmWv4QPTeFvlA",
       "calendarEvents": [
         {
@@ -7146,10 +6613,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7230,15 +6694,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Mathias Pedersen"
-      ],
+      "companies": ["Mathias Pedersen"],
       "billyCustomerId": "uW7JQ2JxT8OyKRAU1pR4JA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7293,15 +6753,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Mathias Skovsbøl"
-      ],
+      "companies": ["Mathias Skovsbøl"],
       "billyCustomerId": "zTJ2WHP2TZuRQQPdzg6acg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7356,15 +6812,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Merete Bruun"
-      ],
+      "companies": ["Merete Bruun"],
       "billyCustomerId": "iiBhjOugRXKDuLaa9vDbEQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7417,19 +6869,13 @@
       "name": "Metin's Grill v/Perihan Pøhrenk",
       "normalizedName": "metins grill vperihan pøhrenk",
       "emails": [],
-      "phones": [
-        "53501511"
-      ],
+      "phones": ["53501511"],
       "addresses": [],
-      "companies": [
-        "Metin's Grill v/Perihan Pøhrenk"
-      ],
+      "companies": ["Metin's Grill v/Perihan Pøhrenk"],
       "billyCustomerId": "CGclD3jORUukLdnskEeMiw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7481,16 +6927,10 @@
       "id": "PROFILE_0093",
       "name": "Mette Grøn",
       "normalizedName": "mette grøn",
-      "emails": [
-        "mette409@gmail.com"
-      ],
-      "phones": [
-        "60641085"
-      ],
+      "emails": ["mette409@gmail.com"],
+      "phones": ["60641085"],
       "addresses": [],
-      "companies": [
-        "Mette Grøn"
-      ],
+      "companies": ["Mette Grøn"],
       "billyCustomerId": "ISbUGGNmSkGpYyCqNHEUIQ",
       "calendarEvents": [
         {
@@ -7509,10 +6949,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7582,16 +7019,10 @@
       "id": "PROFILE_0094",
       "name": "Mette Jønstrup Dollerup",
       "normalizedName": "mette jønstrup dollerup",
-      "emails": [
-        "dollerup10@hotmail.com"
-      ],
-      "phones": [
-        "23665075"
-      ],
+      "emails": ["dollerup10@hotmail.com"],
+      "phones": ["23665075"],
       "addresses": [],
-      "companies": [
-        "Mette Jønstrup Dollerup"
-      ],
+      "companies": ["Mette Jønstrup Dollerup"],
       "billyCustomerId": "DAxWoq91QMarfRdWU2D27Q",
       "calendarEvents": [
         {
@@ -7603,10 +7034,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7668,16 +7096,10 @@
       "id": "PROFILE_0095",
       "name": "Mette Nielsen",
       "normalizedName": "mette nielsen",
-      "emails": [
-        "mette_nielsen46@hotmail.com"
-      ],
-      "phones": [
-        "28918703"
-      ],
+      "emails": ["mette_nielsen46@hotmail.com"],
+      "phones": ["28918703"],
       "addresses": [],
-      "companies": [
-        "Mette Nielsen"
-      ],
+      "companies": ["Mette Nielsen"],
       "billyCustomerId": "uWnhBJuuTFykbTJGXai2hA",
       "calendarEvents": [
         {
@@ -7689,10 +7111,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7754,16 +7173,10 @@
       "id": "PROFILE_0096",
       "name": "Mi Duborg",
       "normalizedName": "mi duborg",
-      "emails": [
-        "mi_dubsson@hotmail.com"
-      ],
-      "phones": [
-        "40600767"
-      ],
+      "emails": ["mi_dubsson@hotmail.com"],
+      "phones": ["40600767"],
       "addresses": [],
-      "companies": [
-        "Mi Duborg"
-      ],
+      "companies": ["Mi Duborg"],
       "billyCustomerId": "RE6DQPBYToyMuZLOSs8b1g",
       "calendarEvents": [
         {
@@ -7789,10 +7202,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7873,15 +7283,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Minimal Customer Test"
-      ],
+      "companies": ["Minimal Customer Test"],
       "billyCustomerId": "642jZfHMRrGIclbJq6KHcA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -7933,16 +7339,10 @@
       "id": "PROFILE_0098",
       "name": "Nadia Møllebjerg",
       "normalizedName": "nadia møllebjerg",
-      "emails": [
-        "nadia.mollebjerg@hotmail.com"
-      ],
-      "phones": [
-        "60601963"
-      ],
+      "emails": ["nadia.mollebjerg@hotmail.com"],
+      "phones": ["60601963"],
       "addresses": [],
-      "companies": [
-        "Nadia Møllebjerg"
-      ],
+      "companies": ["Nadia Møllebjerg"],
       "billyCustomerId": "KR7swDuRTFW8ZO2voP8fuw",
       "calendarEvents": [
         {
@@ -7954,10 +7354,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8022,15 +7419,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Nettbureau AS"
-      ],
+      "companies": ["Nettbureau AS"],
       "billyCustomerId": "HAWkErxqTBynGb4oC5Bv4Q",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8083,19 +7476,13 @@
       "name": "NORDIC SERVICE PARTNERS A/S",
       "normalizedName": "nordic service partners as",
       "emails": [],
-      "phones": [
-        "33932811"
-      ],
+      "phones": ["33932811"],
       "addresses": [],
-      "companies": [
-        "NORDIC SERVICE PARTNERS A/S"
-      ],
+      "companies": ["NORDIC SERVICE PARTNERS A/S"],
       "billyCustomerId": "SefdzflUTcGv8MjADtenUw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8150,15 +7537,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "OpenRouter, Inc"
-      ],
+      "companies": ["OpenRouter, Inc"],
       "billyCustomerId": "TyFAWQFVSoKt83LRxDDfCA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8210,17 +7593,10 @@
       "id": "PROFILE_0102",
       "name": "Patrick  Ville",
       "normalizedName": "patrick ville",
-      "emails": [
-        "patrickville90@gmail.com"
-      ],
-      "phones": [
-        "+45 41 14 14 81",
-        "41141481"
-      ],
+      "emails": ["patrickville90@gmail.com"],
+      "phones": ["+45 41 14 14 81", "41141481"],
       "addresses": [],
-      "companies": [
-        "Patrick  Ville"
-      ],
+      "companies": ["Patrick  Ville"],
       "billyCustomerId": "ywqRNEUbSdi8RYYofbo8cg",
       "calendarEvents": [
         {
@@ -8232,10 +7608,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8297,17 +7670,10 @@
       "id": "PROFILE_0103",
       "name": "Peder Kjær",
       "normalizedName": "peder kjær",
-      "emails": [
-        "pederkjaer@hotmail.com"
-      ],
-      "phones": [
-        "31 77 90 87",
-        "31779087"
-      ],
+      "emails": ["pederkjaer@hotmail.com"],
+      "phones": ["31 77 90 87", "31779087"],
       "addresses": [],
-      "companies": [
-        "Peder Kjær"
-      ],
+      "companies": ["Peder Kjær"],
       "billyCustomerId": "0kIj3GElSnK2iwiHV2thzw",
       "calendarEvents": [
         {
@@ -8396,10 +7762,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8549,17 +7912,10 @@
       "id": "PROFILE_0104",
       "name": "Pia Duffy",
       "normalizedName": "pia duffy",
-      "emails": [
-        "piaduffy@hotmail.com"
-      ],
-      "phones": [
-        "28 97 04 56",
-        "28970456"
-      ],
+      "emails": ["piaduffy@hotmail.com"],
+      "phones": ["28 97 04 56", "28970456"],
       "addresses": [],
-      "companies": [
-        "Pia Duffy"
-      ],
+      "companies": ["Pia Duffy"],
       "billyCustomerId": "vm80LQ7PT6Sl0wjQLUroyw",
       "calendarEvents": [
         {
@@ -8571,10 +7927,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8637,19 +7990,13 @@
       "name": "PITA HYTTEN",
       "normalizedName": "pita hytten",
       "emails": [],
-      "phones": [
-        "53785338"
-      ],
+      "phones": ["53785338"],
       "addresses": [],
-      "companies": [
-        "PITA HYTTEN"
-      ],
+      "companies": ["PITA HYTTEN"],
       "billyCustomerId": "MjmblzP5RPqOdOlYiN04nQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8702,19 +8049,13 @@
       "name": "Pizza Dag and Night v/Abdul Basir Ghafouri",
       "normalizedName": "pizza dag and night vabdul basir ghafouri",
       "emails": [],
-      "phones": [
-        "20663140"
-      ],
+      "phones": ["20663140"],
       "addresses": [],
-      "companies": [
-        "Pizza Dag and Night v/Abdul Basir Ghafouri"
-      ],
+      "companies": ["Pizza Dag and Night v/Abdul Basir Ghafouri"],
       "billyCustomerId": "b5K7c84iTROI4MPGkFnilQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8767,19 +8108,13 @@
       "name": "POSTNORD STRÅLFORS A/S",
       "normalizedName": "postnord strålfors as",
       "emails": [],
-      "phones": [
-        "33868686"
-      ],
+      "phones": ["33868686"],
       "addresses": [],
-      "companies": [
-        "POSTNORD STRÅLFORS A/S"
-      ],
+      "companies": ["POSTNORD STRÅLFORS A/S"],
       "billyCustomerId": "vpNUQ2WWTWaJUBBaavDLAw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8834,15 +8169,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Q-Park"
-      ],
+      "companies": ["Q-Park"],
       "billyCustomerId": "POkrxkp6QNuVkuuxkXu2vQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8897,15 +8228,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Rasmus Faurschou Andersen"
-      ],
+      "companies": ["Rasmus Faurschou Andersen"],
       "billyCustomerId": "mfdTvF3bQQCiEBd3nNL13w",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -8960,15 +8287,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "René Fly Jensen"
-      ],
+      "companies": ["René Fly Jensen"],
       "billyCustomerId": "SM0SIkBqS6OJ72GhGkC6Jw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9021,19 +8344,13 @@
       "name": "Salling Group A/S",
       "normalizedName": "salling group as",
       "emails": [],
-      "phones": [
-        "87785000"
-      ],
+      "phones": ["87785000"],
       "addresses": [],
-      "companies": [
-        "Salling Group A/S"
-      ],
+      "companies": ["Salling Group A/S"],
       "billyCustomerId": "e80FhkUHR8ayCaqGue21jg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9085,16 +8402,10 @@
       "id": "PROFILE_0112",
       "name": "Sebastian Fuhlendorff Christensen",
       "normalizedName": "sebastian fuhlendorff christensen",
-      "emails": [
-        "sfc@fh-aarhus.com"
-      ],
-      "phones": [
-        "22442380"
-      ],
+      "emails": ["sfc@fh-aarhus.com"],
+      "phones": ["22442380"],
       "addresses": [],
-      "companies": [
-        "Sebastian Fuhlendorff Christensen"
-      ],
+      "companies": ["Sebastian Fuhlendorff Christensen"],
       "billyCustomerId": "eW8tk8pvSTuACY9CrAw4xw",
       "calendarEvents": [
         {
@@ -9106,10 +8417,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9174,15 +8482,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Sehested Retail ApS"
-      ],
+      "companies": ["Sehested Retail ApS"],
       "billyCustomerId": "9EZ5S0csQ0O6xqL36mDJfg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9237,15 +8541,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Steen Hansen & Dorte Elgaard"
-      ],
+      "companies": ["Steen Hansen & Dorte Elgaard"],
       "billyCustomerId": "ocaRxNd1REm0IM1CEpgeOA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9298,19 +8598,13 @@
       "name": "Tanja  Brokmann",
       "normalizedName": "tanja brokmann",
       "emails": [],
-      "phones": [
-        "51215189"
-      ],
+      "phones": ["51215189"],
       "addresses": [],
-      "companies": [
-        "Tanja  Brokmann"
-      ],
+      "companies": ["Tanja  Brokmann"],
       "billyCustomerId": "rDQCSpkETBexu71ak46fMg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9365,15 +8659,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Tech Startup A/S"
-      ],
+      "companies": ["Tech Startup A/S"],
       "billyCustomerId": "qRrmzV1cRLqa92PJTg16pg",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9426,19 +8716,13 @@
       "name": "TELENOR A/S",
       "normalizedName": "telenor as",
       "emails": [],
-      "phones": [
-        "72121212"
-      ],
+      "phones": ["72121212"],
       "addresses": [],
-      "companies": [
-        "TELENOR A/S"
-      ],
+      "companies": ["TELENOR A/S"],
       "billyCustomerId": "CMwN2BbxTJaPVKnDwbVQaQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9493,15 +8777,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Test Contact Direct"
-      ],
+      "companies": ["Test Contact Direct"],
       "billyCustomerId": "6AddII2IQQaqj4pmpq27pw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9554,19 +8834,13 @@
       "name": "Test Customer - Email Phone Test",
       "normalizedName": "test customer  email phone test",
       "emails": [],
-      "phones": [
-        "12345678"
-      ],
+      "phones": ["12345678"],
       "addresses": [],
-      "companies": [
-        "Test Customer - Email Phone Test"
-      ],
+      "companies": ["Test Customer - Email Phone Test"],
       "billyCustomerId": "L7GjRq7iTsiuq0iH2vl8aA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9621,15 +8895,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Test Customer 1761921934962"
-      ],
+      "companies": ["Test Customer 1761921934962"],
       "billyCustomerId": "2YAK5LxGS6ywb24AmcdEMw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9682,19 +8952,13 @@
       "name": "Test Kunde - SLET MIG",
       "normalizedName": "test kunde  slet mig",
       "emails": [],
-      "phones": [
-        "12345678"
-      ],
+      "phones": ["12345678"],
       "addresses": [],
-      "companies": [
-        "Test Kunde - SLET MIG"
-      ],
+      "companies": ["Test Kunde - SLET MIG"],
       "billyCustomerId": "lPMf0MR5TMSDvzvjaofeCw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9749,15 +9013,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Test Minimal ContactPerson"
-      ],
+      "companies": ["Test Minimal ContactPerson"],
       "billyCustomerId": "KXaWBkWrTJqhDHl8Ckk1Cw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9810,19 +9070,13 @@
       "name": "Test With Phone",
       "normalizedName": "test with phone",
       "emails": [],
-      "phones": [
-        "12345678"
-      ],
+      "phones": ["12345678"],
       "addresses": [],
-      "companies": [
-        "Test With Phone"
-      ],
+      "companies": ["Test With Phone"],
       "billyCustomerId": "bOGU3QZwTdqjHimr9HJqZQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9874,16 +9128,10 @@
       "id": "PROFILE_0124",
       "name": "Thor  Sporring",
       "normalizedName": "thor sporring",
-      "emails": [
-        "thor@sporring.eu"
-      ],
-      "phones": [
-        "28896657"
-      ],
+      "emails": ["thor@sporring.eu"],
+      "phones": ["28896657"],
       "addresses": [],
-      "companies": [
-        "Thor  Sporring"
-      ],
+      "companies": ["Thor  Sporring"],
       "billyCustomerId": "ePvUZGtVRw6e4EUyxlmXqQ",
       "calendarEvents": [
         {
@@ -9895,10 +9143,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -9961,13 +9206,9 @@
       "name": "Tobias Hansen",
       "normalizedName": "tobias hansen",
       "emails": [],
-      "phones": [
-        "+4525655046"
-      ],
+      "phones": ["+4525655046"],
       "addresses": [],
-      "companies": [
-        "Tobias Hansen"
-      ],
+      "companies": ["Tobias Hansen"],
       "billyCustomerId": "EPOrqdLORRaz4PIQ5VYrKw",
       "calendarEvents": [
         {
@@ -9979,10 +9220,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10044,17 +9282,10 @@
       "id": "PROFILE_0126",
       "name": "Tommy Callesen",
       "normalizedName": "tommy callesen",
-      "emails": [
-        "tommy_callesen1234@hotmail.com"
-      ],
-      "phones": [
-        "29365355",
-        "26365352"
-      ],
+      "emails": ["tommy_callesen1234@hotmail.com"],
+      "phones": ["29365355", "26365352"],
       "addresses": [],
-      "companies": [
-        "Tommy Callesen"
-      ],
+      "companies": ["Tommy Callesen"],
       "billyCustomerId": "66vRnVHfTlQwOi9Vdo8E2Q",
       "calendarEvents": [
         {
@@ -10122,10 +9353,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10254,15 +9482,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "TOTAL RENT.DK ApS"
-      ],
+      "companies": ["TOTAL RENT.DK ApS"],
       "billyCustomerId": "OrZpnpuUTqad7f1I3BTe2w",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10317,15 +9541,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Uncle's I/S"
-      ],
+      "companies": ["Uncle's I/S"],
       "billyCustomerId": "iTi18etIReK6IRo2lnAIeQ",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10380,15 +9600,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Vesterbrogade BB ApS"
-      ],
+      "companies": ["Vesterbrogade BB ApS"],
       "billyCustomerId": "rTkRRpM2Q4mRG7vryDWjTw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10440,16 +9656,10 @@
       "id": "PROFILE_0130",
       "name": "Vibeke Bregnballe",
       "normalizedName": "vibeke bregnballe",
-      "emails": [
-        "vbregnballe@hotmail.com"
-      ],
-      "phones": [
-        "61699001"
-      ],
+      "emails": ["vbregnballe@hotmail.com"],
+      "phones": ["61699001"],
       "addresses": [],
-      "companies": [
-        "Vibeke Bregnballe"
-      ],
+      "companies": ["Vibeke Bregnballe"],
       "billyCustomerId": "vbC9GZAtTh2ltOAUf5Mqsg",
       "calendarEvents": [
         {
@@ -10475,11 +9685,7 @@
           "email": "vbregnballe@hotmail.com"
         }
       ],
-      "sources": [
-        "billy",
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["billy", "calendar", "gmail"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10557,19 +9763,13 @@
       "name": "Vindunor A/S",
       "normalizedName": "vindunor as",
       "emails": [],
-      "phones": [
-        "+45 44 12 00\n64"
-      ],
+      "phones": ["+45 44 12 00\n64"],
       "addresses": [],
-      "companies": [
-        "Vindunor A/S"
-      ],
+      "companies": ["Vindunor A/S"],
       "billyCustomerId": "k7kbkeFkS9uoBZqSdGErBw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10621,14 +9821,10 @@
       "id": "PROFILE_0132",
       "name": "Vinni Hansen",
       "normalizedName": "vinni hansen",
-      "emails": [
-        "glassau-hansen@sol.dk"
-      ],
+      "emails": ["glassau-hansen@sol.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Vinni Hansen"
-      ],
+      "companies": ["Vinni Hansen"],
       "billyCustomerId": "mCwxTzLCR7i19c9hTyD0xg",
       "calendarEvents": [
         {
@@ -10640,10 +9836,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "billy",
-        "calendar"
-      ],
+      "sources": ["billy", "calendar"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10708,15 +9901,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "VistaPrint"
-      ],
+      "companies": ["VistaPrint"],
       "billyCustomerId": "7NXOukmtQZynfEceaLIZtw",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10771,15 +9960,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Wolt Danmark ApS"
-      ],
+      "companies": ["Wolt Danmark ApS"],
       "billyCustomerId": "lVqhJgIyR7qmZnKV4mrqTA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10834,15 +10019,11 @@
       "emails": [],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "Yami ApS"
-      ],
+      "companies": ["Yami ApS"],
       "billyCustomerId": "M9FPnzYTSyeLaWkT0CqVsA",
       "calendarEvents": [],
       "gmailThreads": [],
-      "sources": [
-        "billy"
-      ],
+      "sources": ["billy"],
       "confidence": 1,
       "rawData": {
         "billy": {
@@ -10895,13 +10076,7 @@
       "name": "Unknown",
       "normalizedName": "unknown",
       "emails": [],
-      "phones": [
-        "24794309",
-        "27587790",
-        "44788330",
-        "45222880",
-        "52603798"
-      ],
+      "phones": ["24794309", "27587790", "44788330", "45222880", "52603798"],
       "addresses": [],
       "companies": [],
       "calendarEvents": [
@@ -11138,9 +10313,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 1,
       "lastActivity": "2025-11-13T08:00:00+01:00",
       "rawData": {
@@ -11417,18 +10590,10 @@
       "id": "PROFILE_0137",
       "name": "Hanne Qvist Flytterengøring",
       "normalizedName": "hanne qvist flytterengøring",
-      "emails": [
-        "h-qvist@hotmail.com"
-      ],
-      "phones": [
-        "26279680"
-      ],
-      "addresses": [
-        "Broloftet 14 8240 Risskov, Danmark"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["h-qvist@hotmail.com"],
+      "phones": ["26279680"],
+      "addresses": ["Broloftet 14 8240 Risskov, Danmark"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-07-09T15:30:00+02:00",
@@ -11460,9 +10625,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 1,
       "lastActivity": "2025-08-04T10:00:00+02:00",
       "rawData": {
@@ -11513,15 +10676,8 @@
         "leminen@live.dk",
         "refj@dalgas.com"
       ],
-      "phones": [
-        "31653861",
-        "40456319",
-        "50409949",
-        "42607672"
-      ],
-      "addresses": [
-        "Sølykken 16 8530 Hjortshøj, Danmark"
-      ],
+      "phones": ["31653861", "40456319", "50409949", "42607672"],
+      "addresses": ["Sølykken 16 8530 Hjortshøj, Danmark"],
       "companies": [],
       "calendarEvents": [
         {
@@ -11713,10 +10869,7 @@
           "email": "lars.joenstrup@live.dk"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 1,
       "lastActivity": "2025-12-22T11:00:00+01:00",
       "rawData": {
@@ -11939,18 +11092,10 @@
       "id": "PROFILE_0150",
       "name": "Jørgen Pragh",
       "normalizedName": "jørgen pragh",
-      "emails": [
-        "joergenpagh1948@gmail.com"
-      ],
-      "phones": [
-        "30666685"
-      ],
-      "addresses": [
-        "Sølykken 20, 8530 Hjortshøj"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["joergenpagh1948@gmail.com"],
+      "phones": ["30666685"],
+      "addresses": ["Sølykken 20, 8530 Hjortshøj"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-08-11T10:30:00+02:00",
@@ -11982,10 +11127,7 @@
           "email": "joergenpagh1948@gmail.com"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 1,
       "lastActivity": "2025-10-30T08:00:00+01:00",
       "rawData": {
@@ -12028,18 +11170,10 @@
       "id": "PROFILE_0159",
       "name": "lla",
       "normalizedName": "lla",
-      "emails": [
-        "lla@vindunor.dk"
-      ],
-      "phones": [
-        "+4544120064"
-      ],
-      "addresses": [
-        "Rymarken 2, St. Th., 8210 Aarhus V"
-      ],
-      "companies": [
-        "vindunor.dk"
-      ],
+      "emails": ["lla@vindunor.dk"],
+      "phones": ["+4544120064"],
+      "addresses": ["Rymarken 2, St. Th., 8210 Aarhus V"],
+      "companies": ["vindunor.dk"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-02T12:15:00+02:00",
@@ -12155,9 +11289,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 1,
       "lastActivity": "2025-12-17T17:00:00+01:00",
       "rawData": {
@@ -12298,18 +11430,10 @@
       "id": "PROFILE_0139",
       "name": "cecilie_boegh",
       "normalizedName": "cecilie_boegh",
-      "emails": [
-        "cecilie_boegh@hotmail.com"
-      ],
-      "phones": [
-        "30669748"
-      ],
-      "addresses": [
-        "Aldersrovej 19a"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["cecilie_boegh@hotmail.com"],
+      "phones": ["30669748"],
+      "addresses": ["Aldersrovej 19a"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-07-12T10:00:00+02:00",
@@ -12327,9 +11451,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-07-12T10:00:00+02:00",
       "rawData": {
@@ -12358,18 +11480,10 @@
       "id": "PROFILE_0140",
       "name": "otteanne",
       "normalizedName": "otteanne",
-      "emails": [
-        "otteanne@hotmail.com"
-      ],
-      "phones": [
-        "26390762"
-      ],
-      "addresses": [
-        "Grønnegade 76, stuen 3, 8000 Aarhus C"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["otteanne@hotmail.com"],
+      "phones": ["26390762"],
+      "addresses": ["Grønnegade 76, stuen 3, 8000 Aarhus C"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-07-13T10:00:00+02:00",
@@ -12387,9 +11501,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-07-13T10:00:00+02:00",
       "rawData": {
@@ -12418,18 +11530,10 @@
       "id": "PROFILE_0141",
       "name": "Restaurant Rengøring",
       "normalizedName": "restaurant rengøring",
-      "emails": [
-        "ahmedgt2005@gmail.com"
-      ],
-      "phones": [
-        "22841379"
-      ],
-      "addresses": [
-        "Sankt Pauls Kirkeplads 19 8000 Aarhus C, Danmark"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["ahmedgt2005@gmail.com"],
+      "phones": ["22841379"],
+      "addresses": ["Sankt Pauls Kirkeplads 19 8000 Aarhus C, Danmark"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-07-15T08:00:00+02:00",
@@ -12447,9 +11551,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-07-15T08:00:00+02:00",
       "rawData": {
@@ -12478,18 +11580,10 @@
       "id": "PROFILE_0142",
       "name": "Jane Allermann",
       "normalizedName": "jane allermann",
-      "emails": [
-        "jane.allermann@outlook.dk"
-      ],
-      "phones": [
-        "23376874"
-      ],
-      "addresses": [
-        "Kastbjerg Byvej 8 Kastbjerg, 8585 Glesborg, Danmark"
-      ],
-      "companies": [
-        "outlook.dk"
-      ],
+      "emails": ["jane.allermann@outlook.dk"],
+      "phones": ["23376874"],
+      "addresses": ["Kastbjerg Byvej 8 Kastbjerg, 8585 Glesborg, Danmark"],
+      "companies": ["outlook.dk"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-07-18T15:00:00+02:00",
@@ -12507,9 +11601,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-07-18T15:00:00+02:00",
       "rawData": {
@@ -12538,16 +11630,10 @@
       "id": "PROFILE_0143",
       "name": "Kasper Munk",
       "normalizedName": "kasper munk",
-      "emails": [
-        "kaspermunkhansen@gmail.com"
-      ],
-      "phones": [
-        "60127352"
-      ],
+      "emails": ["kaspermunkhansen@gmail.com"],
+      "phones": ["60127352"],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-07-20T10:00:00+02:00",
@@ -12565,9 +11651,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-07-20T10:00:00+02:00",
       "rawData": {
@@ -12596,18 +11680,10 @@
       "id": "PROFILE_0144",
       "name": "Henrik Brøsted Flytterengøring",
       "normalizedName": "henrik brøsted flytterengøring",
-      "emails": [
-        "h.brosted@gmail.cm"
-      ],
-      "phones": [
-        "60464822"
-      ],
-      "addresses": [
-        "Langelinieparken 3A, 1, 8000 Aarhus, Danmark"
-      ],
-      "companies": [
-        "gmail.cm"
-      ],
+      "emails": ["h.brosted@gmail.cm"],
+      "phones": ["60464822"],
+      "addresses": ["Langelinieparken 3A, 1, 8000 Aarhus, Danmark"],
+      "companies": ["gmail.cm"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-07-31T12:00:00+02:00",
@@ -12625,9 +11701,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-07-31T12:00:00+02:00",
       "rawData": {
@@ -12657,12 +11731,8 @@
       "name": "Jonas Sloth",
       "normalizedName": "jonas sloth",
       "emails": [],
-      "phones": [
-        "22970309"
-      ],
-      "addresses": [
-        "Ferdinand Sallings Stræde 17, 8000 Aarhus C"
-      ],
+      "phones": ["22970309"],
+      "addresses": ["Ferdinand Sallings Stræde 17, 8000 Aarhus C"],
       "companies": [],
       "calendarEvents": [
         {
@@ -12681,9 +11751,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-08-06T10:00:00+02:00",
       "rawData": {
@@ -12714,9 +11782,7 @@
       "normalizedName": "ane johanne davidsen",
       "emails": [],
       "phones": [],
-      "addresses": [
-        "Græsvangen 56, 8381 Tilst, Danmark"
-      ],
+      "addresses": ["Græsvangen 56, 8381 Tilst, Danmark"],
       "companies": [],
       "calendarEvents": [
         {
@@ -12735,9 +11801,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-08-08T10:00:00+02:00",
       "rawData": {
@@ -12767,12 +11831,8 @@
       "name": "Check Out Cleaning",
       "normalizedName": "check out cleaning",
       "emails": [],
-      "phones": [
-        "+4522650226"
-      ],
-      "addresses": [
-        "Lone Kellermanns Gade #11 st., 8000 Aarhus, Denmark"
-      ],
+      "phones": ["+4522650226"],
+      "addresses": ["Lone Kellermanns Gade #11 st., 8000 Aarhus, Denmark"],
       "companies": [],
       "calendarEvents": [
         {
@@ -12791,9 +11851,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-09-26T09:30:00+02:00",
       "rawData": {
@@ -12822,18 +11880,10 @@
       "id": "PROFILE_0166",
       "name": "Annette118a",
       "normalizedName": "annette118a",
-      "emails": [
-        "annette118a@gmail.com"
-      ],
-      "phones": [
-        "50921220"
-      ],
-      "addresses": [
-        "Byagervej 118A"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["annette118a@gmail.com"],
+      "phones": ["50921220"],
+      "addresses": ["Byagervej 118A"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-22T15:15:00+02:00",
@@ -12851,9 +11901,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-09-26T04:00:00+02:00",
       "rawData": {
@@ -12882,18 +11930,10 @@
       "id": "PROFILE_0168",
       "name": "hibberdk",
       "normalizedName": "hibberdk",
-      "emails": [
-        "hibberdk@gmail.com"
-      ],
-      "phones": [
-        "25787342"
-      ],
-      "addresses": [
-        "Fredensborgparken 23, 8260 Viby J"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["hibberdk@gmail.com"],
+      "phones": ["25787342"],
+      "addresses": ["Fredensborgparken 23, 8260 Viby J"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-25T10:00:00+02:00",
@@ -12911,9 +11951,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.9,
       "lastActivity": "2025-09-28T10:00:00+02:00",
       "rawData": {
@@ -12942,18 +11980,10 @@
       "id": "PROFILE_0178",
       "name": "Anita Faurholt",
       "normalizedName": "anita faurholt",
-      "emails": [
-        "anita@timfaurholt.dk"
-      ],
-      "phones": [
-        "22597322"
-      ],
-      "addresses": [
-        "Stenaldervej 199, 1, 1, 8220 Brabrand"
-      ],
-      "companies": [
-        "timfaurholt.dk"
-      ],
+      "emails": ["anita@timfaurholt.dk"],
+      "phones": ["22597322"],
+      "addresses": ["Stenaldervej 199, 1, 1, 8220 Brabrand"],
+      "companies": ["timfaurholt.dk"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-27T07:00:00+01:00",
@@ -12971,10 +12001,7 @@
           "email": "anita@timfaurholt.dk"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 0.9,
       "lastActivity": "2025-10-27T07:00:00+01:00",
       "rawData": {
@@ -13002,18 +12029,10 @@
       "id": "PROFILE_0179",
       "name": "Lone Beck",
       "normalizedName": "lone beck",
-      "emails": [
-        "lonesonderbys@hotmail.com"
-      ],
-      "phones": [
-        "41331021"
-      ],
-      "addresses": [
-        "Reventlowsvej, 8260 Viby J"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["lonesonderbys@hotmail.com"],
+      "phones": ["41331021"],
+      "addresses": ["Reventlowsvej, 8260 Viby J"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-29T12:00:00+01:00",
@@ -13031,10 +12050,7 @@
           "email": "lonesonderbys@hotmail.com"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 0.9,
       "lastActivity": "2025-10-29T12:00:00+01:00",
       "rawData": {
@@ -13061,18 +12077,10 @@
       "id": "PROFILE_0182",
       "name": "Mathias Skovsbol",
       "normalizedName": "mathias skovsbol",
-      "emails": [
-        "mathiassbp@gmail.com"
-      ],
-      "phones": [
-        "27517233"
-      ],
-      "addresses": [
-        "Skovvej 7A, 8751 Gedved"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["mathiassbp@gmail.com"],
+      "phones": ["27517233"],
+      "addresses": ["Skovvej 7A, 8751 Gedved"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-02T09:30:00+01:00",
@@ -13090,10 +12098,7 @@
           "email": "mathiassbp@gmail.com"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 0.9,
       "lastActivity": "2025-11-02T09:30:00+01:00",
       "rawData": {
@@ -13121,18 +12126,10 @@
       "id": "PROFILE_0186",
       "name": "Daniel Kofoed",
       "normalizedName": "daniel kofoed",
-      "emails": [
-        "danielkofoed35@hotmail.com"
-      ],
-      "phones": [
-        "23827406"
-      ],
-      "addresses": [
-        "Brendstrupvej 7, 8200 Aarhus, Danmark"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["danielkofoed35@hotmail.com"],
+      "phones": ["23827406"],
+      "addresses": ["Brendstrupvej 7, 8200 Aarhus, Danmark"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-12T14:00:00+01:00",
@@ -13150,10 +12147,7 @@
           "email": "danielkofoed35@hotmail.com"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 0.9,
       "lastActivity": "2025-11-12T14:00:00+01:00",
       "rawData": {
@@ -13181,18 +12175,10 @@
       "id": "PROFILE_0188",
       "name": "Niels Thaibert",
       "normalizedName": "niels thaibert",
-      "emails": [
-        "niels-thaibert@hotmail.com"
-      ],
-      "phones": [
-        "20476094"
-      ],
-      "addresses": [
-        "Peder Skrams Gade 53a, 8200 Aarhus N"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["niels-thaibert@hotmail.com"],
+      "phones": ["20476094"],
+      "addresses": ["Peder Skrams Gade 53a, 8200 Aarhus N"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-15T12:00:00+01:00",
@@ -13210,10 +12196,7 @@
           "email": "niels-thaibert@hotmail.com"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 0.9,
       "lastActivity": "2025-11-15T12:00:00+01:00",
       "rawData": {
@@ -13241,18 +12224,10 @@
       "id": "PROFILE_0189",
       "name": "Månedlig Rengøring",
       "normalizedName": "månedlig rengøring",
-      "emails": [
-        "m.hollaender@gmail.com"
-      ],
-      "phones": [
-        "31317371"
-      ],
-      "addresses": [
-        "Grumstolsvej 44B, 8270 Højbjerg"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["m.hollaender@gmail.com"],
+      "phones": ["31317371"],
+      "addresses": ["Grumstolsvej 44B, 8270 Højbjerg"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-18T09:00:00+01:00",
@@ -13270,10 +12245,7 @@
           "email": "m.hollaender@gmail.com"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 0.9,
       "lastActivity": "2025-11-18T09:00:00+01:00",
       "rawData": {
@@ -13301,18 +12273,10 @@
       "id": "PROFILE_0190",
       "name": "Florian Keppeler",
       "normalizedName": "florian keppeler",
-      "emails": [
-        "mail@florian-keppeler.com"
-      ],
-      "phones": [
-        "91822335"
-      ],
-      "addresses": [
-        "Kalmargade 16B, 8200 Aarhus N"
-      ],
-      "companies": [
-        "florian-keppeler.com"
-      ],
+      "emails": ["mail@florian-keppeler.com"],
+      "phones": ["91822335"],
+      "addresses": ["Kalmargade 16B, 8200 Aarhus N"],
+      "companies": ["florian-keppeler.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-22T09:00:00+01:00",
@@ -13330,10 +12294,7 @@
           "email": "mail@florian-keppeler.com"
         }
       ],
-      "sources": [
-        "calendar",
-        "gmail"
-      ],
+      "sources": ["calendar", "gmail"],
       "confidence": 0.9,
       "lastActivity": "2025-11-22T09:00:00+01:00",
       "rawData": {
@@ -13361,18 +12322,10 @@
       "id": "PROFILE_0148",
       "name": "Torben Munk Mørk",
       "normalizedName": "torben munk mørk",
-      "emails": [
-        "torbenmm91@gmail.com"
-      ],
-      "phones": [
-        "30206565"
-      ],
-      "addresses": [
-        "Holtvadvej 11, Gedved Mark, 8751"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["torbenmm91@gmail.com"],
+      "phones": ["30206565"],
+      "addresses": ["Holtvadvej 11, Gedved Mark, 8751"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-23T09:00:00+02:00",
@@ -13383,9 +12336,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-23T09:00:00+02:00",
       "rawData": {
@@ -13406,18 +12357,10 @@
       "id": "PROFILE_0149",
       "name": "Nikolaj Madsen",
       "normalizedName": "nikolaj madsen",
-      "emails": [
-        "nwsm97@gmail.com"
-      ],
-      "phones": [
-        "26207973"
-      ],
-      "addresses": [
-        "Gøteborg Allé 7S, 8200 Aarhus N"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["nwsm97@gmail.com"],
+      "phones": ["26207973"],
+      "addresses": ["Gøteborg Allé 7S, 8200 Aarhus N"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-15T08:00:00+01:00",
@@ -13428,9 +12371,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-11-15T08:00:00+01:00",
       "rawData": {
@@ -13453,9 +12394,7 @@
       "normalizedName": "jens kristensen",
       "emails": [],
       "phones": [],
-      "addresses": [
-        "Olfert Fischers Gade 3, 2. sal tv, Aarhus"
-      ],
+      "addresses": ["Olfert Fischers Gade 3, 2. sal tv, Aarhus"],
       "companies": [],
       "calendarEvents": [
         {
@@ -13467,9 +12406,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-13T08:00:00+02:00",
       "rawData": {
@@ -13492,9 +12429,7 @@
       "normalizedName": "lena rasmussen",
       "emails": [],
       "phones": [],
-      "addresses": [
-        "Kaserneboulevarden 16, 1. tv, 8000 Aarhus C"
-      ],
+      "addresses": ["Kaserneboulevarden 16, 1. tv, 8000 Aarhus C"],
       "companies": [],
       "calendarEvents": [
         {
@@ -13506,9 +12441,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-13T10:00:00+02:00",
       "rawData": {
@@ -13531,9 +12464,7 @@
       "normalizedName": "cecilie krogsgaard",
       "emails": [],
       "phones": [],
-      "addresses": [
-        "Hans Hartvig Seedorffs Stræde 16B, 1.4, 8000 Aarhus C"
-      ],
+      "addresses": ["Hans Hartvig Seedorffs Stræde 16B, 1.4, 8000 Aarhus C"],
       "companies": [],
       "calendarEvents": [
         {
@@ -13545,9 +12476,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-14T13:00:00+02:00",
       "rawData": {
@@ -13568,18 +12497,10 @@
       "id": "PROFILE_0154",
       "name": "Preben Kristensen",
       "normalizedName": "preben kristensen",
-      "emails": [
-        "langsand@gmail.com"
-      ],
-      "phones": [
-        "21703653"
-      ],
-      "addresses": [
-        "Vestre Ringgade 174, 8000 Aarhus C"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["langsand@gmail.com"],
+      "phones": ["21703653"],
+      "addresses": ["Vestre Ringgade 174, 8000 Aarhus C"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-08-18T15:00:00+02:00",
@@ -13590,9 +12511,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-18T15:00:00+02:00",
       "rawData": {
@@ -13613,18 +12532,10 @@
       "id": "PROFILE_0155",
       "name": "sreg",
       "normalizedName": "sreg",
-      "emails": [
-        "sreg@generaxion.dk"
-      ],
-      "phones": [
-        "+4521603614"
-      ],
-      "addresses": [
-        "Sankt Pauls Gade 3, 8000 Aarhus"
-      ],
-      "companies": [
-        "generaxion.dk"
-      ],
+      "emails": ["sreg@generaxion.dk"],
+      "phones": ["+4521603614"],
+      "addresses": ["Sankt Pauls Gade 3, 8000 Aarhus"],
+      "companies": ["generaxion.dk"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-08-21T10:30:00+02:00",
@@ -13635,9 +12546,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-21T10:30:00+02:00",
       "rawData": {
@@ -13672,9 +12581,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-22T13:00:00+02:00",
       "rawData": {
@@ -13695,18 +12602,10 @@
       "id": "PROFILE_0157",
       "name": "Kenneth Jon",
       "normalizedName": "kenneth jon",
-      "emails": [
-        "kennethjon1987@icloud.com"
-      ],
-      "phones": [
-        "22168747"
-      ],
-      "addresses": [
-        "Doris Kæraas Gade 6 St, 8240 Risskov"
-      ],
-      "companies": [
-        "icloud.com"
-      ],
+      "emails": ["kennethjon1987@icloud.com"],
+      "phones": ["22168747"],
+      "addresses": ["Doris Kæraas Gade 6 St, 8240 Risskov"],
+      "companies": ["icloud.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-08-29T15:00:00+02:00",
@@ -13717,9 +12616,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-29T15:00:00+02:00",
       "rawData": {
@@ -13740,18 +12637,10 @@
       "id": "PROFILE_0158",
       "name": "Ivan Thomsen",
       "normalizedName": "ivan thomsen",
-      "emails": [
-        "ivanthom47@icloud.com"
-      ],
-      "phones": [
-        "53604407"
-      ],
-      "addresses": [
-        "Koldkilde 125, 8520 Lystrup"
-      ],
-      "companies": [
-        "icloud.com"
-      ],
+      "emails": ["ivanthom47@icloud.com"],
+      "phones": ["53604407"],
+      "addresses": ["Koldkilde 125, 8520 Lystrup"],
+      "companies": ["icloud.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-08-30T12:00:00+02:00",
@@ -13762,9 +12651,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-08-30T12:00:00+02:00",
       "rawData": {
@@ -13785,18 +12672,10 @@
       "id": "PROFILE_0160",
       "name": "Tina Lunds",
       "normalizedName": "tina lunds",
-      "emails": [
-        "tinakamplund@gmail.com"
-      ],
-      "phones": [
-        "53388838"
-      ],
-      "addresses": [
-        "Nørre Alle 42L, 8000 Aarhus"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["tinakamplund@gmail.com"],
+      "phones": ["53388838"],
+      "addresses": ["Nørre Alle 42L, 8000 Aarhus"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-02T17:00:00+02:00",
@@ -13807,9 +12686,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-02T17:00:00+02:00",
       "rawData": {
@@ -13830,18 +12707,10 @@
       "id": "PROFILE_0161",
       "name": "Lis Hauerbach Rengøring",
       "normalizedName": "lis hauerbach rengøring",
-      "emails": [
-        "lishauerbach@gmail.com"
-      ],
-      "phones": [
-        "21285402"
-      ],
-      "addresses": [
-        "Pilebækvej 1, 8520 Lystrup, Danmark"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["lishauerbach@gmail.com"],
+      "phones": ["21285402"],
+      "addresses": ["Pilebækvej 1, 8520 Lystrup, Danmark"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-05T13:00:00+02:00",
@@ -13852,9 +12721,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-05T13:00:00+02:00",
       "rawData": {
@@ -13875,18 +12742,10 @@
       "id": "PROFILE_0162",
       "name": "Jonas Dejgaard Flytterengøring",
       "normalizedName": "jonas dejgaard flytterengøring",
-      "emails": [
-        "jonas.dejgaard@gmail.com"
-      ],
-      "phones": [
-        "21938171"
-      ],
-      "addresses": [
-        "Marselis Boulevard 74, 3. tv., 8000 Aarhus"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["jonas.dejgaard@gmail.com"],
+      "phones": ["21938171"],
+      "addresses": ["Marselis Boulevard 74, 3. tv., 8000 Aarhus"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-09T14:00:00+02:00",
@@ -13897,9 +12756,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-09T14:00:00+02:00",
       "rawData": {
@@ -13920,18 +12777,10 @@
       "id": "PROFILE_0163",
       "name": "Jens Ravn",
       "normalizedName": "jens ravn",
-      "emails": [
-        "juravn@gmail.com"
-      ],
-      "phones": [
-        "20732425"
-      ],
-      "addresses": [
-        "Tilst Skolevej 19A, 8381 Tilst"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["juravn@gmail.com"],
+      "phones": ["20732425"],
+      "addresses": ["Tilst Skolevej 19A, 8381 Tilst"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-12T13:00:00+02:00",
@@ -13942,9 +12791,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-12T13:00:00+02:00",
       "rawData": {
@@ -13965,18 +12812,10 @@
       "id": "PROFILE_0164",
       "name": "Julie Gravesen",
       "normalizedName": "julie gravesen",
-      "emails": [
-        "juliegravesen@hotmail.com"
-      ],
-      "phones": [
-        "20351367"
-      ],
-      "addresses": [
-        "Store Torv 10, 5, 8000 Aarhus"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["juliegravesen@hotmail.com"],
+      "phones": ["20351367"],
+      "addresses": ["Store Torv 10, 5, 8000 Aarhus"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-14T12:00:00+02:00",
@@ -13987,9 +12826,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-14T12:00:00+02:00",
       "rawData": {
@@ -14010,16 +12847,10 @@
       "id": "PROFILE_0165",
       "name": "cajaogtorben",
       "normalizedName": "cajaogtorben",
-      "emails": [
-        "cajaogtorben@gmail.com"
-      ],
+      "emails": ["cajaogtorben@gmail.com"],
       "phones": [],
-      "addresses": [
-        "Præstegårdsvej 24, Mårslet"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "addresses": ["Præstegårdsvej 24, Mårslet"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-19T13:00:00+02:00",
@@ -14030,9 +12861,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-19T13:00:00+02:00",
       "rawData": {
@@ -14053,18 +12882,10 @@
       "id": "PROFILE_0167",
       "name": "Henrik Holm",
       "normalizedName": "henrik holm",
-      "emails": [
-        "dkhenrikholm@live.com"
-      ],
-      "phones": [
-        "22618399"
-      ],
-      "addresses": [
-        "Skanderborgvej 94, St. 2., 8000 Aarhus C"
-      ],
-      "companies": [
-        "live.com"
-      ],
+      "emails": ["dkhenrikholm@live.com"],
+      "phones": ["22618399"],
+      "addresses": ["Skanderborgvej 94, St. 2., 8000 Aarhus C"],
+      "companies": ["live.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-09-23T08:00:00+02:00",
@@ -14075,9 +12896,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-09-23T08:00:00+02:00",
       "rawData": {
@@ -14098,16 +12917,10 @@
       "id": "PROFILE_0169",
       "name": "Michael Roach Flytterengøring",
       "normalizedName": "michael roach flytterengøring",
-      "emails": [
-        "mroach@mroach.com"
-      ],
+      "emails": ["mroach@mroach.com"],
       "phones": [],
-      "addresses": [
-        "Telefonsmøgen 24B, Aarhus"
-      ],
-      "companies": [
-        "mroach.com"
-      ],
+      "addresses": ["Telefonsmøgen 24B, Aarhus"],
+      "companies": ["mroach.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-11T10:00:00+02:00",
@@ -14118,9 +12931,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-11T10:00:00+02:00",
       "rawData": {
@@ -14141,18 +12952,10 @@
       "id": "PROFILE_0170",
       "name": "Eoin Galligan Flytterengøring",
       "normalizedName": "eoin galligan flytterengøring",
-      "emails": [
-        "eoingalligan@gmail.com"
-      ],
-      "phones": [
-        "60474391"
-      ],
-      "addresses": [
-        "Vestergaardsringen 69, 8260 Viby J"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["eoingalligan@gmail.com"],
+      "phones": ["60474391"],
+      "addresses": ["Vestergaardsringen 69, 8260 Viby J"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-12T08:00:00+02:00",
@@ -14163,9 +12966,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-12T08:00:00+02:00",
       "rawData": {
@@ -14186,18 +12987,10 @@
       "id": "PROFILE_0171",
       "name": "Sowdo Flytterengøring",
       "normalizedName": "sowdo flytterengøring",
-      "emails": [
-        "sowdahaaji@hotmail.com"
-      ],
-      "phones": [
-        "50107252"
-      ],
-      "addresses": [
-        "Rydevænget 73, 8210 Aarhus, Danmark"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["sowdahaaji@hotmail.com"],
+      "phones": ["50107252"],
+      "addresses": ["Rydevænget 73, 8210 Aarhus, Danmark"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-13T10:00:00+02:00",
@@ -14208,9 +13001,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-13T10:00:00+02:00",
       "rawData": {
@@ -14231,18 +13022,10 @@
       "id": "PROFILE_0172",
       "name": "Fanny Sørensen Flytterengøring",
       "normalizedName": "fanny sørensen flytterengøring",
-      "emails": [
-        "fannysorensen@gmail.com"
-      ],
-      "phones": [
-        "27596917"
-      ],
-      "addresses": [
-        "Vestre Ringgade 60, 1 th, 8000 Aarhus, Danmark"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["fannysorensen@gmail.com"],
+      "phones": ["27596917"],
+      "addresses": ["Vestre Ringgade 60, 1 th, 8000 Aarhus, Danmark"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-13T14:00:00+02:00",
@@ -14253,9 +13036,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-13T14:00:00+02:00",
       "rawData": {
@@ -14276,18 +13057,10 @@
       "id": "PROFILE_0173",
       "name": "Andersen Flytterengøring",
       "normalizedName": "andersen flytterengøring",
-      "emails": [
-        "rfarfa@gmail.com"
-      ],
-      "phones": [
-        "61662691"
-      ],
-      "addresses": [
-        "Høiriisgårdsvej 101, 8220 Brabrand"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["rfarfa@gmail.com"],
+      "phones": ["61662691"],
+      "addresses": ["Høiriisgårdsvej 101, 8220 Brabrand"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-15T12:00:00+02:00",
@@ -14298,9 +13071,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-15T12:00:00+02:00",
       "rawData": {
@@ -14321,18 +13092,10 @@
       "id": "PROFILE_0174",
       "name": "Bashar Nasouri Hovedrengøring",
       "normalizedName": "bashar nasouri hovedrengøring",
-      "emails": [
-        "bhn@nordpil.dk"
-      ],
-      "phones": [
-        "20468956"
-      ],
-      "addresses": [
-        "Gudenåvej 60, 8660 Skanderborg"
-      ],
-      "companies": [
-        "nordpil.dk"
-      ],
+      "emails": ["bhn@nordpil.dk"],
+      "phones": ["20468956"],
+      "addresses": ["Gudenåvej 60, 8660 Skanderborg"],
+      "companies": ["nordpil.dk"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-16T09:00:00+02:00",
@@ -14343,9 +13106,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-16T09:00:00+02:00",
       "rawData": {
@@ -14366,18 +13127,10 @@
       "id": "PROFILE_0175",
       "name": "Livie Yumeng Li Fokuseret Rengøring",
       "normalizedName": "livie yumeng li fokuseret rengøring",
-      "emails": [
-        "livie.li@hotmail.com"
-      ],
-      "phones": [
-        "50380361"
-      ],
-      "addresses": [
-        "Holbergsgade 10, 2 Tv, 8000 Aarhus"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["livie.li@hotmail.com"],
+      "phones": ["50380361"],
+      "addresses": ["Holbergsgade 10, 2 Tv, 8000 Aarhus"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-17T12:30:00+02:00",
@@ -14388,9 +13141,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-17T12:30:00+02:00",
       "rawData": {
@@ -14411,18 +13162,10 @@
       "id": "PROFILE_0176",
       "name": "Mathias Pedersen Flytterengøring",
       "normalizedName": "mathias pedersen flytterengøring",
-      "emails": [
-        "mathiaslpedersen@hotmail.com"
-      ],
-      "phones": [
-        "29638103"
-      ],
-      "addresses": [
-        "Mariane Thomsens G. 30, 8000 Aarhus C"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["mathiaslpedersen@hotmail.com"],
+      "phones": ["29638103"],
+      "addresses": ["Mariane Thomsens G. 30, 8000 Aarhus C"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-17T13:00:00+02:00",
@@ -14433,9 +13176,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-17T13:00:00+02:00",
       "rawData": {
@@ -14456,18 +13197,10 @@
       "id": "PROFILE_0177",
       "name": "Henrik Grostholm",
       "normalizedName": "henrik grostholm",
-      "emails": [
-        "henrikfrostholm@gmail.com"
-      ],
-      "phones": [
-        "29646444"
-      ],
-      "addresses": [
-        "Siimtoften 8 Hårby, 8660 Skanderborg"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["henrikfrostholm@gmail.com"],
+      "phones": ["29646444"],
+      "addresses": ["Siimtoften 8 Hårby, 8660 Skanderborg"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-10-23T11:30:00+02:00",
@@ -14478,9 +13211,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-23T11:30:00+02:00",
       "rawData": {
@@ -14502,9 +13233,7 @@
       "name": "John Kirk Nielsen",
       "normalizedName": "john kirk nielsen",
       "emails": [],
-      "phones": [
-        "+4551230828"
-      ],
+      "phones": ["+4551230828"],
       "addresses": [],
       "companies": [],
       "calendarEvents": [
@@ -14517,9 +13246,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-10-30T10:00:00+01:00",
       "rawData": {
@@ -14540,18 +13267,10 @@
       "id": "PROFILE_0181",
       "name": "Marianne Bukhave",
       "normalizedName": "marianne bukhave",
-      "emails": [
-        "mariannebukhave@gmail.com"
-      ],
-      "phones": [
-        "29929162"
-      ],
-      "addresses": [
-        "Nørreskovvej 59, 8382 Hinnerup"
-      ],
-      "companies": [
-        "gmail.com"
-      ],
+      "emails": ["mariannebukhave@gmail.com"],
+      "phones": ["29929162"],
+      "addresses": ["Nørreskovvej 59, 8382 Hinnerup"],
+      "companies": ["gmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-01T10:00:00+01:00",
@@ -14562,9 +13281,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-11-01T10:00:00+01:00",
       "rawData": {
@@ -14587,9 +13304,7 @@
       "normalizedName": "fouad amer hodaifa",
       "emails": [],
       "phones": [],
-      "addresses": [
-        "Fredens Moske, Edwin Rahrs Vej 32, 8220 Brabrand"
-      ],
+      "addresses": ["Fredens Moske, Edwin Rahrs Vej 32, 8220 Brabrand"],
       "companies": [],
       "calendarEvents": [
         {
@@ -14601,9 +13316,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-11-08T15:00:00+01:00",
       "rawData": {
@@ -14624,18 +13337,10 @@
       "id": "PROFILE_0184",
       "name": "Bjarne Kristensen",
       "normalizedName": "bjarne kristensen",
-      "emails": [
-        "bjarne.1955@hotmail.com"
-      ],
-      "phones": [
-        "60668276"
-      ],
-      "addresses": [
-        "Thit Jensens Gade 5, 2 5, 8000 Aarhus, Danmark"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["bjarne.1955@hotmail.com"],
+      "phones": ["60668276"],
+      "addresses": ["Thit Jensens Gade 5, 2 5, 8000 Aarhus, Danmark"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-11T12:45:00+01:00",
@@ -14646,9 +13351,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-11-11T12:45:00+01:00",
       "rawData": {
@@ -14669,18 +13372,10 @@
       "id": "PROFILE_0185",
       "name": "Claus Toft",
       "normalizedName": "claus toft",
-      "emails": [
-        "ctn@cc.au.dk"
-      ],
-      "phones": [
-        "28717109"
-      ],
-      "addresses": [
-        "Tranekærvej 57, 8240 Risskov, Danmark"
-      ],
-      "companies": [
-        "cc.au.dk"
-      ],
+      "emails": ["ctn@cc.au.dk"],
+      "phones": ["28717109"],
+      "addresses": ["Tranekærvej 57, 8240 Risskov, Danmark"],
+      "companies": ["cc.au.dk"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-12T08:00:00+01:00",
@@ -14691,9 +13386,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-11-12T08:00:00+01:00",
       "rawData": {
@@ -14714,18 +13407,10 @@
       "id": "PROFILE_0187",
       "name": "Emilie Birkeholm Blach",
       "normalizedName": "emilie birkeholm blach",
-      "emails": [
-        "emiliebirkeholm@hotmail.com"
-      ],
-      "phones": [
-        "60230562"
-      ],
-      "addresses": [
-        "Lystrupvej 221D, 8520 Lystrup, Danmark"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "emails": ["emiliebirkeholm@hotmail.com"],
+      "phones": ["60230562"],
+      "addresses": ["Lystrupvej 221D, 8520 Lystrup, Danmark"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-11-14T10:00:00+01:00",
@@ -14736,9 +13421,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-11-14T10:00:00+01:00",
       "rawData": {
@@ -14759,16 +13442,10 @@
       "id": "PROFILE_0191",
       "name": "Line Rohde Jensen",
       "normalizedName": "line rohde jensen",
-      "emails": [
-        "line_rohde91@hotmail.com"
-      ],
+      "emails": ["line_rohde91@hotmail.com"],
       "phones": [],
-      "addresses": [
-        "Finderupvej 8, 3.1, 8000 Aarhus C"
-      ],
-      "companies": [
-        "hotmail.com"
-      ],
+      "addresses": ["Finderupvej 8, 3.1, 8000 Aarhus C"],
+      "companies": ["hotmail.com"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-12-10T12:00:00+01:00",
@@ -14779,9 +13456,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-12-10T12:00:00+01:00",
       "rawData": {
@@ -14802,18 +13477,10 @@
       "id": "PROFILE_0192",
       "name": "Heidi Laila Madsen",
       "normalizedName": "heidi laila madsen",
-      "emails": [
-        "heidimadsen2@outlook.dk"
-      ],
-      "phones": [
-        "26779744"
-      ],
-      "addresses": [
-        "Kristrupvej 7, 8960 Randers SØ"
-      ],
-      "companies": [
-        "outlook.dk"
-      ],
+      "emails": ["heidimadsen2@outlook.dk"],
+      "phones": ["26779744"],
+      "addresses": ["Kristrupvej 7, 8960 Randers SØ"],
+      "companies": ["outlook.dk"],
       "calendarEvents": [
         {
           "eventId": "CAL_2025-12-10T14:00:00+01:00",
@@ -14824,9 +13491,7 @@
         }
       ],
       "gmailThreads": [],
-      "sources": [
-        "calendar"
-      ],
+      "sources": ["calendar"],
       "confidence": 0.8,
       "lastActivity": "2025-12-10T14:00:00+01:00",
       "rawData": {
@@ -14847,14 +13512,10 @@
       "id": "PROFILE_0193",
       "name": "\"Rendetalje.dk\"",
       "normalizedName": "rendetaljedk",
-      "emails": [
-        "rendetalje@gmail.com"
-      ],
+      "emails": ["rendetalje@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -14864,9 +13525,7 @@
           "email": "rendetalje@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -14883,14 +13542,10 @@
       "id": "PROFILE_0194",
       "name": "Google Kalender",
       "normalizedName": "google kalender",
-      "emails": [
-        "calendar-notification@google.com"
-      ],
+      "emails": ["calendar-notification@google.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "google.com"
-      ],
+      "companies": ["google.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -14900,9 +13555,7 @@
           "email": "calendar-notification@google.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -14919,14 +13572,10 @@
       "id": "PROFILE_0195",
       "name": "Andrew Lee",
       "normalizedName": "andrew lee",
-      "emails": [
-        "andrew@tasklet.ai"
-      ],
+      "emails": ["andrew@tasklet.ai"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "tasklet.ai"
-      ],
+      "companies": ["tasklet.ai"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -14936,9 +13585,7 @@
           "email": "andrew@tasklet.ai"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -14955,14 +13602,10 @@
       "id": "PROFILE_0196",
       "name": "Nichole at Bubble",
       "normalizedName": "nichole at bubble",
-      "emails": [
-        "newsletter@mail.bubble.io"
-      ],
+      "emails": ["newsletter@mail.bubble.io"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "mail.bubble.io"
-      ],
+      "companies": ["mail.bubble.io"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -14972,9 +13615,7 @@
           "email": "newsletter@mail.bubble.io"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -14991,14 +13632,10 @@
       "id": "PROFILE_0197",
       "name": "\"Rengøring Aarhus\"",
       "normalizedName": "rengøring aarhus",
-      "emails": [
-        "system@leadpoint.dk"
-      ],
+      "emails": ["system@leadpoint.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "leadpoint.dk"
-      ],
+      "companies": ["leadpoint.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15008,9 +13645,7 @@
           "email": "system@leadpoint.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15027,14 +13662,10 @@
       "id": "PROFILE_0198",
       "name": "Team Bonzer",
       "normalizedName": "team bonzer",
-      "emails": [
-        "kontakt@bonzer.dk"
-      ],
+      "emails": ["kontakt@bonzer.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "bonzer.dk"
-      ],
+      "companies": ["bonzer.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15044,9 +13675,7 @@
           "email": "kontakt@bonzer.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15063,14 +13692,10 @@
       "id": "PROFILE_0199",
       "name": "\"Leadmail.no\"",
       "normalizedName": "leadmailno",
-      "emails": [
-        "kontakt@leadmail.no"
-      ],
+      "emails": ["kontakt@leadmail.no"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "leadmail.no"
-      ],
+      "companies": ["leadmail.no"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15080,9 +13705,7 @@
           "email": "kontakt@leadmail.no"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15100,14 +13723,10 @@
       "id": "PROFILE_0200",
       "name": "Zapier Events",
       "normalizedName": "zapier events",
-      "emails": [
-        "events@send.zapier.com"
-      ],
+      "emails": ["events@send.zapier.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "send.zapier.com"
-      ],
+      "companies": ["send.zapier.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15117,9 +13736,7 @@
           "email": "events@send.zapier.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15136,14 +13753,10 @@
       "id": "PROFILE_0201",
       "name": "Kilo Code",
       "normalizedName": "kilo code",
-      "emails": [
-        "kilocode@substack.com"
-      ],
+      "emails": ["kilocode@substack.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "substack.com"
-      ],
+      "companies": ["substack.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15153,9 +13766,7 @@
           "email": "kilocode@substack.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15172,14 +13783,10 @@
       "id": "PROFILE_0202",
       "name": "Matilde Skinneholm",
       "normalizedName": "matilde skinneholm",
-      "emails": [
-        "matildeskinneholm@gmail.com"
-      ],
+      "emails": ["matildeskinneholm@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15189,9 +13796,7 @@
           "email": "matildeskinneholm@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15208,14 +13813,10 @@
       "id": "PROFILE_0203",
       "name": "BLS Hafnia",
       "normalizedName": "bls hafnia",
-      "emails": [
-        "newsletter@blshafnia.com"
-      ],
+      "emails": ["newsletter@blshafnia.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "blshafnia.com"
-      ],
+      "companies": ["blshafnia.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15225,9 +13826,7 @@
           "email": "newsletter@blshafnia.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15244,14 +13843,10 @@
       "id": "PROFILE_0204",
       "name": "Jorn Steen Larsen",
       "normalizedName": "jorn steen larsen",
-      "emails": [
-        "11jsteen80@gmail.com"
-      ],
+      "emails": ["11jsteen80@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15261,9 +13856,7 @@
           "email": "11jsteen80@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15281,14 +13874,10 @@
       "id": "PROFILE_0205",
       "name": "Kristina Brosolat",
       "normalizedName": "kristina brosolat",
-      "emails": [
-        "kristina.brosolat@gmail.com"
-      ],
+      "emails": ["kristina.brosolat@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15298,9 +13887,7 @@
           "email": "kristina.brosolat@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15317,14 +13904,10 @@
       "id": "PROFILE_0206",
       "name": "Ruth Marcher Andersen",
       "normalizedName": "ruth marcher andersen",
-      "emails": [
-        "ruth.22.marcher@gmail.com"
-      ],
+      "emails": ["ruth.22.marcher@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15334,9 +13917,7 @@
           "email": "ruth.22.marcher@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15353,14 +13934,10 @@
       "id": "PROFILE_0207",
       "name": "Zapier",
       "normalizedName": "zapier",
-      "emails": [
-        "learn@send.zapier.com"
-      ],
+      "emails": ["learn@send.zapier.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "send.zapier.com"
-      ],
+      "companies": ["send.zapier.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15370,9 +13947,7 @@
           "email": "learn@send.zapier.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15389,14 +13964,10 @@
       "id": "PROFILE_0208",
       "name": "\"Nikol (UptimeRobot)\"",
       "normalizedName": "nikol uptimerobot",
-      "emails": [
-        "info@ses.uptimerobot.com"
-      ],
+      "emails": ["info@ses.uptimerobot.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "ses.uptimerobot.com"
-      ],
+      "companies": ["ses.uptimerobot.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15406,9 +13977,7 @@
           "email": "info@ses.uptimerobot.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15425,14 +13994,10 @@
       "id": "PROFILE_0209",
       "name": "Mobbin",
       "normalizedName": "mobbin",
-      "emails": [
-        "newsletter@mobbin.com"
-      ],
+      "emails": ["newsletter@mobbin.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "mobbin.com"
-      ],
+      "companies": ["mobbin.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15442,9 +14007,7 @@
           "email": "newsletter@mobbin.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15461,14 +14024,10 @@
       "id": "PROFILE_0210",
       "name": "Fliki",
       "normalizedName": "fliki",
-      "emails": [
-        "support@fliki.ai"
-      ],
+      "emails": ["support@fliki.ai"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "fliki.ai"
-      ],
+      "companies": ["fliki.ai"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15478,9 +14037,7 @@
           "email": "support@fliki.ai"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15497,14 +14054,10 @@
       "id": "PROFILE_0211",
       "name": "norepl",
       "normalizedName": "norepl",
-      "emails": [
-        "y@viaplay.com"
-      ],
+      "emails": ["y@viaplay.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "viaplay.com"
-      ],
+      "companies": ["viaplay.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15514,9 +14067,7 @@
           "email": "y@viaplay.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15533,14 +14084,10 @@
       "id": "PROFILE_0212",
       "name": "BoligPortal",
       "normalizedName": "boligportal",
-      "emails": [
-        "info@campaign.boligportal.dk"
-      ],
+      "emails": ["info@campaign.boligportal.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "campaign.boligportal.dk"
-      ],
+      "companies": ["campaign.boligportal.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15550,9 +14097,7 @@
           "email": "info@campaign.boligportal.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15569,14 +14114,10 @@
       "id": "PROFILE_0213",
       "name": "norepl",
       "normalizedName": "norepl",
-      "emails": [
-        "y@azets.com"
-      ],
+      "emails": ["y@azets.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "azets.com"
-      ],
+      "companies": ["azets.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15586,9 +14127,7 @@
           "email": "y@azets.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15605,14 +14144,10 @@
       "id": "PROFILE_0214",
       "name": "Hanne Andersen",
       "normalizedName": "hanne andersen",
-      "emails": [
-        "h.lindtoft@gmail.com"
-      ],
+      "emails": ["h.lindtoft@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15622,9 +14157,7 @@
           "email": "h.lindtoft@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15641,14 +14174,10 @@
       "id": "PROFILE_0215",
       "name": "betul karakaya",
       "normalizedName": "betul karakaya",
-      "emails": [
-        "b.karakaya99@hotmail.com"
-      ],
+      "emails": ["b.karakaya99@hotmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "hotmail.com"
-      ],
+      "companies": ["hotmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15658,9 +14187,7 @@
           "email": "b.karakaya99@hotmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15677,14 +14204,10 @@
       "id": "PROFILE_0216",
       "name": "Privyr Updates",
       "normalizedName": "privyr updates",
-      "emails": [
-        "support@privyr.com"
-      ],
+      "emails": ["support@privyr.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "privyr.com"
-      ],
+      "companies": ["privyr.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15694,9 +14217,7 @@
           "email": "support@privyr.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15713,14 +14234,10 @@
       "id": "PROFILE_0217",
       "name": "Benjamin from Framer",
       "normalizedName": "benjamin from framer",
-      "emails": [
-        "team@framer.com"
-      ],
+      "emails": ["team@framer.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "framer.com"
-      ],
+      "companies": ["framer.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15730,9 +14247,7 @@
           "email": "team@framer.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15749,14 +14264,10 @@
       "id": "PROFILE_0218",
       "name": "Mail Delivery Subsystem",
       "normalizedName": "mail delivery subsystem",
-      "emails": [
-        "mailer-daemon@googlemail.com"
-      ],
+      "emails": ["mailer-daemon@googlemail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "googlemail.com"
-      ],
+      "companies": ["googlemail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15766,9 +14277,7 @@
           "email": "mailer-daemon@googlemail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15785,14 +14294,10 @@
       "id": "PROFILE_0219",
       "name": "Google",
       "normalizedName": "google",
-      "emails": [
-        "no-reply@accounts.google.com"
-      ],
+      "emails": ["no-reply@accounts.google.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "accounts.google.com"
-      ],
+      "companies": ["accounts.google.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15802,9 +14307,7 @@
           "email": "no-reply@accounts.google.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15821,14 +14324,10 @@
       "id": "PROFILE_0220",
       "name": "Leadpoint ApS",
       "normalizedName": "leadpoint aps",
-      "emails": [
-        "post@dinero.dk"
-      ],
+      "emails": ["post@dinero.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "dinero.dk"
-      ],
+      "companies": ["dinero.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15838,9 +14337,7 @@
           "email": "post@dinero.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15857,14 +14354,10 @@
       "id": "PROFILE_0221",
       "name": "\"Kristoffer fra Conversio | Hub\"",
       "normalizedName": "kristoffer fra conversio  hub",
-      "emails": [
-        "kristoffer.n@conversio.dk"
-      ],
+      "emails": ["kristoffer.n@conversio.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "conversio.dk"
-      ],
+      "companies": ["conversio.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15874,9 +14367,7 @@
           "email": "kristoffer.n@conversio.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15893,14 +14384,10 @@
       "id": "PROFILE_0222",
       "name": "\"fm.dll.collectiondk\"",
       "normalizedName": "fmdllcollectiondk",
-      "emails": [
-        "inkasso@dllgroup.com"
-      ],
+      "emails": ["inkasso@dllgroup.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "dllgroup.com"
-      ],
+      "companies": ["dllgroup.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15910,9 +14397,7 @@
           "email": "inkasso@dllgroup.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15929,14 +14414,10 @@
       "id": "PROFILE_0223",
       "name": "Mads Risbjerg",
       "normalizedName": "mads risbjerg",
-      "emails": [
-        "mr@leadpoint.dk"
-      ],
+      "emails": ["mr@leadpoint.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "leadpoint.dk"
-      ],
+      "companies": ["leadpoint.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15946,9 +14427,7 @@
           "email": "mr@leadpoint.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -15966,14 +14445,10 @@
       "id": "PROFILE_0224",
       "name": "Leadpoint ApS",
       "normalizedName": "leadpoint aps",
-      "emails": [
-        "partner@leadpoint.dk"
-      ],
+      "emails": ["partner@leadpoint.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "leadpoint.dk"
-      ],
+      "companies": ["leadpoint.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -15983,9 +14458,7 @@
           "email": "partner@leadpoint.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16002,14 +14475,10 @@
       "id": "PROFILE_0225",
       "name": "\"Faktura - Total rent.dk\"",
       "normalizedName": "faktura  total rentdk",
-      "emails": [
-        "faktura@totalrent.dk"
-      ],
+      "emails": ["faktura@totalrent.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "totalrent.dk"
-      ],
+      "companies": ["totalrent.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16019,9 +14488,7 @@
           "email": "faktura@totalrent.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16038,14 +14505,10 @@
       "id": "PROFILE_0226",
       "name": "Bjarne Anthon",
       "normalizedName": "bjarne anthon",
-      "emails": [
-        "bjarneanthon@gmail.com"
-      ],
+      "emails": ["bjarneanthon@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16055,9 +14518,7 @@
           "email": "bjarneanthon@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16074,14 +14535,10 @@
       "id": "PROFILE_0227",
       "name": "\"Ann Maj Kjær-Rasmussen\"",
       "normalizedName": "ann maj kjærrasmussen",
-      "emails": [
-        "amkkr1989@gmail.com"
-      ],
+      "emails": ["amkkr1989@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16091,9 +14548,7 @@
           "email": "amkkr1989@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16111,14 +14566,10 @@
       "id": "PROFILE_0228",
       "name": "Lucas Staunstrup Nielsen",
       "normalizedName": "lucas staunstrup nielsen",
-      "emails": [
-        "samarbejde@samarbejde.3match.dk"
-      ],
+      "emails": ["samarbejde@samarbejde.3match.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "samarbejde.3match.dk"
-      ],
+      "companies": ["samarbejde.3match.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16128,9 +14579,7 @@
           "email": "samarbejde@samarbejde.3match.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16147,14 +14596,10 @@
       "id": "PROFILE_0229",
       "name": "michael svend bendix",
       "normalizedName": "michael svend bendix",
-      "emails": [
-        "spendix@hotmail.com"
-      ],
+      "emails": ["spendix@hotmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "hotmail.com"
-      ],
+      "companies": ["hotmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16164,9 +14609,7 @@
           "email": "spendix@hotmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16184,14 +14627,10 @@
       "id": "PROFILE_0230",
       "name": "GitGuardian",
       "normalizedName": "gitguardian",
-      "emails": [
-        "security@getgitguardian.com"
-      ],
+      "emails": ["security@getgitguardian.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "getgitguardian.com"
-      ],
+      "companies": ["getgitguardian.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16201,9 +14640,7 @@
           "email": "security@getgitguardian.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16220,14 +14657,10 @@
       "id": "PROFILE_0231",
       "name": "Clerk",
       "normalizedName": "clerk",
-      "emails": [
-        "systems@clerk.com"
-      ],
+      "emails": ["systems@clerk.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "clerk.com"
-      ],
+      "companies": ["clerk.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16237,9 +14670,7 @@
           "email": "systems@clerk.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16256,14 +14687,10 @@
       "id": "PROFILE_0232",
       "name": "Andy from Framer",
       "normalizedName": "andy from framer",
-      "emails": [
-        "andy@framer.com"
-      ],
+      "emails": ["andy@framer.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "framer.com"
-      ],
+      "companies": ["framer.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16273,9 +14700,7 @@
           "email": "andy@framer.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16292,14 +14717,10 @@
       "id": "PROFILE_0233",
       "name": "\"René Vendel Nielsen\"",
       "normalizedName": "ren vendel nielsen",
-      "emails": [
-        "renevendelnielsen@gmail.com"
-      ],
+      "emails": ["renevendelnielsen@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16309,9 +14730,7 @@
           "email": "renevendelnielsen@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16329,14 +14748,10 @@
       "id": "PROFILE_0234",
       "name": "UptimeRobot",
       "normalizedName": "uptimerobot",
-      "emails": [
-        "alert@uptimerobot.com"
-      ],
+      "emails": ["alert@uptimerobot.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "uptimerobot.com"
-      ],
+      "companies": ["uptimerobot.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16346,9 +14761,7 @@
           "email": "alert@uptimerobot.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16365,14 +14778,10 @@
       "id": "PROFILE_0235",
       "name": "Lunar Business",
       "normalizedName": "lunar business",
-      "emails": [
-        "hello@hello.lunar.app"
-      ],
+      "emails": ["hello@hello.lunar.app"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "hello.lunar.app"
-      ],
+      "companies": ["hello.lunar.app"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16382,9 +14791,7 @@
           "email": "hello@hello.lunar.app"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16401,14 +14808,10 @@
       "id": "PROFILE_0236",
       "name": "\"merete Graabæk\"",
       "normalizedName": "merete graabæk",
-      "emails": [
-        "meretegraa@gmail.com"
-      ],
+      "emails": ["meretegraa@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16418,9 +14821,7 @@
           "email": "meretegraa@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16438,14 +14839,10 @@
       "id": "PROFILE_0237",
       "name": "Lunar",
       "normalizedName": "lunar",
-      "emails": [
-        "service@service.lunar.app"
-      ],
+      "emails": ["service@service.lunar.app"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "service.lunar.app"
-      ],
+      "companies": ["service.lunar.app"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16455,9 +14852,7 @@
           "email": "service@service.lunar.app"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16474,14 +14869,10 @@
       "id": "PROFILE_0238",
       "name": "Aaron from Privyr",
       "normalizedName": "aaron from privyr",
-      "emails": [
-        "blog@privyr.com"
-      ],
+      "emails": ["blog@privyr.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "privyr.com"
-      ],
+      "companies": ["privyr.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16491,9 +14882,7 @@
           "email": "blog@privyr.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16510,14 +14899,10 @@
       "id": "PROFILE_0239",
       "name": "\"Eric at Bolt.new\"",
       "normalizedName": "eric at boltnew",
-      "emails": [
-        "ericsimons@stackblitz.com"
-      ],
+      "emails": ["ericsimons@stackblitz.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "stackblitz.com"
-      ],
+      "companies": ["stackblitz.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16527,9 +14912,7 @@
           "email": "ericsimons@stackblitz.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16546,14 +14929,10 @@
       "id": "PROFILE_0240",
       "name": "Manus AI",
       "normalizedName": "manus ai",
-      "emails": [
-        "invoice+statements+acct_1r15xbhkfkp4fcs9@stripe.com"
-      ],
+      "emails": ["invoice+statements+acct_1r15xbhkfkp4fcs9@stripe.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "stripe.com"
-      ],
+      "companies": ["stripe.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16563,9 +14942,7 @@
           "email": "invoice+statements+acct_1r15xbhkfkp4fcs9@stripe.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16582,14 +14959,10 @@
       "id": "PROFILE_0241",
       "name": "Cursor Team",
       "normalizedName": "cursor team",
-      "emails": [
-        "hi@mail.cursor.com"
-      ],
+      "emails": ["hi@mail.cursor.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "mail.cursor.com"
-      ],
+      "companies": ["mail.cursor.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16599,9 +14972,7 @@
           "email": "hi@mail.cursor.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16618,14 +14989,10 @@
       "id": "PROFILE_0242",
       "name": "BoligPortal",
       "normalizedName": "boligportal",
-      "emails": [
-        "info@boligportal.dk"
-      ],
+      "emails": ["info@boligportal.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "boligportal.dk"
-      ],
+      "companies": ["boligportal.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16635,9 +15002,7 @@
           "email": "info@boligportal.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16654,14 +15019,10 @@
       "id": "PROFILE_0243",
       "name": "CleanManager",
       "normalizedName": "cleanmanager",
-      "emails": [
-        "cleanmanager@cleanmanager.dk"
-      ],
+      "emails": ["cleanmanager@cleanmanager.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "cleanmanager.dk"
-      ],
+      "companies": ["cleanmanager.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16671,9 +15032,7 @@
           "email": "cleanmanager@cleanmanager.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16690,14 +15049,10 @@
       "id": "PROFILE_0244",
       "name": "Team Lindy",
       "normalizedName": "team lindy",
-      "emails": [
-        "newsletter@lindy.ai"
-      ],
+      "emails": ["newsletter@lindy.ai"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "lindy.ai"
-      ],
+      "companies": ["lindy.ai"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16707,9 +15062,7 @@
           "email": "newsletter@lindy.ai"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16726,14 +15079,10 @@
       "id": "PROFILE_0245",
       "name": "Simon from FeedHive",
       "normalizedName": "simon from feedhive",
-      "emails": [
-        "info@feedhive.com"
-      ],
+      "emails": ["info@feedhive.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "feedhive.com"
-      ],
+      "companies": ["feedhive.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16743,9 +15092,7 @@
           "email": "info@feedhive.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16762,14 +15109,10 @@
       "id": "PROFILE_0246",
       "name": "Link",
       "normalizedName": "link",
-      "emails": [
-        "notifications@link.com"
-      ],
+      "emails": ["notifications@link.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "link.com"
-      ],
+      "companies": ["link.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16779,9 +15122,7 @@
           "email": "notifications@link.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16798,14 +15139,10 @@
       "id": "PROFILE_0247",
       "name": "\"Shortwave Communications, Inc.\"",
       "normalizedName": "shortwave communications inc",
-      "emails": [
-        "upcoming-invoice+acct_1gbwpfbqs1j54pgc@stripe.com"
-      ],
+      "emails": ["upcoming-invoice+acct_1gbwpfbqs1j54pgc@stripe.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "stripe.com"
-      ],
+      "companies": ["stripe.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16815,9 +15152,7 @@
           "email": "upcoming-invoice+acct_1gbwpfbqs1j54pgc@stripe.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16834,14 +15169,10 @@
       "id": "PROFILE_0248",
       "name": "Ea Russell",
       "normalizedName": "ea russell",
-      "emails": [
-        "eamarie59@aol.co.uk"
-      ],
+      "emails": ["eamarie59@aol.co.uk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "aol.co.uk"
-      ],
+      "companies": ["aol.co.uk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16851,9 +15182,7 @@
           "email": "eamarie59@aol.co.uk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16871,14 +15200,10 @@
       "id": "PROFILE_0249",
       "name": "\"Aron @ Gumloop\"",
       "normalizedName": "aron  gumloop",
-      "emails": [
-        "aron@gumloopmail.com"
-      ],
+      "emails": ["aron@gumloopmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gumloopmail.com"
-      ],
+      "companies": ["gumloopmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16888,9 +15213,7 @@
           "email": "aron@gumloopmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16907,14 +15230,10 @@
       "id": "PROFILE_0250",
       "name": "Morten Schmidt",
       "normalizedName": "morten schmidt",
-      "emails": [
-        "morten.schmidt@hotmail.com"
-      ],
+      "emails": ["morten.schmidt@hotmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "hotmail.com"
-      ],
+      "companies": ["hotmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16924,9 +15243,7 @@
           "email": "morten.schmidt@hotmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16944,14 +15261,10 @@
       "id": "PROFILE_0251",
       "name": "Maja Lomborg",
       "normalizedName": "maja lomborg",
-      "emails": [
-        "majaolomborg@gmail.com"
-      ],
+      "emails": ["majaolomborg@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16961,9 +15274,7 @@
           "email": "majaolomborg@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -16981,14 +15292,10 @@
       "id": "PROFILE_0252",
       "name": "Sandra Beck",
       "normalizedName": "sandra beck",
-      "emails": [
-        "sbeck8722@gmail.com"
-      ],
+      "emails": ["sbeck8722@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -16998,9 +15305,7 @@
           "email": "sbeck8722@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17018,14 +15323,10 @@
       "id": "PROFILE_0253",
       "name": "Katrine Reeberg Storm",
       "normalizedName": "katrine reeberg storm",
-      "emails": [
-        "reebergstorm@gmail.com"
-      ],
+      "emails": ["reebergstorm@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17035,9 +15336,7 @@
           "email": "reebergstorm@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17054,14 +15353,10 @@
       "id": "PROFILE_0254",
       "name": "Ticketmaster",
       "normalizedName": "ticketmaster",
-      "emails": [
-        "customer_support@email.ticketmaster.com"
-      ],
+      "emails": ["customer_support@email.ticketmaster.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "email.ticketmaster.com"
-      ],
+      "companies": ["email.ticketmaster.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17071,9 +15366,7 @@
           "email": "customer_support@email.ticketmaster.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17090,14 +15383,10 @@
       "id": "PROFILE_0255",
       "name": "norepl",
       "normalizedName": "norepl",
-      "emails": [
-        "y@booking.com"
-      ],
+      "emails": ["y@booking.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "booking.com"
-      ],
+      "companies": ["booking.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17107,9 +15396,7 @@
           "email": "y@booking.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17126,14 +15413,10 @@
       "id": "PROFILE_0256",
       "name": "Ticketmaster",
       "normalizedName": "ticketmaster",
-      "emails": [
-        "no-reply@ticketmaster.dk"
-      ],
+      "emails": ["no-reply@ticketmaster.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "ticketmaster.dk"
-      ],
+      "companies": ["ticketmaster.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17143,9 +15426,7 @@
           "email": "no-reply@ticketmaster.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17163,14 +15444,10 @@
       "id": "PROFILE_0257",
       "name": "Ticketmaster",
       "normalizedName": "ticketmaster",
-      "emails": [
-        "no-reply@info.ticketmaster.dk"
-      ],
+      "emails": ["no-reply@info.ticketmaster.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "info.ticketmaster.dk"
-      ],
+      "companies": ["info.ticketmaster.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17180,9 +15457,7 @@
           "email": "no-reply@info.ticketmaster.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17199,14 +15474,10 @@
       "id": "PROFILE_0258",
       "name": "support",
       "normalizedName": "support",
-      "emails": [
-        "support@jace.ai"
-      ],
+      "emails": ["support@jace.ai"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "jace.ai"
-      ],
+      "companies": ["jace.ai"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17216,9 +15487,7 @@
           "email": "support@jace.ai"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17235,14 +15504,10 @@
       "id": "PROFILE_0259",
       "name": "Ebbe Mehlby",
       "normalizedName": "ebbe mehlby",
-      "emails": [
-        "emehlby@yahoo.dk"
-      ],
+      "emails": ["emehlby@yahoo.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "yahoo.dk"
-      ],
+      "companies": ["yahoo.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17252,9 +15517,7 @@
           "email": "emehlby@yahoo.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17271,14 +15534,10 @@
       "id": "PROFILE_0260",
       "name": "andreas madsen",
       "normalizedName": "andreas madsen",
-      "emails": [
-        "lundoermadsen@hotmail.com"
-      ],
+      "emails": ["lundoermadsen@hotmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "hotmail.com"
-      ],
+      "companies": ["hotmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17288,9 +15547,7 @@
           "email": "lundoermadsen@hotmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17308,14 +15565,10 @@
       "id": "PROFILE_0261",
       "name": "Hans Henrik Schou",
       "normalizedName": "hans henrik schou",
-      "emails": [
-        "hanshenrik.schou1@googlemail.com"
-      ],
+      "emails": ["hanshenrik.schou1@googlemail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "googlemail.com"
-      ],
+      "companies": ["googlemail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17325,9 +15578,7 @@
           "email": "hanshenrik.schou1@googlemail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17344,14 +15595,10 @@
       "id": "PROFILE_0262",
       "name": "Zapier Updates",
       "normalizedName": "zapier updates",
-      "emails": [
-        "updates@send.zapier.com"
-      ],
+      "emails": ["updates@send.zapier.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "send.zapier.com"
-      ],
+      "companies": ["send.zapier.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17361,9 +15608,7 @@
           "email": "updates@send.zapier.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17380,14 +15625,10 @@
       "id": "PROFILE_0263",
       "name": "Johanna Luige",
       "normalizedName": "johanna luige",
-      "emails": [
-        "luigejo@gmail.com"
-      ],
+      "emails": ["luigejo@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17397,9 +15638,7 @@
           "email": "luigejo@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17417,14 +15656,10 @@
       "id": "PROFILE_0264",
       "name": "Marianne Agerlund Petersen",
       "normalizedName": "marianne agerlund petersen",
-      "emails": [
-        "marianne.agerlund@gmail.com"
-      ],
+      "emails": ["marianne.agerlund@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17434,9 +15669,7 @@
           "email": "marianne.agerlund@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17453,14 +15686,10 @@
       "id": "PROFILE_0265",
       "name": "Lise Christensen",
       "normalizedName": "lise christensen",
-      "emails": [
-        "hurtig79@hotmail.com"
-      ],
+      "emails": ["hurtig79@hotmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "hotmail.com"
-      ],
+      "companies": ["hotmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17470,9 +15699,7 @@
           "email": "hurtig79@hotmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17489,14 +15716,10 @@
       "id": "PROFILE_0266",
       "name": "jesper vestergaard",
       "normalizedName": "jesper vestergaard",
-      "emails": [
-        "jesper.vestergaard324@gmail.com"
-      ],
+      "emails": ["jesper.vestergaard324@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17506,9 +15729,7 @@
           "email": "jesper.vestergaard324@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17526,14 +15747,10 @@
       "id": "PROFILE_0267",
       "name": "glassau-hanse",
       "normalizedName": "glassauhanse",
-      "emails": [
-        "n@sol.dk"
-      ],
+      "emails": ["n@sol.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "sol.dk"
-      ],
+      "companies": ["sol.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17543,9 +15760,7 @@
           "email": "n@sol.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17563,14 +15778,10 @@
       "id": "PROFILE_0268",
       "name": "mab",
       "normalizedName": "mab",
-      "emails": [
-        "e@paradis.dk"
-      ],
+      "emails": ["e@paradis.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "paradis.dk"
-      ],
+      "companies": ["paradis.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17580,9 +15791,7 @@
           "email": "e@paradis.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17599,14 +15808,10 @@
       "id": "PROFILE_0269",
       "name": "Replit",
       "normalizedName": "replit",
-      "emails": [
-        "notifications@replit.com"
-      ],
+      "emails": ["notifications@replit.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "replit.com"
-      ],
+      "companies": ["replit.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17616,9 +15821,7 @@
           "email": "notifications@replit.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17635,14 +15838,10 @@
       "id": "PROFILE_0270",
       "name": "Smartsupp",
       "normalizedName": "smartsupp",
-      "emails": [
-        "newsletter@smartsupp.com"
-      ],
+      "emails": ["newsletter@smartsupp.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "smartsupp.com"
-      ],
+      "companies": ["smartsupp.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17652,9 +15851,7 @@
           "email": "newsletter@smartsupp.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17671,14 +15868,10 @@
       "id": "PROFILE_0271",
       "name": "Sara El-Natour",
       "normalizedName": "sara elnatour",
-      "emails": [
-        "elnatoursara00@gmail.com"
-      ],
+      "emails": ["elnatoursara00@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17688,9 +15881,7 @@
           "email": "elnatoursara00@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17708,14 +15899,10 @@
       "id": "PROFILE_0272",
       "name": "AM SW",
       "normalizedName": "am sw",
-      "emails": [
-        "annemaries@gmail.com"
-      ],
+      "emails": ["annemaries@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17725,9 +15912,7 @@
           "email": "annemaries@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17744,14 +15929,10 @@
       "id": "PROFILE_0273",
       "name": "Magny og Bent",
       "normalizedName": "magny og bent",
-      "emails": [
-        "mabe@paradis.dk"
-      ],
+      "emails": ["mabe@paradis.dk"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "paradis.dk"
-      ],
+      "companies": ["paradis.dk"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17761,9 +15942,7 @@
           "email": "mabe@paradis.dk"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17780,14 +15959,10 @@
       "id": "PROFILE_0274",
       "name": "Trae",
       "normalizedName": "trae",
-      "emails": [
-        "notify@mail.trae.ai"
-      ],
+      "emails": ["notify@mail.trae.ai"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "mail.trae.ai"
-      ],
+      "companies": ["mail.trae.ai"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17797,9 +15972,7 @@
           "email": "notify@mail.trae.ai"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17816,14 +15989,10 @@
       "id": "PROFILE_0275",
       "name": "Nicolaj Haslev-Vortvedt",
       "normalizedName": "nicolaj haslevvortvedt",
-      "emails": [
-        "nicolaj@nettbureau.no"
-      ],
+      "emails": ["nicolaj@nettbureau.no"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "nettbureau.no"
-      ],
+      "companies": ["nettbureau.no"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17833,9 +16002,7 @@
           "email": "nicolaj@nettbureau.no"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17852,14 +16019,10 @@
       "id": "PROFILE_0276",
       "name": "\"leadbox.no\"",
       "normalizedName": "leadboxno",
-      "emails": [
-        "kontakt@leadbox.no"
-      ],
+      "emails": ["kontakt@leadbox.no"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "leadbox.no"
-      ],
+      "companies": ["leadbox.no"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17869,9 +16032,7 @@
           "email": "kontakt@leadbox.no"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17888,14 +16049,10 @@
       "id": "PROFILE_0277",
       "name": "Jette Ginderskov hansen",
       "normalizedName": "jette ginderskov hansen",
-      "emails": [
-        "jette7hansen@gmail.com"
-      ],
+      "emails": ["jette7hansen@gmail.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "gmail.com"
-      ],
+      "companies": ["gmail.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17905,9 +16062,7 @@
           "email": "jette7hansen@gmail.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17924,14 +16079,10 @@
       "id": "PROFILE_0278",
       "name": "Frappe Cloud",
       "normalizedName": "frappe cloud",
-      "emails": [
-        "notifications@frappecloud.com"
-      ],
+      "emails": ["notifications@frappecloud.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "frappecloud.com"
-      ],
+      "companies": ["frappecloud.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17941,9 +16092,7 @@
           "email": "notifications@frappecloud.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [
@@ -17960,14 +16109,10 @@
       "id": "PROFILE_0279",
       "name": "Michael from Cursor",
       "normalizedName": "michael from cursor",
-      "emails": [
-        "michael@mail.cursor.com"
-      ],
+      "emails": ["michael@mail.cursor.com"],
       "phones": [],
       "addresses": [],
-      "companies": [
-        "mail.cursor.com"
-      ],
+      "companies": ["mail.cursor.com"],
       "calendarEvents": [],
       "gmailThreads": [
         {
@@ -17977,9 +16122,7 @@
           "email": "michael@mail.cursor.com"
         }
       ],
-      "sources": [
-        "gmail"
-      ],
+      "sources": ["gmail"],
       "confidence": 0.7,
       "rawData": {
         "gmail": [

@@ -20,7 +20,7 @@ export function extractJSON(content: string): any | null {
 
   // Try to find JSON object
   let jsonMatch = content.match(/\{[\s\S]*?\}/);
-  
+
   if (!jsonMatch) {
     // Try to find JSON in code blocks
     const codeBlockMatch = content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
@@ -73,10 +73,13 @@ User: "Book møde med Peter onsdag kl 14"
 /**
  * Create email summary prompt (optimized for Danish summaries)
  */
-export function createEmailSummaryPrompt(subject: string, body: string): string {
+export function createEmailSummaryPrompt(
+  subject: string,
+  body: string
+): string {
   // Truncate body to avoid token limits
   const truncatedBody = body.substring(0, 1500);
-  
+
   return `Lav en kort dansk sammenfatning af denne email (max 150 tegn):
 
 Emne: ${subject}
@@ -88,9 +91,13 @@ Sammenfatning (kun tekst, max 150 tegn):`;
 /**
  * Create label suggestion prompt (optimized for JSON output)
  */
-export function createLabelPrompt(from: string, subject: string, body: string): string {
+export function createLabelPrompt(
+  from: string,
+  subject: string,
+  body: string
+): string {
   const truncatedBody = body.substring(0, 500);
-  
+
   return `Analyser denne email og find det bedste label:
 
 Labels: Lead (ny kunde), Booking (aftale), Finance (faktura/betaling), Support (problem), Newsletter
@@ -110,35 +117,35 @@ Svar KUN med JSON:
 export const MODEL_SETTINGS = {
   // For JSON/structured output - use GPT-OSS
   JSON_OUTPUT: {
-    model: 'openai/gpt-oss-20b:free',
+    model: "openai/gpt-oss-20b:free",
     temperature: 0.1,
     max_tokens: 300,
-    reasoning: 'GPT-OSS is 75% better at JSON than GLM (tested)'
+    reasoning: "GPT-OSS is 75% better at JSON than GLM (tested)",
   },
-  
+
   // For natural Danish conversation - use GLM
   CONVERSATION: {
-    model: 'z-ai/glm-4.5-air:free',
+    model: "z-ai/glm-4.5-air:free",
     temperature: 0.7,
     max_tokens: 2000,
-    reasoning: 'GLM has excellent Danish quality (100% success rate)'
+    reasoning: "GLM has excellent Danish quality (100% success rate)",
   },
-  
+
   // For fast analysis - use GPT-OSS
   FAST_ANALYSIS: {
-    model: 'openai/gpt-oss-20b:free',
+    model: "openai/gpt-oss-20b:free",
     temperature: 0.7,
     max_tokens: 1000,
-    reasoning: 'GPT-OSS is 7.5x faster (2.6s vs 19s)'
+    reasoning: "GPT-OSS is 7.5x faster (2.6s vs 19s)",
   },
-  
+
   // For email summaries - use GLM for quality
   EMAIL_SUMMARY: {
-    model: 'z-ai/glm-4.5-air:free',
+    model: "z-ai/glm-4.5-air:free",
     temperature: 0.7,
     max_tokens: 150,
-    reasoning: 'GLM provides best Danish quality for professional writing'
-  }
+    reasoning: "GLM provides best Danish quality for professional writing",
+  },
 } as const;
 
 /**
@@ -150,20 +157,22 @@ export async function retryAICall<T>(
   delayMs: number = 2000
 ): Promise<T> {
   let lastError: Error | null = null;
-  
+
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       return await fn();
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
-      
+
       if (attempt < maxAttempts) {
-        console.log(`⚠️ Attempt ${attempt} failed, retrying in ${delayMs}ms...`);
+        console.log(
+          `⚠️ Attempt ${attempt} failed, retrying in ${delayMs}ms...`
+        );
         await new Promise(resolve => setTimeout(resolve, delayMs));
         continue;
       }
     }
   }
-  
-  throw lastError || new Error('All retry attempts failed');
+
+  throw lastError || new Error("All retry attempts failed");
 }

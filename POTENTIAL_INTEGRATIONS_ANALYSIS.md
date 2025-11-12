@@ -1,7 +1,7 @@
 # 🔍 Potentielle Integrationer til Friday AI & Friday Docs
 
 **Analyseret:** November 9, 2025  
-**Status:** Research & Recommendations  
+**Status:** Research & Recommendations
 
 ---
 
@@ -21,9 +21,11 @@ Vi har undersøgt 6 potentielle værktøjer/services til integration:
 ## 1. 🧠 Ragie.ai - RAG Platform
 
 ### Hvad Er Det?
+
 Secure Retrieval Augmented Generation (RAG) APIs for developers.
 
 ### Core Features:
+
 - ✅ Document ingestion (multiple formats)
 - ✅ Semantic search
 - ✅ Metadata filtering
@@ -32,15 +34,16 @@ Secure Retrieval Augmented Generation (RAG) APIs for developers.
 - ✅ Langchain integration
 
 ### Pricing:
+
 - Free tier available
 - Pay as you grow
 
 ### Potential Use Cases i Friday AI:
+
 1. **Friday Docs Enhancement** ⭐⭐⭐⭐⭐
    - Intelligent document search
    - Context-aware retrieval
    - Better AI doc generation with RAG
-   
 2. **Email Intelligence**
    - Search email history semantically
    - Find similar conversations
@@ -52,17 +55,21 @@ Secure Retrieval Augmented Generation (RAG) APIs for developers.
    - Smart lead matching
 
 ### Integration Effort:
+
 - **Difficulty:** Medium
 - **Time:** 4-8 hours
 - **Value:** HIGH ⭐⭐⭐⭐⭐
 
 ### Recommendation:
+
 ✅ **STRONGLY RECOMMENDED** for Friday Docs
+
 - Perfect fit for semantic document search
 - Enhances AI doc generation
 - Relatively easy to integrate
 
 ### Implementation Plan:
+
 ```typescript
 // 1. Install SDK
 npm install @ragieai/ragie-ts
@@ -90,9 +97,11 @@ const results = await ragie.retrievals.retrieve({
 ## 2. 🕷️ Firecrawl - Web Scraping for LLMs
 
 ### Hvad Er Det?
+
 Turn entire websites into LLM-ready markdown.
 
 ### Core Features:
+
 - ✅ Web scraping → Markdown
 - ✅ Batch crawling
 - ✅ JSON extraction
@@ -101,15 +110,16 @@ Turn entire websites into LLM-ready markdown.
 - ✅ LLM-optimized output
 
 ### Pricing:
+
 - Free tier: 500 credits/month
 - Paid: From $20/month
 
 ### Potential Use Cases i Friday AI:
+
 1. **Lead Enrichment** ⭐⭐⭐⭐
    - Scrape company websites
    - Extract contact info
    - Gather company details
-   
 2. **Competitive Intelligence**
    - Monitor competitor sites
    - Price tracking
@@ -121,17 +131,21 @@ Turn entire websites into LLM-ready markdown.
    - Knowledge base building
 
 ### Integration Effort:
+
 - **Difficulty:** Easy
 - **Time:** 2-4 hours
 - **Value:** HIGH ⭐⭐⭐⭐
 
 ### Recommendation:
+
 ✅ **RECOMMENDED** for Lead Enrichment
+
 - Great for automatic lead research
 - LLM-ready output perfect for AI analysis
 - Easy integration
 
 ### Implementation Plan:
+
 ```typescript
 // 1. Install SDK
 npm install @mendable/firecrawl-js
@@ -156,9 +170,11 @@ const enrichedData = await analyzeWithAI(result.markdown);
 ## 3. 🌐 Browserbase - Headless Browser Automation
 
 ### Hvad Er Det?
+
 Managed headless browser infrastructure for automation.
 
 ### Core Features:
+
 - ✅ Playwright/Puppeteer support
 - ✅ Session recording
 - ✅ Live view
@@ -167,15 +183,16 @@ Managed headless browser infrastructure for automation.
 - ✅ Session debugging
 
 ### Pricing:
+
 - Free tier: 60 min/month
 - Paid: From $50/month
 
 ### Potential Use Cases i Friday AI:
+
 1. **Advanced E2E Testing** ⭐⭐⭐
    - Replace local Playwright
    - Better session debugging
    - Live view for tests
-   
 2. **Lead Verification**
    - Verify company websites
    - Check contact forms
@@ -187,17 +204,21 @@ Managed headless browser infrastructure for automation.
    - Automated workflows
 
 ### Integration Effort:
+
 - **Difficulty:** Easy (Playwright compatible)
 - **Time:** 2-3 hours
 - **Value:** MEDIUM ⭐⭐⭐
 
 ### Recommendation:
+
 ⚠️ **OPTIONAL** - Nice to Have
+
 - Good for advanced testing
 - Our current Playwright setup works
 - Consider for future scaling
 
 ### Implementation Plan:
+
 ```typescript
 // 1. Install SDK
 npm install playwright @browserbasehq/sdk
@@ -220,9 +241,11 @@ const browser = await chromium.connectOverCDP(
 ## 4. 🚀 LiteLLM - Unified LLM Gateway
 
 ### Hvad Er Det?
+
 Call 100+ LLM APIs in OpenAI format (proxy/gateway).
 
 ### Core Features:
+
 - ✅ 100+ LLM providers
 - ✅ OpenAI-compatible format
 - ✅ Retry/fallback logic
@@ -232,15 +255,16 @@ Call 100+ LLM APIs in OpenAI format (proxy/gateway).
 - ✅ Proxy server
 
 ### Pricing:
+
 - Open source (FREE!)
 - Enterprise tier available
 
 ### Potential Use Cases i Friday AI:
+
 1. **AI Provider Flexibility** ⭐⭐⭐⭐⭐
    - Easy model switching
    - Fallback support
    - Cost optimization
-   
 2. **Friday Docs AI Enhancement**
    - Test multiple models
    - Automatic failover
@@ -252,17 +276,21 @@ Call 100+ LLM APIs in OpenAI format (proxy/gateway).
    - Better monitoring
 
 ### Integration Effort:
+
 - **Difficulty:** Easy
 - **Time:** 3-5 hours
 - **Value:** VERY HIGH ⭐⭐⭐⭐⭐
 
 ### Recommendation:
-✅ **HIGHLY RECOMMENDED** 
+
+✅ **HIGHLY RECOMMENDED**
+
 - Perfect for production resilience
 - Easy model experimentation
 - FREE and open source!
 
 ### Implementation Plan:
+
 ```typescript
 // 1. Install
 npm install litellm
@@ -300,9 +328,11 @@ model_list:
 ## 5. 🧪 Kusho.ai - AI-Powered API Testing
 
 ### Hvad Er Det?
+
 Autonomous API and UI testing platform.
 
 ### Core Features:
+
 - ✅ Auto-generate test suites
 - ✅ API spec → Tests
 - ✅ UI recording → Tests
@@ -311,15 +341,16 @@ Autonomous API and UI testing platform.
 - ✅ Regression detection
 
 ### Pricing:
+
 - Free tier available
 - Team plans from $49/user/month
 
 ### Potential Use Cases i Friday AI:
+
 1. **Automated Testing Enhancement** ⭐⭐⭐⭐
    - Auto-generate API tests
    - Better coverage
    - Less manual work
-   
 2. **Friday Docs API Testing**
    - Generate tests for tRPC endpoints
    - Regression detection
@@ -331,17 +362,21 @@ Autonomous API and UI testing platform.
    - Quality gates
 
 ### Integration Effort:
+
 - **Difficulty:** Easy
 - **Time:** 2-4 hours
 - **Value:** HIGH ⭐⭐⭐⭐
 
 ### Recommendation:
+
 ✅ **RECOMMENDED** for Test Automation
+
 - Perfect complement to Playwright
 - Auto-generate API tests
 - Improve test coverage
 
 ### Implementation Plan:
+
 ```typescript
 // 1. Export OpenAPI spec
 // Generate from tRPC router
@@ -364,9 +399,11 @@ npm run test:api
 ## 6. 📮 Postman - API Development Platform
 
 ### Hvad Er Det?
+
 Industry-standard API development and testing platform.
 
 ### Core Features:
+
 - ✅ API testing
 - ✅ Collection organization
 - ✅ Environment variables
@@ -376,15 +413,16 @@ Industry-standard API development and testing platform.
 - ✅ Team collaboration
 
 ### Pricing:
+
 - Free tier (good for small teams)
 - Paid: From $12/user/month
 
 ### Potential Use Cases i Friday AI:
+
 1. **API Documentation** ⭐⭐⭐⭐
    - Document tRPC endpoints
    - Share with team
    - Client documentation
-   
 2. **Manual Testing**
    - Quick endpoint testing
    - Environment management
@@ -396,17 +434,21 @@ Industry-standard API development and testing platform.
    - Onboarding docs
 
 ### Integration Effort:
+
 - **Difficulty:** Easy
 - **Time:** 2-3 hours (setup)
 - **Value:** MEDIUM ⭐⭐⭐
 
 ### Recommendation:
+
 ✅ **RECOMMENDED** for Documentation
+
 - Industry standard
 - Good for team collaboration
 - Free tier sufficient
 
 ### Implementation Plan:
+
 ```javascript
 // 1. Create Postman workspace
 // Via web interface
@@ -429,6 +471,7 @@ Industry-standard API development and testing platform.
 ## 🎯 PRIORITERET ANBEFALING
 
 ### Tier 1: Must Have ⭐⭐⭐⭐⭐
+
 1. **LiteLLM** - Unified LLM gateway
    - **Why:** Better reliability, easy model switching, FREE!
    - **Impact:** HIGH
@@ -442,6 +485,7 @@ Industry-standard API development and testing platform.
    - **Action:** Implement for Friday Docs v1.1
 
 ### Tier 2: Should Have ⭐⭐⭐⭐
+
 3. **Firecrawl** - Web scraping
    - **Why:** Lead enrichment, competitive intelligence
    - **Impact:** HIGH
@@ -461,6 +505,7 @@ Industry-standard API development and testing platform.
    - **Action:** Setup for team use
 
 ### Tier 3: Nice to Have ⭐⭐⭐
+
 6. **Browserbase** - Browser automation
    - **Why:** Advanced testing, better debugging
    - **Impact:** MEDIUM
@@ -472,6 +517,7 @@ Industry-standard API development and testing platform.
 ## 💰 COST ANALYSIS
 
 ### Free Tiers (Start Here):
+
 - ✅ **LiteLLM**: FREE (open source)
 - ✅ **Ragie.ai**: Free tier available
 - ✅ **Firecrawl**: 500 credits/month free
@@ -482,6 +528,7 @@ Industry-standard API development and testing platform.
 **Total Initial Cost:** $0/month 🎉
 
 ### Projected Costs (Scaled Usage):
+
 - LiteLLM: $0 (self-hosted)
 - Ragie.ai: ~$20-50/month
 - Firecrawl: ~$20-40/month
@@ -496,6 +543,7 @@ Industry-standard API development and testing platform.
 ## 📅 IMPLEMENTATION ROADMAP
 
 ### Phase 1: Foundation (Week 1-2)
+
 1. **LiteLLM Setup** (Day 1-2)
    - Install and configure
    - Migrate existing AI calls
@@ -507,6 +555,7 @@ Industry-standard API development and testing platform.
    - Add documentation
 
 ### Phase 2: Enhancement (Week 3-4)
+
 3. **Ragie.ai Integration** (Week 3)
    - Friday Docs semantic search
    - Document indexing
@@ -518,6 +567,7 @@ Industry-standard API development and testing platform.
    - Data extraction
 
 ### Phase 3: Automation (Week 5-6)
+
 5. **Kusho.ai Testing** (Week 5)
    - Generate API tests
    - CI/CD integration
@@ -533,17 +583,20 @@ Industry-standard API development and testing platform.
 ## 🎊 SAMLET VURDERING
 
 ### Top 3 Prioriteter:
+
 1. **LiteLLM** → Better AI reliability
 2. **Ragie.ai** → Smarter Friday Docs
 3. **Firecrawl** → Better lead data
 
 ### ROI Estimate:
+
 - **Time saved:** 10-20 hours/month
 - **Quality improvement:** 30-40%
 - **Cost:** ~$0-50/month (initial)
 - **Value:** HIGH ⭐⭐⭐⭐⭐
 
 ### Next Steps:
+
 1. Start with LiteLLM (this week)
 2. Setup Postman (documentation)
 3. Test Ragie.ai for Friday Docs
@@ -554,6 +607,6 @@ Industry-standard API development and testing platform.
 
 **Analyseret af:** Cascade AI  
 **Dato:** November 9, 2025  
-**Status:** Ready for Implementation  
+**Status:** Ready for Implementation
 
 Skal vi starte med LiteLLM integration? 🚀

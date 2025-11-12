@@ -4,7 +4,9 @@ interface WelcomeScreenProps {
   onSuggestionClick: (suggestion: string) => void;
 }
 
-export default function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
+export default function WelcomeScreen({
+  onSuggestionClick,
+}: WelcomeScreenProps) {
   const suggestions = [
     { text: "Tjek min kalender i dag", icon: Calendar },
     { text: "Vis ubetalte fakturaer", icon: FileText },
@@ -13,7 +15,7 @@ export default function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps)
   ];
 
   return (
-    <div 
+    <div
       data-testid="welcome-screen"
       className="flex flex-col items-center justify-center min-h-[50vh] space-y-4 px-3"
     >
@@ -26,7 +28,7 @@ export default function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps)
           Vælg handling eller skriv
         </p>
       </div>
-      
+
       {/* Compact suggestion pills - optimized for 20% width */}
       <div className="flex flex-col gap-2 w-full">
         {suggestions.map((suggestion, i) => {
@@ -44,7 +46,7 @@ export default function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps)
           );
         })}
       </div>
-      
+
       {/* Model info - Shortwave style */}
       <div className="text-xs text-muted-foreground text-center space-y-1">
         <p>Standard • Gemma 3 27B Free</p>

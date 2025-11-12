@@ -88,11 +88,11 @@ curl https://your-domain.com/api/trpc/aiMetrics.checkRolloutHealth
 
 ## 🎯 Decision Matrix
 
-| Error Rate | Avg Time | Action |
-|------------|----------|--------|
-| < 1% | < 3s | ✅ Proceed |
-| 1-5% | 3-5s | ⚠️  Hold, monitor |
-| > 5% | > 5s | 🚨 Rollback |
+| Error Rate | Avg Time | Action           |
+| ---------- | -------- | ---------------- |
+| < 1%       | < 3s     | ✅ Proceed       |
+| 1-5%       | 3-5s     | ⚠️ Hold, monitor |
+| > 5%       | > 5s     | 🚨 Rollback      |
 
 ---
 
@@ -111,18 +111,21 @@ OPENROUTER_API_KEY=sk-or-v1-...
 ## 🔧 Quick Troubleshooting
 
 **High error rate?**
+
 ```bash
 # Check which model is failing
 curl .../aiMetrics.getModelBreakdown
 ```
 
 **Slow responses?**
+
 ```bash
 # Check P95 times
 curl .../aiMetrics.getSummary | jq '.p95ResponseTime'
 ```
 
 **Users getting wrong experience?**
+
 ```bash
 # Verify rollout percentage
 curl .../aiMetrics.getRolloutStatus
@@ -134,7 +137,7 @@ curl .../aiMetrics.getRolloutStatus
 
 - **Day 0:** Staging ✅
 - **Day 1-2:** 10% rollout + monitor 48h
-- **Day 3-4:** 50% rollout + monitor 48h  
+- **Day 3-4:** 50% rollout + monitor 48h
 - **Day 5-7:** 100% rollout + monitor 1 week
 
 ---

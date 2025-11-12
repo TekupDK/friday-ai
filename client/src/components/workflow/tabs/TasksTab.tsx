@@ -44,7 +44,9 @@ interface CleaningTask {
  */
 export default function TasksTab() {
   const { state } = useWorkflowContext();
-  const [filter, setFilter] = useState<"all" | "today" | "pending" | "completed">("all");
+  const [filter, setFilter] = useState<
+    "all" | "today" | "pending" | "completed"
+  >("all");
 
   // Mock cleaning tasks - replace with real data
   const cleaningTasks: CleaningTask[] = [
@@ -54,12 +56,12 @@ export default function TasksTab() {
       type: "flytterengøring",
       customer: {
         name: "Sarah Johnson",
-        phone: "+45 12 34 56 78"
+        phone: "+45 12 34 56 78",
       },
       location: {
         address: "Nørrebrogade 123, 2. tv",
         city: "København",
-        postalCode: "2200"
+        postalCode: "2200",
       },
       scheduledDate: new Date(),
       estimatedDuration: 240,
@@ -67,27 +69,27 @@ export default function TasksTab() {
       status: "pending",
       priority: "high",
       assignedTo: "Maria",
-      notes: "Ekstra snavset køkken, husk specialrengøring"
+      notes: "Ekstra snavset køkken, husk specialrengøring",
     },
     {
-      id: "2", 
+      id: "2",
       title: "Hovedrengøring - Villa",
       type: "hovedrengøring",
       customer: {
         name: "Michael Chen",
-        phone: "+45 87 65 43 21"
+        phone: "+45 87 65 43 21",
       },
       location: {
         address: "Strandvejen 45",
         city: "Hellerup",
-        postalCode: "2900"
+        postalCode: "2900",
       },
       scheduledDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
       estimatedDuration: 360,
       price: 4200,
       status: "pending",
       priority: "medium",
-      assignedTo: "Anna"
+      assignedTo: "Anna",
     },
     {
       id: "3",
@@ -95,45 +97,55 @@ export default function TasksTab() {
       type: "løbende",
       customer: {
         name: "TechStart Solutions",
-        phone: "+45 33 44 55 66"
+        phone: "+45 33 44 55 66",
       },
       location: {
         address: "Vesterbrogade 89, 3. sal",
         city: "København",
-        postalCode: "1620"
+        postalCode: "1620",
       },
       scheduledDate: new Date(Date.now() - 2 * 60 * 60 * 1000),
       estimatedDuration: 120,
       price: 1800,
       status: "completed",
-      priority: "low"
-    }
+      priority: "low",
+    },
   ];
 
   const getStatusColor = (status: CleaningTask["status"]) => {
     switch (status) {
-      case "pending": return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "in_progress": return "bg-blue-100 text-blue-800 border-blue-200";
-      case "completed": return "bg-green-100 text-green-800 border-green-200";
-      case "cancelled": return "bg-red-100 text-red-800 border-red-200";
-      default: return "bg-gray-100 text-gray-800 border-gray-200";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "in_progress":
+        return "bg-blue-100 text-blue-800 border-blue-200";
+      case "completed":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "cancelled":
+        return "bg-red-100 text-red-800 border-red-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   const getTypeColor = (type: CleaningTask["type"]) => {
     switch (type) {
-      case "flytterengøring": return "bg-purple-100 text-purple-800";
-      case "hovedrengøring": return "bg-blue-100 text-blue-800";
-      case "løbende": return "bg-green-100 text-green-800";
-      case "vinduespolering": return "bg-orange-100 text-orange-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "flytterengøring":
+        return "bg-purple-100 text-purple-800";
+      case "hovedrengøring":
+        return "bg-blue-100 text-blue-800";
+      case "løbende":
+        return "bg-green-100 text-green-800";
+      case "vinduespolering":
+        return "bg-orange-100 text-orange-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('da-DK', {
-      style: 'currency',
-      currency: 'DKK'
+    return new Intl.NumberFormat("da-DK", {
+      style: "currency",
+      currency: "DKK",
     }).format(price);
   };
 
@@ -166,8 +178,8 @@ export default function TasksTab() {
             { key: "all", label: "Alle", count: cleaningTasks.length },
             { key: "today", label: "I dag", count: 2 },
             { key: "pending", label: "Afventer", count: 2 },
-            { key: "completed", label: "Færdige", count: 1 }
-          ].map((filterOption) => (
+            { key: "completed", label: "Færdige", count: 1 },
+          ].map(filterOption => (
             <Button
               key={filterOption.key}
               variant={filter === filterOption.key ? "default" : "outline"}
@@ -186,12 +198,12 @@ export default function TasksTab() {
 
       {/* Tasks List */}
       <div className="flex-1 overflow-auto p-4 space-y-3">
-        {cleaningTasks.map((task) => (
+        {cleaningTasks.map(task => (
           <Card key={task.id} className="p-4 hover:shadow-md transition-shadow">
             <div className="flex items-start gap-4">
               {/* Status Checkbox */}
               <div className="mt-1">
-                <Checkbox 
+                <Checkbox
                   checked={task.status === "completed"}
                   className="w-5 h-5"
                 />
@@ -237,8 +249,12 @@ export default function TasksTab() {
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-gray-400" />
                     <div>
-                      <div className="text-sm font-medium">{task.customer.name}</div>
-                      <div className="text-xs text-gray-500">{task.customer.phone}</div>
+                      <div className="text-sm font-medium">
+                        {task.customer.name}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {task.customer.phone}
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -257,7 +273,11 @@ export default function TasksTab() {
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1 text-sm text-gray-600">
                       <Calendar className="w-4 h-4" />
-                      {task.scheduledDate.toLocaleDateString('da-DK')} kl. {task.scheduledDate.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}
+                      {task.scheduledDate.toLocaleDateString("da-DK")} kl.{" "}
+                      {task.scheduledDate.toLocaleTimeString("da-DK", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </div>
                     {task.assignedTo && (
                       <div className="flex items-center gap-2">
@@ -266,7 +286,9 @@ export default function TasksTab() {
                             {task.assignedTo.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-sm text-gray-600">{task.assignedTo}</span>
+                        <span className="text-sm text-gray-600">
+                          {task.assignedTo}
+                        </span>
                       </div>
                     )}
                   </div>

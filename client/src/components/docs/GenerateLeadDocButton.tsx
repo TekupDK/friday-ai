@@ -1,6 +1,6 @@
 /**
  * Generate Lead Documentation Button
- * 
+ *
  * Standalone button component for generating AI documentation for a lead.
  * Can be used in:
  * - Leads list/table

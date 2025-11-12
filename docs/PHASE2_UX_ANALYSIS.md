@@ -1,4 +1,5 @@
 # Phase 2 UX Analysis & Improvement Plan
+
 **Dato:** 9. November 2025  
 **Status:** ChatGPT Feedback Integration Analysis  
 **Autor:** Cascade (med bruger feedback)
@@ -8,6 +9,7 @@
 ## 📋 EXECUTIVE SUMMARY
 
 ChatGPT har analyseret vores Email Center design og identificeret vigtige UX-problemer:
+
 - **Høj kognitiv belastning** (3 kolonner konkurrerer)
 - **Badge clutter** (for mange signaler)
 - **Manglende actionbar** (handlinger gemt i kebab-menu)
@@ -22,25 +24,28 @@ ChatGPT har analyseret vores Email Center design og identificeret vigtige UX-pro
 ### ✅ HVAD VI ALLEREDE HAR GJORT RIGTIGT (Phase 1 & 2)
 
 #### 1. **Sender-Based Grouping** ✅
+
 ```typescript
 // ✅ DONE in Phase 2: client/src/utils/thread-grouping.ts
 export function groupEmailsByThread(emails: EnhancedEmailMessage[]) {
   const threadsMap = new Map<string, EmailThread>();
-  
+
   emails.forEach(email => {
     // Extract email address from "Name <email@domain.com>" format
-    const senderEmail = email.from.match(/<(.+?)>/) 
-      ? email.from.match(/<(.+?)>/)![1] 
+    const senderEmail = email.from.match(/<(.+?)>/)
+      ? email.from.match(/<(.+?)>/)![1]
       : email.from;
-    
+
     // ✅ Group by SENDER (not threadId)
     const threadId = senderEmail;
   });
 }
 ```
+
 **IMPACT:** Reducerer "7 separate Rendstelsje.dk items" → "1 customer thread [7]"
 
 #### 2. **Conditional Badges (Hot Leads Only)** ✅
+
 ```typescript
 // ✅ DONE in Phase 1: client/src/components/inbox/EmailThreadGroup.tsx
 const leadScoreConfig = maxLeadScore >= 70 ? getLeadScoreConfig(maxLeadScore) : null;
@@ -53,31 +58,36 @@ const leadScoreConfig = maxLeadScore >= 70 ? getLeadScoreConfig(maxLeadScore) : 
   </Badge>
 )}
 ```
+
 **IMPACT:** Reducerer badge clutter ved kun at vise vigtige leads
 
 #### 3. **Quick Actions Integration** ✅
+
 ```typescript
 // ✅ DONE in Phase 1: client/src/components/inbox/EmailThreadGroup.tsx
 <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-  <EmailQuickActions 
+  <EmailQuickActions
     email={latestMessage}
     onArchive={handleArchive}
     onReply={handleReply}
   />
 </div>
 ```
+
 **IMPACT:** Hover-activated actions, ikke altid synlige
 
 #### 4. **Virtualization for Performance** ✅
+
 ```typescript
 // ✅ DONE in Phase 1: client/src/components/inbox/EmailListAI.tsx
 const virtualizer = useVirtualizer({
   count: threads.length,
   getScrollElement: () => parentRef.current,
-  estimateSize: () => (density === 'compact' ? 60 : 100),
+  estimateSize: () => (density === "compact" ? 60 : 100),
   overscan: 5,
 });
 ```
+
 **IMPACT:** Hurtig rendering af 1000+ emails
 
 ---
@@ -85,15 +95,18 @@ const virtualizer = useVirtualizer({
 ### ⚠️ HVAD VI SKAL FORBEDRE (ChatGPT Feedback)
 
 #### 1. **STICKY ACTIONBAR** ❌ (Mangler)
+
 **Problem:** Quick Actions er kun synlige on hover. Når user vælger 1+ emails, skal der være en sticky actionbar.
 
 **ChatGPT anbefaling:**
+
 ```
-Sticky actionbar øverst når 1+ emails er valgt: 
+Sticky actionbar øverst når 1+ emails er valgt:
 Svar, Book, Opret opgave, Label, Arkiver
 ```
 
 **VORES LØSNING:**
+
 ```typescript
 // NY KOMPONENT: client/src/components/inbox/EmailStickyActionBar.tsx
 interface EmailStickyActionBarProps {
@@ -117,7 +130,7 @@ export function EmailStickyActionBar({
         <Checkbox checked={true} onCheckedChange={() => actions.onClose()} />
         <span className="font-medium">{selectedThreads.length} valgt</span>
       </div>
-      
+
       {/* Right: Actions */}
       <div className="flex items-center gap-2">
         <Button size="sm" variant="secondary" onClick={actions.onReply}>
@@ -140,34 +153,42 @@ export function EmailStickyActionBar({
 ```
 
 #### 2. **VISUEL FORENKLING: Badges** ⚠️ (Delvist gjort)
+
 **Problem:** For mange badge-typer og farver.
 
 **ChatGPT anbefaling:**
+
 ```
 Reducer badges til to farver:
-- Status (grøn) 
+- Status (grøn)
 - Risiko (gul/rød)
 ```
 
 **VORES NUVÆRENDE:**
+
 ```typescript
 // EmailThreadGroup.tsx - HAR 4 badge typer
-if (score >= 80) return { color: 'bg-red-100', icon: Flame, label: 'Hot' };      // RØD
-if (score >= 60) return { color: 'bg-green-100', icon: TrendingUp, label: 'High' }; // GRØN
-if (score >= 40) return { color: 'bg-blue-100', icon: Target, label: 'Medium' }; // BLÅ
-return { color: 'bg-gray-100', icon: Circle, label: 'Low' };                     // GRÅ
+if (score >= 80) return { color: "bg-red-100", icon: Flame, label: "Hot" }; // RØD
+if (score >= 60)
+  return { color: "bg-green-100", icon: TrendingUp, label: "High" }; // GRØN
+if (score >= 40) return { color: "bg-blue-100", icon: Target, label: "Medium" }; // BLÅ
+return { color: "bg-gray-100", icon: Circle, label: "Low" }; // GRÅ
 ```
 
 **FORESLÅET FORBEDRING:**
+
 ```typescript
 // SIMPLIFY: Kun 2 badge farver
 const getLeadScoreConfig = (score: number) => {
   if (score >= 70) {
     // ✅ RISIKO/VIGTIG (Rød/Gul)
-    return { 
-      color: score >= 80 ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800',
-      icon: Flame, 
-      label: score >= 80 ? 'Hot' : 'Warm'
+    return {
+      color:
+        score >= 80
+          ? "bg-red-100 text-red-800"
+          : "bg-yellow-100 text-yellow-800",
+      icon: Flame,
+      label: score >= 80 ? "Hot" : "Warm",
     };
   }
   // ✅ STATUS (Grøn) - kun hvis behov
@@ -176,15 +197,18 @@ const getLeadScoreConfig = (score: number) => {
 ```
 
 #### 3. **LINE-HEIGHT & LÆSBARHED** ⚠️
+
 **Problem:** Tæt linjehøjde gør det svært at scanne emails.
 
 **ChatGPT anbefaling:**
+
 ```
 Øg line-height i email-rækker til ~1.4
 Gør afsender semibold, emne normal, metadata mutet
 ```
 
 **VORES NUVÆRENDE:**
+
 ```tsx
 // EmailThreadGroup.tsx
 <div className="flex-1 min-w-0">
@@ -192,7 +216,7 @@ Gør afsender semibold, emne normal, metadata mutet
   <div className="font-medium text-sm truncate">
     {getDisplayName(latestMessage.from)}
   </div>
-  
+
   {/* Subject */}
   <div className="text-sm text-muted-foreground truncate">
     {latestMessage.subject}
@@ -201,30 +225,39 @@ Gør afsender semibold, emne normal, metadata mutet
 ```
 
 **FORESLÅET FORBEDRING:**
+
 ```tsx
 // Better spacing og hierarchy
-<div className="flex-1 min-w-0 space-y-1">  {/* ✅ space-y-1 for breathing room */}
+<div className="flex-1 min-w-0 space-y-1">
+  {" "}
+  {/* ✅ space-y-1 for breathing room */}
   {/* Sender - semibold */}
-  <div className="font-semibold text-sm truncate leading-relaxed">  {/* ✅ semibold + leading-relaxed */}
+  <div className="font-semibold text-sm truncate leading-relaxed">
+    {" "}
+    {/* ✅ semibold + leading-relaxed */}
     {getDisplayName(latestMessage.from)}
   </div>
-  
   {/* Subject - normal weight */}
-  <div className="text-sm text-foreground/80 truncate leading-relaxed">  {/* ✅ foreground/80 for contrast */}
+  <div className="text-sm text-foreground/80 truncate leading-relaxed">
+    {" "}
+    {/* ✅ foreground/80 for contrast */}
     {latestMessage.subject}
   </div>
-  
   {/* Metadata - muted */}
-  <div className="text-xs text-muted-foreground">  {/* ✅ smaller, muted */}
+  <div className="text-xs text-muted-foreground">
+    {" "}
+    {/* ✅ smaller, muted */}
     {formatTime(latestMessage.date)}
   </div>
 </div>
 ```
 
 #### 4. **UTF-8 ENCODING FIX** ❌ (KRITISK!)
+
 **Problem:** "rengÃ¥ring" i stedet for "rengøring"
 
 **ChatGPT anbefaling:**
+
 ```
 Sikr charset=utf-8 i:
 1. DB-connection
@@ -233,6 +266,7 @@ Sikr charset=utf-8 i:
 ```
 
 **VORES FIX:**
+
 ```typescript
 // 1. Database config: drizzle/drizzle.config.ts
 export default {
@@ -254,19 +288,26 @@ export async function getEmails(req, res) {
 ```
 
 #### 5. **EMPTY STATES & DISMISSIBLE ALERTS** ⚠️
+
 **Problem:** "Low confidence" og "Lead Analysis 30%" fremstår som permanente advarsler.
 
 **ChatGPT anbefaling:**
+
 ```
 Progress/"Low confidence" som dismissible alert med lille ikon
 Tydelige empty states med CTA'er
 ```
 
 **FORESLÅET IMPLEMENTERING:**
+
 ```tsx
 // NY KOMPONENT: client/src/components/inbox/EmailEmptyState.tsx
-export function EmailEmptyState({ type }: { type: 'no-emails' | 'no-results' | 'low-confidence' }) {
-  if (type === 'no-emails') {
+export function EmailEmptyState({
+  type,
+}: {
+  type: "no-emails" | "no-results" | "low-confidence";
+}) {
+  if (type === "no-emails") {
     return (
       <div className="flex flex-col items-center justify-center h-full p-8 text-center">
         <Mail className="w-16 h-16 text-muted-foreground mb-4" />
@@ -281,8 +322,8 @@ export function EmailEmptyState({ type }: { type: 'no-emails' | 'no-results' | '
       </div>
     );
   }
-  
-  if (type === 'low-confidence') {
+
+  if (type === "low-confidence") {
     return (
       <Alert variant="warning" className="m-4" dismissible>
         <AlertTriangle className="w-4 h-4" />
@@ -303,47 +344,56 @@ export function EmailEmptyState({ type }: { type: 'no-emails' | 'no-results' | '
 ### 🔴 HIGH PRIORITY (Phase 2.1 - Denne uge)
 
 #### ✅ 1. **Sticky ActionBar** (2-3 timer)
+
 - [ ] Opret `EmailStickyActionBar.tsx` komponent
 - [ ] Integrer i `EmailListAI.tsx` når `selectedEmails.size > 0`
 - [ ] Tilføj keyboard shortcuts (j/k navigation)
 - [ ] Test med 1, 5, 50 valgte threads
 
 **MÅLING:**
+
 - `clicks_per_action` før/efter
 - `time_to_archive` før/efter
 
 #### ✅ 2. **UTF-8 Fix** (1 time - KRITISK!)
+
 - [ ] Verificer database charset
 - [ ] Tilføj `charset=utf-8` til alle API responses
 - [ ] Test med danske characters (æ, ø, å)
 
 **MÅLING:**
+
 - Manual test: Send email med "rengøring", verificer korrekt visning
 
 #### ✅ 3. **Badge Simplification** (2 timer)
+
 - [ ] Reducer fra 4 → 2 badge typer (Hot/Warm only)
 - [ ] Fjern "Medium" og "Low" badges
 - [ ] Update `getLeadScoreConfig()` i `EmailThreadGroup.tsx`
 
 **MÅLING:**
+
 - User feedback: "Nemmere at scanne emails?"
 - Visual clutter reduction
 
 ### 🟡 MEDIUM PRIORITY (Phase 2.2 - Næste uge)
 
 #### ✅ 4. **Line-Height & Readability** (2-3 timer)
+
 - [ ] Øg line-height til `leading-relaxed`
 - [ ] Gør sender `font-semibold`
 - [ ] Reducer metadata opacity til `text-muted-foreground`
 - [ ] Tilføj `space-y-1` mellem elements
 
 #### ✅ 5. **Empty States** (3-4 timer)
+
 - [ ] Opret `EmailEmptyState.tsx` komponent
 - [ ] Design 3 states: no-emails, no-results, low-confidence
 - [ ] Tilføj CTA buttons
 - [ ] Integrer i `EmailListAI.tsx`
 
 #### ✅ 6. **Dismissible Alerts** (1-2 timer)
+
 - [ ] Gør "Low confidence" alert dismissible
 - [ ] Persister dismissed state i localStorage
 - [ ] Test across sessions
@@ -351,16 +401,19 @@ export function EmailEmptyState({ type }: { type: 'no-emails' | 'no-results' | '
 ### 🟢 LOW PRIORITY (Phase 3 - Fremtidig)
 
 #### 7. **Context Panel Tabs** (5-8 timer)
+
 - Tabs: Lead | Booking | Kalender
 - Kun én aktiv ad gangen
 - Lazy loading af tabs
 
 #### 8. **AI Panel Kommandoer** (8-12 timer)
+
 - `/triage` → marker hot leads
 - `/book 3t fre 10:00` → åbner Booking-tab
 - `/draft svar` → viser svar-preview
 
 #### 9. **Keyboard Navigation** (3-5 timer)
+
 - j/k navigation
 - x for checkbox toggle
 - / for search focus
@@ -372,17 +425,19 @@ export function EmailEmptyState({ type }: { type: 'no-emails' | 'no-results' | '
 ### Step 1: Sticky ActionBar (Først!)
 
 **1.1 Create Component**
+
 ```bash
 touch client/src/components/inbox/EmailStickyActionBar.tsx
 ```
 
 **1.2 Implementation**
+
 ```typescript
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { 
-  Reply, Calendar, CheckSquare, 
-  Tag, Archive, X 
+import {
+  Reply, Calendar, CheckSquare,
+  Tag, Archive, X
 } from "lucide-react";
 import type { EmailThread } from "@/types/email-thread";
 
@@ -409,8 +464,8 @@ export default function EmailStickyActionBar({
     <div className="sticky top-0 z-10 bg-primary text-primary-foreground px-4 py-3 flex items-center justify-between shadow-lg border-b border-primary/20">
       {/* Left: Selection count */}
       <div className="flex items-center gap-3">
-        <Checkbox 
-          checked={true} 
+        <Checkbox
+          checked={true}
           onCheckedChange={onDeselectAll}
           className="border-primary-foreground"
         />
@@ -418,63 +473,63 @@ export default function EmailStickyActionBar({
           {selectedThreads.length} {selectedThreads.length === 1 ? 'thread' : 'threads'} valgt
         </span>
       </div>
-      
+
       {/* Right: Primary actions */}
       <div className="flex items-center gap-2">
-        <Button 
-          size="sm" 
-          variant="secondary" 
+        <Button
+          size="sm"
+          variant="secondary"
           onClick={onReply}
           className="font-medium"
         >
           <Reply className="w-4 h-4 mr-1" />
           Svar
         </Button>
-        
-        <Button 
-          size="sm" 
-          variant="secondary" 
+
+        <Button
+          size="sm"
+          variant="secondary"
           onClick={onBook}
           className="font-medium"
         >
           <Calendar className="w-4 h-4 mr-1" />
           Book møde
         </Button>
-        
-        <Button 
-          size="sm" 
-          variant="secondary" 
+
+        <Button
+          size="sm"
+          variant="secondary"
           onClick={onCreateTask}
           className="font-medium"
         >
           <CheckSquare className="w-4 h-4 mr-1" />
           Opret opgave
         </Button>
-        
-        <Button 
-          size="sm" 
-          variant="secondary" 
+
+        <Button
+          size="sm"
+          variant="secondary"
           onClick={onLabel}
           className="font-medium"
         >
           <Tag className="w-4 h-4 mr-1" />
           Label
         </Button>
-        
-        <Button 
-          size="sm" 
-          variant="secondary" 
+
+        <Button
+          size="sm"
+          variant="secondary"
           onClick={onArchive}
           className="font-medium"
         >
           <Archive className="w-4 h-4 mr-1" />
           Arkiver
         </Button>
-        
+
         {/* Close button */}
-        <Button 
-          size="sm" 
-          variant="ghost" 
+        <Button
+          size="sm"
+          variant="ghost"
           onClick={onDeselectAll}
           className="ml-2 text-primary-foreground hover:bg-primary-foreground/10"
         >
@@ -487,6 +542,7 @@ export default function EmailStickyActionBar({
 ```
 
 **1.3 Integrate in EmailListAI**
+
 ```typescript
 // client/src/components/inbox/EmailListAI.tsx
 
@@ -494,25 +550,25 @@ import EmailStickyActionBar from "./EmailStickyActionBar";
 
 export default function EmailListAI({ ... }: EmailListAIProps) {
   // ... existing code ...
-  
+
   const selectedThreadsList = useMemo(() => {
     return threads.filter(thread => selectedEmails.has(thread.id));
   }, [threads, selectedEmails]);
-  
+
   const handleDeselectAll = useCallback(() => {
     onEmailSelectionChange(new Set());
   }, [onEmailSelectionChange]);
-  
+
   const handleBulkReply = useCallback(() => {
     // TODO: Implement bulk reply logic
     console.log('Bulk reply to', selectedThreadsList.length, 'threads');
   }, [selectedThreadsList]);
-  
+
   const handleBulkBook = useCallback(() => {
     // TODO: Open booking dialog
     console.log('Bulk book for', selectedThreadsList.length, 'threads');
   }, [selectedThreadsList]);
-  
+
   const handleBulkArchive = useCallback(() => {
     // TODO: Archive selected threads
     console.log('Archive', selectedThreadsList.length, 'threads');
@@ -523,7 +579,7 @@ export default function EmailListAI({ ... }: EmailListAIProps) {
     <div className="flex flex-col h-full">
       {/* Intelligence Header */}
       {/* ... existing header code ... */}
-      
+
       {/* NEW: Sticky ActionBar - only when threads selected */}
       {selectedThreadsList.length > 0 && (
         <EmailStickyActionBar
@@ -536,7 +592,7 @@ export default function EmailListAI({ ... }: EmailListAIProps) {
           onDeselectAll={handleDeselectAll}
         />
       )}
-      
+
       {/* Email List */}
       <div ref={parentRef} className="flex-1 overflow-y-auto">
         {/* ... existing virtualized list ... */}
@@ -549,37 +605,40 @@ export default function EmailListAI({ ... }: EmailListAIProps) {
 ### Step 2: UTF-8 Fix
 
 **2.1 Database Connection**
+
 ```typescript
 // drizzle/drizzle.config.ts
-import { defineConfig } from 'drizzle-kit';
+import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
-  schema: './drizzle/schema.ts',
-  out: './drizzle',
-  driver: 'mssql',
+  schema: "./drizzle/schema.ts",
+  out: "./drizzle",
+  driver: "mssql",
   dbCredentials: {
     connectionString: process.env.DATABASE_URL!,
     // ✅ Ensure UTF-8 encoding
     options: {
-      charset: 'utf8mb4',
+      charset: "utf8mb4",
       enableArithAbort: true,
-    }
+    },
   },
 });
 ```
 
 **2.2 API Headers**
+
 ```typescript
 // server/_core/context.ts (eller relevant middleware)
 export function setUTF8Headers(res: Response) {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  res.setHeader('Content-Encoding', 'utf-8');
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.setHeader("Content-Encoding", "utf-8");
 }
 ```
 
 ### Step 3: Badge Simplification
 
 **3.1 Update getLeadScoreConfig**
+
 ```typescript
 // client/src/components/inbox/EmailThreadGroup.tsx
 
@@ -591,21 +650,21 @@ const getLeadScoreConfig = (score: number) => {
   if (score >= 70) {
     if (score >= 80) {
       // 🔥 HOT (Rød)
-      return { 
-        color: 'bg-red-100 text-red-800 border-red-200', 
-        icon: Flame, 
-        label: 'Hot' 
+      return {
+        color: 'bg-red-100 text-red-800 border-red-200',
+        icon: Flame,
+        label: 'Hot'
       };
     } else {
       // ⚡ WARM (Gul)
-      return { 
-        color: 'bg-yellow-100 text-yellow-800 border-yellow-200', 
-        icon: TrendingUp, 
-        label: 'Warm' 
+      return {
+        color: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+        icon: TrendingUp,
+        label: 'Warm'
       };
     }
   }
-  
+
   // ✅ NO badge for Medium/Low leads (reduces clutter)
   return null;
 };
@@ -627,6 +686,7 @@ const leadScoreConfig = getLeadScoreConfig(maxLeadScore);
 ## 📈 SUCCESS METRICS (Før/Efter)
 
 ### Kvantitative Metrics:
+
 ```
 1. time_to_reply (gennemsnitstid fra email læst → svar sendt)
    BEFORE: ?
@@ -646,6 +706,7 @@ const leadScoreConfig = getLeadScoreConfig(maxLeadScore);
 ```
 
 ### Kvalitative Metrics:
+
 ```
 User feedback:
 - "Kan du hurtigere finde hot leads?"
@@ -658,6 +719,7 @@ User feedback:
 ## 🚀 ROLLOUT PLAN
 
 ### Week 1: Phase 2.1 - Quick Wins
+
 ```
 ✅ Day 1-2: Sticky ActionBar (HIGH impact, LOW effort)
 ✅ Day 2: UTF-8 Fix (CRITICAL, LOW effort)
@@ -666,6 +728,7 @@ User feedback:
 ```
 
 ### Week 2: Phase 2.2 - Polish
+
 ```
 ✅ Day 1-2: Line-height & Readability improvements
 ✅ Day 3-4: Empty States & Dismissible Alerts
@@ -673,6 +736,7 @@ User feedback:
 ```
 
 ### Week 3+: Phase 3 - Advanced Features
+
 ```
 ✅ Context Panel Tabs (Lead | Booking | Kalender)
 ✅ AI Panel Kommandoer (/triage, /book, /draft)
@@ -685,7 +749,6 @@ User feedback:
 
 1. **To-panel fokus** (fjern venstre AI-panel)
    - Reason: AI-panelet er "kontroltårnet" - skal blive
-   
 2. **Komplet redesign af højre-rail**
    - Reason: Phase 3 - fokus på midte først
 

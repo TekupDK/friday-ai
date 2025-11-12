@@ -6,9 +6,19 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { 
-  User, Phone, Mail, MapPin, Calendar, DollarSign, 
-  TrendingUp, Clock, Building, FileText, CheckCircle2, Star
+import {
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+  DollarSign,
+  TrendingUp,
+  Clock,
+  Building,
+  FileText,
+  CheckCircle2,
+  Star,
 } from "lucide-react";
 
 /**
@@ -32,7 +42,7 @@ interface LeadEmail {
   lastContact: string;
   leadScore: number;
   estimatedValue: number;
-  status: 'new' | 'contacted' | 'quoted' | 'won' | 'lost';
+  status: "new" | "contacted" | "quoted" | "won" | "lost";
   serviceType: string;
   emailCount: number;
   nextAction?: string;
@@ -41,63 +51,63 @@ interface LeadEmail {
 
 const leads: LeadEmail[] = [
   {
-    id: '1',
-    leadName: 'Matilde Skinneholm',
-    company: 'Tech Corp ApS',
-    email: 'matilde@techcorp.dk',
-    phone: '+45 12 34 56 78',
-    address: 'Nørrebrogade 123, 2200 København',
-    source: 'Rengøring.nu',
-    firstContact: '2024-11-10',
-    lastContact: '22:08',
+    id: "1",
+    leadName: "Matilde Skinneholm",
+    company: "Tech Corp ApS",
+    email: "matilde@techcorp.dk",
+    phone: "+45 12 34 56 78",
+    address: "Nørrebrogade 123, 2200 København",
+    source: "Rengøring.nu",
+    firstContact: "2024-11-10",
+    lastContact: "22:08",
     leadScore: 95,
     estimatedValue: 40000,
-    status: 'new',
-    serviceType: 'Fast Rengøring',
+    status: "new",
+    serviceType: "Fast Rengøring",
     emailCount: 1,
-    nextAction: 'Send tilbud indenfor 24 timer',
-    notes: '250 m² kontor, ønsker ugentlig service'
+    nextAction: "Send tilbud indenfor 24 timer",
+    notes: "250 m² kontor, ønsker ugentlig service",
   },
   {
-    id: '2',
-    leadName: 'Lars Nielsen',
-    company: 'Nielsen & Co',
-    email: 'lars@nielsen.dk',
-    phone: '+45 98 76 54 32',
-    source: 'Direct',
-    firstContact: '2024-11-05',
-    lastContact: 'Igår',
+    id: "2",
+    leadName: "Lars Nielsen",
+    company: "Nielsen & Co",
+    email: "lars@nielsen.dk",
+    phone: "+45 98 76 54 32",
+    source: "Direct",
+    firstContact: "2024-11-05",
+    lastContact: "Igår",
     leadScore: 78,
     estimatedValue: 25000,
-    status: 'quoted',
-    serviceType: 'Flytterengøring',
+    status: "quoted",
+    serviceType: "Flytterengøring",
     emailCount: 4,
-    nextAction: 'Follow-up på tilbud',
-    notes: '3-værelses lejlighed'
+    nextAction: "Follow-up på tilbud",
+    notes: "3-værelses lejlighed",
   },
   {
-    id: '3',
-    leadName: 'Maria Hansen',
-    email: 'maria@example.dk',
-    phone: '+45 23 45 67 89',
-    source: 'Website',
-    firstContact: '2024-11-01',
-    lastContact: '3 dage siden',
+    id: "3",
+    leadName: "Maria Hansen",
+    email: "maria@example.dk",
+    phone: "+45 23 45 67 89",
+    source: "Website",
+    firstContact: "2024-11-01",
+    lastContact: "3 dage siden",
     leadScore: 88,
     estimatedValue: 15000,
-    status: 'won',
-    serviceType: 'Hovedrengøring',
+    status: "won",
+    serviceType: "Hovedrengøring",
     emailCount: 6,
-    notes: 'Job completed, send faktura'
-  }
+    notes: "Job completed, send faktura",
+  },
 ];
 
 const statusConfig = {
-  new: { label: 'New Lead', color: 'bg-blue-500', icon: Star },
-  contacted: { label: 'Contacted', color: 'bg-yellow-500', icon: Mail },
-  quoted: { label: 'Quoted', color: 'bg-purple-500', icon: FileText },
-  won: { label: 'Won', color: 'bg-green-500', icon: CheckCircle2 },
-  lost: { label: 'Lost', color: 'bg-gray-400', icon: Clock }
+  new: { label: "New Lead", color: "bg-blue-500", icon: Star },
+  contacted: { label: "Contacted", color: "bg-yellow-500", icon: Mail },
+  quoted: { label: "Quoted", color: "bg-purple-500", icon: FileText },
+  won: { label: "Won", color: "bg-green-500", icon: CheckCircle2 },
+  lost: { label: "Lost", color: "bg-gray-400", icon: Clock },
 };
 
 export function EmailCenterLeadCRM() {
@@ -115,16 +125,23 @@ export function EmailCenterLeadCRM() {
                 Lead Management
               </h3>
               <p className="text-xs text-muted-foreground">
-                {leads.length} active leads • {leads.filter(l => l.status === 'new').length} nye
+                {leads.length} active leads •{" "}
+                {leads.filter(l => l.status === "new").length} nye
               </p>
             </div>
 
             {/* Filters */}
             <div className="border-b p-3 space-y-2">
               <div className="flex gap-2">
-                <Button size="sm" variant="default" className="flex-1">All ({leads.length})</Button>
-                <Button size="sm" variant="outline" className="flex-1">New (1)</Button>
-                <Button size="sm" variant="outline" className="flex-1">Hot (2)</Button>
+                <Button size="sm" variant="default" className="flex-1">
+                  All ({leads.length})
+                </Button>
+                <Button size="sm" variant="outline" className="flex-1">
+                  New (1)
+                </Button>
+                <Button size="sm" variant="outline" className="flex-1">
+                  Hot (2)
+                </Button>
               </div>
             </div>
 
@@ -142,7 +159,9 @@ export function EmailCenterLeadCRM() {
                       isSelected && "bg-accent/50 border-l-4 border-l-primary",
                       "hover:bg-accent/30"
                     )}
-                    style={{ animation: `fadeIn 0.3s ease-out ${idx * 0.05}s both` }}
+                    style={{
+                      animation: `fadeIn 0.3s ease-out ${idx * 0.05}s both`,
+                    }}
                   >
                     {/* Lead Header */}
                     <div className="flex items-start gap-3 mb-3">
@@ -152,7 +171,9 @@ export function EmailCenterLeadCRM() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-sm mb-0.5">{lead.leadName}</div>
+                        <div className="font-semibold text-sm mb-0.5">
+                          {lead.leadName}
+                        </div>
                         {lead.company && (
                           <div className="text-xs text-muted-foreground flex items-center gap-1">
                             <Building className="h-3 w-3" />
@@ -160,8 +181,15 @@ export function EmailCenterLeadCRM() {
                           </div>
                         )}
                         <div className="flex items-center gap-2 mt-1">
-                          <Badge variant="outline" className="text-xs">{lead.source}</Badge>
-                          <div className={cn("px-2 py-0.5 rounded text-xs text-white font-medium", statusConfig[lead.status].color)}>
+                          <Badge variant="outline" className="text-xs">
+                            {lead.source}
+                          </Badge>
+                          <div
+                            className={cn(
+                              "px-2 py-0.5 rounded text-xs text-white font-medium",
+                              statusConfig[lead.status].color
+                            )}
+                          >
                             {statusConfig[lead.status].label}
                           </div>
                         </div>
@@ -170,25 +198,32 @@ export function EmailCenterLeadCRM() {
 
                     {/* Lead Score */}
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs text-muted-foreground">Score:</span>
+                      <span className="text-xs text-muted-foreground">
+                        Score:
+                      </span>
                       <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
-                        <div 
+                        <div
                           className={cn(
                             "h-full",
-                            lead.leadScore >= 90 ? "bg-green-500" : 
-                            lead.leadScore >= 75 ? "bg-blue-500" : "bg-yellow-500"
+                            lead.leadScore >= 90
+                              ? "bg-green-500"
+                              : lead.leadScore >= 75
+                                ? "bg-blue-500"
+                                : "bg-yellow-500"
                           )}
                           style={{ width: `${lead.leadScore}%` }}
                         />
                       </div>
-                      <span className="text-xs font-semibold">{lead.leadScore}</span>
+                      <span className="text-xs font-semibold">
+                        {lead.leadScore}
+                      </span>
                     </div>
 
                     {/* Value & Service */}
                     <div className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-1 text-muted-foreground">
                         <DollarSign className="h-3 w-3" />
-                        {lead.estimatedValue.toLocaleString('da-DK')} kr
+                        {lead.estimatedValue.toLocaleString("da-DK")} kr
                       </div>
                       <div className="text-muted-foreground">
                         {lead.emailCount} emails
@@ -213,7 +248,9 @@ export function EmailCenterLeadCRM() {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <h2 className="text-2xl font-bold mb-1">{selectedLead.leadName}</h2>
+                      <h2 className="text-2xl font-bold mb-1">
+                        {selectedLead.leadName}
+                      </h2>
                       {selectedLead.company && (
                         <div className="text-muted-foreground flex items-center gap-2 mb-2">
                           <Building className="h-4 w-4" />
@@ -222,16 +259,20 @@ export function EmailCenterLeadCRM() {
                       )}
                       <div className="flex items-center gap-2">
                         <Badge variant="outline">{selectedLead.source}</Badge>
-                        <Badge className={statusConfig[selectedLead.status].color}>
+                        <Badge
+                          className={statusConfig[selectedLead.status].color}
+                        >
                           {statusConfig[selectedLead.status].label}
                         </Badge>
                       </div>
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-green-600 mb-1">
-                        {selectedLead.estimatedValue.toLocaleString('da-DK')} kr
+                        {selectedLead.estimatedValue.toLocaleString("da-DK")} kr
                       </div>
-                      <div className="text-xs text-muted-foreground">Estimated Value</div>
+                      <div className="text-xs text-muted-foreground">
+                        Estimated Value
+                      </div>
                     </div>
                   </div>
 
@@ -266,14 +307,20 @@ export function EmailCenterLeadCRM() {
                     <div className="space-y-2">
                       <div className="flex items-center gap-3 text-sm">
                         <Mail className="h-4 w-4 text-muted-foreground" />
-                        <a href={`mailto:${selectedLead.email}`} className="text-blue-600 hover:underline">
+                        <a
+                          href={`mailto:${selectedLead.email}`}
+                          className="text-blue-600 hover:underline"
+                        >
                           {selectedLead.email}
                         </a>
                       </div>
                       {selectedLead.phone && (
                         <div className="flex items-center gap-3 text-sm">
                           <Phone className="h-4 w-4 text-muted-foreground" />
-                          <a href={`tel:${selectedLead.phone}`} className="text-blue-600 hover:underline">
+                          <a
+                            href={`tel:${selectedLead.phone}`}
+                            className="text-blue-600 hover:underline"
+                          >
                             {selectedLead.phone}
                           </a>
                         </div>
@@ -297,20 +344,36 @@ export function EmailCenterLeadCRM() {
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="p-3 rounded-lg border bg-muted/30">
-                        <div className="text-xs text-muted-foreground mb-1">Service Type</div>
-                        <div className="font-semibold">{selectedLead.serviceType}</div>
+                        <div className="text-xs text-muted-foreground mb-1">
+                          Service Type
+                        </div>
+                        <div className="font-semibold">
+                          {selectedLead.serviceType}
+                        </div>
                       </div>
                       <div className="p-3 rounded-lg border bg-muted/30">
-                        <div className="text-xs text-muted-foreground mb-1">Lead Score</div>
-                        <div className="font-semibold text-green-600">{selectedLead.leadScore}/100</div>
+                        <div className="text-xs text-muted-foreground mb-1">
+                          Lead Score
+                        </div>
+                        <div className="font-semibold text-green-600">
+                          {selectedLead.leadScore}/100
+                        </div>
                       </div>
                       <div className="p-3 rounded-lg border bg-muted/30">
-                        <div className="text-xs text-muted-foreground mb-1">First Contact</div>
-                        <div className="font-semibold">{selectedLead.firstContact}</div>
+                        <div className="text-xs text-muted-foreground mb-1">
+                          First Contact
+                        </div>
+                        <div className="font-semibold">
+                          {selectedLead.firstContact}
+                        </div>
                       </div>
                       <div className="p-3 rounded-lg border bg-muted/30">
-                        <div className="text-xs text-muted-foreground mb-1">Last Contact</div>
-                        <div className="font-semibold">{selectedLead.lastContact}</div>
+                        <div className="text-xs text-muted-foreground mb-1">
+                          Last Contact
+                        </div>
+                        <div className="font-semibold">
+                          {selectedLead.lastContact}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -326,7 +389,9 @@ export function EmailCenterLeadCRM() {
                         </div>
                         <div>
                           <h4 className="font-semibold mb-1">Next Action</h4>
-                          <p className="text-sm text-muted-foreground">{selectedLead.nextAction}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {selectedLead.nextAction}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -349,13 +414,19 @@ export function EmailCenterLeadCRM() {
                         <Mail className="h-4 w-4" />
                         Email Historie
                       </span>
-                      <Badge variant="outline">{selectedLead.emailCount} emails</Badge>
+                      <Badge variant="outline">
+                        {selectedLead.emailCount} emails
+                      </Badge>
                     </h3>
                     <div className="space-y-2">
                       <div className="p-3 rounded-lg border hover:bg-accent/30 cursor-pointer transition-colors">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-sm">Tilbudsanmodning modtaget</span>
-                          <span className="text-xs text-muted-foreground">{selectedLead.lastContact}</span>
+                          <span className="font-medium text-sm">
+                            Tilbudsanmodning modtaget
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {selectedLead.lastContact}
+                          </span>
                         </div>
                         <p className="text-xs text-muted-foreground line-clamp-2">
                           Hej – vi vil gerne have et tilbud på rengøring...

@@ -3,7 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Edit, Calendar, Tag, User, GitBranch } from "lucide-react";
-import { useDocument, useDocumentComments, useDocuments } from "@/hooks/docs/useDocuments";
+import {
+  useDocument,
+  useDocumentComments,
+  useDocuments,
+} from "@/hooks/docs/useDocuments";
 import { formatDistanceToNow } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -16,24 +20,29 @@ interface DocumentViewerProps {
   onBack: () => void;
 }
 
-export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerProps) {
+export function DocumentViewer({
+  documentId,
+  onEdit,
+  onBack,
+}: DocumentViewerProps) {
   const { document, isLoading } = useDocument(documentId);
-  const { comments, addComment, resolveComment } = useDocumentComments(documentId);
-  
+  const { comments, addComment, resolveComment } =
+    useDocumentComments(documentId);
+
   const handleAddComment = async (content: string) => {
     return new Promise<void>((resolve, reject) => {
       addComment(
         { documentId, content },
-        { onSuccess: () => resolve(), onError: (error) => reject(error) }
+        { onSuccess: () => resolve(), onError: error => reject(error) }
       );
     });
   };
-  
+
   const handleResolveComment = async (commentId: string) => {
     return new Promise<void>((resolve, reject) => {
       resolveComment(
         { commentId },
-        { onSuccess: () => resolve(), onError: (error) => reject(error) }
+        { onSuccess: () => resolve(), onError: error => reject(error) }
       );
     });
   };
@@ -65,12 +74,7 @@ export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerPro
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="mb-4"
-          >
+          <Button variant="ghost" size="sm" onClick={onBack} className="mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to List
           </Button>
@@ -107,7 +111,10 @@ export function DocumentViewer({ documentId, onEdit, onBack }: DocumentViewerPro
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              Updated {formatDistanceToNow(new Date(document.updatedAt), { addSuffix: true })}
+              Updated{" "}
+              {formatDistanceToNow(new Date(document.updatedAt), {
+                addSuffix: true,
+              })}
             </div>
             <div className="flex items-center gap-2">
               <GitBranch className="h-4 w-4" />

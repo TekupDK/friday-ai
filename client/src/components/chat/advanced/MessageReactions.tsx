@@ -21,14 +21,14 @@ interface MessageReactionsProps {
   compact?: boolean;
 }
 
-const QUICK_REACTIONS = ['👍', '❤️', '😊', '🎉', '🔥', '👀'];
+const QUICK_REACTIONS = ["👍", "❤️", "😊", "🎉", "🔥", "👀"];
 
-export function MessageReactions({ 
-  messageId, 
+export function MessageReactions({
+  messageId,
   reactions,
   onReact,
   onRemoveReaction,
-  compact = false
+  compact = false,
 }: MessageReactionsProps) {
   const [showPicker, setShowPicker] = useState(false);
 
@@ -50,9 +50,12 @@ export function MessageReactions({
           size={compact ? "sm" : "default"}
           className={cn(
             "gap-1 transition-all",
-            reaction.userReacted && "bg-blue-50 dark:bg-blue-950/20 border-blue-500"
+            reaction.userReacted &&
+              "bg-blue-50 dark:bg-blue-950/20 border-blue-500"
           )}
-          onClick={() => handleReactionClick(reaction.emoji, reaction.userReacted)}
+          onClick={() =>
+            handleReactionClick(reaction.emoji, reaction.userReacted)
+          }
         >
           <span>{reaction.emoji}</span>
           <span className="text-xs">{reaction.count}</span>
@@ -74,7 +77,7 @@ export function MessageReactions({
       {/* Quick Picker */}
       {showPicker && (
         <div className="flex gap-1 animate-in fade-in zoom-in-95">
-          {QUICK_REACTIONS.map((emoji) => (
+          {QUICK_REACTIONS.map(emoji => (
             <Button
               key={emoji}
               variant="ghost"

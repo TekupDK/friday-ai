@@ -1,0 +1,108 @@
+name: Bundle Size Analysis
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  bundle-analysis:
+    name: Analyze bundle size
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build production bundle
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: Upload bundle stats
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-stats
+          path: |
+            stats.html
+            dist/public/**/*.js.map
+          retention-days: 30
+
+      - name: Analyze bundle size
+        id: analyze
+        run: |
+          if [ -f "stats.html" ]; then
+            SIZE=$(du -sh dist/public | cut -f1)
+            echo "Bundle size: $SIZE"
+            echo "size=$SIZE" >> $GITHUB_OUTPUT
+          else
+            echo "stats.html not found"
+            echo "size=unknown" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment bundle size on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const size = '${{ steps.analyze.outputs.size }}';
+            const body = [
+              '## 📦 Bundle Size Analysis',
+              '',
+              `**Total bundle size:** ${size}`,
+              '',
+              'Bundle visualization is available as a workflow artifact (`bundle-stats`).',
+              '',
+              '**Download the artifact to view:**',
+              '- `stats.html` - Interactive treemap of bundle composition',
+              '- Source maps for detailed analysis',
+              '',
+              '_This is an informational report and does not block the PR._'
+            ].join('\n');
+            
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Bundle Size Analysis')
+            );
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body,
+              });
+            }

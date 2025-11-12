@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { CheckCircle, AlertCircle, Info, XCircle, X } from "lucide-react";
 
-type ToastType = 'success' | 'error' | 'warning' | 'info';
+type ToastType = "success" | "error" | "warning" | "info";
 
 interface Toast {
   id: number;
@@ -16,28 +22,28 @@ interface Toast {
 const toastConfig = {
   success: {
     icon: CheckCircle,
-    bg: 'bg-green-500/10 border-green-500/20',
-    iconColor: 'text-green-500',
-    title: 'Success!'
+    bg: "bg-green-500/10 border-green-500/20",
+    iconColor: "text-green-500",
+    title: "Success!",
   },
   error: {
     icon: XCircle,
-    bg: 'bg-red-500/10 border-red-500/20',
-    iconColor: 'text-red-500',
-    title: 'Error!'
+    bg: "bg-red-500/10 border-red-500/20",
+    iconColor: "text-red-500",
+    title: "Error!",
   },
   warning: {
     icon: AlertCircle,
-    bg: 'bg-orange-500/10 border-orange-500/20',
-    iconColor: 'text-orange-500',
-    title: 'Warning!'
+    bg: "bg-orange-500/10 border-orange-500/20",
+    iconColor: "text-orange-500",
+    title: "Warning!",
   },
   info: {
     icon: Info,
-    bg: 'bg-blue-500/10 border-blue-500/20',
-    iconColor: 'text-blue-500',
-    title: 'Info'
-  }
+    bg: "bg-blue-500/10 border-blue-500/20",
+    iconColor: "text-blue-500",
+    title: "Info",
+  },
 };
 
 export function ToastNotificationDemo() {
@@ -49,7 +55,7 @@ export function ToastNotificationDemo() {
       id: counter,
       type,
       title: toastConfig[type].title,
-      message: getRandomMessage(type)
+      message: getRandomMessage(type),
     };
 
     setToasts(prev => [...prev, newToast]);
@@ -68,29 +74,29 @@ export function ToastNotificationDemo() {
   const getRandomMessage = (type: ToastType): string => {
     const messages = {
       success: [
-        'Email sent successfully',
-        'Lead created and assigned',
-        'Task completed',
-        'Changes saved'
+        "Email sent successfully",
+        "Lead created and assigned",
+        "Task completed",
+        "Changes saved",
       ],
       error: [
-        'Failed to send email',
-        'Network connection lost',
-        'Invalid credentials',
-        'Server error occurred'
+        "Failed to send email",
+        "Network connection lost",
+        "Invalid credentials",
+        "Server error occurred",
       ],
       warning: [
-        'Unsaved changes detected',
-        'Low storage space',
-        'Session expiring soon',
-        'Action requires confirmation'
+        "Unsaved changes detected",
+        "Low storage space",
+        "Session expiring soon",
+        "Action requires confirmation",
       ],
       info: [
-        'New message received',
-        'System update available',
-        'Reminder: Meeting in 10 min',
-        'Daily backup completed'
-      ]
+        "New message received",
+        "System update available",
+        "Reminder: Meeting in 10 min",
+        "Daily backup completed",
+      ],
     };
 
     const msgs = messages[type];
@@ -109,26 +115,23 @@ export function ToastNotificationDemo() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <Button 
-              onClick={() => addToast('success')}
+            <Button
+              onClick={() => addToast("success")}
               className="bg-green-500 hover:bg-green-600"
             >
               ✓ Success
             </Button>
-            <Button 
-              onClick={() => addToast('error')}
-              variant="destructive"
-            >
+            <Button onClick={() => addToast("error")} variant="destructive">
               × Error
             </Button>
-            <Button 
-              onClick={() => addToast('warning')}
+            <Button
+              onClick={() => addToast("warning")}
               className="bg-orange-500 hover:bg-orange-600"
             >
               ⚠ Warning
             </Button>
-            <Button 
-              onClick={() => addToast('info')}
+            <Button
+              onClick={() => addToast("info")}
               className="bg-blue-500 hover:bg-blue-600"
             >
               ℹ Info
@@ -152,11 +155,11 @@ export function ToastNotificationDemo() {
                 config.bg
               )}
               style={{
-                animationDelay: `${idx * 50}ms`
+                animationDelay: `${idx * 50}ms`,
               }}
             >
               <Icon className={cn("w-5 h-5 mt-0.5", config.iconColor)} />
-              
+
               <div className="flex-1 min-w-0">
                 <h4 className="font-semibold text-sm mb-1">{toast.title}</h4>
                 <p className="text-xs text-muted-foreground">{toast.message}</p>
@@ -175,9 +178,7 @@ export function ToastNotificationDemo() {
 
       {/* Example area */}
       <div className="min-h-[200px] border-2 border-dashed rounded-lg flex items-center justify-center text-muted-foreground">
-        <p className="text-sm">
-          Toasts vil vises i nederste højre hjørne →
-        </p>
+        <p className="text-sm">Toasts vil vises i nederste højre hjørne →</p>
       </div>
     </div>
   );

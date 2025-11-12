@@ -1,6 +1,7 @@
 # EmailTab Layout Alternativer
 
 ## 🎯 Nuværende Layout: **Sidebar + List**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ [Sidebar]  │  [Email List]                              │
@@ -21,6 +22,7 @@
 ## 🚀 Alternative Layout Muligheder
 
 ### 1. **Gmail-Style (3-Panel)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ [Sidebar] │ [Email List]     │ [Email Preview]          │
@@ -40,6 +42,7 @@
 ```
 
 ### 2. **Superhuman-Style (Keyboard First)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ Inbox (24)                    [?] Shortcuts   [Compose] │
@@ -62,6 +65,7 @@
 ```
 
 ### 3. **Notion-Style (Card Grid)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ 📧 Emails / Inbox                          [+ Compose] │
@@ -87,6 +91,7 @@
 ```
 
 ### 4. **Slack-Style (Conversation View)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ # inbox                                     [+ Compose] │
@@ -115,6 +120,7 @@
 ```
 
 ### 5. **Kanban-Style (Pipeline View)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ Email Pipeline                              [+ Compose] │
@@ -140,6 +146,7 @@
 ```
 
 ### 6. **Apple Mail-Style (Split View)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ [Sidebar] │ [Email List - Compact]                      │
@@ -170,16 +177,19 @@
 ## 🎯 Anbefalet Implementation
 
 ### **Option A: Gmail 3-Panel (Mest Populær)**
+
 - Tilføj preview panel til højre
 - Bevar nuværende sidebar
 - Hurtig email preview uden modal
 
 ### **Option B: Superhuman Keyboard-First**
+
 - Fjern sidebar, gør den til overlay
 - Fokus på keyboard shortcuts
 - Mere plads til email liste
 
 ### **Option C: Hybrid Approach**
+
 - Bevar nuværende som standard
 - Tilføj view toggle: List | Cards | Pipeline
 - Brugere kan vælge deres foretrukne layout
@@ -189,8 +199,11 @@
 ## 🛠️ Implementation Plan
 
 ### Phase 1: View Toggle System
+
 ```tsx
-const [viewMode, setViewMode] = useState<'list' | 'cards' | 'pipeline' | 'split'>('list');
+const [viewMode, setViewMode] = useState<
+  "list" | "cards" | "pipeline" | "split"
+>("list");
 
 // I toolbar
 <ToggleGroup type="single" value={viewMode} onValueChange={setViewMode}>
@@ -198,16 +211,18 @@ const [viewMode, setViewMode] = useState<'list' | 'cards' | 'pipeline' | 'split'
   <ToggleGroupItem value="cards">🎴 Cards</ToggleGroupItem>
   <ToggleGroupItem value="pipeline">📊 Pipeline</ToggleGroupItem>
   <ToggleGroupItem value="split">📱 Split</ToggleGroupItem>
-</ToggleGroup>
+</ToggleGroup>;
 ```
 
 ### Phase 2: Layout Components
+
 - `EmailListView` (nuværende)
 - `EmailCardsView` (grid layout)
 - `EmailPipelineView` (kanban style)
 - `EmailSplitView` (3-panel)
 
 ### Phase 3: User Preferences
+
 - Gem valgt layout i localStorage
 - Per-folder layout preferences
 - Responsive breakpoints
@@ -219,6 +234,6 @@ const [viewMode, setViewMode] = useState<'list' | 'cards' | 'pipeline' | 'split'
 **A) Gmail 3-Panel** - Klassisk og velkendt  
 **B) Card Grid** - Moderne og visuelt  
 **C) Pipeline/Kanban** - Workflow-orienteret  
-**D) View Toggle System** - Lad brugere vælge  
+**D) View Toggle System** - Lad brugere vælge
 
 Jeg kan implementere enhver af disse layouts! Hvad tænker du?

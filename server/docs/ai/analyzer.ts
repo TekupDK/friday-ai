@@ -1,6 +1,6 @@
 /**
  * AI Docs Generator - Analyzer
- * 
+ *
  * Uses OpenRouter (FREE GLM-4.5-Air) to analyze collected data and extract insights
  */
 
@@ -26,7 +26,7 @@ export interface Analysis {
 export async function analyzeLeadData(data: CollectedData): Promise<Analysis> {
   try {
     const prompt = buildAnalysisPrompt(data);
-    
+
     logger.info({ leadId: data.lead.id }, "[AI Analyzer] Starting analysis");
 
     const response = await invokeLLM({
@@ -57,10 +57,11 @@ Format your response as JSON with this structure:
     });
 
     const message = response.choices[0].message;
-    const content = typeof message.content === "string" 
-      ? message.content 
-      : JSON.stringify(message.content);
-    
+    const content =
+      typeof message.content === "string"
+        ? message.content
+        : JSON.stringify(message.content);
+
     if (!content) {
       throw new Error("No response from LLM");
     }
@@ -68,7 +69,7 @@ Format your response as JSON with this structure:
     const analysis: Analysis = JSON.parse(content);
 
     logger.info(
-      { 
+      {
         leadId: data.lead.id,
         sentiment: analysis.sentiment,
         priority: analysis.priority,
@@ -79,11 +80,14 @@ Format your response as JSON with this structure:
 
     return analysis;
   } catch (error) {
-    logger.error({ error, leadId: data.lead.id }, "[AI Analyzer] Analysis failed");
-    
+    logger.error(
+      { error, leadId: data.lead.id },
+      "[AI Analyzer] Analysis failed"
+    );
+
     // Fallback analysis
     return {
-      summary: `Analysis unavailable. Lead: ${data.lead.name} (${data.lead.company || 'No company'}). ${data.emailThreads.length} email threads, ${data.calendarEvents.length} meetings recorded.`,
+      summary: `Analysis unavailable. Lead: ${data.lead.name} (${data.lead.company || "No company"}). ${data.emailThreads.length} email threads, ${data.calendarEvents.length} meetings recorded.`,
       keyTopics: ["data-collected"],
       sentiment: "neutral",
       actionItems: ["Review communication history manually"],
@@ -117,7 +121,7 @@ Last Updated: ${data.lead.updatedAt}`);
     sections.push(`\n## Email Communication (${data.emailThreads.length} threads)
 
 Recent emails:`);
-    
+
     data.emailThreads.slice(0, 10).forEach((thread, i) => {
       sections.push(`\n### Email ${i + 1}
 Subject: ${thread.subject}
@@ -134,7 +138,7 @@ ${thread.body ? `\nBody excerpt: ${thread.body.slice(0, 500)}...` : ""}`);
     sections.push(`\n## Meetings (${data.calendarEvents.length} events)
 
 Recent meetings:`);
-    
+
     data.calendarEvents.slice(0, 5).forEach((event, i) => {
       sections.push(`\n### Meeting ${i + 1}
 Title: ${event.summary}
@@ -149,7 +153,7 @@ ${event.description ? `Description: ${event.description}` : "No description"}`);
     sections.push(`\n## Chat Conversations (${data.chatMessages.length} messages)
 
 Recent chats:`);
-    
+
     data.chatMessages.slice(0, 5).forEach((msg, i) => {
       sections.push(`\n### Chat ${i + 1}
 Time: ${msg.timestamp}
@@ -207,16 +211,28 @@ export async function analyzeWeeklyData(data: {
     const prompt = `Analyze this week's business activity:
 
 ## New Leads (${data.leads.length})
-${data.leads.slice(0, 10).map(l => `- ${l.name} (${l.company || "No company"}) - ${l.email}`).join("\n")}
+${data.leads
+  .slice(0, 10)
+  .map(l => `- ${l.name} (${l.company || "No company"}) - ${l.email}`)
+  .join("\n")}
 
 ## Email Activity (${data.emailThreads.length} threads)
-${data.emailThreads.slice(0, 10).map(e => `- ${e.subject} (${e.date})`).join("\n")}
+${data.emailThreads
+  .slice(0, 10)
+  .map(e => `- ${e.subject} (${e.date})`)
+  .join("\n")}
 
 ## Meetings (${data.calendarEvents.length})
-${data.calendarEvents.slice(0, 10).map(m => `- ${m.summary} (${m.start})`).join("\n")}
+${data.calendarEvents
+  .slice(0, 10)
+  .map(m => `- ${m.summary} (${m.start})`)
+  .join("\n")}
 
 ## Conversations (${data.recentConversations.length})
-${data.recentConversations.slice(0, 5).map(c => `- ${c.content.slice(0, 100)}...`).join("\n")}
+${data.recentConversations
+  .slice(0, 5)
+  .map(c => `- ${c.content.slice(0, 100)}...`)
+  .join("\n")}
 
 Provide JSON with:
 {
@@ -230,7 +246,8 @@ Provide JSON with:
       messages: [
         {
           role: "system",
-          content: "You are a business intelligence analyst. Summarize weekly activity.",
+          content:
+            "You are a business intelligence analyst. Summarize weekly activity.",
         },
         {
           role: "user",
@@ -241,10 +258,11 @@ Provide JSON with:
     });
 
     const message = response.choices[0].message;
-    const content = typeof message.content === "string"
-      ? message.content
-      : JSON.stringify(message.content);
-    
+    const content =
+      typeof message.content === "string"
+        ? message.content
+        : JSON.stringify(message.content);
+
     if (!content) throw new Error("No response from LLM");
 
     const analysis = JSON.parse(content);
@@ -260,7 +278,7 @@ Provide JSON with:
     };
   } catch (error) {
     logger.error({ error }, "[AI Analyzer] Weekly analysis failed");
-    
+
     return {
       summary: `Weekly activity: ${data.leads.length} new leads, ${data.emailThreads.length} emails, ${data.calendarEvents.length} meetings.`,
       highlights: ["Data collected successfully"],

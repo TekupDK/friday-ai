@@ -105,9 +105,7 @@ export function EmailCard({ email, onClick }: EmailCardProps) {
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-sm font-medium truncate">
-                {email.from}
-              </span>
+              <span className="text-sm font-medium truncate">{email.from}</span>
               <span className="text-xs text-muted-foreground shrink-0">
                 {getRelativeTime(email.timestamp)}
               </span>
@@ -149,12 +147,8 @@ export function EmailCard({ email, onClick }: EmailCardProps) {
                 Ny
               </Badge>
             )}
-            {email.labels?.slice(0, 2).map((label) => (
-              <Badge
-                key={label}
-                variant="outline"
-                className="h-5 text-xs"
-              >
+            {email.labels?.slice(0, 2).map(label => (
+              <Badge key={label} variant="outline" className="h-5 text-xs">
                 {label}
               </Badge>
             ))}

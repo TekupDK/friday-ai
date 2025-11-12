@@ -174,6 +174,14 @@ async function getAuthClient(): Promise<JWT> {
       credentials = JSON.parse(readFileSync(credentialsPath, "utf8"));
     } else if (SERVICE_ACCOUNT_KEY) {
       credentials = JSON.parse(SERVICE_ACCOUNT_KEY);
+      // Normalize escaped newlines in private_key when loaded from env JSON
+      if (
+        credentials &&
+        typeof credentials.private_key === "string" &&
+        credentials.private_key.includes("\\n")
+      ) {
+        credentials.private_key = credentials.private_key.replace(/\\n/g, "\n");
+      }
     } else {
       throw new Error("Google Service Account credentials not found");
     }
@@ -532,7 +540,10 @@ export async function searchGmailThreadsPaged(params: {
   const threads: GmailThread[] = [];
   for (const thread of response.data.threads) {
     if (!thread.id) continue;
-    const threadDetail = await gmail.users.threads.get({ userId: "me", id: thread.id });
+    const threadDetail = await gmail.users.threads.get({
+      userId: "me",
+      id: thread.id,
+    });
 
     const messages: GmailMessage[] = [];
     let threadHasAttachments = false;
@@ -541,14 +552,17 @@ export async function searchGmailThreadsPaged(params: {
         const headers = msg.payload?.headers || [];
         const fromHeader = headers.find(h => h.name?.toLowerCase() === "from");
         const toHeader = headers.find(h => h.name?.toLowerCase() === "to");
-        const subjectHeader = headers.find(h => h.name?.toLowerCase() === "subject");
+        const subjectHeader = headers.find(
+          h => h.name?.toLowerCase() === "subject"
+        );
         const dateHeader = headers.find(h => h.name?.toLowerCase() === "date");
 
         const bodies = extractBodiesFromPayload(msg.payload as any);
         if (!threadHasAttachments && payloadHasAttachments(msg.payload)) {
           threadHasAttachments = true;
         }
-        const bodyText = bodies.text || (bodies.html ? stripHtmlToText(bodies.html) : "");
+        const bodyText =
+          bodies.text || (bodies.html ? stripHtmlToText(bodies.html) : "");
         const bodyHtml = bodies.html;
         const body = (bodyText || "").substring(0, 500);
 
@@ -567,8 +581,12 @@ export async function searchGmailThreadsPaged(params: {
       }
     }
 
-    const lastMsg = threadDetail.data.messages?.[threadDetail.data.messages.length - 1];
-    const labelIds = lastMsg && Array.isArray(lastMsg.labelIds) ? (lastMsg.labelIds as string[]) : [];
+    const lastMsg =
+      threadDetail.data.messages?.[threadDetail.data.messages.length - 1];
+    const labelIds =
+      lastMsg && Array.isArray(lastMsg.labelIds)
+        ? (lastMsg.labelIds as string[])
+        : [];
     const { mapLabelIdsToNames } = await import("./gmail-labels");
     const labels = await mapLabelIdsToNames(labelIds);
 

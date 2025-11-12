@@ -7,13 +7,16 @@ Scripts for collecting real production data and tuning ChromaDB duplicate detect
 ## 📋 Overview
 
 ### Purpose
+
 Use **real production data** from RenDetalje (July-December 2025) to:
+
 - Test ChromaDB with actual leads
 - Tune duplicate detection threshold
 - Measure accuracy with real duplicates
 - Optimize embedding performance
 
 ### Data Sources
+
 1. **Google Calendar** (RenOS Booking Calendar)
 2. **Email Threads** (Gmail)
 3. **Billy Customer Database**
@@ -29,6 +32,7 @@ npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
 ```
 
 **What it does:**
+
 - Fetches calendar events (July-Dec 2025)
 - Extracts email thread participants
 - Pulls Billy customer database
@@ -36,6 +40,7 @@ npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
 - Saves to `test-data/real-leads.json`
 
 **Output:**
+
 ```json
 {
   "metadata": {
@@ -75,6 +80,7 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
 ```
 
 **What it does:**
+
 - Loads collected leads
 - Generates embeddings for all
 - Identifies known duplicates (same email)
@@ -87,6 +93,7 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
 - Recommends optimal threshold
 
 **Example Output:**
+
 ```
 📊 RESULTS SUMMARY
 ============================================================
@@ -118,6 +125,7 @@ Accuracy: 93.1%
 ## 📊 Understanding Metrics
 
 ### Confusion Matrix
+
 ```
                     Predicted
                  Duplicate | Unique
@@ -132,22 +140,26 @@ Unique       FP          | TN
 ### Metrics Explained
 
 **Precision (PPV)**
+
 - What % of predicted duplicates are actually duplicates?
 - High precision = Few false alarms
 - Formula: `TP / (TP + FP)`
 
 **Recall (Sensitivity)**
+
 - What % of actual duplicates are detected?
 - High recall = Few missed duplicates
 - Formula: `TP / (TP + FN)`
 
 **F1 Score**
+
 - Harmonic mean of precision and recall
 - Balances both metrics
 - Formula: `2 * (P * R) / (P + R)`
 - **Use this to pick optimal threshold**
 
 **Accuracy**
+
 - Overall correctness
 - Formula: `(TP + TN) / Total`
 
@@ -155,27 +167,30 @@ Unique       FP          | TN
 
 ## 🎯 Threshold Trade-offs
 
-| Threshold | Behavior | Use Case |
-|-----------|----------|----------|
-| **0.70-0.75** | Loose | High recall, more false positives. Use if missing duplicates is costly. |
-| **0.80-0.85** | Balanced | Good F1 score. Best for most cases. |
-| **0.90-0.95** | Strict | High precision, may miss similar duplicates. Use if false positives are costly. |
+| Threshold     | Behavior | Use Case                                                                        |
+| ------------- | -------- | ------------------------------------------------------------------------------- |
+| **0.70-0.75** | Loose    | High recall, more false positives. Use if missing duplicates is costly.         |
+| **0.80-0.85** | Balanced | Good F1 score. Best for most cases.                                             |
+| **0.90-0.95** | Strict   | High precision, may miss similar duplicates. Use if false positives are costly. |
 
 ---
 
 ## 💡 Interpretation Guide
 
 ### High Precision, Low Recall (e.g., 0.95 threshold)
+
 - Very few false positives
 - But misses some duplicates
 - **Good for:** Critical data where false merges are expensive
 
 ### Low Precision, High Recall (e.g., 0.70 threshold)
+
 - Catches most duplicates
 - But many false positives
 - **Good for:** Flagging potential duplicates for manual review
 
 ### Balanced (e.g., 0.80-0.85 threshold)
+
 - Best F1 score
 - Good compromise
 - **Good for:** Automated duplicate prevention (our use case)
@@ -185,20 +200,26 @@ Unique       FP          | TN
 ## 🔄 Recommended Workflow
 
 1. **Collect data** (run once or when you need fresh data)
+
    ```bash
    npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
    ```
 
 2. **Tune threshold** (after collecting data)
+
    ```bash
    npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
    ```
 
 3. **Update threshold** if recommended
+
    ```typescript
    // server/db.ts around line 470
-   if (similarity > 0.80) { // Changed from 0.85
-     console.log(`[ChromaDB] Duplicate lead detected (similarity: ${similarity.toFixed(3)})`);
+   if (similarity > 0.8) {
+     // Changed from 0.85
+     console.log(
+       `[ChromaDB] Duplicate lead detected (similarity: ${similarity.toFixed(3)})`
+     );
      return existingLead;
    }
    ```
@@ -233,17 +254,21 @@ chromadb/
 ## 🐛 Troubleshooting
 
 ### "Real data not found"
+
 **Solution:** Run `collect-real-data.ts` first
 
 ### "Failed to generate embedding"
+
 **Cause:** OpenRouter API issue or rate limit  
 **Solution:** Wait a minute, try again. Embeddings are cached.
 
 ### "No calendar events found"
+
 **Cause:** No events in date range or calendar access issue  
 **Solution:** Check Google Calendar auth, verify date range
 
 ### TypeScript errors in collect script
+
 **Cause:** API response structure mismatch  
 **Solution:** Check actual API responses, update type definitions
 
@@ -268,10 +293,10 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
 # Expected output:
 # ✅ Generated 412 embeddings
 # ✅ Identified 45 known duplicate pairs
-# 
+#
 # Optimal Threshold: 0.82
 # F1 Score: 92.4%
-# 
+#
 # 💡 Update threshold from 0.85 to 0.82
 
 # 3. Update code

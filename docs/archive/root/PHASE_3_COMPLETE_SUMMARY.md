@@ -8,13 +8,13 @@
 
 ## 📊 Test Results Overview
 
-| Test Suite | GLM-4.5 Air | GPT-OSS 20B | Overall | Status |
-|-------------|-------------|-------------|---------|--------|
-| **Promptfoo Eval** | 100% (3/3) | 100% (3/3) | 66% (6/9) | ✅ |
-| **Manual Tests** | 100% (2/2) | 100% (2/2) | 66% (4/6) | ✅ |
-| **Intent Detection** | 25% (1/4) | 75% (3/4) | 50% (4/8) | ⚠️ |
-| **Email Intelligence** | 0% (0/4) | 25% (1/4) | 13% (1/8) | ❌ |
-| **TOTAL** | **56% (6/13)** | **75% (9/13)** | **65% (15/31)** | **🟡** |
+| Test Suite             | GLM-4.5 Air    | GPT-OSS 20B    | Overall         | Status |
+| ---------------------- | -------------- | -------------- | --------------- | ------ |
+| **Promptfoo Eval**     | 100% (3/3)     | 100% (3/3)     | 66% (6/9)       | ✅     |
+| **Manual Tests**       | 100% (2/2)     | 100% (2/2)     | 66% (4/6)       | ✅     |
+| **Intent Detection**   | 25% (1/4)      | 75% (3/4)      | 50% (4/8)       | ⚠️     |
+| **Email Intelligence** | 0% (0/4)       | 25% (1/4)      | 13% (1/8)       | ❌     |
+| **TOTAL**              | **56% (6/13)** | **75% (9/13)** | **65% (15/31)** | **🟡** |
 
 ---
 
@@ -23,18 +23,21 @@
 ### ✅ **Strengths**
 
 #### **1. Danish Conversation Quality: EXCELLENT**
+
 - **GLM-4.5 Air:** 100% success (5/5 conversational tests)
 - **GPT-OSS 20B:** 100% success (5/5 conversational tests)
 - Both models produce natural, professional Danish
 - Response times: 2.6s (GPT-OSS) vs 19s (GLM)
 
 #### **2. Speed Performance: GPT-OSS WINNER**
+
 - **GPT-OSS 20B:** 2.6s average ⚡ **7.5x FASTER**
 - **GLM-4.5 Air:** 19.4s average
 - Both FREE tier
 - Cost: $0.00
 
 #### **3. Structured Output: GPT-OSS BETTER**
+
 - **Intent Detection:** GPT-OSS 75% vs GLM 25%
 - Better JSON formatting
 - More consistent parameter extraction
@@ -43,6 +46,7 @@
 ### ⚠️ **Weaknesses**
 
 #### **1. Email Intelligence: BOTH STRUGGLE**
+
 - **Overall:** 13% success rate (1/8)
 - **GLM-4.5 Air:** 0% (0/4)
 - **GPT-OSS 20B:** 25% (1/4)
@@ -50,11 +54,13 @@
 - **Impact:** Email summary & label features may need prompt tuning
 
 #### **2. JSON Format Consistency**
+
 - GLM-4.5 Air struggles with strict JSON output
 - Better at natural language than structured data
 - **Solution:** Use GPT-OSS for JSON responses
 
 #### **3. DeepSeek v3.1 Blocked**
+
 - Data policy configuration required
 - Cannot test without setup
 - **Decision:** Skip for now, use GLM + GPT-OSS
@@ -90,15 +96,15 @@ FALLBACK:
 
 ### **Task-Specific Assignments**
 
-| Task Type | Primary Model | Reasoning |
-|-----------|---------------|-----------|
-| **Chat** | GLM-4.5 Air | Best quality, 100% Danish success |
-| **Email Draft** | GLM-4.5 Air | Professional writing quality |
-| **Email Analysis** | GPT-OSS 20B | 7x faster, good enough quality |
-| **Intent Detection** | GPT-OSS 20B | 75% success vs 25% for GLM |
-| **Tool Calling** | GPT-OSS 20B | Better JSON formatting |
-| **Complex Reasoning** | GLM-4.5 Air | 100% accuracy rating |
-| **Code Generation** | Qwen3 Coder | Specialized (not tested yet) |
+| Task Type             | Primary Model | Reasoning                         |
+| --------------------- | ------------- | --------------------------------- |
+| **Chat**              | GLM-4.5 Air   | Best quality, 100% Danish success |
+| **Email Draft**       | GLM-4.5 Air   | Professional writing quality      |
+| **Email Analysis**    | GPT-OSS 20B   | 7x faster, good enough quality    |
+| **Intent Detection**  | GPT-OSS 20B   | 75% success vs 25% for GLM        |
+| **Tool Calling**      | GPT-OSS 20B   | Better JSON formatting            |
+| **Complex Reasoning** | GLM-4.5 Air   | 100% accuracy rating              |
+| **Code Generation**   | Qwen3 Coder   | Specialized (not tested yet)      |
 
 ---
 
@@ -127,11 +133,13 @@ Total Progress: 60% (Phase 3 Complete)
 ### 1. Promptfoo Evaluation (1m 15s)
 
 **Configuration:**
+
 - 3 prompts × 3 models = 9 tests
 - Danish business scenarios
 - Professional tone validation
 
 **Results:**
+
 ```
 ✅ GLM-4.5 Air:     3/3 (100%) - 1,731 tokens
 ✅ GPT-OSS 20B:     3/3 (100%) - 1,548 tokens
@@ -142,6 +150,7 @@ Cost: $0.00
 ```
 
 **Quality Assessment:**
+
 - GLM: Excellent Danish, natural tone
 - GPT-OSS: Good Danish, concise responses
 - Both passed all language quality tests
@@ -153,6 +162,7 @@ Cost: $0.00
 **Test Script:** `test-models-manual.mjs`
 
 **Results:**
+
 ```
 ✅ GLM-4.5 Air:     2/2 (100%) - Avg 19.4s
 ✅ GPT-OSS 20B:     2/2 (100%) - Avg 2.6s
@@ -163,6 +173,7 @@ Speed Winner: GPT-OSS (7.5x faster)
 ```
 
 **Performance:**
+
 - Danish Business Email: Both excellent
 - Calendar Reasoning: Both correct
 - GPT-OSS significantly faster
@@ -174,6 +185,7 @@ Speed Winner: GPT-OSS (7.5x faster)
 **Test Script:** `test-intent-detection.mjs`
 
 **Results:**
+
 ```
 ⚠️ GLM-4.5 Air:     1/4 (25%)
    ❌ Create Lead - No JSON
@@ -192,6 +204,7 @@ Winner: GPT-OSS 20B
 ```
 
 **Key Insight:**
+
 - GPT-OSS much better at JSON output
 - GLM struggles with structured formats
 - **Use GPT-OSS for intent detection**
@@ -203,6 +216,7 @@ Winner: GPT-OSS 20B
 **Test Script:** `test-email-intelligence.mjs`
 
 **Results:**
+
 ```
 ❌ GLM-4.5 Air:     0/4 (0%)
    ❌ Email Summary - Empty response
@@ -221,12 +235,14 @@ Issue: API errors, empty responses
 ```
 
 **Problems Identified:**
+
 1. Empty API responses (rate limiting?)
 2. Inconsistent JSON formatting
 3. Prompt may need optimization
 4. May need retry logic
 
 **Recommendations:**
+
 - Tune prompts for email intelligence
 - Add retry logic for API errors
 - Consider using GPT-OSS exclusively
@@ -239,31 +255,36 @@ Issue: API errors, empty responses
 ### **1. Use Case-Specific Model Selection**
 
 **For Natural Conversation (Chat, Email Drafting):**
+
 ```typescript
-primary: "glm-4.5-air-free"
-reasoning: "Excellent Danish quality, professional tone"
+primary: "glm-4.5-air-free";
+reasoning: "Excellent Danish quality, professional tone";
 ```
 
 **For Structured Output (Intents, Tools, JSON):**
+
 ```typescript
-primary: "gpt-oss-20b-free"
-reasoning: "75% intent success, better JSON formatting"
+primary: "gpt-oss-20b-free";
+reasoning: "75% intent success, better JSON formatting";
 ```
 
 **For Speed-Critical Tasks (Analysis, Quick responses):**
+
 ```typescript
-primary: "gpt-oss-20b-free"
-reasoning: "2.6s average (7x faster than GLM)"
+primary: "gpt-oss-20b-free";
+reasoning: "2.6s average (7x faster than GLM)";
 ```
 
 ### **2. Prompt Engineering Needed**
 
 **Email Intelligence prompts need optimization:**
+
 - Current success: 13%
 - Issue: Empty responses, JSON parsing
 - Solution: Simplify prompts, add examples, adjust temperature
 
 **Intent Detection works better with:**
+
 - Clear JSON schema in system prompt
 - Explicit field requirements
 - GPT-OSS model (not GLM)
@@ -271,12 +292,14 @@ reasoning: "2.6s average (7x faster than GLM)"
 ### **3. Production Deployment Ready**
 
 **Ready for Production:**
+
 - ✅ Chat functionality (100% success)
 - ✅ Email drafting (100% success)
 - ✅ Basic intent detection (75% with GPT-OSS)
 - ✅ Fast email analysis (GPT-OSS 2.6s)
 
 **Needs Work Before Production:**
+
 - ⚠️ Email summary generation (0% success)
 - ⚠️ Email label suggestions (25% success)
 - ⚠️ Complex intent parsing (50% success)
@@ -290,10 +313,11 @@ reasoning: "2.6s average (7x faster than GLM)"
 ### **Week 1: Staging Deployment**
 
 1. **Deploy to Staging**
+
    ```bash
    # Update .env.prod with new models
    OPENROUTER_MODEL=z-ai/glm-4.5-air:free
-   
+
    # Deploy
    npm run build
    npm run start
@@ -336,6 +360,7 @@ reasoning: "2.6s average (7x faster than GLM)"
 ### **Monitoring Setup**
 
 **Track These Metrics:**
+
 - Error rate (target: < 1%)
 - Response time p95 (target: < 5s)
 - Danish quality (user feedback)
@@ -348,18 +373,21 @@ reasoning: "2.6s average (7x faster than GLM)"
 ## 📂 **Deliverables Created**
 
 ### **Test Scripts**
+
 - ✅ `promptfooconfig.yaml` - Promptfoo evaluation
 - ✅ `test-models-manual.mjs` - Manual testing
 - ✅ `test-intent-detection.mjs` - Intent validation
 - ✅ `test-email-intelligence.mjs` - Email features
 
 ### **Documentation**
+
 - ✅ `OPENROUTER_MODELS_TEST_RESULTS.md` - Detailed results (437 lines)
 - ✅ `PHASE_3_COMPLETE_SUMMARY.md` - This document
 - ✅ `tasks/openrouter-models-integration/PHASE-PLAN.md` - Full roadmap
 - ✅ `tasks/openrouter-models-integration/QUICK-START.md` - Quick guide
 
 ### **Code Changes**
+
 - ✅ `server/model-router.ts` - Updated with test-proven routing
 - ✅ `.env` & `.env.dev` - GLM-4.5 Air as default
 - ✅ `server/_core/env.ts` - Environment config
@@ -369,16 +397,16 @@ reasoning: "2.6s average (7x faster than GLM)"
 
 ## ✅ **Success Criteria**
 
-| Criteria | Target | Actual | Status |
-|----------|--------|--------|--------|
-| Models Integrated | 6 | 6 | ✅ |
-| Working Models | ≥2 | 2 | ✅ |
-| Test Coverage | ≥80% | 100% | ✅ |
-| Pass Rate | ≥70% | 65% | ⚠️ |
-| Danish Quality | Excellent | Excellent | ✅ |
-| Cost | $0 | $0 | ✅ |
-| Response Time | <5s | 2.6s (GPT-OSS) | ✅ |
-| Documentation | Complete | Complete | ✅ |
+| Criteria          | Target    | Actual         | Status |
+| ----------------- | --------- | -------------- | ------ |
+| Models Integrated | 6         | 6              | ✅     |
+| Working Models    | ≥2        | 2              | ✅     |
+| Test Coverage     | ≥80%      | 100%           | ✅     |
+| Pass Rate         | ≥70%      | 65%            | ⚠️     |
+| Danish Quality    | Excellent | Excellent      | ✅     |
+| Cost              | $0        | $0             | ✅     |
+| Response Time     | <5s       | 2.6s (GPT-OSS) | ✅     |
+| Documentation     | Complete  | Complete       | ✅     |
 
 **Overall:** ✅ **Phase 3 SUCCESS** (7/8 criteria met)
 
@@ -418,26 +446,30 @@ reasoning: "2.6s average (7x faster than GLM)"
 ### **Deploy to Production: YES** ✅
 
 **Deployment Plan:**
+
 1. **Primary:** GLM-4.5 Air (chat, email drafting)
 2. **Secondary:** GPT-OSS 20B (analysis, intents, speed)
 3. **Fallback:** Gemma 3 27B (proven reliability)
 4. **Skip:** DeepSeek v3.1 (policy issues)
 
 **Risks:** LOW
+
 - 2/2 models working perfectly (100% each)
 - Cost: $0.00 (fully free)
 - Danish quality: Excellent
 - Performance: Fast enough (2.6s)
 
 **Opportunities:** HIGH
+
 - 7x faster responses (GPT-OSS)
 - 100% accuracy ratings
 - Better intent detection
 - Free tier savings
 
 **Timeline:**
+
 - Staging: Week 1
-- Production: Week 2  
+- Production: Week 2
 - Full rollout: Week 3
 
 ---
@@ -446,7 +478,8 @@ reasoning: "2.6s average (7x faster than GLM)"
 
 **Next Action:** Deploy to staging environment and begin production rollout planning.
 
-**View Test Results:** 
+**View Test Results:**
+
 - Promptfoo UI: http://localhost:15500
 - Test summary: `OPENROUTER_MODELS_TEST_RESULTS.md`
 - Phase plan: `tasks/openrouter-models-integration/PHASE-PLAN.md`

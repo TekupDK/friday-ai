@@ -7,20 +7,30 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Bot, MessageCircle, Send, Mic, MicOff, Volume2, Settings, HelpCircle, Zap } from "lucide-react";
+import {
+  Bot,
+  MessageCircle,
+  Send,
+  Mic,
+  MicOff,
+  Volume2,
+  Settings,
+  HelpCircle,
+  Zap,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 export interface AIMessage {
   id: string;
   content: string;
-  sender: 'user' | 'assistant';
+  sender: "user" | "assistant";
   timestamp: string;
-  type: 'text' | 'suggestion' | 'action' | 'error';
+  type: "text" | "suggestion" | "action" | "error";
   metadata?: Record<string, any>;
 }
 
 export interface AIAssistantData {
-  status: 'idle' | 'thinking' | 'speaking' | 'error';
+  status: "idle" | "thinking" | "speaking" | "error";
   capabilities: string[];
   currentContext?: string;
   suggestions: string[];
@@ -35,31 +45,42 @@ interface AIAssistantProps {
   onClearChat?: () => void;
 }
 
-export function AIAssistant({ 
+export function AIAssistant({
   data,
   messages = [],
   onSendMessage,
   onVoiceToggle,
   onCapabilityToggle,
-  onClearChat 
+  onClearChat,
 }: AIAssistantProps) {
   const [input, setInput] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(false);
-  const [selectedCapabilities, setSelectedCapabilities] = useState<string[]>(['email', 'calendar', 'invoices']);
+  const [selectedCapabilities, setSelectedCapabilities] = useState<string[]>([
+    "email",
+    "calendar",
+    "invoices",
+  ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Default AI assistant data
   const defaultData: AIAssistantData = {
-    status: 'idle',
-    capabilities: ['email', 'calendar', 'invoices', 'analytics', 'automation', 'support'],
-    currentContext: 'Hjælper med daglige opgaver',
+    status: "idle",
+    capabilities: [
+      "email",
+      "calendar",
+      "invoices",
+      "analytics",
+      "automation",
+      "support",
+    ],
+    currentContext: "Hjælper med daglige opgaver",
     suggestions: [
-      'Hvordan kan jeg hjælpe dig i dag?',
-      'Skal jeg oprette en ny faktura?',
-      'Vil du se din kalender for i dag?',
-      'Har du brug for hjælp til email management?'
-    ]
+      "Hvordan kan jeg hjælpe dig i dag?",
+      "Skal jeg oprette en ny faktura?",
+      "Vil du se din kalender for i dag?",
+      "Har du brug for hjælp til email management?",
+    ],
   };
 
   const assistantData = data || defaultData;
@@ -67,19 +88,20 @@ export function AIAssistant({
   // Default messages
   const defaultMessages: AIMessage[] = [
     {
-      id: '1',
-      content: 'Hej! Jeg er din AI assistent. Jeg kan hjælpe dig med emails, kalender, fakturaer og meget mere.',
-      sender: 'assistant',
-      timestamp: '10:00',
-      type: 'text'
+      id: "1",
+      content:
+        "Hej! Jeg er din AI assistent. Jeg kan hjælpe dig med emails, kalender, fakturaer og meget mere.",
+      sender: "assistant",
+      timestamp: "10:00",
+      type: "text",
     },
     {
-      id: '2',
-      content: 'Hvad kan jeg hjælpe dig med i dag?',
-      sender: 'assistant',
-      timestamp: '10:01',
-      type: 'suggestion'
-    }
+      id: "2",
+      content: "Hvad kan jeg hjælpe dig med i dag?",
+      sender: "assistant",
+      timestamp: "10:01",
+      type: "suggestion",
+    },
   ];
 
   const chatMessages = messages.length > 0 ? messages : defaultMessages;
@@ -100,7 +122,7 @@ export function AIAssistant({
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -110,7 +132,7 @@ export function AIAssistant({
     setVoiceEnabled(!voiceEnabled);
     setIsListening(!isListening);
     onVoiceToggle?.();
-    
+
     // Simulate voice recognition
     if (!isListening) {
       setTimeout(() => {
@@ -132,47 +154,71 @@ export function AIAssistant({
     onCapabilityToggle?.(capability);
   };
 
-  const getStatusColor = (status: AIAssistantData['status']) => {
+  const getStatusColor = (status: AIAssistantData["status"]) => {
     switch (status) {
-      case 'idle': return 'bg-gray-500';
-      case 'thinking': return 'bg-blue-500';
-      case 'speaking': return 'bg-green-500';
-      case 'error': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case "idle":
+        return "bg-gray-500";
+      case "thinking":
+        return "bg-blue-500";
+      case "speaking":
+        return "bg-green-500";
+      case "error":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const getStatusLabel = (status: AIAssistantData['status']) => {
+  const getStatusLabel = (status: AIAssistantData["status"]) => {
     switch (status) {
-      case 'idle': return 'Inaktiv';
-      case 'thinking': return 'Tænker';
-      case 'speaking': return 'Taler';
-      case 'error': return 'Fejl';
-      default: return status;
+      case "idle":
+        return "Inaktiv";
+      case "thinking":
+        return "Tænker";
+      case "speaking":
+        return "Taler";
+      case "error":
+        return "Fejl";
+      default:
+        return status;
     }
   };
 
   const getCapabilityIcon = (capability: string) => {
     switch (capability) {
-      case 'email': return '📧';
-      case 'calendar': return '📅';
-      case 'invoices': return '📄';
-      case 'analytics': return '📊';
-      case 'automation': return '⚡';
-      case 'support': return '🎧';
-      default: return '🔧';
+      case "email":
+        return "📧";
+      case "calendar":
+        return "📅";
+      case "invoices":
+        return "📄";
+      case "analytics":
+        return "📊";
+      case "automation":
+        return "⚡";
+      case "support":
+        return "🎧";
+      default:
+        return "🔧";
     }
   };
 
   const getCapabilityLabel = (capability: string) => {
     switch (capability) {
-      case 'email': return 'Email';
-      case 'calendar': return 'Kalender';
-      case 'invoices': return 'Fakturaer';
-      case 'analytics': return 'Analytik';
-      case 'automation': return 'Automatisering';
-      case 'support': return 'Support';
-      default: return capability;
+      case "email":
+        return "Email";
+      case "calendar":
+        return "Kalender";
+      case "invoices":
+        return "Fakturaer";
+      case "analytics":
+        return "Analytik";
+      case "automation":
+        return "Automatisering";
+      case "support":
+        return "Support";
+      default:
+        return capability;
     }
   };
 
@@ -187,7 +233,9 @@ export function AIAssistant({
             </div>
             <div>
               <h4 className="font-semibold">AI Assistant</h4>
-              <p className="text-xs text-muted-foreground">Interaktiv AI hjælper</p>
+              <p className="text-xs text-muted-foreground">
+                Interaktiv AI hjælper
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -202,9 +250,11 @@ export function AIAssistant({
 
         {/* Capabilities */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Capabilities:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Capabilities:
+          </label>
           <div className="flex flex-wrap gap-1">
-            {assistantData.capabilities.map((capability) => (
+            {assistantData.capabilities.map(capability => (
               <button
                 key={capability}
                 onClick={() => handleCapabilityToggle(capability)}
@@ -242,29 +292,31 @@ export function AIAssistant({
               Ryd chat
             </Button>
           </div>
-          
+
           <div className="border rounded-lg bg-background p-3 h-64 overflow-y-auto">
             <div className="space-y-3">
-              {chatMessages.map((message) => (
+              {chatMessages.map(message => (
                 <div
                   key={message.id}
                   className={cn(
                     "flex",
-                    message.sender === 'user' ? "justify-end" : "justify-start"
+                    message.sender === "user" ? "justify-end" : "justify-start"
                   )}
                 >
                   <div
                     className={cn(
                       "max-w-[80%] p-3 rounded-lg",
-                      message.sender === 'user'
+                      message.sender === "user"
                         ? "bg-blue-500 text-white"
-                        : message.type === 'suggestion'
-                        ? "bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400"
-                        : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                        : message.type === "suggestion"
+                          ? "bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400"
+                          : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
                     )}
                   >
                     <p className="text-sm">{message.content}</p>
-                    <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
+                    <p className="text-xs opacity-70 mt-1">
+                      {message.timestamp}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -275,7 +327,9 @@ export function AIAssistant({
 
         {/* Suggestions */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Forslag:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Forslag:
+          </label>
           <div className="grid grid-cols-2 gap-2">
             {assistantData.suggestions.slice(0, 4).map((suggestion, index) => (
               <button
@@ -294,11 +348,11 @@ export function AIAssistant({
           <div className="relative">
             <Input
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={e => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Skriv dit spørgsmål..."
               className="pr-20"
-              disabled={assistantData.status === 'thinking'}
+              disabled={assistantData.status === "thinking"}
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
               <Button
@@ -310,19 +364,23 @@ export function AIAssistant({
                   isListening ? "text-red-500" : "text-gray-500"
                 )}
               >
-                {isListening ? <MicOff className="w-3 h-3" /> : <Mic className="w-3 h-3" />}
+                {isListening ? (
+                  <MicOff className="w-3 h-3" />
+                ) : (
+                  <Mic className="w-3 h-3" />
+                )}
               </Button>
               <Button
                 size="sm"
                 onClick={handleSendMessage}
-                disabled={!input.trim() || assistantData.status === 'thinking'}
+                disabled={!input.trim() || assistantData.status === "thinking"}
                 className="h-7 px-2"
               >
                 <Send className="w-3 h-3" />
               </Button>
             </div>
           </div>
-          
+
           {isListening && (
             <div className="p-2 rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800">
               <div className="flex items-center gap-2">
@@ -344,7 +402,11 @@ export function AIAssistant({
                 Stemmeassistent aktiv
               </span>
             </div>
-            <Button size="sm" variant="ghost" onClick={() => setVoiceEnabled(false)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => setVoiceEnabled(false)}
+            >
               <MicOff className="w-3 h-3" />
             </Button>
           </div>
@@ -368,7 +430,8 @@ export function AIAssistant({
 
         {/* Status */}
         <div className="text-center text-xs text-muted-foreground">
-          AI Assistant er klar til at hjælpe • {selectedCapabilities.length} capabilities aktive
+          AI Assistant er klar til at hjælpe • {selectedCapabilities.length}{" "}
+          capabilities aktive
         </div>
       </div>
     </Card>

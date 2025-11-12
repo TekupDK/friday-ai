@@ -39,7 +39,10 @@ export const customerRouter = router({
   getByLeadId: protectedProcedure
     .input(z.object({ leadId: z.number() }))
     .query(async ({ ctx, input }) => {
-      const profile = await getCustomerProfileByLeadId(input.leadId, ctx.user.id);
+      const profile = await getCustomerProfileByLeadId(
+        input.leadId,
+        ctx.user.id
+      );
       if (!profile) {
         throw new Error("Customer not found");
       }
@@ -176,10 +179,12 @@ export const customerRouter = router({
    * Get activity timeline - unified chronological view of emails, invoices, and calendar
    */
   getActivityTimeline: protectedProcedure
-    .input(z.object({ 
-      customerId: z.number(),
-      limit: z.number().optional().default(50),
-    }))
+    .input(
+      z.object({
+        customerId: z.number(),
+        limit: z.number().optional().default(50),
+      })
+    )
     .query(async ({ ctx, input }) => {
       const [emails, invoices, calendarEvents] = await Promise.all([
         getCustomerEmails(input.customerId, ctx.user.id),
@@ -190,7 +195,7 @@ export const customerRouter = router({
       // Transform to unified activity items
       const activities: Array<{
         id: string;
-        type: 'email' | 'invoice' | 'calendar';
+        type: "email" | "invoice" | "calendar";
         date: string;
         title: string;
         description?: string;
@@ -201,9 +206,9 @@ export const customerRouter = router({
       emails.forEach(email => {
         activities.push({
           id: `email-${email.id}`,
-          type: 'email',
+          type: "email",
           date: email.lastMessageDate || new Date().toISOString(),
-          title: email.subject || '(No Subject)',
+          title: email.subject || "(No Subject)",
           description: email.snippet || undefined,
           metadata: {
             gmailThreadId: email.gmailThreadId || undefined,
@@ -216,10 +221,10 @@ export const customerRouter = router({
       invoices.forEach(invoice => {
         activities.push({
           id: `invoice-${invoice.id}`,
-          type: 'invoice',
+          type: "invoice",
           date: invoice.createdAt || new Date().toISOString(),
           title: `Invoice ${invoice.invoiceNumber || invoice.billyInvoiceId}`,
-          description: `${invoice.amount ? (parseFloat(invoice.amount) / 100).toFixed(2) : '0.00'} DKK - ${invoice.status}`,
+          description: `${invoice.amount ? (parseFloat(invoice.amount) / 100).toFixed(2) : "0.00"} DKK - ${invoice.status}`,
           metadata: {
             amount: invoice.amount,
             status: invoice.status,
@@ -233,9 +238,9 @@ export const customerRouter = router({
       calendarEvents.forEach(event => {
         activities.push({
           id: `calendar-${event.id}`,
-          type: 'calendar',
+          type: "calendar",
           date: (event as any).startTime || new Date().toISOString(),
-          title: (event as any).title || '(No Title)',
+          title: (event as any).title || "(No Title)",
           description: (event as any).description || (event as any).location,
           metadata: {
             startTime: (event as any).startTime,
@@ -246,8 +251,8 @@ export const customerRouter = router({
       });
 
       // Sort by date descending (newest first)
-      activities.sort((a, b) => 
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+      activities.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       );
 
       // Apply limit
@@ -505,7 +510,9 @@ Format as clear, concise bullet points in Danish.`;
         name: z.string().optional(),
         phone: z.string().optional(),
         billyCustomerId: z.string().optional(),
-        status: z.enum(["new", "active", "inactive", "vip", "at_risk"]).optional(),
+        status: z
+          .enum(["new", "active", "inactive", "vip", "at_risk"])
+          .optional(),
         tags: z.array(z.string()).optional(),
         customerType: z.enum(["private", "erhverv"]).optional(),
       })
@@ -591,7 +598,7 @@ Format as clear, concise bullet points in Danish.`;
   syncBilly: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      // Mock implementation for now  
+      // Mock implementation for now
       console.log(`[Sync] Billy sync for customer ${input.customerId}`);
       return { success: true, synced: 0 };
     }),

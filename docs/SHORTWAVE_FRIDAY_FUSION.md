@@ -7,6 +7,7 @@
 ## 🎯 DESIGN FILOSOFI
 
 ### **SHORTWAVE'S DESIGN** (Visual)
+
 - ✅ Ultra-clean, minimal interface
 - ✅ No visual clutter
 - ✅ Smart input field with integrations
@@ -14,6 +15,7 @@
 - ✅ Professional, modern UI
 
 ### **FRIDAY'S PERSONLIGHED** (Behavior)
+
 - ✅ Dansk kommunikation (100%)
 - ✅ Professionel executive assistant
 - ✅ Arbejdsfokuseret (emails, kalender, faktura, leads)
@@ -21,6 +23,7 @@
 - ✅ Rendetalje-specifik viden
 
 ### **CASCADE-LIGNENDE ARBEJDSFLOW** (Function)
+
 - ✅ Chatbot som arbejdspartner
 - ✅ Kontinuerlig samtale om opgaver
 - ✅ Intelligent kontekst-forståelse
@@ -56,31 +59,37 @@ Friday: "Du har 4 ubetalte fakturaer til i alt 12.450 kr:
 ## 🎨 UI ELEMENTER
 
 ### **Input Field:**
+
 ```
 Placeholder: "Tjek kalender, send tilbud, opret faktura, søg emails..."
 ```
+
 - **Shortwave style:** Clean, muted, rounded
 - **Friday tone:** Arbejdsfokuserede actions
 - **Dansk:** Helt igennem
 
 ### **Welcome Screen:**
+
 ```
 Header: "Hvad kan jeg hjælpe med i dag?"
-Suggestions: 
+Suggestions:
 - "Tjek min kalender i dag"
 - "Vis ubetalte fakturaer"
 - "Find nye leads"
 - "Hvad kan Friday?"
 ```
+
 - **Shortwave style:** Centered, minimal, elegant
 - **Friday tone:** Konkrete business actions
 - **Dansk:** Naturligt, professionelt
 
 ### **Model Info:**
+
 ```
 Standard • Gemma 3 27B Free
 Gmail, Kalender, Billy (35 værktøjer)
 ```
+
 - **Shortwave style:** Subtle, bottom info
 - **Friday specifikt:** Viser faktiske integrationer
 - **Dansk:** "Kalender" ikke "Calendar"
@@ -90,26 +99,31 @@ Gmail, Kalender, Billy (35 værktøjer)
 ## 🧠 FRIDAY'S KERNEKOMPETENCER
 
 ### **1. Email Management**
+
 - Søg i Gmail threads
 - Send tilbud og svar
 - Sporing af kommunikation
 
 ### **2. Kalender Booking**
+
 - Tjek ledige tider
 - Book møder/opgaver
 - Konflikt-detection
 
 ### **3. Faktura Håndtering**
+
 - Opret fakturaer i Billy
 - Track betalingsstatus
 - Påmindelser
 
 ### **4. Lead Kvalificering**
+
 - Analysér nye leads
 - Qualify + follow-up
 - Pipeline tracking
 
 ### **5. Opgave Organisering**
+
 - Prioriter tasks
 - Deadline tracking
 - Workflow automation
@@ -118,21 +132,22 @@ Gmail, Kalender, Billy (35 værktøjer)
 
 ## 💡 NØGLE-FORSKELLE FRA SHORTWAVE
 
-| Feature | Shortwave | Friday (Vores) |
-|---------|-----------|----------------|
-| **Sprog** | Engelsk | 100% Dansk |
-| **Fokus** | Email-only | Email + Kalender + Faktura + Leads |
-| **Tone** | Professional | Professionel + Varm (dansk stil) |
-| **Use Case** | Personal productivity | Business operations (Rendetalje) |
-| **AI Model** | Claude/GPT | Gemma 3 27B Free |
-| **Integrations** | Gmail, Calendar, Apps | Gmail, Calendar, Billy, Database |
-| **Personality** | Neutral assistant | Friday - Executive assistant |
+| Feature          | Shortwave             | Friday (Vores)                     |
+| ---------------- | --------------------- | ---------------------------------- |
+| **Sprog**        | Engelsk               | 100% Dansk                         |
+| **Fokus**        | Email-only            | Email + Kalender + Faktura + Leads |
+| **Tone**         | Professional          | Professionel + Varm (dansk stil)   |
+| **Use Case**     | Personal productivity | Business operations (Rendetalje)   |
+| **AI Model**     | Claude/GPT            | Gemma 3 27B Free                   |
+| **Integrations** | Gmail, Calendar, Apps | Gmail, Calendar, Billy, Database   |
+| **Personality**  | Neutral assistant     | Friday - Executive assistant       |
 
 ---
 
 ## 🎯 DESIGN BESLUTNINGER
 
 ### **Hvad vi tog fra Shortwave:**
+
 1. ✅ Minimal, clean UI
 2. ✅ Smart input field layout
 3. ✅ Suggestion pills design
@@ -141,6 +156,7 @@ Gmail, Kalender, Billy (35 værktøjer)
 6. ✅ No visual clutter philosophy
 
 ### **Hvad vi ændrede til Friday:**
+
 1. ✅ 100% dansk tekst
 2. ✅ Arbejdsfokuserede suggestions
 3. ✅ Rendetalje-specifik funktionalitet
@@ -149,6 +165,7 @@ Gmail, Kalender, Billy (35 værktøjer)
 6. ✅ Gemma model i stedet for Claude
 
 ### **Hvad vi tilføjede (Cascade-inspireret):**
+
 1. ✅ Chatbot arbejdspartner mentalitet
 2. ✅ Kontinuerlig samtale workflow
 3. ✅ Handlingsorienteret sprog
@@ -160,6 +177,7 @@ Gmail, Kalender, Billy (35 værktøjer)
 ## 🚀 RESULTAT
 
 **En perfekt fusion:**
+
 - **Shortwave's elegante design**
 - **Friday's danske arbejdsfokus**
 - **Cascade's chatbot partner-feeling**
@@ -171,6 +189,7 @@ Gmail, Kalender, Billy (35 værktøjer)
 ## 📝 IMPLEMENTERET
 
 ### **Komponenter:**
+
 ```
 ✅ ShortWaveChatPanel.tsx   - Hovedkomponent (Fusion)
 ✅ ChatInput.tsx            - Input med dansk placeholder
@@ -179,6 +198,7 @@ Gmail, Kalender, Billy (35 værktøjer)
 ```
 
 ### **Features:**
+
 ```
 ✅ Dansk UI (100%)
 ✅ Shortwave design

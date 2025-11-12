@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ChatFlowDemoProps {
-  scenario: 'weather' | 'email' | 'calendar' | 'invoices' | 'search';
+  scenario: "weather" | "email" | "calendar" | "invoices" | "search";
 }
 
 export function ChatFlowDemo({ scenario }: ChatFlowDemoProps) {
@@ -50,28 +50,28 @@ export function ChatFlowDemo({ scenario }: ChatFlowDemoProps) {
     weather: {
       userMessage: "Hvad er vejret i København?",
       toolMessage: "Fetching weather data...",
-      emoji: "🌤️"
+      emoji: "🌤️",
     },
     email: {
       userMessage: "Vis mine vigtigste emails",
       toolMessage: "Analyzing inbox...",
-      emoji: "📧"
+      emoji: "📧",
     },
     calendar: {
       userMessage: "Book møde med teamet i morgen kl 14",
       toolMessage: "Checking calendar availability...",
-      emoji: "📅"
+      emoji: "📅",
     },
     invoices: {
       userMessage: "Vis ubetalte fakturaer",
       toolMessage: "Fetching from Billy...",
-      emoji: "💰"
+      emoji: "💰",
     },
     search: {
       userMessage: "Find information om AI trends 2024",
       toolMessage: "Searching the web...",
-      emoji: "🔍"
-    }
+      emoji: "🔍",
+    },
   };
 
   const content = scenarioContent[scenario];
@@ -101,9 +101,7 @@ export function ChatFlowDemo({ scenario }: ChatFlowDemoProps) {
           )}
 
           {/* Step 2: AI Thinking */}
-          {step >= 2 && step < 3 && (
-            <AIThinking message="AI Thinking..." />
-          )}
+          {step >= 2 && step < 3 && <AIThinking message="AI Thinking..." />}
 
           {/* Step 3: Tool Execution */}
           {step >= 3 && step < 4 && (
@@ -118,7 +116,7 @@ export function ChatFlowDemo({ scenario }: ChatFlowDemoProps) {
           {/* Step 4: Response Card */}
           {step >= 4 && (
             <div className="animate-in fade-in slide-in-from-bottom duration-500">
-              {scenario === 'weather' && (
+              {scenario === "weather" && (
                 <WeatherCard
                   city="København"
                   temperature={18}
@@ -127,73 +125,74 @@ export function ChatFlowDemo({ scenario }: ChatFlowDemoProps) {
                   humidity={65}
                   wind={12}
                   forecast={[
-                    { day: 'Man', temp: 19, emoji: '☀️' },
-                    { day: 'Tir', temp: 17, emoji: '☁️' },
-                    { day: 'Ons', temp: 16, emoji: '🌧️' },
+                    { day: "Man", temp: 19, emoji: "☀️" },
+                    { day: "Tir", temp: 17, emoji: "☁️" },
+                    { day: "Ons", temp: 16, emoji: "🌧️" },
                   ]}
                 />
               )}
 
-              {scenario === 'email' && (
+              {scenario === "email" && (
                 <EmailThreadCard
                   data={{
-                    subject: 'Tilbud på website projekt',
-                    from: 'kunde@firma.dk',
+                    subject: "Tilbud på website projekt",
+                    from: "kunde@firma.dk",
                     messageCount: 5,
-                    summary: 'Kunde efterspørger tilbud på nyt website med e-commerce. Budget omkring 50.000 kr.',
-                    labels: ['Lead', 'Høj prioritet'],
-                    priority: 'high',
-                    hasAttachments: true
+                    summary:
+                      "Kunde efterspørger tilbud på nyt website med e-commerce. Budget omkring 50.000 kr.",
+                    labels: ["Lead", "Høj prioritet"],
+                    priority: "high",
+                    hasAttachments: true,
                   }}
                 />
               )}
 
-              {scenario === 'calendar' && (
+              {scenario === "calendar" && (
                 <CalendarEventCard
                   data={{
-                    title: 'Team Meeting',
+                    title: "Team Meeting",
                     startTime: new Date(Date.now() + 24 * 60 * 60 * 1000),
                     endTime: new Date(Date.now() + 25 * 60 * 60 * 1000),
-                    location: 'Google Meet',
-                    attendees: ['Hans', 'Peter', 'Mette'],
-                    isBooked: true
+                    location: "Google Meet",
+                    attendees: ["Hans", "Peter", "Mette"],
+                    isBooked: true,
                   }}
                 />
               )}
 
-              {scenario === 'invoices' && (
+              {scenario === "invoices" && (
                 <InvoiceCards
                   invoices={[
                     {
-                      id: '#1234',
-                      company: 'Acme Corp',
+                      id: "#1234",
+                      company: "Acme Corp",
                       amount: 12500,
-                      currency: 'kr',
+                      currency: "kr",
                       dueInDays: 5,
-                      status: 'pending'
+                      status: "pending",
                     },
                     {
-                      id: '#1236',
-                      company: 'Nordic Ltd',
+                      id: "#1236",
+                      company: "Nordic Ltd",
                       amount: 15800,
-                      currency: 'kr',
+                      currency: "kr",
                       dueInDays: -3,
-                      status: 'overdue'
-                    }
+                      status: "overdue",
+                    },
                   ]}
                 />
               )}
 
-              {scenario === 'search' && (
+              {scenario === "search" && (
                 <SearchResultsCard
                   query="AI trends 2024"
                   results={[
                     {
-                      title: 'AI Trends 2024: What to Expect',
-                      url: 'https://example.com',
-                      snippet: 'Comprehensive analysis of AI developments...',
-                      source: 'TechCrunch'
-                    }
+                      title: "AI Trends 2024: What to Expect",
+                      url: "https://example.com",
+                      snippet: "Comprehensive analysis of AI developments...",
+                      source: "TechCrunch",
+                    },
                   ]}
                 />
               )}

@@ -1,6 +1,6 @@
 /**
  * Phase 9.4: Lead Source Analytics
- * 
+ *
  * Track and analyze source effectiveness with comprehensive metrics.
  * Business intelligence for lead source optimization.
  */
@@ -47,7 +47,7 @@ export interface AnalyticsRecommendation {
   impact: "high" | "medium" | "low";
   effort: "high" | "medium" | "low";
   expectedImprovement: number; // percentage
-};
+}
 
 /**
  * Phase 9.4: Mock analytics data generator
@@ -146,7 +146,7 @@ export function generateSourceAnalytics(
     {
       source: "direct",
       totalLeads: 22,
-      conversionRate: 0.20, // 20%
+      conversionRate: 0.2, // 20%
       averageResponseTime: 3.5, // 3.5 hours
       averageDealValue: 3600,
       costPerLead: 110,
@@ -157,15 +157,17 @@ export function generateSourceAnalytics(
     },
   ];
 
-  const totalLeads = mockSourceMetrics.reduce((sum, m) => sum + m.totalLeads, 0);
+  const totalLeads = mockSourceMetrics.reduce(
+    (sum, m) => sum + m.totalLeads,
+    0
+  );
   const totalRevenue = mockSourceMetrics.reduce(
     (sum, m) => sum + m.totalLeads * m.conversionRate * m.averageDealValue,
     0
   );
-  const averageConversionRate = mockSourceMetrics.reduce(
-    (sum, m) => sum + m.conversionRate,
-    0
-  ) / mockSourceMetrics.length;
+  const averageConversionRate =
+    mockSourceMetrics.reduce((sum, m) => sum + m.conversionRate, 0) /
+    mockSourceMetrics.length;
 
   // Sort sources by different metrics
   const byVolume = [...mockSourceMetrics]
@@ -179,7 +181,11 @@ export function generateSourceAnalytics(
     .map(m => m.source);
 
   const byRevenue = [...mockSourceMetrics]
-    .sort((a, b) => (b.totalLeads * b.conversionRate * b.averageDealValue) - (a.totalLeads * a.conversionRate * a.averageDealValue))
+    .sort(
+      (a, b) =>
+        b.totalLeads * b.conversionRate * b.averageDealValue -
+        a.totalLeads * a.conversionRate * a.averageDealValue
+    )
     .slice(0, 3)
     .map(m => m.source);
 
@@ -210,7 +216,9 @@ export function generateSourceAnalytics(
 /**
  * Generate intelligent recommendations based on source metrics
  */
-function generateRecommendations(metrics: SourceMetrics[]): AnalyticsRecommendation[] {
+function generateRecommendations(
+  metrics: SourceMetrics[]
+): AnalyticsRecommendation[] {
   const recommendations: AnalyticsRecommendation[] = [];
 
   for (const metric of metrics) {
@@ -281,7 +289,9 @@ function generateRecommendations(metrics: SourceMetrics[]): AnalyticsRecommendat
   }
 
   // Sort by expected improvement
-  return recommendations.sort((a, b) => b.expectedImprovement - a.expectedImprovement);
+  return recommendations.sort(
+    (a, b) => b.expectedImprovement - a.expectedImprovement
+  );
 }
 
 /**
@@ -293,16 +303,21 @@ export function getSourcePerformanceSummary(analytics: SourceAnalytics): {
   mostImproved: LeadSource;
   needsAttention: LeadSource[];
 } {
-  const sortedByQuality = [...analytics.sourceMetrics].sort((a, b) => b.qualityScore - a.qualityScore);
-  const sortedByTrend = [...analytics.sourceMetrics].sort((a, b) => b.trendScore - a.trendScore);
-  
+  const sortedByQuality = [...analytics.sourceMetrics].sort(
+    (a, b) => b.qualityScore - a.qualityScore
+  );
+  const sortedByTrend = [...analytics.sourceMetrics].sort(
+    (a, b) => b.trendScore - a.trendScore
+  );
+
   const needsAttention = analytics.sourceMetrics
     .filter(m => m.qualityScore < 50 || m.trendScore < -20)
     .map(m => m.source);
 
   return {
     bestOverall: sortedByQuality[0]?.source || "unknown",
-    worstOverall: sortedByQuality[sortedByQuality.length - 1]?.source || "unknown",
+    worstOverall:
+      sortedByQuality[sortedByQuality.length - 1]?.source || "unknown",
     mostImproved: sortedByTrend[0]?.source || "unknown",
     needsAttention,
   };
@@ -324,8 +339,11 @@ export function calculateSourceEffectiveness(metric: SourceMetrics): number {
   const normalizedConversion = Math.min(metric.conversionRate * 100, 100);
   const normalizedQuality = metric.qualityScore;
   const normalizedRoi = Math.min(metric.roi * 20, 100); // 5x ROI = 100 points
-  const normalizedTrend = Math.max(0, Math.min((metric.trendScore + 100) / 2, 100));
-  const normalizedResponse = Math.max(0, 100 - (metric.averageResponseTime * 10)); // Faster = better
+  const normalizedTrend = Math.max(
+    0,
+    Math.min((metric.trendScore + 100) / 2, 100)
+  );
+  const normalizedResponse = Math.max(0, 100 - metric.averageResponseTime * 10); // Faster = better
 
   return (
     normalizedConversion * weights.conversionRate +
@@ -353,7 +371,7 @@ export function exportAnalyticsReport(analytics: SourceAnalytics): {
     "Cost Per Lead",
     "Quality Score",
     "ROI",
-    "Effectiveness Score"
+    "Effectiveness Score",
   ].join(",");
 
   const csvRows = analytics.sourceMetrics.map(metric => {
@@ -367,7 +385,7 @@ export function exportAnalyticsReport(analytics: SourceAnalytics): {
       "DKK " + metric.costPerLead,
       metric.qualityScore,
       metric.roi.toFixed(2) + "x",
-      effectiveness.toFixed(1)
+      effectiveness.toFixed(1),
     ].join(",");
   });
 
@@ -389,7 +407,10 @@ Top Performers:
 - By Quality: ${analytics.topPerformers.byQuality.join(", ")}
 
 Key Recommendations:
-${analytics.recommendations.slice(0, 3).map(r => `• ${r.title}: ${r.description}`).join("\n")}
+${analytics.recommendations
+  .slice(0, 3)
+  .map(r => `• ${r.title}: ${r.description}`)
+  .join("\n")}
   `.trim();
 
   return { csv, json, summary };

@@ -1,9 +1,9 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import {
   HelpCircle,
   Search,
@@ -12,26 +12,27 @@ import {
   Lightbulb,
   ExternalLink,
   ThumbsUp,
-  ThumbsDown
-} from "lucide-react"
+  ThumbsDown,
+} from "lucide-react";
 
-export interface ContextualHelpCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  context: string
+export interface ContextualHelpCardProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  context: string;
   suggestions: Array<{
-    id: string
-    question: string
-    answer: string
-    category: string
-    confidence: number
-    source?: string
-    helpful?: boolean
-  }>
-  onSuggestionClick?: (suggestion: any) => void
-  onSearch?: (query: string) => void
-  onFeedback?: (suggestionId: string, helpful: boolean) => void
-  onAskQuestion?: (question: string) => void
-  isLoading?: boolean
-  showSearch?: boolean
+    id: string;
+    question: string;
+    answer: string;
+    category: string;
+    confidence: number;
+    source?: string;
+    helpful?: boolean;
+  }>;
+  onSuggestionClick?: (suggestion: any) => void;
+  onSearch?: (query: string) => void;
+  onFeedback?: (suggestionId: string, helpful: boolean) => void;
+  onAskQuestion?: (question: string) => void;
+  isLoading?: boolean;
+  showSearch?: boolean;
 }
 
 export function ContextualHelpCard({
@@ -46,20 +47,20 @@ export function ContextualHelpCard({
   className,
   ...props
 }: ContextualHelpCardProps) {
-  const [searchQuery, setSearchQuery] = React.useState("")
-  const [customQuestion, setCustomQuestion] = React.useState("")
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [customQuestion, setCustomQuestion] = React.useState("");
 
   const handleSearch = (query: string) => {
-    setSearchQuery(query)
-    onSearch?.(query)
-  }
+    setSearchQuery(query);
+    onSearch?.(query);
+  };
 
   const handleAskQuestion = () => {
     if (customQuestion.trim()) {
-      onAskQuestion?.(customQuestion.trim())
-      setCustomQuestion("")
+      onAskQuestion?.(customQuestion.trim());
+      setCustomQuestion("");
     }
-  }
+  };
 
   return (
     <Card className={cn("w-full", className)} {...props}>
@@ -69,7 +70,8 @@ export function ContextualHelpCard({
           Contextual Help
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          AI-drevet hjælp baseret på din nuværende kontekst: <strong>{context}</strong>
+          AI-drevet hjælp baseret på din nuværende kontekst:{" "}
+          <strong>{context}</strong>
         </p>
       </CardHeader>
 
@@ -82,8 +84,8 @@ export function ContextualHelpCard({
               <Input
                 placeholder="Søg i hjælp eller stil et spørgsmål..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
+                onChange={e => setSearchQuery(e.target.value)}
+                onKeyPress={e => e.key === "Enter" && handleSearch(searchQuery)}
                 className="pl-10"
               />
             </div>
@@ -108,17 +110,21 @@ export function ContextualHelpCard({
             <div className="flex items-center justify-center py-8">
               <div className="text-center space-y-2">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto"></div>
-                <p className="text-sm text-muted-foreground">Finder relevante svar...</p>
+                <p className="text-sm text-muted-foreground">
+                  Finder relevante svar...
+                </p>
               </div>
             </div>
           ) : suggestions.length === 0 ? (
             <div className="text-center py-6">
               <HelpCircle className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">Ingen forslag tilgængelige</p>
+              <p className="text-sm text-muted-foreground">
+                Ingen forslag tilgængelige
+              </p>
             </div>
           ) : (
             <div className="space-y-2">
-              {suggestions.map((suggestion) => (
+              {suggestions.map(suggestion => (
                 <div
                   key={suggestion.id}
                   className="p-3 rounded-lg border cursor-pointer transition-all hover:shadow-sm hover:border-primary/50 bg-card"
@@ -159,9 +165,9 @@ export function ContextualHelpCard({
                         size="sm"
                         variant="ghost"
                         className="h-6 w-6 p-0"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          onFeedback?.(suggestion.id, true)
+                        onClick={e => {
+                          e.stopPropagation();
+                          onFeedback?.(suggestion.id, true);
                         }}
                       >
                         <ThumbsUp className="h-3 w-3" />
@@ -170,9 +176,9 @@ export function ContextualHelpCard({
                         size="sm"
                         variant="ghost"
                         className="h-6 w-6 p-0"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          onFeedback?.(suggestion.id, false)
+                        onClick={e => {
+                          e.stopPropagation();
+                          onFeedback?.(suggestion.id, false);
                         }}
                       >
                         <ThumbsDown className="h-3 w-3" />
@@ -192,8 +198,8 @@ export function ContextualHelpCard({
             <Input
               placeholder="Hvad kan jeg hjælpe dig med?"
               value={customQuestion}
-              onChange={(e) => setCustomQuestion(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleAskQuestion()}
+              onChange={e => setCustomQuestion(e.target.value)}
+              onKeyPress={e => e.key === "Enter" && handleAskQuestion()}
               className="flex-1"
             />
             <Button
@@ -225,5 +231,5 @@ export function ContextualHelpCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

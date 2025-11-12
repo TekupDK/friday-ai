@@ -1,0 +1,211 @@
+/**
+ * AppleListItem Styles
+ *
+ * iOS-style list item styling
+ */
+
+.listItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  /* background controlled by theme */
+  transition: background 0.2s ease;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.separator::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================================
+   LEFT ICON
+   ============================================================================ */
+
+.leftIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* color controlled by theme */
+}
+
+/* ============================================================================
+   CONTENT
+   ============================================================================ */
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(60, 60, 67, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================================
+   RIGHT CONTENT
+   ============================================================================ */
+
+.rightContent {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: rgba(60, 60, 67, 0.6);
+  font-size: 15px;
+}
+
+/* ============================================================================
+   CHEVRON
+   ============================================================================ */
+
+.chevron {
+  flex-shrink: 0;
+  color: rgba(60, 60, 67, 0.3);
+}
+
+/* ============================================================================
+   LIGHT MODE
+   ============================================================================ */
+
+[data-theme="light"] .listItem {
+  background: #ffffff;
+}
+
+[data-theme="light"] .clickable:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .separator::after {
+  background: rgba(60, 60, 67, 0.36);
+}
+
+[data-theme="light"] .leftIcon {
+  color: #007aff;
+}
+
+[data-theme="light"] .title {
+  color: #000000;
+}
+
+[data-theme="light"] .subtitle {
+  color: rgba(60, 60, 67, 0.6);
+}
+
+[data-theme="light"] .rightContent {
+  color: rgba(60, 60, 67, 0.6);
+}
+
+[data-theme="light"] .chevron {
+  color: rgba(60, 60, 67, 0.3);
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+[data-theme="dark"] .listItem {
+  background: #1c1c1e;
+}
+
+[data-theme="dark"] .clickable:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .separator::after {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .leftIcon {
+  color: #0a84ff;
+}
+
+[data-theme="dark"] .title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .subtitle {
+  color: rgba(235, 235, 245, 0.6);
+}
+
+[data-theme="dark"] .rightContent {
+  color: rgba(235, 235, 245, 0.6);
+}
+
+[data-theme="dark"] .chevron {
+  color: rgba(235, 235, 245, 0.3);
+}
+
+/* Support system preference as well */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .listItem {
+    background: #1c1c1e;
+  }
+
+  html:not([data-theme]) .clickable:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  html:not([data-theme]) .separator::after {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  html:not([data-theme]) .leftIcon {
+    color: #0a84ff;
+  }
+
+  html:not([data-theme]) .title {
+    color: #ffffff;
+  }
+
+  html:not([data-theme]) .subtitle {
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  html:not([data-theme]) .rightContent {
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  html:not([data-theme]) .chevron {
+    color: rgba(235, 235, 245, 0.3);
+  }
+}

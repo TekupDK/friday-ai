@@ -14,7 +14,7 @@ export class LiteLLMError extends Error {
     public details?: any
   ) {
     super(message);
-    this.name = 'LiteLLMError';
+    this.name = "LiteLLMError";
     Object.setPrototypeOf(this, LiteLLMError.prototype);
   }
 }
@@ -23,9 +23,9 @@ export class LiteLLMError extends Error {
  * LiteLLM timeout error
  */
 export class LiteLLMTimeoutError extends LiteLLMError {
-  constructor(message: string = 'Request timeout', provider?: string) {
+  constructor(message: string = "Request timeout", provider?: string) {
     super(message, 408, provider);
-    this.name = 'LiteLLMTimeoutError';
+    this.name = "LiteLLMTimeoutError";
     Object.setPrototypeOf(this, LiteLLMTimeoutError.prototype);
   }
 }
@@ -34,9 +34,9 @@ export class LiteLLMTimeoutError extends LiteLLMError {
  * LiteLLM rate limit error
  */
 export class LiteLLMRateLimitError extends LiteLLMError {
-  constructor(message: string = 'Rate limit exceeded', provider?: string) {
+  constructor(message: string = "Rate limit exceeded", provider?: string) {
     super(message, 429, provider);
-    this.name = 'LiteLLMRateLimitError';
+    this.name = "LiteLLMRateLimitError";
     Object.setPrototypeOf(this, LiteLLMRateLimitError.prototype);
   }
 }
@@ -53,7 +53,7 @@ export class LiteLLMProviderError extends LiteLLMError {
     details?: any
   ) {
     super(message, statusCode, provider, details);
-    this.name = 'LiteLLMProviderError';
+    this.name = "LiteLLMProviderError";
     Object.setPrototypeOf(this, LiteLLMProviderError.prototype);
   }
 }
@@ -63,9 +63,9 @@ export class LiteLLMProviderError extends LiteLLMError {
  * When connection to LiteLLM proxy fails
  */
 export class LiteLLMNetworkError extends LiteLLMError {
-  constructor(message: string = 'Network error', details?: any) {
+  constructor(message: string = "Network error", details?: any) {
     super(message, 503, undefined, details);
-    this.name = 'LiteLLMNetworkError';
+    this.name = "LiteLLMNetworkError";
     Object.setPrototypeOf(this, LiteLLMNetworkError.prototype);
   }
 }
@@ -74,9 +74,9 @@ export class LiteLLMNetworkError extends LiteLLMError {
  * LiteLLM invalid request error
  */
 export class LiteLLMInvalidRequestError extends LiteLLMError {
-  constructor(message: string = 'Invalid request', details?: any) {
+  constructor(message: string = "Invalid request", details?: any) {
     super(message, 400, undefined, details);
-    this.name = 'LiteLLMInvalidRequestError';
+    this.name = "LiteLLMInvalidRequestError";
     Object.setPrototypeOf(this, LiteLLMInvalidRequestError.prototype);
   }
 }

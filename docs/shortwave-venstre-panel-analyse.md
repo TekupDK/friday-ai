@@ -2,7 +2,7 @@
 
 ## 📊 **SHORTWAVE'S VENSTRE PANEL DESIGN**
 
-### **🔍 **HVAD HAR SHORTWAVE I VENSTRE PANEL:**
+### **🔍 **HVAD HAR SHORTWAVE I VENSTRE PANEL:\*\*
 
 ```
 ┌─────────────────────────────────┐
@@ -32,9 +32,10 @@
 └─────────────────────────────────┘
 ```
 
-### **🎯 **KEY FEATURES:**
+### **🎯 **KEY FEATURES:\*\*
 
 #### **1. COLLAPSIBLE LEFT MENU**
+
 ```typescript
 ✅ PERSONALIZABLE:
 - Add shortcuts to frequently visited sections
@@ -51,6 +52,7 @@
 ```
 
 #### **2. INBOX BUNDLES**
+
 ```typescript
 🎯 AUTOMATIC CATEGORIZATION:
 - Newsletters → One bundle
@@ -67,6 +69,7 @@
 ```
 
 #### **3. CUSTOM SHORTCUTS**
+
 ```typescript
 🔍 SAVED SEARCHES:
 - "Emails before 9am"
@@ -81,6 +84,7 @@
 ```
 
 #### **4. SPLIT INBOX TABS**
+
 ```typescript
 📊 MULTIPLE VIEWS:
 - High-priority emails tab
@@ -99,9 +103,10 @@
 
 ## 🎨 **SHORTWAVE'S DESIGN PHILOSOPHY**
 
-### **✅ **HVAD VIRKER:**
+### **✅ **HVAD VIRKER:\*\*
 
-#### **🎯 **SIMPLICITY + POWER:**
+#### **🎯 **SIMPLICITY + POWER:\*\*
+
 ```typescript
 ✨ CLEAN INTERFACE:
 - White space usage
@@ -116,7 +121,8 @@
 - Smart categorization
 ```
 
-#### **📦 **BUNDLES SYSTEM:**
+#### **📦 **BUNDLES SYSTEM:\*\*
+
 ```typescript
 🎯 AUTOMATIC ORGANIZATION:
 - AI detects email types
@@ -131,7 +137,8 @@
 - Full customization
 ```
 
-#### **🔍 **PERSONALIZATION:**
+#### **🔍 **PERSONALIZATION:\*\*
+
 ```typescript
 ✅ CUSTOMIZABLE:
 - Add/remove shortcuts
@@ -150,9 +157,10 @@
 
 ## 🏆 **HVAD KAN VI LÆRE FRA SHORTWAVE?**
 
-### **🎯 **APPLY TO JERES VENSTRE PANEL:**
+### **🎯 **APPLY TO JERES VENSTRE PANEL:\*\*
 
 #### **1. SMART EMAIL BUNDLING**
+
 ```typescript
 🎯 IMPLEMENT I JERES SYSTEM:
 - Rengøring.nu emails → Bundle
@@ -168,6 +176,7 @@
 ```
 
 #### **2. CUSTOM SHORTCUTS**
+
 ```typescript
 🔍 SAVED VIEWS:
 - "Hot leads (score > 80)"
@@ -183,6 +192,7 @@
 ```
 
 #### **3. AI-POWERED ORGANIZATION**
+
 ```typescript
 🤖 INTELLIGENT FEATURES:
 - Auto-detect lead sources
@@ -198,6 +208,7 @@
 ```
 
 #### **4. BULK ACTIONS**
+
 ```typescript
 ⚡ EFFICIENCY:
 - Archive bundle with one click
@@ -216,7 +227,7 @@
 
 ## 🚀 **REBUILD VENSTRE PANEL - SHORTWAVE-INSPIRED**
 
-### **🎯 **NEW DESIGN CONCEPT:**
+### **🎯 **NEW DESIGN CONCEPT:\*\*
 
 ```
 ┌─────────────────────────────────┐
@@ -253,9 +264,10 @@
 └─────────────────────────────────┘
 ```
 
-### **🎯 **KEY IMPROVEMENTS:**
+### **🎯 **KEY IMPROVEMENTS:\*\*
 
 #### **1. LEAD BUNDLES (SHORTWAVE-INSPIRED)**
+
 ```typescript
 🎯 AUTO-CATEGORIZATION:
 - Hot Leads bundle (score 85+)
@@ -271,6 +283,7 @@
 ```
 
 #### **2. SMART SHORTCUTS**
+
 ```typescript
 🔍 SAVED FILTERS:
 - "Today's new leads"
@@ -286,6 +299,7 @@
 ```
 
 #### **3. QUICK STATS DASHBOARD**
+
 ```typescript
 📊 REAL-TIME METRICS:
 - Total estimated value
@@ -301,6 +315,7 @@
 ```
 
 #### **4. BULK ACTIONS**
+
 ```typescript
 ⚡ EFFICIENCY TOOLS:
 - Archive all read emails
@@ -319,7 +334,8 @@
 
 ## 🏆 **IMPLEMENTATION PLAN**
 
-### **🎯 **PHASE 1: CORE STRUCTURE**
+### **🎯 **PHASE 1: CORE STRUCTURE\*\*
+
 ```typescript
 ✅ BUILD:
 - Collapsible sidebar navigation
@@ -334,7 +350,8 @@
 - Real-time metrics
 ```
 
-### **🎯 **PHASE 2: AI INTELLIGENCE**
+### **🎯 **PHASE 2: AI INTELLIGENCE\*\*
+
 ```typescript
 🤖 IMPLEMENT:
 - Auto-detect lead categories
@@ -349,7 +366,8 @@
 - Business insights
 ```
 
-### **🎯 **PHASE 3: BULK ACTIONS**
+### **🎯 **PHASE 3: BULK ACTIONS\*\*
+
 ```typescript
 ⚡ ADD:
 - One-click bundle actions
@@ -368,7 +386,8 @@
 
 ## 🎯 **KONKLUSION**
 
-### **✅ **SHORTWAVE'S VENSTRE PANEL:**
+### **✅ **SHORTWAVE'S VENSTRE PANEL:\*\*
+
 ```typescript
 🎯 KEY LEARNINGS:
 - Smart email bundling
@@ -385,7 +404,8 @@
 - AI-powered organization
 ```
 
-### **🚀 **JERES COMPETITIVE ADVANTAGE:**
+### **🚀 **JERES COMPETITIVE ADVANTAGE:\*\*
+
 ```typescript
 🏆 SHORTWAVE + BUSINESS INTELLIGENCE:
 - Email bundling → Lead bundling

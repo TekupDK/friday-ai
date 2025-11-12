@@ -7,7 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Package, Plus, Edit2, Save, X, Euro, TrendingUp, Box } from "lucide-react";
+import {
+  Package,
+  Plus,
+  Edit2,
+  Save,
+  X,
+  Euro,
+  TrendingUp,
+  Box,
+} from "lucide-react";
 import { useState } from "react";
 
 export interface ProductData {
@@ -16,84 +25,88 @@ export interface ProductData {
   name: string;
   description: string;
   price: number;
-  unit: 'stk' | 'time' | 'm2' | 'km';
-  category: 'rengøring' | 'vedligehold' | 'service' | 'materiale';
+  unit: "stk" | "time" | "m2" | "km";
+  category: "rengøring" | "vedligehold" | "service" | "materiale";
   stock?: number;
   active: boolean;
 }
 
 interface BillyProductCardProps {
   product?: ProductData;
-  mode?: 'view' | 'edit' | 'create';
+  mode?: "view" | "edit" | "create";
   onSave?: (product: ProductData) => void;
   onCancel?: () => void;
 }
 
 // Default products for REN series
-const DEFAULT_PRODUCTS: Omit<ProductData, 'id'>[] = [
+const DEFAULT_PRODUCTS: Omit<ProductData, "id">[] = [
   {
-    sku: 'REN-001',
-    name: 'Standard Rengøring',
-    description: 'Grundlæggende rengøring af kontor',
+    sku: "REN-001",
+    name: "Standard Rengøring",
+    description: "Grundlæggende rengøring af kontor",
     price: 500,
-    unit: 'time',
-    category: 'rengøring',
+    unit: "time",
+    category: "rengøring",
     stock: 0,
-    active: true
+    active: true,
   },
   {
-    sku: 'REN-002',
-    name: 'Hovedrengøring',
-    description: 'Dybdegående rengøring inkl. vinduer',
+    sku: "REN-002",
+    name: "Hovedrengøring",
+    description: "Dybdegående rengøring inkl. vinduer",
     price: 750,
-    unit: 'time',
-    category: 'rengøring',
+    unit: "time",
+    category: "rengøring",
     stock: 0,
-    active: true
+    active: true,
   },
   {
-    sku: 'REN-003',
-    name: 'Gulvbehandling',
-    description: 'Voksning og polering af hårde gulve',
+    sku: "REN-003",
+    name: "Gulvbehandling",
+    description: "Voksning og polering af hårde gulve",
     price: 1200,
-    unit: 'm2',
-    category: 'vedligehold',
+    unit: "m2",
+    category: "vedligehold",
     stock: 0,
-    active: true
+    active: true,
   },
   {
-    sku: 'REN-004',
-    name: 'Facade Rengøring',
-    description: 'Udvendig rengøring af facader',
+    sku: "REN-004",
+    name: "Facade Rengøring",
+    description: "Udvendig rengøring af facader",
     price: 150,
-    unit: 'm2',
-    category: 'rengøring',
+    unit: "m2",
+    category: "rengøring",
     stock: 0,
-    active: true
+    active: true,
   },
   {
-    sku: 'REN-005',
-    name: 'Serviceaftale',
-    description: 'Månedlig service og vedligehold',
+    sku: "REN-005",
+    name: "Serviceaftale",
+    description: "Månedlig service og vedligehold",
     price: 2500,
-    unit: 'stk',
-    category: 'service',
+    unit: "stk",
+    category: "service",
     stock: 0,
-    active: true
-  }
+    active: true,
+  },
 ];
 
-export function BillyProductCard({ 
+export function BillyProductCard({
   product,
-  mode = 'view',
+  mode = "view",
   onSave,
-  onCancel 
+  onCancel,
 }: BillyProductCardProps) {
-  const [data, setData] = useState<ProductData>(product || {
-    ...DEFAULT_PRODUCTS[0],
-    id: Math.random().toString()
-  });
-  const [isEditing, setIsEditing] = useState(mode === 'edit' || mode === 'create');
+  const [data, setData] = useState<ProductData>(
+    product || {
+      ...DEFAULT_PRODUCTS[0],
+      id: Math.random().toString(),
+    }
+  );
+  const [isEditing, setIsEditing] = useState(
+    mode === "edit" || mode === "create"
+  );
 
   const update = (field: keyof ProductData, value: any) => {
     setData(prev => ({ ...prev, [field]: value }));
@@ -101,38 +114,53 @@ export function BillyProductCard({
 
   const handleSave = () => {
     onSave?.(data);
-    if (mode !== 'create') {
+    if (mode !== "create") {
       setIsEditing(false);
     }
   };
 
-  const getCategoryColor = (category: ProductData['category']) => {
+  const getCategoryColor = (category: ProductData["category"]) => {
     switch (category) {
-      case 'rengøring': return 'bg-blue-500';
-      case 'vedligehold': return 'bg-green-500';
-      case 'service': return 'bg-purple-500';
-      case 'materiale': return 'bg-orange-500';
-      default: return 'bg-gray-500';
+      case "rengøring":
+        return "bg-blue-500";
+      case "vedligehold":
+        return "bg-green-500";
+      case "service":
+        return "bg-purple-500";
+      case "materiale":
+        return "bg-orange-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const getCategoryLabel = (category: ProductData['category']) => {
+  const getCategoryLabel = (category: ProductData["category"]) => {
     switch (category) {
-      case 'rengøring': return 'Rengøring';
-      case 'vedligehold': return 'Vedligehold';
-      case 'service': return 'Service';
-      case 'materiale': return 'Materiale';
-      default: return 'Andet';
+      case "rengøring":
+        return "Rengøring";
+      case "vedligehold":
+        return "Vedligehold";
+      case "service":
+        return "Service";
+      case "materiale":
+        return "Materiale";
+      default:
+        return "Andet";
     }
   };
 
-  const getUnitLabel = (unit: ProductData['unit']) => {
+  const getUnitLabel = (unit: ProductData["unit"]) => {
     switch (unit) {
-      case 'stk': return 'pr. stk';
-      case 'time': return 'pr. time';
-      case 'm2': return 'pr. m²';
-      case 'km': return 'pr. km';
-      default: return unit;
+      case "stk":
+        return "pr. stk";
+      case "time":
+        return "pr. time";
+      case "m2":
+        return "pr. m²";
+      case "km":
+        return "pr. km";
+      default:
+        return unit;
     }
   };
 
@@ -147,7 +175,11 @@ export function BillyProductCard({
             </div>
             <div>
               <h4 className="font-semibold">
-                {mode === 'create' ? 'Opret Produkt' : isEditing ? 'Rediger Produkt' : 'Produkt Detaljer'}
+                {mode === "create"
+                  ? "Opret Produkt"
+                  : isEditing
+                    ? "Rediger Produkt"
+                    : "Produkt Detaljer"}
               </h4>
               <p className="text-xs text-muted-foreground">Billy.dk produkt</p>
             </div>
@@ -170,7 +202,11 @@ export function BillyProductCard({
             <div>
               <label className="text-xs text-muted-foreground">SKU</label>
               {isEditing ? (
-                <Input value={data.sku} onChange={(e) => update('sku', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  value={data.sku}
+                  onChange={e => update("sku", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
                 <p className="font-mono text-sm mt-1">{data.sku}</p>
               )}
@@ -178,9 +214,9 @@ export function BillyProductCard({
             <div>
               <label className="text-xs text-muted-foreground">Kategori</label>
               {isEditing ? (
-                <select 
-                  value={data.category} 
-                  onChange={(e) => update('category', e.target.value)}
+                <select
+                  value={data.category}
+                  onChange={e => update("category", e.target.value)}
                   className="w-full h-9 px-2 border rounded text-sm mt-1"
                 >
                   <option value="rengøring">Rengøring</option>
@@ -189,7 +225,9 @@ export function BillyProductCard({
                   <option value="materiale">Materiale</option>
                 </select>
               ) : (
-                <p className="text-sm mt-1">{getCategoryLabel(data.category)}</p>
+                <p className="text-sm mt-1">
+                  {getCategoryLabel(data.category)}
+                </p>
               )}
             </div>
           </div>
@@ -197,7 +235,11 @@ export function BillyProductCard({
           <div>
             <label className="text-xs text-muted-foreground">Produktnavn</label>
             {isEditing ? (
-              <Input value={data.name} onChange={(e) => update('name', e.target.value)} className="h-9 mt-1" />
+              <Input
+                value={data.name}
+                onChange={e => update("name", e.target.value)}
+                className="h-9 mt-1"
+              />
             ) : (
               <p className="font-medium text-sm mt-1">{data.name}</p>
             )}
@@ -206,7 +248,11 @@ export function BillyProductCard({
           <div>
             <label className="text-xs text-muted-foreground">Beskrivelse</label>
             {isEditing ? (
-              <Input value={data.description} onChange={(e) => update('description', e.target.value)} className="h-9 mt-1" />
+              <Input
+                value={data.description}
+                onChange={e => update("description", e.target.value)}
+                className="h-9 mt-1"
+              />
             ) : (
               <p className="text-sm mt-1">{data.description}</p>
             )}
@@ -218,22 +264,28 @@ export function BillyProductCard({
                 <Euro className="w-3 h-3" /> Pris
               </label>
               {isEditing ? (
-                <Input 
-                  type="number" 
-                  value={data.price} 
-                  onChange={(e) => update('price', parseFloat(e.target.value) || 0)} 
-                  className="h-9 mt-1" 
+                <Input
+                  type="number"
+                  value={data.price}
+                  onChange={e =>
+                    update("price", parseFloat(e.target.value) || 0)
+                  }
+                  className="h-9 mt-1"
                 />
               ) : (
-                <p className="font-medium text-sm mt-1">{data.price.toLocaleString('da-DK')} kr</p>
+                <p className="font-medium text-sm mt-1">
+                  {data.price.toLocaleString("da-DK")} kr
+                </p>
               )}
             </div>
             <div>
               <label className="text-xs text-muted-foreground">Enhed</label>
               {isEditing ? (
-                <select 
-                  value={data.unit} 
-                  onChange={(e) => update('unit', e.target.value as ProductData['unit'])}
+                <select
+                  value={data.unit}
+                  onChange={e =>
+                    update("unit", e.target.value as ProductData["unit"])
+                  }
                   className="w-full h-9 px-2 border rounded text-sm mt-1"
                 >
                   <option value="stk">Stk</option>
@@ -254,7 +306,8 @@ export function BillyProductCard({
                 Salgspris:
               </span>
               <span className="text-lg font-bold text-purple-700 dark:text-purple-400">
-                {data.price.toLocaleString('da-DK')} kr {getUnitLabel(data.unit)}
+                {data.price.toLocaleString("da-DK")} kr{" "}
+                {getUnitLabel(data.unit)}
               </span>
             </div>
           </div>
@@ -262,13 +315,15 @@ export function BillyProductCard({
           {/* Status (edit mode) */}
           {isEditing && (
             <div className="flex items-center gap-2">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 id="active"
                 checked={data.active}
-                onChange={(e) => update('active', e.target.checked)}
+                onChange={e => update("active", e.target.checked)}
               />
-              <label htmlFor="active" className="text-sm">Produkt er aktivt</label>
+              <label htmlFor="active" className="text-sm">
+                Produkt er aktivt
+              </label>
             </div>
           )}
         </div>
@@ -301,9 +356,12 @@ export function BillyProductCard({
             </>
           ) : (
             <>
-              <Button onClick={handleSave} className="flex-1 bg-linear-to-r from-purple-600 to-pink-600">
+              <Button
+                onClick={handleSave}
+                className="flex-1 bg-linear-to-r from-purple-600 to-pink-600"
+              >
                 <Save className="w-4 h-4 mr-2" />
-                {mode === 'create' ? 'Opret' : 'Gem'}
+                {mode === "create" ? "Opret" : "Gem"}
               </Button>
               <Button onClick={onCancel} variant="outline" className="flex-1">
                 <X className="w-4 h-4 mr-2" />

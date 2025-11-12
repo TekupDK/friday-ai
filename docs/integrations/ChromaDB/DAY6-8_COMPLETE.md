@@ -23,6 +23,7 @@
 **File:** `server/integrations/chromadb/embeddings.ts`
 
 **Features:**
+
 - OpenRouter API integration (`openai/text-embedding-3-small`)
 - 1536-dimensional vectors
 - Automatic caching (1000 recent embeddings)
@@ -31,6 +32,7 @@
 - Performance: ~600ms per embedding
 
 **Functions:**
+
 ```typescript
 generateEmbedding(text: string): Promise<number[]>
 generateEmbeddings(texts: string[]): Promise<number[][]>
@@ -44,23 +46,26 @@ getEmbeddingCacheStats(): object
 **File:** `server/db.ts` - Modified `createLead()`
 
 **Logic:**
+
 1. Before creating lead → Search ChromaDB for similar leads
 2. If similarity > 0.85 → Return existing lead (duplicate detected)
 3. If similarity < 0.85 → Create new lead
 4. After creation → Index new lead in ChromaDB
 
 **Example:**
+
 ```typescript
 const lead = await createLead({
   name: "John Doe",
   email: "john@acme.com",
-  company: "ACME Corp"
+  company: "ACME Corp",
 });
 // Automatically checks for duplicates
 // Returns existing if found
 ```
 
 **Console Output:**
+
 ```
 [ChromaDB] Duplicate lead detected (similarity: 0.932), returning existing lead #123
 [ChromaDB] Indexed new lead #456
@@ -71,18 +76,20 @@ const lead = await createLead({
 **File:** `server/db.ts` - Modified `createEmailThread()` + new `getRelatedEmailThreads()`
 
 **Features:**
+
 - Automatic email indexing on creation
 - Semantic search across all emails
 - Returns N most similar emails
 - Perfect for RAG (Retrieval Augmented Generation)
 
 **Example:**
+
 ```typescript
 // Get 5 related emails for context
 const relatedEmails = await getRelatedEmailThreads(currentEmail, 5);
 
 // Use in AI prompt:
-const context = relatedEmails.map(e => e.snippet).join('\n\n');
+const context = relatedEmails.map(e => e.snippet).join("\n\n");
 const prompt = `Context from related emails:\n${context}\n\nCurrent email: ...`;
 ```
 
@@ -97,6 +104,7 @@ npx tsx server/integrations/chromadb/test-embeddings.ts
 ```
 
 **Results:**
+
 - ✅ 1536 dimensions generated
 - ✅ Same lead (variation): 0.9319 similarity → DUPLICATE!
 - ✅ Different lead: 0.6617 similarity → DIFFERENT
@@ -109,6 +117,7 @@ npx tsx server/integrations/chromadb/test-embeddings.ts
 ### Test 2: TypeScript Compilation ✅
 
 Fixed 2 TypeScript errors:
+
 - ✅ `embeddings.ts:65` - Added undefined check
 - ✅ `langfuse/client.ts:204` - Fixed trace.update API
 
@@ -232,7 +241,7 @@ pnpm dev
 const lead = await createLead({
   name: "John Doe",
   email: "john@acme.com",
-  company: "ACME Corporation"
+  company: "ACME Corporation",
 });
 
 // ChromaDB automatically:
@@ -245,17 +254,17 @@ const lead = await createLead({
 
 ```typescript
 // Get related emails for AI context
-import { getRelatedEmailThreads } from './db';
+import { getRelatedEmailThreads } from "./db";
 
 async function generateAIResponse(email: EmailThread) {
   // Get 5 most related emails
   const relatedEmails = await getRelatedEmailThreads(email, 5);
-  
+
   // Build context
   const context = relatedEmails
     .map(e => `Subject: ${e.subject}\n${e.snippet}`)
-    .join('\n\n---\n\n');
-  
+    .join("\n\n---\n\n");
+
   // Use in AI prompt
   const prompt = `
 Previous related conversations:
@@ -267,15 +276,15 @@ ${email.snippet}
 
 Draft a professional response:
   `;
-  
-  return await invokeLLM({ messages: [{ role: 'user', content: prompt }] });
+
+  return await invokeLLM({ messages: [{ role: "user", content: prompt }] });
 }
 ```
 
 ### Manual Semantic Search
 
 ```typescript
-import { generateEmbedding, cosineSimilarity } from './integrations/chromadb';
+import { generateEmbedding, cosineSimilarity } from "./integrations/chromadb";
 
 // Search for similar text
 const query = "ACME Corporation contract";
@@ -285,7 +294,7 @@ const queryEmbedding = await generateEmbedding(query);
 for (const item of databaseItems) {
   const itemEmbedding = await generateEmbedding(item.text);
   const similarity = cosineSimilarity(queryEmbedding, itemEmbedding);
-  
+
   if (similarity > 0.7) {
     console.log(`Found similar: ${item.text} (${similarity.toFixed(3)})`);
   }
@@ -297,22 +306,26 @@ for (const item of databaseItems) {
 ## 📊 Performance Metrics
 
 ### Embeddings
+
 - **Single embedding:** ~600ms (API call)
 - **Cached embedding:** ~1ms
 - **Batch (10 texts):** ~800ms
 - **Cache hit rate:** ~40% (typical usage)
 
 ### Lead Deduplication
+
 - **Duplicate check:** ~700ms (embedding + search)
 - **New lead creation:** ~800ms (embedding + insert)
 - **Total overhead:** ~700-800ms per lead
 
 ### Email Indexing
+
 - **Index on creation:** ~100ms (background)
 - **Related search:** ~700ms (embedding + search)
 - **No blocking:** Indexing happens async
 
 ### ChromaDB Operations
+
 - **Add document:** ~50ms
 - **Search (1K vectors):** ~50ms
 - **Search (10K vectors):** ~100ms
@@ -395,6 +408,7 @@ const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2'
 ```
 
 **Tradeoff:**
+
 - ✅ Free
 - ✅ Complete privacy
 - ❌ Slower (~500ms vs ~600ms)
@@ -406,6 +420,7 @@ const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2'
 ## 📚 Documentation
 
 All documentation in `docs/integrations/ChromaDB/`:
+
 - `README.md` - Overview & quick start
 - `SETUP.md` - Day 4-5 Docker & client setup
 - `EMBEDDINGS.md` - Embeddings API reference
@@ -435,11 +450,13 @@ All documentation in `docs/integrations/ChromaDB/`:
 **Completed:** Day 6-8 ChromaDB Integration ✅
 
 **Next:** Day 9-10 Crawl4AI Integration
+
 - Web scraping for lead enrichment
 - Company intelligence gathering
 - Automated research
 
 **Timeline:**
+
 - Day 9: Crawl4AI setup & basic scraping
 - Day 10: Integration with leads & testing
 

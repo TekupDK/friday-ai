@@ -13,7 +13,7 @@ import { useState, useRef, useEffect } from "react";
 export interface AutoCompleteSuggestion {
   id: string;
   text: string;
-  type: 'phrase' | 'template' | 'command' | 'contact' | 'file';
+  type: "phrase" | "template" | "command" | "contact" | "file";
   category: string;
   confidence: number;
   usage?: number;
@@ -28,16 +28,18 @@ interface AutoCompleteProps {
   maxSuggestions?: number;
 }
 
-export function AutoComplete({ 
+export function AutoComplete({
   suggestions = [],
   onSelectSuggestion,
   onAddToFavorites,
   placeholder = "Skriv for auto-fuldførelse...",
-  maxSuggestions = 8
+  maxSuggestions = 8,
 }: AutoCompleteProps) {
   const [input, setInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filteredSuggestions, setFilteredSuggestions] = useState<AutoCompleteSuggestion[]>([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState<
+    AutoCompleteSuggestion[]
+  >([]);
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [recentSuggestions, setRecentSuggestions] = useState<string[]>([]);
@@ -46,105 +48,107 @@ export function AutoComplete({
   // Default auto-complete suggestions
   const defaultSuggestions: AutoCompleteSuggestion[] = [
     {
-      id: '1',
-      text: 'Kan du hjælpe mig med at oprette en ny faktura?',
-      type: 'phrase',
-      category: 'faktura',
+      id: "1",
+      text: "Kan du hjælpe mig med at oprette en ny faktura?",
+      type: "phrase",
+      category: "faktura",
       confidence: 95,
       usage: 156,
-      context: 'Ofte brugt til fakturering'
+      context: "Ofte brugt til fakturering",
     },
     {
-      id: '2',
-      text: 'Send en påmindelse om betaling til',
-      type: 'template',
-      category: 'email',
+      id: "2",
+      text: "Send en påmindelse om betaling til",
+      type: "template",
+      category: "email",
       confidence: 88,
       usage: 89,
-      context: 'Betalingspåmindelse template'
+      context: "Betalingspåmindelse template",
     },
     {
-      id: '3',
-      text: '/create invoice for',
-      type: 'command',
-      category: 'kommando',
+      id: "3",
+      text: "/create invoice for",
+      type: "command",
+      category: "kommando",
       confidence: 92,
       usage: 234,
-      context: 'Slash kommando til faktura'
+      context: "Slash kommando til faktura",
     },
     {
-      id: '4',
-      text: 'Book et møde med',
-      type: 'phrase',
-      category: 'kalender',
+      id: "4",
+      text: "Book et møde med",
+      type: "phrase",
+      category: "kalender",
       confidence: 85,
       usage: 67,
-      context: 'Møde booking'
+      context: "Møde booking",
     },
     {
-      id: '5',
-      text: 'john@company.com',
-      type: 'contact',
-      category: 'kontakt',
+      id: "5",
+      text: "john@company.com",
+      type: "contact",
+      category: "kontakt",
       confidence: 90,
       usage: 145,
-      context: 'Email kontakt'
+      context: "Email kontakt",
     },
     {
-      id: '6',
-      text: 'Ugentlig rapport for',
-      type: 'template',
-      category: 'rapport',
+      id: "6",
+      text: "Ugentlig rapport for",
+      type: "template",
+      category: "rapport",
       confidence: 78,
       usage: 34,
-      context: 'Rapport template'
+      context: "Rapport template",
     },
     {
-      id: '7',
-      text: 'Opdater kundeinformation for',
-      type: 'phrase',
-      category: 'kunde',
+      id: "7",
+      text: "Opdater kundeinformation for",
+      type: "phrase",
+      category: "kunde",
       confidence: 82,
       usage: 56,
-      context: 'Kunde administration'
+      context: "Kunde administration",
     },
     {
-      id: '8',
-      text: 'Analyser salgsdata for',
-      type: 'command',
-      category: 'analyse',
+      id: "8",
+      text: "Analyser salgsdata for",
+      type: "command",
+      category: "analyse",
       confidence: 75,
       usage: 23,
-      context: 'Salgsanalyse'
+      context: "Salgsanalyse",
     },
     {
-      id: '9',
-      text: 'F-2024-',
-      type: 'template',
-      category: 'faktura',
+      id: "9",
+      text: "F-2024-",
+      type: "template",
+      category: "faktura",
       confidence: 87,
       usage: 201,
-      context: 'Faktura nummer format'
+      context: "Faktura nummer format",
     },
     {
-      id: '10',
-      text: 'Mange tak for din henvendelse',
-      type: 'phrase',
-      category: 'email',
+      id: "10",
+      text: "Mange tak for din henvendelse",
+      type: "phrase",
+      category: "email",
       confidence: 91,
       usage: 178,
-      context: 'Polite email åbning'
-    }
+      context: "Polite email åbning",
+    },
   ];
 
-  const autoCompleteSuggestions = suggestions.length > 0 ? suggestions : defaultSuggestions;
+  const autoCompleteSuggestions =
+    suggestions.length > 0 ? suggestions : defaultSuggestions;
 
   useEffect(() => {
     if (input.length > 2) {
       const filtered = autoCompleteSuggestions
-        .filter(suggestion => 
-          suggestion.text.toLowerCase().includes(input.toLowerCase()) ||
-          suggestion.category.toLowerCase().includes(input.toLowerCase())
+        .filter(
+          suggestion =>
+            suggestion.text.toLowerCase().includes(input.toLowerCase()) ||
+            suggestion.category.toLowerCase().includes(input.toLowerCase())
         )
         .sort((a, b) => {
           // Sort by confidence first, then by usage
@@ -154,7 +158,7 @@ export function AutoComplete({
           return (b.usage || 0) - (a.usage || 0);
         })
         .slice(0, maxSuggestions);
-      
+
       setFilteredSuggestions(filtered);
       setShowSuggestions(true);
       setSelectedSuggestionIndex(0);
@@ -172,22 +176,27 @@ export function AutoComplete({
     if (!showSuggestions) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => (prev + 1) % filteredSuggestions.length);
+        setSelectedSuggestionIndex(
+          prev => (prev + 1) % filteredSuggestions.length
+        );
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => (prev - 1 + filteredSuggestions.length) % filteredSuggestions.length);
+        setSelectedSuggestionIndex(
+          prev =>
+            (prev - 1 + filteredSuggestions.length) % filteredSuggestions.length
+        );
         break;
-      case 'Enter':
-      case 'Tab':
+      case "Enter":
+      case "Tab":
         e.preventDefault();
         if (filteredSuggestions[selectedSuggestionIndex]) {
           selectSuggestion(filteredSuggestions[selectedSuggestionIndex]);
         }
         break;
-      case 'Escape':
+      case "Escape":
         setShowSuggestions(false);
         break;
     }
@@ -196,10 +205,12 @@ export function AutoComplete({
   const selectSuggestion = (suggestion: AutoCompleteSuggestion) => {
     setInput(suggestion.text);
     setShowSuggestions(false);
-    
+
     // Add to recent
-    setRecentSuggestions(prev => [suggestion.id, ...prev.filter(id => id !== suggestion.id)].slice(0, 5));
-    
+    setRecentSuggestions(prev =>
+      [suggestion.id, ...prev.filter(id => id !== suggestion.id)].slice(0, 5)
+    );
+
     onSelectSuggestion?.(suggestion);
   };
 
@@ -212,46 +223,67 @@ export function AutoComplete({
     onAddToFavorites?.(suggestionId);
   };
 
-  const getTypeIcon = (type: AutoCompleteSuggestion['type']) => {
+  const getTypeIcon = (type: AutoCompleteSuggestion["type"]) => {
     switch (type) {
-      case 'phrase': return '💬';
-      case 'template': return '📋';
-      case 'command': return '⚡';
-      case 'contact': return '👤';
-      case 'file': return '📎';
-      default: return '💡';
+      case "phrase":
+        return "💬";
+      case "template":
+        return "📋";
+      case "command":
+        return "⚡";
+      case "contact":
+        return "👤";
+      case "file":
+        return "📎";
+      default:
+        return "💡";
     }
   };
 
-  const getTypeLabel = (type: AutoCompleteSuggestion['type']) => {
+  const getTypeLabel = (type: AutoCompleteSuggestion["type"]) => {
     switch (type) {
-      case 'phrase': return 'Frase';
-      case 'template': return 'Skabelon';
-      case 'command': return 'Kommando';
-      case 'contact': return 'Kontakt';
-      case 'file': return 'Fil';
-      default: return type;
+      case "phrase":
+        return "Frase";
+      case "template":
+        return "Skabelon";
+      case "command":
+        return "Kommando";
+      case "contact":
+        return "Kontakt";
+      case "file":
+        return "Fil";
+      default:
+        return type;
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
-      case 'faktura': return 'bg-orange-500';
-      case 'email': return 'bg-blue-500';
-      case 'kalender': return 'bg-purple-500';
-      case 'kontakt': return 'bg-green-500';
-      case 'rapport': return 'bg-indigo-500';
-      case 'kunde': return 'bg-teal-500';
-      case 'analyse': return 'bg-pink-500';
-      case 'kommando': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case "faktura":
+        return "bg-orange-500";
+      case "email":
+        return "bg-blue-500";
+      case "kalender":
+        return "bg-purple-500";
+      case "kontakt":
+        return "bg-green-500";
+      case "rapport":
+        return "bg-indigo-500";
+      case "kunde":
+        return "bg-teal-500";
+      case "analyse":
+        return "bg-pink-500";
+      case "kommando":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
   const getConfidenceColor = (confidence: number) => {
-    if (confidence >= 90) return 'text-green-600';
-    if (confidence >= 75) return 'text-yellow-600';
-    return 'text-red-600';
+    if (confidence >= 90) return "text-green-600";
+    if (confidence >= 75) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const getTopSuggestions = () => {
@@ -272,11 +304,15 @@ export function AutoComplete({
             </div>
             <div>
               <h4 className="font-semibold">Auto Complete</h4>
-              <p className="text-xs text-muted-foreground">Intelligent auto-fuldførelse</p>
+              <p className="text-xs text-muted-foreground">
+                Intelligent auto-fuldførelse
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge className="bg-purple-500">{autoCompleteSuggestions.length} forslag</Badge>
+            <Badge className="bg-purple-500">
+              {autoCompleteSuggestions.length} forslag
+            </Badge>
             <Button size="sm" variant="ghost">
               <Zap className="w-3 h-3" />
             </Button>
@@ -285,7 +321,9 @@ export function AutoComplete({
 
         {/* Auto Complete Input */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Begynd at skrive:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Begynd at skrive:
+          </label>
           <div className="relative">
             <input
               ref={inputRef}
@@ -315,23 +353,27 @@ export function AutoComplete({
                 onClick={() => selectSuggestion(suggestion)}
                 className={cn(
                   "w-full text-left p-3 flex items-center gap-3 transition-colors border-b last:border-b-0",
-                  index === selectedSuggestionIndex 
-                    ? "bg-purple-50 dark:bg-purple-950/20 border-l-2 border-l-purple-500" 
+                  index === selectedSuggestionIndex
+                    ? "bg-purple-50 dark:bg-purple-950/20 border-l-2 border-l-purple-500"
                     : "hover:bg-muted/50"
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">{getTypeIcon(suggestion.type)}</span>
+                  <span className="text-lg">
+                    {getTypeIcon(suggestion.type)}
+                  </span>
                   <div className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
                     <span className="text-xs font-bold text-purple-600 dark:text-purple-400">
                       {suggestion.confidence}%
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-sm">{suggestion.text}</span>
+                    <span className="font-medium text-sm">
+                      {suggestion.text}
+                    </span>
                     <Badge className={getCategoryColor(suggestion.category)}>
                       {suggestion.category}
                     </Badge>
@@ -357,14 +399,25 @@ export function AutoComplete({
                     </p>
                   )}
                 </div>
-                
+
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={(e) => toggleFavorite(suggestion.id, e)}
+                    onClick={e => toggleFavorite(suggestion.id, e)}
                     className="p-1 rounded hover:bg-muted/50"
-                    title={favorites.includes(suggestion.id) ? 'Fjern fra favoritter' : 'Tilføj til favoritter'}
+                    title={
+                      favorites.includes(suggestion.id)
+                        ? "Fjern fra favoritter"
+                        : "Tilføj til favoritter"
+                    }
                   >
-                    <Star className={cn("w-4 h-4", favorites.includes(suggestion.id) ? "text-yellow-500 fill-yellow-500" : "text-gray-400")} />
+                    <Star
+                      className={cn(
+                        "w-4 h-4",
+                        favorites.includes(suggestion.id)
+                          ? "text-yellow-500 fill-yellow-500"
+                          : "text-gray-400"
+                      )}
+                    />
                   </button>
                   {index === selectedSuggestionIndex && (
                     <Check className="w-4 h-4 text-purple-600" />
@@ -378,7 +431,9 @@ export function AutoComplete({
         {/* Top Suggestions */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="text-xs font-medium text-muted-foreground">Populære forslag:</label>
+            <label className="text-xs font-medium text-muted-foreground">
+              Populære forslag:
+            </label>
             {favorites.length > 0 && (
               <Button size="sm" variant="ghost">
                 <Star className="w-3 h-3 mr-1" />
@@ -387,7 +442,7 @@ export function AutoComplete({
             )}
           </div>
           <div className="grid grid-cols-2 gap-2">
-            {getTopSuggestions().map((suggestion) => (
+            {getTopSuggestions().map(suggestion => (
               <button
                 key={suggestion.id}
                 onClick={() => selectSuggestion(suggestion)}
@@ -395,9 +450,13 @@ export function AutoComplete({
               >
                 <div className="flex items-center gap-2">
                   <span>{getTypeIcon(suggestion.type)}</span>
-                  <span className="text-xs font-medium truncate">{suggestion.text}</span>
+                  <span className="text-xs font-medium truncate">
+                    {suggestion.text}
+                  </span>
                   {suggestion.usage && (
-                    <span className="text-xs text-muted-foreground">({suggestion.usage})</span>
+                    <span className="text-xs text-muted-foreground">
+                      ({suggestion.usage})
+                    </span>
                   )}
                 </div>
               </button>
@@ -409,13 +468,22 @@ export function AutoComplete({
         <div className="grid grid-cols-3 gap-2 text-xs">
           <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/20 text-center">
             <p className="font-bold text-purple-700 dark:text-purple-300">
-              {autoCompleteSuggestions.reduce((sum, s) => sum + (s.usage || 0), 0)}
+              {autoCompleteSuggestions.reduce(
+                (sum, s) => sum + (s.usage || 0),
+                0
+              )}
             </p>
             <p className="text-purple-600 dark:text-purple-400">Total brug</p>
           </div>
           <div className="p-2 rounded-lg bg-pink-50 dark:bg-pink-950/20 text-center">
             <p className="font-bold text-pink-700 dark:text-pink-300">
-              {Math.round(autoCompleteSuggestions.reduce((sum, s) => sum + s.confidence, 0) / autoCompleteSuggestions.length)}%
+              {Math.round(
+                autoCompleteSuggestions.reduce(
+                  (sum, s) => sum + s.confidence,
+                  0
+                ) / autoCompleteSuggestions.length
+              )}
+              %
             </p>
             <p className="text-pink-600 dark:text-pink-400">Gns. confidence</p>
           </div>
@@ -432,7 +500,9 @@ export function AutoComplete({
           <div className="flex items-start gap-2">
             <Zap className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
             <div className="text-xs text-purple-700 dark:text-purple-400">
-              <p className="font-semibold mb-1">Smart auto-complete features:</p>
+              <p className="font-semibold mb-1">
+                Smart auto-complete features:
+              </p>
               <ul className="space-y-1">
                 <li>• Begynd at skrive for at se forslag</li>
                 <li>• Brug ↑/↓ piletaster til navigation</li>
@@ -446,7 +516,11 @@ export function AutoComplete({
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button onClick={() => setInput('')} variant="outline" className="flex-1">
+          <Button
+            onClick={() => setInput("")}
+            variant="outline"
+            className="flex-1"
+          >
             <X className="w-4 h-4 mr-2" />
             Ryd
           </Button>

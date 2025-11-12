@@ -30,7 +30,7 @@ export function CustomerNotesTab({ customerId }: CustomerNotesTabProps) {
       refetch();
       toast.success("Note tilføjet");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error("Kunne ikke tilføje note: " + error.message);
     },
   });
@@ -42,7 +42,7 @@ export function CustomerNotesTab({ customerId }: CustomerNotesTabProps) {
       refetch();
       toast.success("Note opdateret");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error("Kunne ikke opdatere note: " + error.message);
     },
   });
@@ -52,7 +52,7 @@ export function CustomerNotesTab({ customerId }: CustomerNotesTabProps) {
       refetch();
       toast.success("Note slettet");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error("Kunne ikke slette note: " + error.message);
     },
   });
@@ -97,7 +97,7 @@ export function CustomerNotesTab({ customerId }: CustomerNotesTabProps) {
           <Textarea
             placeholder="Skriv din note her..."
             value={newNote}
-            onChange={(e) => setNewNote(e.target.value)}
+            onChange={e => setNewNote(e.target.value)}
             rows={3}
           />
           <div className="flex justify-end">
@@ -128,7 +128,7 @@ export function CustomerNotesTab({ customerId }: CustomerNotesTabProps) {
           {notes && notes.length > 0 ? (
             <ScrollArea className="h-[400px]">
               <div className="space-y-3">
-                {notes.map((note) => (
+                {notes.map(note => (
                   <div
                     key={note.id}
                     className="border rounded-lg p-3 space-y-2 hover:bg-muted/30 transition-colors"
@@ -197,7 +197,7 @@ export function CustomerNotesTab({ customerId }: CustomerNotesTabProps) {
                     {editingNoteId === note.id ? (
                       <Textarea
                         value={editingNote}
-                        onChange={(e) => setEditingNote(e.target.value)}
+                        onChange={e => setEditingNote(e.target.value)}
                         rows={3}
                         className="text-sm"
                       />

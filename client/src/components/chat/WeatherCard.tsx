@@ -19,14 +19,14 @@ export interface WeatherCardProps {
   }>;
 }
 
-export function WeatherCard({ 
-  city, 
-  temperature, 
-  condition, 
+export function WeatherCard({
+  city,
+  temperature,
+  condition,
   emoji,
   humidity,
   wind,
-  forecast 
+  forecast,
 }: WeatherCardProps) {
   return (
     <Card className="overflow-hidden border-0 shadow-lg animate-in fade-in slide-in-from-bottom-3 duration-500">
@@ -74,7 +74,9 @@ export function WeatherCard({
             <div className="grid grid-cols-3 gap-4">
               {forecast.map((day, idx) => (
                 <div key={idx} className="text-center">
-                  <p className="text-xs text-muted-foreground mb-1">{day.day}</p>
+                  <p className="text-xs text-muted-foreground mb-1">
+                    {day.day}
+                  </p>
                   <div className="text-2xl my-1">{day.emoji}</div>
                   <p className="text-sm font-semibold">{day.temp}°C</p>
                 </div>

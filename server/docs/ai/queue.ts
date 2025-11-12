@@ -1,6 +1,6 @@
 /**
  * AI Generation Queue System
- * 
+ *
  * Manages batch processing and queuing of AI doc generation:
  * - Prevent concurrent overload
  * - Queue management
@@ -56,7 +56,7 @@ class AIGenerationQueue {
    * Add multiple jobs (bulk)
    */
   addBulkJobs(leads: Array<{ id: number; name?: string }>): QueueJob[] {
-    const jobs = leads.map((lead) => ({
+    const jobs = leads.map(lead => ({
       id: `job_${Date.now()}_${lead.id}_${Math.random().toString(36).substring(7)}`,
       leadId: lead.id,
       leadName: lead.name,
@@ -82,7 +82,10 @@ class AIGenerationQueue {
     }
 
     this.processing = true;
-    logger.info({ queueSize: this.queue.length }, "[AI Queue] Starting queue processing");
+    logger.info(
+      { queueSize: this.queue.length },
+      "[AI Queue] Starting queue processing"
+    );
 
     while (this.queue.length > 0) {
       const job = this.queue.shift()!;
@@ -149,7 +152,7 @@ class AIGenerationQueue {
 
       // Small delay between jobs to avoid hammering the API
       if (this.queue.length > 0) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
 
@@ -186,7 +189,7 @@ class AIGenerationQueue {
    * Get all pending jobs
    */
   getPendingJobs(): QueueJob[] {
-    return this.queue.filter((job) => job.status === "pending");
+    return this.queue.filter(job => job.status === "pending");
   }
 }
 
@@ -196,14 +199,19 @@ export const aiQueue = new AIGenerationQueue();
 /**
  * Helper: Add lead to generation queue
  */
-export async function queueLeadDocGeneration(leadId: number, leadName?: string) {
+export async function queueLeadDocGeneration(
+  leadId: number,
+  leadName?: string
+) {
   return aiQueue.addJob(leadId, leadName);
 }
 
 /**
  * Helper: Queue multiple leads
  */
-export async function queueBulkLeadDocs(leads: Array<{ id: number; name?: string }>) {
+export async function queueBulkLeadDocs(
+  leads: Array<{ id: number; name?: string }>
+) {
   return aiQueue.addBulkJobs(leads);
 }
 

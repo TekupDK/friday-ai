@@ -9,7 +9,7 @@ import type { EmailMessage } from "./categorizer";
 
 export interface EmailPriority {
   score: number; // 0-100
-  level: 'urgent' | 'high' | 'normal' | 'low';
+  level: "urgent" | "high" | "normal" | "low";
   factors: {
     sender_importance: number; // 0-1
     content_urgency: number; // 0-1
@@ -22,7 +22,7 @@ export interface EmailPriority {
 
 export interface SenderProfile {
   email: string;
-  relationship: 'vip' | 'customer' | 'colleague' | 'vendor' | 'unknown';
+  relationship: "vip" | "customer" | "colleague" | "vendor" | "unknown";
   importance: number; // 0-1
   responseTime?: number; // average response time in hours
 }
@@ -69,7 +69,7 @@ export async function scorePriority(
   try {
     // First try rule-based quick scoring
     const quickScore = quickPriorityScore(email, senderProfile);
-    
+
     // If clearly low/normal priority, return quick score
     if (quickScore.score < 50) {
       return quickScore;
@@ -78,22 +78,22 @@ export async function scorePriority(
     // For potentially high priority, use LLM for detailed analysis
     const senderSection = senderProfile
       ? `\nAfsender profil: ${senderProfile.relationship} (importance: ${senderProfile.importance})\n`
-      : '';
+      : "";
 
-    const truncatedBody = email.body.length > 1500
-      ? email.body.substring(0, 1500) + '...'
-      : email.body;
+    const truncatedBody =
+      email.body.length > 1500
+        ? email.body.substring(0, 1500) + "..."
+        : email.body;
 
-    const prompt = PRIORITY_SCORING_PROMPT
-      .replace('{from}', email.from)
-      .replace('{to}', email.to)
-      .replace('{subject}', email.subject)
-      .replace('{body}', truncatedBody)
-      .replace('{senderSection}', senderSection);
+    const prompt = PRIORITY_SCORING_PROMPT.replace("{from}", email.from)
+      .replace("{to}", email.to)
+      .replace("{subject}", email.subject)
+      .replace("{body}", truncatedBody)
+      .replace("{senderSection}", senderSection);
 
     const response = await routeAI({
-      messages: [{ role: 'user', content: prompt }],
-      taskType: 'chat',
+      messages: [{ role: "user", content: prompt }],
+      taskType: "chat",
       userId,
       requireApproval: false,
       correlationId: generateCorrelationId(),
@@ -103,7 +103,7 @@ export async function scorePriority(
     const priority = parsePriorityResponse(response.content);
     return priority;
   } catch (error) {
-    console.error('Priority scoring error:', error);
+    console.error("Priority scoring error:", error);
     return quickPriorityScore(email, senderProfile);
   }
 }
@@ -138,8 +138,17 @@ function quickPriorityScore(
   }
 
   // Urgency keywords
-  const urgencyKeywords = ['urgent', 'asap', 'vigtig', 'haster', 'straks', 'immediately'];
-  const hasUrgency = urgencyKeywords.some(kw => subject.includes(kw) || body.includes(kw));
+  const urgencyKeywords = [
+    "urgent",
+    "asap",
+    "vigtig",
+    "haster",
+    "straks",
+    "immediately",
+  ];
+  const hasUrgency = urgencyKeywords.some(
+    kw => subject.includes(kw) || body.includes(kw)
+  );
   if (hasUrgency) {
     factors.content_urgency = 0.9;
     score += 20;
@@ -153,8 +162,8 @@ function quickPriorityScore(
     /i morgen|tomorrow/i,
     /denne uge|this week/i,
   ];
-  const hasDeadline = deadlinePatterns.some(pattern =>
-    pattern.test(subject) || pattern.test(body)
+  const hasDeadline = deadlinePatterns.some(
+    pattern => pattern.test(subject) || pattern.test(body)
   );
   if (hasDeadline) {
     factors.deadline_mentioned = true;
@@ -162,17 +171,28 @@ function quickPriorityScore(
   }
 
   // Action required
-  const actionKeywords = ['skal', 'must', 'need', 'kræver', 'requires', 'action'];
-  const hasAction = actionKeywords.some(kw => subject.includes(kw) || body.includes(kw));
-  const hasQuestion = body.includes('?');
+  const actionKeywords = [
+    "skal",
+    "must",
+    "need",
+    "kræver",
+    "requires",
+    "action",
+  ];
+  const hasAction = actionKeywords.some(
+    kw => subject.includes(kw) || body.includes(kw)
+  );
+  const hasQuestion = body.includes("?");
   if (hasAction || hasQuestion) {
     factors.requires_action = true;
     score += 10;
   }
 
   // Time sensitive
-  const timeKeywords = ['møde', 'meeting', 'event', 'invitation', 'aftale'];
-  const hasTime = timeKeywords.some(kw => subject.includes(kw) || body.includes(kw));
+  const timeKeywords = ["møde", "meeting", "event", "invitation", "aftale"];
+  const hasTime = timeKeywords.some(
+    kw => subject.includes(kw) || body.includes(kw)
+  );
   if (hasTime) {
     factors.time_sensitive = true;
     score += 10;
@@ -196,7 +216,7 @@ function parsePriorityResponse(content: string): EmailPriority {
   try {
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      throw new Error('No JSON found');
+      throw new Error("No JSON found");
     }
 
     const parsed = JSON.parse(jsonMatch[0]);
@@ -205,8 +225,14 @@ function parsePriorityResponse(content: string): EmailPriority {
       score: Math.min(Math.max(parsed.score || 50, 0), 100),
       level: validateLevel(parsed.level),
       factors: {
-        sender_importance: Math.min(Math.max(parsed.factors?.sender_importance || 0.5, 0), 1),
-        content_urgency: Math.min(Math.max(parsed.factors?.content_urgency || 0.5, 0), 1),
+        sender_importance: Math.min(
+          Math.max(parsed.factors?.sender_importance || 0.5, 0),
+          1
+        ),
+        content_urgency: Math.min(
+          Math.max(parsed.factors?.content_urgency || 0.5, 0),
+          1
+        ),
         deadline_mentioned: !!parsed.factors?.deadline_mentioned,
         requires_action: !!parsed.factors?.requires_action,
         time_sensitive: !!parsed.factors?.time_sensitive,
@@ -214,34 +240,41 @@ function parsePriorityResponse(content: string): EmailPriority {
       reasoning: parsed.reasoning,
     };
   } catch (error) {
-    throw new Error('Failed to parse priority response');
+    throw new Error("Failed to parse priority response");
   }
 }
 
 /**
  * Convert score to priority level
  */
-function scoreToLevel(score: number): EmailPriority['level'] {
-  if (score >= 80) return 'urgent';
-  if (score >= 65) return 'high';
-  if (score >= 35) return 'normal';
-  return 'low';
+function scoreToLevel(score: number): EmailPriority["level"] {
+  if (score >= 80) return "urgent";
+  if (score >= 65) return "high";
+  if (score >= 35) return "normal";
+  return "low";
 }
 
 /**
  * Validate priority level
  */
-function validateLevel(level: string): EmailPriority['level'] {
-  const validLevels: EmailPriority['level'][] = ['urgent', 'high', 'normal', 'low'];
-  return validLevels.includes(level as any) ? level as EmailPriority['level'] : 'normal';
+function validateLevel(level: string): EmailPriority["level"] {
+  const validLevels: EmailPriority["level"][] = [
+    "urgent",
+    "high",
+    "normal",
+    "low",
+  ];
+  return validLevels.includes(level as any)
+    ? (level as EmailPriority["level"])
+    : "normal";
 }
 
 /**
  * Check if sender is VIP
  */
 function isVIPSender(from: string): boolean {
-  const vipDomains = ['kunde.dk', 'vip.com', 'important.dk'];
-  const vipKeywords = ['ceo', 'director', 'manager', 'chef'];
+  const vipDomains = ["kunde.dk", "vip.com", "important.dk"];
+  const vipKeywords = ["ceo", "director", "manager", "chef"];
 
   return (
     vipDomains.some(domain => from.includes(domain)) ||
@@ -253,32 +286,32 @@ function isVIPSender(from: string): boolean {
  * Generate reasoning text
  */
 function generateReasoning(
-  factors: EmailPriority['factors'],
-  level: EmailPriority['level']
+  factors: EmailPriority["factors"],
+  level: EmailPriority["level"]
 ): string {
   const reasons: string[] = [];
 
   if (factors.sender_importance > 0.7) {
-    reasons.push('Vigtig afsender');
+    reasons.push("Vigtig afsender");
   }
   if (factors.content_urgency > 0.7) {
-    reasons.push('Urgent indhold');
+    reasons.push("Urgent indhold");
   }
   if (factors.deadline_mentioned) {
-    reasons.push('Deadline nævnt');
+    reasons.push("Deadline nævnt");
   }
   if (factors.requires_action) {
-    reasons.push('Kræver handling');
+    reasons.push("Kræver handling");
   }
   if (factors.time_sensitive) {
-    reasons.push('Tidsfølsom');
+    reasons.push("Tidsfølsom");
   }
 
   if (reasons.length === 0) {
     return `Standard ${level} prioritet`;
   }
 
-  return reasons.join(', ');
+  return reasons.join(", ");
 }
 
 /**
@@ -298,14 +331,12 @@ export async function scoreBatchPriorities(
 
     const batchResults = await Promise.all(
       batch.map(email =>
-        scorePriority(
-          email,
-          userId,
-          senderProfiles?.get(email.from)
-        ).catch(error => {
-          console.error(`Failed to score priority for ${email.id}:`, error);
-          return quickPriorityScore(email, senderProfiles?.get(email.from));
-        })
+        scorePriority(email, userId, senderProfiles?.get(email.from)).catch(
+          error => {
+            console.error(`Failed to score priority for ${email.id}:`, error);
+            return quickPriorityScore(email, senderProfiles?.get(email.from));
+          }
+        )
       )
     );
 
@@ -338,7 +369,7 @@ export function getPriorityStats(priorities: EmailPriority[]): {
   priorities.forEach(priority => {
     distribution[priority.level]++;
     totalScore += priority.score;
-    if (priority.level === 'urgent') urgentCount++;
+    if (priority.level === "urgent") urgentCount++;
   });
 
   return {
@@ -358,17 +389,17 @@ export function createSenderProfile(
   // Analyze previous emails to determine relationship
   const emailCount = previousEmails.filter(e => e.from === email).length;
 
-  let relationship: SenderProfile['relationship'] = 'unknown';
+  let relationship: SenderProfile["relationship"] = "unknown";
   let importance = 0.5;
 
   if (emailCount > 10) {
-    relationship = 'colleague';
+    relationship = "colleague";
     importance = 0.6;
   } else if (emailCount > 5) {
-    relationship = 'customer';
+    relationship = "customer";
     importance = 0.7;
   } else if (isVIPSender(email)) {
-    relationship = 'vip';
+    relationship = "vip";
     importance = 0.9;
   }
 

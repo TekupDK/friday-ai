@@ -15,7 +15,7 @@ export {
   listCollections,
   formatLeadForEmbedding,
   formatEmailForEmbedding,
-} from './client';
+} from "./client";
 
 export {
   generateEmbedding,
@@ -23,7 +23,7 @@ export {
   cosineSimilarity,
   clearEmbeddingCache,
   getEmbeddingCacheStats,
-} from './embeddings';
+} from "./embeddings";
 
 // Re-export for convenience
-export { getChromaClient as default } from './client';
+export { getChromaClient as default } from "./client";

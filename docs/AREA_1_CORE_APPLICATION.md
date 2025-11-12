@@ -8,6 +8,7 @@
 ## 🎯 **OVERVIEW**
 
 Core Application består af:
+
 - **Client (Frontend):** React + TypeScript + Vite
 - **Server (Backend):** Node.js + tRPC + Express
 - **Shared:** Fælles types og utilities
@@ -48,6 +49,7 @@ client/src/
 **Purpose:** Friday AI chat interface
 
 **Files:**
+
 ```
 chat/
 ├── ChatInput.tsx              # Message input with suggestions
@@ -59,6 +61,7 @@ chat/
 ```
 
 **Key Features:**
+
 - ✅ Shortwave-inspired UI
 - ✅ Auto-scroll to latest message
 - ✅ Optimistic updates
@@ -68,6 +71,7 @@ chat/
 - ✅ Welcome screen with suggestions
 
 **Used By:**
+
 - `AIAssistantPanelV2.tsx` (main panel)
 
 ---
@@ -77,6 +81,7 @@ chat/
 **Purpose:** Main application panels (3-panel layout)
 
 **Files:**
+
 ```
 panels/
 ├── AIAssistantPanelV2.tsx     # Friday AI chat panel (RIGHT)
@@ -87,6 +92,7 @@ panels/
 ```
 
 **Key Features:**
+
 - ✅ 3-panel layout
 - ✅ Context-aware chat
 - ✅ Email integration
@@ -94,6 +100,7 @@ panels/
 - ✅ Lead tracking
 
 **Architecture:**
+
 ```
 ┌─────────────┬──────────────┬─────────────┐
 │  Workspace  │    Email     │  Friday AI  │
@@ -112,6 +119,7 @@ panels/
 **Purpose:** Email inbox functionality
 
 **Files:**
+
 ```
 inbox/
 ├── EmailList.tsx              # Email thread list
@@ -122,6 +130,7 @@ inbox/
 ```
 
 **Key Features:**
+
 - ✅ Gmail integration
 - ✅ Thread management
 - ✅ Label management
@@ -135,6 +144,7 @@ inbox/
 **Purpose:** Business workspace features
 
 **Files:**
+
 ```
 workspace/
 ├── LeadCard.tsx               # Lead display
@@ -146,6 +156,7 @@ workspace/
 ```
 
 **Key Features:**
+
 - ✅ Lead management
 - ✅ Task tracking
 - ✅ Customer profiles
@@ -159,6 +170,7 @@ workspace/
 **Purpose:** Reusable UI primitives (shadcn/ui)
 
 **Files:** 30+ components
+
 ```
 ui/
 ├── button.tsx                 # Button component
@@ -201,20 +213,22 @@ components/
 ### **Chat Hooks**
 
 **1. `useFridayChatSimple.ts`** ⭐ MAIN CHAT HOOK
+
 ```typescript
 // Simple chat hook with optimistic updates
 const {
-  messages,           // Chat messages
-  isLoading,          // Loading state
-  error,              // Error state
-  sendMessage,        // Send message function
+  messages, // Chat messages
+  isLoading, // Loading state
+  error, // Error state
+  sendMessage, // Send message function
 } = useFridayChatSimple({
   conversationId,
-  context,            // Email/calendar context
+  context, // Email/calendar context
 });
 ```
 
 **Features:**
+
 - ✅ Message loading
 - ✅ Message sending
 - ✅ Optimistic updates
@@ -227,21 +241,23 @@ const {
 ---
 
 **2. `useFridayChat.ts`** - ADVANCED CHAT HOOK
+
 ```typescript
 // Advanced chat with pagination
 const {
   messages,
-  loadMoreMessages,   // Load older messages
-  hasMoreMessages,    // Has more flag
+  loadMoreMessages, // Load older messages
+  hasMoreMessages, // Has more flag
   isLoading,
   sendMessage,
 } = useFridayChat({
   conversationId,
-  maxMessages: 50,    // Memory management
+  maxMessages: 50, // Memory management
 });
 ```
 
 **Features:**
+
 - ✅ Message pagination
 - ✅ Infinite scroll
 - ✅ Memory management (max 50 messages)
@@ -250,21 +266,23 @@ const {
 ---
 
 **3. `useStreamingChat.ts`** - STREAMING HOOK
+
 ```typescript
 // Real-time streaming responses
 const {
-  streamingMessage,   // Current streaming message
-  isStreaming,        // Streaming state
-  stopStreaming,      // Stop function
+  streamingMessage, // Current streaming message
+  isStreaming, // Streaming state
+  stopStreaming, // Stop function
 } = useStreamingChat({
   conversationId,
-  onChunk: (chunk) => {
+  onChunk: chunk => {
     // Handle each chunk
-  }
+  },
 });
 ```
 
 **Features:**
+
 - ✅ Server-Sent Events (SSE)
 - ✅ Real-time streaming
 - ✅ Stop streaming
@@ -275,24 +293,31 @@ const {
 ### **Utility Hooks**
 
 **4. `useDebounce.ts`**
+
 - Debounce values (search, input)
 
 **5. `useKeyboardShortcuts.ts`**
+
 - Global keyboard shortcuts
 
 **6. `useRateLimit.ts`**
+
 - Client-side rate limiting
 
 **7. `useMobile.tsx`**
+
 - Mobile detection
 
 **8. `useActionSuggestions.ts`**
+
 - AI action suggestions
 
 **9. `useAdaptivePolling.ts`**
+
 - Smart polling for updates
 
 **10. `useChatInput.ts`**
+
 - Chat input management
 
 ---
@@ -310,6 +335,7 @@ pages/
 ```
 
 **Routing:**
+
 ```typescript
 / → Home (Dashboard)
 /login → LoginPage
@@ -335,6 +361,7 @@ lib/
 ```
 
 **Key Utilities:**
+
 - `cn()` - Tailwind class merging
 - `trpc` - tRPC client instance
 - Storage helpers
@@ -369,14 +396,14 @@ contexts/
 
 ## 📊 **CLIENT STATISTICS**
 
-| Category | Count | Purpose |
-|----------|-------|---------|
-| Components | 50+ | UI components |
-| Hooks | 15+ | Custom hooks |
-| Pages | 6 | Route pages |
-| Contexts | 4 | Global state |
-| Utilities | 20+ | Helper functions |
-| Tests | 30+ | Component tests |
+| Category   | Count | Purpose          |
+| ---------- | ----- | ---------------- |
+| Components | 50+   | UI components    |
+| Hooks      | 15+   | Custom hooks     |
+| Pages      | 6     | Route pages      |
+| Contexts   | 4     | Global state     |
+| Utilities  | 20+   | Helper functions |
+| Tests      | 30+   | Component tests  |
 
 ---
 
@@ -410,54 +437,59 @@ server/
 **Endpoints:**
 
 ### **Chat Endpoints**
+
 ```typescript
 chat: {
-  createConversation()       // Create new conversation
-  getUserConversations()     // Get user's conversations
-  deleteConversation()       // Delete conversation
-  getMessages()              // Get conversation messages
-  sendMessage()              // Send message + AI response
+  createConversation(); // Create new conversation
+  getUserConversations(); // Get user's conversations
+  deleteConversation(); // Delete conversation
+  getMessages(); // Get conversation messages
+  sendMessage(); // Send message + AI response
 }
 ```
 
 ### **Email Endpoints**
+
 ```typescript
 email: {
-  getThreads()               // Get email threads
-  getThread()                // Get single thread
-  sendEmail()                // Send email
-  archiveThread()            // Archive thread
-  labelThread()              // Add/remove labels
-  searchEmails()             // Search emails
+  getThreads(); // Get email threads
+  getThread(); // Get single thread
+  sendEmail(); // Send email
+  archiveThread(); // Archive thread
+  labelThread(); // Add/remove labels
+  searchEmails(); // Search emails
 }
 ```
 
 ### **Calendar Endpoints**
+
 ```typescript
 calendar: {
-  getEvents()                // Get calendar events
-  createEvent()              // Create event
-  updateEvent()              // Update event
-  deleteEvent()              // Delete event
+  getEvents(); // Get calendar events
+  createEvent(); // Create event
+  updateEvent(); // Update event
+  deleteEvent(); // Delete event
 }
 ```
 
 ### **Billy Endpoints**
+
 ```typescript
 billy: {
-  getInvoices()              // Get invoices
-  createInvoice()            // Create invoice
-  getCustomers()             // Get customers
-  syncData()                 // Sync Billy data
+  getInvoices(); // Get invoices
+  createInvoice(); // Create invoice
+  getCustomers(); // Get customers
+  syncData(); // Sync Billy data
 }
 ```
 
 ### **Analytics Endpoints**
+
 ```typescript
 analytics: {
-  trackEvent()               // Track event
-  getMetrics()               // Get metrics
-  getDashboard()             // Get dashboard data
+  trackEvent(); // Track event
+  getMetrics(); // Get metrics
+  getDashboard(); // Get dashboard data
 }
 ```
 
@@ -470,6 +502,7 @@ analytics: {
 **Function:** `routeAI()`
 
 **Flow:**
+
 ```
 1. Receive message + context + history
 2. Select appropriate AI model
@@ -483,6 +516,7 @@ analytics: {
 ```
 
 **Features:**
+
 - ✅ Model selection (gemma-3-27b, gpt-4, etc.)
 - ✅ Context injection
 - ✅ Tool integration
@@ -491,32 +525,33 @@ analytics: {
 - ✅ Streaming support
 
 **Code Structure:**
+
 ```typescript
 export async function routeAI({
-  messages,      // Conversation history
-  context,       // Email/calendar context
-  tools,         // Available tools (35+)
-  userId,        // User ID
-  conversationId // Conversation ID
+  messages, // Conversation history
+  context, // Email/calendar context
+  tools, // Available tools (35+)
+  userId, // User ID
+  conversationId, // Conversation ID
 }) {
   // 1. Select model
   const model = selectModel(messages);
-  
+
   // 2. Build system prompt
   const systemPrompt = buildSystemPrompt(context);
-  
+
   // 3. Call LLM
   const response = await callLLM({
     model,
     messages: [systemPrompt, ...messages],
     tools,
   });
-  
+
   // 4. Handle tool calls
   if (response.toolCalls) {
     await handleToolCalls(response.toolCalls);
   }
-  
+
   // 5. Return response
   return response;
 }
@@ -531,54 +566,58 @@ export async function routeAI({
 **Categories:**
 
 ### **1. Gmail Tools (15 tools)**
+
 ```typescript
-- gmail_search_emails          // Search emails
-- gmail_get_thread             // Get email thread
-- gmail_send_email             // Send email
-- gmail_reply_to_email         // Reply to email
-- gmail_archive_thread         // Archive thread
-- gmail_label_thread           // Add/remove labels
-- gmail_mark_read              // Mark as read/unread
-- gmail_get_labels             // Get all labels
-- gmail_create_label           // Create label
-- gmail_delete_label           // Delete label
-- gmail_get_attachments        // Get attachments
-- gmail_download_attachment    // Download attachment
-- gmail_get_draft              // Get draft
-- gmail_create_draft           // Create draft
-- gmail_send_draft             // Send draft
+-gmail_search_emails - // Search emails
+  gmail_get_thread - // Get email thread
+  gmail_send_email - // Send email
+  gmail_reply_to_email - // Reply to email
+  gmail_archive_thread - // Archive thread
+  gmail_label_thread - // Add/remove labels
+  gmail_mark_read - // Mark as read/unread
+  gmail_get_labels - // Get all labels
+  gmail_create_label - // Create label
+  gmail_delete_label - // Delete label
+  gmail_get_attachments - // Get attachments
+  gmail_download_attachment - // Download attachment
+  gmail_get_draft - // Get draft
+  gmail_create_draft - // Create draft
+  gmail_send_draft; // Send draft
 ```
 
 ### **2. Calendar Tools (8 tools)**
+
 ```typescript
-- calendar_get_events          // Get events
-- calendar_create_event        // Create event
-- calendar_update_event        // Update event
-- calendar_delete_event        // Delete event
-- calendar_search_events       // Search events
-- calendar_get_free_busy       // Get availability
-- calendar_list_calendars      // List calendars
-- calendar_create_calendar     // Create calendar
+-calendar_get_events - // Get events
+  calendar_create_event - // Create event
+  calendar_update_event - // Update event
+  calendar_delete_event - // Delete event
+  calendar_search_events - // Search events
+  calendar_get_free_busy - // Get availability
+  calendar_list_calendars - // List calendars
+  calendar_create_calendar; // Create calendar
 ```
 
 ### **3. Billy Tools (7 tools)**
+
 ```typescript
-- billy_get_invoices           // Get invoices
-- billy_create_invoice         // Create invoice
-- billy_get_customers          // Get customers
-- billy_create_customer        // Create customer
-- billy_get_products           // Get products
-- billy_sync_data              // Sync data
-- billy_get_stats              // Get statistics
+-billy_get_invoices - // Get invoices
+  billy_create_invoice - // Create invoice
+  billy_get_customers - // Get customers
+  billy_create_customer - // Create customer
+  billy_get_products - // Get products
+  billy_sync_data - // Sync data
+  billy_get_stats; // Get statistics
 ```
 
 ### **4. Database Tools (5 tools)**
+
 ```typescript
-- db_get_leads                 // Get leads
-- db_create_lead               // Create lead
-- db_update_lead               // Update lead
-- db_get_tasks                 // Get tasks
-- db_create_task               // Create task
+-db_get_leads - // Get leads
+  db_create_lead - // Create lead
+  db_update_lead - // Update lead
+  db_get_tasks - // Get tasks
+  db_create_task; // Create task
 ```
 
 **Total:** 35+ tools
@@ -590,25 +629,27 @@ export async function routeAI({
 **Purpose:** Implement tool functions
 
 **Structure:**
+
 ```typescript
 export const toolHandlers = {
-  gmail_search_emails: async (params) => {
+  gmail_search_emails: async params => {
     // Implementation
     const results = await searchGmail(params);
     return results;
   },
-  
-  calendar_create_event: async (params) => {
+
+  calendar_create_event: async params => {
     // Implementation
     const event = await createCalendarEvent(params);
     return event;
   },
-  
+
   // ... 35+ handlers
 };
 ```
 
 **Features:**
+
 - ✅ Error handling
 - ✅ Validation
 - ✅ Rate limiting
@@ -624,35 +665,39 @@ export const toolHandlers = {
 **Functions:**
 
 ### **Conversation Functions**
+
 ```typescript
-- createConversation()         // Create conversation
-- getConversation()            // Get conversation
-- getUserConversations()       // Get user's conversations
-- deleteConversation()         // Delete conversation
-- updateConversation()         // Update conversation
+-createConversation() - // Create conversation
+  getConversation() - // Get conversation
+  getUserConversations() - // Get user's conversations
+  deleteConversation() - // Delete conversation
+  updateConversation(); // Update conversation
 ```
 
 ### **Message Functions**
+
 ```typescript
-- createMessage()              // Create message
-- getMessages()                // Get messages
-- getConversationMessages()    // Get conversation messages
-- deleteMessage()              // Delete message
+-createMessage() - // Create message
+  getMessages() - // Get messages
+  getConversationMessages() - // Get conversation messages
+  deleteMessage(); // Delete message
 ```
 
 ### **Email Functions**
+
 ```typescript
-- saveEmailThread()            // Save email thread
-- getEmailThreads()            // Get email threads
-- updateEmailThread()          // Update thread
-- deleteEmailThread()          // Delete thread
+-saveEmailThread() - // Save email thread
+  getEmailThreads() - // Get email threads
+  updateEmailThread() - // Update thread
+  deleteEmailThread(); // Delete thread
 ```
 
 ### **Analytics Functions**
+
 ```typescript
-- trackEvent()                 // Track event
-- getAnalytics()               // Get analytics
-- getMetrics()                 // Get metrics
+-trackEvent() - // Track event
+  getAnalytics() - // Get analytics
+  getMetrics(); // Get metrics
 ```
 
 **Tech:** Drizzle ORM + PostgreSQL
@@ -676,11 +721,12 @@ _core/
 **Key Files:**
 
 **1. `context.ts`** - Request Context
+
 ```typescript
 export async function createContext({ req, res }) {
   // Get user from session
   const user = await getUserFromSession(req);
-  
+
   return {
     req,
     res,
@@ -691,6 +737,7 @@ export async function createContext({ req, res }) {
 ```
 
 **2. `trpc.ts`** - tRPC Setup
+
 ```typescript
 export const t = initTRPC.context<Context>().create();
 
@@ -700,28 +747,27 @@ export const protectedProcedure = t.procedure.use(authMiddleware);
 ```
 
 **3. `llm.ts`** - LLM Client
+
 ```typescript
-export async function callLLM({
-  model,
-  messages,
-  tools,
-  stream = false,
-}) {
+export async function callLLM({ model, messages, tools, stream = false }) {
   // Call OpenRouter API
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model,
-      messages,
-      tools,
-      stream,
-    }),
-  });
-  
+  const response = await fetch(
+    "https://openrouter.ai/api/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        tools,
+        stream,
+      }),
+    }
+  );
+
   return response.json();
 }
 ```
@@ -730,14 +776,14 @@ export async function callLLM({
 
 ## 📊 **SERVER STATISTICS**
 
-| Category | Count | Purpose |
-|----------|-------|---------|
-| Routers | 10+ | API endpoints |
-| Tools | 35+ | AI functions |
-| Database Functions | 50+ | Data operations |
-| Utilities | 30+ | Helper functions |
-| Tests | 40+ | Server tests |
-| Integrations | 3 | Gmail, Calendar, Billy |
+| Category           | Count | Purpose                |
+| ------------------ | ----- | ---------------------- |
+| Routers            | 10+   | API endpoints          |
+| Tools              | 35+   | AI functions           |
+| Database Functions | 50+   | Data operations        |
+| Utilities          | 30+   | Helper functions       |
+| Tests              | 40+   | Server tests           |
+| Integrations       | 3     | Gmail, Calendar, Billy |
 
 ---
 
@@ -796,26 +842,31 @@ export async function callLLM({
 ## 🎯 **KEY INTEGRATION POINTS**
 
 ### **1. Client ↔ Server**
+
 - **Protocol:** tRPC (type-safe RPC)
 - **Transport:** HTTP/WebSocket
 - **Auth:** Session cookies
 
 ### **2. Server ↔ Database**
+
 - **ORM:** Drizzle
 - **Database:** PostgreSQL
 - **Connection:** Connection pool
 
 ### **3. Server ↔ AI**
+
 - **Provider:** OpenRouter
 - **Models:** gemma-3-27b, gpt-4, etc.
 - **Protocol:** REST API
 
 ### **4. Server ↔ Google**
+
 - **APIs:** Gmail, Calendar
 - **Auth:** OAuth 2.0
 - **SDK:** googleapis
 
 ### **5. Server ↔ Billy**
+
 - **API:** Billy REST API
 - **Auth:** API key
 - **Protocol:** REST
@@ -825,6 +876,7 @@ export async function callLLM({
 ## 📁 **VIGTIGSTE FILER - QUICK REFERENCE**
 
 ### **Client:**
+
 1. `client/src/App.tsx` - Main app
 2. `client/src/components/panels/AIAssistantPanelV2.tsx` - Friday AI panel
 3. `client/src/components/chat/ShortWaveChatPanel.tsx` - Chat UI
@@ -832,6 +884,7 @@ export async function callLLM({
 5. `client/src/lib/trpc.ts` - tRPC client
 
 ### **Server:**
+
 1. `server/routers.ts` - Main API router
 2. `server/ai-router.ts` - AI orchestration
 3. `server/friday-tools.ts` - AI tools (35+)
@@ -844,6 +897,7 @@ export async function callLLM({
 ## ✅ **HVAD VIRKER**
 
 ### **Client:**
+
 - ✅ 3-panel layout
 - ✅ Chat interface (Shortwave-style)
 - ✅ Optimistic updates
@@ -855,6 +909,7 @@ export async function callLLM({
 - ✅ Context integration
 
 ### **Server:**
+
 - ✅ tRPC API (type-safe)
 - ✅ AI routing
 - ✅ 35+ tools

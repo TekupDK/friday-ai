@@ -405,7 +405,8 @@ export const FRIDAY_TOOLS = [
         properties: {
           status: {
             type: "string",
-            description: "Filter på status (new, contacted, qualified, proposal, won, lost)",
+            description:
+              "Filter på status (new, contacted, qualified, proposal, won, lost)",
             enum: ["new", "contacted", "qualified", "proposal", "won", "lost"],
           },
           source: {
@@ -472,7 +473,8 @@ export const FRIDAY_TOOLS = [
           },
           status: {
             type: "string",
-            description: "Ny status (new, contacted, qualified, proposal, won, lost)",
+            description:
+              "Ny status (new, contacted, qualified, proposal, won, lost)",
             enum: ["new", "contacted", "qualified", "proposal", "won", "lost"],
           },
         },
@@ -493,7 +495,8 @@ export const FRIDAY_TOOLS = [
         properties: {
           status: {
             type: "string",
-            description: "Filter på status (todo, in_progress, done, cancelled)",
+            description:
+              "Filter på status (todo, in_progress, done, cancelled)",
             enum: ["todo", "in_progress", "done", "cancelled"],
           },
         },

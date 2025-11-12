@@ -11,6 +11,18 @@
 
 Friday AI is an intelligent email management system inspired by Shortwave.ai. It combines AI-powered conversation with real-time inbox management, calendar bookings, invoice handling, and lead tracking.
 
+## Staging Test & Cleanup Flow
+
+- `pnpm run crm:test:staging` — kører CRM smoke-tests mod `.env.staging` (Prod DB)
+- `pnpm run crm:test:staging:watch` — watcher til hurtig iteration på CRM tests
+- `pnpm run crm:seed:staging` — opretter små, unikke seed-leads og relaterede entiteter
+- `pnpm run crm:cleanup:staging` — dry-run cleanup, viser hvor meget der matches (ingen sletning)
+- `pnpm run crm:cleanup:staging:apply` — sletter seedede entiteter (matcher kun `crm-seed-` prefix)
+- `pnpm run test:email-smoke:staging` — Gmail smoke-test mod staging konfiguration
+- `pnpm run crm:test:staging:chroma` — kør CRM tests med `CHROMA_ENABLED=true` (fallback hvis Chroma ikke er tilgængelig)
+
+Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opretter kun små, adskilte data med prefix `crm-seed-` og cleanup-scriptet sletter kun disse.
+
 ### 🎨 Chat Components Showcase (78+ Components)
 
 **Complete UI Component Library** for modern chat interfaces and business applications.
@@ -50,6 +62,12 @@ Friday AI is an intelligent email management system inspired by Shortwave.ai. It
 ### 🆕 What's New in v1.5.0
 
 - **🤖 Autonomous Lead Intelligence System** (Complete Implementation):
+
+### 🧩 CRM Module Update (Nov 11-12, 2025)
+
+- **CRM Backend Completed (Phases 1-6):** 51 TRPC endpoints, 12 CRM tables, fully tested and production-ready. (Opportunities, Segments, Documents, Audit Log, Relationships included)
+- **How to test:** `pnpm exec tsx server/scripts/test-crm-extensions.ts`
+- **Frontend:** UI handoff documentation for Kiro in `.kiro/specs/crm-module/HANDOFF_TO_KIRO.md` and API reference in `.kiro/specs/crm-module/API_REFERENCE.md`.
   - **Daily AI Lead Import**: Automatic import of 231 AI-enriched leads from v4.3.5 pipeline
     - Idempotent upserts using `datasetLeadId` tracking (no duplicates)
     - Synthetic email generation for missing data

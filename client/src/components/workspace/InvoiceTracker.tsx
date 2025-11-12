@@ -2,7 +2,14 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, DollarSign, Mail, Phone, Calendar, Clock } from "lucide-react";
+import {
+  AlertTriangle,
+  DollarSign,
+  Mail,
+  Phone,
+  Calendar,
+  Clock,
+} from "lucide-react";
 import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
 import { trpc } from "@/lib/trpc";
 import SmartActionBar, { type InvoiceData } from "./SmartActionBar";
@@ -34,7 +41,11 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
   const [error, setError] = useState<string | null>(null);
 
   // Fetch invoice from Billy API
-  const { data: billyInvoice, isLoading: isBillyLoading, error: billyError } = trpc.inbox.invoices.getByNumber.useQuery(
+  const {
+    data: billyInvoice,
+    isLoading: isBillyLoading,
+    error: billyError,
+  } = trpc.inbox.invoices.getByNumber.useQuery(
     { invoiceNumber: invoiceNumber || "" },
     {
       enabled: !!invoiceNumber, // Only fetch if we have an invoice number
@@ -46,22 +57,32 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
     if (invoiceNumber) {
       setIsLoading(true);
       setError(null);
-      
+
       if (billyInvoice) {
         // Calculate days overdue
-        const daysOverdue = billyInvoice.dueDate 
-          ? Math.floor((new Date().getTime() - new Date(billyInvoice.dueDate).getTime()) / (1000 * 60 * 60 * 24))
+        const daysOverdue = billyInvoice.dueDate
+          ? Math.floor(
+              (new Date().getTime() -
+                new Date(billyInvoice.dueDate).getTime()) /
+                (1000 * 60 * 60 * 24)
+            )
           : 0;
 
         setInvoice({
           id: billyInvoice.invoiceNo || `#${invoiceNumber}`,
           billyId: billyInvoice.id,
-          customer: from.replace(/<.*>/, '').trim() || "Kunde",
-          email: from.includes('<') ? from.match(/<(.+)>/)?.[1] : from,
+          customer: from.replace(/<.*>/, "").trim() || "Kunde",
+          email: from.includes("<") ? from.match(/<(.+)>/)?.[1] : from,
           phone: "Ikke angivet", // Would need customer lookup
-          amount: Math.round(billyInvoice.grossAmount || billyInvoice.amount || 0),
-          sent: billyInvoice.createdTime ? new Date(billyInvoice.createdTime).toLocaleDateString('da-DK') : "Ikke angivet",
-          due: billyInvoice.dueDate ? new Date(billyInvoice.dueDate).toLocaleDateString('da-DK') : "Ikke angivet",
+          amount: Math.round(
+            billyInvoice.grossAmount || billyInvoice.amount || 0
+          ),
+          sent: billyInvoice.createdTime
+            ? new Date(billyInvoice.createdTime).toLocaleDateString("da-DK")
+            : "Ikke angivet",
+          due: billyInvoice.dueDate
+            ? new Date(billyInvoice.dueDate).toLocaleDateString("da-DK")
+            : "Ikke angivet",
           daysOverdue: daysOverdue > 0 ? daysOverdue : 0,
           status: billyInvoice.state || "pending",
           balance: Math.round(billyInvoice.balance || 0),
@@ -75,13 +96,17 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
       }
     } else {
       // Fallback to parsed data if no invoice number found
-      const amountMatch = body.match(/(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s*kr/i);
-      const amount = amountMatch ? parseInt(amountMatch[1].replace(/[.,]/g, '')) : 0;
+      const amountMatch = body.match(
+        /(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s*kr/i
+      );
+      const amount = amountMatch
+        ? parseInt(amountMatch[1].replace(/[.,]/g, ""))
+        : 0;
 
       setInvoice({
         id: "#XXXX",
-        customer: from.replace(/<.*>/, '').trim() || "Kunde",
-        email: from.includes('<') ? from.match(/<(.+)>/)?.[1] : from,
+        customer: from.replace(/<.*>/, "").trim() || "Kunde",
+        email: from.includes("<") ? from.match(/<(.+)>/)?.[1] : from,
         phone: "Ikke angivet",
         amount: amount || 4339,
         sent: "Ikke angivet",
@@ -109,8 +134,12 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
             <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-lg">💰 Invoice Tracker</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">Fejl ved hentning af faktura</p>
-              <p className="text-sm text-red-800 dark:text-red-200 mt-2">{error}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Fejl ved hentning af faktura
+              </p>
+              <p className="text-sm text-red-800 dark:text-red-200 mt-2">
+                {error}
+              </p>
             </div>
           </div>
         </Card>
@@ -121,16 +150,53 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
   if (!invoice) return null;
 
   // Status badge configuration
-  const getStatusBadge = (status: string, daysOverdue: number, isPaid: boolean) => {
-    if (isPaid) return { variant: "default" as const, text: "Betalt", color: "bg-green-500" };
-    if (daysOverdue > 14) return { variant: "destructive" as const, text: `${daysOverdue} dage forsinket`, color: "bg-red-500" };
-    if (daysOverdue > 0) return { variant: "destructive" as const, text: `${daysOverdue} dage forsinket`, color: "bg-orange-500" };
-    if (status === "sent") return { variant: "secondary" as const, text: "Sendt", color: "bg-blue-500" };
-    if (status === "draft") return { variant: "outline" as const, text: "Kladde", color: "bg-gray-500" };
-    return { variant: "secondary" as const, text: "Afventer betaling", color: "bg-yellow-500" };
+  const getStatusBadge = (
+    status: string,
+    daysOverdue: number,
+    isPaid: boolean
+  ) => {
+    if (isPaid)
+      return {
+        variant: "default" as const,
+        text: "Betalt",
+        color: "bg-green-500",
+      };
+    if (daysOverdue > 14)
+      return {
+        variant: "destructive" as const,
+        text: `${daysOverdue} dage forsinket`,
+        color: "bg-red-500",
+      };
+    if (daysOverdue > 0)
+      return {
+        variant: "destructive" as const,
+        text: `${daysOverdue} dage forsinket`,
+        color: "bg-orange-500",
+      };
+    if (status === "sent")
+      return {
+        variant: "secondary" as const,
+        text: "Sendt",
+        color: "bg-blue-500",
+      };
+    if (status === "draft")
+      return {
+        variant: "outline" as const,
+        text: "Kladde",
+        color: "bg-gray-500",
+      };
+    return {
+      variant: "secondary" as const,
+      text: "Afventer betaling",
+      color: "bg-yellow-500",
+    };
   };
 
-  const statusBadge = getStatusBadge(invoice.status, invoice.daysOverdue, invoice.isPaid);
+  const statusBadge = getStatusBadge(
+    invoice.status,
+    invoice.daysOverdue,
+    invoice.isPaid
+  );
 
   // Prepare invoice data for SmartActionBar
   const invoiceData: InvoiceData = {
@@ -151,7 +217,8 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
           <div>
             <h3 className="font-semibold text-lg">💰 Invoice Tracker</h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Faktura {invoice.id} {invoice.billyId && "• Billy ID: " + invoice.billyId}
+              Faktura {invoice.id}{" "}
+              {invoice.billyId && "• Billy ID: " + invoice.billyId}
             </p>
           </div>
           <Badge variant={statusBadge.variant} className={statusBadge.color}>
@@ -173,12 +240,16 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Total beløb:</span>
-            <span className="font-bold text-lg">{invoice.amount.toLocaleString('da-DK')} kr</span>
+            <span className="font-bold text-lg">
+              {invoice.amount.toLocaleString("da-DK")} kr
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Resterende:</span>
-            <span className={`font-bold text-lg ${invoice.balance > 0 ? 'text-red-600' : 'text-green-600'}`}>
-              {invoice.balance.toLocaleString('da-DK')} kr
+            <span
+              className={`font-bold text-lg ${invoice.balance > 0 ? "text-red-600" : "text-green-600"}`}
+            >
+              {invoice.balance.toLocaleString("da-DK")} kr
             </span>
           </div>
           <div className="flex justify-between">
@@ -187,15 +258,22 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Forfald:</span>
-            <span className={`font-medium ${invoice.daysOverdue > 0 ? 'text-red-600' : ''}`}>
+            <span
+              className={`font-medium ${invoice.daysOverdue > 0 ? "text-red-600" : ""}`}
+            >
               {invoice.due}
-              {invoice.daysOverdue > 0 && ` (${invoice.daysOverdue} dage forsinket)`}
+              {invoice.daysOverdue > 0 &&
+                ` (${invoice.daysOverdue} dage forsinket)`}
             </span>
           </div>
           {invoice.downloadUrl && (
             <div className="pt-2">
               <Button variant="outline" size="sm" className="w-full" asChild>
-                <a href={invoice.downloadUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={invoice.downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   📄 Download Faktura PDF
                 </a>
               </Button>
@@ -228,12 +306,16 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
             )}
             {invoice.daysOverdue > 0 && invoice.daysOverdue <= 14 && (
               <>
-                <div>🟡 Mellem risiko: {invoice.daysOverdue} dage forsinket</div>
+                <div>
+                  🟡 Mellem risiko: {invoice.daysOverdue} dage forsinket
+                </div>
                 <div>• Send venlig påmindelse</div>
                 <div>• Overvåg tæt</div>
               </>
             )}
-            <div>• Resterende: {invoice.balance.toLocaleString('da-DK')} kr</div>
+            <div>
+              • Resterende: {invoice.balance.toLocaleString("da-DK")} kr
+            </div>
           </div>
         </Card>
       )}
@@ -269,7 +351,7 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
         onAction={async (actionId: string, data: any) => {
           // Handle smart actions
           console.log("Smart action executed:", actionId, data);
-          
+
           switch (actionId) {
             case "sendReminder":
               // Send payment reminder email

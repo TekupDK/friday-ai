@@ -6,7 +6,7 @@
 interface QueuedRequest {
   id: string;
   fn: () => Promise<any>;
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
   timestamp: number;
   resolve: (value: any) => void;
   reject: (error: any) => void;
@@ -24,10 +24,10 @@ export class LiteLLMRateLimiter {
   private requestTimestamps: number[] = [];
   private processing = false;
   private concurrent = 0;
-  
+
   private config: RateLimitConfig = {
     maxRequestsPerMinute: 12, // VERY Conservative for tool calls (limit is 16, we use 12)
-    maxConcurrent: 2,          // Max 2 parallel requests (tool calls can spawn multiple)
+    maxConcurrent: 2, // Max 2 parallel requests (tool calls can spawn multiple)
     retryAttempts: 3,
     backoffMultiplier: 2,
   };
@@ -37,7 +37,7 @@ export class LiteLLMRateLimiter {
    */
   async enqueue<T>(
     fn: () => Promise<T>,
-    priority: 'high' | 'medium' | 'low' = 'medium'
+    priority: "high" | "medium" | "low" = "medium"
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       const request: QueuedRequest = {
@@ -50,13 +50,13 @@ export class LiteLLMRateLimiter {
       };
 
       // Insert by priority
-      if (priority === 'high') {
+      if (priority === "high") {
         this.queue.unshift(request);
-      } else if (priority === 'low') {
+      } else if (priority === "low") {
         this.queue.push(request);
       } else {
         // Medium priority: insert in middle
-        const mediumIndex = this.queue.findIndex(r => r.priority === 'low');
+        const mediumIndex = this.queue.findIndex(r => r.priority === "low");
         if (mediumIndex === -1) {
           this.queue.push(request);
         } else {
@@ -79,7 +79,9 @@ export class LiteLLMRateLimiter {
       // Check if we can make a request
       if (!this.canMakeRequest()) {
         const waitTime = this.getWaitTime();
-        console.log(`⏳ [RateLimiter] Waiting ${waitTime}ms before next request`);
+        console.log(
+          `⏳ [RateLimiter] Waiting ${waitTime}ms before next request`
+        );
         await this.sleep(waitTime);
         continue;
       }
@@ -109,7 +111,7 @@ export class LiteLLMRateLimiter {
     this.recordRequest();
 
     let lastError: any;
-    
+
     for (let attempt = 1; attempt <= this.config.retryAttempts; attempt++) {
       try {
         const result = await request.fn();
@@ -118,14 +120,14 @@ export class LiteLLMRateLimiter {
         return;
       } catch (error: any) {
         lastError = error;
-        
+
         // Check if it's a rate limit error
         if (this.isRateLimitError(error)) {
           const backoffTime = this.calculateBackoff(attempt);
           console.warn(
             `⚠️ [RateLimiter] Rate limit hit. Retry ${attempt}/${this.config.retryAttempts} in ${backoffTime}ms`
           );
-          
+
           if (attempt < this.config.retryAttempts) {
             await this.sleep(backoffTime);
             continue;
@@ -154,11 +156,11 @@ export class LiteLLMRateLimiter {
    */
   private getWaitTime(): number {
     if (this.requestTimestamps.length === 0) return 0;
-    
+
     const oldestRequest = this.requestTimestamps[0];
     const timeSinceOldest = Date.now() - oldestRequest;
     const timeToWait = 60000 - timeSinceOldest; // 60 seconds
-    
+
     return Math.max(timeToWait, 0);
   }
 
@@ -191,10 +193,10 @@ export class LiteLLMRateLimiter {
    * Check if error is rate limit error
    */
   private isRateLimitError(error: any): boolean {
-    const errorMessage = error?.message?.toLowerCase() || '';
+    const errorMessage = error?.message?.toLowerCase() || "";
     return (
-      errorMessage.includes('rate limit') ||
-      errorMessage.includes('429') ||
+      errorMessage.includes("rate limit") ||
+      errorMessage.includes("429") ||
       error?.statusCode === 429
     );
   }
@@ -216,7 +218,8 @@ export class LiteLLMRateLimiter {
       maxPerMinute: this.config.maxRequestsPerMinute,
       concurrent: this.concurrent,
       maxConcurrent: this.config.maxConcurrent,
-      availableSlots: this.config.maxRequestsPerMinute - this.requestTimestamps.length,
+      availableSlots:
+        this.config.maxRequestsPerMinute - this.requestTimestamps.length,
     };
   }
 }

@@ -6,15 +6,26 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { 
-  Sparkles, Inbox, Star, Archive, Clock, Search, 
-  CheckCircle2, Mail, Zap, Filter, MoreHorizontal,
-  Circle, ChevronRight, Flame
+import {
+  Sparkles,
+  Inbox,
+  Star,
+  Archive,
+  Clock,
+  Search,
+  CheckCircle2,
+  Mail,
+  Zap,
+  Filter,
+  MoreHorizontal,
+  Circle,
+  ChevronRight,
+  Flame,
 } from "lucide-react";
 
 /**
  * SHORTWAVE-INSPIRED PREMIUM DESIGN
- * 
+ *
  * Modern UI Features:
  * - Glassmorphism panels with backdrop blur
  * - Rich mesh gradients
@@ -47,56 +58,86 @@ interface Email {
 }
 
 const bundles: Bundle[] = [
-  { id: 'hot', name: 'Hot Leads', count: 3, color: 'from-red-500 to-orange-500', icon: Flame, gradient: 'bg-gradient-to-br from-red-50 to-orange-50' },
-  { id: 'action', name: 'Needs Action', count: 5, color: 'from-blue-500 to-cyan-500', icon: Zap, gradient: 'bg-gradient-to-br from-blue-50 to-cyan-50' },
-  { id: 'waiting', name: 'Waiting', count: 2, color: 'from-yellow-500 to-amber-500', icon: Clock, gradient: 'bg-gradient-to-br from-yellow-50 to-amber-50' },
-  { id: 'done', name: 'Done', count: 12, color: 'from-green-500 to-emerald-500', icon: CheckCircle2, gradient: 'bg-gradient-to-br from-green-50 to-emerald-50' }
+  {
+    id: "hot",
+    name: "Hot Leads",
+    count: 3,
+    color: "from-red-500 to-orange-500",
+    icon: Flame,
+    gradient: "bg-gradient-to-br from-red-50 to-orange-50",
+  },
+  {
+    id: "action",
+    name: "Needs Action",
+    count: 5,
+    color: "from-blue-500 to-cyan-500",
+    icon: Zap,
+    gradient: "bg-gradient-to-br from-blue-50 to-cyan-50",
+  },
+  {
+    id: "waiting",
+    name: "Waiting",
+    count: 2,
+    color: "from-yellow-500 to-amber-500",
+    icon: Clock,
+    gradient: "bg-gradient-to-br from-yellow-50 to-amber-50",
+  },
+  {
+    id: "done",
+    name: "Done",
+    count: 12,
+    color: "from-green-500 to-emerald-500",
+    icon: CheckCircle2,
+    gradient: "bg-gradient-to-br from-green-50 to-emerald-50",
+  },
 ];
 
 const emails: Email[] = [
-  { 
-    id: '1', 
-    from: 'Matilde Skinneholm', 
-    avatar: 'MS',
-    subject: 'Tilbud på rengøring for kontor',
-    summary: 'Ny kunde søger tilbud på 250m² kontor med ugentlig service. Estimeret værdi: 40.000 kr.',
-    time: 'Nu',
-    bundle: 'hot',
+  {
+    id: "1",
+    from: "Matilde Skinneholm",
+    avatar: "MS",
+    subject: "Tilbud på rengøring for kontor",
+    summary:
+      "Ny kunde søger tilbud på 250m² kontor med ugentlig service. Estimeret værdi: 40.000 kr.",
+    time: "Nu",
+    bundle: "hot",
     starred: true,
     unread: true,
-    aiScore: 95
+    aiScore: 95,
   },
-  { 
-    id: '2', 
-    from: 'Hanne Andersen', 
-    avatar: 'HA',
-    subject: 'Follow-up på tilbud',
-    summary: 'Eksisterende lead følger op. Har modtaget tilbud, afventer svar.',
-    time: '2t',
-    bundle: 'waiting',
+  {
+    id: "2",
+    from: "Hanne Andersen",
+    avatar: "HA",
+    subject: "Follow-up på tilbud",
+    summary: "Eksisterende lead følger op. Har modtaget tilbud, afventer svar.",
+    time: "2t",
+    bundle: "waiting",
     starred: false,
     unread: true,
-    aiScore: 88
+    aiScore: 88,
   },
-  { 
-    id: '3', 
-    from: 'Lars Nielsen', 
-    avatar: 'LN',
-    subject: 'Booking bekræftet',
-    summary: 'Kunde bekræfter booking til onsdag kl. 10. Ingen yderligere action.',
-    time: '5t',
-    bundle: 'done',
+  {
+    id: "3",
+    from: "Lars Nielsen",
+    avatar: "LN",
+    subject: "Booking bekræftet",
+    summary:
+      "Kunde bekræfter booking til onsdag kl. 10. Ingen yderligere action.",
+    time: "5t",
+    bundle: "done",
     starred: false,
     unread: false,
-    aiScore: 75
-  }
+    aiScore: 75,
+  },
 ];
 
 export function EmailCenterShortwavePremium() {
   const [activeBundle, setActiveBundle] = useState<string | null>(null);
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(emails[0]);
 
-  const filteredEmails = activeBundle 
+  const filteredEmails = activeBundle
     ? emails.filter(e => e.bundle === activeBundle)
     : emails;
 
@@ -105,7 +146,7 @@ export function EmailCenterShortwavePremium() {
       {/* Beautiful Mesh Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 opacity-60" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(139,92,246,0.1),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(59,130,246,0.1),transparent_50%)]" />
-      
+
       <div className="relative flex h-[750px]">
         {/* Left Sidebar - Glassmorphism */}
         <div className="w-[280px] border-r border-white/20 backdrop-blur-xl bg-white/40 shadow-2xl">
@@ -126,8 +167,8 @@ export function EmailCenterShortwavePremium() {
             {/* Search with Glassmorphism */}
             <div className="relative mb-6">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input 
-                placeholder="Search emails..." 
+              <Input
+                placeholder="Search emails..."
                 className="pl-10 bg-white/60 border-white/40 backdrop-blur-sm shadow-lg focus:shadow-xl transition-all"
               />
             </div>
@@ -137,59 +178,67 @@ export function EmailCenterShortwavePremium() {
               <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-2">
                 Smart Bundles
               </div>
-              {bundles.map((bundle) => {
+              {bundles.map(bundle => {
                 const Icon = bundle.icon;
                 const isActive = activeBundle === bundle.id;
-                
+
                 return (
                   <button
                     key={bundle.id}
                     onClick={() => setActiveBundle(isActive ? null : bundle.id)}
                     className={cn(
                       "w-full group relative overflow-hidden rounded-xl p-4 transition-all duration-300",
-                      isActive 
-                        ? "shadow-xl scale-[1.02]" 
+                      isActive
+                        ? "shadow-xl scale-[1.02]"
                         : "shadow-md hover:shadow-lg hover:scale-[1.01]"
                     )}
                     style={{
-                      background: isActive 
-                        ? `linear-gradient(135deg, ${bundle.color.split(' ')[1]} 0%, ${bundle.color.split(' ')[3]} 100%)`
-                        : 'rgba(255, 255, 255, 0.7)'
+                      background: isActive
+                        ? `linear-gradient(135deg, ${bundle.color.split(" ")[1]} 0%, ${bundle.color.split(" ")[3]} 100%)`
+                        : "rgba(255, 255, 255, 0.7)",
                     }}
                   >
                     {/* Gradient Overlay on Hover */}
                     {!isActive && (
-                      <div 
+                      <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300"
                         style={{
-                          background: `linear-gradient(135deg, ${bundle.color.split(' ')[1]}, ${bundle.color.split(' ')[3]})`
+                          background: `linear-gradient(135deg, ${bundle.color.split(" ")[1]}, ${bundle.color.split(" ")[3]})`,
                         }}
                       />
                     )}
-                    
+
                     <div className="relative flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className={cn(
-                          "w-10 h-10 rounded-lg flex items-center justify-center shadow-md",
-                          isActive ? "bg-white/30 backdrop-blur-sm" : "bg-white/80"
-                        )}>
-                          <Icon className={cn(
-                            "w-5 h-5",
-                            isActive ? "text-white" : "text-gray-700"
-                          )} />
+                        <div
+                          className={cn(
+                            "w-10 h-10 rounded-lg flex items-center justify-center shadow-md",
+                            isActive
+                              ? "bg-white/30 backdrop-blur-sm"
+                              : "bg-white/80"
+                          )}
+                        >
+                          <Icon
+                            className={cn(
+                              "w-5 h-5",
+                              isActive ? "text-white" : "text-gray-700"
+                            )}
+                          />
                         </div>
-                        <span className={cn(
-                          "font-semibold text-sm",
-                          isActive ? "text-white" : "text-gray-800"
-                        )}>
+                        <span
+                          className={cn(
+                            "font-semibold text-sm",
+                            isActive ? "text-white" : "text-gray-800"
+                          )}
+                        >
                           {bundle.name}
                         </span>
                       </div>
-                      <Badge 
+                      <Badge
                         className={cn(
                           "shadow-md",
-                          isActive 
-                            ? "bg-white/30 text-white backdrop-blur-sm" 
+                          isActive
+                            ? "bg-white/30 text-white backdrop-blur-sm"
                             : "bg-white/80 text-gray-700"
                         )}
                       >
@@ -207,10 +256,10 @@ export function EmailCenterShortwavePremium() {
                 Quick Actions
               </div>
               {[
-                { icon: Star, label: 'Starred' },
-                { icon: Archive, label: 'Archive' },
-                { icon: Filter, label: 'Filters' }
-              ].map((action) => {
+                { icon: Star, label: "Starred" },
+                { icon: Archive, label: "Archive" },
+                { icon: Filter, label: "Filters" },
+              ].map(action => {
                 const Icon = action.icon;
                 return (
                   <button
@@ -218,7 +267,9 @@ export function EmailCenterShortwavePremium() {
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/50 hover:bg-white/70 backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-200"
                   >
                     <Icon className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-700">{action.label}</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      {action.label}
+                    </span>
                   </button>
                 );
               })}
@@ -232,9 +283,13 @@ export function EmailCenterShortwavePremium() {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-bold text-gray-800">
-                  {activeBundle ? bundles.find(b => b.id === activeBundle)?.name : 'All Mail'}
+                  {activeBundle
+                    ? bundles.find(b => b.id === activeBundle)?.name
+                    : "All Mail"}
                 </h3>
-                <p className="text-sm text-gray-600">{filteredEmails.length} emails</p>
+                <p className="text-sm text-gray-600">
+                  {filteredEmails.length} emails
+                </p>
               </div>
               <Button variant="ghost" size="sm" className="rounded-xl">
                 <MoreHorizontal className="w-4 h-4" />
@@ -251,13 +306,13 @@ export function EmailCenterShortwavePremium() {
                   className={cn(
                     "group relative overflow-hidden rounded-2xl p-5 cursor-pointer transition-all duration-300",
                     "bg-white/70 backdrop-blur-md border border-white/40",
-                    selectedEmail?.id === email.id 
-                      ? "shadow-2xl scale-[1.02] border-purple-200" 
+                    selectedEmail?.id === email.id
+                      ? "shadow-2xl scale-[1.02] border-purple-200"
                       : "shadow-lg hover:shadow-xl hover:scale-[1.01]",
                     email.unread && "bg-white/90"
                   )}
                   style={{
-                    animation: `slideUp 0.4s ease-out ${idx * 0.1}s both`
+                    animation: `slideUp 0.4s ease-out ${idx * 0.1}s both`,
                   }}
                 >
                   {/* AI Score Indicator - Subtle Glow */}
@@ -273,26 +328,34 @@ export function EmailCenterShortwavePremium() {
                           {email.avatar}
                         </AvatarFallback>
                       </Avatar>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
-                          <span className={cn(
-                            "font-semibold text-sm",
-                            email.unread ? "text-gray-900" : "text-gray-600"
-                          )}>
+                          <span
+                            className={cn(
+                              "font-semibold text-sm",
+                              email.unread ? "text-gray-900" : "text-gray-600"
+                            )}
+                          >
                             {email.from}
                           </span>
                           <div className="flex items-center gap-2">
                             {email.starred && (
                               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                             )}
-                            <span className="text-xs text-gray-500">{email.time}</span>
+                            <span className="text-xs text-gray-500">
+                              {email.time}
+                            </span>
                           </div>
                         </div>
-                        <h4 className={cn(
-                          "text-sm mb-2 line-clamp-1",
-                          email.unread ? "font-semibold text-gray-900" : "font-medium text-gray-700"
-                        )}>
+                        <h4
+                          className={cn(
+                            "text-sm mb-2 line-clamp-1",
+                            email.unread
+                              ? "font-semibold text-gray-900"
+                              : "font-medium text-gray-700"
+                          )}
+                        >
                           {email.subject}
                         </h4>
                       </div>
@@ -308,11 +371,16 @@ export function EmailCenterShortwavePremium() {
                       </div>
                       {/* AI Score Badge */}
                       <div className="absolute top-2 right-2">
-                        <div className={cn(
-                          "px-2 py-0.5 rounded-full text-xs font-semibold shadow-sm",
-                          email.aiScore >= 90 && "bg-green-100 text-green-700",
-                          email.aiScore >= 75 && email.aiScore < 90 && "bg-blue-100 text-blue-700"
-                        )}>
+                        <div
+                          className={cn(
+                            "px-2 py-0.5 rounded-full text-xs font-semibold shadow-sm",
+                            email.aiScore >= 90 &&
+                              "bg-green-100 text-green-700",
+                            email.aiScore >= 75 &&
+                              email.aiScore < 90 &&
+                              "bg-blue-100 text-blue-700"
+                          )}
+                        >
                           {email.aiScore}
                         </div>
                       </div>
@@ -321,10 +389,18 @@ export function EmailCenterShortwavePremium() {
                     {/* Hover Actions */}
                     <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       <div className="flex gap-1">
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 rounded-lg bg-white/80 backdrop-blur-sm shadow-md">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-8 w-8 p-0 rounded-lg bg-white/80 backdrop-blur-sm shadow-md"
+                        >
                           <Archive className="w-3.5 h-3.5" />
                         </Button>
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 rounded-lg bg-white/80 backdrop-blur-sm shadow-md">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-8 w-8 p-0 rounded-lg bg-white/80 backdrop-blur-sm shadow-md"
+                        >
                           <ChevronRight className="w-3.5 h-3.5" />
                         </Button>
                       </div>
@@ -348,7 +424,9 @@ export function EmailCenterShortwavePremium() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">{selectedEmail.subject}</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                      {selectedEmail.subject}
+                    </h2>
                     <div className="flex items-center gap-3 text-sm text-gray-600">
                       <span className="font-medium">{selectedEmail.from}</span>
                       <Circle className="w-1 h-1 fill-current" />
@@ -363,7 +441,10 @@ export function EmailCenterShortwavePremium() {
                     <Mail className="w-4 h-4 mr-2" />
                     Reply
                   </Button>
-                  <Button variant="outline" className="bg-white/70 backdrop-blur-sm border-white/40 shadow-md hover:shadow-lg">
+                  <Button
+                    variant="outline"
+                    className="bg-white/70 backdrop-blur-sm border-white/40 shadow-md hover:shadow-lg"
+                  >
                     <Archive className="w-4 h-4 mr-2" />
                     Archive
                   </Button>

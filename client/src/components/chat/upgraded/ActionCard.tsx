@@ -17,9 +17,13 @@ export interface ActionCardProps {
   iconColor: string; // e.g., "from-blue-500 to-purple-600"
   badge?: string;
   timestamp?: Date;
-  status?: 'success' | 'pending' | 'error';
+  status?: "success" | "pending" | "error";
   metadata?: Array<{ label: string; value: string; icon?: LucideIcon }>;
-  actions?: Array<{ label: string; onClick: () => void; variant?: 'default' | 'outline' }>;
+  actions?: Array<{
+    label: string;
+    onClick: () => void;
+    variant?: "default" | "outline";
+  }>;
   onCardClick?: () => void;
   copyableId?: string;
 }
@@ -31,11 +35,11 @@ export function ActionCard({
   iconColor,
   badge,
   timestamp,
-  status = 'success',
+  status = "success",
   metadata = [],
   actions = [],
   onCardClick,
-  copyableId
+  copyableId,
 }: ActionCardProps) {
   const [copied, setCopied] = useState(false);
 
@@ -49,13 +53,13 @@ export function ActionCard({
   };
 
   const statusStyles = {
-    success: 'border-l-green-500 bg-green-50/50 dark:bg-green-950/20',
-    pending: 'border-l-yellow-500 bg-yellow-50/50 dark:bg-yellow-950/20',
-    error: 'border-l-red-500 bg-red-50/50 dark:bg-red-950/20',
+    success: "border-l-green-500 bg-green-50/50 dark:bg-green-950/20",
+    pending: "border-l-yellow-500 bg-yellow-50/50 dark:bg-yellow-950/20",
+    error: "border-l-red-500 bg-red-50/50 dark:bg-red-950/20",
   };
 
   return (
-    <Card 
+    <Card
       className={cn(
         "group relative overflow-hidden border-l-4 transition-all duration-300",
         "hover:shadow-xl hover:scale-[1.02]",
@@ -67,18 +71,20 @@ export function ActionCard({
     >
       {/* Gradient overlay on hover */}
       <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
+
       <div className="relative p-4 space-y-3">
         {/* Header */}
         <div className="flex items-start gap-3">
           {/* Icon */}
-          <div className={cn(
-            "w-12 h-12 rounded-xl flex items-center justify-center shrink-0",
-            "shadow-lg backdrop-blur-sm",
-            "bg-linear-to-br",
-            iconColor,
-            "group-hover:scale-110 transition-transform duration-300"
-          )}>
+          <div
+            className={cn(
+              "w-12 h-12 rounded-xl flex items-center justify-center shrink-0",
+              "shadow-lg backdrop-blur-sm",
+              "bg-linear-to-br",
+              iconColor,
+              "group-hover:scale-110 transition-transform duration-300"
+            )}
+          >
             <Icon className="w-6 h-6 text-white" />
           </div>
 
@@ -92,9 +98,11 @@ export function ActionCard({
                 </Badge>
               )}
             </div>
-            
+
             {description && (
-              <p className="text-sm text-muted-foreground line-clamp-2">{description}</p>
+              <p className="text-sm text-muted-foreground line-clamp-2">
+                {description}
+              </p>
             )}
           </div>
 
@@ -120,7 +128,9 @@ export function ActionCard({
           <div className="grid grid-cols-2 gap-2">
             {metadata.map((item, idx) => (
               <div key={idx} className="flex items-center gap-2 text-xs">
-                {item.icon && <item.icon className="w-3.5 h-3.5 text-muted-foreground" />}
+                {item.icon && (
+                  <item.icon className="w-3.5 h-3.5 text-muted-foreground" />
+                )}
                 <span className="text-muted-foreground">{item.label}:</span>
                 <span className="font-medium truncate">{item.value}</span>
               </div>
@@ -134,9 +144,9 @@ export function ActionCard({
             {actions.map((action, idx) => (
               <Button
                 key={idx}
-                variant={action.variant || 'outline'}
+                variant={action.variant || "outline"}
                 size="sm"
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   action.onClick();
                 }}
@@ -152,7 +162,10 @@ export function ActionCard({
         {timestamp && (
           <div className="flex justify-end">
             <span className="text-xs text-muted-foreground">
-              {timestamp.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}
+              {timestamp.toLocaleTimeString("da-DK", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </span>
           </div>
         )}

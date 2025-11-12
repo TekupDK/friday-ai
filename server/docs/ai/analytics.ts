@@ -1,6 +1,6 @@
 /**
  * AI Documentation Analytics & Metrics
- * 
+ *
  * Track and analyze AI doc generation:
  * - Success/failure rates
  * - Generation times
@@ -58,20 +58,24 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
 
     // Calculate time-based metrics
     const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const todayStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
     const weekStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
     const generatedToday = aiDocs.filter(
-      (doc) => new Date(doc.createdAt) >= todayStart
+      doc => new Date(doc.createdAt) >= todayStart
     ).length;
 
     const generatedThisWeek = aiDocs.filter(
-      (doc) => new Date(doc.createdAt) >= weekStart
+      doc => new Date(doc.createdAt) >= weekStart
     ).length;
 
     const generatedThisMonth = aiDocs.filter(
-      (doc) => new Date(doc.createdAt) >= monthStart
+      doc => new Date(doc.createdAt) >= monthStart
     ).length;
 
     // Success rate (assuming all retrieved docs are successful)
@@ -85,13 +89,16 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
 
     // Top leads (extract from doc metadata)
     const leadCounts = new Map<string, { name: string; count: number }>();
-    
-    aiDocs.forEach((doc) => {
+
+    aiDocs.forEach(doc => {
       // Try to extract lead info from title or content
       const titleMatch = doc.title?.match(/Lead:\s*(.+?)(?:\s*-|$)/);
       if (titleMatch) {
         const leadName = titleMatch[1].trim();
-        const current = leadCounts.get(leadName) || { name: leadName, count: 0 };
+        const current = leadCounts.get(leadName) || {
+          name: leadName,
+          count: 0,
+        };
         leadCounts.set(leadName, { ...current, count: current.count + 1 });
       }
     });
@@ -106,14 +113,17 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
       .slice(0, 5);
 
     // Recent generations
-    const recentGenerations = aiDocs.slice(0, 10).map((doc) => ({
+    const recentGenerations = aiDocs.slice(0, 10).map(doc => ({
       docId: doc.id,
       title: doc.title || "Untitled",
       createdAt: new Date(doc.createdAt),
       tags: doc.tags || [],
     }));
 
-    logger.info({ totalGenerated, generatedToday }, "[AI Analytics] Metrics retrieved");
+    logger.info(
+      { totalGenerated, generatedToday },
+      "[AI Analytics] Metrics retrieved"
+    );
 
     return {
       totalGenerated,
@@ -128,7 +138,7 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
     };
   } catch (error: any) {
     logger.error({ error }, "[AI Analytics] Failed to get metrics");
-    
+
     // Return empty metrics on error
     return {
       totalGenerated: 0,
@@ -171,7 +181,7 @@ export async function logAIGeneration(data: {
 
     // In production, you might want to store this in a separate analytics table
     // For now, just logging it
-    
+
     // Could also send to external analytics service like Mixpanel, Segment, etc.
   } catch (error: any) {
     logger.error({ error }, "[AI Analytics] Failed to log generation");
@@ -185,7 +195,7 @@ export async function getGenerationStats(period: "day" | "week" | "month") {
   try {
     const db = getDb();
     const now = new Date();
-    
+
     let startDate: Date;
     switch (period) {
       case "day":
@@ -218,7 +228,7 @@ export async function getGenerationStats(period: "day" | "week" | "month") {
     return {
       period,
       count: docs.length,
-      docs: docs.map((doc) => ({
+      docs: docs.map(doc => ({
         id: doc.id,
         title: doc.title,
         createdAt: new Date(doc.createdAt),
@@ -243,16 +253,16 @@ export function calculateSavings(totalDocs: number) {
   // - AI doc creation: 30 seconds
   // - Time saved per doc: 29.5 minutes
   // - Cost of manual work: 500 DKK/hour (consultant rate)
-  
+
   const timePerDocManual = 30; // minutes
   const timePerDocAI = 0.5; // minutes
   const timeSavedPerDoc = timePerDocManual - timePerDocAI;
   const totalTimeSaved = timeSavedPerDoc * totalDocs; // minutes
   const hoursSaved = totalTimeSaved / 60;
-  
+
   const hourlyRate = 500; // DKK
   const costSaved = hoursSaved * hourlyRate;
-  
+
   return {
     totalDocs,
     timeSavedMinutes: totalTimeSaved,

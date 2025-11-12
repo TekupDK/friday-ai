@@ -3,13 +3,14 @@
 **Version:** 1.0.0  
 **Date:** November 9, 2025  
 **Timeline:** 2-3 weeks  
-**Status:** Ready for Execution  
+**Status:** Ready for Execution
 
 ---
 
 ## 📋 Overview
 
 Detailed step-by-step migration plan for integrating LiteLLM into Friday AI with:
+
 - ✅ Zero breaking changes (wrapper pattern)
 - ✅ Gradual rollout (0% → 10% → 50% → 100%)
 - ✅ Zero cost increase ($0.00/month)
@@ -24,6 +25,7 @@ Detailed step-by-step migration plan for integrating LiteLLM into Friday AI with
 **Morning (3h): Install & Configure**
 
 1. Install LiteLLM
+
 ```bash
 pip install 'litellm[proxy]'
 litellm --version
@@ -41,6 +43,7 @@ litellm --version
 4. Create client.ts (100 lines)
 
 **Deliverables:**
+
 - [ ] LiteLLM running locally
 - [ ] Config with 5 FREE models
 - [ ] Type definitions complete
@@ -52,7 +55,7 @@ litellm --version
 **Morning (3h): Core Wrapper**
 
 1. Create index.ts with invokeLLM() wrapper
-2. Update server/_core/env.ts (add ENABLE_LITELLM)
+2. Update server/\_core/env.ts (add ENABLE_LITELLM)
 3. Update feature-flags.ts (add litellm flags)
 
 **Afternoon (4h): Monitoring & Tests**
@@ -62,6 +65,7 @@ litellm --version
 3. Write unit tests (150 lines)
 
 **Deliverables:**
+
 - [ ] Wrapper maintains backward compatibility
 - [ ] Feature flags ready
 - [ ] Tests pass
@@ -84,6 +88,7 @@ litellm --version
 7. Document results
 
 **Deliverables:**
+
 - [ ] All features work with LiteLLM
 - [ ] Performance acceptable
 - [ ] No critical issues
@@ -95,23 +100,26 @@ litellm --version
 **Full Day (7h): Update Imports**
 
 Update 6-10 files:
+
 ```typescript
 // OLD:
-import { invokeLLM } from '@/server/_core/llm';
+import { invokeLLM } from "@/server/_core/llm";
 
 // NEW:
-import { invokeLLM } from '@/server/integrations/litellm';
+import { invokeLLM } from "@/server/integrations/litellm";
 ```
 
 Files to update:
+
 - server/docs/ai/analyzer.ts
-- server/docs/ai/auto-create.ts  
+- server/docs/ai/auto-create.ts
 - server/ai-email-summary.ts
 - server/ai-label-suggestions.ts
 - server/routers/chat-streaming.ts
 - (any others using invokeLLM)
 
 **Deliverables:**
+
 - [ ] All imports updated
 - [ ] No TypeScript errors
 - [ ] E2E tests pass
@@ -123,7 +131,7 @@ Files to update:
 **Morning (3h): Complete Docs**
 
 1. SETUP.md (installation guide)
-2. API.md (API reference)  
+2. API.md (API reference)
 3. TROUBLESHOOTING.md (common issues)
 
 **Afternoon (4h): Deploy to Staging**
@@ -134,6 +142,7 @@ Files to update:
 4. 24h monitoring
 
 **Deliverables:**
+
 - [ ] All docs complete
 - [ ] Staging deployment successful
 - [ ] 24h monitoring clean
@@ -154,6 +163,7 @@ LITELLM_ROLLOUT_PERCENTAGE=10
 - Fix any issues
 
 **Success Criteria:**
+
 - [ ] Error rate same or lower
 - [ ] Latency acceptable
 - [ ] No user complaints
@@ -170,6 +180,7 @@ LITELLM_ROLLOUT_PERCENTAGE=50
 - Compare with 10% metrics
 
 **Success Criteria:**
+
 - [ ] Metrics consistent
 - [ ] Performance stable
 
@@ -185,6 +196,7 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 - Monitor closely for 48h
 
 **Success Criteria:**
+
 - [ ] All users migrated
 - [ ] No issues detected
 - [ ] Cost still $0.00
@@ -203,6 +215,7 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 ## 📊 Monitoring Checklist
 
 ### Daily Checks
+
 - [ ] Error rate
 - [ ] Latency (p50, p95, p99)
 - [ ] Fallback rate
@@ -210,6 +223,7 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 - [ ] User feedback
 
 ### Weekly Checks
+
 - [ ] Cost (should be $0.00)
 - [ ] Usage patterns
 - [ ] Performance trends
@@ -220,22 +234,26 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 ## 🚨 Rollback Procedures
 
 ### Level 1: Feature Flag (30 seconds)
+
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=0
 ```
 
 ### Level 2: Code Rollback (5 min)
+
 ```typescript
 // Revert imports to original
-import { invokeLLM } from '@/server/_core/llm';
+import { invokeLLM } from "@/server/_core/llm";
 ```
 
 ### Level 3: Stop LiteLLM (10 min)
+
 ```bash
 docker-compose stop litellm
 ```
 
 ### Level 4: Git Revert (15 min)
+
 ```bash
 git revert <commit>
 git push
@@ -246,6 +264,7 @@ git push
 ## ✅ Final Success Criteria
 
 ### Must Have (P0)
+
 - [ ] Uses ONLY FREE OpenRouter models
 - [ ] Zero cost increase ($0.00)
 - [ ] No breaking changes
@@ -254,12 +273,14 @@ git push
 - [ ] Test coverage >80%
 
 ### Should Have (P1)
+
 - [ ] Latency increase <10ms
 - [ ] Error rate same or lower
 - [ ] Metrics dashboard functional
 - [ ] Documentation complete
 
 ### Nice to Have (P2)
+
 - [ ] Advanced monitoring
 - [ ] A/B testing framework
 - [ ] Performance improvements
@@ -269,6 +290,7 @@ git push
 ## 📝 File Checklist
 
 ### Implementation Files
+
 - [ ] server/integrations/litellm/config/litellm.config.yaml
 - [ ] server/integrations/litellm/docker/docker-compose.litellm.yml
 - [ ] server/integrations/litellm/types.ts
@@ -280,11 +302,13 @@ git push
 - [ ] server/integrations/litellm/monitoring/logger.ts
 
 ### Test Files
+
 - [ ] tests/integrations/litellm/client.test.ts
 - [ ] tests/integrations/litellm/integration.test.ts
 - [ ] tests/integrations/litellm/e2e.test.ts
 
 ### Documentation Files
+
 - [x] docs/integrations/litellm/ARCHITECTURE.md
 - [x] docs/integrations/litellm/DECISIONS.md
 - [x] docs/integrations/litellm/MIGRATION_PLAN.md
@@ -298,4 +322,4 @@ git push
 **Next Action:** Day 1, Task 1.1 - Install LiteLLM  
 **Estimated Completion:** 2-3 weeks  
 **Risk Level:** LOW  
-**Cost Impact:** $0.00  
+**Cost Impact:** $0.00

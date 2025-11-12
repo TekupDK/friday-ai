@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # PostgreSQL database for Langfuse
@@ -35,34 +35,42 @@ services:
     environment:
       # Database connection
       DATABASE_URL: postgresql://langfuse:langfuse_password_change_in_production@langfuse-db:5432/langfuse
-      
+
       # Direct database URL (used by some migrations)
       DIRECT_URL: postgresql://langfuse:langfuse_password_change_in_production@langfuse-db:5432/langfuse
-      
+
       # NextAuth configuration (for web UI authentication)
       NEXTAUTH_SECRET: langfuse-nextauth-secret-change-in-production-use-random-string
       NEXTAUTH_URL: http://localhost:3001
-      
+
       # Salt for encryption (change in production!)
       SALT: langfuse-salt-change-in-production-use-random-string
-      
+
       # Telemetry (optional - set to false for privacy)
       TELEMETRY_ENABLED: "false"
-      
+
       # Optional: Custom branding
       LANGFUSE_INIT_PROJECT_NAME: "Friday AI"
       LANGFUSE_INIT_PROJECT_PUBLIC_KEY: friday-public-key
       LANGFUSE_INIT_PROJECT_SECRET_KEY: friday-secret-key
-      
+
       # Optional: Admin user (auto-created on first start)
       # LANGFUSE_INIT_USER_EMAIL: admin@friday-ai.com
       # LANGFUSE_INIT_USER_PASSWORD: change-me-in-production
-      
+
       # Performance tuning
       NODE_ENV: production
-      
+
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/public/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/api/public/health",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3

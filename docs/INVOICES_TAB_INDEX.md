@@ -11,7 +11,9 @@
 Ny til InvoicesTab eller skal fixe bugs? Følg denne guide:
 
 ### 1️⃣ Forstå Problemerne
+
 📄 **[TECHNICAL_ANALYSIS.md](../tasks/invoices-ui/TECHNICAL_ANALYSIS.md)**
+
 - 12 dokumenterede fejl (critical → low priority)
 - Memory leaks, race conditions, type safety
 - Performance bottlenecks
@@ -22,7 +24,9 @@ Ny til InvoicesTab eller skal fixe bugs? Følg denne guide:
 ---
 
 ### 2️⃣ Planlæg Implementeringen
+
 📄 **[IMPLEMENTATION_PLAN.md](../tasks/invoices-ui/IMPLEMENTATION_PLAN.md)**
+
 - 4 faser (Critical → Quality → Database → Features)
 - Kode eksempler for hver fix
 - Test strategier
@@ -33,7 +37,9 @@ Ny til InvoicesTab eller skal fixe bugs? Følg denne guide:
 ---
 
 ### 3️⃣ Udfør Arbejdet
+
 📄 **[QUICK_CHECKLIST.md](../tasks/invoices-ui/QUICK_CHECKLIST.md)**
+
 - Printvenlig checklist
 - Tick af når tasks er færdige
 - Noter blockers underveis
@@ -46,27 +52,27 @@ Ny til InvoicesTab eller skal fixe bugs? Følg denne guide:
 
 ### Core Documentation (tasks/invoices-ui/)
 
-| Dokument | Formål | Hvem skal læse? |
-|----------|--------|-----------------|
-| **[README.md](../tasks/invoices-ui/README.md)** | Overview + quick start guide | Alle nye udviklere |
-| **[TECHNICAL_ANALYSIS.md](../tasks/invoices-ui/TECHNICAL_ANALYSIS.md)** | Dybdegående fejl analyse | Developers der skal fixe bugs |
-| **[IMPLEMENTATION_PLAN.md](../tasks/invoices-ui/IMPLEMENTATION_PLAN.md)** | Step-by-step implementation | Developers under implementation |
-| **[QUICK_CHECKLIST.md](../tasks/invoices-ui/QUICK_CHECKLIST.md)** | Daglig task tracking | Alle under udvikling |
-| **[PLAN.md](../tasks/invoices-ui/PLAN.md)** | Original UX forbedringer | Product/UX team |
-| **[STATUS.md](../tasks/invoices-ui/STATUS.md)** | Løbende status + milestones | Project managers, team leads |
-| **[CHANGELOG.md](../tasks/invoices-ui/CHANGELOG.md)** | Historisk change log | Alle (dokumentation) |
+| Dokument                                                                  | Formål                       | Hvem skal læse?                 |
+| ------------------------------------------------------------------------- | ---------------------------- | ------------------------------- |
+| **[README.md](../tasks/invoices-ui/README.md)**                           | Overview + quick start guide | Alle nye udviklere              |
+| **[TECHNICAL_ANALYSIS.md](../tasks/invoices-ui/TECHNICAL_ANALYSIS.md)**   | Dybdegående fejl analyse     | Developers der skal fixe bugs   |
+| **[IMPLEMENTATION_PLAN.md](../tasks/invoices-ui/IMPLEMENTATION_PLAN.md)** | Step-by-step implementation  | Developers under implementation |
+| **[QUICK_CHECKLIST.md](../tasks/invoices-ui/QUICK_CHECKLIST.md)**         | Daglig task tracking         | Alle under udvikling            |
+| **[PLAN.md](../tasks/invoices-ui/PLAN.md)**                               | Original UX forbedringer     | Product/UX team                 |
+| **[STATUS.md](../tasks/invoices-ui/STATUS.md)**                           | Løbende status + milestones  | Project managers, team leads    |
+| **[CHANGELOG.md](../tasks/invoices-ui/CHANGELOG.md)**                     | Historisk change log         | Alle (dokumentation)            |
 
 ---
 
 ## 🚨 KRITISKE PROBLEMER OVERSIGT
 
-| # | Problem | Severity | Estimat | Status |
-|---|---------|----------|---------|--------|
-| 1 | Memory leak i CSV export | 🔴 Critical | 15 min | ⏳ Pending |
-| 2 | Ingen TypeScript interfaces | 🔴 Critical | 1-2 timer | ⏳ Pending |
-| 3 | Race condition i AI analysis | 🔴 High | 1 time | ⏳ Pending |
-| 4 | Ingen debouncing på search | 🟠 Medium | 1 time | ⏳ Pending |
-| 5 | Database schema mismatch | 🔴 Blocker | 3-4 timer | ⏳ Pending |
+| #   | Problem                      | Severity    | Estimat   | Status     |
+| --- | ---------------------------- | ----------- | --------- | ---------- |
+| 1   | Memory leak i CSV export     | 🔴 Critical | 15 min    | ⏳ Pending |
+| 2   | Ingen TypeScript interfaces  | 🔴 Critical | 1-2 timer | ⏳ Pending |
+| 3   | Race condition i AI analysis | 🔴 High     | 1 time    | ⏳ Pending |
+| 4   | Ingen debouncing på search   | 🟠 Medium   | 1 time    | ⏳ Pending |
+| 5   | Database schema mismatch     | 🔴 Blocker  | 3-4 timer | ⏳ Pending |
 
 **Total estimat for critical fixes:** 6-9 timer
 
@@ -104,42 +110,44 @@ Week 1: Critical Fixes (Dag 1-2)
 
 ### Technical Health
 
-| Metric | Current | Target | Priority |
-|--------|---------|--------|----------|
-| Memory leaks | 1 | 0 | 🔴 Critical |
-| TypeScript `any` types | ~8 | 0 | 🔴 Critical |
-| Race conditions | 1 | 0 | 🔴 High |
-| Accessibility score | ~60 | >90 | 🟡 Medium |
-| Test coverage | ~20% | >80% | 🟡 Medium |
+| Metric                 | Current | Target | Priority    |
+| ---------------------- | ------- | ------ | ----------- |
+| Memory leaks           | 1       | 0      | 🔴 Critical |
+| TypeScript `any` types | ~8      | 0      | 🔴 Critical |
+| Race conditions        | 1       | 0      | 🔴 High     |
+| Accessibility score    | ~60     | >90    | 🟡 Medium   |
+| Test coverage          | ~20%    | >80%   | 🟡 Medium   |
 
 ### Performance
 
-| Metric | Current | Target | Priority |
-|--------|---------|--------|----------|
-| Search response time | ~50ms/keystroke | <100ms (debounced) | 🟠 High |
-| Render 100 invoices | ~300ms | <200ms | 🟡 Medium |
-| AI analysis (p95) | ~3-5s | <5s | 🟢 Low |
-| Memory usage (stable) | Growing | Stable | 🔴 Critical |
+| Metric                | Current         | Target             | Priority    |
+| --------------------- | --------------- | ------------------ | ----------- |
+| Search response time  | ~50ms/keystroke | <100ms (debounced) | 🟠 High     |
+| Render 100 invoices   | ~300ms          | <200ms             | 🟡 Medium   |
+| AI analysis (p95)     | ~3-5s           | <5s                | 🟢 Low      |
+| Memory usage (stable) | Growing         | Stable             | 🔴 Critical |
 
 ### User Experience
 
-| Metric | Current | Target | Priority |
-|--------|---------|--------|----------|
-| AI analysis success rate | ~90% | >95% | 🟠 High |
-| CSV export success rate | ~95% | >99% | 🟠 High |
-| User satisfaction | Unknown | >4.0/5.0 | 🟡 Medium |
+| Metric                   | Current | Target   | Priority  |
+| ------------------------ | ------- | -------- | --------- |
+| AI analysis success rate | ~90%    | >95%     | 🟠 High   |
+| CSV export success rate  | ~95%    | >99%     | 🟠 High   |
+| User satisfaction        | Unknown | >4.0/5.0 | 🟡 Medium |
 
 ---
 
 ## 🧪 TESTING CHECKLIST
 
 ### Automated Tests
+
 - [ ] Unit tests (memory leak, race condition, filters)
 - [ ] Integration tests (Billy API sync, database cache)
 - [ ] E2E tests (search, analyze, export)
 - [ ] Performance tests (debouncing, render time)
 
 ### Manual Tests
+
 - [ ] Search invoices (type fast)
 - [ ] Filter by multiple statuses
 - [ ] AI analysis (single invoice)
@@ -150,6 +158,7 @@ Week 1: Critical Fixes (Dag 1-2)
 - [ ] Mobile responsive (dialog, cards)
 
 ### Pre-deploy Tests
+
 - [ ] Lighthouse Accessibility >90
 - [ ] No console errors
 - [ ] No TypeScript errors
@@ -161,11 +170,13 @@ Week 1: Critical Fixes (Dag 1-2)
 ## 🔗 RELATED DOCUMENTATION
 
 ### Internal Docs
+
 - [Billy Integration](./BILLY_INTEGRATION.md) — Billy API + MCP server
 - [Database Setup](./DATABASE_SETUP.md) — Schema + migrations
 - [Testing Guide](./TESTING_REPORT.md) — Test strategies
 
 ### External Resources
+
 - [Billy API (GitHub)](https://github.com/TekupDK/tekup-billy)
 - [Drizzle ORM](https://orm.drizzle.team/)
 - [shadcn/ui](https://ui.shadcn.com/)
@@ -199,6 +210,7 @@ Week 1: Critical Fixes (Dag 1-2)
 ```
 
 ### Data Flow
+
 1. **List Invoices:** Database-first (cache), fallback to Billy API
 2. **AI Analysis:** Direct LLM call with invoice summary
 3. **Feedback:** Store in analytics_events table
@@ -209,6 +221,7 @@ Week 1: Critical Fixes (Dag 1-2)
 ## 🚀 QUICK START COMMANDS
 
 ### Development
+
 ```bash
 # Start dev server
 pnpm dev
@@ -227,6 +240,7 @@ pnpm format
 ```
 
 ### Database
+
 ```bash
 # Generate migration
 pnpm drizzle-kit generate
@@ -239,6 +253,7 @@ pnpm drizzle-kit studio
 ```
 
 ### Production
+
 ```bash
 # Build
 pnpm build
@@ -255,6 +270,7 @@ pnpm preview
 ## 📞 SUPPORT & ESCALATION
 
 ### Questions?
+
 1. Check this index for relevant docs
 2. Read TECHNICAL_ANALYSIS.md for bug details
 3. Check IMPLEMENTATION_PLAN.md for code examples
@@ -262,11 +278,13 @@ pnpm preview
 5. Tag @frontend-team if urgent
 
 ### Escalation Path
+
 ```
 Developer → Tech Lead → Engineering Manager → CTO
 ```
 
 ### Critical Issues
+
 - Memory leaks in production? → Revert + hotfix
 - Data corruption? → Tag @backend-team + @devops
 - Security vulnerability? → Tag @security immediately
@@ -276,6 +294,7 @@ Developer → Tech Lead → Engineering Manager → CTO
 ## 🎓 LEARNING RESOURCES
 
 ### Concepts Used
+
 - **React Hooks:** useState, useMemo, useEffect, useReducer
 - **tRPC:** Type-safe API calls
 - **Drizzle ORM:** Database queries
@@ -283,6 +302,7 @@ Developer → Tech Lead → Engineering Manager → CTO
 - **Tailwind CSS:** Utility-first styling
 
 ### Recommended Reading
+
 1. [React Performance Optimization](https://react.dev/learn/render-and-commit)
 2. [TypeScript Best Practices](https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html)
 3. [Accessibility (a11y) Guidelines](https://www.a11yproject.com/)
@@ -293,24 +313,28 @@ Developer → Tech Lead → Engineering Manager → CTO
 ## 📝 CONTRIBUTION GUIDELINES
 
 ### Before Starting
+
 - [ ] Read TECHNICAL_ANALYSIS.md
 - [ ] Check STATUS.md for current state
 - [ ] Create branch: `fix/invoices-<issue-name>`
 - [ ] Update QUICK_CHECKLIST.md as you work
 
 ### During Development
+
 - [ ] Write tests for your changes
 - [ ] Update documentation if behavior changes
 - [ ] Check TypeScript errors (`pnpm typecheck`)
 - [ ] Test accessibility (keyboard + screen reader)
 
 ### Before Committing
+
 - [ ] Run tests: `pnpm test`
 - [ ] Format code: `pnpm format`
 - [ ] Update CHANGELOG.md
 - [ ] Write clear commit message (see conventions below)
 
 ### Commit Conventions
+
 ```
 <type>(invoices): <description>
 

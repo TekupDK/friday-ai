@@ -25,28 +25,46 @@ interface FreeBusyCardProps {
   onCancel?: () => void;
 }
 
-export function FreeBusyCard({ 
-  date = new Date().toISOString().split('T')[0],
+export function FreeBusyCard({
+  date = new Date().toISOString().split("T")[0],
   timeSlots = [],
   onBookSlot,
   onChangeDate,
-  onCancel 
+  onCancel,
 }: FreeBusyCardProps) {
   const [selectedDate, setSelectedDate] = useState(date);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
 
   // Generate sample time slots if none provided
   const defaultSlots: TimeSlot[] = [
-    { id: '1', time: '09:00', duration: '30 min', available: true },
-    { id: '2', time: '09:30', duration: '30 min', available: true },
-    { id: '3', time: '10:00', duration: '1 time', available: false, conflictingEvent: 'Team Møde' },
-    { id: '4', time: '11:00', duration: '30 min', available: true },
-    { id: '5', time: '11:30', duration: '1 time', available: false, conflictingEvent: 'Kunde Call' },
-    { id: '6', time: '13:00', duration: '30 min', available: true },
-    { id: '7', time: '13:30', duration: '1 time', available: true },
-    { id: '8', time: '14:30', duration: '30 min', available: false, conflictingEvent: 'Lunch' },
-    { id: '9', time: '15:00', duration: '1 time', available: true },
-    { id: '10', time: '16:00', duration: '30 min', available: true },
+    { id: "1", time: "09:00", duration: "30 min", available: true },
+    { id: "2", time: "09:30", duration: "30 min", available: true },
+    {
+      id: "3",
+      time: "10:00",
+      duration: "1 time",
+      available: false,
+      conflictingEvent: "Team Møde",
+    },
+    { id: "4", time: "11:00", duration: "30 min", available: true },
+    {
+      id: "5",
+      time: "11:30",
+      duration: "1 time",
+      available: false,
+      conflictingEvent: "Kunde Call",
+    },
+    { id: "6", time: "13:00", duration: "30 min", available: true },
+    { id: "7", time: "13:30", duration: "1 time", available: true },
+    {
+      id: "8",
+      time: "14:30",
+      duration: "30 min",
+      available: false,
+      conflictingEvent: "Lunch",
+    },
+    { id: "9", time: "15:00", duration: "1 time", available: true },
+    { id: "10", time: "16:00", duration: "30 min", available: true },
   ];
 
   const slots = timeSlots.length > 0 ? timeSlots : defaultSlots;
@@ -88,11 +106,13 @@ export function FreeBusyCard({
 
         {/* Date Selection */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Vælg dato:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Vælg dato:
+          </label>
           <input
             type="date"
             value={selectedDate}
-            onChange={(e) => handleDateChange(e.target.value)}
+            onChange={e => handleDateChange(e.target.value)}
             className="w-full h-9 px-3 border rounded-lg text-sm"
           />
         </div>
@@ -106,17 +126,21 @@ export function FreeBusyCard({
                 {availableSlots} af {totalSlots} tider ledige
               </span>
             </div>
-            <Badge className={availableSlots > 0 ? "bg-green-500" : "bg-red-500"}>
-              {availableSlots > 0 ? 'Ledig' : 'Optaget'}
+            <Badge
+              className={availableSlots > 0 ? "bg-green-500" : "bg-red-500"}
+            >
+              {availableSlots > 0 ? "Ledig" : "Optaget"}
             </Badge>
           </div>
         </div>
 
         {/* Time Slots */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Tidspunkter:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Tidspunkter:
+          </label>
           <div className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto">
-            {slots.map((slot) => (
+            {slots.map(slot => (
               <button
                 key={slot.id}
                 onClick={() => handleSlotSelect(slot.id)}
@@ -140,9 +164,13 @@ export function FreeBusyCard({
                       )}
                       <span className="text-sm font-medium">{slot.time}</span>
                     </div>
-                    <p className="text-xs text-muted-foreground">{slot.duration}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {slot.duration}
+                    </p>
                     {slot.conflictingEvent && (
-                      <p className="text-xs text-red-600 truncate">{slot.conflictingEvent}</p>
+                      <p className="text-xs text-red-600 truncate">
+                        {slot.conflictingEvent}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -155,15 +183,16 @@ export function FreeBusyCard({
         {selectedSlot && (
           <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 text-xs">
             <span className="font-medium text-green-700 dark:text-green-400">
-              Valgt: {slots.find(s => s.id === selectedSlot)?.time} ({slots.find(s => s.id === selectedSlot)?.duration})
+              Valgt: {slots.find(s => s.id === selectedSlot)?.time} (
+              {slots.find(s => s.id === selectedSlot)?.duration})
             </span>
           </div>
         )}
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button 
-            onClick={handleBook} 
+          <Button
+            onClick={handleBook}
             className="flex-1 bg-linear-to-r from-blue-600 to-cyan-600"
             disabled={!selectedSlot}
           >

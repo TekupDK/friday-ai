@@ -12,6 +12,22 @@
 */
 
 import "dotenv/config";
+import { appendFileSync } from "fs";
+const LOG_PATH = "server/scripts/email-smoke-test.log";
+const originalLog = console.log;
+const originalError = console.error;
+console.log = (...args: any[]) => {
+  try {
+    appendFileSync(LOG_PATH, args.map(String).join(" ") + "\n");
+  } catch {}
+  originalLog(...args);
+};
+console.error = (...args: any[]) => {
+  try {
+    appendFileSync(LOG_PATH, "[ERROR] " + args.map(String).join(" ") + "\n");
+  } catch {}
+  originalError(...args);
+};
 import {
   getGmailThread,
   modifyGmailThread,

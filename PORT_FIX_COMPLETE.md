@@ -14,7 +14,7 @@
    - Port mapping: `3000:3000` → `3001:3000`
    - NEXTAUTH_URL: `http://localhost:3000` → `http://localhost:3001`
 
-2. **server/_core/env.ts**
+2. **server/\_core/env.ts**
    - Default: `http://localhost:3000` → `http://localhost:3001`
 
 3. **server/integrations/langfuse/client.ts**
@@ -56,16 +56,19 @@ PostgreSQL (Langfuse):  localhost:5433        (doesn't conflict)
 ## 📝 Setup Steps (Updated)
 
 ### 1. Access Langfuse
+
 ```
 Open: http://localhost:3001  (NOT 3000!)
 ```
 
 ### 2. Create Account
+
 - First user = admin
 - Create project: "Friday AI"
 - Get API keys from Settings
 
 ### 3. Add to .env.dev
+
 ```bash
 LANGFUSE_ENABLED=true
 LANGFUSE_PUBLIC_KEY=pk-lf-XXXXXXXXXXXXXXXX
@@ -74,6 +77,7 @@ LANGFUSE_BASE_URL=http://localhost:3001  # Port 3001!
 ```
 
 ### 4. Restart Friday AI
+
 ```bash
 pnpm dev
 ```

@@ -963,10 +963,13 @@ export default function CalendarTab() {
                                   {estimate.hours && (
                                     <div className="flex justify-between gap-4">
                                       <span className="text-muted-foreground">
-                                        Timer ({estimate.hours}t × {BUSINESS_CONSTANTS.HOURLY_RATE} kr/t)
+                                        Timer ({estimate.hours}t ×{" "}
+                                        {BUSINESS_CONSTANTS.HOURLY_RATE} kr/t)
                                       </span>
                                       <span className="font-medium">
-                                        {parseFloat(estimate.hours) * BUSINESS_CONSTANTS.HOURLY_RATE} kr
+                                        {parseFloat(estimate.hours) *
+                                          BUSINESS_CONSTANTS.HOURLY_RATE}{" "}
+                                        kr
                                       </span>
                                     </div>
                                   )}

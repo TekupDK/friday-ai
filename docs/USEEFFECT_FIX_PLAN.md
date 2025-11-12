@@ -10,6 +10,7 @@
 ## 🎯 **OBJECTIVE**
 
 Fix all useEffect dependency issues to:
+
 - Prevent infinite loops
 - Ensure correct re-execution
 - Follow React best practices
@@ -42,6 +43,7 @@ Fix all useEffect dependency issues to:
 **File:** `client/src/components/panels/AIAssistantPanelV2.tsx`
 
 **Current Code:**
+
 ```typescript
 const [isInitialized, setIsInitialized] = useState(false);
 
@@ -54,11 +56,13 @@ useEffect(() => {
 ```
 
 **Problem:**
+
 - `createConversation` is a mutation object that changes on every render
 - `isInitialized` flag is a workaround
 - Violates React best practices
 
 **Solution:**
+
 ```typescript
 // Remove mutation from dependencies
 useEffect(() => {
@@ -76,6 +80,7 @@ useEffect(() => {
 **File:** `client/src/App.tsx`
 
 **Current Code:**
+
 ```typescript
 useEffect(() => {
   if (isAuthenticated && user?.id) {
@@ -85,15 +90,18 @@ useEffect(() => {
 ```
 
 **Problem:**
+
 - `queryClient` is stable but shouldn't be in dependencies
 - Adds unnecessary complexity
 
 **Solution:**
+
 ```typescript
 useEffect(() => {
   if (isAuthenticated && user?.id) {
-    warmupCache(queryClient, String(user.id))
-      .catch(err => console.warn('Cache warmup failed:', err));
+    warmupCache(queryClient, String(user.id)).catch(err =>
+      console.warn("Cache warmup failed:", err)
+    );
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [isAuthenticated, user?.id]); // Remove queryClient
@@ -108,6 +116,7 @@ useEffect(() => {
 **File:** `client/src/components/chat/ShortWaveChatPanel.tsx`
 
 **Current Code:**
+
 ```typescript
 useEffect(() => {
   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -115,10 +124,12 @@ useEffect(() => {
 ```
 
 **Problem:**
+
 - Scrolls even when user is reading old messages
 - Should only scroll if user is at bottom
 
 **Solution:**
+
 ```typescript
 const [autoScroll, setAutoScroll] = useState(true);
 
@@ -180,17 +191,20 @@ const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
 ## 🛠️ **IMPLEMENTATION STRATEGY**
 
 ### **1. Create Branch**
+
 ```bash
 git checkout -b fix/useeffect-dependencies
 ```
 
 ### **2. Fix Files One by One**
+
 - Fix file
 - Test locally
 - Commit
 - Move to next
 
 ### **3. Testing**
+
 ```bash
 # Run tests
 pnpm test
@@ -203,6 +217,7 @@ pnpm dev
 ```
 
 ### **4. Merge**
+
 ```bash
 git push origin fix/useeffect-dependencies
 # Create PR
@@ -237,11 +252,13 @@ Create `docs/REACT_PATTERNS.md`:
 ## useEffect Dependencies
 
 ### ✅ DO:
+
 - Include all values used inside effect
 - Use primitive dependencies when possible
 - Add eslint-disable comment when intentional
 
 ### ❌ DON'T:
+
 - Include stable refs (queryClient, etc.)
 - Include mutation objects
 - Ignore ESLint warnings without comment
@@ -249,24 +266,27 @@ Create `docs/REACT_PATTERNS.md`:
 ### Examples:
 
 #### Good:
+
 \`\`\`typescript
 useEffect(() => {
-  fetchData(userId);
+fetchData(userId);
 }, [userId]); // Primitive dependency
 \`\`\`
 
 #### Bad:
+
 \`\`\`typescript
 useEffect(() => {
-  mutation.mutate();
+mutation.mutate();
 }, [mutation]); // Mutation changes every render
 \`\`\`
 
 #### Intentional:
+
 \`\`\`typescript
 useEffect(() => {
-  initOnce();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+initOnce();
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, []); // Intentionally run once
 \`\`\`
 ```
@@ -287,12 +307,14 @@ useEffect(() => {
 ## 📊 **EXPECTED RESULTS**
 
 ### **Before:**
+
 - 79 useEffect calls
 - ~20 with issues
 - ESLint warnings
 - Potential bugs
 
 ### **After:**
+
 - 79 useEffect calls
 - 0 issues
 - No ESLint warnings

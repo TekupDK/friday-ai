@@ -1,7 +1,7 @@
 # InvoicesTab — Quick Implementation Checklist
 
-**Start dato:** _____
-**Forventet færdig:** _____
+**Start dato:** **\_**
+**Forventet færdig:** **\_**
 **Status:** ⏸️ Not Started
 
 ---
@@ -9,12 +9,14 @@
 ## 🔴 PHASE 1: CRITICAL FIXES (Dag 1-2)
 
 ### ✅ Task 1.1: Fix Memory Leak
+
 - [ ] Add `URL.revokeObjectURL(url)` after CSV export
 - [ ] Test: Export 10+ CSVs, verify no memory leak
 - **Estimat:** 15 min
 - **Files:** `InvoicesTab.tsx:261`
 
 ### ✅ Task 1.2: TypeScript Interfaces
+
 - [ ] Create `BillyInvoice` interface i `shared/types.ts`
 - [ ] Create `BillyInvoiceLine` interface
 - [ ] Replace all `any` types in InvoicesTab
@@ -23,6 +25,7 @@
 - **Files:** `shared/types.ts`, `InvoicesTab.tsx`
 
 ### ✅ Task 1.3: Fix Race Condition
+
 - [ ] Add `currentAnalysisId` state
 - [ ] Check ID before updating analysis state
 - [ ] Test: Click analyze on A, then B quickly
@@ -30,6 +33,7 @@
 - **Files:** `InvoicesTab.tsx:264-303`
 
 ### ✅ Task 1.4: Error Handling (CSV)
+
 - [ ] Wrap CSV export i try-catch
 - [ ] Add success toast
 - [ ] Add error toast
@@ -37,6 +41,7 @@
 - **Files:** `InvoicesTab.tsx:487-492`
 
 ### ✅ Task 1.5: Search Debouncing
+
 - [ ] Create/check `useDebouncedValue` hook
 - [ ] Split `searchQuery` → `searchInput` + `debouncedSearch`
 - [ ] Update `filteredInvoices` useMemo
@@ -45,13 +50,14 @@
 - **Files:** `hooks/useDebouncedValue.ts`, `InvoicesTab.tsx`
 
 **Phase 1 Done?** ✅ / ❌
-**Review:** _____________________
+**Review:** **********\_**********
 
 ---
 
 ## 🟡 PHASE 2: CODE QUALITY (Dag 3-4)
 
 ### ✅ Task 2.1: useReducer Refactor
+
 - [ ] Create `AnalysisState` type
 - [ ] Create `analysisReducer` function
 - [ ] Replace 6 states with reducer
@@ -60,6 +66,7 @@
 - **Files:** `InvoicesTab.tsx`
 
 ### ✅ Task 2.2: Accessibility
+
 - [ ] Add `tabIndex`, `role`, `aria-label` til cards
 - [ ] Add keyboard handler (Enter/Space)
 - [ ] Add ARIA labels til icon buttons
@@ -70,6 +77,7 @@
 - **Files:** `InvoicesTab.tsx`
 
 ### ✅ Task 2.3: Extract Constants
+
 - [ ] Create `INVOICE_CONFIG` object
 - [ ] Extract polling intervals
 - [ ] Extract debounce delay
@@ -78,7 +86,7 @@
 - **Files:** `InvoicesTab.tsx`
 
 **Phase 2 Done?** ✅ / ❌
-**Review:** _____________________
+**Review:** **********\_**********
 
 ---
 
@@ -87,6 +95,7 @@
 **⚠️ KOORDINÉR MED BACKEND TEAM**
 
 ### ✅ Task 3.1: Database Migration
+
 - [ ] Update `drizzle/schema.ts` (add columns)
 - [ ] Run `pnpm drizzle-kit generate`
 - [ ] Test migration i dev
@@ -98,6 +107,7 @@
 - **Files:** `drizzle/schema.ts`
 
 ### ✅ Task 3.2: Update Backend Cache
+
 - [ ] Update `cacheInvoicesToDatabase` function
 - [ ] Update `getInvoices` query
 - [ ] Test Billy API sync
@@ -106,6 +116,7 @@
 - **Files:** `server/invoice-cache.ts`, `server/billy.ts`
 
 ### ✅ Task 3.3: Backfill Data
+
 - [ ] Create `scripts/backfill-invoices.ts`
 - [ ] Test in dev environment
 - [ ] Schedule maintenance window
@@ -115,7 +126,7 @@
 - **Files:** `scripts/backfill-invoices.ts`
 
 **Phase 3 Done?** ✅ / ❌
-**Review:** _____________________
+**Review:** **********\_**********
 
 ---
 
@@ -124,6 +135,7 @@
 **Vælg 1-2 features baseret på bruger feedback**
 
 ### Option A: Bulk Actions 🎯
+
 - [ ] Add checkbox til invoice cards
 - [ ] Add `selectedInvoices` state
 - [ ] Build bulk action bar
@@ -133,6 +145,7 @@
 - **ROI:** High
 
 ### Option B: Smart Filters 🎯
+
 - [ ] Design filter structure
 - [ ] Add "Save Filter" button
 - [ ] Add filter selector dropdown
@@ -142,6 +155,7 @@
 - **ROI:** Medium
 
 ### Option C: AI Suggestions 🔮
+
 - [ ] Design suggestion schema
 - [ ] Create background analysis job
 - [ ] Store suggestions in database
@@ -151,13 +165,14 @@
 - **ROI:** High (innovative)
 
 **Phase 4 Done?** ✅ / ❌
-**Review:** _____________________
+**Review:** **********\_**********
 
 ---
 
 ## 🧪 TESTING
 
 ### Unit Tests
+
 - [ ] CSV export memory test
 - [ ] Race condition test
 - [ ] Search/filter logic
@@ -165,11 +180,13 @@
 - [ ] Coverage > 80%
 
 ### Integration Tests
+
 - [ ] Billy API sync
 - [ ] Database cache
 - [ ] AI analysis flow
 
 ### E2E Tests (Playwright)
+
 - [ ] Search invoices
 - [ ] Filter by status
 - [ ] Analyze invoice
@@ -177,6 +194,7 @@
 - [ ] Keyboard navigation
 
 ### Performance Tests
+
 - [ ] Search debouncing < 100ms
 - [ ] Render 100 invoices < 200ms
 - [ ] Memory stable (no leaks)
@@ -188,6 +206,7 @@
 ## 🚀 DEPLOYMENT
 
 ### Pre-deploy
+
 - [ ] All phases complete
 - [ ] Tests passing
 - [ ] Migration tested in staging
@@ -196,6 +215,7 @@
 - [ ] Code review approved
 
 ### Deploy
+
 - [ ] Run database migration (production)
 - [ ] Run backfill script
 - [ ] Deploy code (CI/CD)
@@ -203,6 +223,7 @@
 - [ ] Monitor errors (Sentry/logs)
 
 ### Post-deploy
+
 - [ ] Verify InvoicesTab loads
 - [ ] Test search/filter
 - [ ] Test AI analysis
@@ -217,6 +238,7 @@
 ## 📊 SUCCESS METRICS
 
 ### Technical
+
 - [ ] 0 memory leaks
 - [ ] 0 `any` types
 - [ ] Lighthouse A11y > 90
@@ -224,11 +246,13 @@
 - [ ] No console errors
 
 ### Performance
+
 - [ ] Search < 100ms
 - [ ] Render 100 items < 200ms
 - [ ] AI analysis < 5s (p95)
 
 ### User Experience
+
 - [ ] AI success rate > 95%
 - [ ] CSV success rate > 99%
 - [ ] Feedback rating > 4.0/5.0
@@ -238,16 +262,22 @@
 ## 📝 NOTES
 
 **Blockers:**
-_____________________________
-_____________________________
+
+---
+
+---
 
 **Decisions:**
-_____________________________
-_____________________________
+
+---
+
+---
 
 **Follow-up:**
-_____________________________
-_____________________________
+
+---
+
+---
 
 ---
 

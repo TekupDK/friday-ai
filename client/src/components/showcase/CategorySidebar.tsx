@@ -20,24 +20,24 @@ interface CategorySidebarProps {
   className?: string;
 }
 
-export function CategorySidebar({ 
-  categories, 
+export function CategorySidebar({
+  categories,
   activeSection,
   onNavigate,
-  className 
+  className,
 }: CategorySidebarProps) {
   return (
     <aside className={cn("sticky top-8 h-[calc(100vh-6rem)]", className)}>
       <ScrollArea className="h-full pr-4">
         <div className="space-y-6">
-          {categories.map((category) => (
+          {categories.map(category => (
             <div key={category.name} className="space-y-2">
               <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
                 {category.emoji && <span>{category.emoji}</span>}
                 {category.name}
               </h4>
               <ul className="space-y-1">
-                {category.items.map((item) => (
+                {category.items.map(item => (
                   <li key={item.id}>
                     <button
                       onClick={() => onNavigate(item.id)}
@@ -50,7 +50,9 @@ export function CategorySidebar({
                       )}
                     >
                       <span className="flex items-center gap-2">
-                        {item.emoji && <span className="text-xs">{item.emoji}</span>}
+                        {item.emoji && (
+                          <span className="text-xs">{item.emoji}</span>
+                        )}
                         {item.name}
                       </span>
                     </button>

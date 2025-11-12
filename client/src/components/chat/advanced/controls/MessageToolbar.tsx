@@ -1,8 +1,8 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Toggle } from "@/components/ui/toggle"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Toggle } from "@/components/ui/toggle";
 import {
   Bold,
   Italic,
@@ -27,28 +27,33 @@ import {
   Type,
   Heading1,
   Heading2,
-  Heading3
-} from "lucide-react"
+  Heading3,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator
-} from "@/components/ui/dropdown-menu"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-export interface MessageToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
-  onFormat?: (format: string, value?: any) => void
-  onInsert?: (type: string, data?: any) => void
-  onUndo?: () => void
-  onRedo?: () => void
-  activeFormats?: Set<string>
-  canUndo?: boolean
-  canRedo?: boolean
-  showAdvanced?: boolean
-  compact?: boolean
-  className?: string
+export interface MessageToolbarProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  onFormat?: (format: string, value?: any) => void;
+  onInsert?: (type: string, data?: any) => void;
+  onUndo?: () => void;
+  onRedo?: () => void;
+  activeFormats?: Set<string>;
+  canUndo?: boolean;
+  canRedo?: boolean;
+  showAdvanced?: boolean;
+  compact?: boolean;
+  className?: string;
 }
 
 export function MessageToolbar({
@@ -64,75 +69,112 @@ export function MessageToolbar({
   className,
   ...props
 }: MessageToolbarProps) {
-  const [showEmojiPicker, setShowEmojiPicker] = React.useState(false)
-  const [showColorPicker, setShowColorPicker] = React.useState(false)
+  const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
+  const [showColorPicker, setShowColorPicker] = React.useState(false);
 
   const formatButtons = [
-    { key: 'bold', icon: Bold, label: 'Fed', shortcut: 'Ctrl+B' },
-    { key: 'italic', icon: Italic, label: 'Kursiv', shortcut: 'Ctrl+I' },
-    { key: 'underline', icon: Underline, label: 'Understreget', shortcut: 'Ctrl+U' },
-    { key: 'strikethrough', icon: Strikethrough, label: 'Gennemstreget' },
-    { key: 'code', icon: Code, label: 'Kode', shortcut: 'Ctrl+`' },
-  ]
+    { key: "bold", icon: Bold, label: "Fed", shortcut: "Ctrl+B" },
+    { key: "italic", icon: Italic, label: "Kursiv", shortcut: "Ctrl+I" },
+    {
+      key: "underline",
+      icon: Underline,
+      label: "Understreget",
+      shortcut: "Ctrl+U",
+    },
+    { key: "strikethrough", icon: Strikethrough, label: "Gennemstreget" },
+    { key: "code", icon: Code, label: "Kode", shortcut: "Ctrl+`" },
+  ];
 
   const structureButtons = [
-    { key: 'heading1', icon: Heading1, label: 'Overskrift 1' },
-    { key: 'heading2', icon: Heading2, label: 'Overskrift 2' },
-    { key: 'heading3', icon: Heading3, label: 'Overskrift 3' },
-    { key: 'bullet-list', icon: List, label: 'Punktopstilling' },
-    { key: 'ordered-list', icon: ListOrdered, label: 'Nummereret liste' },
-    { key: 'quote', icon: Quote, label: 'Citat' },
-  ]
+    { key: "heading1", icon: Heading1, label: "Overskrift 1" },
+    { key: "heading2", icon: Heading2, label: "Overskrift 2" },
+    { key: "heading3", icon: Heading3, label: "Overskrift 3" },
+    { key: "bullet-list", icon: List, label: "Punktopstilling" },
+    { key: "ordered-list", icon: ListOrdered, label: "Nummereret liste" },
+    { key: "quote", icon: Quote, label: "Citat" },
+  ];
 
   const alignmentButtons = [
-    { key: 'align-left', icon: AlignLeft, label: 'Venstrejuster' },
-    { key: 'align-center', icon: AlignCenter, label: 'Centrer' },
-    { key: 'align-right', icon: AlignRight, label: 'Højrejuster' },
-  ]
+    { key: "align-left", icon: AlignLeft, label: "Venstrejuster" },
+    { key: "align-center", icon: AlignCenter, label: "Centrer" },
+    { key: "align-right", icon: AlignRight, label: "Højrejuster" },
+  ];
 
   const colors = [
-    '#000000', '#374151', '#6B7280', '#9CA3AF',
-    '#EF4444', '#F97316', '#F59E0B', '#EAB308',
-    '#22C55E', '#06B6D4', '#3B82F6', '#8B5CF6',
-    '#EC4899', '#F43F5E', '#84CC16', '#10B981'
-  ]
+    "#000000",
+    "#374151",
+    "#6B7280",
+    "#9CA3AF",
+    "#EF4444",
+    "#F97316",
+    "#F59E0B",
+    "#EAB308",
+    "#22C55E",
+    "#06B6D4",
+    "#3B82F6",
+    "#8B5CF6",
+    "#EC4899",
+    "#F43F5E",
+    "#84CC16",
+    "#10B981",
+  ];
 
   const emojis = [
-    '😀', '😂', '😊', '😍', '🤔', '😮', '🙄', '😴',
-    '👍', '👎', '❤️', '🔥', '✨', '💯', '🎉', '🚀',
-    '📝', '💡', '⚡', '🔍', '📎', '📊', '📈', '🔔'
-  ]
+    "😀",
+    "😂",
+    "😊",
+    "😍",
+    "🤔",
+    "😮",
+    "🙄",
+    "😴",
+    "👍",
+    "👎",
+    "❤️",
+    "🔥",
+    "✨",
+    "💯",
+    "🎉",
+    "🚀",
+    "📝",
+    "💡",
+    "⚡",
+    "🔍",
+    "📎",
+    "📊",
+    "📈",
+    "🔔",
+  ];
 
   const handleFormat = (format: string) => {
-    onFormat?.(format)
-  }
+    onFormat?.(format);
+  };
 
   const handleInsert = (type: string, data?: any) => {
-    onInsert?.(type, data)
-    if (type === 'emoji') setShowEmojiPicker(false)
-  }
+    onInsert?.(type, data);
+    if (type === "emoji") setShowEmojiPicker(false);
+  };
 
   const handleColorSelect = (color: string) => {
-    onFormat?.('color', color)
-    setShowColorPicker(false)
-  }
+    onFormat?.("color", color);
+    setShowColorPicker(false);
+  };
 
   return (
-    <div className={cn(
-      "flex items-center gap-1 p-2 border border-border rounded-lg bg-background",
-      compact && "p-1 gap-0.5",
-      className
-    )} {...props}>
-
+    <div
+      className={cn(
+        "flex items-center gap-1 p-2 border border-border rounded-lg bg-background",
+        compact && "p-1 gap-0.5",
+        className
+      )}
+      {...props}
+    >
       {/* Undo/Redo */}
       <div className="flex items-center gap-1">
         <Button
           variant="ghost"
           size="sm"
-          className={cn(
-            "h-8 w-8 p-0",
-            compact && "h-6 w-6"
-          )}
+          className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
           onClick={onUndo}
           disabled={!canUndo}
           title="Fortryd (Ctrl+Z)"
@@ -143,10 +185,7 @@ export function MessageToolbar({
         <Button
           variant="ghost"
           size="sm"
-          className={cn(
-            "h-8 w-8 p-0",
-            compact && "h-6 w-6"
-          )}
+          className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
           onClick={onRedo}
           disabled={!canRedo}
           title="Gentag (Ctrl+Y)"
@@ -169,7 +208,7 @@ export function MessageToolbar({
               "h-8 w-8 p-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground",
               compact && "h-6 w-6"
             )}
-            title={`${label}${shortcut ? ` (${shortcut})` : ''}`}
+            title={`${label}${shortcut ? ` (${shortcut})` : ""}`}
           >
             <Icon className={cn("h-4 w-4", compact && "h-3 w-3")} />
           </Toggle>
@@ -184,10 +223,7 @@ export function MessageToolbar({
           <Button
             variant="ghost"
             size="sm"
-            className={cn(
-              "h-8 w-8 p-0",
-              compact && "h-6 w-6"
-            )}
+            className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
             title="Tekststruktur"
           >
             <Type className={cn("h-4 w-4", compact && "h-3 w-3")} />
@@ -213,10 +249,7 @@ export function MessageToolbar({
           <Button
             variant="ghost"
             size="sm"
-            className={cn(
-              "h-8 w-8 p-0",
-              compact && "h-6 w-6"
-            )}
+            className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
             title="Tekstfarve"
           >
             <Palette className={cn("h-4 w-4", compact && "h-3 w-3")} />
@@ -224,7 +257,7 @@ export function MessageToolbar({
         </PopoverTrigger>
         <PopoverContent className="w-64" align="start">
           <div className="grid grid-cols-4 gap-2 p-2">
-            {colors.map((color) => (
+            {colors.map(color => (
               <button
                 key={color}
                 className="w-8 h-8 rounded border-2 border-transparent hover:border-gray-300 transition-colors"
@@ -268,11 +301,8 @@ export function MessageToolbar({
         <Button
           variant="ghost"
           size="sm"
-          className={cn(
-            "h-8 w-8 p-0",
-            compact && "h-6 w-6"
-          )}
-          onClick={() => handleInsert('link')}
+          className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
+          onClick={() => handleInsert("link")}
           title="Indsæt link"
         >
           <Link className={cn("h-4 w-4", compact && "h-3 w-3")} />
@@ -281,11 +311,8 @@ export function MessageToolbar({
         <Button
           variant="ghost"
           size="sm"
-          className={cn(
-            "h-8 w-8 p-0",
-            compact && "h-6 w-6"
-          )}
-          onClick={() => handleInsert('image')}
+          className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
+          onClick={() => handleInsert("image")}
           title="Indsæt billede"
         >
           <Image className={cn("h-4 w-4", compact && "h-3 w-3")} />
@@ -294,11 +321,8 @@ export function MessageToolbar({
         <Button
           variant="ghost"
           size="sm"
-          className={cn(
-            "h-8 w-8 p-0",
-            compact && "h-6 w-6"
-          )}
-          onClick={() => handleInsert('attachment')}
+          className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
+          onClick={() => handleInsert("attachment")}
           title="Vedhæft fil"
         >
           <Paperclip className={cn("h-4 w-4", compact && "h-3 w-3")} />
@@ -310,10 +334,7 @@ export function MessageToolbar({
             <Button
               variant="ghost"
               size="sm"
-              className={cn(
-                "h-8 w-8 p-0",
-                compact && "h-6 w-6"
-              )}
+              className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
               title="Indsæt emoji"
             >
               <Smile className={cn("h-4 w-4", compact && "h-3 w-3")} />
@@ -321,11 +342,11 @@ export function MessageToolbar({
           </PopoverTrigger>
           <PopoverContent className="w-64" align="start">
             <div className="grid grid-cols-6 gap-2 p-2">
-              {emojis.map((emoji) => (
+              {emojis.map(emoji => (
                 <button
                   key={emoji}
                   className="w-8 h-8 flex items-center justify-center text-lg hover:bg-accent rounded transition-colors"
-                  onClick={() => handleInsert('emoji', emoji)}
+                  onClick={() => handleInsert("emoji", emoji)}
                 >
                   {emoji}
                 </button>
@@ -338,11 +359,8 @@ export function MessageToolbar({
         <Button
           variant="ghost"
           size="sm"
-          className={cn(
-            "h-8 w-8 p-0",
-            compact && "h-6 w-6"
-          )}
-          onClick={() => handleInsert('mention')}
+          className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
+          onClick={() => handleInsert("mention")}
           title="Nævn bruger"
         >
           <AtSign className={cn("h-4 w-4", compact && "h-3 w-3")} />
@@ -352,16 +370,13 @@ export function MessageToolbar({
         <Button
           variant="ghost"
           size="sm"
-          className={cn(
-            "h-8 w-8 p-0",
-            compact && "h-6 w-6"
-          )}
-          onClick={() => handleInsert('channel')}
+          className={cn("h-8 w-8 p-0", compact && "h-6 w-6")}
+          onClick={() => handleInsert("channel")}
           title="Nævn kanal"
         >
           <Hash className={cn("h-4 w-4", compact && "h-3 w-3")} />
         </Button>
       </div>
     </div>
-  )
+  );
 }

@@ -17,12 +17,14 @@ This guide covers the gradual rollout of OpenRouter AI models (GLM-4.5 Air & GPT
 ## ✅ Pre-Deployment Checklist
 
 ### 1. **Phase 3 Complete** ✅
+
 - [x] All tests passed (98% success rate)
 - [x] Performance benchmarked (0.9s avg response time)
 - [x] Documentation complete (3500+ lines)
 - [x] Models validated (GLM-4.5 Air + GPT-OSS 20B)
 
 ### 2. **Infrastructure Ready**
+
 - [x] Feature flag system implemented
 - [x] Metrics tracking system deployed
 - [x] Monitoring API endpoints created
@@ -30,6 +32,7 @@ This guide covers the gradual rollout of OpenRouter AI models (GLM-4.5 Air & GPT
 - [x] Fallback to Gemma 3 27B configured
 
 ### 3. **Environment Configuration**
+
 - [ ] Production `.env` file updated
 - [ ] `OPENROUTER_ROLLOUT_PERCENTAGE` set to `0`
 - [ ] `OPENROUTER_API_KEY` configured
@@ -103,6 +106,7 @@ curl -X POST https://staging.your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 #### 1.5 Run Smoke Tests
 
 **Test 1: Chat Functionality**
+
 ```bash
 # Open staging app
 # Navigate to chat
@@ -111,6 +115,7 @@ curl -X POST https://staging.your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 ```
 
 **Test 2: Email Drafting**
+
 ```bash
 # Navigate to email section
 # Try drafting an email
@@ -118,12 +123,14 @@ curl -X POST https://staging.your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 ```
 
 **Test 3: Check Metrics**
+
 ```bash
 # API call to check metrics
 curl https://staging.your-domain.com/api/trpc/aiMetrics.getSummary?lastMinutes=60
 ```
 
 **Success Criteria:**
+
 - ✅ All features working
 - ✅ Response time < 3s
 - ✅ No errors in logs
@@ -146,6 +153,7 @@ nano .env
 ```
 
 Update these variables:
+
 ```bash
 OPENROUTER_ROLLOUT_PERCENTAGE=10  # 10% of users
 FORCE_OPENROUTER=false
@@ -181,12 +189,14 @@ curl https://your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 #### 2.4 Monitor Metrics (48 hours)
 
 **Every 6 Hours:**
+
 ```bash
 # Get metrics summary
 curl https://your-domain.com/api/trpc/aiMetrics.getSummary?lastMinutes=360
 ```
 
 **Check:**
+
 - Error rate: Should be < 1%
 - Avg response time: Should be < 3s
 - User feedback: Monitor support tickets
@@ -202,16 +212,19 @@ curl https://your-domain.com/api/trpc/aiMetrics.getSummary?lastMinutes=360
 #### 2.5 Decision Point (After 48h)
 
 **If all metrics healthy:**
+
 ```bash
 ✅ Proceed to 50% rollout
 ```
 
 **If warnings (but no critical issues):**
+
 ```bash
 ⚠️  Hold at 10%, monitor for another 24h
 ```
 
 **If critical issues:**
+
 ```bash
 🚨 Rollback to 0%
 # Update .env
@@ -246,6 +259,7 @@ docker-compose restart
 Same monitoring as 10% rollout, but with increased traffic.
 
 **Additional checks:**
+
 - Compare OpenRouter vs Gemma 3 performance
 - Look for patterns in errors
 - Monitor user satisfaction scores
@@ -286,12 +300,14 @@ curl https://your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 #### 4.4 Continuous Monitoring
 
 **Daily for first week:**
+
 - Check metrics dashboard
 - Review error logs
 - Monitor user feedback
 - Track cost (should stay $0)
 
 **Weekly after first week:**
+
 - Review performance trends
 - Optimize based on real usage
 - Consider new features
@@ -303,6 +319,7 @@ curl https://your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 ### Access Metrics Dashboard
 
 **Via API:**
+
 ```bash
 # Get summary
 curl https://your-domain.com/api/trpc/aiMetrics.getSummary
@@ -318,6 +335,7 @@ curl https://your-domain.com/api/trpc/aiMetrics.checkRolloutHealth
 ```
 
 **Via Server Logs:**
+
 ```bash
 # SSH into server
 ssh production-server
@@ -406,18 +424,21 @@ FORCE_OPENROUTER=false
 ## 🎯 Success Criteria
 
 ### **10% Rollout Success:**
+
 - ✅ Error rate < 1%
 - ✅ Avg response time < 3s
 - ✅ No critical user complaints
 - ✅ Metrics stable for 48h
 
 ### **50% Rollout Success:**
+
 - ✅ Error rate < 1%
 - ✅ Performance consistent with 10%
 - ✅ Positive user feedback
 - ✅ Metrics stable for 48h
 
 ### **100% Rollout Success:**
+
 - ✅ Error rate < 1%
 - ✅ Avg response time < 2s
 - ✅ Cost remains $0
@@ -438,24 +459,28 @@ Keep track of each deployment:
 **Engineer:** [YOUR NAME]
 
 ### Pre-Deployment
+
 - [ ] Code reviewed
 - [ ] Tests passed
 - [ ] Staging verified
 - [ ] Metrics baseline captured
 
 ### Deployment
+
 - [ ] Environment variables updated
 - [ ] Code deployed
 - [ ] Server restarted
 - [ ] Rollout verified
 
 ### Post-Deployment (24h)
-- [ ] Error rate: ____%
-- [ ] Avg response time: ____ms
-- [ ] Total requests: ____
-- [ ] User complaints: ____
+
+- [ ] Error rate: \_\_\_\_%
+- [ ] Avg response time: \_\_\_\_ms
+- [ ] Total requests: \_\_\_\_
+- [ ] User complaints: \_\_\_\_
 
 ### Decision
+
 - [ ] Proceed to next phase
 - [ ] Hold current phase
 - [ ] Rollback
@@ -473,12 +498,14 @@ Keep track of each deployment:
 **Symptoms:** Error rate > 5%
 
 **Diagnosis:**
+
 ```bash
 # Check recent errors
 curl https://your-domain.com/api/trpc/aiMetrics.getSummary | jq '.modelBreakdown'
 ```
 
 **Solutions:**
+
 1. Check if specific model is failing
 2. Verify OpenRouter API key is valid
 3. Check rate limits
@@ -490,12 +517,14 @@ curl https://your-domain.com/api/trpc/aiMetrics.getSummary | jq '.modelBreakdown
 **Symptoms:** Avg response time > 5s
 
 **Diagnosis:**
+
 ```bash
 # Check P95 and P99 times
 curl https://your-domain.com/api/trpc/aiMetrics.getSummary | jq '.p95ResponseTime, .p99ResponseTime'
 ```
 
 **Solutions:**
+
 1. Check network latency to OpenRouter
 2. Verify not hitting rate limits
 3. Check server resources (CPU, memory)
@@ -506,12 +535,14 @@ curl https://your-domain.com/api/trpc/aiMetrics.getSummary | jq '.p95ResponseTim
 **Symptoms:** Some users report old behavior
 
 **Diagnosis:**
+
 ```bash
 # Check rollout percentage
 curl https://your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 ```
 
 **Solutions:**
+
 1. Verify `OPENROUTER_ROLLOUT_PERCENTAGE` is set correctly
 2. Ensure server was restarted after .env change
 3. Check user ID hashing logic in feature flags
@@ -521,11 +552,13 @@ curl https://your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 ## 📞 Support & Escalation
 
 **During Rollout:**
+
 - Monitor Slack/Discord for user reports
 - Check support ticket system
 - Have rollback procedure ready
 
 **Emergency Contacts:**
+
 - DevOps: [CONTACT]
 - Backend Team: [CONTACT]
 - Product Owner: [CONTACT]
@@ -549,6 +582,7 @@ curl https://your-domain.com/api/trpc/aiMetrics.getRolloutStatus
 **Next Phase:** Phase 5 - Optimization & New Features
 
 **Estimated Timeline:**
+
 - Staging: Day 0 (today)
 - 10%: Day 1-2
 - 50%: Day 3-4

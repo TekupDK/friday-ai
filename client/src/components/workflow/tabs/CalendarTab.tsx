@@ -13,13 +13,13 @@ export default function CalendarTab() {
         <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
           <Calendar className="w-10 h-10 text-white" />
         </div>
-        
+
         <div className="space-y-3">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Kalender & Planlægning
           </h2>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Professionel kalenderstyring til Rendetalje. Planlæg rengøringsjobs, 
+            Professionel kalenderstyring til Rendetalje. Planlæg rengøringsjobs,
             administrer medarbejderskemaer og optimer ruter mellem lokationer.
           </p>
         </div>
@@ -55,9 +55,7 @@ export default function CalendarTab() {
             <Plus className="w-4 h-4" />
             Planlæg Job
           </Button>
-          <Button variant="outline">
-            Se Kalender
-          </Button>
+          <Button variant="outline">Se Kalender</Button>
         </div>
       </div>
     </div>

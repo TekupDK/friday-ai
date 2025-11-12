@@ -10,17 +10,17 @@
 
 ### Version Evolution
 
-| Version | Gmail | Calendar | Billy | Revenue | Completeness |
-|---------|-------|----------|-------|---------|--------------|
-| **V4.3** | 2,447 (100%) | 73 (3%) | 93 (4%) | 80k | 46% |
-| **V4.3.1** | 536 (78% ↓) | 54 (10%) | 70 (13%) | - | - |
-| **V4.3.2** | 536 (same) | 30 (6%) | 70 (13%) | 169k | 52% |
-| **V4.3.3** | 536 (same) | **84 (16%)** | **100 (19%)** | **220k** | **62.5%** |
+| Version    | Gmail        | Calendar     | Billy         | Revenue  | Completeness |
+| ---------- | ------------ | ------------ | ------------- | -------- | ------------ |
+| **V4.3**   | 2,447 (100%) | 73 (3%)      | 93 (4%)       | 80k      | 46%          |
+| **V4.3.1** | 536 (78% ↓)  | 54 (10%)     | 70 (13%)      | -        | -            |
+| **V4.3.2** | 536 (same)   | 30 (6%)      | 70 (13%)      | 169k     | 52%          |
+| **V4.3.3** | 536 (same)   | **84 (16%)** | **100 (19%)** | **220k** | **62.5%**    |
 
 ### Total Improvements (V4.3 → V4.3.3)
 
 - ✅ **Calendar Matching**: 3% → 16% (+**433%**)
-- ✅ **Billy Matching**: 4% → 19% (+**375%**)  
+- ✅ **Billy Matching**: 4% → 19% (+**375%**)
 - ✅ **Revenue Tracked**: 80k → 220k (+**175%**)
 - ✅ **Data Completeness**: 46% → 62.5% (+**36%**)
 - ✅ **Noise Reduction**: 2,447 → 536 emails (-**78%**)
@@ -62,6 +62,7 @@ Data Quality: 62.5% avg completeness ✅
 ## 🔧 V4.3.3 Advanced Features
 
 ### 1. **Targeted Gmail Search** ✅
+
 ```typescript
 // Multi-filter approach
 from:(leadpoint OR leadmail OR adhelp)
@@ -72,12 +73,13 @@ to:(info@rendetalje.dk OR sp@adhelp.dk OR mw@adhelp.dk)
 **Result**: 2,447 → 536 emails (78% noise reduction)
 
 ### 2. **RenOS Calendar Parsing** ✅
+
 ```typescript
 // Parsed fields from calendar:
 title: "🏠 RenOS Booking - Customer Name"
 description:
   - 📧 Email: customer@example.com
-  - 📞 Telefon: +45 12345678  
+  - 📞 Telefon: +45 12345678
   - 📍 Adresse: Street Address
   - 🏠 Service: Service Type
   - 💰 Pris: 500 DKK
@@ -86,11 +88,12 @@ description:
 **Result**: Rich data for matching & classification
 
 ### 3. **Gmail Body Parsing** ✅
+
 ```typescript
 // Extracted from leadmail body:
 - Customer email (for Billy matching)
 - Customer phone
-- Customer name  
+- Customer name
 - Property address
 - Property size (m²)
 ```
@@ -98,6 +101,7 @@ description:
 **Result**: Customer email from body enables Billy matching!
 
 ### 4. **Advanced Calendar Matching** ✅
+
 ```typescript
 Scoring system (threshold: 30 points):
 ├─ Customer email match: 100 pts  ⭐
@@ -110,10 +114,11 @@ Scoring system (threshold: 30 points):
 **Result**: 6% → 16% calendar matches (+167%)
 
 ### 5. **Advanced Billy Matching** ✅
+
 ```typescript
 Scoring system (threshold: 35 points):
 ├─ Email match (Gmail OR Calendar): 100 pts ⭐
-├─ Phone match (Gmail OR Calendar): 80 pts ⭐  
+├─ Phone match (Gmail OR Calendar): 80 pts ⭐
 ├─ Fuzzy name match: 50/20 pts
 ├─ Fuzzy address match: 40/15 pts 🆕
 ├─ Amount matching ±5-30%: 60/30/10 pts 🆕
@@ -127,6 +132,7 @@ Scoring system (threshold: 35 points):
 ## 📁 File Structure
 
 ### **Pipeline Scripts** (Complete)
+
 ```
 scripts/
 ├── 1-collect-and-link-v4_3_3.ts    ✅ Advanced matching
@@ -136,6 +142,7 @@ scripts/
 ```
 
 ### **Output Files**
+
 ```
 test-data/
 ├── raw-leads-v4_3_3.json           ✅ 536 linked leads
@@ -144,6 +151,7 @@ test-data/
 ```
 
 ### **Configuration**
+
 ```
 ├── v4_3-config.ts                  ✅ Lead costs, rules, stages
 ├── v4_3-types.ts                   ✅ 89-parameter interface
@@ -156,6 +164,7 @@ test-data/
 ## 🚀 Usage Guide
 
 ### **Run Complete Pipeline**
+
 ```bash
 # Step 1: Collect & Link (5-10 min)
 npx tsx server/integrations/chromadb/scripts/1-collect-and-link-v4_3_3.ts
@@ -168,17 +177,19 @@ npx tsx server/integrations/chromadb/scripts/3-pipeline-analysis-v4_3_2.ts
 ```
 
 ### **Query Leads**
+
 ```typescript
-import { readFileSync } from 'fs';
+import { readFileSync } from "fs";
 
 const data = JSON.parse(
-  readFileSync('test-data/complete-leads-v4.3.3.json', 'utf-8')
+  readFileSync("test-data/complete-leads-v4.3.3.json", "utf-8")
 );
 
 // High-value opportunities
-const opportunities = data.leads.filter(l => 
-  l.pipeline.status === 'contacted' && 
-  l.calculated.financial.invoicedPrice > 2000
+const opportunities = data.leads.filter(
+  l =>
+    l.pipeline.status === "contacted" &&
+    l.calculated.financial.invoicedPrice > 2000
 );
 
 // Best ROI lead source
@@ -196,6 +207,7 @@ data.leads.forEach(l => {
 ## 🔌 ChromaDB Integration (Next Step)
 
 ### **Why ChromaDB?**
+
 1. ✅ Semantic lead search ("Find similar flytterengøring customers")
 2. ✅ Customer similarity matching
 3. ✅ Smart recommendations based on history
@@ -203,6 +215,7 @@ data.leads.forEach(l => {
 5. ✅ Auto lead classification
 
 ### **Setup Required**
+
 ```bash
 # Install ChromaDB server (Docker recommended)
 docker run -p 8000:8000 chromadb/chroma
@@ -216,18 +229,19 @@ npx tsx server/integrations/chromadb/scripts/4-upload-to-chromadb.ts
 ```
 
 ### **Expected ChromaDB Features**
+
 ```typescript
 // Semantic search
 collection.query({
-  queryTexts: ['flytterengøring 120m² villa'],
-  nResults: 10
+  queryTexts: ["flytterengøring 120m² villa"],
+  nResults: 10,
 });
 
 // Find similar customers
 collection.query({
   queryTexts: [lead.customerName],
   where: { serviceType: lead.serviceType },
-  nResults: 5
+  nResults: 5,
 });
 
 // Smart filtering
@@ -235,8 +249,8 @@ collection.get({
   where: {
     revenue: { $gt: 2000 },
     margin: { $gt: 50 },
-    status: 'won'
-  }
+    status: "won",
+  },
 });
 ```
 
@@ -245,6 +259,7 @@ collection.get({
 ## 📈 Business Intelligence Insights
 
 ### **Lead Source Performance**
+
 ```
 Rengøring.nu (Leadmail.no):
 ├─ Leads: 120
@@ -262,6 +277,7 @@ Leadpoint.dk (Rengøring Aarhus):
 ```
 
 ### **Conversion Funnel**
+
 ```
 Inbox (82) → Contacted (12) → Scheduled (6) → Invoiced (4) → Won (63)
 
@@ -273,6 +289,7 @@ Dropoff Analysis:
 ```
 
 ### **Key Recommendations**
+
 1. ✅ **Focus on Leadpoint.dk** - Highest conversion (58.3%)
 2. ⚠️ **Improve follow-up** - 85% dropoff from inbox
 3. ✅ **Calendar booking works** - 50% convert after scheduling
@@ -284,7 +301,9 @@ Dropoff Analysis:
 ## 🎯 What's Next?
 
 ### **Option A: Customer Cards V5.1** (Recommended)
+
 Build interactive customer cards with V4.3.3 data:
+
 - ✅ Complete financial history
 - ✅ Contact information
 - ✅ Service history
@@ -292,12 +311,15 @@ Build interactive customer cards with V4.3.3 data:
 - ✅ Profit/margin analysis
 
 ### **Option B: ChromaDB Semantic Search**
+
 Enable AI-powered lead search:
+
 - ✅ "Find customers similar to this one"
 - ✅ "Show me high-value prospects"
 - ✅ "Recommend services based on history"
 
 ### **Option C: Further Optimizations**
+
 - 🔄 Extract m² from Billy invoice descriptions
 - 🔄 Calculate actualHours from calendar duration
 - 🔄 Parse team members from calendar
@@ -307,13 +329,13 @@ Enable AI-powered lead search:
 
 ## ✅ Success Criteria - ALL MET!
 
-| Criteria | Target | Achieved | Status |
-|----------|--------|----------|--------|
-| Billy Matching | >50% | 52% | ✅ |
-| Calendar Matching | >15% | 16% | ✅ |
-| Data Completeness | >60% | 62.5% | ✅ |
-| Revenue Tracking | >150k | 220k | ✅ |
-| Processing Time | <5 min | 1 min | ✅ |
+| Criteria          | Target | Achieved | Status |
+| ----------------- | ------ | -------- | ------ |
+| Billy Matching    | >50%   | 52%      | ✅     |
+| Calendar Matching | >15%   | 16%      | ✅     |
+| Data Completeness | >60%   | 62.5%    | ✅     |
+| Revenue Tracking  | >150k  | 220k     | ✅     |
+| Processing Time   | <5 min | 1 min    | ✅     |
 
 ---
 

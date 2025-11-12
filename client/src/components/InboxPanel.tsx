@@ -1,16 +1,16 @@
 /**
  * ⚠️ DEPRECATED - DO NOT USE IN V2
- * 
+ *
  * This file is kept for reference only.
  * In V2 architecture, EmailCenterPanel directly uses EmailTab.
- * 
+ *
  * Migration path:
  * - Old: EmailCenterPanel → InboxPanel → EmailTab (+ 4 other tabs)
  * - New: EmailCenterPanel → EmailTab (dedicated to emails only)
- * 
+ *
  * Other tabs moved to:
  * - Fakturaer, Kalender, Leads, Opgaver → Mini-tabs system (future)
- * 
+ *
  * @deprecated Use EmailCenterPanel directly in V2
  * @see client/src/components/panels/EmailCenterPanel.tsx
  * @see docs/V2-MIGRATION-COMPLETE-PLAN.md
@@ -21,9 +21,7 @@ import { Calendar, CheckSquare, FileText, Mail, Users } from "lucide-react";
 import { lazy, Suspense, memo } from "react";
 
 // Lazy load tabs for better initial performance
-const EmailTabV2 = lazy(() =>
-  import("@/components/inbox/EmailTabV2")
-);
+const EmailTabV2 = lazy(() => import("@/components/inbox/EmailTabV2"));
 const InvoicesTab = lazy(() =>
   import("@/components/inbox/InvoicesTab").then(m => ({ default: m.default }))
 );

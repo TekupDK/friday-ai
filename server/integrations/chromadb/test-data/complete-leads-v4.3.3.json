@@ -48,15 +48,9 @@
         "threadId": "19a6f3a45c72f4ae",
         "subject": "Anne Sofie Feldberg fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 10 Nov 2025 19:24:37 +0000 (UTC)",
-        "labels": [
-          "UNREAD",
-          "CATEGORY_UPDATES",
-          "INBOX"
-        ],
+        "labels": ["UNREAD", "CATEGORY_UPDATES", "INBOX"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -90,10 +84,7 @@
             "actualPrice": null,
             "numberOfWorkers": 1
           },
-          "specialRequirements": [
-            "sæbespåner",
-            "egen_nøgle"
-          ],
+          "specialRequirements": ["sæbespåner", "egen_nøgle"],
           "qualitySignals": {
             "isRepeatBooking": true,
             "bookingNumber": 7,
@@ -184,10 +175,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "sæbespåner",
-          "egen_nøgle"
-        ]
+        "specialRequirements": ["sæbespåner", "egen_nøgle"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -210,16 +198,9 @@
         "threadId": "19a6eecfada5ff7b",
         "subject": "Nadia Nørgård Steiner fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 10 Nov 2025 18:00:11 +0000 (UTC)",
-        "labels": [
-          "UNREAD",
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["UNREAD", "CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -367,15 +348,9 @@
         "threadId": "19a6ec39757f64d0",
         "subject": "Cecilia Nørgaard Andersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 10 Nov 2025 17:15:00 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -409,9 +384,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -502,9 +475,7 @@
         "customerType": "standard",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -527,9 +498,7 @@
         "threadId": "19a6d53187210a03",
         "subject": "Email via Rengøring Aarhus: Tilbud, erhvervsrengøring",
         "from": "Gitte Klarskov Larsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 10 Nov 2025 02:32:31 -0800",
         "labels": [
           "YELLOW_STAR",
@@ -571,9 +540,7 @@
             "actualPrice": null,
             "numberOfWorkers": 2
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -664,9 +631,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -689,14 +654,9 @@
         "threadId": "197ee87d623f523e",
         "subject": "Opkald via Rengøring Aarhus",
         "from": "\"Rengøring Aarhus\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 9 Jul 2025 04:32:47 -0500",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -730,9 +690,7 @@
             "actualPrice": null,
             "numberOfWorkers": 2
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": 1,
@@ -823,9 +781,7 @@
         "customerType": "standard",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -848,14 +804,9 @@
         "threadId": "19a6ceeee84dc5bb",
         "subject": "Amalie Mathiesen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 10 Nov 2025 08:43:06 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -990,14 +941,9 @@
         "threadId": "19a6c9b7cc350aa0",
         "subject": "Stine Skovgaard fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 10 Nov 2025 07:11:57 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -1031,9 +977,7 @@
             "actualPrice": null,
             "numberOfWorkers": 2
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -1111,9 +1055,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -1136,14 +1078,9 @@
         "threadId": "19a6c9a362070e3f",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Stine Skovgaard <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sun, 9 Nov 2025 23:10:36 -0800",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -1278,15 +1215,9 @@
         "threadId": "19a5afb7ef78f424",
         "subject": "Sevina Keinicke Gerlach fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 21:03:38 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -1434,14 +1365,9 @@
         "threadId": "19a5aa48db55abad",
         "subject": "Camilla Niehues fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 19:28:42 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -1576,14 +1502,9 @@
         "threadId": "19a5a584c94e8794",
         "subject": "Kia fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 18:05:23 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -1718,14 +1639,9 @@
         "threadId": "19a59c7687a09865",
         "subject": "Lone Bro fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 15:27:08 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -1873,13 +1789,9 @@
         "threadId": "19a59add57355ef9",
         "subject": "Matilde Skinneholm fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 14:59:10 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -2027,14 +1939,9 @@
         "threadId": "19a5978c7d6e3c44",
         "subject": "Susanne Almosetoft fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 14:01:15 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -2182,14 +2089,9 @@
         "threadId": "19a585a43e5324b8",
         "subject": "Cecilie Birk fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 08:48:18 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -2337,13 +2239,9 @@
         "threadId": "19a5838232a5e000",
         "subject": "Jørn steen Larsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 08:11:03 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -2377,9 +2275,7 @@
             "actualPrice": null,
             "numberOfWorkers": 2
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -2470,9 +2366,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -2495,14 +2389,9 @@
         "threadId": "19a5828e31c8b9bf",
         "subject": "Bitten Mortensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 07:54:22 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -2637,14 +2526,9 @@
         "threadId": "19a5827fcb8ae4ea",
         "subject": "Kristina Brosolat fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 06 Nov 2025 07:53:24 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -2779,14 +2663,9 @@
         "threadId": "19a561c4ebc62ba6",
         "subject": "Christine Jensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 05 Nov 2025 22:21:23 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -2921,14 +2800,9 @@
         "threadId": "19a559cc9720ac76",
         "subject": "RuthAndersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 05 Nov 2025 20:02:08 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3076,15 +2950,9 @@
         "threadId": "19a53a471957129b",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Rikke Gejl Jensen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 5 Nov 2025 02:51:15 -0800",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3177,15 +3045,9 @@
         "threadId": "19a538cfa12fe0c2",
         "subject": "Niels Ulrik Drescher fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 05 Nov 2025 10:25:36 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3291,15 +3153,9 @@
         "threadId": "19a5346fd45d9917",
         "subject": "Anne Myken fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 05 Nov 2025 09:09:08 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3392,15 +3248,9 @@
         "threadId": "19a50d5e1eb72a87",
         "subject": "Niels Thaibert fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 21:46:21 +0000 (UTC)",
-        "labels": [
-          "Label_144",
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["Label_144", "CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3493,15 +3343,9 @@
         "threadId": "19a50b096a941d97",
         "subject": "Mads Amstrup Fournais fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 21:05:37 +0000 (UTC)",
-        "labels": [
-          "UNREAD",
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["UNREAD", "CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3607,15 +3451,9 @@
         "threadId": "19a50141ffc5d7e3",
         "subject": "Louise Severin fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 18:14:43 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3708,16 +3546,9 @@
         "threadId": "19a4fc4ddac4a741",
         "subject": "Daniel Kofoed fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 16:48:09 +0000 (UTC)",
-        "labels": [
-          "STARRED",
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["STARRED", "CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3810,15 +3641,9 @@
         "threadId": "19a4f836b6604ff3",
         "subject": "Mads Hollænder fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 15:36:40 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -3911,15 +3736,9 @@
         "threadId": "19a4f20c1c9f5ffc",
         "subject": "Ole Vistisen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 13:48:52 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4012,14 +3831,9 @@
         "threadId": "19a4ead8310cb1c4",
         "subject": "hanne andersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 11:43:02 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4112,14 +3926,9 @@
         "threadId": "19a4e9ae7ec4b220",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Nanna Silke Ploug Pedersen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 4 Nov 2025 06:22:44 -0500",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4225,15 +4034,9 @@
         "threadId": "19a4e991e758b831",
         "subject": "Nanna Silke Ploug fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 11:20:45 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4326,14 +4129,9 @@
         "threadId": "19a4d83067921a81",
         "subject": "Betül Kocak fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 04 Nov 2025 06:16:59 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4468,14 +4266,9 @@
         "threadId": "19a4af65fbc4163b",
         "subject": "Emilie Blach fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 03 Nov 2025 18:24:08 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4581,15 +4374,9 @@
         "threadId": "19a4aa4a9efe985c",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Jesper Vestergaard <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 3 Nov 2025 08:54:54 -0800",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4737,15 +4524,9 @@
         "threadId": "19a48cff57081b5d",
         "subject": "Email via Rengøring Aarhus: Flytterengøring",
         "from": "Katrine Vest Jakobsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 3 Nov 2025 00:22:57 -0800",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -4893,14 +4674,9 @@
         "threadId": "19a482a1aefe7390",
         "subject": "Bjarne Anthon fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 03 Nov 2025 05:21:47 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5035,16 +4811,9 @@
         "threadId": "19a463fffdd1ee23",
         "subject": "Karoline Sønder fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 02 Nov 2025 20:26:26 +0000 (UTC)",
-        "labels": [
-          "STARRED",
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["STARRED", "CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5179,15 +4948,9 @@
         "threadId": "19a45da41038ea0d",
         "subject": "Nicolai Ahle Bjerg fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 02 Nov 2025 18:35:19 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5293,14 +5056,9 @@
         "threadId": "19a4598ee45c319e",
         "subject": "Michael Svend Bendix fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 02 Nov 2025 17:23:58 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5393,15 +5151,9 @@
         "threadId": "19a4514d064d84bc",
         "subject": "jørgen veng fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 02 Nov 2025 14:59:40 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5507,15 +5259,9 @@
         "threadId": "19a446262a5ebfd2",
         "subject": "Else Marie U Petersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 02 Nov 2025 11:44:46 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5621,15 +5367,9 @@
         "threadId": "19a445a8e2ca9388",
         "subject": "Elísabet María Guðmundsdóttir fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 02 Nov 2025 11:36:15 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5722,14 +5462,9 @@
         "threadId": "19a43434682dd1b4",
         "subject": "Email via Rengøring Aarhus: Job wanted",
         "from": "Danny B 96 <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 1 Nov 2025 23:31:09 -0700",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5877,15 +5612,9 @@
         "threadId": "19a40632dcbd5d27",
         "subject": "Henning Gudichsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 01 Nov 2025 17:07:07 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -5991,15 +5720,9 @@
         "threadId": "19a3f7bd7ac5a8f0",
         "subject": "Mikkel English fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 01 Nov 2025 12:54:30 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -6105,14 +5828,9 @@
         "threadId": "19a3c3a5dea4711c",
         "subject": "René Vendel Nielsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 31 Oct 2025 21:44:04 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -6146,9 +5864,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -6239,9 +5955,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -6264,13 +5978,9 @@
         "threadId": "19a3b3fb6f1bc608",
         "subject": "Carina Nielsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 31 Oct 2025 17:10:18 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -6363,15 +6073,9 @@
         "threadId": "19a3adf3b105ee16",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Preben Lillelund <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 31 Oct 2025 11:24:57 -0400",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -6464,15 +6168,9 @@
         "threadId": "19a3a1c9225b027f",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Merete Graabæk\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 31 Oct 2025 04:52:21 -0700",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -6565,16 +6263,9 @@
         "threadId": "19a351ca382afd20",
         "subject": "Rene Fly Jensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 30 Oct 2025 12:34:18 +0000 (UTC)",
-        "labels": [
-          "Label_145",
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["Label_145", "CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -6608,9 +6299,7 @@
             "actualPrice": null,
             "numberOfWorkers": 2
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -6701,9 +6390,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -6726,14 +6413,9 @@
         "threadId": "19a30e32f4e4be1f",
         "subject": "Sophie fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 29 Oct 2025 16:53:03 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -6881,15 +6563,9 @@
         "threadId": "19a2fec45545d40b",
         "subject": "Kundiz fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 29 Oct 2025 12:23:22 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -7037,14 +6713,9 @@
         "threadId": "19a2f33fd2f590a9",
         "subject": "Inger knorborg fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 29 Oct 2025 09:02:04 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -7192,13 +6863,9 @@
         "threadId": "19a2c1e2768e8d08",
         "subject": "mathias meyer fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 28 Oct 2025 18:39:21 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -7346,14 +7013,9 @@
         "threadId": "19a2b676561c5a05",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Sebastian Christensen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 28 Oct 2025 08:19:45 -0700",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -7501,14 +7163,9 @@
         "threadId": "19a2b1c80246e461",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Lone Beck <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 28 Oct 2025 06:57:57 -0700",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -7643,9 +7300,7 @@
         "threadId": "19a2ad68e163b7e4",
         "subject": "Mathias Skovsbøl fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 28 Oct 2025 12:41:31 +0000 (UTC)",
         "labels": [
           "STARRED",
@@ -7788,15 +7443,9 @@
         "threadId": "19a279c5d1072023",
         "subject": "Dominic Russell fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 27 Oct 2025 21:39:06 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -7931,15 +7580,9 @@
         "threadId": "19a2650d33158422",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Nanna Lundgaard <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 27 Oct 2025 08:37:01 -0700",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8074,14 +7717,9 @@
         "threadId": "19a25f0d0e05984c",
         "subject": "Sophia Sritharan fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 27 Oct 2025 13:52:07 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8216,15 +7854,9 @@
         "threadId": "19a25b63ceb7c2b8",
         "subject": "Morten fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 27 Oct 2025 12:48:07 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8317,15 +7949,9 @@
         "threadId": "19a25468cd3db7f6",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Maja Lomborg <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 27 Oct 2025 05:46:10 -0500",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8418,15 +8044,9 @@
         "threadId": "19a21e42cd6f04b7",
         "subject": "Sandra Beck fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 26 Oct 2025 18:59:50 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8561,14 +8181,9 @@
         "threadId": "19a1fd31d4ed2ff5",
         "subject": "Katrine Reeberg Storm fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 26 Oct 2025 09:21:58 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "Label_185"
-        ],
+        "labels": ["CATEGORY_UPDATES", "Label_185"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8661,13 +8276,9 @@
         "threadId": "19a1cde7ab263e3f",
         "subject": "Email via Rengøring Aarhus: Apply for the position of Cleaning Assistant",
         "from": "Chamara Dhanushka Unantenna <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 25 Oct 2025 12:35:30 -0700",
-        "labels": [
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8760,13 +8371,9 @@
         "threadId": "19a19f4b12cf6019",
         "subject": "Saija Hyrkäs fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 25 Oct 2025 06:00:55 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8859,14 +8466,9 @@
         "threadId": "19a175d4b5111966",
         "subject": "Lea Nyvang fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 24 Oct 2025 17:56:18 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -8959,14 +8561,9 @@
         "threadId": "19a16444c2715a20",
         "subject": "Jodi Suliman fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 24 Oct 2025 12:49:22 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_UPDATES",
-          "INBOX"
-        ],
+        "labels": ["CATEGORY_UPDATES", "INBOX"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -9059,9 +8656,7 @@
         "threadId": "19a1108ef71817b9",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Lars Dollerup <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 23 Oct 2025 05:26:26 -0700",
         "labels": [
           "Label_181",
@@ -9206,9 +8801,7 @@
         "threadId": "19a103d7997ca342",
         "subject": "Heine Eriksen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 23 Oct 2025 08:44:10 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -9352,9 +8945,7 @@
         "threadId": "19a0d5a4b2a88555",
         "subject": "Stine Elizabeth Theilgaard fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 22 Oct 2025 19:16:50 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -9498,9 +9089,7 @@
         "threadId": "19a07cbf35445ec8",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Florian Keppeler <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 21 Oct 2025 13:23:15 -0400",
         "labels": [
           "Label_149",
@@ -9656,9 +9245,7 @@
         "threadId": "19a072d6ef51f530",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Nicoline Skou Willumsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 21 Oct 2025 07:30:07 -0700",
         "labels": [
           "Label_148",
@@ -9801,9 +9388,7 @@
         "threadId": "19a0260617766e1c",
         "subject": "Johan Sorknæs fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 20 Oct 2025 16:07:38 +0000 (UTC)",
         "labels": [
           "Label_146",
@@ -9921,9 +9506,7 @@
         "threadId": "19a021d9a849db96",
         "subject": "Andreas Lundøer Madsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 20 Oct 2025 14:54:42 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -10037,9 +9620,7 @@
         "threadId": "19a01963c9731fae",
         "subject": "Trine Ena Langholm fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 20 Oct 2025 12:26:52 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -10154,9 +9735,7 @@
         "threadId": "19a0156000ca3800",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Naja Honnens Nielsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 20 Oct 2025 04:16:43 -0700",
         "labels": [
           "Label_149",
@@ -10259,9 +9838,7 @@
         "threadId": "19a014091be5c936",
         "subject": "Naja Honnens Nielsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 20 Oct 2025 10:53:15 +0000 (UTC)",
         "labels": [
           "Label_146",
@@ -10364,9 +9941,7 @@
         "threadId": "199fe05b88b279d0",
         "subject": "Asta Thaarup fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 19 Oct 2025 19:50:09 +0000 (UTC)",
         "labels": [
           "Label_153",
@@ -10481,9 +10056,7 @@
         "threadId": "199fab071f2313e3",
         "subject": "Email via Rengøring Aarhus: Rengøring Århus Uden risiko for jer – sådan gør vi",
         "from": "Lucas Nygaard <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 18 Oct 2025 21:18:09 -0700",
         "labels": [
           "STARRED",
@@ -10585,9 +10158,7 @@
         "threadId": "199f90047b17ce38",
         "subject": "Kristian  Laursen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 18 Oct 2025 20:26:07 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -10689,9 +10260,7 @@
         "threadId": "199f856c27674865",
         "subject": "Ebbe Mehlby Brun fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 18 Oct 2025 17:20:56 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -10792,9 +10361,7 @@
         "threadId": "199f7d0c0ff36892",
         "subject": "Peter Nørbo Andersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 18 Oct 2025 14:54:34 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -10896,9 +10463,7 @@
         "threadId": "199f67eebb24185b",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Charlene Hemberg <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 18 Oct 2025 01:45:35 -0700",
         "labels": [
           "Label_145",
@@ -11000,9 +10565,7 @@
         "threadId": "199f3b6a6f0f0e54",
         "subject": "Simon Leminen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 17 Oct 2025 19:47:34 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -11104,9 +10667,7 @@
         "threadId": "199f2cbd4fd8aa15",
         "subject": "Sara El-Natour fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 17 Oct 2025 15:31:04 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -11207,9 +10768,7 @@
         "threadId": "199f2b6228fb07fb",
         "subject": "Anne Marie Schwartz Wiig fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 17 Oct 2025 15:07:22 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -11312,14 +10871,9 @@
         "threadId": "199f1b22b972b489",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Ioana Luisa Forcas <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 17 Oct 2025 03:23:27 -0700",
-        "labels": [
-          "CATEGORY_PERSONAL",
-          "Label_152"
-        ],
+        "labels": ["CATEGORY_PERSONAL", "Label_152"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -11353,9 +10907,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -11433,9 +10985,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -11458,9 +11008,7 @@
         "threadId": "199f160963690a37",
         "subject": "Helle fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 17 Oct 2025 08:54:20 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -11502,9 +11050,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -11582,9 +11128,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -11607,9 +11151,7 @@
         "threadId": "199ec15631c4a867",
         "subject": "Mathias Pilegaard fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 16 Oct 2025 08:14:05 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -11753,9 +11295,7 @@
         "threadId": "199ebf8d2d2dd089",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Anita Faurholt <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 16 Oct 2025 03:42:55 -0400",
         "labels": [
           "Label_149",
@@ -11857,9 +11397,7 @@
         "threadId": "199eb8232802da9c",
         "subject": "Caroline Mathiesen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 16 Oct 2025 05:33:19 +0000 (UTC)",
         "labels": [
           "Label_153",
@@ -12002,15 +11540,9 @@
         "threadId": "199e64e222088a9e",
         "subject": "Jette Ginderskov Hansen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 15 Oct 2025 05:18:20 +0000 (UTC)",
-        "labels": [
-          "Label_148",
-          "Label_153",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_148", "Label_153", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -12158,9 +11690,7 @@
         "threadId": "199e3f9d98e0d928",
         "subject": "Sabine Aftret fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 14 Oct 2025 18:27:01 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -12305,16 +11835,9 @@
         "threadId": "199e27f8f1c57082",
         "subject": "Birgit Joost Blak fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 14 Oct 2025 11:33:53 +0000 (UTC)",
-        "labels": [
-          "Label_148",
-          "Label_153",
-          "Label_144",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_148", "Label_153", "Label_144", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -12449,16 +11972,9 @@
         "threadId": "199e20811e925687",
         "subject": "Bashar Nasouri fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 14 Oct 2025 09:23:20 +0000 (UTC)",
-        "labels": [
-          "Label_181",
-          "Label_153",
-          "CATEGORY_UPDATES",
-          "Label_150"
-        ],
+        "labels": ["Label_181", "Label_153", "CATEGORY_UPDATES", "Label_150"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -12551,14 +12067,9 @@
         "threadId": "199de927b8a6b6e4",
         "subject": "Mette Brandt fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 13 Oct 2025 17:16:03 +0000 (UTC)",
-        "labels": [
-          "Label_153",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_153", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -12592,10 +12103,7 @@
             "actualPrice": null,
             "numberOfWorkers": 1
           },
-          "specialRequirements": [
-            "sæbespåner",
-            "egen_nøgle"
-          ],
+          "specialRequirements": ["sæbespåner", "egen_nøgle"],
           "qualitySignals": {
             "isRepeatBooking": true,
             "bookingNumber": 5,
@@ -12686,10 +12194,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "sæbespåner",
-          "egen_nøgle"
-        ]
+        "specialRequirements": ["sæbespåner", "egen_nøgle"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -12712,9 +12217,7 @@
         "threadId": "199ddfe0ab4f369e",
         "subject": "Gerda Madsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 13 Oct 2025 14:33:55 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -12815,16 +12318,9 @@
         "threadId": "199dd9a8066b7c56",
         "subject": "Bente Hvid Kristensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 13 Oct 2025 12:45:09 +0000 (UTC)",
-        "labels": [
-          "Label_181",
-          "Label_148",
-          "Label_153",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_181", "Label_148", "Label_153", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -12917,9 +12413,7 @@
         "threadId": "199dd0887b04064a",
         "subject": "Emma Jensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 13 Oct 2025 10:05:46 +0000 (UTC)",
         "labels": [
           "Label_153",
@@ -13076,9 +12570,7 @@
         "threadId": "199dc81abbed03cd",
         "subject": "Asbjørn fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 13 Oct 2025 07:38:27 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -13122,9 +12614,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -13215,9 +12705,7 @@
         "customerType": "standard",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -13240,9 +12728,7 @@
         "threadId": "199d91a3eaead755",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Rasmus Faurschou Andersen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sun, 12 Oct 2025 08:46:38 -0700",
         "labels": [
           "Label_149",
@@ -13386,9 +12872,7 @@
         "threadId": "199d81c00c64b871",
         "subject": "Gertie heide fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 12 Oct 2025 11:08:55 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -13491,9 +12975,7 @@
         "threadId": "199d80c2959ee517",
         "subject": "Annelie Ginzel fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 12 Oct 2025 10:51:37 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -13596,9 +13078,7 @@
         "threadId": "199d4a10778079a7",
         "subject": "Nikolaj Madsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 11 Oct 2025 18:55:45 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -13743,9 +13223,7 @@
         "threadId": "199cfe4fb8e1fb87",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Souvick <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 10 Oct 2025 13:51:52 -0700",
         "labels": [
           "Label_181",
@@ -13888,9 +13366,7 @@
         "threadId": "199ca3e24716d76d",
         "subject": "Frederik aaby kristensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 09 Oct 2025 18:31:32 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -14005,9 +13481,7 @@
         "threadId": "199ca24d02c7a515",
         "subject": "Asbjørn Tinning fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 09 Oct 2025 18:03:51 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -14123,9 +13597,7 @@
         "threadId": "199c9c4225cb64dd",
         "subject": "Dorte Prip fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 09 Oct 2025 16:18:11 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -14240,9 +13712,7 @@
         "threadId": "199c96d865725309",
         "subject": "Katrine jørgensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 09 Oct 2025 14:43:40 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -14358,9 +13828,7 @@
         "threadId": "199c76c1621a1658",
         "subject": "Anne-Mette Pedersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 09 Oct 2025 05:22:51 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -14516,9 +13984,7 @@
         "threadId": "199c4e89aeb699d3",
         "subject": "Line Rohde fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 08 Oct 2025 17:39:57 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -14664,15 +14130,9 @@
         "threadId": "199c30a49fa5ee53",
         "subject": "Doris Pedersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 08 Oct 2025 08:57:32 +0000 (UTC)",
-        "labels": [
-          "Label_153",
-          "CATEGORY_UPDATES",
-          "Label_150"
-        ],
+        "labels": ["Label_153", "CATEGORY_UPDATES", "Label_150"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -14778,9 +14238,7 @@
         "threadId": "199bd3e1988139c5",
         "subject": "Henrik fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 07 Oct 2025 05:56:24 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -14924,9 +14382,7 @@
         "threadId": "199b83fc4993e9a8",
         "subject": "Kenni fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 06 Oct 2025 06:40:08 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -15082,9 +14538,7 @@
         "threadId": "199a8cd4af555097",
         "subject": "Birgitte Kjærgaard fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 03 Oct 2025 06:40:48 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -15229,9 +14683,7 @@
         "threadId": "199a6946ce330918",
         "subject": "Karin Viller Hansen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 02 Oct 2025 20:19:26 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -15345,9 +14797,7 @@
         "threadId": "199a593f19eb0000",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Maria Tønnersen\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 2 Oct 2025 11:39:19 -0400",
         "labels": [
           "Label_144",
@@ -15462,9 +14912,7 @@
         "threadId": "199a4ac961ebc87d",
         "subject": "Jesper Urban Holm fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 02 Oct 2025 11:26:34 +0000 (UTC)",
         "labels": [
           "IMPORTANT",
@@ -15579,9 +15027,7 @@
         "threadId": "199a1759371d43d2",
         "subject": "Daniel Larsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 01 Oct 2025 20:27:39 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -15727,9 +15173,7 @@
         "threadId": "1999fe213b5bdc4f",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Livie Yumeng Li <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 1 Oct 2025 06:06:55 -0700",
         "labels": [
           "Label_181",
@@ -15885,9 +15329,7 @@
         "threadId": "1999e67cbab73cef",
         "subject": "Mathilde fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 01 Oct 2025 06:13:44 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -16032,9 +15474,7 @@
         "threadId": "19999afca84a01cc",
         "subject": "Henning Lund-Sørensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 30 Sep 2025 08:14:16 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -16179,9 +15619,7 @@
         "threadId": "19996dbc0efdcf1b",
         "subject": "Andreas Slot Tanderup fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 29 Sep 2025 19:03:26 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -16225,10 +15663,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "sæbespåner",
-            "egen_nøgle"
-          ],
+          "specialRequirements": ["sæbespåner", "egen_nøgle"],
           "qualitySignals": {
             "isRepeatBooking": true,
             "bookingNumber": 4,
@@ -16319,10 +15754,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "sæbespåner",
-          "egen_nøgle"
-        ]
+        "specialRequirements": ["sæbespåner", "egen_nøgle"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -16345,9 +15777,7 @@
         "threadId": "19995ad137191e08",
         "subject": "Vinni Hansen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 29 Sep 2025 13:32:50 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -16463,9 +15893,7 @@
         "threadId": "1999528cf19ff37c",
         "subject": "Trine Meisner fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 29 Sep 2025 11:08:21 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -16581,15 +16009,9 @@
         "threadId": "1998ff2da508f54c",
         "subject": "Aboubakar Cissé fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 28 Sep 2025 10:51:19 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "Label_153",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "Label_153", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -16623,9 +16045,7 @@
             "actualPrice": null,
             "numberOfWorkers": 2
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -16716,9 +16136,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -16741,9 +16159,7 @@
         "threadId": "1998fdd620b9965e",
         "subject": "Line Slot Tanderup fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 28 Sep 2025 10:27:50 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -16860,9 +16276,7 @@
         "threadId": "1998f5b827b94dde",
         "subject": "Claus Toft-Nielsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 28 Sep 2025 08:06:00 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -16978,9 +16392,7 @@
         "threadId": "1998f03f7239306f",
         "subject": "Gabi Henckel fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 28 Sep 2025 06:30:24 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -17124,9 +16536,7 @@
         "threadId": "19986f9e8e690a25",
         "subject": "Lise Christensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 26 Sep 2025 17:02:27 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -17284,9 +16694,7 @@
         "threadId": "199859b9c59a14dd",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Eoin Galligan <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 26 Sep 2025 03:39:47 -0700",
         "labels": [
           "Label_181",
@@ -17431,9 +16839,7 @@
         "threadId": "1998268ebc264be2",
         "subject": "Johanna Luige fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 25 Sep 2025 19:45:34 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -17580,9 +16986,7 @@
         "threadId": "199821aeaf7a304e",
         "subject": "Kirsten Uldal Krejberg fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 25 Sep 2025 18:20:23 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -17726,9 +17130,7 @@
         "threadId": "1997a2f794a2d16a",
         "subject": "Hilal fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 24 Sep 2025 05:25:52 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -17874,9 +17276,7 @@
         "threadId": "19972ed8a7336af5",
         "subject": "Kathrine By Larsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 22 Sep 2025 19:36:30 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -17921,9 +17321,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -18001,9 +17399,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -18026,9 +17422,7 @@
         "threadId": "1997263f39006511",
         "subject": "Marianne Agerlund Petersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 22 Sep 2025 17:06:13 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -18144,9 +17538,7 @@
         "threadId": "199712a2121d4b40",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Alex Abbas <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 22 Sep 2025 13:23:28 +0200",
         "labels": [
           "Label_149",
@@ -18291,9 +17683,7 @@
         "threadId": "199700e8933ad723",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Nadia Rønholt Ernst\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 22 Sep 2025 06:13:43 +0000",
         "labels": [
           "Label_149",
@@ -18409,9 +17799,7 @@
         "threadId": "1996c47ed35fda0b",
         "subject": "Laiba Olsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 21 Sep 2025 12:37:53 +0000 (UTC)",
         "labels": [
           "IMPORTANT",
@@ -18554,9 +17942,7 @@
         "threadId": "19968013df6af630",
         "subject": "Julie Nielsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 20 Sep 2025 16:42:14 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -18671,9 +18057,7 @@
         "threadId": "1996341039bceaec",
         "subject": "Nina fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 19 Sep 2025 18:33:47 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -18789,9 +18173,7 @@
         "threadId": "1995df7c75c2e9a0",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Catharina Reestorff Frandsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 18 Sep 2025 13:55:41 -0400",
         "labels": [
           "Label_148",
@@ -18906,9 +18288,7 @@
         "threadId": "1995d06cc2f0087f",
         "subject": "Anna Maarbjerg fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 18 Sep 2025 13:32:29 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -19052,9 +18432,7 @@
         "threadId": "1995c846890aaaae",
         "subject": "Bente andersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 18 Sep 2025 11:10:02 +0000 (UTC)",
         "labels": [
           "IMPORTANT",
@@ -19171,9 +18549,7 @@
         "threadId": "1995c2ada1bc9d34",
         "subject": "Erik Hansen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 18 Sep 2025 09:32:15 +0000 (UTC)",
         "labels": [
           "IMPORTANT",
@@ -19330,9 +18706,7 @@
         "threadId": "1995c0f1de9734a4",
         "subject": "Mette de Hemmer Bjerregaard fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 18 Sep 2025 09:01:55 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -19448,9 +18822,7 @@
         "threadId": "19954084100a931c",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Isabella <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 16 Sep 2025 12:37:28 -0700",
         "labels": [
           "Label_148",
@@ -19594,9 +18966,7 @@
         "threadId": "1994c44e4084bd3f",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Toke Agerschou <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 15 Sep 2025 00:26:46 -0700",
         "labels": [
           "IMPORTANT",
@@ -19739,9 +19109,7 @@
         "threadId": "19946bb2a877257c",
         "subject": "Marianne Petersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 14 Sep 2025 05:38:13 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -19784,9 +19152,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -19864,9 +19230,7 @@
         "customerType": "standard",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -19889,9 +19253,7 @@
         "threadId": "1993e93711ea36b5",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Hans Henrik Schou <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 12 Sep 2025 08:37:50 -0700",
         "labels": [
           "Label_148",
@@ -20049,16 +19411,9 @@
         "threadId": "1993dadeeec2a563",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Dorthe / Dancenter Juelsminde\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 12 Sep 2025 04:27:11 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_PERSONAL",
-          "Label_151",
-          "Label_152"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_PERSONAL", "Label_151", "Label_152"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -20164,9 +19519,7 @@
         "threadId": "1993a8d7259c5522",
         "subject": "Christian Bakkestrøm fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 11 Sep 2025 20:52:51 +0000 (UTC)",
         "labels": [
           "Label_181",
@@ -20209,9 +19562,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -20289,9 +19640,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -20314,16 +19663,9 @@
         "threadId": "1993825917791bbf",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Natascha Kring <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 11 Sep 2025 02:40:08 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_PERSONAL",
-          "Label_150",
-          "Label_152"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_PERSONAL", "Label_150", "Label_152"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -20357,9 +19699,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -20437,9 +19777,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -20462,9 +19800,7 @@
         "threadId": "1993506c4b351fd8",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Line Udengaard <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 10 Sep 2025 12:07:38 -0700",
         "labels": [
           "Label_148",
@@ -20607,9 +19943,7 @@
         "threadId": "199342ff838a0bef",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Fanny Sørensen\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 10 Sep 2025 11:13:01 -0400",
         "labels": [
           "Label_149",
@@ -20754,9 +20088,7 @@
         "threadId": "1993342c195fd174",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Thomas Hansen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 10 Sep 2025 03:53:54 -0700",
         "labels": [
           "IMPORTANT",
@@ -20899,9 +20231,7 @@
         "threadId": "1992dfd9bd63887e",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Mia Marie Lyngsø\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 9 Sep 2025 05:20:17 -0500",
         "labels": [
           "Label_149",
@@ -20944,9 +20274,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -21037,9 +20365,7 @@
         "customerType": "standard",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -21062,9 +20388,7 @@
         "threadId": "1991f723218eb314",
         "subject": "Email via Rengøring Aarhus: Forespørgsel",
         "from": "Marianne Bukhave <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 6 Sep 2025 07:33:20 -0700",
         "labels": [
           "Label_149",
@@ -21179,9 +20503,7 @@
         "threadId": "198b9de0f75a67fb",
         "subject": "Inger Pedersen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 17 Aug 2025 21:09:52 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -21224,9 +20546,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -21304,9 +20624,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -21329,9 +20647,7 @@
         "threadId": "199162ea16ed4ad6",
         "subject": "Cindy Jørgensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 04 Sep 2025 19:22:56 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -21488,9 +20804,7 @@
         "threadId": "199108c2222ee2c7",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Katrine Bech <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 3 Sep 2025 12:07:22 -0500",
         "labels": [
           "Label_148",
@@ -21634,9 +20948,7 @@
         "threadId": "199107ff9cd6b625",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Anne Semberlund <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 3 Sep 2025 09:54:05 -0700",
         "labels": [
           "Label_149",
@@ -21750,9 +21062,7 @@
         "threadId": "1990b9faf8b08035",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Amanda Meyer <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 2 Sep 2025 14:10:37 -0400",
         "labels": [
           "Label_149",
@@ -21896,9 +21206,7 @@
         "threadId": "19905ae83b507bda",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Bjarne Kristensen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 1 Sep 2025 10:29:05 -0400",
         "labels": [
           "Label_149",
@@ -21941,10 +21249,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "sæbespåner",
-            "egen_nøgle"
-          ],
+          "specialRequirements": ["sæbespåner", "egen_nøgle"],
           "qualitySignals": {
             "isRepeatBooking": true,
             "bookingNumber": 2,
@@ -22035,10 +21340,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "sæbespåner",
-          "egen_nøgle"
-        ]
+        "specialRequirements": ["sæbespåner", "egen_nøgle"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -22061,9 +21363,7 @@
         "threadId": "1990555f929ab7b3",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Christian Føns Jensen\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 1 Sep 2025 05:52:21 -0700",
         "labels": [
           "Label_149",
@@ -22220,9 +21520,7 @@
         "threadId": "19904f472068fa99",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Mi Duborg <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 1 Sep 2025 04:05:51 -0700",
         "labels": [
           "Label_148",
@@ -22336,9 +21634,7 @@
         "threadId": "199005cfd42bd103",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Tina Kamp Lund <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sun, 31 Aug 2025 08:41:56 -0500",
         "labels": [
           "Label_149",
@@ -22494,9 +21790,7 @@
         "threadId": "198fc7aadcacc84f",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Anne Sofie Vejlby Kristensen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 30 Aug 2025 15:35:53 -0400",
         "labels": [
           "Label_148",
@@ -22610,9 +21904,7 @@
         "threadId": "198fc5925721e4fb",
         "subject": "Claus Bo Refslund fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 30 Aug 2025 18:59:13 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -22728,9 +22020,7 @@
         "threadId": "198fab23fbe7e17f",
         "subject": "Nicolaj Balle Ladiges fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 30 Aug 2025 11:17:19 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -22874,9 +22164,7 @@
         "threadId": "198f1ba0ee63092d",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Louise Bang <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 28 Aug 2025 10:29:17 -0700",
         "labels": [
           "Label_149",
@@ -22919,9 +22207,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -22999,9 +22285,7 @@
         "customerType": "standard",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -23024,9 +22308,7 @@
         "threadId": "198efe5c919fffd5",
         "subject": "Helle Olesen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 28 Aug 2025 08:57:46 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -23170,15 +22452,9 @@
         "threadId": "198ec69dfbd4b092",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Sergei Jensen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 27 Aug 2025 11:43:36 -0500",
-        "labels": [
-          "Label_181",
-          "IMPORTANT",
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["Label_181", "IMPORTANT", "CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -23326,9 +22602,7 @@
         "threadId": "198eadde6c8d05c0",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Emilie Ullerup Dejgaard <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 27 Aug 2025 02:31:06 -0700",
         "labels": [
           "Label_149",
@@ -23471,9 +22745,7 @@
         "threadId": "198e6a86dd5fc3be",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Kenneth Jon Sørensen\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 26 Aug 2025 08:54:12 -0500",
         "labels": [
           "IMPORTANT",
@@ -23588,9 +22860,7 @@
         "threadId": "198e561d44ef7bfe",
         "subject": "Martin Hoffmann Vallentin fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 26 Aug 2025 07:57:27 +0000 (UTC)",
         "labels": [
           "Label_146",
@@ -23735,9 +23005,7 @@
         "threadId": "198e335545e1b71e",
         "subject": "Cecilie Elisabeth Jørgensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 25 Aug 2025 21:49:37 +0000 (UTC)",
         "labels": [
           "Label_146",
@@ -23896,9 +23164,7 @@
         "threadId": "198dfbd5384b07d6",
         "subject": "Katrine Werge Kassner fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 25 Aug 2025 05:39:39 +0000 (UTC)",
         "labels": [
           "Label_146",
@@ -24042,9 +23308,7 @@
         "threadId": "198dafcedd2fd0d0",
         "subject": "Ebbe sønderskov fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 24 Aug 2025 07:31:02 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -24188,9 +23452,7 @@
         "threadId": "198da9f50cb58e3f",
         "subject": "Martin Thimsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 24 Aug 2025 05:48:48 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -24334,15 +23596,9 @@
         "threadId": "198d2252de92d53f",
         "subject": "Email via Rengøring Aarhus: Application for the cleaning position",
         "from": "Robert Mitacc <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 22 Aug 2025 07:18:22 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_PERSONAL",
-          "Label_152"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_PERSONAL", "Label_152"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -24477,16 +23733,9 @@
         "threadId": "198ce8015eb39900",
         "subject": "Xenia Rudbjerg fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 21 Aug 2025 21:19:14 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "Label_145",
-          "CATEGORY_UPDATES",
-          "Label_150"
-        ],
+        "labels": ["IMPORTANT", "Label_145", "CATEGORY_UPDATES", "Label_150"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -24621,9 +23870,7 @@
         "threadId": "198cb98db392fec0",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Dennis Milton <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 21 Aug 2025 02:47:26 -0500",
         "labels": [
           "Label_148",
@@ -24767,14 +24014,9 @@
         "threadId": "198c356b25891d4e",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Dorte Bendixen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 19 Aug 2025 10:18:14 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -24922,15 +24164,9 @@
         "threadId": "198bf32674d1070d",
         "subject": "Emil Alexander Agerskov fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 18 Aug 2025 22:00:06 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -24964,9 +24200,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "sæbespåner"
-          ],
+          "specialRequirements": ["sæbespåner"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -25057,9 +24291,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "sæbespåner"
-        ]
+        "specialRequirements": ["sæbespåner"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -25082,14 +24314,9 @@
         "threadId": "198bd2de42e93797",
         "subject": "Morten noer fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 18 Aug 2025 12:35:56 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_PROMOTIONS",
-          "IMPORTANT"
-        ],
+        "labels": ["CATEGORY_PROMOTIONS", "IMPORTANT"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -25224,9 +24451,7 @@
         "threadId": "198a44dc163c2512",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Ulla Larsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 13 Aug 2025 09:40:14 -0700",
         "labels": [
           "Label_148",
@@ -25384,15 +24609,9 @@
         "threadId": "198b2d60186e63a3",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Marie-Louise Ravnholt Henriksen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 16 Aug 2025 07:23:44 -0500",
-        "labels": [
-          "IMPORTANT",
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -25498,9 +24717,7 @@
         "threadId": "198aecb489097d7c",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Sine Skov <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 15 Aug 2025 10:33:33 -0700",
         "labels": [
           "Label_148",
@@ -25643,9 +24860,7 @@
         "threadId": "198abdbf25d1020b",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Pernille Poulsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 14 Aug 2025 22:52:53 -0500",
         "labels": [
           "Label_148",
@@ -25801,9 +25016,7 @@
         "threadId": "198aa04453aa3a41",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Marcus Winther Pedersen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 14 Aug 2025 14:17:41 -0500",
         "labels": [
           "Label_148",
@@ -25947,9 +25160,7 @@
         "threadId": "198a6c27bba8d382",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Louise Ahle <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 13 Aug 2025 23:06:58 -0500",
         "labels": [
           "Label_149",
@@ -26092,14 +25303,9 @@
         "threadId": "198a51498e06fc9b",
         "subject": "Hanne Laursen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 13 Aug 2025 20:17:23 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -26234,14 +25440,9 @@
         "threadId": "198a012a884862e0",
         "subject": "Karl-Johan Simonsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 12 Aug 2025 20:57:10 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -26275,9 +25476,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -26355,9 +25554,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": true,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -26380,14 +25577,9 @@
         "threadId": "1989faa04eeefd8a",
         "subject": "Jacob Monsrud fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 12 Aug 2025 19:02:54 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -26535,15 +25727,9 @@
         "threadId": "1989f34437e3423f",
         "subject": "Email via Rengøring Aarhus: Rengøring i Skødstrup",
         "from": "Steen Christensen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 12 Aug 2025 09:54:17 -0700",
-        "labels": [
-          "IMPORTANT",
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -26678,13 +25864,9 @@
         "threadId": "1989cce5b619d16e",
         "subject": "Kirsten Kjeldsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 12 Aug 2025 05:43:42 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -26819,16 +26001,9 @@
         "threadId": "19898f00049bbe3e",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Henrik Holm <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 11 Aug 2025 04:42:00 -0700",
-        "labels": [
-          "Label_149",
-          "CATEGORY_PERSONAL",
-          "Label_150",
-          "Label_152"
-        ],
+        "labels": ["Label_149", "CATEGORY_PERSONAL", "Label_150", "Label_152"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -26934,16 +26109,9 @@
         "threadId": "198904633385bd64",
         "subject": "Lars Fentz Krogh fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 09 Aug 2025 19:19:34 +0000 (UTC)",
-        "labels": [
-          "Label_148",
-          "Label_153",
-          "CATEGORY_PERSONAL",
-          "Label_151"
-        ],
+        "labels": ["Label_148", "Label_153", "CATEGORY_PERSONAL", "Label_151"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -27091,14 +26259,9 @@
         "threadId": "1988eb036831f71e",
         "subject": "Emma Juhl Jensen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 09 Aug 2025 11:56:05 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -27246,14 +26409,9 @@
         "threadId": "1988e2ce98c87c2d",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Kristine Nielsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 9 Aug 2025 02:32:43 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -27388,14 +26546,9 @@
         "threadId": "1988a5c501d66c42",
         "subject": "Martin Holm fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 08 Aug 2025 15:46:00 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -27530,14 +26683,9 @@
         "threadId": "198881fbbf7d13bd",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Jørgen Porse\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 7 Aug 2025 22:20:35 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -27672,14 +26820,9 @@
         "threadId": "19883ee85fcb6d06",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Tobias Gjerløff\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Thu, 7 Aug 2025 04:48:22 -0500",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -27814,9 +26957,7 @@
         "threadId": "19880575486f64c3",
         "subject": "Signe Nielsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 06 Aug 2025 17:04:20 +0000 (UTC)",
         "labels": [
           "Label_149",
@@ -27972,14 +27113,9 @@
         "threadId": "19880341d8bddffc",
         "subject": "Email via Rengøring Aarhus:",
         "from": "system@leadpoint.dk",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 6 Aug 2025 11:25:54 -0500",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -28114,9 +27250,7 @@
         "threadId": "1987dc0a3a1381d0",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Tommy Callesen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 6 Aug 2025 01:00:29 -0400",
         "labels": [
           "Label_148",
@@ -28261,13 +27395,9 @@
         "threadId": "19876a89d69e7b06",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Lisa Veldhuis <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 4 Aug 2025 14:56:56 -0500",
-        "labels": [
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -28402,14 +27532,9 @@
         "threadId": "1986c09fc383e0d6",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Brian Nielsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 2 Aug 2025 11:27:29 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -28544,16 +27669,9 @@
         "threadId": "198654d7753d8210",
         "subject": "Regitze Olesgaard fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Fri, 01 Aug 2025 11:03:48 +0000 (UTC)",
-        "labels": [
-          "Label_148",
-          "Label_153",
-          "CATEGORY_PERSONAL",
-          "Label_151"
-        ],
+        "labels": ["Label_148", "Label_153", "CATEGORY_PERSONAL", "Label_151"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -28659,9 +27777,7 @@
         "threadId": "1985be43c19cbe01",
         "subject": "Casper Bekker Skov fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Wed, 30 Jul 2025 15:12:18 +0000 (UTC)",
         "labels": [
           "Label_148",
@@ -28804,14 +27920,9 @@
         "threadId": "198564b4213a5aea",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Maria Herold <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 29 Jul 2025 06:07:07 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -28959,14 +28070,9 @@
         "threadId": "1985286ec38fac72",
         "subject": "Mads Warberg Danielsen fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Mon, 28 Jul 2025 19:33:48 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -29101,14 +28207,9 @@
         "threadId": "1984c1b4b634116d",
         "subject": "Nadia Møllebjerg fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 27 Jul 2025 13:38:30 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -29243,14 +28344,9 @@
         "threadId": "1984765528966dcf",
         "subject": "Karin Bredmose Björnsson fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sat, 26 Jul 2025 15:41:16 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -29385,15 +28481,9 @@
         "threadId": "1984272d83c446b3",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Simone Ebling <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 25 Jul 2025 09:37:58 -0700",
-        "labels": [
-          "IMPORTANT",
-          "Label_145",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "Label_145", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -29427,9 +28517,7 @@
             "actualPrice": null,
             "numberOfWorkers": null
           },
-          "specialRequirements": [
-            "afkalkning"
-          ],
+          "specialRequirements": ["afkalkning"],
           "qualitySignals": {
             "isRepeatBooking": false,
             "bookingNumber": null,
@@ -29507,9 +28595,7 @@
         "customerType": "premium",
         "hasComplaints": false,
         "hasSpecialNeeds": false,
-        "specialRequirements": [
-          "afkalkning"
-        ]
+        "specialRequirements": ["afkalkning"]
       },
       "quoteRecommendation": {
         "estimatedHours": 0,
@@ -29532,14 +28618,9 @@
         "threadId": "19829cc0ab388181",
         "subject": "Johan Maunsbach fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 20 Jul 2025 21:44:52 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -29674,13 +28755,9 @@
         "threadId": "198275f3d384eefd",
         "subject": "Jan Elgaard fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Sun, 20 Jul 2025 10:26:48 +0000 (UTC)",
-        "labels": [
-          "CATEGORY_PERSONAL"
-        ],
+        "labels": ["CATEGORY_PERSONAL"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -29815,9 +28892,7 @@
         "threadId": "198212716f9cd2d8",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Toke Østerby\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 18 Jul 2025 22:27:45 -0700",
         "labels": [
           "Label_149",
@@ -29960,14 +29035,9 @@
         "threadId": "1980f5666d616242",
         "subject": "Timmy Ibro fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Tue, 15 Jul 2025 18:26:14 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -30115,14 +29185,9 @@
         "threadId": "1980a31a313b09c5",
         "subject": "Email via Rengøring Aarhus: Rengøring af rækkehus i Hørning",
         "from": "\"Lasse Bækhøj Madsen\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Mon, 14 Jul 2025 11:27:59 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -30270,16 +29335,9 @@
         "threadId": "197ff7fd93ae63c8",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Bente Overgaard <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Sat, 12 Jul 2025 11:37:36 -0500",
-        "labels": [
-          "Label_149",
-          "IMPORTANT",
-          "CATEGORY_UPDATES",
-          "Label_151"
-        ],
+        "labels": ["Label_149", "IMPORTANT", "CATEGORY_UPDATES", "Label_151"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -30414,14 +29472,9 @@
         "threadId": "197f440028c25bae",
         "subject": "Ingelise skole fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 10 Jul 2025 12:12:02 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -30556,14 +29609,9 @@
         "threadId": "197f2fc0400495c7",
         "subject": "Cecilie Bøgh fra Rengøring.nu - Nettbureau AS",
         "from": "\"Leadmail.no\" <kontakt@leadmail.no>",
-        "to": [
-          "\"info@rendetalje.dk\" <info@rendetalje.dk"
-        ],
+        "to": ["\"info@rendetalje.dk\" <info@rendetalje.dk"],
         "date": "Thu, 10 Jul 2025 06:18:10 +0000 (UTC)",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -30698,14 +29746,9 @@
         "threadId": "197eed6bcc1fb9f9",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Mia Nielsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 9 Jul 2025 03:58:57 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -30840,14 +29883,9 @@
         "threadId": "197e91c6e8da762f",
         "subject": "Formular via Rengøring Aarhus",
         "from": "\"Sofie Møller Carlsen\" <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Tue, 8 Jul 2025 01:17:22 -0700",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -30982,14 +30020,9 @@
         "threadId": "197d4f10f7c85160",
         "subject": "Email via Rengøring Aarhus: Henvendelse vedr. virksomhedspraktik",
         "from": "Lenette Olesen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Fri, 4 Jul 2025 06:17:35 -0400",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -31124,14 +30157,9 @@
         "threadId": "197caf6018b0c2a1",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Katrine <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 2 Jul 2025 06:46:47 -0500",
-        "labels": [
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,
@@ -31266,15 +30294,9 @@
         "threadId": "197ca202db830d5f",
         "subject": "Formular via Rengøring Aarhus",
         "from": "Cecilie Krogsgaard Nielsen <system@leadpoint.dk>",
-        "to": [
-          "info@rendetalje.dk"
-        ],
+        "to": ["info@rendetalje.dk"],
         "date": "Wed, 2 Jul 2025 02:53:14 -0500",
-        "labels": [
-          "Label_149",
-          "IMPORTANT",
-          "CATEGORY_UPDATES"
-        ],
+        "labels": ["Label_149", "IMPORTANT", "CATEGORY_UPDATES"],
         "estimatedHours": 0,
         "propertySize": 0,
         "quotedPrice": 0,

@@ -32,29 +32,29 @@
 
 ### Analytics Tracking Tests
 
-| Test | Purpose | Expected Result |
-|------|---------|-----------------|
-| Track message sent | Verify event tracking | Event logged |
-| Track AI response | Verify response tracking | Response time logged |
-| Track context usage | Verify context tracking | Context keys logged |
-| Track message length | Verify length tracking | Length recorded |
+| Test                 | Purpose                  | Expected Result      |
+| -------------------- | ------------------------ | -------------------- |
+| Track message sent   | Verify event tracking    | Event logged         |
+| Track AI response    | Verify response tracking | Response time logged |
+| Track context usage  | Verify context tracking  | Context keys logged  |
+| Track message length | Verify length tracking   | Length recorded      |
 
 ### Rate Limiting Tests
 
-| Test | Purpose | Expected Result |
-|------|---------|-----------------|
-| Allow normal sending | Verify under limit works | Messages sent |
-| Enforce rate limit | Verify limit enforcement | 11th message blocked |
-| Reset after window | Verify time window reset | Limit resets |
-| Show error message | Verify user feedback | Error shown |
+| Test                 | Purpose                  | Expected Result      |
+| -------------------- | ------------------------ | -------------------- |
+| Allow normal sending | Verify under limit works | Messages sent        |
+| Enforce rate limit   | Verify limit enforcement | 11th message blocked |
+| Reset after window   | Verify time window reset | Limit resets         |
+| Show error message   | Verify user feedback     | Error shown          |
 
 ### Performance Monitoring Tests
 
-| Test | Purpose | Expected Result |
-|------|---------|-----------------|
-| Track response time | Verify timing metrics | Time recorded |
-| Track model usage | Verify model tracking | Model logged |
-| Track tools available | Verify tools tracking | Count logged |
+| Test                  | Purpose               | Expected Result |
+| --------------------- | --------------------- | --------------- |
+| Track response time   | Verify timing metrics | Time recorded   |
+| Track model usage     | Verify model tracking | Model logged    |
+| Track tools available | Verify tools tracking | Count logged    |
 
 ---
 
@@ -65,6 +65,7 @@
 **Feature:** Track all chat events
 
 **Events Tracked:**
+
 ```typescript
 // Message sent
 {
@@ -91,6 +92,7 @@
 ```
 
 **Tests:**
+
 - ✅ Message sent events tracked
 - ✅ AI response events tracked
 - ✅ Context usage tracked
@@ -99,6 +101,7 @@
 - ✅ Model usage tracked
 
 **Expected Behavior:**
+
 - All events logged to database
 - Performance metrics captured
 - Usage patterns tracked
@@ -111,18 +114,21 @@
 **Feature:** Prevent spam and abuse
 
 **Implementation:**
+
 ```typescript
 // 10 messages per minute per user
-checkRateLimit(userId, 10, 60000)
+checkRateLimit(userId, 10, 60000);
 ```
 
 **Tests:**
+
 - ✅ Normal messages allowed
 - ✅ 11th message blocked
 - ✅ Error message shown
 - ✅ Limit resets after 60s
 
 **Expected Behavior:**
+
 - First 10 messages: ✅ Allowed
 - 11th message: ❌ Blocked
 - Error: "Rate limit exceeded. Please wait."
@@ -132,12 +138,12 @@ checkRateLimit(userId, 10, 60000)
 
 ## 📈 Performance Targets
 
-| Metric | Target | Test | Status |
-|--------|--------|------|--------|
-| Analytics Overhead | <10ms | ✅ Tested | ⏳ Pending |
-| Rate Limit Check | <1ms | ✅ Tested | ⏳ Pending |
-| Event Logging | Async | ✅ Tested | ⏳ Pending |
-| User Experience | No impact | ✅ Tested | ⏳ Pending |
+| Metric             | Target    | Test      | Status     |
+| ------------------ | --------- | --------- | ---------- |
+| Analytics Overhead | <10ms     | ✅ Tested | ⏳ Pending |
+| Rate Limit Check   | <1ms      | ✅ Tested | ⏳ Pending |
+| Event Logging      | Async     | ✅ Tested | ⏳ Pending |
+| User Experience    | No impact | ✅ Tested | ⏳ Pending |
 
 ---
 
@@ -146,6 +152,7 @@ checkRateLimit(userId, 10, 60000)
 ### Scenario 1: Normal Usage
 
 **Steps:**
+
 1. User sends message
 2. Analytics tracks event
 3. Message sent successfully
@@ -159,6 +166,7 @@ checkRateLimit(userId, 10, 60000)
 ### Scenario 2: Rate Limit Hit
 
 **Steps:**
+
 1. User sends 10 messages quickly
 2. All 10 succeed
 3. User sends 11th message
@@ -173,6 +181,7 @@ checkRateLimit(userId, 10, 60000)
 ### Scenario 3: Performance Monitoring
 
 **Steps:**
+
 1. User sends message
 2. Start timer
 3. AI responds
@@ -187,10 +196,12 @@ checkRateLimit(userId, 10, 60000)
 ## 🐛 Known Issues
 
 ### From Previous Phases
+
 - ⚠️ Real AI tests timeout (expected)
 - ⚠️ Need mocking for speed
 
 ### Phase 4 Specific
+
 - ⏳ Analytics events not visible in client
 - ⏳ Rate limit testing requires rapid sending
 - ⏳ Performance metrics need database verification
@@ -225,6 +236,7 @@ checkRateLimit(userId, 10, 60000)
 ## 📝 Test Files Created
 
 ### E2E Tests
+
 - `tests/phase-4-analytics-security.spec.ts` (13 tests)
   - Analytics Tracking (4 tests)
   - Rate Limiting (4 tests)
@@ -232,6 +244,7 @@ checkRateLimit(userId, 10, 60000)
   - Integration (2 tests)
 
 ### Mocked Tests
+
 - `tests/phase-4-analytics-security-mocked.spec.ts` (10 tests)
   - Analytics Tracking (3 tests)
   - Rate Limiting (3 tests)
@@ -245,12 +258,14 @@ checkRateLimit(userId, 10, 60000)
 ## 🎓 Testing Strategy
 
 ### E2E Tests (Playwright)
+
 - Test real analytics tracking
 - Verify rate limiting works
 - Check error messages
 - Test user experience
 
 ### Mocked Tests
+
 - Fast feedback
 - Reliable results
 - No AI dependency
@@ -261,12 +276,14 @@ checkRateLimit(userId, 10, 60000)
 ## 🚀 Next Steps
 
 ### Before Production
+
 1. ✅ Run E2E tests
 2. ✅ Run mocked tests
 3. ✅ Verify analytics in database
 4. ✅ Test rate limit reset
 
 ### For Production
+
 1. Add analytics dashboard
 2. Monitor rate limit hits
 3. Adjust limits if needed
@@ -279,16 +296,19 @@ checkRateLimit(userId, 10, 60000)
 ### To Run Tests
 
 **E2E Tests:**
+
 ```bash
 npx playwright test tests/phase-4-analytics-security.spec.ts
 ```
 
 **Mocked Tests:**
+
 ```bash
 npx playwright test tests/phase-4-analytics-security-mocked.spec.ts
 ```
 
 **All Phase 4 Tests:**
+
 ```bash
 npx playwright test tests/phase-4-*.spec.ts
 ```
@@ -308,6 +328,7 @@ npx playwright test tests/phase-4-*.spec.ts
 ---
 
 **Key Achievements:**
+
 - ✅ Analytics tracking tested
 - ✅ Rate limiting tested
 - ✅ Performance monitoring tested

@@ -1,0 +1,259 @@
+{
+  "timestamp": "2025-11-12T17:54:25.217Z",
+  "totalComponents": 11,
+  "passed": 5,
+  "failed": 6,
+  "results": [
+    {
+      "component": "AppleButton",
+      "status": "❌ ERROR",
+      "error": "Failed to load story for AppleButton (crm-apple-ui-applebutton--primary) - tried: crm-apple-ui-applebutton--primary, apple-ui-applebutton--primary"
+    },
+    {
+      "component": "AppleInput",
+      "status": "❌ ERROR",
+      "error": "Failed to load story for AppleInput (crm-apple-ui-appleinput--default) - tried: crm-apple-ui-appleinput--default, apple-ui-appleinput--default"
+    },
+    {
+      "component": "AppleSearchField",
+      "status": "✅ PASS",
+      "themeWorks": true,
+      "colorsDifferent": true,
+      "lightScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleSearchField-light.png",
+      "darkScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleSearchField-dark.png",
+      "lightColors": [
+        {
+          "tag": "DIV",
+          "className": "_searchWrapper_hgmn9_20 ",
+          "background": "rgb(242, 242, 247)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "tag": "INPUT",
+          "className": "_input_hgmn9_52",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 0, 0)",
+          "borderColor": "rgb(0, 0, 0)"
+        }
+      ],
+      "darkColors": [
+        {
+          "tag": "DIV",
+          "className": "_searchWrapper_hgmn9_20 ",
+          "background": "rgb(44, 44, 46)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "tag": "INPUT",
+          "className": "_input_hgmn9_52",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(255, 255, 255)",
+          "borderColor": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "component": "AppleListItem",
+      "status": "✅ PASS",
+      "themeWorks": true,
+      "colorsDifferent": true,
+      "lightScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleListItem-light.png",
+      "darkScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleListItem-dark.png",
+      "lightColors": [
+        {
+          "tag": "DIV",
+          "className": "_listItem_wsb8x_7  _separator_wsb8x_25 ",
+          "background": "rgb(255, 255, 255)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ],
+      "darkColors": [
+        {
+          "tag": "DIV",
+          "className": "_listItem_wsb8x_7  _separator_wsb8x_25 ",
+          "background": "rgb(28, 28, 30)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ]
+    },
+    {
+      "component": "AppleModal",
+      "status": "❌ ERROR",
+      "error": "Failed to load story for AppleModal (crm-apple-ui-applemodal--default) - tried: crm-apple-ui-applemodal--default, apple-ui-applemodal--default"
+    },
+    {
+      "component": "AppleDrawer",
+      "status": "✅ PASS",
+      "themeWorks": true,
+      "colorsDifferent": true,
+      "lightScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleDrawer-light.png",
+      "darkScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleDrawer-dark.png",
+      "lightColors": [
+        {
+          "tag": "DIV",
+          "className": "_backdrop_wnlpb_11",
+          "background": "rgba(0, 0, 0, 0.3)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "_drawer_wnlpb_30 _right_wnlpb_42",
+          "background": "rgb(255, 255, 255)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ],
+      "darkColors": [
+        {
+          "tag": "DIV",
+          "className": "_backdrop_wnlpb_11",
+          "background": "rgba(0, 0, 0, 0.5)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "_drawer_wnlpb_30 _right_wnlpb_42",
+          "background": "rgb(28, 28, 30)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ]
+    },
+    {
+      "component": "AppleSheet",
+      "status": "✅ PASS",
+      "themeWorks": true,
+      "colorsDifferent": true,
+      "lightScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleSheet-light.png",
+      "darkScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleSheet-dark.png",
+      "lightColors": [
+        {
+          "tag": "DIV",
+          "className": "_backdrop_1v3lu_11",
+          "background": "rgba(0, 0, 0, 0.2)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "_sheet_1v3lu_30",
+          "background": "rgb(255, 255, 255)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ],
+      "darkColors": [
+        {
+          "tag": "DIV",
+          "className": "_backdrop_1v3lu_11",
+          "background": "rgba(0, 0, 0, 0.4)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "_sheet_1v3lu_30",
+          "background": "rgb(28, 28, 30)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ]
+    },
+    {
+      "component": "AppleBadge",
+      "status": "❌ ERROR",
+      "error": "Failed to load story for AppleBadge (crm-apple-ui-applebadge--all-statuses) - tried: crm-apple-ui-applebadge--all-statuses, apple-ui-applebadge--all-statuses"
+    },
+    {
+      "component": "AppleTag",
+      "status": "✅ PASS",
+      "themeWorks": true,
+      "colorsDifferent": true,
+      "lightScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleTag-light.png",
+      "darkScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\AppleTag-dark.png",
+      "lightColors": [
+        {
+          "tag": "SPAN",
+          "className": "_tag_9bfsp_7 ",
+          "background": "rgba(0, 122, 255, 0.082)",
+          "color": "rgb(0, 122, 255)",
+          "borderColor": "rgba(0, 122, 255, 0.19)"
+        }
+      ],
+      "darkColors": [
+        {
+          "tag": "SPAN",
+          "className": "_tag_9bfsp_7 ",
+          "background": "rgba(10, 132, 255, 0.082)",
+          "color": "rgb(10, 132, 255)",
+          "borderColor": "rgba(10, 132, 255, 0.19)"
+        }
+      ]
+    },
+    {
+      "component": "AppleCard",
+      "status": "❌ ERROR",
+      "error": "Failed to load story for AppleCard (crm-apple-ui-applecard--elevated) - tried: crm-apple-ui-applecard--elevated, apple-ui-applecard--elevated"
+    },
+    {
+      "component": "ScrollToTop",
+      "status": "❌ FAIL",
+      "themeWorks": true,
+      "colorsDifferent": false,
+      "lightScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\ScrollToTop-light.png",
+      "darkScreenshot": "C:\\Users\\empir\\Tekup\\services\\tekup-ai-v2\\test-results\\phase0-verification\\ScrollToTop-dark.png",
+      "lightColors": [
+        {
+          "tag": "DIV",
+          "className": "",
+          "background": "rgb(255, 255, 255)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ],
+      "darkColors": [
+        {
+          "tag": "DIV",
+          "className": "",
+          "background": "rgb(255, 255, 255)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        },
+        {
+          "tag": "DIV",
+          "className": "",
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "oklch(0.235 0.015 65)",
+          "borderColor": "oklch(0.92 0.004 286.32)"
+        }
+      ]
+    }
+  ]
+}

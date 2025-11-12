@@ -38,6 +38,7 @@ npx tsx server/scripts/validate-import.ts
 ```
 
 **Expected output:**
+
 ```
 ✅ Dataset loaded (version 4.3 → import as 4.3.5)
    Leads: 231
@@ -58,6 +59,7 @@ npx tsx server/scripts/action-handler.ts --dry-run
 ```
 
 **Expected output:**
+
 ```
 📊 ACTION HANDLER SUMMARY
 Total insights:     25
@@ -116,11 +118,11 @@ curl http://localhost:3000/api/trpc/fridayLeads.getDashboardStats
 
 ## 📊 What's Running Now?
 
-| Component | Schedule | Purpose |
-|-----------|----------|---------|
-| `import-pipeline-v4_3_5.ts` | Daily 02:30 | Refresh lead data from v4.3.5 dataset |
-| `action-handler.ts` | Every 4 hours | Detect insights & create tasks |
-| Friday AI Server | Always on | Serve `fridayLeads` API endpoints |
+| Component                   | Schedule      | Purpose                               |
+| --------------------------- | ------------- | ------------------------------------- |
+| `import-pipeline-v4_3_5.ts` | Daily 02:30   | Refresh lead data from v4.3.5 dataset |
+| `action-handler.ts`         | Every 4 hours | Detect insights & create tasks        |
+| Friday AI Server            | Always on     | Serve `fridayLeads` API endpoints     |
 
 ## 🔍 Monitor Status
 
@@ -139,6 +141,7 @@ psql $DATABASE_URL -c "SELECT * FROM friday_ai.tasks WHERE metadata->>'generated
 ## 🎉 You're Done!
 
 Friday AI now autonomously:
+
 - ✅ Imports and tracks 231 enriched leads
 - ✅ Detects missing bookings from recurring customers
 - ✅ Flags at-risk customers for review

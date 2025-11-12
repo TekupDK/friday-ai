@@ -9,6 +9,7 @@
 ## ✅ What We Accomplished
 
 ### 1. Langfuse Deployed ✅
+
 ```
 ✅ Docker containers running
 ✅ PostgreSQL database healthy
@@ -17,6 +18,7 @@
 ```
 
 ### 2. LLM Tracing Integrated ✅
+
 - ✅ `invokeLLM` function wrapped with Langfuse
 - ✅ Automatic trace creation for every AI call
 - ✅ Success tracking (response time, tokens, model)
@@ -30,14 +32,15 @@
 ### File Modified: `server/_core/llm.ts`
 
 **Added at function start:**
+
 ```typescript
 // Import Langfuse for tracing
-const { getLangfuseClient } = await import('../integrations/langfuse/client');
+const { getLangfuseClient } = await import("../integrations/langfuse/client");
 const langfuse = getLangfuseClient();
 
 // Create trace if Langfuse is enabled
 const trace = langfuse?.trace({
-  name: 'llm-invocation',
+  name: "llm-invocation",
   metadata: {
     hasTools: !!tools && tools.length > 0,
     toolCount: tools?.length || 0,
@@ -46,7 +49,7 @@ const trace = langfuse?.trace({
 
 // Create generation span
 const generation = trace?.generation({
-  name: 'llm-call',
+  name: "llm-call",
   input: messages,
 });
 
@@ -54,6 +57,7 @@ const startTime = Date.now();
 ```
 
 **Added success tracking:**
+
 ```typescript
 // Track success in Langfuse
 const responseTime = Date.now() - startTime;
@@ -75,9 +79,10 @@ await flushLangfuse();
 ```
 
 **Added error tracking:**
+
 ```typescript
 generation?.end({
-  level: 'ERROR',
+  level: "ERROR",
   statusMessage: error.message,
   metadata: {
     responseTime,
@@ -120,12 +125,14 @@ pnpm dev
 ### Step 4: Make an AI Request
 
 Option A - Via UI:
+
 1. Open Friday AI (http://localhost:5173)
 2. Go to Leads tab
 3. Request a lead analysis
 4. Or use chat to ask Friday anything
 
 Option B - Via tRPC:
+
 ```bash
 # In another terminal
 curl http://localhost:5173/api/trpc/ai.chat \
@@ -140,6 +147,7 @@ curl http://localhost:5173/api/trpc/ai.chat \
 3. You should see your AI call!
 
 **Expected data:**
+
 - ✅ Trace name: "llm-invocation"
 - ✅ Generation name: "llm-call"
 - ✅ Input: Your messages
@@ -153,6 +161,7 @@ curl http://localhost:5173/api/trpc/ai.chat \
 ## 📊 What You'll See in Langfuse
 
 ### Main Dashboard
+
 ```
 Recent Traces
 ├── llm-invocation (2 seconds ago)
@@ -163,6 +172,7 @@ Recent Traces
 ```
 
 ### Trace Details
+
 - **Input:** Complete message array
 - **Output:** Full AI response
 - **Metadata:**
@@ -175,7 +185,9 @@ Recent Traces
   - Total tokens
 
 ### Error Tracking
+
 If an error occurs:
+
 - **Level:** ERROR
 - **Status Message:** Error description
 - **Metadata:** Error details, response time
@@ -198,6 +210,7 @@ If an error occurs:
 ## 📈 Performance Impact
 
 **Overhead per AI call:**
+
 - **Trace creation:** <1ms
 - **Data serialization:** <2ms
 - **Async flush:** ~10ms (non-blocking)
@@ -212,34 +225,38 @@ If an error occurs:
 ### Not yet implemented, but available:
 
 1. **User tracking:**
+
 ```typescript
 const trace = langfuse?.trace({
-  name: 'llm-invocation',
-  userId: userId.toString(),  // Add this!
+  name: "llm-invocation",
+  userId: userId.toString(), // Add this!
 });
 ```
 
 2. **Session tracking:**
+
 ```typescript
 const trace = langfuse?.trace({
-  name: 'llm-invocation',
-  sessionId: conversationId,  // Group by conversation
+  name: "llm-invocation",
+  sessionId: conversationId, // Group by conversation
 });
 ```
 
 3. **Feedback scores:**
+
 ```typescript
 trace?.score({
-  name: 'user-feedback',
+  name: "user-feedback",
   value: 1, // thumbs up
 });
 ```
 
 4. **Custom tags:**
+
 ```typescript
 const trace = langfuse?.trace({
-  name: 'llm-invocation',
-  tags: ['lead-analysis', 'high-priority'],
+  name: "llm-invocation",
+  tags: ["lead-analysis", "high-priority"],
 });
 ```
 
@@ -250,11 +267,13 @@ const trace = langfuse?.trace({
 ### No traces appearing?
 
 1. **Check Langfuse is running:**
+
    ```bash
    curl http://localhost:3000/api/public/health
    ```
 
 2. **Check environment variables:**
+
    ```bash
    # In Friday AI console, you should see:
    [Langfuse] ✅ Client initialized (http://localhost:3000)
@@ -274,6 +293,7 @@ const trace = langfuse?.trace({
 ### Traces are delayed?
 
 This is **normal**! Traces are flushed asynchronously:
+
 - Default flush interval: 1 second
 - Traces appear within 1-2 seconds
 - No impact on AI response time
@@ -294,6 +314,7 @@ This is **normal**! Traces are flushed asynchronously:
 **Goal:** Add semantic search for leads, emails, and documents
 
 **Files to create:**
+
 - `server/integrations/chromadb/docker/docker-compose.chromadb.yml`
 - `server/integrations/chromadb/client.ts`
 - `server/integrations/chromadb/indexers/lead-indexer.ts`

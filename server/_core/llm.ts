@@ -329,9 +329,9 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   } = params;
 
   // Import Langfuse for tracing
-  const { getLangfuseClient } = await import('../integrations/langfuse/client');
+  const { getLangfuseClient } = await import("../integrations/langfuse/client");
   const langfuse = getLangfuseClient();
-  
+
   // Check which API we're using (priority: OpenRouter > Ollama > Gemini > OpenAI)
   const useOpenRouter = ENV.openRouterApiKey && ENV.openRouterApiKey.trim();
   const useOllamaApi = !useOpenRouter && ENV.ollamaBaseUrl;
@@ -340,15 +340,19 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     !useOllamaApi &&
     ENV.geminiApiKey &&
     ENV.geminiApiKey.trim();
-    
+
   // Determine model name for tracking
-  const modelName = useOpenRouter ? ENV.openRouterModel : 
-                    useOllamaApi ? ENV.ollamaModel :
-                    useGeminiApi ? 'gemini-2.0-flash-exp' : 'gpt-4o-mini';
-  
+  const modelName = useOpenRouter
+    ? ENV.openRouterModel
+    : useOllamaApi
+      ? ENV.ollamaModel
+      : useGeminiApi
+        ? "gemini-2.0-flash-exp"
+        : "gpt-4o-mini";
+
   // Create trace if Langfuse is enabled
   const trace = langfuse?.trace({
-    name: 'llm-invocation',
+    name: "llm-invocation",
     metadata: {
       hasTools: !!tools && tools.length > 0,
       toolCount: tools?.length || 0,
@@ -357,13 +361,15 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   });
 
   // Create generation span (stringify input for Langfuse compatibility)
-  const inputForLangfuse = messages?.map(m => ({
-    role: m.role,
-    content: typeof m.content === 'string' ? m.content : JSON.stringify(m.content)
-  })) || [];
-  
+  const inputForLangfuse =
+    messages?.map(m => ({
+      role: m.role,
+      content:
+        typeof m.content === "string" ? m.content : JSON.stringify(m.content),
+    })) || [];
+
   const generation = trace?.generation({
-    name: 'llm-call',
+    name: "llm-call",
     input: inputForLangfuse,
     model: modelName,
   });
@@ -464,50 +470,55 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     }
 
     const result = (await response.json()) as InvokeResult;
-    
+
     // Track success in Langfuse
     const responseTime = Date.now() - startTime;
-    
+
     // Extract text content from result for logging
-    const outputText = result.choices?.[0]?.message?.content || 
-                       result.choices?.[0]?.message?.tool_calls?.map(tc => tc.function.name).join(', ') ||
-                       'No output';
-    
+    const outputText =
+      result.choices?.[0]?.message?.content ||
+      result.choices?.[0]?.message?.tool_calls
+        ?.map(tc => tc.function.name)
+        .join(", ") ||
+      "No output";
+
     generation?.end({
       output: outputText,
-      usage: result.usage ? {
-        promptTokens: result.usage.prompt_tokens,
-        completionTokens: result.usage.completion_tokens,
-        totalTokens: result.usage.total_tokens,
-      } : undefined,
+      usage: result.usage
+        ? {
+            promptTokens: result.usage.prompt_tokens,
+            completionTokens: result.usage.completion_tokens,
+            totalTokens: result.usage.total_tokens,
+          }
+        : undefined,
       metadata: {
         responseTime,
-        hasToolCalls: !!(result.choices?.[0]?.message?.tool_calls),
+        hasToolCalls: !!result.choices?.[0]?.message?.tool_calls,
         finishReason: result.choices?.[0]?.finish_reason,
       },
     });
-    
+
     // Flush to Langfuse
-    const { flushLangfuse } = await import('../integrations/langfuse/client');
+    const { flushLangfuse } = await import("../integrations/langfuse/client");
     await flushLangfuse();
-    
+
     return result;
   } catch (error) {
     // Track error in Langfuse
     const responseTime = Date.now() - startTime;
     generation?.end({
-      level: 'ERROR',
+      level: "ERROR",
       statusMessage: error instanceof Error ? error.message : String(error),
       metadata: {
         responseTime,
         error: error instanceof Error ? error.message : String(error),
       },
     });
-    
+
     // Flush to Langfuse
-    const { flushLangfuse } = await import('../integrations/langfuse/client');
+    const { flushLangfuse } = await import("../integrations/langfuse/client");
     await flushLangfuse();
-    
+
     throw error;
   }
 }
@@ -589,7 +600,9 @@ export async function* streamResponse(
 
   // Add response format if provided (only for OpenAI/OpenRouter)
   if ((useOpenRouter || (!useOllamaApi && !useGeminiApi)) && responseFormat) {
-    const normalizedResponseFormat = normalizeResponseFormat({ responseFormat });
+    const normalizedResponseFormat = normalizeResponseFormat({
+      responseFormat,
+    });
     if (normalizedResponseFormat) {
       payload.response_format = normalizedResponseFormat;
     }
@@ -634,17 +647,19 @@ export async function* streamResponse(
       if (done) break;
 
       const chunk = decoder.decode(value, { stream: true });
-      const lines = chunk.split('\n');
+      const lines = chunk.split("\n");
 
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
+        if (line.startsWith("data: ")) {
           const data = line.slice(6).trim();
-          if (data === '[DONE]') return;
+          if (data === "[DONE]") return;
 
           try {
             const parsed = JSON.parse(data);
-            const content = parsed.choices?.[0]?.delta?.content || 
-                           parsed.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            const content =
+              parsed.choices?.[0]?.delta?.content ||
+              parsed.candidates?.[0]?.content?.parts?.[0]?.text ||
+              "";
             if (content) {
               yield content;
             }

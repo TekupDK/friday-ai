@@ -8,63 +8,63 @@ const cards = [
   {
     id: 1,
     icon: Mail,
-    title: 'Email Inbox',
-    description: 'AI-sorted med prioritering',
-    count: '24',
-    color: 'from-blue-500/20 to-cyan-500/20',
-    iconBg: 'bg-blue-500/10',
-    iconColor: 'text-blue-500'
+    title: "Email Inbox",
+    description: "AI-sorted med prioritering",
+    count: "24",
+    color: "from-blue-500/20 to-cyan-500/20",
+    iconBg: "bg-blue-500/10",
+    iconColor: "text-blue-500",
   },
   {
     id: 2,
     icon: Calendar,
-    title: 'Calendar Events',
-    description: 'Dagens møder og tasks',
-    count: '8',
-    color: 'from-purple-500/20 to-pink-500/20',
-    iconBg: 'bg-purple-500/10',
-    iconColor: 'text-purple-500'
+    title: "Calendar Events",
+    description: "Dagens møder og tasks",
+    count: "8",
+    color: "from-purple-500/20 to-pink-500/20",
+    iconBg: "bg-purple-500/10",
+    iconColor: "text-purple-500",
   },
   {
     id: 3,
     icon: DollarSign,
-    title: 'Invoices',
-    description: 'Ubetalte fakturaer',
-    count: '5',
-    color: 'from-green-500/20 to-emerald-500/20',
-    iconBg: 'bg-green-500/10',
-    iconColor: 'text-green-500'
+    title: "Invoices",
+    description: "Ubetalte fakturaer",
+    count: "5",
+    color: "from-green-500/20 to-emerald-500/20",
+    iconBg: "bg-green-500/10",
+    iconColor: "text-green-500",
   },
   {
     id: 4,
     icon: Users,
-    title: 'Hot Leads',
-    description: 'Prioriterede leads',
-    count: '12',
-    color: 'from-red-500/20 to-orange-500/20',
-    iconBg: 'bg-red-500/10',
-    iconColor: 'text-red-500'
+    title: "Hot Leads",
+    description: "Prioriterede leads",
+    count: "12",
+    color: "from-red-500/20 to-orange-500/20",
+    iconBg: "bg-red-500/10",
+    iconColor: "text-red-500",
   },
   {
     id: 5,
     icon: Sparkles,
-    title: 'AI Suggestions',
-    description: 'Intelligente forslag',
-    count: '6',
-    color: 'from-yellow-500/20 to-amber-500/20',
-    iconBg: 'bg-yellow-500/10',
-    iconColor: 'text-yellow-500'
+    title: "AI Suggestions",
+    description: "Intelligente forslag",
+    count: "6",
+    color: "from-yellow-500/20 to-amber-500/20",
+    iconBg: "bg-yellow-500/10",
+    iconColor: "text-yellow-500",
   },
   {
     id: 6,
     icon: Zap,
-    title: 'Quick Actions',
-    description: 'Hurtige genveje',
-    count: '15',
-    color: 'from-indigo-500/20 to-violet-500/20',
-    iconBg: 'bg-indigo-500/10',
-    iconColor: 'text-indigo-500'
-  }
+    title: "Quick Actions",
+    description: "Hurtige genveje",
+    count: "15",
+    color: "from-indigo-500/20 to-violet-500/20",
+    iconBg: "bg-indigo-500/10",
+    iconColor: "text-indigo-500",
+  },
 ];
 
 export function InteractiveHoverCard() {
@@ -72,10 +72,10 @@ export function InteractiveHoverCard() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {cards.map((card) => {
+      {cards.map(card => {
         const Icon = card.icon;
         const isHovered = hoveredId === card.id;
-        
+
         return (
           <Card
             key={card.id}
@@ -83,12 +83,12 @@ export function InteractiveHoverCard() {
             onMouseEnter={() => setHoveredId(card.id)}
             onMouseLeave={() => setHoveredId(null)}
             style={{
-              transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+              transform: isHovered ? "translateY(-8px)" : "translateY(0)",
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
             {/* Animated gradient background */}
-            <div 
+            <div
               className={cn(
                 "absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500",
                 card.color,
@@ -107,27 +107,29 @@ export function InteractiveHoverCard() {
                     isHovered && "scale-110 rotate-6"
                   )}
                 >
-                  <Icon 
+                  <Icon
                     className={cn(
                       "w-7 h-7 transition-all duration-300",
                       card.iconColor,
                       isHovered && "scale-125"
-                    )} 
+                    )}
                   />
                 </div>
-                
+
                 {/* Animated count badge */}
-                <Badge 
+                <Badge
                   className={cn(
                     "transition-all duration-300",
                     isHovered && "scale-110"
                   )}
                   variant="secondary"
                 >
-                  <span className={cn(
-                    "font-bold transition-all duration-300",
-                    isHovered && "text-primary"
-                  )}>
+                  <span
+                    className={cn(
+                      "font-bold transition-all duration-300",
+                      isHovered && "text-primary"
+                    )}
+                  >
                     {card.count}
                   </span>
                 </Badge>
@@ -135,7 +137,7 @@ export function InteractiveHoverCard() {
 
               {/* Title with slide animation */}
               <div className="space-y-1">
-                <h3 
+                <h3
                   className={cn(
                     "font-semibold text-lg transition-all duration-300",
                     isHovered && "text-primary translate-x-1"
@@ -143,7 +145,7 @@ export function InteractiveHoverCard() {
                 >
                   {card.title}
                 </h3>
-                <p 
+                <p
                   className={cn(
                     "text-sm text-muted-foreground transition-all duration-300",
                     isHovered && "translate-x-1"
@@ -158,10 +160,10 @@ export function InteractiveHoverCard() {
                 <div
                   className={cn(
                     "h-full rounded-full transition-all duration-1000 ease-out",
-                    card.iconColor.replace('text-', 'bg-')
+                    card.iconColor.replace("text-", "bg-")
                   )}
                   style={{
-                    width: isHovered ? '100%' : '0%'
+                    width: isHovered ? "100%" : "0%",
                   }}
                 />
               </div>

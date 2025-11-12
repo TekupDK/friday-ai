@@ -13,14 +13,14 @@ export default function LocationsTab() {
         <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg">
           <MapPin className="w-10 h-10 text-white" />
         </div>
-        
+
         <div className="space-y-3">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Lokationer & Ruter
           </h2>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Administrer alle rengøringslokationer i København og omegn. 
-            Optimer kørselsruter og reducer transporttid mellem jobs.
+            Administrer alle rengøringslokationer i København og omegn. Optimer
+            kørselsruter og reducer transporttid mellem jobs.
           </p>
         </div>
 
@@ -55,9 +55,7 @@ export default function LocationsTab() {
             <Plus className="w-4 h-4" />
             Tilføj Lokation
           </Button>
-          <Button variant="outline">
-            Se Kort
-          </Button>
+          <Button variant="outline">Se Kort</Button>
         </div>
       </div>
     </div>

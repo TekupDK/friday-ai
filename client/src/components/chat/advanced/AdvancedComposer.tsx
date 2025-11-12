@@ -7,17 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { 
-  Send, 
-  Paperclip, 
-  Mic, 
+import {
+  Send,
+  Paperclip,
+  Mic,
   Image as ImageIcon,
   FileText,
   Code,
   Search,
   Sparkles,
   StopCircle,
-  MoreHorizontal
+  MoreHorizontal,
 } from "lucide-react";
 import { useState, useRef, KeyboardEvent } from "react";
 
@@ -25,7 +25,7 @@ export interface SlashCommand {
   id: string;
   label: string;
   description: string;
-  icon: 'search' | 'code' | 'file' | 'image' | 'sparkles';
+  icon: "search" | "code" | "file" | "image" | "sparkles";
 }
 
 interface AdvancedComposerProps {
@@ -37,11 +37,26 @@ interface AdvancedComposerProps {
 }
 
 const DEFAULT_COMMANDS: SlashCommand[] = [
-  { id: 'search', label: '/search', description: 'Søg på nettet', icon: 'search' },
-  { id: 'analyze', label: '/analyze', description: 'Analyser data', icon: 'code' },
-  { id: 'file', label: '/file', description: 'Upload fil', icon: 'file' },
-  { id: 'image', label: '/image', description: 'Generer billede', icon: 'image' },
-  { id: 'ai', label: '/ai', description: 'AI assistance', icon: 'sparkles' }
+  {
+    id: "search",
+    label: "/search",
+    description: "Søg på nettet",
+    icon: "search",
+  },
+  {
+    id: "analyze",
+    label: "/analyze",
+    description: "Analyser data",
+    icon: "code",
+  },
+  { id: "file", label: "/file", description: "Upload fil", icon: "file" },
+  {
+    id: "image",
+    label: "/image",
+    description: "Generer billede",
+    icon: "image",
+  },
+  { id: "ai", label: "/ai", description: "AI assistance", icon: "sparkles" },
 ];
 
 export function AdvancedComposer({
@@ -49,9 +64,9 @@ export function AdvancedComposer({
   onStop,
   isGenerating = false,
   placeholder = "Send en besked til Friday AI...",
-  showSlashCommands = true
+  showSlashCommands = true,
 }: AdvancedComposerProps) {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [attachments, setAttachments] = useState<File[]>([]);
   const [showCommands, setShowCommands] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -59,16 +74,16 @@ export function AdvancedComposer({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
 
-    if (e.key === '/' && message === '') {
+    if (e.key === "/" && message === "") {
       setShowCommands(true);
     }
 
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       setShowCommands(false);
     }
   };
@@ -76,7 +91,7 @@ export function AdvancedComposer({
   const handleSend = () => {
     if (message.trim() || attachments.length > 0) {
       onSend?.(message, attachments);
-      setMessage('');
+      setMessage("");
       setAttachments([]);
       setShowCommands(false);
     }
@@ -94,19 +109,25 @@ export function AdvancedComposer({
   };
 
   const handleCommandSelect = (command: SlashCommand) => {
-    setMessage(command.label + ' ');
+    setMessage(command.label + " ");
     setShowCommands(false);
     textareaRef.current?.focus();
   };
 
-  const getCommandIcon = (icon: SlashCommand['icon']) => {
+  const getCommandIcon = (icon: SlashCommand["icon"]) => {
     switch (icon) {
-      case 'search': return Search;
-      case 'code': return Code;
-      case 'file': return FileText;
-      case 'image': return ImageIcon;
-      case 'sparkles': return Sparkles;
-      default: return Sparkles;
+      case "search":
+        return Search;
+      case "code":
+        return Code;
+      case "file":
+        return FileText;
+      case "image":
+        return ImageIcon;
+      case "sparkles":
+        return Sparkles;
+      default:
+        return Sparkles;
     }
   };
 
@@ -116,9 +137,9 @@ export function AdvancedComposer({
       {attachments.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {attachments.map((file, index) => (
-            <Badge 
-              key={index} 
-              variant="secondary" 
+            <Badge
+              key={index}
+              variant="secondary"
               className="flex items-center gap-2"
             >
               <FileText className="w-3 h-3" />
@@ -138,7 +159,7 @@ export function AdvancedComposer({
       {showCommands && showSlashCommands && (
         <Card className="absolute bottom-full mb-2 w-full max-w-md p-2 shadow-lg">
           <div className="space-y-1">
-            {DEFAULT_COMMANDS.map((cmd) => {
+            {DEFAULT_COMMANDS.map(cmd => {
               const Icon = getCommandIcon(cmd.icon);
               return (
                 <button
@@ -151,7 +172,9 @@ export function AdvancedComposer({
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-medium">{cmd.label}</p>
-                    <p className="text-xs text-muted-foreground">{cmd.description}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {cmd.description}
+                    </p>
                   </div>
                 </button>
               );
@@ -166,7 +189,7 @@ export function AdvancedComposer({
           <Textarea
             ref={textareaRef}
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={e => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             rows={1}
@@ -228,13 +251,9 @@ export function AdvancedComposer({
             className={cn(isRecording && "text-red-600")}
           >
             <Mic className="w-4 h-4 mr-1" />
-            {isRecording ? 'Stop' : 'Voice'}
+            {isRecording ? "Stop" : "Voice"}
           </Button>
-          <Button
-            size="sm"
-            variant="ghost"
-            disabled={isGenerating}
-          >
+          <Button size="sm" variant="ghost" disabled={isGenerating}>
             <MoreHorizontal className="w-4 h-4" />
           </Button>
         </div>

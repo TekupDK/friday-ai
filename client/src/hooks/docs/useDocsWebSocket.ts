@@ -15,7 +15,9 @@ export function useDocsWebSocket() {
   const ws = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [subscribedDocs, setSubscribedDocs] = useState<Set<string>>(new Set());
-  const listeners = useRef<Map<string, Set<(message: WSMessage) => void>>>(new Map());
+  const listeners = useRef<Map<string, Set<(message: WSMessage) => void>>>(
+    new Map()
+  );
 
   // Connect to WebSocket
   useEffect(() => {
@@ -31,7 +33,7 @@ export function useDocsWebSocket() {
       setIsConnected(true);
     };
 
-    socket.onmessage = (event) => {
+    socket.onmessage = event => {
       try {
         const message: WSMessage = JSON.parse(event.data);
         console.log("[DocsWS] Message:", message);
@@ -39,7 +41,7 @@ export function useDocsWebSocket() {
         // Notify all listeners for this message type
         const typeListeners = listeners.current.get(message.type);
         if (typeListeners) {
-          typeListeners.forEach((listener) => listener(message));
+          typeListeners.forEach(listener => listener(message));
         }
 
         // Show toast notifications for certain events
@@ -61,7 +63,7 @@ export function useDocsWebSocket() {
       }
     };
 
-    socket.onerror = (error) => {
+    socket.onerror = error => {
       console.error("[DocsWS] Error:", error);
       toast.error("WebSocket connection error");
     };
@@ -87,12 +89,14 @@ export function useDocsWebSocket() {
       return;
     }
 
-    ws.current.send(JSON.stringify({
-      type: "doc:subscribe",
-      document_id: documentId,
-    }));
+    ws.current.send(
+      JSON.stringify({
+        type: "doc:subscribe",
+        document_id: documentId,
+      })
+    );
 
-    setSubscribedDocs((prev) => new Set(prev).add(documentId));
+    setSubscribedDocs(prev => new Set(prev).add(documentId));
     console.log(`[DocsWS] Subscribed to ${documentId}`);
   }, []);
 
@@ -102,12 +106,14 @@ export function useDocsWebSocket() {
       return;
     }
 
-    ws.current.send(JSON.stringify({
-      type: "doc:unsubscribe",
-      document_id: documentId,
-    }));
+    ws.current.send(
+      JSON.stringify({
+        type: "doc:unsubscribe",
+        document_id: documentId,
+      })
+    );
 
-    setSubscribedDocs((prev) => {
+    setSubscribedDocs(prev => {
       const next = new Set(prev);
       next.delete(documentId);
       return next;
@@ -117,40 +123,48 @@ export function useDocsWebSocket() {
   }, []);
 
   // Add event listener for specific message types
-  const on = useCallback((messageType: string, callback: (message: WSMessage) => void) => {
-    if (!listeners.current.has(messageType)) {
-      listeners.current.set(messageType, new Set());
-    }
-    listeners.current.get(messageType)!.add(callback);
-
-    // Return cleanup function
-    return () => {
-      const typeListeners = listeners.current.get(messageType);
-      if (typeListeners) {
-        typeListeners.delete(callback);
-        if (typeListeners.size === 0) {
-          listeners.current.delete(messageType);
-        }
+  const on = useCallback(
+    (messageType: string, callback: (message: WSMessage) => void) => {
+      if (!listeners.current.has(messageType)) {
+        listeners.current.set(messageType, new Set());
       }
-    };
-  }, []);
+      listeners.current.get(messageType)!.add(callback);
+
+      // Return cleanup function
+      return () => {
+        const typeListeners = listeners.current.get(messageType);
+        if (typeListeners) {
+          typeListeners.delete(callback);
+          if (typeListeners.size === 0) {
+            listeners.current.delete(messageType);
+          }
+        }
+      };
+    },
+    []
+  );
 
   // Send presence update
-  const updatePresence = useCallback((documentId: string, cursorPosition?: number) => {
-    if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
-      return;
-    }
+  const updatePresence = useCallback(
+    (documentId: string, cursorPosition?: number) => {
+      if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
+        return;
+      }
 
-    ws.current.send(JSON.stringify({
-      type: "presence:update",
-      presence: {
-        user_id: user?.openId,
-        document_id: documentId,
-        cursor_position: cursorPosition,
-        last_seen: new Date().toISOString(),
-      },
-    }));
-  }, [user?.openId]);
+      ws.current.send(
+        JSON.stringify({
+          type: "presence:update",
+          presence: {
+            user_id: user?.openId,
+            document_id: documentId,
+            cursor_position: cursorPosition,
+            last_seen: new Date().toISOString(),
+          },
+        })
+      );
+    },
+    [user?.openId]
+  );
 
   return {
     isConnected,

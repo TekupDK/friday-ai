@@ -18,7 +18,7 @@ export interface CalendarCardProps {
     time: string;
     duration: string;
     location: string;
-    type: 'meeting' | 'call' | 'event' | 'reminder';
+    type: "meeting" | "call" | "event" | "reminder";
     attendees: number;
     isOnline: boolean;
   };
@@ -27,31 +27,35 @@ export interface CalendarCardProps {
   onCancel?: () => void;
 }
 
-export function CalendarCard({ 
+export function CalendarCard({
   event = {
-    id: '1',
-    title: 'Team Møde - Q1 Review',
-    description: 'Gennemgang af Q1 resultater og planlægning af Q2',
-    date: 'I dag',
-    time: '14:00',
-    duration: '1 time',
-    location: 'Mødelokale A',
-    type: 'meeting',
+    id: "1",
+    title: "Team Møde - Q1 Review",
+    description: "Gennemgang af Q1 resultater og planlægning af Q2",
+    date: "I dag",
+    time: "14:00",
+    duration: "1 time",
+    location: "Mødelokale A",
+    type: "meeting",
     attendees: 5,
-    isOnline: false
+    isOnline: false,
   },
   onJoin,
   onEdit,
-  onCancel
+  onCancel,
 }: CalendarCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const getTypeColor = () => {
     switch (event.type) {
-      case 'call': return 'bg-emerald-600';
-      case 'event': return 'bg-purple-600';
-      case 'reminder': return 'bg-amber-500';
-      default: return 'bg-blue-600';
+      case "call":
+        return "bg-emerald-600";
+      case "event":
+        return "bg-purple-600";
+      case "reminder":
+        return "bg-amber-500";
+      default:
+        return "bg-blue-600";
     }
   };
 
@@ -60,7 +64,12 @@ export function CalendarCard({
       <div className="p-4 space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", getTypeColor())}>
+            <div
+              className={cn(
+                "w-10 h-10 rounded-lg flex items-center justify-center",
+                getTypeColor()
+              )}
+            >
               <Calendar className="w-5 h-5 text-white" />
             </div>
             <div>

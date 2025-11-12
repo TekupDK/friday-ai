@@ -1,53 +1,53 @@
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { 
-  MessageSquare, 
-  Calendar, 
-  FileText, 
-  Users, 
+import {
+  MessageSquare,
+  Calendar,
+  FileText,
+  Users,
   HelpCircle,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 
 interface ChatSuggestion {
   id: string;
   text: string;
   icon: typeof MessageSquare;
-  category: 'quick' | 'standard' | 'advanced';
+  category: "quick" | "standard" | "advanced";
 }
 
 const suggestions: ChatSuggestion[] = [
   {
-    id: '1',
-    text: 'Hvad kan jeg hjælpe med?',
+    id: "1",
+    text: "Hvad kan jeg hjælpe med?",
     icon: Sparkles,
-    category: 'quick'
+    category: "quick",
   },
   {
-    id: '2',
-    text: 'Tjek min kalender i dag',
+    id: "2",
+    text: "Tjek min kalender i dag",
     icon: Calendar,
-    category: 'standard'
+    category: "standard",
   },
   {
-    id: '3',
-    text: 'Vis ubetalte fakturaer',
+    id: "3",
+    text: "Vis ubetalte fakturaer",
     icon: FileText,
-    category: 'standard'
+    category: "standard",
   },
   {
-    id: '4',
-    text: 'Find nye leads',
+    id: "4",
+    text: "Find nye leads",
     icon: Users,
-    category: 'standard'
+    category: "standard",
   },
   {
-    id: '5',
-    text: 'Hvad kan Friday?',
+    id: "5",
+    text: "Hvad kan Friday?",
     icon: HelpCircle,
-    category: 'quick'
-  }
+    category: "quick",
+  },
 ];
 
 export function ChatSuggestionsPanel() {
@@ -72,9 +72,9 @@ export function ChatSuggestionsPanel() {
 
           <ScrollArea className="h-[300px]">
             <div className="space-y-2">
-              {suggestions.map((suggestion) => {
+              {suggestions.map(suggestion => {
                 const Icon = suggestion.icon;
-                
+
                 return (
                   <button
                     key={suggestion.id}
@@ -88,7 +88,7 @@ export function ChatSuggestionsPanel() {
                     <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
                       <Icon className="w-4 h-4 text-primary" />
                     </div>
-                    
+
                     <span className="text-sm font-medium">
                       {suggestion.text}
                     </span>

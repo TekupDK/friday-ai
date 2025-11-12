@@ -1,9 +1,9 @@
 /**
  * EmailQuickActions - Quick Action Menu for Email Items
- * 
+ *
  * Hover-activated quick actions for efficient email management
  * Includes: Archive, Star, Delete, Snooze, Label
- * 
+ *
  * Inspired by Shortwave's quick actions
  */
 
@@ -54,13 +54,13 @@ export default function EmailQuickActions({
   onMarkAsUnread,
 }: EmailQuickActionsProps) {
   const [showDropdown, setShowDropdown] = useState(false);
-  
+
   // Handle action with event stop propagation
   const handleAction = (action: () => void, event: React.MouseEvent) => {
     event.stopPropagation();
     action();
   };
-  
+
   // Snooze presets
   const snoozePresets = [
     { label: "Om 1 time", hours: 1 },
@@ -68,7 +68,7 @@ export default function EmailQuickActions({
     { label: "I morgen kl. 9", hours: 24 }, // Simplified, would calculate actual 9am
     { label: "Næste uge", hours: 7 * 24 },
   ];
-  
+
   // Quick label presets
   const labelPresets = [
     { label: "Hot Lead", value: "hot-lead", color: "text-red-600" },
@@ -76,7 +76,7 @@ export default function EmailQuickActions({
     { label: "Follow Up", value: "follow-up", color: "text-blue-600" },
     { label: "Done", value: "done", color: "text-green-600" },
   ];
-  
+
   return (
     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
       {/* Archive Button */}
@@ -85,29 +85,29 @@ export default function EmailQuickActions({
           size="icon"
           variant="ghost"
           className="h-7 w-7"
-          onClick={(e) => handleAction(() => onArchive(threadId), e)}
+          onClick={e => handleAction(() => onArchive(threadId), e)}
           title="Arkivér (e)"
         >
           <Archive className="h-3.5 w-3.5" />
         </Button>
       )}
-      
+
       {/* Star Button */}
       {onStar && (
         <Button
           size="icon"
           variant="ghost"
-          className={`h-7 w-7 ${isStarred ? 'text-yellow-500' : ''}`}
-          onClick={(e) => handleAction(() => onStar(threadId), e)}
+          className={`h-7 w-7 ${isStarred ? "text-yellow-500" : ""}`}
+          onClick={e => handleAction(() => onStar(threadId), e)}
           title="Stjerne (s)"
         >
-          <Star className={`h-3.5 w-3.5 ${isStarred ? 'fill-current' : ''}`} />
+          <Star className={`h-3.5 w-3.5 ${isStarred ? "fill-current" : ""}`} />
         </Button>
       )}
-      
+
       {/* More Actions Dropdown */}
       <DropdownMenu open={showDropdown} onOpenChange={setShowDropdown}>
-        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+        <DropdownMenuTrigger asChild onClick={e => e.stopPropagation()}>
           <Button
             size="icon"
             variant="ghost"
@@ -117,7 +117,11 @@ export default function EmailQuickActions({
             <MoreHorizontal className="h-3.5 w-3.5" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48" onClick={(e) => e.stopPropagation()}>
+        <DropdownMenuContent
+          align="end"
+          className="w-48"
+          onClick={e => e.stopPropagation()}
+        >
           {/* Read/Unread */}
           {isRead && onMarkAsUnread ? (
             <DropdownMenuItem onClick={() => onMarkAsUnread(threadId)}>
@@ -130,9 +134,9 @@ export default function EmailQuickActions({
               Markér som læst
             </DropdownMenuItem>
           ) : null}
-          
+
           <DropdownMenuSeparator />
-          
+
           {/* Snooze Options */}
           {onSnooze && (
             <>
@@ -153,11 +157,13 @@ export default function EmailQuickActions({
               <DropdownMenuSeparator />
             </>
           )}
-          
+
           {/* Label Options */}
           {onLabel && (
             <>
-              <DropdownMenuLabel className="text-xs">Tilføj Label</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-xs">
+                Tilføj Label
+              </DropdownMenuLabel>
               {labelPresets.map(preset => (
                 <DropdownMenuItem
                   key={preset.value}
@@ -170,10 +176,10 @@ export default function EmailQuickActions({
               <DropdownMenuSeparator />
             </>
           )}
-          
+
           {/* Delete */}
           {onDelete && (
-            <DropdownMenuItem 
+            <DropdownMenuItem
               onClick={() => onDelete(threadId)}
               className="text-destructive focus:text-destructive"
             >

@@ -1,12 +1,26 @@
 import { z } from "zod";
 import { router, protectedProcedure } from "../_core/trpc";
 import { getDb } from "../db";
-import { documents, documentComments, documentChanges, documentConflicts } from "../../drizzle/schema";
+import {
+  documents,
+  documentComments,
+  documentChanges,
+  documentConflicts,
+} from "../../drizzle/schema";
 import { eq, like, and, or, desc, sql } from "drizzle-orm";
 import { logger } from "../_core/logger";
 import { nanoid } from "nanoid";
-import { autoCreateLeadDoc, updateLeadDoc, generateWeeklyDigest, bulkGenerateLeadDocs } from "../docs/ai/auto-create";
-import { getAIDocMetrics, getGenerationStats, calculateSavings } from "../docs/ai/analytics";
+import {
+  autoCreateLeadDoc,
+  updateLeadDoc,
+  generateWeeklyDigest,
+  bulkGenerateLeadDocs,
+} from "../docs/ai/auto-create";
+import {
+  getAIDocMetrics,
+  getGenerationStats,
+  calculateSavings,
+} from "../docs/ai/analytics";
 
 /**
  * Documentation System Router
@@ -28,7 +42,7 @@ export const docsRouter = router({
     .query(async ({ input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
-      
+
       const conditions = [];
 
       if (input.category) {
@@ -315,7 +329,7 @@ export const docsRouter = router({
   getConflicts: protectedProcedure.query(async () => {
     const db = await getDb();
     if (!db) throw new Error("Database not available");
-    
+
     return db
       .select()
       .from(documentConflicts)
@@ -443,7 +457,10 @@ export const docsRouter = router({
   generateLeadDoc: protectedProcedure
     .input(z.object({ leadId: z.number() }))
     .mutation(async ({ input }) => {
-      logger.info({ leadId: input.leadId }, "[Docs Router] Generating lead doc");
+      logger.info(
+        { leadId: input.leadId },
+        "[Docs Router] Generating lead doc"
+      );
       const result = await autoCreateLeadDoc(input.leadId);
       return result;
     }),
@@ -452,34 +469,34 @@ export const docsRouter = router({
   updateLeadDoc: protectedProcedure
     .input(z.object({ leadId: z.number(), docId: z.string() }))
     .mutation(async ({ input }) => {
-      logger.info({ leadId: input.leadId, docId: input.docId }, "[Docs Router] Updating lead doc");
+      logger.info(
+        { leadId: input.leadId, docId: input.docId },
+        "[Docs Router] Updating lead doc"
+      );
       const result = await updateLeadDoc(input.leadId, input.docId);
       return result;
     }),
 
   // AI: Generate weekly digest
-  generateWeeklyDigest: protectedProcedure
-    .mutation(async () => {
-      logger.info("[Docs Router] Generating weekly digest");
-      const result = await generateWeeklyDigest();
-      return result;
-    }),
+  generateWeeklyDigest: protectedProcedure.mutation(async () => {
+    logger.info("[Docs Router] Generating weekly digest");
+    const result = await generateWeeklyDigest();
+    return result;
+  }),
 
   // AI: Bulk generate for all leads
-  bulkGenerateLeadDocs: protectedProcedure
-    .mutation(async () => {
-      logger.info("[Docs Router] Bulk generating lead docs");
-      const result = await bulkGenerateLeadDocs();
-      return result;
-    }),
+  bulkGenerateLeadDocs: protectedProcedure.mutation(async () => {
+    logger.info("[Docs Router] Bulk generating lead docs");
+    const result = await bulkGenerateLeadDocs();
+    return result;
+  }),
 
   // Analytics: Get AI doc metrics
-  getAIMetrics: protectedProcedure
-    .query(async () => {
-      logger.info("[Docs Router] Fetching AI doc metrics");
-      const metrics = await getAIDocMetrics();
-      return metrics;
-    }),
+  getAIMetrics: protectedProcedure.query(async () => {
+    logger.info("[Docs Router] Fetching AI doc metrics");
+    const metrics = await getAIDocMetrics();
+    return metrics;
+  }),
 
   // Analytics: Get generation stats for period
   getGenerationStats: protectedProcedure
@@ -489,7 +506,10 @@ export const docsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      logger.info({ period: input.period }, "[Docs Router] Fetching generation stats");
+      logger.info(
+        { period: input.period },
+        "[Docs Router] Fetching generation stats"
+      );
       const stats = await getGenerationStats(input.period);
       return stats;
     }),
@@ -502,7 +522,10 @@ export const docsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      logger.info({ totalDocs: input.totalDocs }, "[Docs Router] Calculating savings");
+      logger.info(
+        { totalDocs: input.totalDocs },
+        "[Docs Router] Calculating savings"
+      );
       const savings = calculateSavings(input.totalDocs);
       return savings;
     }),

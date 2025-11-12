@@ -17,9 +17,11 @@ En moderne Shortwave-inspireret Kanban board til håndtering af email workflow g
 ## 📦 Komponenter Oprettet
 
 ### 1. EmailCard.tsx (166 lines)
+
 **Placering:** `client/src/components/inbox/EmailCard.tsx`
 
 **Features:**
+
 - ✅ Compact email card design
 - ✅ Avatar med initials
 - ✅ Subject, from, og snippet
@@ -31,6 +33,7 @@ En moderne Shortwave-inspireret Kanban board til håndtering af email workflow g
 - ✅ Hover og drag states
 
 **Props:**
+
 ```typescript
 interface EmailCardData {
   id: string;
@@ -49,9 +52,11 @@ interface EmailCardData {
 ---
 
 ### 2. PipelineColumn.tsx (148 lines)
+
 **Placering:** `client/src/components/inbox/PipelineColumn.tsx`
 
 **Features:**
+
 - ✅ Colored header per stage
 - ✅ Email count badge
 - ✅ Droppable area med hover feedback
@@ -60,6 +65,7 @@ interface EmailCardData {
 - ✅ Sortable email list
 
 **Stage Colors:**
+
 - 🔴 **Needs Action:** Red (urgent)
 - 🟡 **Venter på svar:** Yellow (awaiting reply)
 - 🔵 **I kalender:** Blue (scheduled)
@@ -69,9 +75,11 @@ interface EmailCardData {
 ---
 
 ### 3. EmailPipelineBoard.tsx (162 lines)
+
 **Placering:** `client/src/components/inbox/EmailPipelineBoard.tsx`
 
 **Features:**
+
 - ✅ 5-column Kanban layout
 - ✅ Drag-and-drop mellem stages
 - ✅ Real-time data via tRPC
@@ -83,6 +91,7 @@ interface EmailCardData {
 - ✅ Keyboard support (via dnd-kit sensors)
 
 **Drag & Drop:**
+
 - 8px activation distance (prevents accidental drags)
 - Pointer sensor + keyboard sensor
 - Closest corners collision detection
@@ -95,15 +104,18 @@ interface EmailCardData {
 ### Nye Endpoints i `server/routers.ts`
 
 #### `inbox.pipeline.getAll`
+
 **Type:** Query
 **Beskrivelse:** Henter alle emails grupperet efter pipeline stage
 
 **Response:**
+
 ```typescript
-Record<PipelineStage, EmailCardData[]>
+Record<PipelineStage, EmailCardData[]>;
 ```
 
 **Features:**
+
 - ✅ Joins `email_pipeline_state` + `email_threads` + `emails`
 - ✅ Sorterer efter timestamp (nyeste først)
 - ✅ Transformer til frontend format
@@ -114,10 +126,12 @@ Record<PipelineStage, EmailCardData[]>
 ---
 
 #### `inbox.pipeline.updateStage`
+
 **Type:** Mutation
 **Beskrivelse:** Flytter email til ny pipeline stage
 
 **Input:**
+
 ```typescript
 {
   threadId: string;
@@ -126,6 +140,7 @@ Record<PipelineStage, EmailCardData[]>
 ```
 
 **Features:**
+
 - ✅ Opdaterer via `updatePipelineStage()` function
 - ✅ Tracker analytics event (`pipeline_drag_drop`)
 - ✅ Trigger workflow automation (via `handlePipelineTransition`)
@@ -140,6 +155,7 @@ Record<PipelineStage, EmailCardData[]>
 ### Eksisterende Tabeller (allerede oprettet)
 
 #### `email_pipeline_state`
+
 ```sql
 CREATE TABLE friday_ai.email_pipeline_state (
   id SERIAL PRIMARY KEY,
@@ -154,6 +170,7 @@ CREATE TABLE friday_ai.email_pipeline_state (
 ```
 
 #### `email_pipeline_transitions` (audit log)
+
 ```sql
 CREATE TABLE friday_ai.email_pipeline_transitions (
   id SERIAL PRIMARY KEY,
@@ -174,12 +191,14 @@ CREATE TABLE friday_ai.email_pipeline_transitions (
 ### EmailTab.tsx Integration
 
 **Ændringer:**
+
 - ✅ Import `EmailPipelineBoard` i stedet for `EmailPipelineView`
 - ✅ Rendering ved `viewMode === "pipeline"`
 - ✅ Email click åbner `EmailPreviewModal`
 - ✅ Seamless switch mellem List/Pipeline/Dashboard views
 
 **Kode:**
+
 ```typescript
 // Line 40
 import { EmailPipelineBoard } from "./EmailPipelineBoard";
@@ -206,11 +225,13 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ```
 
 **Versions:**
+
 - `@dnd-kit/core`: ^6.x
 - `@dnd-kit/sortable`: ^8.x
 - `@dnd-kit/utilities`: ^3.x
 
 **Hvorfor dnd-kit:**
+
 - ✅ Modern, lightweight (vs react-beautiful-dnd)
 - ✅ TypeScript-first
 - ✅ Keyboard accessible
@@ -222,6 +243,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## 🧪 Testing Status
 
 ### Manual Testing Checklist
+
 - [ ] Åbn EmailTab og klik "Pipeline" view knap
 - [ ] Drag email fra "Needs Action" til "Venter på svar"
 - [ ] Verificer toast notification vises
@@ -232,6 +254,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 - [ ] Test med tom pipeline (empty state)
 
 ### Automated Tests (TODO)
+
 - [ ] Unit tests for EmailCard component
 - [ ] Unit tests for PipelineColumn component
 - [ ] Unit tests for EmailPipelineBoard drag logic
@@ -243,6 +266,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## 🎯 Performance
 
 ### Optimizations Implemented
+
 - ✅ **tRPC query caching** - Reduces API calls
 - ✅ **Optimistic UI** - Instant drag feedback
 - ✅ **Lazy loading** - Only loads visible emails
@@ -250,6 +274,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 - ✅ **Debounced sensors** - 8px activation distance
 
 ### Metrics (Estimated)
+
 - Initial load: ~300-500ms (afhængig af antal emails)
 - Drag operation: <16ms (60 FPS)
 - Stage update mutation: ~100-200ms
@@ -260,15 +285,18 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## 🔮 Næste Skridt (Phase 2.2 & 2.3)
 
 ### Phase 2.2: Smart Source Detection (1-2 timer)
+
 **Status:** Not Started
 
 **Features:**
+
 - [ ] Auto-detect lead source fra email headers/body
 - [ ] Rules for Rengøring.nu, AdHelp, Direct
 - [ ] Auto-apply labels baseret på source
 - [ ] Visual source indicator i EmailCard
 
 **Files to create:**
+
 - `server/lead-source-detector.ts` - Detection logic (EXISTS)
 - Update `EmailCard.tsx` - Add source badge
 - Update `pipeline.getAll` - Include source field
@@ -276,15 +304,18 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ---
 
 ### Phase 2.3: Pipeline Quick Actions (1-2 timer)
+
 **Status:** Not Started
 
 **Features:**
+
 - [ ] One-click actions i EmailCard (Send Tilbud, Bekræft Booking, etc.)
 - [ ] Keyboard shortcuts (1-4 keys)
 - [ ] Context menu (right-click)
 - [ ] Toast feedback med undo option
 
 **Files to create:**
+
 - `client/src/components/inbox/PipelineQuickActions.tsx`
 - Update `EmailCard.tsx` - Add action buttons
 - Add tRPC endpoints for quick actions
@@ -294,6 +325,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## 📊 Impact Analysis
 
 ### Before Pipeline Board
+
 - ❌ No visual workflow management
 - ❌ Manual email categorization
 - ❌ Difficult to track lead status
@@ -301,6 +333,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 - ❌ Limited pipeline automation
 
 ### After Pipeline Board
+
 - ✅ Visual Kanban board for emails
 - ✅ Drag-and-drop stage transitions
 - ✅ Real-time pipeline state tracking
@@ -309,6 +342,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 - ✅ Analytics tracking (pipeline_drag_drop events)
 
 ### User Benefits
+
 - ⚡ **Faster lead processing** - Drag to move vs clicks
 - 📊 **Better overview** - See all stages at once
 - 🎯 **Clear priorities** - Red = urgent, Gray = done
@@ -319,12 +353,14 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## 🐛 Known Issues
 
 ### Minor Issues
+
 1. **Email preview in pipeline view** - Opens modal instead of sidebar
    - **Fix:** Add sidebar option for pipeline view
 2. **No source indicator yet** - Awaits Phase 2.2
 3. **No quick actions yet** - Awaits Phase 2.3
 
 ### Not Issues (By Design)
+
 - Empty stages show empty state - This is intentional UX
 - Drag requires 8px movement - Prevents accidental drags
 - Toast notifications auto-dismiss - Standard UX pattern
@@ -334,18 +370,21 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## 📝 Code Quality
 
 ### TypeScript Coverage
+
 - ✅ All components fully typed
 - ✅ tRPC endpoints fully typed
 - ✅ Props interfaces exported
 - ✅ No `any` types used
 
 ### Component Structure
+
 - ✅ Single Responsibility Principle
 - ✅ Reusable components (EmailCard, PipelineColumn)
 - ✅ Clean separation of concerns
 - ✅ Props drilling avoided (tRPC hooks in board)
 
 ### Error Handling
+
 - ✅ tRPC error boundaries
 - ✅ Toast notifications for errors
 - ✅ Loading states
@@ -356,6 +395,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## 🎓 Learning Resources
 
 ### How Drag & Drop Works
+
 1. **DndContext** - Wraps all draggable/droppable components
 2. **useSortable** - Makes EmailCard draggable + provides listeners
 3. **useDroppable** - Makes PipelineColumn accept drops
@@ -363,6 +403,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 5. **onDragEnd** - Triggers mutation to update backend
 
 ### Key Files to Study
+
 - `EmailPipelineBoard.tsx` - Main drag-and-drop logic
 - `PipelineColumn.tsx` - Droppable area with feedback
 - `EmailCard.tsx` - Draggable card with sortable
@@ -372,6 +413,7 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ## ✅ Definition of Done
 
 **Phase 2.1 er COMPLETE når:**
+
 - [x] EmailCard component oprettet
 - [x] PipelineColumn component oprettet
 - [x] EmailPipelineBoard component oprettet
@@ -404,17 +446,20 @@ Before deploying to production:
 ## 💡 Tips til Videreudvikling
 
 ### Performance Optimization
+
 - Consider virtual scrolling for 100+ emails per column
 - Add pagination if columns exceed screen height
 - Cache pipeline state in localStorage for instant load
 
 ### UX Improvements
+
 - Add stage transition animations
 - Add email count sparkline (trend over time)
 - Add filter by source/label in pipeline view
 - Add multi-select drag (move multiple emails at once)
 
 ### Advanced Features (Phase 3)
+
 - Auto-calendar integration on "I kalender" drop
 - Auto-invoice creation on "Finance" drop
 - Email templates for each stage

@@ -11,14 +11,14 @@ import { useState } from "react";
 
 export interface ApprovalItem {
   id: string;
-  type: 'booking' | 'invoice' | 'quote' | 'lead';
+  type: "booking" | "invoice" | "quote" | "lead";
   title: string;
   description: string;
   amount?: string;
   requestedBy: string;
   requestedAt: string;
-  status: 'pending' | 'approved' | 'rejected';
-  priority: 'low' | 'medium' | 'high';
+  status: "pending" | "approved" | "rejected";
+  priority: "low" | "medium" | "high";
   metadata?: Record<string, any>;
 }
 
@@ -29,35 +29,54 @@ interface ApprovalCardProps {
   onView?: (id: string) => void;
 }
 
-export function ApprovalCard({ item, onApprove, onReject, onView }: ApprovalCardProps) {
+export function ApprovalCard({
+  item,
+  onApprove,
+  onReject,
+  onView,
+}: ApprovalCardProps) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const getTypeColor = () => {
     switch (item.type) {
-      case 'booking': return 'bg-purple-600';
-      case 'invoice': return 'bg-emerald-600';
-      case 'quote': return 'bg-blue-600';
-      case 'lead': return 'bg-amber-500';
-      default: return 'bg-slate-600';
+      case "booking":
+        return "bg-purple-600";
+      case "invoice":
+        return "bg-emerald-600";
+      case "quote":
+        return "bg-blue-600";
+      case "lead":
+        return "bg-amber-500";
+      default:
+        return "bg-slate-600";
     }
   };
 
   const getTypeIcon = () => {
     switch (item.type) {
-      case 'booking': return Calendar;
-      case 'invoice': return DollarSign;
-      case 'quote': return DollarSign;
-      case 'lead': return User;
-      default: return Clock;
+      case "booking":
+        return Calendar;
+      case "invoice":
+        return DollarSign;
+      case "quote":
+        return DollarSign;
+      case "lead":
+        return User;
+      default:
+        return Clock;
     }
   };
 
   const getPriorityColor = () => {
     switch (item.priority) {
-      case 'high': return 'bg-red-500';
-      case 'medium': return 'bg-amber-500';
-      case 'low': return 'bg-blue-500';
-      default: return 'bg-slate-500';
+      case "high":
+        return "bg-red-500";
+      case "medium":
+        return "bg-amber-500";
+      case "low":
+        return "bg-blue-500";
+      default:
+        return "bg-slate-500";
     }
   };
 
@@ -80,33 +99,38 @@ export function ApprovalCard({ item, onApprove, onReject, onView }: ApprovalCard
       <div className="space-y-4">
         {/* Header */}
         <div className="flex items-start gap-3">
-          <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", getTypeColor())}>
+          <div
+            className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center",
+              getTypeColor()
+            )}
+          >
             <Icon className="w-5 h-5 text-white" />
           </div>
-          
+
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h4 className="font-semibold text-sm truncate">{item.title}</h4>
-              <Badge className={getPriorityColor()}>
-                {item.priority}
-              </Badge>
+              <Badge className={getPriorityColor()}>{item.priority}</Badge>
             </div>
-            <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>
+            <p className="text-xs text-muted-foreground line-clamp-2">
+              {item.description}
+            </p>
           </div>
 
-          {item.status === 'pending' && (
+          {item.status === "pending" && (
             <Badge variant="outline" className="shrink-0">
               <Clock className="w-3 h-3 mr-1" />
               Afventer
             </Badge>
           )}
-          {item.status === 'approved' && (
+          {item.status === "approved" && (
             <Badge className="bg-emerald-600 shrink-0">
               <Check className="w-3 h-3 mr-1" />
               Godkendt
             </Badge>
           )}
-          {item.status === 'rejected' && (
+          {item.status === "rejected" && (
             <Badge className="bg-red-500 shrink-0">
               <X className="w-3 h-3 mr-1" />
               Afvist
@@ -133,7 +157,7 @@ export function ApprovalCard({ item, onApprove, onReject, onView }: ApprovalCard
         </div>
 
         {/* Actions */}
-        {item.status === 'pending' && (
+        {item.status === "pending" && (
           <div className="flex gap-2 pt-2 border-t">
             <Button
               size="sm"

@@ -53,39 +53,75 @@ function improveCategory(
   const lower = content.toLowerCase();
 
   // Priority-based categorization
-  if (path.includes("invoice") || lower.includes("billy") || lower.includes("invoice")) {
+  if (
+    path.includes("invoice") ||
+    lower.includes("billy") ||
+    lower.includes("invoice")
+  ) {
     return "Invoices & Billy";
   }
 
-  if (path.includes("email") || lower.includes("email") || lower.includes("gmail")) {
+  if (
+    path.includes("email") ||
+    lower.includes("email") ||
+    lower.includes("gmail")
+  ) {
     return "Email System";
   }
 
-  if (lower.includes("friday ai") || lower.includes("chatbot") || path.includes("ai")) {
+  if (
+    lower.includes("friday ai") ||
+    lower.includes("chatbot") ||
+    path.includes("ai")
+  ) {
     return "AI & Friday";
   }
 
-  if (path.includes("calendar") || lower.includes("calendar") || lower.includes("google calendar")) {
+  if (
+    path.includes("calendar") ||
+    lower.includes("calendar") ||
+    lower.includes("google calendar")
+  ) {
     return "Calendar Integration";
   }
 
-  if (path.includes("test") || lower.includes("playwright") || lower.includes("e2e")) {
+  if (
+    path.includes("test") ||
+    lower.includes("playwright") ||
+    lower.includes("e2e")
+  ) {
     return "Testing & QA";
   }
 
-  if (lower.includes("migration") || lower.includes("database") || lower.includes("schema")) {
+  if (
+    lower.includes("migration") ||
+    lower.includes("database") ||
+    lower.includes("schema")
+  ) {
     return "Database & Migrations";
   }
 
-  if (lower.includes("deployment") || lower.includes("docker") || lower.includes("production")) {
+  if (
+    lower.includes("deployment") ||
+    lower.includes("docker") ||
+    lower.includes("production")
+  ) {
     return "DevOps & Deployment";
   }
 
-  if (lower.includes("api") || lower.includes("endpoint") || lower.includes("trpc")) {
+  if (
+    lower.includes("api") ||
+    lower.includes("endpoint") ||
+    lower.includes("trpc")
+  ) {
     return "API & Backend";
   }
 
-  if (lower.includes("component") || lower.includes("react") || lower.includes("ui")) {
+  if (
+    lower.includes("component") ||
+    lower.includes("react") ||
+    lower.includes("ui")
+  ) {
     return "Frontend & UI";
   }
 
@@ -93,15 +129,27 @@ function improveCategory(
     return "Screenshots & Visuals";
   }
 
-  if (lower.includes("setup") || lower.includes("installation") || lower.includes("getting started")) {
+  if (
+    lower.includes("setup") ||
+    lower.includes("installation") ||
+    lower.includes("getting started")
+  ) {
     return "Setup & Configuration";
   }
 
-  if (lower.includes("plan") || lower.includes("roadmap") || lower.includes("milestone")) {
+  if (
+    lower.includes("plan") ||
+    lower.includes("roadmap") ||
+    lower.includes("milestone")
+  ) {
     return "Planning & Roadmap";
   }
 
-  if (lower.includes("bug") || lower.includes("fix") || lower.includes("issue")) {
+  if (
+    lower.includes("bug") ||
+    lower.includes("fix") ||
+    lower.includes("issue")
+  ) {
     return "Bug Fixes";
   }
 
@@ -113,24 +161,44 @@ function improveCategory(
 }
 
 // Enhance tags based on content
-function improveTags(content: string, path: string, existingTags: string[]): string[] {
+function improveTags(
+  content: string,
+  path: string,
+  existingTags: string[]
+): string[] {
   const tags = new Set(existingTags);
 
   const lower = content.toLowerCase();
 
   // Status tags
-  if (lower.includes("✅") || lower.includes("[done]") || lower.includes("completed")) {
+  if (
+    lower.includes("✅") ||
+    lower.includes("[done]") ||
+    lower.includes("completed")
+  ) {
     tags.add("completed");
   }
-  if (lower.includes("🚧") || lower.includes("[wip]") || lower.includes("in progress")) {
+  if (
+    lower.includes("🚧") ||
+    lower.includes("[wip]") ||
+    lower.includes("in progress")
+  ) {
     tags.add("in-progress");
   }
-  if (lower.includes("❌") || lower.includes("[todo]") || lower.includes("not started")) {
+  if (
+    lower.includes("❌") ||
+    lower.includes("[todo]") ||
+    lower.includes("not started")
+  ) {
     tags.add("todo");
   }
 
   // Priority tags
-  if (lower.includes("urgent") || lower.includes("critical") || lower.includes("blocker")) {
+  if (
+    lower.includes("urgent") ||
+    lower.includes("critical") ||
+    lower.includes("blocker")
+  ) {
     tags.add("urgent");
   }
   if (lower.includes("important") || lower.includes("priority")) {
@@ -138,7 +206,11 @@ function improveTags(content: string, path: string, existingTags: string[]): str
   }
 
   // Type tags
-  if (lower.includes("guide") || lower.includes("how to") || lower.includes("tutorial")) {
+  if (
+    lower.includes("guide") ||
+    lower.includes("how to") ||
+    lower.includes("tutorial")
+  ) {
     tags.add("guide");
   }
   if (lower.includes("reference") || lower.includes("documentation")) {
@@ -197,7 +269,8 @@ async function recategorizeDocs() {
 
     // Check if anything changed
     const categoryChanged = newCategory !== oldCategory;
-    const tagsChanged = JSON.stringify(newTags.sort()) !== JSON.stringify(oldTags.sort());
+    const tagsChanged =
+      JSON.stringify(newTags.sort()) !== JSON.stringify(oldTags.sort());
     const statusChanged = status === "outdated";
 
     if (categoryChanged || tagsChanged || statusChanged) {
@@ -267,10 +340,15 @@ async function recategorizeDocs() {
   // Show new distribution
   const categoryCount = new Map<string, number>();
   for (const update of updates) {
-    categoryCount.set(update.category, (categoryCount.get(update.category) || 0) + 1);
+    categoryCount.set(
+      update.category,
+      (categoryCount.get(update.category) || 0) + 1
+    );
   }
 
-  const sorted = Array.from(categoryCount.entries()).sort((a, b) => b[1] - a[1]);
+  const sorted = Array.from(categoryCount.entries()).sort(
+    (a, b) => b[1] - a[1]
+  );
   for (const [category, count] of sorted.slice(0, 10)) {
     console.log(`   - ${category}: ${count}`);
   }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface KeyboardShortcutConfig {
   onSave?: () => void;
@@ -10,7 +10,7 @@ interface KeyboardShortcutConfig {
 
 /**
  * Keyboard Shortcuts for Docs System
- * 
+ *
  * Shortcuts:
  * - Ctrl+S / Cmd+S: Save document
  * - Ctrl+K / Cmd+K: Focus search
@@ -21,46 +21,46 @@ interface KeyboardShortcutConfig {
 export function useKeyboardShortcuts(config: KeyboardShortcutConfig) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
       const ctrlKey = isMac ? event.metaKey : event.ctrlKey;
 
       // Ctrl+S / Cmd+S - Save
-      if (ctrlKey && event.key === 's') {
+      if (ctrlKey && event.key === "s") {
         event.preventDefault();
         config.onSave?.();
         return;
       }
 
       // Ctrl+K / Cmd+K - Search
-      if (ctrlKey && event.key === 'k') {
+      if (ctrlKey && event.key === "k") {
         event.preventDefault();
         config.onSearch?.();
         return;
       }
 
       // Ctrl+N / Cmd+N - New document
-      if (ctrlKey && event.key === 'n') {
+      if (ctrlKey && event.key === "n") {
         event.preventDefault();
         config.onNew?.();
         return;
       }
 
       // Ctrl+P / Cmd+P - Toggle preview
-      if (ctrlKey && event.key === 'p') {
+      if (ctrlKey && event.key === "p") {
         event.preventDefault();
         config.onPreview?.();
         return;
       }
 
       // Escape - Cancel
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         config.onEscape?.();
         return;
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [config]);
 }
 
@@ -68,8 +68,8 @@ export function useKeyboardShortcuts(config: KeyboardShortcutConfig) {
  * Show keyboard shortcuts hint
  */
 export function KeyboardShortcutsHint() {
-  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  const mod = isMac ? '⌘' : 'Ctrl';
+  const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+  const mod = isMac ? "⌘" : "Ctrl";
 
   return (
     <div className="text-xs text-muted-foreground space-y-1">

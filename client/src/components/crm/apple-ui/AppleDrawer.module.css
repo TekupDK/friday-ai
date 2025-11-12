@@ -1,0 +1,261 @@
+/**
+ * AppleDrawer Styles
+ *
+ * Side drawer styling with frosted glass backdrop
+ */
+
+/* ============================================================================
+   BACKDROP
+   ============================================================================ */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+@supports not (backdrop-filter: blur(6px)) {
+  .backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ============================================================================
+   DRAWER
+   ============================================================================ */
+
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 1400;
+  /* background controlled by theme */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.drawer.right {
+  right: 0;
+}
+
+.drawer.left {
+  left: 0;
+}
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 28px;
+  /* color controlled by theme */
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  /* background controlled by theme */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  /* color controlled by theme */
+  transition: all 0.2s ease;
+}
+
+/* Hover styles are defined in theme blocks */
+
+.closeButton:active {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================================================
+   CONTENT
+   ============================================================================ */
+
+.content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Custom scrollbar */
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================================
+   LIGHT MODE
+   ============================================================================ */
+
+[data-theme="light"] .backdrop {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .drawer {
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .header {
+  border-bottom: 1px solid rgba(60, 60, 67, 0.12);
+}
+
+[data-theme="light"] .title {
+  color: #000000;
+}
+
+[data-theme="light"] .closeButton {
+  background: rgba(60, 60, 67, 0.08);
+  color: rgba(60, 60, 67, 0.6);
+}
+
+[data-theme="light"] .closeButton:hover {
+  background: rgba(60, 60, 67, 0.12);
+  color: #000000;
+}
+
+[data-theme="light"] .closeButton:active {
+  background: rgba(60, 60, 67, 0.16);
+}
+
+[data-theme="light"] .content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+[data-theme="dark"] .backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .drawer {
+  background: #1c1c1e;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .closeButton {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(235, 235, 245, 0.6);
+}
+
+[data-theme="dark"] .closeButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .closeButton:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Support system preference as well */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  html:not([data-theme]) .drawer {
+    background: #1c1c1e;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  html:not([data-theme]) .header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  html:not([data-theme]) .title {
+    color: #ffffff;
+  }
+
+  html:not([data-theme]) .closeButton {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  html:not([data-theme]) .closeButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+
+  html:not([data-theme]) .closeButton:active {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  html:not([data-theme]) .content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  html:not([data-theme]) .content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* ============================================================================
+   MOBILE
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .drawer {
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+}

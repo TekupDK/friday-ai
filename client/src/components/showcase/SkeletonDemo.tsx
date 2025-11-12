@@ -61,7 +61,8 @@ export function SkeletonDemo() {
             ) : (
               <div className="space-y-3">
                 <p className="text-sm text-muted-foreground">
-                  Kunde efterspørger tilbud på vinduespudsning for kontor bygning.
+                  Kunde efterspørger tilbud på vinduespudsning for kontor
+                  bygning.
                 </p>
                 <div className="flex gap-2">
                   <span className="px-2 py-1 bg-red-500/10 text-red-600 dark:text-red-400 text-xs rounded-full">
@@ -114,8 +115,11 @@ export function SkeletonDemo() {
       <Card>
         <CardContent className="p-4">
           <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center gap-3 p-3 border rounded-lg">
+            {[1, 2, 3].map(i => (
+              <div
+                key={i}
+                className="flex items-center gap-3 p-3 border rounded-lg"
+              >
                 {loading ? (
                   <>
                     <Skeleton className="h-4 w-4 rounded" />

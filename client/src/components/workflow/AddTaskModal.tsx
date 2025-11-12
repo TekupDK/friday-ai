@@ -33,9 +33,12 @@ interface AddTaskModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) {
+export default function AddTaskModal({
+  open,
+  onOpenChange,
+}: AddTaskModalProps) {
   const { addTask } = useWorkflowContext();
-  
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<"low" | "medium" | "high">("medium");
@@ -45,7 +48,7 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!title.trim()) return;
 
     const newTask: Omit<Task, "id" | "createdAt"> = {
@@ -58,7 +61,7 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
     };
 
     addTask(newTask);
-    
+
     // Reset form
     setTitle("");
     setDescription("");
@@ -66,7 +69,7 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
     setDueDate(undefined);
     setTags([]);
     setTagInput("");
-    
+
     onOpenChange(false);
   };
 
@@ -91,7 +94,7 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
         <DialogHeader>
           <DialogTitle>Add New Task</DialogTitle>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title */}
           <div className="space-y-2">
@@ -99,7 +102,7 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
             <Input
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={e => setTitle(e.target.value)}
               placeholder="What needs to be done?"
               required
             />
@@ -111,7 +114,7 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
             <Textarea
               id="description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={e => setDescription(e.target.value)}
               placeholder="Add more details..."
               rows={3}
             />
@@ -120,7 +123,10 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
           {/* Priority */}
           <div className="space-y-2">
             <Label>Priority</Label>
-            <Select value={priority} onValueChange={(value: any) => setPriority(value)}>
+            <Select
+              value={priority}
+              onValueChange={(value: any) => setPriority(value)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -162,13 +168,13 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
             <Input
               id="tags"
               value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
+              onChange={e => setTagInput(e.target.value)}
               onKeyDown={handleAddTag}
               placeholder="Add tags (press Enter)"
             />
             {tags.length > 0 && (
               <div className="flex flex-wrap gap-1 mt-2">
-                {tags.map((tag) => (
+                {tags.map(tag => (
                   <Badge key={tag} variant="secondary" className="gap-1">
                     {tag}
                     <button
@@ -185,7 +191,11 @@ export default function AddTaskModal({ open, onOpenChange }: AddTaskModalProps) 
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={!title.trim()}>

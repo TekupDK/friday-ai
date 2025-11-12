@@ -334,7 +334,9 @@ export async function createGmailDraft(params: {
 }): Promise<{ draftId: string }> {
   try {
     // Use direct Google API for safety (ensures a DRAFT, not a send)
-    const { createGmailDraft: directCreateDraft } = await import("./google-api");
+    const { createGmailDraft: directCreateDraft } = await import(
+      "./google-api"
+    );
     const res = await directCreateDraft({
       to: params.to,
       subject: params.subject,

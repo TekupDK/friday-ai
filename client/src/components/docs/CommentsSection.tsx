@@ -83,7 +83,7 @@ export function CommentsSection({
           <Textarea
             placeholder="Add a comment..."
             value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
+            onChange={e => setNewComment(e.target.value)}
             className="min-h-[80px]"
             disabled={isAdding}
           />
@@ -114,7 +114,7 @@ export function CommentsSection({
                 <h4 className="text-sm font-semibold text-muted-foreground">
                   Active Discussions
                 </h4>
-                {unresolvedComments.map((comment) => (
+                {unresolvedComments.map(comment => (
                   <CommentCard
                     key={comment.id}
                     comment={comment}
@@ -130,7 +130,7 @@ export function CommentsSection({
                 <h4 className="text-sm font-semibold text-muted-foreground">
                   Resolved
                 </h4>
-                {resolvedComments.map((comment) => (
+                {resolvedComments.map(comment => (
                   <CommentCard
                     key={comment.id}
                     comment={comment}
@@ -155,7 +155,7 @@ function CommentCard({ comment, onResolve }: CommentCardProps) {
   const initials = comment.userId
     .split("-")
     .slice(0, 2)
-    .map((s) => s[0])
+    .map(s => s[0])
     .join("")
     .toUpperCase();
 
@@ -187,7 +187,9 @@ function CommentCard({ comment, onResolve }: CommentCardProps) {
                 </Badge>
               )}
             </div>
-            <p className="text-sm mt-1 whitespace-pre-wrap">{comment.content}</p>
+            <p className="text-sm mt-1 whitespace-pre-wrap">
+              {comment.content}
+            </p>
           </div>
         </div>
         {!comment.resolved && (

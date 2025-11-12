@@ -8,7 +8,13 @@ import { visualizer } from "rollup-plugin-visualizer";
 const plugins = [react(), tailwindcss(), jsxLocPlugin()];
 
 export default defineConfig({
-  plugins: [...plugins, visualizer({ filename: "stats.html", open: true })],
+  plugins: [...plugins, visualizer({ 
+    filename: "stats.html", 
+    open: false, // Don't auto-open in CI
+    gzipSize: true,
+    brotliSize: true,
+    template: "treemap" // Better visualization
+  })],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -32,7 +38,7 @@ export default defineConfig({
           "react-vendor": ["react", "react-dom"],
           "ui-vendor": [
             "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu", 
+            "@radix-ui/react-dropdown-menu",
             "@radix-ui/react-select",
           ],
           "trpc-vendor": ["@trpc/client", "@trpc/react-query", "@trpc/server"],

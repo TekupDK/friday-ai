@@ -53,6 +53,7 @@ Transformation af Friday fra 2-panel email client til professionelt 3-panel work
 ```
 
 **Problemer:**
+
 1. **Chat dominerer** - Email føles sekundær
 2. **Ingen workflow tools** - Tasks/projects spredt
 3. **Performance:** 700KB initial bundle
@@ -76,6 +77,7 @@ Transformation af Friday fra 2-panel email client til professionelt 3-panel work
 ```
 
 **Components:**
+
 - **AIAssistantPanel:** Chat, Voice, Agent, Smart modes
 - **EmailCenterPanel:** Email workspace with AI features
 - **WorkflowPanel:** Tasks, Calendar, Projects, Automation
@@ -127,11 +129,13 @@ panels/
 ### 📊 Bundle Size Optimization
 
 **Before:**
+
 - Initial: 700KB
 - EmailTab: 280KB
 - ChatPanel: 150KB
 
 **After (Code Splitting):**
+
 - Initial: 130KB (-81%)
 - AI chunk: 150KB (lazy)
 - Email chunk: 280KB (lazy)
@@ -142,6 +146,7 @@ panels/
 ### 🎯 Render Performance
 
 **Optimizations:**
+
 - Panel memoization (67% færre re-renders)
 - Persistent mounting (280ms → 10ms mode switch)
 - Virtual scrolling optimization
@@ -154,7 +159,6 @@ panels/
 
 1. **XSS i Task Titles** - CRITICAL
    - Fix: DOMPurify sanitization
-   
 2. **Email Content Injection** - CRITICAL
    - Fix: Content Security Policy + sanitization
 
@@ -183,16 +187,19 @@ panels/
 ### 📋 Test Coverage
 
 **Unit Tests:**
+
 - AIAssistantPanel: Mode switching, persistence
 - WorkflowPanel: Task CRUD, metrics
 - EmailCenterPanel: Tab management
 
 **Integration Tests:**
+
 - 3-panel layout rendering
 - Panel resizing
 - Mobile drawer navigation
 
 **E2E Tests (Playwright):**
+
 - Complete workflows
 - Error recovery
 - Panel persistence
@@ -206,24 +213,28 @@ panels/
 ### 🗓️ 4-Ugers Plan
 
 **Uge 1: Foundation**
+
 - Code splitting + lazy loading
 - Error boundaries per panel
 - Unit test setup
 - 50% test coverage
 
 **Uge 2: Enhancement**
+
 - Accessibility fixes (WCAG AA)
 - Performance optimization
 - Security hardening
 - Integration tests
 
 **Uge 3: Features**
+
 - Workflow panel functionality
 - AI modes implementation
 - Mobile UX improvements
 - E2E tests
 
 **Uge 4: Polish & Deploy**
+
 - Bug fixes
 - Documentation
 - Deployment
@@ -233,13 +244,13 @@ panels/
 
 ## 🎲 Risk Assessment
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Panel crash = app crash | HIGH | LOW | Error boundaries |
-| Bundle size increase | MED | MED | Code splitting |
-| Mobile UX degradation | HIGH | LOW | Bottom nav + testing |
-| Breaking API changes | MED | LOW | Feature flags |
-| User confusion | LOW | MED | Training + docs |
+| Risk                    | Impact | Probability | Mitigation           |
+| ----------------------- | ------ | ----------- | -------------------- |
+| Panel crash = app crash | HIGH   | LOW         | Error boundaries     |
+| Bundle size increase    | MED    | MED         | Code splitting       |
+| Mobile UX degradation   | HIGH   | LOW         | Bottom nav + testing |
+| Breaking API changes    | MED    | LOW         | Feature flags        |
+| User confusion          | LOW    | MED         | Training + docs      |
 
 **Overall Risk:** LOW (mitigations in place)
 
@@ -265,6 +276,7 @@ panels/
 
 **Costs:** 152,000 DKK one-time  
 **Benefits (årlig):**
+
 - 30% hurtigere email processing × 100 brugere × 2h/dag × 250 dage × 500 DKK/h = 7,500,000 DKK
 - **ROI:** 4,834% første år
 
@@ -281,9 +293,9 @@ panels/
 ### 🔄 Feature Flags
 
 ```typescript
-ENABLE_3_PANEL=true
-ENABLE_AI_MODES=false (gradual)
-ENABLE_WORKFLOW=true
+ENABLE_3_PANEL = true;
+ENABLE_AI_MODES = false(gradual);
+ENABLE_WORKFLOW = true;
 ```
 
 ### ⏮️ Rollback Plan
@@ -301,17 +313,20 @@ ENABLE_WORKFLOW=true
 ### 🎯 KPIs
 
 **Performance:**
+
 - Initial load time: <2s (target: 1.2s)
 - Panel switch time: <100ms (target: 50ms)
 - Bundle size: <150KB initial
 
 **User Experience:**
+
 - Email processing speed: +30%
 - AI usage frequency: +50%
 - Task completion rate: +25%
 - User satisfaction: +40%
 
 **Technical:**
+
 - Test coverage: 80%
 - Error rate: <0.1%
 - Accessibility score: 100 (Lighthouse)
@@ -339,6 +354,7 @@ ENABLE_WORKFLOW=true
 ## ✅ Go/No-Go Checklist
 
 **Technical:**
+
 - ✅ Code splitting implemented
 - ✅ Error boundaries in place
 - ✅ 80% test coverage
@@ -347,12 +363,14 @@ ENABLE_WORKFLOW=true
 - ✅ Performance benchmarks met
 
 **Business:**
+
 - ✅ Stakeholder approval
 - ✅ Budget allocated
 - ✅ Timeline confirmed
 - ✅ Rollback plan ready
 
 **User:**
+
 - ✅ Training materials ready
 - ✅ Support team briefed
 - ✅ Communication sent
@@ -364,6 +382,7 @@ ENABLE_WORKFLOW=true
 ### ✅ ANBEFALING: GO FOR IMPLEMENTATION
 
 **Begrundelse:**
+
 1. Klar business case (4,834% ROI)
 2. Low risk med mitigations
 3. 4-ugers realistic timeline
@@ -390,6 +409,6 @@ ENABLE_WORKFLOW=true
 
 ---
 
-*Rapport genereret: 6. November 2025*  
-*Version: 1.0*  
-*Status: Klar til beslutning*
+_Rapport genereret: 6. November 2025_  
+_Version: 1.0_  
+_Status: Klar til beslutning_

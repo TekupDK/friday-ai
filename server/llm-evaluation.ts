@@ -4,10 +4,10 @@
  */
 
 export type EvaluationMetric =
-  | "intent_accuracy"      // Did we detect the right intent?
-  | "action_relevance"     // Was the suggested action appropriate?
-  | "response_quality"     // Was the response helpful?
-  | "token_efficiency"     // Tokens used vs. value delivered
+  | "intent_accuracy" // Did we detect the right intent?
+  | "action_relevance" // Was the suggested action appropriate?
+  | "response_quality" // Was the response helpful?
+  | "token_efficiency" // Tokens used vs. value delivered
   | "conversation_coherence" // Multi-turn consistency
   | "hallucination_check"; // Did we make up facts?
 

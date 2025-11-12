@@ -18,33 +18,36 @@ export interface DocumentCardProps {
     lastModified: string;
     owner: string;
     shared: boolean;
-    status: 'draft' | 'review' | 'approved';
+    status: "draft" | "review" | "approved";
   };
   onView?: () => void;
   onDownload?: () => void;
   onShare?: () => void;
 }
 
-export function DocumentCard({ 
+export function DocumentCard({
   document = {
-    id: '1',
-    name: 'Kontrakt ABC Corporation.pdf',
-    type: 'PDF',
-    size: '2.4 MB',
-    lastModified: 'for 2 timer siden',
-    owner: 'John Smith',
+    id: "1",
+    name: "Kontrakt ABC Corporation.pdf",
+    type: "PDF",
+    size: "2.4 MB",
+    lastModified: "for 2 timer siden",
+    owner: "John Smith",
     shared: true,
-    status: 'approved'
+    status: "approved",
   },
   onView,
   onDownload,
-  onShare
+  onShare,
 }: DocumentCardProps) {
   const getStatusColor = () => {
     switch (document.status) {
-      case 'approved': return 'bg-green-500';
-      case 'review': return 'bg-yellow-500';
-      default: return 'bg-gray-500';
+      case "approved":
+        return "bg-green-500";
+      case "review":
+        return "bg-yellow-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
@@ -66,7 +69,11 @@ export function DocumentCard({
             </div>
           </div>
           <Badge className={getStatusColor()}>
-            {document.status === 'approved' ? 'Godkendt' : document.status === 'review' ? 'Til gennemsyn' : 'Kladde'}
+            {document.status === "approved"
+              ? "Godkendt"
+              : document.status === "review"
+                ? "Til gennemsyn"
+                : "Kladde"}
           </Badge>
         </div>
 

@@ -8,6 +8,7 @@
 ## ✅ What's Done
 
 ### 1. Langfuse V2 Docker Deployed
+
 ```
 ✅ PostgreSQL:  Running (port 5433)
 ✅ Langfuse V2: Running (port 3001)
@@ -16,6 +17,7 @@
 ```
 
 ### 2. Account Created
+
 ```
 ✅ Organization: TekupFriday AI
 ✅ User: jonas (info@rendetalje.dk)
@@ -23,6 +25,7 @@
 ```
 
 ### 3. API Keys Configured
+
 ```
 ✅ Public Key:  pk-lf-8a634586-6130-40ac-a03f-fe4fc0799b69
 ✅ Secret Key:  sk-lf-a3fc83f3-93b4-4de9-aa47-cf234135157e
@@ -31,6 +34,7 @@
 ```
 
 ### 4. Integration Code Ready
+
 ```
 ✅ server/_core/llm.ts      - Tracing in invokeLLM()
 ✅ server/_core/env.ts       - Config loaded
@@ -48,6 +52,7 @@
    - Press `Ctrl+C`
 
 2. **Start Fresh:**
+
    ```bash
    pnpm dev
    ```
@@ -73,11 +78,13 @@ pnpm dev
 ## 🧪 Test It!
 
 ### 1. Make AI Request
+
 - Open Friday AI: http://localhost:3000
 - Use chat or analyze a lead
 - Any AI operation will be traced!
 
 ### 2. View Traces
+
 - Open Langfuse: http://localhost:3001
 - Click "Traces" in sidebar
 - You should see your request! 🎉
@@ -85,6 +92,7 @@ pnpm dev
 ### 3. What You'll See
 
 **Trace Details:**
+
 ```
 ✅ Name:          "llm-invocation"
 ✅ Input:         Your messages/prompt
@@ -101,11 +109,13 @@ pnpm dev
 ## 📊 Expected Console Output
 
 ### When Friday AI Starts:
+
 ```
 [Langfuse] ✅ Client initialized (http://localhost:3001)
 ```
 
 ### After Each AI Request:
+
 ```
 [Langfuse] Trace created: llm-invocation
 [Langfuse] Generation tracked
@@ -113,6 +123,7 @@ pnpm dev
 ```
 
 ### If No Output:
+
 Check `LANGFUSE_ENABLED=true` in .env.dev
 
 ---
@@ -120,11 +131,13 @@ Check `LANGFUSE_ENABLED=true` in .env.dev
 ## 🐛 Troubleshooting
 
 ### "Langfuse client not initialized"
+
 - ✅ Check .env.dev has all 4 variables
 - ✅ Check LANGFUSE_ENABLED=true
 - ✅ Restart Friday AI
 
 ### "Connection refused" errors
+
 - ✅ Check Langfuse is running:
   ```bash
   curl http://localhost:3001/api/public/health
@@ -132,6 +145,7 @@ Check `LANGFUSE_ENABLED=true` in .env.dev
 - ✅ Should return: `{"status":"OK","version":"2.95.11"}`
 
 ### No traces appearing
+
 1. Check console for Langfuse logs
 2. Check Langfuse dashboard is on correct project
 3. Make an AI request (chat, lead analysis, etc.)
@@ -154,6 +168,7 @@ Check `LANGFUSE_ENABLED=true` in .env.dev
 ## 📈 What Gets Tracked
 
 ### Every AI Call:
+
 - **Input:** All messages sent to LLM
 - **Output:** Complete AI response
 - **Tokens:** Prompt + completion usage
@@ -164,6 +179,7 @@ Check `LANGFUSE_ENABLED=true` in .env.dev
 - **Metadata:** Additional context
 
 ### Dashboard Shows:
+
 - Total requests
 - Average response time
 - Token usage
@@ -178,16 +194,19 @@ Check `LANGFUSE_ENABLED=true` in .env.dev
 ## 💡 Tips
 
 ### Performance
+
 - Langfuse adds ~10-20ms overhead (negligible)
 - All tracking is async (doesn't block requests)
 - Data is batched for efficiency
 
 ### Privacy
+
 - All data stays on your machine
 - No external connections
 - Full control over retention
 
 ### Production
+
 - Change passwords in docker-compose.yml
 - Enable SSL/TLS
 - Set up backups

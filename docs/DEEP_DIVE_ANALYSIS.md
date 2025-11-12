@@ -11,12 +11,14 @@
 **Arkitektur Kvalitet:** ⭐⭐⭐⭐ (4/5)
 
 **Styrker:**
+
 - ✅ Clean Architecture principles
 - ✅ Type-safe end-to-end
 - ✅ Modern React patterns
 - ✅ Solid error handling
 
 **Svagheder:**
+
 - ⚠️ useEffect dependency issues
 - ⚠️ Context overuse
 - ⚠️ Performance optimization gaps
@@ -50,16 +52,19 @@
 **Analysis:**
 
 ✅ **Good:**
+
 - Error boundary at top level
 - Clear provider hierarchy
 - Separation of concerns
 
 ⚠️ **Concerns:**
+
 - **4 nested contexts** - potential performance issue
 - Each context re-renders all children on update
 - No context splitting/optimization
 
 **Recommendation:**
+
 ```typescript
 // Split contexts by update frequency
 <StaticProviders> {/* Theme, Tooltip */}
@@ -77,8 +82,8 @@
 
 ```typescript
 function Router() {
-  const { isAuthenticated, loading } = useAuth({ 
-    redirectOnUnauthenticated: false 
+  const { isAuthenticated, loading } = useAuth({
+    redirectOnUnauthenticated: false
   });
 
   if (loading) return <LoadingSpinner />;
@@ -90,20 +95,23 @@ function Router() {
 **Analysis:**
 
 ✅ **Good:**
+
 - Simple and clear
 - Loading state handled
 - No flash of unauthenticated content
 
 ⚠️ **Concerns:**
+
 - **No route protection** - all routes accessible if authenticated
 - **No role-based access control** (RBAC)
 - **No session timeout handling**
 
 **Recommendation:**
+
 ```typescript
 // Add protected route wrapper
-<ProtectedRoute 
-  path="/" 
+<ProtectedRoute
+  path="/"
   component={WorkspaceLayout}
   requiredRole="user"
 />
@@ -133,21 +141,25 @@ function CacheWarmer() {
 **Analysis:**
 
 ✅ **Good:**
+
 - Proactive cache warming
 - Improves perceived performance
 - Runs after authentication
 
 ⚠️ **Concerns:**
+
 - **queryClient in dependencies** - stable but unnecessary
 - **No error handling** - warmup failures silent
 - **No loading indicator** - user doesn't know it's happening
 
 **Recommendation:**
+
 ```typescript
 useEffect(() => {
   if (isAuthenticated && user?.id) {
-    warmupCache(queryClient, String(user.id))
-      .catch(err => console.warn('Cache warmup failed:', err));
+    warmupCache(queryClient, String(user.id)).catch(err =>
+      console.warn("Cache warmup failed:", err)
+    );
   }
 }, [isAuthenticated, user?.id]); // Remove queryClient
 ```
@@ -174,17 +186,20 @@ useEffect(() => {
 **Analysis:**
 
 ⚠️ **CRITICAL ISSUE:**
+
 - **createConversation in dependencies** - mutation object changes every render
 - **Potential infinite loop** - if mutation recreates
 - **isInitialized flag** - workaround for dependency issue
 
 **Root Cause:**
+
 ```typescript
 const createConversation = trpc.chat.createConversation.useMutation({...});
 // This object is recreated on every render!
 ```
 
 **Proper Solution:**
+
 ```typescript
 // Option 1: Remove from dependencies (ESLint disable)
 useEffect(() => {
@@ -204,16 +219,17 @@ useEffect(() => {
 // Option 3: Move mutation outside component
 const useAutoCreateConversation = () => {
   const mutation = trpc.chat.createConversation.useMutation();
-  
+
   useEffect(() => {
     mutation.mutate({ title: "Friday AI Chat" });
   }, []); // Safe - mutation is stable
-  
+
   return mutation;
 };
 ```
 
 **Impact:** 🟡 MEDIUM
+
 - Currently works due to isInitialized flag
 - But violates React best practices
 - Could break in future React versions
@@ -223,6 +239,7 @@ const useAutoCreateConversation = () => {
 ### **5. CONTEXT USAGE ANALYSIS**
 
 **Found 4 contexts:**
+
 1. `ThemeContext` - Theme state
 2. `EmailContext` - Email state
 3. `WorkflowContext` - Workflow state
@@ -242,6 +259,7 @@ const useAutoCreateConversation = () => {
 ```
 
 **Performance Impact:**
+
 - EmailContext update → 1000+ component re-renders
 - WorkflowContext update → 800+ component re-renders
 - **No memoization** → expensive re-renders
@@ -280,6 +298,7 @@ const useEmailStore = create((set) => ({
 **Common Issues:**
 
 **Issue 1: Missing Dependencies**
+
 ```typescript
 // ❌ BAD
 useEffect(() => {
@@ -293,6 +312,7 @@ useEffect(() => {
 ```
 
 **Issue 2: Unstable Dependencies**
+
 ```typescript
 // ❌ BAD
 useEffect(() => {
@@ -307,6 +327,7 @@ useEffect(() => {
 ```
 
 **Issue 3: Object Dependencies**
+
 ```typescript
 // ❌ BAD
 useEffect(() => {
@@ -334,10 +355,10 @@ useEffect(() => {
 ```typescript
 function selectModelForTask(taskType, userId, explicitModel) {
   // Strategy: Choose model based on task
-  if (taskType === 'calendar') return 'gpt-4o';
-  if (taskType === 'email_draft') return 'claude-3.5-sonnet';
-  if (taskType === 'simple_query') return 'gemini-pro';
-  return 'gemma-3-27b-free';
+  if (taskType === "calendar") return "gpt-4o";
+  if (taskType === "email_draft") return "claude-3.5-sonnet";
+  if (taskType === "simple_query") return "gemini-pro";
+  return "gemma-3-27b-free";
 }
 
 export async function routeAI(options) {
@@ -351,16 +372,19 @@ export async function routeAI(options) {
 **Analysis:**
 
 ✅ **Good:**
+
 - Clear separation of concerns
 - Easy to add new models
 - Testable strategy logic
 
 ⚠️ **Concerns:**
+
 - **No caching** - same query → same LLM call
 - **No fallback chain** - if GPT-4 fails, no retry with Gemini
 - **No cost tracking** - expensive models used without monitoring
 
 **Recommendation:**
+
 ```typescript
 // Add caching layer
 const cache = new Map();
@@ -370,7 +394,7 @@ export async function routeAI(options) {
   if (cache.has(cacheKey)) {
     return cache.get(cacheKey);
   }
-  
+
   const result = await executeWithFallback(options);
   cache.set(cacheKey, result);
   return result;
@@ -378,8 +402,8 @@ export async function routeAI(options) {
 
 // Add fallback chain
 async function executeWithFallback(options) {
-  const models = ['gpt-4o', 'claude-3.5-sonnet', 'gemini-pro'];
-  
+  const models = ["gpt-4o", "claude-3.5-sonnet", "gemini-pro"];
+
   for (const model of models) {
     try {
       return await callModel(model, options);
@@ -387,8 +411,8 @@ async function executeWithFallback(options) {
       console.warn(`Model ${model} failed, trying next...`);
     }
   }
-  
-  throw new Error('All models failed');
+
+  throw new Error("All models failed");
 }
 ```
 
@@ -423,6 +447,7 @@ export function parseIntent(message: string): ParsedIntent {
 ⚠️ **CRITICAL ISSUES:**
 
 **Issue 1: Brittle Pattern Matching**
+
 ```typescript
 // ❌ Fails on variations
 "Vis min kalender" → ✅ Works
@@ -431,12 +456,14 @@ export function parseIntent(message: string): ParsedIntent {
 ```
 
 **Issue 2: No Confidence Scoring**
+
 ```typescript
 // All intents return fixed confidence
-confidence: 0.95 // Always same, regardless of match quality
+confidence: 0.95; // Always same, regardless of match quality
 ```
 
 **Issue 3: No Ambiguity Handling**
+
 ```typescript
 // What if message matches multiple intents?
 "Opret lead og book møde" → Only first match returned
@@ -458,15 +485,15 @@ export async function parseIntent(message: string): Promise<ParsedIntent> {
     
     Return JSON: { intent: string, params: object, confidence: number }
   `;
-  
-  const result = await callLLM({ prompt, model: 'gemini-pro' });
+
+  const result = await callLLM({ prompt, model: "gemini-pro" });
   return JSON.parse(result);
 }
 
 // Or use ML model
-import { pipeline } from '@xenova/transformers';
+import { pipeline } from "@xenova/transformers";
 
-const classifier = await pipeline('text-classification', 'intent-model');
+const classifier = await pipeline("text-classification", "intent-model");
 const result = await classifier(message);
 ```
 
@@ -493,19 +520,22 @@ function generateActionPreview(intentType, params) {
 **Analysis:**
 
 ✅ **Good:**
+
 - Clear preview format
 - Localized (Danish)
 - Consistent structure
 
 ⚠️ **Concerns:**
+
 - **Hardcoded templates** - hard to maintain
 - **No i18n support** - only Danish
 - **No validation** - missing params show "Ikke angivet"
 
 **Recommendation:**
+
 ```typescript
 // Use template engine
-import Handlebars from 'handlebars';
+import Handlebars from "handlebars";
 
 const templates = {
   create_lead: Handlebars.compile(`
@@ -552,33 +582,36 @@ function getRiskLevel(intentType: string) {
 **Analysis:**
 
 ✅ **Good:**
+
 - Simple and clear
 - Default fallback
 - Easy to adjust
 
 ⚠️ **Concerns:**
+
 - **Static risk levels** - doesn't consider params
 - **No dynamic assessment** - $10 invoice = $10,000 invoice
 - **No user-based risk** - admin vs regular user
 
 **Recommendation:**
+
 ```typescript
 function getRiskLevel(intentType, params, user) {
   // Base risk
   let risk = baseRiskMap[intentType] || "medium";
-  
+
   // Adjust based on params
   if (intentType === "create_invoice") {
     const amount = calculateTotal(params.lines);
     if (amount > 10000) risk = "high";
     if (amount > 50000) risk = "critical";
   }
-  
+
   // Adjust based on user
   if (user.role === "admin") {
     risk = lowerRisk(risk); // Admins can do more
   }
-  
+
   return risk;
 }
 ```
@@ -629,6 +662,7 @@ function getRiskLevel(intentType, params, user) {
 ### **1. Bundle Size**
 
 **Estimated:**
+
 - Client bundle: ~2-3 MB (with all dependencies)
 - Largest dependencies:
   - React + React DOM: ~150 KB
@@ -637,14 +671,15 @@ function getRiskLevel(intentType, params, user) {
   - Recharts: ~200 KB
 
 **Recommendation:**
+
 ```typescript
 // Code splitting
-const CalendarTab = lazy(() => import('./CalendarTab'));
-const InvoicesTab = lazy(() => import('./InvoicesTab'));
+const CalendarTab = lazy(() => import("./CalendarTab"));
+const InvoicesTab = lazy(() => import("./InvoicesTab"));
 
 // Tree shaking
-import { Button } from '@radix-ui/react-button'; // ✅
-import * as Radix from '@radix-ui/react'; // ❌
+import { Button } from "@radix-ui/react-button"; // ✅
+import * as Radix from "@radix-ui/react"; // ❌
 ```
 
 ---
@@ -658,6 +693,7 @@ import * as Radix from '@radix-ui/react'; // ❌
 3. **Inline Functions** - New functions every render
 
 **Example:**
+
 ```typescript
 // ❌ BAD - creates new function every render
 <Button onClick={() => handleClick(id)}>Click</Button>
@@ -677,11 +713,13 @@ const MemoButton = memo(({ onClick }) => (
 ### **3. Network Requests**
 
 **Current:**
+
 - No request deduplication
 - No request batching
 - No prefetching
 
 **Recommendation:**
+
 ```typescript
 // React Query automatic deduplication
 const { data } = useQuery(['emails'], fetchEmails);
@@ -689,7 +727,7 @@ const { data } = useQuery(['emails'], fetchEmails);
 
 // Prefetch on hover
 const prefetchEmail = usePrefetchQuery();
-<EmailRow 
+<EmailRow
   onMouseEnter={() => prefetchEmail(['email', id])}
 />
 ```
@@ -701,11 +739,13 @@ const prefetchEmail = usePrefetchQuery();
 ### **Current State:**
 
 ✅ **Has:**
+
 - Analytics tracking (events)
 - Error boundaries
 - Console logging
 
 ❌ **Missing:**
+
 - Performance monitoring
 - Error tracking (Sentry)
 - User analytics (Mixpanel/Amplitude)
@@ -713,6 +753,7 @@ const prefetchEmail = usePrefetchQuery();
 - API latency monitoring
 
 **Recommendation:**
+
 ```typescript
 // Add Sentry
 import * as Sentry from "@sentry/react";
@@ -728,7 +769,7 @@ const startTime = performance.now();
 const result = await routeAI(options);
 const duration = performance.now() - startTime;
 
-trackMetric('ai_response_time', duration, {
+trackMetric("ai_response_time", duration, {
   model: result.model,
   tokens: result.usage.totalTokens,
 });
@@ -745,6 +786,7 @@ trackMetric('ai_response_time', duration, {
 **Risk:** MEDIUM
 
 **Action:**
+
 1. Audit all 79 useEffect calls
 2. Fix dependency arrays
 3. Add ESLint rules
@@ -759,6 +801,7 @@ trackMetric('ai_response_time', duration, {
 **Risk:** MEDIUM
 
 **Action:**
+
 1. Split contexts by update frequency
 2. Add memoization
 3. Consider Zustand/Jotai
@@ -773,6 +816,7 @@ trackMetric('ai_response_time', duration, {
 **Risk:** LOW
 
 **Action:**
+
 1. Add Redis caching for AI responses
 2. Cache conversation summaries
 3. Cache tool results
@@ -787,6 +831,7 @@ trackMetric('ai_response_time', duration, {
 **Risk:** LOW
 
 **Action:**
+
 1. Use LLM for intent classification
 2. Add confidence scoring
 3. Handle ambiguity
@@ -801,6 +846,7 @@ trackMetric('ai_response_time', duration, {
 **Risk:** LOW
 
 **Action:**
+
 1. Add Sentry for errors
 2. Add performance monitoring
 3. Track LLM costs
@@ -810,16 +856,16 @@ trackMetric('ai_response_time', duration, {
 
 ## 📈 **ARCHITECTURE SCORE CARD**
 
-| Category | Score | Notes |
-|----------|-------|-------|
-| **Code Quality** | 4/5 | Clean, typed, tested |
-| **Architecture** | 4/5 | Solid patterns, some issues |
-| **Performance** | 3/5 | Good, but optimization needed |
-| **Scalability** | 3/5 | Works now, issues at scale |
-| **Maintainability** | 4/5 | Well-organized, documented |
-| **Security** | 3/5 | Basic, needs hardening |
-| **Testing** | 4/5 | Good coverage |
-| **Documentation** | 4/5 | Comprehensive |
+| Category            | Score | Notes                         |
+| ------------------- | ----- | ----------------------------- |
+| **Code Quality**    | 4/5   | Clean, typed, tested          |
+| **Architecture**    | 4/5   | Solid patterns, some issues   |
+| **Performance**     | 3/5   | Good, but optimization needed |
+| **Scalability**     | 3/5   | Works now, issues at scale    |
+| **Maintainability** | 4/5   | Well-organized, documented    |
+| **Security**        | 3/5   | Basic, needs hardening        |
+| **Testing**         | 4/5   | Good coverage                 |
+| **Documentation**   | 4/5   | Comprehensive                 |
 
 **Overall:** ⭐⭐⭐⭐ (4/5)
 
@@ -830,12 +876,14 @@ trackMetric('ai_response_time', duration, {
 **Verdict:** Solid foundation with room for optimization
 
 **Strengths:**
+
 - Clean architecture
 - Type-safe end-to-end
 - Good error handling
 - Modern patterns
 
 **Areas for Improvement:**
+
 - useEffect dependency management
 - Context performance
 - Caching strategy
@@ -845,6 +893,7 @@ trackMetric('ai_response_time', duration, {
 **Ready for Production:** ✅ YES (with recommended fixes)
 
 **Recommended Timeline:**
+
 - Week 1: Fix critical issues (useEffect, rate limiting)
 - Week 2: Optimize performance (contexts, caching)
 - Week 3: Improve AI (intent parsing, fallbacks)

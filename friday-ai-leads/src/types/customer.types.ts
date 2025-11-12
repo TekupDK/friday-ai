@@ -9,10 +9,10 @@ export interface CustomerProfile {
   email: string;
   phone?: string;
   address?: string;
-  
+
   // Property Information
   propertySize?: number; // m²
-  propertyType?: 'house' | 'apartment' | 'office' | 'commercial';
+  propertyType?: "house" | "apartment" | "office" | "commercial";
   propertyDetails?: {
     rooms?: number;
     floors?: number;
@@ -26,13 +26,13 @@ export interface CustomerMetrics {
   firstBookingDate: Date | null;
   lastBookingDate: Date | null;
   daysBetweenBookings: number | null;
-  
+
   // Financial Metrics
   lifetimeValue: number; // kr
   averageBookingValue: number; // kr
   totalRevenue: number; // kr
   outstandingAmount: number; // kr
-  
+
   // Engagement Metrics
   repeatRate: number; // percentage
   churnRisk: number; // 0-100
@@ -41,29 +41,34 @@ export interface CustomerMetrics {
 
 export interface CustomerIntelligence {
   // Customer Classification
-  customerType: 'premium' | 'standard' | 'problematic' | 'unknown';
+  customerType: "premium" | "standard" | "problematic" | "unknown";
   isRecurring: boolean;
   isActive: boolean;
   isPremium: boolean;
-  
+
   // Booking Patterns
-  recurringFrequency?: 'weekly' | 'biweekly' | 'triweekly' | 'monthly' | 'irregular';
+  recurringFrequency?:
+    | "weekly"
+    | "biweekly"
+    | "triweekly"
+    | "monthly"
+    | "irregular";
   preferredDay?: string; // Monday, Tuesday, etc.
   preferredTime?: string; // Morning, Afternoon, etc.
-  seasonality?: 'consistent' | 'seasonal' | 'sporadic';
-  
+  seasonality?: "consistent" | "seasonal" | "sporadic";
+
   // Quality Signals
   hasComplaints: boolean;
   hasSpecialNeeds: boolean;
   complaintHistory?: ComplaintRecord[];
   satisfactionScore?: number; // 1-5
-  
+
   // Special Requirements
   specialRequirements: string[];
   accessInstructions?: string;
   preferredWorkers?: string[];
   avoidWorkers?: string[];
-  
+
   // AI Insights
   aiParsedData?: {
     confidence: number;
@@ -75,7 +80,7 @@ export interface CustomerIntelligence {
 export interface ComplaintRecord {
   date: Date;
   description: string;
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: "low" | "medium" | "high" | "critical";
   resolved: boolean;
   resolution?: string;
   compensationGiven?: boolean;
@@ -85,21 +90,21 @@ export interface Customer {
   profile: CustomerProfile;
   metrics: CustomerMetrics;
   intelligence: CustomerIntelligence;
-  
+
   // Relationships
   emailThreads?: string[]; // Thread IDs
   calendarEvents?: string[]; // Event IDs
   invoices?: string[]; // Invoice IDs
-  
+
   // Metadata
   createdAt: Date;
   updatedAt: Date;
   lastContactDate?: Date;
   nextExpectedBooking?: Date;
-  
+
   // Alerts
   activeAlerts?: CustomerAlert[];
-  
+
   // Tags
   tags?: string[];
   notes?: string;
@@ -107,8 +112,13 @@ export interface Customer {
 
 export interface CustomerAlert {
   id: string;
-  type: 'overdue_booking' | 'churn_risk' | 'quality_issue' | 'payment_issue' | 'opportunity';
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  type:
+    | "overdue_booking"
+    | "churn_risk"
+    | "quality_issue"
+    | "payment_issue"
+    | "opportunity";
+  severity: "low" | "medium" | "high" | "critical";
   message: string;
   createdAt: Date;
   acknowledged: boolean;
@@ -122,9 +132,9 @@ export interface CustomerSegment {
   criteria: {
     minBookings?: number;
     minLifetimeValue?: number;
-    customerType?: CustomerIntelligence['customerType'];
+    customerType?: CustomerIntelligence["customerType"];
     isRecurring?: boolean;
-    frequency?: CustomerIntelligence['recurringFrequency'];
+    frequency?: CustomerIntelligence["recurringFrequency"];
   };
   customers: Customer[];
   metrics: {
@@ -141,28 +151,28 @@ export interface CustomerSearchQuery {
   email?: string;
   phone?: string;
   name?: string;
-  
+
   // Filters
-  customerType?: CustomerIntelligence['customerType'];
+  customerType?: CustomerIntelligence["customerType"];
   isRecurring?: boolean;
   isActive?: boolean;
   hasComplaints?: boolean;
   hasSpecialNeeds?: boolean;
-  
+
   // Ranges
   minLifetimeValue?: number;
   maxLifetimeValue?: number;
   minBookings?: number;
   maxBookings?: number;
-  
+
   // Date ranges
   lastBookingAfter?: Date;
   lastBookingBefore?: Date;
-  
+
   // Sorting
-  sortBy?: 'lifetimeValue' | 'totalBookings' | 'lastBooking' | 'churnRisk';
-  sortOrder?: 'asc' | 'desc';
-  
+  sortBy?: "lifetimeValue" | "totalBookings" | "lastBooking" | "churnRisk";
+  sortOrder?: "asc" | "desc";
+
   // Pagination
   limit?: number;
   offset?: number;

@@ -10,6 +10,7 @@
 ### **Hvad slettes:**
 
 #### **1. Tomme Filer (11 stk, 0 bytes)**
+
 ```
 ❌ DEBUG_AKTUEL_STATUS.md
 ❌ FIX_500_ERROR.md
@@ -29,6 +30,7 @@
 ---
 
 #### **2. Backup Filer (1 stk)**
+
 ```
 ❌ drizzle/schema.backup.ts
 ```
@@ -38,6 +40,7 @@
 ---
 
 #### **3. Deprecated Docs (2 stk)**
+
 ```
 ❌ docs/DEPRECATED_CODE_CLEANUP.md
 ❌ docs/DEPRECATED_FILES.md
@@ -48,6 +51,7 @@
 ---
 
 #### **4. Temporary Filer (5 stk, ~1.3 MB)**
+
 ```
 ❌ analysis-emil-laerke.json (1.2 MB)
 ❌ billy-api-response.json
@@ -61,6 +65,7 @@
 ---
 
 ### **Total Script 1:**
+
 - **19 filer slettes**
 - **~1.3 MB frigives**
 - **Ingen kode påvirkes**
@@ -99,6 +104,7 @@
 ---
 
 ### **Total Script 2:**
+
 - **18 filer flyttes**
 - **Fra:** Root directory
 - **Til:** `tests/manual/`
@@ -109,6 +115,7 @@
 ## 📊 **SAMLET RESULTAT**
 
 ### **Før Cleanup:**
+
 ```
 Root Directory:
 ├── ~150 filer
@@ -118,6 +125,7 @@ Root Directory:
 ```
 
 ### **Efter Cleanup:**
+
 ```
 Root Directory:
 ├── ~80 filer (-47%)
@@ -131,6 +139,7 @@ Root Directory:
 ## ✅ **HVAD PÅVIRKES IKKE:**
 
 ### **Ingen af disse slettes/flyttes:**
+
 - ✅ Kildekode (`client/`, `server/`)
 - ✅ Vigtige docs (`README.md`, `STATUS.md`)
 - ✅ Config filer (`.env`, `package.json`)
@@ -231,7 +240,7 @@ git commit -m "chore: cleanup workspace - remove 19 files, organize 18 tests"
 
 ## ⚠️ **ULEMPER:**
 
-**Ingen!** 
+**Ingen!**
 
 - Ingen kode påvirkes
 - Ingen funktionalitet ændres

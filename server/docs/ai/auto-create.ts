@@ -1,6 +1,6 @@
 /**
  * AI Docs Generator - Auto Create
- * 
+ *
  * Orchestrates the entire flow:
  * 1. Collect data
  * 2. Analyze with AI
@@ -13,7 +13,10 @@ import { getDb } from "../../db";
 import { documents, documentChanges, leads } from "../../../drizzle/schema";
 import { collectLeadData, collectWeeklyData } from "./data-collector";
 import { analyzeLeadData, analyzeWeeklyData } from "./analyzer";
-import { generateLeadDocument, generateWeeklyDigest as generateWeeklyDigestMarkdown } from "./generator";
+import {
+  generateLeadDocument,
+  generateWeeklyDigest as generateWeeklyDigestMarkdown,
+} from "./generator";
 import { logger } from "../../_core/logger";
 import { eq } from "drizzle-orm";
 
@@ -31,9 +34,12 @@ export async function autoCreateLeadDoc(
   retries?: number;
 }> {
   const MAX_RETRIES = 2;
-  
+
   try {
-    logger.info({ leadId, retryCount }, "[AI Auto-Create] Starting lead doc generation");
+    logger.info(
+      { leadId, retryCount },
+      "[AI Auto-Create] Starting lead doc generation"
+    );
 
     // Step 1: Collect data
     const data = await collectLeadData(leadId);
@@ -82,19 +88,26 @@ export async function autoCreateLeadDoc(
 
     return { success: true, docId, retries: retryCount };
   } catch (error: any) {
-    logger.error({ error, leadId, retryCount }, "[AI Auto-Create] Failed to create lead doc");
-    
+    logger.error(
+      { error, leadId, retryCount },
+      "[AI Auto-Create] Failed to create lead doc"
+    );
+
     // Retry on AI failures
-    if (retryCount < MAX_RETRIES && (
-      error.message?.includes('AI') ||
-      error.message?.includes('OpenRouter') ||
-      error.message?.includes('timeout')
-    )) {
-      logger.info({ leadId, retryCount }, "[AI Auto-Create] Retrying after error...");
+    if (
+      retryCount < MAX_RETRIES &&
+      (error.message?.includes("AI") ||
+        error.message?.includes("OpenRouter") ||
+        error.message?.includes("timeout"))
+    ) {
+      logger.info(
+        { leadId, retryCount },
+        "[AI Auto-Create] Retrying after error..."
+      );
       await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2s before retry
       return autoCreateLeadDoc(leadId, retryCount + 1);
     }
-    
+
     return { success: false, error: error.message, retries: retryCount };
   }
 }
@@ -102,7 +115,10 @@ export async function autoCreateLeadDoc(
 /**
  * Update existing lead documentation
  */
-export async function updateLeadDoc(leadId: number, docId: string): Promise<{
+export async function updateLeadDoc(
+  leadId: number,
+  docId: string
+): Promise<{
   success: boolean;
   error?: string;
 }> {
@@ -127,7 +143,7 @@ export async function updateLeadDoc(leadId: number, docId: string): Promise<{
       .from(documents)
       .where(eq(documents.id, docId))
       .limit(1);
-    
+
     const existingDoc = existingDocResults[0];
 
     if (!existingDoc) {
@@ -152,11 +168,17 @@ export async function updateLeadDoc(leadId: number, docId: string): Promise<{
       diff: `AI-regenerated with latest data (${data.emailThreads.length} emails, ${data.calendarEvents.length} meetings)`,
     });
 
-    logger.info({ leadId, docId }, "[AI Auto-Create] Lead doc updated successfully");
+    logger.info(
+      { leadId, docId },
+      "[AI Auto-Create] Lead doc updated successfully"
+    );
 
     return { success: true };
   } catch (error: any) {
-    logger.error({ error, leadId, docId }, "[AI Auto-Create] Failed to update lead doc");
+    logger.error(
+      { error, leadId, docId },
+      "[AI Auto-Create] Failed to update lead doc"
+    );
     return { success: false, error: error.message };
   }
 }
@@ -239,10 +261,7 @@ export async function bulkGenerateLeadDocs(): Promise<{
     if (!db) throw new Error("Database not available");
 
     // Get all leads
-    const allLeads = await db
-      .select()
-      .from(leads)
-      .limit(100);
+    const allLeads = await db.select().from(leads).limit(100);
 
     const results = {
       success: true,
@@ -254,7 +273,7 @@ export async function bulkGenerateLeadDocs(): Promise<{
 
     for (const lead of allLeads) {
       const result = await autoCreateLeadDoc(lead.id);
-      
+
       if (result.success && result.docId) {
         results.generated++;
         results.docIds.push(result.docId);
@@ -295,9 +314,11 @@ function slugify(str: string): string {
  * Helper: Get week number
  */
 function getWeekNumber(date: Date): number {
-  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const d = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  );
   const dayNum = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - dayNum);
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }

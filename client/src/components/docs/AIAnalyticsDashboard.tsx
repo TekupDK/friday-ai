@@ -1,6 +1,6 @@
 /**
  * AI Analytics Dashboard
- * 
+ *
  * Visual dashboard showing AI doc generation metrics:
  * - Total generated
  * - Success rate
@@ -9,7 +9,13 @@
  * - Usage trends
  */
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/lib/trpc";
@@ -137,22 +143,26 @@ export function AIAnalyticsDashboard() {
             <TrendingUp className="h-5 w-5 text-green-600" />
             Økonomiske Besparelser
           </CardTitle>
-          <CardDescription>
-            Estimeret værdi af AI automation
-          </CardDescription>
+          <CardDescription>Estimeret værdi af AI automation</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
               <div>
-                <p className="text-sm text-muted-foreground">Manuel tid sparet</p>
-                <p className="text-2xl font-bold">{savings.timeSavedHours.toFixed(1)} timer</p>
+                <p className="text-sm text-muted-foreground">
+                  Manuel tid sparet
+                </p>
+                <p className="text-2xl font-bold">
+                  {savings.timeSavedHours.toFixed(1)} timer
+                </p>
               </div>
               <Clock className="h-8 w-8 text-muted-foreground" />
             </div>
             <div className="flex justify-between items-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
               <div>
-                <p className="text-sm text-green-600 dark:text-green-400">Værd i besparelser</p>
+                <p className="text-sm text-green-600 dark:text-green-400">
+                  Værd i besparelser
+                </p>
                 <p className="text-2xl font-bold text-green-700 dark:text-green-300">
                   {savings.costSavedDKK.toLocaleString("da-DK")} kr
                 </p>
@@ -220,7 +230,7 @@ export function AIAnalyticsDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {metrics.recentGenerations.map((doc) => (
+              {metrics.recentGenerations.map(doc => (
                 <div
                   key={doc.docId}
                   className="flex items-start justify-between p-3 hover:bg-muted rounded-lg transition-colors cursor-pointer"

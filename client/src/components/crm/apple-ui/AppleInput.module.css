@@ -1,0 +1,330 @@
+/**
+ * AppleInput Styles
+ *
+ * iOS-style input styling
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ============================================================================
+   INPUT WRAPPER
+   ============================================================================ */
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  /* background controlled by theme */
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.inputWrapper:hover {
+  background: #e8e8ed;
+}
+
+.inputWrapper.focused {
+  background: #ffffff;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.inputWrapper.error {
+  border-color: #ff3b30;
+}
+
+.inputWrapper.error.focused {
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.1);
+}
+
+/* ============================================================================
+   INPUT CONTAINER
+   ============================================================================ */
+
+.inputContainer {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(60, 60, 67, 0.6);
+  pointer-events: none;
+  user-select: none;
+}
+
+.input {
+  width: 100%;
+  padding: 0;
+  margin-top: 12px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  line-height: 21px;
+}
+
+.input::placeholder {
+  color: rgba(60, 60, 67, 0.3);
+}
+
+/* ============================================================================
+   ICONS
+   ============================================================================ */
+
+.leftIcon,
+.rightIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(60, 60, 67, 0.6);
+  flex-shrink: 0;
+}
+
+.focused .leftIcon,
+.focused .rightIcon {
+  color: #007aff;
+}
+
+.error .leftIcon,
+.error .rightIcon {
+  color: #ff3b30;
+}
+
+/* ============================================================================
+   HELPER TEXT
+   ============================================================================ */
+
+.helperText {
+  margin: 0;
+  padding: 0 16px;
+  font-size: 13px;
+  line-height: 18px;
+  color: rgba(60, 60, 67, 0.6);
+}
+
+.errorText {
+  margin: 0;
+  padding: 0 16px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #ff3b30;
+  font-weight: 500;
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+/* Dark mode via data-theme attribute (highest priority) */
+[data-theme="dark"] .inputWrapper {
+  background: #2c2c2e;
+  border-color: transparent;
+}
+
+[data-theme="dark"] .inputWrapper:hover {
+  background: #3a3a3c;
+}
+
+[data-theme="dark"] .inputWrapper.focused {
+  background: #1c1c1e;
+  border-color: #0a84ff;
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+}
+
+[data-theme="dark"] .inputWrapper.error {
+  border-color: #ff453a;
+}
+
+[data-theme="dark"] .inputWrapper.error.focused {
+  box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.15);
+}
+
+[data-theme="dark"] .label {
+  color: rgba(235, 235, 245, 0.6);
+}
+
+[data-theme="dark"] .input {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .input::placeholder {
+  color: rgba(235, 235, 245, 0.3);
+}
+
+[data-theme="dark"] .leftIcon,
+[data-theme="dark"] .rightIcon {
+  color: rgba(235, 235, 245, 0.6);
+}
+
+[data-theme="dark"] .focused .leftIcon,
+[data-theme="dark"] .focused .rightIcon {
+  color: #0a84ff;
+}
+
+[data-theme="dark"] .error .leftIcon,
+[data-theme="dark"] .error .rightIcon {
+  color: #ff453a;
+}
+
+[data-theme="dark"] .helperText {
+  color: rgba(235, 235, 245, 0.6);
+}
+
+[data-theme="dark"] .errorText {
+  color: #ff453a;
+}
+
+/* Light mode via data-theme attribute (explicit override for OS dark mode) */
+[data-theme="light"] .inputWrapper {
+  background: #f2f2f7;
+  border-color: transparent;
+}
+
+[data-theme="light"] .inputWrapper:hover {
+  background: #e8e8ed;
+}
+
+[data-theme="light"] .inputWrapper.focused {
+  background: #ffffff;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+[data-theme="light"] .inputWrapper.error {
+  border-color: #ff3b30;
+}
+
+[data-theme="light"] .inputWrapper.error.focused {
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.1);
+}
+
+[data-theme="light"] .label {
+  color: rgba(60, 60, 67, 0.6);
+}
+
+[data-theme="light"] .input {
+  color: #000000;
+}
+
+[data-theme="light"] .input::placeholder {
+  color: rgba(60, 60, 67, 0.3);
+}
+
+[data-theme="light"] .leftIcon,
+[data-theme="light"] .rightIcon {
+  color: rgba(60, 60, 67, 0.6);
+}
+
+[data-theme="light"] .focused .leftIcon,
+[data-theme="light"] .focused .rightIcon {
+  color: #007aff;
+}
+
+[data-theme="light"] .error .leftIcon,
+[data-theme="light"] .error .rightIcon {
+  color: #ff3b30;
+}
+
+[data-theme="light"] .helperText {
+  color: rgba(60, 60, 67, 0.6);
+}
+
+[data-theme="light"] .errorText {
+  color: #ff3b30;
+}
+
+/* Support system preference as well */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .inputWrapper {
+    background: #2c2c2e;
+  }
+
+  html:not([data-theme]) .inputWrapper:hover {
+    background: #3a3a3c;
+  }
+
+  html:not([data-theme]) .inputWrapper.focused {
+    background: #1c1c1e;
+    border-color: #0a84ff;
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+  }
+
+  html:not([data-theme]) .inputWrapper.error {
+    border-color: #ff453a;
+  }
+
+  html:not([data-theme]) .inputWrapper.error.focused {
+    box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.15);
+  }
+
+  html:not([data-theme]) .label {
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  html:not([data-theme]) .input {
+    color: #ffffff;
+  }
+
+  html:not([data-theme]) .input::placeholder {
+    color: rgba(235, 235, 245, 0.3);
+  }
+
+  html:not([data-theme]) .leftIcon,
+  html:not([data-theme]) .rightIcon {
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  html:not([data-theme]) .focused .leftIcon,
+  html:not([data-theme]) .focused .rightIcon {
+    color: #0a84ff;
+  }
+
+  html:not([data-theme]) .error .leftIcon,
+  html:not([data-theme]) .error .rightIcon {
+    color: #ff453a;
+  }
+
+  html:not([data-theme]) .helperText {
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  html:not([data-theme]) .errorText {
+    color: #ff453a;
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .inputWrapper {
+    transition: none;
+  }
+}

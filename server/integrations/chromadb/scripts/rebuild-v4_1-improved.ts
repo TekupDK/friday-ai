@@ -9,21 +9,26 @@
  * 5. Consolidate duplicate profiles
  */
 
-import { readFileSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
+import { readFileSync, writeFileSync } from "fs";
+import { resolve } from "path";
 
-console.log('🔧 V4.1 Improved - Better Linking & Enrichment\n');
-console.log('='.repeat(70));
+console.log("🔧 V4.1 Improved - Better Linking & Enrichment\n");
+console.log("=".repeat(70));
 
-const v4Path = resolve(process.cwd(), 'server/integrations/chromadb/test-data/complete-leads-v4.json');
-const v4 = JSON.parse(readFileSync(v4Path, 'utf-8'));
+const v4Path = resolve(
+  process.cwd(),
+  "server/integrations/chromadb/test-data/complete-leads-v4.json"
+);
+const v4 = JSON.parse(readFileSync(v4Path, "utf-8"));
 let leads: any[] = v4.leads || [];
 
-const gmailLeads = leads.filter(l => l.source === 'gmail');
-const calendarLeads = leads.filter(l => l.source === 'calendar');
-const billyLeads = leads.filter(l => l.source === 'billy');
+const gmailLeads = leads.filter(l => l.source === "gmail");
+const calendarLeads = leads.filter(l => l.source === "calendar");
+const billyLeads = leads.filter(l => l.source === "billy");
 
-console.log(`\nLoaded: ${gmailLeads.length} Gmail, ${calendarLeads.length} Calendar, ${billyLeads.length} Billy`);
+console.log(
+  `\nLoaded: ${gmailLeads.length} Gmail, ${calendarLeads.length} Calendar, ${billyLeads.length} Billy`
+);
 
 // ============================================================================
 // 1. FILTER OUT SPAM/NOISE
@@ -46,8 +51,8 @@ const spamPatterns = [
 ];
 
 const isSpam = (lead: any): boolean => {
-  const name = (lead.name || '').toLowerCase();
-  const desc = (lead.description || '').toLowerCase();
+  const name = (lead.name || "").toLowerCase();
+  const desc = (lead.description || "").toLowerCase();
   return spamPatterns.some(p => p.test(name) || p.test(desc));
 };
 
@@ -66,11 +71,13 @@ leads = [...gmailLeads, ...filteredCalendar, ...billyLeads];
 // ============================================================================
 
 function norm(str?: string | null) {
-  return (str || '').toLowerCase().trim();
+  return (str || "").toLowerCase().trim();
 }
 
 function normalizeName(name: string) {
-  return norm(name).replace(/\s+/g, ' ').replace(/[^a-z0-9 æøå]/g, '');
+  return norm(name)
+    .replace(/\s+/g, " ")
+    .replace(/[^a-z0-9 æøå]/g, "");
 }
 
 function namesSimilar(a: string, b: string): number {
@@ -78,9 +85,10 @@ function namesSimilar(a: string, b: string): number {
   const B = normalizeName(b);
   if (!A || !B) return 0;
   if (A === B) return 1;
-  if (A.includes(B) || B.includes(A)) return Math.min(A.length, B.length) / Math.max(A.length, B.length);
-  const wa = new Set(A.split(' '));
-  const wb = new Set(B.split(' '));
+  if (A.includes(B) || B.includes(A))
+    return Math.min(A.length, B.length) / Math.max(A.length, B.length);
+  const wa = new Set(A.split(" "));
+  const wb = new Set(B.split(" "));
   const common = [...wa].filter(w => w.length > 2 && wb.has(w)).length;
   return common > 0 ? common / Math.max(wa.size, wb.size) : 0;
 }
@@ -95,8 +103,8 @@ function dateDiffDays(a?: string, b?: string): number {
 
 function addressSimilar(a?: string | null, b?: string | null): number {
   if (!a || !b) return 0;
-  const A = norm(a).replace(/[,\.]/g, '').split(/\s+/);
-  const B = norm(b).replace(/[,\.]/g, '').split(/\s+/);
+  const A = norm(a).replace(/[,\.]/g, "").split(/\s+/);
+  const B = norm(b).replace(/[,\.]/g, "").split(/\s+/);
   const setA = new Set(A);
   const common = B.filter(w => w.length > 2 && setA.has(w)).length;
   return common / Math.max(A.length, B.length);
@@ -145,8 +153,8 @@ for (const cal of filteredCalendar) {
 
     // Phone match
     if (cal.phone && gmail.phone) {
-      const calPhone = norm(cal.phone).replace(/\D/g, '');
-      const gmailPhone = norm(gmail.phone).replace(/\D/g, '');
+      const calPhone = norm(cal.phone).replace(/\D/g, "");
+      const gmailPhone = norm(gmail.phone).replace(/\D/g, "");
       if (calPhone && gmailPhone && calPhone === gmailPhone) {
         score += 80;
       }
@@ -188,7 +196,9 @@ for (const cal of filteredCalendar) {
 console.log(`\n🔗 Linking Results:`);
 console.log(`  Calendar ↔ Gmail links: ${linkedPairs.length}`);
 console.log(`  Unlinked Gmail: ${gmailLeads.length - linkedGmailIds.size}`);
-console.log(`  Unlinked Calendar: ${filteredCalendar.length - linkedCalendarIds.size}`);
+console.log(
+  `  Unlinked Calendar: ${filteredCalendar.length - linkedCalendarIds.size}`
+);
 
 // ============================================================================
 // 4. MERGE LINKED PAIRS & ENRICH
@@ -214,7 +224,9 @@ for (const { calendar, gmail } of linkedPairs) {
 
   // Try to extract address from Gmail body if still missing
   if (!merged.address && gmail.rawData?.messages?.[0]?.bodyText) {
-    const extractedAddr = extractAddressFromGmail(gmail.rawData.messages[0].bodyText);
+    const extractedAddr = extractAddressFromGmail(
+      gmail.rawData.messages[0].bodyText
+    );
     if (extractedAddr) {
       merged.address = extractedAddr;
     }
@@ -234,7 +246,9 @@ for (const gmail of gmailLeads) {
   if (!processedIds.has(gmail.id)) {
     // Try to extract address from Gmail body
     if (!gmail.address && gmail.rawData?.messages?.[0]?.bodyText) {
-      const extractedAddr = extractAddressFromGmail(gmail.rawData.messages[0].bodyText);
+      const extractedAddr = extractAddressFromGmail(
+        gmail.rawData.messages[0].bodyText
+      );
       if (extractedAddr) {
         gmail.address = extractedAddr;
       }
@@ -264,22 +278,23 @@ console.log(`\n📦 Enriched Leads: ${enrichedLeads.length}`);
 // ============================================================================
 
 const serviceCoefficients: Record<string, number> = {
-  'REN-001': 0.01, // Privatrengøring: 0.01 t/m²
-  'REN-002': 0.015, // Hovedrengøring: 0.015 t/m²
-  'REN-003': 0.02, // Flytterengøring: 0.02 t/m²
-  'REN-004': 0.008, // Erhvervsrengøring: 0.008 t/m²
-  'REN-005': 0.01, // Fast rengøring: 0.01 t/m²
+  "REN-001": 0.01, // Privatrengøring: 0.01 t/m²
+  "REN-002": 0.015, // Hovedrengøring: 0.015 t/m²
+  "REN-003": 0.02, // Flytterengøring: 0.02 t/m²
+  "REN-004": 0.008, // Erhvervsrengøring: 0.008 t/m²
+  "REN-005": 0.01, // Fast rengøring: 0.01 t/m²
 };
 
 let timeEstimatesAdded = 0;
 
 for (const lead of enrichedLeads) {
   // Skip if already has time estimate
-  if (lead.timeEstimate?.estimatedHours || lead.timeEstimate?.actualHours) continue;
+  if (lead.timeEstimate?.estimatedHours || lead.timeEstimate?.actualHours)
+    continue;
 
-  const m2Str = (lead.propertySize || '').match(/(\d+)/)?.[1];
+  const m2Str = (lead.propertySize || "").match(/(\d+)/)?.[1];
   const m2 = m2Str ? parseInt(m2Str) : null;
-  const serviceType = lead.serviceType || 'REN-001';
+  const serviceType = lead.serviceType || "REN-001";
   const coeff = serviceCoefficients[serviceType] || 0.01;
 
   if (m2 && m2 > 0) {
@@ -287,7 +302,7 @@ for (const lead of enrichedLeads) {
     lead.timeEstimate = {
       estimatedHours,
       text: `${estimatedHours}h (m² rule)`,
-      basis: 'm2_rule',
+      basis: "m2_rule",
     };
     timeEstimatesAdded++;
   }
@@ -302,31 +317,33 @@ console.log(`  Time estimates added via m² rule: ${timeEstimatesAdded}`);
 
 const output = {
   metadata: {
-    base: 'complete-leads-v4.json',
+    base: "complete-leads-v4.json",
     generated: new Date().toISOString(),
     improvements: [
-      'Filtered spam/noise calendar entries',
-      'Improved Calendar↔Gmail linking (name, address, date proximity)',
-      'Extracted addresses from Gmail bodies',
-      'Estimated missing times using m² coefficients',
+      "Filtered spam/noise calendar entries",
+      "Improved Calendar↔Gmail linking (name, address, date proximity)",
+      "Extracted addresses from Gmail bodies",
+      "Estimated missing times using m² coefficients",
     ],
     counts: {
       total: enrichedLeads.length,
-      gmail: enrichedLeads.filter(l => l.source === 'gmail').length,
-      calendar: enrichedLeads.filter(l => l.source === 'calendar').length,
-      billy: enrichedLeads.filter(l => l.source === 'billy').length,
+      gmail: enrichedLeads.filter(l => l.source === "gmail").length,
+      calendar: enrichedLeads.filter(l => l.source === "calendar").length,
+      billy: enrichedLeads.filter(l => l.source === "billy").length,
     },
     links: {
       total: linkedPairs.length,
-      emailMatches: linkedPairs.filter(p => norm(p.calendar.email) === norm(p.gmail.email)).length,
+      emailMatches: linkedPairs.filter(
+        p => norm(p.calendar.email) === norm(p.gmail.email)
+      ).length,
       phoneMatches: linkedPairs.filter(p => {
-        const cp = norm(p.calendar.phone || '').replace(/\D/g, '');
-        const gp = norm(p.gmail.phone || '').replace(/\D/g, '');
+        const cp = norm(p.calendar.phone || "").replace(/\D/g, "");
+        const gp = norm(p.gmail.phone || "").replace(/\D/g, "");
         return cp && gp && cp === gp;
       }).length,
       fuzzyMatches: linkedPairs.filter(p => {
-        const cp = norm(p.calendar.email || '').replace(/\D/g, '');
-        const gp = norm(p.gmail.email || '').replace(/\D/g, '');
+        const cp = norm(p.calendar.email || "").replace(/\D/g, "");
+        const gp = norm(p.gmail.email || "").replace(/\D/g, "");
         return !cp && !gp;
       }).length,
     },
@@ -338,15 +355,20 @@ const output = {
   leads: enrichedLeads,
 };
 
-const outputPath = resolve(process.cwd(), 'server/integrations/chromadb/test-data/complete-leads-v4.1-improved.json');
+const outputPath = resolve(
+  process.cwd(),
+  "server/integrations/chromadb/test-data/complete-leads-v4.1-improved.json"
+);
 writeFileSync(outputPath, JSON.stringify(output, null, 2));
 
 console.log(`\n✅ Saved: ${outputPath}`);
-console.log('\n' + '='.repeat(70));
-console.log('\n📊 Summary:');
+console.log("\n" + "=".repeat(70));
+console.log("\n📊 Summary:");
 console.log(`  Total leads: ${enrichedLeads.length}`);
 console.log(`  Calendar↔Gmail links: ${linkedPairs.length}`);
 console.log(`  Spam removed: ${spamRemoved}`);
-console.log(`  Addresses enriched: ${enrichedLeads.filter(l => l.address).length}`);
+console.log(
+  `  Addresses enriched: ${enrichedLeads.filter(l => l.address).length}`
+);
 console.log(`  Time estimates added: ${timeEstimatesAdded}`);
-console.log('\n' + '='.repeat(70));
+console.log("\n" + "=".repeat(70));

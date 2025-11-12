@@ -1,6 +1,6 @@
 /**
  * Phase 9.8: Real-time Email Monitoring Service
- * 
+ *
  * Automatically monitors Gmail inbox for new leads
  * and triggers immediate processing workflows.
  */
@@ -40,7 +40,7 @@ export class EmailMonitorService {
   private isRunning: boolean = false;
   private pollTimer: NodeJS.Timeout | null = null;
   private processedEmails: Set<string> = new Set();
-  
+
   private config: EmailMonitorConfig = {
     pollInterval: 30000, // 30 seconds
     maxEmailsPerPoll: 10,
@@ -92,7 +92,9 @@ export class EmailMonitorService {
       }
     }, this.config.pollInterval);
 
-    console.log(`[EmailMonitor] ✅ Monitoring started (polling every ${this.config.pollInterval/1000}s)`);
+    console.log(
+      `[EmailMonitor] ✅ Monitoring started (polling every ${this.config.pollInterval / 1000}s)`
+    );
   }
 
   /**
@@ -137,7 +139,7 @@ export class EmailMonitorService {
 
       for (const message of messages) {
         const emailId = message.id;
-        
+
         // Skip if already processed
         if (this.processedEmails.has(emailId)) {
           continue;
@@ -150,19 +152,25 @@ export class EmailMonitorService {
             this.processedEmails.add(emailId);
           }
         } catch (error) {
-          console.error(`[EmailMonitor] Error processing email ${emailId}:`, error);
+          console.error(
+            `[EmailMonitor] Error processing email ${emailId}:`,
+            error
+          );
         }
       }
 
       if (newEmails.length > 0) {
-        console.log(`[EmailMonitor] 🎯 Processed ${newEmails.length} new emails:`);
+        console.log(
+          `[EmailMonitor] 🎯 Processed ${newEmails.length} new emails:`
+        );
         newEmails.forEach(email => {
-          console.log(`  - ${email.sourceDetection.source} (${email.sourceDetection.confidence}% confidence): ${email.subject}`);
+          console.log(
+            `  - ${email.sourceDetection.source} (${email.sourceDetection.confidence}% confidence): ${email.subject}`
+          );
         });
       }
 
       return newEmails;
-
     } catch (error) {
       console.error("[EmailMonitor] Error processing new emails:", error);
       return [];
@@ -172,7 +180,9 @@ export class EmailMonitorService {
   /**
    * Process individual email
    */
-  private async processEmail(message: any): Promise<NewEmailNotification | null> {
+  private async processEmail(
+    message: any
+  ): Promise<NewEmailNotification | null> {
     try {
       // Get full email details
       const emailDetail = await this.gmail.users.messages.get({
@@ -182,7 +192,8 @@ export class EmailMonitorService {
       });
 
       const headers = emailDetail.data.payload.headers;
-      const subject = headers.find((h: any) => h.name === "Subject")?.value || "";
+      const subject =
+        headers.find((h: any) => h.name === "Subject")?.value || "";
       const from = headers.find((h: any) => h.name === "From")?.value || "";
       const to = headers.find((h: any) => h.name === "To")?.value || "";
       const date = headers.find((h: any) => h.name === "Date")?.value || "";
@@ -203,7 +214,7 @@ export class EmailMonitorService {
 
       // Check if this is a lead (not a reply, etc.)
       const isLead = this.isLeadEmail(subject, from);
-      
+
       if (!isLead) {
         console.log(`[EmailMonitor] Skipping non-lead email: ${subject}`);
         return null;
@@ -223,8 +234,9 @@ export class EmailMonitorService {
       });
 
       // Auto-process if high confidence
-      const autoProcessed = sourceDetection.confidence >= this.config.autoProcessThreshold;
-      
+      const autoProcessed =
+        sourceDetection.confidence >= this.config.autoProcessThreshold;
+
       if (autoProcessed) {
         await this.autoProcessEmail(message.id, sourceDetection, workflow);
         // Mark as read
@@ -249,9 +261,11 @@ export class EmailMonitorService {
         workflow,
         autoProcessed,
       };
-
     } catch (error) {
-      console.error(`[EmailMonitor] Error processing email ${message.id}:`, error);
+      console.error(
+        `[EmailMonitor] Error processing email ${message.id}:`,
+        error
+      );
       return null;
     }
   }
@@ -280,7 +294,7 @@ export class EmailMonitorService {
    */
   private isLeadEmail(subject: string, from: string): boolean {
     const subjectLower = subject.toLowerCase();
-    
+
     // Skip replies and forwards
     if (subjectLower.startsWith("re:") || subjectLower.startsWith("fwd:")) {
       return false;
@@ -305,7 +319,7 @@ export class EmailMonitorService {
         console.error("[EmailMonitor] Database not available");
         return;
       }
-      
+
       // Store in email_threads table
       await db.insert(emailThreads).values({
         gmailThreadId: emailData.threadId,
@@ -321,8 +335,9 @@ export class EmailMonitorService {
         }),
       });
 
-      console.log(`[EmailMonitor] ✅ Stored email in database: ${emailData.subject}`);
-
+      console.log(
+        `[EmailMonitor] ✅ Stored email in database: ${emailData.subject}`
+      );
     } catch (error) {
       console.error("[EmailMonitor] Error storing email in database:", error);
     }
@@ -331,15 +346,23 @@ export class EmailMonitorService {
   /**
    * Auto-process email with high confidence
    */
-  private async autoProcessEmail(emailId: string, sourceDetection: any, workflow: any): Promise<void> {
+  private async autoProcessEmail(
+    emailId: string,
+    sourceDetection: any,
+    workflow: any
+  ): Promise<void> {
     try {
-      console.log(`[EmailMonitor] 🤖 Auto-processing ${sourceDetection.source} lead (${sourceDetection.confidence}% confidence)`);
-      
+      console.log(
+        `[EmailMonitor] 🤖 Auto-processing ${sourceDetection.source} lead (${sourceDetection.confidence}% confidence)`
+      );
+
       // Trigger immediate workflow actions
       if (workflow.workflow.autoActions) {
         for (const action of workflow.workflow.autoActions) {
           if (action.trigger === "immediate") {
-            console.log(`[EmailMonitor] ⚡ Executing auto-action: ${action.title}`);
+            console.log(
+              `[EmailMonitor] ⚡ Executing auto-action: ${action.title}`
+            );
             // TODO: Implement specific auto-actions
             // - Send notification to sales team
             // - Create calendar event
@@ -347,7 +370,6 @@ export class EmailMonitorService {
           }
         }
       }
-
     } catch (error) {
       console.error("[EmailMonitor] Error in auto-processing:", error);
     }

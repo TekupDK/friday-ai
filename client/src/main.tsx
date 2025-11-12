@@ -1,7 +1,17 @@
 import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from "@shared/const";
-import { QueryClient, QueryClientProvider, dehydrate, hydrate } from "@tanstack/react-query";
-import { httpBatchLink, httpLink, splitLink, TRPCClientError } from "@trpc/client";
+import {
+  QueryClient,
+  QueryClientProvider,
+  dehydrate,
+  hydrate,
+} from "@tanstack/react-query";
+import {
+  httpBatchLink,
+  httpLink,
+  splitLink,
+  TRPCClientError,
+} from "@trpc/client";
 import { createRoot } from "react-dom/client";
 import superjson from "superjson";
 import App from "./App";
@@ -10,7 +20,12 @@ import "./index.css";
 import { requestQueue } from "./lib/requestQueue";
 import { chatSendAbort } from "./lib/abortSignals";
 import { intelligentRetryDelay, shouldRetry } from "./lib/retryStrategy";
-import { createOptimizedQueryClient, invalidateAuthQueries, warmupCache, getCacheConfig } from "./lib/cacheStrategy";
+import {
+  createOptimizedQueryClient,
+  invalidateAuthQueries,
+  warmupCache,
+  getCacheConfig,
+} from "./lib/cacheStrategy";
 
 // Phase 7.2: Optimized QueryClient with intelligent cache strategy
 const queryClient = createOptimizedQueryClient();
@@ -87,7 +102,9 @@ const redirectToLoginIfUnauthorized = async (error: unknown) => {
 
   // Phase 7.1: Try silent refresh before redirecting
   try {
-    console.log("[Auth] Attempting silent session refresh before login redirect");
+    console.log(
+      "[Auth] Attempting silent session refresh before login redirect"
+    );
     const refreshResponse = await fetch("/api/auth/refresh", {
       method: "POST",
       credentials: "include",
@@ -99,14 +116,19 @@ const redirectToLoginIfUnauthorized = async (error: unknown) => {
     if (refreshResponse.ok) {
       const refreshData = await refreshResponse.json();
       if (refreshData.refreshed) {
-        console.log("[Auth] Session refreshed successfully - avoiding login redirect");
+        console.log(
+          "[Auth] Session refreshed successfully - avoiding login redirect"
+        );
         // Phase 7.2: Intelligent auth-aware cache invalidation
         invalidateAuthQueries(queryClient);
         return;
       }
     }
   } catch (refreshError) {
-    console.warn("[Auth] Silent refresh failed, proceeding with login redirect", refreshError);
+    console.warn(
+      "[Auth] Silent refresh failed, proceeding with login redirect",
+      refreshError
+    );
   }
 
   // If refresh failed or wasn't needed, redirect to login

@@ -44,6 +44,7 @@ Open browser: **http://localhost:3000**
 You should see the Langfuse login page.
 
 **Default credentials** (if not set in docker-compose):
+
 - Will be created on first access via web UI
 
 ### 3. Get API Keys
@@ -132,7 +133,7 @@ Edit `docker-compose.langfuse.yml` to customize:
 - **Port:** Change `3000:3000` to your preferred port
 - **Database:** Use external PostgreSQL if needed
 - **Secrets:** Update NEXTAUTH_SECRET and SALT (important for production!)
-- **Admin User:** Uncomment and set LANGFUSE_INIT_USER_* variables
+- **Admin User:** Uncomment and set LANGFUSE*INIT_USER*\* variables
 
 ---
 
@@ -141,19 +142,19 @@ Edit `docker-compose.langfuse.yml` to customize:
 ### Basic Tracing
 
 ```typescript
-import { langfuseClient } from './integrations/langfuse';
+import { langfuseClient } from "./integrations/langfuse";
 
 // Create trace
 const trace = langfuseClient.trace({
-  name: 'lead-analysis',
-  userId: '123',
-  metadata: { source: 'email' }
+  name: "lead-analysis",
+  userId: "123",
+  metadata: { source: "email" },
 });
 
 // Track LLM call
 const generation = trace.generation({
-  name: 'analyze-lead',
-  model: 'glm-4.5-air-free',
+  name: "analyze-lead",
+  model: "glm-4.5-air-free",
   input: messages,
 });
 
@@ -162,7 +163,7 @@ const generation = trace.generation({
 // End generation
 generation.end({
   output: result,
-  usage: { promptTokens: 100, completionTokens: 200 }
+  usage: { promptTokens: 100, completionTokens: 200 },
 });
 ```
 
@@ -229,6 +230,7 @@ docker compose -f docker-compose.langfuse.yml logs
 ### No Traces Showing Up
 
 1. **Check API keys**
+
    ```bash
    # Verify in .env.dev
    echo $LANGFUSE_PUBLIC_KEY
@@ -236,12 +238,14 @@ docker compose -f docker-compose.langfuse.yml logs
    ```
 
 2. **Check connection**
+
    ```bash
    curl http://localhost:3000/api/public/health
    # Should return: {"status":"ok"}
    ```
 
 3. **Check Friday AI logs**
+
    ```bash
    # Look for Langfuse errors
    grep -i langfuse logs/friday-ai.log
@@ -310,6 +314,7 @@ For high-volume production:
    - Can scale independently
 
 2. **Increase flush interval**
+
    ```bash
    LANGFUSE_FLUSH_INTERVAL=5000  # 5 seconds
    ```
@@ -366,6 +371,7 @@ Add to cron (Linux/Mac) or Task Scheduler (Windows):
 ## 🆘 Support
 
 **Issues?**
+
 - Check troubleshooting section above
 - View logs: `docker compose logs langfuse`
 - Langfuse Discord: https://discord.gg/langfuse

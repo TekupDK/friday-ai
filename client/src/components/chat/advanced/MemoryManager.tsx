@@ -14,7 +14,7 @@ export interface MemoryItem {
   id: string;
   key: string;
   value: string;
-  source: 'user' | 'inferred' | 'explicit';
+  source: "user" | "inferred" | "explicit";
   createdAt: string;
   project?: string;
 }
@@ -46,18 +46,22 @@ export function MemoryManager({
   onDeleteMemory,
   onClearMemories,
   onSelectProject,
-  activeProject
+  activeProject,
 }: MemoryManagerProps) {
   const [showMemories, setShowMemories] = useState(false);
 
-  const getSourceBadge = (source: MemoryItem['source']) => {
+  const getSourceBadge = (source: MemoryItem["source"]) => {
     switch (source) {
-      case 'user':
+      case "user":
         return <Badge className="bg-blue-600 text-xs">User</Badge>;
-      case 'explicit':
+      case "explicit":
         return <Badge className="bg-emerald-600 text-xs">Explicit</Badge>;
-      case 'inferred':
-        return <Badge variant="outline" className="text-xs">Inferred</Badge>;
+      case "inferred":
+        return (
+          <Badge variant="outline" className="text-xs">
+            Inferred
+          </Badge>
+        );
     }
   };
 
@@ -69,10 +73,7 @@ export function MemoryManager({
           <Brain className="w-5 h-5 text-purple-600" />
           <h3 className="font-semibold">Memory & Context</h3>
         </div>
-        <Switch
-          checked={memoryEnabled}
-          onCheckedChange={onToggleMemory}
-        />
+        <Switch checked={memoryEnabled} onCheckedChange={onToggleMemory} />
       </div>
 
       {/* Project Scope Selector */}
@@ -83,7 +84,7 @@ export function MemoryManager({
             Active Project Scope
           </label>
           <div className="space-y-1">
-            {projects.map((project) => (
+            {projects.map(project => (
               <button
                 key={project.id}
                 onClick={() => onSelectProject?.(project.id)}
@@ -96,7 +97,9 @@ export function MemoryManager({
               >
                 <div className="text-left">
                   <p className="text-sm font-medium">{project.name}</p>
-                  <p className="text-xs text-muted-foreground">{project.description}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {project.description}
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" className="text-xs">
@@ -115,18 +118,20 @@ export function MemoryManager({
       {/* Memory Stats */}
       <div className="grid grid-cols-3 gap-2 p-3 rounded-lg bg-slate-50 dark:bg-slate-900">
         <div className="text-center">
-          <p className="text-2xl font-bold text-purple-600">{memories.length}</p>
+          <p className="text-2xl font-bold text-purple-600">
+            {memories.length}
+          </p>
           <p className="text-xs text-muted-foreground">Total</p>
         </div>
         <div className="text-center">
           <p className="text-2xl font-bold text-blue-600">
-            {memories.filter(m => m.source === 'user').length}
+            {memories.filter(m => m.source === "user").length}
           </p>
           <p className="text-xs text-muted-foreground">User</p>
         </div>
         <div className="text-center">
           <p className="text-2xl font-bold text-emerald-600">
-            {memories.filter(m => m.source === 'inferred').length}
+            {memories.filter(m => m.source === "inferred").length}
           </p>
           <p className="text-xs text-muted-foreground">Auto</p>
         </div>
@@ -155,7 +160,7 @@ export function MemoryManager({
       {/* Memories List */}
       {showMemories && (
         <div className="space-y-2 max-h-[400px] overflow-y-auto">
-          {memories.map((memory) => (
+          {memories.map(memory => (
             <div
               key={memory.id}
               className="p-3 rounded-lg border bg-card hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
@@ -166,7 +171,9 @@ export function MemoryManager({
                     <p className="text-sm font-medium">{memory.key}</p>
                     {getSourceBadge(memory.source)}
                   </div>
-                  <p className="text-xs text-muted-foreground">{memory.value}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {memory.value}
+                  </p>
                 </div>
                 <Button
                   size="sm"

@@ -1,6 +1,6 @@
 /**
  * AI Docs Generator - Data Collector
- * 
+ *
  * Collects data from multiple sources:
  * - Leads from database
  * - Email threads from Gmail
@@ -61,7 +61,9 @@ export interface CollectedData {
 /**
  * Collect all data related to a lead
  */
-export async function collectLeadData(leadId: number): Promise<CollectedData | null> {
+export async function collectLeadData(
+  leadId: number
+): Promise<CollectedData | null> {
   try {
     const db = await getDb();
     if (!db) throw new Error("Database not available");
@@ -72,7 +74,7 @@ export async function collectLeadData(leadId: number): Promise<CollectedData | n
       .from(leads)
       .where(eq(leads.id, leadId))
       .limit(1);
-    
+
     const lead = leadResults[0];
 
     if (!lead) {
@@ -90,7 +92,10 @@ export async function collectLeadData(leadId: number): Promise<CollectedData | n
 
     // 3. Calendar events - temporarily disabled until getCalendarClient is available
     const calendarEvents: CalendarEventData[] = [];
-    logger.info({ leadId }, "[AI Collector] Calendar integration disabled - will be added in future");
+    logger.info(
+      { leadId },
+      "[AI Collector] Calendar integration disabled - will be added in future"
+    );
 
     // 4. Fetch conversations related to this lead (by userId matching lead)
     const chatMessages = await db
@@ -129,8 +134,8 @@ export async function collectLeadData(leadId: number): Promise<CollectedData | n
     };
 
     logger.info(
-      { 
-        leadId, 
+      {
+        leadId,
         emailCount: result.emailThreads.length,
         calendarCount: result.calendarEvents.length,
         chatCount: result.chatMessages.length,
@@ -158,7 +163,9 @@ export async function collectWeeklyData(): Promise<{
     const db = await getDb();
     if (!db) throw new Error("Database not available");
 
-    const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const oneWeekAgo = new Date(
+      Date.now() - 7 * 24 * 60 * 60 * 1000
+    ).toISOString();
 
     // Recent leads
     const recentLeads = await db
@@ -183,7 +190,9 @@ export async function collectWeeklyData(): Promise<{
 
     // Calendar events - temporarily disabled
     const calendarEvents: CalendarEventData[] = [];
-    logger.info("[AI Collector] Calendar integration for weekly digest disabled - will be added in future");
+    logger.info(
+      "[AI Collector] Calendar integration for weekly digest disabled - will be added in future"
+    );
 
     return {
       leads: recentLeads.map(l => ({

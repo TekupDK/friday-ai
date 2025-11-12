@@ -3,13 +3,14 @@
 **Version:** 1.0.0  
 **Status:** Design Phase  
 **Author:** Friday AI Team  
-**Date:** November 9, 2025  
+**Date:** November 9, 2025
 
 ---
 
 ## 🎯 Overview
 
 LiteLLM serves as our unified AI gateway, providing:
+
 - Single interface to multiple LLM providers
 - Automatic failover and retry logic
 - Cost tracking and monitoring
@@ -91,6 +92,7 @@ docs/integrations/litellm/
 ## 🔄 Request Flow
 
 ### Happy Path (Primary Provider Success)
+
 ```
 1. Friday AI → LiteLLM Client
    ├─ model: "gpt-4o"
@@ -114,6 +116,7 @@ docs/integrations/litellm/
 ```
 
 ### Fallback Path (Primary Fails)
+
 ```
 1. Friday AI → LiteLLM Client
    └─ Same request
@@ -136,6 +139,7 @@ docs/integrations/litellm/
 ```
 
 ### All Providers Fail
+
 ```
 1. Try all providers in cascade
 2. Log detailed error information
@@ -149,9 +153,11 @@ docs/integrations/litellm/
 ## 🔧 Core Components
 
 ### 1. LiteLLM Client (`client.ts`)
+
 **Purpose:** Thin wrapper around LiteLLM proxy  
 **Max Lines:** 100  
 **Responsibilities:**
+
 - HTTP requests to proxy
 - Response normalization
 - Basic error handling
@@ -168,9 +174,11 @@ export class LiteLLMClient {
 ```
 
 ### 2. Fallback Strategy (`fallback/strategy.ts`)
+
 **Purpose:** Define provider cascade  
 **Max Lines:** 120  
 **Responsibilities:**
+
 - Provider priority order
 - Fallback decision logic
 - Model mapping per provider
@@ -186,32 +194,39 @@ export class FallbackStrategy {
 ```
 
 ### 3. Circuit Breaker (`fallback/circuit-breaker.ts`)
+
 **Purpose:** Prevent cascading failures  
 **Max Lines:** 100  
 **Responsibilities:**
+
 - Track provider health
 - Open/Close circuit based on errors
 - Auto-recovery after timeout
 - Metrics reporting
 
 **States:**
+
 - **CLOSED:** Normal operation
 - **OPEN:** Provider marked as down
 - **HALF_OPEN:** Testing recovery
 
 ### 4. Retry Logic (`fallback/retry.ts`)
+
 **Purpose:** Smart retry with backoff  
 **Max Lines:** 80  
 **Responsibilities:**
+
 - Exponential backoff
 - Max 3 retries
 - Different strategies per error type
 - Metrics tracking
 
 ### 5. OpenRouter Adapter (`adapters/openrouter-adapter.ts`)
+
 **Purpose:** Normalize OpenRouter responses  
 **Max Lines:** 80  
 **Responsibilities:**
+
 - Convert OpenRouter format → Standard format
 - Handle different FREE model quirks
 - Ensure consistent response structure
@@ -222,6 +237,7 @@ export class FallbackStrategy {
 ## 📊 Provider Configuration
 
 ### Primary: OpenRouter FREE - DeepSeek Chat
+
 ```yaml
 - model_name: deepseek-chat
   litellm_params:
@@ -235,6 +251,7 @@ export class FallbackStrategy {
 ```
 
 ### Fallback 1: OpenRouter FREE - GLM-4.5 Air
+
 ```yaml
 - model_name: glm-4.5-air
   litellm_params:
@@ -248,6 +265,7 @@ export class FallbackStrategy {
 ```
 
 ### Fallback 2: OpenRouter FREE - Mistral 7B
+
 ```yaml
 - model_name: mistral-7b
   litellm_params:
@@ -261,6 +279,7 @@ export class FallbackStrategy {
 ```
 
 ### Fallback 3: OpenRouter FREE - Llama 3.2
+
 ```yaml
 - model_name: llama-3.2
   litellm_params:
@@ -278,26 +297,31 @@ export class FallbackStrategy {
 ## 🎯 Design Principles
 
 ### 1. Single Responsibility
+
 - Each file handles ONE concern
 - Max 200 lines per file
 - Clear module boundaries
 
 ### 2. Fail-Safe Defaults
+
 - Always have fallback option
 - Graceful degradation
 - Never throw unhandled errors
 
 ### 3. Observable System
+
 - Log all requests/responses
 - Metrics for every operation
 - Health checks at all levels
 
 ### 4. Type Safety
+
 - Full TypeScript coverage
 - No `any` types
 - Comprehensive interfaces
 
 ### 5. Testability
+
 - Each module independently testable
 - Mock-friendly interfaces
 - Clear dependencies
@@ -307,6 +331,7 @@ export class FallbackStrategy {
 ## 🔍 Monitoring Strategy
 
 ### Metrics to Track
+
 ```typescript
 interface Metrics {
   // Request metrics
@@ -315,16 +340,16 @@ interface Metrics {
   averageLatency: number;
   p95Latency: number;
   p99Latency: number;
-  
+
   // Provider metrics
   providerRequests: Record<Provider, number>;
   providerErrors: Record<Provider, number>;
   fallbackRate: number;
-  
+
   // Cost metrics
   totalCost: number;
   costPerRequest: number;
-  
+
   // Error metrics
   errorRate: number;
   errorsByType: Record<ErrorType, number>;
@@ -332,11 +357,13 @@ interface Metrics {
 ```
 
 ### Health Checks
+
 - `/health` - Overall system health
 - `/health/providers` - Per-provider status
 - `/health/circuit-breakers` - Circuit breaker states
 
 ### Alerts
+
 - Error rate > 10%
 - Fallback rate > 50%
 - Any provider down > 5 min
@@ -347,16 +374,19 @@ interface Metrics {
 ## 🚀 Deployment Architecture
 
 ### Development
+
 ```
 Friday AI Dev → LiteLLM Local (Docker) → Providers
 ```
 
 ### Staging
+
 ```
 Friday AI Staging → LiteLLM Staging (K8s) → Providers
 ```
 
 ### Production
+
 ```
 Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
   ├─ Pod 1 (Active)
@@ -369,12 +399,14 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 ## 📈 Scalability Considerations
 
 ### Current Scale (Phase 1)
+
 - Single Docker container
 - 100 req/min expected
 - Local state (no Redis needed)
 - Simple health checks
 
 ### Future Scale (Phase 2+)
+
 - Multiple instances (K8s)
 - 1000+ req/min
 - Shared state (Redis)
@@ -386,18 +418,21 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 ## 🔒 Security Considerations
 
 ### API Key Management
+
 - Never hardcode keys
 - Use environment variables
 - Rotate keys quarterly
 - Different keys per environment
 
 ### Request Validation
+
 - Validate all inputs (Zod)
 - Sanitize user content
 - Rate limiting per user
 - Request size limits
 
 ### Response Handling
+
 - Never expose provider errors directly
 - Sanitize error messages
 - Log sensitive data separately
@@ -408,17 +443,20 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 ## ⚡ Performance Targets
 
 ### Response Times
+
 - **p50:** < 1s
 - **p95:** < 3s
 - **p99:** < 5s
 - **Timeout:** 30s
 
 ### Availability
+
 - **Uptime:** 99.9%
 - **Max downtime:** 43 min/month
 - **MTTR:** < 5 min
 
 ### Throughput
+
 - **Current:** 100 req/min
 - **Target:** 1000 req/min
 - **Peak:** 2000 req/min
@@ -428,24 +466,28 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 ## 🔄 Migration Strategy
 
 ### Phase 1: Setup (Week 1, Day 1-2)
+
 1. Install LiteLLM
 2. Configure providers
 3. Test locally
 4. Document setup
 
 ### Phase 2: Integration (Week 1, Day 3)
+
 1. Create client wrapper
 2. Implement fallback
 3. Add monitoring
 4. Write tests
 
 ### Phase 3: Migration (Week 1, Day 4)
+
 1. Update Friday Docs AI calls
 2. Test with staging data
 3. Monitor metrics
 4. Fix issues
 
 ### Phase 4: Rollout (Week 1, Day 5)
+
 1. Deploy to staging
 2. 24h monitoring
 3. Production deployment
@@ -456,6 +498,7 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 ## ✅ Success Criteria
 
 ### Phase 1 Complete When:
+
 - [ ] LiteLLM running locally
 - [ ] All providers configured
 - [ ] Fallback logic working
@@ -466,6 +509,7 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 - [ ] Team approved
 
 ### Production Ready When:
+
 - [ ] Staging stable for 24h
 - [ ] No critical bugs
 - [ ] Performance targets met
@@ -488,4 +532,4 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 
 **Status:** ✅ Architecture Designed  
 **Next:** Review & Approve  
-**Estimated Time:** 30 min review  
+**Estimated Time:** 30 min review

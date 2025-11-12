@@ -7,7 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { Paperclip, Upload, X, File, Image, FileText, Download, Eye, Trash2 } from "lucide-react";
+import {
+  Paperclip,
+  Upload,
+  X,
+  File,
+  Image,
+  FileText,
+  Download,
+  Eye,
+  Trash2,
+} from "lucide-react";
 import { useState, useRef } from "react";
 
 export interface AttachmentFile {
@@ -18,7 +28,7 @@ export interface AttachmentFile {
   url?: string;
   preview?: string;
   uploadProgress?: number;
-  status: 'pending' | 'uploading' | 'completed' | 'error';
+  status: "pending" | "uploading" | "completed" | "error";
 }
 
 interface AttachmentPreviewProps {
@@ -31,14 +41,14 @@ interface AttachmentPreviewProps {
   maxSize?: number; // in MB
 }
 
-export function AttachmentPreview({ 
+export function AttachmentPreview({
   files = [],
   onUpload,
   onRemove,
   onDownload,
   onPreview,
   maxFiles = 5,
-  maxSize = 10
+  maxSize = 10,
 }: AttachmentPreviewProps) {
   const [attachments, setAttachments] = useState<AttachmentFile[]>(files);
   const [dragActive, setDragActive] = useState(false);
@@ -58,7 +68,7 @@ export function AttachmentPreview({
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFiles(e.dataTransfer.files);
     }
@@ -72,7 +82,7 @@ export function AttachmentPreview({
 
   const handleFiles = async (fileList: FileList) => {
     const newFiles = Array.from(fileList);
-    
+
     // Check max files limit
     if (attachments.length + newFiles.length > maxFiles) {
       alert(`Maksimalt ${maxFiles} filer tilladt`);
@@ -84,7 +94,9 @@ export function AttachmentPreview({
     for (const file of newFiles) {
       // Check file size
       if (file.size > maxSize * 1024 * 1024) {
-        alert(`Filen ${file.name} er for stor. Maksimal størrelse er ${maxSize}MB`);
+        alert(
+          `Filen ${file.name} er for stor. Maksimal størrelse er ${maxSize}MB`
+        );
         continue;
       }
 
@@ -93,11 +105,11 @@ export function AttachmentPreview({
         name: file.name,
         size: file.size,
         type: file.type,
-        status: 'pending'
+        status: "pending",
       };
 
       // Generate preview for images
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         attachment.preview = URL.createObjectURL(file);
       }
 
@@ -110,11 +122,13 @@ export function AttachmentPreview({
     // Simulate upload
     processedFiles.forEach((attachment, index) => {
       setTimeout(() => {
-        setAttachments(prev => prev.map(a => 
-          a.id === attachment.id 
-            ? { ...a, status: 'uploading' as const, uploadProgress: 0 }
-            : a
-        ));
+        setAttachments(prev =>
+          prev.map(a =>
+            a.id === attachment.id
+              ? { ...a, status: "uploading" as const, uploadProgress: 0 }
+              : a
+          )
+        );
 
         // Simulate progress
         let progress = 0;
@@ -123,17 +137,19 @@ export function AttachmentPreview({
           if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
-            setAttachments(prev => prev.map(a => 
-              a.id === attachment.id 
-                ? { ...a, status: 'completed' as const, uploadProgress: 100 }
-                : a
-            ));
+            setAttachments(prev =>
+              prev.map(a =>
+                a.id === attachment.id
+                  ? { ...a, status: "completed" as const, uploadProgress: 100 }
+                  : a
+              )
+            );
           } else {
-            setAttachments(prev => prev.map(a => 
-              a.id === attachment.id 
-                ? { ...a, uploadProgress: progress }
-                : a
-            ));
+            setAttachments(prev =>
+              prev.map(a =>
+                a.id === attachment.id ? { ...a, uploadProgress: progress } : a
+              )
+            );
           }
         }, 200);
       }, index * 100);
@@ -148,45 +164,61 @@ export function AttachmentPreview({
   };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   const getFileIcon = (type: string) => {
-    if (type.startsWith('image/')) return Image;
-    if (type.includes('pdf') || type.includes('document') || type.includes('text')) return FileText;
+    if (type.startsWith("image/")) return Image;
+    if (
+      type.includes("pdf") ||
+      type.includes("document") ||
+      type.includes("text")
+    )
+      return FileText;
     return File;
   };
 
   const getFileColor = (type: string) => {
-    if (type.startsWith('image/')) return 'bg-green-500';
-    if (type.includes('pdf')) return 'bg-red-500';
-    if (type.includes('document') || type.includes('text')) return 'bg-blue-500';
-    if (type.includes('spreadsheet')) return 'bg-emerald-500';
-    if (type.includes('presentation')) return 'bg-orange-500';
-    return 'bg-gray-500';
+    if (type.startsWith("image/")) return "bg-green-500";
+    if (type.includes("pdf")) return "bg-red-500";
+    if (type.includes("document") || type.includes("text"))
+      return "bg-blue-500";
+    if (type.includes("spreadsheet")) return "bg-emerald-500";
+    if (type.includes("presentation")) return "bg-orange-500";
+    return "bg-gray-500";
   };
 
-  const getStatusColor = (status: AttachmentFile['status']) => {
+  const getStatusColor = (status: AttachmentFile["status"]) => {
     switch (status) {
-      case 'pending': return 'text-gray-500';
-      case 'uploading': return 'text-blue-500';
-      case 'completed': return 'text-green-500';
-      case 'error': return 'text-red-500';
-      default: return 'text-gray-500';
+      case "pending":
+        return "text-gray-500";
+      case "uploading":
+        return "text-blue-500";
+      case "completed":
+        return "text-green-500";
+      case "error":
+        return "text-red-500";
+      default:
+        return "text-gray-500";
     }
   };
 
-  const getStatusLabel = (status: AttachmentFile['status']) => {
+  const getStatusLabel = (status: AttachmentFile["status"]) => {
     switch (status) {
-      case 'pending': return 'Afventer';
-      case 'uploading': return 'Uploader';
-      case 'completed': return 'Fuldført';
-      case 'error': return 'Fejl';
-      default: return status;
+      case "pending":
+        return "Afventer";
+      case "uploading":
+        return "Uploader";
+      case "completed":
+        return "Fuldført";
+      case "error":
+        return "Fejl";
+      default:
+        return status;
     }
   };
 
@@ -201,7 +233,9 @@ export function AttachmentPreview({
             </div>
             <div>
               <h4 className="font-semibold">Attachment Preview</h4>
-              <p className="text-xs text-muted-foreground">File upload og preview</p>
+              <p className="text-xs text-muted-foreground">
+                File upload og preview
+              </p>
             </div>
           </div>
           <Badge className="bg-orange-500">
@@ -224,11 +258,9 @@ export function AttachmentPreview({
         >
           <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
           <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
-            {dragActive ? 'Slip filer her' : 'Træk og slip filer her'}
+            {dragActive ? "Slip filer her" : "Træk og slip filer her"}
           </p>
-          <p className="text-xs text-gray-500 mb-3">
-            eller
-          </p>
+          <p className="text-xs text-gray-500 mb-3">eller</p>
           <Button
             onClick={() => fileInputRef.current?.click()}
             variant="outline"
@@ -263,25 +295,43 @@ export function AttachmentPreview({
                 Ryd alle
               </Button>
             </div>
-            
+
             <div className="space-y-2 max-h-64 overflow-y-auto">
-              {attachments.map((file) => {
+              {attachments.map(file => {
                 const Icon = getFileIcon(file.type);
                 return (
-                  <div key={file.id} className="p-3 rounded-lg bg-background border border-border">
+                  <div
+                    key={file.id}
+                    className="p-3 rounded-lg bg-background border border-border"
+                  >
                     <div className="flex items-start gap-3">
-                      <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center text-white", getFileColor(file.type))}>
+                      <div
+                        className={cn(
+                          "w-10 h-10 rounded-lg flex items-center justify-center text-white",
+                          getFileColor(file.type)
+                        )}
+                      >
                         <Icon className="w-5 h-5" />
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">{file.name}</p>
-                            <p className="text-xs text-muted-foreground">{formatFileSize(file.size)}</p>
+                            <p className="font-medium text-sm truncate">
+                              {file.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {formatFileSize(file.size)}
+                            </p>
                           </div>
                           <div className="flex items-center gap-1">
-                            <Badge variant="outline" className={cn("text-xs", getStatusColor(file.status))}>
+                            <Badge
+                              variant="outline"
+                              className={cn(
+                                "text-xs",
+                                getStatusColor(file.status)
+                              )}
+                            >
                               {getStatusLabel(file.status)}
                             </Badge>
                             <Button
@@ -294,20 +344,28 @@ export function AttachmentPreview({
                             </Button>
                           </div>
                         </div>
-                        
+
                         {/* Upload Progress */}
-                        {file.status === 'uploading' && file.uploadProgress !== undefined && (
-                          <div className="mt-2">
-                            <div className="flex justify-between items-center mb-1">
-                              <span className="text-xs text-muted-foreground">Uploader...</span>
-                              <span className="text-xs font-medium">{Math.round(file.uploadProgress)}%</span>
+                        {file.status === "uploading" &&
+                          file.uploadProgress !== undefined && (
+                            <div className="mt-2">
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-xs text-muted-foreground">
+                                  Uploader...
+                                </span>
+                                <span className="text-xs font-medium">
+                                  {Math.round(file.uploadProgress)}%
+                                </span>
+                              </div>
+                              <Progress
+                                value={file.uploadProgress}
+                                className="h-1"
+                              />
                             </div>
-                            <Progress value={file.uploadProgress} className="h-1" />
-                          </div>
-                        )}
-                        
+                          )}
+
                         {/* Preview for images */}
-                        {file.preview && file.status === 'completed' && (
+                        {file.preview && file.status === "completed" && (
                           <div className="mt-2">
                             <img
                               src={file.preview}
@@ -316,9 +374,9 @@ export function AttachmentPreview({
                             />
                           </div>
                         )}
-                        
+
                         {/* Actions */}
-                        {file.status === 'completed' && (
+                        {file.status === "completed" && (
                           <div className="flex gap-1 mt-2">
                             <Button
                               size="sm"
@@ -354,21 +412,25 @@ export function AttachmentPreview({
           <div className="grid grid-cols-3 gap-2 text-xs">
             <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950/20 text-center">
               <p className="font-bold text-green-700 dark:text-green-300">
-                {attachments.filter(f => f.status === 'completed').length}
+                {attachments.filter(f => f.status === "completed").length}
               </p>
               <p className="text-green-600 dark:text-green-400">Fuldført</p>
             </div>
             <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/20 text-center">
               <p className="font-bold text-blue-700 dark:text-blue-300">
-                {attachments.filter(f => f.status === 'uploading').length}
+                {attachments.filter(f => f.status === "uploading").length}
               </p>
               <p className="text-blue-600 dark:text-blue-400">Uploader</p>
             </div>
             <div className="p-2 rounded-lg bg-orange-50 dark:bg-orange-950/20 text-center">
               <p className="font-bold text-orange-700 dark:text-orange-300">
-                {formatFileSize(attachments.reduce((sum, f) => sum + f.size, 0))}
+                {formatFileSize(
+                  attachments.reduce((sum, f) => sum + f.size, 0)
+                )}
               </p>
-              <p className="text-orange-600 dark:text-orange-400">Total størrelse</p>
+              <p className="text-orange-600 dark:text-orange-400">
+                Total størrelse
+              </p>
             </div>
           </div>
         )}

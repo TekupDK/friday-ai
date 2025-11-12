@@ -345,7 +345,10 @@ export const inboxRouter = router({
                 let threadIdMap: Record<number, string> = {};
                 if (emailThreadIds.length > 0) {
                   const threadRows = await db
-                    .select({ id: emailThreads.id, gmailThreadId: emailThreads.gmailThreadId })
+                    .select({
+                      id: emailThreads.id,
+                      gmailThreadId: emailThreads.gmailThreadId,
+                    })
                     .from(emailThreads)
                     .where(inArray(emailThreads.id, emailThreadIds))
                     .execute();
@@ -356,14 +359,19 @@ export const inboxRouter = router({
 
                 const threads = emailRecords.map((email: any) => {
                   const gmailThreadId =
-                    (email.emailThreadId != null ? threadIdMap[email.emailThreadId] : undefined) ||
+                    (email.emailThreadId != null
+                      ? threadIdMap[email.emailThreadId]
+                      : undefined) ||
                     email.threadKey ||
                     undefined;
-                  const threadId = gmailThreadId || String(email.emailThreadId || email.providerId);
+                  const threadId =
+                    gmailThreadId ||
+                    String(email.emailThreadId || email.providerId);
 
                   return {
                     id: threadId,
-                    snippet: email.text?.substring(0, 200) || email.subject || "",
+                    snippet:
+                      email.text?.substring(0, 200) || email.subject || "",
                     subject: email.subject,
                     from: email.fromEmail,
                     date:
@@ -374,7 +382,8 @@ export const inboxRouter = router({
                     unread: true,
                     hasAttachments: !!email.hasAttachments,
                     aiSummary: email.aiSummary || undefined,
-                    aiSummaryGeneratedAt: email.aiSummaryGeneratedAt || undefined,
+                    aiSummaryGeneratedAt:
+                      email.aiSummaryGeneratedAt || undefined,
                     aiLabelSuggestions: email.aiLabelSuggestions || undefined,
                     aiLabelsGeneratedAt: email.aiLabelsGeneratedAt || undefined,
                     messages: [
@@ -394,10 +403,16 @@ export const inboxRouter = router({
                   } as any;
                 });
 
-                return { threads, nextPageToken: undefined as string | undefined };
+                return {
+                  threads,
+                  nextPageToken: undefined as string | undefined,
+                };
               }
             } catch (error) {
-              console.warn("[Email ListPaged] DB path failed, using Gmail API", error);
+              console.warn(
+                "[Email ListPaged] DB path failed, using Gmail API",
+                error
+              );
             }
           }
         }
@@ -1352,21 +1367,22 @@ export const inboxRouter = router({
       .query(async ({ input }) => {
         // Get all invoices from Billy API
         const invoices = await getBillyInvoices();
-        
+
         // Find invoice by number
-        const invoice = invoices.find(inv => 
-          inv.invoiceNo === input.invoiceNumber || 
-          inv.invoiceNo === `#${input.invoiceNumber}` ||
-          inv.invoiceNo?.includes(input.invoiceNumber)
+        const invoice = invoices.find(
+          inv =>
+            inv.invoiceNo === input.invoiceNumber ||
+            inv.invoiceNo === `#${input.invoiceNumber}` ||
+            inv.invoiceNo?.includes(input.invoiceNumber)
         );
-        
+
         if (!invoice) {
           throw new TRPCError({
             code: "NOT_FOUND",
             message: `Invoice ${input.invoiceNumber} not found`,
           });
         }
-        
+
         return invoice;
       }),
   }),

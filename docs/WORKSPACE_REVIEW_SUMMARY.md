@@ -13,6 +13,7 @@
 **Dokument:** `docs/AREA_1_CORE_APPLICATION.md` (870 lines)
 
 **Client (Frontend):**
+
 - 50+ React components
 - 15+ custom hooks
 - 6 pages med routing
@@ -22,6 +23,7 @@
 - Error handling
 
 **Server (Backend):**
+
 - Main tRPC router (alle endpoints)
 - AI router (orchestration)
 - 35+ Friday tools
@@ -31,6 +33,7 @@
 - Billy integration
 
 **Key Files:**
+
 - `client/src/components/panels/AIAssistantPanelV2.tsx` - Friday AI panel
 - `client/src/components/chat/ShortWaveChatPanel.tsx` - Chat UI
 - `client/src/hooks/useFridayChatSimple.ts` - Chat hook
@@ -47,6 +50,7 @@
 **Dokument:** `docs/AREA_2_AI_SYSTEM.md` (180 lines)
 
 **Komponenter:**
+
 - AI Router (main orchestration)
 - 35+ Friday Tools (Gmail 15, Calendar 8, Billy 7, DB 5)
 - Tool Handlers (implementations)
@@ -56,6 +60,7 @@
 - Quality monitoring
 
 **Key Features:**
+
 - Natural language understanding (dansk/engelsk)
 - Multi-model routing
 - Function calling (35+ tools)
@@ -64,6 +69,7 @@
 - Workflow automation
 
 **Statistics:**
+
 - 35+ tools available
 - 4 AI models
 - 12KB prompt size
@@ -77,6 +83,7 @@
 **Dokument:** `docs/CLEANUP_ANALYSIS.md`
 
 **Filer til sletning:** 33
+
 - 11 tomme filer (0 bytes)
 - 1 backup fil
 - 2 deprecated docs
@@ -84,10 +91,12 @@
 - 5 temporary filer (inkl. 1.1MB stats.html)
 
 **Filer til flytning:** 22
+
 - 18 test scripts → `tests/manual/`
 - 4 phase docs → `docs/phases/`
 
 **Filer til konsolidering:** 23
+
 - 6 login docs
 - 5 status docs
 - 4 ENV docs
@@ -95,6 +104,7 @@
 - 3 docker docs
 
 **Scripts lavet:**
+
 - `scripts/cleanup-phase1.ps1` - Slet 19 filer
 - `scripts/organize-test-files.ps1` - Flyt 18 test filer
 
@@ -106,32 +116,32 @@
 
 ### **Core Application:**
 
-| Category | Count |
-|----------|-------|
-| Client Components | 50+ |
-| Custom Hooks | 15+ |
-| Pages | 6 |
-| Server Files | 86 |
-| API Endpoints | 50+ |
-| Database Functions | 50+ |
+| Category           | Count |
+| ------------------ | ----- |
+| Client Components  | 50+   |
+| Custom Hooks       | 15+   |
+| Pages              | 6     |
+| Server Files       | 86    |
+| API Endpoints      | 50+   |
+| Database Functions | 50+   |
 
 ### **AI System:**
 
-| Category | Count |
-|----------|-------|
-| Tools | 35+ |
-| Models | 4 |
-| Prompt Size | 12KB |
-| Success Rate | 95%+ |
+| Category     | Count |
+| ------------ | ----- |
+| Tools        | 35+   |
+| Models       | 4     |
+| Prompt Size  | 12KB  |
+| Success Rate | 95%+  |
 
 ### **Workspace:**
 
-| Category | Before | After Cleanup |
-|----------|--------|---------------|
-| Root Files | ~150 | ~80 (-47%) |
-| Empty Files | 11 | 0 |
-| Test Files (root) | 18 | 0 |
-| Disk Space | +1.3MB | Freed |
+| Category          | Before | After Cleanup |
+| ----------------- | ------ | ------------- |
+| Root Files        | ~150   | ~80 (-47%)    |
+| Empty Files       | 11     | 0             |
+| Test Files (root) | 18     | 0             |
+| Disk Space        | +1.3MB | Freed         |
 
 ---
 
@@ -233,6 +243,7 @@ docs/
 ### **Prioritet 3: Fortsæt Gennemgang**
 
 Næste områder:
+
 - 🗄️ Database (Schema, Migrations)
 - 🧪 Testing (Test coverage)
 - 📚 Documentation (Docs folder)
@@ -245,18 +256,21 @@ Næste områder:
 ## 🎯 **NÆSTE SKRIDT**
 
 **Option 1: Kør Cleanup Nu**
+
 - Slet 33 filer
 - Flyt 22 filer
 - Commit changes
 - **Tid:** 10 min
 
 **Option 2: Fortsæt Gennemgang**
+
 - Område 3: Database
 - Område 4: Testing
 - Område 5: Documentation
 - **Tid:** 30-40 min
 
 **Option 3: Pause & Review**
+
 - Review Område 1 & 2 docs
 - Diskuter findings
 - Plan næste session

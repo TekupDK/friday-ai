@@ -35,38 +35,38 @@
 
 ### Error Boundary Tests:
 
-| Test | Purpose | Expected Result |
-|------|---------|-----------------|
-| No crash on errors | Verify ErrorBoundary works | UI stays functional |
-| Conversation creation failure | Test error state | Shows error message |
-| Graceful degradation | Test fallback UI | Input still works |
+| Test                          | Purpose                    | Expected Result     |
+| ----------------------------- | -------------------------- | ------------------- |
+| No crash on errors            | Verify ErrorBoundary works | UI stays functional |
+| Conversation creation failure | Test error state           | Shows error message |
+| Graceful degradation          | Test fallback UI           | Input still works   |
 
 ### Loading States Tests:
 
-| Test | Purpose | Expected Result |
-|------|---------|-----------------|
-| Show loading indicator | Verify loading UI | Dots + text visible |
+| Test                    | Purpose              | Expected Result         |
+| ----------------------- | -------------------- | ----------------------- |
+| Show loading indicator  | Verify loading UI    | Dots + text visible     |
 | Loading during creation | Test startup loading | "Starting Friday AI..." |
-| Hide after response | Test loading removal | Indicator disappears |
-| Animated dots | Test animation | 3 bouncing dots |
+| Hide after response     | Test loading removal | Indicator disappears    |
+| Animated dots           | Test animation       | 3 bouncing dots         |
 
 ### Scroll Behavior Tests:
 
-| Test | Purpose | Expected Result |
-|------|---------|-----------------|
-| Auto-scroll on message | Verify scroll to bottom | Latest message visible |
-| Scroll on AI response | Test AI message scroll | AI message in viewport |
-| Multiple messages | Test scroll with many messages | Last message visible |
-| Smooth scrolling | Test scroll animation | Smooth behavior |
+| Test                   | Purpose                        | Expected Result        |
+| ---------------------- | ------------------------------ | ---------------------- |
+| Auto-scroll on message | Verify scroll to bottom        | Latest message visible |
+| Scroll on AI response  | Test AI message scroll         | AI message in viewport |
+| Multiple messages      | Test scroll with many messages | Last message visible   |
+| Smooth scrolling       | Test scroll animation          | Smooth behavior        |
 
 ### UX Polish Tests:
 
-| Test | Purpose | Expected Result |
-|------|---------|-----------------|
-| Welcome screen | Test initial UI | Welcome visible |
-| Hide welcome | Test welcome removal | Hidden after message |
-| UI responsiveness | Test input speed | <100ms response |
-| Timestamps | Test message metadata | Time displayed |
+| Test              | Purpose               | Expected Result      |
+| ----------------- | --------------------- | -------------------- |
+| Welcome screen    | Test initial UI       | Welcome visible      |
+| Hide welcome      | Test welcome removal  | Hidden after message |
+| UI responsiveness | Test input speed      | <100ms response      |
+| Timestamps        | Test message metadata | Time displayed       |
 
 ---
 
@@ -77,12 +77,14 @@
 **Feature:** Graceful error handling
 
 **Tests:**
+
 - ✅ ErrorBoundary wraps chat
 - ✅ No crashes on errors
 - ✅ Error state on creation failure
 - ✅ Graceful degradation
 
 **Expected Behavior:**
+
 - UI doesn't crash
 - Error messages shown
 - Reload button available
@@ -95,12 +97,14 @@
 **Feature:** Better loading feedback
 
 **Tests:**
+
 - ✅ Loading indicator visible
 - ✅ "Friday is thinking..." text
 - ✅ Animated dots (3)
 - ✅ Disappears after response
 
 **Expected Behavior:**
+
 - Loading shows while AI thinks
 - Visual feedback clear
 - Disappears when done
@@ -113,12 +117,14 @@
 **Feature:** Auto-scroll on new messages
 
 **Tests:**
+
 - ✅ Scroll on user message
 - ✅ Scroll on AI response
 - ✅ Scroll with multiple messages
 - ✅ Smooth scroll behavior
 
 **Expected Behavior:**
+
 - Latest message always visible
 - Smooth scrolling
 - Works with rapid messages
@@ -128,11 +134,11 @@
 
 ## 📈 Performance Targets
 
-| Metric | Target | Test | Status |
-|--------|--------|------|--------|
-| Loading Indicator | Shows | ✅ Tested | ⏳ Pending |
-| Scroll Speed | Smooth | ✅ Tested | ⏳ Pending |
-| Error Recovery | Works | ✅ Tested | ⏳ Pending |
+| Metric            | Target | Test      | Status     |
+| ----------------- | ------ | --------- | ---------- |
+| Loading Indicator | Shows  | ✅ Tested | ⏳ Pending |
+| Scroll Speed      | Smooth | ✅ Tested | ⏳ Pending |
+| Error Recovery    | Works  | ✅ Tested | ⏳ Pending |
 | UI Responsiveness | <100ms | ✅ Tested | ⏳ Pending |
 
 ---
@@ -142,6 +148,7 @@
 ### Scenario 1: Error Occurs
 
 **Steps:**
+
 1. Component throws error
 2. ErrorBoundary catches it
 3. Shows error UI
@@ -155,6 +162,7 @@
 ### Scenario 2: Message Sent
 
 **Steps:**
+
 1. User types message
 2. Presses Enter
 3. Loading indicator shows
@@ -170,6 +178,7 @@
 ### Scenario 3: Rapid Messages
 
 **Steps:**
+
 1. User sends 10 messages quickly
 2. Each shows loading
 3. All appear in order
@@ -183,10 +192,12 @@
 ## 🐛 Known Issues
 
 ### From Previous Phases:
+
 - ⚠️ Real AI tests timeout (expected)
 - ⚠️ Need mocking for speed
 
 ### Phase 3 Specific:
+
 - ⏳ Scroll behavior needs real testing
 - ⏳ Error boundary needs error injection
 - ⏳ Loading states need timing verification
@@ -226,6 +237,7 @@
 ## 📝 Test Files Created
 
 ### E2E Tests:
+
 - `tests/phase-3-error-handling-ux.spec.ts` (18 tests)
   - Error Boundary (3 tests)
   - Loading States (4 tests)
@@ -235,6 +247,7 @@
   - Integration (1 test)
 
 ### Mocked Tests:
+
 - `tests/phase-3-error-handling-ux-mocked.spec.ts` (15 tests)
   - Loading States (3 tests)
   - Scroll Behavior (3 tests)
@@ -249,12 +262,14 @@
 ## 🎓 Testing Strategy
 
 ### E2E Tests (Playwright):
+
 - Test real user interactions
 - Verify visual feedback
 - Check scroll behavior
 - Test error states
 
 ### Mocked Tests:
+
 - Fast feedback
 - Reliable results
 - No AI dependency
@@ -265,12 +280,14 @@
 ## 🚀 Next Steps
 
 ### Before Production:
+
 1. ✅ Run E2E tests
 2. ✅ Run mocked tests
 3. ✅ Verify all features
 4. ✅ Document results
 
 ### For Production:
+
 1. Add more error scenarios
 2. Test with real errors
 3. Performance optimization
@@ -283,16 +300,19 @@
 ### To Run Tests:
 
 **E2E Tests:**
+
 ```bash
 npx playwright test tests/phase-3-error-handling-ux.spec.ts
 ```
 
 **Mocked Tests:**
+
 ```bash
 npx playwright test tests/phase-3-error-handling-ux-mocked.spec.ts
 ```
 
 **All Phase 3 Tests:**
+
 ```bash
 npx playwright test tests/phase-3-*.spec.ts
 ```
@@ -312,6 +332,7 @@ npx playwright test tests/phase-3-*.spec.ts
 ---
 
 **Key Achievements:**
+
 - ✅ Error boundary tested
 - ✅ Loading states tested
 - ✅ Scroll behavior tested

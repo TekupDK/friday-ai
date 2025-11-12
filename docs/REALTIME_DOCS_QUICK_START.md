@@ -85,18 +85,18 @@ tekup-docs sync
 
 ```typescript
 // Fetch all documents
-const response = await fetch('http://localhost:3000/api/docs');
+const response = await fetch("http://localhost:3000/api/docs");
 const docs = await response.json();
 
 // Create new document
-await fetch('http://localhost:3000/api/docs', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+await fetch("http://localhost:3000/api/docs", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    title: 'New Doc',
-    content: '# New Doc\n\nContent here...',
-    category: 'API',
-    tags: ['api', 'new'],
+    title: "New Doc",
+    content: "# New Doc\n\nContent here...",
+    category: "API",
+    tags: ["api", "new"],
   }),
 });
 ```
@@ -104,20 +104,22 @@ await fetch('http://localhost:3000/api/docs', {
 ### From WebSocket
 
 ```typescript
-import { WebSocket } from 'ws';
+import { WebSocket } from "ws";
 
-const ws = new WebSocket('ws://localhost:3002?userId=user123');
+const ws = new WebSocket("ws://localhost:3002?userId=user123");
 
 // Subscribe to document updates
-ws.send(JSON.stringify({
-  type: 'doc:subscribe',
-  document_id: 'doc-uuid',
-}));
+ws.send(
+  JSON.stringify({
+    type: "doc:subscribe",
+    document_id: "doc-uuid",
+  })
+);
 
 // Listen for updates
-ws.on('message', (data) => {
+ws.on("message", data => {
   const event = JSON.parse(data.toString());
-  console.log('Document updated:', event);
+  console.log("Document updated:", event);
 });
 ```
 
@@ -174,14 +176,14 @@ Legend:
 
 ```typescript
 const gitConfig = {
-  repoPath: process.env.DOCS_REPO_PATH || './',
-  docsPath: process.env.DOCS_PATH || 'docs',
-  branch: process.env.DOCS_GIT_BRANCH || 'main',
-  autoCommit: process.env.DOCS_AUTO_COMMIT === 'true',
-  autoPush: process.env.DOCS_AUTO_PUSH === 'true',
-  commitMessage: (files) => `docs: Update ${files.length} file(s)`,
-  watchPatterns: ['**/*.md'],
-  ignorePatterns: ['**/node_modules/**', '**/.git/**'],
+  repoPath: process.env.DOCS_REPO_PATH || "./",
+  docsPath: process.env.DOCS_PATH || "docs",
+  branch: process.env.DOCS_GIT_BRANCH || "main",
+  autoCommit: process.env.DOCS_AUTO_COMMIT === "true",
+  autoPush: process.env.DOCS_AUTO_PUSH === "true",
+  commitMessage: files => `docs: Update ${files.length} file(s)`,
+  watchPatterns: ["**/*.md"],
+  ignorePatterns: ["**/node_modules/**", "**/.git/**"],
 };
 ```
 
@@ -189,7 +191,7 @@ const gitConfig = {
 
 ```typescript
 const wsConfig = {
-  port: parseInt(process.env.DOCS_WS_PORT || '3002'),
+  port: parseInt(process.env.DOCS_WS_PORT || "3002"),
   heartbeatInterval: 30000, // 30 seconds
   maxConnections: 1000,
 };
@@ -199,9 +201,9 @@ const wsConfig = {
 
 ```typescript
 const aiConfig = {
-  provider: 'openrouter',
+  provider: "openrouter",
   apiKey: process.env.OPENROUTER_API_KEY,
-  model: 'anthropic/claude-3.5-sonnet',
+  model: "anthropic/claude-3.5-sonnet",
   maxTokens: 4000,
   temperature: 0.7,
 };
@@ -408,6 +410,7 @@ For questions or issues:
 **Status:** Ready to proceed with implementation!
 
 **Next Command:**
+
 ```bash
 pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter @types/ws @types/markdown-it @types/inquirer -D
 ```

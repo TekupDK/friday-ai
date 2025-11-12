@@ -3,15 +3,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AIThinking } from "@/components/chat/AIThinking";
 import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
 import { WeatherCard } from "@/components/chat/WeatherCard";
-import { InvoiceCards, type InvoiceCardData } from "@/components/chat/InvoiceCards";
-import { AIMemoryPanel, type AIMemoryItem } from "@/components/chat/AIMemoryPanel";
-import { EmailThreadCard, type EmailThreadData } from "@/components/chat/EmailThreadCard";
-import { CalendarEventCard, type CalendarEventData } from "@/components/chat/CalendarEventCard";
-import { SearchResultsCard, type SearchResult } from "@/components/chat/SearchResultsCard";
+import {
+  InvoiceCards,
+  type InvoiceCardData,
+} from "@/components/chat/InvoiceCards";
+import {
+  AIMemoryPanel,
+  type AIMemoryItem,
+} from "@/components/chat/AIMemoryPanel";
+import {
+  EmailThreadCard,
+  type EmailThreadData,
+} from "@/components/chat/EmailThreadCard";
+import {
+  CalendarEventCard,
+  type CalendarEventData,
+} from "@/components/chat/CalendarEventCard";
+import {
+  SearchResultsCard,
+  type SearchResult,
+} from "@/components/chat/SearchResultsCard";
 
 export function ChatPanelUIShowcase() {
   const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState<'running' | 'completed' | 'failed'>('running');
+  const [status, setStatus] = useState<"running" | "completed" | "failed">(
+    "running"
+  );
 
   useEffect(() => {
     let mounted = true;
@@ -21,7 +38,7 @@ export function ChatPanelUIShowcase() {
       p += Math.random() * 18 + 6;
       if (p >= 100) {
         p = 100;
-        setStatus('completed');
+        setStatus("completed");
         clearInterval(id);
       }
       setProgress(Math.min(100, Math.round(p)));
@@ -33,52 +50,87 @@ export function ChatPanelUIShowcase() {
   }, []);
 
   const weatherData = {
-    city: 'København',
+    city: "København",
     temperature: 18,
-    condition: 'Partly Cloudy',
-    emoji: '☁️',
+    condition: "Partly Cloudy",
+    emoji: "☁️",
     humidity: 65,
     wind: 12,
     forecast: [
-      { day: 'Man', temp: 19, emoji: '☀️' },
-      { day: 'Tir', temp: 17, emoji: '☁️' },
-      { day: 'Ons', temp: 16, emoji: '🌧️' }
-    ]
+      { day: "Man", temp: 19, emoji: "☀️" },
+      { day: "Tir", temp: 17, emoji: "☁️" },
+      { day: "Ons", temp: 16, emoji: "🌧️" },
+    ],
   };
 
   const invoices: InvoiceCardData[] = [
-    { id: '#1234', company: 'Acme Corp', amount: 12500, currency: 'kr', dueInDays: 5, status: 'pending' },
-    { id: '#1236', company: 'Nordic Ltd', amount: 15800, currency: 'kr', dueInDays: -3, status: 'overdue' }
+    {
+      id: "#1234",
+      company: "Acme Corp",
+      amount: 12500,
+      currency: "kr",
+      dueInDays: 5,
+      status: "pending",
+    },
+    {
+      id: "#1236",
+      company: "Nordic Ltd",
+      amount: 15800,
+      currency: "kr",
+      dueInDays: -3,
+      status: "overdue",
+    },
   ];
 
   const memoryItems: AIMemoryItem[] = [
-    { id: '1', type: 'lead', title: 'Oprettet lead:', subtitle: 'Hans Jensen, 12345678', timestamp: new Date() },
-    { id: '2', type: 'task', title: 'Oprettet opgave:', subtitle: 'Ring kunde i morgen', timestamp: new Date() }
+    {
+      id: "1",
+      type: "lead",
+      title: "Oprettet lead:",
+      subtitle: "Hans Jensen, 12345678",
+      timestamp: new Date(),
+    },
+    {
+      id: "2",
+      type: "task",
+      title: "Oprettet opgave:",
+      subtitle: "Ring kunde i morgen",
+      timestamp: new Date(),
+    },
   ];
 
   const emailThreadData: EmailThreadData = {
-    subject: 'Tilbud på website projekt',
-    from: 'kunde@firma.dk',
+    subject: "Tilbud på website projekt",
+    from: "kunde@firma.dk",
     messageCount: 5,
-    summary: 'Kunde efterspørger tilbud på nyt website med e-commerce. Budget 50.000 kr.',
-    labels: ['Lead', 'Høj prioritet', 'Website'],
-    priority: 'high',
-    hasAttachments: true
+    summary:
+      "Kunde efterspørger tilbud på nyt website med e-commerce. Budget 50.000 kr.",
+    labels: ["Lead", "Høj prioritet", "Website"],
+    priority: "high",
+    hasAttachments: true,
   };
 
   const calendarEventData: CalendarEventData = {
-    title: 'Kundemøde – Website redesign',
+    title: "Kundemøde – Website redesign",
     startTime: new Date(),
     endTime: new Date(Date.now() + 60 * 60 * 1000),
-    location: 'København',
-    attendees: ['camilla@firma.dk', 'info@rendetalje.dk'],
-    description: 'Intro møde og behovsafklaring',
-    isBooked: true
+    location: "København",
+    attendees: ["camilla@firma.dk", "info@rendetalje.dk"],
+    description: "Intro møde og behovsafklaring",
+    isBooked: true,
   };
 
   const searchResultsData: SearchResult[] = [
-    { title: 'AI trends 2024 – Rapport', url: 'https://example.com/ai-trends', snippet: 'De vigtigste AI tendenser for 2024...'},
-    { title: 'Notion AI Features', url: 'https://example.com/notion-ai', snippet: 'Notion AI kan hjælpe med...'}
+    {
+      title: "AI trends 2024 – Rapport",
+      url: "https://example.com/ai-trends",
+      snippet: "De vigtigste AI tendenser for 2024...",
+    },
+    {
+      title: "Notion AI Features",
+      url: "https://example.com/notion-ai",
+      snippet: "Notion AI kan hjælpe med...",
+    },
   ];
 
   return (
@@ -86,7 +138,9 @@ export function ChatPanelUIShowcase() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">AI Thinking + Tool Execution</CardTitle>
+            <CardTitle className="text-base">
+              AI Thinking + Tool Execution
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <AIThinking />
@@ -136,7 +190,10 @@ export function ChatPanelUIShowcase() {
             <CardTitle className="text-base">Search Results Card</CardTitle>
           </CardHeader>
           <CardContent className="max-w-2xl">
-            <SearchResultsCard query="AI trends 2024" results={searchResultsData} />
+            <SearchResultsCard
+              query="AI trends 2024"
+              results={searchResultsData}
+            />
           </CardContent>
         </Card>
 

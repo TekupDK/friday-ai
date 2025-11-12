@@ -8,7 +8,9 @@
 Friday AI now supports **6 new free OpenRouter models** with **100% accuracy ratings**, replacing the legacy Gemma 3 27B model. All models are completely free with no rate limits.
 
 ### Recommended Default
+
 **GLM-4.5 Air Free** (`z-ai/glm-4.5-air:free`)
+
 - ✅ 100% accuracy rating from OpenRouter
 - ✅ Free tier with no cost
 - ✅ Excellent Danish language support
@@ -22,9 +24,11 @@ Friday AI now supports **6 new free OpenRouter models** with **100% accuracy rat
 ### 🏆 100% Accuracy Models (Recommended)
 
 #### 1. GLM-4.5 Air Free ⭐ **DEFAULT**
+
 ```typescript
-modelId: "z-ai/glm-4.5-air:free"
+modelId: "z-ai/glm-4.5-air:free";
 ```
+
 - **Provider:** Z-AI
 - **Accuracy:** 100%
 - **Context:** 128K tokens
@@ -33,9 +37,11 @@ modelId: "z-ai/glm-4.5-air:free"
 - **Cost:** FREE
 
 #### 2. GPT-OSS 20B Free
+
 ```typescript
-modelId: "openai/gpt-oss-20b:free"
+modelId: "openai/gpt-oss-20b:free";
 ```
+
 - **Provider:** OpenAI
 - **Accuracy:** 100%
 - **Context:** 8K tokens
@@ -46,9 +52,11 @@ modelId: "openai/gpt-oss-20b:free"
 ### 🧠 Advanced Reasoning Models
 
 #### 3. DeepSeek Chat v3.1 Free
+
 ```typescript
-modelId: "deepseek/deepseek-chat-v3.1:free"
+modelId: "deepseek/deepseek-chat-v3.1:free";
 ```
+
 - **Provider:** DeepSeek
 - **Context:** 32K tokens
 - **Best For:** Complex reasoning, email analysis, technical tasks
@@ -58,9 +66,11 @@ modelId: "deepseek/deepseek-chat-v3.1:free"
 ### 💻 Specialized Models
 
 #### 4. Qwen3 Coder Free
+
 ```typescript
-modelId: "qwen/qwen3-coder:free"
+modelId: "qwen/qwen3-coder:free";
 ```
+
 - **Provider:** Qwen
 - **Context:** 32K tokens
 - **Best For:** Code generation, debugging, technical writing
@@ -68,9 +78,11 @@ modelId: "qwen/qwen3-coder:free"
 - **Cost:** FREE
 
 #### 5. MiniMax M2 Free
+
 ```typescript
-modelId: "minimax/minimax-m2:free"
+modelId: "minimax/minimax-m2:free";
 ```
+
 - **Provider:** MiniMax
 - **Context:** 8K tokens
 - **Best For:** Fast responses, simple queries
@@ -78,9 +90,11 @@ modelId: "minimax/minimax-m2:free"
 - **Cost:** FREE
 
 #### 6. Kimi K2 Free
+
 ```typescript
-modelId: "moonshotai/kimi-k2:free"
+modelId: "moonshotai/kimi-k2:free";
 ```
+
 - **Provider:** Moonshot AI
 - **Context:** 200K tokens (!)
 - **Best For:** Long documents, large email threads, extensive context
@@ -93,23 +107,25 @@ modelId: "moonshotai/kimi-k2:free"
 
 Friday AI automatically selects the optimal model based on task type:
 
-| Task Type | Primary Model | Reasoning |
-|-----------|--------------|-----------|
-| **General Chat** | GLM-4.5 Air | 100% accuracy, professional tone |
-| **Email Drafting** | GLM-4.5 Air | Professional Danish writing |
-| **Email Analysis** | DeepSeek v3.1 | Advanced reasoning for threads |
-| **Invoice Creation** | GLM-4.5 Air | Structured data generation |
-| **Calendar** | GLM-4.5 Air | Date/time logic |
-| **Code Generation** | Qwen3 Coder | Code-specialized model |
-| **Complex Reasoning** | DeepSeek v3.1 | Advanced problem-solving |
-| **Long Context** | Kimi K2 | 200K token support |
+| Task Type             | Primary Model | Reasoning                        |
+| --------------------- | ------------- | -------------------------------- |
+| **General Chat**      | GLM-4.5 Air   | 100% accuracy, professional tone |
+| **Email Drafting**    | GLM-4.5 Air   | Professional Danish writing      |
+| **Email Analysis**    | DeepSeek v3.1 | Advanced reasoning for threads   |
+| **Invoice Creation**  | GLM-4.5 Air   | Structured data generation       |
+| **Calendar**          | GLM-4.5 Air   | Date/time logic                  |
+| **Code Generation**   | Qwen3 Coder   | Code-specialized model           |
+| **Complex Reasoning** | DeepSeek v3.1 | Advanced problem-solving         |
+| **Long Context**      | Kimi K2       | 200K token support               |
 
 ### Fallback Chain
+
 ```
 Primary Model → Fallback 1 → Fallback 2 → Fallback 3
 ```
 
 Example for chat:
+
 ```
 GLM-4.5 Air → GPT-OSS 20B → MiniMax M2 → Gemma 3 27B
 ```
@@ -121,6 +137,7 @@ GLM-4.5 Air → GPT-OSS 20B → MiniMax M2 → Gemma 3 27B
 ### Environment Variables
 
 #### Development (`.env.dev`)
+
 ```bash
 # OpenRouter API Key (free at https://openrouter.ai/keys)
 OPENROUTER_API_KEY=sk-or-v1-your-api-key
@@ -136,6 +153,7 @@ OPENROUTER_MODEL=z-ai/glm-4.5-air:free
 ```
 
 #### Production (`.env.prod`)
+
 ```bash
 OPENROUTER_API_KEY=sk-or-v1-your-production-key
 VITE_OPENROUTER_API_KEY=sk-or-v1-your-production-key
@@ -145,39 +163,35 @@ OPENROUTER_MODEL=z-ai/glm-4.5-air:free
 ### Programmatic Model Selection
 
 #### Server-Side (TypeScript)
+
 ```typescript
 import { selectModel, invokeLLMWithRouting } from "./server/model-router";
 
 // Auto-select optimal model for task
-const messages = [
-  { role: "user", content: "Skriv en email til kunde" }
-];
+const messages = [{ role: "user", content: "Skriv en email til kunde" }];
 
 const response = await invokeLLMWithRouting(
-  "email-draft",  // Task type
+  "email-draft", // Task type
   messages,
   { userId: 123 } // Optional user context
 );
 
 // Force specific model
-const response = await invokeLLMWithRouting(
-  "chat",
-  messages,
-  { forceModel: "deepseek-chat-v3.1-free" }
-);
+const response = await invokeLLMWithRouting("chat", messages, {
+  forceModel: "deepseek-chat-v3.1-free",
+});
 ```
 
 #### Client-Side (React)
+
 ```typescript
 import { useOpenRouter } from "@/hooks/useOpenRouter";
 
 function ChatComponent() {
   const { sendMessage, isLoading } = useOpenRouter();
-  
+
   const handleSend = async (message: string) => {
-    const response = await sendMessage([
-      { role: "user", content: message }
-    ]);
+    const response = await sendMessage([{ role: "user", content: message }]);
   };
 }
 ```
@@ -215,6 +229,7 @@ python tests/ai/deepeval-test.py
 ```
 
 **Features:**
+
 - Answer relevancy metrics
 - Faithfulness scoring
 - Hallucination detection
@@ -235,26 +250,31 @@ npm run test:friday -- --model glm-4.5-air-free
 ## Evaluation Criteria
 
 ### 1. Danish Language Quality ✅
+
 - Proper grammar and spelling
 - Professional business tone
 - Natural Danish phrasing
 
 ### 2. Response Accuracy ✅
+
 - Factual correctness
 - No hallucinations
 - Relevant to context
 
 ### 3. Professional Tone ✅
+
 - Business-appropriate language
 - Courteous and helpful
 - No informal slang
 
 ### 4. Task Completion ✅
+
 - Fulfills user request
 - Provides actionable next steps
 - Structured format when needed
 
 ### 5. Performance ⚡
+
 - Response time < 5 seconds
 - Consistent quality
 - Fallback handling
@@ -264,6 +284,7 @@ npm run test:friday -- --model glm-4.5-air-free
 ## Migration from Legacy Models
 
 ### From Gemma 3 27B
+
 ```typescript
 // OLD
 OPENROUTER_MODEL=google/gemma-3-27b-it:free
@@ -273,26 +294,28 @@ OPENROUTER_MODEL=z-ai/glm-4.5-air:free
 ```
 
 **Benefits:**
+
 - ✅ 100% accuracy (vs. unrated)
 - ✅ Better Danish support
 - ✅ Larger context (128K vs 8K)
 - ✅ Faster response times
 
 ### Backward Compatibility
+
 All existing code works without changes. The system uses the same OpenRouter API endpoint.
 
 ---
 
 ## Cost Analysis
 
-| Model | Cost per 1M Tokens | Cost per Day (1000 requests) | Recommendation |
-|-------|-------------------|------------------------------|----------------|
-| GLM-4.5 Air | **$0.00** | **$0.00** | ✅ Use in production |
-| GPT-OSS 20B | **$0.00** | **$0.00** | ✅ Use in production |
-| DeepSeek v3.1 | **$0.00** | **$0.00** | ✅ Use in production |
-| Qwen3 Coder | **$0.00** | **$0.00** | ✅ Use in production |
-| GPT-4o Mini | $0.15 | $150 | ⚠️ Fallback only |
-| Claude 3 Haiku | $0.25 | $250 | ⚠️ Fallback only |
+| Model          | Cost per 1M Tokens | Cost per Day (1000 requests) | Recommendation       |
+| -------------- | ------------------ | ---------------------------- | -------------------- |
+| GLM-4.5 Air    | **$0.00**          | **$0.00**                    | ✅ Use in production |
+| GPT-OSS 20B    | **$0.00**          | **$0.00**                    | ✅ Use in production |
+| DeepSeek v3.1  | **$0.00**          | **$0.00**                    | ✅ Use in production |
+| Qwen3 Coder    | **$0.00**          | **$0.00**                    | ✅ Use in production |
+| GPT-4o Mini    | $0.15              | $150                         | ⚠️ Fallback only     |
+| Claude 3 Haiku | $0.25              | $250                         | ⚠️ Fallback only     |
 
 **Total Production Cost:** **$0/month** (using free tier models)
 
@@ -301,6 +324,7 @@ All existing code works without changes. The system uses the same OpenRouter API
 ## Best Practices
 
 ### 1. Use Task-Based Routing
+
 ```typescript
 // Let the system choose
 await invokeLLMWithRouting("email-draft", messages);
@@ -309,6 +333,7 @@ await invokeLLMWithRouting("email-draft", messages);
 ```
 
 ### 2. Implement Fallbacks
+
 ```typescript
 // Fallbacks are automatic in model router
 const config = getModelConfig("chat");
@@ -316,6 +341,7 @@ console.log(config.fallbacks); // ["gpt-oss-20b-free", "minimax-m2-free", ...]
 ```
 
 ### 3. Monitor Performance
+
 ```typescript
 import { getModelStats } from "./server/model-router";
 
@@ -326,6 +352,7 @@ console.log(stats.errorRate);
 ```
 
 ### 4. Test Before Deployment
+
 ```bash
 # Run full evaluation suite
 npm run eval:models
@@ -342,6 +369,7 @@ npm run test:performance
 ## Troubleshooting
 
 ### API Key Issues
+
 ```bash
 # Verify key is set
 echo $OPENROUTER_API_KEY
@@ -352,6 +380,7 @@ curl https://openrouter.ai/api/v1/auth/key \
 ```
 
 ### Model Not Available
+
 ```typescript
 // Check if model is in mapping
 import { MODEL_ID_MAPPING } from "./server/_core/model-mappings";
@@ -359,18 +388,20 @@ console.log(MODEL_ID_MAPPING["glm-4.5-air-free"]);
 ```
 
 ### Slow Responses
+
 ```typescript
 // Use faster model for simple tasks
 await invokeLLMWithRouting("chat", messages, {
-  forceModel: "minimax-m2-free" // Fastest
+  forceModel: "minimax-m2-free", // Fastest
 });
 ```
 
 ### Poor Quality Responses
+
 ```typescript
 // Use advanced reasoning model
 await invokeLLMWithRouting("complex-reasoning", messages, {
-  forceModel: "deepseek-chat-v3.1-free"
+  forceModel: "deepseek-chat-v3.1-free",
 });
 ```
 
@@ -379,6 +410,7 @@ await invokeLLMWithRouting("complex-reasoning", messages, {
 ## Future Enhancements
 
 ### Planned Features
+
 - [ ] A/B testing framework for model comparison
 - [ ] Automatic quality scoring for all responses
 - [ ] Model usage analytics dashboard
@@ -386,6 +418,7 @@ await invokeLLMWithRouting("complex-reasoning", messages, {
 - [ ] Multi-model ensemble responses
 
 ### Under Consideration
+
 - RAGAS (RAG evaluation framework)
 - LangChain v1.0 integration
 - Custom prompt templates per model
@@ -396,16 +429,19 @@ await invokeLLMWithRouting("complex-reasoning", messages, {
 ## Resources
 
 ### Documentation
+
 - [OpenRouter Docs](https://openrouter.ai/docs)
 - [Model Mappings](../server/_core/model-mappings.ts)
 - [Model Router](../server/model-router.ts)
 
 ### Evaluation Tools
+
 - [Promptfoo](https://www.promptfoo.dev/)
 - [DeepEval](https://docs.confident-ai.com/)
 - [RAGAS](https://docs.ragas.io/)
 
 ### API Keys
+
 - [Get OpenRouter Key](https://openrouter.ai/keys) (Free)
 - [OpenRouter Models](https://openrouter.ai/models)
 
@@ -414,6 +450,7 @@ await invokeLLMWithRouting("complex-reasoning", messages, {
 ## Support
 
 For issues or questions:
+
 1. Check this documentation
 2. Review `AI_MODEL_SELECTION_GUIDE.md`
 3. Run evaluation tests

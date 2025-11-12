@@ -1,0 +1,86 @@
+name: AI Docs Soft Gate
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ai-docs:
+    name: Generate and check AI component docs (soft gate)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate AI components docs
+        run: pnpm docs:ai-components
+
+      - name: Detect AI docs changes
+        id: diff
+        shell: bash
+        run: |
+          set -eo pipefail
+          git diff --name-only > diff.txt || true
+          if grep -q "^AI_DOCS_COMPONENTS_AI.md$" diff.txt; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload updated AI docs artifact
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-docs-updated
+          path: |
+            AI_DOCS_COMPONENTS_AI.md
+
+      - name: Comment on PR with update instructions
+        if: steps.diff.outputs.changed == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = [
+              'AI docs generator detected changes to AI_DOCS_COMPONENTS_AI.md.',
+              '',
+              'Please update the docs locally and commit the result:',
+              '```pwsh',
+              'pnpm docs:ai-components',
+              'git add AI_DOCS_COMPONENTS_AI.md',
+              'git commit -m "chore(docs): update AI components docs"',
+              '```',
+              '',
+              'A copy of the updated file is attached as a workflow artifact (ai-docs-updated).'
+            ].join('\n');
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body,
+            });
+
+      - name: Outcome
+        if: always()
+        run: |
+          if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
+            echo "AI docs changed: soft gate passed (non-blocking).";
+          else
+            echo "AI docs unchanged.";
+          fi

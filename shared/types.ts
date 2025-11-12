@@ -28,8 +28,8 @@ export interface BillyInvoice {
   dueDate?: string | null; // Date only (YYYY-MM-DD)
 
   // Status
-  state: 'draft' | 'approved' | 'sent' | 'paid' | 'overdue' | 'voided';
-  sentState: 'unsent' | 'sent' | 'resent';
+  state: "draft" | "approved" | "sent" | "paid" | "overdue" | "voided";
+  sentState: "unsent" | "sent" | "resent";
   isPaid: boolean; // readonly
 
   // Amounts (in currency units, e.g., DKK)
@@ -62,7 +62,7 @@ export interface BillyInvoice {
 
   // Other
   type?: string; // e.g., "invoice", "creditNote"
-  taxMode?: 'incl' | 'excl' | null;
+  taxMode?: "incl" | "excl" | null;
   externalId?: string | null;
   orderNo?: string | null;
   paymentMethods?: any[];

@@ -1,6 +1,6 @@
 /**
  * EmailSearchV2 - Modular Search and Filtering Component
- * 
+ *
  * Extracted from EmailTab for better separation of concerns.
  * Handles search, folder selection, and label filtering.
  */
@@ -62,15 +62,21 @@ export default function EmailSearchV2({
   isLoading = false,
 }: EmailSearchV2Props) {
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
-  
+
   // Debounced search to avoid excessive API calls
-  const debouncedSearchQuery = useDebounce(localSearchQuery, UI_CONSTANTS.SEARCH_DEBOUNCE);
+  const debouncedSearchQuery = useDebounce(
+    localSearchQuery,
+    UI_CONSTANTS.SEARCH_DEBOUNCE
+  );
 
   // Update parent when debounced query changes
-  const handleSearchChange = useCallback((query: string) => {
-    setLocalSearchQuery(query);
-    onSearchChange(query);
-  }, [onSearchChange]);
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      setLocalSearchQuery(query);
+      onSearchChange(query);
+    },
+    [onSearchChange]
+  );
 
   // Sync local state with props
   const syncSearchQuery = useCallback(() => {
@@ -80,12 +86,15 @@ export default function EmailSearchV2({
   }, [localSearchQuery, searchQuery]);
 
   // Handle label selection
-  const handleLabelToggle = useCallback((label: string) => {
-    const newLabels = selectedLabels.includes(label)
-      ? selectedLabels.filter(l => l !== label)
-      : [...selectedLabels, label];
-    onLabelsChange(newLabels);
-  }, [selectedLabels, onLabelsChange]);
+  const handleLabelToggle = useCallback(
+    (label: string) => {
+      const newLabels = selectedLabels.includes(label)
+        ? selectedLabels.filter(l => l !== label)
+        : [...selectedLabels, label];
+      onLabelsChange(newLabels);
+    },
+    [selectedLabels, onLabelsChange]
+  );
 
   // Clear all filters
   const handleClearFilters = useCallback(() => {
@@ -112,7 +121,7 @@ export default function EmailSearchV2({
         <Input
           placeholder="Søg i emails..."
           value={localSearchQuery}
-          onChange={(e) => handleSearchChange(e.target.value)}
+          onChange={e => handleSearchChange(e.target.value)}
           className="pl-10 pr-4"
           disabled={isLoading}
         />
@@ -163,14 +172,20 @@ export default function EmailSearchV2({
                 <Tag className="w-4 h-4" />
                 Labels
                 {selectedLabels.length > 0 && (
-                  <Badge variant="secondary" className="ml-1 text-xs h-4 px-1.5">
+                  <Badge
+                    variant="secondary"
+                    className="ml-1 text-xs h-4 px-1.5"
+                  >
                     {selectedLabels.length}
                   </Badge>
                 )}
                 <ChevronDown className="w-3 h-3" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56 max-h-64 overflow-y-auto">
+            <DropdownMenuContent
+              align="start"
+              className="w-56 max-h-64 overflow-y-auto"
+            >
               <DropdownMenuLabel>Filter by labels</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {availableLabels.map(label => (
@@ -179,9 +194,11 @@ export default function EmailSearchV2({
                   onClick={() => handleLabelToggle(label)}
                   className="gap-2"
                 >
-                  <div className={`w-2 h-2 rounded-full ${
-                    selectedLabels.includes(label) ? 'bg-primary' : 'bg-muted'
-                  }`} />
+                  <div
+                    className={`w-2 h-2 rounded-full ${
+                      selectedLabels.includes(label) ? "bg-primary" : "bg-muted"
+                    }`}
+                  />
                   {label}
                 </DropdownMenuItem>
               ))}
@@ -215,7 +232,8 @@ export default function EmailSearchV2({
         <div className="mt-3 pt-3 border-t border-border/10">
           <div className="flex items-center justify-between">
             <span className="text-xs text-muted-foreground">
-              {activeFiltersCount} aktiv{activeFiltersCount !== 1 ? 'e' : ''} filter
+              {activeFiltersCount} aktiv{activeFiltersCount !== 1 ? "e" : ""}{" "}
+              filter
             </span>
             <Button
               variant="ghost"

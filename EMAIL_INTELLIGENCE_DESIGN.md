@@ -1,4 +1,5 @@
 # 📧 Email Intelligence Feature Design
+
 **Implementation Plan for Friday AI**
 
 ---
@@ -8,6 +9,7 @@
 Add AI-powered email intelligence capabilities to Friday AI to help users manage their inbox more efficiently.
 
 ### Core Features:
+
 1. **Smart Categorization** - Automatic email classification
 2. **Auto-Response Suggestions** - AI-generated reply templates
 3. **Priority Detection** - Intelligent importance scoring
@@ -22,7 +24,13 @@ Add AI-powered email intelligence capabilities to Friday AI to help users manage
 ```typescript
 // server/email-intelligence/categorizer.ts
 interface EmailCategory {
-  category: 'work' | 'personal' | 'finance' | 'marketing' | 'important' | 'other';
+  category:
+    | "work"
+    | "personal"
+    | "finance"
+    | "marketing"
+    | "important"
+    | "other";
   confidence: number; // 0-1
   subcategory?: string;
   reasoning?: string;
@@ -32,15 +40,16 @@ async function categorizeEmail(email: EmailMessage): Promise<EmailCategory> {
   // Use LLM to analyze email and determine category
   // Consider: sender, subject, content, previous interactions
   return {
-    category: 'work',
+    category: "work",
     confidence: 0.95,
-    subcategory: 'project_update',
-    reasoning: 'Email discusses project timeline from team member'
+    subcategory: "project_update",
+    reasoning: "Email discusses project timeline from team member",
   };
 }
 ```
 
 **Benefits:**
+
 - Automatic inbox organization
 - Reduce manual sorting
 - Better email discovery
@@ -53,9 +62,9 @@ async function categorizeEmail(email: EmailMessage): Promise<EmailCategory> {
 ```typescript
 // server/email-intelligence/response-generator.ts
 interface ResponseSuggestion {
-  type: 'quick_reply' | 'detailed' | 'forward' | 'schedule';
+  type: "quick_reply" | "detailed" | "forward" | "schedule";
   text: string;
-  tone: 'professional' | 'friendly' | 'formal';
+  tone: "professional" | "friendly" | "formal";
   confidence: number;
 }
 
@@ -67,22 +76,23 @@ async function generateResponseSuggestions(
   // Generate 2-3 appropriate response options
   return [
     {
-      type: 'quick_reply',
-      text: 'Tak for din mail! Jeg vender tilbage inden for 24 timer.',
-      tone: 'professional',
-      confidence: 0.9
+      type: "quick_reply",
+      text: "Tak for din mail! Jeg vender tilbage inden for 24 timer.",
+      tone: "professional",
+      confidence: 0.9,
     },
     {
-      type: 'detailed',
-      text: 'Hej [name],\n\nTak for din henvendelse...',
-      tone: 'professional',
-      confidence: 0.85
-    }
+      type: "detailed",
+      text: "Hej [name],\n\nTak for din henvendelse...",
+      tone: "professional",
+      confidence: 0.85,
+    },
   ];
 }
 ```
 
 **Benefits:**
+
 - Faster email responses
 - Consistent tone
 - Reduce writer's block
@@ -96,7 +106,7 @@ async function generateResponseSuggestions(
 // server/email-intelligence/priority-scorer.ts
 interface EmailPriority {
   score: number; // 0-100
-  level: 'urgent' | 'high' | 'normal' | 'low';
+  level: "urgent" | "high" | "normal" | "low";
   factors: {
     sender_importance: number;
     content_urgency: number;
@@ -112,21 +122,22 @@ async function scorePriority(email: EmailMessage): Promise<EmailPriority> {
   // - Deadlines mentioned
   // - Action items present
   // - Historical response patterns
-  
+
   return {
     score: 85,
-    level: 'high',
+    level: "high",
     factors: {
       sender_importance: 0.9, // VIP customer
-      content_urgency: 0.8,   // Contains "urgent"
+      content_urgency: 0.8, // Contains "urgent"
       deadline_mentioned: true,
-      requires_action: true
-    }
+      requires_action: true,
+    },
   };
 }
 ```
 
 **Benefits:**
+
 - Focus on important emails first
 - Never miss urgent messages
 - Better time management
@@ -139,6 +150,7 @@ async function scorePriority(email: EmailMessage): Promise<EmailPriority> {
 ### Phase 1: Backend Intelligence (1-2 hours)
 
 **Files to Create:**
+
 ```
 server/email-intelligence/
 ├── categorizer.ts          # Email categorization logic
@@ -152,6 +164,7 @@ server/email-intelligence/
 ```
 
 **Dependencies:**
+
 - ✅ OpenRouter LLM (already configured)
 - ✅ Email data access (already available)
 - ✅ TRPC router (for API endpoints)
@@ -161,6 +174,7 @@ server/email-intelligence/
 ### Phase 2: Database Schema (15 min)
 
 **New Tables:**
+
 ```sql
 -- email_categories
 CREATE TABLE email_categories (
@@ -213,7 +227,7 @@ export const emailIntelligenceRouter = router({
       await saveEmailCategory(input.threadId, category);
       return category;
     }),
-  
+
   getResponseSuggestions: protectedProcedure
     .input(z.object({ threadId: z.string() }))
     .query(async ({ input }) => {
@@ -221,7 +235,7 @@ export const emailIntelligenceRouter = router({
       const suggestions = await generateResponseSuggestions(email);
       return suggestions;
     }),
-  
+
   scorePriority: protectedProcedure
     .input(z.object({ threadId: z.string() }))
     .mutation(async ({ input }) => {
@@ -230,12 +244,11 @@ export const emailIntelligenceRouter = router({
       await saveEmailPriority(input.threadId, priority);
       return priority;
     }),
-  
-  getCategoryStats: protectedProcedure
-    .query(async ({ ctx }) => {
-      // Return category distribution for user's emails
-      return getEmailCategoryStats(ctx.user.id);
-    }),
+
+  getCategoryStats: protectedProcedure.query(async ({ ctx }) => {
+    // Return category distribution for user's emails
+    return getEmailCategoryStats(ctx.user.id);
+  }),
 });
 ```
 
@@ -244,6 +257,7 @@ export const emailIntelligenceRouter = router({
 ### Phase 4: UI Components (1-2 hours)
 
 **Components to Create:**
+
 ```
 client/src/components/email-intelligence/
 ├── CategoryBadge.tsx          # Display email category
@@ -255,6 +269,7 @@ client/src/components/email-intelligence/
 ```
 
 **Example Usage:**
+
 ```tsx
 // In EmailThreadView.tsx
 <EmailThread>
@@ -262,16 +277,11 @@ client/src/components/email-intelligence/
     <PriorityIndicator priority={priority} />
     <CategoryBadge category={category} />
   </EmailHeader>
-  
-  <EmailContent>
-    {/* existing content */}
-  </EmailContent>
-  
+
+  <EmailContent>{/* existing content */}</EmailContent>
+
   <EmailActions>
-    <ResponseSuggestions 
-      threadId={threadId}
-      onSelect={handleUseSuggestion}
-    />
+    <ResponseSuggestions threadId={threadId} onSelect={handleUseSuggestion} />
   </EmailActions>
 </EmailThread>
 ```
@@ -281,30 +291,32 @@ client/src/components/email-intelligence/
 ## 📊 TESTING STRATEGY
 
 ### Unit Tests (30 min):
+
 ```typescript
 // Test categorization logic
-describe('Email Categorizer', () => {
-  it('should categorize work email correctly');
-  it('should identify marketing emails');
-  it('should handle multiple categories');
+describe("Email Categorizer", () => {
+  it("should categorize work email correctly");
+  it("should identify marketing emails");
+  it("should handle multiple categories");
 });
 
 // Test response generation
-describe('Response Generator', () => {
-  it('should generate professional responses');
-  it('should match email tone');
-  it('should include context');
+describe("Response Generator", () => {
+  it("should generate professional responses");
+  it("should match email tone");
+  it("should include context");
 });
 
 // Test priority scoring
-describe('Priority Scorer', () => {
-  it('should detect urgent emails');
-  it('should score VIP senders higher');
-  it('should identify action items');
+describe("Priority Scorer", () => {
+  it("should detect urgent emails");
+  it("should score VIP senders higher");
+  it("should identify action items");
 });
 ```
 
 ### Integration Tests:
+
 - TRPC endpoint functionality
 - Database persistence
 - LLM integration
@@ -315,12 +327,14 @@ describe('Priority Scorer', () => {
 ## 🎯 SUCCESS METRICS
 
 **User Experience:**
+
 - ✅ Reduce time spent sorting emails
 - ✅ Faster response times
 - ✅ Better inbox organization
 - ✅ Improved email productivity
 
 **Technical:**
+
 - ✅ 90%+ categorization accuracy
 - ✅ <2s response suggestion generation
 - ✅ 95%+ priority detection accuracy
@@ -331,6 +345,7 @@ describe('Priority Scorer', () => {
 ## 📝 IMPLEMENTATION CHECKLIST
 
 ### Backend (1-2 hours):
+
 - [ ] Create categorizer.ts
 - [ ] Create response-generator.ts
 - [ ] Create priority-scorer.ts
@@ -339,6 +354,7 @@ describe('Priority Scorer', () => {
 - [ ] Write unit tests
 
 ### Frontend (1-2 hours):
+
 - [ ] Create CategoryBadge component
 - [ ] Create PriorityIndicator component
 - [ ] Create ResponseSuggestions component
@@ -347,6 +363,7 @@ describe('Priority Scorer', () => {
 - [ ] Write component tests
 
 ### Testing & Polish (30 min):
+
 - [ ] Run all tests
 - [ ] Manual testing
 - [ ] Performance optimization
@@ -358,6 +375,7 @@ describe('Priority Scorer', () => {
 ## 🚀 FUTURE ENHANCEMENTS
 
 **V2 Features:**
+
 - Learning from user behavior
 - Custom category creation
 - Automated email rules
@@ -366,6 +384,7 @@ describe('Priority Scorer', () => {
 - Multi-language support
 
 **Analytics:**
+
 - Email response time tracking
 - Category distribution over time
 - Priority trends
@@ -376,6 +395,7 @@ describe('Priority Scorer', () => {
 ## 💡 TECHNICAL NOTES
 
 **LLM Prompts:**
+
 ```typescript
 // Categorization prompt
 const CATEGORIZATION_PROMPT = `
@@ -414,6 +434,7 @@ Return JSON array of suggestions.
 ```
 
 **Rate Limiting:**
+
 - Cache category results for 24h
 - Batch process suggestions
 - Lazy load priority scores

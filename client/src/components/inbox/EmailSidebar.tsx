@@ -121,7 +121,7 @@ export default function EmailSidebar({
             <ChevronRight className="w-4 h-4" />
           </Button>
         </div>
-        
+
         {/* Compose button */}
         <div className="p-2">
           <Button
@@ -133,7 +133,7 @@ export default function EmailSidebar({
             <PenSquare className="w-4 h-4" />
           </Button>
         </div>
-        
+
         {/* Icon-only folders */}
         <div className="flex-1 overflow-y-auto nice-scrollbar">
           <div className="p-2 space-y-1">
@@ -148,9 +148,9 @@ export default function EmailSidebar({
                   size="sm"
                   onClick={() => onFolderChange(folder.id)}
                   className={`w-full h-8 p-0 relative ${
-                    isSelected ? 'bg-primary/10 text-primary' : ''
+                    isSelected ? "bg-primary/10 text-primary" : ""
                   }`}
-                  title={`${folder.label}${unreadCount > 0 ? ` (${unreadCount})` : ''}`}
+                  title={`${folder.label}${unreadCount > 0 ? ` (${unreadCount})` : ""}`}
                 >
                   <Icon className="w-4 h-4" />
                   {unreadCount > 0 && (
@@ -170,11 +170,7 @@ export default function EmailSidebar({
       {/* Header with Compose Button and Toggle */}
       <div className="p-4 border-b border-border/30">
         <div className="flex items-center gap-2 mb-3">
-          <Button
-            onClick={onCompose}
-            className="flex-1 gap-2"
-            size="sm"
-          >
+          <Button onClick={onCompose} className="flex-1 gap-2" size="sm">
             <PenSquare className="w-4 h-4" />
             Ny mail
           </Button>
@@ -276,7 +272,10 @@ export default function EmailSidebar({
                     <Icon className="w-4 h-4" />
                     <span className="flex-1 text-left">{folder.label}</span>
                     {unreadCount > 0 && (
-                      <Badge variant="outline" className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground">
+                      <Badge
+                        variant="outline"
+                        className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground"
+                      >
                         {unreadCount}
                       </Badge>
                     )}
@@ -327,7 +326,9 @@ export default function EmailSidebar({
                     <div
                       key={label.id}
                       className={`flex items-center gap-2 px-2 py-1 rounded-sm transition-colors ${
-                        isChecked ? "border-l-2 border-l-primary bg-primary/5" : "hover:bg-accent/30"
+                        isChecked
+                          ? "border-l-2 border-l-primary bg-primary/5"
+                          : "hover:bg-accent/30"
                       }`}
                     >
                       <Checkbox
@@ -359,7 +360,10 @@ export default function EmailSidebar({
                         />
                         <span className="flex-1">{label.name}</span>
                         {unreadCount > 0 && (
-                          <Badge variant="outline" className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground">
+                          <Badge
+                            variant="outline"
+                            className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground"
+                          >
                             {unreadCount}
                           </Badge>
                         )}
@@ -398,7 +402,9 @@ export default function EmailSidebar({
                       <div
                         key={label.id}
                         className={`flex items-center gap-2 px-2 py-1 rounded-sm transition-colors ${
-                          isChecked ? "border-l-2 border-l-primary bg-primary/5" : "hover:bg-accent/30"
+                          isChecked
+                            ? "border-l-2 border-l-primary bg-primary/5"
+                            : "hover:bg-accent/30"
                         }`}
                       >
                         <Checkbox
@@ -413,7 +419,10 @@ export default function EmailSidebar({
                         >
                           <span className="flex-1">{label.name}</span>
                           {unreadCount > 0 && (
-                            <Badge variant="outline" className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground">
+                            <Badge
+                              variant="outline"
+                              className="ml-auto text-[10px] h-4 px-1.5 py-0 border-border/40 text-muted-foreground"
+                            >
                               {unreadCount}
                             </Badge>
                           )}

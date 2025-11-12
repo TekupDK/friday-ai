@@ -7,6 +7,7 @@
 ## 🎯 Hvad er V2?
 
 V2 er den nye **Shortwave-inspirerede workspace** med:
+
 - ✅ Dedikeret email center (60% af skærmen)
 - ✅ Context-aware højre panel (Smart Workspace)
 - ✅ Auto-detection af email type (Lead/Booking/Invoice/Customer)
@@ -35,6 +36,7 @@ Brug dine normale login credentials.
 ### Test 1: Email Selection → Workspace Update
 
 **Forventet adfærd:**
+
 1. Klik på en email i listen
 2. Højre panel skifter automatisk baseret på email type
 3. Relevant information vises (Lead analyzer, Booking manager, etc.)
@@ -121,22 +123,25 @@ No email selected   →  📊 Business Dashboard
 ```javascript
 // I browser console, check EmailContext:
 // (Dette er kun for debugging)
-console.log('Email Context:', window.__emailContext);
+console.log("Email Context:", window.__emailContext);
 ```
 
 ### Common Issues
 
 **Issue 1: Højre panel skifter ikke**
+
 - Check: Er email clicked?
 - Check: Console errors?
 - Fix: Refresh page (Ctrl+R)
 
 **Issue 2: TypeScript errors**
+
 ```bash
 npm run check
 ```
 
 **Issue 3: Workspace viser forkert component**
+
 - Check: Email labels korrekte?
 - Check: Context detection logic i SmartWorkspacePanel.tsx
 
@@ -202,21 +207,25 @@ V2 Architecture:
 ## 🔧 Developer Commands
 
 ### Start Development
+
 ```bash
 npm run dev
 ```
 
 ### Type Check
+
 ```bash
 npm run check
 ```
 
 ### Run Tests
+
 ```bash
 npm test
 ```
 
 ### Build Production
+
 ```bash
 npm run build
 ```
@@ -226,6 +235,7 @@ npm run build
 ## 📝 What's Working
 
 ✅ **Core Functionality:**
+
 - Email selection tracking
 - Context detection
 - Workspace component switching
@@ -233,12 +243,14 @@ npm run build
 - All tests passing
 
 ✅ **UI Components:**
+
 - WorkspaceLayout renders
 - EmailCenterPanel shows emails
 - SmartWorkspacePanel detects context
 - All 5 workspace states render
 
 ✅ **Integration:**
+
 - EmailContext updated on click
 - SmartWorkspacePanel receives updates
 - Correct component shown based on email type
@@ -248,16 +260,19 @@ npm run build
 ## ⏳ What's Pending
 
 ⏳ **Phase 4: Real Data Integration**
+
 - Connect to tRPC endpoints
 - Real calendar data
 - Real invoice data
 - Real customer data
 
 ⏳ **Phase 5: Mini-Tabs**
+
 - Bottom tabs for Fakturaer, Kalender, Leads, Opgaver
 - Drawer system
 
 ⏳ **Phase 6: Tests**
+
 - Integration tests
 - E2E tests
 - Performance tests
@@ -267,18 +282,21 @@ npm run build
 ## 🎯 Success Criteria
 
 ### ✅ Must Work (Currently Working)
+
 - [x] Click email → workspace updates
 - [x] Different email types → different workspace views
 - [x] No TypeScript errors
 - [x] App compiles and runs
 
 ### ⏳ Should Work (Phase 4)
+
 - [ ] Real data in workspace components
 - [ ] API calls to backend
 - [ ] Loading states
 - [ ] Error handling
 
 ### 🎨 Nice to Have (Phase 5+)
+
 - [ ] Mini-tabs functional
 - [ ] Animations smooth
 - [ ] Mobile responsive
@@ -289,16 +307,19 @@ npm run build
 ## 💡 Tips
 
 ### For Testing
+
 1. **Use different email types** - Test all 5 workspace states
 2. **Check console logs** - Verify context detection
 3. **Try edge cases** - No email selected, multiple clicks, etc.
 
 ### For Development
+
 1. **Hot reload works** - Changes reflect immediately
 2. **TypeScript strict** - Fix errors as they appear
 3. **Component isolation** - Each workspace component is independent
 
 ### For Debugging
+
 1. **React DevTools** - Inspect component state
 2. **Console logs** - Added throughout for debugging
 3. **Network tab** - Check API calls (Phase 4)
@@ -308,11 +329,13 @@ npm run build
 ## 📞 Need Help?
 
 ### Documentation
+
 - `docs/V2-ARCHITECTURE-COMPLETE.md` - Full architecture
 - `docs/V2-MIGRATION-COMPLETE-PLAN.md` - Migration details
 - `docs/V2-IMPLEMENTATION-SUMMARY.md` - What was built
 
 ### Key Files
+
 - `client/src/pages/WorkspaceLayout.tsx` - Main layout
 - `client/src/components/panels/SmartWorkspacePanel.tsx` - Context detection
 - `client/src/contexts/EmailContext.tsx` - State management

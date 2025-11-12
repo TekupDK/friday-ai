@@ -9,6 +9,7 @@
 ## 🔍 NUVÆRENDE PROBLEMER
 
 ### ❌ **Layout Issues**
+
 1. **Card-baseret layout tager for meget plads**
    - Kan kun se 3-4 fakturaer på skærmen ad gangen
    - Meget whitespace mellem cards
@@ -26,6 +27,7 @@
 ### ❌ **Manglende Funktionalitet**
 
 #### **1. Ingen Statistics Overview**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │ Total Fakturaer: 127                                │
@@ -34,16 +36,20 @@
 │ Betalt denne måned: 89.300 DKK ✅                    │
 └─────────────────────────────────────────────────────┘
 ```
+
 **Impact:** Mangler overblik over økonomi
 
 ---
 
 #### **2. Begrænset Filtering**
+
 **Nuværende:**
+
 - ✅ Search (navn, ID, kunde)
 - ✅ Status filter (dropdown)
 
 **Mangler:**
+
 - ❌ Beløb filter (min/max)
 - ❌ Dato range filter (forfaldsdato, oprettelsesdato)
 - ❌ Quick filters ("Forfaldne", "Denne uge", "Denne måned")
@@ -52,6 +58,7 @@
 
 **Sammenligning med LeadsTab:**
 LeadsTab har:
+
 - Status filter ✅
 - Source filter ✅
 - Sort options ✅
@@ -61,7 +68,9 @@ LeadsTab har:
 ---
 
 #### **3. Ingen Sorting**
+
 **Kan ikke sortere efter:**
+
 - ❌ Beløb (højeste først)
 - ❌ Forfaldsdato (oldest first)
 - ❌ Oprettelsesdato
@@ -73,7 +82,9 @@ LeadsTab har:
 ---
 
 #### **4. Manglende Bulk Actions**
+
 **Kan ikke:**
+
 - ❌ Vælge flere fakturaer med checkbox
 - ❌ Bulk export til CSV (eksporter 10 fakturaer på én gang)
 - ❌ Bulk analyze med AI
@@ -85,9 +96,11 @@ LeadsTab har:
 ---
 
 #### **5. Ingen Quick Actions**
+
 **Nuværende:** Hover for at se "Open in Billy" og "Download CSV"
 
 **Mangler:**
+
 - ❌ "Mark as paid" button
 - ❌ "Send påmindelse" button
 - ❌ "Create reminder" button
@@ -100,9 +113,11 @@ LeadsTab har:
 ---
 
 #### **6. Ingen Invoice Preview**
+
 **Problem:** Skal klikke "Analyze" for at se detaljer
 
 **Forslag:**
+
 - ❌ Quick preview modal (vis invoice lines, beløb breakdown)
 - ❌ Thumbnail af PDF (hvis Billy API supporterer det)
 - ❌ Invoice timeline (created → sent → paid)
@@ -110,9 +125,11 @@ LeadsTab har:
 ---
 
 #### **7. Manglende Payment Status Details**
+
 **Nuværende:** Viser kun "Betalt", "Afsendt", etc.
 
 **Mangler:**
+
 - ❌ Payment date (hvis betalt)
 - ❌ Payment method
 - ❌ Partial payments (hvis delvist betalt)
@@ -122,11 +139,13 @@ LeadsTab har:
 ---
 
 #### **8. Ingen Create Invoice**
+
 **Problem:** Kan ikke oprette faktura fra UI
 
 **LeadsTab har:** "Tilføj Lead" button med dialog ✅
 
 **Forslag:**
+
 - ❌ "Opret Faktura" button
 - ❌ Quick-create dialog med basic info
 - ❌ Integration med Billy API's `createInvoice`
@@ -134,7 +153,9 @@ LeadsTab har:
 ---
 
 #### **9. Ingen Analytics/Insights**
+
 **Mangler:**
+
 - ❌ Gennemsnitlig betalingstid
 - ❌ Top 5 kunder (efter beløb)
 - ❌ Revenue trend graph
@@ -144,12 +165,15 @@ LeadsTab har:
 ---
 
 #### **10. AI Analysis Issues**
+
 **Nuværende problemer:**
+
 - ⚠️ Skal klikke "Analyser" manuelt for hver faktura
 - ⚠️ AI analysis gemmes ikke (skal re-analyze)
 - ⚠️ Ingen batch analyze
 
 **Forslag:**
+
 - ✅ Auto-analyze forfaldne fakturaer
 - ✅ Cache AI results i database
 - ✅ Bulk analyze med progressbar
@@ -162,7 +186,9 @@ LeadsTab har:
 ### **Phase A: Layout Overhaul (2-3 timer)**
 
 #### **A1: Skift til Table Layout** (som LeadsTab)
+
 **Før (Cards):**
+
 ```tsx
 <Card className="p-2.5">
   <div>Invoice #12345</div>
@@ -172,6 +198,7 @@ LeadsTab har:
 ```
 
 **Efter (Table):**
+
 ```tsx
 <div className="grid grid-cols-12 gap-3 px-5 py-4">
   <div className="col-span-2">Invoice #12345</div>
@@ -184,6 +211,7 @@ LeadsTab har:
 ```
 
 **Fordele:**
+
 - ✅ Se 10-15 fakturaer på skærmen (vs 3-4)
 - ✅ Nemmere at sammenligne
 - ✅ Mere kompakt
@@ -193,9 +221,11 @@ LeadsTab har:
 ---
 
 #### **A2: Add Virtual Scrolling**
+
 **Library:** `@tanstack/react-virtual` (allerede brugt i LeadsTab)
 
 **Implementation:**
+
 ```tsx
 import { useVirtualizer } from "@tanstack/react-virtual";
 
@@ -209,13 +239,16 @@ const virtualizer = useVirtualizer({
 });
 
 // Only render visible items
-{virtualizer.getVirtualItems().map(virtualRow => {
-  const invoice = filteredInvoices[virtualRow.index];
-  return <InvoiceRow key={invoice.id} invoice={invoice} />;
-})}
+{
+  virtualizer.getVirtualItems().map(virtualRow => {
+    const invoice = filteredInvoices[virtualRow.index];
+    return <InvoiceRow key={invoice.id} invoice={invoice} />;
+  });
+}
 ```
 
 **Performance improvement:**
+
 - 100 invoices: Render 15 items instead of 100 (85% reduction)
 - Smooth scrolling ved 500+ fakturaer
 
@@ -224,17 +257,19 @@ const virtualizer = useVirtualizer({
 ---
 
 #### **A3: Memoize Invoice Rows**
+
 ```tsx
 const InvoiceRow = memo(function InvoiceRow({
   invoice,
   onAnalyze,
-  onStatusChange
+  onStatusChange,
 }: InvoiceRowProps) {
   // ... row content
 });
 ```
 
 **Fordele:**
+
 - ✅ Undgå re-renders når andre rows opdateres
 - ✅ Performance boost ved filtering/sorting
 
@@ -245,6 +280,7 @@ const InvoiceRow = memo(function InvoiceRow({
 ### **Phase B: Statistics & Overview (1-2 timer)**
 
 #### **B1: Statistics Cards**
+
 ```tsx
 <div className="grid grid-cols-4 gap-4 mb-6">
   <Card className="p-4">
@@ -269,20 +305,21 @@ const InvoiceRow = memo(function InvoiceRow({
 ```
 
 **Calculation:**
+
 ```tsx
 const stats = useMemo(() => {
   if (!invoices) return null;
 
   const total = invoices.length;
-  const unpaid = invoices.filter(i => i.state !== 'paid').length;
-  const overdue = invoices.filter(i => i.state === 'overdue').length;
+  const unpaid = invoices.filter(i => i.state !== "paid").length;
+  const overdue = invoices.filter(i => i.state === "overdue").length;
 
   const unpaidAmount = invoices
-    .filter(i => i.state !== 'paid')
+    .filter(i => i.state !== "paid")
     .reduce((sum, i) => sum + (i.totalAmount || 0), 0);
 
   const overdueAmount = invoices
-    .filter(i => i.state === 'overdue')
+    .filter(i => i.state === "overdue")
     .reduce((sum, i) => sum + (i.totalAmount || 0), 0);
 
   const thisMonthPaid = invoices
@@ -290,8 +327,10 @@ const stats = useMemo(() => {
       if (!i.paidAt) return false;
       const paidDate = new Date(i.paidAt);
       const now = new Date();
-      return paidDate.getMonth() === now.getMonth() &&
-             paidDate.getFullYear() === now.getFullYear();
+      return (
+        paidDate.getMonth() === now.getMonth() &&
+        paidDate.getFullYear() === now.getFullYear()
+      );
     })
     .reduce((sum, i) => sum + (i.paidAmount || 0), 0);
 
@@ -304,29 +343,30 @@ const stats = useMemo(() => {
 ---
 
 #### **B2: Quick Filters**
+
 ```tsx
 <div className="flex gap-2 mb-4">
   <Button
-    variant={quickFilter === 'overdue' ? 'default' : 'outline'}
-    onClick={() => setQuickFilter('overdue')}
+    variant={quickFilter === "overdue" ? "default" : "outline"}
+    onClick={() => setQuickFilter("overdue")}
   >
     🔥 Forfaldne ({stats.overdue})
   </Button>
   <Button
-    variant={quickFilter === 'this-week' ? 'default' : 'outline'}
-    onClick={() => setQuickFilter('this-week')}
+    variant={quickFilter === "this-week" ? "default" : "outline"}
+    onClick={() => setQuickFilter("this-week")}
   >
     📅 Denne uge
   </Button>
   <Button
-    variant={quickFilter === 'this-month' ? 'default' : 'outline'}
-    onClick={() => setQuickFilter('this-month')}
+    variant={quickFilter === "this-month" ? "default" : "outline"}
+    onClick={() => setQuickFilter("this-month")}
   >
     📆 Denne måned
   </Button>
   <Button
-    variant={quickFilter === 'unpaid' ? 'default' : 'outline'}
-    onClick={() => setQuickFilter('unpaid')}
+    variant={quickFilter === "unpaid" ? "default" : "outline"}
+    onClick={() => setQuickFilter("unpaid")}
   >
     ⏳ Ubetalte ({stats.unpaid})
   </Button>
@@ -340,6 +380,7 @@ const stats = useMemo(() => {
 ### **Phase C: Advanced Filtering & Sorting (1-2 timer)**
 
 #### **C1: Sort Options**
+
 ```tsx
 <Select value={sortBy} onValueChange={setSortBy}>
   <SelectTrigger>
@@ -359,14 +400,15 @@ const stats = useMemo(() => {
 ```
 
 **Implementation:**
+
 ```tsx
 const sortedInvoices = useMemo(() => {
   const sorted = [...filteredInvoices];
 
   switch (sortBy) {
-    case 'amount-desc':
+    case "amount-desc":
       return sorted.sort((a, b) => (b.totalAmount || 0) - (a.totalAmount || 0));
-    case 'due-date-asc':
+    case "due-date-asc":
       return sorted.sort((a, b) => {
         const aDate = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
         const bDate = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
@@ -384,6 +426,7 @@ const sortedInvoices = useMemo(() => {
 ---
 
 #### **C2: Amount Range Filter**
+
 ```tsx
 <Popover>
   <PopoverTrigger asChild>
@@ -416,14 +459,15 @@ const sortedInvoices = useMemo(() => {
 ---
 
 #### **C3: Date Range Filter**
+
 ```tsx
 import { DatePickerWithRange } from "@/components/ui/date-picker";
 
 <DatePickerWithRange
   from={dateRange.from}
   to={dateRange.to}
-  onSelect={(range) => setDateRange(range)}
-/>
+  onSelect={range => setDateRange(range)}
+/>;
 ```
 
 **Estimat:** 30 min
@@ -433,6 +477,7 @@ import { DatePickerWithRange } from "@/components/ui/date-picker";
 ### **Phase D: Bulk Actions (1-2 timer)**
 
 #### **D1: Selection Checkboxes**
+
 ```tsx
 const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set());
 
@@ -465,45 +510,36 @@ const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set())
 ---
 
 #### **D2: Bulk Action Bar**
+
 ```tsx
-{selectedInvoices.size > 0 && (
-  <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground p-4 rounded-lg shadow-2xl z-50">
-    <div className="flex items-center gap-4">
-      <p className="font-semibold">{selectedInvoices.size} valgt</p>
+{
+  selectedInvoices.size > 0 && (
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground p-4 rounded-lg shadow-2xl z-50">
+      <div className="flex items-center gap-4">
+        <p className="font-semibold">{selectedInvoices.size} valgt</p>
 
-      <Button
-        variant="secondary"
-        onClick={handleBulkExportCSV}
-      >
-        <Download className="w-4 h-4 mr-2" />
-        Eksportér CSV
-      </Button>
+        <Button variant="secondary" onClick={handleBulkExportCSV}>
+          <Download className="w-4 h-4 mr-2" />
+          Eksportér CSV
+        </Button>
 
-      <Button
-        variant="secondary"
-        onClick={handleBulkAnalyze}
-      >
-        <Sparkles className="w-4 h-4 mr-2" />
-        Analysér alle
-      </Button>
+        <Button variant="secondary" onClick={handleBulkAnalyze}>
+          <Sparkles className="w-4 h-4 mr-2" />
+          Analysér alle
+        </Button>
 
-      <Button
-        variant="secondary"
-        onClick={handleBulkMarkPaid}
-      >
-        <CheckCircle2 className="w-4 h-4 mr-2" />
-        Markér betalt
-      </Button>
+        <Button variant="secondary" onClick={handleBulkMarkPaid}>
+          <CheckCircle2 className="w-4 h-4 mr-2" />
+          Markér betalt
+        </Button>
 
-      <Button
-        variant="ghost"
-        onClick={() => setSelectedInvoices(new Set())}
-      >
-        <X className="w-4 h-4" />
-      </Button>
+        <Button variant="ghost" onClick={() => setSelectedInvoices(new Set())}>
+          <X className="w-4 h-4" />
+        </Button>
+      </div>
     </div>
-  </div>
-)}
+  );
+}
 ```
 
 **Estimat:** 1 time
@@ -524,7 +560,9 @@ const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set())
       <Sparkles className="w-4 h-4 mr-2" />
       Analysér med AI
     </DropdownMenuItem>
-    <DropdownMenuItem onClick={() => window.open(`https://app.billy.dk/invoices/${invoice.id}`)}>
+    <DropdownMenuItem
+      onClick={() => window.open(`https://app.billy.dk/invoices/${invoice.id}`)}
+    >
       <ExternalLink className="w-4 h-4 mr-2" />
       Åbn i Billy.dk
     </DropdownMenuItem>
@@ -620,7 +658,9 @@ const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set())
         <div className="space-y-2">
           <div className="flex justify-between gap-8">
             <span>Subtotal:</span>
-            <span className="font-medium">{formatCurrency(previewInvoice?.totalAmount)}</span>
+            <span className="font-medium">
+              {formatCurrency(previewInvoice?.totalAmount)}
+            </span>
           </div>
           <div className="flex justify-between gap-8 text-lg font-bold">
             <span>Total:</span>
@@ -692,6 +732,7 @@ const [selectedInvoices, setSelectedInvoices] = useState<Set<string>>(new Set())
 ```
 
 **Backend integration:**
+
 ```tsx
 const createInvoiceMutation = trpc.inbox.invoices.create.useMutation({
   onSuccess: () => {
@@ -709,6 +750,7 @@ const createInvoiceMutation = trpc.inbox.invoices.create.useMutation({
 ## 📊 PRIORITERET ROADMAP
 
 ### **Sprint 1: Core Improvements (1 uge)**
+
 **Mest kritiske forbedringer først:**
 
 1. ✅ **Phase A1-A3: Layout overhaul** (2-3 timer)
@@ -764,6 +806,7 @@ const createInvoiceMutation = trpc.inbox.invoices.create.useMutation({
 **Alle forbedringer:** 14-15 timer (spredt over 3 uger)
 
 **Hvis vi prioriterer:**
+
 - **MVP (Sprint 1):** 5-6 timer → Se 3x flere fakturaer, bedre performance
 - **Full feature set:** 14-15 timer → På niveau med bedste invoice management tools
 

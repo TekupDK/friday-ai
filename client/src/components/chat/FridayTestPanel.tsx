@@ -1,6 +1,6 @@
 /**
  * Friday AI Test Panel
- * 
+ *
  * Interactive testing interface for A/B prompt testing
  * Quality scoring, response analysis, optimization
  */
@@ -32,45 +32,60 @@ export default function FridayTestPanel() {
   const [isRunning, setIsRunning] = useState(false);
   const [currentTest, setCurrentTest] = useState<string>("");
   const [results, setResults] = useState<TestResult[]>([]);
-  const [selectedVariation, setSelectedVariation] = useState<keyof typeof FRIDAY_PROMPTS.testVariations>("minimal");
-  
+  const [selectedVariation, setSelectedVariation] =
+    useState<keyof typeof FRIDAY_PROMPTS.testVariations>("minimal");
+
   const { testPromptVariation, isLoading } = useOpenRouter();
 
-  const runSingleTest = useCallback(async (variation: keyof typeof FRIDAY_PROMPTS.testVariations, testMessage: string) => {
-    try {
-      setIsRunning(true);
-      setCurrentTest(`${variation} - ${testMessage.substring(0, 30)}...`);
-      
-      const { response, quality, responseTime } = await testPromptVariation(variation, testMessage);
-      
-      const result: TestResult = {
-        variation,
-        response,
-        quality,
-        responseTime,
-        timestamp: new Date(),
-      };
-      
-      setResults(prev => [...prev, result]);
-    } catch (error) {
-      console.error('Test failed:', error);
-    } finally {
-      setIsRunning(false);
-      setCurrentTest("");
-    }
-  }, [testPromptVariation]);
+  const runSingleTest = useCallback(
+    async (
+      variation: keyof typeof FRIDAY_PROMPTS.testVariations,
+      testMessage: string
+    ) => {
+      try {
+        setIsRunning(true);
+        setCurrentTest(`${variation} - ${testMessage.substring(0, 30)}...`);
+
+        const { response, quality, responseTime } = await testPromptVariation(
+          variation,
+          testMessage
+        );
+
+        const result: TestResult = {
+          variation,
+          response,
+          quality,
+          responseTime,
+          timestamp: new Date(),
+        };
+
+        setResults(prev => [...prev, result]);
+      } catch (error) {
+        console.error("Test failed:", error);
+      } finally {
+        setIsRunning(false);
+        setCurrentTest("");
+      }
+    },
+    [testPromptVariation]
+  );
 
   const runAllTests = useCallback(async () => {
     setIsRunning(true);
     setResults([]);
-    
-    const variations: (keyof typeof FRIDAY_PROMPTS.testVariations)[] = ["minimal", "persona", "taskOriented", "business"];
+
+    const variations: (keyof typeof FRIDAY_PROMPTS.testVariations)[] = [
+      "minimal",
+      "persona",
+      "taskOriented",
+      "business",
+    ];
     const testCases = [
       "Hej Friday, præsenter dig selv",
       "Hvad kan du hjælpe mig med i min rengøringsvirksomhed?",
       "Jeg har 3 kundeemails - opsummer dem og foreslå handlinger",
     ];
-    
+
     for (const variation of variations) {
       for (const testCase of testCases) {
         await runSingleTest(variation, testCase);
@@ -78,23 +93,29 @@ export default function FridayTestPanel() {
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
-    
+
     setIsRunning(false);
   }, [runSingleTest]);
 
   const getBestResult = useCallback(() => {
     if (results.length === 0) return null;
-    return results.reduce((best, current) => 
+    return results.reduce((best, current) =>
       current.quality.overallScore > best.quality.overallScore ? current : best
     );
   }, [results]);
 
-  const getAverageScore = useCallback((variation: string) => {
-    const variationResults = results.filter(r => r.variation === variation);
-    if (variationResults.length === 0) return 0;
-    const total = variationResults.reduce((sum, r) => sum + r.quality.overallScore, 0);
-    return total / variationResults.length;
-  }, [results]);
+  const getAverageScore = useCallback(
+    (variation: string) => {
+      const variationResults = results.filter(r => r.variation === variation);
+      if (variationResults.length === 0) return 0;
+      const total = variationResults.reduce(
+        (sum, r) => sum + r.quality.overallScore,
+        0
+      );
+      return total / variationResults.length;
+    },
+    [results]
+  );
 
   const clearResults = useCallback(() => {
     setResults([]);
@@ -137,7 +158,9 @@ export default function FridayTestPanel() {
 
       {currentTest && (
         <div className="mb-4 p-3 bg-muted rounded-lg">
-          <p className="text-sm text-muted-foreground">Running: {currentTest}</p>
+          <p className="text-sm text-muted-foreground">
+            Running: {currentTest}
+          </p>
         </div>
       )}
 
@@ -149,7 +172,11 @@ export default function FridayTestPanel() {
         <CardContent className="space-y-3">
           <select
             value={selectedVariation}
-            onChange={(e) => setSelectedVariation(e.target.value as keyof typeof FRIDAY_PROMPTS.testVariations)}
+            onChange={e =>
+              setSelectedVariation(
+                e.target.value as keyof typeof FRIDAY_PROMPTS.testVariations
+              )
+            }
             className="w-full p-2 border rounded text-sm"
             disabled={isRunning}
           >
@@ -159,12 +186,12 @@ export default function FridayTestPanel() {
               </option>
             ))}
           </select>
-          
+
           <div className="flex gap-2">
             {[
               "Hej Friday, præsenter dig selv",
               "Hvad kan du hjælpe med?",
-              "Opsummer kundeemails"
+              "Opsummer kundeemails",
             ].map((test, index) => (
               <Button
                 key={index}
@@ -203,17 +230,21 @@ export default function FridayTestPanel() {
                   {bestResult.response.length} chars
                 </div>
               </div>
-              
+
               <div className="flex gap-1">
                 {[
-                  { key: 'danishLanguage', label: '🇩🇰' },
-                  { key: 'professionalTone', label: '💼' },
-                  { key: 'businessContext', label: '🏢' },
-                  { key: 'responseLength', label: '📏' }
+                  { key: "danishLanguage", label: "🇩🇰" },
+                  { key: "professionalTone", label: "💼" },
+                  { key: "businessContext", label: "🏢" },
+                  { key: "responseLength", label: "📏" },
                 ].map(({ key, label }) => (
                   <Badge
                     key={key}
-                    variant={bestResult.quality[key as keyof typeof bestResult.quality] ? "default" : "outline"}
+                    variant={
+                      bestResult.quality[key as keyof typeof bestResult.quality]
+                        ? "default"
+                        : "outline"
+                    }
                     className="text-xs"
                   >
                     {label}
@@ -223,9 +254,10 @@ export default function FridayTestPanel() {
                   Score: {bestResult.quality.overallScore}/4
                 </Badge>
               </div>
-              
+
               <div className="p-2 bg-muted rounded text-xs">
-                "{bestResult.response.substring(0, 150)}{bestResult.response.length > 150 ? '...' : ''}"
+                "{bestResult.response.substring(0, 150)}
+                {bestResult.response.length > 150 ? "..." : ""}"
               </div>
             </div>
           </CardContent>
@@ -245,17 +277,22 @@ export default function FridayTestPanel() {
                       {result.responseTime}ms
                     </span>
                   </div>
-                  <Badge variant={result.quality.overallScore >= 3 ? "default" : "secondary"}>
+                  <Badge
+                    variant={
+                      result.quality.overallScore >= 3 ? "default" : "secondary"
+                    }
+                  >
                     {result.quality.overallScore}/4
                   </Badge>
                 </div>
-                
+
                 <div className="text-xs text-muted-foreground">
                   {result.timestamp.toLocaleTimeString()}
                 </div>
-                
+
                 <div className="text-sm p-2 bg-muted rounded">
-                  "{result.response.substring(0, 200)}{result.response.length > 200 ? '...' : ''}"
+                  "{result.response.substring(0, 200)}
+                  {result.response.length > 200 ? "..." : ""}"
                 </div>
               </div>
             </Card>

@@ -3,10 +3,10 @@ import { Mail } from "lucide-react";
 
 /**
  * Email Center Panel - Dedicated Email Workspace
- * 
+ *
  * Refactored to focus 100% on emails.
  * Other tabs (Fakturaer, Kalender, Leads, Opgaver) moved to WorkspacePanel.
- * 
+ *
  * Features:
  * - Full-width email list for maximum readability
  * - No tab switching - always shows emails
@@ -14,9 +14,7 @@ import { Mail } from "lucide-react";
  * - Mini-tabs at bottom for quick access to other tools
  */
 
-const EmailTabV2 = lazy(() =>
-  import("@/components/inbox/EmailTabV2")
-);
+const EmailTabV2 = lazy(() => import("@/components/inbox/EmailTabV2"));
 
 const EmailSkeleton = () => (
   <div className="space-y-4 p-4">

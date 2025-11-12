@@ -10,7 +10,9 @@
 ### CLI Commands (8/8 Core Commands) ✅
 
 #### 1. **list** - List documents
+
 **Fil:** `cli/tekup-docs/src/commands/list.ts`
+
 - List alle dokumenter
 - Filter by category, tags, author
 - Full-text search
@@ -18,7 +20,9 @@
 - Formateret output
 
 #### 2. **create** - Create document
+
 **Fil:** `cli/tekup-docs/src/commands/create.ts`
+
 - Interactive prompts (hvis ingen args)
 - Template support (api, guide, tutorial)
 - Load content from file
@@ -26,40 +30,52 @@
 - Git path generation
 
 #### 3. **view** - View document
+
 **Fil:** `cli/tekup-docs/src/commands/view.ts`
+
 - View single document
 - Show comments (--comments flag)
 - Show history (--history flag)
 - Pretty formatted output
 
 #### 4. **search** - Search documents
+
 **Fil:** `cli/tekup-docs/src/commands/search.ts`
+
 - Full-text search
 - Filter by category, tags, author
 - Pagination
 - Facets display (categories, authors count)
 
 #### 5. **edit** - Edit document
+
 **Fil:** `cli/tekup-docs/src/commands/edit.ts`
+
 - Interactive editor (opens $EDITOR)
 - Update title, category, tags
 - Load content from file
 - Version bump automatic
 
 #### 6. **delete** - Delete document
+
 **Fil:** `cli/tekup-docs/src/commands/delete.ts`
+
 - Confirmation prompt (unless --force)
 - Shows document info before delete
 - Audit log automatic
 
 #### 7. **status** - System status
+
 **Fil:** `cli/tekup-docs/src/commands/status.ts`
+
 - Total documents count
 - Conflicts count
 - Detailed conflict list
 
 #### 8. **resolve** - Resolve conflicts
+
 **Fil:** `cli/tekup-docs/src/commands/resolve.ts`
+
 - Accept local/remote/manual
 - Opens editor for manual merge
 - Shows conflict markers
@@ -67,14 +83,18 @@
 ### Utilities ✅
 
 #### API Client
+
 **Fil:** `cli/tekup-docs/src/api/client.ts`
+
 - Axios-based HTTP client
 - All tRPC endpoints wrapped
 - Error handling
 - ENV-based configuration
 
 #### Formatters
+
 **Fil:** `cli/tekup-docs/src/utils/formatter.ts`
+
 - `formatDocumentList()` - Pretty list view
 - `formatDocument()` - Single doc view
 - `formatComments()` - Comments with status
@@ -85,16 +105,19 @@
 ### Configuration ✅
 
 #### package.json
+
 - Alle dependencies klar
 - Bin entry point
 - Scripts (build, dev, link)
 
 #### tsconfig.json
+
 - ES2022 target
 - ESNext modules
 - Strict mode
 
 #### index.ts
+
 - Command registration
 - Help text
 - Version
@@ -105,6 +128,7 @@
 ## 📦 Installerede Filer
 
 ### Nye filer (11)
+
 ```
 cli/tekup-docs/
 ├── src/
@@ -149,6 +173,7 @@ export DOCS_API_KEY=optional-api-key
 ### Eksempler
 
 #### List alle docs
+
 ```bash
 tekup-docs list
 tekup-docs list --category="API"
@@ -157,6 +182,7 @@ tekup-docs list --search="authentication"
 ```
 
 #### Create document
+
 ```bash
 # Interactive
 tekup-docs create
@@ -172,6 +198,7 @@ tekup-docs create "REST API" --template=api
 ```
 
 #### View document
+
 ```bash
 tekup-docs view <doc-id>
 tekup-docs view <doc-id> --comments
@@ -179,12 +206,14 @@ tekup-docs view <doc-id> --history
 ```
 
 #### Search
+
 ```bash
 tekup-docs search "email sync"
 tekup-docs search "api" --category="API"
 ```
 
 #### Edit
+
 ```bash
 # Interactive editor
 tekup-docs edit <doc-id>
@@ -197,17 +226,20 @@ tekup-docs edit <doc-id> --title="New Title" --tags="updated,new"
 ```
 
 #### Delete
+
 ```bash
 tekup-docs delete <doc-id>
 tekup-docs delete <doc-id> --force
 ```
 
 #### Status
+
 ```bash
 tekup-docs status
 ```
 
 #### Resolve conflict
+
 ```bash
 tekup-docs resolve <conflict-id>
 tekup-docs resolve <conflict-id> --local
@@ -220,6 +252,7 @@ tekup-docs resolve <conflict-id> --manual
 ## 🎨 Output Examples
 
 ### List Output
+
 ```
 📚 Found 3 document(s):
 
@@ -236,6 +269,7 @@ tekup-docs resolve <conflict-id> --manual
 ```
 
 ### View Output
+
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📄 API Authentication Guide
@@ -258,6 +292,7 @@ Updated: 11/8/2025, 8:30:00 PM
 ```
 
 ### Status Output
+
 ```
 📊 Documentation System Status
 
@@ -289,19 +324,19 @@ Conflicts: 0
 
 ## 🎯 Samlet Status Nu
 
-| Komponent | Status | Procent |
-|-----------|--------|---------|
-| TypeScript Setup | ✅ | 100% |
-| Dependencies | ✅ | 100% |
-| Database Schema | ✅ | 100% |
-| Backend Services | ✅ | 100% |
-| API Layer | ✅ | 100% |
-| Server Integration | ✅ | 100% |
-| **CLI Commands** | ✅ | **100%** |
-| **CLI Utilities** | ✅ | **100%** |
-| Frontend Portal | 🔴 | 0% |
-| AI Integration | 🔴 | 0% |
-| Testing | 🔴 | 0% |
+| Komponent          | Status | Procent  |
+| ------------------ | ------ | -------- |
+| TypeScript Setup   | ✅     | 100%     |
+| Dependencies       | ✅     | 100%     |
+| Database Schema    | ✅     | 100%     |
+| Backend Services   | ✅     | 100%     |
+| API Layer          | ✅     | 100%     |
+| Server Integration | ✅     | 100%     |
+| **CLI Commands**   | ✅     | **100%** |
+| **CLI Utilities**  | ✅     | **100%** |
+| Frontend Portal    | 🔴     | 0%       |
+| AI Integration     | 🔴     | 0%       |
+| Testing            | 🔴     | 0%       |
 
 **Overall Progress: ~60%** (Backend + CLI komplet)
 
@@ -310,6 +345,7 @@ Conflicts: 0
 ## 🚧 Hvad mangler stadig
 
 ### Frontend (100% mangler)
+
 - Docs portal page
 - Document viewer
 - Markdown editor
@@ -318,6 +354,7 @@ Conflicts: 0
 - Real-time WebSocket integration
 
 ### AI Integration (100% mangler)
+
 - Generate documentation
 - Improve documentation
 - Summarize
@@ -325,6 +362,7 @@ Conflicts: 0
 - Auto-tagging
 
 ### Testing (100% mangler)
+
 - CLI unit tests
 - API integration tests
 - E2E tests
@@ -336,12 +374,14 @@ Conflicts: 0
 ### For at teste CLI nu:
 
 1. **Install dependencies:**
+
    ```bash
    cd cli/tekup-docs
    pnpm install
    ```
 
 2. **Link globally:**
+
    ```bash
    pnpm link
    ```
@@ -355,6 +395,7 @@ Conflicts: 0
 ### For at få fuld funktionalitet:
 
 1. **Kør migrations:**
+
    ```bash
    cd ../..
    pnpm db:generate
@@ -362,10 +403,11 @@ Conflicts: 0
    ```
 
 2. **Start server med docs service:**
+
    ```bash
    # Tilføj til .env.dev
    DOCS_ENABLE=true
-   
+
    # Start
    pnpm dev
    ```
@@ -384,6 +426,7 @@ Conflicts: 0
 **CLI er nu fuldt funktionel!**
 
 Du kan:
+
 - ✅ List, create, view, search, edit, delete docs
 - ✅ View comments og history
 - ✅ Check status og resolve conflicts
@@ -391,6 +434,7 @@ Du kan:
 - ✅ Pretty formatted output
 
 **Mangler kun:**
+
 - Frontend docs portal (for web UI)
 - AI integration (for auto-generation)
 - Testing suite

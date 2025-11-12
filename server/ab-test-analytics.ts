@@ -5,12 +5,12 @@
 
 import { z } from "zod";
 import { publicProcedure, router } from "./_core/trpc";
-import { 
-  recordTestMetrics, 
-  calculateTestResults, 
+import {
+  recordTestMetrics,
+  calculateTestResults,
   getABTestStatus,
   getTestGroup,
-  type TestMetrics 
+  type TestMetrics,
 } from "./_core/ab-testing";
 import { getDb } from "./db";
 
@@ -66,17 +66,17 @@ export const abTestAnalyticsRouter = router({
         testName: results.testName,
         controlSampleSize: results.controlMetrics.length,
         variantSampleSize: results.variantMetrics.length,
-        controlAvgResponseTime: 
-          results.controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) / 
+        controlAvgResponseTime:
+          results.controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
           (results.controlMetrics.length || 1),
-        variantAvgResponseTime: 
-          results.variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) / 
+        variantAvgResponseTime:
+          results.variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
           (results.variantMetrics.length || 1),
-        controlErrorRate: 
-          results.controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) / 
+        controlErrorRate:
+          results.controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
           (results.controlMetrics.length || 1),
-        variantErrorRate: 
-          results.variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) / 
+        variantErrorRate:
+          results.variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
           (results.variantMetrics.length || 1),
         statisticalSignificance: results.statisticalSignificance,
         recommendation: results.recommendation,

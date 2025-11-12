@@ -2,19 +2,21 @@
 
 **Officielt Navn:** Friday Docs  
 **Alternativt:** Friday Knowledge System  
-**Version:** 1.0.0 ✅ Production Ready  
+**Version:** 1.0.0 ✅ Production Ready
 
 ---
 
 ## 🎯 Hvad Skal Du Kalde Det?
 
 ### I Chat/Diskussioner:
+
 - **"Friday Docs"** (anbefalet)
 - **"Docs systemet"**
 - **"Friday Knowledge"**
 - **"Friday Docs AI"** (når du snakker om AI features)
 
 ### I Kode:
+
 ```typescript
 // Import paths bruger "docs"
 import { useDocuments } from "@/hooks/docs/useDocuments";
@@ -25,6 +27,7 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 ```
 
 ### I URLs:
+
 - Main: `/docs`
 - Analytics: `/docs` (Analytics tab)
 
@@ -32,22 +35,23 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 
 ## ⚡ Quick Facts
 
-| Hvad | Værdi |
-|------|-------|
-| **Officielt Navn** | Friday Docs |
-| **Version** | 1.0.0 |
-| **Status** | ✅ Production Ready |
-| **Udviklet** | November 2025 |
-| **Total Tid** | 8+ timer |
-| **Features** | 43+ |
-| **Cost** | $0.00/måned 🎉 |
-| **ROI** | ∞ (infinite) |
+| Hvad               | Værdi               |
+| ------------------ | ------------------- |
+| **Officielt Navn** | Friday Docs         |
+| **Version**        | 1.0.0               |
+| **Status**         | ✅ Production Ready |
+| **Udviklet**       | November 2025       |
+| **Total Tid**      | 8+ timer            |
+| **Features**       | 43+                 |
+| **Cost**           | $0.00/måned 🎉      |
+| **ROI**            | ∞ (infinite)        |
 
 ---
 
 ## 🚀 Hvad Kan Det?
 
 ### Core (Friday Docs Core)
+
 - ✅ Document CRUD
 - ✅ Search & filter
 - ✅ Markdown editing
@@ -55,6 +59,7 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 - ✅ Comments & conflicts
 
 ### AI (Friday Docs AI)
+
 - ✅ AI doc generation
 - ✅ Weekly digests
 - ✅ Bulk generation
@@ -62,6 +67,7 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 - ✅ FREE model ($0.00!)
 
 ### Analytics (Friday Docs Analytics)
+
 - ✅ Metrics dashboard
 - ✅ Savings calculator
 - ✅ Activity tracking
@@ -72,16 +78,19 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 ## 💬 Eksempel På Brug I Chat
 
 **Når du vil nævne det:**
+
 > "Vi har Friday Docs klar - det kan lave AI-dokumenter for leads"
 > "Brug Friday Docs til at generere ugentlige rapporter"
 > "Friday Docs analytics viser vi har sparet 24k DKK"
 
 **Når du diskuterer features:**
+
 > "Friday Docs AI bruger FREE OpenRouter model"
 > "Friday Docs Core har real-time sync"
 > "Friday Docs Analytics tracker alt"
 
 **Når du guider andre:**
+
 > "Gå til Friday Docs (/docs) og klik Weekly Digest"
 > "I Friday Docs kan du se analytics under Analytics-tab"
 > "Friday Docs integration i leads dropdown - klik Generer AI Dok"
@@ -91,12 +100,14 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 ## 📊 Hurtig Sammenligning
 
 ### Friday AI (Hovedsystem)
+
 - Email management
 - Chat interface
 - Calendar booking
 - Lead tracking
 
 ### Friday Docs (Dette System)
+
 - Documentation management
 - AI doc generation
 - Knowledge base
@@ -123,7 +134,7 @@ Når du skal sælge/forklare Friday Docs:
 **Master Doc:** `FRIDAY_DOCS_SYSTEM.md`  
 **Quick Ref:** `FRIDAY_DOCS_QUICK_REF.md` (denne fil)  
 **Deployment:** `AI_DOCS_DEPLOYMENT_CHECKLIST.md`  
-**Usage:** `client/src/components/docs/AI_DOCS_USAGE.md`  
+**Usage:** `client/src/components/docs/AI_DOCS_USAGE.md`
 
 ---
 

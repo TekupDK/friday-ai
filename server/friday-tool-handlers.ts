@@ -27,7 +27,14 @@ export interface ToolCallResult {
   success: boolean;
   data?: any;
   error?: string;
-  code?: "UNKNOWN_TOOL" | "VALIDATION_ERROR" | "APPROVAL_REQUIRED" | "RATE_LIMIT_EXCEEDED" | "AUTH_ERROR" | "API_ERROR" | "INTERNAL_ERROR";
+  code?:
+    | "UNKNOWN_TOOL"
+    | "VALIDATION_ERROR"
+    | "APPROVAL_REQUIRED"
+    | "RATE_LIMIT_EXCEEDED"
+    | "AUTH_ERROR"
+    | "API_ERROR"
+    | "INTERNAL_ERROR";
 }
 
 type ToolRegistryEntry = {
@@ -101,11 +108,15 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       .object({
         timeMin: z
           .string()
-          .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/)
+          .regex(
+            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+          )
           .optional(),
         timeMax: z
           .string()
-          .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/)
+          .regex(
+            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+          )
           .optional(),
         maxResults: z.number().int().positive().optional(),
       })
@@ -118,7 +129,10 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
       duration: z.number().positive(),
       workingHours: z
-        .object({ start: z.number().min(0).max(23), end: z.number().min(0).max(23) })
+        .object({
+          start: z.number().min(0).max(23),
+          end: z.number().min(0).max(23),
+        })
         .optional(),
     }),
     requiresApproval: false,
@@ -130,10 +144,14 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       description: z.string().optional(),
       start: z
         .string()
-        .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/),
+        .regex(
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+        ),
       end: z
         .string()
-        .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/),
+        .regex(
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+        ),
       location: z.string().optional(),
     }),
     requiresApproval: true,
@@ -155,11 +173,15 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       description: z.string().optional(),
       start: z
         .string()
-        .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/)
+        .regex(
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+        )
         .optional(),
       end: z
         .string()
-        .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/)
+        .regex(
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+        )
         .optional(),
       location: z.string().optional(),
     }),
@@ -167,7 +189,10 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
     handler: async (args: any) => handleUpdateCalendarEvent(args),
   },
   delete_calendar_event: {
-    schema: z.object({ eventId: z.string().min(1), reason: z.string().optional() }),
+    schema: z.object({
+      eventId: z.string().min(1),
+      reason: z.string().optional(),
+    }),
     requiresApproval: true,
     handler: async (args: any) => handleDeleteCalendarEvent(args),
   },
@@ -175,10 +200,14 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
     schema: z.object({
       start: z
         .string()
-        .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/),
+        .regex(
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+        ),
       end: z
         .string()
-        .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/),
+        .regex(
+          /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(?:\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})$/
+        ),
       ignoreEventId: z.string().optional(),
     }),
     requiresApproval: false,
@@ -210,12 +239,20 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
     }),
     requiresApproval: false,
     requiresUser: true,
-    handler: async (args: any, userId: number) => handleCreateLead(userId, args),
+    handler: async (args: any, userId: number) =>
+      handleCreateLead(userId, args),
   },
   update_lead_status: {
     schema: z.object({
       leadId: z.number().int().positive(),
-      status: z.enum(["new", "contacted", "qualified", "proposal", "won", "lost"]),
+      status: z.enum([
+        "new",
+        "contacted",
+        "qualified",
+        "proposal",
+        "won",
+        "lost",
+      ]),
     }),
     requiresApproval: false,
     requiresUser: true,
@@ -225,7 +262,9 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
   // Tasks
   list_tasks: {
     schema: z
-      .object({ status: z.enum(["todo", "in_progress", "done", "cancelled"]).optional() })
+      .object({
+        status: z.enum(["todo", "in_progress", "done", "cancelled"]).optional(),
+      })
       .strict(),
     requiresApproval: false,
     requiresUser: true,
@@ -240,7 +279,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
     }),
     requiresApproval: false,
     requiresUser: true,
-    handler: async (args: any, userId: number) => handleCreateTask(userId, args),
+    handler: async (args: any, userId: number) =>
+      handleCreateTask(userId, args),
   },
 };
 
@@ -287,34 +327,60 @@ export async function executeToolCall(
     ? `[Tool][${options.correlationId}]`
     : `[Tool]`;
   if (!toolName) {
-    return { success: false, error: "Tool name is required", code: "VALIDATION_ERROR" };
+    return {
+      success: false,
+      error: "Tool name is required",
+      code: "VALIDATION_ERROR",
+    };
   }
   if (!args || typeof args !== "object") {
-    return { success: false, error: "Invalid arguments object", code: "VALIDATION_ERROR" };
+    return {
+      success: false,
+      error: "Invalid arguments object",
+      code: "VALIDATION_ERROR",
+    };
   }
 
   const entry = TOOL_REGISTRY[toolName];
   if (!entry) {
-    return { success: false, error: `Unknown tool: ${toolName}`, code: "UNKNOWN_TOOL" };
+    return {
+      success: false,
+      error: `Unknown tool: ${toolName}`,
+      code: "UNKNOWN_TOOL",
+    };
   }
 
   if (entry.requiresUser && !userId) {
-    return { success: false, error: "User authentication required", code: "AUTH_ERROR" };
+    return {
+      success: false,
+      error: "User authentication required",
+      code: "AUTH_ERROR",
+    };
   }
 
   const parsed = entry.schema.safeParse(args);
   if (!parsed.success) {
-    return { success: false, error: parsed.error.message, code: "VALIDATION_ERROR" };
+    return {
+      success: false,
+      error: parsed.error.message,
+      code: "VALIDATION_ERROR",
+    };
   }
 
   if (entry.requiresApproval && (args as any).__approved !== true) {
-    return { success: false, error: "Approval required for this action", code: "APPROVAL_REQUIRED" };
+    return {
+      success: false,
+      error: "Approval required for this action",
+      code: "APPROVAL_REQUIRED",
+    };
   }
 
   try {
     const result = await entry.handler(parsed.data, userId);
     const duration = Date.now() - start;
-    console.log(`${logPrefix} ${toolName} by user ${userId} -> ${result.success ? "OK" : "ERR"} in ${duration}ms${result.code ? ` [${result.code}]` : ""}`);
+    console.log(
+      `${logPrefix} ${toolName} by user ${userId} -> ${result.success ? "OK" : "ERR"} in ${duration}ms${result.code ? ` [${result.code}]` : ""}`
+    );
     await trackEvent({
       userId,
       eventType: "tool_call",
@@ -331,7 +397,10 @@ export async function executeToolCall(
     return result;
   } catch (error) {
     const duration = Date.now() - start;
-    console.error(`${logPrefix} ${toolName} by user ${userId} failed in ${duration}ms:`, error);
+    console.error(
+      `${logPrefix} ${toolName} by user ${userId} failed in ${duration}ms:`,
+      error
+    );
     await trackEvent({
       userId,
       eventType: "tool_call",
@@ -360,7 +429,9 @@ async function handleSearchGmail(args: {
   maxResults?: number;
 }): Promise<ToolCallResult> {
   try {
-    const results = await callWithRetry(() => searchGmail(args.query, args.maxResults));
+    const results = await callWithRetry(() =>
+      searchGmail(args.query, args.maxResults)
+    );
     return { success: true, data: results };
   } catch (error) {
     return {
@@ -423,7 +494,9 @@ async function handleSearchBillyCustomer(args: {
   email: string;
 }): Promise<ToolCallResult> {
   try {
-    const customer = await callWithRetry(() => searchCustomerByEmail(args.email));
+    const customer = await callWithRetry(() =>
+      searchCustomerByEmail(args.email)
+    );
     return { success: true, data: customer };
   } catch (error) {
     return {
@@ -812,7 +885,7 @@ async function handleCreateTask(
 ): Promise<ToolCallResult> {
   const priorityValues = ["low", "medium", "high", "urgent"] as const;
   const priority = priorityValues.includes((args.priority || "medium") as any)
-    ? ((args.priority || "medium") as typeof priorityValues[number])
+    ? ((args.priority || "medium") as (typeof priorityValues)[number])
     : ("medium" as const);
   const dueDateIso = args.dueDate
     ? /\d{4}-\d{2}-\d{2}$/.test(args.dueDate)

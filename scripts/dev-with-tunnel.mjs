@@ -230,17 +230,17 @@ setTimeout(async () => {
   });
 
   // Process ngrok output to extract and display clean URLs
-  ngrokProcess.stdout.on("data", (data) => {
+  ngrokProcess.stdout.on("data", data => {
     const output = data.toString();
     log("[TUNNEL]", colors.green, output.trim());
-    
+
     // Extract and save the public URL
     const urlMatch = output.match(/https:\/\/[^\s]+\.ngrok(-free)?\.dev/);
     if (urlMatch) {
       const publicUrl = urlMatch[0];
       log("[TUNNEL]", colors.cyan, `🌐 Public URL: ${publicUrl}`);
       log("[TUNNEL]", colors.cyan, `📊 Web Interface: http://127.0.0.1:4040`);
-      
+
       // Save to file for reference
       const outDir = path.resolve("tmp");
       fs.mkdirSync(outDir, { recursive: true });

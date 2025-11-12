@@ -1,9 +1,9 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import {
   Bell,
   BellRing,
@@ -21,40 +21,51 @@ import {
   Zap,
   MessageSquare,
   Settings,
-  ExternalLink
-} from "lucide-react"
-import { formatDistanceToNow } from "date-fns"
-import { da } from "date-fns/locale"
+  ExternalLink,
+} from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import { da } from "date-fns/locale";
 
 export interface NotificationItem {
-  id: string
-  type: 'success' | 'error' | 'warning' | 'info' | 'system'
-  title: string
-  message: string
-  timestamp: Date
-  read: boolean
-  priority?: 'low' | 'medium' | 'high' | 'urgent'
-  category?: 'message' | 'booking' | 'payment' | 'system' | 'reminder' | 'alert'
-  actionLabel?: string
-  actionUrl?: string
-  metadata?: Record<string, any>
-  dismissible?: boolean
-  autoHide?: boolean
-  autoHideDelay?: number
+  id: string;
+  type: "success" | "error" | "warning" | "info" | "system";
+  title: string;
+  message: string;
+  timestamp: Date;
+  read: boolean;
+  priority?: "low" | "medium" | "high" | "urgent";
+  category?:
+    | "message"
+    | "booking"
+    | "payment"
+    | "system"
+    | "reminder"
+    | "alert";
+  actionLabel?: string;
+  actionUrl?: string;
+  metadata?: Record<string, any>;
+  dismissible?: boolean;
+  autoHide?: boolean;
+  autoHideDelay?: number;
 }
 
 interface NotificationSystemProps extends React.HTMLAttributes<HTMLDivElement> {
-  notifications: NotificationItem[]
-  onMarkAsRead?: (id: string) => void
-  onMarkAllAsRead?: () => void
-  onDismiss?: (id: string) => void
-  onAction?: (notification: NotificationItem) => void
-  onClearAll?: () => void
-  maxVisible?: number
-  showUnreadBadge?: boolean
-  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center'
-  variant?: 'dropdown' | 'panel' | 'toast'
-  className?: string
+  notifications: NotificationItem[];
+  onMarkAsRead?: (id: string) => void;
+  onMarkAllAsRead?: () => void;
+  onDismiss?: (id: string) => void;
+  onAction?: (notification: NotificationItem) => void;
+  onClearAll?: () => void;
+  maxVisible?: number;
+  showUnreadBadge?: boolean;
+  position?:
+    | "top-right"
+    | "top-left"
+    | "bottom-right"
+    | "bottom-left"
+    | "center";
+  variant?: "dropdown" | "panel" | "toast";
+  className?: string;
 }
 
 const notificationIcons = {
@@ -62,23 +73,23 @@ const notificationIcons = {
   error: AlertCircle,
   warning: AlertTriangle,
   info: Info,
-  system: Settings
-}
+  system: Settings,
+};
 
 const notificationColors = {
-  success: 'text-green-600 bg-green-50 border-green-200',
-  error: 'text-red-600 bg-red-50 border-red-200',
-  warning: 'text-amber-600 bg-amber-50 border-amber-200',
-  info: 'text-blue-600 bg-blue-50 border-blue-200',
-  system: 'text-purple-600 bg-purple-50 border-purple-200'
-}
+  success: "text-green-600 bg-green-50 border-green-200",
+  error: "text-red-600 bg-red-50 border-red-200",
+  warning: "text-amber-600 bg-amber-50 border-amber-200",
+  info: "text-blue-600 bg-blue-50 border-blue-200",
+  system: "text-purple-600 bg-purple-50 border-purple-200",
+};
 
 const priorityColors = {
-  low: 'bg-gray-100 text-gray-800',
-  medium: 'bg-blue-100 text-blue-800',
-  high: 'bg-orange-100 text-orange-800',
-  urgent: 'bg-red-100 text-red-800'
-}
+  low: "bg-gray-100 text-gray-800",
+  medium: "bg-blue-100 text-blue-800",
+  high: "bg-orange-100 text-orange-800",
+  urgent: "bg-red-100 text-red-800",
+};
 
 const categoryIcons = {
   message: MessageSquare,
@@ -86,8 +97,8 @@ const categoryIcons = {
   payment: CreditCard,
   system: Settings,
   reminder: Clock,
-  alert: AlertTriangle
-}
+  alert: AlertTriangle,
+};
 
 export function NotificationSystem({
   notifications,
@@ -98,56 +109,65 @@ export function NotificationSystem({
   onClearAll,
   maxVisible = 5,
   showUnreadBadge = true,
-  position = 'top-right',
-  variant = 'dropdown',
+  position = "top-right",
+  variant = "dropdown",
   className,
   ...props
 }: NotificationSystemProps) {
-  const [isOpen, setIsOpen] = React.useState(false)
-  const [filter, setFilter] = React.useState<'all' | 'unread'>('all')
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [filter, setFilter] = React.useState<"all" | "unread">("all");
 
-  const unreadCount = notifications.filter(n => !n.read).length
+  const unreadCount = notifications.filter(n => !n.read).length;
   const visibleNotifications = notifications
-    .filter(n => filter === 'all' || !n.read)
-    .slice(0, maxVisible)
+    .filter(n => filter === "all" || !n.read)
+    .slice(0, maxVisible);
 
   const handleNotificationClick = (notification: NotificationItem) => {
     if (!notification.read && onMarkAsRead) {
-      onMarkAsRead(notification.id)
+      onMarkAsRead(notification.id);
     }
     if (notification.actionUrl && onAction) {
-      onAction(notification)
+      onAction(notification);
     }
-  }
+  };
 
   const getPriorityBadge = (priority?: string) => {
-    if (!priority) return null
+    if (!priority) return null;
     return (
       <Badge
         variant="outline"
-        className={cn("text-xs", priorityColors[priority as keyof typeof priorityColors])}
+        className={cn(
+          "text-xs",
+          priorityColors[priority as keyof typeof priorityColors]
+        )}
       >
         {priority.toUpperCase()}
       </Badge>
-    )
-  }
+    );
+  };
 
-  if (variant === 'toast') {
+  if (variant === "toast") {
     return (
-      <div className={cn(
-        "fixed z-50 space-y-2",
-        {
-          'top-4 right-4': position === 'top-right',
-          'top-4 left-4': position === 'top-left',
-          'bottom-4 right-4': position === 'bottom-right',
-          'bottom-4 left-4': position === 'bottom-left',
-          'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2': position === 'center'
-        },
-        className
-      )} {...props}>
-        {visibleNotifications.map((notification) => {
-          const Icon = notificationIcons[notification.type]
-          const CategoryIcon = notification.category ? categoryIcons[notification.category] : null
+      <div
+        className={cn(
+          "fixed z-50 space-y-2",
+          {
+            "top-4 right-4": position === "top-right",
+            "top-4 left-4": position === "top-left",
+            "bottom-4 right-4": position === "bottom-right",
+            "bottom-4 left-4": position === "bottom-left",
+            "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2":
+              position === "center",
+          },
+          className
+        )}
+        {...props}
+      >
+        {visibleNotifications.map(notification => {
+          const Icon = notificationIcons[notification.type];
+          const CategoryIcon = notification.category
+            ? categoryIcons[notification.category]
+            : null;
 
           return (
             <div
@@ -175,7 +195,7 @@ export function NotificationSystem({
                   <span className="text-xs opacity-70">
                     {formatDistanceToNow(new Date(notification.timestamp), {
                       addSuffix: true,
-                      locale: da
+                      locale: da,
                     })}
                   </span>
                   {notification.actionLabel && (
@@ -201,10 +221,10 @@ export function NotificationSystem({
                 </Button>
               )}
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   }
 
   return (
@@ -222,10 +242,8 @@ export function NotificationSystem({
           <Bell className="w-4 h-4" />
         )}
         {showUnreadBadge && unreadCount > 0 && (
-          <Badge
-            className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-red-500 hover:bg-red-500"
-          >
-            {unreadCount > 9 ? '9+' : unreadCount}
+          <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-red-500 hover:bg-red-500">
+            {unreadCount > 9 ? "9+" : unreadCount}
           </Badge>
         )}
       </Button>
@@ -240,16 +258,12 @@ export function NotificationSystem({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setFilter(filter === 'all' ? 'unread' : 'all')}
+                onClick={() => setFilter(filter === "all" ? "unread" : "all")}
               >
-                {filter === 'all' ? 'Vis ulæste' : 'Vis alle'}
+                {filter === "all" ? "Vis ulæste" : "Vis alle"}
               </Button>
               {unreadCount > 0 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={onMarkAllAsRead}
-                >
+                <Button variant="ghost" size="sm" onClick={onMarkAllAsRead}>
                   Markér alle som læst
                 </Button>
               )}
@@ -266,18 +280,18 @@ export function NotificationSystem({
           {/* Filter Tabs */}
           <div className="flex border-b border-border">
             <Button
-              variant={filter === 'all' ? 'default' : 'ghost'}
+              variant={filter === "all" ? "default" : "ghost"}
               size="sm"
               className="flex-1 rounded-none border-r border-border"
-              onClick={() => setFilter('all')}
+              onClick={() => setFilter("all")}
             >
               Alle ({notifications.length})
             </Button>
             <Button
-              variant={filter === 'unread' ? 'default' : 'ghost'}
+              variant={filter === "unread" ? "default" : "ghost"}
               size="sm"
               className="flex-1 rounded-none"
-              onClick={() => setFilter('unread')}
+              onClick={() => setFilter("unread")}
             >
               Ulæste ({unreadCount})
             </Button>
@@ -289,21 +303,26 @@ export function NotificationSystem({
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <Bell className="w-12 h-12 text-muted-foreground mb-3" />
                 <p className="text-sm text-muted-foreground">
-                  {filter === 'unread' ? 'Ingen ulæste notifikationer' : 'Ingen notifikationer'}
+                  {filter === "unread"
+                    ? "Ingen ulæste notifikationer"
+                    : "Ingen notifikationer"}
                 </p>
               </div>
             ) : (
               <div className="divide-y divide-border">
-                {visibleNotifications.map((notification) => {
-                  const Icon = notificationIcons[notification.type]
-                  const CategoryIcon = notification.category ? categoryIcons[notification.category] : null
+                {visibleNotifications.map(notification => {
+                  const Icon = notificationIcons[notification.type];
+                  const CategoryIcon = notification.category
+                    ? categoryIcons[notification.category]
+                    : null;
 
                   return (
                     <div
                       key={notification.id}
                       className={cn(
                         "p-4 hover:bg-accent/50 cursor-pointer transition-colors",
-                        !notification.read && "bg-blue-50/30 border-l-4 border-l-blue-500"
+                        !notification.read &&
+                          "bg-blue-50/30 border-l-4 border-l-blue-500"
                       )}
                       onClick={() => handleNotificationClick(notification)}
                     >
@@ -324,19 +343,22 @@ export function NotificationSystem({
                           </p>
                           <div className="flex items-center justify-between">
                             <span className="text-xs text-muted-foreground">
-                              {formatDistanceToNow(new Date(notification.timestamp), {
-                                addSuffix: true,
-                                locale: da
-                              })}
+                              {formatDistanceToNow(
+                                new Date(notification.timestamp),
+                                {
+                                  addSuffix: true,
+                                  locale: da,
+                                }
+                              )}
                             </span>
                             {notification.actionLabel && (
                               <Button
                                 size="sm"
                                 variant="outline"
                                 className="h-6 px-2 text-xs"
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  onAction?.(notification)
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  onAction?.(notification);
                                 }}
                               >
                                 {notification.actionLabel}
@@ -354,9 +376,9 @@ export function NotificationSystem({
                               variant="ghost"
                               size="sm"
                               className="h-6 w-6 p-0 hover:bg-destructive/10 hover:text-destructive"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                onDismiss?.(notification.id)
+                              onClick={e => {
+                                e.stopPropagation();
+                                onDismiss?.(notification.id);
                               }}
                             >
                               <X className="w-3 h-3" />
@@ -365,7 +387,7 @@ export function NotificationSystem({
                         </div>
                       </div>
                     </div>
-                  )
+                  );
                 })}
               </div>
             )}
@@ -375,7 +397,8 @@ export function NotificationSystem({
           {notifications.length > maxVisible && (
             <div className="p-3 border-t border-border bg-muted/30">
               <p className="text-xs text-center text-muted-foreground">
-                Viser {visibleNotifications.length} af {notifications.length} notifikationer
+                Viser {visibleNotifications.length} af {notifications.length}{" "}
+                notifikationer
               </p>
             </div>
           )}
@@ -395,5 +418,5 @@ export function NotificationSystem({
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,4 +1,5 @@
 # Test Results Summary - Chat Improvements
+
 **Date:** November 8, 2025  
 **Session:** Chat Panel Improvements & Testing
 
@@ -11,6 +12,7 @@
 **Status:** ✅ **10/10 PASSED**
 
 **Results:**
+
 ```
 ✓ formatActionResultForAI (10)
   ✓ should format success result without data
@@ -40,11 +42,13 @@
 **Status:** ⏸️ **BLOCKED - Server Issues**
 
 **Reason:** Dev server failed to start due to:
+
 - Missing `react-syntax-highlighter` dependency
 - TypeScript module resolution errors
 - Better-sqlite3 native binding issues
 
 **Tests Created (8 total):**
+
 1. should show disabled buttons with "kommer snart" tooltips
 2. should have disabled voice button with tooltip
 3. Send button should be disabled when input is empty
@@ -55,6 +59,7 @@
 8. messages should use compact styling
 
 **To Run When Fixed:**
+
 ```bash
 npm run dev  # In terminal 1
 npx playwright test tests/chat-input-buttons.spec.ts  # In terminal 2
@@ -67,10 +72,12 @@ npx playwright test tests/chat-input-buttons.spec.ts  # In terminal 2
 **Status:** ⏸️ **BLOCKED - OpenRouter API Configuration**
 
 **Reason:** OpenRouter API key needs data policy configured for free models
+
 - Error: "No endpoints found matching your data policy (Free model publication)"
 - Solution: Configure at https://openrouter.ai/settings/privacy
 
 **Tests Created (4 total):**
+
 - 4 test cases validating LLM output formatting
 - Model: deepseek/deepseek-chat-v3.1:free (verified working model ID)
 - Validates no raw JSON in responses
@@ -78,12 +85,14 @@ npx playwright test tests/chat-input-buttons.spec.ts  # In terminal 2
 - Checks calendar/email/lead formatting
 
 **Infrastructure:**
+
 - ✅ better-sqlite3 rebuilt successfully
 - ✅ Promptfoo runs without errors
 - ✅ Model IDs validated against MODEL_ID_MAPPING
 - ⏸️ Waiting for OpenRouter account configuration
 
 **To Run When Fixed:**
+
 ```bash
 # 1. Configure OpenRouter: https://openrouter.ai/settings/privacy
 # 2. Enable "Free model publication" in data policy
@@ -97,12 +106,12 @@ promptfoo view  # See results
 
 ## 📊 Overall Test Statistics
 
-| Test Suite | Status | Passed | Total | Completion |
-|------------|--------|--------|-------|------------|
-| Unit Tests | ✅ DONE | 10 | 10 | 100% |
-| E2E Playwright | ⏸️ BLOCKED | 0 | 8 | 0% |
-| Promptfoo LLM | ⏸️ BLOCKED | 0 | 12 | 0% |
-| **TOTAL** | **⏸️** | **10** | **30** | **33%** |
+| Test Suite     | Status     | Passed | Total  | Completion |
+| -------------- | ---------- | ------ | ------ | ---------- |
+| Unit Tests     | ✅ DONE    | 10     | 10     | 100%       |
+| E2E Playwright | ⏸️ BLOCKED | 0      | 8      | 0%         |
+| Promptfoo LLM  | ⏸️ BLOCKED | 0      | 12     | 0%         |
+| **TOTAL**      | **⏸️**     | **10** | **30** | **33%**    |
 
 ---
 
@@ -146,16 +155,19 @@ promptfoo view  # See results
 ## 🐛 Issues Encountered
 
 ### 1. Node Modules Corruption
+
 **Error:** `better-sqlite3` native bindings not found  
 **Impact:** Blocks Promptfoo and potentially dev server  
 **Solution:** `npm install` or rebuild better-sqlite3
 
 ### 2. Missing Dependencies
+
 **Error:** `react-syntax-highlighter` not installed  
 **Impact:** Blocks dev server startup  
 **Solution:** Installed temporary fallback (commented out)
 
 ### 3. TypeScript Module Resolution
+
 **Error:** Cannot find package in node_modules  
 **Impact:** Dev server fails to start  
 **Solution:** May need `npm clean-install` or node_modules rebuild
@@ -177,7 +189,9 @@ promptfoo view  # See results
 ## 📝 Recommendations
 
 ### Immediate Actions:
+
 1. **Fix Node Modules:**
+
    ```bash
    rm -rf node_modules package-lock.json
    npm install
@@ -185,6 +199,7 @@ promptfoo view  # See results
    ```
 
 2. **Install Missing Dependencies:**
+
    ```bash
    npm install react-syntax-highlighter @types/react-syntax-highlighter
    ```
@@ -196,6 +211,7 @@ promptfoo view  # See results
    ```
 
 ### Then Run Remaining Tests:
+
 1. **E2E Tests:** `npx playwright test tests/chat-input-buttons.spec.ts`
 2. **Promptfoo:** `cd tests/ai && promptfoo eval -c promptfoo-action-formatting.yaml`
 
@@ -220,14 +236,14 @@ promptfoo view  # See results
 
 ## 📈 Success Criteria Met
 
-| Criteria | Status | Evidence |
-|----------|--------|----------|
-| Code changes implemented | ✅ | All 5 tasks completed and committed |
-| Unit tests created | ✅ | 10 tests, 100% passing |
-| E2E tests created | ✅ | 8 tests written, config done |
-| LLM quality tests created | ✅ | Promptfoo config ready |
-| Test documentation | ✅ | Complete guide written |
-| **Partial Success** | **✅** | **Core functionality verified** |
+| Criteria                  | Status | Evidence                            |
+| ------------------------- | ------ | ----------------------------------- |
+| Code changes implemented  | ✅     | All 5 tasks completed and committed |
+| Unit tests created        | ✅     | 10 tests, 100% passing              |
+| E2E tests created         | ✅     | 8 tests written, config done        |
+| LLM quality tests created | ✅     | Promptfoo config ready              |
+| Test documentation        | ✅     | Complete guide written              |
+| **Partial Success**       | **✅** | **Core functionality verified**     |
 
 ---
 

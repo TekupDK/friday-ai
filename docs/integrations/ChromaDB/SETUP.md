@@ -37,6 +37,7 @@ Modified:
 ### ✅ TypeScript Client
 
 **Features:**
+
 - ✅ Singleton ChromaClient
 - ✅ Collection management
 - ✅ Document add/update/delete
@@ -45,6 +46,7 @@ Modified:
 - ✅ Helper formatters (leads, emails)
 
 **Functions:**
+
 ```typescript
 - getChromaClient()
 - getCollection(name, metadata?)
@@ -133,7 +135,7 @@ await addDocuments('friday_leads', [
 
 // Search for similar leads
 const results = await searchSimilar(
-  'friday_leads', 
+  'friday_leads',
   'Looking for product information',
   limit: 5
 );
@@ -153,18 +155,18 @@ async function findDuplicateLeads(newLead: Lead) {
     company: newLead.company,
     message: newLead.message
   });
-  
+
   const similar = await searchSimilar(
     'friday_leads',
     leadText,
     limit: 3
   );
-  
+
   // Leads with distance < 0.2 are likely duplicates
-  const duplicates = similar?.ids.filter((_, i) => 
+  const duplicates = similar?.ids.filter((_, i) =>
     similar.distances[i] < 0.2
   ) || [];
-  
+
   return duplicates;
 }
 ```
@@ -180,14 +182,14 @@ async function findRelatedEmails(currentEmail: Email) {
     subject: currentEmail.subject,
     body: currentEmail.body
   });
-  
+
   const related = await searchSimilar(
     'friday_emails',
     emailText,
     limit: 5,
     where: { threadId: currentEmail.threadId } // Optional filter
   );
-  
+
   return related?.documents || [];
 }
 ```
@@ -231,6 +233,7 @@ Current: Simple hash-based (not real embeddings)
 Need: Integrate with proper embeddings API
 
 **Options:**
+
 - OpenAI Embeddings API (text-embedding-3-small)
 - Voyage AI (free tier available)
 - Local Sentence Transformers
@@ -299,14 +302,14 @@ curl -X POST http://localhost:8000/api/v2/collections \
 
 ```typescript
 // Add to tests or run in dev console
-import { getChromaClient, listCollections } from '../integrations/chromadb';
+import { getChromaClient, listCollections } from "../integrations/chromadb";
 
 async function testChroma() {
   const client = getChromaClient();
-  console.log('Client:', client ? 'Connected' : 'Failed');
-  
+  console.log("Client:", client ? "Connected" : "Failed");
+
   const collections = await listCollections();
-  console.log('Collections:', collections);
+  console.log("Collections:", collections);
 }
 
 testChroma();
@@ -319,11 +322,13 @@ testChroma();
 ### Problem: ChromaDB not starting
 
 **Check logs:**
+
 ```bash
 docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.yml logs chromadb
 ```
 
 **Common fixes:**
+
 - Port 8000 already in use → Change port in docker-compose.yml
 - Volume permission issues → Clear volume and restart
 - Health check failing → Wait 30 seconds for startup
@@ -331,6 +336,7 @@ docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.ym
 ### Problem: Client not connecting
 
 **Check:**
+
 1. `CHROMA_ENABLED=true` in .env.dev
 2. `CHROMA_URL=http://localhost:8000` is correct
 3. ChromaDB is actually running (`docker ps`)
@@ -339,6 +345,7 @@ docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.ym
 ### Problem: Authentication errors
 
 **Check:**
+
 - `CHROMA_AUTH_TOKEN` matches in docker-compose.yml and .env.dev
 - Default: `friday-chromadb-token-dev`
 

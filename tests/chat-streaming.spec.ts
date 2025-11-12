@@ -7,7 +7,9 @@ async function devLogin(page: any) {
   await page.waitForLoadState("networkidle");
 }
 
-test("streaming can be canceled and partial output preserved", async ({ page }) => {
+test("streaming can be canceled and partial output preserved", async ({
+  page,
+}) => {
   await devLogin(page);
 
   const newConv = page.getByRole("button", { name: "Ny samtale" });
@@ -16,7 +18,9 @@ test("streaming can be canceled and partial output preserved", async ({ page }) 
   }
 
   const input = page.getByPlaceholder("Skriv til Friday...");
-  await input.fill("Skriv et langt svar om emnet præsentation af virksomheden.");
+  await input.fill(
+    "Skriv et langt svar om emnet præsentation af virksomheden."
+  );
   await input.press("Enter");
 
   const status = page.getByRole("status").filter({ hasText: "Friday" });
@@ -42,7 +46,9 @@ test("stream aborts when switching conversation", async ({ page }) => {
     await newConv.click();
   }
 
-  const convoButtons = page.getByRole("button").filter({ hasText: /Ny samtale|\d{2}:\d{2}/ });
+  const convoButtons = page
+    .getByRole("button")
+    .filter({ hasText: /Ny samtale|\d{2}:\d{2}/ });
   const count = await convoButtons.count();
   if (count < 2) {
     test.skip(true, "Not enough conversations to test switching.");

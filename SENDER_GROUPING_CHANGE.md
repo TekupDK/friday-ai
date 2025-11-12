@@ -8,6 +8,7 @@
 ## 📧 WHAT CHANGED
 
 ### BEFORE (Gmail ThreadId Grouping):
+
 ```
 ❌ Emails grouped by Gmail's internal threadId
 ❌ Multiple separate threads from same customer
@@ -15,12 +16,13 @@
 
 Example:
 - Thread 1: "Rengøring tilbud" (threadId: abc123)
-- Thread 2: "Nyt projekt" (threadId: def456)  
+- Thread 2: "Nyt projekt" (threadId: def456)
 - Thread 3: "Opfølgning" (threadId: ghi789)
 → 3 separate threads, even though all from Rendstelsje.dk
 ```
 
 ### AFTER (Sender Email Grouping):
+
 ```
 ✅ Emails grouped by SENDER email address
 ✅ All emails from same customer in ONE thread
@@ -40,6 +42,7 @@ Example:
 ## 🎯 WHY THIS CHANGE?
 
 ### Customer-Centric View:
+
 ```
 Business Need:
 "Jeg vil se ALLE emails fra Rendstelsje.dk sammen,
@@ -59,6 +62,7 @@ New Way (Sender):
 ```
 
 ### Better for Business:
+
 - ✅ Track all conversations with each customer
 - ✅ See complete interaction history
 - ✅ Easier to spot repeat customers
@@ -70,6 +74,7 @@ New Way (Sender):
 ## 🔧 TECHNICAL IMPLEMENTATION
 
 ### Code Change:
+
 ```typescript
 // OLD: Group by Gmail threadId
 emails.forEach(email => {
@@ -80,16 +85,17 @@ emails.forEach(email => {
 // NEW: Group by sender email
 emails.forEach(email => {
   // Extract email from "Name <email@domain.com>"
-  const senderEmail = email.from.match(/<(.+?)>/) 
-    ? email.from.match(/<(.+?)>/)![1] 
+  const senderEmail = email.from.match(/<(.+?)>/)
+    ? email.from.match(/<(.+?)>/)![1]
     : email.from;
-  
+
   const threadId = senderEmail;  // Use sender as group key
   ...
 });
 ```
 
 ### Email Format Handling:
+
 ```typescript
 // Handles both formats:
 "john@example.com" → "john@example.com"
@@ -103,6 +109,7 @@ emails.forEach(email => {
 ## 📊 REAL-WORLD EXAMPLE
 
 ### From Screenshots:
+
 ```
 BEFORE (Multiple Threads):
 ┌────────────────────────────────┐
@@ -133,6 +140,7 @@ AFTER (One Customer Thread):
 ## ✅ BENEFITS
 
 ### For Users:
+
 ```
 Reduction in clutter:   86% fewer items
 Customer visibility:    100% of history in one place
@@ -141,6 +149,7 @@ Mental overhead:        Significantly reduced
 ```
 
 ### For Business:
+
 ```
 Customer tracking:      Complete conversation history
 Lead management:        All interactions grouped
@@ -154,6 +163,7 @@ Sales efficiency:       Quick customer overview
 ## 🧪 TESTING
 
 ### Test Results:
+
 ```
 ✅ All 18/18 Vitest tests passing (100%)
 ✅ Sender extraction works correctly
@@ -163,6 +173,7 @@ Sales efficiency:       Quick customer overview
 ```
 
 ### Test Coverage:
+
 - ✅ Multiple emails from same sender → 1 thread
 - ✅ Emails from different senders → separate threads
 - ✅ Name format extraction working
@@ -174,6 +185,7 @@ Sales efficiency:       Quick customer overview
 ## 📝 EXAMPLE SCENARIOS
 
 ### Scenario 1: Repeat Customer
+
 ```
 Rendstelsje.dk sends 7 emails over 2 weeks:
 
@@ -189,6 +201,7 @@ NEW WAY:
 ```
 
 ### Scenario 2: Multiple Customers
+
 ```
 You have emails from:
 - Rendstelsje.dk (7 emails)
@@ -207,6 +220,7 @@ NEW WAY:
 ```
 
 ### Scenario 3: Lead Tracking
+
 ```
 Hot lead "Matilde Stænneben" contacts you:
 
@@ -228,6 +242,7 @@ NEW WAY:
 ## 🎯 CONFIGURATION
 
 ### Current Settings:
+
 ```typescript
 // Grouping by sender is now the default
 const threads = groupEmailsByThread(emails);
@@ -239,6 +254,7 @@ thread.messageCount = total emails from sender
 ```
 
 ### Thread Properties:
+
 ```typescript
 {
   id: "rendstelsje@example.com",  // Sender email
@@ -260,12 +276,14 @@ thread.messageCount = total emails from sender
 ### Status: ✅ READY FOR PRODUCTION
 
 **Completed:**
+
 - ✅ Code implemented
 - ✅ All tests passing
 - ✅ Edge cases handled
 - ✅ Documentation complete
 
 **Impact:**
+
 - ✅ 86% reduction in visible items
 - ✅ Better customer tracking
 - ✅ More intuitive UX
@@ -278,6 +296,7 @@ thread.messageCount = total emails from sender
 ## 📈 EXPECTED IMPACT
 
 ### Metrics:
+
 ```
 Items to scan:        86% fewer (100 emails → 14 customers)
 Customer lookups:     Instant (all in one thread)
@@ -287,6 +306,7 @@ User satisfaction:    Higher (intuitive grouping)
 ```
 
 ### User Feedback Expected:
+
 ```
 "Wow, now I can see all emails from Rendstelsje.dk together!"
 "Much easier to track customer conversations!"
@@ -303,6 +323,7 @@ User satisfaction:    Higher (intuitive grouping)
 This change transforms Email Center from a chronological email list into a customer-centric conversation manager!
 
 **Key Achievement:**
+
 - ✅ 86% reduction in clutter
 - ✅ Customer-focused organization
 - ✅ Complete conversation history
@@ -313,4 +334,4 @@ This change transforms Email Center from a chronological email list into a custo
 
 ---
 
-*Built with customer needs in mind! 💼*
+_Built with customer needs in mind! 💼_

@@ -1,9 +1,9 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import {
   Download,
   Upload,
@@ -13,32 +13,33 @@ import {
   CheckCircle,
   AlertCircle,
   Loader2,
-  Save
-} from "lucide-react"
+  Save,
+} from "lucide-react";
 
-export interface ExportImportCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ExportImportCardProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   exports: Array<{
-    id: string
-    name: string
-    type: 'data' | 'settings' | 'backup' | 'report'
-    format: 'json' | 'csv' | 'pdf' | 'xlsx'
-    size: string
-    createdAt: string
-    status: 'ready' | 'processing' | 'failed'
-  }>
+    id: string;
+    name: string;
+    type: "data" | "settings" | "backup" | "report";
+    format: "json" | "csv" | "pdf" | "xlsx";
+    size: string;
+    createdAt: string;
+    status: "ready" | "processing" | "failed";
+  }>;
   imports: Array<{
-    id: string
-    name: string
-    type: 'data' | 'settings' | 'backup'
-    progress?: number
-    status: 'uploading' | 'processing' | 'completed' | 'failed'
-    createdAt: string
-  }>
-  onExport?: (type: string, format: string) => void
-  onImport?: (file: File) => void
-  onDownload?: (exportId: string) => void
-  onDelete?: (exportId: string) => void
-  isLoading?: boolean
+    id: string;
+    name: string;
+    type: "data" | "settings" | "backup";
+    progress?: number;
+    status: "uploading" | "processing" | "completed" | "failed";
+    createdAt: string;
+  }>;
+  onExport?: (type: string, format: string) => void;
+  onImport?: (file: File) => void;
+  onDownload?: (exportId: string) => void;
+  onDelete?: (exportId: string) => void;
+  isLoading?: boolean;
 }
 
 export function ExportImportCard({
@@ -52,56 +53,83 @@ export function ExportImportCard({
   className,
   ...props
 }: ExportImportCardProps) {
-  const [selectedExportType, setSelectedExportType] = React.useState('data')
-  const [selectedExportFormat, setSelectedExportFormat] = React.useState('json')
-  const fileInputRef = React.useRef<HTMLInputElement>(null)
+  const [selectedExportType, setSelectedExportType] = React.useState("data");
+  const [selectedExportFormat, setSelectedExportFormat] =
+    React.useState("json");
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const exportTypes = [
-    { id: 'data', label: 'Data', icon: Database, description: 'Leads, kunder, opgaver' },
-    { id: 'settings', label: 'Indstillinger', icon: Settings, description: 'Tema, præferencer' },
-    { id: 'backup', label: 'Backup', icon: Save, description: 'Komplet system backup' },
-    { id: 'report', label: 'Rapport', icon: FileText, description: 'Analytics og rapporter' }
-  ]
+    {
+      id: "data",
+      label: "Data",
+      icon: Database,
+      description: "Leads, kunder, opgaver",
+    },
+    {
+      id: "settings",
+      label: "Indstillinger",
+      icon: Settings,
+      description: "Tema, præferencer",
+    },
+    {
+      id: "backup",
+      label: "Backup",
+      icon: Save,
+      description: "Komplet system backup",
+    },
+    {
+      id: "report",
+      label: "Rapport",
+      icon: FileText,
+      description: "Analytics og rapporter",
+    },
+  ];
 
   const exportFormats = [
-    { id: 'json', label: 'JSON', description: 'Struktureret data' },
-    { id: 'csv', label: 'CSV', description: 'Regneark kompatibel' },
-    { id: 'xlsx', label: 'Excel', description: 'Microsoft Excel' },
-    { id: 'pdf', label: 'PDF', description: 'Dokument format' }
-  ]
+    { id: "json", label: "JSON", description: "Struktureret data" },
+    { id: "csv", label: "CSV", description: "Regneark kompatibel" },
+    { id: "xlsx", label: "Excel", description: "Microsoft Excel" },
+    { id: "pdf", label: "PDF", description: "Dokument format" },
+  ];
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'ready':
-      case 'completed':
-        return <CheckCircle className="h-4 w-4 text-green-500" />
-      case 'processing':
-      case 'uploading':
-        return <Loader2 className="h-4 w-4 text-blue-500 animate-spin" />
-      case 'failed':
-        return <AlertCircle className="h-4 w-4 text-red-500" />
+      case "ready":
+      case "completed":
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
+      case "processing":
+      case "uploading":
+        return <Loader2 className="h-4 w-4 text-blue-500 animate-spin" />;
+      case "failed":
+        return <AlertCircle className="h-4 w-4 text-red-500" />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'ready': return 'Klar'
-      case 'processing': return 'Behandler'
-      case 'uploading': return 'Uploader'
-      case 'completed': return 'Fuldført'
-      case 'failed': return 'Fejlet'
-      default: return status
+      case "ready":
+        return "Klar";
+      case "processing":
+        return "Behandler";
+      case "uploading":
+        return "Uploader";
+      case "completed":
+        return "Fuldført";
+      case "failed":
+        return "Fejlet";
+      default:
+        return status;
     }
-  }
+  };
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
     if (file) {
-      onImport?.(file)
+      onImport?.(file);
     }
-  }
+  };
 
   return (
     <Card className={cn("w-full", className)} {...props}>
@@ -128,8 +156,8 @@ export function ExportImportCard({
             <div className="space-y-2">
               <label className="text-xs font-medium">Type</label>
               <div className="space-y-1">
-                {exportTypes.map((type) => {
-                  const Icon = type.icon
+                {exportTypes.map(type => {
+                  const Icon = type.icon;
                   return (
                     <button
                       key={type.id}
@@ -144,10 +172,12 @@ export function ExportImportCard({
                       <Icon className="h-4 w-4" />
                       <div>
                         <div className="text-sm font-medium">{type.label}</div>
-                        <div className="text-xs text-muted-foreground">{type.description}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {type.description}
+                        </div>
                       </div>
                     </button>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -156,7 +186,7 @@ export function ExportImportCard({
             <div className="space-y-2">
               <label className="text-xs font-medium">Format</label>
               <div className="space-y-1">
-                {exportFormats.map((format) => (
+                {exportFormats.map(format => (
                   <button
                     key={format.id}
                     onClick={() => setSelectedExportFormat(format.id)}
@@ -168,7 +198,9 @@ export function ExportImportCard({
                     )}
                   >
                     <div className="text-sm font-medium">{format.label}</div>
-                    <div className="text-xs text-muted-foreground">{format.description}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {format.description}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -220,7 +252,7 @@ export function ExportImportCard({
           <div className="space-y-3 pt-4 border-t">
             <h4 className="font-medium text-sm">Seneste Eksport</h4>
             <div className="space-y-2">
-              {exports.slice(0, 3).map((exportItem) => (
+              {exports.slice(0, 3).map(exportItem => (
                 <div
                   key={exportItem.id}
                   className="flex items-center justify-between p-3 rounded-lg border bg-card"
@@ -228,15 +260,18 @@ export function ExportImportCard({
                   <div className="flex items-center gap-3">
                     {getStatusIcon(exportItem.status)}
                     <div>
-                      <div className="text-sm font-medium">{exportItem.name}</div>
+                      <div className="text-sm font-medium">
+                        {exportItem.name}
+                      </div>
                       <div className="text-xs text-muted-foreground">
-                        {exportItem.size} • {exportItem.createdAt} • {exportItem.format.toUpperCase()}
+                        {exportItem.size} • {exportItem.createdAt} •{" "}
+                        {exportItem.format.toUpperCase()}
                       </div>
                     </div>
                   </div>
 
                   <div className="flex gap-2">
-                    {exportItem.status === 'ready' && (
+                    {exportItem.status === "ready" && (
                       <Button
                         size="sm"
                         variant="outline"
@@ -264,7 +299,7 @@ export function ExportImportCard({
           <div className="space-y-3 pt-4 border-t">
             <h4 className="font-medium text-sm">Aktive Imports</h4>
             <div className="space-y-2">
-              {imports.map((importItem) => (
+              {imports.map(importItem => (
                 <div
                   key={importItem.id}
                   className="p-3 rounded-lg border bg-card space-y-2"
@@ -272,7 +307,9 @@ export function ExportImportCard({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {getStatusIcon(importItem.status)}
-                      <span className="text-sm font-medium">{importItem.name}</span>
+                      <span className="text-sm font-medium">
+                        {importItem.name}
+                      </span>
                       <Badge variant="outline" className="text-xs">
                         {importItem.type}
                       </Badge>
@@ -288,7 +325,8 @@ export function ExportImportCard({
 
                   <div className="text-xs text-muted-foreground">
                     Status: {getStatusText(importItem.status)}
-                    {importItem.progress !== undefined && ` (${importItem.progress}%)`}
+                    {importItem.progress !== undefined &&
+                      ` (${importItem.progress}%)`}
                   </div>
                 </div>
               ))}
@@ -297,5 +335,5 @@ export function ExportImportCard({
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

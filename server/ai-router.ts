@@ -6,7 +6,12 @@
 import { randomBytes } from "crypto";
 import { invokeLLM, type Message } from "./_core/llm";
 import { getFridaySystemPrompt } from "./friday-prompts";
-import { invokeLLMWithRouting, selectModel, type TaskType, type AIModel } from "./model-router";
+import {
+  invokeLLMWithRouting,
+  selectModel,
+  type TaskType,
+  type AIModel,
+} from "./model-router";
 import {
   executeAction,
   parseIntent,
@@ -77,14 +82,18 @@ export interface AIResponse {
 /**
  * Enhanced model selection with routing and feature flags
  */
-function selectModelForTask(taskType: TaskType, userId?: number, explicitModel?: AIModel): AIModel {
+function selectModelForTask(
+  taskType: TaskType,
+  userId?: number,
+  explicitModel?: AIModel
+): AIModel {
   const flags = getFeatureFlags(userId);
-  
+
   // If model routing is disabled or explicit model provided, use legacy logic
   if (!flags.enableModelRouting || explicitModel) {
     return explicitModel || "gemma-3-27b-free";
   }
-  
+
   // Use new model routing system
   return selectModel(taskType, userId, explicitModel);
 }
@@ -227,13 +236,19 @@ export async function routeAI(
   } = options;
 
   // Use preferred model first, then explicit model, then select based on task type
-  const selectedModel = selectModelForTask(taskType, userId, explicitModel || preferredModel);
+  const selectedModel = selectModelForTask(
+    taskType,
+    userId,
+    explicitModel || preferredModel
+  );
 
   const logPrefix = correlationId
     ? `[AI Router][${correlationId}]`
     : `[AI Router]`;
 
-  console.log(`${logPrefix} Using model: ${selectedModel} for task: ${taskType}`);
+  console.log(
+    `${logPrefix} Using model: ${selectedModel} for task: ${taskType}`
+  );
 
   // Get the last user message to check for intents
   const lastUserMessage = messages.filter(m => m.role === "user").pop();
@@ -400,7 +415,7 @@ Hvis brugeren siger du har forkert dato, så TJEK DENNE BESKED IGEN! ⬆️`,
   // Helper function to format action results for AI
   const formatActionResultForAI = (result: ActionResult): string => {
     let content = `[Handling Udført] ${result.success ? "✅ Succes" : "❌ Fejl"}: ${result.message}`;
-    
+
     if (result.data) {
       // Format data based on type instead of raw JSON
       if (Array.isArray(result.data)) {
@@ -410,22 +425,23 @@ Hvis brugeren siger du har forkert dato, så TJEK DENNE BESKED IGEN! ⬆️`,
           else if (item.title) content += `\n${i + 1}. ${item.title}`;
           else if (item.subject) content += `\n${i + 1}. ${item.subject}`;
         });
-        if (result.data.length > 3) content += `\n... og ${result.data.length - 3} flere`;
-      } else if (typeof result.data === 'object') {
+        if (result.data.length > 3)
+          content += `\n... og ${result.data.length - 3} flere`;
+      } else if (typeof result.data === "object") {
         // Extract key info without showing full JSON
         const keys = Object.keys(result.data);
         if (keys.length <= 5) {
-          content += `\n\nDetaljer: ${keys.map(k => `${k}: ${result.data[k]}`).join(', ')}`;
+          content += `\n\nDetaljer: ${keys.map(k => `${k}: ${result.data[k]}`).join(", ")}`;
         } else {
           content += `\n\nData modtaget (${keys.length} felter)`;
         }
       }
     }
-    
+
     if (result.error) {
       content += `\n\n⚠️ Teknisk fejl: ${result.error}`;
     }
-    
+
     content += `\n\n💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.`;
     return content;
   };
@@ -481,7 +497,7 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
       for await (const chunk of response) {
         accumulatedContent += chunk;
       }
-      
+
       const messageContent = accumulatedContent;
       let content = typeof messageContent === "string" ? messageContent : "";
 

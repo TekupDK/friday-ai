@@ -27,19 +27,24 @@ export function BookingManager({ context }: BookingManagerProps) {
   const body = context.body || "";
 
   // Extract customer name from email
-  const customerName = from.replace(/<.*>/, '').trim() || "Kunde";
-  
+  const customerName = from.replace(/<.*>/, "").trim() || "Kunde";
+
   // Extract email address
   const emailMatch = from.match(/<(.+)>/);
   const customerEmail = emailMatch ? emailMatch[1] : from;
 
   // Parse date from subject (e.g., "Re: November opstart")
-  const monthMatch = subject.match(/(januar|februar|marts|april|maj|juni|juli|august|september|oktober|november|december)/i);
+  const monthMatch = subject.match(
+    /(januar|februar|marts|april|maj|juni|juli|august|september|oktober|november|december)/i
+  );
   const month = monthMatch ? monthMatch[1] : "Ikke angivet";
 
   // Detect booking type from keywords
   let bookingType = "Rengøring";
-  if (subject.toLowerCase().includes("flytte") || body.toLowerCase().includes("flytte")) {
+  if (
+    subject.toLowerCase().includes("flytte") ||
+    body.toLowerCase().includes("flytte")
+  ) {
     bookingType = "Flytterengøring";
   } else if (subject.toLowerCase().includes("hovedrengøring")) {
     bookingType = "Hovedrengøring";
@@ -48,7 +53,9 @@ export function BookingManager({ context }: BookingManagerProps) {
   }
 
   // Parse address from body if present
-  const addressMatch = body.match(/([A-ZÆØÅ][a-zæøå]+(?:\s+[A-ZÆØÅ]?[a-zæøå]+)*\s+\d+[a-z]?,?\s*\d{4}\s*[A-ZÆØÅ]?)/);
+  const addressMatch = body.match(
+    /([A-ZÆØÅ][a-zæøå]+(?:\s+[A-ZÆØÅ]?[a-zæøå]+)*\s+\d+[a-z]?,?\s*\d{4}\s*[A-ZÆØÅ]?)/
+  );
   const address = addressMatch ? addressMatch[0] : "Adresse ikke angivet";
 
   // State for calendar data
@@ -57,10 +64,18 @@ export function BookingManager({ context }: BookingManagerProps) {
   const [error, setError] = useState<string | null>(null);
 
   // Fetch calendar events for this customer
-  const { data: calendarEvents, isLoading: isCalendarLoading, error: calendarError } = trpc.inbox.calendar.list.useQuery(
+  const {
+    data: calendarEvents,
+    isLoading: isCalendarLoading,
+    error: calendarError,
+  } = trpc.inbox.calendar.list.useQuery(
     {
-      timeMin: new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString(),
-      timeMax: new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString(),
+      timeMin: new Date(
+        new Date().setMonth(new Date().getMonth() - 1)
+      ).toISOString(),
+      timeMax: new Date(
+        new Date().setMonth(new Date().getMonth() + 3)
+      ).toISOString(),
       maxResults: 50,
     },
     {
@@ -71,21 +86,27 @@ export function BookingManager({ context }: BookingManagerProps) {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    
+
     if (calendarEvents && calendarEvents.length > 0) {
       // Find events matching this customer (by name or email in title/description)
-      const customerEvents = calendarEvents.filter(event => 
-        event.summary?.toLowerCase().includes(customerName.toLowerCase()) ||
-        event.description?.toLowerCase().includes(customerName.toLowerCase()) ||
-        event.description?.toLowerCase().includes(customerEmail.toLowerCase())
+      const customerEvents = calendarEvents.filter(
+        event =>
+          event.summary?.toLowerCase().includes(customerName.toLowerCase()) ||
+          event.description
+            ?.toLowerCase()
+            .includes(customerName.toLowerCase()) ||
+          event.description?.toLowerCase().includes(customerEmail.toLowerCase())
       );
 
       if (customerEvents.length > 0) {
         // Get the most recent/future event
-        const nextEvent = customerEvents
-          .filter(event => new Date(event.start) > new Date())
-          .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())[0] || 
-          customerEvents[customerEvents.length - 1];
+        const nextEvent =
+          customerEvents
+            .filter(event => new Date(event.start) > new Date())
+            .sort(
+              (a, b) =>
+                new Date(a.start).getTime() - new Date(b.start).getTime()
+            )[0] || customerEvents[customerEvents.length - 1];
 
         // Parse booking using centralized business logic
         const parsedBooking = parseCalendarEvent(nextEvent);
@@ -96,15 +117,26 @@ export function BookingManager({ context }: BookingManagerProps) {
           email: customerEmail,
           phone: "Ikke angivet", // Would need customer lookup
           address: nextEvent.location || address,
-          date: nextEvent.start ? new Date(nextEvent.start).toLocaleDateString('da-DK') : `${month} 2025`,
-          time: nextEvent.start ? new Date(nextEvent.start).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' }) : "Ikke angivet",
+          date: nextEvent.start
+            ? new Date(nextEvent.start).toLocaleDateString("da-DK")
+            : `${month} 2025`,
+          time: nextEvent.start
+            ? new Date(nextEvent.start).toLocaleTimeString("da-DK", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "Ikke angivet",
           duration: parsedBooking.duration,
           type: parsedBooking.type,
-          size: nextEvent.description?.match(/(\d+)\s*m²/)?.[1] ? `${nextEvent.description.match(/(\d+)\s*m²/)![1]} m²` : "Ikke angivet",
-          team: nextEvent.description?.match(/Team:\s*(.+)/)?.[1] || "Jonas + Team",
+          size: nextEvent.description?.match(/(\d+)\s*m²/)?.[1]
+            ? `${nextEvent.description.match(/(\d+)\s*m²/)![1]} m²`
+            : "Ikke angivet",
+          team:
+            nextEvent.description?.match(/Team:\s*(.+)/)?.[1] || "Jonas + Team",
           price: parsedBooking.price,
           profit: profit,
-          status: new Date(nextEvent.start) > new Date() ? "upcoming" : "completed",
+          status:
+            new Date(nextEvent.start) > new Date() ? "upcoming" : "completed",
           eventId: nextEvent.id,
           calendarUrl: `https://calendar.google.com/calendar/event?eid=${nextEvent.id}`,
         });
@@ -149,7 +181,15 @@ export function BookingManager({ context }: BookingManagerProps) {
       });
       setIsLoading(false);
     }
-  }, [calendarEvents, calendarError, customerName, customerEmail, month, bookingType, address]); // All deps needed for booking data
+  }, [
+    calendarEvents,
+    calendarError,
+    customerName,
+    customerEmail,
+    month,
+    bookingType,
+    address,
+  ]); // All deps needed for booking data
 
   // Loading state
   if (isLoading) {
@@ -165,8 +205,12 @@ export function BookingManager({ context }: BookingManagerProps) {
             <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-lg">📅 Booking Manager</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">Fejl ved hentning af kalender</p>
-              <p className="text-sm text-red-800 dark:text-red-200 mt-2">{error}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Fejl ved hentning af kalender
+              </p>
+              <p className="text-sm text-red-800 dark:text-red-200 mt-2">
+                {error}
+              </p>
             </div>
           </div>
         </Card>
@@ -178,9 +222,23 @@ export function BookingManager({ context }: BookingManagerProps) {
 
   // Status badge configuration
   const getStatusBadge = (status: string) => {
-    if (status === "upcoming") return { variant: "default" as const, text: "Kommende", color: "bg-blue-500" };
-    if (status === "completed") return { variant: "secondary" as const, text: "Afsluttet", color: "bg-gray-500" };
-    return { variant: "default" as const, text: "Bekræftet", color: "bg-green-500" };
+    if (status === "upcoming")
+      return {
+        variant: "default" as const,
+        text: "Kommende",
+        color: "bg-blue-500",
+      };
+    if (status === "completed")
+      return {
+        variant: "secondary" as const,
+        text: "Afsluttet",
+        color: "bg-gray-500",
+      };
+    return {
+      variant: "default" as const,
+      text: "Bekræftet",
+      color: "bg-green-500",
+    };
   };
 
   const statusBadge = getStatusBadge(booking.status);
@@ -192,7 +250,9 @@ export function BookingManager({ context }: BookingManagerProps) {
           <div>
             <h3 className="font-semibold text-lg">📅 Booking Manager</h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {booking.status === "upcoming" ? "Kommende booking" : "Booking detaljer"}
+              {booking.status === "upcoming"
+                ? "Kommende booking"
+                : "Booking detaljer"}
               {booking.eventId && " • Calendar ID: " + booking.eventId}
             </p>
           </div>
@@ -247,7 +307,11 @@ export function BookingManager({ context }: BookingManagerProps) {
           {booking.calendarUrl && (
             <div className="pt-2">
               <Button variant="outline" size="sm" className="w-full" asChild>
-                <a href={booking.calendarUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={booking.calendarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   📅 Åbn i Google Calendar
                 </a>
               </Button>
@@ -272,7 +336,9 @@ export function BookingManager({ context }: BookingManagerProps) {
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Profit:</span>
-            <span className="font-medium text-green-600">~{booking.profit} kr</span>
+            <span className="font-medium text-green-600">
+              ~{booking.profit} kr
+            </span>
           </div>
         </div>
       </Card>
@@ -284,7 +350,7 @@ export function BookingManager({ context }: BookingManagerProps) {
         onAction={async (actionId, data) => {
           // Handle smart actions
           console.log("Smart action executed:", actionId, data);
-          
+
           // TODO: Implement actual action handlers
           switch (actionId) {
             case "send-reminder":

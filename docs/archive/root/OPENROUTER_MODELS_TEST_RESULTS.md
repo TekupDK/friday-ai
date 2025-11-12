@@ -10,23 +10,25 @@
 
 ### ✅ Tests Completed
 
-| Test Type | Status | Success Rate | Duration | Notes |
-|-----------|--------|--------------|----------|-------|
-| **Promptfoo Eval** | ✅ DONE | 66.67% (6/9) | 1m 15s | 3 DeepSeek errors |
-| **Manual Node Test** | ✅ DONE | 66.67% (4/6) | ~45s | 2 DeepSeek policy errors |
-| **Overall** | ✅ PARTIAL | **66.67%** | **2m** | **GLM & GPT-OSS: 100%** |
+| Test Type            | Status     | Success Rate | Duration | Notes                    |
+| -------------------- | ---------- | ------------ | -------- | ------------------------ |
+| **Promptfoo Eval**   | ✅ DONE    | 66.67% (6/9) | 1m 15s   | 3 DeepSeek errors        |
+| **Manual Node Test** | ✅ DONE    | 66.67% (4/6) | ~45s     | 2 DeepSeek policy errors |
+| **Overall**          | ✅ PARTIAL | **66.67%**   | **2m**   | **GLM & GPT-OSS: 100%**  |
 
 ---
 
 ## 🎯 Promptfoo Evaluation Results
 
 ### Configuration
+
 - **Config File:** `promptfooconfig.yaml`
 - **Prompts:** 3 Danish business scenarios
 - **Models Tested:** 3 (GLM-4.5 Air, GPT-OSS 20B, DeepSeek v3.1)
 - **Total Test Cases:** 9 (3 prompts × 3 models)
 
 ### Results Summary
+
 ```
 ✅ Successes: 6
 ❌ Failures: 0
@@ -37,6 +39,7 @@
 ```
 
 ### Token Breakdown
+
 ```
 GLM-4.5 Air:     1,731 tokens (168 prompt, 1,563 completion)
 GPT-OSS 20B:     1,548 tokens (344 prompt, 1,204 completion)
@@ -46,6 +49,7 @@ DeepSeek v3.1:   0 tokens (failed - policy error)
 ### Model Performance
 
 #### 🥇 GLM-4.5 Air (100% accuracy) - **WINNER**
+
 - ✅ **Success Rate:** 3/3 (100%)
 - ⏱️ **Avg Response Time:** ~19s
 - 🪙 **Tokens:** 1,731
@@ -54,6 +58,7 @@ DeepSeek v3.1:   0 tokens (failed - policy error)
 - **Recommendation:** ⭐ **Primary model for production**
 
 #### 🥈 GPT-OSS 20B (100% accuracy) - **FAST**
+
 - ✅ **Success Rate:** 3/3 (100%)
 - ⏱️ **Avg Response Time:** ~2.6s (7x faster!)
 - 🪙 **Tokens:** 1,548
@@ -62,6 +67,7 @@ DeepSeek v3.1:   0 tokens (failed - policy error)
 - **Recommendation:** 💨 **Best for speed-critical tasks**
 
 #### ❌ DeepSeek Chat v3.1 - **BLOCKED**
+
 - ❌ **Success Rate:** 0/3 (0%)
 - ⚠️ **Error:** "No endpoints found matching your data policy"
 - 📝 **Issue:** Requires OpenRouter privacy settings configuration
@@ -74,6 +80,7 @@ DeepSeek v3.1:   0 tokens (failed - policy error)
 ### Test Script: `test-models-manual.mjs`
 
 **Results:**
+
 ```
 Total Tests: 6
 ✅ Successful: 4
@@ -84,6 +91,7 @@ Total Tests: 6
 ### Detailed Performance
 
 #### GLM-4.5 Air
+
 - ✅ Danish Business Email: **21,774ms** (433 tokens) ✅
 - ✅ Calendar Reasoning: **17,115ms** (568 tokens) ✅
 - **Success Rate:** 2/2 (100%)
@@ -91,6 +99,7 @@ Total Tests: 6
 - **Output Quality:** Excellent, natural Danish
 
 #### GPT-OSS 20B
+
 - ✅ Danish Business Email: **2,564ms** (368 tokens) ✅
 - ✅ Calendar Reasoning: **2,609ms** (626 tokens) ✅
 - **Success Rate:** 2/2 (100%)
@@ -98,6 +107,7 @@ Total Tests: 6
 - **Output Quality:** Good, concise Danish
 
 #### DeepSeek Chat v3.1
+
 - ❌ Danish Business Email: **Policy Error** ❌
 - ❌ Calendar Reasoning: **Policy Error** ❌
 - **Success Rate:** 0/2 (0%)
@@ -108,39 +118,44 @@ Total Tests: 6
 ## 📝 Test Prompts Used
 
 ### 1. Danish Business Email
+
 ```
-Skriv et kort professionelt svar på dansk til denne email: 
-"Hej, jeg vil gerne have et tilbud på badværelsesrenovering. 
-Hvornår kan I komme?" 
+Skriv et kort professionelt svar på dansk til denne email:
+"Hej, jeg vil gerne have et tilbud på badværelsesrenovering.
+Hvornår kan I komme?"
 Svar på max 3 linjer.
 ```
 
 **GLM-4.5 Air Output:**
+
 ```
-Hej! Vi sender gerne et tilbud. Kontakt os gerne på telefon eller 
-mail med detaljer om dit projekt, og vi kan aftale et besøg til 
+Hej! Vi sender gerne et tilbud. Kontakt os gerne på telefon eller
+mail med detaljer om dit projekt, og vi kan aftale et besøg til
 gennemgang med det. Vi ser frem til at høre fra dig!
 ```
 
 **GPT-OSS 20B Output:**
+
 ```
-Hej, tak for din henvendelse. Vi kan afhøre dig i den kommende uge 
-og give et tilbud – hvornår passer det dig bedst? 
+Hej, tak for din henvendelse. Vi kan afhøre dig i den kommende uge
+og give et tilbud – hvornår passer det dig bedst?
 Vi ser frem til at høre fra dig!
 ```
 
 ### 2. Calendar Reasoning
+
 ```
-Jeg skal have et 2-timers møde onsdag 10-16. 
-Kalender viser: 10:00-11:30 optaget, 14:00-15:00 optaget. 
+Jeg skal have et 2-timers møde onsdag 10-16.
+Kalender viser: 10:00-11:30 optaget, 14:00-15:00 optaget.
 Hvornår kan mødet placeres? Giv 2 forslag på dansk.
 ```
 
 **Both models provided correct Danish time slot suggestions**
 
 ### 3. Email Thread Summary
+
 ```
-Opsummer på dansk (max 2 linjer): 
+Opsummer på dansk (max 2 linjer):
 Email 1: Hej jeg vil have tilbud på tag
 Email 2: Vi kan komme d. 15/3
 Email 3: Perfekt
@@ -194,14 +209,14 @@ Email 4: Bekræftet 15/3 kl 10
 
 ## 📊 Comparison: New vs Legacy Models
 
-| Metric | GLM-4.5 Air (NEW) | GPT-OSS 20B (NEW) | Gemma 3 27B (OLD) |
-|--------|-------------------|-------------------|-------------------|
-| **Accuracy Rating** | 100% ⭐ | 100% ⭐ | Claude-quality |
-| **Response Time** | 19.4s | 2.6s 🚀 | ~5-10s |
-| **Danish Quality** | Excellent ⭐⭐⭐⭐⭐ | Good ⭐⭐⭐⭐ | Good ⭐⭐⭐⭐ |
-| **Cost** | FREE | FREE | FREE |
-| **Success Rate** | 100% ✅ | 100% ✅ | 90% ✅ |
-| **Recommendation** | Primary | Speed-critical | Fallback |
+| Metric              | GLM-4.5 Air (NEW)    | GPT-OSS 20B (NEW) | Gemma 3 27B (OLD) |
+| ------------------- | -------------------- | ----------------- | ----------------- |
+| **Accuracy Rating** | 100% ⭐              | 100% ⭐           | Claude-quality    |
+| **Response Time**   | 19.4s                | 2.6s 🚀           | ~5-10s            |
+| **Danish Quality**  | Excellent ⭐⭐⭐⭐⭐ | Good ⭐⭐⭐⭐     | Good ⭐⭐⭐⭐     |
+| **Cost**            | FREE                 | FREE              | FREE              |
+| **Success Rate**    | 100% ✅              | 100% ✅           | 90% ✅            |
+| **Recommendation**  | Primary              | Speed-critical    | Fallback          |
 
 ---
 
@@ -210,6 +225,7 @@ Email 4: Bekræftet 15/3 kl 10
 ### Production Deployment
 
 #### **Primary Model: GLM-4.5 Air** ⭐
+
 ```typescript
 // server/model-router.ts
 chat: {
@@ -220,12 +236,14 @@ chat: {
 ```
 
 **Use Cases:**
+
 - Email drafting (professional tone needed)
 - Complex business communication
 - Customer-facing responses
 - High-quality content generation
 
 #### **Speed Model: GPT-OSS 20B** 🚀
+
 ```typescript
 // For time-sensitive tasks
 "email-analysis": {
@@ -236,17 +254,20 @@ chat: {
 ```
 
 **Use Cases:**
+
 - Quick responses needed
 - Real-time chat
 - Email summaries
 - Calendar operations
 
 #### **Fallback: Gemma 3 27B**
+
 - Keep as final fallback
 - Proven reliability
 - Good Danish support
 
 ### DeepSeek v3.1 Status
+
 - ⏸️ **Skip for now** due to policy errors
 - 🔧 **Optional:** Configure privacy policy at https://openrouter.ai/settings/privacy
 - ✅ **Alternative:** Use Qwen3 Coder for code-heavy tasks instead
@@ -270,6 +291,7 @@ chat: {
    - Re-test DeepSeek v3.1
 
 2. **Performance Benchmark** (Playwright)
+
    ```bash
    npm run test:ai:performance
    ```
@@ -306,6 +328,7 @@ chat: {
 ## 📂 Files Created/Modified
 
 ### New Files
+
 - ✅ `promptfooconfig.yaml` - Promptfoo evaluation config
 - ✅ `prompts/test1.txt` - Danish business email test
 - ✅ `prompts/test2.txt` - Calendar reasoning test
@@ -316,6 +339,7 @@ chat: {
 - ✅ `tasks/openrouter-models-integration/QUICK-START.md` - Quick guide
 
 ### Modified Files
+
 - ✅ `.env` - Updated to GLM-4.5 Air
 - ✅ `.env.dev` - Updated to GLM-4.5 Air
 - ✅ `server/model-router.ts` - 6 new models added
@@ -326,15 +350,15 @@ chat: {
 
 ## 🎯 Success Metrics
 
-| Metric | Target | Actual | Status |
-|--------|--------|--------|--------|
-| **Models Integrated** | 6 | 6 | ✅ |
-| **Tests Run** | 15 | 15 | ✅ |
-| **Pass Rate** | ≥80% | 66.67% | ⚠️ |
-| **Working Models** | ≥2 | 2 | ✅ |
-| **Cost** | $0 | $0 | ✅ |
-| **Response Time** | <5s | 2.6s (GPT-OSS) | ✅ |
-| **Danish Quality** | Good | Excellent | ✅ |
+| Metric                | Target | Actual         | Status |
+| --------------------- | ------ | -------------- | ------ |
+| **Models Integrated** | 6      | 6              | ✅     |
+| **Tests Run**         | 15     | 15             | ✅     |
+| **Pass Rate**         | ≥80%   | 66.67%         | ⚠️     |
+| **Working Models**    | ≥2     | 2              | ✅     |
+| **Cost**              | $0     | $0             | ✅     |
+| **Response Time**     | <5s    | 2.6s (GPT-OSS) | ✅     |
+| **Danish Quality**    | Good   | Excellent      | ✅     |
 
 **Overall Status:** ✅ **SUCCESS** (2/3 models working perfectly)
 
@@ -343,18 +367,21 @@ chat: {
 ## 🐛 Known Issues
 
 ### 1. DeepSeek v3.1 Data Policy Error
+
 - **Severity:** Medium
 - **Impact:** Cannot use this model
 - **Workaround:** Use GLM-4.5 Air or GPT-OSS 20B
 - **Fix:** Configure privacy policy (optional)
 
 ### 2. GLM-4.5 Air Slow Response
+
 - **Severity:** Low
 - **Impact:** 19s average response time
 - **Workaround:** Use GPT-OSS 20B for speed-critical tasks
 - **Note:** Quality justifies slower speed for important tasks
 
 ### 3. Promptfoo Danish Characters
+
 - **Severity:** Resolved
 - **Solution:** Use file-based prompts
 - **Status:** ✅ Working now
@@ -409,6 +436,7 @@ Total Progress: 56% (Phase 3.2/5)
 **OpenRouter model integration is 67% complete and ready for continued testing.**
 
 ### ✅ Achievements
+
 - 6 new models integrated
 - 2 models fully tested and working (100% success rate each)
 - Evaluation framework operational
@@ -416,11 +444,13 @@ Total Progress: 56% (Phase 3.2/5)
 - $0 cost maintained
 
 ### 🎯 Working Models for Production
+
 1. **GLM-4.5 Air** - Primary (quality focus)
 2. **GPT-OSS 20B** - Secondary (speed focus)
 3. **Gemma 3 27B** - Fallback (proven reliability)
 
 ### ⏭️ Next: Complete Phase 3
+
 - Intent detection validation
 - Email intelligence testing
 - Performance benchmarking

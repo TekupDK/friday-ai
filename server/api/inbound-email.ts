@@ -23,14 +23,16 @@ const WEBHOOK_SECRET = ENV.INBOUND_EMAIL_WEBHOOK_SECRET;
  * Get userId from email account mapping
  * Maps receiving email addresses to user IDs
  */
-async function getUserIdFromEmailAccount(emailAddress: string): Promise<number> {
+async function getUserIdFromEmailAccount(
+  emailAddress: string
+): Promise<number> {
   // TODO: Implement proper email account to user mapping from database
   // For now, use a simple mapping based on environment variables
   const emailAccountMap: Record<string, number> = {
     [ENV.PRIMARY_EMAIL_ACCOUNT || ""]: 1,
     // Add more mappings as needed
   };
-  
+
   return emailAccountMap[emailAddress.toLowerCase()] || 1; // Default to user 1 if not found
 }
 

@@ -3,16 +3,16 @@
  * Automatically monitors A/B tests and triggers rollback if metrics degrade
  */
 
-import { 
-  calculateTestResults, 
-  getABTestStatus, 
-  type ABTestResult 
+import {
+  calculateTestResults,
+  getABTestStatus,
+  type ABTestResult,
 } from "./_core/ab-testing";
-import { 
-  shouldTriggerRollback, 
-  executeRollback, 
+import {
+  shouldTriggerRollback,
+  executeRollback,
   getCurrentRolloutPhase,
-  type RolloutPhase 
+  type RolloutPhase,
 } from "./_core/rollout-config";
 import { getDb } from "./db";
 
@@ -22,16 +22,16 @@ import { getDb } from "./db";
 const ROLLBACK_THRESHOLDS = {
   // Error rate increase threshold (e.g., 2x = 200%)
   maxErrorRateIncrease: 2.0,
-  
+
   // Response time increase threshold (e.g., 1.5x = 150%)
   maxResponseTimeIncrease: 1.5,
-  
+
   // Minimum sample size before considering rollback
   minSampleSize: 100,
-  
+
   // Statistical significance required for rollback decision
-  minSignificance: 0.90, // 90% confidence
-  
+  minSignificance: 0.9, // 90% confidence
+
   // Time window for monitoring (hours)
   monitoringWindowHours: 1,
 };
@@ -39,7 +39,7 @@ const ROLLBACK_THRESHOLDS = {
 /**
  * Rollback reasons for logging and alerts
  */
-export type RollbackReason = 
+export type RollbackReason =
   | "error_rate_spike"
   | "response_time_degradation"
   | "low_statistical_significance"
@@ -78,7 +78,9 @@ export function startRollbackMonitoring(intervalMs: number = 60000) {
     return;
   }
 
-  console.log(`[RollbackMonitor] 🚀 Starting monitoring (interval: ${intervalMs}ms)`);
+  console.log(
+    `[RollbackMonitor] 🚀 Starting monitoring (interval: ${intervalMs}ms)`
+  );
 
   monitoringInterval = setInterval(async () => {
     await checkAllTestsForRollback();
@@ -109,12 +111,14 @@ async function checkAllTestsForRollback() {
 
     for (const test of activeTests) {
       const results = await calculateTestResults(test.name, db);
-      
+
       if (results) {
         const shouldRollback = await evaluateRollbackConditions(results);
-        
+
         if (shouldRollback.should && shouldRollback.reason) {
-          console.warn(`[RollbackMonitor] 🚨 Triggering rollback for ${test.name}: ${shouldRollback.reason}`);
+          console.warn(
+            `[RollbackMonitor] 🚨 Triggering rollback for ${test.name}: ${shouldRollback.reason}`
+          );
           await triggerRollback(test.name, shouldRollback.reason, results);
         }
       }
@@ -139,27 +143,41 @@ async function evaluateRollbackConditions(
   }
 
   // Calculate average metrics
-  const controlAvgResponseTime = 
-    results.controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) / controlSampleSize;
-  const variantAvgResponseTime = 
-    results.variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) / variantSampleSize;
+  const controlAvgResponseTime =
+    results.controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
+    controlSampleSize;
+  const variantAvgResponseTime =
+    results.variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
+    variantSampleSize;
 
-  const controlErrorRate = 
-    results.controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) / controlSampleSize;
-  const variantErrorRate = 
-    results.variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) / variantSampleSize;
+  const controlErrorRate =
+    results.controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
+    controlSampleSize;
+  const variantErrorRate =
+    results.variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
+    variantSampleSize;
 
   // Check for error rate spike
-  if (variantErrorRate > controlErrorRate * ROLLBACK_THRESHOLDS.maxErrorRateIncrease) {
+  if (
+    variantErrorRate >
+    controlErrorRate * ROLLBACK_THRESHOLDS.maxErrorRateIncrease
+  ) {
     // Need statistical significance to confirm it's not random
-    if (results.statisticalSignificance >= ROLLBACK_THRESHOLDS.minSignificance) {
+    if (
+      results.statisticalSignificance >= ROLLBACK_THRESHOLDS.minSignificance
+    ) {
       return { should: true, reason: "error_rate_spike" };
     }
   }
 
   // Check for response time degradation
-  if (variantAvgResponseTime > controlAvgResponseTime * ROLLBACK_THRESHOLDS.maxResponseTimeIncrease) {
-    if (results.statisticalSignificance >= ROLLBACK_THRESHOLDS.minSignificance) {
+  if (
+    variantAvgResponseTime >
+    controlAvgResponseTime * ROLLBACK_THRESHOLDS.maxResponseTimeIncrease
+  ) {
+    if (
+      results.statisticalSignificance >= ROLLBACK_THRESHOLDS.minSignificance
+    ) {
       return { should: true, reason: "response_time_degradation" };
     }
   }
@@ -186,10 +204,18 @@ async function triggerRollback(
     testName,
     reason,
     metrics: {
-      controlErrorRate: results.controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) / results.controlMetrics.length,
-      variantErrorRate: results.variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) / results.variantMetrics.length,
-      controlResponseTime: results.controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) / results.controlMetrics.length,
-      variantResponseTime: results.variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) / results.variantMetrics.length,
+      controlErrorRate:
+        results.controlMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
+        results.controlMetrics.length,
+      variantErrorRate:
+        results.variantMetrics.reduce((sum, m) => sum + m.errorCount, 0) /
+        results.variantMetrics.length,
+      controlResponseTime:
+        results.controlMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
+        results.controlMetrics.length,
+      variantResponseTime:
+        results.variantMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
+        results.variantMetrics.length,
       sampleSize: results.variantMetrics.length,
     },
     autoTriggered: true,
@@ -204,7 +230,7 @@ async function triggerRollback(
 
   // Send Slack notification
   await sendRollbackAlert(event);
-  
+
   // TODO: Store in database
   // await db.insert(rollbackEvents).values(event);
 }
@@ -228,10 +254,10 @@ export function clearRollbackHistory() {
  */
 export async function manualRollback(testName: string) {
   console.log(`[RollbackMonitor] 🔧 Manual rollback triggered for ${testName}`);
-  
+
   const db = await getDb();
   const results = await calculateTestResults(testName, db);
-  
+
   if (results) {
     await triggerRollback(testName, "manual_trigger", results);
   }
@@ -245,7 +271,10 @@ export function getMonitoringStatus() {
     isRunning: monitoringInterval !== null,
     thresholds: ROLLBACK_THRESHOLDS,
     rollbackCount: rollbackHistory.length,
-    lastCheck: rollbackHistory.length > 0 ? rollbackHistory[rollbackHistory.length - 1].timestamp : null,
+    lastCheck:
+      rollbackHistory.length > 0
+        ? rollbackHistory[rollbackHistory.length - 1].timestamp
+        : null,
   };
 }
 
@@ -259,22 +288,40 @@ async function sendRollbackAlert(event: RollbackEvent) {
   const message = {
     text: `🚨 Rollback: ${event.testName}`,
     blocks: [
-      { type: 'header', text: { type: 'plain_text', text: '🚨 A/B Test Rollback' } },
-      { type: 'section', text: { type: 'mrkdwn', text: `*Test:* ${event.testName}\n*Reason:* ${event.reason}` } },
-      { type: 'section', fields: [
-        { type: 'mrkdwn', text: `*Error Rate:* ${(event.metrics.variantErrorRate * 100).toFixed(2)}%` },
-        { type: 'mrkdwn', text: `*Response Time:* ${event.metrics.variantResponseTime.toFixed(0)}ms` },
-      ]},
+      {
+        type: "header",
+        text: { type: "plain_text", text: "🚨 A/B Test Rollback" },
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*Test:* ${event.testName}\n*Reason:* ${event.reason}`,
+        },
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: `*Error Rate:* ${(event.metrics.variantErrorRate * 100).toFixed(2)}%`,
+          },
+          {
+            type: "mrkdwn",
+            text: `*Response Time:* ${event.metrics.variantResponseTime.toFixed(0)}ms`,
+          },
+        ],
+      },
     ],
   };
 
   try {
     await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(message),
     });
   } catch (error) {
-    console.error('[RollbackMonitor] Failed to send Slack alert:', error);
+    console.error("[RollbackMonitor] Failed to send Slack alert:", error);
   }
 }

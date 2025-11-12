@@ -3,9 +3,10 @@
 ## Problem: `unauthorized_client` Error
 
 If you see this error:
+
 ```
 ❌ Google OAuth Failed:
-unauthorized_client: Client is unauthorized to retrieve access tokens using this method, 
+unauthorized_client: Client is unauthorized to retrieve access tokens using this method,
 or client not authorized for any of the scopes requested.
 ```
 
@@ -18,6 +19,7 @@ or client not authorized for any of the scopes requested.
 ### Step 1: Get Service Account Client ID
 
 Your service account:
+
 ```
 Email: renos-319@renos-465008.iam.gserviceaccount.com
 Client ID: 113277186090139582531
@@ -26,6 +28,7 @@ Client ID: 113277186090139582531
 ### Step 2: Configure Domain-Wide Delegation
 
 1. **Go to Google Workspace Admin Console**:
+
    ```
    https://admin.google.com/ac/owl/domainwidedelegation
    ```
@@ -33,11 +36,13 @@ Client ID: 113277186090139582531
 2. **Click "Add new"** (or edit existing if service account already listed)
 
 3. **Enter Client ID**:
+
    ```
    113277186090139582531
    ```
 
 4. **Enter OAuth Scopes** (copy-paste this EXACTLY):
+
    ```
    https://www.googleapis.com/auth/calendar.readonly,https://www.googleapis.com/auth/gmail.readonly
    ```
@@ -49,11 +54,13 @@ Client ID: 113277186090139582531
 ### Step 3: Verify Setup
 
 Run the collection script again:
+
 ```bash
 npx tsx server/integrations/chromadb/scripts/1-collect-and-link-v4_3.ts
 ```
 
 You should see:
+
 ```
 ✅ Google OAuth authenticated
 📧 Collecting Gmail threads...
@@ -66,6 +73,7 @@ You should see:
 ### Still Getting `unauthorized_client`?
 
 **Check 1: Correct Client ID**
+
 ```bash
 # Get Client ID from service account JSON
 cat .env.dev | grep GOOGLE_SERVICE_ACCOUNT_KEY | jq -r '.client_id'
@@ -73,17 +81,21 @@ cat .env.dev | grep GOOGLE_SERVICE_ACCOUNT_KEY | jq -r '.client_id'
 
 **Check 2: Correct Scopes**
 Make sure you added BOTH scopes (comma-separated, no spaces):
+
 - ✅ `https://www.googleapis.com/auth/calendar.readonly,https://www.googleapis.com/auth/gmail.readonly`
 - ❌ NOT separate entries!
 
 **Check 3: Impersonated User Exists**
+
 ```
 Impersonating: info@rendetalje.dk
 ```
+
 - This email must exist in your Google Workspace
 - Service account will act on behalf of this user
 
 **Check 4: Wait for Propagation**
+
 - Google can take up to 15 minutes to apply changes
 - Try again after waiting
 
@@ -94,16 +106,19 @@ Impersonating: info@rendetalje.dk
 Once OAuth is working:
 
 ### Gmail Threads
+
 - Time range: July 1 - November 30, 2025
 - Filters: Inbox, sent, archived
 - Data: Subject, from/to, date, body snippet, labels
 
 ### Calendar Events
+
 - Time range: July 1 - November 30, 2025
 - Calendar: `c_39570a852bf141658572fa37bb229c7246564a6cca47560bc66a4f9e4fec67ff@group.calendar.google.com`
 - Data: Event summary, description, start/end times, attendees, location
 
 ### Billy Invoices
+
 - Time range: July 1 - November 30, 2025
 - States: approved, sent, paid only
 - Data: Invoice number, amount, hours, customer info, line items
@@ -126,7 +141,9 @@ After successful collection:
       "withBilly": 89
     }
   },
-  "leads": [ /* 662 linked leads */ ]
+  "leads": [
+    /* 662 linked leads */
+  ]
 }
 ```
 
@@ -154,6 +171,7 @@ npx tsx scripts/1-convert-v4_2-to-v4_3.ts
 ```
 
 This will:
+
 - ✅ Use your existing production data
 - ✅ Apply new V4.3 structure
 - ✅ Calculate all metrics
@@ -164,6 +182,7 @@ This will:
 ## 📞 Support
 
 If you're still stuck:
+
 1. Check service account has domain-wide delegation enabled in GCP Console
 2. Verify `info@rendetalje.dk` has access to Gmail and Calendar
 3. Try with a different impersonated user email

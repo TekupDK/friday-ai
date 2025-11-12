@@ -12,22 +12,22 @@ export interface FridayAIResponse {
 }
 
 export interface FridayAIIntent {
-  type: 
-    | 'customer_lookup'
-    | 'booking_prediction'
-    | 'booking_history'
-    | 'revenue_opportunities'
-    | 'quality_check'
-    | 'churn_analysis'
-    | 'segment_analysis'
-    | 'daily_summary'
-    | 'create_reminder'
-    | 'send_campaign'
-    | 'unknown';
+  type:
+    | "customer_lookup"
+    | "booking_prediction"
+    | "booking_history"
+    | "revenue_opportunities"
+    | "quality_check"
+    | "churn_analysis"
+    | "segment_analysis"
+    | "daily_summary"
+    | "create_reminder"
+    | "send_campaign"
+    | "unknown";
   confidence: number; // 0-1
   parameters: Record<string, any>;
   originalQuery?: string;
-  language?: 'da' | 'en';
+  language?: "da" | "en";
 }
 
 export interface FridayAIContext {
@@ -40,15 +40,15 @@ export interface FridayAIContext {
     email: string;
   };
   preferences?: {
-    language: 'da' | 'en';
-    responseStyle: 'concise' | 'detailed' | 'conversational';
+    language: "da" | "en";
+    responseStyle: "concise" | "detailed" | "conversational";
     autoActions: boolean;
   };
 }
 
 export interface ConversationEntry {
   timestamp: Date;
-  role: 'user' | 'assistant' | 'system';
+  role: "user" | "assistant" | "system";
   content: string;
   intent?: FridayAIIntent;
   response?: FridayAIResponse;
@@ -57,8 +57,8 @@ export interface ConversationEntry {
 
 export interface FridayAIAction {
   id: string;
-  type: 'email' | 'sms' | 'call' | 'calendar' | 'task' | 'alert' | 'report';
-  status: 'pending' | 'executing' | 'completed' | 'failed' | 'cancelled';
+  type: "email" | "sms" | "call" | "calendar" | "task" | "alert" | "report";
+  status: "pending" | "executing" | "completed" | "failed" | "cancelled";
   target?: {
     customerId?: string;
     email?: string;
@@ -79,8 +79,14 @@ export interface FridayAIAction {
 export interface FridayAITemplate {
   id: string;
   name: string;
-  category: 'booking' | 'reminder' | 'upsell' | 'winback' | 'quality' | 'payment';
-  language: 'da' | 'en';
+  category:
+    | "booking"
+    | "reminder"
+    | "upsell"
+    | "winback"
+    | "quality"
+    | "payment";
+  language: "da" | "en";
   subject?: string;
   content: string;
   variables: TemplateVariable[];
@@ -96,7 +102,7 @@ export interface FridayAITemplate {
 
 export interface TemplateVariable {
   name: string;
-  type: 'string' | 'number' | 'date' | 'boolean' | 'array' | 'object';
+  type: "string" | "number" | "date" | "boolean" | "array" | "object";
   required: boolean;
   defaultValue?: any;
   description?: string;
@@ -105,9 +111,15 @@ export interface TemplateVariable {
 
 export interface TemplateCondition {
   field: string;
-  operator: 'equals' | 'not_equals' | 'greater_than' | 'less_than' | 'contains' | 'not_contains';
+  operator:
+    | "equals"
+    | "not_equals"
+    | "greater_than"
+    | "less_than"
+    | "contains"
+    | "not_contains";
   value: any;
-  action: 'include' | 'exclude' | 'modify';
+  action: "include" | "exclude" | "modify";
   modification?: string;
 }
 
@@ -117,20 +129,26 @@ export interface FridayAIQuery {
   filters?: QueryFilter[];
   includeHistory?: boolean;
   maxResults?: number;
-  language?: 'da' | 'en';
+  language?: "da" | "en";
 }
 
 export interface QueryFilter {
   field: string;
-  operator: 'equals' | 'contains' | 'greater_than' | 'less_than' | 'between' | 'in';
+  operator:
+    | "equals"
+    | "contains"
+    | "greater_than"
+    | "less_than"
+    | "between"
+    | "in";
   value: any;
-  combinator?: 'AND' | 'OR';
+  combinator?: "AND" | "OR";
 }
 
 export interface FridayAIInsight {
   id: string;
-  type: 'trend' | 'anomaly' | 'opportunity' | 'risk' | 'recommendation';
-  severity: 'info' | 'low' | 'medium' | 'high' | 'critical';
+  type: "trend" | "anomaly" | "opportunity" | "risk" | "recommendation";
+  severity: "info" | "low" | "medium" | "high" | "critical";
   title: string;
   description: string;
   affectedCustomers?: string[];
@@ -143,7 +161,7 @@ export interface FridayAIInsight {
 }
 
 export interface InsightEvidence {
-  type: 'metric' | 'pattern' | 'comparison' | 'correlation';
+  type: "metric" | "pattern" | "comparison" | "correlation";
   description: string;
   data: any;
   significance: number; // 0-1
@@ -151,8 +169,8 @@ export interface InsightEvidence {
 
 export interface FridayAINotification {
   id: string;
-  type: 'alert' | 'reminder' | 'update' | 'report' | 'action_required';
-  priority: 'low' | 'medium' | 'high' | 'critical';
+  type: "alert" | "reminder" | "update" | "report" | "action_required";
+  priority: "low" | "medium" | "high" | "critical";
   title: string;
   message: string;
   customer?: {
@@ -169,7 +187,7 @@ export interface FridayAINotification {
 
 export interface FridayAIReport {
   id: string;
-  type: 'daily' | 'weekly' | 'monthly' | 'custom';
+  type: "daily" | "weekly" | "monthly" | "custom";
   period: {
     start: Date;
     end: Date;
@@ -183,12 +201,12 @@ export interface FridayAIReport {
   };
   generatedAt: Date;
   generatedBy: string;
-  format?: 'html' | 'pdf' | 'json' | 'markdown';
+  format?: "html" | "pdf" | "json" | "markdown";
 }
 
 export interface ReportSection {
   title: string;
-  type: 'text' | 'metrics' | 'chart' | 'table' | 'list';
+  type: "text" | "metrics" | "chart" | "table" | "list";
   content: any;
   insights?: string[];
   recommendations?: string[];
@@ -196,10 +214,10 @@ export interface ReportSection {
 
 export interface TrendData {
   metric: string;
-  direction: 'up' | 'down' | 'stable';
+  direction: "up" | "down" | "stable";
   change: number; // percentage
   period: string;
-  significance: 'low' | 'medium' | 'high';
+  significance: "low" | "medium" | "high";
   forecast?: number;
 }
 
@@ -207,7 +225,7 @@ export interface FridayAIConfig {
   // API Configuration
   chromaDbUrl: string;
   openAiKey?: string;
-  
+
   // Feature Flags
   features: {
     naturalLanguage: boolean;
@@ -216,7 +234,7 @@ export interface FridayAIConfig {
     qualityMonitoring: boolean;
     revenueOptimization: boolean;
   };
-  
+
   // Thresholds
   thresholds: {
     churnRiskThreshold: number; // 0-100
@@ -224,18 +242,18 @@ export interface FridayAIConfig {
     qualityAlertScore: number; // 1-5
     minimumConfidence: number; // 0-1
   };
-  
+
   // Scheduling
   scheduling: {
     dailyAnalysisTime: string; // e.g., "09:00"
     reminderLeadDays: number;
     campaignBatchSize: number;
   };
-  
+
   // Defaults
   defaults: {
-    language: 'da' | 'en';
-    currency: 'DKK' | 'EUR' | 'USD';
+    language: "da" | "en";
+    currency: "DKK" | "EUR" | "USD";
     timezone: string;
     dateFormat: string;
   };

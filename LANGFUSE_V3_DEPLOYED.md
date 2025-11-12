@@ -40,6 +40,7 @@ PostgreSQL:             localhost:5433
 ## 🔧 Why V3 with ClickHouse?
 
 **Langfuse V3 Benefits:**
+
 - ✅ Much faster analytics queries
 - ✅ Better performance with large datasets
 - ✅ Real-time aggregations
@@ -47,6 +48,7 @@ PostgreSQL:             localhost:5433
 - ✅ Column-oriented storage (perfect for metrics)
 
 **ClickHouse Advantages:**
+
 - ⚡ 100-1000x faster than PostgreSQL for analytics
 - 📊 Real-time data processing
 - 💾 Excellent compression (10x smaller)
@@ -134,12 +136,14 @@ You should see your AI call! 🎉
 ## 📈 What You'll See
 
 ### Dashboard Metrics:
+
 - **Total Traces:** All AI operations
 - **Total Cost:** $0.00 (we use FREE models!)
 - **Avg Response Time:** Real-time metrics
 - **Error Rate:** Track failures
 
 ### Trace Details:
+
 - **Input:** Your prompt/messages
 - **Output:** AI response
 - **Tokens:** Prompt + completion
@@ -148,6 +152,7 @@ You should see your AI call! 🎉
 - **Status:** Success/Error
 
 ### Analytics (V3 Power!):
+
 - Real-time charts
 - User analytics
 - Model comparison
@@ -174,6 +179,7 @@ As your data grows, ClickHouse will be **100-1000x faster!**
 ## 💾 Data Storage
 
 ### PostgreSQL (5433):
+
 - User accounts
 - Projects
 - API keys
@@ -181,6 +187,7 @@ As your data grows, ClickHouse will be **100-1000x faster!**
 - ~10-50 MB
 
 ### ClickHouse (8123/9000):
+
 - All traces
 - All generations
 - All scores
@@ -192,12 +199,14 @@ As your data grows, ClickHouse will be **100-1000x faster!**
 ## 🔒 Security Notes
 
 **Current Setup (Development):**
+
 - ✅ Self-hosted (full control)
 - ✅ No external connections
 - ✅ Data stays on your machine
 - ⚠️ Weak passwords (change for production!)
 
 **Production Checklist:**
+
 - [ ] Change PostgreSQL password
 - [ ] Change ClickHouse password
 - [ ] Update NEXTAUTH_SECRET
@@ -245,6 +254,7 @@ curl http://localhost:8123/ping
 ## 📊 Resource Usage
 
 ### Current (Idle):
+
 ```
 PostgreSQL:     ~100 MB RAM
 ClickHouse:     ~200 MB RAM
@@ -254,6 +264,7 @@ Total:          ~600 MB RAM
 ```
 
 ### Under Load:
+
 ```
 PostgreSQL:     ~200 MB RAM
 ClickHouse:     ~500 MB RAM

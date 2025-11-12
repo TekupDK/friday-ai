@@ -1,6 +1,6 @@
 /**
  * Phase 9.3: Source-Based Workflow System
- * 
+ *
  * Different actions and workflows based on lead source.
  * Intelligent automation tailored to source characteristics.
  */
@@ -473,7 +473,7 @@ export function getWorkflowFromDetection(detection: SourceDetection): {
   if (detection.confidence < 50) {
     recommendations.push("Lav konfidens - verificer kilde manuelt");
   }
-  
+
   if (detection.confidence > 80) {
     recommendations.push("Høj konfidens - automatiser workflow");
   }
@@ -499,11 +499,11 @@ export function getPrioritizedActions(source: LeadSource): {
   thisWeek: WorkflowAction[];
 } {
   const workflow = getSourceWorkflow(source);
-  
+
   const immediate = workflow.requiredActions.filter(a => a.estimatedTime <= 15);
   const today = [
     ...workflow.requiredActions.filter(a => a.estimatedTime <= 60),
-    ...workflow.suggestedActions.filter(a => a.estimatedTime <= 30)
+    ...workflow.suggestedActions.filter(a => a.estimatedTime <= 30),
   ];
   const thisWeek = [...workflow.suggestedActions];
 

@@ -42,7 +42,9 @@ export default function EmailAISummary({
   const shouldFetch = expanded && !preloadedSummary;
 
   // Resolve numeric emailId from threadId when needed
-  const { data: mappedIds } = (trpc.inbox as any).email.mapThreadsToEmailIds.useQuery(
+  const { data: mappedIds } = (
+    trpc.inbox as any
+  ).email.mapThreadsToEmailIds.useQuery(
     { threadIds: threadId ? [threadId] : [] },
     { enabled: shouldFetch && !!threadId }
   );

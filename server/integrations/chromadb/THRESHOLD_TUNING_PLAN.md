@@ -9,6 +9,7 @@
 ## 🎉 Brilliant Idea!
 
 Brug **rigtige data fra RenDetalje** (Juli-December 2025) til at:
+
 - Teste ChromaDB med real leads
 - Optimere duplicate detection threshold
 - Måle accuracy med rigtige duplicates
@@ -19,16 +20,19 @@ Brug **rigtige data fra RenDetalje** (Juli-December 2025) til at:
 ## 📊 Data Sources
 
 ### 1. Google Calendar - RenOS Booking Calendar
+
 - **Periode:** Juli 1 - December 31, 2025
 - **Data:** Aftaler, kunder, kontaktinfo
 - **Forventet:** 100-300 events
 
 ### 2. Email Threads (Gmail)
+
 - **Periode:** Juli 1 - December 31, 2025
 - **Data:** Email correspondance, participants
 - **Forventet:** 200-500 threads
 
 ### 3. Billy Customer Database
+
 - **Data:** Alle kunder fra Billy
 - **Forventet:** 50-100 customers
 
@@ -47,14 +51,16 @@ npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
 ```
 
 **Output:**
+
 - `test-data/real-leads.json` (all collected leads)
 - Metadata (sources, counts, date range)
 - Deduplication by email
 
 **Expected output:**
+
 ```
 ✅ Found 245 calendar events
-✅ Found 389 email threads  
+✅ Found 389 email threads
 ✅ Found 67 Billy customers
 ✅ Total unique leads: 412
 ✅ Saved to: test-data/real-leads.json
@@ -71,6 +77,7 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
 ```
 
 **What it does:**
+
 1. Load all collected leads
 2. Generate embeddings (OpenRouter API)
 3. Identify known duplicates (same email = duplicate)
@@ -82,6 +89,7 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
    - **Accuracy:** (TP + TN) / Total
 
 **Expected output:**
+
 ```
 📊 RESULTS SUMMARY
 
@@ -106,8 +114,11 @@ Threshold | Precision | Recall | F1 Score | Accuracy
 
 ```typescript
 // server/db.ts around line 470
-if (similarity > 0.82) { // Changed from 0.85
-  console.log(`[ChromaDB] Duplicate lead detected (similarity: ${similarity.toFixed(3)})`);
+if (similarity > 0.82) {
+  // Changed from 0.85
+  console.log(
+    `[ChromaDB] Duplicate lead detected (similarity: ${similarity.toFixed(3)})`
+  );
   return existingLead;
 }
 ```
@@ -117,6 +128,7 @@ if (similarity > 0.82) { // Changed from 0.85
 ### Phase 4: Validation (10 min)
 
 **Test in production:**
+
 1. Restart server: `npm run dev`
 2. Create test leads
 3. Monitor logs for similarity scores
@@ -127,13 +139,14 @@ if (similarity > 0.82) { // Changed from 0.85
 ## 📈 Metrics Explained
 
 ### Confusion Matrix
+
 ```
                  Predicted
               Duplicate | Unique
 Actual ────────────────────────
 Duplicate   TP         | FN
             (Correct!) | (Missed!)
-            
+
 Unique      FP         | TN
             (False     | (Correct!)
              alarm!)
@@ -142,16 +155,19 @@ Unique      FP         | TN
 ### Which Metric to Use?
 
 **F1 Score** ← **USE THIS!**
+
 - Balances precision and recall
 - Best for finding optimal threshold
 - Formula: `2 * (Precision * Recall) / (Precision + Recall)`
 
 **Precision**
+
 - How many predicted duplicates are actually duplicates?
 - High = Few false positives
 - Formula: `TP / (TP + FP)`
 
 **Recall**
+
 - How many actual duplicates did we catch?
 - High = Few missed duplicates
 - Formula: `TP / (TP + FN)`
@@ -160,11 +176,11 @@ Unique      FP         | TN
 
 ## 🎯 Threshold Trade-offs
 
-| Threshold | Behavior | Use Case |
-|-----------|----------|----------|
-| **0.70-0.75** | Loose - Catches more, more false alarms | High volume, manual review available |
-| **0.80-0.85** | Balanced - Best F1 score | Automated detection (our case) |
-| **0.90-0.95** | Strict - Very accurate, may miss some | Critical data, expensive false merges |
+| Threshold     | Behavior                                | Use Case                              |
+| ------------- | --------------------------------------- | ------------------------------------- |
+| **0.70-0.75** | Loose - Catches more, more false alarms | High volume, manual review available  |
+| **0.80-0.85** | Balanced - Best F1 score                | Automated detection (our case)        |
+| **0.90-0.95** | Strict - Very accurate, may miss some   | Critical data, expensive false merges |
 
 ---
 
@@ -193,16 +209,18 @@ graph LR
 ## 💡 Why This Works
 
 ### Real Data Benefits
+
 ✅ **Actual duplicates** - Not synthetic  
 ✅ **Real edge cases** - Name variations, typos  
 ✅ **Production patterns** - How customers actually appear  
-✅ **Domain-specific** - RenDetalje business context  
+✅ **Domain-specific** - RenDetalje business context
 
 ### Scientific Approach
+
 ✅ **Objective metrics** - Not guessing  
 ✅ **Data-driven** - Based on real results  
 ✅ **Reproducible** - Can re-run anytime  
-✅ **Continuous improvement** - Re-tune as data grows  
+✅ **Continuous improvement** - Re-tune as data grows
 
 ---
 
@@ -224,6 +242,7 @@ server/integrations/chromadb/
 ## 🎯 Success Criteria
 
 **After tuning, we should have:**
+
 - ✅ Optimal threshold identified (data-driven)
 - ✅ F1 score >90% (high quality)
 - ✅ Precision >85% (few false positives)
@@ -241,6 +260,7 @@ server/integrations/chromadb/
 4. **Edge cases** - Some duplicates may be subjective
 
 **Solutions:**
+
 - Manual review of edge cases
 - Re-tune quarterly with fresh data
 - A/B test if uncertain
@@ -251,6 +271,7 @@ server/integrations/chromadb/
 ## 🚀 Ready to Execute!
 
 **Quick start:**
+
 ```bash
 # Step 1: Collect data (30 min)
 npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
@@ -269,11 +290,13 @@ npm run dev
 ## 📊 Expected Benefits
 
 ### Before (Current: 0.85)
+
 - Threshold: 0.85 (guessed)
 - Accuracy: ~90% (estimated)
 - Confidence: Medium (not tested with real data)
 
 ### After (Optimized)
+
 - Threshold: **0.80-0.85** (data-driven)
 - Accuracy: **91-93%** (measured)
 - Confidence: **High** (tested with 300+ leads)

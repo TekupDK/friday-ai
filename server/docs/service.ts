@@ -23,26 +23,42 @@ export async function startDocsService(): Promise<void> {
       branch,
       autoCommit: readBool(process.env.DOCS_AUTO_COMMIT, true),
       autoPush: readBool(process.env.DOCS_AUTO_PUSH, false),
-      commitMessage: files => `docs: update ${files.length} file(s)`
-        + (files.length <= 5 ? ` (${files.join(", ")})` : ""),
+      commitMessage: files =>
+        `docs: update ${files.length} file(s)` +
+        (files.length <= 5 ? ` (${files.join(", ")})` : ""),
       watchPatterns: ["**/*.md"],
       ignorePatterns: ["**/node_modules/**", "**/.git/**"],
     };
 
     engine = new GitSyncEngine(config);
 
-    engine.on("file_added", e => logger.debug({ path: e.path }, "[Docs] file added"));
-    engine.on("file_changed", e => logger.debug({ path: e.path }, "[Docs] file changed"));
-    engine.on("file_deleted", e => logger.debug({ path: e.path }, "[Docs] file deleted"));
-    engine.on("conflict", e => logger.warn({ file: e.conflict?.path }, "[Docs] conflict detected"));
-    engine.on("error", e => logger.error({ err: e.error }, "[Docs] sync error"));
-    engine.on("sync_complete", e => logger.info({ count: e.files?.length }, "[Docs] sync complete"));
+    engine.on("file_added", e =>
+      logger.debug({ path: e.path }, "[Docs] file added")
+    );
+    engine.on("file_changed", e =>
+      logger.debug({ path: e.path }, "[Docs] file changed")
+    );
+    engine.on("file_deleted", e =>
+      logger.debug({ path: e.path }, "[Docs] file deleted")
+    );
+    engine.on("conflict", e =>
+      logger.warn({ file: e.conflict?.path }, "[Docs] conflict detected")
+    );
+    engine.on("error", e =>
+      logger.error({ err: e.error }, "[Docs] sync error")
+    );
+    engine.on("sync_complete", e =>
+      logger.info({ count: e.files?.length }, "[Docs] sync complete")
+    );
 
     await engine.initialize();
 
     hub = new WebSocketHub(wsPort);
 
-    logger.info({ repoPath, docsPath, branch, wsPort }, "[Docs] Service started");
+    logger.info(
+      { repoPath, docsPath, branch, wsPort },
+      "[Docs] Service started"
+    );
   } catch (err) {
     logger.error({ err }, "[Docs] Failed to start service");
     throw err;

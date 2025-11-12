@@ -10,11 +10,11 @@ interface CodeBlockProps {
   showLineNumbers?: boolean;
 }
 
-export function CodeBlock({ 
-  code, 
-  language = "tsx", 
+export function CodeBlock({
+  code,
+  language = "tsx",
   className,
-  showLineNumbers = false 
+  showLineNumbers = false,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
@@ -24,7 +24,7 @@ export function CodeBlock({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const lines = code.split('\n');
+  const lines = code.split("\n");
 
   return (
     <div className={cn("relative group", className)}>
@@ -40,21 +40,19 @@ export function CodeBlock({
           <Copy className="w-4 h-4" />
         )}
       </Button>
-      
+
       <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
         <code className={`language-${language} text-sm`}>
-          {showLineNumbers ? (
-            lines.map((line, i) => (
-              <div key={i} className="table-row">
-                <span className="table-cell text-muted-foreground select-none pr-4 text-right">
-                  {i + 1}
-                </span>
-                <span className="table-cell">{line}</span>
-              </div>
-            ))
-          ) : (
-            code
-          )}
+          {showLineNumbers
+            ? lines.map((line, i) => (
+                <div key={i} className="table-row">
+                  <span className="table-cell text-muted-foreground select-none pr-4 text-right">
+                    {i + 1}
+                  </span>
+                  <span className="table-cell">{line}</span>
+                </div>
+              ))
+            : code}
         </code>
       </pre>
     </div>

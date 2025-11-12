@@ -7,9 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { 
-  User, Mail, Phone, MapPin, Calendar, DollarSign,
-  MessageSquare, FileText, CheckCircle2, Clock, TrendingUp
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+  DollarSign,
+  MessageSquare,
+  FileText,
+  CheckCircle2,
+  Clock,
+  TrendingUp,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -22,7 +31,7 @@ export interface LeadData {
   location: string;
   service: string;
   value: number;
-  status: 'new' | 'contacted' | 'qualified' | 'proposal' | 'won' | 'lost';
+  status: "new" | "contacted" | "qualified" | "proposal" | "won" | "lost";
   source: string;
   createdAt: Date;
   lastContact?: Date;
@@ -33,12 +42,36 @@ export interface LeadData {
 }
 
 const STATUS_CONFIG = {
-  new: { label: 'Nyt Lead', color: 'bg-blue-500', textColor: 'text-blue-700 dark:text-blue-300' },
-  contacted: { label: 'Kontaktet', color: 'bg-purple-500', textColor: 'text-purple-700 dark:text-purple-300' },
-  qualified: { label: 'Kvalificeret', color: 'bg-yellow-500', textColor: 'text-yellow-700 dark:text-yellow-300' },
-  proposal: { label: 'Tilbud sendt', color: 'bg-orange-500', textColor: 'text-orange-700 dark:text-orange-300' },
-  won: { label: 'Vundet', color: 'bg-green-500', textColor: 'text-green-700 dark:text-green-300' },
-  lost: { label: 'Tabt', color: 'bg-gray-500', textColor: 'text-gray-700 dark:text-gray-300' }
+  new: {
+    label: "Nyt Lead",
+    color: "bg-blue-500",
+    textColor: "text-blue-700 dark:text-blue-300",
+  },
+  contacted: {
+    label: "Kontaktet",
+    color: "bg-purple-500",
+    textColor: "text-purple-700 dark:text-purple-300",
+  },
+  qualified: {
+    label: "Kvalificeret",
+    color: "bg-yellow-500",
+    textColor: "text-yellow-700 dark:text-yellow-300",
+  },
+  proposal: {
+    label: "Tilbud sendt",
+    color: "bg-orange-500",
+    textColor: "text-orange-700 dark:text-orange-300",
+  },
+  won: {
+    label: "Vundet",
+    color: "bg-green-500",
+    textColor: "text-green-700 dark:text-green-300",
+  },
+  lost: {
+    label: "Tabt",
+    color: "bg-gray-500",
+    textColor: "text-gray-700 dark:text-gray-300",
+  },
 };
 
 interface LeadCardDetailedProps {
@@ -47,16 +80,16 @@ interface LeadCardDetailedProps {
   onCall?: () => void;
   onSendQuote?: () => void;
   onScheduleMeeting?: () => void;
-  onUpdateStatus?: (status: LeadData['status']) => void;
+  onUpdateStatus?: (status: LeadData["status"]) => void;
 }
 
-export function LeadCardDetailed({ 
+export function LeadCardDetailed({
   data,
   onSendEmail,
   onCall,
   onSendQuote,
   onScheduleMeeting,
-  onUpdateStatus
+  onUpdateStatus,
 }: LeadCardDetailedProps) {
   const [expanded, setExpanded] = useState(false);
   const statusConfig = STATUS_CONFIG[data.status];
@@ -72,9 +105,13 @@ export function LeadCardDetailed({
             </div>
             <div>
               <h3 className="font-bold text-lg">{data.name}</h3>
-              {data.company && <p className="text-sm text-muted-foreground">{data.company}</p>}
+              {data.company && (
+                <p className="text-sm text-muted-foreground">{data.company}</p>
+              )}
               <div className="flex items-center gap-2 mt-1">
-                <Badge className={statusConfig.color}>{statusConfig.label}</Badge>
+                <Badge className={statusConfig.color}>
+                  {statusConfig.label}
+                </Badge>
                 <Badge variant="outline">#{data.id}</Badge>
               </div>
             </div>
@@ -93,11 +130,18 @@ export function LeadCardDetailed({
         <div className="grid grid-cols-2 gap-3">
           <div className="flex items-center gap-2 text-sm">
             <Mail className="w-4 h-4 text-muted-foreground shrink-0" />
-            <a href={`mailto:${data.email}`} className="hover:underline truncate">{data.email}</a>
+            <a
+              href={`mailto:${data.email}`}
+              className="hover:underline truncate"
+            >
+              {data.email}
+            </a>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Phone className="w-4 h-4 text-muted-foreground shrink-0" />
-            <a href={`tel:${data.phone}`} className="hover:underline">{data.phone}</a>
+            <a href={`tel:${data.phone}`} className="hover:underline">
+              {data.phone}
+            </a>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <MapPin className="w-4 h-4 text-muted-foreground shrink-0" />
@@ -105,7 +149,9 @@ export function LeadCardDetailed({
           </div>
           <div className="flex items-center gap-2 text-sm">
             <DollarSign className="w-4 h-4 text-muted-foreground shrink-0" />
-            <span className="font-semibold">{data.value.toLocaleString('da-DK')} kr</span>
+            <span className="font-semibold">
+              {data.value.toLocaleString("da-DK")} kr
+            </span>
           </div>
         </div>
 
@@ -124,7 +170,9 @@ export function LeadCardDetailed({
         {/* Score Progress */}
         <div>
           <div className="flex justify-between text-xs mb-2">
-            <span className="text-muted-foreground">Konvertering sandsynlighed</span>
+            <span className="text-muted-foreground">
+              Konvertering sandsynlighed
+            </span>
             <span className="font-medium">{data.score}%</span>
           </div>
           <Progress value={data.score} className="h-2" />
@@ -146,16 +194,20 @@ export function LeadCardDetailed({
           <div className="space-y-3 pt-3 border-t animate-in slide-in-from-top-2">
             {data.notes && (
               <div>
-                <p className="text-xs font-semibold text-muted-foreground mb-1">Noter:</p>
+                <p className="text-xs font-semibold text-muted-foreground mb-1">
+                  Noter:
+                </p>
                 <p className="text-sm">{data.notes}</p>
               </div>
             )}
-            
+
             {data.nextAction && (
               <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800">
                 <Clock className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs font-semibold text-blue-700 dark:text-blue-400">Næste handling:</p>
+                  <p className="text-xs font-semibold text-blue-700 dark:text-blue-400">
+                    Næste handling:
+                  </p>
                   <p className="text-sm">{data.nextAction}</p>
                 </div>
               </div>
@@ -165,14 +217,14 @@ export function LeadCardDetailed({
               <div>
                 <span className="text-muted-foreground">Oprettet:</span>
                 <span className="ml-2 font-medium">
-                  {data.createdAt.toLocaleDateString('da-DK')}
+                  {data.createdAt.toLocaleDateString("da-DK")}
                 </span>
               </div>
               {data.lastContact && (
                 <div>
                   <span className="text-muted-foreground">Sidst kontakt:</span>
                   <span className="ml-2 font-medium">
-                    {data.lastContact.toLocaleDateString('da-DK')}
+                    {data.lastContact.toLocaleDateString("da-DK")}
                   </span>
                 </div>
               )}
@@ -186,15 +238,30 @@ export function LeadCardDetailed({
             <Mail className="w-3.5 h-3.5 mr-1.5" />
             Email
           </Button>
-          <Button size="sm" onClick={onCall} variant="outline" className="flex-1">
+          <Button
+            size="sm"
+            onClick={onCall}
+            variant="outline"
+            className="flex-1"
+          >
             <Phone className="w-3.5 h-3.5 mr-1.5" />
             Ring
           </Button>
-          <Button size="sm" onClick={onSendQuote} variant="outline" className="flex-1">
+          <Button
+            size="sm"
+            onClick={onSendQuote}
+            variant="outline"
+            className="flex-1"
+          >
             <FileText className="w-3.5 h-3.5 mr-1.5" />
             Tilbud
           </Button>
-          <Button size="sm" onClick={onScheduleMeeting} variant="outline" className="flex-1">
+          <Button
+            size="sm"
+            onClick={onScheduleMeeting}
+            variant="outline"
+            className="flex-1"
+          >
             <Calendar className="w-3.5 h-3.5 mr-1.5" />
             Møde
           </Button>
@@ -207,7 +274,7 @@ export function LeadCardDetailed({
           onClick={() => setExpanded(!expanded)}
           className="w-full"
         >
-          {expanded ? '▲ Skjul detaljer' : '▼ Vis flere detaljer'}
+          {expanded ? "▲ Skjul detaljer" : "▼ Vis flere detaljer"}
         </Button>
       </div>
     </Card>

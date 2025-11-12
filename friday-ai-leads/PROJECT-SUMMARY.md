@@ -21,13 +21,13 @@ friday-ai-leads/                       ← HOVEDMAPPE
 │   └── tsconfig.json                 ✅ TypeScript configuration
 │
 ├── 📂 src/                           ← SOURCE CODE
-│   ├── 📁 services/                 
+│   ├── 📁 services/
 │   │   └── FridayAIService.ts       ✅ Main AI service (470 lines)
 │   │
-│   ├── 📁 intents/                  
+│   ├── 📁 intents/
 │   │   └── CustomerLookup.ts        ✅ Customer search intent (258 lines)
 │   │
-│   ├── 📁 types/                    
+│   ├── 📁 types/
 │   │   ├── customer.types.ts        ✅ Customer interfaces (173 lines)
 │   │   ├── analytics.types.ts       ✅ Analytics types (216 lines)
 │   │   └── friday.types.ts          ✅ Friday AI types (227 lines)
@@ -53,6 +53,7 @@ friday-ai-leads/                       ← HOVEDMAPPE
 ### **✅ Core Services (KOMPLET)**
 
 #### **1. FridayAIService.ts** (470 lines)
+
 ```typescript
 - ChromaDB integration
 - Customer context retrieval
@@ -65,6 +66,7 @@ friday-ai-leads/                       ← HOVEDMAPPE
 ```
 
 #### **2. CustomerLookup.ts** (258 lines)
+
 ```typescript
 - Multi-type search (email, phone, name)
 - Customer formatting
@@ -75,6 +77,7 @@ friday-ai-leads/                       ← HOVEDMAPPE
 ```
 
 #### **3. Main API Server** (189 lines)
+
 ```typescript
 Endpoints:
   GET  /health                 - Health check
@@ -90,6 +93,7 @@ Endpoints:
 ## 🎯 **TYPE DEFINITIONS (KOMPLET)**
 
 ### **Customer Types** (173 lines)
+
 ```typescript
 ✅ CustomerProfile        - Basic info
 ✅ CustomerMetrics       - Business metrics
@@ -101,6 +105,7 @@ Endpoints:
 ```
 
 ### **Analytics Types** (216 lines)
+
 ```typescript
 ✅ BookingPrediction     - Next booking prediction
 ✅ RevenueOpportunity    - Revenue opportunities
@@ -112,6 +117,7 @@ Endpoints:
 ```
 
 ### **Friday AI Types** (227 lines)
+
 ```typescript
 ✅ FridayAIResponse      - API responses
 ✅ FridayAIIntent        - Intent detection
@@ -127,6 +133,7 @@ Endpoints:
 ## 💡 **KEY FEATURES IMPLEMENTERET**
 
 ### **1. Intelligent Customer Service** ✅
+
 ```javascript
 // Instant customer lookup
 const customer = await fridayAI.getCustomerContext("tommy@example.com");
@@ -139,6 +146,7 @@ const customer = await fridayAI.getCustomerContext("tommy@example.com");
 ```
 
 ### **2. Predictive Booking** ✅
+
 ```javascript
 // Predict next booking
 const prediction = await fridayAI.predictNextBooking(customerId);
@@ -151,6 +159,7 @@ const prediction = await fridayAI.predictNextBooking(customerId);
 ```
 
 ### **3. Revenue Opportunities** ✅
+
 ```javascript
 // Find opportunities
 const opportunities = await fridayAI.findRevenueOpportunities();
@@ -163,6 +172,7 @@ const opportunities = await fridayAI.findRevenueOpportunities();
 ```
 
 ### **4. Natural Language Queries** ✅
+
 ```javascript
 // Process natural language
 const result = await fridayAI.handleQuery("Info om Tommy Callesen");
@@ -175,12 +185,14 @@ const result = await fridayAI.handleQuery("Info om Tommy Callesen");
 ## 🚀 **SÅDAN STARTER DU**
 
 ### **1. Installation**
+
 ```bash
 cd friday-ai-leads
 npm install
 ```
 
 ### **2. Environment Setup**
+
 ```bash
 # Create .env file
 CHROMADB_URL=http://localhost:8000
@@ -188,11 +200,13 @@ PORT=3001
 ```
 
 ### **3. Start Service**
+
 ```bash
 npm run start
 ```
 
 ### **4. Test API**
+
 ```bash
 # Health check
 curl http://localhost:3001/health
@@ -208,12 +222,14 @@ curl -X POST http://localhost:3001/api/customer \
 ## 📈 **INTEGRATION MED LEAD DATA**
 
 ### **Data Kilder:**
+
 - **231 leads** fra V4.3.5 pipeline
 - **24 recurring customers** identificeret
 - **28 premium customers** flagged
 - **4 problematiske customers** med quality issues
 
 ### **ChromaDB Collection:**
+
 ```typescript
 Collection: leads_v4_3_3
 Documents: 231
@@ -221,6 +237,7 @@ Embeddings: Ready for semantic search
 ```
 
 ### **AI Intelligence:**
+
 ```typescript
 100% AI-parsed calendar events
 Customer type classification
@@ -233,6 +250,7 @@ Special requirements tracking
 ## 🎯 **NÆSTE SKRIDT**
 
 ### **Phase 1: Core Implementation** ✅
+
 - [x] Folder struktur oprettet
 - [x] Type definitions
 - [x] Main service
@@ -241,6 +259,7 @@ Special requirements tracking
 - [x] Documentation
 
 ### **Phase 2: Additional Features** (TODO)
+
 - [ ] Booking history intent
 - [ ] Quality monitoring service
 - [ ] Alert manager
@@ -248,6 +267,7 @@ Special requirements tracking
 - [ ] Automated campaigns
 
 ### **Phase 3: Testing & Deployment**
+
 - [ ] Unit tests
 - [ ] Integration tests
 - [ ] Load testing
@@ -277,6 +297,7 @@ Ready for Extension:   Yes
 ## 💼 **BUSINESS VALUE**
 
 ### **Efficiency:**
+
 ```
 Customer Lookup:        Instant (vs 2-3 min)
 Booking Prediction:     Automated
@@ -285,6 +306,7 @@ Revenue Detection:      Data-driven
 ```
 
 ### **Expected Impact:**
+
 ```
 Year 1 Revenue:         95-125k kr
 Implementation Cost:    0 kr (FREE tier)
@@ -297,6 +319,7 @@ Time to Value:         Immediate
 ## 🔧 **TEKNISK STATUS**
 
 ### **Implementeret:**
+
 ✅ ChromaDB integration  
 ✅ Customer intelligence extraction  
 ✅ Booking prediction algorithm  
@@ -304,13 +327,14 @@ Time to Value:         Immediate
 ✅ Natural language processing  
 ✅ RESTful API endpoints  
 ✅ TypeScript type safety  
-✅ Error handling  
+✅ Error handling
 
 ### **Klar til:**
+
 ✅ Data import fra V4.3.5 pipeline  
 ✅ Production deployment  
 ✅ Testing & validation  
-✅ Feature expansion  
+✅ Feature expansion
 
 ---
 
@@ -323,9 +347,10 @@ Vi har opbygget en **komplet, struktureret mappe** for Friday AI + Leads integra
 ✅ **Complete type system** - 616 lines af type definitions  
 ✅ **RESTful API** - 6 ready-to-use endpoints  
 ✅ **Documentation** - README, types, inline comments  
-✅ **Ready for extension** - Clean architecture for nye features  
+✅ **Ready for extension** - Clean architecture for nye features
 
 **Systemet er struktureret, dokumenteret og klar til:**
+
 1. Import af lead data
 2. Testing
 3. Production deployment

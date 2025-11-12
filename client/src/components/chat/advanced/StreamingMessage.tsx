@@ -6,21 +6,21 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { 
-  Copy, 
-  RotateCcw, 
-  Share2, 
-  ThumbsUp, 
-  ThumbsDown, 
+import {
+  Copy,
+  RotateCcw,
+  Share2,
+  ThumbsUp,
+  ThumbsDown,
   MoreVertical,
   Sparkles,
   User,
-  CheckCheck
+  CheckCheck,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export interface StreamingMessageProps {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   isStreaming?: boolean;
   showTools?: boolean;
@@ -44,11 +44,11 @@ export function StreamingMessage({
   onRegenerate,
   onShare,
   onLike,
-  onDislike
+  onDislike,
 }: StreamingMessageProps) {
-  const [displayedContent, setDisplayedContent] = useState('');
+  const [displayedContent, setDisplayedContent] = useState("");
   const [copied, setCopied] = useState(false);
-  const [liked, setLiked] = useState<'like' | 'dislike' | null>(null);
+  const [liked, setLiked] = useState<"like" | "dislike" | null>(null);
 
   useEffect(() => {
     if (isStreaming) {
@@ -75,16 +75,16 @@ export function StreamingMessage({
   };
 
   const handleLike = () => {
-    setLiked(liked === 'like' ? null : 'like');
+    setLiked(liked === "like" ? null : "like");
     onLike?.();
   };
 
   const handleDislike = () => {
-    setLiked(liked === 'dislike' ? null : 'dislike');
+    setLiked(liked === "dislike" ? null : "dislike");
     onDislike?.();
   };
 
-  if (role === 'user') {
+  if (role === "user") {
     return (
       <div className="flex gap-3 justify-end">
         <Card className="p-4 max-w-[80%] bg-blue-50 dark:bg-blue-950/20 border-blue-200">
@@ -106,7 +106,7 @@ export function StreamingMessage({
       <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center shrink-0">
         <Sparkles className="w-4 h-4 text-white" />
       </div>
-      
+
       <div className="flex-1 space-y-2">
         <Card className="p-4">
           {model && (
@@ -133,7 +133,9 @@ export function StreamingMessage({
 
           {sources.length > 0 && (
             <div className="mt-4 pt-4 border-t space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground">Sources:</p>
+              <p className="text-xs font-semibold text-muted-foreground">
+                Sources:
+              </p>
               <div className="flex flex-wrap gap-2">
                 {sources.map((source, i) => (
                   <a
@@ -159,13 +161,17 @@ export function StreamingMessage({
               onClick={handleCopy}
               className="h-8 px-2"
             >
-              {copied ? <CheckCheck className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? (
+                <CheckCheck className="w-4 h-4" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
             </Button>
             <Button
               size="sm"
               variant="ghost"
               onClick={handleLike}
-              className={cn("h-8 px-2", liked === 'like' && "text-emerald-600")}
+              className={cn("h-8 px-2", liked === "like" && "text-emerald-600")}
             >
               <ThumbsUp className="w-4 h-4" />
             </Button>
@@ -173,7 +179,7 @@ export function StreamingMessage({
               size="sm"
               variant="ghost"
               onClick={handleDislike}
-              className={cn("h-8 px-2", liked === 'dislike' && "text-red-600")}
+              className={cn("h-8 px-2", liked === "dislike" && "text-red-600")}
             >
               <ThumbsDown className="w-4 h-4" />
             </Button>
@@ -193,11 +199,7 @@ export function StreamingMessage({
             >
               <Share2 className="w-4 h-4" />
             </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="h-8 px-2"
-            >
+            <Button size="sm" variant="ghost" className="h-8 px-2">
               <MoreVertical className="w-4 h-4" />
             </Button>
           </div>

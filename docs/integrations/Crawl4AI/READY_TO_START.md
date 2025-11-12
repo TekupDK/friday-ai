@@ -18,6 +18,7 @@
 ## 📋 Pre-Flight Checklist
 
 ### ✅ Prerequisites Complete
+
 - [x] ChromaDB working (for storing scraped data)
 - [x] Langfuse ready (for monitoring scraping quality)
 - [x] OpenRouter API (for AI content extraction)
@@ -25,6 +26,7 @@
 - [x] Plan documented (`PLAN_DAY9-10.md`)
 
 ### 🎯 What You'll Build
+
 ```
 Day 9 (4-6 hours):
 ├── Crawl4AI Docker service
@@ -46,6 +48,7 @@ Day 10 (4-6 hours):
 ### Day 9: Setup & Basic Scraping
 
 #### Step 1: Create Docker Service (1.5h)
+
 ```bash
 # Create directory structure
 mkdir -p server/integrations/crawl4ai/app
@@ -65,14 +68,16 @@ server/integrations/crawl4ai/
 ```
 
 #### Step 2: TypeScript Client (1h)
+
 ```typescript
 // server/integrations/crawl4ai/client.ts
-export async function scrapePage(url: string)
-export async function enrichLead(leadId: number)
-export async function findContacts(companyUrl: string)
+export async function scrapePage(url: string);
+export async function enrichLead(leadId: number);
+export async function findContacts(companyUrl: string);
 ```
 
 #### Step 3: Test Basic Scraping (30min)
+
 ```bash
 # Test endpoints
 curl -X POST http://localhost:8080/scrape \
@@ -82,18 +87,21 @@ curl -X POST http://localhost:8080/scrape \
 ### Day 10: Advanced Features
 
 #### Step 4: Company Intelligence (2h)
+
 - Scrape company websites
 - Extract: description, industry, size, location
 - Store in ChromaDB for context
 - Track in Langfuse
 
 #### Step 5: Contact Discovery (2h)
+
 - Find email patterns
 - Extract phone numbers
 - Scrape contact pages
 - LinkedIn integration (optional)
 
 #### Step 6: Automated Enrichment (1.5h)
+
 - Integrate with `createLead()`
 - Background job queue
 - Error handling
@@ -104,6 +112,7 @@ curl -X POST http://localhost:8080/scrape \
 ## 🔧 Docker Setup Template
 
 ### Dockerfile
+
 ```dockerfile
 FROM python:3.11-slim
 
@@ -132,8 +141,9 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
 ```
 
 ### docker-compose.crawl4ai.yml
+
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   crawl4ai:
@@ -156,6 +166,7 @@ services:
 ```
 
 ### requirements.txt
+
 ```
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
@@ -172,6 +183,7 @@ python-multipart==0.0.6
 ## 📝 FastAPI App Template
 
 ### app/main.py
+
 ```python
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, HttpUrl
@@ -222,6 +234,7 @@ async def discover_contacts(request: ScrapeRequest):
 ## 🧪 Testing Strategy
 
 ### Manual Tests
+
 ```bash
 # 1. Health check
 curl http://localhost:8080/health
@@ -243,22 +256,23 @@ curl -X POST http://localhost:8080/find-contacts \
 ```
 
 ### Integration Tests
+
 ```typescript
 // server/integrations/crawl4ai/test-scraping.ts
-import { scrapePage, enrichLead, findContacts } from './client';
+import { scrapePage, enrichLead, findContacts } from "./client";
 
 async function test() {
   // Test basic scraping
-  const page = await scrapePage('https://example.com');
-  console.log('✅ Scraped:', page.title);
-  
+  const page = await scrapePage("https://example.com");
+  console.log("✅ Scraped:", page.title);
+
   // Test lead enrichment
   const enriched = await enrichLead(123);
-  console.log('✅ Enriched:', enriched.company);
-  
+  console.log("✅ Enriched:", enriched.company);
+
   // Test contact discovery
-  const contacts = await findContacts('https://acme.com');
-  console.log('✅ Found contacts:', contacts.length);
+  const contacts = await findContacts("https://acme.com");
+  console.log("✅ Found contacts:", contacts.length);
 }
 ```
 
@@ -267,6 +281,7 @@ async function test() {
 ## 📊 Success Metrics
 
 ### Day 9 Goals
+
 - [ ] Docker service running on port 8080
 - [ ] Basic scraping endpoint working
 - [ ] TypeScript client integrated
@@ -274,6 +289,7 @@ async function test() {
 - [ ] Error handling robust
 
 ### Day 10 Goals
+
 - [ ] Company intel extraction working
 - [ ] Contact discovery functional
 - [ ] Automated lead enrichment
@@ -281,6 +297,7 @@ async function test() {
 - [ ] Documentation complete
 
 ### Overall Success
+
 - [ ] Can enrich leads automatically
 - [ ] Data quality >80%
 - [ ] Response time <30s per lead
@@ -292,6 +309,7 @@ async function test() {
 ## ⚠️ Important Considerations
 
 ### Legal & Ethical
+
 - ✅ Respect robots.txt
 - ✅ Rate limit requests (10/hour per domain)
 - ✅ Identify bot clearly (User-Agent)
@@ -299,12 +317,14 @@ async function test() {
 - ✅ Provide opt-out mechanism
 
 ### Performance
+
 - ✅ Cache results (24h TTL)
 - ✅ Background processing (don't block UI)
 - ✅ Timeout handling (30s max)
 - ✅ Retry logic (3 attempts)
 
 ### Cost
+
 - ✅ OpenRouter AI extraction: ~$0.01/page
 - ✅ Infrastructure: $0 (self-hosted)
 - ✅ Estimated monthly: $15-30
@@ -322,6 +342,7 @@ async function test() {
 5. **Add to Friday AI**
 
 ### Timeline
+
 ```
 Saturday (Day 9):
 10:00 - 11:30   Docker setup

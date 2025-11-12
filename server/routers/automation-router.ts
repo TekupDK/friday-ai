@@ -1,6 +1,6 @@
 /**
  * Phase 9.8: Workflow Automation API
- * 
+ *
  * REST endpoints to control and monitor the automation system
  */
 
@@ -55,21 +55,23 @@ export const automationRouter = router({
 
   // Process individual lead manually
   processLead: protectedProcedure
-    .input(z.object({
-      emailId: z.string(),
-      threadId: z.string(),
-      subject: z.string(),
-      from: z.string(),
-      body: z.string(),
-    }))
+    .input(
+      z.object({
+        emailId: z.string(),
+        threadId: z.string(),
+        subject: z.string(),
+        from: z.string(),
+        body: z.string(),
+      })
+    )
     .mutation(async ({ input }) => {
       try {
         const result = await workflowAutomation.processLeadWorkflow(input);
         return {
           success: result.success,
           result,
-          message: result.success 
-            ? "Lead processed successfully" 
+          message: result.success
+            ? "Lead processed successfully"
             : `Failed to process lead: ${result.error}`,
         };
       } catch (error) {
@@ -79,17 +81,21 @@ export const automationRouter = router({
 
   // Billy automation functions
   createBillyCustomer: protectedProcedure
-    .input(z.object({
-      leadId: z.number(),
-    }))
+    .input(
+      z.object({
+        leadId: z.number(),
+      })
+    )
     .mutation(async ({ input }) => {
       try {
-        const customer = await billyAutomation.createCustomerFromLead(input.leadId);
+        const customer = await billyAutomation.createCustomerFromLead(
+          input.leadId
+        );
         return {
           success: !!customer,
           customer,
-          message: customer 
-            ? "Billy customer created successfully" 
+          message: customer
+            ? "Billy customer created successfully"
             : "Failed to create Billy customer",
         };
       } catch (error) {
@@ -98,23 +104,25 @@ export const automationRouter = router({
     }),
 
   createInvoiceFromJob: protectedProcedure
-    .input(z.object({
-      leadId: z.number(),
-      jobType: z.string(),
-      hoursWorked: z.number(),
-      hourlyRate: z.number(),
-      materials: z.number().optional(),
-      travelCost: z.number().optional(),
-      description: z.string().optional(),
-    }))
+    .input(
+      z.object({
+        leadId: z.number(),
+        jobType: z.string(),
+        hoursWorked: z.number(),
+        hourlyRate: z.number(),
+        materials: z.number().optional(),
+        travelCost: z.number().optional(),
+        description: z.string().optional(),
+      })
+    )
     .mutation(async ({ input }) => {
       try {
         const result = await billyAutomation.createInvoiceFromJob(input);
         return {
           success: result.success,
           result,
-          message: result.success 
-            ? "Invoice created successfully" 
+          message: result.success
+            ? "Invoice created successfully"
             : `Failed to create invoice: ${result.error}`,
         };
       } catch (error) {
@@ -123,10 +131,12 @@ export const automationRouter = router({
     }),
 
   getFinancialSummary: protectedProcedure
-    .input(z.object({
-      startDate: z.string().datetime(),
-      endDate: z.string().datetime(),
-    }))
+    .input(
+      z.object({
+        startDate: z.string().datetime(),
+        endDate: z.string().datetime(),
+      })
+    )
     .query(async ({ input }) => {
       try {
         const summary = await billyAutomation.getFinancialSummary(
@@ -171,13 +181,15 @@ export const automationRouter = router({
 
   // Configuration
   updateAutomationConfig: protectedProcedure
-    .input(z.object({
-      enableEmailMonitoring: z.boolean().optional(),
-      enableBillyAutomation: z.boolean().optional(),
-      enableCalendarSync: z.boolean().optional(),
-      autoProcessThreshold: z.number().min(0).max(100).optional(),
-      autoCreateCustomerThreshold: z.number().min(0).max(100).optional(),
-    }))
+    .input(
+      z.object({
+        enableEmailMonitoring: z.boolean().optional(),
+        enableBillyAutomation: z.boolean().optional(),
+        enableCalendarSync: z.boolean().optional(),
+        autoProcessThreshold: z.number().min(0).max(100).optional(),
+        autoCreateCustomerThreshold: z.number().min(0).max(100).optional(),
+      })
+    )
     .mutation(async ({ input }) => {
       try {
         workflowAutomation.updateConfig(input);
@@ -193,10 +205,12 @@ export const automationRouter = router({
 
   // Analytics
   getSourceAnalytics: protectedProcedure
-    .input(z.object({
-      startDate: z.string().datetime(),
-      endDate: z.string().datetime(),
-    }))
+    .input(
+      z.object({
+        startDate: z.string().datetime(),
+        endDate: z.string().datetime(),
+      })
+    )
     .query(async ({ input }) => {
       try {
         const analytics = generateSourceAnalytics(
@@ -214,19 +228,21 @@ export const automationRouter = router({
 
   // Phase 9.9: Email Assistant
   analyzeEmail: protectedProcedure
-    .input(z.object({
-      from: z.string(),
-      subject: z.string(),
-      body: z.string(),
-    }))
+    .input(
+      z.object({
+        from: z.string(),
+        subject: z.string(),
+        body: z.string(),
+      })
+    )
     .query(async ({ input }) => {
       try {
         // Analyze email content
         const analysis = emailAnalysisEngine.analyzeEmail(input);
-        
+
         // Generate suggestions
         const suggestions = emailAnalysisEngine.generateSuggestions(analysis);
-        
+
         return {
           success: true,
           analysis,
@@ -238,24 +254,26 @@ export const automationRouter = router({
     }),
 
   logSuggestionUsage: protectedProcedure
-    .input(z.object({
-      suggestionId: z.string(),
-      emailData: z.object({
-        from: z.string(),
-        subject: z.string(),
-        body: z.string(),
-        threadId: z.string().optional(),
-      }),
-      chosenContent: z.string(),
-      sent: z.boolean().optional(),
-    }))
+    .input(
+      z.object({
+        suggestionId: z.string(),
+        emailData: z.object({
+          from: z.string(),
+          subject: z.string(),
+          body: z.string(),
+          threadId: z.string().optional(),
+        }),
+        chosenContent: z.string(),
+        sent: z.boolean().optional(),
+      })
+    )
     .mutation(async ({ input }) => {
       try {
         // TODO: Log to analytics database
         console.log(`[EmailAssistant] Suggestion used: ${input.suggestionId}`);
         console.log(`[EmailAssistant] Email: ${input.emailData.subject}`);
         console.log(`[EmailAssistant] Sent: ${input.sent || false}`);
-        
+
         return {
           success: true,
           message: "Suggestion usage logged",

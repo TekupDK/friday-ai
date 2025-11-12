@@ -41,7 +41,7 @@ export class LiteLLMCache {
     // Record cache hit
     entry.hits++;
     console.log(`✅ [Cache] Hit! Saved 1 API call (${entry.hits} total hits)`);
-    
+
     return entry.response;
   }
 
@@ -52,9 +52,10 @@ export class LiteLLMCache {
     // Enforce max size
     if (this.cache.size >= this.maxSize) {
       // Remove oldest entry
-      const oldestKey = Array.from(this.cache.entries())
-        .sort((a, b) => a[1].timestamp - b[1].timestamp)[0]?.[0];
-      
+      const oldestKey = Array.from(this.cache.entries()).sort(
+        (a, b) => a[1].timestamp - b[1].timestamp
+      )[0]?.[0];
+
       if (oldestKey) {
         this.cache.delete(oldestKey);
       }
@@ -86,14 +87,16 @@ export class LiteLLMCache {
   getStats() {
     const entries = Array.from(this.cache.values());
     const totalHits = entries.reduce((sum, e) => sum + e.hits, 0);
-    
+
     return {
       size: this.cache.size,
       maxSize: this.maxSize,
       totalHits,
-      avgAge: entries.length > 0
-        ? entries.reduce((sum, e) => sum + (Date.now() - e.timestamp), 0) / entries.length
-        : 0,
+      avgAge:
+        entries.length > 0
+          ? entries.reduce((sum, e) => sum + (Date.now() - e.timestamp), 0) /
+            entries.length
+          : 0,
     };
   }
 

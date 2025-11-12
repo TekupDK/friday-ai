@@ -26,16 +26,16 @@ interface CodeBlockHighlightProps {
 }
 
 const LANGUAGES = [
-  { id: 'javascript', label: 'JavaScript', icon: '🟨' },
-  { id: 'typescript', label: 'TypeScript', icon: '🔷' },
-  { id: 'python', label: 'Python', icon: '🐍' },
-  { id: 'java', label: 'Java', icon: '☕' },
-  { id: 'html', label: 'HTML', icon: '🌐' },
-  { id: 'css', label: 'CSS', icon: '🎨' },
-  { id: 'json', label: 'JSON', icon: '📄' },
-  { id: 'sql', label: 'SQL', icon: '🗃️' },
-  { id: 'bash', label: 'Bash', icon: '💻' },
-  { id: 'markdown', label: 'Markdown', icon: '📝' }
+  { id: "javascript", label: "JavaScript", icon: "🟨" },
+  { id: "typescript", label: "TypeScript", icon: "🔷" },
+  { id: "python", label: "Python", icon: "🐍" },
+  { id: "java", label: "Java", icon: "☕" },
+  { id: "html", label: "HTML", icon: "🌐" },
+  { id: "css", label: "CSS", icon: "🎨" },
+  { id: "json", label: "JSON", icon: "📄" },
+  { id: "sql", label: "SQL", icon: "🗃️" },
+  { id: "bash", label: "Bash", icon: "💻" },
+  { id: "markdown", label: "Markdown", icon: "📝" },
 ];
 
 const SAMPLE_CODE = {
@@ -94,15 +94,15 @@ SELECT
 FROM products p
 JOIN cart c ON p.id = c.product_id
 WHERE c.user_id = 123
-ORDER BY total DESC;`
+ORDER BY total DESC;`,
 };
 
-export function CodeBlockHighlight({ 
+export function CodeBlockHighlight({
   data,
   onCopy,
   onRun,
   onEdit,
-  onDownload 
+  onDownload,
 }: CodeBlockHighlightProps) {
   const [copied, setCopied] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -137,7 +137,7 @@ export function CodeBlockHighlight({
 
   const getLanguageIcon = (language: string) => {
     const lang = LANGUAGES.find(l => l.id === language);
-    return lang?.icon || '📄';
+    return lang?.icon || "📄";
   };
 
   const getLanguageLabel = (language: string) => {
@@ -146,7 +146,7 @@ export function CodeBlockHighlight({
   };
 
   const getLineCount = (code: string) => {
-    return code.split('\n').length;
+    return code.split("\n").length;
   };
 
   return (
@@ -160,20 +160,26 @@ export function CodeBlockHighlight({
             </div>
             <div>
               <h4 className="font-semibold">Code Block</h4>
-              <p className="text-xs text-muted-foreground">Syntax highlighting</p>
+              <p className="text-xs text-muted-foreground">
+                Syntax highlighting
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-lg">{getLanguageIcon(selectedLanguage)}</span>
-            <Badge variant="secondary">{getLanguageLabel(selectedLanguage)}</Badge>
+            <Badge variant="secondary">
+              {getLanguageLabel(selectedLanguage)}
+            </Badge>
           </div>
         </div>
 
         {/* Language Selector */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Vælg sprog:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Vælg sprog:
+          </label>
           <div className="grid grid-cols-5 gap-1">
-            {LANGUAGES.map((lang) => (
+            {LANGUAGES.map(lang => (
               <button
                 key={lang.id}
                 onClick={() => handleLanguageChange(lang.id)}
@@ -195,31 +201,32 @@ export function CodeBlockHighlight({
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <label className="text-xs font-medium text-muted-foreground">
-              {data.filename || `code.${selectedLanguage}`} ({getLineCount(editableCode)} linjer)
+              {data.filename || `code.${selectedLanguage}`} (
+              {getLineCount(editableCode)} linjer)
             </label>
             {data.editable && (
               <Button size="sm" variant="ghost" onClick={handleEdit}>
-                {isEditing ? 'Gem' : 'Rediger'}
+                {isEditing ? "Gem" : "Rediger"}
               </Button>
             )}
           </div>
-          
+
           <div className="relative">
             {/* Line Numbers */}
             <div className="absolute left-0 top-0 bottom-0 w-12 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400 p-3 select-none">
-              {editableCode.split('\n').map((_, index) => (
+              {editableCode.split("\n").map((_, index) => (
                 <div key={index} className="text-right">
                   {index + 1}
                 </div>
               ))}
             </div>
-            
+
             {/* Code Content */}
             <div className="ml-12">
               {isEditing ? (
                 <textarea
                   value={editableCode}
-                  onChange={(e) => setEditableCode(e.target.value)}
+                  onChange={e => setEditableCode(e.target.value)}
                   className="w-full h-64 p-3 font-mono text-sm bg-background border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
                   spellCheck={false}
                 />
@@ -248,7 +255,7 @@ export function CodeBlockHighlight({
           </div>
           <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950/20 text-center">
             <p className="font-medium text-green-700 dark:text-green-400">
-              {editableCode.split('\n').filter(line => line.trim()).length}
+              {editableCode.split("\n").filter(line => line.trim()).length}
             </p>
             <p className="text-green-600 dark:text-green-500">Aktive</p>
           </div>
@@ -269,14 +276,17 @@ export function CodeBlockHighlight({
               </>
             )}
           </Button>
-          
+
           <Button onClick={handleDownload} variant="outline" className="flex-1">
             <Download className="w-4 h-4 mr-2" />
             Download
           </Button>
-          
+
           {data.runnable && (
-            <Button onClick={() => onRun?.(editableCode)} className="flex-1 bg-linear-to-r from-green-600 to-emerald-600">
+            <Button
+              onClick={() => onRun?.(editableCode)}
+              className="flex-1 bg-linear-to-r from-green-600 to-emerald-600"
+            >
               <Play className="w-4 h-4 mr-2" />
               Kør
             </Button>

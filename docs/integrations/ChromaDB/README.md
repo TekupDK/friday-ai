@@ -54,17 +54,19 @@ CHROMA_AUTH_TOKEN=friday-chromadb-token-dev
 ### 4. Use in Code
 
 ```typescript
-import { addDocuments, searchSimilar } from '../integrations/chromadb';
+import { addDocuments, searchSimilar } from "../integrations/chromadb";
 
 // Add lead
-await addDocuments('friday_leads', [{
-  id: 'lead-123',
-  text: 'John Doe from ACME Corp',
-  metadata: { leadId: '123' }
-}]);
+await addDocuments("friday_leads", [
+  {
+    id: "lead-123",
+    text: "John Doe from ACME Corp",
+    metadata: { leadId: "123" },
+  },
+]);
 
 // Search similar
-const results = await searchSimilar('friday_leads', 'ACME', 5);
+const results = await searchSimilar("friday_leads", "ACME", 5);
 ```
 
 ---
@@ -87,17 +89,20 @@ const results = await searchSimilar('friday_leads', 'ACME', 5);
 ## 🚀 Integration Roadmap
 
 ### Day 4-5: Setup ✅ COMPLETE
+
 - Docker deployment
 - TypeScript client
 - Basic operations
 
 ### Day 6-8: Integration 🔄 IN PROGRESS
+
 - Real embeddings API
 - Lead deduplication
 - Email context retrieval
 - Testing & validation
 
 ### Day 9-10: Crawl4AI
+
 - Web scraping integration
 - Lead enrichment from ChromaDB data
 
@@ -106,9 +111,10 @@ const results = await searchSimilar('friday_leads', 'ACME', 5);
 ## 💡 Use Cases
 
 ### 1. Lead Deduplication
+
 ```typescript
 // Before creating a new lead:
-const similar = await searchSimilar('friday_leads', leadText, 3);
+const similar = await searchSimilar("friday_leads", leadText, 3);
 if (similar && similar.distances[0] < 0.2) {
   // Lead already exists!
   return existingLead;
@@ -116,16 +122,18 @@ if (similar && similar.distances[0] < 0.2) {
 ```
 
 ### 2. Email Context
+
 ```typescript
 // When processing email:
-const context = await searchSimilar('friday_emails', emailText, 5);
+const context = await searchSimilar("friday_emails", emailText, 5);
 // Use context to generate better AI response
 ```
 
 ### 3. Document Search
+
 ```typescript
 // When user asks question:
-const relevantDocs = await searchSimilar('friday_docs', question, 3);
+const relevantDocs = await searchSimilar("friday_docs", question, 3);
 // Use as context for RAG
 ```
 
@@ -154,16 +162,19 @@ Scalability:       Millions of vectors
 ## 🆘 Troubleshooting
 
 ### ChromaDB not starting?
+
 ```bash
 docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.yml logs
 ```
 
 ### Can't connect?
+
 1. Check `CHROMA_ENABLED=true` in .env.dev
 2. Verify ChromaDB running: `docker ps`
 3. Test health: `curl http://localhost:8000/api/v2/heartbeat`
 
 ### No search results?
+
 1. Check embeddings are being generated
 2. Verify documents were added: `countDocuments('collection_name')`
 3. Check collection exists: `listCollections()`

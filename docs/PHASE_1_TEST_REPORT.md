@@ -31,18 +31,18 @@
 
 ### Playwright E2E Tests:
 
-| Test | Status | Time | Notes |
-|------|--------|------|-------|
-| Auto-create conversation | ✅ PASS | 140ms | Fast |
-| Display welcome screen | ⏭️ SKIP | - | Needs UI update |
-| Send message & receive response | ⏭️ SKIP | - | Needs AI mock |
-| Remember conversation history | ❌ FAIL | 21s | Timeout |
-| Handle suggestion clicks | ❌ FAIL | 20.5s | Timeout |
-| Persist messages after refresh | ❌ FAIL | 20.8s | Timeout |
-| Display timestamps | ❌ FAIL | 20.7s | Timeout |
-| Show loading indicator | ✅ PASS | - | Works |
-| Conversation creation speed | ✅ PASS | <3s | Fast |
-| Message send responsiveness | ❌ FAIL | 227ms | Selector issue |
+| Test                            | Status  | Time  | Notes           |
+| ------------------------------- | ------- | ----- | --------------- |
+| Auto-create conversation        | ✅ PASS | 140ms | Fast            |
+| Display welcome screen          | ⏭️ SKIP | -     | Needs UI update |
+| Send message & receive response | ⏭️ SKIP | -     | Needs AI mock   |
+| Remember conversation history   | ❌ FAIL | 21s   | Timeout         |
+| Handle suggestion clicks        | ❌ FAIL | 20.5s | Timeout         |
+| Persist messages after refresh  | ❌ FAIL | 20.8s | Timeout         |
+| Display timestamps              | ❌ FAIL | 20.7s | Timeout         |
+| Show loading indicator          | ✅ PASS | -     | Works           |
+| Conversation creation speed     | ✅ PASS | <3s   | Fast            |
+| Message send responsiveness     | ❌ FAIL | 227ms | Selector issue  |
 
 **Summary:** 3 passed, 2 skipped, 5 failed
 
@@ -92,26 +92,28 @@
 ### High Priority:
 
 1. **Add Test IDs to Components**
+
    ```tsx
    // ShortWaveChatPanel.tsx
    <div data-testid="friday-ai-panel">
-   
+
    // WelcomeScreen.tsx
    <div data-testid="welcome-screen">
-   
+
    // Message components
    <div data-testid="user-message">
    <div data-testid="ai-message">
    ```
 
 2. **Mock AI Responses in Tests**
+
    ```typescript
    // Mock routeAI for faster tests
-   vi.mock('./ai-router', () => ({
+   vi.mock("./ai-router", () => ({
      routeAI: vi.fn(() => ({
-       content: 'Mocked response',
-       model: 'test',
-     }))
+       content: "Mocked response",
+       model: "test",
+     })),
    }));
    ```
 
@@ -129,12 +131,12 @@
 
 ## 📈 Test Metrics
 
-| Metric | Target | Actual | Status |
-|--------|--------|--------|--------|
-| Test Coverage | >80% | ~60% | ⚠️ Needs improvement |
-| E2E Pass Rate | >90% | 30% | ❌ Needs fixes |
-| Unit Test Pass Rate | >95% | Not run | ⏳ Pending |
-| Performance | <3s load | <3s | ✅ Good |
+| Metric              | Target   | Actual  | Status               |
+| ------------------- | -------- | ------- | -------------------- |
+| Test Coverage       | >80%     | ~60%    | ⚠️ Needs improvement |
+| E2E Pass Rate       | >90%     | 30%     | ❌ Needs fixes       |
+| Unit Test Pass Rate | >95%     | Not run | ⏳ Pending           |
+| Performance         | <3s load | <3s     | ✅ Good              |
 
 ---
 
@@ -202,12 +204,15 @@
 ## 📝 Test Files Created
 
 ### E2E Tests:
+
 - `tests/phase-1-chat.spec.ts` (12 tests)
 
 ### Unit Tests:
+
 - `client/src/hooks/__tests__/useFridayChatSimple.test.ts` (9 tests)
 
 ### Server Tests:
+
 - `server/__tests__/chat-phase-1.test.ts` (12 tests)
 
 **Total:** 33 tests across 3 files
@@ -241,6 +246,7 @@
 **Test Coverage:** ⚠️ NEEDS IMPROVEMENT
 
 **Recommended Actions:**
+
 1. Add test IDs to components
 2. Mock AI responses in tests
 3. Run unit and server tests
@@ -251,6 +257,7 @@
 ---
 
 **Next Steps:**
+
 1. Implement test ID fixes (5 min)
 2. Continue with Phase 2 implementation
 3. Add Phase 2 tests alongside implementation

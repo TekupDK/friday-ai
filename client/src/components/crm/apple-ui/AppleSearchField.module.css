@@ -1,0 +1,248 @@
+/**
+ * AppleSearchField Styles
+ *
+ * iOS-style search field styling
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ============================================================================
+   SEARCH WRAPPER
+   ============================================================================ */
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  /* background controlled by theme */
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  min-height: 36px;
+}
+
+/* Hover/focus styles are defined within theme selectors */
+
+/* ============================================================================
+   SEARCH ICON
+   ============================================================================ */
+
+.searchIcon {
+  color: rgba(60, 60, 67, 0.6);
+  flex-shrink: 0;
+}
+
+.focused .searchIcon {
+  color: #007aff;
+}
+
+/* ============================================================================
+   INPUT
+   ============================================================================ */
+
+.input {
+  flex: 1;
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  line-height: 21px;
+}
+
+.input::placeholder {
+  color: rgba(60, 60, 67, 0.3);
+}
+
+/* ============================================================================
+   CLEAR BUTTON
+   ============================================================================ */
+
+.clearButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: rgba(60, 60, 67, 0.3);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #ffffff;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.clearButton:hover {
+  background: rgba(60, 60, 67, 0.4);
+}
+
+.clearButton:active {
+  background: rgba(60, 60, 67, 0.5);
+}
+
+/* ============================================================================
+   LIGHT MODE
+   ============================================================================ */
+
+[data-theme="light"] .searchWrapper {
+  background: #f2f2f7;
+}
+
+[data-theme="light"] .searchWrapper:hover {
+  background: #e8e8ed;
+}
+
+[data-theme="light"] .searchWrapper.focused {
+  background: #ffffff;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+[data-theme="light"] .searchIcon {
+  color: rgba(60, 60, 67, 0.6);
+}
+
+[data-theme="light"] .focused .searchIcon {
+  color: #007aff;
+}
+
+[data-theme="light"] .input {
+  color: #000000;
+}
+
+[data-theme="light"] .input::placeholder {
+  color: rgba(60, 60, 67, 0.3);
+}
+
+[data-theme="light"] .clearButton {
+  background: rgba(60, 60, 67, 0.3);
+}
+
+[data-theme="light"] .clearButton:hover {
+  background: rgba(60, 60, 67, 0.4);
+}
+
+[data-theme="light"] .clearButton:active {
+  background: rgba(60, 60, 67, 0.5);
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+[data-theme="dark"] .searchWrapper {
+  background: #2c2c2e;
+}
+
+[data-theme="dark"] .searchWrapper:hover {
+  background: #3a3a3c;
+}
+
+[data-theme="dark"] .searchWrapper.focused {
+  background: #1c1c1e;
+  border-color: #0a84ff;
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+}
+
+[data-theme="dark"] .searchIcon {
+  color: rgba(235, 235, 245, 0.6);
+}
+
+[data-theme="dark"] .focused .searchIcon {
+  color: #0a84ff;
+}
+
+[data-theme="dark"] .input {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .input::placeholder {
+  color: rgba(235, 235, 245, 0.3);
+}
+
+[data-theme="dark"] .clearButton {
+  background: rgba(235, 235, 245, 0.3);
+}
+
+[data-theme="dark"] .clearButton:hover {
+  background: rgba(235, 235, 245, 0.4);
+}
+
+[data-theme="dark"] .clearButton:active {
+  background: rgba(235, 235, 245, 0.5);
+}
+
+/* Support system preference as well */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .searchWrapper {
+    background: #2c2c2e;
+  }
+
+  html:not([data-theme]) .searchWrapper:hover {
+    background: #3a3a3c;
+  }
+
+  html:not([data-theme]) .searchWrapper.focused {
+    background: #1c1c1e;
+    border-color: #0a84ff;
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.15);
+  }
+
+  html:not([data-theme]) .searchIcon {
+    color: rgba(235, 235, 245, 0.6);
+  }
+
+  html:not([data-theme]) .focused .searchIcon {
+    color: #0a84ff;
+  }
+
+  html:not([data-theme]) .input {
+    color: #ffffff;
+  }
+
+  html:not([data-theme]) .input::placeholder {
+    color: rgba(235, 235, 245, 0.3);
+  }
+
+  html:not([data-theme]) .clearButton {
+    background: rgba(235, 235, 245, 0.3);
+  }
+
+  html:not([data-theme]) .clearButton:hover {
+    background: rgba(235, 235, 245, 0.4);
+  }
+
+  html:not([data-theme]) .clearButton:active {
+    background: rgba(235, 235, 245, 0.5);
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .searchWrapper {
+    transition: none;
+  }
+
+  .clearButton {
+    transition: none;
+  }
+}

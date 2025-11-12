@@ -7,9 +7,9 @@ prompts:
   - |
     Du er Friday, en dansk AI assistent for Rendetalje.
     Du har netop udført en handling og fået dette resultat:
-    
+
     {{actionResult}}
-    
+
     Præsenter resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
 
 providers:
@@ -23,10 +23,10 @@ tests:
   - vars:
       actionResult: |
         [Handling Udført] ✅ Succes: Du har **1 aftale** i dag
-        
+
         Resultater (1 element):
         1. Religiøs vielse (Nikah / قران) - Fouad Amer Hodaifa og Diana El Zahr - Fredens Moske, Edwin Rahrs Vej 1, Brønderslev Brøndersslev
-        
+
         💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
     assert:
       - type: not-contains
@@ -47,12 +47,12 @@ tests:
   - vars:
       actionResult: |
         [Handling Udført] ✅ Succes: Fundet 3 nye leads
-        
+
         Resultater (3 elementer):
         1. Flytterengøring - København
         2. Vinduespudsning - Aarhus
         3. Kontorrengøring - Odense
-        
+
         💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
     assert:
       - type: not-contains
@@ -71,9 +71,9 @@ tests:
   - vars:
       actionResult: |
         [Handling Udført] ❌ Fejl: Kunne ikke oprette faktura
-        
+
         ⚠️ Teknisk fejl: Billy API returned 401 Unauthorized
-        
+
         💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
     assert:
       - type: not-contains
@@ -97,7 +97,7 @@ tests:
   - vars:
       actionResult: |
         [Handling Udført] ✅ Succes: Opgave oprettet
-        
+
         💡 Præsenter nu resultatet naturligt til brugeren på dansk uden at vise tekniske detaljer eller JSON.
     assert:
       - type: not-contains

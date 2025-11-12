@@ -168,6 +168,37 @@
 			"type": "shell",
 			"command": "npm run check",
 			"group": "test"
+		},
+		{
+			"label": "Start Storybook",
+			"type": "shell",
+			"command": "pnpm run storybook",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run Phase0 Verification",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"scripts/verify-phase0-components.mjs"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run Phase0 Verification 2",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"scripts/verify-phase0-components.mjs"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
 		}
 	]
 }

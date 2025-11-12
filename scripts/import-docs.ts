@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 /**
  * Import Existing Markdown Files to Docs System
- * 
+ *
  * Scans workspace for .md files and imports them to database
  */
 
@@ -36,7 +36,7 @@ function findMarkdownFiles(dir: string, files: FoundDoc[] = []): FoundDoc[] {
     } else if (item.endsWith(".md")) {
       const content = readFileSync(fullPath, "utf-8");
       const relativePath = relative(WORKSPACE_ROOT, fullPath);
-      
+
       files.push({
         path: fullPath,
         relativePath: relativePath.replace(/\\/g, "/"),
@@ -64,8 +64,10 @@ function inferCategory(path: string): string {
   if (path.startsWith("tasks/ai")) return "AI";
   if (path.startsWith("tasks/ops")) return "Operations";
   if (path.startsWith("tasks/")) return "Tasks";
-  if (path.startsWith(".copilot/") || path.startsWith(".claude/")) return "Development";
-  if (path.includes("STATUS") || path.includes("PROGRESS")) return "Project Status";
+  if (path.startsWith(".copilot/") || path.startsWith(".claude/"))
+    return "Development";
+  if (path.includes("STATUS") || path.includes("PROGRESS"))
+    return "Project Status";
   if (path.includes("README")) return "Documentation";
   if (path.includes("PLAN") || path.includes("ROADMAP")) return "Planning";
   if (path.includes("TEST")) return "Testing";
@@ -100,7 +102,15 @@ function extractTags(content: string, path: string): string[] {
   if (path.includes("docs")) tags.add("documentation");
 
   // Look for common keywords
-  const keywords = ["bug", "feature", "fix", "todo", "important", "urgent", "review"];
+  const keywords = [
+    "bug",
+    "feature",
+    "fix",
+    "todo",
+    "important",
+    "urgent",
+    "review",
+  ];
   for (const keyword of keywords) {
     if (content.toLowerCase().includes(keyword)) {
       tags.add(keyword);
@@ -113,7 +123,7 @@ function extractTags(content: string, path: string): string[] {
 async function importDocs() {
   console.log("🔍 Scanning for markdown files...");
   const files = findMarkdownFiles(WORKSPACE_ROOT);
-  
+
   console.log(`📄 Found ${files.length} markdown files`);
 
   const db = await getDb();
@@ -121,7 +131,7 @@ async function importDocs() {
     console.error("❌ Database not available");
     process.exit(1);
   }
-  
+
   let imported = 0;
   let skipped = 0;
 
@@ -155,7 +165,9 @@ async function importDocs() {
       imported++;
       console.log(`✅ Imported: ${title} (${category})`);
     } catch (error: any) {
-      console.error(`❌ Failed to import ${file.relativePath}: ${error.message}`);
+      console.error(
+        `❌ Failed to import ${file.relativePath}: ${error.message}`
+      );
       skipped++;
     }
   }

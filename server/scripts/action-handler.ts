@@ -1,20 +1,24 @@
 /**
  * Autonomous Action Handler
- * 
+ *
  * Automatically processes actionable insights from the lead pipeline:
  * - Missing bookings: sends reminder emails/notifications
  * - At-risk customers: creates follow-up tasks
  * - Upsell opportunities: flags for sales review
- * 
+ *
  * Can be triggered manually or via scheduled task.
- * 
+ *
  * Usage:
  *   npx tsx server/scripts/action-handler.ts [--dry-run]
  */
 
 import * as dotenv from "dotenv";
 import { getDb, getUserByOpenId } from "../db";
-import { customerProfiles, customerInvoices, tasks } from "../../drizzle/schema";
+import {
+  customerProfiles,
+  customerInvoices,
+  tasks,
+} from "../../drizzle/schema";
 import { eq, and, sql, desc } from "drizzle-orm";
 
 dotenv.config({ path: ".env.supabase" });
@@ -40,7 +44,7 @@ async function main() {
   const isDryRun = process.argv.includes("--dry-run");
 
   console.log(`🤖 Autonomous Action Handler ${isDryRun ? "(DRY RUN)" : ""}`);
-  console.log("=" .repeat(60));
+  console.log("=".repeat(60));
 
   const db = await getDb();
   if (!db) {
@@ -76,8 +80,8 @@ async function main() {
     .where(
       and(
         eq(customerProfiles.userId, userId),
-        sql`${customerProfiles.tags}::jsonb @> '["recurring"]'`,
-      ),
+        sql`${customerProfiles.tags}::jsonb @> '["recurring"]'`
+      )
     )
     .limit(50);
 
@@ -88,8 +92,8 @@ async function main() {
       .where(
         and(
           eq(customerInvoices.customerId, profile.id),
-          sql`${customerInvoices.entryDate} > NOW() - INTERVAL '90 days'`,
-        ),
+          sql`${customerInvoices.entryDate} > NOW() - INTERVAL '90 days'`
+        )
       )
       .limit(1);
 
@@ -98,12 +102,7 @@ async function main() {
       stats.byType["missing_booking"] =
         (stats.byType["missing_booking"] || 0) + 1;
 
-      const result = await handleMissingBooking(
-        db,
-        userId,
-        profile,
-        isDryRun,
-      );
+      const result = await handleMissingBooking(db, userId, profile, isDryRun);
       results.push(result);
 
       if (result.success) {
@@ -122,8 +121,8 @@ async function main() {
     .where(
       and(
         eq(customerProfiles.userId, userId),
-        eq(customerProfiles.status, "at_risk"),
-      ),
+        eq(customerProfiles.status, "at_risk")
+      )
     )
     .limit(50);
 
@@ -149,8 +148,8 @@ async function main() {
     .where(
       and(
         eq(customerProfiles.userId, userId),
-        eq(customerProfiles.status, "vip"),
-      ),
+        eq(customerProfiles.status, "vip")
+      )
     )
     .orderBy(desc(customerProfiles.totalInvoiced))
     .limit(20);
@@ -165,7 +164,7 @@ async function main() {
         db,
         userId,
         profile,
-        isDryRun,
+        isDryRun
       );
       results.push(result);
 
@@ -191,7 +190,7 @@ async function main() {
 
   if (results.length > 0) {
     console.log("\n📋 Recent Actions:");
-    results.slice(-10).forEach((r) => {
+    results.slice(-10).forEach(r => {
       const icon = r.success ? "✅" : "❌";
       console.log(`   ${icon} ${r.type} • ${r.customerName}: ${r.message}`);
     });
@@ -206,7 +205,7 @@ async function handleMissingBooking(
   db: any,
   userId: number,
   profile: any,
-  isDryRun: boolean,
+  isDryRun: boolean
 ): Promise<ActionResult> {
   const taskTitle = `📞 Follow-up: ${profile.name} (missing booking)`;
   const taskDescription = `Recurring customer has no bookings in 90+ days. Contact to schedule next appointment.`;
@@ -256,8 +255,7 @@ async function handleMissingBooking(
       customerName: profile.name || "Unknown",
       action: "create_task",
       success: false,
-      message:
-        error instanceof Error ? error.message : "Unknown error",
+      message: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
@@ -266,7 +264,7 @@ async function handleAtRiskCustomer(
   db: any,
   userId: number,
   profile: any,
-  isDryRun: boolean,
+  isDryRun: boolean
 ): Promise<ActionResult> {
   const taskTitle = `⚠️  Review: ${profile.name} (at-risk)`;
   const taskDescription = `Customer flagged as at-risk. Review account balance, complaints, and recent interactions.`;
@@ -317,8 +315,7 @@ async function handleAtRiskCustomer(
       customerName: profile.name || "Unknown",
       action: "create_task",
       success: false,
-      message:
-        error instanceof Error ? error.message : "Unknown error",
+      message: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
@@ -327,7 +324,7 @@ async function handleUpsellOpportunity(
   db: any,
   userId: number,
   profile: any,
-  isDryRun: boolean,
+  isDryRun: boolean
 ): Promise<ActionResult> {
   const lifetimeValue = (profile.totalInvoiced || 0) / 100;
   const taskTitle = `💎 Upsell: ${profile.name} (${lifetimeValue.toLocaleString("da-DK")} kr)`;
@@ -379,13 +376,12 @@ async function handleUpsellOpportunity(
       customerName: profile.name || "Unknown",
       action: "create_task",
       success: false,
-      message:
-        error instanceof Error ? error.message : "Unknown error",
+      message: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
 
-void main().catch((error) => {
+void main().catch(error => {
   console.error("❌ Action handler failed:", error);
   process.exit(1);
 });

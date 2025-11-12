@@ -37,6 +37,7 @@ LANGFUSE_ENABLED=false
 ```
 
 Derefter:
+
 ```bash
 pnpm dev
 ```
@@ -80,7 +81,7 @@ pnpm dev
    - "Cannot find module..."
    - "Connection refused..."
    - "Timeout..."
-   
+
 ✅ GOOD:
    - "[Langfuse] ✅ Client initialized"
    - "Server running on port 5173"
@@ -105,6 +106,7 @@ pnpm dev
 ## 💡 Mulige Fejl
 
 ### 1. Langfuse Connection Timeout
+
 ```typescript
 // Hvis det hænger her:
 [Langfuse] Connecting to http://localhost:3001...
@@ -114,6 +116,7 @@ pnpm dev
 ```
 
 ### 2. Calendar API Hanging
+
 ```typescript
 // Hvis det hænger her:
 [Calendar] 🔍 Validating configuration...
@@ -123,6 +126,7 @@ pnpm dev
 ```
 
 ### 3. Port Already In Use
+
 ```typescript
 // Error: listen EADDRINUSE: address already in use :::3000
 // Løsning: Kill process using port
@@ -131,9 +135,10 @@ Stop-Process -Id <PID>
 ```
 
 ### 4. Missing Dependencies
+
 ```typescript
 // Error: Cannot find module 'langfuse'
-// Løsning: 
+// Løsning:
 pnpm install
 ```
 

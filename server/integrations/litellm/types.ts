@@ -3,7 +3,7 @@
  * Type definitions for LiteLLM proxy integration
  */
 
-import type { Message, Tool, ToolChoice } from '../../_core/llm';
+import type { Message, Tool, ToolChoice } from "../../_core/llm";
 
 /**
  * LiteLLM client configuration
@@ -40,7 +40,7 @@ export interface ChatCompletionResponse {
   choices: Array<{
     index: number;
     message: {
-      role: 'assistant' | 'user' | 'system';
+      role: "assistant" | "user" | "system";
       content: string;
       tool_calls?: any[];
     };

@@ -1,6 +1,6 @@
 /**
  * ChatInput - Main Component
- * 
+ *
  * Clean, modular, 30 lines max
  * Composition over inheritance
  */
@@ -26,7 +26,10 @@ export default function ChatInput(props: ChatInputProps) {
   });
 
   return (
-    <div data-testid="friday-chat-input-container" className="border-t border-border/20 p-3">
+    <div
+      data-testid="friday-chat-input-container"
+      className="border-t border-border/20 p-3"
+    >
       <div className="w-full">
         <ChatInputField
           ref={inputRef}
@@ -38,8 +41,11 @@ export default function ChatInput(props: ChatInputProps) {
           leftIcons={left}
           rightIcons={right}
         />
-        
-        <div data-testid="friday-model-info" className="mt-2 text-[10px] text-muted-foreground text-center truncate">
+
+        <div
+          data-testid="friday-model-info"
+          className="mt-2 text-[10px] text-muted-foreground text-center truncate"
+        >
           {AI_CONFIG.getModelDisplay()}
         </div>
       </div>

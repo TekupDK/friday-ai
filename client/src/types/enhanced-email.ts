@@ -1,6 +1,6 @@
 /**
  * EnhancedEmailMessage.ts - Interface for AI-powered email data
- * 
+ *
  * Extends base email message with AI analysis and business intelligence
  */
 
@@ -19,13 +19,13 @@ export interface EnhancedEmailMessage {
   labels: string[];
   hasAttachment: boolean;
   sender: string;
-  
+
   // AI Enhancement data
   aiAnalysis?: {
     leadScore: number; // 0-100
-    source: 'rengoring_nu' | 'rengoring_aarhus' | 'adhelp' | 'direct' | null;
+    source: "rengoring_nu" | "rengoring_aarhus" | "adhelp" | "direct" | null;
     estimatedValue: number;
-    urgency: 'high' | 'medium' | 'low';
+    urgency: "high" | "medium" | "low";
     jobType: string;
     location: string;
     confidence: number;
@@ -50,6 +50,11 @@ export interface IntelligenceSummary {
   urgentEmails: number;
 }
 
-export type SortOption = 'leadScore' | 'date' | 'value' | 'urgency';
-export type FilterSource = 'all' | 'rengoring_nu' | 'rengoring_aarhus' | 'adhelp' | 'direct';
-export type Density = 'compact' | 'comfortable';
+export type SortOption = "leadScore" | "date" | "value" | "urgency";
+export type FilterSource =
+  | "all"
+  | "rengoring_nu"
+  | "rengoring_aarhus"
+  | "adhelp"
+  | "direct";
+export type Density = "compact" | "comfortable";

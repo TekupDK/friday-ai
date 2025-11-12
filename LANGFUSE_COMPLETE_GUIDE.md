@@ -48,6 +48,7 @@
 ## 📁 All Files Created/Modified
 
 ### Docker Setup (1 file)
+
 ```
 server/integrations/langfuse/docker/
 └── docker-compose.langfuse.yml
@@ -58,6 +59,7 @@ server/integrations/langfuse/docker/
 ```
 
 ### TypeScript Client (3 files)
+
 ```
 server/integrations/langfuse/
 ├── client.ts           - Langfuse wrapper with helpers
@@ -66,6 +68,7 @@ server/integrations/langfuse/
 ```
 
 ### Documentation (3 files)
+
 ```
 server/integrations/langfuse/
 ├── README.md           - Complete integration guide
@@ -78,6 +81,7 @@ Root:
 ```
 
 ### Modified Core Files (2 files)
+
 ```
 server/_core/
 ├── env.ts              - Added LANGFUSE_* config vars
@@ -85,6 +89,7 @@ server/_core/
 ```
 
 ### Configuration (1 file)
+
 ```
 .env.dev                - API keys and settings
 ```
@@ -218,6 +223,7 @@ grep LANGFUSE_ENABLED .env.dev
 ### End-to-End Test
 
 1. **Start Friday AI:**
+
    ```bash
    pnpm dev
    ```
@@ -249,12 +255,14 @@ grep LANGFUSE_ENABLED .env.dev
 ### Problem: Langfuse not starting
 
 **Symptoms:**
+
 ```
 Container restarting constantly
 Health check failing
 ```
 
 **Solutions:**
+
 ```bash
 # Check logs
 docker compose -f server/integrations/langfuse/docker/docker-compose.langfuse.yml logs langfuse
@@ -270,12 +278,14 @@ docker compose -f server/integrations/langfuse/docker/docker-compose.langfuse.ym
 ### Problem: No traces appearing
 
 **Symptoms:**
+
 ```
 Dashboard is empty
 No traces after AI requests
 ```
 
 **Solutions:**
+
 ```bash
 # 1. Check Langfuse is enabled
 grep LANGFUSE_ENABLED .env.dev
@@ -295,12 +305,14 @@ grep LANGFUSE_PUBLIC_KEY .env.dev
 ### Problem: "Connection refused" errors
 
 **Symptoms:**
+
 ```
 [Langfuse] Connection refused
 ECONNREFUSED localhost:3001
 ```
 
 **Solutions:**
+
 ```bash
 # Check Langfuse is running
 curl http://localhost:3001/api/public/health
@@ -317,16 +329,19 @@ docker compose up -d
 **Status:** ⚠️ Known V2 Limitation
 
 **Explanation:**
+
 - Langfuse V2 has limited support for complex input/output
 - Our messages array isn't serialized correctly by V2
 - All other metrics (tokens, time, model) work perfectly
 
 **Options:**
+
 1. **Accept it:** Other metrics are sufficient
 2. **Upgrade later:** V3 requires ClickHouse cluster (complex)
 3. **Custom logger:** Add separate text logging if needed
 
 **Workaround:**
+
 ```typescript
 // Check metadata instead:
 - responseTime: How long it took
@@ -513,11 +528,13 @@ services:
 ```
 
 **When to upgrade:**
+
 - Millions of traces
 - Complex analytics queries
 - Real-time aggregations needed
 
 **Current V2 is fine for:**
+
 - <1M traces
 - Basic dashboards
 - Current usage patterns
@@ -544,33 +561,35 @@ services:
 
 ```typescript
 // Import Langfuse
-import { getLangfuseClient } from '../integrations/langfuse/client';
+import { getLangfuseClient } from "../integrations/langfuse/client";
 
 // Create trace
 const langfuse = getLangfuseClient();
 const trace = langfuse?.trace({
-  name: 'my-operation',
-  metadata: { /* custom data */ }
+  name: "my-operation",
+  metadata: {
+    /* custom data */
+  },
 });
 
 // Create generation
 const generation = trace?.generation({
-  name: 'llm-call',
-  input: 'user message',
-  model: 'gpt-4'
+  name: "llm-call",
+  input: "user message",
+  model: "gpt-4",
 });
 
 // End generation
 generation?.end({
-  output: 'ai response',
+  output: "ai response",
   usage: {
     promptTokens: 100,
-    completionTokens: 50
-  }
+    completionTokens: 50,
+  },
 });
 
 // Flush
-import { flushLangfuse } from '../integrations/langfuse/client';
+import { flushLangfuse } from "../integrations/langfuse/client";
 await flushLangfuse();
 ```
 

@@ -1,9 +1,9 @@
 /**
  * EmailCenter - Phase 4 Integrated Email Hub
- * 
+ *
  * Evolution from EmailTab (2318 lines) to intelligent email center.
  * Integrates Phase 4 SmartWorkspacePanel with contextual tab system.
- * 
+ *
  * Architecture:
  * - Left: EmailListV2 (modular email rendering)
  * - Right: SmartWorkspacePanel + ContextualTabs (Phase 4 integration)
@@ -15,54 +15,70 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEmailContext } from "@/contexts/EmailContext";
-import { detectEmailContext, type EmailContextData } from "@/services/emailContextDetection";
+import {
+  detectEmailContext,
+  type EmailContextData,
+} from "@/services/emailContextDetection";
 import { useCallback, useMemo, useState } from "react";
 import { PenSquare } from "lucide-react";
 import EmailListV2 from "./EmailListV2";
 import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
 import SmartWorkspacePanel from "../panels/SmartWorkspacePanel";
-import SmartActionBar, { type LeadData, type BookingData, type InvoiceData, type CustomerData } from "../workspace/SmartActionBar";
+import SmartActionBar, {
+  type LeadData,
+  type BookingData,
+  type InvoiceData,
+  type CustomerData,
+} from "../workspace/SmartActionBar";
 
 // Contextual tab components (will be created in Phase 5.3.x)
-const LeadActionsTab = () => <div className="p-4">🎯 Lead Actions (Coming Soon)</div>;
-const BookingActionsTab = () => <div className="p-4">📅 Booking Actions (Coming Soon)</div>;
-const InvoiceActionsTab = () => <div className="p-4">💰 Invoice Actions (Coming Soon)</div>;
-const CustomerActionsTab = () => <div className="p-4">👤 Customer Actions (Coming Soon)</div>;
+const LeadActionsTab = () => (
+  <div className="p-4">🎯 Lead Actions (Coming Soon)</div>
+);
+const BookingActionsTab = () => (
+  <div className="p-4">📅 Booking Actions (Coming Soon)</div>
+);
+const InvoiceActionsTab = () => (
+  <div className="p-4">💰 Invoice Actions (Coming Soon)</div>
+);
+const CustomerActionsTab = () => (
+  <div className="p-4">👤 Customer Actions (Coming Soon)</div>
+);
 
 interface EmailCenterProps {
   // Configuration
   showAIFeatures?: boolean;
-  density?: 'comfortable' | 'compact';
+  density?: "comfortable" | "compact";
   maxResults?: number;
-  
+
   // Phase 4 integration
   enableContextualTabs?: boolean;
   defaultContext?: EmailContextData;
-  
+
   // Navigation state
   activeFolder?: FolderType;
   onFolderChange?: (folder: FolderType) => void;
   searchQuery?: string;
   onSearchChange?: (query: string) => void;
-  
+
   // UI Controls
-  viewMode?: 'list' | 'pipeline' | 'dashboard';
-  onViewModeChange?: (mode: 'list' | 'pipeline' | 'dashboard') => void;
-  onDensityChange?: (density: 'comfortable' | 'compact') => void;
+  viewMode?: "list" | "pipeline" | "dashboard";
+  onViewModeChange?: (mode: "list" | "pipeline" | "dashboard") => void;
+  onDensityChange?: (density: "comfortable" | "compact") => void;
   onComposeNew?: () => void;
 }
 
 export default function EmailCenter({
   showAIFeatures = true,
-  density = 'compact',
+  density = "compact",
   maxResults = 25,
   enableContextualTabs = true,
-  defaultContext = { type: 'dashboard', confidence: 1.0 },
-  activeFolder = 'inbox',
+  defaultContext = { type: "dashboard", confidence: 1.0 },
+  activeFolder = "inbox",
   onFolderChange,
-  searchQuery = '',
+  searchQuery = "",
   onSearchChange,
-  viewMode = 'list',
+  viewMode = "list",
   onViewModeChange,
   onDensityChange,
   onComposeNew,
@@ -73,7 +89,9 @@ export default function EmailCenter({
 
   // Phase 4: Smart context detection
   const detectedContext = useMemo(() => {
-    const context = selectedEmail ? detectEmailContext(selectedEmail) : defaultContext;
+    const context = selectedEmail
+      ? detectEmailContext(selectedEmail)
+      : defaultContext;
     return {
       ...context,
       confidence: context.confidence ?? 1.0, // Ensure confidence is never undefined
@@ -84,34 +102,38 @@ export default function EmailCenter({
   const contextualTabConfig = useMemo(() => {
     const configs = {
       lead: {
-        id: 'lead',
-        label: '🎯 Lead',
+        id: "lead",
+        label: "🎯 Lead",
         component: LeadActionsTab,
-        description: 'Lead management and conversion',
+        description: "Lead management and conversion",
       },
       booking: {
-        id: 'booking',
-        label: '📅 Booking',
+        id: "booking",
+        label: "📅 Booking",
         component: BookingActionsTab,
-        description: 'Calendar and scheduling',
+        description: "Calendar and scheduling",
       },
       invoice: {
-        id: 'invoice',
-        label: '💰 Invoice',
+        id: "invoice",
+        label: "💰 Invoice",
         component: InvoiceActionsTab,
-        description: 'Billing and payments',
+        description: "Billing and payments",
       },
       customer: {
-        id: 'customer',
-        label: '👤 Customer',
+        id: "customer",
+        label: "👤 Customer",
         component: CustomerActionsTab,
-        description: 'Customer relationship management',
+        description: "Customer relationship management",
       },
       dashboard: {
-        id: 'dashboard',
-        label: '📊 Overview',
-        component: () => <div className="p-4 text-center text-muted-foreground">Select an email to see contextual actions</div>,
-        description: 'General email actions',
+        id: "dashboard",
+        label: "📊 Overview",
+        component: () => (
+          <div className="p-4 text-center text-muted-foreground">
+            Select an email to see contextual actions
+          </div>
+        ),
+        description: "General email actions",
       },
     };
 
@@ -119,41 +141,47 @@ export default function EmailCenter({
   }, [detectedContext]);
 
   // Handle email selection with Phase 4 integration
-  const handleEmailSelect = useCallback((email: any) => {
-    // Update EmailContext for SmartWorkspacePanel
-    emailContext.setSelectedEmail({
-      id: email.id,
-      threadId: email.threadId,
-      subject: email.subject,
-      from: email.from,
-      snippet: email.snippet,
-      labels: email.labels || [],
-      threadLength: 1,
-    });
-  }, [emailContext]);
+  const handleEmailSelect = useCallback(
+    (email: any) => {
+      // Update EmailContext for SmartWorkspacePanel
+      emailContext.setSelectedEmail({
+        id: email.id,
+        threadId: email.threadId,
+        subject: email.subject,
+        from: email.from,
+        snippet: email.snippet,
+        labels: email.labels || [],
+        threadLength: 1,
+      });
+    },
+    [emailContext]
+  );
 
   // Handle smart actions from contextual tabs
-  const handleSmartAction = useCallback(async (actionId: string, data: any) => {
-    console.log('EmailCenter: Smart action executed', actionId, data);
-    
-    // TODO: Implement action routing based on context
-    switch (detectedContext.type) {
-      case 'lead':
-        // Route to lead workflow
-        break;
-      case 'booking':
-        // Route to booking workflow
-        break;
-      case 'invoice':
-        // Route to invoice workflow
-        break;
-      case 'customer':
-        // Route to customer workflow
-        break;
-      default:
-        console.log('General action:', actionId);
-    }
-  }, [detectedContext]);
+  const handleSmartAction = useCallback(
+    async (actionId: string, data: any) => {
+      console.log("EmailCenter: Smart action executed", actionId, data);
+
+      // TODO: Implement action routing based on context
+      switch (detectedContext.type) {
+        case "lead":
+          // Route to lead workflow
+          break;
+        case "booking":
+          // Route to booking workflow
+          break;
+        case "invoice":
+          // Route to invoice workflow
+          break;
+        case "customer":
+          // Route to customer workflow
+          break;
+        default:
+          console.log("General action:", actionId);
+      }
+    },
+    [detectedContext]
+  );
 
   // Generate workspace data for SmartActionBar
   const workspaceData = useMemo(() => {
@@ -161,56 +189,69 @@ export default function EmailCenter({
 
     // Extract data based on context type
     switch (detectedContext.type) {
-      case 'lead':
+      case "lead":
         return {
-          customerName: selectedEmail.from?.replace(/<.*>/, '').trim() || 'Kunde',
-          customerEmail: selectedEmail.from?.match(/<(.+)>/)?.[1] || selectedEmail.from || '',
+          customerName:
+            selectedEmail.from?.replace(/<.*>/, "").trim() || "Kunde",
+          customerEmail:
+            selectedEmail.from?.match(/<(.+)>/)?.[1] ||
+            selectedEmail.from ||
+            "",
           estimate: {
             totalPrice: 3490, // Would be extracted from email
             size: 120,
             travelCost: 500,
           },
-          address: 'Aarhus C', // Would be extracted from email
-          leadType: 'Hovedrengøring', // Would be detected from email
+          address: "Aarhus C", // Would be extracted from email
+          leadType: "Hovedrengøring", // Would be detected from email
         } as LeadData;
 
-      case 'booking':
+      case "booking":
         return {
-          customer: selectedEmail.from?.replace(/<.*>/, '').trim() || 'Kunde',
-          email: selectedEmail.from?.match(/<(.+)>/)?.[1] || selectedEmail.from || '',
-          phone: '+45 12 34 56 78',
-          address: 'Aarhus C',
-          date: 'December 2025',
-          time: '09:00-12:00',
-          duration: '3t',
-          type: 'Hovedrengøring',
-          size: '120m²',
-          team: 'Jonas + Team',
+          customer: selectedEmail.from?.replace(/<.*>/, "").trim() || "Kunde",
+          email:
+            selectedEmail.from?.match(/<(.+)>/)?.[1] ||
+            selectedEmail.from ||
+            "",
+          phone: "+45 12 34 56 78",
+          address: "Aarhus C",
+          date: "December 2025",
+          time: "09:00-12:00",
+          duration: "3t",
+          type: "Hovedrengøring",
+          size: "120m²",
+          team: "Jonas + Team",
           price: 3490,
           profit: 2590,
-          status: 'upcoming' as const,
+          status: "upcoming" as const,
         } as BookingData;
 
-      case 'invoice':
+      case "invoice":
         return {
-          customer: selectedEmail.from?.replace(/<.*>/, '').trim() || 'Kunde',
-          email: selectedEmail.from?.match(/<(.+)>/)?.[1] || selectedEmail.from || '',
+          customer: selectedEmail.from?.replace(/<.*>/, "").trim() || "Kunde",
+          email:
+            selectedEmail.from?.match(/<(.+)>/)?.[1] ||
+            selectedEmail.from ||
+            "",
           amount: 3490,
-          dueDate: '2025-12-15',
-          status: 'unpaid' as const,
+          dueDate: "2025-12-15",
+          status: "unpaid" as const,
           isPaid: false,
         } as InvoiceData;
 
-      case 'customer':
+      case "customer":
         return {
-          name: selectedEmail.from?.replace(/<.*>/, '').trim() || 'Kunde',
-          email: selectedEmail.from?.match(/<(.+)>/)?.[1] || selectedEmail.from || '',
-          phone: '+45 12 34 56 78',
-          address: 'Aarhus C',
+          name: selectedEmail.from?.replace(/<.*>/, "").trim() || "Kunde",
+          email:
+            selectedEmail.from?.match(/<(.+)>/)?.[1] ||
+            selectedEmail.from ||
+            "",
+          phone: "+45 12 34 56 78",
+          address: "Aarhus C",
           totalBookings: 3,
           totalValue: 12000,
-          status: 'active' as const,
-          lastBooking: '2025-11-01',
+          status: "active" as const,
+          lastBooking: "2025-11-01",
         } as CustomerData;
 
       default:
@@ -226,19 +267,23 @@ export default function EmailCenter({
           <div>
             <h2 className="text-lg font-semibold">📧 Email Center</h2>
             <p className="text-sm text-muted-foreground">
-              {detectedContext.confidence > 0.7 
+              {detectedContext.confidence > 0.7
                 ? `Context: ${contextualTabConfig.label} (${Math.round(detectedContext.confidence * 100)}% confidence)`
-                : 'Analyzing email context...'
-              }
+                : "Analyzing email context..."}
             </p>
           </div>
-          
+
           {/* Context confidence indicator */}
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${
-              detectedContext.confidence > 0.8 ? 'bg-green-500' :
-              detectedContext.confidence > 0.5 ? 'bg-yellow-500' : 'bg-red-500'
-            }`} />
+            <div
+              className={`w-2 h-2 rounded-full ${
+                detectedContext.confidence > 0.8
+                  ? "bg-green-500"
+                  : detectedContext.confidence > 0.5
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+              }`}
+            />
             <span className="text-xs text-muted-foreground">
               {Math.round(detectedContext.confidence * 100)}%
             </span>
@@ -263,7 +308,7 @@ export default function EmailCenter({
                 onLabelsChange={() => {}}
                 isLoading={false}
               />
-              
+
               {/* UI Controls: Density, View Mode, Compose */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex gap-1 lg:gap-2 items-center overflow-x-auto">
@@ -288,7 +333,7 @@ export default function EmailCenter({
                       Compact
                     </Button>
                   </div>
-                  
+
                   {/* View Mode Toggle */}
                   <div className="flex gap-0.5 border rounded-md p-0.5">
                     <Button
@@ -317,7 +362,7 @@ export default function EmailCenter({
                     </Button>
                   </div>
                 </div>
-                
+
                 {/* Compose Button */}
                 <Button
                   variant="default"
@@ -332,7 +377,7 @@ export default function EmailCenter({
               </div>
             </div>
           </div>
-          
+
           {/* Email List */}
           <div className="flex-1 overflow-hidden">
             <EmailListV2

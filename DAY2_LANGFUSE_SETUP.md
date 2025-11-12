@@ -9,12 +9,14 @@
 ## ✅ What We Accomplished
 
 ### 1. Docker Configuration Created
+
 - ✅ `docker-compose.langfuse.yml` with PostgreSQL + Langfuse
 - ✅ Health checks configured
 - ✅ Persistent volumes setup
 - ✅ Network isolation
 
 ### 2. TypeScript Client Implemented
+
 - ✅ Langfuse SDK installed (`langfuse` + `langfuse-node`)
 - ✅ Client wrapper with singleton pattern
 - ✅ Helper functions for tracing
@@ -22,6 +24,7 @@
 - ✅ Error handling
 
 ### 3. Environment Configuration
+
 - ✅ Added to `server/_core/env.ts`:
   - `LANGFUSE_ENABLED`
   - `LANGFUSE_PUBLIC_KEY`
@@ -30,6 +33,7 @@
 - ✅ `.env.example` template created
 
 ### 4. Documentation
+
 - ✅ Complete README (400+ lines)
 - ✅ Quick start guide
 - ✅ Troubleshooting section
@@ -124,6 +128,7 @@ pnpm dev
 ### Day 3: LLM Integration (Tomorrow)
 
 We'll integrate Langfuse tracing into:
+
 1. `invokeLLM` function (core LLM calls)
 2. `streamResponse` function (streaming)
 3. `model-router.ts` (task-based routing)
@@ -137,6 +142,7 @@ We'll integrate Langfuse tracing into:
 ## 🎯 Success Metrics
 
 Once Day 3 is complete, you'll have:
+
 - ✅ 100% of AI calls traced
 - ✅ Real-time dashboard showing all operations
 - ✅ Token usage tracking

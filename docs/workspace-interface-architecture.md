@@ -1,9 +1,10 @@
-/**
- * WORKSPACE INTERFACE - COMPLETE ARCHITECTURE OVERVIEW
- *
- * Denne fil dokumenterer hele workspace interface strukturen
- * fra top-level layout til individuelle komponenter
- */
+/\*\*
+
+- WORKSPACE INTERFACE - COMPLETE ARCHITECTURE OVERVIEW
+-
+- Denne fil dokumenterer hele workspace interface strukturen
+- fra top-level layout til individuelle komponenter
+  \*/
 
 # 🎯 **WORKSPACE INTERFACE - COMPLETE ARCHITECTURE**
 
@@ -73,7 +74,7 @@ client/src/
 
 ## 🏗️ **3-PANEL LAYOUT ARCHITECTURE**
 
-### **🎯 **MAIN WORKSPACE LAYOUT (WorkspaceLayout.tsx)**
+### **🎯 **MAIN WORKSPACE LAYOUT (WorkspaceLayout.tsx)\*\*
 
 ```typescript
 // TOP LEVEL: WorkspaceLayout.tsx
@@ -118,9 +119,10 @@ function WorkspaceLayout() {
 }
 ```
 
-### **📊 **PANEL KOMPONENTER:**
+### **📊 **PANEL KOMPONENTER:\*\*
 
-#### **🤖 **VENSTRE PANEL: AIAssistantPanel.tsx**
+#### **🤖 **VENSTRE PANEL: AIAssistantPanel.tsx\*\*
+
 ```typescript
 // VENSTRE PANEL (20%) - AI ASSISTANT
 export default function AIAssistantPanel() {
@@ -135,7 +137,8 @@ export default function AIAssistantPanel() {
 }
 ```
 
-#### **📧 **MIDTERSTE PANEL: EmailCenterPanel.tsx**
+#### **📧 **MIDTERSTE PANEL: EmailCenterPanel.tsx\*\*
+
 ```typescript
 // MIDTERSTE PANEL (60%) - EMAIL CENTER
 export default function EmailCenterPanel() {
@@ -157,7 +160,8 @@ export default function EmailCenterPanel() {
 }
 ```
 
-#### **🎯 **HØJRE PANEL: SmartWorkspacePanel.tsx**
+#### **🎯 **HØJRE PANEL: SmartWorkspacePanel.tsx\*\*
+
 ```typescript
 // HØJRE PANEL (20%) - SMART WORKSPACE
 export default function SmartWorkspacePanel() {
@@ -177,7 +181,7 @@ export default function SmartWorkspacePanel() {
 
 ## 📧 **EMAIL SYSTEM ARCHITECTURE**
 
-### **🎯 **EMAIL TAB HIERARKI:**
+### **🎯 **EMAIL TAB HIERARKI:\*\*
 
 ```typescript
 // EMAIL CENTER CONTENT FLOW:
@@ -194,21 +198,24 @@ EmailThreadView.tsx           // Email content viewer
 EmailAssistant3Panel.tsx      // AI suggestions panel
 ```
 
-### **📋 **EMAIL KOMPONENTER OVERSIGT:**
+### **📋 **EMAIL KOMPONENTER OVERSIGT:\*\*
 
-#### **📧 **LIST COMPONENTS:**
+#### **📧 **LIST COMPONENTS:\*\*
+
 - `EmailListAI.tsx` - **MAIN**: AI-enhanced email list med lead scoring
 - `EmailListV2.tsx` - Fallback: Standard email list
 - `EmailCard.tsx` - Individual email cards
 - `EmailRowActions.tsx` - Row-level actions
 
-#### **📖 **CONTENT COMPONENTS:**
+#### **📖 **CONTENT COMPONENTS:\*\*
+
 - `EmailThreadView.tsx` - Main email thread viewer
 - `EmailIframeView.tsx` - Email HTML rendering
 - `EmailAISummary.tsx` - AI-generated summaries
 - `EmailAssistant3Panel.tsx` - AI suggestions
 
-#### **🔧 **UTILITY COMPONENTS:**
+#### **🔧 **UTILITY COMPONENTS:\*\*
+
 - `EmailSearchV2.tsx` - Advanced search
 - `EmailBulkActionsV2.tsx` - Bulk operations
 - `EmailComposer.tsx` - Reply/compose interface
@@ -219,9 +226,10 @@ EmailAssistant3Panel.tsx      // AI suggestions panel
 
 ## 🔄 **STATE MANAGEMENT & CONTEXTS**
 
-### **🎯 **MAIN CONTEXTS:**
+### **🎯 **MAIN CONTEXTS:\*\*
 
-#### **📧 **EmailContext.tsx**
+#### **📧 **EmailContext.tsx\*\*
+
 ```typescript
 interface EmailContextType {
   state: {
@@ -237,7 +245,8 @@ interface EmailContextType {
 }
 ```
 
-#### **🤖 **AIContext.tsx**
+#### **🤖 **AIContext.tsx\*\*
+
 ```typescript
 interface AIContextType {
   state: {
@@ -251,7 +260,8 @@ interface AIContextType {
 }
 ```
 
-#### **⚙️ **WorkflowContext.tsx**
+#### **⚙️ **WorkflowContext.tsx\*\*
+
 ```typescript
 interface WorkflowContextType {
   state: {
@@ -265,33 +275,36 @@ interface WorkflowContextType {
 }
 ```
 
-### **🪝 **CUSTOM HOOKS:**
+### **🪝 **CUSTOM HOOKS:\*\*
 
-#### **⌨️ **useKeyboardShortcuts.ts**
+#### **⌨️ **useKeyboardShortcuts.ts\*\*
+
 ```typescript
 // Keyboard navigation for panels
 useKeyboardShortcuts([
-  { key: '1', ctrlKey: true, handler: () => focusPanel('ai') },
-  { key: '2', ctrlKey: true, handler: () => focusPanel('email') },
-  { key: '3', ctrlKey: true, handler: () => focusPanel('workflow') }
+  { key: "1", ctrlKey: true, handler: () => focusPanel("ai") },
+  { key: "2", ctrlKey: true, handler: () => focusPanel("email") },
+  { key: "3", ctrlKey: true, handler: () => focusPanel("workflow") },
 ]);
 ```
 
-#### **⏱️ **useRateLimit.ts**
+#### **⏱️ **useRateLimit.ts\*\*
+
 ```typescript
 // API rate limiting
 const { isRateLimited, timeUntilReset } = useRateLimit({
   maxRequests: 100,
-  windowMs: 60000
+  windowMs: 60000,
 });
 ```
 
-#### **🔄 **useAdaptivePolling.ts**
+#### **🔄 **useAdaptivePolling.ts\*\*
+
 ```typescript
 // Smart data polling based on user activity
 const { data, isLoading } = useAdaptivePolling({
   queryFn: fetchEmails,
-  enabled: isActiveTab
+  enabled: isActiveTab,
 });
 ```
 
@@ -299,7 +312,8 @@ const { data, isLoading } = useAdaptivePolling({
 
 ## 🎨 **UI COMPONENT SYSTEM**
 
-### **📦 **UI PRIMITIVES (shadcn/ui):**
+### **📦 **UI PRIMITIVES (shadcn/ui):\*\*
+
 ```
 components/ui/
 ├── badge.tsx          # Status indicators
@@ -314,7 +328,8 @@ components/ui/
 └── [45 flere]         # Complete UI library
 ```
 
-### **🔧 **PANEL RESIZING:**
+### **🔧 **PANEL RESIZING:\*\*
+
 ```typescript
 // ResizablePanelGroup from shadcn/ui
 <ResizablePanelGroup direction="horizontal">
@@ -332,11 +347,12 @@ components/ui/
 
 ## 📊 **DATA FLOW & INTEGRATION**
 
-### **🔗 **TRPC INTEGRATION:**
+### **🔗 **TRPC INTEGRATION:\*\*
+
 ```typescript
 // lib/trpc.ts
-import { createTRPCReact } from '@trpc/react-query';
-import type { AppRouter } from '../../../server/routers';
+import { createTRPCReact } from "@trpc/react-query";
+import type { AppRouter } from "../../../server/routers";
 
 export const trpc = createTRPCReact<AppRouter>();
 
@@ -345,7 +361,8 @@ const { data: emails } = trpc.email.list.useQuery();
 const analyzeEmail = trpc.automation.analyzeEmail.useMutation();
 ```
 
-### **🎯 **COMPONENT COMMUNICATION:**
+### **🎯 **COMPONENT COMMUNICATION:\*\*
+
 ```typescript
 // Context-based communication
 EmailContext ↔ EmailListAI ↔ EmailThreadView ↔ EmailAssistant3Panel
@@ -361,35 +378,42 @@ EmailListAI → EmailTabV2 → EmailCenterPanel → WorkspaceLayout
 
 ## 🚀 **PERFORMANCE OPTIMIZATIONS**
 
-### **⚡ **LAZY LOADING:**
+### **⚡ **LAZY LOADING:\*\*
+
 ```typescript
 // Panel lazy loading
-const AIAssistantPanel = lazy(() => import('@/components/panels/AIAssistantPanel'));
-const EmailCenterPanel = lazy(() => import('@/components/panels/EmailCenterPanel'));
+const AIAssistantPanel = lazy(
+  () => import("@/components/panels/AIAssistantPanel")
+);
+const EmailCenterPanel = lazy(
+  () => import("@/components/panels/EmailCenterPanel")
+);
 
 // Component lazy loading
-const EmailAISummary = lazy(() => import('./EmailAISummary'));
-const EmailAssistant3Panel = lazy(() => import('./EmailAssistant3Panel'));
+const EmailAISummary = lazy(() => import("./EmailAISummary"));
+const EmailAssistant3Panel = lazy(() => import("./EmailAssistant3Panel"));
 ```
 
-### **🔄 **VIRTUAL SCROLLING:**
+### **🔄 **VIRTUAL SCROLLING:\*\*
+
 ```typescript
 // EmailListAI.tsx - Virtual scrolling for 1000+ emails
 const virtualizer = useVirtualizer({
   count: emails.length,
   getScrollElement: () => parentRef.current,
   estimateSize: () => 80, // Compact: 60px, Comfortable: 80px
-  overscan: 5
+  overscan: 5,
 });
 ```
 
-### **💾 **CACHING STRATEGIES:**
+### **💾 **CACHING STRATEGIES:\*\*
+
 ```typescript
 // lib/cacheStrategy.ts
 export const emailCacheStrategy = {
-  staleTime: 5 * 60 * 1000,    // 5 minutes
-  gcTime: 10 * 60 * 1000,      // 10 minutes
-  refetchOnWindowFocus: false
+  staleTime: 5 * 60 * 1000, // 5 minutes
+  gcTime: 10 * 60 * 1000, // 10 minutes
+  refetchOnWindowFocus: false,
 };
 ```
 
@@ -397,7 +421,7 @@ export const emailCacheStrategy = {
 
 ## 🏆 **COMPLETE ARCHITECTURE SUMMARY**
 
-### **🎯 **WORKSPACE INTERFACE LAYER CAKE:**
+### **🎯 **WORKSPACE INTERFACE LAYER CAKE:\*\*
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -435,30 +459,35 @@ export const emailCacheStrategy = {
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### **🚀 **KEY ARCHITECTURAL DECISIONS:**
+### **🚀 **KEY ARCHITECTURAL DECISIONS:\*\*
 
-#### **🏗️ **3-PANEL DESIGN:**
+#### **🏗️ **3-PANEL DESIGN:\*\*
+
 - **Venstre (20%)**: AI Assistant - Dedicated chat interface
 - **Midterste (60%)**: Email Center - Full email workspace
 - **Højre (20%)**: Smart Workspace - Context-aware business tools
 
-#### **📧 **EMAIL SYSTEM:**
+#### **📧 **EMAIL SYSTEM:\*\*
+
 - **EmailListAI**: Default AI-enhanced list with lead scoring
 - **EmailThreadView**: Full email content with AI integration
 - **EmailAssistant3Panel**: AI suggestions and automation
 
-#### **🔄 **STATE MANAGEMENT:**
+#### **🔄 **STATE MANAGEMENT:\*\*
+
 - **Context-based**: Separate contexts for email, AI, workflow
 - **tRPC integration**: Type-safe backend communication
 - **Optimistic updates**: Fast UI responses
 
-#### **⚡ **PERFORMANCE:**
+#### **⚡ **PERFORMANCE:\*\*
+
 - **Lazy loading**: Code splitting for panels
 - **Virtual scrolling**: Efficient rendering of large lists
 - **Smart caching**: Optimized data fetching
 - **Rate limiting**: API protection
 
-### **🎯 **CURRENT STATUS:**
+### **🎯 **CURRENT STATUS:\*\*
+
 ```typescript
 ✅ IMPLEMENTATION COMPLETE:
 - 3-panel layout: 100% functional

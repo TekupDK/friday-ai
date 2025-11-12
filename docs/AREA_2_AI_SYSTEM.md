@@ -8,6 +8,7 @@
 ## 🎯 **OVERVIEW**
 
 Friday AI System - intelligent executive assistant med:
+
 - 35+ funktioner (Gmail, Calendar, Billy)
 - Multi-model routing (GPT-4, Claude, Gemini)
 - Dansk/engelsk forståelse
@@ -37,6 +38,7 @@ server/
 **Main Function:** `routeAI()`
 
 **Flow:**
+
 1. Select model (GPT-4/Claude/Gemini)
 2. Build system prompt
 3. Inject 35+ tools
@@ -46,6 +48,7 @@ server/
 7. Return result
 
 **Models:**
+
 - **GPT-4:** Complex reasoning, calendar
 - **Claude:** Email writing, customer communication
 - **Gemini:** Quick lookups, data extraction
@@ -56,22 +59,26 @@ server/
 ## 🛠️ **2. FRIDAY TOOLS** (35+)
 
 ### **Gmail (15 tools)**
+
 - search_gmail, get_thread, create_draft
 - send_email, reply, archive, label
 - mark_read, get_labels, create_label
 - get_attachments, download_attachment
 
 ### **Calendar (8 tools)**
+
 - get_events, create_event, update_event
 - delete_event, search_events, get_free_busy
 - list_calendars, create_calendar
 
 ### **Billy (7 tools)**
+
 - list_invoices, create_invoice, approve_invoice
 - send_invoice, list_customers, create_customer
 - sync_data
 
 ### **Database (5 tools)**
+
 - get_leads, create_lead, update_lead
 - get_tasks, create_task
 
@@ -80,6 +87,7 @@ server/
 ## 📝 **3. FRIDAY PROMPTS**
 
 **Components:**
+
 1. **Main Prompt** - Personality & rules
 2. **Email Handling** - 5-step lead workflow
 3. **Billy Invoice** - Invoice creation workflow
@@ -89,6 +97,7 @@ server/
 7. **Quality Control** - Pre-send verification
 
 **Key Rules:**
+
 - ❌ NEVER add calendar attendees
 - ✅ ALWAYS verify dates/times
 - ✅ ALWAYS check calendar before suggestions
@@ -128,15 +137,15 @@ server/
 
 ## 📊 **STATISTICS**
 
-| Metric | Value |
-|--------|-------|
-| Tools | 35+ |
-| Models | 4 |
-| Prompt Size | 12KB |
-| Max Context | 128K tokens |
-| Response Time | 3-8 sec |
-| Success Rate | 95%+ |
-| Intent Accuracy | 90%+ |
+| Metric          | Value       |
+| --------------- | ----------- |
+| Tools           | 35+         |
+| Models          | 4           |
+| Prompt Size     | 12KB        |
+| Max Context     | 128K tokens |
+| Response Time   | 3-8 sec     |
+| Success Rate    | 95%+        |
+| Intent Accuracy | 90%+        |
 
 ---
 

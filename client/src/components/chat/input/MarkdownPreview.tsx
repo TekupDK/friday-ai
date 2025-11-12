@@ -6,19 +6,30 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { FileText, Eye, Edit, Code, Bold, Italic, Link, Image, List, Quote } from "lucide-react";
+import {
+  FileText,
+  Eye,
+  Edit,
+  Code,
+  Bold,
+  Italic,
+  Link,
+  Image,
+  List,
+  Quote,
+} from "lucide-react";
 import { useState } from "react";
 
 interface MarkdownPreviewProps {
   initialMarkdown?: string;
   onSave?: (markdown: string) => void;
-  onExport?: (format: 'markdown' | 'html') => void;
+  onExport?: (format: "markdown" | "html") => void;
 }
 
-export function MarkdownPreview({ 
+export function MarkdownPreview({
   initialMarkdown = "# Markdown Preview\n\nSkriv **bold** eller *italic* tekst.\n\n- List item 1\n- List item 2\n\n> Block quote\n\n`inline code`\n\n```javascript\n// Code block\nfunction hello() {\n  console.log('Hello World!');\n}\n```",
   onSave,
-  onExport 
+  onExport,
 }: MarkdownPreviewProps) {
   const [markdown, setMarkdown] = useState(initialMarkdown);
   const [isPreview, setIsPreview] = useState(false);
@@ -31,42 +42,69 @@ export function MarkdownPreview({
   const renderMarkdown = (text: string) => {
     // Simple markdown parsing (in real app, use a library like marked.js)
     let html = text;
-    
+
     // Headers
-    html = html.replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mb-2">$1</h3>');
-    html = html.replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold mb-3">$1</h2>');
-    html = html.replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mb-4">$1</h1>');
-    
+    html = html.replace(
+      /^### (.*$)/gim,
+      '<h3 class="text-lg font-semibold mb-2">$1</h3>'
+    );
+    html = html.replace(
+      /^## (.*$)/gim,
+      '<h2 class="text-xl font-semibold mb-3">$1</h2>'
+    );
+    html = html.replace(
+      /^# (.*$)/gim,
+      '<h1 class="text-2xl font-bold mb-4">$1</h1>'
+    );
+
     // Bold and italic
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    
+    html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+
     // Links
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>');
-    
+    html = html.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" class="text-blue-600 hover:underline">$1</a>'
+    );
+
     // Images
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full h-auto rounded" />');
-    
+    html = html.replace(
+      /!\[([^\]]*)\]\(([^)]+)\)/g,
+      '<img src="$2" alt="$1" class="max-w-full h-auto rounded" />'
+    );
+
     // Code blocks
-    html = html.replace(/```([^`]+)```/g, '<pre class="bg-gray-900 text-gray-100 p-3 rounded-lg overflow-x-auto my-3"><code>$1</code></pre>');
-    html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm">$1</code>');
-    
+    html = html.replace(
+      /```([^`]+)```/g,
+      '<pre class="bg-gray-900 text-gray-100 p-3 rounded-lg overflow-x-auto my-3"><code>$1</code></pre>'
+    );
+    html = html.replace(
+      /`([^`]+)`/g,
+      '<code class="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm">$1</code>'
+    );
+
     // Blockquotes
-    html = html.replace(/^> (.+)$/gim, '<blockquote class="border-l-4 border-gray-300 pl-4 italic my-2">$1</blockquote>');
-    
+    html = html.replace(
+      /^> (.+)$/gim,
+      '<blockquote class="border-l-4 border-gray-300 pl-4 italic my-2">$1</blockquote>'
+    );
+
     // Lists
     html = html.replace(/^\* (.+)$/gim, '<li class="ml-4">• $1</li>');
     html = html.replace(/^- (.+)$/gim, '<li class="ml-4">• $1</li>');
-    
+
     // Line breaks
     html = html.replace(/\n\n/g, '</p><p class="mb-3">');
-    html = '<p class="mb-3">' + html + '</p>';
-    
+    html = '<p class="mb-3">' + html + "</p>";
+
     return html;
   };
 
   const getWordCount = () => {
-    return markdown.trim().split(/\s+/).filter(word => word.length > 0).length;
+    return markdown
+      .trim()
+      .split(/\s+/)
+      .filter(word => word.length > 0).length;
   };
 
   const getCharCount = () => {
@@ -74,16 +112,16 @@ export function MarkdownPreview({
   };
 
   const getLineCount = () => {
-    return markdown.split('\n').length;
+    return markdown.split("\n").length;
   };
 
   const markdownSyntax = [
-    { icon: Bold, syntax: '**bold**', description: 'Bold text' },
-    { icon: Italic, syntax: '*italic*', description: 'Italic text' },
-    { icon: Link, syntax: '[text](url)', description: 'Link' },
-    { icon: Image, syntax: '![alt](url)', description: 'Image' },
-    { icon: List, syntax: '- item', description: 'Bullet list' },
-    { icon: Quote, syntax: '> quote', description: 'Blockquote' }
+    { icon: Bold, syntax: "**bold**", description: "Bold text" },
+    { icon: Italic, syntax: "*italic*", description: "Italic text" },
+    { icon: Link, syntax: "[text](url)", description: "Link" },
+    { icon: Image, syntax: "![alt](url)", description: "Image" },
+    { icon: List, syntax: "- item", description: "Bullet list" },
+    { icon: Quote, syntax: "> quote", description: "Blockquote" },
   ];
 
   return (
@@ -97,7 +135,9 @@ export function MarkdownPreview({
             </div>
             <div>
               <h4 className="font-semibold">Markdown Preview</h4>
-              <p className="text-xs text-muted-foreground">Live markdown preview</p>
+              <p className="text-xs text-muted-foreground">
+                Live markdown preview
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -106,15 +146,19 @@ export function MarkdownPreview({
               variant="ghost"
               onClick={() => setIsSplitView(!isSplitView)}
             >
-              {isSplitView ? 'Single' : 'Split'}
+              {isSplitView ? "Single" : "Split"}
             </Button>
             <Button
               size="sm"
               variant="ghost"
               onClick={() => setIsPreview(!isPreview)}
             >
-              {isPreview ? <Edit className="w-3 h-3 mr-1" /> : <Eye className="w-3 h-3 mr-1" />}
-              {isPreview ? 'Edit' : 'Preview'}
+              {isPreview ? (
+                <Edit className="w-3 h-3 mr-1" />
+              ) : (
+                <Eye className="w-3 h-3 mr-1" />
+              )}
+              {isPreview ? "Edit" : "Preview"}
             </Button>
           </div>
         </div>
@@ -122,7 +166,10 @@ export function MarkdownPreview({
         {/* View Toggle */}
         <div className="flex gap-1 p-1 rounded-lg bg-muted">
           <button
-            onClick={() => { setIsPreview(false); setIsSplitView(false); }}
+            onClick={() => {
+              setIsPreview(false);
+              setIsSplitView(false);
+            }}
             className={cn(
               "flex-1 px-3 py-2 rounded-md text-xs font-medium transition-colors",
               !isPreview && !isSplitView
@@ -134,7 +181,10 @@ export function MarkdownPreview({
             Edit
           </button>
           <button
-            onClick={() => { setIsPreview(true); setIsSplitView(false); }}
+            onClick={() => {
+              setIsPreview(true);
+              setIsSplitView(false);
+            }}
             className={cn(
               "flex-1 px-3 py-2 rounded-md text-xs font-medium transition-colors",
               isPreview && !isSplitView
@@ -146,12 +196,13 @@ export function MarkdownPreview({
             Preview
           </button>
           <button
-            onClick={() => { setIsPreview(false); setIsSplitView(true); }}
+            onClick={() => {
+              setIsPreview(false);
+              setIsSplitView(true);
+            }}
             className={cn(
               "flex-1 px-3 py-2 rounded-md text-xs font-medium transition-colors",
-              isSplitView
-                ? "bg-background shadow-sm"
-                : "hover:bg-background/50"
+              isSplitView ? "bg-background shadow-sm" : "hover:bg-background/50"
             )}
           >
             <Code className="w-3 h-3 inline mr-1" />
@@ -164,7 +215,9 @@ export function MarkdownPreview({
           <div className="grid grid-cols-2 gap-4">
             {/* Editor */}
             <div className="space-y-2">
-              <label className="text-xs font-medium text-muted-foreground">Markdown:</label>
+              <label className="text-xs font-medium text-muted-foreground">
+                Markdown:
+              </label>
               <textarea
                 value={markdown}
                 onChange={handleMarkdownChange}
@@ -172,11 +225,13 @@ export function MarkdownPreview({
                 placeholder="Skriv markdown her..."
               />
             </div>
-            
+
             {/* Preview */}
             <div className="space-y-2">
-              <label className="text-xs font-medium text-muted-foreground">Preview:</label>
-              <div 
+              <label className="text-xs font-medium text-muted-foreground">
+                Preview:
+              </label>
+              <div
                 className="h-64 p-4 border rounded-lg bg-background overflow-y-auto prose prose-sm max-w-none"
                 dangerouslySetInnerHTML={{ __html: renderMarkdown(markdown) }}
               />
@@ -184,15 +239,19 @@ export function MarkdownPreview({
           </div>
         ) : isPreview ? (
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground">Preview:</label>
-            <div 
+            <label className="text-xs font-medium text-muted-foreground">
+              Preview:
+            </label>
+            <div
               className="min-h-[200px] p-4 border rounded-lg bg-background overflow-y-auto prose prose-sm max-w-none"
               dangerouslySetInnerHTML={{ __html: renderMarkdown(markdown) }}
             />
           </div>
         ) : (
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground">Markdown:</label>
+            <label className="text-xs font-medium text-muted-foreground">
+              Markdown:
+            </label>
             <textarea
               value={markdown}
               onChange={handleMarkdownChange}
@@ -204,7 +263,9 @@ export function MarkdownPreview({
 
         {/* Markdown Syntax Guide */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Quick Syntax:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Quick Syntax:
+          </label>
           <div className="grid grid-cols-3 gap-2">
             {markdownSyntax.map((item, index) => {
               const Icon = item.icon;
@@ -212,15 +273,23 @@ export function MarkdownPreview({
                 <button
                   key={index}
                   onClick={() => {
-                    const textarea = document.querySelector('textarea') as HTMLTextAreaElement;
+                    const textarea = document.querySelector(
+                      "textarea"
+                    ) as HTMLTextAreaElement;
                     if (textarea) {
                       const start = textarea.selectionStart;
                       const end = textarea.selectionEnd;
-                      const text = markdown.substring(0, start) + item.syntax + markdown.substring(end);
+                      const text =
+                        markdown.substring(0, start) +
+                        item.syntax +
+                        markdown.substring(end);
                       setMarkdown(text);
                       setTimeout(() => {
                         textarea.focus();
-                        textarea.setSelectionRange(start + item.syntax.length, start + item.syntax.length);
+                        textarea.setSelectionRange(
+                          start + item.syntax.length,
+                          start + item.syntax.length
+                        );
                       }, 0);
                     }
                   }}
@@ -259,7 +328,9 @@ export function MarkdownPreview({
 
         {/* Raw Markdown */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Raw Markdown:</label>
+          <label className="text-xs font-medium text-muted-foreground">
+            Raw Markdown:
+          </label>
           <pre className="p-3 rounded-lg bg-gray-900 text-gray-100 text-xs overflow-x-auto max-h-32">
             {markdown}
           </pre>
@@ -267,15 +338,26 @@ export function MarkdownPreview({
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button onClick={() => onSave?.(markdown)} className="flex-1 bg-linear-to-r from-green-600 to-emerald-600">
+          <Button
+            onClick={() => onSave?.(markdown)}
+            className="flex-1 bg-linear-to-r from-green-600 to-emerald-600"
+          >
             <FileText className="w-4 h-4 mr-2" />
             Save Markdown
           </Button>
-          <Button onClick={() => onExport?.('markdown')} variant="outline" className="flex-1">
+          <Button
+            onClick={() => onExport?.("markdown")}
+            variant="outline"
+            className="flex-1"
+          >
             <Code className="w-4 h-4 mr-2" />
             Export MD
           </Button>
-          <Button onClick={() => onExport?.('html')} variant="outline" className="flex-1">
+          <Button
+            onClick={() => onExport?.("html")}
+            variant="outline"
+            className="flex-1"
+          >
             <Eye className="w-4 h-4 mr-2" />
             Export HTML
           </Button>

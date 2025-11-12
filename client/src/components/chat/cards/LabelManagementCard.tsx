@@ -24,29 +24,27 @@ interface LabelManagementCardProps {
   onCancel?: () => void;
 }
 
-export function LabelManagementCard({ 
+export function LabelManagementCard({
   threads,
   availableLabels,
   onApplyLabels,
-  onCancel 
+  onCancel,
 }: LabelManagementCardProps) {
   const [selectedThreads, setSelectedThreads] = useState<string[]>([]);
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [newLabel, setNewLabel] = useState("");
 
   const toggleThread = (threadId: string) => {
-    setSelectedThreads(prev => 
-      prev.includes(threadId) 
+    setSelectedThreads(prev =>
+      prev.includes(threadId)
         ? prev.filter(id => id !== threadId)
         : [...prev, threadId]
     );
   };
 
   const toggleLabel = (label: string) => {
-    setSelectedLabels(prev => 
-      prev.includes(label) 
-        ? prev.filter(l => l !== label)
-        : [...prev, label]
+    setSelectedLabels(prev =>
+      prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]
     );
   };
 
@@ -73,25 +71,34 @@ export function LabelManagementCard({
             <Tag className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h4 className="font-semibold">Add Label: {selectedLabels[0] || "..."}</h4>
+            <h4 className="font-semibold">
+              Add Label: {selectedLabels[0] || "..."}
+            </h4>
             <p className="text-xs text-muted-foreground">Organisere emails</p>
           </div>
         </div>
 
         {/* Threads Selection */}
         <div className="space-y-2">
-          <p className="text-xs font-medium text-muted-foreground">Vælg tråde:</p>
+          <p className="text-xs font-medium text-muted-foreground">
+            Vælg tråde:
+          </p>
           <div className="space-y-1 max-h-32 overflow-y-auto">
-            {threads.map((thread) => (
-              <div key={thread.id} className="flex items-center gap-2 p-2 rounded hover:bg-muted/50">
+            {threads.map(thread => (
+              <div
+                key={thread.id}
+                className="flex items-center gap-2 p-2 rounded hover:bg-muted/50"
+              >
                 <Checkbox
                   checked={selectedThreads.includes(thread.id)}
                   onCheckedChange={() => toggleThread(thread.id)}
                 />
                 <Mail className="w-4 h-4 text-muted-foreground shrink-0" />
-                <span className="text-sm flex-1 truncate">{thread.subject}</span>
+                <span className="text-sm flex-1 truncate">
+                  {thread.subject}
+                </span>
                 <div className="flex gap-1">
-                  {thread.labels.map((label) => (
+                  {thread.labels.map(label => (
                     <Badge key={label} variant="secondary" className="text-xs">
                       {label}
                     </Badge>
@@ -104,9 +111,11 @@ export function LabelManagementCard({
 
         {/* Labels Selection */}
         <div className="space-y-2">
-          <p className="text-xs font-medium text-muted-foreground">Vælg labels:</p>
+          <p className="text-xs font-medium text-muted-foreground">
+            Vælg labels:
+          </p>
           <div className="flex flex-wrap gap-2">
-            {availableLabels.map((label) => (
+            {availableLabels.map(label => (
               <button
                 key={label}
                 onClick={() => toggleLabel(label)}
@@ -121,12 +130,12 @@ export function LabelManagementCard({
               </button>
             ))}
           </div>
-          
+
           {/* Add New Label */}
           <div className="flex gap-2">
             <Input
               value={newLabel}
-              onChange={(e) => setNewLabel(e.target.value)}
+              onChange={e => setNewLabel(e.target.value)}
               placeholder="Ny label..."
               className="h-8 text-sm"
             />
@@ -143,18 +152,18 @@ export function LabelManagementCard({
             {selectedThreads.length} tråde valgt
           </span>
           {selectedLabels.length > 0 && (
-            <span className="ml-2">
-              → {selectedLabels.join(", ")}
-            </span>
+            <span className="ml-2">→ {selectedLabels.join(", ")}</span>
           )}
         </div>
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button 
-            onClick={handleApply} 
+          <Button
+            onClick={handleApply}
             className="flex-1 bg-linear-to-r from-orange-600 to-red-600"
-            disabled={selectedThreads.length === 0 || selectedLabels.length === 0}
+            disabled={
+              selectedThreads.length === 0 || selectedLabels.length === 0
+            }
           >
             <FolderOpen className="w-4 h-4 mr-2" />
             Apply to {selectedThreads.length}

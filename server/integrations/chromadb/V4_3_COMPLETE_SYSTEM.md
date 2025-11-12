@@ -9,6 +9,7 @@
 ## 🎯 System Overview
 
 V4.3 er et komplet lead data enrichment system der integrerer Gmail, Google Calendar og Billy.dk til at skabe en 360° view af hver lead med:
+
 - Fuld lead tracking (Gmail → Calendar → Invoice)
 - Financial metrics (revenue, profit, margins)
 - Time accuracy metrics
@@ -22,26 +23,29 @@ V4.3 er et komplet lead data enrichment system der integrerer Gmail, Google Cale
 ## 📦 System Components
 
 ### **Core Configuration**
-| File | Purpose |
-|------|---------|
-| `v4_3-config.ts` | Time window, lead costs, service types, business rules |
-| `v4_3-types.ts` | TypeScript interfaces (89 parameters) |
-| `v4_3-deduplication.ts` | Customer merging & filtering logic |
+
+| File                    | Purpose                                                |
+| ----------------------- | ------------------------------------------------------ |
+| `v4_3-config.ts`        | Time window, lead costs, service types, business rules |
+| `v4_3-types.ts`         | TypeScript interfaces (89 parameters)                  |
+| `v4_3-deduplication.ts` | Customer merging & filtering logic                     |
 
 ### **Pipeline Scripts**
-| Script | Input | Output | Function |
-|--------|-------|--------|----------|
-| `1-collect-and-link-v4_3.ts` | Gmail/Calendar/Billy APIs | `raw-leads-v4_3.json` | Collect & link data |
-| `2-calculate-metrics-v4_3.ts` | `raw-leads-v4_3.json` | `complete-leads-v4.3.json` | Calculate metrics |
-| `3-pipeline-analysis-v4_3.ts` | `complete-leads-v4.3.json` | Reports (JSON + MD) | Generate business insights |
+
+| Script                        | Input                      | Output                     | Function                   |
+| ----------------------------- | -------------------------- | -------------------------- | -------------------------- |
+| `1-collect-and-link-v4_3.ts`  | Gmail/Calendar/Billy APIs  | `raw-leads-v4_3.json`      | Collect & link data        |
+| `2-calculate-metrics-v4_3.ts` | `raw-leads-v4_3.json`      | `complete-leads-v4.3.json` | Calculate metrics          |
+| `3-pipeline-analysis-v4_3.ts` | `complete-leads-v4.3.json` | Reports (JSON + MD)        | Generate business insights |
 
 ### **Documentation**
-| File | Purpose |
-|------|---------|
-| `V4_3_INTERFACE_ANALYSIS.md` | Parameter feasibility analysis |
+
+| File                             | Purpose                            |
+| -------------------------------- | ---------------------------------- |
+| `V4_3_INTERFACE_ANALYSIS.md`     | Parameter feasibility analysis     |
 | `V4_3_DEDUPLICATION_STRATEGY.md` | Deduplication & filtering strategy |
-| `GOOGLE_OAUTH_SETUP.md` | OAuth configuration guide |
-| `V4_3_COMPLETE_SYSTEM.md` | This document |
+| `GOOGLE_OAUTH_SETUP.md`          | OAuth configuration guide          |
+| `V4_3_COMPLETE_SYSTEM.md`        | This document                      |
 
 ---
 
@@ -148,16 +152,18 @@ V4.3 er et komplet lead data enrichment system der integrerer Gmail, Google Cale
 ## 🔧 Key Fix: Billy Linking
 
 ### Problem (Before)
+
 ```typescript
 // ❌ Matching "from" header (leadmail system email)
-const customerEmail = 'system@leadpoint.dk';  // Wrong!
-const billyContact = 'kunde@gmail.com';       // Never matches
+const customerEmail = "system@leadpoint.dk"; // Wrong!
+const billyContact = "kunde@gmail.com"; // Never matches
 ```
 
 ### Solution (After)
+
 ```typescript
 // ✅ Parse customer email from leadmail body
-const bodyText = Buffer.from(message.body.data, 'base64').toString('utf-8');
+const bodyText = Buffer.from(message.body.data, "base64").toString("utf-8");
 const customerEmail = bodyText.match(/E-?mail:?\s*([^\s]+@[^\s]+)/i)[1];
 // customerEmail = 'kunde@gmail.com'  // Correct!
 
@@ -174,6 +180,7 @@ if (normalizeEmail(invoice.contactEmail) === customerEmail) {
 ## 📊 Expected Output (After Fix)
 
 ### Raw Collection
+
 ```json
 {
   "metadata": {
@@ -186,6 +193,7 @@ if (normalizeEmail(invoice.contactEmail) === customerEmail) {
 ```
 
 ### After Processing
+
 ```json
 {
   "metadata": {
@@ -205,29 +213,30 @@ if (normalizeEmail(invoice.contactEmail) === customerEmail) {
 ## 💰 Lead Cost Configuration
 
 ### Verified Nov 2025
+
 ```typescript
 LEAD_COST_CONFIG = {
-  'Leadpoint.dk': {
+  "Leadpoint.dk": {
     perLead: {
-      'REN-001': 150,  // Privatrengøring
-      'REN-003': 750,  // Flytterengøring
-      'REN-004': 150,  // Erhvervsrengøring
+      "REN-001": 150, // Privatrengøring
+      "REN-003": 750, // Flytterengøring
+      "REN-004": 150, // Erhvervsrengøring
     },
-    monthlyFixed: 0
+    monthlyFixed: 0,
   },
-  'AdHelp': {
+  AdHelp: {
     perLead: 250,
-    monthlyFixed: 0
+    monthlyFixed: 0,
   },
-  'Rengøring.nu': {
+  "Rengøring.nu": {
     perLead: 65,
-    monthlyFixed: 100  // Fixed monthly cost
+    monthlyFixed: 100, // Fixed monthly cost
   },
-  'Direct': {
+  Direct: {
     perLead: 0,
-    monthlyFixed: 0
-  }
-}
+    monthlyFixed: 0,
+  },
+};
 ```
 
 ---
@@ -235,6 +244,7 @@ LEAD_COST_CONFIG = {
 ## 🎯 Data Quality Metrics
 
 ### Completeness Scoring
+
 ```
 100% = Gmail + Calendar + Billy (full 360° view)
 67%  = Gmail + Calendar (booking confirmed, no invoice yet)
@@ -242,6 +252,7 @@ LEAD_COST_CONFIG = {
 ```
 
 ### Linking Confidence
+
 ```
 HIGH   = Email match + Name match + Date proximity
 MEDIUM = Email match OR (Name match + Date proximity)
@@ -253,6 +264,7 @@ LOW    = Gmail only, no Calendar/Billy match
 ## 🚀 Usage Examples
 
 ### 1. Run Complete Pipeline
+
 ```bash
 # Step 1: Collect data (10-15 min)
 npx tsx server/integrations/chromadb/scripts/1-collect-and-link-v4_3.ts
@@ -265,27 +277,30 @@ npx tsx server/integrations/chromadb/scripts/3-pipeline-analysis-v4_3.ts
 ```
 
 ### 2. Query Leads
+
 ```typescript
-import leads from './test-data/complete-leads-v4.3.json';
+import leads from "./test-data/complete-leads-v4.3.json";
 
 // High-value opportunities
-const opportunities = leads.leads.filter(l => 
-  l.pipeline.status === 'contacted' && 
-  l.quoteRecommendation.estimatedPrice > 2000
+const opportunities = leads.leads.filter(
+  l =>
+    l.pipeline.status === "contacted" &&
+    l.quoteRecommendation.estimatedPrice > 2000
 );
 
 // Low profitability leads
-const lowProfit = leads.leads.filter(l =>
-  l.calculated.financial.netMargin < 30
+const lowProfit = leads.leads.filter(
+  l => l.calculated.financial.netMargin < 30
 );
 
 // Active customers
-const activeCustomers = leads.leads.filter(l =>
-  l.pipeline.status === 'active_recurring'
+const activeCustomers = leads.leads.filter(
+  l => l.pipeline.status === "active_recurring"
 );
 ```
 
 ### 3. Lead Source Analysis
+
 ```typescript
 const analysis = leads.metadata.counts.byLeadSource;
 // {
@@ -300,6 +315,7 @@ const analysis = leads.metadata.counts.byLeadSource;
 ## 📈 Business Intelligence
 
 ### Key Insights from V4.3
+
 1. **Conversion Funnel**: 60% dropoff fra Inbox → Contacted
 2. **Best Lead Source**: Direct (0kr cost, highest conversion)
 3. **Time Accuracy**: Vi undervurderer konsistent (316% actual vs estimated)
@@ -307,6 +323,7 @@ const analysis = leads.metadata.counts.byLeadSource;
 5. **Data Completeness**: 43% average (room for improvement)
 
 ### Actionable Recommendations
+
 1. ✅ Focus on direct lead generation (best ROI)
 2. ✅ Adjust m² coefficients (currently too low)
 3. ✅ Improve follow-up (reduce inbox dropoff)
@@ -328,15 +345,19 @@ const analysis = leads.metadata.counts.byLeadSource;
 ## 🐛 Troubleshooting
 
 ### Issue: No Billy matches
+
 **Solution**: Verify customer email is parsed from Gmail body correctly
 
 ### Issue: Low Calendar matches
+
 **Solution**: Check attendee email format, add fuzzy name matching
 
 ### Issue: OAuth errors
+
 **Solution**: See `GOOGLE_OAUTH_SETUP.md`
 
 ### Issue: Deduplication over-merging
+
 **Solution**: Adjust threshold in `v4_3-deduplication.ts`
 
 ---
@@ -344,12 +365,14 @@ const analysis = leads.metadata.counts.byLeadSource;
 ## 📅 Maintenance
 
 ### Monthly Tasks
+
 1. Run pipeline for previous month
 2. Review lead source ROI
 3. Adjust m² coefficients based on accuracy data
 4. Update lead costs if pricing changes
 
 ### Quarterly Tasks
+
 1. Review deduplication logic
 2. Audit spam filter patterns
 3. Analyze customer retention trends
@@ -360,60 +383,64 @@ const analysis = leads.metadata.counts.byLeadSource;
 ## 🎓 Technical Details
 
 ### Lead Status Auto-Classification Logic
+
 ```typescript
 function determineLeadStatus(lead): LeadStatus {
   // Spam check
   if (isSpam(lead.gmail.subject)) return LeadStatus.SPAM;
-  
+
   // Active recurring
-  if (lead.billy && lead.calculated.property.serviceType === 'REN-005') {
+  if (lead.billy && lead.calculated.property.serviceType === "REN-005") {
     return LeadStatus.ACTIVE_RECURRING;
   }
-  
+
   // Paid/Invoiced
   if (lead.billy?.isPaid) return LeadStatus.PAID;
   if (lead.billy) return LeadStatus.INVOICED;
-  
+
   // Scheduled
   if (lead.calendar) return LeadStatus.SCHEDULED;
-  
+
   // Dead/No response (based on days since received)
   if (daysOld > 30) return LeadStatus.DEAD;
   if (daysOld > 7) return LeadStatus.NO_RESPONSE;
-  
+
   // Default
   return LeadStatus.NEW;
 }
 ```
 
 ### Fuzzy Name Matching
+
 ```typescript
 // Split names into words, find common words (length > 2)
-const commonWords = name1.split(' ').filter(w1 =>
-  w1.length > 2 && name2.split(' ').some(w2 => 
-    w2.includes(w1) || w1.includes(w2)
-  )
-);
+const commonWords = name1
+  .split(" ")
+  .filter(
+    w1 =>
+      w1.length > 2 &&
+      name2.split(" ").some(w2 => w2.includes(w1) || w1.includes(w2))
+  );
 
 // Match score
-if (commonWords.length >= 2) score += 50;  // Good match
-if (commonWords.length === 1) score += 20;  // Weak match
+if (commonWords.length >= 2) score += 50; // Good match
+if (commonWords.length === 1) score += 20; // Weak match
 ```
 
 ---
 
 ## ✅ System Status
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| Gmail API | ✅ Working | OAuth configured |
-| Calendar API | ✅ Working | OAuth configured |
-| Billy API | ✅ Working | API key valid |
-| Script 1 | ✅ Complete | With body parsing |
-| Script 2 | ✅ Complete | All metrics working |
-| Script 3 | ✅ Complete | Reports generated |
-| Deduplication | ✅ Complete | 95% reduction |
-| Billy Linking | 🔄 Testing | Fix deployed |
+| Component     | Status      | Notes               |
+| ------------- | ----------- | ------------------- |
+| Gmail API     | ✅ Working  | OAuth configured    |
+| Calendar API  | ✅ Working  | OAuth configured    |
+| Billy API     | ✅ Working  | API key valid       |
+| Script 1      | ✅ Complete | With body parsing   |
+| Script 2      | ✅ Complete | All metrics working |
+| Script 3      | ✅ Complete | Reports generated   |
+| Deduplication | ✅ Complete | 95% reduction       |
+| Billy Linking | 🔄 Testing  | Fix deployed        |
 
 ---
 

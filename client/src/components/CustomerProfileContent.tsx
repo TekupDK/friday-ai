@@ -36,7 +36,15 @@ import { SafeStreamdown } from "./SafeStreamdown";
 
 interface CustomerProfileContentProps {
   leadId: number;
-  initialTab?: "overview" | "invoices" | "emails" | "calendar" | "chat" | "case" | "timeline" | "notes";
+  initialTab?:
+    | "overview"
+    | "invoices"
+    | "emails"
+    | "calendar"
+    | "chat"
+    | "case"
+    | "timeline"
+    | "notes";
   onOpenEmailThread?: (threadId: string) => void;
   onClose?: () => void;
 }
@@ -55,19 +63,14 @@ export default function CustomerProfileContent({
     data: profile,
     isLoading: profileLoading,
     refetch: refetchProfile,
-  } = trpc.customer.getByLeadId.useQuery(
-    { leadId },
-    { enabled: !!leadId }
-  );
+  } = trpc.customer.getByLeadId.useQuery({ leadId }, { enabled: !!leadId });
 
   // Get case analysis data
-  const {
-    data: caseData,
-    isLoading: caseLoading,
-  } = trpc.customer.getProfileWithCase.useQuery(
-    { email: profile?.email || "" },
-    { enabled: !!profile?.email }
-  );
+  const { data: caseData, isLoading: caseLoading } =
+    trpc.customer.getProfileWithCase.useQuery(
+      { email: profile?.email || "" },
+      { enabled: !!profile?.email }
+    );
 
   // Get calendar events
   const { data: calendarEvents } = trpc.customer.getCalendarEvents.useQuery(
@@ -106,7 +109,7 @@ export default function CustomerProfileContent({
 
     if (!lastSync || parseInt(lastSync) < fiveMinutesAgo) {
       console.log(`[CustomerProfile] Auto-syncing customer ${profile.id}`);
-      
+
       // Parallel sync
       Promise.all([
         syncGmail.mutateAsync({ customerId: profile.id }),
@@ -124,20 +127,27 @@ export default function CustomerProfileContent({
   // Auto-generate AI resume on first open if missing
   useEffect(() => {
     if (!profile) return;
-    
+
     // Only auto-generate if no resume exists and customer has some activity
-    const shouldAutoGenerate = !profile.aiResume && (
-      profile.emailCount > 0 || 
-      profile.invoiceCount > 0 ||
-      profile.totalInvoiced > 0
-    );
-    
+    const shouldAutoGenerate =
+      !profile.aiResume &&
+      (profile.emailCount > 0 ||
+        profile.invoiceCount > 0 ||
+        profile.totalInvoiced > 0);
+
     if (shouldAutoGenerate) {
-      console.log(`[CustomerProfile] Auto-generating AI resume for customer ${profile.id}`);
+      console.log(
+        `[CustomerProfile] Auto-generating AI resume for customer ${profile.id}`
+      );
       generateResume.mutate({ customerId: profile.id });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile?.id, profile?.aiResume, profile?.emailCount, profile?.invoiceCount]); // Auto-generate AI resume if missing
+  }, [
+    profile?.id,
+    profile?.aiResume,
+    profile?.emailCount,
+    profile?.invoiceCount,
+  ]); // Auto-generate AI resume if missing
 
   // Generate AI resume
   const generateResume = trpc.customer.generateResume.useMutation({
@@ -145,7 +155,7 @@ export default function CustomerProfileContent({
       refetchProfile();
       toast.success("AI resumé genereret");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error("Kunne ikke generere AI resumé: " + error.message);
     },
   });
@@ -278,14 +288,14 @@ export default function CustomerProfileContent({
           <TabsContent value="timeline" className="m-0 p-6">
             <ActivityTimeline
               customerId={profile?.id || 0}
-              onEmailClick={(threadId) => {
+              onEmailClick={threadId => {
                 if (onOpenEmailThread) {
                   onOpenEmailThread(threadId);
                 } else {
                   toast.info(`Email navigation (${threadId}) kommer snart`);
                 }
               }}
-              onInvoiceClick={(invoiceId) => {
+              onInvoiceClick={invoiceId => {
                 toast.info(`Faktura detaljer (ID: ${invoiceId}) kommer snart`);
               }}
             />
@@ -296,9 +306,7 @@ export default function CustomerProfileContent({
             {/* Status & Tags */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">
-                  Kunde Status & Tags
-                </CardTitle>
+                <CardTitle className="text-base">Kunde Status & Tags</CardTitle>
                 <CardDescription>
                   Organiser og kategoriser kunden
                 </CardDescription>
@@ -317,9 +325,7 @@ export default function CustomerProfileContent({
             {/* Contact Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">
-                  Contact Information
-                </CardTitle>
+                <CardTitle className="text-base">Contact Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center gap-2 text-sm">
@@ -461,7 +467,8 @@ export default function CustomerProfileContent({
                 <AlertTriangle className="w-12 h-12 mx-auto mb-4 opacity-50" />
                 <p>No case analysis available</p>
                 <p className="text-sm mt-2">
-                  Case analysis will be generated based on customer interactions.
+                  Case analysis will be generated based on customer
+                  interactions.
                 </p>
               </div>
             )}

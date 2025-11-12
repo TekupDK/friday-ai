@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   litellm:
@@ -9,32 +9,33 @@ services:
     environment:
       # OpenRouter API Key (from .env)
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-      
+
       # LiteLLM Master Key (optional - for auth)
       - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-friday-litellm-dev}
-      
+
       # Logging
       - LITELLM_LOG_LEVEL=${LITELLM_LOG_LEVEL:-INFO}
-      
+
       # Disable database (use in-memory)
       - DATABASE_URL=
       - STORE_MODEL_IN_DB=False
-      
+
     volumes:
       # Mount config file
       - ../config/litellm.config.yaml:/app/config.yaml:ro
-      
-    command: ["--config", "/app/config.yaml", "--port", "4000", "--host", "0.0.0.0"]
-    
+
+    command:
+      ["--config", "/app/config.yaml", "--port", "4000", "--host", "0.0.0.0"]
+
     restart: unless-stopped
-    
+
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 10s
-    
+
     networks:
       - friday-network
 

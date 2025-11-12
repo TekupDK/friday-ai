@@ -5,11 +5,13 @@ Komplet visuel opgradering af alle Friday AI chat komponenter med moderne design
 ## 📦 Nye Komponenter
 
 ### 1. **ActionCard** - Universal Card Komponent
+
 Moderne card til alle typer AI actions (leads, tasks, meetings, invoices)
 
 **Features:**
+
 - ✨ Glassmorphism effekt
-- 🎨 Gradient icons med hover animations  
+- 🎨 Gradient icons med hover animations
 - 📋 Metadata grid
 - ⚡ Quick actions buttons
 - 📋 Copyable ID med click-to-copy
@@ -17,6 +19,7 @@ Moderne card til alle typer AI actions (leads, tasks, meetings, invoices)
 - 🖱️ Hover effects (scale + shadow)
 
 **Usage:**
+
 ```tsx
 <ActionCard
   title="Matilde Skinneholm"
@@ -29,9 +32,7 @@ Moderne card til alle typer AI actions (leads, tasks, meetings, invoices)
     { label: "Email", value: "matilde@gmail.com", icon: Mail },
     { label: "Phone", value: "50 65 75 40", icon: Phone },
   ]}
-  actions={[
-    { label: "Send tilbud", onClick: () => {} },
-  ]}
+  actions={[{ label: "Send tilbud", onClick: () => {} }]}
   copyableId="#1247"
   timestamp={new Date()}
 />
@@ -40,30 +41,31 @@ Moderne card til alle typer AI actions (leads, tasks, meetings, invoices)
 ---
 
 ### 2. **ThinkingIndicator** - 5 Loading Varianter
+
 Forskellige animerede loading indicators
 
 **Varianter:**
+
 - 🔵 **dots** - Classic bouncing dots (default)
 - 🌊 **wave** - Sound wave bars
-- 💫 **pulse** - Pulsating circle  
+- 💫 **pulse** - Pulsating circle
 - ▬ **progress** - Animated progress bar
 - ✨ **sparkle** - Sparkles animation
 
 **Usage:**
+
 ```tsx
-<ThinkingIndicator 
-  variant="dots"
-  message="Friday tænker..."
-  size="md"
-/>
+<ThinkingIndicator variant="dots" message="Friday tænker..." size="md" />
 ```
 
 ---
 
 ### 3. **ChatMessage** - Moderne Chat Bubbles
+
 Opgraderet chat besked med reactions og status
 
 **Features:**
+
 - 👤 User/AI avatars
 - 💬 Gradient bubbles (user) / card style (AI)
 - 📋 Copy button (hover)
@@ -73,6 +75,7 @@ Opgraderet chat besked med reactions og status
 - 🏷️ Model badge
 
 **Usage:**
+
 ```tsx
 <ChatMessage
   type="ai"
@@ -87,9 +90,11 @@ Opgraderet chat besked med reactions og status
 ---
 
 ### 4. **WelcomeScreenUpgraded** - Moderne Velkomst
+
 Opgraderet welcome screen med kategorier og stats
 
 **Features:**
+
 - 🌅 Gradient title
 - 📊 Stats badges (værktøjer, integrationer)
 - 🎯 Kategoriserede suggestions:
@@ -100,25 +105,29 @@ Opgraderet welcome screen med kategorier og stats
 - ⏰ Dynamic greeting (tid på dagen)
 
 **Usage:**
+
 ```tsx
 <WelcomeScreenUpgraded
   userName="Anders"
-  onSuggestionClick={(text) => handleClick(text)}
+  onSuggestionClick={text => handleClick(text)}
 />
 ```
 
 ---
 
 ### 5. **QuickActions** - Inline Action Buttons
+
 Hurtige handlinger med gradient styling
 
 **Features:**
+
 - ⚡ Preset actions (calendar, invoice, email, call, etc.)
 - 🎨 Gradient backgrounds
 - 📐 2 layouts: horizontal / grid
 - 🔄 Hover scale effect
 
 **Usage:**
+
 ```tsx
 <QuickActions
   actions={[
@@ -134,16 +143,19 @@ Hurtige handlinger med gradient styling
 ## 🎨 Design Principper
 
 ### **Glassmorphism**
+
 - Semi-transparent backgrounds
 - Backdrop blur effekter
 - Subtle gradients overlays
 
 ### **Gradients**
+
 - Icon backgrounds: `bg-gradient-to-br from-X to-Y`
 - Text: `bg-gradient-to-r ... bg-clip-text`
 - Overlays: Low opacity på hover
 
 ### **Animations**
+
 - `animate-in slide-in-from-bottom-2` - Slide in effect
 - `fade-in` - Fade effect
 - `hover:scale-105` - Subtle hover scale
@@ -152,6 +164,7 @@ Hurtige handlinger med gradient styling
 - `animate-bounce` - Bouncing effect
 
 ### **Colors**
+
 - **Blue-Purple** gradient: Primary AI theme
 - **Green**: Success / Leads
 - **Yellow-Orange**: Invoices / Warnings
@@ -188,6 +201,7 @@ http://localhost:3000/showcase
 ## 🔄 Migration fra Gamle Komponenter
 
 ### AIThinking → ThinkingIndicator
+
 ```tsx
 // Før:
 <AIThinking message="AI Thinking..." />
@@ -197,18 +211,20 @@ http://localhost:3000/showcase
 ```
 
 ### WelcomeScreen → WelcomeScreenUpgraded
+
 ```tsx
 // Før:
 <WelcomeScreen onSuggestionClick={handleClick} />
 
 // Nu:
-<WelcomeScreenUpgraded 
+<WelcomeScreenUpgraded
   userName="Anders"
-  onSuggestionClick={handleClick} 
+  onSuggestionClick={handleClick}
 />
 ```
 
 ### ResponseCard → ActionCard
+
 ```tsx
 // Før:
 <ResponseCard data={{ type: 'lead_created', lead: {...} }} />

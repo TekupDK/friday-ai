@@ -1,6 +1,6 @@
 /**
  * Enhanced Friday AI Chat Panel with Performance Optimizations
- * 
+ *
  * Features:
  * - Message pagination with infinite scroll
  * - Memory management (max 50 messages)
@@ -32,27 +32,26 @@ interface ShortWaveChatPanelProps {
   };
 }
 
-export default function ShortWaveChatPanel({ 
-  className = "", 
+export default function ShortWaveChatPanel({
+  className = "",
   conversationId,
-  context = {} 
+  context = {},
 }: ShortWaveChatPanelProps) {
-  
   // Memoize context to prevent unnecessary re-renders
   const memoizedContext = useMemo(() => context, [context]);
-  
+
   const [inputMessage, setInputMessage] = useState("");
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { 
-    messages: chatMessages, 
-    isLoading, 
-    error, 
-    sendMessage 
-  } = useFridayChatSimple({ 
+  const {
+    messages: chatMessages,
+    isLoading,
+    error,
+    sendMessage,
+  } = useFridayChatSimple({
     conversationId,
-    context: memoizedContext 
+    context: memoizedContext,
   });
 
   useEffect(() => {
@@ -72,16 +71,19 @@ export default function ShortWaveChatPanel({
     }
   }, [inputMessage, isLoading, conversationId, sendMessage]);
 
-  const handleSuggestionClick = useCallback(async (suggestion: string) => {
-    if (!conversationId || isLoading) return;
-    
-    // Directly send the suggestion without setting input
-    try {
-      await sendMessage(suggestion);
-    } catch (error) {
-      toast.error("Failed to send message");
-    }
-  }, [conversationId, isLoading, sendMessage]);
+  const handleSuggestionClick = useCallback(
+    async (suggestion: string) => {
+      if (!conversationId || isLoading) return;
+
+      // Directly send the suggestion without setting input
+      try {
+        await sendMessage(suggestion);
+      } catch (error) {
+        toast.error("Failed to send message");
+      }
+    },
+    [conversationId, isLoading, sendMessage]
+  );
 
   const handleStop = useCallback(() => {
     // TODO: Implement streaming stop
@@ -89,7 +91,7 @@ export default function ShortWaveChatPanel({
   }, []);
 
   return (
-    <div 
+    <div
       data-testid="friday-ai-panel"
       className={`flex flex-col h-full bg-background ${className}`}
     >
@@ -104,7 +106,9 @@ export default function ShortWaveChatPanel({
           {chatMessages.map((message: any) => (
             <div
               key={message.id}
-              data-testid={message.role === "user" ? "user-message" : "ai-message"}
+              data-testid={
+                message.role === "user" ? "user-message" : "ai-message"
+              }
               className={`flex ${
                 message.role === "user" ? "justify-end" : "justify-start"
               }`}
@@ -120,7 +124,10 @@ export default function ShortWaveChatPanel({
                   {message.content}
                 </p>
                 <p className="text-[10px] opacity-60 mt-1">
-                  {new Date(message.createdAt).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}
+                  {new Date(message.createdAt).toLocaleTimeString("da-DK", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </p>
               </div>
             </div>
@@ -131,10 +138,18 @@ export default function ShortWaveChatPanel({
                 <div className="flex items-center space-x-2">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div
+                      className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.1s" }}
+                    ></div>
+                    <div
+                      className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    ></div>
                   </div>
-                  <span className="text-xs text-muted-foreground">Friday is thinking...</span>
+                  <span className="text-xs text-muted-foreground">
+                    Friday is thinking...
+                  </span>
                 </div>
               </div>
             </div>
@@ -147,9 +162,7 @@ export default function ShortWaveChatPanel({
       {/* Error Display */}
       {error && (
         <div className="p-4 bg-destructive/10 border border-destructive/20">
-          <p className="text-sm text-destructive">
-            Error: {error.message}
-          </p>
+          <p className="text-sm text-destructive">Error: {error.message}</p>
         </div>
       )}
 

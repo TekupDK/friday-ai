@@ -13,7 +13,11 @@ import { SafeStreamdown } from "../SafeStreamdown";
 import ShortWaveChatPanel from "../chat/ShortWaveChatPanel";
 import EmailActions from "./EmailActions";
 import { EmailAssistant3Panel } from "../workspace/EmailAssistant3Panel";
-import { CategoryBadge, PriorityIndicator, ResponseSuggestions } from "../email-intelligence";
+import {
+  CategoryBadge,
+  PriorityIndicator,
+  ResponseSuggestions,
+} from "../email-intelligence";
 const EmailAISummary = lazy(() => import("./EmailAISummary"));
 const EmailLabelSuggestions = lazy(() => import("./EmailLabelSuggestions"));
 
@@ -35,10 +39,12 @@ interface EmailThreadViewProps {
 
 // Wrapper component for CategoryBadge with TRPC data fetching
 function EmailCategoryBadge({ threadId }: { threadId: string }) {
-  const { data } = trpc.emailIntelligence.getEmailCategory.useQuery({ threadId });
-  
+  const { data } = trpc.emailIntelligence.getEmailCategory.useQuery({
+    threadId,
+  });
+
   if (!data) return null;
-  
+
   return (
     <CategoryBadge
       category={data.category}
@@ -50,10 +56,12 @@ function EmailCategoryBadge({ threadId }: { threadId: string }) {
 
 // Wrapper component for PriorityIndicator with TRPC data fetching
 function EmailPriorityBadge({ threadId }: { threadId: string }) {
-  const { data } = trpc.emailIntelligence.getEmailPriority.useQuery({ threadId });
-  
+  const { data } = trpc.emailIntelligence.getEmailPriority.useQuery({
+    threadId,
+  });
+
   if (!data) return null;
-  
+
   return (
     <PriorityIndicator
       level={data.level}
@@ -73,7 +81,9 @@ export default function EmailThreadView({
   initialPreview,
 }: EmailThreadViewProps) {
   const [showAISidebar, setShowAISidebar] = useState(false);
-  const [conversationId, setConversationId] = useState<number | undefined>(undefined);
+  const [conversationId, setConversationId] = useState<number | undefined>(
+    undefined
+  );
   const [emailContext, setEmailContext] = useState<{
     threadId: string;
     subject: string;
@@ -83,7 +93,7 @@ export default function EmailThreadView({
 
   // Create conversation for AI sidebar
   const createConversation = trpc.chat.createConversation.useMutation({
-    onSuccess: (newConv) => {
+    onSuccess: newConv => {
       setConversationId(newConv.id);
     },
   });
@@ -263,14 +273,14 @@ export default function EmailThreadView({
                           Nyeste
                         </Badge>
                       )}
-                      
+
                       {/* Email Intelligence: Category Badge */}
                       {isLast && (
                         <Suspense fallback={null}>
                           <EmailCategoryBadge threadId={threadId} />
                         </Suspense>
                       )}
-                      
+
                       {/* Email Intelligence: Priority Indicator */}
                       {isLast && (
                         <Suspense fallback={null}>
@@ -313,7 +323,11 @@ export default function EmailThreadView({
 
                 {/* AI Summary - below subject */}
                 {isLast && (
-                  <Suspense fallback={<div className="h-3 bg-muted/40 rounded w-3/4 mb-3" />}>
+                  <Suspense
+                    fallback={
+                      <div className="h-3 bg-muted/40 rounded w-3/4 mb-3" />
+                    }
+                  >
                     <EmailAISummary
                       threadId={message.threadId || threadId}
                       collapsed={false}
@@ -324,7 +338,11 @@ export default function EmailThreadView({
 
                 {/* AI Label Suggestions - below summary */}
                 {isLast && (
-                  <Suspense fallback={<div className="h-6 bg-muted/30 rounded w-40 mb-3" />}>
+                  <Suspense
+                    fallback={
+                      <div className="h-6 bg-muted/30 rounded w-40 mb-3" />
+                    }
+                  >
                     <EmailLabelSuggestions
                       threadId={message.threadId || threadId}
                       currentLabels={thread.labels || []}
@@ -342,7 +360,11 @@ export default function EmailThreadView({
 
                 {/* Phase 9.9: AI Email Assistant - below label suggestions */}
                 {isLast && (
-                  <Suspense fallback={<div className="h-20 bg-muted/30 rounded-lg mb-3 animate-pulse" />}>
+                  <Suspense
+                    fallback={
+                      <div className="h-20 bg-muted/30 rounded-lg mb-3 animate-pulse" />
+                    }
+                  >
                     <EmailAssistant3Panel
                       emailData={{
                         from: message.from || "",
@@ -350,7 +372,7 @@ export default function EmailThreadView({
                         body: (message as any).bodyText || message.body || "",
                         threadId: message.threadId || threadId,
                       }}
-                      onInsertReply={(content) => {
+                      onInsertReply={content => {
                         // Insert content i reply system
                         if (onReply) {
                           onReply({
@@ -362,7 +384,7 @@ export default function EmailThreadView({
                           });
                         }
                       }}
-                      onSendEmail={async (content) => {
+                      onSendEmail={async content => {
                         // Send email direkte via Gmail
                         try {
                           console.log("Sending email...", content);
@@ -375,13 +397,17 @@ export default function EmailThreadView({
                     />
                   </Suspense>
                 )}
-                
+
                 {/* Email Intelligence: Response Suggestions */}
                 {isLast && (
-                  <Suspense fallback={<div className="h-32 bg-muted/20 rounded-lg mb-3 animate-pulse" />}>
+                  <Suspense
+                    fallback={
+                      <div className="h-32 bg-muted/20 rounded-lg mb-3 animate-pulse" />
+                    }
+                  >
                     <ResponseSuggestions
                       threadId={message.threadId || threadId}
-                      onSelectSuggestion={(text) => {
+                      onSelectSuggestion={text => {
                         // Copy to clipboard and optionally trigger reply
                         if (onReply) {
                           onReply({
@@ -430,19 +456,18 @@ export default function EmailThreadView({
               <Bot className="w-5 h-5 text-primary" />
               <h3 className="font-semibold">Friday AI</h3>
             </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setShowAISidebar(false)}
             >
-              <span className="sr-only">Close</span>
-              ✕
+              <span className="sr-only">Close</span>✕
             </Button>
           </div>
-          
+
           {/* Chat Panel */}
           <div className="flex-1 overflow-hidden">
-            <ShortWaveChatPanel 
+            <ShortWaveChatPanel
               conversationId={conversationId}
               context={{
                 selectedEmails: [emailContext.threadId],

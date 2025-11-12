@@ -6,7 +6,14 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { MessageSquare, Reply, Forward, Trash2, Star, MoreVertical } from "lucide-react";
+import {
+  MessageSquare,
+  Reply,
+  Forward,
+  Trash2,
+  Star,
+  MoreVertical,
+} from "lucide-react";
 import { useState } from "react";
 
 export interface MessageCardProps {
@@ -27,22 +34,23 @@ export interface MessageCardProps {
   onStar?: () => void;
 }
 
-export function MessageCard({ 
+export function MessageCard({
   message = {
-    id: '1',
-    from: 'John Smith',
-    to: 'Sarah Johnson',
-    subject: 'Møde om projekt status',
-    content: 'Hej Sarah, jeg vil gerne diskutere status på vores projekt. Kan vi mødes i morgen kl. 10?',
-    timestamp: 'for 5 minutter siden',
+    id: "1",
+    from: "John Smith",
+    to: "Sarah Johnson",
+    subject: "Møde om projekt status",
+    content:
+      "Hej Sarah, jeg vil gerne diskutere status på vores projekt. Kan vi mødes i morgen kl. 10?",
+    timestamp: "for 5 minutter siden",
     read: false,
     starred: false,
-    attachments: 2
+    attachments: 2,
   },
   onReply,
   onForward,
   onDelete,
-  onStar
+  onStar,
 }: MessageCardProps) {
   const [isStarred, setIsStarred] = useState(message.starred);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -53,11 +61,13 @@ export function MessageCard({
   };
 
   return (
-    <Card className={cn(
-      "border-l-4 transition-all duration-200",
-      message.read ? "border-l-gray-400" : "border-l-blue-500",
-      "hover:shadow-lg"
-    )}>
+    <Card
+      className={cn(
+        "border-l-4 transition-all duration-200",
+        message.read ? "border-l-gray-400" : "border-l-blue-500",
+        "hover:shadow-lg"
+      )}
+    >
       <div className="p-4 space-y-3">
         {/* Header */}
         <div className="flex items-start justify-between">
@@ -70,7 +80,9 @@ export function MessageCard({
                 <span className="font-semibold">{message.from}</span>
                 {!message.read && <Badge className="bg-blue-500">Ny</Badge>}
               </div>
-              <span className="text-xs text-muted-foreground">til {message.to}</span>
+              <span className="text-xs text-muted-foreground">
+                til {message.to}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-1">
@@ -80,7 +92,12 @@ export function MessageCard({
               onClick={handleStar}
               className="h-8 w-8"
             >
-              <Star className={cn("w-4 h-4", isStarred ? "fill-yellow-400 text-yellow-400" : "")} />
+              <Star
+                className={cn(
+                  "w-4 h-4",
+                  isStarred ? "fill-yellow-400 text-yellow-400" : ""
+                )}
+              />
             </Button>
             <Button size="icon" variant="ghost" className="h-8 w-8">
               <MoreVertical className="w-4 h-4" />
@@ -94,7 +111,7 @@ export function MessageCard({
         </div>
 
         {/* Content */}
-        <div 
+        <div
           className={cn(
             "text-sm text-muted-foreground",
             !isExpanded && "line-clamp-2"
@@ -110,7 +127,8 @@ export function MessageCard({
             <span>{message.timestamp}</span>
             {message.attachments && message.attachments > 0 && (
               <Badge variant="outline">
-                📎 {message.attachments} fil{message.attachments > 1 ? 'er' : ''}
+                📎 {message.attachments} fil
+                {message.attachments > 1 ? "er" : ""}
               </Badge>
             )}
           </div>

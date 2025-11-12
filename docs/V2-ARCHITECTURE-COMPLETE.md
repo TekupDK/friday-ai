@@ -23,6 +23,7 @@ ChatInterface.tsx (forvirrende navn)
 ```
 
 **Problemer:**
+
 - Tab-switching i midten = dårlig email-fokus
 - Højre panel ikke context-aware
 - Forvirrende navngivning (ChatInterface)
@@ -50,6 +51,7 @@ WorkspaceLayout.tsx (klart navn)
 ```
 
 **Fordele:**
+
 - ✅ Email får 60% af skærmen (før: 50%)
 - ✅ Ingen tab-switching i midten
 - ✅ Context-aware højre panel
@@ -109,9 +111,9 @@ useEffect(() => {
 
   // Analyser email
   const email = getEmailData(emailState.openThreadId);
-  
+
   // 3. Context detection baseret på:
-  
+
   // LEAD?
   if (
     email.from.includes("rengoring.nu") ||
@@ -120,7 +122,7 @@ useEffect(() => {
   ) {
     setContext({ type: "lead" });
   }
-  
+
   // BOOKING?
   else if (
     email.labels.includes("I kalender") ||
@@ -128,7 +130,7 @@ useEffect(() => {
   ) {
     setContext({ type: "booking" });
   }
-  
+
   // INVOICE?
   else if (
     email.labels.includes("Finance") ||
@@ -136,7 +138,7 @@ useEffect(() => {
   ) {
     setContext({ type: "invoice" });
   }
-  
+
   // CUSTOMER?
   else if (
     email.threadLength > 3 ||
@@ -144,7 +146,7 @@ useEffect(() => {
   ) {
     setContext({ type: "customer" });
   }
-  
+
 }, [emailState.openThreadId]);
 
 // 4. Render korrekt komponent
@@ -164,11 +166,13 @@ switch (context.type) {
 ### EmailCenterPanel (Midten)
 
 **Før:**
+
 - 5 tabs (Email, Fakturaer, Kalender, Leads, Opgaver)
 - Tab-switching = dårlig workflow
 - 50% af skærmen
 
 **Efter:**
+
 - KUN EmailTab - 100% fokus på emails
 - Ingen tabs = ingen distraktioner
 - 60% af skærmen (+10% mere plads)
@@ -176,11 +180,13 @@ switch (context.type) {
 ### EmailSidebarV2
 
 **Før (V1):**
+
 - Fast bredde
 - Simpel liste design
 - Ingen collapse funktion
 
 **Efter (V2):**
+
 - Collapsible: 48px (collapsed) ↔ 224px (expanded)
 - Card-baseret moderne design
 - Farvede folder ikoner
@@ -190,16 +196,19 @@ switch (context.type) {
 ### WorkflowPanelV2 (Højre)
 
 **Før (V1):**
+
 - Statisk: Opgaver + Kunder tabs
 - Ingen relation til valgt email
 - Generisk information
 
 **Efter (V2):**
+
 - Dynamisk: Skifter baseret på email
 - Context-aware: Viser relevant info
 - 5 intelligente states:
 
 #### 1. LeadAnalyzer 🎯
+
 ```
 Når: Lead email valgt
 Viser:
@@ -211,6 +220,7 @@ Viser:
 ```
 
 #### 2. BookingManager 📅
+
 ```
 Når: Booking email valgt
 Viser:
@@ -222,6 +232,7 @@ Viser:
 ```
 
 #### 3. InvoiceTracker 💰
+
 ```
 Når: Faktura email valgt
 Viser:
@@ -233,6 +244,7 @@ Viser:
 ```
 
 #### 4. CustomerProfile 👤
+
 ```
 Når: Kunde email valgt
 Viser:
@@ -244,6 +256,7 @@ Viser:
 ```
 
 #### 5. BusinessDashboard 📊
+
 ```
 Når: Ingen email valgt
 Viser:
@@ -292,6 +305,7 @@ BESPARELSE: 40 min per lead (85%)
 ```
 
 **Med 50 leads/måned:**
+
 - Før: 39 timer
 - Efter: 6 timer
 - **Spart: 33 timer/måned** = næsten 1 uge!
@@ -379,6 +393,6 @@ Vi har nu en **moderne, Shortwave-inspireret workspace** med:
 ✅ **Email-fokus** (60% af skærmen, ingen tabs)  
 ✅ **Context-aware højre panel** (intelligent assistance)  
 ✅ **85% tidsbesparelse** på lead → booking workflow  
-✅ **Skalerbar arkitektur** (let at tilføje nye features)  
+✅ **Skalerbar arkitektur** (let at tilføje nye features)
 
 **Klar til produktion!** 🚀

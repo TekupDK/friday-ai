@@ -3,18 +3,21 @@
 ## 🎯 Problemer der var løst
 
 ### 1. **Modal var for kompleks og rodet**
+
 - ❌ Viste teknisk JSON params
-- ❌ For mange sektioner og visuel støj  
+- ❌ For mange sektioner og visuel støj
 - ❌ Komplekse gradients, blur, pulse animations
 - ❌ Stor modal tog for meget skærmplads
 
 ### 2. **Friday fik ingen besked ved afvisning**
+
 - ❌ Når bruger afviste handling, blev modal bare lukket
 - ❌ Ingen backend call - Friday vidste ikke hvorfor
 - ❌ Samtale fortsatte uden context
 - ❌ Friday kunne ikke tilpasse sig eller spørge hvorfor
 
 ### 3. **System messages var for verbose**
+
 - ❌ `[Action Executed] Success: {...}` blev vist direkte
 - ❌ Forvirrende teknisk info i chat
 - ❌ Friday skulle forklare naturligt i stedet
@@ -26,6 +29,7 @@
 ### 1. **ActionApprovalModal - Radikal Forenkling**
 
 #### Før:
+
 ```tsx
 // max-w-lg modal med:
 // - Gradient icon med blur og pulse
@@ -36,6 +40,7 @@
 ```
 
 #### Efter:
+
 ```tsx
 // max-w-md kompakt modal med:
 ✅ Simpel farve-ikon (bg-green-100, bg-red-100, etc.)
@@ -46,6 +51,7 @@
 ```
 
 **Ændringer:**
+
 - **Layout:** `max-w-lg` → `max-w-md` (mindre)
 - **Ikon:** Fjernet blur/pulse/gradient, simpel solid farve
 - **Sektioner fjernet:**
@@ -58,6 +64,7 @@
 ### 2. **SuggestionsBar - Mere Kompakt**
 
 #### Før:
+
 ```tsx
 // Store cards med gradient ikoner
 py-3 px-4
@@ -66,6 +73,7 @@ Alle risk badges vist
 ```
 
 #### Efter:
+
 ```tsx
 ✅ Kompakt én-linje layout
 ✅ py-2 px-3 (mindre padding)
@@ -81,12 +89,14 @@ Alle risk badges vist
 
 ```typescript
 rejectAction: protectedProcedure
-  .input(z.object({
-    conversationId: z.number(),
-    actionId: z.string(),
-    actionType: z.string(),
-    reason: z.string().optional(),
-  }))
+  .input(
+    z.object({
+      conversationId: z.number(),
+      actionId: z.string(),
+      actionType: z.string(),
+      reason: z.string().optional(),
+    })
+  )
   .mutation(async ({ ctx, input }) => {
     // 1. Track rejection metrics
     trackMetric(ctx.user.id, "action_rejected", {
@@ -110,10 +120,11 @@ rejectAction: protectedProcedure
     });
 
     return { assistantMessage };
-  })
+  });
 ```
 
 **Hvad gør den?**
+
 1. ✅ Logger rejection til metrics (analytics)
 2. ✅ Opretter system message om afvisning
 3. ✅ Friday får besked og kan reagere naturligt
@@ -122,6 +133,7 @@ rejectAction: protectedProcedure
 ### 4. **Frontend: handleRejectAction Opdateret**
 
 #### Før:
+
 ```typescript
 const handleRejectAction = () => {
   setPendingAction(null);
@@ -132,6 +144,7 @@ const handleRejectAction = () => {
 ```
 
 #### Efter:
+
 ```typescript
 const handleRejectAction = () => {
   if (!pendingAction || !selectedConversationId) {
@@ -151,7 +164,7 @@ const handleRejectAction = () => {
 // Ny mutation hook
 const rejectAction = trpc.chat.rejectAction.useMutation({
   onSuccess: () => {
-    refetchMessages();  // Hent Friday's svar
+    refetchMessages(); // Hent Friday's svar
     setPendingAction(null);
     setShowApprovalModal(false);
   },
@@ -171,7 +184,7 @@ const rejectAction = trpc.chat.rejectAction.useMutation({
   )) {
     return null;  // Skjul teknisk besked
   }
-  
+
   return (
     // Vis message...
   );
@@ -179,22 +192,26 @@ const rejectAction = trpc.chat.rejectAction.useMutation({
 ```
 
 **Resultat:**
+
 - ❌ Ikke vist: `[Action Executed] ✓ create_invoice: Faktura oprettet`
 - ✅ Vist i stedet: Friday's naturlige forklaring: "Jeg har oprettet fakturaen til Flyttetjenesten Køge. Den indeholder 2 timer til 500 kr/time."
 
 ### 6. **Renere System Messages**
 
 #### Før:
+
 ```typescript
-content: `[Action Executed] ${actionResult.success ? "Success" : "Failed"}: ${actionResult.message}${actionResult.data ? "\nData: " + JSON.stringify(actionResult.data, null, 2) : ""}${actionResult.error ? "\nError: " + actionResult.error : ""}`
+content: `[Action Executed] ${actionResult.success ? "Success" : "Failed"}: ${actionResult.message}${actionResult.data ? "\nData: " + JSON.stringify(actionResult.data, null, 2) : ""}${actionResult.error ? "\nError: " + actionResult.error : ""}`;
 ```
 
 #### Efter:
+
 ```typescript
-content: `[Action Executed] ${actionResult.success ? "✓" : "✗"} ${input.actionType}: ${actionResult.message}`
+content: `[Action Executed] ${actionResult.success ? "✓" : "✗"} ${input.actionType}: ${actionResult.message}`;
 ```
 
 **Forskellen:**
+
 - ✅ Ingen JSON.stringify data dump
 - ✅ Simpel ✓ eller ✗ symbol
 - ✅ Kort og præcis
@@ -211,12 +228,13 @@ export type MetricEvent =
   | "suggestion_ignored"
   | "action_executed"
   | "action_failed"
-  | "action_rejected"  // 👈 NY
+  | "action_rejected" // 👈 NY
   | "dry_run_performed"
   | "rollout_check";
 ```
 
 **Nu kan vi tracke:**
+
 - Hvor ofte handlinger afvises
 - Hvilke typer afvises mest
 - Om brugere foretrækker visse handlinger
@@ -225,15 +243,15 @@ export type MetricEvent =
 
 ## 📊 Før vs. Efter Sammenligning
 
-| Aspekt | Før | Efter | Forbedring |
-|--------|-----|-------|------------|
-| **Modal størrelse** | max-w-lg (512px) | max-w-md (448px) | ↓ 13% mindre |
-| **Sektioner i modal** | 6 | 3 | ↓ 50% |
-| **JSON params vist** | Ja | Nej | ✅ Rent UI |
-| **Friday ved om afvisning** | Nej | Ja | ✅ Context awareness |
-| **System message visibility** | Verbose teknisk | Skjult, Friday forklarer | ✅ Brugervenlig |
-| **Metrics tracking** | Kun godkendelse | Både godkend + afvis | ✅ Bedre analytics |
-| **SuggestionsBar padding** | py-3 px-4 | py-2 px-3 | ↓ Mere kompakt |
+| Aspekt                        | Før              | Efter                    | Forbedring           |
+| ----------------------------- | ---------------- | ------------------------ | -------------------- |
+| **Modal størrelse**           | max-w-lg (512px) | max-w-md (448px)         | ↓ 13% mindre         |
+| **Sektioner i modal**         | 6                | 3                        | ↓ 50%                |
+| **JSON params vist**          | Ja               | Nej                      | ✅ Rent UI           |
+| **Friday ved om afvisning**   | Nej              | Ja                       | ✅ Context awareness |
+| **System message visibility** | Verbose teknisk  | Skjult, Friday forklarer | ✅ Brugervenlig      |
+| **Metrics tracking**          | Kun godkendelse  | Både godkend + afvis     | ✅ Bedre analytics   |
+| **SuggestionsBar padding**    | py-3 px-4        | py-2 px-3                | ↓ Mere kompakt       |
 
 ---
 
@@ -300,6 +318,7 @@ Exit code:  0 ✅
 ```
 
 **TypeScript:**
+
 ```bash
 npx tsc --noEmit
 
@@ -311,6 +330,7 @@ Exit code: 0 ✅
 ## 📁 Filer Ændret
 
 ### Backend:
+
 1. **server/routers.ts**
    - ✅ Tilføjet `rejectAction` mutation
    - ✅ Forenklet `[Action Executed]` message
@@ -319,6 +339,7 @@ Exit code: 0 ✅
    - ✅ Tilføjet `action_rejected` event type
 
 ### Frontend:
+
 3. **client/src/components/ActionApprovalModal.tsx**
    - ✅ Radikal forenkling fra 321 → ~266 linjer
    - ✅ Fjernet JSON params, komplekse effekter
@@ -339,16 +360,19 @@ Exit code: 0 ✅
 ## 🚀 Næste Mulige Forbedringer
 
 ### Prioritet 1 (Hurtigt):
+
 - **Rejection reason input:** Tilføj valgfrit tekstfelt i modal: "Hvorfor afviser du?"
 - **Rejection analytics dashboard:** Vis hvilke actions afvises mest
 - **A/B test:** Test automatisk execution vs approval-first
 
 ### Prioritet 2 (Mellemlang):
+
 - **Smart retry:** Friday foreslår justeret handling baseret på afvisning
 - **Learning:** ML model lærer hvilke handlinger bruger foretrækker
 - **Bulk approve:** "Godkend alle lave risici" knap
 
 ### Prioritet 3 (Langvarig):
+
 - **Voice rejection:** "Friday, afvis" via voice input
 - **Contextual reasons:** AI foreslår hvorfor bruger måske afviste
 - **Trust score:** Reducer approval-krav baseret på trust over tid
@@ -358,6 +382,7 @@ Exit code: 0 ✅
 ## ✅ Task Færdig!
 
 **Alle højprioritet-forbedringer implementeret:**
+
 - ✅ Modal redesign (simpel, kompakt, brugervenlig)
 - ✅ Friday får besked ved afvisning
 - ✅ System messages skjult (Friday forklarer i stedet)
@@ -367,6 +392,7 @@ Exit code: 0 ✅
 - ✅ TypeScript bygger rent
 
 **Systemet er nu:**
+
 - 🎨 **Pænere** - Simpel, moderne UI uden støj
 - 🧠 **Smartere** - Friday ved når handlinger afvises
 - 📊 **Målbar** - Track både godkendelser og afvisninger

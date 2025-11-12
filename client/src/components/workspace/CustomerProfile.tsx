@@ -2,10 +2,23 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, DollarSign, Mail, Star, TrendingUp, AlertTriangle, Phone, MapPin } from "lucide-react";
+import {
+  Calendar,
+  DollarSign,
+  Mail,
+  Star,
+  TrendingUp,
+  AlertTriangle,
+  Phone,
+  MapPin,
+} from "lucide-react";
 import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
 import { trpc } from "@/lib/trpc";
-import { parseCalendarEvent, formatTimeRange, calculateTotalRevenue } from "@/lib/business-logic";
+import {
+  parseCalendarEvent,
+  formatTimeRange,
+  calculateTotalRevenue,
+} from "@/lib/business-logic";
 import SmartActionBar, { type CustomerData } from "./SmartActionBar";
 
 interface CustomerProfileProps {
@@ -26,14 +39,16 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
   const body = context.body || "";
 
   // Extract customer name from email
-  const customerName = from.replace(/<.*>/, '').trim() || "Kunde";
-  
+  const customerName = from.replace(/<.*>/, "").trim() || "Kunde";
+
   // Extract email address
   const emailMatch = from.match(/<(.+)>/);
   const customerEmail = emailMatch ? emailMatch[1] : from;
 
   // Parse address from body if present
-  const addressMatch = body.match(/([A-ZÆØÅ][a-zæøå]+(?:\s+[A-ZÆØÅ]?[a-zæøå]+)*\s+\d+[a-z]?,?\s*\d{4}\s*[A-ZÆØÅ]?)/);
+  const addressMatch = body.match(
+    /([A-ZÆØÅ][a-zæøå]+(?:\s+[A-ZÆØÅ]?[a-zæøå]+)*\s+\d+[a-z]?,?\s*\d{4}\s*[A-ZÆØÅ]?)/
+  );
   const address = addressMatch ? addressMatch[0] : "Adresse ikke angivet";
 
   // State for customer data
@@ -43,14 +58,21 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
   const [error, setError] = useState<string | null>(null);
 
   // Fetch customer history from multiple sources
-  const { data: invoices, isLoading: isInvoicesLoading, error: invoicesError } = trpc.inbox.invoices.list.useQuery(
-    undefined,
-    { retry: 1 }
-  );
+  const {
+    data: invoices,
+    isLoading: isInvoicesLoading,
+    error: invoicesError,
+  } = trpc.inbox.invoices.list.useQuery(undefined, { retry: 1 });
 
-  const { data: calendarEvents, isLoading: isCalendarLoading, error: calendarError } = trpc.inbox.calendar.list.useQuery(
+  const {
+    data: calendarEvents,
+    isLoading: isCalendarLoading,
+    error: calendarError,
+  } = trpc.inbox.calendar.list.useQuery(
     {
-      timeMin: new Date(new Date().setMonth(new Date().getMonth() - 12)).toISOString(),
+      timeMin: new Date(
+        new Date().setMonth(new Date().getMonth() - 12)
+      ).toISOString(),
       timeMax: new Date().toISOString(),
       maxResults: 100,
     },
@@ -60,27 +82,39 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       // Find customer-related data from invoices
-      const customerInvoices = invoices?.filter(inv => 
-        inv.contactId?.toLowerCase().includes(customerEmail.toLowerCase()) ||
-        inv.organizationId?.toLowerCase().includes(customerName.toLowerCase())
-      ) || [];
+      const customerInvoices =
+        invoices?.filter(
+          inv =>
+            inv.contactId
+              ?.toLowerCase()
+              .includes(customerEmail.toLowerCase()) ||
+            inv.organizationId
+              ?.toLowerCase()
+              .includes(customerName.toLowerCase())
+        ) || [];
 
       // Find customer-related calendar events
-      const customerEvents = calendarEvents?.filter(event => 
-        event.summary?.toLowerCase().includes(customerName.toLowerCase()) ||
-        event.description?.toLowerCase().includes(customerName.toLowerCase()) ||
-        event.description?.toLowerCase().includes(customerEmail.toLowerCase())
-      ) || [];
+      const customerEvents =
+        calendarEvents?.filter(
+          event =>
+            event.summary?.toLowerCase().includes(customerName.toLowerCase()) ||
+            event.description
+              ?.toLowerCase()
+              .includes(customerName.toLowerCase()) ||
+            event.description
+              ?.toLowerCase()
+              .includes(customerEmail.toLowerCase())
+        ) || [];
 
       // Parse customer events using centralized business logic
       const parsedBookings = customerEvents.map(event => {
         const booking = parseCalendarEvent(event);
         return {
           id: `event-${event.id}`,
-          type: 'booking' as const,
+          type: "booking" as const,
           date: event.start,
           description: `${booking.type} - ${booking.customer}`,
           price: booking.price,
@@ -94,7 +128,7 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
       // Parse customer invoices
       const parsedInvoices = customerInvoices.map(invoice => ({
         id: `invoice-${invoice.id}`,
-        type: 'invoice' as const,
+        type: "invoice" as const,
         date: invoice.createdTime || invoice.entryDate,
         description: `Faktura ${invoice.invoiceNo}`,
         price: invoice.grossAmount || invoice.amount || 0,
@@ -104,9 +138,14 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
 
       // Calculate customer statistics using real business data
       const totalBookings = parsedBookings.length;
-      const totalValue = calculateTotalRevenue(customerEvents) + parsedInvoices.reduce((sum, inv) => sum + inv.price, 0);
-      const avgBooking = totalBookings > 0 ? totalValue / (totalBookings + parsedInvoices.length) : 0;
-      
+      const totalValue =
+        calculateTotalRevenue(customerEvents) +
+        parsedInvoices.reduce((sum, inv) => sum + inv.price, 0);
+      const avgBooking =
+        totalBookings > 0
+          ? totalValue / (totalBookings + parsedInvoices.length)
+          : 0;
+
       // Determine customer status based on real data
       let status = "Ny kunde";
       if (totalBookings >= 10) {
@@ -120,19 +159,23 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
       // Find first interaction date
       const allDates = [
         ...customerEvents.map(e => new Date(e.start)),
-        ...parsedInvoices.map(i => new Date(i.date || ''))
+        ...parsedInvoices.map(i => new Date(i.date || "")),
       ].filter(date => !isNaN(date.getTime()));
-      
-      const customerSince = allDates.length > 0 
-        ? new Date(Math.min(...allDates.map(d => d.getTime()))).toLocaleDateString('da-DK')
-        : "Ikke angivet";
+
+      const customerSince =
+        allDates.length > 0
+          ? new Date(
+              Math.min(...allDates.map(d => d.getTime()))
+            ).toLocaleDateString("da-DK")
+          : "Ikke angivet";
 
       // Build recent history (last 5 items) - properly sorted
-      const allHistory = [
-        ...parsedBookings,
-        ...parsedInvoices,
-      ].sort((a, b) => new Date(b.date || '').getTime() - new Date(a.date || '').getTime())
-      .slice(0, 5);
+      const allHistory = [...parsedBookings, ...parsedInvoices]
+        .sort(
+          (a, b) =>
+            new Date(b.date || "").getTime() - new Date(a.date || "").getTime()
+        )
+        .slice(0, 5);
 
       setCustomer({
         name: customerName,
@@ -170,8 +213,12 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
             <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-lg">👤 Customer Profile</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">Fejl ved hentning af kunde data</p>
-              <p className="text-sm text-red-800 dark:text-red-200 mt-2">{error}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Fejl ved hentning af kunde data
+              </p>
+              <p className="text-sm text-red-800 dark:text-red-200 mt-2">
+                {error}
+              </p>
             </div>
           </div>
         </Card>
@@ -183,10 +230,29 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
 
   // Status badge configuration
   const getStatusBadge = (status: string) => {
-    if (status === "VIP") return { variant: "default" as const, text: status, color: "bg-purple-500" };
-    if (status === "Fast kunde") return { variant: "secondary" as const, text: status, color: "bg-blue-500" };
-    if (status === "Eksisterende kunde") return { variant: "outline" as const, text: status, color: "bg-green-500" };
-    return { variant: "default" as const, text: status, color: "bg-orange-500" };
+    if (status === "VIP")
+      return {
+        variant: "default" as const,
+        text: status,
+        color: "bg-purple-500",
+      };
+    if (status === "Fast kunde")
+      return {
+        variant: "secondary" as const,
+        text: status,
+        color: "bg-blue-500",
+      };
+    if (status === "Eksisterende kunde")
+      return {
+        variant: "outline" as const,
+        text: status,
+        color: "bg-green-500",
+      };
+    return {
+      variant: "default" as const,
+      text: status,
+      color: "bg-orange-500",
+    };
   };
 
   const statusBadge = getStatusBadge(customer.status);
@@ -199,7 +265,12 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
     address: customer.address,
     totalBookings: customer.totalBookings,
     totalValue: customer.totalSpent,
-    status: customer.status === "VIP" ? "vip" : customer.status === "Fast kunde" ? "active" : "inactive",
+    status:
+      customer.status === "VIP"
+        ? "vip"
+        : customer.status === "Fast kunde"
+          ? "active"
+          : "inactive",
     lastBooking: customer.lastContact,
   };
 
@@ -210,7 +281,8 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
           <div>
             <h3 className="font-semibold text-lg">👤 Customer Profile</h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {customer.totalBookings} booking{customer.totalBookings !== 1 ? 's' : ''} • {customer.since}
+              {customer.totalBookings} booking
+              {customer.totalBookings !== 1 ? "s" : ""} • {customer.since}
             </p>
           </div>
           <Badge variant={statusBadge.variant} className={statusBadge.color}>
@@ -221,8 +293,12 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
         <div className="space-y-2 text-sm">
           <div>
             <div className="font-semibold">{customer.name}</div>
-            <div className="text-xs text-muted-foreground">{customer.email}</div>
-            <div className="text-xs text-muted-foreground">{customer.phone}</div>
+            <div className="text-xs text-muted-foreground">
+              {customer.email}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {customer.phone}
+            </div>
           </div>
           <div className="text-muted-foreground">{customer.address}</div>
         </div>
@@ -244,11 +320,15 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Total værdi:</span>
-            <span className="font-medium">{customer.totalValue.toLocaleString('da-DK')} kr</span>
+            <span className="font-medium">
+              {customer.totalValue.toLocaleString("da-DK")} kr
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Gennemsnit:</span>
-            <span className="font-medium">{customer.avgBooking.toLocaleString('da-DK')} kr</span>
+            <span className="font-medium">
+              {customer.avgBooking.toLocaleString("da-DK")} kr
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Rating:</span>
@@ -260,7 +340,9 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
           {customer.unpaidInvoices > 0 && (
             <div className="flex justify-between">
               <span className="text-red-600">Ubetalte fakturaer:</span>
-              <span className="font-medium text-red-600">{customer.unpaidInvoices}</span>
+              <span className="font-medium text-red-600">
+                {customer.unpaidInvoices}
+              </span>
             </div>
           )}
         </div>
@@ -273,7 +355,7 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
         </div>
         <div className="space-y-2">
           {recentBookings.length > 0 ? (
-            recentBookings.map((item) => (
+            recentBookings.map(item => (
               <div
                 key={item.id}
                 className="flex items-center justify-between p-2 rounded-md bg-muted/30 text-sm"
@@ -282,36 +364,56 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
                   <div className="flex items-center gap-2">
                     <div className="font-medium">{item.description}</div>
                     <Badge variant="outline" className="text-xs">
-                      {item.type === 'booking' ? '📅 Booking' : '💰 Faktura'}
+                      {item.type === "booking" ? "📅 Booking" : "💰 Faktura"}
                     </Badge>
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {new Date(item.date).toLocaleDateString('da-DK')}
+                    {new Date(item.date).toLocaleDateString("da-DK")}
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-medium">{Math.round(item.price).toLocaleString('da-DK')} kr</div>
+                  <div className="font-medium">
+                    {Math.round(item.price).toLocaleString("da-DK")} kr
+                  </div>
                   <div className="flex items-center gap-1 justify-end">
                     {item.paid && (
                       <Badge variant="secondary" className="text-xs">
                         ✅ Betalt
                       </Badge>
                     )}
-                    {!item.paid && item.type === 'invoice' && (
+                    {!item.paid && item.type === "invoice" && (
                       <Badge variant="destructive" className="text-xs">
                         ⏳ Ubetalt
                       </Badge>
                     )}
-                    {item.type === 'booking' && item.calendarUrl && (
-                      <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" asChild>
-                        <a href={item.calendarUrl} target="_blank" rel="noopener noreferrer">
+                    {item.type === "booking" && item.calendarUrl && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs"
+                        asChild
+                      >
+                        <a
+                          href={item.calendarUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           Åbn
                         </a>
                       </Button>
                     )}
-                    {item.type === 'invoice' && item.downloadUrl && (
-                      <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" asChild>
-                        <a href={item.downloadUrl} target="_blank" rel="noopener noreferrer">
+                    {item.type === "invoice" && item.downloadUrl && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs"
+                        asChild
+                      >
+                        <a
+                          href={item.downloadUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           PDF
                         </a>
                       </Button>
@@ -345,7 +447,7 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
         onAction={async (actionId: string, data: any) => {
           // Handle smart actions
           console.log("Smart action executed:", actionId, data);
-          
+
           switch (actionId) {
             case "sendEmail":
               // Send email to customer

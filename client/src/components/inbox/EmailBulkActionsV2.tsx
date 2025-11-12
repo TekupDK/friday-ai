@@ -1,6 +1,6 @@
 /**
  * EmailBulkActionsV2 - Modular Bulk Actions Component
- * 
+ *
  * Extracted from EmailTab for better separation of concerns.
  * Handles bulk operations like mark as read/unread, archive, delete.
  */
@@ -25,9 +25,9 @@ import {
   Trash2,
 } from "lucide-react";
 
-export type BulkAction = 
+export type BulkAction =
   | "markAsRead"
-  | "markAsUnread" 
+  | "markAsUnread"
   | "archive"
   | "delete"
   | "addLabel"
@@ -52,10 +52,13 @@ export default function EmailBulkActionsV2({
   const selectedCount = selectedEmails.size;
 
   // Handle bulk action with safety checks
-  const handleBulkAction = useCallback((action: BulkAction, params?: any) => {
-    if (selectedCount === 0 || disabled || isLoading) return;
-    onBulkAction(action, params);
-  }, [selectedCount, disabled, isLoading, onBulkAction]);
+  const handleBulkAction = useCallback(
+    (action: BulkAction, params?: any) => {
+      if (selectedCount === 0 || disabled || isLoading) return;
+      onBulkAction(action, params);
+    },
+    [selectedCount, disabled, isLoading, onBulkAction]
+  );
 
   // Clear selection helper
   const handleClearSelection = useCallback(() => {
@@ -73,9 +76,9 @@ export default function EmailBulkActionsV2({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Badge variant="secondary" className="text-sm">
-            {selectedCount} valg{selectedCount !== 1 ? 't' : 'et'}
+            {selectedCount} valg{selectedCount !== 1 ? "t" : "et"}
           </Badge>
-          
+
           <div className="flex items-center gap-1">
             <Button
               size="sm"
@@ -130,7 +133,7 @@ export default function EmailBulkActionsV2({
           >
             Annuller
           </Button>
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

@@ -65,14 +65,17 @@ Status: [~] Ready to start (plan complete)
 ## Open Issues / Blockers
 
 ### 🔴 CRITICAL
+
 - [ ] **Memory Leak:** CSV export doesn't revoke blob URLs (causes memory buildup)
 - [ ] **Type Safety:** All invoice objects use `any` type (no compile-time checks)
 - [ ] **Race Condition:** Fast clicking "Analyze" on different invoices shows wrong results
 
 ### 🟠 HIGH
+
 - [ ] **Database Schema:** Supabase `customer_invoices` table lacks `invoiceNo`, `paidAmount`, `entryDate`, `paidDate` columns — causes `NaN` balances and missing invoice numbers
 
 ### 🟡 MEDIUM
+
 - [ ] **Performance:** Search input has no debouncing (100+ invoices = slow typing)
 - [ ] **Accessibility:** No keyboard navigation or ARIA labels (WCAG non-compliant)
 - [ ] **State Management:** 6 separate states for analysis modal (should use useReducer)

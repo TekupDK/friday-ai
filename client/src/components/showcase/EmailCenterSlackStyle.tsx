@@ -7,9 +7,17 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { 
-  MessageSquare, Reply, MoreHorizontal, Smile, Paperclip,
-  AtSign, Hash, Send, ThumbsUp, Check
+import {
+  MessageSquare,
+  Reply,
+  MoreHorizontal,
+  Smile,
+  Paperclip,
+  AtSign,
+  Hash,
+  Send,
+  ThumbsUp,
+  Check,
 } from "lucide-react";
 
 /**
@@ -43,42 +51,67 @@ interface Reply {
 
 const threads: Message[] = [
   {
-    id: '1',
-    from: 'Matilde Skinneholm',
-    avatar: 'MS',
-    content: 'Hej – vi vil gerne have et tilbud på rengøring for vores kontor i København. Vi er ca. 250 m² og ønsker ugentlig rengøring. Kan I sende et tilbud?',
-    time: '22:08',
+    id: "1",
+    from: "Matilde Skinneholm",
+    avatar: "MS",
+    content:
+      "Hej – vi vil gerne have et tilbud på rengøring for vores kontor i København. Vi er ca. 250 m² og ønsker ugentlig rengøring. Kan I sende et tilbud?",
+    time: "22:08",
     replies: [
-      { id: 'r1', from: 'You', avatar: 'ME', content: 'Hej Matilde! Tak for din henvendelse. Jeg sender et tilbud i løbet af dagen.', time: '22:15' },
-      { id: 'r2', from: 'Matilde Skinneholm', avatar: 'MS', content: 'Perfekt, tak!', time: '22:18' }
+      {
+        id: "r1",
+        from: "You",
+        avatar: "ME",
+        content:
+          "Hej Matilde! Tak for din henvendelse. Jeg sender et tilbud i løbet af dagen.",
+        time: "22:15",
+      },
+      {
+        id: "r2",
+        from: "Matilde Skinneholm",
+        avatar: "MS",
+        content: "Perfekt, tak!",
+        time: "22:18",
+      },
     ],
-    reactions: [{ emoji: '👍', count: 2 }, { emoji: '✅', count: 1 }],
+    reactions: [
+      { emoji: "👍", count: 2 },
+      { emoji: "✅", count: 1 },
+    ],
     hasAttachment: false,
-    mentions: ['@you']
+    mentions: ["@you"],
   },
   {
-    id: '2',
-    from: 'Hanne Andersen',
-    avatar: 'HA',
-    content: 'Jeg følger op på vores tidligere mail vedrørende tilbuddet. Har I haft mulighed for at se på det?',
-    time: '17:39',
+    id: "2",
+    from: "Hanne Andersen",
+    avatar: "HA",
+    content:
+      "Jeg følger op på vores tidligere mail vedrørende tilbuddet. Har I haft mulighed for at se på det?",
+    time: "17:39",
     replies: [],
     reactions: [],
     hasAttachment: false,
-    mentions: []
+    mentions: [],
   },
   {
-    id: '3',
-    from: 'Rendetalje.dk',
-    avatar: 'RD',
-    content: 'Vi kan tirsdag eller torsdag denne uge. Hvad passer jer bedst? Vi er fleksible med tidspunkter.',
-    time: '20:53',
+    id: "3",
+    from: "Rendetalje.dk",
+    avatar: "RD",
+    content:
+      "Vi kan tirsdag eller torsdag denne uge. Hvad passer jer bedst? Vi er fleksible med tidspunkter.",
+    time: "20:53",
     replies: [
-      { id: 'r3', from: 'You', avatar: 'ME', content: 'Torsdag passer perfekt. Kl. 10?', time: '21:10' }
+      {
+        id: "r3",
+        from: "You",
+        avatar: "ME",
+        content: "Torsdag passer perfekt. Kl. 10?",
+        time: "21:10",
+      },
     ],
-    reactions: [{ emoji: '📅', count: 1 }],
+    reactions: [{ emoji: "📅", count: 1 }],
     hasAttachment: true,
-    mentions: []
+    mentions: [],
   },
 ];
 
@@ -94,7 +127,9 @@ export function EmailCenterSlackStyle() {
           <div className="w-[240px] border-r bg-muted/20">
             <div className="p-4 border-b">
               <h3 className="font-bold text-lg">Email Threads</h3>
-              <p className="text-xs text-muted-foreground mt-1">Conversation view</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Conversation view
+              </p>
             </div>
             <ScrollArea className="h-[calc(100%-73px)]">
               <div className="p-2 space-y-1">
@@ -104,7 +139,9 @@ export function EmailCenterSlackStyle() {
                 <button className="w-full flex items-center gap-2 px-3 py-2 rounded hover:bg-accent/50 text-sm">
                   <Hash className="h-4 w-4" />
                   <span>inbox</span>
-                  <Badge variant="secondary" className="ml-auto text-xs">3</Badge>
+                  <Badge variant="secondary" className="ml-auto text-xs">
+                    3
+                  </Badge>
                 </button>
                 <button className="w-full flex items-center gap-2 px-3 py-2 rounded hover:bg-accent/50 text-sm">
                   <Hash className="h-4 w-4" />
@@ -113,7 +150,9 @@ export function EmailCenterSlackStyle() {
                 <button className="w-full flex items-center gap-2 px-3 py-2 rounded hover:bg-accent/50 text-sm">
                   <Hash className="h-4 w-4" />
                   <span>important</span>
-                  <Badge variant="secondary" className="ml-auto text-xs">2</Badge>
+                  <Badge variant="secondary" className="ml-auto text-xs">
+                    2
+                  </Badge>
                 </button>
 
                 <Separator className="my-2" />
@@ -122,16 +161,23 @@ export function EmailCenterSlackStyle() {
                   Direct Messages
                 </div>
                 {threads.map(thread => (
-                  <button 
+                  <button
                     key={thread.id}
                     className="w-full flex items-center gap-2 px-3 py-2 rounded hover:bg-accent/50 text-sm"
                   >
                     <Avatar className="h-6 w-6">
-                      <AvatarFallback className="text-xs">{thread.avatar}</AvatarFallback>
+                      <AvatarFallback className="text-xs">
+                        {thread.avatar}
+                      </AvatarFallback>
                     </Avatar>
-                    <span className="truncate flex-1 text-left">{thread.from}</span>
+                    <span className="truncate flex-1 text-left">
+                      {thread.from}
+                    </span>
                     {thread.replies.length > 0 && (
-                      <Badge variant="destructive" className="h-4 min-w-[16px] text-xs px-1">
+                      <Badge
+                        variant="destructive"
+                        className="h-4 min-w-[16px] text-xs px-1"
+                      >
                         {thread.replies.length}
                       </Badge>
                     )}
@@ -159,7 +205,7 @@ export function EmailCenterSlackStyle() {
             <ScrollArea className="flex-1 px-6 py-4">
               <div className="space-y-4">
                 {threads.map(thread => (
-                  <div 
+                  <div
                     key={thread.id}
                     onMouseEnter={() => setHoveredMsg(thread.id)}
                     onMouseLeave={() => setHoveredMsg(null)}
@@ -174,8 +220,12 @@ export function EmailCenterSlackStyle() {
                       <div className="flex-1 min-w-0">
                         {/* Header */}
                         <div className="flex items-baseline gap-2 mb-1">
-                          <span className="font-semibold text-sm">{thread.from}</span>
-                          <span className="text-xs text-muted-foreground">{thread.time}</span>
+                          <span className="font-semibold text-sm">
+                            {thread.from}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {thread.time}
+                          </span>
                         </div>
 
                         {/* Content */}
@@ -194,7 +244,9 @@ export function EmailCenterSlackStyle() {
                           <div className="mt-2 p-2 rounded border bg-muted/30 flex items-center gap-2 text-xs w-fit">
                             <Paperclip className="h-3 w-3" />
                             <span>Plantegning.pdf</span>
-                            <span className="text-muted-foreground">2.4 MB</span>
+                            <span className="text-muted-foreground">
+                              2.4 MB
+                            </span>
                           </div>
                         )}
 
@@ -202,12 +254,14 @@ export function EmailCenterSlackStyle() {
                         {thread.reactions.length > 0 && (
                           <div className="flex gap-1 mt-2">
                             {thread.reactions.map((reaction, idx) => (
-                              <button 
+                              <button
                                 key={idx}
                                 className="flex items-center gap-1 px-2 py-0.5 rounded-full border bg-background hover:bg-accent/50 text-xs transition-colors"
                               >
                                 <span>{reaction.emoji}</span>
-                                <span className="font-medium">{reaction.count}</span>
+                                <span className="font-medium">
+                                  {reaction.count}
+                                </span>
                               </button>
                             ))}
                             <button className="h-6 w-6 rounded-full border hover:bg-accent/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -217,26 +271,36 @@ export function EmailCenterSlackStyle() {
                         )}
 
                         {/* Thread Replies Summary */}
-                        {thread.replies.length > 0 && expandedThread !== thread.id && (
-                          <button
-                            onClick={() => setExpandedThread(thread.id)}
-                            className="flex items-center gap-2 mt-2 px-3 py-2 rounded-md border bg-background hover:bg-accent/50 text-sm transition-colors"
-                          >
-                            <div className="flex -space-x-2">
-                              {thread.replies.slice(0, 3).map(reply => (
-                                <Avatar key={reply.id} className="h-6 w-6 border-2 border-background">
-                                  <AvatarFallback className="text-xs">{reply.avatar}</AvatarFallback>
-                                </Avatar>
-                              ))}
-                            </div>
-                            <span className="text-blue-600 font-medium">
-                              {thread.replies.length} {thread.replies.length === 1 ? 'reply' : 'replies'}
-                            </span>
-                            <span className="text-muted-foreground text-xs">
-                              Last reply {thread.replies[thread.replies.length - 1].time}
-                            </span>
-                          </button>
-                        )}
+                        {thread.replies.length > 0 &&
+                          expandedThread !== thread.id && (
+                            <button
+                              onClick={() => setExpandedThread(thread.id)}
+                              className="flex items-center gap-2 mt-2 px-3 py-2 rounded-md border bg-background hover:bg-accent/50 text-sm transition-colors"
+                            >
+                              <div className="flex -space-x-2">
+                                {thread.replies.slice(0, 3).map(reply => (
+                                  <Avatar
+                                    key={reply.id}
+                                    className="h-6 w-6 border-2 border-background"
+                                  >
+                                    <AvatarFallback className="text-xs">
+                                      {reply.avatar}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                ))}
+                              </div>
+                              <span className="text-blue-600 font-medium">
+                                {thread.replies.length}{" "}
+                                {thread.replies.length === 1
+                                  ? "reply"
+                                  : "replies"}
+                              </span>
+                              <span className="text-muted-foreground text-xs">
+                                Last reply{" "}
+                                {thread.replies[thread.replies.length - 1].time}
+                              </span>
+                            </button>
+                          )}
 
                         {/* Expanded Replies */}
                         {expandedThread === thread.id && (
@@ -244,12 +308,18 @@ export function EmailCenterSlackStyle() {
                             {thread.replies.map(reply => (
                               <div key={reply.id} className="flex gap-2">
                                 <Avatar className="h-7 w-7 shrink-0">
-                                  <AvatarFallback className="text-xs">{reply.avatar}</AvatarFallback>
+                                  <AvatarFallback className="text-xs">
+                                    {reply.avatar}
+                                  </AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1">
                                   <div className="flex items-baseline gap-2 mb-1">
-                                    <span className="font-semibold text-sm">{reply.from}</span>
-                                    <span className="text-xs text-muted-foreground">{reply.time}</span>
+                                    <span className="font-semibold text-sm">
+                                      {reply.from}
+                                    </span>
+                                    <span className="text-xs text-muted-foreground">
+                                      {reply.time}
+                                    </span>
                                   </div>
                                   <div className="text-sm">{reply.content}</div>
                                 </div>
@@ -267,13 +337,25 @@ export function EmailCenterSlackStyle() {
                         {/* Quick Actions (on hover) */}
                         {hoveredMsg === thread.id && (
                           <div className="absolute right-4 top-2 flex gap-1 bg-background border rounded-lg shadow-sm p-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                            >
                               <ThumbsUp className="h-3.5 w-3.5" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                            >
                               <Reply className="h-3.5 w-3.5" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 w-7 p-0"
+                            >
                               <MoreHorizontal className="h-3.5 w-3.5" />
                             </Button>
                           </div>
@@ -288,8 +370,8 @@ export function EmailCenterSlackStyle() {
             {/* Message Input */}
             <div className="border-t p-4">
               <div className="flex items-center gap-2 p-2 border rounded-lg">
-                <Input 
-                  placeholder="Reply to #inbox..." 
+                <Input
+                  placeholder="Reply to #inbox..."
                   className="border-0 focus-visible:ring-0 shadow-none"
                 />
                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0">

@@ -24,14 +24,22 @@ export function PropsTable({ items, dense }: PropsTableProps) {
           <div className="col-span-3">Default</div>
         </div>
         <div className="divide-y">
-          {items.map((p) => (
+          {items.map(p => (
             <div key={p.name} className="grid grid-cols-12 py-2 gap-2">
               <div className="col-span-3 font-mono text-sm">{p.name}</div>
-              <div className="col-span-4 text-xs text-muted-foreground break-words">{p.type}</div>
-              <div className="col-span-2 text-xs">{p.required ? "Yes" : "No"}</div>
-              <div className="col-span-3 text-xs text-muted-foreground">{p.defaultValue || "-"}</div>
+              <div className="col-span-4 text-xs text-muted-foreground break-words">
+                {p.type}
+              </div>
+              <div className="col-span-2 text-xs">
+                {p.required ? "Yes" : "No"}
+              </div>
+              <div className="col-span-3 text-xs text-muted-foreground">
+                {p.defaultValue || "-"}
+              </div>
               {p.description && (
-                <div className="col-span-12 text-[11px] text-muted-foreground/80">{p.description}</div>
+                <div className="col-span-12 text-[11px] text-muted-foreground/80">
+                  {p.description}
+                </div>
               )}
             </div>
           ))}

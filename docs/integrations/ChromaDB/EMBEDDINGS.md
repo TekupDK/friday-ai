@@ -14,6 +14,7 @@ The embeddings service generates vector representations of text for semantic sea
 ## 🔧 Configuration
 
 ### Model Used
+
 ```
 openai/text-embedding-3-small
 - Dimensions: 1536
@@ -22,11 +23,13 @@ openai/text-embedding-3-small
 ```
 
 ### API Endpoint
+
 ```
 https://openrouter.ai/api/v1/embeddings
 ```
 
 ### Authentication
+
 Uses existing `OPENROUTER_API_KEY` from environment.
 
 ---
@@ -38,13 +41,14 @@ Uses existing `OPENROUTER_API_KEY` from environment.
 Generate embedding for a single text.
 
 ```typescript
-import { generateEmbedding } from '../integrations/chromadb';
+import { generateEmbedding } from "../integrations/chromadb";
 
-const embedding = await generateEmbedding('Hello World');
+const embedding = await generateEmbedding("Hello World");
 console.log(embedding.length); // 1536
 ```
 
 **Features:**
+
 - ✅ Caching (avoids duplicate API calls)
 - ✅ Fallback to simple hash if API fails
 - ✅ Error handling
@@ -56,14 +60,15 @@ console.log(embedding.length); // 1536
 Generate embeddings for multiple texts in batch (more efficient).
 
 ```typescript
-import { generateEmbeddings } from '../integrations/chromadb';
+import { generateEmbeddings } from "../integrations/chromadb";
 
-const texts = ['Text 1', 'Text 2', 'Text 3'];
+const texts = ["Text 1", "Text 2", "Text 3"];
 const embeddings = await generateEmbeddings(texts);
 console.log(embeddings.length); // 3
 ```
 
 **Features:**
+
 - ✅ Batch processing (single API call)
 - ✅ Partial caching
 - ✅ More efficient than multiple single calls
@@ -75,10 +80,10 @@ console.log(embeddings.length); // 3
 Calculate similarity between two embeddings.
 
 ```typescript
-import { generateEmbedding, cosineSimilarity } from '../integrations/chromadb';
+import { generateEmbedding, cosineSimilarity } from "../integrations/chromadb";
 
-const emb1 = await generateEmbedding('Hello World');
-const emb2 = await generateEmbedding('Hi World');
+const emb1 = await generateEmbedding("Hello World");
+const emb2 = await generateEmbedding("Hi World");
 
 const similarity = cosineSimilarity(emb1, emb2);
 console.log(similarity); // 0.95 (very similar)
@@ -87,6 +92,7 @@ console.log(similarity); // 0.95 (very similar)
 **Returns:** Value between -1 (opposite) and 1 (identical)
 
 **Interpretation:**
+
 - `> 0.9`: Nearly identical
 - `0.7-0.9`: Very similar (likely duplicate)
 - `0.5-0.7`: Somewhat similar
@@ -99,7 +105,7 @@ console.log(similarity); // 0.95 (very similar)
 Clear the embedding cache.
 
 ```typescript
-import { clearEmbeddingCache } from '../integrations/chromadb';
+import { clearEmbeddingCache } from "../integrations/chromadb";
 
 clearEmbeddingCache();
 ```
@@ -111,7 +117,7 @@ clearEmbeddingCache();
 Get cache statistics.
 
 ```typescript
-import { getEmbeddingCacheStats } from '../integrations/chromadb';
+import { getEmbeddingCacheStats } from "../integrations/chromadb";
 
 const stats = getEmbeddingCacheStats();
 console.log(stats); // { size: 42, maxSize: 1000 }
@@ -153,25 +159,23 @@ Similarity 1-3: 0.2156 (should be LOW - different topic)
 ### 1. Lead Deduplication
 
 ```typescript
-import { generateEmbedding, cosineSimilarity } from '../integrations/chromadb';
+import { generateEmbedding, cosineSimilarity } from "../integrations/chromadb";
 
 async function isDuplicateLead(newLead, existingLeads) {
-  const newEmbedding = await generateEmbedding(
-    formatLeadForEmbedding(newLead)
-  );
-  
+  const newEmbedding = await generateEmbedding(formatLeadForEmbedding(newLead));
+
   for (const existing of existingLeads) {
     const existingEmbedding = await generateEmbedding(
       formatLeadForEmbedding(existing)
     );
-    
+
     const similarity = cosineSimilarity(newEmbedding, existingEmbedding);
-    
+
     if (similarity > 0.85) {
       return true; // Likely duplicate
     }
   }
-  
+
   return false;
 }
 ```
@@ -179,15 +183,15 @@ async function isDuplicateLead(newLead, existingLeads) {
 ### 2. Email Context Retrieval
 
 ```typescript
-import { searchSimilar } from '../integrations/chromadb';
+import { searchSimilar } from "../integrations/chromadb";
 
 async function getRelatedEmails(currentEmail) {
   const results = await searchSimilar(
-    'friday_emails',
+    "friday_emails",
     formatEmailForEmbedding(currentEmail),
     5
   );
-  
+
   return results?.documents || [];
 }
 ```
@@ -195,16 +199,12 @@ async function getRelatedEmails(currentEmail) {
 ### 3. Document Search (RAG)
 
 ```typescript
-import { searchSimilar } from '../integrations/chromadb';
+import { searchSimilar } from "../integrations/chromadb";
 
 async function findRelevantDocs(question) {
-  const results = await searchSimilar(
-    'friday_docs',
-    question,
-    3
-  );
-  
-  return results?.documents.join('\n\n');
+  const results = await searchSimilar("friday_docs", question, 3);
+
+  return results?.documents.join("\n\n");
 }
 ```
 
@@ -245,13 +245,15 @@ Similarity calc:     <1ms
 ### Problem: "No OpenRouter API key configured"
 
 **Solution:** Ensure `.env.dev` has:
+
 ```bash
 OPENROUTER_API_KEY=sk-or-v1-...
 ```
 
 ### Problem: API call fails
 
-**Solution:** 
+**Solution:**
+
 - Check API key is valid
 - Check OpenRouter status
 - Fallback to simple hash automatically kicks in
@@ -259,6 +261,7 @@ OPENROUTER_API_KEY=sk-or-v1-...
 ### Problem: Slow performance
 
 **Solutions:**
+
 - Use batch API for multiple texts
 - Check network latency
 - Consider caching strategy
@@ -267,6 +270,7 @@ OPENROUTER_API_KEY=sk-or-v1-...
 ### Problem: Unexpected similarity scores
 
 **Solutions:**
+
 - Check text preprocessing
 - Ensure embeddings are from same model
 - Test with known similar/different pairs
@@ -277,6 +281,7 @@ OPENROUTER_API_KEY=sk-or-v1-...
 ## 📊 Cost Estimation
 
 ### OpenRouter Pricing
+
 ```
 Model: openai/text-embedding-3-small
 Cost: $0.00002 per 1K tokens
@@ -301,15 +306,15 @@ If cost or privacy is a concern, consider local embeddings:
 
 ```typescript
 // Install: pnpm add @xenova/transformers
-import { pipeline } from '@xenova/transformers';
+import { pipeline } from "@xenova/transformers";
 
 const extractor = await pipeline(
-  'feature-extraction',
-  'Xenova/all-MiniLM-L6-v2'
+  "feature-extraction",
+  "Xenova/all-MiniLM-L6-v2"
 );
 
-const output = await extractor('Hello World', {
-  pooling: 'mean',
+const output = await extractor("Hello World", {
+  pooling: "mean",
   normalize: true,
 });
 
@@ -317,11 +322,13 @@ const embedding = Array.from(output.data); // 384 dimensions
 ```
 
 **Pros:**
+
 - 100% free
 - No API calls
 - Complete privacy
 
 **Cons:**
+
 - Slower (~500ms per embedding)
 - Lower quality than OpenAI
 - Needs model download (~100MB)

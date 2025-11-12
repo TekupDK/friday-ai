@@ -29,7 +29,14 @@ export async function createStreamingResponse(
   options: StreamingOptions,
   onEvent: (event: StreamEvent) => void
 ) {
-  const { conversationId, userId, messages, context, taskType = "chat", correlationId } = options;
+  const {
+    conversationId,
+    userId,
+    messages,
+    context,
+    taskType = "chat",
+    correlationId,
+  } = options;
   const flags = getFeatureFlags(userId);
 
   try {
@@ -46,17 +53,20 @@ export async function createStreamingResponse(
 
     // Build messages with context
     const fullMessages = [...messages];
-    
+
     if (context) {
       const contextString = Object.entries(context)
-        .filter(([_, value]) => value && (Array.isArray(value) ? value.length > 0 : true))
+        .filter(
+          ([_, value]) =>
+            value && (Array.isArray(value) ? value.length > 0 : true)
+        )
         .map(([key, value]) => `${key.toUpperCase()}: ${JSON.stringify(value)}`)
-        .join('\n');
-      
+        .join("\n");
+
       if (contextString) {
         fullMessages.unshift({
           role: "system",
-          content: `<CONTEXT>\n${contextString}\n</CONTEXT>`
+          content: `<CONTEXT>\n${contextString}\n</CONTEXT>`,
         });
       }
     }
@@ -68,14 +78,14 @@ export async function createStreamingResponse(
 
     let accumulatedContent = "";
     let hasContent = false;
-    
+
     // Stream chunks to client
     for await (const chunk of stream) {
       if (!hasContent) {
         hasContent = true;
       }
       accumulatedContent += chunk;
-      
+
       onEvent({
         type: "chunk",
         data: {
@@ -96,11 +106,10 @@ export async function createStreamingResponse(
           promptTokens: 0,
           completionTokens: accumulatedContent.length,
           totalTokens: accumulatedContent.length,
-        }
+        },
       },
       timestamp: new Date().toISOString(),
     });
-
   } catch (error) {
     console.error("Streaming error:", error);
     onEvent({
@@ -120,20 +129,22 @@ export async function createStreamingResponse(
 export function createSSEHandler(req: any, res: any) {
   // Set SSE headers
   res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Cache-Control',
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache",
+    Connection: "keep-alive",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Cache-Control",
   });
 
   // Send initial connection event
-  res.write('event: connected\n');
-  res.write(`data: ${JSON.stringify({ type: 'connected', timestamp: new Date().toISOString() })}\n\n`);
+  res.write("event: connected\n");
+  res.write(
+    `data: ${JSON.stringify({ type: "connected", timestamp: new Date().toISOString() })}\n\n`
+  );
 
   // Handle client disconnect
-  req.on('close', () => {
-    console.log('SSE client disconnected');
+  req.on("close", () => {
+    console.log("SSE client disconnected");
   });
 
   return res;
@@ -157,7 +168,7 @@ export async function createStreamingResponseWithRouting(
 ) {
   // Import model router to avoid circular dependency
   const { invokeLLMWithRouting } = await import("../model-router");
-  
+
   const { taskType = "chat", ...restOptions } = options;
 
   try {
@@ -182,9 +193,9 @@ export async function createStreamingResponseWithRouting(
     // Handle both streaming and non-streaming responses
     if (Symbol.asyncIterator in stream) {
       for await (const chunk of stream) {
-        if (typeof chunk === 'string') {
+        if (typeof chunk === "string") {
           accumulatedContent += chunk;
-          
+
           onEvent({
             type: "chunk",
             data: {
@@ -197,18 +208,25 @@ export async function createStreamingResponseWithRouting(
       }
     } else {
       // Non-streaming response - treat as single chunk
-      let content = '';
-      if (typeof stream === 'object' && stream !== null && 'choices' in stream) {
+      let content = "";
+      if (
+        typeof stream === "object" &&
+        stream !== null &&
+        "choices" in stream
+      ) {
         const messageContent = stream.choices[0]?.message?.content;
-        content = typeof messageContent === 'string' ? messageContent : 
-                  Array.isArray(messageContent) ? JSON.stringify(messageContent) :
-                  String(messageContent || '');
+        content =
+          typeof messageContent === "string"
+            ? messageContent
+            : Array.isArray(messageContent)
+              ? JSON.stringify(messageContent)
+              : String(messageContent || "");
       } else {
         content = String(stream);
       }
-      
+
       accumulatedContent = content;
-      
+
       onEvent({
         type: "chunk",
         data: {
@@ -227,7 +245,6 @@ export async function createStreamingResponseWithRouting(
       },
       timestamp: new Date().toISOString(),
     });
-
   } catch (error) {
     console.error("Streaming with routing error:", error);
     onEvent({

@@ -3,12 +3,12 @@
  * Tests context integration and optimistic updates
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
-import { useFridayChatSimple } from '../useFridayChatSimple';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { renderHook, waitFor } from "@testing-library/react";
+import { useFridayChatSimple } from "../useFridayChatSimple";
 
 // Mock tRPC
-vi.mock('@/lib/trpc', () => ({
+vi.mock("@/lib/trpc", () => ({
   trpc: {
     useUtils: vi.fn(() => ({
       chat: {
@@ -39,20 +39,20 @@ vi.mock('@/lib/trpc', () => ({
   },
 }));
 
-describe('useFridayChatSimple - Phase 2', () => {
+describe("useFridayChatSimple - Phase 2", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  describe('Context Integration', () => {
-    it('should send context with message', async () => {
+  describe("Context Integration", () => {
+    it("should send context with message", async () => {
       const mockMutateAsync = vi.fn().mockResolvedValue({});
       const mockContext = {
-        selectedEmails: ['email1', 'email2'],
-        searchQuery: 'test query',
+        selectedEmails: ["email1", "email2"],
+        searchQuery: "test query",
       };
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.chat.sendMessage.useMutation).mockReturnValue({
         mutateAsync: mockMutateAsync,
         isPending: false,
@@ -66,19 +66,19 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await result.current.sendMessage('Test message');
+      await result.current.sendMessage("Test message");
 
       expect(mockMutateAsync).toHaveBeenCalledWith({
         conversationId: 1,
-        content: 'Test message',
+        content: "Test message",
         context: mockContext,
       });
     });
 
-    it('should handle empty context', async () => {
+    it("should handle empty context", async () => {
       const mockMutateAsync = vi.fn().mockResolvedValue({});
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.chat.sendMessage.useMutation).mockReturnValue({
         mutateAsync: mockMutateAsync,
         isPending: false,
@@ -92,19 +92,19 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await result.current.sendMessage('Test');
+      await result.current.sendMessage("Test");
 
       expect(mockMutateAsync).toHaveBeenCalledWith({
         conversationId: 1,
-        content: 'Test',
+        content: "Test",
         context: {},
       });
     });
 
-    it('should handle undefined context', async () => {
+    it("should handle undefined context", async () => {
       const mockMutateAsync = vi.fn().mockResolvedValue({});
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.chat.sendMessage.useMutation).mockReturnValue({
         mutateAsync: mockMutateAsync,
         isPending: false,
@@ -118,26 +118,31 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await result.current.sendMessage('Test');
+      await result.current.sendMessage("Test");
 
       expect(mockMutateAsync).toHaveBeenCalledWith({
         conversationId: 1,
-        content: 'Test',
+        content: "Test",
         context: undefined,
       });
     });
   });
 
-  describe('Optimistic Updates', () => {
-    it('should optimistically add message before server response', async () => {
+  describe("Optimistic Updates", () => {
+    it("should optimistically add message before server response", async () => {
       const mockSetData = vi.fn();
       const mockGetData = vi.fn(() => ({
         messages: [
-          { id: 1, role: 'user', content: 'Old message', createdAt: '2025-01-01' },
+          {
+            id: 1,
+            role: "user",
+            content: "Old message",
+            createdAt: "2025-01-01",
+          },
         ],
       }));
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.useUtils).mockReturnValue({
         chat: {
           getMessages: {
@@ -163,16 +168,16 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await result.current.sendMessage('New message');
+      await result.current.sendMessage("New message");
 
       // Should have called setData to add optimistic message
       expect(mockSetData).toHaveBeenCalled();
     });
 
-    it('should cancel pending queries before optimistic update', async () => {
+    it("should cancel pending queries before optimistic update", async () => {
       const mockCancel = vi.fn();
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.useUtils).mockReturnValue({
         chat: {
           getMessages: {
@@ -198,18 +203,20 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await result.current.sendMessage('Test');
+      await result.current.sendMessage("Test");
 
       // Should cancel pending queries
       expect(mockCancel).toHaveBeenCalled();
     });
 
-    it('should rollback on error', async () => {
+    it("should rollback on error", async () => {
       const mockSetData = vi.fn();
-      const previousData = { messages: [{ id: 1, role: 'user', content: 'Old' }] };
+      const previousData = {
+        messages: [{ id: 1, role: "user", content: "Old" }],
+      };
       const mockGetData = vi.fn(() => previousData);
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.useUtils).mockReturnValue({
         chat: {
           getMessages: {
@@ -221,7 +228,7 @@ describe('useFridayChatSimple - Phase 2', () => {
         },
       } as any);
 
-      const mockError = new Error('Send failed');
+      const mockError = new Error("Send failed");
       const mockMutateAsync = vi.fn().mockRejectedValue(mockError);
       vi.mocked(trpc.chat.sendMessage.useMutation).mockReturnValue({
         mutateAsync: mockMutateAsync,
@@ -236,16 +243,18 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await expect(result.current.sendMessage('Test')).rejects.toThrow('Send failed');
+      await expect(result.current.sendMessage("Test")).rejects.toThrow(
+        "Send failed"
+      );
 
       // Should have called setData at least twice (optimistic + rollback)
       expect(mockSetData).toHaveBeenCalled();
     });
 
-    it('should invalidate after successful send', async () => {
+    it("should invalidate after successful send", async () => {
       const mockInvalidate = vi.fn();
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.useUtils).mockReturnValue({
         chat: {
           getMessages: {
@@ -271,23 +280,23 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await result.current.sendMessage('Test');
+      await result.current.sendMessage("Test");
 
       // Should invalidate to fetch AI response
       expect(mockInvalidate).toHaveBeenCalled();
     });
   });
 
-  describe('Integration', () => {
-    it('should handle context + optimistic updates together', async () => {
+  describe("Integration", () => {
+    it("should handle context + optimistic updates together", async () => {
       const mockContext = {
-        selectedEmails: ['email1'],
+        selectedEmails: ["email1"],
         hasEmails: true,
       };
       const mockSetData = vi.fn();
       const mockMutateAsync = vi.fn().mockResolvedValue({});
 
-      const { trpc } = await import('@/lib/trpc');
+      const { trpc } = await import("@/lib/trpc");
       vi.mocked(trpc.useUtils).mockReturnValue({
         chat: {
           getMessages: {
@@ -312,7 +321,7 @@ describe('useFridayChatSimple - Phase 2', () => {
         })
       );
 
-      await result.current.sendMessage('Test with context');
+      await result.current.sendMessage("Test with context");
 
       // Should send context
       expect(mockMutateAsync).toHaveBeenCalledWith(

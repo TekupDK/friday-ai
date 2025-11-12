@@ -3,21 +3,25 @@
  * Main client for interacting with LiteLLM proxy
  */
 
-import type { InvokeParams, InvokeResult } from '../../_core/llm';
-import { ENV } from '../../_core/env';
-import { LITELLM_DEFAULTS, LITELLM_ENDPOINTS, ERROR_MESSAGES } from './constants';
+import type { InvokeParams, InvokeResult } from "../../_core/llm";
+import { ENV } from "../../_core/env";
+import {
+  LITELLM_DEFAULTS,
+  LITELLM_ENDPOINTS,
+  ERROR_MESSAGES,
+} from "./constants";
 import {
   LiteLLMError,
   LiteLLMTimeoutError,
   LiteLLMNetworkError,
   LiteLLMProviderError,
-} from './errors';
+} from "./errors";
 import type {
   ChatCompletionRequest,
   ChatCompletionResponse,
   HealthCheckResponse,
   RequestOptions,
-} from './types';
+} from "./types";
 
 export class LiteLLMClient {
   private baseUrl: string;
@@ -37,11 +41,11 @@ export class LiteLLMClient {
    */
   async chatCompletion(
     params: InvokeParams,
-    options?: RequestOptions & { priority?: 'high' | 'medium' | 'low' }
+    options?: RequestOptions & { priority?: "high" | "medium" | "low" }
   ): Promise<InvokeResult> {
     const { messages, tools, toolChoice, tool_choice } = params;
     const model = options?.model || LITELLM_DEFAULTS.DEFAULT_MODEL;
-    const priority = options?.priority || 'medium';
+    const priority = options?.priority || "medium";
 
     const request: ChatCompletionRequest = {
       model,
@@ -56,27 +60,24 @@ export class LiteLLMClient {
     }
 
     // Use rate limiter for smart queuing
-    const { rateLimiter } = await import('./rate-limiter');
-    
+    const { rateLimiter } = await import("./rate-limiter");
+
     try {
-      const response = await rateLimiter.enqueue(
-        async () => {
-          return await this.makeRequest<ChatCompletionResponse>(
-            LITELLM_ENDPOINTS.CHAT,
-            {
-              method: 'POST',
-              body: JSON.stringify(request),
-            },
-            options?.timeout || this.timeout
-          );
-        },
-        priority
-      );
+      const response = await rateLimiter.enqueue(async () => {
+        return await this.makeRequest<ChatCompletionResponse>(
+          LITELLM_ENDPOINTS.CHAT,
+          {
+            method: "POST",
+            body: JSON.stringify(request),
+          },
+          options?.timeout || this.timeout
+        );
+      }, priority);
 
       return this.mapToInvokeResult(response);
     } catch (error) {
       // Log error for debugging
-      console.error('[LiteLLM] Chat completion error:', error);
+      console.error("[LiteLLM] Chat completion error:", error);
       throw error;
     }
   }
@@ -89,7 +90,7 @@ export class LiteLLMClient {
     try {
       const response = await this.makeRequest<HealthCheckResponse>(
         LITELLM_ENDPOINTS.HEALTH,
-        { method: 'GET' },
+        { method: "GET" },
         5000 // 5 second timeout for health check
       );
       return response.healthy_count >= 0;
@@ -113,7 +114,7 @@ export class LiteLLMClient {
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         ...options,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...options.headers,
         },
         signal: controller.signal,
@@ -137,10 +138,10 @@ export class LiteLLMClient {
       clearTimeout(timeoutId);
 
       if (error instanceof Error) {
-        if (error.name === 'AbortError') {
+        if (error.name === "AbortError") {
           throw new LiteLLMTimeoutError(ERROR_MESSAGES.TIMEOUT);
         }
-        if (error.message.includes('fetch')) {
+        if (error.message.includes("fetch")) {
           throw new LiteLLMNetworkError(ERROR_MESSAGES.NETWORK_ERROR, error);
         }
       }

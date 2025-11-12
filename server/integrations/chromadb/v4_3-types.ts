@@ -1,11 +1,11 @@
 /**
  * V4.3 Lead Interface Definitions
- * 
+ *
  * Complete 360° view of leads from Gmail → Calendar → Billy
  * with calculated metrics, pipeline stages, and customer value
  */
 
-import { LeadSource } from './v4_3-config';
+import { LeadSource } from "./v4_3-config";
 
 // ============================================================================
 // CORE DATA TIERS
@@ -62,8 +62,8 @@ export interface CalendarData {
       bookingNumber: number | null;
       hasComplaints: boolean;
       hasSpecialNeeds: boolean;
-      customerType: 'standard' | 'premium' | 'problematic' | 'unknown';
-      confidence: 'high' | 'medium' | 'low';
+      customerType: "standard" | "premium" | "problematic" | "unknown";
+      confidence: "high" | "medium" | "low";
     };
     notes: string | null;
   };
@@ -89,7 +89,7 @@ export interface GmailData {
 
 export interface PropertyMetrics {
   propertySize: number; // m²
-  propertySizeSource: 'billy' | 'gmail' | 'calendar' | 'unknown';
+  propertySizeSource: "billy" | "gmail" | "calendar" | "unknown";
   serviceType: string; // REN-001 to REN-005
   serviceTypeName: string; // Privatrengøring, etc.
 }
@@ -131,7 +131,7 @@ export interface QualityMetrics {
   hasCalendar: boolean;
   hasBilly: boolean;
   dataCompleteness: number; // 0-100%
-  linkingConfidence: 'high' | 'medium' | 'low';
+  linkingConfidence: "high" | "medium" | "low";
 }
 
 export interface CalculatedMetrics {
@@ -147,9 +147,29 @@ export interface CalculatedMetrics {
 // ============================================================================
 
 export interface PipelineStatus {
-  stage: 'spam' | 'inbox' | 'contacted' | 'calendar' | 'proposal' | 'won' | 'active' | 'lost';
+  stage:
+    | "spam"
+    | "inbox"
+    | "contacted"
+    | "calendar"
+    | "proposal"
+    | "won"
+    | "active"
+    | "lost";
   substage: string;
-  status: 'spam' | 'new' | 'contacted' | 'no_response' | 'dead' | 'quoted' | 'scheduled' | 'invoiced' | 'paid' | 'active_recurring' | 'lost' | 'cancelled';
+  status:
+    | "spam"
+    | "new"
+    | "contacted"
+    | "no_response"
+    | "dead"
+    | "quoted"
+    | "scheduled"
+    | "invoiced"
+    | "paid"
+    | "active_recurring"
+    | "lost"
+    | "cancelled";
   daysInStage?: number; // Days since last status change
   lastActivity?: string; // ISO timestamp of last action
 }
@@ -171,9 +191,15 @@ export interface CustomerValueMetrics {
   // V4.3.4: Active & Recurring tags
   isActive: boolean; // Lead from active period (Oct-Nov)
   isRecurring: boolean; // Customer has 2+ bookings
-  recurringFrequency: 'weekly' | 'biweekly' | 'triweekly' | 'monthly' | 'irregular' | null; // Pattern if recurring
+  recurringFrequency:
+    | "weekly"
+    | "biweekly"
+    | "triweekly"
+    | "monthly"
+    | "irregular"
+    | null; // Pattern if recurring
   // V4.3.5: AI Quality Signals
-  customerType?: 'standard' | 'premium' | 'problematic' | 'unknown';
+  customerType?: "standard" | "premium" | "problematic" | "unknown";
   hasComplaints?: boolean;
   hasSpecialNeeds?: boolean;
   specialRequirements?: string[];
@@ -186,8 +212,8 @@ export interface CustomerValueMetrics {
 export interface QuoteRecommendation {
   estimatedHours: number;
   estimatedPrice: number;
-  basis: 'actual_invoiced' | 'actual_avg' | 'estimated' | 'm2_rule' | 'default';
-  confidence: 'high' | 'medium' | 'low';
+  basis: "actual_invoiced" | "actual_avg" | "estimated" | "m2_rule" | "default";
+  confidence: "high" | "medium" | "low";
   breakdown: {
     hours: number;
     hourlyRate: number;
@@ -231,7 +257,7 @@ export interface V4_3_Lead {
 
 export interface V4_3_Dataset {
   metadata: {
-    version: '4.3';
+    version: "4.3";
     generated: string; // ISO timestamp
     timeWindow: {
       start: string;

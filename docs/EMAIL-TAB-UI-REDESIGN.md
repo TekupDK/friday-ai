@@ -3,6 +3,7 @@
 ## 📊 Nuværende UI Analyse
 
 ### Layout Struktur
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ [Sidebar]  │  [Search & Actions]                        │
@@ -21,6 +22,7 @@
 ```
 
 ### 🎯 Styrker (Bevar disse)
+
 1. ✅ **Sidebar navigation** - God folder/label struktur
 2. ✅ **Virtual scrolling** - Performance optimeret
 3. ✅ **Time-based sections** - "TODAY", "YESTERDAY", "LAST 7 DAYS"
@@ -31,12 +33,15 @@
 ### ❌ Problemer & Forbedringer
 
 #### 1. **Visual Density - For tæt pakket**
-**Problem**: 
+
+**Problem**:
+
 - Email cards er for tætte (py-2)
 - Svært at scanne hurtigt
 - Information overload med AI features synlige
 
 **Forslag**:
+
 ```tsx
 // Fra:
 className="py-2"
@@ -51,12 +56,15 @@ className="py-3"  // Mere luft mellem emails
 ```
 
 #### 2. **AI Features - For iøjnefaldende**
+
 **Problem**:
+
 - AI summary og labels altid synlige
 - Distraherer fra email scanning
 - "Needs Action" badge for aggressiv (destructive variant)
 
 **Forslag**:
+
 ```tsx
 // Collapse AI features by default
 <div className="group">
@@ -73,30 +81,29 @@ className="py-3"  // Mere luft mellem emails
 ```
 
 #### 3. **Email Card Design - Mangler hierarki**
+
 **Problem**:
+
 - Fra/Emne/Snippet samme visual vægt
 - Attachments ikke synlige
 - Dato ikke prominent
 
 **Forslag**:
+
 ```tsx
 <div className="flex items-start justify-between">
   {/* Left: Sender + Subject */}
   <div className="flex-1 min-w-0">
     <div className="flex items-baseline gap-2 mb-0.5">
-      <span className="font-semibold text-base">
-        {sender}
-      </span>
+      <span className="font-semibold text-base">{sender}</span>
       {unread && <span className="w-2 h-2 rounded-full bg-blue-500" />}
     </div>
     <h3 className="text-sm font-medium text-foreground/90 mb-1 line-clamp-1">
       {subject}
     </h3>
-    <p className="text-xs text-muted-foreground line-clamp-2">
-      {snippet}
-    </p>
+    <p className="text-xs text-muted-foreground line-clamp-2">{snippet}</p>
   </div>
-  
+
   {/* Right: Time + Icons */}
   <div className="flex flex-col items-end gap-1 ml-4">
     <time className="text-xs text-muted-foreground whitespace-nowrap">
@@ -111,12 +118,15 @@ className="py-3"  // Mere luft mellem emails
 ```
 
 #### 4. **Search Bar - Mangler prominence**
+
 **Problem**:
+
 - For lille i compact layout
 - Mangler keyboard focus indicator
 - Advanced search ikke synlig
 
 **Forslag**:
+
 ```tsx
 <div className="relative flex-1 max-w-2xl">
   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -129,11 +139,14 @@ className="py-3"  // Mere luft mellem emails
 ```
 
 #### 5. **Actions Bar - For mange knapper**
+
 **Problem**:
+
 - View toggle, Compose, Refresh, AI tools alle på samme niveau
 - Ikke tydeligt hvad der er primær action
 
 **Forslag**:
+
 ```tsx
 <div className="flex items-center gap-3">
   {/* Primary Action */}
@@ -141,7 +154,7 @@ className="py-3"  // Mere luft mellem emails
     <PenSquare className="w-4 h-4" />
     Ny Email
   </Button>
-  
+
   {/* Secondary Actions */}
   <div className="flex gap-1">
     <TooltipButton icon={RefreshCw} label="Opdater" />
@@ -152,11 +165,14 @@ className="py-3"  // Mere luft mellem emails
 ```
 
 #### 6. **Section Headers - For subtile**
+
 **Problem**:
+
 - "TODAY", "YESTERDAY" let at overse
 - Sticky positioning ikke tydeligt
 
 **Forslag**:
+
 ```tsx
 <div className="sticky top-0 z-10 py-2 px-4 bg-gradient-to-b from-background via-background to-transparent backdrop-blur-md border-b">
   <div className="flex items-center gap-2">
@@ -176,6 +192,7 @@ className="py-3"  // Mere luft mellem emails
 ## 🎨 Redesign Forslag
 
 ### Option 1: **Gmail-Inspired (Minimalistisk)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ [≡] Inbox (24)          [/ Søg...]         [+ Ny Email] │
@@ -195,6 +212,7 @@ className="py-3"  // Mere luft mellem emails
 ```
 
 ### Option 2: **Superhuman-Style (Keyboard First)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ Inbox                  Tryk ? for shortcuts    [Compose] │
@@ -215,6 +233,7 @@ className="py-3"  // Mere luft mellem emails
 ```
 
 ### Option 3: **Notion-Style (Moderne & Luftig)**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ 📧 Emails / Inbox                          [+ Ny email] │
@@ -245,18 +264,21 @@ className="py-3"  // Mere luft mellem emails
 ## 🚀 Anbefalet Implementering (Hybrid Approach)
 
 ### **Phase 1: Quick Wins (1-2 dage)**
+
 1. **Øg spacing** mellem emails (py-2 → py-3)
 2. **Collapse AI features** til hover state
 3. **Forbedre visual hierarki** i email cards
 4. **Større søgefelt** med keyboard shortcut (/)
 
 ### **Phase 2: Visual Refresh (3-5 dage)**
+
 1. **Ny email card design** med bedre typografi
 2. **Forbedrede section headers** med gradient + sticky
 3. **Hover actions** (archive, star, delete) ved hover
 4. **Better attachment indicators**
 
 ### **Phase 3: Advanced Features (1 uge)**
+
 1. **Inbox Zero celebration** animation
 2. **Smart categorization** badges (Work, Personal, Finance)
 3. **Quick preview** på hover (tooltip med første linjer)
@@ -267,26 +289,31 @@ className="py-3"  // Mere luft mellem emails
 ## 💡 Design Principper
 
 ### 1. **Scanability**
+
 - Tydelig visual hierarki
 - Sender > Subject > Snippet
 - God spacing mellem elements
 
 ### 2. **Progressive Disclosure**
+
 - Skjul kompleksitet til hover/focus
 - AI features kun når relevant
 - Context menu for advanced actions
 
 ### 3. **Keyboard First**
+
 - Alle actions skal være keyboard accessible
 - Visual feedback for keyboard navigation
 - Shortcuts synlige ved ?
 
 ### 4. **Performance**
+
 - Ingen re-renders ved hover
 - Virtual scrolling bevares
 - Lazy load AI features
 
 ### 5. **Accessibility**
+
 - ARIA labels overalt
 - Focus indicators
 - Screen reader friendly
@@ -298,6 +325,6 @@ className="py-3"  // Mere luft mellem emails
 **A) Gmail-Inspired** - Minimalistisk, professionel, kendt UI  
 **B) Superhuman-Style** - Keyboard-first, power user fokus  
 **C) Notion-Style** - Moderne, luftig, user-friendly  
-**D) Hybrid** - Kombiner det bedste fra alle  
+**D) Hybrid** - Kombiner det bedste fra alle
 
 Vil du have mig til at implementere en specifik direction?

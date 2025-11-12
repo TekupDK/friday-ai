@@ -20,14 +20,17 @@ interface ComponentSearchProps {
   onSelect: (componentId: string) => void;
 }
 
-export function ComponentSearch({ components, onSelect }: ComponentSearchProps) {
+export function ComponentSearch({
+  components,
+  onSelect,
+}: ComponentSearchProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        setOpen(open => !open);
       }
     };
 
@@ -35,13 +38,16 @@ export function ComponentSearch({ components, onSelect }: ComponentSearchProps) 
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const groupedComponents = components.reduce((acc, comp) => {
-    if (!acc[comp.category]) {
-      acc[comp.category] = [];
-    }
-    acc[comp.category].push(comp);
-    return acc;
-  }, {} as Record<string, ComponentItem[]>);
+  const groupedComponents = components.reduce(
+    (acc, comp) => {
+      if (!acc[comp.category]) {
+        acc[comp.category] = [];
+      }
+      acc[comp.category].push(comp);
+      return acc;
+    },
+    {} as Record<string, ComponentItem[]>
+  );
 
   return (
     <>
@@ -55,9 +61,11 @@ export function ComponentSearch({ components, onSelect }: ComponentSearchProps) 
                      h-9 px-4 py-2 w-full justify-start text-muted-foreground"
         >
           <span>Søg komponenter...</span>
-          <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 
+          <kbd
+            className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 
                          rounded border bg-muted px-1.5 font-mono text-[10px] font-medium 
-                         text-muted-foreground opacity-100">
+                         text-muted-foreground opacity-100"
+          >
             <span className="text-xs">⌘</span>K
           </kbd>
         </button>
@@ -69,10 +77,10 @@ export function ComponentSearch({ components, onSelect }: ComponentSearchProps) 
           <CommandEmpty>Ingen komponenter fundet.</CommandEmpty>
           {Object.entries(groupedComponents).map(([category, items]) => (
             <CommandGroup key={category} heading={category}>
-              {items.map((item) => (
+              {items.map(item => (
                 <CommandItem
                   key={item.id}
-                  value={`${item.name} ${item.keywords?.join(' ') || ''}`}
+                  value={`${item.name} ${item.keywords?.join(" ") || ""}`}
                   onSelect={() => {
                     onSelect(item.id);
                     setOpen(false);

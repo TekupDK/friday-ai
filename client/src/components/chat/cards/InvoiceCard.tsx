@@ -16,7 +16,7 @@ export interface InvoiceCardProps {
     customer: string;
     amount: string;
     currency: string;
-    status: 'draft' | 'sent' | 'paid' | 'overdue';
+    status: "draft" | "sent" | "paid" | "overdue";
     dueDate: string;
     items: number;
   };
@@ -25,27 +25,31 @@ export interface InvoiceCardProps {
   onDownload?: () => void;
 }
 
-export function InvoiceCard({ 
+export function InvoiceCard({
   invoice = {
-    id: '1',
-    number: 'INV-2024-001',
-    customer: 'ABC Corporation',
-    amount: '12,450',
-    currency: 'DKK',
-    status: 'sent',
-    dueDate: 'Om 7 dage',
-    items: 3
+    id: "1",
+    number: "INV-2024-001",
+    customer: "ABC Corporation",
+    amount: "12,450",
+    currency: "DKK",
+    status: "sent",
+    dueDate: "Om 7 dage",
+    items: 3,
   },
   onView,
   onSend,
-  onDownload
+  onDownload,
 }: InvoiceCardProps) {
   const getStatusBadge = () => {
     switch (invoice.status) {
-      case 'paid': return <Badge className="bg-green-500">Betalt</Badge>;
-      case 'sent': return <Badge className="bg-blue-500">Sendt</Badge>;
-      case 'overdue': return <Badge className="bg-red-500">Forfalden</Badge>;
-      default: return <Badge variant="secondary">Kladde</Badge>;
+      case "paid":
+        return <Badge className="bg-green-500">Betalt</Badge>;
+      case "sent":
+        return <Badge className="bg-blue-500">Sendt</Badge>;
+      case "overdue":
+        return <Badge className="bg-red-500">Forfalden</Badge>;
+      default:
+        return <Badge variant="secondary">Kladde</Badge>;
     }
   };
 
@@ -59,7 +63,9 @@ export function InvoiceCard({
             </div>
             <div>
               <h4 className="font-semibold">{invoice.number}</h4>
-              <p className="text-xs text-muted-foreground">{invoice.customer}</p>
+              <p className="text-xs text-muted-foreground">
+                {invoice.customer}
+              </p>
             </div>
           </div>
           {getStatusBadge()}
@@ -67,10 +73,14 @@ export function InvoiceCard({
 
         <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
           <div>
-            <p className="text-2xl font-bold">{invoice.amount} {invoice.currency}</p>
-            <p className="text-xs text-muted-foreground">{invoice.items} linjer</p>
+            <p className="text-2xl font-bold">
+              {invoice.amount} {invoice.currency}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {invoice.items} linjer
+            </p>
           </div>
-          {invoice.status === 'paid' && (
+          {invoice.status === "paid" && (
             <CheckCircle className="w-8 h-8 text-green-500" />
           )}
         </div>
@@ -84,7 +94,7 @@ export function InvoiceCard({
             <Eye className="w-3 h-3 mr-1" />
             Vis
           </Button>
-          {invoice.status === 'draft' && (
+          {invoice.status === "draft" && (
             <Button size="sm" variant="outline" onClick={onSend}>
               <Send className="w-3 h-3 mr-1" />
               Send

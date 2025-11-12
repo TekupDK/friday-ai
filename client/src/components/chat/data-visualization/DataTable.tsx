@@ -1,8 +1,8 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -10,21 +10,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   ChevronUp,
   ChevronDown,
@@ -35,41 +35,42 @@ import {
   ArrowUpDown,
   RefreshCw,
   Download,
-  Settings
-} from "lucide-react"
+  Settings,
+} from "lucide-react";
 
 export interface Column<T = any> {
-  id: string
-  label: string
-  accessor: keyof T | ((row: T) => any)
-  sortable?: boolean
-  filterable?: boolean
-  width?: string
-  align?: 'left' | 'center' | 'right'
-  format?: (value: any, row: T) => React.ReactNode
-  render?: (value: any, row: T) => React.ReactNode
+  id: string;
+  label: string;
+  accessor: keyof T | ((row: T) => any);
+  sortable?: boolean;
+  filterable?: boolean;
+  width?: string;
+  align?: "left" | "center" | "right";
+  format?: (value: any, row: T) => React.ReactNode;
+  render?: (value: any, row: T) => React.ReactNode;
 }
 
-export interface DataTableProps<T = any> extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string
-  subtitle?: string
-  data: T[]
-  columns: Column<T>[]
-  searchable?: boolean
-  filterable?: boolean
-  sortable?: boolean
-  paginated?: boolean
-  pageSize?: number
-  pageSizeOptions?: number[]
-  selectable?: boolean
-  onSelectionChange?: (selectedRows: T[]) => void
-  onRowClick?: (row: T) => void
-  loading?: boolean
-  emptyMessage?: string
-  showControls?: boolean
-  onRefresh?: () => void
-  onExport?: () => void
-  compact?: boolean
+export interface DataTableProps<T = any>
+  extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  subtitle?: string;
+  data: T[];
+  columns: Column<T>[];
+  searchable?: boolean;
+  filterable?: boolean;
+  sortable?: boolean;
+  paginated?: boolean;
+  pageSize?: number;
+  pageSizeOptions?: number[];
+  selectable?: boolean;
+  onSelectionChange?: (selectedRows: T[]) => void;
+  onRowClick?: (row: T) => void;
+  loading?: boolean;
+  emptyMessage?: string;
+  showControls?: boolean;
+  onRefresh?: () => void;
+  onExport?: () => void;
+  compact?: boolean;
 }
 
 export function DataTable<T extends Record<string, any>>({
@@ -95,16 +96,20 @@ export function DataTable<T extends Record<string, any>>({
   className,
   ...props
 }: DataTableProps<T>) {
-  const [searchTerm, setSearchTerm] = React.useState("")
-  const [sortColumn, setSortColumn] = React.useState<string | null>(null)
-  const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>('asc')
-  const [currentPage, setCurrentPage] = React.useState(1)
-  const [selectedRows, setSelectedRows] = React.useState<Set<number>>(new Set())
-  const [filters, setFilters] = React.useState<Record<string, string>>({})
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [sortColumn, setSortColumn] = React.useState<string | null>(null);
+  const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">(
+    "asc"
+  );
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [selectedRows, setSelectedRows] = React.useState<Set<number>>(
+    new Set()
+  );
+  const [filters, setFilters] = React.useState<Record<string, string>>({});
 
   // Filter data based on search and column filters
   const filteredData = React.useMemo(() => {
-    let filtered = data
+    let filtered = data;
 
     // Search filter
     if (searchTerm) {
@@ -112,136 +117,142 @@ export function DataTable<T extends Record<string, any>>({
         Object.values(row).some(value =>
           String(value).toLowerCase().includes(searchTerm.toLowerCase())
         )
-      )
+      );
     }
 
     // Column filters
     Object.entries(filters).forEach(([columnId, filterValue]) => {
       if (filterValue) {
         filtered = filtered.filter(row => {
-          const column = columns.find(col => col.id === columnId)
-          if (!column) return true
+          const column = columns.find(col => col.id === columnId);
+          if (!column) return true;
 
-          const value = typeof column.accessor === 'function'
-            ? column.accessor(row)
-            : row[column.accessor]
+          const value =
+            typeof column.accessor === "function"
+              ? column.accessor(row)
+              : row[column.accessor];
 
-          return String(value).toLowerCase().includes(filterValue.toLowerCase())
-        })
+          return String(value)
+            .toLowerCase()
+            .includes(filterValue.toLowerCase());
+        });
       }
-    })
+    });
 
-    return filtered
-  }, [data, searchTerm, filters, columns])
+    return filtered;
+  }, [data, searchTerm, filters, columns]);
 
   // Sort data
   const sortedData = React.useMemo(() => {
-    if (!sortColumn || !sortable) return filteredData
+    if (!sortColumn || !sortable) return filteredData;
 
-    const column = columns.find(col => col.id === sortColumn)
-    if (!column) return filteredData
+    const column = columns.find(col => col.id === sortColumn);
+    if (!column) return filteredData;
 
     return [...filteredData].sort((a, b) => {
-      const aValue = typeof column.accessor === 'function'
-        ? column.accessor(a)
-        : a[column.accessor]
+      const aValue =
+        typeof column.accessor === "function"
+          ? column.accessor(a)
+          : a[column.accessor];
 
-      const bValue = typeof column.accessor === 'function'
-        ? column.accessor(b)
-        : b[column.accessor]
+      const bValue =
+        typeof column.accessor === "function"
+          ? column.accessor(b)
+          : b[column.accessor];
 
       // Handle different data types
-      if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return sortDirection === 'asc' ? aValue - bValue : bValue - aValue
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return sortDirection === "asc" ? aValue - bValue : bValue - aValue;
       }
 
-      const aStr = String(aValue).toLowerCase()
-      const bStr = String(bValue).toLowerCase()
+      const aStr = String(aValue).toLowerCase();
+      const bStr = String(bValue).toLowerCase();
 
-      if (sortDirection === 'asc') {
-        return aStr.localeCompare(bStr)
+      if (sortDirection === "asc") {
+        return aStr.localeCompare(bStr);
       } else {
-        return bStr.localeCompare(aStr)
+        return bStr.localeCompare(aStr);
       }
-    })
-  }, [filteredData, sortColumn, sortDirection, sortable, columns])
+    });
+  }, [filteredData, sortColumn, sortDirection, sortable, columns]);
 
   // Paginate data
   const paginatedData = React.useMemo(() => {
-    if (!paginated) return sortedData
+    if (!paginated) return sortedData;
 
-    const startIndex = (currentPage - 1) * pageSize
-    return sortedData.slice(startIndex, startIndex + pageSize)
-  }, [sortedData, currentPage, pageSize, paginated])
+    const startIndex = (currentPage - 1) * pageSize;
+    return sortedData.slice(startIndex, startIndex + pageSize);
+  }, [sortedData, currentPage, pageSize, paginated]);
 
-  const totalPages = Math.ceil(sortedData.length / pageSize)
+  const totalPages = Math.ceil(sortedData.length / pageSize);
 
   // Handle sorting
   const handleSort = (columnId: string) => {
-    if (!sortable) return
+    if (!sortable) return;
 
     if (sortColumn === columnId) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
-      setSortColumn(columnId)
-      setSortDirection('asc')
+      setSortColumn(columnId);
+      setSortDirection("asc");
     }
-  }
+  };
 
   // Handle selection
   const handleRowSelect = (index: number, checked: boolean) => {
-    const newSelected = new Set(selectedRows)
+    const newSelected = new Set(selectedRows);
     if (checked) {
-      newSelected.add(index)
+      newSelected.add(index);
     } else {
-      newSelected.delete(index)
+      newSelected.delete(index);
     }
-    setSelectedRows(newSelected)
-    onSelectionChange?.(Array.from(newSelected).map(i => sortedData[i]))
-  }
+    setSelectedRows(newSelected);
+    onSelectionChange?.(Array.from(newSelected).map(i => sortedData[i]));
+  };
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedRows(new Set(paginatedData.map((_, i) => i)))
-      onSelectionChange?.(paginatedData)
+      setSelectedRows(new Set(paginatedData.map((_, i) => i)));
+      onSelectionChange?.(paginatedData);
     } else {
-      setSelectedRows(new Set())
-      onSelectionChange?.([])
+      setSelectedRows(new Set());
+      onSelectionChange?.([]);
     }
-  }
+  };
 
   // Get cell value
   const getCellValue = (row: T, column: Column<T>) => {
-    const value = typeof column.accessor === 'function'
-      ? column.accessor(row)
-      : row[column.accessor]
+    const value =
+      typeof column.accessor === "function"
+        ? column.accessor(row)
+        : row[column.accessor];
 
-    return value
-  }
+    return value;
+  };
 
   // Render cell content
   const renderCell = (row: T, column: Column<T>, rowIndex: number) => {
-    const value = getCellValue(row, column)
+    const value = getCellValue(row, column);
 
     if (column.render) {
-      return column.render(value, row)
+      return column.render(value, row);
     }
 
     if (column.format) {
-      return column.format(value, row)
+      return column.format(value, row);
     }
 
-    return String(value)
-  }
+    return String(value);
+  };
 
   const resetFilters = () => {
-    setSearchTerm("")
-    setFilters({})
-    setSortColumn(null)
-    setSortDirection('asc')
-    setCurrentPage(1)
-    setSelectedRows(new Set())
-  }
+    setSearchTerm("");
+    setFilters({});
+    setSortColumn(null);
+    setSortDirection("asc");
+    setCurrentPage(1);
+    setSelectedRows(new Set());
+  };
 
   return (
     <div className={cn("space-y-4", className)} {...props}>
@@ -250,14 +261,23 @@ export function DataTable<T extends Record<string, any>>({
         <div className="flex items-center justify-between">
           <div>
             {title && <h3 className="text-lg font-semibold">{title}</h3>}
-            {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+            {subtitle && (
+              <p className="text-sm text-muted-foreground">{subtitle}</p>
+            )}
           </div>
 
           {showControls && (
             <div className="flex items-center gap-2">
               {onRefresh && (
-                <Button variant="outline" size="sm" onClick={onRefresh} disabled={loading}>
-                  <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onRefresh}
+                  disabled={loading}
+                >
+                  <RefreshCw
+                    className={cn("h-4 w-4", loading && "animate-spin")}
+                  />
                 </Button>
               )}
               {onExport && (
@@ -280,7 +300,7 @@ export function DataTable<T extends Record<string, any>>({
               <Input
                 placeholder="Søg..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
                 className="pl-10"
               />
             </div>
@@ -304,20 +324,23 @@ export function DataTable<T extends Record<string, any>>({
                 <TableHead className="w-12">
                   <input
                     type="checkbox"
-                    checked={selectedRows.size === paginatedData.length && paginatedData.length > 0}
-                    onChange={(e) => handleSelectAll(e.target.checked)}
+                    checked={
+                      selectedRows.size === paginatedData.length &&
+                      paginatedData.length > 0
+                    }
+                    onChange={e => handleSelectAll(e.target.checked)}
                     className="rounded"
                   />
                 </TableHead>
               )}
-              {columns.map((column) => (
+              {columns.map(column => (
                 <TableHead
                   key={column.id}
                   className={cn(
                     "font-semibold",
                     column.width && `w-[${column.width}]`,
-                    column.align === 'center' && "text-center",
-                    column.align === 'right' && "text-right"
+                    column.align === "center" && "text-center",
+                    column.align === "right" && "text-right"
                   )}
                 >
                   <div className="flex items-center gap-2">
@@ -330,7 +353,7 @@ export function DataTable<T extends Record<string, any>>({
                       >
                         {column.label}
                         {sortColumn === column.id ? (
-                          sortDirection === 'asc' ? (
+                          sortDirection === "asc" ? (
                             <ChevronUp className="h-4 w-4 ml-1" />
                           ) : (
                             <ChevronDown className="h-4 w-4 ml-1" />
@@ -347,7 +370,11 @@ export function DataTable<T extends Record<string, any>>({
                     {filterable && column.filterable !== false && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0"
+                          >
                             <Filter className="h-3 w-3" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -356,10 +383,12 @@ export function DataTable<T extends Record<string, any>>({
                             <Input
                               placeholder={`Filtrer ${column.label.toLowerCase()}`}
                               value={filters[column.id] || ""}
-                              onChange={(e) => setFilters(prev => ({
-                                ...prev,
-                                [column.id]: e.target.value
-                              }))}
+                              onChange={e =>
+                                setFilters(prev => ({
+                                  ...prev,
+                                  [column.id]: e.target.value,
+                                }))
+                              }
                               className="text-xs"
                             />
                           </div>
@@ -381,7 +410,9 @@ export function DataTable<T extends Record<string, any>>({
                   className="text-center py-12"
                 >
                   <RefreshCw className="h-6 w-6 animate-spin mx-auto text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground mt-2">Indlæser data...</p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Indlæser data...
+                  </p>
                 </TableCell>
               </TableRow>
             ) : paginatedData.length === 0 ? (
@@ -408,22 +439,22 @@ export function DataTable<T extends Record<string, any>>({
                       <input
                         type="checkbox"
                         checked={selectedRows.has(index)}
-                        onChange={(e) => {
-                          e.stopPropagation()
-                          handleRowSelect(index, e.target.checked)
+                        onChange={e => {
+                          e.stopPropagation();
+                          handleRowSelect(index, e.target.checked);
                         }}
                         className="rounded"
                       />
                     </TableCell>
                   )}
 
-                  {columns.map((column) => (
+                  {columns.map(column => (
                     <TableCell
                       key={column.id}
                       className={cn(
                         compact ? "py-2" : "py-3",
-                        column.align === 'center' && "text-center",
-                        column.align === 'right' && "text-right"
+                        column.align === "center" && "text-center",
+                        column.align === "right" && "text-right"
                       )}
                     >
                       {renderCell(row, column, index)}
@@ -433,7 +464,11 @@ export function DataTable<T extends Record<string, any>>({
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -461,23 +496,26 @@ export function DataTable<T extends Record<string, any>>({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">
-              Viser {Math.min((currentPage - 1) * pageSize + 1, sortedData.length)} - {Math.min(currentPage * pageSize, sortedData.length)} af {sortedData.length}
+              Viser{" "}
+              {Math.min((currentPage - 1) * pageSize + 1, sortedData.length)} -{" "}
+              {Math.min(currentPage * pageSize, sortedData.length)} af{" "}
+              {sortedData.length}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             <Select
               value={pageSize.toString()}
-              onValueChange={(value) => {
-                setPageSize(Number(value))
-                setCurrentPage(1)
+              onValueChange={value => {
+                setPageSize(Number(value));
+                setCurrentPage(1);
               }}
             >
               <SelectTrigger className="w-20">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {pageSizeOptions.map((size) => (
+                {pageSizeOptions.map(size => (
                   <SelectItem key={size} value={size.toString()}>
                     {size}
                   </SelectItem>
@@ -502,7 +540,9 @@ export function DataTable<T extends Record<string, any>>({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                onClick={() =>
+                  setCurrentPage(Math.min(totalPages, currentPage + 1))
+                }
                 disabled={currentPage === totalPages}
               >
                 Næste
@@ -512,5 +552,5 @@ export function DataTable<T extends Record<string, any>>({
         </div>
       )}
     </div>
-  )
+  );
 }

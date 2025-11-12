@@ -27,11 +27,14 @@ export interface AIMetricsSummary {
   p50ResponseTime: number;
   p95ResponseTime: number;
   p99ResponseTime: number;
-  modelBreakdown: Record<string, {
-    requests: number;
-    avgResponseTime: number;
-    errorRate: number;
-  }>;
+  modelBreakdown: Record<
+    string,
+    {
+      requests: number;
+      avgResponseTime: number;
+      errorRate: number;
+    }
+  >;
 }
 
 // In-memory metrics store (in production, use database or Redis)
@@ -41,7 +44,7 @@ const MAX_METRICS_IN_MEMORY = 10000; // Keep last 10k metrics
 /**
  * Track an AI request metric
  */
-export function trackAIMetric(metric: Omit<AIMetric, 'timestamp'>): void {
+export function trackAIMetric(metric: Omit<AIMetric, "timestamp">): void {
   const fullMetric: AIMetric = {
     ...metric,
     timestamp: new Date(),
@@ -56,12 +59,16 @@ export function trackAIMetric(metric: Omit<AIMetric, 'timestamp'>): void {
 
   // Log errors immediately
   if (!metric.success) {
-    console.error(`[AI Metrics] Error: Model=${metric.modelId}, Task=${metric.taskType}, Error=${metric.errorMessage}`);
+    console.error(
+      `[AI Metrics] Error: Model=${metric.modelId}, Task=${metric.taskType}, Error=${metric.errorMessage}`
+    );
   }
 
   // Log slow responses (>5s)
   if (metric.responseTime > 5000) {
-    console.warn(`[AI Metrics] Slow response: ${metric.responseTime}ms, Model=${metric.modelId}, Task=${metric.taskType}`);
+    console.warn(
+      `[AI Metrics] Slow response: ${metric.responseTime}ms, Model=${metric.modelId}, Task=${metric.taskType}`
+    );
   }
 }
 
@@ -88,7 +95,9 @@ export function getMetricsSummary(lastMinutes: number = 60): AIMetricsSummary {
 
   const successfulRequests = recentMetrics.filter(m => m.success).length;
   const failedRequests = recentMetrics.length - successfulRequests;
-  const responseTimes = recentMetrics.map(m => m.responseTime).sort((a, b) => a - b);
+  const responseTimes = recentMetrics
+    .map(m => m.responseTime)
+    .sort((a, b) => a - b);
 
   // Calculate percentiles
   const p50Index = Math.floor(responseTimes.length * 0.5);
@@ -96,11 +105,14 @@ export function getMetricsSummary(lastMinutes: number = 60): AIMetricsSummary {
   const p99Index = Math.floor(responseTimes.length * 0.99);
 
   // Model breakdown
-  const modelBreakdown: Record<string, {
-    requests: number;
-    avgResponseTime: number;
-    errorRate: number;
-  }> = {};
+  const modelBreakdown: Record<
+    string,
+    {
+      requests: number;
+      avgResponseTime: number;
+      errorRate: number;
+    }
+  > = {};
 
   recentMetrics.forEach(metric => {
     if (!modelBreakdown[metric.modelId]) {
@@ -117,10 +129,13 @@ export function getMetricsSummary(lastMinutes: number = 60): AIMetricsSummary {
   Object.keys(modelBreakdown).forEach(modelId => {
     const modelMetrics = recentMetrics.filter(m => m.modelId === modelId);
     const modelSuccesses = modelMetrics.filter(m => m.success).length;
-    const avgTime = modelMetrics.reduce((sum, m) => sum + m.responseTime, 0) / modelMetrics.length;
-    
+    const avgTime =
+      modelMetrics.reduce((sum, m) => sum + m.responseTime, 0) /
+      modelMetrics.length;
+
     modelBreakdown[modelId].avgResponseTime = Math.round(avgTime);
-    modelBreakdown[modelId].errorRate = ((modelMetrics.length - modelSuccesses) / modelMetrics.length) * 100;
+    modelBreakdown[modelId].errorRate =
+      ((modelMetrics.length - modelSuccesses) / modelMetrics.length) * 100;
   });
 
   return {
@@ -128,7 +143,9 @@ export function getMetricsSummary(lastMinutes: number = 60): AIMetricsSummary {
     successfulRequests,
     failedRequests,
     errorRate: (failedRequests / recentMetrics.length) * 100,
-    avgResponseTime: Math.round(responseTimes.reduce((sum, t) => sum + t, 0) / responseTimes.length),
+    avgResponseTime: Math.round(
+      responseTimes.reduce((sum, t) => sum + t, 0) / responseTimes.length
+    ),
     p50ResponseTime: responseTimes[p50Index] || 0,
     p95ResponseTime: responseTimes[p95Index] || 0,
     p99ResponseTime: responseTimes[p99Index] || 0,
@@ -149,22 +166,34 @@ export function checkHealthThresholds(summary: AIMetricsSummary): {
 
   // Error rate thresholds
   if (summary.errorRate > 5) {
-    critical.push(`Error rate too high: ${summary.errorRate.toFixed(1)}% (threshold: 5%)`);
+    critical.push(
+      `Error rate too high: ${summary.errorRate.toFixed(1)}% (threshold: 5%)`
+    );
   } else if (summary.errorRate > 1) {
-    warnings.push(`Error rate elevated: ${summary.errorRate.toFixed(1)}% (threshold: 1%)`);
+    warnings.push(
+      `Error rate elevated: ${summary.errorRate.toFixed(1)}% (threshold: 1%)`
+    );
   }
 
   // Response time thresholds
   if (summary.p95ResponseTime > 10000) {
-    critical.push(`P95 response time too high: ${summary.p95ResponseTime}ms (threshold: 10s)`);
+    critical.push(
+      `P95 response time too high: ${summary.p95ResponseTime}ms (threshold: 10s)`
+    );
   } else if (summary.p95ResponseTime > 5000) {
-    warnings.push(`P95 response time elevated: ${summary.p95ResponseTime}ms (threshold: 5s)`);
+    warnings.push(
+      `P95 response time elevated: ${summary.p95ResponseTime}ms (threshold: 5s)`
+    );
   }
 
   if (summary.avgResponseTime > 5000) {
-    critical.push(`Average response time too high: ${summary.avgResponseTime}ms (threshold: 5s)`);
+    critical.push(
+      `Average response time too high: ${summary.avgResponseTime}ms (threshold: 5s)`
+    );
   } else if (summary.avgResponseTime > 3000) {
-    warnings.push(`Average response time elevated: ${summary.avgResponseTime}ms (threshold: 3s)`);
+    warnings.push(
+      `Average response time elevated: ${summary.avgResponseTime}ms (threshold: 3s)`
+    );
   }
 
   return {
@@ -247,18 +276,22 @@ export function logMetricsSummary(): void {
   const summary = getMetricsSummary(60);
   const health = checkHealthThresholds(summary);
 
-  console.log('\n' + '='.repeat(70));
-  console.log('📊 AI METRICS SUMMARY (Last 60 minutes)');
-  console.log('='.repeat(70));
+  console.log("\n" + "=".repeat(70));
+  console.log("📊 AI METRICS SUMMARY (Last 60 minutes)");
+  console.log("=".repeat(70));
   console.log(`Total Requests:     ${summary.totalRequests}`);
-  console.log(`Successful:         ${summary.successfulRequests} (${((summary.successfulRequests/summary.totalRequests)*100).toFixed(1)}%)`);
-  console.log(`Failed:             ${summary.failedRequests} (${summary.errorRate.toFixed(1)}%)`);
+  console.log(
+    `Successful:         ${summary.successfulRequests} (${((summary.successfulRequests / summary.totalRequests) * 100).toFixed(1)}%)`
+  );
+  console.log(
+    `Failed:             ${summary.failedRequests} (${summary.errorRate.toFixed(1)}%)`
+  );
   console.log(`\nResponse Times:`);
   console.log(`  Average:          ${summary.avgResponseTime}ms`);
   console.log(`  P50 (median):     ${summary.p50ResponseTime}ms`);
   console.log(`  P95:              ${summary.p95ResponseTime}ms`);
   console.log(`  P99:              ${summary.p99ResponseTime}ms`);
-  
+
   console.log(`\nModel Breakdown:`);
   Object.entries(summary.modelBreakdown).forEach(([modelId, stats]) => {
     console.log(`  ${modelId}:`);
@@ -267,7 +300,9 @@ export function logMetricsSummary(): void {
     console.log(`    Error Rate:     ${stats.errorRate.toFixed(1)}%`);
   });
 
-  console.log(`\nHealth Status: ${health.healthy ? '✅ HEALTHY' : '❌ UNHEALTHY'}`);
+  console.log(
+    `\nHealth Status: ${health.healthy ? "✅ HEALTHY" : "❌ UNHEALTHY"}`
+  );
   if (health.warnings.length > 0) {
     console.log(`⚠️  Warnings:`);
     health.warnings.forEach(w => console.log(`   - ${w}`));
@@ -276,5 +311,5 @@ export function logMetricsSummary(): void {
     console.log(`🚨 Critical Issues:`);
     health.critical.forEach(c => console.log(`   - ${c}`));
   }
-  console.log('='.repeat(70) + '\n');
+  console.log("=".repeat(70) + "\n");
 }

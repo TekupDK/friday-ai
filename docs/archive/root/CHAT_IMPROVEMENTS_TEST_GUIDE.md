@@ -3,6 +3,7 @@
 ## 📋 Overview
 
 This guide covers testing for the chat panel improvements:
+
 1. **LLM Output Formatting** - No raw JSON in responses
 2. **ChatInput Buttons** - Disabled state with feedback
 3. **UI Compactness** - Optimized for 20% panel width
@@ -16,12 +17,14 @@ This guide covers testing for the chat panel improvements:
 **Location:** `tests/ai/promptfoo-action-formatting.yaml`
 
 **What it tests:**
+
 - Action results don't contain raw JSON
 - AI presents results naturally in Danish
 - Responses are concise and user-friendly
 - Error messages don't expose technical details
 
 **Run:**
+
 ```bash
 # Install promptfoo if not installed
 npm install -g promptfoo
@@ -35,6 +38,7 @@ promptfoo view
 ```
 
 **Expected Results:**
+
 - ✅ 4/4 test cases pass
 - ✅ No output contains `{`, `}`, or `"`
 - ✅ All responses in natural Danish
@@ -47,6 +51,7 @@ promptfoo view
 **Location:** `tests/chat-input-buttons.spec.ts`
 
 **What it tests:**
+
 - Attach, Apps, Mic buttons are disabled
 - Tooltips show "kommer snart"
 - Send button enabled/disabled based on input
@@ -55,6 +60,7 @@ promptfoo view
 - Messages use compact styling (p-2, text-xs)
 
 **Run:**
+
 ```bash
 # Run all chat input tests
 npm run test:e2e -- chat-input-buttons
@@ -70,6 +76,7 @@ npm run test:e2e -- chat-input-buttons --debug
 ```
 
 **Expected Results:**
+
 - ✅ 8/8 tests pass
 - ✅ Disabled buttons have correct tooltips
 - ✅ Send button logic works
@@ -82,6 +89,7 @@ npm run test:e2e -- chat-input-buttons --debug
 **Location:** `server/__tests__/action-result-formatting.test.ts`
 
 **What it tests:**
+
 - `formatActionResultForAI()` never outputs raw JSON
 - Success/failure results formatted correctly
 - Arrays truncated to 3 items with "... og X flere"
@@ -90,6 +98,7 @@ npm run test:e2e -- chat-input-buttons --debug
 - Error messages sanitized (no technical details)
 
 **Run:**
+
 ```bash
 # Run all unit tests
 npm test
@@ -105,6 +114,7 @@ npm test -- --coverage action-result-formatting
 ```
 
 **Expected Results:**
+
 - ✅ 12/12 tests pass
 - ✅ 100% code coverage on formatActionResultForAI
 - ✅ No JSON structure in any output
@@ -132,11 +142,11 @@ cd tests/ai && promptfoo eval -c promptfoo-action-formatting.yaml
 
 All tests should pass with these results:
 
-| Test Suite | Tests | Expected | Notes |
-|------------|-------|----------|-------|
-| Unit Tests | 12 | 12/12 ✅ | Fast, no API calls |
-| Playwright E2E | 8 | 8/8 ✅ | Requires running dev server |
-| Promptfoo LLM | 4 cases x 3 models = 12 | 12/12 ✅ | Requires OpenRouter API key |
+| Test Suite     | Tests                   | Expected | Notes                       |
+| -------------- | ----------------------- | -------- | --------------------------- |
+| Unit Tests     | 12                      | 12/12 ✅ | Fast, no API calls          |
+| Playwright E2E | 8                       | 8/8 ✅   | Requires running dev server |
+| Promptfoo LLM  | 4 cases x 3 models = 12 | 12/12 ✅ | Requires OpenRouter API key |
 
 **Total:** 32 tests should pass
 
@@ -145,6 +155,7 @@ All tests should pass with these results:
 ## 🐛 Troubleshooting
 
 ### Promptfoo fails with API errors
+
 ```bash
 # Check OpenRouter API key is set
 echo $OPENROUTER_API_KEY
@@ -157,6 +168,7 @@ promptfoo eval -c promptfoo-action-formatting.yaml --no-cache
 ```
 
 ### Playwright can't find elements
+
 ```bash
 # Make sure dev server is running
 npm run dev
@@ -169,6 +181,7 @@ npm run test:e2e -- chat-input-buttons --trace on
 ```
 
 ### Unit tests import errors
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules
@@ -203,6 +216,7 @@ After running tests, track these metrics:
 ## 🔄 Regression Testing
 
 Re-run these tests after:
+
 - ✅ Any changes to `ai-router.ts`
 - ✅ Model router updates
 - ✅ ChatInput component changes
@@ -213,7 +227,9 @@ Re-run these tests after:
 ## 📝 Adding New Tests
 
 ### For new action types:
+
 Add test case to `promptfoo-action-formatting.yaml`:
+
 ```yaml
 - vars:
     actionResult: |
@@ -225,9 +241,11 @@ Add test case to `promptfoo-action-formatting.yaml`:
 ```
 
 ### For new UI features:
+
 Add test to `chat-input-buttons.spec.ts`:
+
 ```typescript
-test('should handle new feature', async ({ page }) => {
+test("should handle new feature", async ({ page }) => {
   // Your test here
 });
 ```
@@ -237,6 +255,7 @@ test('should handle new feature', async ({ page }) => {
 ## ✅ Final Checklist
 
 Before deploying:
+
 - [ ] All unit tests pass
 - [ ] All E2E tests pass
 - [ ] Promptfoo shows improvement over baseline

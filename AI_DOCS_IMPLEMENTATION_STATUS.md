@@ -8,9 +8,11 @@
 ## ✅ COMPLETED (Backend)
 
 ### 1. Data Collection Module
+
 **File:** `server/docs/ai/data-collector.ts`
 
 **Features:**
+
 - ✅ Collect lead data from database
 - ✅ Fetch Gmail email threads
 - ✅ Fetch Google Calendar events
@@ -19,13 +21,16 @@
 - ✅ Error handling & logging
 
 **Functions:**
+
 - `collectLeadData(leadId)` - Samler alt data for en lead
 - `collectWeeklyData()` - Samler data for ugentlig digest
 
 ### 2. AI Analyzer Module
+
 **File:** `server/docs/ai/analyzer.ts`
 
 **Features:**
+
 - ✅ OpenAI GPT-4o-mini integration
 - ✅ Lead data analysis
 - ✅ Sentiment analysis
@@ -36,13 +41,16 @@
 - ✅ Fallback når AI fejler
 
 **Functions:**
+
 - `analyzeLeadData(data)` - AI analyse af lead
 - `analyzeWeeklyData(data)` - AI analyse af uge
 
 ### 3. Document Generator Module
+
 **File:** `server/docs/ai/generator.ts`
 
 **Features:**
+
 - ✅ Markdown generation
 - ✅ Professional formatting
 - ✅ Emoji indicators
@@ -52,13 +60,16 @@
 - ✅ Weekly digest format
 
 **Functions:**
+
 - `generateLeadDocument(data, analysis)` - Generer lead doc
 - `generateWeeklyDigest(data, analysis)` - Generer ugentlig digest
 
 ### 4. Auto-Create Module
+
 **File:** `server/docs/ai/auto-create.ts`
 
 **Features:**
+
 - ✅ Full orchestration pipeline
 - ✅ Database insertion
 - ✅ Document versioning
@@ -69,15 +80,18 @@
 - ✅ Error handling
 
 **Functions:**
+
 - `autoCreateLeadDoc(leadId)` - Generer & gem lead doc
 - `updateLeadDoc(leadId, docId)` - Opdater eksisterende doc
 - `generateWeeklyDigest()` - Generer ugentlig digest
 - `bulkGenerateLeadDocs()` - Bulk generation
 
 ### 5. tRPC API Endpoints
+
 **File:** `server/routers/docs-router.ts`
 
 **Endpoints:**
+
 - ✅ `docs.generateLeadDoc({ leadId })` - Generer lead doc
 - ✅ `docs.updateLeadDoc({ leadId, docId })` - Opdater lead doc
 - ✅ `docs.generateWeeklyDigest()` - Generer ugentlig digest
@@ -90,6 +104,7 @@
 ### UI Buttons Needed
 
 **1. Leads Page**
+
 ```typescript
 // client/src/pages/LeadsPage.tsx (eller lignende)
 
@@ -100,6 +115,7 @@
 ```
 
 **2. Docs Page - Toolbar**
+
 ```typescript
 // client/src/pages/docs/DocsPage.tsx
 
@@ -115,6 +131,7 @@
 ```
 
 **3. Lead Detail View**
+
 ```typescript
 // Ved lead details
 
@@ -131,29 +148,30 @@
 ```
 
 ### Hook Example
+
 ```typescript
 // client/src/hooks/docs/useAIGeneration.ts
 
 export function useAIGeneration() {
   const generateLeadDoc = trpc.docs.generateLeadDoc.useMutation({
-    onSuccess: (result) => {
+    onSuccess: result => {
       if (result.success) {
-        toast.success('Documentation generated!');
+        toast.success("Documentation generated!");
         // Navigate to doc
         navigate(`/docs?id=${result.docId}`);
       } else {
         toast.error(result.error);
       }
-    }
+    },
   });
 
   const generateWeeklyDigest = trpc.docs.generateWeeklyDigest.useMutation({
-    onSuccess: (result) => {
+    onSuccess: result => {
       if (result.success) {
-        toast.success('Weekly digest created!');
+        toast.success("Weekly digest created!");
         navigate(`/docs?id=${result.docId}`);
       }
-    }
+    },
   });
 
   return { generateLeadDoc, generateWeeklyDigest };
@@ -172,6 +190,7 @@ export function useAIGeneration() {
 > 🟠 **Priority:** HIGH | 😊 **Sentiment:** positive
 
 ## 📋 Overview
+
 - **Contact:** John Doe
 - **Company:** Acme Corporation
 - **Email:** john@acme.com
@@ -181,11 +200,13 @@ export function useAIGeneration() {
 - **Last Activity:** 8. november 2024
 
 ## 🤖 AI Executive Summary
+
 Active lead with strong engagement. Multiple touchpoints including 3 meetings
 and 12 email exchanges. Currently in negotiation phase for invoice software
 integration. High conversion probability based on communication patterns.
 
 ### 🎯 Key Topics Discussed
+
 - Invoice payment terms
 - Software integration requirements
 - Timeline and budget
@@ -197,11 +218,12 @@ integration. High conversion probability based on communication patterns.
 ### Email Threads (12)
 
 #### 1. Re: Invoice Software Proposal
+
 **Date:** 8. november 2024 (i dag)
 **From:** john@acme.com
 **To:** support@tekup.dk
 
-> Thanks for the detailed proposal. We'd like to proceed with the 
+> Thanks for the detailed proposal. We'd like to proceed with the
 > integration. Can we schedule a call to discuss implementation timeline?
 
 [... more emails ...]
@@ -209,26 +231,31 @@ integration. High conversion probability based on communication patterns.
 ## 🔍 AI Analysis
 
 ### ✅ Action Items
+
 - [ ] Schedule implementation planning call
 - [ ] Prepare technical requirements document
 - [ ] Send contract for review
 - [ ] Arrange demo for stakeholders
 
 ### 📌 Decisions Made
+
 - ✓ Agreed on subscription pricing model
 - ✓ Confirmed integration with existing ERP
 - ✓ Selected premium support package
 
 ### ❓ Open Questions
+
 - Implementation timeline flexibility?
 - Data migration approach?
 - Training schedule for team?
 
 ### ⚠️ Risk Assessment
+
 - 🚨 Timeline constraints mentioned - needs quick response
 - 🚨 Multiple stakeholders - ensure all are aligned
 
 ### 💡 Recommendations
+
 - Prioritize quick response to meeting request
 - Prepare comprehensive implementation plan
 - Consider offering pilot program
@@ -236,13 +263,14 @@ integration. High conversion probability based on communication patterns.
 ---
 
 **📊 Document Statistics**
+
 - Email threads analyzed: 12
 - Meetings recorded: 3
 - Chat messages: 0
 - Generated: 8. november 2024 kl. 23:35
 - Source: AI-powered analysis
 
-*This document was automatically generated by Friday AI.*
+_This document was automatically generated by Friday AI._
 ```
 
 ### Weekly Digest
@@ -253,18 +281,19 @@ integration. High conversion probability based on communication patterns.
 **Period:** 4. november - 10. november 2024
 
 ## 🎯 Executive Summary
+
 Strong week with 5 new qualified leads and 23 customer interactions.
 Email activity up 40% from last week. 3 deals progressing to final stages.
 Overall sentiment positive with increasing engagement levels.
 
 ## 📈 Key Metrics
 
-| Metric | Count |
-|--------|-------|
-| 🆕 New Leads | 5 |
-| 📧 Emails Processed | 45 |
-| 📅 Meetings Held | 8 |
-| 💬 Conversations | 23 |
+| Metric              | Count |
+| ------------------- | ----- |
+| 🆕 New Leads        | 5     |
+| 📧 Emails Processed | 45    |
+| 📅 Meetings Held    | 8     |
+| 💬 Conversations    | 23    |
 
 ## ⭐ Week Highlights
 
@@ -289,8 +318,8 @@ Overall sentiment positive with increasing engagement levels.
 
 ---
 
-*Generated: 8. november 2024*
-*AI-powered weekly digest by Friday AI*
+_Generated: 8. november 2024_
+_AI-powered weekly digest by Friday AI_
 ```
 
 ---
@@ -298,6 +327,7 @@ Overall sentiment positive with increasing engagement levels.
 ## 🚀 How to Use (Once Frontend is Added)
 
 ### For Individual Lead
+
 1. Go to Lead details
 2. Click "Generate AI Doc" button
 3. Wait 10-30 seconds
@@ -305,12 +335,14 @@ Overall sentiment positive with increasing engagement levels.
 5. Review and edit as needed
 
 ### For Weekly Digest
+
 1. Go to Docs page
 2. Click "Generate Weekly Digest"
 3. Wait 20-40 seconds
 4. Digest appears in Docs
 
 ### For Bulk Generation
+
 1. Go to Docs page
 2. Click "Bulk Generate All Leads"
 3. Wait (1 lead per second = ~1-2 min for 100 leads)
@@ -321,22 +353,28 @@ Overall sentiment positive with increasing engagement levels.
 ## 🎯 Integration Points
 
 ### Data Sources
+
 ✅ **Database (Drizzle)**
+
 - Leads table
 - Email threads table
 - Conversations table
 
 ✅ **Google Calendar API**
+
 - Events with lead email
 - Meeting notes
 
 ✅ **Gmail API** (via existing email_threads)
+
 - Thread subjects
 - Email content
 - Timestamps
 
 ### AI Service
+
 ✅ **OpenRouter (GLM-4.5-Air FREE)**
+
 - Model: `z-ai/glm-4.5-air:free` (100% FREE!)
 - JSON response format
 - Via existing `invokeLLM` infrastructure
@@ -347,12 +385,14 @@ Overall sentiment positive with increasing engagement levels.
 ## 📋 Next Steps
 
 **Immediate (30 min):**
+
 1. Add UI button i Leads page
 2. Add toolbar buttons i Docs page
 3. Create `useAIGeneration` hook
 4. Test med 1 lead
 
 **Testing (1 time):**
+
 1. Test single lead doc generation
 2. Test weekly digest
 3. Test bulk generation (5-10 leads)
@@ -360,6 +400,7 @@ Overall sentiment positive with increasing engagement levels.
 5. Check for edge cases
 
 **Polish (30 min):**
+
 1. Loading states
 2. Progress indicators for bulk
 3. Error messaging
@@ -370,6 +411,7 @@ Overall sentiment positive with increasing engagement levels.
 ## 💰 Cost Estimate
 
 **OpenRouter (GLM-4.5-Air FREE):**
+
 - Cost per doc: **$0.00** (100% GRATIS! 🎉)
 - 100 leads: **$0.00**
 - Monthly (unlimited docs): **$0.00**
@@ -381,12 +423,14 @@ Overall sentiment positive with increasing engagement levels.
 ## ✨ Features Summary
 
 **Data Collection:**
+
 - ✅ Multi-source aggregation
 - ✅ Gmail integration
 - ✅ Calendar integration
 - ✅ Chat history
 
 **AI Analysis:**
+
 - ✅ Sentiment analysis
 - ✅ Topic extraction
 - ✅ Action items
@@ -394,6 +438,7 @@ Overall sentiment positive with increasing engagement levels.
 - ✅ Priority scoring
 
 **Documentation:**
+
 - ✅ Professional markdown
 - ✅ Emoji indicators
 - ✅ Statistics
@@ -401,6 +446,7 @@ Overall sentiment positive with increasing engagement levels.
 - ✅ Version control
 
 **Automation:**
+
 - ✅ Single lead
 - ✅ Bulk generation
 - ✅ Weekly digest

@@ -9,16 +9,16 @@ import type { EmailMessage } from "./categorizer";
 
 export interface ResponseSuggestion {
   id: string;
-  type: 'quick_reply' | 'detailed' | 'forward' | 'schedule';
+  type: "quick_reply" | "detailed" | "forward" | "schedule";
   text: string;
-  tone: 'professional' | 'friendly' | 'formal';
+  tone: "professional" | "friendly" | "formal";
   confidence: number; // 0-1
   reasoning?: string;
 }
 
 export interface ConversationContext {
   previousEmails?: EmailMessage[];
-  senderRelationship?: 'vip' | 'customer' | 'colleague' | 'unknown';
+  senderRelationship?: "vip" | "customer" | "colleague" | "unknown";
   threadHistory?: string[];
 }
 
@@ -75,22 +75,22 @@ export async function generateResponseSuggestions(
     const contextSection = buildContextSection(context);
 
     // Truncate long content
-    const truncatedBody = email.body.length > 1500
-      ? email.body.substring(0, 1500) + '...'
-      : email.body;
+    const truncatedBody =
+      email.body.length > 1500
+        ? email.body.substring(0, 1500) + "..."
+        : email.body;
 
     // Build prompt
-    const prompt = RESPONSE_GENERATION_PROMPT
-      .replace('{from}', email.from)
-      .replace('{to}', email.to)
-      .replace('{subject}', email.subject)
-      .replace('{body}', truncatedBody)
-      .replace('{contextSection}', contextSection);
+    const prompt = RESPONSE_GENERATION_PROMPT.replace("{from}", email.from)
+      .replace("{to}", email.to)
+      .replace("{subject}", email.subject)
+      .replace("{body}", truncatedBody)
+      .replace("{contextSection}", contextSection);
 
     // Call LLM
     const response = await routeAI({
-      messages: [{ role: 'user', content: prompt }],
-      taskType: 'chat',
+      messages: [{ role: "user", content: prompt }],
+      taskType: "chat",
       userId,
       requireApproval: false,
       correlationId: generateCorrelationId(),
@@ -102,7 +102,7 @@ export async function generateResponseSuggestions(
 
     return suggestions;
   } catch (error) {
-    console.error('Response generation error:', error);
+    console.error("Response generation error:", error);
 
     // Fallback to template responses
     return generateTemplateResponses(email, context);
@@ -113,7 +113,7 @@ export async function generateResponseSuggestions(
  * Build context section for prompt
  */
 function buildContextSection(context?: ConversationContext): string {
-  if (!context) return '';
+  if (!context) return "";
 
   const sections: string[] = [];
 
@@ -126,13 +126,11 @@ function buildContextSection(context?: ConversationContext): string {
   }
 
   if (context.threadHistory && context.threadHistory.length > 0) {
-    const history = context.threadHistory.slice(0, 2).join('\n');
+    const history = context.threadHistory.slice(0, 2).join("\n");
     sections.push(`Tidligere kommunikation:\n${history}`);
   }
 
-  return sections.length > 0
-    ? `\nKontekst:\n${sections.join('\n')}\n`
-    : '';
+  return sections.length > 0 ? `\nKontekst:\n${sections.join("\n")}\n` : "";
 }
 
 /**
@@ -146,26 +144,28 @@ function parseResponseSuggestions(
     // Extract JSON array from response
     const jsonMatch = content.match(/\[[\s\S]*\]/);
     if (!jsonMatch) {
-      throw new Error('No JSON array found in response');
+      throw new Error("No JSON array found in response");
     }
 
     const parsed = JSON.parse(jsonMatch[0]);
 
     if (!Array.isArray(parsed)) {
-      throw new Error('Response is not an array');
+      throw new Error("Response is not an array");
     }
 
     // Validate and transform each suggestion
-    return parsed.map((item, index) => ({
-      id: `${email.id}-suggestion-${index}`,
-      type: validateType(item.type),
-      text: item.text || '',
-      tone: validateTone(item.tone),
-      confidence: Math.min(Math.max(item.confidence || 0, 0), 1),
-      reasoning: item.reasoning,
-    })).filter(s => s.text.length > 0);
+    return parsed
+      .map((item, index) => ({
+        id: `${email.id}-suggestion-${index}`,
+        type: validateType(item.type),
+        text: item.text || "",
+        tone: validateTone(item.tone),
+        confidence: Math.min(Math.max(item.confidence || 0, 0), 1),
+        reasoning: item.reasoning,
+      }))
+      .filter(s => s.text.length > 0);
   } catch (error) {
-    console.error('Failed to parse response suggestions:', error);
+    console.error("Failed to parse response suggestions:", error);
     throw error;
   }
 }
@@ -173,17 +173,30 @@ function parseResponseSuggestions(
 /**
  * Validate suggestion type
  */
-function validateType(type: string): ResponseSuggestion['type'] {
-  const validTypes: ResponseSuggestion['type'][] = ['quick_reply', 'detailed', 'forward', 'schedule'];
-  return validTypes.includes(type as any) ? type as ResponseSuggestion['type'] : 'quick_reply';
+function validateType(type: string): ResponseSuggestion["type"] {
+  const validTypes: ResponseSuggestion["type"][] = [
+    "quick_reply",
+    "detailed",
+    "forward",
+    "schedule",
+  ];
+  return validTypes.includes(type as any)
+    ? (type as ResponseSuggestion["type"])
+    : "quick_reply";
 }
 
 /**
  * Validate tone
  */
-function validateTone(tone: string): ResponseSuggestion['tone'] {
-  const validTones: ResponseSuggestion['tone'][] = ['professional', 'friendly', 'formal'];
-  return validTones.includes(tone as any) ? tone as ResponseSuggestion['tone'] : 'professional';
+function validateTone(tone: string): ResponseSuggestion["tone"] {
+  const validTones: ResponseSuggestion["tone"][] = [
+    "professional",
+    "friendly",
+    "formal",
+  ];
+  return validTones.includes(tone as any)
+    ? (tone as ResponseSuggestion["tone"])
+    : "professional";
 }
 
 /**
@@ -198,31 +211,31 @@ function generateTemplateResponses(
   const suggestions: ResponseSuggestion[] = [
     {
       id: `${email.id}-template-quick`,
-      type: 'quick_reply',
+      type: "quick_reply",
       text: `Hej ${senderName},\n\nTak for din mail. Jeg har modtaget den og vender tilbage hurtigst muligt.\n\nVenlig hilsen`,
-      tone: 'professional',
+      tone: "professional",
       confidence: 0.7,
-      reasoning: 'Standard bekræftelse',
+      reasoning: "Standard bekræftelse",
     },
     {
       id: `${email.id}-template-detailed`,
-      type: 'detailed',
+      type: "detailed",
       text: `Hej ${senderName},\n\nTak for din henvendelse vedrørende "${email.subject}".\n\nJeg har noteret dine punkter og vil gennemgå dem grundigt. Jeg vender tilbage med et detaljeret svar inden for 24 timer.\n\nHvis du har yderligere spørgsmål i mellemtiden, er du velkommen til at kontakte mig.\n\nVenlig hilsen`,
-      tone: 'professional',
+      tone: "professional",
       confidence: 0.75,
-      reasoning: 'Detaljeret bekræftelse med forventning',
+      reasoning: "Detaljeret bekræftelse med forventning",
     },
   ];
 
   // Add context-specific suggestion if VIP
-  if (context?.senderRelationship === 'vip') {
+  if (context?.senderRelationship === "vip") {
     suggestions.push({
       id: `${email.id}-template-vip`,
-      type: 'detailed',
+      type: "detailed",
       text: `Kære ${senderName},\n\nTak for din mail. Jeg prioriterer din henvendelse og vil sørge for at give dig et fyldestgørende svar snarest muligt.\n\nJeg kontakter dig direkte senere i dag.\n\nMed venlig hilsen`,
-      tone: 'formal',
+      tone: "formal",
       confidence: 0.8,
-      reasoning: 'VIP prioriteret respons',
+      reasoning: "VIP prioriteret respons",
     });
   }
 
@@ -247,7 +260,7 @@ function extractSenderName(from: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
-  return 'der';
+  return "der";
 }
 
 /**
@@ -258,11 +271,11 @@ export async function generateQuickReplies(
   userId: number
 ): Promise<string[]> {
   const quickReplies = [
-    'Tak for din mail!',
-    'Modtaget - vender tilbage snarest.',
-    'Tak! Jeg kigger på det.',
-    'Perfekt, tak!',
-    'Det lyder godt!',
+    "Tak for din mail!",
+    "Modtaget - vender tilbage snarest.",
+    "Tak! Jeg kigger på det.",
+    "Perfekt, tak!",
+    "Det lyder godt!",
   ];
 
   // Could enhance with LLM for context-specific quick replies

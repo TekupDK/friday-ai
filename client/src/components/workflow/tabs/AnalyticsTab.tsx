@@ -13,13 +13,13 @@ export default function AnalyticsTab() {
         <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-lg">
           <TrendingUp className="w-10 h-10 text-white" />
         </div>
-        
+
         <div className="space-y-3">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Business Analytics
           </h2>
           <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-            Avanceret forretningsanalyse for Rendetalje. Følg nøgletal, 
+            Avanceret forretningsanalyse for Rendetalje. Følg nøgletal,
             indtjening, kundetilfredshed og medarbejderproduktivitet.
           </p>
         </div>
@@ -55,9 +55,7 @@ export default function AnalyticsTab() {
             <TrendingUp className="w-4 h-4" />
             Se Rapporter
           </Button>
-          <Button variant="outline">
-            Eksporter Data
-          </Button>
+          <Button variant="outline">Eksporter Data</Button>
         </div>
       </div>
     </div>

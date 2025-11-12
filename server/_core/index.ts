@@ -1,18 +1,22 @@
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import cors from "cors";
 import "dotenv/config";
-import express from "express";
-import rateLimit from "express-rate-limit";
 import { createServer } from "http";
 import net from "net";
+
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import cors from "cors";
+import express from "express";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+
 import * as db from "../db";
+import { startDocsService } from "../docs/service";
 import { appRouter } from "../routers";
+
 import { createContext } from "./context";
 import { ENV } from "./env";
 import { logger } from "./logger";
 import { registerOAuthRoutes } from "./oauth";
 import { serveStatic, setupVite } from "./vite";
-import { startDocsService } from "../docs/service";
 
 /**
  * Check if historical data import is needed and run it automatically
@@ -92,13 +96,56 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
-  // CORS configuration for cookie support
+  // Security headers via Helmet
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Vite dev needs unsafe-eval
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          imgSrc: ["'self'", "data:", "https:"],
+          connectSrc: ["'self'", "ws:", "wss:"], // WebSocket for Vite HMR
+          fontSrc: ["'self'", "data:"],
+          objectSrc: ["'none'"],
+          mediaSrc: ["'self'"],
+          frameSrc: ["'none'"],
+        },
+      },
+      crossOriginEmbedderPolicy: false, // Needed for some external resources
+      hsts: {
+        maxAge: 31536000, // 1 year
+        includeSubDomains: true,
+        preload: true,
+      },
+    })
+  );
+
+  // CORS configuration with strict production rules
+  const allowedOrigins = ENV.corsAllowedOrigins;
+
   app.use(
     cors({
-      origin: true, // Allow all origins in development
+      origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, Postman, etc.)
+        if (!origin) {
+          callback(null, true);
+          return;
+        }
+
+        // Check if origin is in whitelist
+        if (allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          logger.warn({ origin, allowedOrigins }, "CORS: Blocked origin");
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
       credentials: true, // CRITICAL: Allow cookies
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+      exposedHeaders: ["Set-Cookie"],
+      maxAge: 86400, // 24 hours preflight cache
     })
   );
 
@@ -166,7 +213,10 @@ async function startServer() {
     });
 
     // Start Documentation service (optional)
-    logger.info({ docsEnable: process.env.DOCS_ENABLE }, "[Server] Checking DOCS_ENABLE");
+    logger.info(
+      { docsEnable: process.env.DOCS_ENABLE },
+      "[Server] Checking DOCS_ENABLE"
+    );
     if (process.env.DOCS_ENABLE === "true") {
       try {
         logger.info("[Server] Starting docs service...");

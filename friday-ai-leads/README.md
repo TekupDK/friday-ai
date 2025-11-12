@@ -115,9 +115,9 @@ npm install
 ```typescript
 // config/chromadb.config.ts
 export const CHROMADB_CONFIG = {
-  url: 'http://localhost:8000',
-  collection: 'leads_v4_3_3',
-  embeddings: 'text-embedding-ada-002'
+  url: "http://localhost:8000",
+  collection: "leads_v4_3_3",
+  embeddings: "text-embedding-ada-002",
 };
 ```
 
@@ -144,24 +144,28 @@ npm run start
 ## 💡 Key Features
 
 ### **Customer Intelligence** 🧠
+
 - Instant customer lookup
 - Complete booking history
 - Special requirements tracking
 - Quality history
 
 ### **Predictive Analytics** 📊
+
 - Next booking prediction
 - Churn risk detection
 - Upsell opportunity identification
 - Revenue forecasting
 
 ### **Alert System** ⚠️
+
 - Overdue booking alerts
 - Quality issue warnings
 - Payment reminders
 - Opportunity notifications
 
 ### **Revenue Optimization** 💰
+
 - Upsell recommendations
 - Frequency optimization
 - Premium customer identification

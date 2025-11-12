@@ -10,6 +10,7 @@
 ### 1. TypeScript & Build Setup (100% ✅)
 
 **Filer modificeret:**
+
 - `tsconfig.json` - Tilføjet `target: ES2022` og `downlevelIteration: true`
 - `server/docs/types.ts` - Rettet Zod schemas (z.record med key+value types)
 
@@ -22,6 +23,7 @@
 **Nye filer:**
 
 #### Git Sync Engine
+
 - **Fil:** `server/docs/sync/git-sync-engine.ts` (233 linjer)
 - **Features:**
   - Chokidar file watcher for `.md` filer
@@ -32,6 +34,7 @@
   - Debounced batch processing
 
 #### WebSocket Hub
+
 - **Fil:** `server/docs/ws/websocket-hub.ts` (227 linjer)
 - **Features:**
   - WebSocket server på separat port (default 3002)
@@ -42,6 +45,7 @@
   - Real-time collaboration events
 
 #### Service Wrapper
+
 - **Fil:** `server/docs/service.ts` (59 linjer)
 - **Features:**
   - Binder Git sync + WebSocket sammen
@@ -50,6 +54,7 @@
   - Graceful start/stop
 
 #### Server Integration
+
 - **Fil modificeret:** `server/_core/index.ts`
 - **Features:**
   - Import og start af docs service
@@ -61,6 +66,7 @@
 ### 3. Database Schema (100% ✅)
 
 **Filer modificeret:**
+
 - `drizzle/schema.ts` - Tilføjet 4 nye tabeller + enums
 
 **Nye tabeller:**
@@ -105,6 +111,7 @@
 **tRPC Endpoints:**
 
 #### CRUD Operations
+
 - ✅ `docs.list` - List documents med filtering (category, tags, author, search)
 - ✅ `docs.get` - Get single document by ID
 - ✅ `docs.create` - Create new document + audit log
@@ -113,15 +120,18 @@
 - ✅ `docs.history` - Get document change history
 
 #### Comments
+
 - ✅ `docs.addComment` - Add comment (with optional line number)
 - ✅ `docs.getComments` - Get all comments for document
 - ✅ `docs.resolveComment` - Mark comment as resolved
 
 #### Conflicts
+
 - ✅ `docs.getConflicts` - List all unresolved conflicts
 - ✅ `docs.resolveConflict` - Resolve conflict (accept_local/accept_remote/manual)
 
 #### Search
+
 - ✅ `docs.search` - Full-text search med facets (categories, tags, authors)
 
 **Integration:** Tilføjet til `server/routers.ts` som `docs: docsRouter`
@@ -133,6 +143,7 @@
 **Fil modificeret:** `.env.dev.template`
 
 **Nye ENV variabler:**
+
 ```env
 # Enable documentation service
 DOCS_ENABLE=false                    # Set to true to activate
@@ -155,6 +166,7 @@ DOCS_WS_PORT=3002                    # Real-time updates port
 ### 6. Dependencies (100% ✅)
 
 **Installeret via pnpm:**
+
 - ✅ `simple-git@^3.30.0` - Git operations
 - ✅ `chokidar@^4.0.3` - File watching
 - ✅ `ws@^8.18.3` - WebSocket server
@@ -166,6 +178,7 @@ DOCS_WS_PORT=3002                    # Real-time updates port
 ### 7. CLI Scaffold (30% 🟡)
 
 **Oprettet filer:**
+
 - `cli/tekup-docs/package.json` - Dependencies defineret
 - `cli/tekup-docs/src/index.ts` - Commander.js setup
 - `cli/tekup-docs/README.md` - Komplet dokumentation
@@ -177,6 +190,7 @@ DOCS_WS_PORT=3002                    # Real-time updates port
 ### 8. Dokumentation (100% ✅)
 
 **Oprettet guides:**
+
 1. `REALTIME_DOCS_SYSTEM_ARCHITECTURE.md` (451 linjer) - Komplet arkitektur
 2. `REALTIME_DOCS_QUICK_START.md` (411 linjer) - Setup guide
 3. `REALTIME_DOCS_IMPLEMENTATION_ROADMAP.md` (457 linjer) - 4-ugers roadmap
@@ -191,17 +205,20 @@ DOCS_WS_PORT=3002                    # Real-time updates port
 ### Sådan tester du det:
 
 1. **Aktivér service** - Tilføj til `.env.dev`:
+
    ```env
    DOCS_ENABLE=true
    ```
 
 2. **Kør migration** (først gang):
+
    ```bash
    pnpm db:generate
    pnpm db:migrate:dev
    ```
 
 3. **Start server:**
+
    ```bash
    pnpm dev
    ```
@@ -245,12 +262,12 @@ wscat -c "ws://localhost:3002?userId=test-user"
 
 ```typescript
 // I frontend eller via tRPC client
-import { trpc } from '@/lib/trpc';
+import { trpc } from "@/lib/trpc";
 
 // List documents
-const docs = await trpc.docs.list.query({ 
+const docs = await trpc.docs.list.query({
   category: "API",
-  limit: 10 
+  limit: 10,
 });
 
 // Create document
@@ -259,14 +276,14 @@ const newDoc = await trpc.docs.create.mutate({
   title: "Test Document",
   content: "# Test\n\nHello world",
   category: "Test",
-  tags: ["test", "example"]
+  tags: ["test", "example"],
 });
 
 // Add comment
 const comment = await trpc.docs.addComment.mutate({
   documentId: newDoc.id,
   content: "Great documentation!",
-  lineNumber: 5
+  lineNumber: 5,
 });
 ```
 
@@ -277,6 +294,7 @@ const comment = await trpc.docs.addComment.mutate({
 ### CLI Implementation (70% mangler)
 
 **Behøver:**
+
 - `cli/tekup-docs/src/commands/list.ts` - List documents
 - `cli/tekup-docs/src/commands/create.ts` - Create document
 - `cli/tekup-docs/src/commands/edit.ts` - Edit document
@@ -294,6 +312,7 @@ const comment = await trpc.docs.addComment.mutate({
 ### Frontend Portal (100% mangler)
 
 **Behøver:**
+
 - `client/src/pages/docs/DocsPage.tsx` - Main docs page
 - `client/src/pages/docs/DocsViewer.tsx` - Document viewer
 - `client/src/pages/docs/DocsEditor.tsx` - Markdown editor
@@ -311,6 +330,7 @@ const comment = await trpc.docs.addComment.mutate({
 ### AI Integration (100% mangler)
 
 **Behøver:**
+
 - `server/docs/ai/docs-agent.ts` - AI agent
 - Generate documentation fra prompts
 - Improve existing documentation
@@ -325,6 +345,7 @@ const comment = await trpc.docs.addComment.mutate({
 ### Testing Suite (100% mangler)
 
 **Behøver:**
+
 - Unit tests (Git sync, WS hub, API endpoints)
 - Integration tests (E2E flows)
 - Playwright tests (Frontend interactions)
@@ -335,21 +356,21 @@ const comment = await trpc.docs.addComment.mutate({
 
 ## 📊 Samlet Status
 
-| Komponent | Status | Procent | Tid brugt |
-|-----------|--------|---------|-----------|
-| TypeScript Setup | ✅ Komplet | 100% | 15 min |
-| Backend Infrastructure | ✅ Komplet | 100% | 2 timer |
-| Database Schema | ✅ Komplet | 100% | 45 min |
-| API Layer (tRPC) | ✅ Komplet | 100% | 1.5 timer |
-| Environment Config | ✅ Komplet | 100% | 10 min |
-| Dependencies | ✅ Komplet | 100% | 5 min |
-| Dokumentation | ✅ Komplet | 100% | 1 time |
-| Server Integration | ✅ Komplet | 100% | 15 min |
-| CLI Scaffold | 🟡 Delvist | 30% | 30 min |
-| CLI Handlers | 🔴 Mangler | 0% | - |
-| Frontend Portal | 🔴 Mangler | 0% | - |
-| AI Integration | 🔴 Mangler | 0% | - |
-| Testing | 🔴 Mangler | 0% | - |
+| Komponent              | Status     | Procent | Tid brugt |
+| ---------------------- | ---------- | ------- | --------- |
+| TypeScript Setup       | ✅ Komplet | 100%    | 15 min    |
+| Backend Infrastructure | ✅ Komplet | 100%    | 2 timer   |
+| Database Schema        | ✅ Komplet | 100%    | 45 min    |
+| API Layer (tRPC)       | ✅ Komplet | 100%    | 1.5 timer |
+| Environment Config     | ✅ Komplet | 100%    | 10 min    |
+| Dependencies           | ✅ Komplet | 100%    | 5 min     |
+| Dokumentation          | ✅ Komplet | 100%    | 1 time    |
+| Server Integration     | ✅ Komplet | 100%    | 15 min    |
+| CLI Scaffold           | 🟡 Delvist | 30%     | 30 min    |
+| CLI Handlers           | 🔴 Mangler | 0%      | -         |
+| Frontend Portal        | 🔴 Mangler | 0%      | -         |
+| AI Integration         | 🔴 Mangler | 0%      | -         |
+| Testing                | 🔴 Mangler | 0%      | -         |
 
 **Samlet Progress:** ~45% af komplet system  
 **Tid investeret:** ~6.5 timer  
@@ -360,6 +381,7 @@ const comment = await trpc.docs.addComment.mutate({
 ## 🎯 Næste Steps
 
 ### Immediate (i dag/i morgen)
+
 1. ✅ Kør migration: `pnpm db:generate && pnpm db:migrate:dev`
 2. ✅ Test docs service starter korrekt
 3. ✅ Test Git sync ved at redigere en `.md` fil
@@ -367,17 +389,20 @@ const comment = await trpc.docs.addComment.mutate({
 5. ✅ Test API endpoints via tRPC
 
 ### Kort sigt (denne uge)
+
 1. Implementer CLI command handlers
 2. Basic frontend docs page (list + view)
 3. Test E2E flow: CLI → API → Database → WebSocket
 
 ### Mellem sigt (næste uge)
+
 1. Frontend editor med real-time updates
 2. Comment system UI
 3. Conflict resolution UI
 4. AI integration (generate + improve)
 
 ### Lang sigt (uge 3-4)
+
 1. Advanced search med facets
 2. Version history UI
 3. Batch operations
@@ -389,6 +414,7 @@ const comment = await trpc.docs.addComment.mutate({
 ## 🚀 Sådan bruger du det (når komplet)
 
 ### Fra CLI
+
 ```bash
 # List alle docs
 tekup-docs list
@@ -410,6 +436,7 @@ tekup-docs ai improve doc-uuid --focus="examples,clarity"
 ```
 
 ### Fra API
+
 ```typescript
 // List
 const docs = await trpc.docs.list.query({ category: "API" });
@@ -419,26 +446,27 @@ const doc = await trpc.docs.create.mutate({
   title: "New Feature",
   content: "# Feature\n\nDescription...",
   category: "Features",
-  tags: ["new", "api"]
+  tags: ["new", "api"],
 });
 
 // Update
 await trpc.docs.update.mutate({
   id: doc.id,
-  content: "# Updated\n\nNew content..."
+  content: "# Updated\n\nNew content...",
 });
 
 // Comment
 await trpc.docs.addComment.mutate({
   documentId: doc.id,
   content: "Looks good!",
-  lineNumber: 10
+  lineNumber: 10,
 });
 ```
 
 ### Fra WebSocket
+
 ```typescript
-import { useDocsWebSocket } from '@/hooks/useDocsWebSocket';
+import { useDocsWebSocket } from "@/hooks/useDocsWebSocket";
 
 const { subscribe, unsubscribe } = useDocsWebSocket();
 
@@ -446,8 +474,8 @@ const { subscribe, unsubscribe } = useDocsWebSocket();
 subscribe("doc-uuid");
 
 // Listen for events
-ws.on('doc:updated', (doc) => {
-  console.log('Document updated:', doc);
+ws.on("doc:updated", doc => {
+  console.log("Document updated:", doc);
 });
 ```
 
@@ -456,6 +484,7 @@ ws.on('doc:updated', (doc) => {
 ## 🎓 Hvad har vi lært
 
 ### Tekniske valg der virkede godt
+
 - ✅ Drizzle ORM - Type-safe database access
 - ✅ tRPC - End-to-end type safety
 - ✅ Chokidar - Robust file watching
@@ -464,6 +493,7 @@ ws.on('doc:updated', (doc) => {
 - ✅ Pino logger - Struktureret logging
 
 ### Udfordringer løst
+
 - ✅ TypeScript iterator issues (downlevelIteration)
 - ✅ Zod record type definitions
 - ✅ Logger format consistency
@@ -471,6 +501,7 @@ ws.on('doc:updated', (doc) => {
 - ✅ Database schema design med JSONB for tags
 
 ### Best practices fulgt
+
 - ✅ Feature flag for gradual rollout
 - ✅ Audit logging af alle changes
 - ✅ Indexes på frequently queried columns
@@ -483,12 +514,13 @@ ws.on('doc:updated', (doc) => {
 ## 📞 Support & Næste Skridt
 
 **Spørgsmål:**
+
 1. Skal jeg implementere CLI handlers næste?
 2. Vil du have frontend portal først?
 3. Skal AI integration prioriteres?
 4. Noget andet der er vigtigere?
 
-**Kontakt:** Sig til hvad du vil have mig til at fokusere på! 
+**Kontakt:** Sig til hvad du vil have mig til at fokusere på!
 
 ---
 

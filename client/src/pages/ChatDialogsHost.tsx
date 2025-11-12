@@ -1,4 +1,11 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,14 +45,16 @@ export function DialogHost({
   const close = () => onClose();
 
   return (
-    <Dialog open={open} onOpenChange={(o) => !o && close()}>
+    <Dialog open={open} onOpenChange={o => !o && close()}>
       {open && (
         <DialogContent className="sm:max-w-lg">
           {type === "message-reply" && (
             <>
               <DialogHeader>
                 <DialogTitle>Svar på besked</DialogTitle>
-                <DialogDescription>{data?.subject || "Skriv dit svar"}</DialogDescription>
+                <DialogDescription>
+                  {data?.subject || "Skriv dit svar"}
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-3">
                 <Textarea rows={6} placeholder="Skriv dit svar..." />
@@ -60,7 +69,9 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Videresend besked</DialogTitle>
-                <DialogDescription>{data?.subject || "Angiv modtager og besked"}</DialogDescription>
+                <DialogDescription>
+                  {data?.subject || "Angiv modtager og besked"}
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-3">
                 <Input placeholder="Til: email@domain.com" />
@@ -76,7 +87,9 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Svar på email</DialogTitle>
-                <DialogDescription>{data?.subject || "Re: ..."}</DialogDescription>
+                <DialogDescription>
+                  {data?.subject || "Re: ..."}
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-3">
                 <Textarea rows={8} placeholder="Skriv dit svar..." />
@@ -91,7 +104,9 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Videresend email</DialogTitle>
-                <DialogDescription>{data?.subject || "FW: ..."}</DialogDescription>
+                <DialogDescription>
+                  {data?.subject || "FW: ..."}
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-3">
                 <Input placeholder="Til: email@domain.com" />
@@ -110,7 +125,9 @@ export function DialogHost({
                 <DialogDescription>Flyt email til arkiv.</DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button variant="outline" onClick={close}>Annuller</Button>
+                <Button variant="outline" onClick={close}>
+                  Annuller
+                </Button>
                 <Button onClick={close}>Arkiver</Button>
               </DialogFooter>
             </>
@@ -135,14 +152,21 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Opgave</DialogTitle>
-                <DialogDescription>{data?.title || "Rediger opgave"}</DialogDescription>
+                <DialogDescription>
+                  {data?.title || "Rediger opgave"}
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-3">
                 <Input defaultValue={data?.title || "Titel"} />
-                <Textarea rows={5} defaultValue={data?.description || "Beskrivelse"} />
+                <Textarea
+                  rows={5}
+                  defaultValue={data?.description || "Beskrivelse"}
+                />
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={close}>Luk</Button>
+                <Button variant="outline" onClick={close}>
+                  Luk
+                </Button>
                 <Button onClick={close}>Gem</Button>
               </DialogFooter>
             </>
@@ -152,10 +176,14 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Kalender</DialogTitle>
-                <DialogDescription>{data?.title || "Mødedetaljer"}</DialogDescription>
+                <DialogDescription>
+                  {data?.title || "Mødedetaljer"}
+                </DialogDescription>
               </DialogHeader>
               <div className="text-sm text-muted-foreground space-y-2">
-                <div>{data?.date} {data?.time}</div>
+                <div>
+                  {data?.date} {data?.time}
+                </div>
                 <div>{data?.location}</div>
               </div>
               <DialogFooter>
@@ -175,7 +203,9 @@ export function DialogHost({
                 <Input defaultValue={data?.location || "Lokation"} />
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={close}>Annuller</Button>
+                <Button variant="outline" onClick={close}>
+                  Annuller
+                </Button>
                 <Button onClick={close}>Gem</Button>
               </DialogFooter>
             </>
@@ -185,9 +215,13 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Dokument</DialogTitle>
-                <DialogDescription>{data?.name || "Forhåndsvisning"}</DialogDescription>
+                <DialogDescription>
+                  {data?.name || "Forhåndsvisning"}
+                </DialogDescription>
               </DialogHeader>
-              <div className="text-sm text-muted-foreground">Type: {data?.type || "PDF"} • Størrelse: {data?.size || "-"}</div>
+              <div className="text-sm text-muted-foreground">
+                Type: {data?.type || "PDF"} • Størrelse: {data?.size || "-"}
+              </div>
               <DialogFooter>
                 <Button onClick={close}>Luk</Button>
               </DialogFooter>
@@ -198,9 +232,13 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Fil</DialogTitle>
-                <DialogDescription>{data?.name || "Forhåndsvisning"}</DialogDescription>
+                <DialogDescription>
+                  {data?.name || "Forhåndsvisning"}
+                </DialogDescription>
               </DialogHeader>
-              <div className="text-sm text-muted-foreground">{data?.info || "Ingen forhåndsvisning tilgængelig"}</div>
+              <div className="text-sm text-muted-foreground">
+                {data?.info || "Ingen forhåndsvisning tilgængelig"}
+              </div>
               <DialogFooter>
                 <Button onClick={close}>Luk</Button>
               </DialogFooter>
@@ -214,8 +252,13 @@ export function DialogHost({
                 <DialogDescription>{data?.name || "Profil"}</DialogDescription>
               </DialogHeader>
               <div className="space-y-2 text-sm">
-                <div className="flex gap-2 items-center"><Badge variant="secondary">Email</Badge> {data?.email || "-"}</div>
-                <div className="flex gap-2 items-center"><Badge variant="secondary">Telefon</Badge> {data?.phone || "-"}</div>
+                <div className="flex gap-2 items-center">
+                  <Badge variant="secondary">Email</Badge> {data?.email || "-"}
+                </div>
+                <div className="flex gap-2 items-center">
+                  <Badge variant="secondary">Telefon</Badge>{" "}
+                  {data?.phone || "-"}
+                </div>
               </div>
               <DialogFooter>
                 <Button onClick={close}>Luk</Button>
@@ -227,9 +270,13 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Faktura</DialogTitle>
-                <DialogDescription>{data?.number || "Detaljer"}</DialogDescription>
+                <DialogDescription>
+                  {data?.number || "Detaljer"}
+                </DialogDescription>
               </DialogHeader>
-              <div className="text-sm text-muted-foreground">Beløb: {data?.amount || "-"}</div>
+              <div className="text-sm text-muted-foreground">
+                Beløb: {data?.amount || "-"}
+              </div>
               <DialogFooter>
                 <Button onClick={close}>Luk</Button>
               </DialogFooter>
@@ -240,9 +287,13 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Analytics</DialogTitle>
-                <DialogDescription>{data?.title || "Detaljer"}</DialogDescription>
+                <DialogDescription>
+                  {data?.title || "Detaljer"}
+                </DialogDescription>
               </DialogHeader>
-              <div className="text-sm text-muted-foreground">Periode: {data?.period || "-"}</div>
+              <div className="text-sm text-muted-foreground">
+                Periode: {data?.period || "-"}
+              </div>
               <DialogFooter>
                 <Button onClick={close}>Luk</Button>
               </DialogFooter>
@@ -253,9 +304,13 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Status Historik</DialogTitle>
-                <DialogDescription>{data?.service || "Service"}</DialogDescription>
+                <DialogDescription>
+                  {data?.service || "Service"}
+                </DialogDescription>
               </DialogHeader>
-              <div className="text-sm text-muted-foreground">Seneste hændelser...</div>
+              <div className="text-sm text-muted-foreground">
+                Seneste hændelser...
+              </div>
               <DialogFooter>
                 <Button onClick={close}>Luk</Button>
               </DialogFooter>
@@ -266,7 +321,9 @@ export function DialogHost({
             <>
               <DialogHeader>
                 <DialogTitle>Rediger skabelon</DialogTitle>
-                <DialogDescription>{data?.label || "Hurtigt svar"}</DialogDescription>
+                <DialogDescription>
+                  {data?.label || "Hurtigt svar"}
+                </DialogDescription>
               </DialogHeader>
               <Textarea rows={6} defaultValue={data?.message || ""} />
               <DialogFooter>
@@ -282,7 +339,9 @@ export function DialogHost({
                 <DialogDescription>Dette kan ikke fortrydes.</DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button variant="outline" onClick={close}>Annuller</Button>
+                <Button variant="outline" onClick={close}>
+                  Annuller
+                </Button>
                 <Button onClick={close}>Slet</Button>
               </DialogFooter>
             </>
@@ -295,7 +354,9 @@ export function DialogHost({
                 <DialogDescription>Bekræft eksport af data</DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button variant="outline" onClick={close}>Annuller</Button>
+                <Button variant="outline" onClick={close}>
+                  Annuller
+                </Button>
                 <Button onClick={close}>Eksporter</Button>
               </DialogFooter>
             </>

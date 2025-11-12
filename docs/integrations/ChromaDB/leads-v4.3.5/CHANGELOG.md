@@ -7,6 +7,7 @@ All notable changes to the V4.3 lead data pipeline.
 ## [4.3.5] - 2025-11-10 🤖 AI-Enhanced Edition
 
 ### ✨ Added
+
 - **AI-Enhanced Calendar Parsing**
   - OpenRouter GLM-4.5-Air integration (FREE tier)
   - Intelligent extraction of customer, service, and quality data
@@ -41,12 +42,14 @@ All notable changes to the V4.3 lead data pipeline.
   - `specialRequirements` array
 
 ### 🔧 Changed
+
 - Recurring detection now uses AI booking numbers
 - Single-booking customers can be tagged as recurring
 - Frequency classification improved with AI validation
 - Customer metrics now include AI quality signals
 
 ### 📊 Improved
+
 - **Recurring Detection:** +26% improvement (19 → 24 customers)
 - **Weekly:** 3 → 4 customers
 - **Biweekly:** 6 → 7 customers
@@ -54,6 +57,7 @@ All notable changes to the V4.3 lead data pipeline.
 - **Monthly:** 1 → 3 customers
 
 ### 📁 Files Added
+
 - `scripts/ai-calendar-parser.ts` - OpenRouter AI parser
 - `scripts/calendar-parser-v4_3_5.ts` - Hybrid parser
 - `scripts/test-ai-parser.ts` - AI parser tests
@@ -61,6 +65,7 @@ All notable changes to the V4.3 lead data pipeline.
 - `docs/CHANGELOG.md` - This file
 
 ### 📁 Files Modified
+
 - `scripts/1-collect-and-link-v4_3_3.ts` - Added AI parsing integration
 - `scripts/3-add-recurring-tags.ts` - AI frequency validation
 - `v4_3-types.ts` - Added AI quality signal types
@@ -70,6 +75,7 @@ All notable changes to the V4.3 lead data pipeline.
 ## [4.3.4] - 2025-11-10 🔄 Recurring Detection
 
 ### ✨ Added
+
 - **Recurring Customer Detection**
   - Groups leads by calendar customer name
   - Calculates frequency patterns (weekly/biweekly/triweekly/monthly/irregular)
@@ -86,14 +92,17 @@ All notable changes to the V4.3 lead data pipeline.
   - Improves customer matching accuracy
 
 ### 🔧 Changed
+
 - Customer value metrics now reflect calendar bookings
 - `totalBookings` counts actual calendar events
 - Recurring detection uses normalized customer names
 
 ### 📁 Files Added
+
 - `scripts/3-add-recurring-tags.ts` - Recurring detection script
 
 ### 📁 Files Modified
+
 - `v4_3-types.ts` - Added recurring fields to `CustomerValueMetrics`
 - `v4_3-config.ts` - Added `ACTIVE_PERIOD` constant
 
@@ -102,6 +111,7 @@ All notable changes to the V4.3 lead data pipeline.
 ## [4.3.3] - 2025-11-09 🎯 Advanced Matching
 
 ### ✨ Added
+
 - **Advanced Matching Algorithms**
   - Fuzzy address matching (Billy ↔ Calendar)
   - Extended date proximity window (±14 days)
@@ -125,16 +135,19 @@ All notable changes to the V4.3 lead data pipeline.
   - Matching success rates
 
 ### 🔧 Changed
+
 - Time window expanded: July 1 - November 30, 2025
 - Gmail matching threshold lowered
 - Billy matching threshold lowered
 
 ### 📊 Improved
+
 - Calendar coverage: 18% → 33.5%
 - Data completeness: 52% → 68%
 - Phone extraction: 38.7% of leads
 
 ### 📁 Files Added
+
 - `scripts/1-collect-and-link-v4_3_3.ts` - Advanced matching
 - `scripts/2-calculate-metrics-v4_3_3.ts` - Metrics calculation
 
@@ -143,6 +156,7 @@ All notable changes to the V4.3 lead data pipeline.
 ## [4.3.2] - 2025-11-08 📅 RenOS Calendar Format
 
 ### ✨ Added
+
 - **RenOS Calendar Format Support**
   - Parse structured event descriptions
   - Extract customer email, phone, service type, price
@@ -156,6 +170,7 @@ All notable changes to the V4.3 lead data pipeline.
   - Price parsing from descriptions
 
 ### 🔧 Changed
+
 - Calendar collection targets RenOS Automatisk Booking
 - Spam filtering for test events
 - Event duration calculated properly
@@ -165,6 +180,7 @@ All notable changes to the V4.3 lead data pipeline.
 ## [4.3.1] - 2025-11-07 🔍 Targeted Search
 
 ### ✨ Added
+
 - **Targeted Gmail Search**
   - Filter by known lead sources (Leadpoint, Leadmail, Adhelp)
   - Date-range filtering
@@ -176,6 +192,7 @@ All notable changes to the V4.3 lead data pipeline.
   - Leadpoint.dk (Rengøring Aarhus)
 
 ### 🔧 Changed
+
 - Gmail query optimized for lead sources
 - Reduced noise from non-lead emails
 
@@ -184,6 +201,7 @@ All notable changes to the V4.3 lead data pipeline.
 ## [4.3.0] - 2025-11-06 🚀 Foundation
 
 ### ✨ Added
+
 - **Multi-Source Data Collection**
   - Gmail threads integration
   - Google Calendar events
@@ -200,6 +218,7 @@ All notable changes to the V4.3 lead data pipeline.
   - Document storage
 
 ### 📁 Files Added
+
 - `scripts/4-upload-to-chromadb.ts` - ChromaDB upload
 - `v4_3-config.ts` - Configuration
 - `v4_3-types.ts` - TypeScript types

@@ -38,6 +38,7 @@ Create en komplet dokumentationsløsning hvor hele teamet – inklusiv AI copilo
 - `server/docs/ws/websocket-hub.ts` - WebSocket server for real-time collaboration
 
 **Features:**
+
 - Bidirectional Git sync with automatic commit/push
 - File system watching for live updates
 - Conflict detection and resolution strategies
@@ -54,6 +55,7 @@ Create en komplet dokumentationsløsning hvor hele teamet – inklusiv AI copilo
 - `cli/tekup-docs/README.md` - Complete CLI documentation
 
 **Planned Commands:**
+
 - `list` - List and filter documents
 - `create` - Create new documents
 - `edit` - Edit documents
@@ -166,6 +168,7 @@ Create en komplet dokumentationsløsning hvor hele teamet – inklusiv AI copilo
 ### Immediate Actions (Today)
 
 1. **Install Dependencies**
+
    ```bash
    pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter @types/ws @types/markdown-it @types/inquirer -D
    ```
@@ -244,6 +247,7 @@ Create en komplet dokumentationsløsning hvor hele teamet – inklusiv AI copilo
 ## 🛠️ Technology Stack
 
 ### Backend
+
 - **Runtime:** Node.js 20+
 - **Framework:** Express + tRPC
 - **Git:** simple-git
@@ -253,12 +257,14 @@ Create en komplet dokumentationsløsning hvor hele teamet – inklusiv AI copilo
 - **AI:** OpenRouter API
 
 ### Frontend
+
 - **Framework:** React 19
 - **State:** TanStack Query
 - **Markdown:** remark + rehype
 - **Styling:** TailwindCSS
 
 ### CLI
+
 - **Framework:** Commander.js
 - **Prompts:** Inquirer.js
 - **Styling:** Chalk
@@ -289,18 +295,23 @@ Create en komplet dokumentationsløsning hvor hele teamet – inklusiv AI copilo
 ## 💡 Innovation Highlights
 
 ### 1. DevOps-Venlig Dokumentation
+
 Gør dokumentation til en del af dev-pipelinen med CLI-first approach og Git-integration.
 
 ### 2. AI-Optimerede Flows
+
 Automatisk generering, forbedring og kvalitetsanalyse med AI.
 
 ### 3. Real-time Collaboration
+
 Multi-user editing med presence tracking og live updates.
 
 ### 4. Sikker Versionsstyring
+
 Fuld Git-integration med konfliktløsning og history tracking.
 
 ### 5. API-Adgang
+
 Alle funktioner tilgængelige via API for integration med andre værktøjer.
 
 ---
@@ -308,12 +319,14 @@ Alle funktioner tilgængelige via API for integration med andre værktøjer.
 ## 🔒 Security & Permissions
 
 ### Access Levels
+
 - **Read:** View documentation
 - **Write:** Create and edit
 - **Admin:** Manage categories, approve AI changes
 - **System:** Automated operations (CI/CD, AI)
 
 ### Git Integration
+
 - SSH keys for authentication
 - GPG commit signing
 - Branch protection rules
@@ -336,11 +349,13 @@ All documentation is available in the `docs/` directory:
 ## 🤝 Team & Collaboration
 
 ### Communication Channels
+
 - **Slack:** #tekup-docs-dev
 - **GitHub:** Issues and PRs
 - **Meetings:** Weekly reviews on Thursdays
 
 ### Development Workflow
+
 - **Daily standups** for progress updates
 - **Weekly demos** of completed features
 - **Code reviews** required for all PRs
@@ -353,6 +368,7 @@ All documentation is available in the `docs/` directory:
 **Gør dokumentation ligeså dynamisk og devops-venlig som resten af dev-pipelinen.**
 
 Med denne løsning bliver dokumentation:
+
 - ✅ **Altid opdateret** - Real-time sync
 - ✅ **Let at vedligeholde** - CLI og AI
 - ✅ **Samarbejdsvenlig** - Multi-user editing
@@ -366,6 +382,7 @@ Med denne løsning bliver dokumentation:
 **Status:** Foundation complete - ready for full implementation
 
 **Next Command:**
+
 ```bash
 # Install dependencies
 pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter @types/ws @types/markdown-it @types/inquirer -D

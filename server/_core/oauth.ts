@@ -156,46 +156,51 @@ export function registerOAuthRoutes(app: Express) {
     try {
       // Extract session cookie
       const cookieHeader = req.headers.cookie;
-      const cookies = cookieHeader ? cookieHeader.split(';').reduce((acc, cookie) => {
-        const [key, value] = cookie.trim().split('=');
-        acc[key] = value;
-        return acc;
-      }, {} as Record<string, string>) : {};
+      const cookies = cookieHeader
+        ? cookieHeader.split(";").reduce(
+            (acc, cookie) => {
+              const [key, value] = cookie.trim().split("=");
+              acc[key] = value;
+              return acc;
+            },
+            {} as Record<string, string>
+          )
+        : {};
 
       const sessionCookie = cookies[COOKIE_NAME];
       if (!sessionCookie) {
-        return res.status(401).json({ 
+        return res.status(401).json({
           error: "No session cookie",
-          refreshed: false 
+          refreshed: false,
         });
       }
 
       // Verify session and check expiration
       const sessionData = await sdk.verifySessionWithExp(sessionCookie);
       if (!sessionData) {
-        return res.status(401).json({ 
+        return res.status(401).json({
           error: "Invalid session",
-          refreshed: false 
+          refreshed: false,
         });
       }
 
       // Check if we should refresh (within rolling window)
       const shouldRefresh = sessionData.remainingMs < ROLLING_WINDOW_MS;
-      
+
       if (!shouldRefresh) {
-        return res.json({ 
+        return res.json({
           refreshed: false,
           remainingMs: sessionData.remainingMs,
-          message: "Session still valid"
+          message: "Session still valid",
         });
       }
 
       // Get user for token creation
       const user = await db.getUserByOpenId(sessionData.openId);
       if (!user) {
-        return res.status(401).json({ 
+        return res.status(401).json({
           error: "User not found",
-          refreshed: false 
+          refreshed: false,
         });
       }
 
@@ -220,19 +225,18 @@ export function registerOAuthRoutes(app: Express) {
       console.log("[Auth] Session refreshed successfully:", {
         openId: sessionData.openId,
         oldRemainingMs: sessionData.remainingMs,
-        newExpiry: "1 year"
+        newExpiry: "1 year",
       });
 
-      return res.json({ 
+      return res.json({
         refreshed: true,
-        message: "Session refreshed"
+        message: "Session refreshed",
       });
-
     } catch (error) {
       console.error("[Auth] Session refresh failed", error);
-      return res.status(500).json({ 
+      return res.status(500).json({
         error: "Refresh failed",
-        refreshed: false 
+        refreshed: false,
       });
     }
   });

@@ -1,6 +1,6 @@
 /**
  * V4.3 Configuration
- * 
+ *
  * Lead costs, service types, and business rules for V4.3 enrichment
  */
 
@@ -10,16 +10,16 @@
 
 // V4.3.4: Full history (Jul-Dec 2025) for complete recurring patterns + active/recurring tags
 export const TIME_WINDOW = {
-  start: '2025-07-01T00:00:00Z',
-  end: '2025-12-31T23:59:59Z',
-  startDate: '2025-07-01',
-  endDate: '2025-12-31',
+  start: "2025-07-01T00:00:00Z",
+  end: "2025-12-31T23:59:59Z",
+  startDate: "2025-07-01",
+  endDate: "2025-12-31",
 };
 
 // Active period for tagging (most recent 2 months)
 export const ACTIVE_PERIOD = {
-  start: '2025-10-01T00:00:00Z',
-  end: '2025-11-30T23:59:59Z',
+  start: "2025-10-01T00:00:00Z",
+  end: "2025-11-30T23:59:59Z",
 };
 
 // ============================================================================
@@ -27,11 +27,11 @@ export const ACTIVE_PERIOD = {
 // ============================================================================
 
 export enum LeadSource {
-  LEADPOINT_AARHUS = 'Leadpoint.dk',
-  RENGOERING_NU = 'Rengøring.nu',
-  ADHELP = 'AdHelp',
-  DIRECT = 'Direct',
-  EXISTING = 'Existing',
+  LEADPOINT_AARHUS = "Leadpoint.dk",
+  RENGOERING_NU = "Rengøring.nu",
+  ADHELP = "AdHelp",
+  DIRECT = "Direct",
+  EXISTING = "Existing",
 }
 
 // ============================================================================
@@ -47,7 +47,7 @@ interface LeadCostConfig {
 
 /**
  * VERIFIED Lead Costs (Nov 2025)
- * 
+ *
  * Sources:
  * - Leadpoint: Jonas email ([Opsigelse af samarbejdsaftale])
  * - AdHelp: Silas email 19/8 ([Flere lokale rengøringskunder])
@@ -57,32 +57,32 @@ export const LEAD_COST_CONFIG: Record<LeadSource, LeadCostConfig> = {
   [LeadSource.LEADPOINT_AARHUS]: {
     perLead: { private: 150, erhverv: 750 },
     monthlyFixed: 0,
-    description: '750kr/5 leads (privat), 750kr/lead (erhverv)',
-    verifiedDate: '2025-11-03',
+    description: "750kr/5 leads (privat), 750kr/lead (erhverv)",
+    verifiedDate: "2025-11-03",
   },
   [LeadSource.ADHELP]: {
     perLead: 250,
     monthlyFixed: 0,
-    description: '250kr per lead, ~60% conversion rate',
-    verifiedDate: '2025-08-19',
+    description: "250kr per lead, ~60% conversion rate",
+    verifiedDate: "2025-08-19",
   },
   [LeadSource.RENGOERING_NU]: {
     perLead: 65,
     monthlyFixed: 100,
-    description: '65kr per lead + 100kr monthly service fee',
-    verifiedDate: '2025-10-31',
+    description: "65kr per lead + 100kr monthly service fee",
+    verifiedDate: "2025-10-31",
   },
   [LeadSource.DIRECT]: {
     perLead: 0,
     monthlyFixed: 0,
-    description: 'Direct customer inquiries (organic)',
-    verifiedDate: '2025-11-10',
+    description: "Direct customer inquiries (organic)",
+    verifiedDate: "2025-11-10",
   },
   [LeadSource.EXISTING]: {
     perLead: 0,
     monthlyFixed: 0,
-    description: 'Existing/repeat customers',
-    verifiedDate: '2025-11-10',
+    description: "Existing/repeat customers",
+    verifiedDate: "2025-11-10",
   },
 };
 
@@ -97,28 +97,28 @@ export interface ServiceTypeConfig {
 }
 
 export const SERVICE_TYPES: Record<string, ServiceTypeConfig> = {
-  'REN-001': {
-    name: 'Privatrengøring',
+  "REN-001": {
+    name: "Privatrengøring",
     defaultHours: 3,
     coefficient: 0.01, // 0.01 timer per m²
   },
-  'REN-002': {
-    name: 'Hovedrengøring',
+  "REN-002": {
+    name: "Hovedrengøring",
     defaultHours: 4,
     coefficient: 0.015,
   },
-  'REN-003': {
-    name: 'Flytterengøring',
+  "REN-003": {
+    name: "Flytterengøring",
     defaultHours: 5,
     coefficient: 0.02,
   },
-  'REN-004': {
-    name: 'Erhvervsrengøring',
+  "REN-004": {
+    name: "Erhvervsrengøring",
     defaultHours: 4,
     coefficient: 0.008,
   },
-  'REN-005': {
-    name: 'Fast rengøring',
+  "REN-005": {
+    name: "Fast rengøring",
     defaultHours: 3,
     coefficient: 0.01,
   },
@@ -142,36 +142,36 @@ export const BUSINESS_RULES = {
 
 export const PIPELINE_STAGES = {
   spam: {
-    name: 'Spam',
-    substages: ['filtered', 'irrelevant', 'test'],
+    name: "Spam",
+    substages: ["filtered", "irrelevant", "test"],
   },
   inbox: {
-    name: 'Inbox',
-    substages: ['new', 'reviewing'],
+    name: "Inbox",
+    substages: ["new", "reviewing"],
   },
   contacted: {
-    name: 'Contacted',
-    substages: ['awaiting_response', 'in_discussion', 'quote_sent'],
+    name: "Contacted",
+    substages: ["awaiting_response", "in_discussion", "quote_sent"],
   },
   calendar: {
-    name: 'Calendar',
-    substages: ['scheduled', 'completed', 'cancelled'],
+    name: "Calendar",
+    substages: ["scheduled", "completed", "cancelled"],
   },
   proposal: {
-    name: 'Proposal',
-    substages: ['draft', 'approved', 'sent'],
+    name: "Proposal",
+    substages: ["draft", "approved", "sent"],
   },
   won: {
-    name: 'Won',
-    substages: ['paid', 'partial_paid', 'completed'],
+    name: "Won",
+    substages: ["paid", "partial_paid", "completed"],
   },
   active: {
-    name: 'Active',
-    substages: ['recurring', 'ongoing', 'scheduled_future'],
+    name: "Active",
+    substages: ["recurring", "ongoing", "scheduled_future"],
   },
   lost: {
-    name: 'Lost',
-    substages: ['declined', 'no_response', 'too_expensive', 'dead'],
+    name: "Lost",
+    substages: ["declined", "no_response", "too_expensive", "dead"],
   },
 };
 
@@ -179,18 +179,18 @@ export const PIPELINE_STAGES = {
  * Lead status types
  */
 export enum LeadStatus {
-  SPAM = 'spam',                    // Filtered spam/noise
-  NEW = 'new',                      // New lead, no action
-  CONTACTED = 'contacted',          // We replied, awaiting response
-  NO_RESPONSE = 'no_response',      // No response after 7+ days
-  DEAD = 'dead',                    // No response after 30+ days
-  QUOTED = 'quoted',                // Quote sent
-  SCHEDULED = 'scheduled',          // Booking confirmed
-  INVOICED = 'invoiced',            // Invoice sent
-  PAID = 'paid',                    // Payment received
-  ACTIVE_RECURRING = 'active_recurring', // Active recurring customer
-  LOST = 'lost',                    // Lost to competitor or declined
-  CANCELLED = 'cancelled',          // Booking cancelled
+  SPAM = "spam", // Filtered spam/noise
+  NEW = "new", // New lead, no action
+  CONTACTED = "contacted", // We replied, awaiting response
+  NO_RESPONSE = "no_response", // No response after 7+ days
+  DEAD = "dead", // No response after 30+ days
+  QUOTED = "quoted", // Quote sent
+  SCHEDULED = "scheduled", // Booking confirmed
+  INVOICED = "invoiced", // Invoice sent
+  PAID = "paid", // Payment received
+  ACTIVE_RECURRING = "active_recurring", // Active recurring customer
+  LOST = "lost", // Lost to competitor or declined
+  CANCELLED = "cancelled", // Booking cancelled
 }
 
 /**
@@ -200,18 +200,21 @@ export function determineLeadStatus(lead: {
   billy?: { state: string; isPaid: boolean } | null;
   calendar?: { startTime: string } | null;
   gmail?: { date: string; labels: string[] } | null;
-  calculated?: { 
-    timeline?: { 
+  calculated?: {
+    timeline?: {
       leadReceivedDate: string | null;
       firstReplyDate: string | null;
-    } 
+    };
   };
   serviceType?: string;
 }): LeadStatus {
   const now = new Date();
 
   // Check spam first
-  if (lead.gmail?.labels?.includes('Spam') || lead.gmail?.labels?.includes('Trash')) {
+  if (
+    lead.gmail?.labels?.includes("Spam") ||
+    lead.gmail?.labels?.includes("Trash")
+  ) {
     return LeadStatus.SPAM;
   }
 
@@ -219,12 +222,12 @@ export function determineLeadStatus(lead: {
   if (lead.billy) {
     if (lead.billy.isPaid) {
       // Check if recurring customer (REN-005 = Fast rengøring)
-      if (lead.serviceType === 'REN-005') {
+      if (lead.serviceType === "REN-005") {
         return LeadStatus.ACTIVE_RECURRING;
       }
       return LeadStatus.PAID;
     }
-    if (['sent', 'approved'].includes(lead.billy.state)) {
+    if (["sent", "approved"].includes(lead.billy.state)) {
       return LeadStatus.INVOICED;
     }
   }
@@ -242,7 +245,8 @@ export function determineLeadStatus(lead: {
   // Check Gmail timeline
   if (lead.calculated?.timeline?.firstReplyDate) {
     const replyDate = new Date(lead.calculated.timeline.firstReplyDate);
-    const daysSinceReply = (now.getTime() - replyDate.getTime()) / (1000 * 60 * 60 * 24);
+    const daysSinceReply =
+      (now.getTime() - replyDate.getTime()) / (1000 * 60 * 60 * 24);
 
     // No response after reply
     if (daysSinceReply > 30) {
@@ -258,7 +262,8 @@ export function determineLeadStatus(lead: {
   // New lead, no action yet
   if (lead.calculated?.timeline?.leadReceivedDate) {
     const receivedDate = new Date(lead.calculated.timeline.leadReceivedDate);
-    const daysSinceReceived = (now.getTime() - receivedDate.getTime()) / (1000 * 60 * 60 * 24);
+    const daysSinceReceived =
+      (now.getTime() - receivedDate.getTime()) / (1000 * 60 * 60 * 24);
 
     if (daysSinceReceived > 30) {
       return LeadStatus.DEAD;
@@ -312,29 +317,29 @@ export const SPAM_PATTERNS = [
 
 export const LEAD_SOURCE_PATTERNS = {
   leadpoint: {
-    from: ['system@leadpoint.dk', 'noreply@leadpoint.dk'],
-    subject: ['formular via rengøring aarhus', 'rengøring aarhus'],
-    name: 'Leadpoint.dk (Rengøring Aarhus)',
+    from: ["system@leadpoint.dk", "noreply@leadpoint.dk"],
+    subject: ["formular via rengøring aarhus", "rengøring aarhus"],
+    name: "Leadpoint.dk (Rengøring Aarhus)",
   },
   rengoeringNu: {
-    from: ['noreply@leadmail.no', 'system@leadmail.no'],
-    subject: ['ny henvendelse', 'rengøring.nu'],
-    name: 'Rengøring.nu (Leadmail.no)',
+    from: ["noreply@leadmail.no", "system@leadmail.no"],
+    subject: ["ny henvendelse", "rengøring.nu"],
+    name: "Rengøring.nu (Leadmail.no)",
   },
   adHelp: {
-    from: ['leads@adhelp.dk'],
-    subject: ['ny lead', 'adhelp'],
-    name: 'AdHelp',
+    from: ["leads@adhelp.dk"],
+    subject: ["ny lead", "adhelp"],
+    name: "AdHelp",
   },
   direct: {
     from: [], // Not from partners
     subject: [],
-    name: 'Direct',
+    name: "Direct",
   },
   existing: {
     from: [], // Known customer emails
     subject: [],
-    name: 'Existing',
+    name: "Existing",
   },
 };
 
@@ -345,40 +350,42 @@ export const LEAD_SOURCE_PATTERNS = {
 /**
  * Normalize lead source strings from various data sources
  */
-export function normalizeLeadSource(rawSource: string | null | undefined): LeadSource {
+export function normalizeLeadSource(
+  rawSource: string | null | undefined
+): LeadSource {
   if (!rawSource) return LeadSource.DIRECT;
 
   const normalized = rawSource.toLowerCase().trim();
 
   // Leadpoint variations
   if (
-    normalized.includes('leadpoint') ||
-    normalized.includes('rengøring aarhus') ||
-    normalized.includes('system@leadpoint.dk')
+    normalized.includes("leadpoint") ||
+    normalized.includes("rengøring aarhus") ||
+    normalized.includes("system@leadpoint.dk")
   ) {
     return LeadSource.LEADPOINT_AARHUS;
   }
 
   // Rengøring.nu variations
   if (
-    normalized.includes('rengøring.nu') ||
-    normalized.includes('leadmail.no') ||
-    normalized.includes('nettbureau')
+    normalized.includes("rengøring.nu") ||
+    normalized.includes("leadmail.no") ||
+    normalized.includes("nettbureau")
   ) {
     return LeadSource.RENGOERING_NU;
   }
 
   // AdHelp variations
   if (
-    normalized.includes('adhelp') ||
-    normalized.includes('mw@adhelp.dk') ||
-    normalized.includes('sp@adhelp.dk')
+    normalized.includes("adhelp") ||
+    normalized.includes("mw@adhelp.dk") ||
+    normalized.includes("sp@adhelp.dk")
   ) {
     return LeadSource.ADHELP;
   }
 
   // Existing customer
-  if (normalized.includes('existing') || normalized.includes('repeat')) {
+  if (normalized.includes("existing") || normalized.includes("repeat")) {
     return LeadSource.EXISTING;
   }
 
@@ -402,7 +409,7 @@ export function getPerLeadCost(
   // Leadpoint: differentiate private vs erhverv
   if (leadSource === LeadSource.LEADPOINT_AARHUS) {
     const costs = config.perLead as { private: number; erhverv: number };
-    return serviceType === 'REN-004' ? costs.erhverv : costs.private;
+    return serviceType === "REN-004" ? costs.erhverv : costs.private;
   }
 
   return config.perLead as number;
@@ -428,9 +435,8 @@ export function calculateTotalLeadCost(
   const monthlyFixed = getMonthlyFixedCost(leadSource);
 
   // Prorate monthly fixed cost across all leads in the month
-  const proratedFixed = totalLeadsThisMonth > 0 
-    ? monthlyFixed / totalLeadsThisMonth 
-    : 0;
+  const proratedFixed =
+    totalLeadsThisMonth > 0 ? monthlyFixed / totalLeadsThisMonth : 0;
 
   return perLeadCost + proratedFixed;
 }
@@ -439,13 +445,13 @@ export function calculateTotalLeadCost(
  * Profit calculation interface
  */
 export interface ProfitMetrics {
-  revenue: number;           // Invoiced price
-  laborCost: number;         // actualHours × 90kr
-  leadCost: number;          // Lead acquisition cost
-  grossProfit: number;       // revenue - laborCost
-  netProfit: number;         // grossProfit - leadCost
-  grossMargin: number;       // % (grossProfit / revenue)
-  netMargin: number;         // % (netProfit / revenue)
+  revenue: number; // Invoiced price
+  laborCost: number; // actualHours × 90kr
+  leadCost: number; // Lead acquisition cost
+  grossProfit: number; // revenue - laborCost
+  netProfit: number; // grossProfit - leadCost
+  grossMargin: number; // % (grossProfit / revenue)
+  netMargin: number; // % (netProfit / revenue)
 }
 
 /**
@@ -473,12 +479,9 @@ export function calculateProfit(
   const netProfit = grossProfit - leadCost;
 
   // Margins (avoid division by zero)
-  const grossMargin = invoicedPrice > 0 
-    ? (grossProfit / invoicedPrice) * 100 
-    : 0;
-  const netMargin = invoicedPrice > 0 
-    ? (netProfit / invoicedPrice) * 100 
-    : 0;
+  const grossMargin =
+    invoicedPrice > 0 ? (grossProfit / invoicedPrice) * 100 : 0;
+  const netMargin = invoicedPrice > 0 ? (netProfit / invoicedPrice) * 100 : 0;
 
   return {
     revenue: invoicedPrice,
@@ -492,7 +495,7 @@ export function calculateProfit(
 }
 
 export function getServiceTypeConfig(serviceType: string): ServiceTypeConfig {
-  return SERVICE_TYPES[serviceType] ?? SERVICE_TYPES['REN-001'];
+  return SERVICE_TYPES[serviceType] ?? SERVICE_TYPES["REN-001"];
 }
 
 export function isSpam(text: string): boolean {
@@ -518,7 +521,9 @@ export function classifyLeadSource(from: string, subject: string): string {
   // Check Rengøring.nu
   if (
     LEAD_SOURCE_PATTERNS.rengoeringNu.from.some(f => fromLower.includes(f)) ||
-    LEAD_SOURCE_PATTERNS.rengoeringNu.subject.some(s => subjectLower.includes(s))
+    LEAD_SOURCE_PATTERNS.rengoeringNu.subject.some(s =>
+      subjectLower.includes(s)
+    )
   ) {
     return LEAD_SOURCE_PATTERNS.rengoeringNu.name;
   }
@@ -531,7 +536,7 @@ export function classifyLeadSource(from: string, subject: string): string {
     return LEAD_SOURCE_PATTERNS.adHelp.name;
   }
 
-  return 'Direct';
+  return "Direct";
 }
 
 /**
@@ -554,10 +559,13 @@ export function validateLeadCostConfig(): boolean {
 
     // Warn about old verification dates
     const verifiedDate = new Date(config.verifiedDate);
-    const monthsOld = (Date.now() - verifiedDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
+    const monthsOld =
+      (Date.now() - verifiedDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
 
     if (monthsOld > 6) {
-      console.warn(`⚠️ ${source}: Cost data is ${Math.round(monthsOld)} months old - consider updating`);
+      console.warn(
+        `⚠️ ${source}: Cost data is ${Math.round(monthsOld)} months old - consider updating`
+      );
     }
   }
 
@@ -568,12 +576,13 @@ export function validateLeadCostConfig(): boolean {
  * Get human-readable summary of all lead costs
  */
 export function getLeadCostSummary(): string {
-  const lines: string[] = ['📊 LEAD COST SUMMARY\n'];
+  const lines: string[] = ["📊 LEAD COST SUMMARY\n"];
 
   for (const [source, config] of Object.entries(LEAD_COST_CONFIG)) {
-    const perLead = typeof config.perLead === 'number'
-      ? `${config.perLead} kr` 
-      : `${config.perLead.private}/${config.perLead.erhverv} kr (privat/erhverv)`;
+    const perLead =
+      typeof config.perLead === "number"
+        ? `${config.perLead} kr`
+        : `${config.perLead.private}/${config.perLead.erhverv} kr (privat/erhverv)`;
 
     lines.push(
       `${source}:`,
@@ -581,11 +590,11 @@ export function getLeadCostSummary(): string {
       `  Monthly: ${config.monthlyFixed} kr`,
       `  Description: ${config.description}`,
       `  Verified: ${config.verifiedDate}`,
-      ''
+      ""
     );
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 // ============================================================================

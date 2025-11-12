@@ -62,6 +62,56 @@ export const taskStatusInFridayAi = fridayAi.enum("task_status", [
 export const themeInFridayAi = fridayAi.enum("theme", ["light", "dark"]);
 export const userRoleInFridayAi = fridayAi.enum("user_role", ["user", "admin"]);
 
+// =============================================================================
+// CRM: New enums for bookings and service templates
+// =============================================================================
+export const bookingStatusInFridayAi = fridayAi.enum("booking_status", [
+  "planned",
+  "in_progress",
+  "completed",
+  "cancelled",
+]);
+
+export const serviceCategoryInFridayAi = fridayAi.enum("service_category", [
+  "general",
+  "vinduespolering",
+  "facaderens",
+  "tagrens",
+  "graffiti",
+  "other",
+]);
+
+export const dealStageInFridayAi = fridayAi.enum("deal_stage", [
+  "lead",
+  "qualified",
+  "proposal",
+  "negotiation",
+  "won",
+  "lost",
+]);
+
+export const segmentTypeInFridayAi = fridayAi.enum("segment_type", [
+  "manual",
+  "automatic",
+]);
+
+export const activityTypeInFridayAi = fridayAi.enum("activity_type", [
+  "call",
+  "meeting",
+  "email_sent",
+  "note",
+  "task_completed",
+  "status_change",
+  "property_added",
+]);
+
+export const riskLevelInFridayAi = fridayAi.enum("risk_level", [
+  "low",
+  "medium",
+  "high",
+  "critical",
+]);
+
 export const conversationsInFridayAi = fridayAi.table("conversations", {
   id: serial().primaryKey().notNull(),
   userId: integer().notNull(),
@@ -159,6 +209,7 @@ export const tasksInFridayAi = fridayAi.table("tasks", {
   completedAt: timestamp({ mode: "string" }),
   relatedEmailId: integer(),
   relatedLeadId: integer(),
+  relatedCustomerId: integer(),
   createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
 });
@@ -387,6 +438,104 @@ export const customersInFridayAi = fridayAi.table("customers", {
   updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
 });
 
+// =============================================================================
+// CRM: Customer Properties (Ejendomme)
+// =============================================================================
+export const customerPropertiesInFridayAi = fridayAi.table(
+  "customer_properties",
+  {
+    id: serial().primaryKey().notNull(),
+    customerProfileId: integer().notNull(),
+    address: text().notNull(),
+    city: varchar({ length: 120 }),
+    postalCode: varchar({ length: 20 }),
+    coordinates: jsonb(),
+    isPrimary: boolean().default(false).notNull(),
+    attributes: jsonb(), // arbitrary property metadata (type, size, access, etc.)
+    notes: text(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_customer_properties_profile").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_customer_properties_postal").using(
+      "btree",
+      table.postalCode.asc().nullsLast().op("text_ops")
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Service Templates
+// =============================================================================
+export const serviceTemplatesInFridayAi = fridayAi.table(
+  "service_templates",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    title: varchar({ length: 255 }).notNull(),
+    description: text(),
+    category: serviceCategoryInFridayAi().default("general").notNull(),
+    durationMinutes: integer().default(60).notNull(),
+    priceDkk: integer().default(0).notNull(),
+    isActive: boolean().default(true).notNull(),
+    metadata: jsonb(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_service_templates_user").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_service_templates_category").using(
+      "btree",
+      table.category.asc().nullsLast()
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Bookings
+// =============================================================================
+export const bookingsInFridayAi = fridayAi.table(
+  "bookings",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    customerProfileId: integer().notNull(),
+    propertyId: integer(), // optional: target property for service
+    serviceTemplateId: integer(),
+    title: varchar({ length: 255 }),
+    notes: text(),
+    scheduledStart: timestamp({ mode: "string" }).notNull(),
+    scheduledEnd: timestamp({ mode: "string" }),
+    status: bookingStatusInFridayAi().default("planned").notNull(),
+    assigneeUserId: integer(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    metadata: jsonb(),
+  },
+  table => [
+    index("idx_bookings_user").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_bookings_customer").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_bookings_start").using(
+      "btree",
+      table.scheduledStart.asc().nullsLast()
+    ),
+    index("idx_bookings_status").using("btree", table.status.asc().nullsLast()),
+  ]
+);
+
 export const emailThreadsInFridayAi = fridayAi.table(
   "email_threads",
   {
@@ -516,6 +665,251 @@ export const customerNotesInFridayAi = fridayAi.table(
   ]
 );
 
+// =============================================================================
+// CRM: Customer Activities - Track all customer interactions
+// =============================================================================
+export const customerActivitiesInFridayAi = fridayAi.table(
+  "customer_activities",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    customerProfileId: integer().notNull(),
+    activityType: activityTypeInFridayAi().notNull(),
+    subject: varchar({ length: 255 }).notNull(),
+    description: text(),
+    durationMinutes: integer(),
+    outcome: varchar({ length: 255 }),
+    nextSteps: text(),
+    relatedEmailId: integer(),
+    relatedTaskId: integer(),
+    relatedBookingId: integer(),
+    metadata: jsonb(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_customer_activities_customer").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_customer_activities_user").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_customer_activities_type").using(
+      "btree",
+      table.activityType.asc().nullsLast()
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Customer Health Scores - Track customer engagement and risk
+// =============================================================================
+export const customerHealthScoresInFridayAi = fridayAi.table(
+  "customer_health_scores",
+  {
+    id: serial().primaryKey().notNull(),
+    customerProfileId: integer().notNull().unique(),
+    score: integer().notNull(), // 0-100
+    riskLevel: riskLevelInFridayAi().notNull(),
+    churnProbability: integer(), // 0-100 percentage
+    factors: jsonb().notNull(), // { email_engagement: 80, payment_speed: 90, booking_frequency: 60 }
+    lastCalculatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_health_scores_customer").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_health_scores_risk").using(
+      "btree",
+      table.riskLevel.asc().nullsLast()
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Opportunities/Deals - Sales pipeline management
+// =============================================================================
+export const opportunitiesInFridayAi = fridayAi.table(
+  "opportunities",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    customerProfileId: integer().notNull(),
+    title: text().notNull(),
+    description: text(),
+    stage: dealStageInFridayAi().notNull().default("lead"),
+    value: integer(), // Expected revenue in DKK
+    probability: integer(), // Win probability 0-100
+    expectedCloseDate: timestamp({ mode: "string" }),
+    actualCloseDate: timestamp({ mode: "string" }),
+    wonReason: text(),
+    lostReason: text(),
+    nextSteps: text(),
+    metadata: jsonb(), // Custom fields, tags, etc.
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_opportunities_customer").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_opportunities_stage").using(
+      "btree",
+      table.stage.asc().nullsLast()
+    ),
+    index("idx_opportunities_user").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Customer Segments - Smart lists and segmentation
+// =============================================================================
+export const customerSegmentsInFridayAi = fridayAi.table(
+  "customer_segments",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    name: text().notNull(),
+    description: text(),
+    type: segmentTypeInFridayAi().notNull().default("manual"),
+    rules: jsonb(), // For automatic segments: { healthScore: { lt: 50 }, revenue: { gte: 10000 } }
+    color: text(), // UI color for visual distinction
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_segments_user").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+  ]
+);
+
+export const customerSegmentMembersInFridayAi = fridayAi.table(
+  "customer_segment_members",
+  {
+    id: serial().primaryKey().notNull(),
+    segmentId: integer().notNull(),
+    customerProfileId: integer().notNull(),
+    addedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_segment_members_segment").using(
+      "btree",
+      table.segmentId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_segment_members_customer").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Customer Documents - File management
+// =============================================================================
+export const customerDocumentsInFridayAi = fridayAi.table(
+  "customer_documents",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    customerProfileId: integer().notNull(),
+    filename: text().notNull(),
+    filesize: integer(), // bytes
+    mimeType: text(),
+    storageUrl: text().notNull(), // Supabase Storage URL
+    category: text(), // contract, invoice, photo, other
+    description: text(),
+    tags: jsonb(), // Array of tags for search
+    version: integer().default(1),
+    uploadedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_documents_customer").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_documents_user").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Audit Log - GDPR compliance and change tracking
+// =============================================================================
+export const auditLogInFridayAi = fridayAi.table(
+  "audit_log",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    entityType: text().notNull(), // customer, opportunity, document, etc.
+    entityId: integer().notNull(),
+    action: text().notNull(), // created, updated, deleted, exported, consent_given, consent_revoked
+    changes: jsonb(), // { field: { old: "value1", new: "value2" } }
+    ipAddress: text(),
+    userAgent: text(),
+    timestamp: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_audit_log_entity").using(
+      "btree",
+      table.entityType.asc().nullsLast().op("text_ops"),
+      table.entityId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_audit_log_user").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_audit_log_timestamp").using(
+      "btree",
+      table.timestamp.desc().nullsLast()
+    ),
+  ]
+);
+
+// =============================================================================
+// CRM: Customer Relationships - Network mapping
+// =============================================================================
+export const customerRelationshipsInFridayAi = fridayAi.table(
+  "customer_relationships",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    customerProfileId: integer().notNull(), // Main customer
+    relatedCustomerProfileId: integer().notNull(), // Related customer
+    relationshipType: text().notNull(), // parent_company, subsidiary, referrer, referred_by, partner, competitor
+    description: text(),
+    strength: integer(), // 1-10 relationship strength
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_relationships_customer").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_relationships_related").using(
+      "btree",
+      table.relatedCustomerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_relationships_type").using(
+      "btree",
+      table.relationshipType.asc().nullsLast().op("text_ops")
+    ),
+  ]
+);
+
 export const emailPipelineStateInFridayAi = fridayAi.table(
   "email_pipeline_state",
   {
@@ -627,17 +1021,27 @@ export const notifications = notificationsInFridayAi;
 export const userSettings = userSettingsInFridayAi;
 export const webhooks = webhooksInFridayAi;
 export const customers = customersInFridayAi;
+export const customerProperties = customerPropertiesInFridayAi;
+export const serviceTemplates = serviceTemplatesInFridayAi;
+export const bookings = bookingsInFridayAi;
+export const customerActivities = customerActivitiesInFridayAi;
+export const customerHealthScores = customerHealthScoresInFridayAi;
+export const customerNotes = customerNotesInFridayAi;
+export const opportunities = opportunitiesInFridayAi;
+export const customerSegments = customerSegmentsInFridayAi;
+export const customerSegmentMembers = customerSegmentMembersInFridayAi;
+export const customerDocuments = customerDocumentsInFridayAi;
+export const auditLog = auditLogInFridayAi;
+export const customerRelationships = customerRelationshipsInFridayAi;
 
 // =============================================================================
 // DOCUMENTATION SYSTEM TABLES
 // =============================================================================
 
-export const documentSyncStatusInFridayAi = fridayAi.enum("document_sync_status", [
-  "idle",
-  "syncing",
-  "conflict",
-  "error",
-]);
+export const documentSyncStatusInFridayAi = fridayAi.enum(
+  "document_sync_status",
+  ["idle", "syncing", "conflict", "error"]
+);
 
 export const documentConflictResolutionInFridayAi = fridayAi.enum(
   "document_conflict_resolution",
@@ -694,20 +1098,23 @@ export const documentCommentsInFridayAi = fridayAi.table(
   ]
 );
 
-export const documentConflictsInFridayAi = fridayAi.table("document_conflicts", {
-  id: text().primaryKey().notNull(), // UUID
-  documentId: text().notNull(),
-  path: text().notNull(),
-  localContent: text().notNull(),
-  remoteContent: text().notNull(),
-  baseContent: text(),
-  conflictMarkers: text().notNull(),
-  resolution: documentConflictResolutionInFridayAi(),
-  mergedContent: text(),
-  resolvedAt: timestamp({ mode: "string" }),
-  resolvedBy: varchar({ length: 255 }),
-  createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-});
+export const documentConflictsInFridayAi = fridayAi.table(
+  "document_conflicts",
+  {
+    id: text().primaryKey().notNull(), // UUID
+    documentId: text().notNull(),
+    path: text().notNull(),
+    localContent: text().notNull(),
+    remoteContent: text().notNull(),
+    baseContent: text(),
+    conflictMarkers: text().notNull(),
+    resolution: documentConflictResolutionInFridayAi(),
+    mergedContent: text(),
+    resolvedAt: timestamp({ mode: "string" }),
+    resolvedBy: varchar({ length: 255 }),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  }
+);
 
 // Exports for documentation tables
 export const documents = documentsInFridayAi;
@@ -756,17 +1163,36 @@ export type CustomerInvoice = typeof customerInvoicesInFridayAi.$inferSelect;
 export type InsertCustomerInvoice =
   typeof customerInvoicesInFridayAi.$inferInsert;
 export type CustomerProfile = typeof customerProfilesInFridayAi.$inferSelect;
-export type InsertCustomerProfile = typeof customerProfilesInFridayAi.$inferInsert;
+export type InsertCustomerProfile =
+  typeof customerProfilesInFridayAi.$inferInsert;
 export type CustomerNote = typeof customerNotesInFridayAi.$inferSelect;
 export type InsertCustomerNote = typeof customerNotesInFridayAi.$inferInsert;
 export type Document = typeof documentsInFridayAi.$inferSelect;
 export type InsertDocument = typeof documentsInFridayAi.$inferInsert;
 export type DocumentChange = typeof documentChangesInFridayAi.$inferSelect;
-export type InsertDocumentChange = typeof documentChangesInFridayAi.$inferInsert;
+export type InsertDocumentChange =
+  typeof documentChangesInFridayAi.$inferInsert;
 export type DocumentComment = typeof documentCommentsInFridayAi.$inferSelect;
-export type InsertDocumentComment = typeof documentCommentsInFridayAi.$inferInsert;
+export type InsertDocumentComment =
+  typeof documentCommentsInFridayAi.$inferInsert;
 export type DocumentConflict = typeof documentConflictsInFridayAi.$inferSelect;
-export type InsertDocumentConflict = typeof documentConflictsInFridayAi.$inferInsert;
+export type InsertDocumentConflict =
+  typeof documentConflictsInFridayAi.$inferInsert;
+export type CustomerProperty = typeof customerPropertiesInFridayAi.$inferSelect;
+export type InsertCustomerProperty =
+  typeof customerPropertiesInFridayAi.$inferInsert;
+export type ServiceTemplate = typeof serviceTemplatesInFridayAi.$inferSelect;
+export type InsertServiceTemplate =
+  typeof serviceTemplatesInFridayAi.$inferInsert;
+export type Booking = typeof bookingsInFridayAi.$inferSelect;
+export type InsertBooking = typeof bookingsInFridayAi.$inferInsert;
+export type CustomerActivity = typeof customerActivitiesInFridayAi.$inferSelect;
+export type InsertCustomerActivity =
+  typeof customerActivitiesInFridayAi.$inferInsert;
+export type CustomerHealthScore =
+  typeof customerHealthScoresInFridayAi.$inferSelect;
+export type InsertCustomerHealthScore =
+  typeof customerHealthScoresInFridayAi.$inferInsert;
 
 // Email Intelligence Enums
 export const emailCategoryInFridayAi = fridayAi.enum("email_category", [
@@ -842,6 +1268,28 @@ export type EmailCategory = typeof emailCategoriesInFridayAi.$inferSelect;
 export type InsertEmailCategory = typeof emailCategoriesInFridayAi.$inferInsert;
 export type EmailPriority = typeof emailPrioritiesInFridayAi.$inferSelect;
 export type InsertEmailPriority = typeof emailPrioritiesInFridayAi.$inferInsert;
-export type ResponseSuggestion = typeof responseSuggestionsInFridayAi.$inferSelect;
+export type ResponseSuggestion =
+  typeof responseSuggestionsInFridayAi.$inferSelect;
 export type InsertResponseSuggestion =
   typeof responseSuggestionsInFridayAi.$inferInsert;
+
+// CRM Phase 2-6 Types
+export type Opportunity = typeof opportunitiesInFridayAi.$inferSelect;
+export type InsertOpportunity = typeof opportunitiesInFridayAi.$inferInsert;
+export type CustomerSegment = typeof customerSegmentsInFridayAi.$inferSelect;
+export type InsertCustomerSegment =
+  typeof customerSegmentsInFridayAi.$inferInsert;
+export type CustomerSegmentMember =
+  typeof customerSegmentMembersInFridayAi.$inferSelect;
+export type InsertCustomerSegmentMember =
+  typeof customerSegmentMembersInFridayAi.$inferInsert;
+export type CustomerDocument = typeof customerDocumentsInFridayAi.$inferSelect;
+export type InsertCustomerDocument =
+  typeof customerDocumentsInFridayAi.$inferInsert;
+export type AuditLog = typeof auditLogInFridayAi.$inferSelect;
+export type InsertAuditLog = typeof auditLogInFridayAi.$inferInsert;
+export type CustomerRelationship =
+  typeof customerRelationshipsInFridayAi.$inferSelect;
+export type InsertCustomerRelationship =
+  typeof customerRelationshipsInFridayAi.$inferInsert;
+typeof responseSuggestionsInFridayAi.$inferInsert;

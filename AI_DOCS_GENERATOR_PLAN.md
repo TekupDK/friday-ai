@@ -8,17 +8,21 @@
 ## 🎯 Use Cases
 
 ### 1. Lead Documentation
+
 **Input:**
+
 - Lead data (navn, email, phone, company)
 - Email threads relateret til lead
 - Meeting notes fra kalender
 - Chat samtaler med lead
 
 **Output:**
+
 ```markdown
 # Lead: [Company Name]
 
 ## Overview
+
 - Contact: [Name]
 - Email: [email]
 - Phone: [phone]
@@ -27,100 +31,121 @@
 ## Communication History
 
 ### Email Threads (5)
+
 - Thread 1: Re: Invoice discussion - 2024-11-05
   Summary: Discussed invoice terms...
-  
 - Thread 2: Meeting follow-up - 2024-11-03
   Summary: Confirmed requirements...
 
 ### Meetings (3)
+
 - 2024-11-06: Initial consultation
   Notes: Discussed project scope...
-  
 - 2024-11-04: Requirements gathering
   Notes: Customer needs...
 
 ### Chat Conversations (2)
+
 - 2024-11-07: Quick question about pricing
 - 2024-11-02: Feature request
 
 ## AI Analysis
 
 ### Key Topics
+
 - Invoice payment terms
 - Feature requirements
 - Timeline expectations
 
 ### Sentiment Analysis
+
 - Overall: Positive
 - Last interaction: Neutral
 
 ### Action Items
+
 - [ ] Send invoice quote by Friday
 - [ ] Schedule follow-up meeting
 - [ ] Prepare feature demo
 
 ### Recommendations
+
 - High priority lead - active engagement
 - Consider upsell opportunities
 - Schedule regular check-ins
 ```
 
 ### 2. Project Documentation
+
 **Input:**
+
 - Alle leads relateret til projekt
 - Email threads om projektet
 - Meetings tagged med projekt
 - Task beskrivelser
 
 **Output:**
+
 ```markdown
 # Project: [Project Name]
 
 ## Timeline
+
 Start: [date]
 End: [date]
 Status: [In Progress/Completed]
 
 ## Stakeholders
+
 - Lead 1: Primary contact
 - Lead 2: Decision maker
 
 ## Communication Log
+
 [Chronological list af alle interactions]
 
 ## Decisions Made
+
 [AI extracted decisions fra emails/meetings]
 
 ## Open Questions
+
 [AI identified unanswered questions]
 
 ## Risk Analysis
+
 [AI detected potential issues]
 ```
 
 ### 3. Weekly Digest
+
 **Input:**
+
 - Alle emails denne uge
 - Alle meetings
 - Alle samtaler
 
 **Output:**
+
 ```markdown
 # Weekly Digest: Week 45, 2024
 
 ## Summary
+
 - 23 emails processed
 - 8 meetings attended
 - 15 lead interactions
 
 ## Key Highlights
+
 [AI summary af vigtige events]
 
 ## Action Items Generated
+
 [Aggregated tasks fra alle sources]
 
 ## Trends
+
 - Increased interest in Feature X
 - 3 new leads from cold outreach
 - 2 deals close to closing
@@ -131,6 +156,7 @@ Status: [In Progress/Completed]
 ## 🏗️ Architecture
 
 ### Phase 1: Data Collection
+
 ```typescript
 // server/docs/ai/data-collector.ts
 
@@ -144,31 +170,32 @@ interface DataSources {
 async function collectLeadData(leadId: string): Promise<DataSources> {
   // Fetch from database
   const lead = await db.query.leads.findFirst({ where: eq(leads.id, leadId) });
-  
+
   // Fetch email threads
   const emailThreads = await db.query.email_threads.findMany({
     where: or(
       eq(email_threads.from_email, lead.email),
       eq(email_threads.to_email, lead.email)
-    )
+    ),
   });
-  
+
   // Fetch calendar events
   const calendarEvents = await calendar.events.list({
     q: lead.email,
     timeMin: lead.createdAt,
   });
-  
+
   // Fetch chat messages (if applicable)
   const chatMessages = await db.query.conversations.findMany({
-    where: like(conversations.context, `%${lead.email}%`)
+    where: like(conversations.context, `%${lead.email}%`),
   });
-  
+
   return { lead, emailThreads, calendarEvents, chatMessages };
 }
 ```
 
 ### Phase 2: AI Analysis
+
 ```typescript
 // server/docs/ai/analyzer.ts
 
@@ -220,22 +247,23 @@ Format as JSON.
     messages: [{ role: "user", content: prompt }],
     response_format: { type: "json_object" }
   });
-  
+
   return JSON.parse(response.choices[0].message.content);
 }
 ```
 
 ### Phase 3: Document Generation
+
 ```typescript
 // server/docs/ai/generator.ts
 
 async function generateLeadDoc(leadId: string): Promise<string> {
   // Collect data
   const data = await collectLeadData(leadId);
-  
+
   // Analyze
   const analysis = await analyzeData(data);
-  
+
   // Generate markdown
   const markdown = `
 # Lead: ${data.lead.company || data.lead.name}
@@ -255,14 +283,14 @@ ${analysis.summary}
 ### Email Threads (${data.emailThreads.length})
 ${data.emailThreads.slice(0, 10).map((thread, i) => \`
 #### ${i + 1}. ${thread.subject}
-**Date:** ${formatDate(thread.date)}  
+**Date:** ${formatDate(thread.date)}
 **Summary:** ${thread.snippet}
 \`).join('\\n')}
 
 ### Meetings (${data.calendarEvents.length})
 ${data.calendarEvents.map((event, i) => \`
 #### ${i + 1}. ${event.summary}
-**Date:** ${formatDate(event.start)}  
+**Date:** ${formatDate(event.start)}
 **Notes:** ${event.description || 'No notes'}
 \`).join('\\n')}
 
@@ -287,7 +315,7 @@ ${analysis.questions.map(q => \`- ${q}\`).join('\\n')}
 ${analysis.risks.map(r => \`- ⚠️ ${r}\`).join('\\n')}
 
 ---
-**Generated:** ${new Date().toISOString()}  
+**Generated:** ${new Date().toISOString()}
 **Source:** AI Analysis of ${data.emailThreads.length} emails, ${data.calendarEvents.length} meetings
 `;
 
@@ -296,18 +324,19 @@ ${analysis.risks.map(r => \`- ⚠️ ${r}\`).join('\\n')}
 ```
 
 ### Phase 4: Auto-Create Doc
+
 ```typescript
 // server/docs/ai/auto-create.ts
 
 async function autoCreateLeadDoc(leadId: string) {
   // Generate content
   const content = await generateLeadDoc(leadId);
-  
+
   // Get lead for title
-  const lead = await db.query.leads.findFirst({ 
-    where: eq(leads.id, leadId) 
+  const lead = await db.query.leads.findFirst({
+    where: eq(leads.id, leadId)
   });
-  
+
   // Create doc in database
   const docId = nanoid();
   await db.insert(documents).values({
@@ -320,7 +349,7 @@ async function autoCreateLeadDoc(leadId: string) {
     author: "ai-system",
     version: 1,
   });
-  
+
   // Log change
   await db.insert(documentChanges).values({
     id: nanoid(),
@@ -329,7 +358,7 @@ async function autoCreateLeadDoc(leadId: string) {
     operation: "create",
     diff: "AI-generated lead documentation",
   });
-  
+
   return docId;
 }
 ```
@@ -339,6 +368,7 @@ async function autoCreateLeadDoc(leadId: string) {
 ## 🔧 Implementation Steps
 
 ### Step 1: Backend AI Module (1-2 timer)
+
 - [x] Create `server/docs/ai/` folder
 - [ ] `data-collector.ts` - Fetch data from multiple sources
 - [ ] `analyzer.ts` - AI analysis with OpenAI
@@ -346,6 +376,7 @@ async function autoCreateLeadDoc(leadId: string) {
 - [ ] `auto-create.ts` - Auto-create docs
 
 ### Step 2: tRPC Endpoints (30 min)
+
 ```typescript
 // server/routers/docs-router.ts
 
@@ -369,17 +400,18 @@ generateAllLeadDocs: protectedProcedure
   .mutation(async () => {
     const leads = await getAllLeads();
     const docIds = [];
-    
+
     for (const lead of leads) {
       const docId = await autoCreateLeadDoc(lead.id);
       docIds.push(docId);
     }
-    
+
     return { count: docIds.length, docIds };
   }),
 ```
 
 ### Step 3: Frontend UI (30 min)
+
 ```typescript
 // client/src/components/leads/LeadCard.tsx
 
@@ -399,25 +431,26 @@ generateAllLeadDocs: protectedProcedure
 ```
 
 ### Step 4: Automation (30 min)
+
 ```typescript
 // server/jobs/auto-docs.ts
 
 // Cron job - runs daily
-cron.schedule('0 0 * * *', async () => {
+cron.schedule("0 0 * * *", async () => {
   // Generate docs for new leads
   const newLeads = await getLeadsWithoutDocs();
-  
+
   for (const lead of newLeads) {
     await autoCreateLeadDoc(lead.id);
   }
-  
+
   // Update existing docs if significant new data
   const activeLeads = await getActiveLeads();
-  
+
   for (const lead of activeLeads) {
     const lastDocUpdate = await getLastDocUpdate(lead.id);
     const newDataCount = await countNewDataSince(lead.id, lastDocUpdate);
-    
+
     if (newDataCount > 5) {
       // Regenerate doc
       await updateLeadDoc(lead.id);
@@ -426,7 +459,7 @@ cron.schedule('0 0 * * *', async () => {
 });
 
 // Weekly digest - runs Sunday night
-cron.schedule('0 20 * * 0', async () => {
+cron.schedule("0 20 * * 0", async () => {
   await generateWeeklyDigest();
 });
 ```
@@ -436,6 +469,7 @@ cron.schedule('0 20 * * 0', async () => {
 ## 📊 Expected Results
 
 ### Metrics
+
 - **Lead docs:** 1 per lead (~10-50 leads = 10-50 docs)
 - **Weekly digests:** 1 per week (~52 per year)
 - **Project docs:** 1 per project
@@ -443,6 +477,7 @@ cron.schedule('0 20 * * 0', async () => {
 - **Accuracy:** ~85-90% (human review recommended)
 
 ### Benefits
+
 1. **Time saving:** 30 min manual work → 30 sec auto
 2. **Consistency:** All docs same format
 3. **Insights:** AI spots patterns humans miss

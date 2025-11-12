@@ -51,15 +51,21 @@ export function EmailPipelineBoard({ onEmailClick }: EmailPipelineBoardProps) {
   const [activeEmail, setActiveEmail] = useState<EmailCardData | null>(null);
 
   // Fetch pipeline data - grouped by stage
-  const { data: pipelineData, isLoading } = trpc.inbox.pipeline.getAll.useQuery() as {
-    data: Record<PipelineStage, EmailCardData[]> | undefined;
-    isLoading: boolean;
-  };
+  const { data: pipelineData, isLoading } =
+    trpc.inbox.pipeline.getAll.useQuery() as {
+      data: Record<PipelineStage, EmailCardData[]> | undefined;
+      isLoading: boolean;
+    };
 
   // Mutation for updating pipeline stage
   const updateStageMutation = trpc.inbox.pipeline.updateStage.useMutation({
-    onSuccess: (_data: any, variables: { threadId: string; newStage: PipelineStage }) => {
-      toast.success(`Email flyttet til "${PIPELINE_STAGES.find(s => s.stage === variables.newStage)?.title}"`);
+    onSuccess: (
+      _data: any,
+      variables: { threadId: string; newStage: PipelineStage }
+    ) => {
+      toast.success(
+        `Email flyttet til "${PIPELINE_STAGES.find(s => s.stage === variables.newStage)?.title}"`
+      );
     },
     onError: (error: any) => {
       toast.error(`Kunne ikke flytte email: ${error.message}`);
@@ -81,10 +87,13 @@ export function EmailPipelineBoard({ onEmailClick }: EmailPipelineBoardProps) {
   // Group emails by stage
   const emailsByStage = useMemo(() => {
     if (!pipelineData) {
-      return PIPELINE_STAGES.reduce((acc, { stage }) => {
-        acc[stage] = [];
-        return acc;
-      }, {} as Record<PipelineStage, EmailCardData[]>);
+      return PIPELINE_STAGES.reduce(
+        (acc, { stage }) => {
+          acc[stage] = [];
+          return acc;
+        },
+        {} as Record<PipelineStage, EmailCardData[]>
+      );
     }
 
     return pipelineData;
@@ -118,7 +127,7 @@ export function EmailPipelineBoard({ onEmailClick }: EmailPipelineBoardProps) {
 
     // Find current stage of the email
     const currentStage = Object.entries(emailsByStage).find(([, emails]) =>
-      emails.some((e) => e.threadId === threadId)
+      emails.some(e => e.threadId === threadId)
     )?.[0] as PipelineStage | undefined;
 
     if (!currentStage || currentStage === newStage) return;

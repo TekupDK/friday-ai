@@ -26,6 +26,7 @@ pnpm exec playwright show-report
 ## 📊 **HVAD ER BYGGET:**
 
 ### **✅ Complete Test Suite**
+
 - 🎭 **Playwright** automation framework
 - 🤖 **AI-powered** test validation
 - 🇩🇰 **Danish business** scenarios
@@ -35,6 +36,7 @@ pnpm exec playwright show-report
 - 🎯 **Data-testid** attributes
 
 ### **📈 Test Results**
+
 ```
 ⚡ Page Load: 144ms (EXCELLENT!)
 💾 Memory: 13MB (EFFICIENT!)
@@ -62,33 +64,41 @@ pnpm exec playwright show-report
 ## 🚀 **AVAILABLE TESTS:**
 
 ### **1. Basic Functionality**
+
 ```bash
 pnpm playwright test tests/ai/basic.test.ts
 ```
+
 - ✅ Browser automation works
 - ✅ Playwright setup validated
 
 ### **2. Redirect-Safe Tests**
+
 ```bash
 pnpm playwright test tests/ai/friday-redirect-safe.test.ts
 ```
+
 - ✅ Handles app redirects
 - ✅ Performance monitoring
 - ✅ UI consistency checks
 
 ### **3. Real AI Conversation**
+
 ```bash
 pnpm playwright test tests/ai/friday-real-ai.test.ts
 ```
+
 - ✅ Danish language validation
 - ✅ Business context checking
 - ✅ Response time measurement
 - ✅ UI interaction testing
 
 ### **4. AI Agent Tests**
+
 ```bash
 pnpm playwright test tests/ai/friday-ai-agent.test.ts
 ```
+
 - ✅ Natural language test commands
 - ✅ AI-powered validation
 - ✅ Context awareness testing
@@ -148,20 +158,22 @@ pnpm playwright test tests/ai/friday-ai-agent.test.ts
 ## 💡 **QUICK EXAMPLE:**
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('Friday AI Danish Test', async ({ page }) => {
-  await page.goto('http://localhost:3000');
-  
+test("Friday AI Danish Test", async ({ page }) => {
+  await page.goto("http://localhost:3000");
+
   const chatInput = await page.locator('[data-testid="friday-chat-input"]');
-  await chatInput.fill('Hej Friday, præsenter dig selv');
-  
+  await chatInput.fill("Hej Friday, præsenter dig selv");
+
   const sendButton = await page.locator('[data-testid="friday-send-button"]');
   await sendButton.click();
-  
+
   await page.waitForSelector('[data-testid="friday-message-assistant"]');
-  
-  const response = await page.locator('[data-testid="friday-message-assistant"]').last();
+
+  const response = await page
+    .locator('[data-testid="friday-message-assistant"]')
+    .last();
   expect(await response.isVisible()).toBe(true);
 });
 ```
@@ -171,6 +183,7 @@ test('Friday AI Danish Test', async ({ page }) => {
 ## 🎉 **PRODUCTION READY!**
 
 Din Friday AI har nu:
+
 - ✅ **90% quality score** (top-tier)
 - ✅ **4.5s response time** (excellent)
 - ✅ **100% context awareness**

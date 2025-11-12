@@ -5,9 +5,18 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { 
-  Sparkles, Brain, Zap, TrendingUp, CheckCircle2, 
-  AlertCircle, Clock, Mail, ChevronRight, Star, Lightbulb
+import {
+  Sparkles,
+  Brain,
+  Zap,
+  TrendingUp,
+  CheckCircle2,
+  AlertCircle,
+  Clock,
+  Mail,
+  ChevronRight,
+  Star,
+  Lightbulb,
 } from "lucide-react";
 
 /**
@@ -31,105 +40,122 @@ interface AIEmail {
   suggestedLabels: Array<{ label: string; confidence: number }>;
   suggestedActions: Array<{ action: string; reason: string }>;
   keyPoints: string[];
-  urgency: 'low' | 'medium' | 'high' | 'critical';
+  urgency: "low" | "medium" | "high" | "critical";
   actionRequired: boolean;
-  source: 'rengoring_nu' | 'adhelp' | 'direct' | 'website';
+  source: "rengoring_nu" | "adhelp" | "direct" | "website";
 }
 
 const aiEmails: AIEmail[] = [
   {
-    id: '1',
-    from: 'Matilde Skinneholm',
-    subject: 'Tilbud på rengøring',
-    preview: 'Hej – vi vil gerne have et tilbud...',
-    time: '22:08',
-    aiSummary: 'Ny kunde anmoder om tilbud på kontorrengøring, 250m², ugentlig service. Høj konverteringssandsynlighed.',
+    id: "1",
+    from: "Matilde Skinneholm",
+    subject: "Tilbud på rengøring",
+    preview: "Hej – vi vil gerne have et tilbud...",
+    time: "22:08",
+    aiSummary:
+      "Ny kunde anmoder om tilbud på kontorrengøring, 250m², ugentlig service. Høj konverteringssandsynlighed.",
     aiScore: 95,
     suggestedLabels: [
-      { label: 'Leads', confidence: 0.98 },
-      { label: 'Fast Rengøring', confidence: 0.87 }
+      { label: "Leads", confidence: 0.98 },
+      { label: "Fast Rengøring", confidence: 0.87 },
     ],
     suggestedActions: [
-      { action: 'Send tilbud (Template: Kontorrengøring)', reason: 'Standard lead inquiry' },
-      { action: 'Opret lead i CRM', reason: 'Ny potentiel kunde' }
+      {
+        action: "Send tilbud (Template: Kontorrengøring)",
+        reason: "Standard lead inquiry",
+      },
+      { action: "Opret lead i CRM", reason: "Ny potentiel kunde" },
     ],
     keyPoints: [
-      '250 m² kontor i København',
-      'Ønsker ugentlig rengøring',
-      'Anmoder om tilbud'
+      "250 m² kontor i København",
+      "Ønsker ugentlig rengøring",
+      "Anmoder om tilbud",
     ],
-    urgency: 'high',
+    urgency: "high",
     actionRequired: true,
-    source: 'rengoring_nu'
+    source: "rengoring_nu",
   },
   {
-    id: '2',
-    from: 'Lars Nielsen (Existing)',
-    subject: 'Betaling faktura #1234',
-    preview: 'Bekræftelse på betaling...',
-    time: '17:20',
-    aiSummary: 'Eksisterende kunde bekræfter betaling af faktura. Ingen action påkrævet.',
+    id: "2",
+    from: "Lars Nielsen (Existing)",
+    subject: "Betaling faktura #1234",
+    preview: "Bekræftelse på betaling...",
+    time: "17:20",
+    aiSummary:
+      "Eksisterende kunde bekræfter betaling af faktura. Ingen action påkrævet.",
     aiScore: 65,
     suggestedLabels: [
-      { label: 'Finance', confidence: 0.95 },
-      { label: 'Afsluttet', confidence: 0.82 }
+      { label: "Finance", confidence: 0.95 },
+      { label: "Afsluttet", confidence: 0.82 },
     ],
     suggestedActions: [
-      { action: 'Marker faktura som betalt', reason: 'Betalingsbekræftelse modtaget' },
-      { action: 'Send kvittering', reason: 'Standard procedure' }
+      {
+        action: "Marker faktura som betalt",
+        reason: "Betalingsbekræftelse modtaget",
+      },
+      { action: "Send kvittering", reason: "Standard procedure" },
     ],
     keyPoints: [
-      'Faktura #1234 betalt',
-      'Bank reference: 123456',
-      'Eksisterende kunde'
+      "Faktura #1234 betalt",
+      "Bank reference: 123456",
+      "Eksisterende kunde",
     ],
-    urgency: 'low',
+    urgency: "low",
     actionRequired: false,
-    source: 'direct'
+    source: "direct",
   },
   {
-    id: '3',
-    from: 'info@adhelp.dk',
-    subject: 'Ny lead: Flytterengøring',
-    preview: 'Vi har en ny lead til jer...',
-    time: '15:45',
-    aiSummary: 'AdHelp lead for flytterengøring. VIGTIGT: Send tilbud direkte til kundens email (sp@adhelp.dk), IKKE reply til denne email.',
+    id: "3",
+    from: "info@adhelp.dk",
+    subject: "Ny lead: Flytterengøring",
+    preview: "Vi har en ny lead til jer...",
+    time: "15:45",
+    aiSummary:
+      "AdHelp lead for flytterengøring. VIGTIGT: Send tilbud direkte til kundens email (sp@adhelp.dk), IKKE reply til denne email.",
     aiScore: 88,
     suggestedLabels: [
-      { label: 'Leads', confidence: 0.96 },
-      { label: 'Flytterengøring', confidence: 0.91 }
+      { label: "Leads", confidence: 0.96 },
+      { label: "Flytterengøring", confidence: 0.91 },
     ],
     suggestedActions: [
-      { action: 'Opret ny email til kundens adresse', reason: 'AdHelp workflow rule' },
-      { action: 'Brug template: Flytterengøring tilbud', reason: 'Standard AdHelp lead' }
+      {
+        action: "Opret ny email til kundens adresse",
+        reason: "AdHelp workflow rule",
+      },
+      {
+        action: "Brug template: Flytterengøring tilbud",
+        reason: "Standard AdHelp lead",
+      },
     ],
     keyPoints: [
-      '⚠️ AdHelp lead - IKKE reply direkte',
-      'Kunde email: kunde@example.dk',
-      'Flytterengøring 3-værelses'
+      "⚠️ AdHelp lead - IKKE reply direkte",
+      "Kunde email: kunde@example.dk",
+      "Flytterengøring 3-værelses",
     ],
-    urgency: 'high',
+    urgency: "high",
     actionRequired: true,
-    source: 'adhelp'
-  }
+    source: "adhelp",
+  },
 ];
 
 export function EmailCenterAIFirst() {
-  const [selectedEmail, setSelectedEmail] = useState<AIEmail | null>(aiEmails[0]);
+  const [selectedEmail, setSelectedEmail] = useState<AIEmail | null>(
+    aiEmails[0]
+  );
   const [showAIPanel, setShowAIPanel] = useState(true);
 
   const getUrgencyColor = (urgency: string) => {
-    if (urgency === 'critical') return 'text-red-600 bg-red-100';
-    if (urgency === 'high') return 'text-orange-600 bg-orange-100';
-    if (urgency === 'medium') return 'text-yellow-600 bg-yellow-100';
-    return 'text-gray-600 bg-gray-100';
+    if (urgency === "critical") return "text-red-600 bg-red-100";
+    if (urgency === "high") return "text-orange-600 bg-orange-100";
+    if (urgency === "medium") return "text-yellow-600 bg-yellow-100";
+    return "text-gray-600 bg-gray-100";
   };
 
   const getSourceIcon = (source: string) => {
-    if (source === 'rengoring_nu') return '🧹';
-    if (source === 'adhelp') return '📢';
-    if (source === 'website') return '🌐';
-    return '📧';
+    if (source === "rengoring_nu") return "🧹";
+    if (source === "adhelp") return "📢";
+    if (source === "website") return "🌐";
+    return "📧";
   };
 
   return (
@@ -151,7 +177,8 @@ export function EmailCenterAIFirst() {
                 </Badge>
               </div>
               <p className="text-xs text-muted-foreground">
-                Emails sorteret efter AI priority score • Auto-labels • Suggested actions
+                Emails sorteret efter AI priority score • Auto-labels •
+                Suggested actions
               </p>
             </div>
 
@@ -181,23 +208,39 @@ export function EmailCenterAIFirst() {
                   onClick={() => setSelectedEmail(email)}
                   className={cn(
                     "p-4 border-b cursor-pointer transition-all",
-                    selectedEmail?.id === email.id && "bg-accent/50 border-l-4 border-l-primary",
+                    selectedEmail?.id === email.id &&
+                      "bg-accent/50 border-l-4 border-l-primary",
                     "hover:bg-accent/30"
                   )}
-                  style={{ animation: `slideIn 0.3s ease-out ${idx * 0.05}s both` }}
+                  style={{
+                    animation: `slideIn 0.3s ease-out ${idx * 0.05}s both`,
+                  }}
                 >
                   {/* Header Row */}
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <span className="text-xl shrink-0">{getSourceIcon(email.source)}</span>
+                      <span className="text-xl shrink-0">
+                        {getSourceIcon(email.source)}
+                      </span>
                       <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-sm truncate">{email.from}</div>
-                        <div className="text-xs text-muted-foreground truncate">{email.subject}</div>
+                        <div className="font-semibold text-sm truncate">
+                          {email.from}
+                        </div>
+                        <div className="text-xs text-muted-foreground truncate">
+                          {email.subject}
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-1 shrink-0">
-                      <span className="text-xs text-muted-foreground">{email.time}</span>
-                      <Badge className={cn("text-xs px-1.5 py-0", getUrgencyColor(email.urgency))}>
+                      <span className="text-xs text-muted-foreground">
+                        {email.time}
+                      </span>
+                      <Badge
+                        className={cn(
+                          "text-xs px-1.5 py-0",
+                          getUrgencyColor(email.urgency)
+                        )}
+                      >
                         {email.urgency}
                       </Badge>
                     </div>
@@ -217,7 +260,11 @@ export function EmailCenterAIFirst() {
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 flex-wrap">
                       {email.suggestedLabels.slice(0, 2).map((label, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs">
+                        <Badge
+                          key={idx}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {label.label} ({Math.round(label.confidence * 100)}%)
                         </Badge>
                       ))}
@@ -232,19 +279,27 @@ export function EmailCenterAIFirst() {
 
                   {/* AI Score Bar */}
                   <div className="mt-2 flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">AI Score:</span>
+                    <span className="text-xs text-muted-foreground">
+                      AI Score:
+                    </span>
                     <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div 
+                      <div
                         className={cn(
                           "h-full transition-all rounded-full",
-                          email.aiScore >= 90 ? "bg-green-500" :
-                          email.aiScore >= 75 ? "bg-blue-500" :
-                          email.aiScore >= 60 ? "bg-yellow-500" : "bg-gray-400"
+                          email.aiScore >= 90
+                            ? "bg-green-500"
+                            : email.aiScore >= 75
+                              ? "bg-blue-500"
+                              : email.aiScore >= 60
+                                ? "bg-yellow-500"
+                                : "bg-gray-400"
                         )}
                         style={{ width: `${email.aiScore}%` }}
                       />
                     </div>
-                    <span className="text-xs font-semibold">{email.aiScore}</span>
+                    <span className="text-xs font-semibold">
+                      {email.aiScore}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -259,13 +314,19 @@ export function EmailCenterAIFirst() {
                 <div className="border-b p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h3 className="font-bold text-lg mb-1">{selectedEmail.subject}</h3>
+                      <h3 className="font-bold text-lg mb-1">
+                        {selectedEmail.subject}
+                      </h3>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <span className="font-medium">{selectedEmail.from}</span>
+                        <span className="font-medium">
+                          {selectedEmail.from}
+                        </span>
                         <Separator orientation="vertical" className="h-4" />
                         <span>{selectedEmail.time}</span>
                         <Separator orientation="vertical" className="h-4" />
-                        <span className="text-xl">{getSourceIcon(selectedEmail.source)}</span>
+                        <span className="text-xl">
+                          {getSourceIcon(selectedEmail.source)}
+                        </span>
                       </div>
                     </div>
                     <Button
@@ -275,7 +336,7 @@ export function EmailCenterAIFirst() {
                       className="gap-2"
                     >
                       <Brain className="h-4 w-4" />
-                      {showAIPanel ? 'Hide' : 'Show'} AI Panel
+                      {showAIPanel ? "Hide" : "Show"} AI Panel
                     </Button>
                   </div>
                 </div>
@@ -298,7 +359,9 @@ export function EmailCenterAIFirst() {
                                   Score: {selectedEmail.aiScore}
                                 </Badge>
                               </h4>
-                              <p className="text-sm text-muted-foreground">{selectedEmail.aiSummary}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {selectedEmail.aiSummary}
+                              </p>
                             </div>
                           </div>
                         </CardContent>
@@ -313,7 +376,10 @@ export function EmailCenterAIFirst() {
                           </h4>
                           <ul className="space-y-2">
                             {selectedEmail.keyPoints.map((point, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-sm">
+                              <li
+                                key={idx}
+                                className="flex items-start gap-2 text-sm"
+                              >
                                 <ChevronRight className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                                 <span>{point}</span>
                               </li>
@@ -330,19 +396,25 @@ export function EmailCenterAIFirst() {
                             Suggested Actions
                           </h4>
                           <div className="space-y-2">
-                            {selectedEmail.suggestedActions.map((action, idx) => (
-                              <Button
-                                key={idx}
-                                variant="outline"
-                                size="sm"
-                                className="w-full justify-start h-auto py-3"
-                              >
-                                <div className="text-left">
-                                  <div className="font-medium text-sm mb-1">{action.action}</div>
-                                  <div className="text-xs text-muted-foreground">{action.reason}</div>
-                                </div>
-                              </Button>
-                            ))}
+                            {selectedEmail.suggestedActions.map(
+                              (action, idx) => (
+                                <Button
+                                  key={idx}
+                                  variant="outline"
+                                  size="sm"
+                                  className="w-full justify-start h-auto py-3"
+                                >
+                                  <div className="text-left">
+                                    <div className="font-medium text-sm mb-1">
+                                      {action.action}
+                                    </div>
+                                    <div className="text-xs text-muted-foreground">
+                                      {action.reason}
+                                    </div>
+                                  </div>
+                                </Button>
+                              )
+                            )}
                           </div>
                         </CardContent>
                       </Card>
@@ -356,7 +428,12 @@ export function EmailCenterAIFirst() {
                           </h4>
                           <div className="flex flex-wrap gap-2">
                             {selectedEmail.suggestedLabels.map((label, idx) => (
-                              <Button key={idx} variant="outline" size="sm" className="gap-2">
+                              <Button
+                                key={idx}
+                                variant="outline"
+                                size="sm"
+                                className="gap-2"
+                              >
                                 <span>{label.label}</span>
                                 <Badge variant="secondary" className="text-xs">
                                   {Math.round(label.confidence * 100)}%
@@ -373,7 +450,11 @@ export function EmailCenterAIFirst() {
                   <div className="prose prose-sm max-w-none">
                     <p>Hej,</p>
                     <p>{selectedEmail.preview}</p>
-                    <p>Venlig hilsen,<br />{selectedEmail.from}</p>
+                    <p>
+                      Venlig hilsen,
+                      <br />
+                      {selectedEmail.from}
+                    </p>
                   </div>
                 </ScrollArea>
 

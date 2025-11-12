@@ -8,24 +8,28 @@
 ## 🎯 Hvad Kan Langfuse Gøre For ChromaDB?
 
 ### 1. **Embedding Quality Tracking**
+
 - Track embedding generation time
 - Monitor API call success/failure rates
 - Analyze embedding costs (OpenRouter)
 - Identify slow embeddings
 
 ### 2. **Similarity Score Analysis**
+
 - Log all duplicate detection attempts
 - Track similarity thresholds
 - Analyze false positives/negatives
 - Optimize similarity threshold
 
 ### 3. **Search Performance**
+
 - Monitor search latency
 - Track result relevance
 - Analyze query patterns
 - Identify slow searches
 
 ### 4. **Cost Monitoring**
+
 - Track OpenRouter API usage
 - Calculate embedding costs per lead/email
 - Forecast monthly costs
@@ -40,35 +44,35 @@
 ```typescript
 // server/integrations/chromadb/embeddings.ts
 
-import { getLangfuseClient } from '../langfuse/client';
+import { getLangfuseClient } from "../langfuse/client";
 
 export async function generateEmbedding(text: string): Promise<number[]> {
   const langfuse = getLangfuseClient();
-  
+
   // Create trace
   const trace = langfuse?.trace({
-    name: 'chroma-embedding-generation',
+    name: "chroma-embedding-generation",
     metadata: {
       textLength: text.length,
-      source: 'chromadb',
+      source: "chromadb",
     },
   });
-  
+
   // Create generation span
   const generation = trace?.generation({
-    name: 'openrouter-embedding',
-    model: 'openai/text-embedding-3-small',
+    name: "openrouter-embedding",
+    model: "openai/text-embedding-3-small",
     input: text.substring(0, 100), // First 100 chars
   });
-  
+
   const startTime = Date.now();
-  
+
   try {
     // ... existing embedding generation ...
-    
+
     const embedding = data.data[0].embedding;
     const duration = Date.now() - startTime;
-    
+
     // Log success
     generation?.end({
       output: { dimensions: embedding.length },
@@ -83,21 +87,20 @@ export async function generateEmbedding(text: string): Promise<number[]> {
         dimensions: embedding.length,
       },
     });
-    
+
     return embedding;
-    
   } catch (error) {
     const duration = Date.now() - startTime;
-    
+
     // Log error
     generation?.end({
       metadata: {
         duration,
         error: error instanceof Error ? error.message : String(error),
-        level: 'ERROR',
+        level: "ERROR",
       },
     });
-    
+
     throw error;
   } finally {
     await langfuse?.flushAsync();
@@ -112,28 +115,28 @@ export async function generateEmbedding(text: string): Promise<number[]> {
 
 export async function createLead(data: InsertLead): Promise<Lead> {
   const langfuse = getLangfuseClient();
-  
+
   // Create trace for lead creation
   const trace = langfuse?.trace({
-    name: 'lead-creation-with-deduplication',
+    name: "lead-creation-with-deduplication",
     metadata: {
       leadName: data.name,
       leadCompany: data.company,
-      source: data.source || 'unknown',
+      source: data.source || "unknown",
     },
   });
-  
+
   if (ENV.chromaEnabled) {
     const span = trace?.span({
-      name: 'duplicate-detection',
+      name: "duplicate-detection",
     });
-    
+
     try {
-      const similar = await searchSimilar('friday_leads', leadText, 3);
-      
+      const similar = await searchSimilar("friday_leads", leadText, 3);
+
       if (similar && similar.distances.length > 0) {
-        const similarity = 1 - (similar.distances[0] / 2);
-        
+        const similarity = 1 - similar.distances[0] / 2;
+
         // Log duplicate detection result
         span?.end({
           output: {
@@ -144,12 +147,12 @@ export async function createLead(data: InsertLead): Promise<Lead> {
           metadata: {
             threshold: 0.85,
             topMatches: similar.distances.slice(0, 3).map((d, i) => ({
-              similarity: 1 - (d / 2),
+              similarity: 1 - d / 2,
               leadId: similar.metadatas[i]?.leadId,
             })),
           },
         });
-        
+
         if (similarity > 0.85) {
           // Duplicate found - log and return existing
           trace?.update({
@@ -159,7 +162,7 @@ export async function createLead(data: InsertLead): Promise<Lead> {
               returnedExistingLead: true,
             },
           });
-          
+
           // ... return existing lead ...
         }
       }
@@ -167,14 +170,14 @@ export async function createLead(data: InsertLead): Promise<Lead> {
       span?.end({
         metadata: {
           error: error instanceof Error ? error.message : String(error),
-          level: 'ERROR',
+          level: "ERROR",
         },
       });
     }
   }
-  
+
   // ... rest of lead creation ...
-  
+
   await langfuse?.flushAsync();
   return newLead;
 }
@@ -190,41 +193,40 @@ export async function getRelatedEmailThreads(
   limit: number = 5
 ): Promise<EmailThread[]> {
   const langfuse = getLangfuseClient();
-  
+
   const trace = langfuse?.trace({
-    name: 'email-context-retrieval',
+    name: "email-context-retrieval",
     metadata: {
       emailId: emailThread.id,
       subject: emailThread.subject,
       requestedLimit: limit,
     },
   });
-  
+
   try {
-    const similar = await searchSimilar('friday_emails', emailText, limit + 1);
-    
+    const similar = await searchSimilar("friday_emails", emailText, limit + 1);
+
     // Log search results
     trace?.update({
       output: {
         foundCount: similar?.ids.length || 0,
-        topSimilarities: similar?.distances.slice(0, 3).map(d => 1 - (d / 2)),
+        topSimilarities: similar?.distances.slice(0, 3).map(d => 1 - d / 2),
       },
       metadata: {
         searchPerformed: true,
         resultsReturned: relatedIds.length,
       },
     });
-    
+
     return relatedEmails;
-    
   } catch (error) {
     trace?.update({
       metadata: {
         error: error instanceof Error ? error.message : String(error),
-        level: 'ERROR',
+        level: "ERROR",
       },
     });
-    
+
     return [];
   } finally {
     await langfuse?.flushAsync();
@@ -239,6 +241,7 @@ export async function getRelatedEmailThreads(
 ### Metrics to Track
 
 **1. Embedding Performance**
+
 ```
 Metric: embedding-generation-time
 - Average: <600ms
@@ -248,6 +251,7 @@ Metric: embedding-generation-time
 ```
 
 **2. Lead Deduplication**
+
 ```
 Metric: duplicate-detection-rate
 - Duplicates found: X%
@@ -257,6 +261,7 @@ Metric: duplicate-detection-rate
 ```
 
 **3. Email Context Quality**
+
 ```
 Metric: related-email-relevance
 - Results returned: X per query
@@ -265,6 +270,7 @@ Metric: related-email-relevance
 ```
 
 **4. Cost Tracking**
+
 ```
 Metric: embedding-cost
 - Cost per embedding: $0.00002
@@ -279,23 +285,25 @@ Metric: embedding-cost
 ### Scenario 1: Duplicate Lead Detection
 
 **Setup:**
+
 ```typescript
 // Create lead 1
 const lead1 = await createLead({
   name: "John Doe",
   email: "john@acme.com",
-  company: "ACME Corp"
+  company: "ACME Corp",
 });
 
 // Try to create duplicate
 const lead2 = await createLead({
   name: "John Doe",
   email: "j.doe@acme.com", // Different email
-  company: "ACME Corporation" // Different format
+  company: "ACME Corporation", // Different format
 });
 ```
 
 **Expected Langfuse Traces:**
+
 ```
 Trace: lead-creation-with-deduplication (lead1)
   ├─ Span: duplicate-detection
@@ -305,15 +313,16 @@ Trace: lead-creation-with-deduplication (lead1)
 
 Trace: lead-creation-with-deduplication (lead2)
   ├─ Span: duplicate-detection
-  │   └─ Output: { 
+  │   └─ Output: {
   │        duplicateFound: true,
   │        similarity: 0.93,
-  │        existingLeadId: 1 
+  │        existingLeadId: 1
   │      }
   └─ Metadata: { duplicateDetected: true, returnedExistingLead: true }
 ```
 
 **Verification:**
+
 - Check lead2.id === lead1.id
 - Verify similarity score in Langfuse
 - Check no new embedding was generated
@@ -321,10 +330,14 @@ Trace: lead-creation-with-deduplication (lead2)
 ### Scenario 2: Email Context Retrieval
 
 **Setup:**
+
 ```typescript
 // Index 3 related emails
 await createEmailThread({ subject: "Product inquiry", from: "john@acme.com" });
-await createEmailThread({ subject: "Follow-up on pricing", from: "john@acme.com" });
+await createEmailThread({
+  subject: "Follow-up on pricing",
+  from: "john@acme.com",
+});
 await createEmailThread({ subject: "Different topic", from: "jane@xyz.com" });
 
 // Get related emails
@@ -332,6 +345,7 @@ const related = await getRelatedEmailThreads(currentEmail, 2);
 ```
 
 **Expected Langfuse Traces:**
+
 ```
 Trace: email-context-retrieval
   ├─ Input: { emailId: X, subject: "Ready to proceed" }
@@ -343,6 +357,7 @@ Trace: email-context-retrieval
 ```
 
 **Verification:**
+
 - Check top 2 are from john@acme.com
 - Verify jane@xyz.com email excluded
 - Check similarity scores make sense
@@ -356,11 +371,11 @@ Trace: email-context-retrieval
 ```typescript
 // Track in Langfuse
 interface EmbeddingMetrics {
-  generationTime: number;  // ms
-  dimensions: number;       // 1536
+  generationTime: number; // ms
+  dimensions: number; // 1536
   cached: boolean;
   apiSuccess: boolean;
-  cost: number;            // USD
+  cost: number; // USD
 }
 
 // Alerts
@@ -379,22 +394,23 @@ if (!apiSuccess) {
 // Manual review sample
 const sampleLeads = [
   { name: "John Doe", company: "ACME" },
-  { name: "J. Doe", company: "ACME Corp" },  // Should match
-  { name: "Jane Smith", company: "XYZ" },     // Should not match
+  { name: "J. Doe", company: "ACME Corp" }, // Should match
+  { name: "Jane Smith", company: "XYZ" }, // Should not match
 ];
 
 // Track in Langfuse
 for (const lead of sampleLeads) {
   const similarity = await checkSimilarity(lead, existingLeads);
   trace({
-    name: 'duplicate-test',
+    name: "duplicate-test",
     input: lead,
     output: { similarity },
     metadata: {
-      expected: lead.shouldMatch ? 'duplicate' : 'unique',
-      actual: similarity > 0.85 ? 'duplicate' : 'unique',
-      correct: (lead.shouldMatch && similarity > 0.85) || 
-               (!lead.shouldMatch && similarity <= 0.85),
+      expected: lead.shouldMatch ? "duplicate" : "unique",
+      actual: similarity > 0.85 ? "duplicate" : "unique",
+      correct:
+        (lead.shouldMatch && similarity > 0.85) ||
+        (!lead.shouldMatch && similarity <= 0.85),
     },
   });
 }
@@ -432,16 +448,16 @@ Adjust: Decrease threshold or improve embeddings
 
 ```typescript
 // Run A/B test in Langfuse
-const thresholds = [0.80, 0.85, 0.90, 0.95];
+const thresholds = [0.8, 0.85, 0.9, 0.95];
 
 for (const threshold of thresholds) {
   const results = await testDuplicateDetection({
     threshold,
     testSet: knownDuplicates,
   });
-  
+
   langfuse.trace({
-    name: 'threshold-optimization',
+    name: "threshold-optimization",
     metadata: {
       threshold,
       precision: results.precision,
@@ -457,18 +473,21 @@ for (const threshold of thresholds) {
 ## 🎯 Success Criteria
 
 ### Embeddings
+
 - [x] 95%+ API success rate
 - [x] <1s average generation time
 - [x] Cache hit rate >30%
 - [x] Cost <$50/month
 
 ### Duplicate Detection
+
 - [ ] 90%+ duplicate detection rate
 - [ ] <5% false positive rate
 - [ ] <10% false negative rate
 - [ ] Logged in Langfuse for review
 
 ### Email Context
+
 - [ ] 80%+ relevant results
 - [ ] <10% zero results
 - [ ] Average top similarity >0.7
@@ -479,24 +498,28 @@ for (const threshold of thresholds) {
 ## 📚 Implementation Checklist
 
 **Phase 1: Add Tracing**
+
 - [ ] Add Langfuse to embeddings.ts
 - [ ] Add Langfuse to createLead()
 - [ ] Add Langfuse to getRelatedEmailThreads()
 - [ ] Test tracing works
 
 **Phase 2: Dashboard Setup**
+
 - [ ] Create Langfuse dashboards
 - [ ] Set up metrics
 - [ ] Configure alerts
 - [ ] Document queries
 
 **Phase 3: Quality Testing**
+
 - [ ] Run duplicate detection tests
 - [ ] Run email context tests
 - [ ] Review Langfuse traces
 - [ ] Optimize thresholds
 
 **Phase 4: Production Monitoring**
+
 - [ ] Enable in production
 - [ ] Monitor for 1 week
 - [ ] Review metrics
@@ -507,7 +530,7 @@ for (const threshold of thresholds) {
 ## 💡 Next Steps
 
 1. **Start Friday AI server** med ChromaDB enabled
-2. **Run full integration test** 
+2. **Run full integration test**
 3. **Add Langfuse tracing** til embedding functions
 4. **Create test data** (leads + emails)
 5. **Monitor in Langfuse dashboard**

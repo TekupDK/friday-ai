@@ -3,7 +3,14 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { APP_LOGO, APP_TITLE } from "@/const";
 import { trpc } from "@/lib/trpc";
@@ -13,13 +20,13 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const [, navigate] = useLocation();
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: () => {
       navigate("/");
     },
-    onError: (error) => {
+    onError: error => {
       setError(error.message || "Login failed");
     },
     onSettled: () => {
@@ -50,7 +57,11 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center pb-4">
           <div className="mx-auto mb-4 w-16 h-16 bg-white rounded-xl border border-slate-200 flex items-center justify-center">
-            <img src={APP_LOGO} alt="App icon" className="w-10 h-10 rounded-md" />
+            <img
+              src={APP_LOGO}
+              alt="App icon"
+              className="w-10 h-10 rounded-md"
+            />
           </div>
           <CardTitle className="text-2xl font-bold text-slate-900">
             {APP_TITLE}
@@ -67,7 +78,7 @@ export default function LoginPage() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -75,7 +86,7 @@ export default function LoginPage() {
                 type="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 disabled={isLoading}
                 required
               />
@@ -88,7 +99,7 @@ export default function LoginPage() {
                 type="password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 disabled={isLoading}
                 required
               />
@@ -96,11 +107,7 @@ export default function LoginPage() {
           </CardContent>
 
           <CardFooter className="pt-4">
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isLoading}
-            >
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Signing in..." : "Sign In"}
             </Button>
           </CardFooter>

@@ -15,7 +15,7 @@ export interface NewsletterSubscription {
   email: string;
   frequency: string;
   lastReceived: string;
-  category: 'newsletter' | 'marketing' | 'updates' | 'spam';
+  category: "newsletter" | "marketing" | "updates" | "spam";
 }
 
 interface UnsubscribeCardProps {
@@ -24,19 +24,17 @@ interface UnsubscribeCardProps {
   onCancel?: () => void;
 }
 
-export function UnsubscribeCard({ 
+export function UnsubscribeCard({
   subscriptions,
   onUnsubscribe,
-  onCancel 
+  onCancel,
 }: UnsubscribeCardProps) {
   const [selectedSubs, setSelectedSubs] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const toggleSubscription = (id: string) => {
-    setSelectedSubs(prev => 
-      prev.includes(id) 
-        ? prev.filter(subId => subId !== id)
-        : [...prev, id]
+    setSelectedSubs(prev =>
+      prev.includes(id) ? prev.filter(subId => subId !== id) : [...prev, id]
     );
   };
 
@@ -50,23 +48,33 @@ export function UnsubscribeCard({
     }
   };
 
-  const getCategoryColor = (category: NewsletterSubscription['category']) => {
+  const getCategoryColor = (category: NewsletterSubscription["category"]) => {
     switch (category) {
-      case 'newsletter': return 'bg-blue-500';
-      case 'marketing': return 'bg-orange-500';
-      case 'updates': return 'bg-green-500';
-      case 'spam': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case "newsletter":
+        return "bg-blue-500";
+      case "marketing":
+        return "bg-orange-500";
+      case "updates":
+        return "bg-green-500";
+      case "spam":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const getCategoryLabel = (category: NewsletterSubscription['category']) => {
+  const getCategoryLabel = (category: NewsletterSubscription["category"]) => {
     switch (category) {
-      case 'newsletter': return 'Nyhedsbrev';
-      case 'marketing': return 'Marketing';
-      case 'updates': return 'Opdateringer';
-      case 'spam': return 'Spam';
-      default: return 'Andet';
+      case "newsletter":
+        return "Nyhedsbrev";
+      case "marketing":
+        return "Marketing";
+      case "updates":
+        return "Opdateringer";
+      case "spam":
+        return "Spam";
+      default:
+        return "Andet";
     }
   };
 
@@ -90,7 +98,10 @@ export function UnsubscribeCard({
             <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div className="text-xs text-amber-700 dark:text-amber-400">
               <p className="font-semibold">Bemærk:</p>
-              <p>Du vil ikke længere modtage emails fra disse afsendere. Denne handling kan ikke fortrydes.</p>
+              <p>
+                Du vil ikke længere modtage emails fra disse afsendere. Denne
+                handling kan ikke fortrydes.
+              </p>
             </div>
           </div>
         </div>
@@ -101,7 +112,7 @@ export function UnsubscribeCard({
             Vælg nyhedsbreve at afmelde ({subscriptions.length} fundet):
           </p>
           <div className="space-y-2 max-h-48 overflow-y-auto">
-            {subscriptions.map((sub) => (
+            {subscriptions.map(sub => (
               <button
                 key={sub.id}
                 onClick={() => toggleSubscription(sub.id)}
@@ -117,7 +128,9 @@ export function UnsubscribeCard({
                     <Mail className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-sm">{sub.sender}</p>
-                      <p className="text-xs text-muted-foreground">{sub.email}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {sub.email}
+                      </p>
                       <div className="flex items-center gap-2 mt-1">
                         <Badge className={getCategoryColor(sub.category)}>
                           {getCategoryLabel(sub.category)}
@@ -145,15 +158,16 @@ export function UnsubscribeCard({
         {selectedSubs.length > 0 && (
           <div className="p-2 rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 text-xs">
             <span className="font-medium text-red-700 dark:text-red-400">
-              {selectedSubs.length} nyhedsbrev{selectedSubs.length > 1 ? 'er' : ''} valgt til afmelding
+              {selectedSubs.length} nyhedsbrev
+              {selectedSubs.length > 1 ? "er" : ""} valgt til afmelding
             </span>
           </div>
         )}
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button 
-            onClick={handleUnsubscribe} 
+          <Button
+            onClick={handleUnsubscribe}
             className="flex-1 bg-linear-to-r from-red-600 to-orange-600"
             disabled={selectedSubs.length === 0 || isProcessing}
           >

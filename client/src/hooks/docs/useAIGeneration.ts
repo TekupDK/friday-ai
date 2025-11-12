@@ -1,6 +1,6 @@
 /**
  * AI Documentation Generation Hook
- * 
+ *
  * Provides mutations for AI-powered doc generation:
  * - Generate lead documentation
  * - Update lead documentation
@@ -17,23 +17,23 @@ export function useAIGeneration() {
 
   // Generate documentation for a single lead
   const generateLeadDoc = trpc.docs.generateLeadDoc.useMutation({
-    onSuccess: (result) => {
+    onSuccess: result => {
       if (result.success && result.docId) {
-        toast.success('🎉 AI documentation generated!', {
-          description: 'Click to view the document',
+        toast.success("🎉 AI documentation generated!", {
+          description: "Click to view the document",
           action: {
-            label: 'View',
+            label: "View",
             onClick: () => navigate(`/docs?view=${result.docId}`),
           },
         });
       } else {
-        toast.error('Failed to generate documentation', {
-          description: result.error || 'Unknown error',
+        toast.error("Failed to generate documentation", {
+          description: result.error || "Unknown error",
         });
       }
     },
-    onError: (error) => {
-      toast.error('Failed to generate documentation', {
+    onError: error => {
+      toast.error("Failed to generate documentation", {
         description: error.message,
       });
     },
@@ -41,19 +41,19 @@ export function useAIGeneration() {
 
   // Update existing lead documentation
   const updateLeadDoc = trpc.docs.updateLeadDoc.useMutation({
-    onSuccess: (result) => {
+    onSuccess: result => {
       if (result.success) {
-        toast.success('✅ Documentation updated!', {
-          description: 'The document has been refreshed with latest data',
+        toast.success("✅ Documentation updated!", {
+          description: "The document has been refreshed with latest data",
         });
       } else {
-        toast.error('Failed to update documentation', {
-          description: result.error || 'Unknown error',
+        toast.error("Failed to update documentation", {
+          description: result.error || "Unknown error",
         });
       }
     },
-    onError: (error) => {
-      toast.error('Failed to update documentation', {
+    onError: error => {
+      toast.error("Failed to update documentation", {
         description: error.message,
       });
     },
@@ -61,23 +61,23 @@ export function useAIGeneration() {
 
   // Generate weekly digest
   const generateWeeklyDigest = trpc.docs.generateWeeklyDigest.useMutation({
-    onSuccess: (result) => {
+    onSuccess: result => {
       if (result.success && result.docId) {
-        toast.success('📊 Weekly digest generated!', {
-          description: 'Click to view the digest',
+        toast.success("📊 Weekly digest generated!", {
+          description: "Click to view the digest",
           action: {
-            label: 'View',
+            label: "View",
             onClick: () => navigate(`/docs?view=${result.docId}`),
           },
         });
       } else {
-        toast.error('Failed to generate digest', {
-          description: result.error || 'Unknown error',
+        toast.error("Failed to generate digest", {
+          description: result.error || "Unknown error",
         });
       }
     },
-    onError: (error) => {
-      toast.error('Failed to generate digest', {
+    onError: error => {
+      toast.error("Failed to generate digest", {
         description: error.message,
       });
     },
@@ -85,17 +85,17 @@ export function useAIGeneration() {
 
   // Bulk generate for all leads
   const bulkGenerateLeadDocs = trpc.docs.bulkGenerateLeadDocs.useMutation({
-    onSuccess: (result) => {
+    onSuccess: result => {
       if (result.success) {
         toast.success(`🚀 Bulk generation complete!`, {
           description: `Generated ${result.generated} docs, ${result.failed} failed`,
         });
       } else {
-        toast.error('Bulk generation failed');
+        toast.error("Bulk generation failed");
       }
     },
-    onError: (error) => {
-      toast.error('Bulk generation failed', {
+    onError: error => {
+      toast.error("Bulk generation failed", {
         description: error.message,
       });
     },
@@ -106,10 +106,10 @@ export function useAIGeneration() {
     updateLeadDoc,
     generateWeeklyDigest,
     bulkGenerateLeadDocs,
-    isGenerating: 
-      generateLeadDoc.isPending || 
-      updateLeadDoc.isPending || 
-      generateWeeklyDigest.isPending || 
+    isGenerating:
+      generateLeadDoc.isPending ||
+      updateLeadDoc.isPending ||
+      generateWeeklyDigest.isPending ||
       bulkGenerateLeadDocs.isPending,
   };
 }

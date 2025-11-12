@@ -19,7 +19,9 @@ http://localhost:3000/chat-components
 ## 📦 **Komponenter pr. Kategori**
 
 ### 💬 **Chat Cards (12)**
+
 Grundlæggende chat funktioner og kort
+
 - MessageCard
 - EmailCard
 - NotificationCard
@@ -34,7 +36,9 @@ Grundlæggende chat funktioner og kort
 - QuickReplyCard
 
 ### 📧 **Email Center (10)**
+
 Email management og Shortwave-inspirerede features
+
 - EmailSearchCard
 - LabelManagementCard
 - TodoFromEmailCard
@@ -47,7 +51,9 @@ Email management og Shortwave-inspirerede features
 - BillyAnalyticsCard
 
 ### 🧠 **Intelligens & Analyse (10)**
+
 AI-drevne analyse værktøjer
+
 - CrossReferenceCard
 - LeadTrackingCard
 - CustomerHistoryCard
@@ -60,35 +66,45 @@ AI-drevne analyse værktøjer
 - AIClassification
 
 ### ⚡ **Advanced Chat (4)**
+
 Avancerede chat funktioner
+
 - MentionSystem
 - CodeBlockHighlight
 - RichTextEditor
 - MessageHistory
 
 ### ⌨️ **Input (4)**
+
 Input og formatering komponenter
+
 - SlashCommandsMenu
 - MentionAutocomplete
 - MarkdownPreview
 - AttachmentPreview
 
 ### 🤖 **Smart (5)**
+
 Intelligente auto-fuldførelse og suggestions
+
 - SmartSuggestions
 - AIAssistant
 - ContextAwareness
 - AutoComplete
 
 ### 🔴 **Realtime (4)**
+
 Realtime samarbejde og notifikationer
+
 - LiveCollaboration
 - RealtimeNotifications
 - LiveTypingIndicators
 - LiveActivityFeed
 
 ### 🔧 **Andet (10)**
+
 Hjælpeværktøjer og system funktioner
+
 - QuickActions
 - SearchEverywhere
 - CommandPalette
@@ -122,7 +138,7 @@ function MyComponent() {
 ### Med Props:
 
 ```tsx
-<EmailSearchCard 
+<EmailSearchCard
   onSearch={(query) => console.log('Searching:', query)}
   onResultClick={(result) => console.log('Clicked:', result)}
 />
@@ -222,6 +238,7 @@ client/src/components/chat/
 Der er nogle CSS class warnings (`bg-gradient-to-*` vs `bg-linear-to-*`). Disse er **kosmetiske** og påvirker ikke funktionalitet.
 
 For at fixe automatisk:
+
 ```bash
 npm run lint:fix
 ```
@@ -231,6 +248,7 @@ npm run lint:fix
 ## 🎨 **Design System**
 
 Komponenter følger Tekup AI v2 design system:
+
 - **Farver**: Tailwind CSS palette
 - **Typography**: System fonts
 - **Spacing**: Consistent padding/margins

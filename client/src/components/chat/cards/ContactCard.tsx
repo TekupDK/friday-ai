@@ -18,7 +18,7 @@ export interface ContactCardProps {
     company: string;
     role: string;
     location: string;
-    status: 'online' | 'offline' | 'away';
+    status: "online" | "offline" | "away";
     avatar?: string;
   };
   onEmail?: () => void;
@@ -26,26 +26,29 @@ export interface ContactCardProps {
   onView?: () => void;
 }
 
-export function ContactCard({ 
+export function ContactCard({
   contact = {
-    id: '1',
-    name: 'Sarah Johnson',
-    email: 'sarah@abc-corp.com',
-    phone: '+45 2345 6789',
-    company: 'ABC Corporation',
-    role: 'Sales Manager',
-    location: 'København, Danmark',
-    status: 'online'
+    id: "1",
+    name: "Sarah Johnson",
+    email: "sarah@abc-corp.com",
+    phone: "+45 2345 6789",
+    company: "ABC Corporation",
+    role: "Sales Manager",
+    location: "København, Danmark",
+    status: "online",
   },
   onEmail,
   onCall,
-  onView
+  onView,
 }: ContactCardProps) {
   const getStatusColor = () => {
     switch (contact.status) {
-      case 'online': return 'bg-green-500';
-      case 'away': return 'bg-yellow-500';
-      default: return 'bg-gray-500';
+      case "online":
+        return "bg-green-500";
+      case "away":
+        return "bg-yellow-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
@@ -58,7 +61,12 @@ export function ContactCard({
               <div className="w-10 h-10 rounded-lg bg-cyan-600 flex items-center justify-center">
                 <User className="w-5 h-5 text-white" />
               </div>
-              <div className={cn("absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-white", getStatusColor())} />
+              <div
+                className={cn(
+                  "absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-white",
+                  getStatusColor()
+                )}
+              />
             </div>
             <div>
               <h4 className="font-semibold">{contact.name}</h4>

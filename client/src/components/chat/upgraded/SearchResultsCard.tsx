@@ -26,24 +26,28 @@ interface SearchResultsCardProps {
   onOpenResult?: (url: string) => void;
 }
 
-export function SearchResultsCardUpgraded({ 
-  query, 
+export function SearchResultsCardUpgraded({
+  query,
   results,
-  onOpenResult 
+  onOpenResult,
 }: SearchResultsCardProps) {
   return (
-    <Card className={cn(
-      "relative overflow-hidden transition-all duration-300",
-      "hover:shadow-xl",
-      "bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm"
-    )}>
+    <Card
+      className={cn(
+        "relative overflow-hidden transition-all duration-300",
+        "hover:shadow-xl",
+        "bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm"
+      )}
+    >
       <div className="relative p-4 space-y-4">
         {/* Header */}
         <div className="flex items-center gap-3">
-          <div className={cn(
-            "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-md",
-            "bg-linear-to-br from-green-500 to-emerald-600"
-          )}>
+          <div
+            className={cn(
+              "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-md",
+              "bg-linear-to-br from-green-500 to-emerald-600"
+            )}
+          >
             <Search className="w-5 h-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
@@ -70,12 +74,12 @@ export function SearchResultsCardUpgraded({
   );
 }
 
-function SearchResultItem({ 
-  result, 
+function SearchResultItem({
+  result,
   index,
-  onOpen 
-}: { 
-  result: SearchResult; 
+  onOpen,
+}: {
+  result: SearchResult;
   index: number;
   onOpen: () => void;
 }) {
@@ -136,7 +140,7 @@ function SearchResultItem({
             variant="ghost"
             size="sm"
             className="h-7 text-xs"
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               onOpen();
             }}

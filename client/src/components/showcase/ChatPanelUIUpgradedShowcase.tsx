@@ -3,26 +3,44 @@
  * Viser alle nye opgraderede chat komponenter
  */
 
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ActionCard } from "@/components/chat/upgraded/ActionCard";
 import { ThinkingIndicator } from "@/components/chat/upgraded/ThinkingIndicator";
 import { ChatMessage } from "@/components/chat/upgraded/ChatMessage";
 import { WelcomeScreenUpgraded } from "@/components/chat/upgraded/WelcomeScreen";
-import { QuickActions, presetActions } from "@/components/chat/upgraded/QuickActions";
+import {
+  QuickActions,
+  presetActions,
+} from "@/components/chat/upgraded/QuickActions";
 import { EmailThreadCardUpgraded } from "@/components/chat/upgraded/EmailThreadCard";
 import { WeatherCardUpgraded } from "@/components/chat/upgraded/WeatherCard";
 import { InvoiceCardUpgraded } from "@/components/chat/upgraded/InvoiceCard";
 import { SearchResultsCardUpgraded } from "@/components/chat/upgraded/SearchResultsCard";
-import { ToastProvider, useToast } from "@/components/chat/upgraded/ToastNotification";
+import {
+  ToastProvider,
+  useToast,
+} from "@/components/chat/upgraded/ToastNotification";
 import { FileUpload } from "@/components/chat/upgraded/FileUpload";
 import { VoiceInput } from "@/components/chat/upgraded/VoiceInput";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { 
-  UserPlus, CheckCircle2, Calendar, FileText,
-  Mail, Phone, MapPin, DollarSign
+import {
+  UserPlus,
+  CheckCircle2,
+  Calendar,
+  FileText,
+  Mail,
+  Phone,
+  MapPin,
+  DollarSign,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -46,14 +64,15 @@ export function ChatPanelUIUpgradedShowcase() {
         <CardHeader>
           <CardTitle>🎯 Welcome Screen - Oppgraderet</CardTitle>
           <CardDescription>
-            Moderne velkommen skærm med kategoriserede suggestions, gradient cards, og stats
+            Moderne velkommen skærm med kategoriserede suggestions, gradient
+            cards, og stats
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           <div className="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-950 dark:to-blue-950 min-h-[600px]">
-            <WelcomeScreenUpgraded 
+            <WelcomeScreenUpgraded
               userName="Anders"
-              onSuggestionClick={(s) => console.log('Clicked:', s)} 
+              onSuggestionClick={s => console.log("Clicked:", s)}
             />
           </div>
         </CardContent>
@@ -64,7 +83,8 @@ export function ChatPanelUIUpgradedShowcase() {
         <CardHeader>
           <CardTitle>💬 Chat Messages - Opgraderet</CardTitle>
           <CardDescription>
-            Moderne chat bubbles med avatars, reactions, copy button, og status indicators
+            Moderne chat bubbles med avatars, reactions, copy button, og status
+            indicators
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -75,7 +95,7 @@ export function ChatPanelUIUpgradedShowcase() {
               timestamp={new Date()}
               showAvatar
             />
-            
+
             <ChatMessage
               type="ai"
               content="Lad mig tjekke dine opgaver... Du har 3 opgaver i dag: Lead opfølgning for Matilde, Tilbud til Frederiksberg projekt, og faktura til Jonas."
@@ -84,7 +104,7 @@ export function ChatPanelUIUpgradedShowcase() {
               showReactions
               model="Gemma 3 27B"
             />
-            
+
             <ChatMessage
               type="user"
               content="Send tilbud til Matilde"
@@ -110,33 +130,39 @@ export function ChatPanelUIUpgradedShowcase() {
               <Badge className="mb-2">Dots (Classic)</Badge>
               <ThinkingIndicator variant="dots" message="Friday tænker..." />
             </div>
-            
+
             <Separator />
-            
+
             <div>
               <Badge className="mb-2">Wave</Badge>
-              <ThinkingIndicator variant="wave" message="Analyserer emails..." />
+              <ThinkingIndicator
+                variant="wave"
+                message="Analyserer emails..."
+              />
             </div>
-            
+
             <Separator />
-            
+
             <div>
               <Badge className="mb-2">Pulse</Badge>
               <ThinkingIndicator variant="pulse" message="Opretter tilbud..." />
             </div>
-            
+
             <Separator />
-            
+
             <div>
               <Badge className="mb-2">Progress</Badge>
               <ThinkingIndicator variant="progress" message="Booker møde..." />
             </div>
-            
+
             <Separator />
-            
+
             <div>
               <Badge className="mb-2">Sparkle</Badge>
-              <ThinkingIndicator variant="sparkle" message="AI magic happening..." />
+              <ThinkingIndicator
+                variant="sparkle"
+                message="AI magic happening..."
+              />
             </div>
           </div>
         </CardContent>
@@ -147,7 +173,8 @@ export function ChatPanelUIUpgradedShowcase() {
         <CardHeader>
           <CardTitle>🎴 Action Cards - Universal Design</CardTitle>
           <CardDescription>
-            Glassmorphism cards for leads, tasks, meetings, invoices med metadata og actions
+            Glassmorphism cards for leads, tasks, meetings, invoices med
+            metadata og actions
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -167,8 +194,16 @@ export function ChatPanelUIUpgradedShowcase() {
                 { label: "Value", value: "1.500 kr", icon: DollarSign },
               ]}
               actions={[
-                { label: "Send tilbud", onClick: () => alert('Sending tilbud...'), variant: 'default' },
-                { label: "Book møde", onClick: () => alert('Booking...'), variant: 'outline' },
+                {
+                  label: "Send tilbud",
+                  onClick: () => alert("Sending tilbud..."),
+                  variant: "default",
+                },
+                {
+                  label: "Book møde",
+                  onClick: () => alert("Booking..."),
+                  variant: "outline",
+                },
               ]}
               copyableId="#1247"
               timestamp={new Date()}
@@ -187,7 +222,7 @@ export function ChatPanelUIUpgradedShowcase() {
                 { label: "Status", value: "Afventer", icon: CheckCircle2 },
               ]}
               actions={[
-                { label: "Marker færdig", onClick: () => alert('Done!') },
+                { label: "Marker færdig", onClick: () => alert("Done!") },
               ]}
               timestamp={new Date()}
             />
@@ -205,7 +240,7 @@ export function ChatPanelUIUpgradedShowcase() {
                 { label: "Sted", value: "Kontoret", icon: MapPin },
               ]}
               actions={[
-                { label: "Åbn kalender", onClick: () => alert('Opening...') },
+                { label: "Åbn kalender", onClick: () => alert("Opening...") },
               ]}
               timestamp={new Date()}
             />
@@ -227,17 +262,17 @@ export function ChatPanelUIUpgradedShowcase() {
               <Badge className="mb-3">Horizontal Layout</Badge>
               <QuickActions
                 actions={[
-                  presetActions.calendar(() => alert('Booking...')),
-                  presetActions.invoice(() => alert('Creating invoice...')),
-                  presetActions.email(() => alert('Sending email...')),
-                  presetActions.call(() => alert('Calling...')),
+                  presetActions.calendar(() => alert("Booking...")),
+                  presetActions.invoice(() => alert("Creating invoice...")),
+                  presetActions.email(() => alert("Sending email...")),
+                  presetActions.call(() => alert("Calling...")),
                 ]}
                 layout="horizontal"
               />
             </div>
-            
+
             <Separator />
-            
+
             <div>
               <Badge className="mb-3">Grid Layout</Badge>
               <QuickActions
@@ -246,9 +281,9 @@ export function ChatPanelUIUpgradedShowcase() {
                     setCopiedAction(true);
                     setTimeout(() => setCopiedAction(false), 2000);
                   }, copiedAction),
-                  presetActions.download(() => alert('Downloading...')),
-                  presetActions.share(() => alert('Sharing...')),
-                  presetActions.open(() => alert('Opening...')),
+                  presetActions.download(() => alert("Downloading...")),
+                  presetActions.share(() => alert("Sharing...")),
+                  presetActions.open(() => alert("Opening...")),
                 ]}
                 layout="grid"
               />
@@ -268,25 +303,27 @@ export function ChatPanelUIUpgradedShowcase() {
         <CardContent>
           <EmailThreadCardUpgraded
             data={{
-              id: '1',
-              subject: 'Flytterengøring tilbud - Matilde Skinneholm',
-              from: { name: 'Matilde Skinneholm', email: 'matilde@gmail.com' },
+              id: "1",
+              subject: "Flytterengøring tilbud - Matilde Skinneholm",
+              from: { name: "Matilde Skinneholm", email: "matilde@gmail.com" },
               messageCount: 3,
-              summary: 'Matilde spørger om tilbud på flytterengøring af 15m² i Hinnerup. Hun sammenligner med andre tilbud.',
-              aiInsights: '💡 Lead med høj prioritet - hun har modtaget andre tilbud. Send konkurrencedygtigt tilbud hurtigt!',
+              summary:
+                "Matilde spørger om tilbud på flytterengøring af 15m² i Hinnerup. Hun sammenligner med andre tilbud.",
+              aiInsights:
+                "💡 Lead med høj prioritet - hun har modtaget andre tilbud. Send konkurrencedygtigt tilbud hurtigt!",
               labels: [
-                { name: 'Lead', color: '#10b981' },
-                { name: 'Flytterengøring', color: '#3b82f6' }
+                { name: "Lead", color: "#10b981" },
+                { name: "Flytterengøring", color: "#3b82f6" },
               ],
-              priority: 'high',
+              priority: "high",
               hasAttachments: false,
               timestamp: new Date(),
               isUnread: true,
-              isStarred: false
+              isStarred: false,
             }}
-            onOpen={() => console.log('Open')}
-            onReply={() => console.log('Reply')}
-            onArchive={() => console.log('Archive')}
+            onOpen={() => console.log("Open")}
+            onReply={() => console.log("Reply")}
+            onArchive={() => console.log("Archive")}
           />
         </CardContent>
       </Card>
@@ -301,24 +338,24 @@ export function ChatPanelUIUpgradedShowcase() {
         <CardContent>
           <WeatherCardUpgraded
             data={{
-              location: 'Aarhus, Danmark',
+              location: "Aarhus, Danmark",
               temperature: 12,
               feelsLike: 9,
-              condition: 'rainy',
-              description: 'Let regn',
+              condition: "rainy",
+              description: "Let regn",
               humidity: 78,
               windSpeed: 15,
               visibility: 8,
               pressure: 1013,
-              sunrise: '07:42',
-              sunset: '16:18',
+              sunrise: "07:42",
+              sunset: "16:18",
               forecast: [
-                { day: 'I morgen', temp: 14, condition: 'Overskyet' },
-                { day: 'Torsdag', temp: 11, condition: 'Regn' },
-                { day: 'Fredag', temp: 13, condition: 'Delvist overskyet' }
-              ]
+                { day: "I morgen", temp: 14, condition: "Overskyet" },
+                { day: "Torsdag", temp: 11, condition: "Regn" },
+                { day: "Fredag", temp: 13, condition: "Delvist overskyet" },
+              ],
             }}
-            onRefresh={() => console.log('Refresh')}
+            onRefresh={() => console.log("Refresh")}
           />
         </CardContent>
       </Card>
@@ -334,22 +371,26 @@ export function ChatPanelUIUpgradedShowcase() {
           <div className="grid gap-4">
             <InvoiceCardUpgraded
               data={{
-                id: '1',
-                invoiceNumber: '2024-1247',
-                customerName: 'Matilde Skinneholm',
+                id: "1",
+                invoiceNumber: "2024-1247",
+                customerName: "Matilde Skinneholm",
                 amount: 1500,
-                currency: 'DKK',
-                status: 'sent',
+                currency: "DKK",
+                status: "sent",
                 dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
                 createdDate: new Date(),
                 items: [
-                  { description: 'Flytterengøring 15m²', quantity: 1, price: 1200 },
-                  { description: 'Ovnrens', quantity: 1, price: 300 }
+                  {
+                    description: "Flytterengøring 15m²",
+                    quantity: 1,
+                    price: 1200,
+                  },
+                  { description: "Ovnrens", quantity: 1, price: 300 },
                 ],
-                paymentProgress: 0
+                paymentProgress: 0,
               }}
-              onView={() => console.log('View')}
-              onSend={() => console.log('Send')}
+              onView={() => console.log("View")}
+              onSend={() => console.log("Send")}
             />
           </div>
         </CardContent>
@@ -367,23 +408,25 @@ export function ChatPanelUIUpgradedShowcase() {
             query="flytterengøring priser"
             results={[
               {
-                id: '1',
-                title: 'Priser på flytterengøring 2024 - Komplet guide',
-                url: 'https://example.com/flytterengoering-priser',
-                domain: 'example.com',
-                snippet: 'Se hvad flytterengøring koster i 2024. Gennemsnitspriser, tilbud, og sammenligning af firmaer.',
-                relevanceScore: 0.92
+                id: "1",
+                title: "Priser på flytterengøring 2024 - Komplet guide",
+                url: "https://example.com/flytterengoering-priser",
+                domain: "example.com",
+                snippet:
+                  "Se hvad flytterengøring koster i 2024. Gennemsnitspriser, tilbud, og sammenligning af firmaer.",
+                relevanceScore: 0.92,
               },
               {
-                id: '2',
-                title: 'Flytterengøring - Book online | Rendetalje',
-                url: 'https://rendetalje.dk/flytterengoering',
-                domain: 'rendetalje.dk',
-                snippet: 'Professionel flytterengøring fra 349 kr/time. Book direkte online.',
-                relevanceScore: 0.88
-              }
+                id: "2",
+                title: "Flytterengøring - Book online | Rendetalje",
+                url: "https://rendetalje.dk/flytterengoering",
+                domain: "rendetalje.dk",
+                snippet:
+                  "Professionel flytterengøring fra 349 kr/time. Book direkte online.",
+                relevanceScore: 0.88,
+              },
             ]}
-            onOpenResult={(url) => console.log('Open:', url)}
+            onOpenResult={url => console.log("Open:", url)}
           />
         </CardContent>
       </Card>
@@ -412,8 +455,8 @@ export function ChatPanelUIUpgradedShowcase() {
         </CardHeader>
         <CardContent>
           <FileUpload
-            onUpload={async (files) => {
-              console.log('Uploading files:', files);
+            onUpload={async files => {
+              console.log("Uploading files:", files);
             }}
           />
         </CardContent>
@@ -428,8 +471,8 @@ export function ChatPanelUIUpgradedShowcase() {
         </CardHeader>
         <CardContent>
           <VoiceInput
-            onTranscript={(text) => console.log('Transcript:', text)}
-            onAudioBlob={(blob) => console.log('Audio:', blob)}
+            onTranscript={text => console.log("Transcript:", text)}
+            onAudioBlob={blob => console.log("Audio:", blob)}
           />
         </CardContent>
       </Card>
@@ -502,42 +545,50 @@ function ToastDemo() {
   return (
     <div className="flex flex-wrap gap-2">
       <Button
-        onClick={() => addToast({
-          type: 'success',
-          title: 'Success!',
-          description: 'Operation completed successfully'
-        })}
+        onClick={() =>
+          addToast({
+            type: "success",
+            title: "Success!",
+            description: "Operation completed successfully",
+          })
+        }
         variant="outline"
       >
         Success Toast
       </Button>
       <Button
-        onClick={() => addToast({
-          type: 'error',
-          title: 'Error!',
-          description: 'Something went wrong'
-        })}
+        onClick={() =>
+          addToast({
+            type: "error",
+            title: "Error!",
+            description: "Something went wrong",
+          })
+        }
         variant="outline"
       >
         Error Toast
       </Button>
       <Button
-        onClick={() => addToast({
-          type: 'warning',
-          title: 'Warning!',
-          description: 'Please check this'
-        })}
+        onClick={() =>
+          addToast({
+            type: "warning",
+            title: "Warning!",
+            description: "Please check this",
+          })
+        }
         variant="outline"
       >
         Warning Toast
       </Button>
       <Button
-        onClick={() => addToast({
-          type: 'loading',
-          title: 'Processing...',
-          description: 'Please wait',
-          duration: 0
-        })}
+        onClick={() =>
+          addToast({
+            type: "loading",
+            title: "Processing...",
+            description: "Please wait",
+            duration: 0,
+          })
+        }
         variant="outline"
       >
         Loading Toast

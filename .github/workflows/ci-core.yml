@@ -1,0 +1,52 @@
+name: Core CI
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - "**/*.md"
+      - "**/.vscode/**"
+      - "**/.idea/**"
+      - "**/docs/**"
+  push:
+    branches: [ main ]
+
+jobs:
+  quality:
+    name: Typecheck, Test, Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.20.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile=false
+
+      - name: Prettier check
+        run: pnpm run format:check
+
+      - name: TypeScript check
+        run: pnpm run check
+
+      - name: Unit tests
+        run: pnpm run test
+
+      - name: Generate AI docs (artifact only)
+        run: pnpm run docs:ai-components
+
+      - name: Upload AI docs artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-docs
+          path: AI_DOCS_COMPONENTS_AI.md

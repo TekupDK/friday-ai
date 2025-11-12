@@ -11,6 +11,7 @@
 **File:** `AnimatedStatsCard.tsx`
 
 **Animationer:**
+
 - ✅ **Number Counter** - Tæller fra 0 til target (2 sekunder)
 - ✅ **Staggered Entrance** - Hver card med 100ms delay
 - ✅ **Hover Scale** - Scale(1.05) på hover
@@ -20,6 +21,7 @@
 - ✅ **Gradient Backgrounds** - Fade-in på hover
 
 **Stats:**
+
 - Revenue: 125,000 kr
 - New Leads: 48
 - Conversion: 68%
@@ -35,6 +37,7 @@
 **File:** `SkeletonDemo.tsx`
 
 **Features:**
+
 - ✅ **Pulse Animation** - Built-in skeleton pulse
 - ✅ **Reload Button** - Toggle between loading/loaded
 - ✅ **3 Layout Types:**
@@ -44,12 +47,14 @@
 - ✅ **Smooth Transitions** - Fade between states
 
 **Use Cases:**
+
 - Email lists while loading
 - Metric cards waiting for API
 - Task lists fetching data
 - User profiles loading
 
 **Forbedrer UX:**
+
 - Perceived performance boost
 - User feedback mens data loader
 - Professionel loading state
@@ -61,6 +66,7 @@
 **File:** `InteractiveHoverCard.tsx`
 
 **6 Forskellige Hover Effects:**
+
 1. **Lift Effect** - translateY(-8px)
 2. **Icon Rotation** - rotate(6deg) + scale(1.1)
 3. **Gradient Fade** - Colored gradient fade-in
@@ -69,6 +75,7 @@
 6. **Corner Accent** - Decorative corner scale-in
 
 **6 Card Types:**
+
 - 📧 Email Inbox (24)
 - 📅 Calendar Events (8)
 - 💰 Invoices (5)
@@ -77,6 +84,7 @@
 - ⚡ Quick Actions (15)
 
 **Timing:**
+
 - Lift: 300ms
 - Icon: 500ms
 - Gradient: 500ms
@@ -90,25 +98,30 @@
 ## 📊 Animation Teknologier
 
 **CSS Transitions:**
+
 ```css
 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
 **Transform Animations:**
+
 - translateY()
 - translateX()
 - scale()
 - rotate()
 
 **Opacity Animations:**
+
 - 0 → 1 fade-in
 - Smooth opacity transitions
 
 **Width Animations:**
+
 - Progress bars
 - Fill effects
 
 **React State:**
+
 - useState for hover tracking
 - useEffect for counter animations
 - Conditional className toggling
@@ -118,11 +131,13 @@ transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 ## 🎯 Animation Patterns Brugt
 
 ### **Staggered Entrance:**
+
 ```tsx
 style={{ transitionDelay: `${idx * 100}ms` }}
 ```
 
 ### **Number Counter:**
+
 ```tsx
 const increment = target / steps;
 setInterval(() => {
@@ -131,12 +146,14 @@ setInterval(() => {
 ```
 
 ### **Hover State:**
+
 ```tsx
 const [hoveredId, setHoveredId] = useState<number | null>(null);
 onMouseEnter={() => setHoveredId(id)}
 ```
 
 ### **Conditional Classes:**
+
 ```tsx
 className={cn(
   "base-classes",
@@ -149,6 +166,7 @@ className={cn(
 ## 🚀 Integration i Showcase
 
 **Ny Kategori:**
+
 ```
 ✨ Animationer & Effects
   📊 Animated Stats
@@ -157,11 +175,13 @@ className={cn(
 ```
 
 **Sidebar Navigation:**
+
 - Search med Ctrl+K
 - Direkte links
 - Smooth scroll til sections
 
 **Location:**
+
 - Efter "Chat & Tasks" sections
 - Før footer
 - Egne cards med descriptions
@@ -171,18 +191,21 @@ className={cn(
 ## 💡 Use Cases i Production
 
 ### **Animated Stats:**
+
 - Dashboard metrics
 - Real-time counters
 - Business KPIs
 - Performance indicators
 
 ### **Skeleton Loading:**
+
 - API calls pending
 - Database queries
 - File uploads
 - Initial page load
 
 ### **Interactive Hover:**
+
 - Navigation cards
 - Feature showcases
 - Product cards
@@ -194,6 +217,7 @@ className={cn(
 ## 📈 Performance
 
 **Optimeret:**
+
 - ✅ CSS transitions (GPU accelerated)
 - ✅ Transform instead of position
 - ✅ Will-change hints where needed
@@ -201,6 +225,7 @@ className={cn(
 - ✅ Minimal re-renders
 
 **Browser Support:**
+
 - ✅ All modern browsers
 - ✅ Fallback for no-animations
 - ✅ Prefers-reduced-motion respect
@@ -210,21 +235,25 @@ className={cn(
 ## 🎨 Design Principles
 
 ### **Smooth & Natural:**
+
 - Easing functions for realism
 - Duration 300-1000ms sweet spot
 - No jarring movements
 
 ### **Purposeful:**
+
 - Animations guide attention
 - Feedback on interactions
 - Loading state clarity
 
 ### **Performant:**
+
 - GPU-accelerated transforms
 - Minimal layout thrashing
 - Efficient re-renders
 
 ### **Accessible:**
+
 - Respects prefers-reduced-motion
 - Keyboard navigation maintained
 - Screen reader friendly
@@ -233,32 +262,35 @@ className={cn(
 
 ## 📊 Statistics
 
-| Metric | Value |
-|--------|-------|
-| **Nye Komponenter** | 3 |
-| **Animations Types** | 15+ |
-| **Lines of Code** | 500+ |
-| **Duration Range** | 300ms - 2000ms |
-| **Hover Effects** | 6 per card |
-| **Card Examples** | 10+ |
+| Metric               | Value          |
+| -------------------- | -------------- |
+| **Nye Komponenter**  | 3              |
+| **Animations Types** | 15+            |
+| **Lines of Code**    | 500+           |
+| **Duration Range**   | 300ms - 2000ms |
+| **Hover Effects**    | 6 per card     |
+| **Card Examples**    | 10+            |
 
 ---
 
 ## 🎯 Hvad Det Giver
 
 ### **For Brugerne:**
+
 - ✅ Bedre perceived performance
 - ✅ Klarere feedback på actions
 - ✅ Mere engaging UI
 - ✅ Professional feel
 
 ### **For Udviklere:**
+
 - ✅ Reusable components
 - ✅ Easy to customize
 - ✅ Well documented
 - ✅ TypeScript typed
 
 ### **For Business:**
+
 - ✅ Modern appearance
 - ✅ Konkurrer med top apps
 - ✅ Højere engagement
@@ -271,12 +303,14 @@ className={cn(
 **URL:** `http://localhost:3000/showcase`
 
 **Scroll til:**
+
 - Animationer & Effects section
 - Try hover på cards
 - Click reload på skeleton
 - Se counter animations
 
 **Search:**
+
 - Press `Ctrl+K`
 - Type "animated" eller "skeleton" eller "hover"
 - Jump til section!
@@ -289,7 +323,7 @@ className={cn(
 **Total Animations:** 15+ forskellige effects  
 **Lines:** 500+ ny kode  
 **Quality:** Production-ready  
-**Performance:** Optimeret  
+**Performance:** Optimeret
 
 **Jeres showcase har nu moderne, smooth animationer som konkurrerer med Notion, Linear og Figma! ✨🚀**
 

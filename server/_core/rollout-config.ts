@@ -74,7 +74,7 @@ const CHAT_FLOW_ROLLOUT_PHASES: RolloutPhase[] = [
   },
   {
     name: "gradual_rollout",
-    percentage: 0.20, // 20% - general users
+    percentage: 0.2, // 20% - general users
     startDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
     duration: 14,
     successCriteria: {
@@ -126,7 +126,7 @@ const STREAMING_ROLLOUT_PHASES: RolloutPhase[] = [
   },
   {
     name: "streaming_beta",
-    percentage: 0.10,
+    percentage: 0.1,
     startDate: new Date(Date.now() + 32 * 24 * 60 * 60 * 1000), // 32 days from now
     duration: 5,
     successCriteria: {
@@ -161,21 +161,28 @@ const STREAMING_ROLLOUT_PHASES: RolloutPhase[] = [
 /**
  * Get current rollout phase for a feature
  */
-export function getCurrentRolloutPhase(feature: "chat_flow" | "streaming" | "model_routing"): RolloutPhase | null {
-  const phases = feature === "chat_flow" ? CHAT_FLOW_ROLLOUT_PHASES :
-                 feature === "streaming" ? STREAMING_ROLLOUT_PHASES :
-                 []; // Model routing comes after streaming
+export function getCurrentRolloutPhase(
+  feature: "chat_flow" | "streaming" | "model_routing"
+): RolloutPhase | null {
+  const phases =
+    feature === "chat_flow"
+      ? CHAT_FLOW_ROLLOUT_PHASES
+      : feature === "streaming"
+        ? STREAMING_ROLLOUT_PHASES
+        : []; // Model routing comes after streaming
 
   const now = new Date();
-  
+
   for (const phase of phases) {
-    const phaseEnd = new Date(phase.startDate.getTime() + phase.duration * 24 * 60 * 60 * 1000);
-    
+    const phaseEnd = new Date(
+      phase.startDate.getTime() + phase.duration * 24 * 60 * 60 * 1000
+    );
+
     if (now >= phase.startDate && now <= phaseEnd) {
       return phase;
     }
   }
-  
+
   return null;
 }
 
@@ -230,10 +237,15 @@ export function getRolloutStatus(): Record<string, RolloutStatus> {
 /**
  * Get next phase date for a feature
  */
-function getNextPhaseDate(feature: "chat_flow" | "streaming"): Date | undefined {
-  const phases = feature === "chat_flow" ? CHAT_FLOW_ROLLOUT_PHASES :
-                 feature === "streaming" ? STREAMING_ROLLOUT_PHASES :
-                 [];
+function getNextPhaseDate(
+  feature: "chat_flow" | "streaming"
+): Date | undefined {
+  const phases =
+    feature === "chat_flow"
+      ? CHAT_FLOW_ROLLOUT_PHASES
+      : feature === "streaming"
+        ? STREAMING_ROLLOUT_PHASES
+        : [];
 
   const currentPhase = getCurrentRolloutPhase(feature);
   if (!currentPhase) return undefined;
@@ -249,7 +261,9 @@ function getNextPhaseDate(feature: "chat_flow" | "streaming"): Date | undefined 
 /**
  * Check if rollback should be triggered
  */
-export function shouldTriggerRollback(feature: "chat_flow" | "streaming"): boolean {
+export function shouldTriggerRollback(
+  feature: "chat_flow" | "streaming"
+): boolean {
   const phase = getCurrentRolloutPhase(feature);
   if (!phase) return false;
 
@@ -268,23 +282,28 @@ export function shouldTriggerRollback(feature: "chat_flow" | "streaming"): boole
 /**
  * Execute rollback for a feature
  */
-export async function executeRollback(feature: "chat_flow" | "streaming"): Promise<void> {
+export async function executeRollback(
+  feature: "chat_flow" | "streaming"
+): Promise<void> {
   console.log(`🔄 Executing rollback for ${feature}`);
-  
+
   // Set environment variable to force rollback
   process.env[`ROLLBACK_${feature.toUpperCase()}`] = "true";
-  
+
   // TODO: Notify monitoring systems
   // TODO: Log rollback event
   // TODO: Notify team members
-  
+
   console.log(`✅ Rollback completed for ${feature}`);
 }
 
 /**
  * Get user's rollout group based on phases
  */
-export function getUserRolloutGroup(userId: number, feature: "chat_flow" | "streaming"): "control" | "variant" | "excluded" {
+export function getUserRolloutGroup(
+  userId: number,
+  feature: "chat_flow" | "streaming"
+): "control" | "variant" | "excluded" {
   const phase = getCurrentRolloutPhase(feature);
   if (!phase) return "excluded";
 
@@ -303,7 +322,7 @@ function hashUserId(userId: number, feature: string): number {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash;
   }
   return Math.abs(hash) % 100;
@@ -312,8 +331,12 @@ function hashUserId(userId: number, feature: string): number {
 /**
  * Manual override for testing
  */
-export function setManualRolloutOverride(feature: string, percentage: number): void {
-  process.env[`MANUAL_ROLLOUT_${feature.toUpperCase()}`] = percentage.toString();
+export function setManualRolloutOverride(
+  feature: string,
+  percentage: number
+): void {
+  process.env[`MANUAL_ROLLOUT_${feature.toUpperCase()}`] =
+    percentage.toString();
   console.log(`🔧 Manual override set: ${feature} = ${percentage}%`);
 }
 

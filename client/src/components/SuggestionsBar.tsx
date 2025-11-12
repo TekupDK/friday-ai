@@ -119,9 +119,14 @@ export function SuggestionsBar({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-medium truncate">{label}</span>
+                        <span className="text-sm font-medium truncate">
+                          {label}
+                        </span>
                         {suggestion.riskLevel === "high" && (
-                          <Badge variant="outline" className="text-xs bg-red-50 text-red-600 border-red-200">
+                          <Badge
+                            variant="outline"
+                            className="text-xs bg-red-50 text-red-600 border-red-200"
+                          >
                             Høj risiko
                           </Badge>
                         )}

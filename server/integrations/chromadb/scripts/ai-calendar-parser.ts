@@ -1,22 +1,22 @@
 /**
  * V4.3.5: AI-Enhanced Calendar Event Parser
- * 
+ *
  * Uses LLM to intelligently parse Calendar event descriptions
  * and extract structured customer, service, and quality data
  */
 
-import OpenAI from 'openai';
-import { config } from 'dotenv';
-import { resolve } from 'path';
+import OpenAI from "openai";
+import { config } from "dotenv";
+import { resolve } from "path";
 
-config({ path: resolve(process.cwd(), '.env.dev') });
+config({ path: resolve(process.cwd(), ".env.dev") });
 
 const openrouter = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY,
-  baseURL: 'https://openrouter.ai/api/v1',
+  baseURL: "https://openrouter.ai/api/v1",
   defaultHeaders: {
-    'HTTP-Referer': 'https://rendetalje.dk',
-    'X-Title': 'RenDetalje Calendar Parser',
+    "HTTP-Referer": "https://rendetalje.dk",
+    "X-Title": "RenDetalje Calendar Parser",
   },
 });
 
@@ -49,8 +49,8 @@ export interface AICalendarParsing {
     bookingNumber: number | null; // #1, #2, etc.
     hasComplaints: boolean;
     hasSpecialNeeds: boolean;
-    customerType: 'standard' | 'premium' | 'problematic' | 'unknown';
-    confidence: 'high' | 'medium' | 'low';
+    customerType: "standard" | "premium" | "problematic" | "unknown";
+    confidence: "high" | "medium" | "low";
   };
   notes: string | null; // Important context not captured elsewhere
 }
@@ -114,26 +114,28 @@ REGLER:
 
   try {
     const completion = await openrouter.chat.completions.create({
-      model: process.env.OPENROUTER_MODEL || 'z-ai/glm-4.5-air:free',
-      messages: [{
-        role: 'user',
-        content: prompt,
-      }],
+      model: process.env.OPENROUTER_MODEL || "z-ai/glm-4.5-air:free",
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
       temperature: 0.1,
       max_tokens: 2000,
-      response_format: { type: 'json_object' },
+      response_format: { type: "json_object" },
     });
 
     const content = completion.choices[0]?.message?.content;
     if (!content) {
-      throw new Error('No response from OpenRouter');
+      throw new Error("No response from OpenRouter");
     }
 
     const parsed = JSON.parse(content);
     return parsed as AICalendarParsing;
   } catch (error: any) {
-    console.error('❌ AI parsing error:', error.message);
-    
+    console.error("❌ AI parsing error:", error.message);
+
     // Return minimal fallback structure
     return {
       customer: {
@@ -160,8 +162,8 @@ REGLER:
         bookingNumber: null,
         hasComplaints: false,
         hasSpecialNeeds: false,
-        customerType: 'unknown',
-        confidence: 'low',
+        customerType: "unknown",
+        confidence: "low",
       },
       notes: null,
     };
@@ -184,15 +186,17 @@ export async function parseCalendarEventsBatch(
 
   for (let i = 0; i < events.length; i += batchSize) {
     const batch = events.slice(i, i + batchSize);
-    
-    console.log(`   Processing events ${i + 1}-${Math.min(i + batchSize, events.length)} of ${events.length}...`);
-    
+
+    console.log(
+      `   Processing events ${i + 1}-${Math.min(i + batchSize, events.length)} of ${events.length}...`
+    );
+
     const batchResults = await Promise.all(
       batch.map(evt => parseCalendarEventWithAI(evt.summary, evt.description))
     );
-    
+
     results.push(...batchResults);
-    
+
     // Delay between batches to avoid rate limits
     if (i + batchSize < events.length) {
       await new Promise(resolve => setTimeout(resolve, delayMs));

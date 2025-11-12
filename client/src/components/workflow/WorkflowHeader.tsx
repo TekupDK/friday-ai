@@ -1,12 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Sparkles,
-  Plus,
-  Settings,
-  Bell,
-  Search,
-} from "lucide-react";
+import { Sparkles, Plus, Settings, Bell, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 /**
@@ -37,8 +31,8 @@ export default function WorkflowHeader() {
           {/* Notifications */}
           <Button variant="ghost" size="icon" className="relative">
             <Bell className="w-4 h-4" />
-            <Badge 
-              variant="destructive" 
+            <Badge
+              variant="destructive"
               className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs"
             >
               3

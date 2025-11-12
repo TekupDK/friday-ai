@@ -26,7 +26,10 @@ interface UseFridayChatOptions {
 }
 
 interface UseFridayChatReturn {
-  sendMessage: (content: string, options?: { streaming?: boolean }) => Promise<void>;
+  sendMessage: (
+    content: string,
+    options?: { streaming?: boolean }
+  ) => Promise<void>;
   messages: any[];
   isLoading: boolean;
   isStreaming: boolean;
@@ -42,7 +45,7 @@ export function useFridayChat({
   onComplete,
   onError,
   onPendingAction,
-  maxMessages = 50
+  maxMessages = 50,
 }: UseFridayChatOptions): UseFridayChatReturn {
   const [messages, setMessages] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,14 +66,14 @@ export function useFridayChat({
       const result = await utils.client.chat.getMessages.query({
         conversationId,
         cursor,
-        limit: 20
+        limit: 20,
       });
 
       setMessages(prev => [...result.messages, ...prev]);
       setHasMoreMessages(result.hasMore);
       setCursor(result.nextCursor);
     } catch (error) {
-      console.error('Failed to load messages:', error);
+      console.error("Failed to load messages:", error);
       setError(error as Error);
     }
   }, [conversationId, cursor, hasMoreMessages]);
@@ -91,48 +94,51 @@ export function useFridayChat({
     }
   }, [messages.length, maxMessages]); // Enforce max message history length
 
-  const sendMessage = useCallback(async (content: string, options?: { streaming?: boolean }) => {
-    if (!conversationId) {
-      setError(new Error('No conversation ID provided'));
-      return;
-    }
-
-    // Cancel previous request
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-    abortControllerRef.current = new AbortController();
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      // For now, use basic non-streaming implementation
-      const response = await utils.client.chat.sendMessage.mutate({
-        conversationId,
-        content,
-      });
-
-      const anyResp = response as any;
-      if (anyResp?.pendingAction) {
-        setPendingAction(anyResp.pendingAction);
-        onPendingAction?.(anyResp.pendingAction);
-      } else {
-        setMessages(prev => [
-          ...prev,
-          { role: 'assistant', content: anyResp.content }
-        ]);
-        onComplete?.(anyResp.content);
+  const sendMessage = useCallback(
+    async (content: string, options?: { streaming?: boolean }) => {
+      if (!conversationId) {
+        setError(new Error("No conversation ID provided"));
+        return;
       }
-    } catch (error) {
-      setError(error as Error);
-      onError?.(error as Error);
-    } finally {
-      setIsLoading(false);
-      setIsStreaming(false);
-      abortControllerRef.current = null;
-    }
-  }, [conversationId, onComplete, onError, onPendingAction]);
+
+      // Cancel previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      abortControllerRef.current = new AbortController();
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        // For now, use basic non-streaming implementation
+        const response = await utils.client.chat.sendMessage.mutate({
+          conversationId,
+          content,
+        });
+
+        const anyResp = response as any;
+        if (anyResp?.pendingAction) {
+          setPendingAction(anyResp.pendingAction);
+          onPendingAction?.(anyResp.pendingAction);
+        } else {
+          setMessages(prev => [
+            ...prev,
+            { role: "assistant", content: anyResp.content },
+          ]);
+          onComplete?.(anyResp.content);
+        }
+      } catch (error) {
+        setError(error as Error);
+        onError?.(error as Error);
+      } finally {
+        setIsLoading(false);
+        setIsStreaming(false);
+        abortControllerRef.current = null;
+      }
+    },
+    [conversationId, onComplete, onError, onPendingAction]
+  );
 
   return {
     sendMessage,
@@ -142,6 +148,6 @@ export function useFridayChat({
     error,
     pendingAction,
     loadMoreMessages,
-    hasMoreMessages
+    hasMoreMessages,
   };
 }

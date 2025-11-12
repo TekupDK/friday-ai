@@ -11,6 +11,7 @@
 ### 1.1 Feature Flags System
 
 **Verify Implementation:**
+
 - [ ] `server/_core/feature-flags.ts` - Review rollout logic
 - [ ] Percentage-based user selection works correctly
 - [ ] Same user always gets same experience (consistent hashing)
@@ -18,25 +19,27 @@
 - [ ] Fallback to Gemma 3 27B when disabled
 
 **Test Cases to Verify:**
+
 ```typescript
 // Test 1: 0% rollout - no users should get OpenRouter
-getFeatureFlags(1).enableOpenRouterModels  // Should be false
-getFeatureFlags(100).enableOpenRouterModels // Should be false
+getFeatureFlags(1).enableOpenRouterModels; // Should be false
+getFeatureFlags(100).enableOpenRouterModels; // Should be false
 
 // Test 2: 10% rollout - ~10% should get OpenRouter
 // Users 0-9 should get it (10%)
 // Users 10-99 should NOT get it (90%)
 
 // Test 3: 100% rollout - everyone gets OpenRouter
-getFeatureFlags(1).enableOpenRouterModels  // Should be true
-getFeatureFlags(100).enableOpenRouterModels // Should be true
+getFeatureFlags(1).enableOpenRouterModels; // Should be true
+getFeatureFlags(100).enableOpenRouterModels; // Should be true
 
 // Test 4: Force enable works
-FORCE_OPENROUTER=true
-getFeatureFlags(1).enableOpenRouterModels  // Should be true
+FORCE_OPENROUTER = true;
+getFeatureFlags(1).enableOpenRouterModels; // Should be true
 ```
 
 **Questions to Answer:**
+
 - [ ] Hvad sker der hvis OPENROUTER_ROLLOUT_PERCENTAGE ikke er sat?
 - [ ] Hvad sker der hvis environment variable er ugyldig (f.eks. "abc")?
 - [ ] Kan feature flags ændres uden server restart?
@@ -47,6 +50,7 @@ getFeatureFlags(1).enableOpenRouterModels  // Should be true
 ### 1.2 Metrics System
 
 **Verify Implementation:**
+
 - [ ] `server/ai-metrics.ts` - Review metric tracking
 - [ ] Metrics stored in memory (10k limit)
 - [ ] Old metrics cleaned up correctly
@@ -54,6 +58,7 @@ getFeatureFlags(1).enableOpenRouterModels  // Should be true
 - [ ] Health thresholds make sense
 
 **Data Structure Check:**
+
 ```typescript
 interface AIMetric {
   timestamp: Date;         // ✓ Timestamp for time-based queries
@@ -68,6 +73,7 @@ interface AIMetric {
 ```
 
 **Questions to Answer:**
+
 - [ ] Hvad sker der når memory bliver fuld (10k metrics)?
 - [ ] Bliver gamle metrics slettet korrekt?
 - [ ] Kan vi query metrics fra før server restart?
@@ -79,6 +85,7 @@ interface AIMetric {
 ### 1.3 Model Router Integration
 
 **Verify Implementation:**
+
 - [ ] `server/model-router.ts` - Check integration
 - [ ] selectModel() respects feature flags
 - [ ] Fallback to Gemma 3 works
@@ -86,12 +93,13 @@ interface AIMetric {
 - [ ] Error handling with retries
 
 **Flow to Verify:**
+
 ```
-User Request 
+User Request
   ↓
 getFeatureFlags(userId)
   ↓
-enableOpenRouterModels? 
+enableOpenRouterModels?
   ├─ Yes → Use GLM/GPT-OSS (based on task)
   └─ No  → Use Gemma 3 27B (fallback)
   ↓
@@ -105,6 +113,7 @@ Return response
 ```
 
 **Questions to Answer:**
+
 - [ ] Hvad hvis både OpenRouter OG Gemma 3 fejler?
 - [ ] Tracker vi fallback events?
 - [ ] Logger vi når vi skipper til Gemma 3?
@@ -117,6 +126,7 @@ Return response
 ### 2.1 Development Environment
 
 **Current .env.dev:**
+
 ```bash
 OPENROUTER_API_KEY=sk-or-v1-6f45d089...  # ✓ Verified working
 OPENROUTER_MODEL=z-ai/glm-4.5-air:free    # ✓ Best model
@@ -125,6 +135,7 @@ FORCE_OPENROUTER=false                    # Normal behavior
 ```
 
 **Verify:**
+
 - [ ] API key er gyldig og virker
 - [ ] Model ID er korrekt formateret
 - [ ] Alle nødvendige environment variables er sat
@@ -132,6 +143,7 @@ FORCE_OPENROUTER=false                    # Normal behavior
 - [ ] Google API credentials er korrekte
 
 **Action Items:**
+
 - [ ] Test at server starter uden fejl
 - [ ] Test at AI requests virker
 - [ ] Verificer at Gemma 3 fallback virker hvis OpenRouter fejler
@@ -141,6 +153,7 @@ FORCE_OPENROUTER=false                    # Normal behavior
 ### 2.2 Staging Environment
 
 **Required Configuration:**
+
 ```bash
 # Staging should use 100% rollout for full testing
 OPENROUTER_ROLLOUT_PERCENTAGE=100
@@ -158,12 +171,14 @@ BILLY_API_KEY=staging-key
 ```
 
 **Verify:**
+
 - [ ] Staging database eksisterer og er accessible
 - [ ] API keys er konfigureret (kan være dev keys)
 - [ ] Deployment process er dokumenteret
 - [ ] Kan rulles tilbage hvis nødvendigt
 
 **Questions:**
+
 - [ ] Har vi en staging server?
 - [ ] Kan vi deploye til staging uden at påvirke production?
 - [ ] Har staging adgang til samme services (Google, Billy)?
@@ -174,6 +189,7 @@ BILLY_API_KEY=staging-key
 ### 2.3 Production Environment
 
 **Initial Configuration:**
+
 ```bash
 # CRITICAL: Start with 0% rollout
 OPENROUTER_ROLLOUT_PERCENTAGE=0
@@ -187,6 +203,7 @@ DATABASE_URL=postgresql://...production...
 ```
 
 **Security Checklist:**
+
 - [ ] Production API keys er forskellige fra dev
 - [ ] Environment variables er ikke commited til git
 - [ ] Secrets management system er på plads
@@ -194,6 +211,7 @@ DATABASE_URL=postgresql://...production...
 - [ ] Rollback plan er klar
 
 **Questions:**
+
 - [ ] Hvem har adgang til production environment variables?
 - [ ] Hvordan ændrer vi OPENROUTER_ROLLOUT_PERCENTAGE i production?
 - [ ] Skal vi bruge en secrets manager (AWS Secrets, Azure Key Vault)?
@@ -206,23 +224,29 @@ DATABASE_URL=postgresql://...production...
 ### 3.1 Metrics Dashboard
 
 **Current State:**
+
 - ✅ API endpoints for metrics
 - ❓ Frontend dashboard UI
 - ❓ Alerting system
 - ❓ Log aggregation
 
 **To Build/Verify:**
+
 - [ ] Simple dashboard til at se metrics
 - [ ] Kan vi se real-time metrics?
 - [ ] Graphs for trends (error rate over tid)
 - [ ] Alert system (email/Slack når error rate > 5%)
 
 **Minimum Viable Monitoring:**
+
 ```typescript
 // Option 1: Console logs (simplest)
-setInterval(() => {
-  logMetricsSummary();
-}, 5 * 60 * 1000); // Every 5 minutes
+setInterval(
+  () => {
+    logMetricsSummary();
+  },
+  5 * 60 * 1000
+); // Every 5 minutes
 
 // Option 2: API endpoint (better)
 // Call /api/trpc/aiMetrics.getSummary periodically
@@ -232,6 +256,7 @@ setInterval(() => {
 ```
 
 **Questions:**
+
 - [ ] Skal vi bygge en admin dashboard først?
 - [ ] Eller er API endpoints + manual checks nok?
 - [ ] Skal vi integrere med eksisterende monitoring (Datadog, Sentry)?
@@ -242,6 +267,7 @@ setInterval(() => {
 ### 3.2 Alerting Strategy
 
 **Critical Alerts (Immediate Action Required):**
+
 ```typescript
 if (errorRate > 5% || avgResponseTime > 5000) {
   // Send alert via email/Slack
@@ -250,6 +276,7 @@ if (errorRate > 5% || avgResponseTime > 5000) {
 ```
 
 **Warning Alerts (Monitor Closely):**
+
 ```typescript
 if (errorRate > 1% || avgResponseTime > 3000) {
   // Log warning
@@ -258,12 +285,14 @@ if (errorRate > 1% || avgResponseTime > 3000) {
 ```
 
 **Implementation Options:**
+
 - [ ] **Option 1:** Email alerts (simplest)
 - [ ] **Option 2:** Slack webhook (better)
 - [ ] **Option 3:** PagerDuty/OpsGenie (production-grade)
 - [ ] **Option 4:** SMS for critical (best for after-hours)
 
 **Questions:**
+
 - [ ] Hvem skal modtage alerts?
 - [ ] Hvad er response time expectations? (24/7 vs business hours)
 - [ ] Skal alerts være graduelle? (warning → critical)
@@ -274,26 +303,29 @@ if (errorRate > 1% || avgResponseTime > 3000) {
 ### 3.3 Logging Strategy
 
 **What to Log:**
+
 ```typescript
 // Feature flag decisions
-"🔄 OpenRouter disabled (rollout: 10%), using Gemma 3 27B"
+"🔄 OpenRouter disabled (rollout: 10%), using Gemma 3 27B";
 
 // Model selections
-"🧠 Model Routing: Task=chat, Model=glm-4.5-air-free"
+"🧠 Model Routing: Task=chat, Model=glm-4.5-air-free";
 
 // Errors
-"❌ [AI Metrics] Error: Model=gpt-oss-20b, Error=Rate limit"
+"❌ [AI Metrics] Error: Model=gpt-oss-20b, Error=Rate limit";
 
 // Performance
-"⚠️ [AI Metrics] Slow response: 5200ms, Model=glm-4.5-air"
+"⚠️ [AI Metrics] Slow response: 5200ms, Model=glm-4.5-air";
 ```
 
 **Log Levels:**
+
 - `INFO`: Normal operation (model selection, feature flags)
 - `WARN`: Slow responses, degraded performance
 - `ERROR`: Failed requests, errors
 
 **Questions:**
+
 - [ ] Hvor gemmes logs? (console, file, service)
 - [ ] Hvad er log retention policy?
 - [ ] Kan vi søge i logs?
@@ -306,19 +338,20 @@ if (errorRate > 1% || avgResponseTime > 3000) {
 ### 4.1 Unit Tests
 
 **Feature Flags:**
+
 ```typescript
-describe('Feature Flags', () => {
-  it('should enable OpenRouter for 10% of users at 10% rollout', () => {
-    process.env.OPENROUTER_ROLLOUT_PERCENTAGE = '10';
-    
+describe("Feature Flags", () => {
+  it("should enable OpenRouter for 10% of users at 10% rollout", () => {
+    process.env.OPENROUTER_ROLLOUT_PERCENTAGE = "10";
+
     // Users 0-9 should get OpenRouter
     expect(getFeatureFlags(5).enableOpenRouterModels).toBe(true);
-    
+
     // Users 10+ should NOT
     expect(getFeatureFlags(15).enableOpenRouterModels).toBe(false);
   });
-  
-  it('should be consistent per user', () => {
+
+  it("should be consistent per user", () => {
     const flags1 = getFeatureFlags(25);
     const flags2 = getFeatureFlags(25);
     expect(flags1.enableOpenRouterModels).toBe(flags2.enableOpenRouterModels);
@@ -327,21 +360,22 @@ describe('Feature Flags', () => {
 ```
 
 **Metrics:**
+
 ```typescript
-describe('AI Metrics', () => {
-  it('should track successful requests', () => {
+describe("AI Metrics", () => {
+  it("should track successful requests", () => {
     trackAIMetric({
-      modelId: 'glm-4.5-air-free',
-      taskType: 'chat',
+      modelId: "glm-4.5-air-free",
+      taskType: "chat",
       responseTime: 1000,
       success: true,
     });
-    
+
     const summary = getMetricsSummary(60);
     expect(summary.successfulRequests).toBe(1);
   });
-  
-  it('should calculate percentiles correctly', () => {
+
+  it("should calculate percentiles correctly", () => {
     // Add multiple metrics
     // Verify P50, P95, P99 calculations
   });
@@ -349,6 +383,7 @@ describe('AI Metrics', () => {
 ```
 
 **Action Items:**
+
 - [ ] Skriv unit tests for feature flags
 - [ ] Skriv unit tests for metrics
 - [ ] Test edge cases (0%, 100%, invalid values)
@@ -359,26 +394,31 @@ describe('AI Metrics', () => {
 ### 4.2 Integration Tests
 
 **End-to-End Flow:**
+
 ```typescript
-describe('OpenRouter Integration', () => {
-  it('should route to correct model based on rollout', async () => {
+describe("OpenRouter Integration", () => {
+  it("should route to correct model based on rollout", async () => {
     // Set 10% rollout
-    process.env.OPENROUTER_ROLLOUT_PERCENTAGE = '10';
-    
+    process.env.OPENROUTER_ROLLOUT_PERCENTAGE = "10";
+
     // User in rollout (userId=5, 5% < 10%)
-    const response1 = await invokeLLMWithRouting('chat', messages, { userId: 5 });
+    const response1 = await invokeLLMWithRouting("chat", messages, {
+      userId: 5,
+    });
     // Should use GLM-4.5 Air
-    
+
     // User NOT in rollout (userId=25, 25% > 10%)
-    const response2 = await invokeLLMWithRouting('chat', messages, { userId: 25 });
+    const response2 = await invokeLLMWithRouting("chat", messages, {
+      userId: 25,
+    });
     // Should use Gemma 3 27B
   });
-  
-  it('should track metrics on every request', async () => {
+
+  it("should track metrics on every request", async () => {
     const metricsBefore = getMetricsSummary(60);
-    
-    await invokeLLMWithRouting('chat', messages, { userId: 1 });
-    
+
+    await invokeLLMWithRouting("chat", messages, { userId: 1 });
+
     const metricsAfter = getMetricsSummary(60);
     expect(metricsAfter.totalRequests).toBe(metricsBefore.totalRequests + 1);
   });
@@ -386,6 +426,7 @@ describe('OpenRouter Integration', () => {
 ```
 
 **Action Items:**
+
 - [ ] Test feature flag + model router integration
 - [ ] Test metrics tracking on real requests
 - [ ] Test rollback scenario (0% rollout)
@@ -396,6 +437,7 @@ describe('OpenRouter Integration', () => {
 ### 4.3 Manual Testing Checklist
 
 **Before Staging:**
+
 - [ ] Start dev server with `FORCE_OPENROUTER=true`
 - [ ] Test chat functionality (send Danish message)
 - [ ] Test email drafting
@@ -406,6 +448,7 @@ describe('OpenRouter Integration', () => {
 - [ ] Test with `OPENROUTER_ROLLOUT_PERCENTAGE=50` (verify user distribution)
 
 **On Staging:**
+
 - [ ] Deploy to staging
 - [ ] Verify server starts without errors
 - [ ] Test all main features (chat, email, calendar)
@@ -486,6 +529,7 @@ describe('OpenRouter Integration', () => {
 ### 5.2 Rollback Scenarios
 
 **Scenario 1: High Error Rate (>5%)**
+
 ```bash
 # Immediate action
 ssh production-server
@@ -503,6 +547,7 @@ tail -f logs/friday-ai.log | grep ERROR
 ```
 
 **Scenario 2: Slow Performance (P95 > 10s)**
+
 ```bash
 # Option 1: Reduce rollout
 OPENROUTER_ROLLOUT_PERCENTAGE=10  # From 50% to 10%
@@ -515,6 +560,7 @@ OPENROUTER_ROLLOUT_PERCENTAGE=0
 ```
 
 **Scenario 3: User Complaints**
+
 ```bash
 # Check metrics
 curl .../aiMetrics.getSummary | jq
@@ -534,12 +580,14 @@ OPENROUTER_ROLLOUT_PERCENTAGE=0
 ### 6.1 Stakeholder Communication
 
 **Before Deployment:**
+
 - [ ] Notify team of upcoming deployment
 - [ ] Share deployment timeline
 - [ ] Identify on-call personnel
 - [ ] Set up communication channels (Slack, email)
 
 **Email Template:**
+
 ```
 Subject: [Upcoming] OpenRouter AI Models Deployment - Phase 4
 
@@ -550,7 +598,7 @@ We're preparing to deploy new AI models (OpenRouter) to production.
 Timeline:
 - Staging: [DATE]
 - 10% Production: [DATE]
-- 50% Production: [DATE]  
+- 50% Production: [DATE]
 - 100% Production: [DATE]
 
 Expected Impact:
@@ -576,16 +624,19 @@ Thanks,
 **What Support Needs to Know:**
 
 **User-Facing Changes:**
+
 - ✅ Faster AI responses
 - ✅ Better Danish quality
 - ✅ Same features, improved performance
 
 **Potential Issues:**
+
 - ⚠️ Some users may notice different response style
 - ⚠️ If issues occur, we can rollback quickly
 - ⚠️ Not all users get new models immediately (gradual rollout)
 
 **How to Report Issues:**
+
 ```
 1. Gather info:
    - User ID
@@ -607,6 +658,7 @@ Thanks,
 ## ✅ Final Pre-Deployment Checklist
 
 ### Code Ready
+
 - [ ] All code reviewed and tested locally
 - [ ] Unit tests written and passing
 - [ ] Integration tests written and passing
@@ -617,6 +669,7 @@ Thanks,
 - [ ] Model router integration verified
 
 ### Environment Ready
+
 - [ ] Dev environment configured and tested
 - [ ] Staging environment configured
 - [ ] Production environment variables prepared
@@ -625,6 +678,7 @@ Thanks,
 - [ ] Secrets properly managed
 
 ### Monitoring Ready
+
 - [ ] Metrics API endpoints working
 - [ ] Logging configured
 - [ ] Alert system configured (or manual monitoring plan)
@@ -632,6 +686,7 @@ Thanks,
 - [ ] Team knows how to check metrics
 
 ### Documentation Ready
+
 - [ ] Deployment guide complete
 - [ ] Quick reference guide complete
 - [ ] Rollback procedures documented
@@ -639,6 +694,7 @@ Thanks,
 - [ ] Team communication templates ready
 
 ### Team Ready
+
 - [ ] Team briefed on deployment
 - [ ] Support team briefed
 - [ ] On-call person identified
@@ -646,6 +702,7 @@ Thanks,
 - [ ] Escalation path defined
 
 ### Contingency Plans Ready
+
 - [ ] Rollback procedure tested
 - [ ] Database backup plan
 - [ ] Emergency contacts list
@@ -657,6 +714,7 @@ Thanks,
 ## 🎯 Go/No-Go Decision Criteria
 
 **GO if:**
+
 - ✅ All critical checklist items complete
 - ✅ Code tested locally and on staging
 - ✅ Team is ready and available
@@ -664,6 +722,7 @@ Thanks,
 - ✅ Rollback plan is clear
 
 **NO-GO if:**
+
 - ❌ Critical bugs found in testing
 - ❌ Monitoring not working
 - ❌ Team not available for support
@@ -675,24 +734,28 @@ Thanks,
 ## 📅 Recommended Timeline
 
 **Week Before:**
+
 - [ ] Complete all code and testing
 - [ ] Brief team
 - [ ] Set up monitoring
 - [ ] Prepare all documentation
 
 **Day Before:**
+
 - [ ] Final code review
 - [ ] Test on staging one more time
 - [ ] Verify all environments
 - [ ] Send team notification
 
 **Day Of (Staging):**
+
 - [ ] Deploy to staging morning
 - [ ] Monitor for full day
 - [ ] Fix any issues found
 - [ ] Make go/no-go decision for production
 
 **Next Week (Production):**
+
 - [ ] Day 1: 10% rollout, monitor 48h
 - [ ] Day 3: If healthy, 50% rollout, monitor 48h
 - [ ] Day 5: If healthy, 100% rollout
@@ -703,6 +766,7 @@ Thanks,
 **Status:** 📋 **READY FOR PLANNING REVIEW**
 
 **Next Steps:**
+
 1. Review this checklist with team
 2. Answer all questions marked with [ ]
 3. Complete all action items

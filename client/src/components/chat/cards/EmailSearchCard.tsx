@@ -26,18 +26,18 @@ interface EmailSearchCardProps {
   onSelectResult?: (result: EmailSearchResult) => void;
 }
 
-export function EmailSearchCard({ 
+export function EmailSearchCard({
   query = "",
   results = [],
   onSearch,
-  onSelectResult 
+  onSelectResult,
 }: EmailSearchCardProps) {
   const [searchQuery, setSearchQuery] = useState(query);
   const [filters, setFilters] = useState({
-    dateRange: 'any',
-    sender: '',
+    dateRange: "any",
+    sender: "",
     hasAttachment: false,
-    isStarred: false
+    isStarred: false,
   });
 
   const handleSearch = () => {
@@ -54,7 +54,9 @@ export function EmailSearchCard({
           </div>
           <div>
             <h4 className="font-semibold">Email Søgning</h4>
-            <p className="text-xs text-muted-foreground">Avanceret søgning i emails</p>
+            <p className="text-xs text-muted-foreground">
+              Avanceret søgning i emails
+            </p>
           </div>
         </div>
 
@@ -64,20 +66,22 @@ export function EmailSearchCard({
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               placeholder="Søg i emner, afsendere, indhold..."
               className="pl-9 h-10"
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              onKeyDown={e => e.key === "Enter" && handleSearch()}
             />
           </div>
 
           {/* Filters */}
           <div className="flex items-center gap-2 p-2 rounded-lg bg-muted/50">
             <Filter className="w-4 h-4 text-muted-foreground" />
-            <select 
+            <select
               className="text-xs bg-transparent outline-none"
               value={filters.dateRange}
-              onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
+              onChange={e =>
+                setFilters({ ...filters, dateRange: e.target.value })
+              }
             >
               <option value="any">Enhver dato</option>
               <option value="today">I dag</option>
@@ -85,18 +89,22 @@ export function EmailSearchCard({
               <option value="month">Denne måned</option>
             </select>
             <label className="flex items-center gap-1 text-xs">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 checked={filters.hasAttachment}
-                onChange={(e) => setFilters({...filters, hasAttachment: e.target.checked})}
+                onChange={e =>
+                  setFilters({ ...filters, hasAttachment: e.target.checked })
+                }
               />
               Vedhæftet
             </label>
             <label className="flex items-center gap-1 text-xs">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 checked={filters.isStarred}
-                onChange={(e) => setFilters({...filters, isStarred: e.target.checked})}
+                onChange={e =>
+                  setFilters({ ...filters, isStarred: e.target.checked })
+                }
               />
               Stjernet
             </label>
@@ -109,7 +117,7 @@ export function EmailSearchCard({
             <p className="text-xs text-muted-foreground font-medium">
               {results.length} resultater fundet
             </p>
-            {results.map((result) => (
+            {results.map(result => (
               <button
                 key={result.id}
                 onClick={() => onSelectResult?.(result)}
@@ -117,12 +125,20 @@ export function EmailSearchCard({
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{result.subject}</p>
-                    <p className="text-xs text-muted-foreground">{result.from}</p>
-                    <p className="text-xs text-muted-foreground truncate">{result.snippet}</p>
+                    <p className="font-medium text-sm truncate">
+                      {result.subject}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {result.from}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {result.snippet}
+                    </p>
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0">
-                    <span className="text-xs text-muted-foreground">{result.date}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {result.date}
+                    </span>
                     <Badge variant="secondary" className="text-xs">
                       {Math.round(result.relevance * 100)}%
                     </Badge>
@@ -135,7 +151,10 @@ export function EmailSearchCard({
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button onClick={handleSearch} className="flex-1 bg-linear-to-r from-indigo-600 to-purple-600">
+          <Button
+            onClick={handleSearch}
+            className="flex-1 bg-linear-to-r from-indigo-600 to-purple-600"
+          >
             <Search className="w-4 h-4 mr-2" />
             Søg
           </Button>

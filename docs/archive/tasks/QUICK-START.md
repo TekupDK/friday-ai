@@ -7,6 +7,7 @@
 ## ⚡ Kør Tests Nu (5 minutter)
 
 ### 1. Promptfoo Evaluation
+
 ```bash
 # Installer dependencies (hvis ikke allerede gjort)
 npm install
@@ -19,11 +20,13 @@ promptfoo view
 ```
 
 **Hvad det tester:**
+
 - 5 modeller (GLM-4.5 Air, GPT-OSS, DeepSeek, MiniMax, Qwen3)
 - 12 forskellige prompts (dansk business context)
 - Output quality, response time, cost
 
 **Expected output:**
+
 ```
 ✓ GLM-4.5 Air: 95/100 (Recommended ⭐)
 ✓ GPT-OSS 20B: 93/100
@@ -35,6 +38,7 @@ promptfoo view
 ---
 
 ### 2. DeepEval Tests
+
 ```bash
 # Install Python dependencies
 pip install deepeval openai
@@ -47,12 +51,14 @@ python tests/ai/deepeval-test.py
 ```
 
 **Hvad det tester:**
+
 - Answer Relevancy (≥ 0.85 target)
 - Faithfulness (≥ 0.90 target)
 - Hallucination detection
 - 4 use cases: email, chat, invoice, calendar
 
 **Expected output:**
+
 ```json
 {
   "test_email_summary": {
@@ -71,6 +77,7 @@ python tests/ai/deepeval-test.py
 ---
 
 ### 3. Manual Testing (Friday AI)
+
 ```bash
 # Start dev server
 npm run dev
@@ -80,6 +87,7 @@ http://localhost:3000
 ```
 
 **Test scenarios:**
+
 1. **Chat Test:**
    - "Hej Friday, hvad kan du hjælpe med?"
    - Check: Dansk sprog, professionel tone, relevant svar
@@ -101,6 +109,7 @@ http://localhost:3000
 ## 📊 Resultater at Kigge Efter
 
 ### ✅ Success Indicators
+
 - **Dansk kvalitet:** Naturligt, professionelt dansk
 - **Response time:** < 3 sekunder
 - **Confidence:** Intent detection ≥ 85%
@@ -108,6 +117,7 @@ http://localhost:3000
 - **Cost:** $0.00 (free tier)
 
 ### ⚠️ Warning Signs
+
 - Engelsk i stedet for dansk
 - Response time > 5 sekunder
 - Intent detection < 70% confidence
@@ -119,6 +129,7 @@ http://localhost:3000
 ## 🐛 Troubleshooting
 
 ### Promptfoo Command Not Found
+
 ```bash
 # Install globalt
 npm install -g promptfoo
@@ -128,6 +139,7 @@ npx promptfoo eval -c ai-eval-config.yaml
 ```
 
 ### DeepEval Import Error
+
 ```bash
 # Install dependencies
 pip install deepeval openai anthropic
@@ -137,6 +149,7 @@ conda install -c conda-forge deepeval
 ```
 
 ### OpenRouter API Error
+
 ```bash
 # Check API key
 echo $env:OPENROUTER_API_KEY
@@ -147,6 +160,7 @@ curl https://openrouter.ai/api/v1/models `
 ```
 
 ### Model Not Found Error
+
 ```bash
 # Verify model ID in .env
 OPENROUTER_MODEL=z-ai/glm-4.5-air:free
@@ -160,6 +174,7 @@ npm run dev
 ## 📝 Log Resultater
 
 ### Create Test Report
+
 ```bash
 # Efter tests, gem resultater
 mkdir test-results
@@ -172,11 +187,13 @@ python tests/ai/deepeval-test.py > test-results/deepeval-results.txt
 ```
 
 ### Share Results
+
 ```markdown
 ## Test Results - [DATE]
 
 **Promptfoo Score:** 95/100
 **DeepEval Metrics:**
+
 - Answer Relevancy: 0.92
 - Faithfulness: 0.95
 
@@ -189,12 +206,14 @@ python tests/ai/deepeval-test.py > test-results/deepeval-results.txt
 ## 🎯 Next Steps After Testing
 
 ### If Tests Pass ✅
+
 1. Review `PHASE-PLAN.md` → Phase 4
 2. Prepare production deployment
 3. Update `.env.prod` with new models
 4. Schedule deployment window
 
 ### If Tests Fail ❌
+
 1. Document issues in `ISSUES.md`
 2. Adjust model parameters
 3. Test again
@@ -205,17 +224,20 @@ python tests/ai/deepeval-test.py > test-results/deepeval-results.txt
 ## 📞 Need Help?
 
 **Check Documentation:**
+
 - `docs/AI_MODEL_SELECTION_GUIDE.md` - Detailed guide
 - `AI_MODELS_UPGRADE_SUMMARY.md` - Quick reference
 - `PHASE-PLAN.md` - Full project plan
 
 **Review Code:**
+
 - `server/model-router.ts` - Model configuration
 - `server/ai-router.ts` - AI routing logic
 - `ai-eval-config.yaml` - Promptfoo config
 - `tests/ai/deepeval-test.py` - DeepEval tests
 
 **Common Issues:**
+
 - API key not set → Check `.env.dev`
 - Model not found → Verify `OPENROUTER_MODEL`
 - Slow responses → Check network/API status

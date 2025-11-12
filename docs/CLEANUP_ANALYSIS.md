@@ -93,7 +93,8 @@ Root Level Test Scripts:
 
 **Total:** 18 test files in wrong location
 
-**Recommendation:** 
+**Recommendation:**
+
 - Move useful tests to `tests/` folder
 - Delete one-time verification scripts
 
@@ -133,6 +134,7 @@ Root Level:
 **Multiple docs covering similar topics:**
 
 #### **Login Documentation (Redundant)**
+
 ```
 Root Level:
 ├── LOGIN_DEBUG_GUIDE.md ⚠️ CONSOLIDATE
@@ -149,6 +151,7 @@ Root Level:
 ---
 
 #### **Status/Summary Docs (Redundant)**
+
 ```
 Root Level:
 ├── STATUS.md ⚠️ KEEP (main status)
@@ -164,6 +167,7 @@ Root Level:
 ---
 
 #### **Setup/Guide Docs (Redundant)**
+
 ```
 Root Level:
 ├── QUICK_START.md (empty) ❌ DELETE
@@ -180,6 +184,7 @@ Root Level:
 ---
 
 #### **Migration Docs (Redundant)**
+
 ```
 Root Level:
 ├── MIGRATION_GUIDE.md ⚠️ KEEP
@@ -193,6 +198,7 @@ Root Level:
 ---
 
 #### **Email Docs (Too Many)**
+
 ```
 Root Level:
 ├── EMAIL_FUNCTIONS_DOCUMENTATION.md ⚠️ KEEP (comprehensive)
@@ -210,6 +216,7 @@ Root Level:
 ---
 
 #### **Phase Docs (Scattered)**
+
 ```
 Root Level:
 ├── PHASE-4-5-MASTER-PLAN.md ⚠️ MOVE to docs/
@@ -266,33 +273,33 @@ Root Level:
 
 ### **Files to Delete Immediately:**
 
-| Category | Count | Action |
-|----------|-------|--------|
-| Empty files | 11 | ❌ DELETE |
-| Backup files | 1 | ❌ DELETE |
-| Deprecated docs | 2 | ❌ DELETE |
-| Migration scripts | 14 | ❌ DELETE |
-| Temporary files | 5 | ❌ DELETE |
-| **TOTAL** | **33** | **DELETE** |
+| Category          | Count  | Action     |
+| ----------------- | ------ | ---------- |
+| Empty files       | 11     | ❌ DELETE  |
+| Backup files      | 1      | ❌ DELETE  |
+| Deprecated docs   | 2      | ❌ DELETE  |
+| Migration scripts | 14     | ❌ DELETE  |
+| Temporary files   | 5      | ❌ DELETE  |
+| **TOTAL**         | **33** | **DELETE** |
 
 ### **Files to Move/Reorganize:**
 
-| Category | Count | Action |
-|----------|-------|--------|
-| Test scripts | 18 | 📦 MOVE to tests/ |
-| Phase docs | 4 | 📦 MOVE to docs/ |
-| **TOTAL** | **22** | **MOVE** |
+| Category     | Count  | Action            |
+| ------------ | ------ | ----------------- |
+| Test scripts | 18     | 📦 MOVE to tests/ |
+| Phase docs   | 4      | 📦 MOVE to docs/  |
+| **TOTAL**    | **22** | **MOVE**          |
 
 ### **Files to Consolidate:**
 
-| Category | Count | Action |
-|----------|-------|--------|
-| Login docs | 6 | 📝 CONSOLIDATE |
-| Status docs | 5 | 📝 CONSOLIDATE |
-| ENV docs | 4 | 📝 CONSOLIDATE |
-| Email docs | 5 | 📝 CONSOLIDATE |
-| Docker docs | 3 | 📝 CONSOLIDATE |
-| **TOTAL** | **23** | **CONSOLIDATE** |
+| Category    | Count  | Action          |
+| ----------- | ------ | --------------- |
+| Login docs  | 6      | 📝 CONSOLIDATE  |
+| Status docs | 5      | 📝 CONSOLIDATE  |
+| ENV docs    | 4      | 📝 CONSOLIDATE  |
+| Email docs  | 5      | 📝 CONSOLIDATE  |
+| Docker docs | 3      | 📝 CONSOLIDATE  |
+| **TOTAL**   | **23** | **CONSOLIDATE** |
 
 ---
 
@@ -456,12 +463,14 @@ docs/
 ## 🎯 **EXPECTED RESULTS**
 
 ### **Before Cleanup:**
+
 - **Root level files:** ~150 files
 - **Documentation:** Scattered across root and docs/
 - **Test files:** Mixed in root
 - **Status:** Cluttered and hard to navigate
 
 ### **After Cleanup:**
+
 - **Root level files:** ~80 files (47% reduction)
 - **Documentation:** Organized in docs/ with clear structure
 - **Test files:** All in tests/ folder
@@ -484,6 +493,7 @@ docs/
 **Recommendation:** Start with Phase 1 (Safe Deletions) immediately.
 
 **Command to start:**
+
 ```powershell
 # Create cleanup branch
 git checkout -b cleanup/workspace-organization

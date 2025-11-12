@@ -89,6 +89,7 @@ Placering: `server/integrations/chromadb/test-data/`
 **LÆS:** [EXECUTIVE-SUMMARY.md](./EXECUTIVE-SUMMARY.md)
 
 **Indhold:**
+
 - Business impact & ROI (∞ ROI - gratis implementering!)
 - Revenue opportunities (65-85k kr/år)
 - Customer insights (premium/problematic/recurring)
@@ -105,6 +106,7 @@ Placering: `server/integrations/chromadb/test-data/`
 **LÆS:** [BUSINESS-INSIGHTS.md](./BUSINESS-INSIGHTS.md)
 
 **Indhold:**
+
 - Detaljeret kunde segmentering
 - Recurring customer analyse
 - Premium upsell opportunities
@@ -122,6 +124,7 @@ Placering: `server/integrations/chromadb/test-data/`
 **LÆS:** [IMPLEMENTATION-LOG.md](./IMPLEMENTATION-LOG.md)
 
 **Indhold:**
+
 - Dag-for-dag development history (Nov 6-10)
 - Technical challenges & solutions
 - Issues fixed (TypeScript, API keys, dependencies)
@@ -142,11 +145,11 @@ Placering: `server/integrations/chromadb/test-data/`
 1. Missing Bookings Audit
    - Review 8+ kunder flagged af AI
    - Potential: 15-20k kr recovery
-   
+
 2. Problematiske Kunder
    - Kontakt 4 flagged kunder
    - Quality improvement plan
-   
+
 3. Payment Collection
    - Følg op på 2 outstanding invoices
    - Potential: 7-10k kr recovery
@@ -160,11 +163,11 @@ TOTAL IMPACT: 30-40k kr
 1. Premium Customer Program
    - Launch for 28 identificerede kunder
    - Premium pricing & service
-   
+
 2. Win-back Campaign
    - Re-engage 6 single-booking recurring
    - Special offers
-   
+
 3. Frequency Upsell
    - Target 8 kunder for øget frekvens
    - 30-40% booking frequency lift
@@ -386,16 +389,16 @@ server/integrations/chromadb/
 
 ## 🎯 **SUCCESS CRITERIA - ALLE NÅET! ✅**
 
-| Criterion | Target | Achieved | Status |
-|-----------|--------|----------|--------|
-| Recurring Detection | 15+ | 24 | ✅ +60% |
-| AI Parsing | 95%+ | 100% | ✅ Perfect |
-| Coverage | 60%+ | 66% | ✅ Met |
-| Cost | <1000kr | 0kr | ✅ FREE |
-| Revenue Impact | 50k kr | 65-85k | ✅ +30-70% |
-| Quality | Manual | Auto | ✅ Automated |
-| Time to Value | 2 weeks | Immediate | ✅ Instant |
-| Documentation | Basic | Pro | ✅ Complete |
+| Criterion           | Target  | Achieved  | Status       |
+| ------------------- | ------- | --------- | ------------ |
+| Recurring Detection | 15+     | 24        | ✅ +60%      |
+| AI Parsing          | 95%+    | 100%      | ✅ Perfect   |
+| Coverage            | 60%+    | 66%       | ✅ Met       |
+| Cost                | <1000kr | 0kr       | ✅ FREE      |
+| Revenue Impact      | 50k kr  | 65-85k    | ✅ +30-70%   |
+| Quality             | Manual  | Auto      | ✅ Automated |
+| Time to Value       | 2 weeks | Immediate | ✅ Instant   |
+| Documentation       | Basic   | Pro       | ✅ Complete  |
 
 ---
 
@@ -465,11 +468,13 @@ Det har været en fornøjelse at udvikle dette AI-enhanced system for RenDetalje
 ## 📌 **QUICK REFERENCE**
 
 ### **Start Her:**
+
 1. **Management:** [EXECUTIVE-SUMMARY.md](./EXECUTIVE-SUMMARY.md)
 2. **Operations:** [BUSINESS-INSIGHTS.md](./BUSINESS-INSIGHTS.md)
 3. **Technical:** [IMPLEMENTATION-LOG.md](./IMPLEMENTATION-LOG.md)
 
 ### **Run Pipeline:**
+
 ```bash
 cd c:\Users\empir\Tekup\services\tekup-ai-v2
 npx tsx server/integrations/chromadb/scripts/1-collect-and-link-v4_3_3.ts
@@ -479,6 +484,7 @@ npx tsx server/integrations/chromadb/scripts/4-upload-to-chromadb.ts
 ```
 
 ### **ChromaDB:**
+
 - URL: http://localhost:8000
 - Collection: leads_v4_3_3
 - Documents: 231

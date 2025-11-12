@@ -739,24 +739,29 @@ async function executeCreateInvoice(
   const idempotencyKey = `invoice:${userId}:${customer.id}:${entryDate}:${workHours}:${jobType}`;
   const dupCheck = checkIdempotency(idempotencyKey);
   if (dupCheck.isDuplicate) {
-    console.log(`${logPrefix} Duplicate invoice creation prevented for key ${idempotencyKey}`);
+    console.log(
+      `${logPrefix} Duplicate invoice creation prevented for key ${idempotencyKey}`
+    );
     return dupCheck.result as ActionResult;
   }
   try {
-    invoice = await createInvoice({
-      contactId: customer.id,
-      entryDate,
-      paymentTermsDays: 1, // 1 day for one-time jobs
-      lines: [
-        {
-          productId: jobType, // REN-001 to REN-005
-          description: `${jobDescription} - ${workHours} arbejdstimer`,
-          quantity: workHours,
-          unitPrice: unitPrice, // CRITICAL: Set unitPrice per line (MEMORY_17)
-        },
-      ],
-      // state: "draft" is default - DO NOT set to "approved"
-    }, { correlationId });
+    invoice = await createInvoice(
+      {
+        contactId: customer.id,
+        entryDate,
+        paymentTermsDays: 1, // 1 day for one-time jobs
+        lines: [
+          {
+            productId: jobType, // REN-001 to REN-005
+            description: `${jobDescription} - ${workHours} arbejdstimer`,
+            quantity: workHours,
+            unitPrice: unitPrice, // CRITICAL: Set unitPrice per line (MEMORY_17)
+          },
+        ],
+        // state: "draft" is default - DO NOT set to "approved"
+      },
+      { correlationId }
+    );
   } catch (error) {
     return {
       success: false,
@@ -1055,10 +1060,7 @@ async function executeCheckCalendar(
       data: events,
     };
   } catch (error) {
-    console.error(
-      `${logPrefix} Error fetching calendar events:`,
-      error
-    );
+    console.error(`${logPrefix} Error fetching calendar events:`, error);
     return {
       success: false,
       message:

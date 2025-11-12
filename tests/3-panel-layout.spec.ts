@@ -22,9 +22,15 @@ test.describe("3-Panel Layout - Desktop", () => {
 
   test("should render all three panels on desktop", async ({ page }) => {
     // Wait for panels to load
-    await page.waitForSelector('[data-testid="ai-assistant-panel"]', { timeout: 10000 });
-    await page.waitForSelector('[data-testid="email-center-panel"]', { timeout: 10000 });
-    await page.waitForSelector('[data-testid="workflow-panel"]', { timeout: 10000 });
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]', {
+      timeout: 10000,
+    });
+    await page.waitForSelector('[data-testid="email-center-panel"]', {
+      timeout: 10000,
+    });
+    await page.waitForSelector('[data-testid="workflow-panel"]', {
+      timeout: 10000,
+    });
 
     // Verify all panels are visible
     const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
@@ -67,16 +73,22 @@ test.describe("3-Panel Layout - Desktop", () => {
     const initialWidth = initialBox!.width;
 
     // Find the resize handle between AI and Email panels
-    const resizeHandle = page.locator('[data-panel-resize-handle-id]').first();
+    const resizeHandle = page.locator("[data-panel-resize-handle-id]").first();
     await expect(resizeHandle).toBeVisible();
 
     // Get handle position
     const handleBox = await resizeHandle.boundingBox();
-    
+
     // Drag handle to the right to increase AI panel width
-    await page.mouse.move(handleBox!.x + handleBox!.width / 2, handleBox!.y + handleBox!.height / 2);
+    await page.mouse.move(
+      handleBox!.x + handleBox!.width / 2,
+      handleBox!.y + handleBox!.height / 2
+    );
     await page.mouse.down();
-    await page.mouse.move(handleBox!.x + 100, handleBox!.y + handleBox!.height / 2);
+    await page.mouse.move(
+      handleBox!.x + 100,
+      handleBox!.y + handleBox!.height / 2
+    );
     await page.mouse.up();
 
     // Wait for resize to complete
@@ -99,14 +111,16 @@ test.describe("3-Panel Layout - Keyboard Navigation", () => {
 
     // Press Ctrl+1
     await page.keyboard.press("Control+1");
-    
+
     // Wait a moment for focus to apply
     await page.waitForTimeout(200);
 
     // Check if AI panel has focus
     const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
-    const isFocused = await aiPanel.evaluate((el) => document.activeElement === el || el.contains(document.activeElement));
-    
+    const isFocused = await aiPanel.evaluate(
+      el => document.activeElement === el || el.contains(document.activeElement)
+    );
+
     expect(isFocused).toBe(true);
   });
 
@@ -115,13 +129,15 @@ test.describe("3-Panel Layout - Keyboard Navigation", () => {
 
     // Press Ctrl+2
     await page.keyboard.press("Control+2");
-    
+
     await page.waitForTimeout(200);
 
     // Check if Email panel has focus
     const emailPanel = page.locator('[data-testid="email-center-panel"]');
-    const isFocused = await emailPanel.evaluate((el) => document.activeElement === el || el.contains(document.activeElement));
-    
+    const isFocused = await emailPanel.evaluate(
+      el => document.activeElement === el || el.contains(document.activeElement)
+    );
+
     expect(isFocused).toBe(true);
   });
 
@@ -130,17 +146,21 @@ test.describe("3-Panel Layout - Keyboard Navigation", () => {
 
     // Press Ctrl+3
     await page.keyboard.press("Control+3");
-    
+
     await page.waitForTimeout(200);
 
     // Check if Workflow panel has focus
     const workflowPanel = page.locator('[data-testid="workflow-panel"]');
-    const isFocused = await workflowPanel.evaluate((el) => document.activeElement === el || el.contains(document.activeElement));
-    
+    const isFocused = await workflowPanel.evaluate(
+      el => document.activeElement === el || el.contains(document.activeElement)
+    );
+
     expect(isFocused).toBe(true);
   });
 
-  test("should support Alt+1/2/3 shortcuts as alternative", async ({ page }) => {
+  test("should support Alt+1/2/3 shortcuts as alternative", async ({
+    page,
+  }) => {
     await page.waitForSelector('[data-testid="email-center-panel"]');
 
     // Press Alt+2 to focus Email panel
@@ -148,8 +168,10 @@ test.describe("3-Panel Layout - Keyboard Navigation", () => {
     await page.waitForTimeout(200);
 
     const emailPanel = page.locator('[data-testid="email-center-panel"]');
-    const isFocused = await emailPanel.evaluate((el) => document.activeElement === el || el.contains(document.activeElement));
-    
+    const isFocused = await emailPanel.evaluate(
+      el => document.activeElement === el || el.contains(document.activeElement)
+    );
+
     expect(isFocused).toBe(true);
   });
 });
@@ -165,11 +187,13 @@ test.describe("3-Panel Layout - Mobile Responsive", () => {
     await page.waitForTimeout(1000);
 
     // AI panel should be visible
-    const aiPanel = page.locator('.flex.md\\:hidden [data-testid="ai-assistant-panel"]').first();
+    const aiPanel = page
+      .locator('.flex.md\\:hidden [data-testid="ai-assistant-panel"]')
+      .first();
     await expect(aiPanel).toBeVisible();
 
     // Email and Workflow panels should not be visible in main layout
-    const desktopLayout = page.locator('.hidden.md\\:flex');
+    const desktopLayout = page.locator(".hidden.md\\:flex");
     await expect(desktopLayout).not.toBeVisible();
   });
 
@@ -177,11 +201,14 @@ test.describe("3-Panel Layout - Mobile Responsive", () => {
     await page.waitForTimeout(1000);
 
     // Find and click mobile menu button
-    const menuButton = page.getByRole('button', { name: /menu/i }).or(page.locator('button:has-text("☰")')).or(page.locator('[aria-label="Menu"]'));
-    
-    if (await menuButton.count() > 0) {
+    const menuButton = page
+      .getByRole("button", { name: /menu/i })
+      .or(page.locator('button:has-text("☰")'))
+      .or(page.locator('[aria-label="Menu"]'));
+
+    if ((await menuButton.count()) > 0) {
       await menuButton.first().click();
-      
+
       // Wait for drawer to open
       await page.waitForTimeout(500);
 
@@ -195,14 +222,18 @@ test.describe("3-Panel Layout - Mobile Responsive", () => {
     await page.waitForTimeout(1000);
 
     // Open drawer
-    const menuButton = page.getByRole('button', { name: /menu/i }).or(page.locator('[aria-label="Menu"]'));
-    if (await menuButton.count() > 0) {
+    const menuButton = page
+      .getByRole("button", { name: /menu/i })
+      .or(page.locator('[aria-label="Menu"]'));
+    if ((await menuButton.count()) > 0) {
       await menuButton.first().click();
       await page.waitForTimeout(500);
 
       // Click overlay to close
-      const overlay = page.locator('[data-radix-overlay]').or(page.locator('[role="dialog"] ~ div'));
-      if (await overlay.count() > 0) {
+      const overlay = page
+        .locator("[data-radix-overlay]")
+        .or(page.locator('[role="dialog"] ~ div'));
+      if ((await overlay.count()) > 0) {
         await overlay.first().click({ position: { x: 10, y: 10 } });
         await page.waitForTimeout(500);
 
@@ -223,17 +254,19 @@ test.describe("3-Panel Layout - Lazy Loading", () => {
   test("should show loading skeletons before panels load", async ({ page }) => {
     // Navigate and look for loading states quickly
     await page.goto("/");
-    
+
     // Check for loading skeleton text
     const loadingText = page.getByText(/Loading.*\.\.\./i);
-    
+
     // Skeleton should appear briefly (may already be loaded)
-    if (await loadingText.count() > 0) {
+    if ((await loadingText.count()) > 0) {
       await expect(loadingText.first()).toBeVisible();
     }
 
     // Eventually panels should load
-    await page.waitForSelector('[data-testid="ai-assistant-panel"]', { timeout: 10000 });
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]', {
+      timeout: 10000,
+    });
     const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
     await expect(aiPanel).toBeVisible();
   });
@@ -241,10 +274,13 @@ test.describe("3-Panel Layout - Lazy Loading", () => {
   test("should lazy load each panel independently", async ({ page }) => {
     // Monitor network requests to verify lazy loading
     const chunkRequests: string[] = [];
-    
-    page.on('request', request => {
+
+    page.on("request", request => {
       const url = request.url();
-      if (url.includes('.js') && (url.includes('Panel') || url.includes('chunk'))) {
+      if (
+        url.includes(".js") &&
+        (url.includes("Panel") || url.includes("chunk"))
+      ) {
         chunkRequests.push(url);
       }
     });
@@ -269,13 +305,15 @@ test.describe("3-Panel Layout - Error Boundaries", () => {
     // Simulate an error in one panel by forcing a runtime error
     await page.evaluate(() => {
       // Find the AI panel and inject an error
-      const aiPanel = document.querySelector('[data-testid="ai-assistant-panel"]');
+      const aiPanel = document.querySelector(
+        '[data-testid="ai-assistant-panel"]'
+      );
       if (aiPanel) {
         // Trigger React error by modifying the DOM in a way that causes issues
         // This is a simulation - in real scenarios, errors would come from code bugs
-        const errorDiv = document.createElement('div');
-        errorDiv.textContent = 'Simulated Error';
-        errorDiv.setAttribute('data-error-simulation', 'true');
+        const errorDiv = document.createElement("div");
+        errorDiv.textContent = "Simulated Error";
+        errorDiv.setAttribute("data-error-simulation", "true");
       }
     });
 
@@ -294,14 +332,14 @@ test.describe("3-Panel Layout - Error Boundaries", () => {
 
     // Check if error boundary component is in the DOM
     const pageContent = await page.content();
-    
+
     // Verify PanelErrorBoundary is being used (structure check)
     expect(pageContent).toBeTruthy();
   });
 
   test("should allow panel reset after error", async ({ page }) => {
     await page.waitForSelector('[data-testid="ai-assistant-panel"]');
-    
+
     // In a real error scenario, there would be a "Try Again" button
     // This test verifies the structure is in place
     const panels = await page.locator('[data-testid*="panel"]').count();
@@ -319,15 +357,15 @@ test.describe("3-Panel Layout - Panel Visibility & State", () => {
     await page.waitForSelector('[data-testid="email-center-panel"]');
 
     // Interact with email panel (e.g., select a tab)
-    const emailTab = page.getByRole('tab', { name: /email/i }).first();
-    if (await emailTab.count() > 0) {
+    const emailTab = page.getByRole("tab", { name: /email/i }).first();
+    if ((await emailTab.count()) > 0) {
       await emailTab.click();
       await page.waitForTimeout(300);
     }
 
     // Resize the panel
-    const resizeHandle = page.locator('[data-panel-resize-handle-id]').first();
-    if (await resizeHandle.count() > 0) {
+    const resizeHandle = page.locator("[data-panel-resize-handle-id]").first();
+    if ((await resizeHandle.count()) > 0) {
       const handleBox = await resizeHandle.boundingBox();
       await page.mouse.move(handleBox!.x, handleBox!.y);
       await page.mouse.down();
@@ -348,10 +386,10 @@ test.describe("3-Panel Layout - Panel Visibility & State", () => {
     const initialBox = await aiPanel.boundingBox();
 
     // Try to resize below minimum (20% for AI panel)
-    const resizeHandle = page.locator('[data-panel-resize-handle-id]').first();
-    if (await resizeHandle.count() > 0) {
+    const resizeHandle = page.locator("[data-panel-resize-handle-id]").first();
+    if ((await resizeHandle.count()) > 0) {
       const handleBox = await resizeHandle.boundingBox();
-      
+
       // Try to drag handle far to the left
       await page.mouse.move(handleBox!.x, handleBox!.y);
       await page.mouse.down();
@@ -361,7 +399,7 @@ test.describe("3-Panel Layout - Panel Visibility & State", () => {
 
       // Panel should not shrink below minimum
       const newBox = await aiPanel.boundingBox();
-      
+
       // Should maintain reasonable minimum width (at least 15% of viewport)
       expect(newBox!.width).toBeGreaterThan(1920 * 0.15);
     }

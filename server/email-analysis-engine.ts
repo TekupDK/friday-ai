@@ -1,6 +1,6 @@
 /**
  * Phase 9.9: Intelligent Email Assistant
- * 
+ *
  * Shortwave-inspired email suggestion system
  * AI generates suggestions, human chooses and sends
  */
@@ -44,7 +44,6 @@ export interface EmailAnalysis {
  * Analyzes incoming email and extracts key information
  */
 export class EmailAnalysisEngine {
-  
   /**
    * Analyze email content and extract business-relevant information
    */
@@ -54,27 +53,30 @@ export class EmailAnalysisEngine {
     body: string;
   }): EmailAnalysis {
     const { from, subject, body } = emailData;
-    
+
     // Extract customer information
     const customerName = this.extractCustomerName(from);
     const customerEmail = this.extractCustomerEmail(from);
     const customerPhone = this.extractPhoneFromEmail(body);
-    
+
     // Detect job type
     const jobType = this.detectJobType(subject, body);
-    
+
     // Extract location
     const location = this.extractLocation(subject, body);
-    
+
     // Assess urgency
     const urgency = this.assessUrgency(subject, body);
-    
+
     // Calculate estimates
-    const { estimatedPrice, estimatedHours } = this.calculateEstimates(jobType, body);
-    
+    const { estimatedPrice, estimatedHours } = this.calculateEstimates(
+      jobType,
+      body
+    );
+
     // Extract special requirements
     const specialRequirements = this.extractSpecialRequirements(subject, body);
-    
+
     // Source detection
     const sourceDetection = detectLeadSourceIntelligent({
       from,
@@ -103,20 +105,23 @@ export class EmailAnalysisEngine {
   generateSuggestions(analysis: EmailAnalysis): EmailSuggestion[] {
     const suggestions: EmailSuggestion[] = [];
     const workflow = getWorkflowFromDetection(analysis.sourceDetection);
-    
+
     // Generate quote suggestion
     suggestions.push(this.generateQuoteSuggestion(analysis, workflow));
-    
+
     // Generate information request suggestion
     suggestions.push(this.generateInformationSuggestion(analysis, workflow));
-    
+
     // Generate booking suggestion
     suggestions.push(this.generateBookingSuggestion(analysis, workflow));
-    
+
     // Generate custom suggestions based on source
-    const customSuggestions = this.generateSourceSpecificSuggestions(analysis, workflow);
+    const customSuggestions = this.generateSourceSpecificSuggestions(
+      analysis,
+      workflow
+    );
     suggestions.push(...customSuggestions);
-    
+
     // Sort by confidence
     return suggestions.sort((a, b) => b.confidence - a.confidence);
   }
@@ -124,12 +129,16 @@ export class EmailAnalysisEngine {
   /**
    * Generate price quote suggestion
    */
-  private generateQuoteSuggestion(analysis: EmailAnalysis, workflow: any): EmailSuggestion {
-    const { customerName, jobType, location, estimatedPrice, estimatedHours } = analysis;
-    
+  private generateQuoteSuggestion(
+    analysis: EmailAnalysis,
+    workflow: any
+  ): EmailSuggestion {
+    const { customerName, jobType, location, estimatedPrice, estimatedHours } =
+      analysis;
+
     let content = `Kære ${customerName},\n\n`;
     content += `Tak for din henvendelse vedrørende ${jobType} i ${location}.\n\n`;
-    
+
     // Source-specific content
     switch (analysis.sourceDetection.source) {
       case "rengoring_nu":
@@ -144,19 +153,19 @@ export class EmailAnalysisEngine {
       default:
         content += `Tak for din henvendelse. Vi vil gerne give dig et uforpligtende tilbud på ${jobType}.\n\n`;
     }
-    
+
     content += `**Prisoverslag:**\n`;
     content += `- Opgavetype: ${jobType}\n`;
     content += `- Estimeret tid: ${estimatedHours}\n`;
     content += `- Pris: ${estimatedPrice} kr. ekskl. moms\n\n`;
-    
+
     content += `Dette prisoverslag er baseret på den information, du har givet. Endelig pris kan variere afhængigt af opgavens konkrete omfang.\n\n`;
-    
+
     content += `Hvis du ønsker at gå videre, kan vi tilbyde følgende:\n`;
     content += `- Gratis besigtigelse og endeligt tilbud\n`;
     content += `- Fleksibel booking, inkl. weekender\n`;
     content += `- Forsikring og garanti\n\n`;
-    
+
     content += `Jeg vil gerne høre mere om dine specifikke behov, så vi kan give dig det bedst mulige tilbud.\n\n`;
     content += `Med venlig hilsen,\n`;
     content += `[Dit Navn]\n`;
@@ -183,20 +192,23 @@ export class EmailAnalysisEngine {
   /**
    * Generate information request suggestion
    */
-  private generateInformationSuggestion(analysis: EmailAnalysis, workflow: any): EmailSuggestion {
+  private generateInformationSuggestion(
+    analysis: EmailAnalysis,
+    workflow: any
+  ): EmailSuggestion {
     const { customerName, jobType, location } = analysis;
-    
+
     let content = `Kære ${customerName},\n\n`;
     content += `Tak for din henvendelse vedrørende ${jobType} i ${location}.\n\n`;
     content += `For at kunne give dig det mest præcise tilbud, har jeg brug for lidt mere information:\n\n`;
-    
+
     content += `**Spørgsmål:**\n`;
     content += `1. Hvor stort er arealet (i m²)?\n`;
     content += `2. Hvor ofte skal rengøringen udføres? (engang, ugentligt, månedligt)\n`;
     content += `3. Er der særlige områder, der kræver ekstra opmærksomhed?\n`;
     content += `4. Ønskes rengøring af udstyr (gulve, vinduer, badeværelser)?\n`;
     content += `5. Er der adgang til parkering ved adressen?\n\n`;
-    
+
     content += `Når jeg har disse informationer, kan jeg give dig et detaljeret og uforpligtende tilbud.\n\n`;
     content += `Du kan også sende billeder af området, så kan jeg vurdere opgaven endnu bedre.\n\n`;
     content += `Jeg ser frem til at høre fra dig!\n\n`;
@@ -222,9 +234,12 @@ export class EmailAnalysisEngine {
   /**
    * Generate booking suggestion
    */
-  private generateBookingSuggestion(analysis: EmailAnalysis, workflow: any): EmailSuggestion {
+  private generateBookingSuggestion(
+    analysis: EmailAnalysis,
+    workflow: any
+  ): EmailSuggestion {
     const { customerName, jobType, location, estimatedHours } = analysis;
-    
+
     // Calculate proposed time based on urgency
     let proposedTime = "";
     switch (analysis.urgency) {
@@ -238,24 +253,24 @@ export class EmailAnalysisEngine {
         proposedTime = "inden for 2-3 uger";
         break;
     }
-    
+
     let content = `Kære ${customerName},\n\n`;
     content += `Tak for din henvendelse vedrørende ${jobType} i ${location}.\n\n`;
     content += `Vi har ledige kapacitet og kan tilbyde at udføre opgaven ${proposedTime}.\n\n`;
-    
+
     content += `**Forslag til tidspunkt:**\n`;
     content += `- Ugedage: 8:00 - 17:00\n`;
     content += `- Lørdage: 9:00 - 14:00\n`;
     content += `- Estimeret varighed: ${estimatedHours}\n\n`;
-    
+
     content += `Hvis disse tidspunkter passer dig, kan jeg reservere tiden med det samme. \n`;
     content += `Ellers kan vi finde et andet tidspunkt, der passer bedre i din kalender.\n\n`;
-    
+
     content += `For at booke opgaven beder jeg dig bekræfte:\n`;
     content += `1. Ønsket dato og tidspunkt\n`;
     content += `2. Adresse (hvis ikke allerede angivet)\n`;
     content += `3. Kontaktoplysninger (telefonnummer)\n\n`;
-    
+
     content += `Jeg ser frem til at hjælpe dig med ${jobType}!\n\n`;
     content += `Med venlig hilsen,\n`;
     content += `[Dit Navn]\n`;
@@ -281,9 +296,12 @@ export class EmailAnalysisEngine {
   /**
    * Generate source-specific suggestions
    */
-  private generateSourceSpecificSuggestions(analysis: EmailAnalysis, workflow: any): EmailSuggestion[] {
+  private generateSourceSpecificSuggestions(
+    analysis: EmailAnalysis,
+    workflow: any
+  ): EmailSuggestion[] {
     const suggestions: EmailSuggestion[] = [];
-    
+
     switch (analysis.sourceDetection.source) {
       case "rengoring_nu":
         suggestions.push(this.generateRengoringNuSuggestion(analysis));
@@ -295,16 +313,18 @@ export class EmailAnalysisEngine {
         suggestions.push(this.generateWebsiteSuggestion(analysis));
         break;
     }
-    
+
     return suggestions;
   }
 
   /**
    * Rengøring.nu specific suggestion
    */
-  private generateRengoringNuSuggestion(analysis: EmailAnalysis): EmailSuggestion {
+  private generateRengoringNuSuggestion(
+    analysis: EmailAnalysis
+  ): EmailSuggestion {
     const { customerName, estimatedPrice } = analysis;
-    
+
     let content = `Kære ${customerName},\n\n`;
     content += `Tak for din interesse via Rengøring.nu. Vi er en lokal rengøringsvirksomhed med mange års erfaring.\n\n`;
     content += `Som kunde via Rengøring.nu får du:\n`;
@@ -333,9 +353,11 @@ export class EmailAnalysisEngine {
   /**
    * Rengøring Aarhus specific suggestion
    */
-  private generateRengoringAarhusSuggestion(analysis: EmailAnalysis): EmailSuggestion {
+  private generateRengoringAarhusSuggestion(
+    analysis: EmailAnalysis
+  ): EmailSuggestion {
     const { customerName, location } = analysis;
-    
+
     let content = `Kære ${customerName},\n\n`;
     content += `Tak for din henvendelse vedrørende rengøring i Aarhus. Vi dækker hele Aarhus kommune.\n\n`;
     content += `Vi har stor erfaring med:\n`;
@@ -367,7 +389,7 @@ export class EmailAnalysisEngine {
    */
   private generateWebsiteSuggestion(analysis: EmailAnalysis): EmailSuggestion {
     const { customerName } = analysis;
-    
+
     let content = `Kære ${customerName},\n\n`;
     content += `Tak for din henvendelse via vores hjemmeside rendetalje.dk. Vi er glade for din interesse!\n\n`;
     content += `Som direkte kunde via vores hjemmeside får du:\n`;
@@ -411,10 +433,13 @@ export class EmailAnalysisEngine {
 
   private detectJobType(subject: string, body: string): string {
     const text = (subject + " " + body).toLowerCase();
-    
+
     if (text.includes("flytte") || text.includes("flytterengøring")) {
       return "Flytterengøring";
-    } else if (text.includes("hovedrengøring") || text.includes("grundrengøring")) {
+    } else if (
+      text.includes("hovedrengøring") ||
+      text.includes("grundrengøring")
+    ) {
       return "Hovedrengøring";
     } else if (text.includes("vinduespudsning") || text.includes("vinduer")) {
       return "Vinduespudsning";
@@ -429,47 +454,66 @@ export class EmailAnalysisEngine {
 
   private extractLocation(subject: string, body: string): string {
     const text = subject + " " + body;
-    
+
     // Extract city names
-    const cityMatch = text.match(/(Aarhus|Århus|København|Odense|Aalborg|Esbjerg|Randers|Kolding|Horsens|Vejle|Roskilde|Hillerød|Helsingør|Frederiksberg|Gentofte|Lyngby|Virum|Holte|Ballerup|Herlev|Gladsaxe|Rødovre|Hvidovre|Brøndby|Glostrup|Albertslund|Taastrup|Høje Taastrup|Ishøj|Vallensbæk|Greve|Solrød|Køge|Ringsted|Næstved|Slagelse|Kalundborg|Holbæk|Roskilde|Frederikssund|Hillerød|Helsingør|Hørsholm|Rudersdal|Gentofte|Lyngby-Taarbæk|Gladsaxe|Herlev|Ballerup|Furesø|Allerød|Egedal|Rødovre|Hvidovre|Brøndby|Vallensbæk|Ishøj|Høje-Taastrup|Greve|Solrød|Køge|Faxe|Næstved|Vordingborg|Guldborgsund|Lolland|Falster)/i);
-    
+    const cityMatch = text.match(
+      /(Aarhus|Århus|København|Odense|Aalborg|Esbjerg|Randers|Kolding|Horsens|Vejle|Roskilde|Hillerød|Helsingør|Frederiksberg|Gentofte|Lyngby|Virum|Holte|Ballerup|Herlev|Gladsaxe|Rødovre|Hvidovre|Brøndby|Glostrup|Albertslund|Taastrup|Høje Taastrup|Ishøj|Vallensbæk|Greve|Solrød|Køge|Ringsted|Næstved|Slagelse|Kalundborg|Holbæk|Roskilde|Frederikssund|Hillerød|Helsingør|Hørsholm|Rudersdal|Gentofte|Lyngby-Taarbæk|Gladsaxe|Herlev|Ballerup|Furesø|Allerød|Egedal|Rødovre|Hvidovre|Brøndby|Vallensbæk|Ishøj|Høje-Taastrup|Greve|Solrød|Køge|Faxe|Næstved|Vordingborg|Guldborgsund|Lolland|Falster)/i
+    );
+
     if (cityMatch) {
       return cityMatch[1];
     }
-    
+
     // Extract postal codes
     const postalMatch = text.match(/\b(1[0-4]\d{3}|[2-9]\d{3})\b/);
     if (postalMatch) {
       return `Postnummer ${postalMatch[1]}`;
     }
-    
+
     return "Ikke specificeret";
   }
 
-  private assessUrgency(subject: string, body: string): "high" | "medium" | "low" {
+  private assessUrgency(
+    subject: string,
+    body: string
+  ): "high" | "medium" | "low" {
     const text = (subject + " " + body).toLowerCase();
-    
-    if (text.includes("haster") || text.includes("akut") || text.includes("hurtigst muligt") || text.includes("i dag")) {
+
+    if (
+      text.includes("haster") ||
+      text.includes("akut") ||
+      text.includes("hurtigst muligt") ||
+      text.includes("i dag")
+    ) {
       return "high";
-    } else if (text.includes("snart") || text.includes("næste uge") || text.includes("inden længe")) {
+    } else if (
+      text.includes("snart") ||
+      text.includes("næste uge") ||
+      text.includes("inden længe")
+    ) {
       return "medium";
     } else {
       return "low";
     }
   }
 
-  private calculateEstimates(jobType: string, body: string): { estimatedPrice: number; estimatedHours: string } {
+  private calculateEstimates(
+    jobType: string,
+    body: string
+  ): { estimatedPrice: number; estimatedHours: string } {
     const basePrices = {
-      "Flytterengøring": { price: 2500, hours: "4-6 timer" },
-      "Hovedrengøring": { price: 1800, hours: "3-4 timer" },
-      "Vinduespudsning": { price: 800, hours: "1-2 timer" },
-      "Trappevask": { price: 1200, hours: "2-3 timer" },
-      "Erhvervsrengøring": { price: 550, hours: "pr. time" },
+      Flytterengøring: { price: 2500, hours: "4-6 timer" },
+      Hovedrengøring: { price: 1800, hours: "3-4 timer" },
+      Vinduespudsning: { price: 800, hours: "1-2 timer" },
+      Trappevask: { price: 1200, hours: "2-3 timer" },
+      Erhvervsrengøring: { price: 550, hours: "pr. time" },
       "Almindelig rengøring": { price: 1500, hours: "2-3 timer" },
     };
 
-    const estimate = basePrices[jobType as keyof typeof basePrices] || basePrices["Almindelig rengøring"];
-    
+    const estimate =
+      basePrices[jobType as keyof typeof basePrices] ||
+      basePrices["Almindelig rengøring"];
+
     return {
       estimatedPrice: estimate.price,
       estimatedHours: estimate.hours,
@@ -479,15 +523,26 @@ export class EmailAnalysisEngine {
   private extractSpecialRequirements(subject: string, body: string): string[] {
     const text = (subject + " " + body).toLowerCase();
     const requirements: string[] = [];
-    
-    if (text.includes("kælder") || text.includes("basement")) requirements.push("Kælder");
-    if (text.includes("loft") || text.includes("attic")) requirements.push("Loft");
+
+    if (text.includes("kælder") || text.includes("basement"))
+      requirements.push("Kælder");
+    if (text.includes("loft") || text.includes("attic"))
+      requirements.push("Loft");
     if (text.includes("garage")) requirements.push("Garage");
-    if (text.includes("have") || text.includes("garden")) requirements.push("Have");
-    if (text.includes("børn") || text.includes("children")) requirements.push("Børnevenlig rengøring");
-    if (text.includes("dyr") || text.includes("pet") || text.includes("hund") || text.includes("kat")) requirements.push("Dyrevenlig rengøring");
-    if (text.includes("allergi") || text.includes("allergy")) requirements.push("Allergivenlig rengøring");
-    
+    if (text.includes("have") || text.includes("garden"))
+      requirements.push("Have");
+    if (text.includes("børn") || text.includes("children"))
+      requirements.push("Børnevenlig rengøring");
+    if (
+      text.includes("dyr") ||
+      text.includes("pet") ||
+      text.includes("hund") ||
+      text.includes("kat")
+    )
+      requirements.push("Dyrevenlig rengøring");
+    if (text.includes("allergi") || text.includes("allergy"))
+      requirements.push("Allergivenlig rengøring");
+
     return requirements;
   }
 }

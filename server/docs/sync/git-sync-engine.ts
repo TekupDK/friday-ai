@@ -50,18 +50,24 @@ export class GitSyncEngine extends EventEmitter {
       if (!isRepo) throw new Error(`Not a git repo: ${this.config.repoPath}`);
 
       await this.git.checkout(this.config.branch);
-      
+
       // Try to pull, but don't fail if there are unstaged changes
       try {
         await this.pullChanges();
       } catch (pullErr: any) {
-        if (pullErr.message?.includes('unstaged changes')) {
-          logger.warn({ err: pullErr }, "[GitSync] Skipping pull due to unstaged changes - will continue anyway");
+        if (pullErr.message?.includes("unstaged changes")) {
+          logger.warn(
+            { err: pullErr },
+            "[GitSync] Skipping pull due to unstaged changes - will continue anyway"
+          );
         } else {
-          logger.warn({ err: pullErr }, "[GitSync] Pull failed - continuing without pull");
+          logger.warn(
+            { err: pullErr },
+            "[GitSync] Pull failed - continuing without pull"
+          );
         }
       }
-      
+
       this.startWatcher();
 
       logger.info(
@@ -118,7 +124,10 @@ export class GitSyncEngine extends EventEmitter {
         await this.git.commit(this.config.commitMessage(files));
         logger.info({ count: files.length }, "[GitSync] Committed changes");
         if (this.config.autoPush) await this.pushChanges();
-        this.emit("sync_complete", { type: "sync_complete", files } as SyncEvent);
+        this.emit("sync_complete", {
+          type: "sync_complete",
+          files,
+        } as SyncEvent);
       }
     } catch (err) {
       logger.error({ err, files }, "[GitSync] Failed to process changes");
@@ -203,7 +212,12 @@ export class GitSyncEngine extends EventEmitter {
     try {
       const s = await this.git.status();
       return {
-        status: s.conflicted.length > 0 ? "conflict" : this.syncing ? "syncing" : "idle",
+        status:
+          s.conflicted.length > 0
+            ? "conflict"
+            : this.syncing
+              ? "syncing"
+              : "idle",
         last_sync: new Date(),
         pending_changes: this.queue.size,
         conflicts: s.conflicted,

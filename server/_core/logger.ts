@@ -1,6 +1,9 @@
 import path from "path";
-import pino from "pino";
 import { fileURLToPath } from "url";
+
+import pino from "pino";
+
+import { createRedactingSerializer } from "./redact";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -17,6 +20,8 @@ export const logger = pino({
     process.env.LOG_LEVEL ||
     (process.env.NODE_ENV === "production" ? "info" : "debug"),
   base: undefined, // omit pid, hostname to keep logs cleaner
+  // Add redacting serializers to sanitize sensitive data
+  serializers: createRedactingSerializer(),
   transport: {
     targets: [
       // Console output with pretty formatting in development

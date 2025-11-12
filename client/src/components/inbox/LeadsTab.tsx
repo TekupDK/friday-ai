@@ -753,11 +753,11 @@ export default function LeadsTab({ onRequestTabChange }: LeadsTabProps = {}) {
                       lead={lead}
                       index={virtualRow.index}
                       onStatusChange={handleStatusChange}
-                      onSelectLead={(leadId) => {
+                      onSelectLead={leadId => {
                         // Open customer profile in WorkflowPanel
                         openCustomerProfile(leadId);
                       }}
-                      onGenerateDoc={(leadId) => {
+                      onGenerateDoc={leadId => {
                         generateLeadDoc.mutate({ leadId });
                       }}
                     />

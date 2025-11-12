@@ -46,7 +46,9 @@ interface RendetaljeCustomer {
 export default function CustomersTab() {
   const { openCustomerProfile } = useWorkflowContext();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState<"all" | "aktiv" | "lead" | "erhverv">("all");
+  const [filter, setFilter] = useState<"all" | "aktiv" | "lead" | "erhverv">(
+    "all"
+  );
 
   // Mock customer data - replace with real CRM data
   const customers: RendetaljeCustomer[] = [
@@ -59,7 +61,7 @@ export default function CustomersTab() {
       address: {
         street: "Nørrebrogade 123, 2. tv",
         city: "København",
-        postalCode: "2200"
+        postalCode: "2200",
       },
       totalJobs: 8,
       totalRevenue: 24500,
@@ -68,7 +70,7 @@ export default function CustomersTab() {
       rating: 4.8,
       status: "aktiv",
       preferredServices: ["flytterengøring", "hovedrengøring"],
-      notes: "Foretrækker Maria som rengøringsassistent"
+      notes: "Foretrækker Maria som rengøringsassistent",
     },
     {
       id: "2",
@@ -79,7 +81,7 @@ export default function CustomersTab() {
       address: {
         street: "Vesterbrogade 89, 3. sal",
         city: "København",
-        postalCode: "1620"
+        postalCode: "1620",
       },
       totalJobs: 24,
       totalRevenue: 86400,
@@ -88,7 +90,7 @@ export default function CustomersTab() {
       rating: 4.9,
       status: "aktiv",
       preferredServices: ["løbende", "vinduespolering"],
-      notes: "Ugentlig kontor rengøring, adgang med nøglekort"
+      notes: "Ugentlig kontor rengøring, adgang med nøglekort",
     },
     {
       id: "3",
@@ -99,7 +101,7 @@ export default function CustomersTab() {
       address: {
         street: "Strandvejen 45",
         city: "Hellerup",
-        postalCode: "2900"
+        postalCode: "2900",
       },
       totalJobs: 0,
       totalRevenue: 0,
@@ -107,24 +109,28 @@ export default function CustomersTab() {
       rating: 0,
       status: "lead",
       preferredServices: ["hovedrengøring"],
-      notes: "Interesseret i månedlig hovedrengøring af villa"
-    }
+      notes: "Interesseret i månedlig hovedrengøring af villa",
+    },
   ];
 
   const getStatusColor = (status: RendetaljeCustomer["status"]) => {
     switch (status) {
-      case "aktiv": return "bg-green-100 text-green-800 border-green-200";
-      case "inaktiv": return "bg-gray-100 text-gray-800 border-gray-200";
-      case "lead": return "bg-blue-100 text-blue-800 border-blue-200";
-      default: return "bg-gray-100 text-gray-800 border-gray-200";
+      case "aktiv":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "inaktiv":
+        return "bg-gray-100 text-gray-800 border-gray-200";
+      case "lead":
+        return "bg-blue-100 text-blue-800 border-blue-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('da-DK', {
-      style: 'currency',
-      currency: 'DKK',
-      minimumFractionDigits: 0
+    return new Intl.NumberFormat("da-DK", {
+      style: "currency",
+      currency: "DKK",
+      minimumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -140,14 +146,16 @@ export default function CustomersTab() {
   };
 
   const filteredCustomers = customers.filter(customer => {
-    const matchesSearch = customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         customer.phone.includes(searchTerm);
-    
-    const matchesFilter = filter === "all" || 
-                         customer.status === filter || 
-                         (filter === "erhverv" && customer.type === "erhverv");
-    
+    const matchesSearch =
+      customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customer.phone.includes(searchTerm);
+
+    const matchesFilter =
+      filter === "all" ||
+      customer.status === filter ||
+      (filter === "erhverv" && customer.type === "erhverv");
+
     return matchesSearch && matchesFilter;
   });
 
@@ -175,7 +183,7 @@ export default function CustomersTab() {
             <Input
               placeholder="Søg kunder..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={e => setSearchTerm(e.target.value)}
               className="pl-10"
             />
           </div>
@@ -184,8 +192,8 @@ export default function CustomersTab() {
               { key: "all", label: "Alle" },
               { key: "aktiv", label: "Aktive" },
               { key: "lead", label: "Leads" },
-              { key: "erhverv", label: "Erhverv" }
-            ].map((filterOption) => (
+              { key: "erhverv", label: "Erhverv" },
+            ].map(filterOption => (
               <Button
                 key={filterOption.key}
                 variant={filter === filterOption.key ? "default" : "outline"}
@@ -201,9 +209,9 @@ export default function CustomersTab() {
 
       {/* Customers List */}
       <div className="flex-1 overflow-auto p-4 space-y-3">
-        {filteredCustomers.map((customer) => (
-          <Card 
-            key={customer.id} 
+        {filteredCustomers.map(customer => (
+          <Card
+            key={customer.id}
             className="p-4 hover:shadow-md transition-shadow cursor-pointer"
             onClick={() => openCustomerProfile(parseInt(customer.id))}
           >
@@ -214,7 +222,11 @@ export default function CustomersTab() {
                   {customer.type === "erhverv" ? (
                     <Building className="w-6 h-6" />
                   ) : (
-                    customer.name.split(' ').map(n => n[0]).join('').slice(0, 2)
+                    customer.name
+                      .split(" ")
+                      .map(n => n[0])
+                      .join("")
+                      .slice(0, 2)
                   )}
                 </AvatarFallback>
               </Avatar>
@@ -284,13 +296,15 @@ export default function CustomersTab() {
                     {customer.lastService && (
                       <div className="flex items-center gap-1 text-sm text-gray-600">
                         <Calendar className="w-3 h-3" />
-                        Sidst: {customer.lastService.toLocaleDateString('da-DK')}
+                        Sidst:{" "}
+                        {customer.lastService.toLocaleDateString("da-DK")}
                       </div>
                     )}
                     {customer.nextService && (
                       <div className="flex items-center gap-1 text-sm text-blue-600">
                         <Calendar className="w-3 h-3" />
-                        Næste: {customer.nextService.toLocaleDateString('da-DK')}
+                        Næste:{" "}
+                        {customer.nextService.toLocaleDateString("da-DK")}
                       </div>
                     )}
                   </div>
@@ -309,7 +323,9 @@ export default function CustomersTab() {
                 {/* Preferred Services */}
                 {customer.preferredServices.length > 0 && (
                   <div className="mt-3">
-                    <div className="text-xs text-gray-500 mb-1">Foretrukne services:</div>
+                    <div className="text-xs text-gray-500 mb-1">
+                      Foretrukne services:
+                    </div>
                     <div className="flex gap-1 flex-wrap">
                       {customer.preferredServices.map((service, i) => (
                         <Badge key={i} variant="outline" className="text-xs">

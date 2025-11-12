@@ -1,60 +1,63 @@
-import { Command } from 'commander';
-import inquirer from 'inquirer';
-import ora from 'ora';
-import fs from 'fs/promises';
-import path from 'path';
-import { createClient } from '../api/client';
-import { success, error, info } from '../utils/formatter';
+import { Command } from "commander";
+import inquirer from "inquirer";
+import ora from "ora";
+import fs from "fs/promises";
+import path from "path";
+import { createClient } from "../api/client";
+import { success, error, info } from "../utils/formatter";
 
 export function registerCreateCommand(program: Command) {
   program
-    .command('create')
-    .description('Create a new documentation file')
-    .argument('[title]', 'Document title')
-    .option('-c, --category <category>', 'Category')
-    .option('-t, --tags <tags>', 'Tags (comma-separated)')
-    .option('-p, --path <path>', 'File path relative to docs/')
-    .option('-f, --file <file>', 'Read content from file')
-    .option('--template <template>', 'Use template (api, guide, tutorial)')
+    .command("create")
+    .description("Create a new documentation file")
+    .argument("[title]", "Document title")
+    .option("-c, --category <category>", "Category")
+    .option("-t, --tags <tags>", "Tags (comma-separated)")
+    .option("-p, --path <path>", "File path relative to docs/")
+    .option("-f, --file <file>", "Read content from file")
+    .option("--template <template>", "Use template (api, guide, tutorial)")
     .action(async (titleArg, options) => {
       try {
         // Interactive prompts if arguments not provided
         const answers = await inquirer.prompt([
           {
-            type: 'input',
-            name: 'title',
-            message: 'Document title:',
+            type: "input",
+            name: "title",
+            message: "Document title:",
             when: !titleArg,
-            validate: (input) => input.trim().length > 0 || 'Title is required',
+            validate: input => input.trim().length > 0 || "Title is required",
           },
           {
-            type: 'input',
-            name: 'category',
-            message: 'Category:',
+            type: "input",
+            name: "category",
+            message: "Category:",
             when: !options.category,
-            default: 'General',
+            default: "General",
           },
           {
-            type: 'input',
-            name: 'tags',
-            message: 'Tags (comma-separated):',
+            type: "input",
+            name: "tags",
+            message: "Tags (comma-separated):",
             when: !options.tags,
           },
           {
-            type: 'input',
-            name: 'path',
-            message: 'File path (relative to docs/):',
+            type: "input",
+            name: "path",
+            message: "File path (relative to docs/):",
             when: !options.path,
             default: (answers: any) => {
               const title = titleArg || answers.title;
-              const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+              const slug = title
+                .toLowerCase()
+                .replace(/\s+/g, "-")
+                .replace(/[^a-z0-9-]/g, "");
               return `${slug}.md`;
             },
           },
           {
-            type: 'editor',
-            name: 'content',
-            message: 'Document content (opens editor):',
+            type: "editor",
+            name: "content",
+            message: "Document content (opens editor):",
             when: !options.file && !options.template,
             default: (answers: any) => {
               const title = titleArg || answers.title;
@@ -68,12 +71,12 @@ export function registerCreateCommand(program: Command) {
         const tags = options.tags || answers.tags;
         const docPath = options.path || answers.path;
 
-        let content = '';
+        let content = "";
 
         // Load from file if specified
         if (options.file) {
           info(`Reading content from ${options.file}...`);
-          content = await fs.readFile(options.file, 'utf-8');
+          content = await fs.readFile(options.file, "utf-8");
         }
         // Load template if specified
         else if (options.template) {
@@ -84,7 +87,7 @@ export function registerCreateCommand(program: Command) {
           content = answers.content;
         }
 
-        const spinner = ora('Creating document...').start();
+        const spinner = ora("Creating document...").start();
 
         const client = createClient();
         const doc = await client.createDocument({
@@ -92,7 +95,7 @@ export function registerCreateCommand(program: Command) {
           title,
           content,
           category,
-          tags: tags ? tags.split(',').map((t: string) => t.trim()) : [],
+          tags: tags ? tags.split(",").map((t: string) => t.trim()) : [],
         });
 
         spinner.stop();

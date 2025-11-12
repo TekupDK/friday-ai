@@ -53,9 +53,9 @@ const MAX_TRACES = 50000;
  */
 const TOKEN_COSTS = {
   "gemma-3-27b-free": { prompt: 0, completion: 0 }, // Free!
-  "gpt-4o-mini": { prompt: 0.15, completion: 0.60 },
-  "gpt-4o": { prompt: 2.50, completion: 10.00 },
-  "claude-3.5-sonnet": { prompt: 3.00, completion: 15.00 },
+  "gpt-4o-mini": { prompt: 0.15, completion: 0.6 },
+  "gpt-4o": { prompt: 2.5, completion: 10.0 },
+  "claude-3.5-sonnet": { prompt: 3.0, completion: 15.0 },
 } as const;
 
 /**
@@ -102,7 +102,8 @@ export function endTrace(
   const duration = Date.now() - startTime;
 
   // Calculate cost
-  const modelCost = TOKEN_COSTS[model as keyof typeof TOKEN_COSTS] ||
+  const modelCost =
+    TOKEN_COSTS[model as keyof typeof TOKEN_COSTS] ||
     TOKEN_COSTS["gemma-3-27b-free"];
 
   const estimatedCost =
@@ -140,8 +141,8 @@ export function endTrace(
   // Log summary
   console.log(
     `[LLM TRACE] Completed ${traceId} - ` +
-    `${duration}ms, ${usage.totalTokens} tokens, ` +
-    `$${estimatedCost.toFixed(4)}, ${tokensPerSecond} tok/s`
+      `${duration}ms, ${usage.totalTokens} tokens, ` +
+      `$${estimatedCost.toFixed(4)}, ${tokensPerSecond} tok/s`
   );
 
   return trace;
@@ -200,28 +201,34 @@ export function getTraceStats(options?: {
   // Calculate stats
   const totalTokens = traces.reduce((sum, t) => sum + t.totalTokens, 0);
   const totalCost = traces.reduce((sum, t) => sum + t.estimatedCost, 0);
-  const avgDuration = traces.length > 0
-    ? Math.round(traces.reduce((sum, t) => sum + t.duration, 0) / traces.length)
-    : 0;
-  const avgTokensPerSecond = traces.length > 0
-    ? Math.round(
-        traces.reduce((sum, t) => sum + (t.tokensPerSecond || 0), 0) / traces.length
-      )
-    : 0;
+  const avgDuration =
+    traces.length > 0
+      ? Math.round(
+          traces.reduce((sum, t) => sum + t.duration, 0) / traces.length
+        )
+      : 0;
+  const avgTokensPerSecond =
+    traces.length > 0
+      ? Math.round(
+          traces.reduce((sum, t) => sum + (t.tokensPerSecond || 0), 0) /
+            traces.length
+        )
+      : 0;
 
   // Success rate (traces without errors)
   const successCount = traces.filter(t => !t.errorMessage).length;
-  const successRate = traces.length > 0
-    ? Math.round((successCount / traces.length) * 100)
-    : 0;
+  const successRate =
+    traces.length > 0 ? Math.round((successCount / traces.length) * 100) : 0;
 
   // Cost/tokens by model
   const costByModel: Record<string, number> = {};
   const tokensByModel: Record<string, number> = {};
 
   traces.forEach(trace => {
-    costByModel[trace.model] = (costByModel[trace.model] || 0) + trace.estimatedCost;
-    tokensByModel[trace.model] = (tokensByModel[trace.model] || 0) + trace.totalTokens;
+    costByModel[trace.model] =
+      (costByModel[trace.model] || 0) + trace.estimatedCost;
+    tokensByModel[trace.model] =
+      (tokensByModel[trace.model] || 0) + trace.totalTokens;
   });
 
   return {

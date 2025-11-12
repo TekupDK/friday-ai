@@ -7,7 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Command, Zap, FileText, Mail, Calendar, Users, Settings, Search, Plus, Download, Upload, Trash2, Edit3, Clock } from "lucide-react";
+import {
+  Command,
+  Zap,
+  FileText,
+  Mail,
+  Calendar,
+  Users,
+  Settings,
+  Search,
+  Plus,
+  Download,
+  Upload,
+  Trash2,
+  Edit3,
+  Clock,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 export interface CommandItem {
@@ -15,7 +30,13 @@ export interface CommandItem {
   title: string;
   description: string;
   icon: any;
-  category: 'file' | 'communication' | 'productivity' | 'management' | 'tools' | 'navigation';
+  category:
+    | "file"
+    | "communication"
+    | "productivity"
+    | "management"
+    | "tools"
+    | "navigation";
   shortcut?: string;
   action: () => void;
   keywords?: string[];
@@ -27,20 +48,20 @@ interface CommandPaletteProps {
   onRecentCommands?: () => void;
 }
 
-export function CommandPalette({ 
+export function CommandPalette({
   commands = [],
   onCommandExecute,
-  onRecentCommands 
+  onRecentCommands,
 }: CommandPaletteProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [recentCommands, setRecentCommands] = useState<string[]>([
-    'new-email',
-    'create-invoice',
-    'book-meeting',
-    'search-documents'
+    "new-email",
+    "create-invoice",
+    "book-meeting",
+    "search-documents",
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -48,226 +69,254 @@ export function CommandPalette({
   const defaultCommands: CommandItem[] = [
     // File Commands
     {
-      id: 'new-document',
-      title: 'Nyt dokument',
-      description: 'Opret et nyt dokument',
+      id: "new-document",
+      title: "Nyt dokument",
+      description: "Opret et nyt dokument",
       icon: FileText,
-      category: 'file',
-      shortcut: 'Ctrl+Shift+N',
-      keywords: ['dokument', 'fil', 'opret'],
-      action: () => onCommandExecute?.('new-document')
+      category: "file",
+      shortcut: "Ctrl+Shift+N",
+      keywords: ["dokument", "fil", "opret"],
+      action: () => onCommandExecute?.("new-document"),
     },
     {
-      id: 'open-document',
-      title: 'Åbn dokument',
-      description: 'Åbn eksisterende dokument',
+      id: "open-document",
+      title: "Åbn dokument",
+      description: "Åbn eksisterende dokument",
       icon: FileText,
-      category: 'file',
-      shortcut: 'Ctrl+O',
-      keywords: ['åbn', 'dokument', 'fil'],
-      action: () => onCommandExecute?.('open-document')
+      category: "file",
+      shortcut: "Ctrl+O",
+      keywords: ["åbn", "dokument", "fil"],
+      action: () => onCommandExecute?.("open-document"),
     },
     {
-      id: 'save-document',
-      title: 'Gem dokument',
-      description: 'Gem nuværende dokument',
+      id: "save-document",
+      title: "Gem dokument",
+      description: "Gem nuværende dokument",
       icon: FileText,
-      category: 'file',
-      shortcut: 'Ctrl+S',
-      keywords: ['gem', 'save', 'dokument'],
-      action: () => onCommandExecute?.('save-document')
+      category: "file",
+      shortcut: "Ctrl+S",
+      keywords: ["gem", "save", "dokument"],
+      action: () => onCommandExecute?.("save-document"),
     },
     {
-      id: 'download-file',
-      title: 'Download fil',
-      description: 'Download en fil fra systemet',
+      id: "download-file",
+      title: "Download fil",
+      description: "Download en fil fra systemet",
       icon: Download,
-      category: 'file',
-      shortcut: 'Ctrl+Shift+D',
-      keywords: ['download', 'hent', 'fil'],
-      action: () => onCommandExecute?.('download-file')
+      category: "file",
+      shortcut: "Ctrl+Shift+D",
+      keywords: ["download", "hent", "fil"],
+      action: () => onCommandExecute?.("download-file"),
     },
     {
-      id: 'upload-file',
-      title: 'Upload fil',
-      description: 'Upload en fil til systemet',
+      id: "upload-file",
+      title: "Upload fil",
+      description: "Upload en fil til systemet",
       icon: Upload,
-      category: 'file',
-      shortcut: 'Ctrl+Shift+U',
-      keywords: ['upload', 'send', 'fil'],
-      action: () => onCommandExecute?.('upload-file')
+      category: "file",
+      shortcut: "Ctrl+Shift+U",
+      keywords: ["upload", "send", "fil"],
+      action: () => onCommandExecute?.("upload-file"),
     },
 
     // Communication Commands
     {
-      id: 'new-email',
-      title: 'Ny email',
-      description: 'Skriv og send en ny email',
+      id: "new-email",
+      title: "Ny email",
+      description: "Skriv og send en ny email",
       icon: Mail,
-      category: 'communication',
-      shortcut: 'Ctrl+N',
-      keywords: ['email', 'mail', 'besked', 'send'],
-      action: () => onCommandExecute?.('new-email')
+      category: "communication",
+      shortcut: "Ctrl+N",
+      keywords: ["email", "mail", "besked", "send"],
+      action: () => onCommandExecute?.("new-email"),
     },
     {
-      id: 'reply-email',
-      title: 'Svar på email',
-      description: 'Svar på den valgte email',
+      id: "reply-email",
+      title: "Svar på email",
+      description: "Svar på den valgte email",
       icon: Mail,
-      category: 'communication',
-      shortcut: 'Ctrl+R',
-      keywords: ['svar', 'reply', 'email'],
-      action: () => onCommandExecute?.('reply-email')
+      category: "communication",
+      shortcut: "Ctrl+R",
+      keywords: ["svar", "reply", "email"],
+      action: () => onCommandExecute?.("reply-email"),
     },
     {
-      id: 'forward-email',
-      title: 'Videresend email',
-      description: 'Videresend den valgte email',
+      id: "forward-email",
+      title: "Videresend email",
+      description: "Videresend den valgte email",
       icon: Mail,
-      category: 'communication',
-      shortcut: 'Ctrl+Shift+F',
-      keywords: ['videresend', 'forward', 'email'],
-      action: () => onCommandExecute?.('forward-email')
+      category: "communication",
+      shortcut: "Ctrl+Shift+F",
+      keywords: ["videresend", "forward", "email"],
+      action: () => onCommandExecute?.("forward-email"),
     },
 
     // Productivity Commands
     {
-      id: 'book-meeting',
-      title: 'Book møde',
-      description: 'Planlæg et nyt møde',
+      id: "book-meeting",
+      title: "Book møde",
+      description: "Planlæg et nyt møde",
       icon: Calendar,
-      category: 'productivity',
-      shortcut: 'Ctrl+M',
-      keywords: ['møde', 'meeting', 'kalender', 'book'],
-      action: () => onCommandExecute?.('book-meeting')
+      category: "productivity",
+      shortcut: "Ctrl+M",
+      keywords: ["møde", "meeting", "kalender", "book"],
+      action: () => onCommandExecute?.("book-meeting"),
     },
     {
-      id: 'create-task',
-      title: 'Opret opgave',
-      description: 'Opret en ny opgave',
+      id: "create-task",
+      title: "Opret opgave",
+      description: "Opret en ny opgave",
       icon: Plus,
-      category: 'productivity',
-      shortcut: 'Ctrl+T',
-      keywords: ['opgave', 'task', 'opret'],
-      action: () => onCommandExecute?.('create-task')
+      category: "productivity",
+      shortcut: "Ctrl+T",
+      keywords: ["opgave", "task", "opret"],
+      action: () => onCommandExecute?.("create-task"),
     },
     {
-      id: 'start-timer',
-      title: 'Start timer',
-      description: 'Start en tidsregistrering',
+      id: "start-timer",
+      title: "Start timer",
+      description: "Start en tidsregistrering",
       icon: Zap,
-      category: 'productivity',
-      shortcut: 'Ctrl+Shift+T',
-      keywords: ['timer', 'tid', 'start'],
-      action: () => onCommandExecute?.('start-timer')
+      category: "productivity",
+      shortcut: "Ctrl+Shift+T",
+      keywords: ["timer", "tid", "start"],
+      action: () => onCommandExecute?.("start-timer"),
     },
 
     // Management Commands
     {
-      id: 'create-invoice',
-      title: 'Opret faktura',
-      description: 'Opret en ny faktura',
+      id: "create-invoice",
+      title: "Opret faktura",
+      description: "Opret en ny faktura",
       icon: FileText,
-      category: 'management',
-      shortcut: 'Ctrl+I',
-      keywords: ['faktura', 'invoice', 'opret'],
-      action: () => onCommandExecute?.('create-invoice')
+      category: "management",
+      shortcut: "Ctrl+I",
+      keywords: ["faktura", "invoice", "opret"],
+      action: () => onCommandExecute?.("create-invoice"),
     },
     {
-      id: 'add-user',
-      title: 'Tilføj bruger',
-      description: 'Inviter en ny bruger til workspace',
+      id: "add-user",
+      title: "Tilføj bruger",
+      description: "Inviter en ny bruger til workspace",
       icon: Users,
-      category: 'management',
-      shortcut: 'Ctrl+U',
-      keywords: ['bruger', 'user', 'inviter', 'tilføj'],
-      action: () => onCommandExecute?.('add-user')
+      category: "management",
+      shortcut: "Ctrl+U",
+      keywords: ["bruger", "user", "inviter", "tilføj"],
+      action: () => onCommandExecute?.("add-user"),
     },
     {
-      id: 'generate-report',
-      title: 'Generer rapport',
-      description: 'Generer en ny rapport',
+      id: "generate-report",
+      title: "Generer rapport",
+      description: "Generer en ny rapport",
       icon: FileText,
-      category: 'management',
-      shortcut: 'Ctrl+Shift+R',
-      keywords: ['rapport', 'report', 'generer'],
-      action: () => onCommandExecute?.('generate-report')
+      category: "management",
+      shortcut: "Ctrl+Shift+R",
+      keywords: ["rapport", "report", "generer"],
+      action: () => onCommandExecute?.("generate-report"),
     },
 
     // Tools Commands
     {
-      id: 'search',
-      title: 'Søg',
-      description: 'Søg i hele systemet',
+      id: "search",
+      title: "Søg",
+      description: "Søg i hele systemet",
       icon: Search,
-      category: 'tools',
-      shortcut: 'Ctrl+F',
-      keywords: ['søg', 'search', 'find'],
-      action: () => onCommandExecute?.('search')
+      category: "tools",
+      shortcut: "Ctrl+F",
+      keywords: ["søg", "search", "find"],
+      action: () => onCommandExecute?.("search"),
     },
     {
-      id: 'settings',
-      title: 'Indstillinger',
-      description: 'Åbn system indstillinger',
+      id: "settings",
+      title: "Indstillinger",
+      description: "Åbn system indstillinger",
       icon: Settings,
-      category: 'tools',
-      shortcut: 'Ctrl+,',
-      keywords: ['indstillinger', 'settings', 'konfiguration'],
-      action: () => onCommandExecute?.('settings')
+      category: "tools",
+      shortcut: "Ctrl+,",
+      keywords: ["indstillinger", "settings", "konfiguration"],
+      action: () => onCommandExecute?.("settings"),
     },
     {
-      id: 'delete-item',
-      title: 'Slet element',
-      description: 'Slet det valgte element',
+      id: "delete-item",
+      title: "Slet element",
+      description: "Slet det valgte element",
       icon: Trash2,
-      category: 'tools',
-      shortcut: 'Delete',
-      keywords: ['slet', 'delete', 'fjern'],
-      action: () => onCommandExecute?.('delete-item')
+      category: "tools",
+      shortcut: "Delete",
+      keywords: ["slet", "delete", "fjern"],
+      action: () => onCommandExecute?.("delete-item"),
     },
 
     // Navigation Commands
     {
-      id: 'go-to-dashboard',
-      title: 'Gå til dashboard',
-      description: 'Naviger til dashboard',
+      id: "go-to-dashboard",
+      title: "Gå til dashboard",
+      description: "Naviger til dashboard",
       icon: Command,
-      category: 'navigation',
-      shortcut: 'Ctrl+D',
-      keywords: ['dashboard', 'hjem', 'start'],
-      action: () => onCommandExecute?.('go-to-dashboard')
+      category: "navigation",
+      shortcut: "Ctrl+D",
+      keywords: ["dashboard", "hjem", "start"],
+      action: () => onCommandExecute?.("go-to-dashboard"),
     },
     {
-      id: 'go-to-inbox',
-      title: 'Gå til indbakke',
-      description: 'Naviger til email indbakke',
+      id: "go-to-inbox",
+      title: "Gå til indbakke",
+      description: "Naviger til email indbakke",
       icon: Mail,
-      category: 'navigation',
-      shortcut: 'Ctrl+Shift+I',
-      keywords: ['indbakke', 'inbox', 'emails'],
-      action: () => onCommandExecute?.('go-to-inbox')
-    }
+      category: "navigation",
+      shortcut: "Ctrl+Shift+I",
+      keywords: ["indbakke", "inbox", "emails"],
+      action: () => onCommandExecute?.("go-to-inbox"),
+    },
   ];
 
   const allCommands = commands.length > 0 ? commands : defaultCommands;
 
   const categories = [
-    { id: 'all', label: 'Alle', count: allCommands.length },
-    { id: 'file', label: 'Filer', count: allCommands.filter(c => c.category === 'file').length },
-    { id: 'communication', label: 'Kommunikation', count: allCommands.filter(c => c.category === 'communication').length },
-    { id: 'productivity', label: 'Produktivitet', count: allCommands.filter(c => c.category === 'productivity').length },
-    { id: 'management', label: 'Management', count: allCommands.filter(c => c.category === 'management').length },
-    { id: 'tools', label: 'Værktøjer', count: allCommands.filter(c => c.category === 'tools').length },
-    { id: 'navigation', label: 'Navigation', count: allCommands.filter(c => c.category === 'navigation').length }
+    { id: "all", label: "Alle", count: allCommands.length },
+    {
+      id: "file",
+      label: "Filer",
+      count: allCommands.filter(c => c.category === "file").length,
+    },
+    {
+      id: "communication",
+      label: "Kommunikation",
+      count: allCommands.filter(c => c.category === "communication").length,
+    },
+    {
+      id: "productivity",
+      label: "Produktivitet",
+      count: allCommands.filter(c => c.category === "productivity").length,
+    },
+    {
+      id: "management",
+      label: "Management",
+      count: allCommands.filter(c => c.category === "management").length,
+    },
+    {
+      id: "tools",
+      label: "Værktøjer",
+      count: allCommands.filter(c => c.category === "tools").length,
+    },
+    {
+      id: "navigation",
+      label: "Navigation",
+      count: allCommands.filter(c => c.category === "navigation").length,
+    },
   ];
 
   const filteredCommands = allCommands.filter(command => {
-    const matchesCategory = selectedCategory === 'all' || command.category === selectedCategory;
-    const matchesQuery = !query || 
+    const matchesCategory =
+      selectedCategory === "all" || command.category === selectedCategory;
+    const matchesQuery =
+      !query ||
       command.title.toLowerCase().includes(query.toLowerCase()) ||
       command.description.toLowerCase().includes(query.toLowerCase()) ||
-      command.keywords?.some(keyword => keyword.toLowerCase().includes(query.toLowerCase()));
-    
+      command.keywords?.some(keyword =>
+        keyword.toLowerCase().includes(query.toLowerCase())
+      );
+
     return matchesCategory && matchesQuery;
   });
 
@@ -277,21 +326,23 @@ export function CommandPalette({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
         setSelectedIndex(prev => (prev + 1) % filteredCommands.length);
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
-        setSelectedIndex(prev => (prev - 1 + filteredCommands.length) % filteredCommands.length);
+        setSelectedIndex(
+          prev => (prev - 1 + filteredCommands.length) % filteredCommands.length
+        );
         break;
-      case 'Enter':
+      case "Enter":
         e.preventDefault();
         if (filteredCommands[selectedIndex]) {
           executeCommand(filteredCommands[selectedIndex]);
         }
         break;
-      case 'Escape':
+      case "Escape":
         setIsOpen(false);
         setQuery("");
         break;
@@ -300,10 +351,12 @@ export function CommandPalette({
 
   const executeCommand = (command: CommandItem) => {
     command.action();
-    
+
     // Add to recent commands
-    setRecentCommands(prev => [command.id, ...prev.filter(id => id !== command.id)].slice(0, 5));
-    
+    setRecentCommands(prev =>
+      [command.id, ...prev.filter(id => id !== command.id)].slice(0, 5)
+    );
+
     // Close palette
     setIsOpen(false);
     setQuery("");
@@ -311,25 +364,39 @@ export function CommandPalette({
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'file': return 'bg-blue-500';
-      case 'communication': return 'bg-green-500';
-      case 'productivity': return 'bg-purple-500';
-      case 'management': return 'bg-orange-500';
-      case 'tools': return 'bg-gray-500';
-      case 'navigation': return 'bg-indigo-500';
-      default: return 'bg-gray-500';
+      case "file":
+        return "bg-blue-500";
+      case "communication":
+        return "bg-green-500";
+      case "productivity":
+        return "bg-purple-500";
+      case "management":
+        return "bg-orange-500";
+      case "tools":
+        return "bg-gray-500";
+      case "navigation":
+        return "bg-indigo-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
   const getCategoryLabel = (category: string) => {
     switch (category) {
-      case 'file': return 'Filer';
-      case 'communication': return 'Kommunikation';
-      case 'productivity': return 'Produktivitet';
-      case 'management': return 'Management';
-      case 'tools': return 'Værktøjer';
-      case 'navigation': return 'Navigation';
-      default: return category;
+      case "file":
+        return "Filer";
+      case "communication":
+        return "Kommunikation";
+      case "productivity":
+        return "Produktivitet";
+      case "management":
+        return "Management";
+      case "tools":
+        return "Værktøjer";
+      case "navigation":
+        return "Navigation";
+      default:
+        return category;
     }
   };
 
@@ -348,11 +415,15 @@ export function CommandPalette({
             </div>
             <div>
               <h4 className="font-semibold">Command Palette</h4>
-              <p className="text-xs text-muted-foreground">Kommando palette til hurtig adgang</p>
+              <p className="text-xs text-muted-foreground">
+                Kommando palette til hurtig adgang
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge className="bg-purple-500">{allCommands.length} kommandoer</Badge>
+            <Badge className="bg-purple-500">
+              {allCommands.length} kommandoer
+            </Badge>
             <Button size="sm" variant="ghost" onClick={onRecentCommands}>
               <Clock className="w-3 h-3" />
             </Button>
@@ -366,7 +437,7 @@ export function CommandPalette({
             <Input
               ref={inputRef}
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={e => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Skriv en kommando eller søg..."
               className="pl-9 pr-10 h-10"
@@ -381,9 +452,11 @@ export function CommandPalette({
         {/* Category Filter */}
         {isOpen && (
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground">Kategorier:</label>
+            <label className="text-xs font-medium text-muted-foreground">
+              Kategorier:
+            </label>
             <div className="flex flex-wrap gap-1">
-              {categories.map((category) => (
+              {categories.map(category => (
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
@@ -414,14 +487,14 @@ export function CommandPalette({
                 </Button>
               )}
             </div>
-            
+
             {filteredCommands.length > 0 ? (
               <div className="border rounded-lg bg-background max-h-64 overflow-y-auto">
                 {filteredCommands.map((command, index) => {
                   const Icon = command.icon;
                   const isRecent = recentCommands.includes(command.id);
                   const isSelected = index === selectedIndex;
-                  
+
                   return (
                     <button
                       key={command.id}
@@ -433,20 +506,29 @@ export function CommandPalette({
                           : "hover:bg-muted/50"
                       )}
                     >
-                      <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center text-white", getCategoryColor(command.category))}>
+                      <div
+                        className={cn(
+                          "w-8 h-8 rounded-lg flex items-center justify-center text-white",
+                          getCategoryColor(command.category)
+                        )}
+                      >
                         <Icon className="w-4 h-4" />
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-sm">{command.title}</span>
+                          <span className="font-medium text-sm">
+                            {command.title}
+                          </span>
                           {isRecent && (
                             <Badge variant="outline" className="text-xs">
                               Nylig
                             </Badge>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground mb-1">{command.description}</p>
+                        <p className="text-xs text-muted-foreground mb-1">
+                          {command.description}
+                        </p>
                         <div className="flex items-center gap-2">
                           <Badge className={getCategoryColor(command.category)}>
                             {getCategoryLabel(command.category)}
@@ -458,7 +540,7 @@ export function CommandPalette({
                           )}
                         </div>
                       </div>
-                      
+
                       {isSelected && (
                         <div className="w-2 h-2 bg-purple-500 rounded-full" />
                       )}
@@ -481,11 +563,11 @@ export function CommandPalette({
           <div className="space-y-2">
             <h5 className="text-sm font-semibold">Seneste kommandoer:</h5>
             <div className="space-y-1">
-              {recentCommands.slice(0, 3).map((commandId) => {
+              {recentCommands.slice(0, 3).map(commandId => {
                 const command = getRecentCommand(commandId);
                 if (!command) return null;
                 const Icon = command.icon;
-                
+
                 return (
                   <button
                     key={commandId}
@@ -511,10 +593,32 @@ export function CommandPalette({
             <div className="text-xs text-purple-700 dark:text-purple-400">
               <p className="font-semibold mb-1">Keyboard shortcuts:</p>
               <ul className="space-y-1">
-                <li>• <kbd className="px-1 py-0.5 bg-white rounded text-xs">Ctrl+K</kbd> Åbn kommando palette</li>
-                <li>• <kbd className="px-1 py-0.5 bg-white rounded text-xs">↑↓</kbd> Naviger kommandoer</li>
-                <li>• <kbd className="px-1 py-0.5 bg-white rounded text-xs">Enter</kbd> Udfør kommando</li>
-                <li>• <kbd className="px-1 py-0.5 bg-white rounded text-xs">Esc</kbd> Luk palette</li>
+                <li>
+                  •{" "}
+                  <kbd className="px-1 py-0.5 bg-white rounded text-xs">
+                    Ctrl+K
+                  </kbd>{" "}
+                  Åbn kommando palette
+                </li>
+                <li>
+                  •{" "}
+                  <kbd className="px-1 py-0.5 bg-white rounded text-xs">↑↓</kbd>{" "}
+                  Naviger kommandoer
+                </li>
+                <li>
+                  •{" "}
+                  <kbd className="px-1 py-0.5 bg-white rounded text-xs">
+                    Enter
+                  </kbd>{" "}
+                  Udfør kommando
+                </li>
+                <li>
+                  •{" "}
+                  <kbd className="px-1 py-0.5 bg-white rounded text-xs">
+                    Esc
+                  </kbd>{" "}
+                  Luk palette
+                </li>
               </ul>
             </div>
           </div>
@@ -522,7 +626,7 @@ export function CommandPalette({
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button 
+          <Button
             onClick={() => {
               setIsOpen(true);
               inputRef.current?.focus();
@@ -532,7 +636,11 @@ export function CommandPalette({
             <Command className="w-4 h-4 mr-2" />
             Åbn kommandoer
           </Button>
-          <Button onClick={onRecentCommands} variant="outline" className="flex-1">
+          <Button
+            onClick={onRecentCommands}
+            variant="outline"
+            className="flex-1"
+          >
             <Clock className="w-4 h-4 mr-2" />
             Seneste
           </Button>

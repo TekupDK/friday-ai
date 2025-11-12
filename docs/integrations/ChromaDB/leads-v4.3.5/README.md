@@ -24,16 +24,19 @@ The V4.3.5 Lead Data Pipeline uses **AI-enhanced parsing** to automatically extr
 ## 📚 Documentation Index
 
 ### **For Management**
+
 - [Executive Summary for RenDetalje](./EXECUTIVE-SUMMARY.md) - Business impact and ROI
 - [Business Insights Report](./BUSINESS-INSIGHTS.md) - Detailed customer analysis
 - [Implementation Log](./IMPLEMENTATION-LOG.md) - Complete development history
 
 ### **For Developers**
+
 - [Technical Guide](./TECHNICAL-GUIDE.md) - Implementation details
 - [API Reference](./API-REFERENCE.md) - Code examples and schemas
 - [Version History](./CHANGELOG.md) - Complete changelog v4.3.0 → v4.3.5
 
 ### **For Operations**
+
 - [User Guide](./USER-GUIDE.md) - How to use the system
 - [Troubleshooting](./TROUBLESHOOTING.md) - Common issues and fixes
 - [Data Quality Report](./DATA-QUALITY.md) - Coverage and accuracy metrics
@@ -78,6 +81,7 @@ curl http://localhost:8000/api/v1/collections/leads_v4_3_3/get
 ### **1. AI-Enhanced Calendar Parsing** 🤖
 
 Automatically extracts from event descriptions:
+
 - Customer info (name, email, phone, address, property size/type)
 - Service details (type, frequency, hours, price, workers)
 - Quality signals (customer type, complaints, special needs)
@@ -86,6 +90,7 @@ Automatically extracts from event descriptions:
 ### **2. Recurring Customer Detection** 🔄
 
 AI validates and improves frequency detection:
+
 - Detects missing bookings (#7 booking, but only 4 visible)
 - Identifies single-booking recurring customers
 - Validates calculated frequency against AI-parsed data
@@ -94,6 +99,7 @@ AI validates and improves frequency detection:
 ### **3. Quality Intelligence** ⚠️
 
 Auto-detection of:
+
 - Premium customers (28 found)
 - Problematic customers with complaints (4 found)
 - Special needs customers (20 found)
@@ -102,6 +108,7 @@ Auto-detection of:
 ### **4. Data Integration** 📥
 
 Combines multiple sources:
+
 - Gmail threads (537 collected)
 - Google Calendar events (218 with 100% AI parsing)
 - Billy invoices (100 collected)
@@ -112,6 +119,7 @@ Combines multiple sources:
 ## 📊 Results Overview
 
 ### **Dataset Metrics:**
+
 ```
 Total Leads:          231
 Active (Oct-Nov):     122 (52.8%)
@@ -121,6 +129,7 @@ Revenue Tracked:      224,132 kr
 ```
 
 ### **Recurring Distribution:**
+
 ```
 🟢 Weekly:      4 customers (17%)
 🟡 Biweekly:    7 customers (29%)
@@ -130,6 +139,7 @@ Revenue Tracked:      224,132 kr
 ```
 
 ### **Quality Insights:**
+
 ```
 🏆 Premium:       28 customers (18%)
 ⚠️ Problematic:   4 customers (3%)
@@ -143,15 +153,16 @@ Revenue Tracked:      224,132 kr
 
 ### **Immediate Opportunities:**
 
-| Action | Impact | Timeline |
-|--------|--------|----------|
-| Missing bookings recovery | 15-20k kr | Week 1-2 |
-| Problematic customer review | 8-10k kr saved | Week 1-2 |
-| Premium customer upsell | 30-40k kr/year | Week 3-4 |
-| Frequency optimization | 15-20k kr/year | Month 2 |
-| **TOTAL ANNUAL IMPACT** | **65-85k kr** | **3 months** |
+| Action                      | Impact         | Timeline     |
+| --------------------------- | -------------- | ------------ |
+| Missing bookings recovery   | 15-20k kr      | Week 1-2     |
+| Problematic customer review | 8-10k kr saved | Week 1-2     |
+| Premium customer upsell     | 30-40k kr/year | Week 3-4     |
+| Frequency optimization      | 15-20k kr/year | Month 2      |
+| **TOTAL ANNUAL IMPACT**     | **65-85k kr**  | **3 months** |
 
 ### **ROI:**
+
 ```
 Development Cost:  Included in AI subscription
 AI Model Cost:     $0 (FREE tier)
@@ -164,21 +175,25 @@ ROI:              ∞ (Zero cost implementation)
 ## 🔧 Technical Stack
 
 ### **AI Model:**
+
 - **Provider:** OpenRouter
 - **Model:** GLM-4.5-Air (FREE tier, 100% accuracy)
 - **Fallback:** Regex-based parsing
 - **Success Rate:** 100% (218/218 events)
 
 ### **Data Sources:**
+
 - Gmail API (Google Workspace)
 - Google Calendar API
 - Billy REST API
 
 ### **Storage:**
+
 - ChromaDB (vector database)
 - JSON files (backup/processing)
 
 ### **Technologies:**
+
 - TypeScript
 - Node.js
 - OpenRouter SDK
@@ -222,24 +237,28 @@ docs/integrations/ChromaDB/leads-v4.3.5/  # ← You are here
 ## 🎯 Use Cases
 
 ### **1. Sales Team**
+
 - Find recurring customers for retention campaigns
 - Identify premium customers for upselling
 - Detect at-risk customers before churn
 - Query: `customer.customerType === 'premium' && customer.isRecurring`
 
 ### **2. Operations**
+
 - Auto-detect quality issues
 - Flag payment problems
 - Track special requirements
 - Query: `customer.hasComplaints === true`
 
 ### **3. Management**
+
 - Revenue forecasting
 - Customer segmentation
 - Data quality monitoring
 - Business intelligence reporting
 
 ### **4. Development**
+
 - Semantic search for similar leads
 - AI-powered customer insights
 - Automated lead scoring
@@ -250,18 +269,21 @@ docs/integrations/ChromaDB/leads-v4.3.5/  # ← You are here
 ## 🚨 Known Issues & Limitations
 
 ### **Fixed in v4.3.5:**
+
 - ✅ Missing recurring customers (AI detection added)
 - ✅ Frequency miscalculations (AI validation added)
 - ✅ Data gaps (flagged for investigation)
 - ✅ Quality signals (auto-detection added)
 
 ### **Current Limitations:**
+
 - Calendar coverage: 66% (152/231 leads)
 - Billy coverage: 41% (95/231 leads)
 - Missing historical bookings for some customers
 - Manual review needed for problematic customers
 
 ### **Recommended Actions:**
+
 1. Investigate missing bookings (15-20k kr at stake)
 2. Improve calendar data collection
 3. Validate AI findings with historical records
@@ -272,11 +294,13 @@ docs/integrations/ChromaDB/leads-v4.3.5/  # ← You are here
 ## 📞 Support & Contact
 
 ### **Technical Issues:**
+
 - Check [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
 - Review [IMPLEMENTATION-LOG.md](./IMPLEMENTATION-LOG.md)
 - Contact: Development Team
 
 ### **Business Questions:**
+
 - Review [BUSINESS-INSIGHTS.md](./BUSINESS-INSIGHTS.md)
 - See [EXECUTIVE-SUMMARY.md](./EXECUTIVE-SUMMARY.md)
 - Contact: Project Manager
@@ -299,18 +323,21 @@ See [CHANGELOG.md](./CHANGELOG.md) for complete history.
 ## ✅ Next Steps
 
 ### **Immediate (Week 1-2):**
+
 1. Review [EXECUTIVE-SUMMARY.md](./EXECUTIVE-SUMMARY.md) with management
 2. Audit missing bookings flagged by AI
 3. Contact problematic customers
 4. Implement payment collection
 
 ### **Short-term (Month 1):**
+
 1. Launch premium customer program
 2. Re-engagement campaigns
 3. Frequency upsell outreach
 4. Quality monitoring automation
 
 ### **Long-term (Month 2-3):**
+
 1. Predictive booking system
 2. AI insights dashboard
 3. CRM/ERP integration

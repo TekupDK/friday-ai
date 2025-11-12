@@ -1,5 +1,12 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { Brain, Target, Calendar, DollarSign, Briefcase, BarChart3 } from "lucide-react";
+import {
+  Brain,
+  Target,
+  Calendar,
+  DollarSign,
+  Briefcase,
+  BarChart3,
+} from "lucide-react";
 
 interface WorkspaceSkeletonProps {
   type: "lead" | "booking" | "invoice" | "customer" | "dashboard";
@@ -8,21 +15,31 @@ interface WorkspaceSkeletonProps {
 export function WorkspaceSkeleton({ type }: WorkspaceSkeletonProps) {
   const getIcon = () => {
     switch (type) {
-      case "lead": return <Target className="w-5 h-5 text-muted-foreground" />;
-      case "booking": return <Calendar className="w-5 h-5 text-muted-foreground" />;
-      case "invoice": return <DollarSign className="w-5 h-5 text-muted-foreground" />;
-      case "customer": return <Briefcase className="w-5 h-5 text-muted-foreground" />;
-      case "dashboard": return <BarChart3 className="w-5 h-5 text-muted-foreground" />;
+      case "lead":
+        return <Target className="w-5 h-5 text-muted-foreground" />;
+      case "booking":
+        return <Calendar className="w-5 h-5 text-muted-foreground" />;
+      case "invoice":
+        return <DollarSign className="w-5 h-5 text-muted-foreground" />;
+      case "customer":
+        return <Briefcase className="w-5 h-5 text-muted-foreground" />;
+      case "dashboard":
+        return <BarChart3 className="w-5 h-5 text-muted-foreground" />;
     }
   };
 
   const getTitle = () => {
     switch (type) {
-      case "lead": return "Lead Analyzer";
-      case "booking": return "Booking Manager";
-      case "invoice": return "Invoice Tracker";
-      case "customer": return "Customer Profile";
-      case "dashboard": return "Business Dashboard";
+      case "lead":
+        return "Lead Analyzer";
+      case "booking":
+        return "Booking Manager";
+      case "invoice":
+        return "Invoice Tracker";
+      case "customer":
+        return "Customer Profile";
+      case "dashboard":
+        return "Business Dashboard";
     }
   };
 
@@ -69,7 +86,7 @@ export function WorkspaceSkeleton({ type }: WorkspaceSkeletonProps) {
 
         {/* Stats cards */}
         <div className="grid grid-cols-3 gap-4">
-          {[1, 2, 3].map((i) => (
+          {[1, 2, 3].map(i => (
             <div key={i} className="border rounded-lg p-3 bg-muted/5">
               <Skeleton className="h-4 w-16 mb-2" />
               <Skeleton className="h-6 w-12" />
@@ -81,7 +98,7 @@ export function WorkspaceSkeleton({ type }: WorkspaceSkeletonProps) {
         <div className="border rounded-lg p-4 bg-muted/5">
           <div className="space-y-2">
             <Skeleton className="h-4 w-20" />
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3].map(i => (
               <Skeleton key={i} className="h-8 w-full" />
             ))}
           </div>

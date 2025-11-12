@@ -1,14 +1,16 @@
-/**
- * Phase 10.2: Venstre Panel AI Assistant Design
- * 
- * Complete design specification for intelligent email list
- */
+/\*\*
+
+- Phase 10.2: Venstre Panel AI Assistant Design
+-
+- Complete design specification for intelligent email list
+  \*/
 
 # 🎯 **VENSTRE PANEL AI ASSISTANT - DESIGN SPECIFICATION**
 
 ## 📐 **VISUEL LAYOUT:**
 
-### **🔍 **TOP SECTION - SMART CONTROLS:**
+### **🔍 **TOP SECTION - SMART CONTROLS:\*\*
+
 ```typescript
 ┌─────────────────────────────────┐
 │ 🔍 [Search emails...] [⚙️] [📊] │
@@ -17,7 +19,8 @@
 ├─────────────────────────────────┤
 ```
 
-### **📊 **INTELLIGENCE SUMMARY:**
+### **📊 **INTELLIGENCE SUMMARY:\*\*
+
 ```typescript
 │ 📊 LEAD INTELLIGENCE TODAY:      │
 │ 🔥 Hot Leads: 12 (Priority)      │
@@ -28,7 +31,8 @@
 ├─────────────────────────────────┤
 ```
 
-### **📧 **ENHANCED EMAIL LIST:**
+### **📧 **ENHANCED EMAIL LIST:\*\*
+
 ```typescript
 │ 📧 SMART EMAIL LIST:             │
 │                                 │
@@ -59,15 +63,16 @@
 
 ## 🎨 **BADGE SYSTEM:**
 
-### **🏆 **LEAD SCORE BADGES:**
+### **🏆 **LEAD SCORE BADGES:\*\*
+
 ```typescript
-🔥 HOT LEADS (80-100): 
+🔥 HOT LEADS (80-100):
 - Background: 🔥 Red gradient
 - Priority: Top of list
 - Action: Immediate response
 
 💰 HIGH VALUE (60-79):
-- Background: 💰 Green gradient  
+- Background: 💰 Green gradient
 - Priority: High
 - Action: Same day response
 
@@ -82,7 +87,8 @@
 - Action: Batch processing
 ```
 
-### **🏷️ **SOURCE BADGES:**
+### **🏷️ **SOURCE BADGES:\*\*
+
 ```typescript
 💰 RENGØRING.NU:
 - Color: Green (high conversion)
@@ -105,7 +111,8 @@
 - Priority: Variable
 ```
 
-### **📍 **LOCATION BADGES:**
+### **📍 **LOCATION BADGES:\*\*
+
 ```typescript
 🏙️ AARHUS:
 - Icon: 📍
@@ -132,7 +139,8 @@
 
 ## 🤖 **AI FEATURES:**
 
-### **🧠 **INTELLIGENT SORTING:**
+### **🧠 **INTELLIGENT SORTING:\*\*
+
 ```typescript
 🎯 SORT ALGORITHMS:
 1. **Lead Score Priority:**
@@ -156,7 +164,8 @@
    - Quick wins op
 ```
 
-### **📊 **PREDICTIVE ANALYTICS:**
+### **📊 **PREDICTIVE ANALYTICS:\*\*
+
 ```typescript
 🎯 CONVERSION PREDICTION:
 - Email content analysis
@@ -177,25 +186,26 @@
 
 ## 🔧 **TECHNICAL IMPLEMENTATION:**
 
-### **📊 **DATA STRUCTURE:**
+### **📊 **DATA STRUCTURE:\*\*
+
 ```typescript
 interface EnhancedEmailItem {
   id: string;
   subject: string;
   from: string;
   date: Date;
-  
+
   // AI Intelligence
   leadScore: number; // 0-100
   source: LeadSource;
   estimatedValue: number;
-  urgency: 'high' | 'medium' | 'low';
-  
+  urgency: "high" | "medium" | "low";
+
   // Business Data
   jobType: JobType;
   location: string;
   confidence: number;
-  
+
   // Metadata
   isRead: boolean;
   isStarred: boolean;
@@ -204,7 +214,8 @@ interface EnhancedEmailItem {
 }
 ```
 
-### **🔄 **INTEGRATION FLOW:**
+### **🔄 **INTEGRATION FLOW:\*\*
+
 ```typescript
 🎯 EMAIL PROCESSING:
 1. New email arrives
@@ -229,7 +240,8 @@ interface EnhancedEmailItem {
 
 ## 🎯 **USER EXPERIENCE:**
 
-### **⚡ **WORKFLOW OPTIMIZATION:**
+### **⚡ **WORKFLOW OPTIMIZATION:\*\*
+
 ```typescript
 🚀 BEFORE:
 - Manual email scanning
@@ -246,7 +258,8 @@ interface EnhancedEmailItem {
 - Better time allocation
 ```
 
-### **🎯 **BENEFITS:**
+### **🎯 **BENEFITS:\*\*
+
 ```typescript
 💰 TIME SAVINGS:
 - Immediate identification of hot leads
@@ -271,7 +284,8 @@ interface EnhancedEmailItem {
 
 ## 🏆 **SUCCESS METRICS:**
 
-### **📈 **KPIs TO TRACK:**
+### **📈 **KPIs TO TRACK:\*\*
+
 ```typescript
 🎯 EFFICIENCY METRICS:
 - Time to identify hot leads

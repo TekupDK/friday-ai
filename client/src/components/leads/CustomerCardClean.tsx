@@ -1,22 +1,34 @@
 /**
- * Customer Card V5.1 - Clean Design 
+ * Customer Card V5.1 - Clean Design
  * Matches Friday AI design system: simple badges, muted backgrounds, clean layout
  */
 
 import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
+import {
+  Mail,
+  Phone,
+  MapPin,
   Calendar as CalendarIcon,
   Receipt,
   TrendingUp,
@@ -27,7 +39,7 @@ import {
   Star,
   Users,
   Send,
-  Building
+  Building,
 } from "lucide-react";
 
 interface CustomerCardProps {
@@ -100,46 +112,59 @@ interface CustomerCardProps {
 
 // Simple status colors matching your design system
 const statusColors: Record<string, string> = {
-  new: 'bg-purple-500/10 text-purple-700 dark:text-purple-400',
-  contacted: 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-  qualified: 'bg-green-500/10 text-green-700 dark:text-green-400',
-  won: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400',
-  lost: 'bg-red-500/10 text-red-700 dark:text-red-400',
-  calendar: 'bg-orange-500/10 text-orange-700 dark:text-orange-400',
-  paid: 'bg-green-500/10 text-green-700 dark:text-green-400',
+  new: "bg-purple-500/10 text-purple-700 dark:text-purple-400",
+  contacted: "bg-blue-500/10 text-blue-700 dark:text-blue-400",
+  qualified: "bg-green-500/10 text-green-700 dark:text-green-400",
+  won: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  lost: "bg-red-500/10 text-red-700 dark:text-red-400",
+  calendar: "bg-orange-500/10 text-orange-700 dark:text-orange-400",
+  paid: "bg-green-500/10 text-green-700 dark:text-green-400",
 };
 
 const priorityColors: Record<string, string> = {
-  hot: 'bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20',
-  warm: 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20',
-  cold: 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20',
+  hot: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20",
+  warm: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20",
+  cold: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20",
 };
 
-export function CustomerCard({ lead, similarLeads, winProbability, recommendations }: CustomerCardProps) {
+export function CustomerCard({
+  lead,
+  similarLeads,
+  winProbability,
+  recommendations,
+}: CustomerCardProps) {
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
-  
-  const initials = lead.customerName.split(' ').map(n => n[0]).join('').toUpperCase();
+
+  const initials = lead.customerName
+    .split(" ")
+    .map(n => n[0])
+    .join("")
+    .toUpperCase();
   const quality = lead.calculated?.quality.dataCompleteness || 0;
-  
+
   // Determine priority based on win probability
-  const priority = winProbability && winProbability >= 70 ? 'hot' : 
-                   winProbability && winProbability >= 40 ? 'warm' : 'cold';
+  const priority =
+    winProbability && winProbability >= 70
+      ? "hot"
+      : winProbability && winProbability >= 40
+        ? "warm"
+        : "cold";
 
   const formatCurrency = (amount?: number) => {
-    if (!amount) return '-';
-    return new Intl.NumberFormat('da-DK', { 
-      style: 'currency', 
-      currency: 'DKK',
-      maximumFractionDigits: 0 
+    if (!amount) return "-";
+    return new Intl.NumberFormat("da-DK", {
+      style: "currency",
+      currency: "DKK",
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
   const formatDate = (dateStr?: string) => {
-    if (!dateStr) return '-';
-    return new Date(dateStr).toLocaleDateString('da-DK', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+    if (!dateStr) return "-";
+    return new Date(dateStr).toLocaleDateString("da-DK", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
   };
 
@@ -165,14 +190,16 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
           </div>
 
           <div className="flex items-center gap-2">
-            <Badge className={cn(statusColors[lead.pipeline.status] || 'bg-muted')}>
+            <Badge
+              className={cn(statusColors[lead.pipeline.status] || "bg-muted")}
+            >
               {lead.pipeline.stage}
             </Badge>
             {winProbability && (
               <Badge className={cn(priorityColors[priority])} variant="outline">
-                {priority === 'hot' && '🔥'}
-                {priority === 'warm' && '📞'}
-                {priority === 'cold' && '📧'}
+                {priority === "hot" && "🔥"}
+                {priority === "warm" && "📞"}
+                {priority === "cold" && "📧"}
                 {Math.round(winProbability)}%
               </Badge>
             )}
@@ -247,7 +274,7 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
           <TabsContent value="overview" className="space-y-4 mt-4">
             {/* Gmail Lead Source - Clickable */}
             {lead.gmail && (
-              <div 
+              <div
                 onClick={() => setEmailDialogOpen(true)}
                 className="p-3 rounded-lg bg-muted/50 cursor-pointer hover:bg-muted transition-colors border border-transparent hover:border-border"
               >
@@ -256,11 +283,11 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
                     <Mail className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm font-medium">Email Lead</span>
                   </div>
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
+                  <Button
+                    size="sm"
+                    variant="ghost"
                     className="h-6 text-xs"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation();
                       setEmailDialogOpen(true);
                     }}
@@ -269,11 +296,21 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
                   </Button>
                 </div>
                 <div className="space-y-1 text-sm">
-                  <div><strong>Fra:</strong> {lead.gmail.leadSource}</div>
-                  <div><strong>Dato:</strong> {formatDate(lead.gmail.date)}</div>
-                  {lead.gmail.subject && <div><strong>Emne:</strong> {lead.gmail.subject}</div>}
+                  <div>
+                    <strong>Fra:</strong> {lead.gmail.leadSource}
+                  </div>
+                  <div>
+                    <strong>Dato:</strong> {formatDate(lead.gmail.date)}
+                  </div>
+                  {lead.gmail.subject && (
+                    <div>
+                      <strong>Emne:</strong> {lead.gmail.subject}
+                    </div>
+                  )}
                   {lead.gmail.snippet && (
-                    <div className="text-xs text-muted-foreground mt-2 line-clamp-2">{lead.gmail.snippet}</div>
+                    <div className="text-xs text-muted-foreground mt-2 line-clamp-2">
+                      {lead.gmail.snippet}
+                    </div>
                   )}
                 </div>
               </div>
@@ -287,13 +324,27 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
                   <span className="text-sm font-medium">Calendar Booking</span>
                 </div>
                 <div className="space-y-1 text-sm">
-                  {lead.calendar.eventTitle && <div><strong>Titel:</strong> {lead.calendar.eventTitle}</div>}
-                  {lead.calendar.startTime && (
-                    <div><strong>Tid:</strong> {formatDate(lead.calendar.startTime)}</div>
+                  {lead.calendar.eventTitle && (
+                    <div>
+                      <strong>Titel:</strong> {lead.calendar.eventTitle}
+                    </div>
                   )}
-                  {lead.calendar.serviceType && <div><strong>Service:</strong> {lead.calendar.serviceType}</div>}
+                  {lead.calendar.startTime && (
+                    <div>
+                      <strong>Tid:</strong>{" "}
+                      {formatDate(lead.calendar.startTime)}
+                    </div>
+                  )}
+                  {lead.calendar.serviceType && (
+                    <div>
+                      <strong>Service:</strong> {lead.calendar.serviceType}
+                    </div>
+                  )}
                   {lead.calendar.price && (
-                    <div><strong>Pris:</strong> {formatCurrency(lead.calendar.price)}</div>
+                    <div>
+                      <strong>Pris:</strong>{" "}
+                      {formatCurrency(lead.calendar.price)}
+                    </div>
                   )}
                 </div>
               </div>
@@ -312,10 +363,17 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
                   )}
                 </div>
                 <div className="space-y-1 text-sm">
-                  <div><strong>Nr:</strong> {lead.billy.invoiceNo || '-'}</div>
-                  <div><strong>Amount:</strong> {formatCurrency(lead.billy.grossAmount)}</div>
+                  <div>
+                    <strong>Nr:</strong> {lead.billy.invoiceNo || "-"}
+                  </div>
+                  <div>
+                    <strong>Amount:</strong>{" "}
+                    {formatCurrency(lead.billy.grossAmount)}
+                  </div>
                   {lead.billy.paidDate && (
-                    <div><strong>Betalt:</strong> {formatDate(lead.billy.paidDate)}</div>
+                    <div>
+                      <strong>Betalt:</strong> {formatDate(lead.billy.paidDate)}
+                    </div>
                   )}
                 </div>
               </div>
@@ -325,26 +383,40 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
           <TabsContent value="financial" className="space-y-3 mt-4">
             <div className="grid gap-3">
               <div className="flex items-center justify-between p-3 rounded-lg border">
-                <span className="text-sm text-muted-foreground">Total Revenue</span>
-                <span className="font-semibold">{formatCurrency(lead.calculated?.financial.invoicedPrice)}</span>
+                <span className="text-sm text-muted-foreground">
+                  Total Revenue
+                </span>
+                <span className="font-semibold">
+                  {formatCurrency(lead.calculated?.financial.invoicedPrice)}
+                </span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg border">
-                <span className="text-sm text-muted-foreground">Net Profit</span>
+                <span className="text-sm text-muted-foreground">
+                  Net Profit
+                </span>
                 <span className="font-semibold text-green-600 dark:text-green-400">
                   {formatCurrency(lead.calculated?.financial.netProfit)}
                 </span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg border">
-                <span className="text-sm text-muted-foreground">Profit Margin</span>
-                <span className="font-semibold">{lead.calculated?.financial.netMargin.toFixed(1)}%</span>
+                <span className="text-sm text-muted-foreground">
+                  Profit Margin
+                </span>
+                <span className="font-semibold">
+                  {lead.calculated?.financial.netMargin.toFixed(1)}%
+                </span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg border">
                 <span className="text-sm text-muted-foreground">Lead Cost</span>
-                <span className="font-semibold">{formatCurrency(lead.calculated?.financial.leadCost)}</span>
+                <span className="font-semibold">
+                  {formatCurrency(lead.calculated?.financial.leadCost)}
+                </span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg border">
                 <span className="text-sm text-muted-foreground">ROI</span>
-                <span className="font-semibold">{lead.calculated?.financial.roi.toFixed(0)}%</span>
+                <span className="font-semibold">
+                  {lead.calculated?.financial.roi.toFixed(0)}%
+                </span>
               </div>
             </div>
 
@@ -352,23 +424,35 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
               <>
                 <Separator />
                 <div className="space-y-2">
-                  <div className="text-sm font-medium">Customer Lifetime Value</div>
+                  <div className="text-sm font-medium">
+                    Customer Lifetime Value
+                  </div>
                   <div className="grid gap-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">LTV</span>
-                      <span className="font-medium">{formatCurrency(lead.customer.lifetimeValue)}</span>
+                      <span className="font-medium">
+                        {formatCurrency(lead.customer.lifetimeValue)}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Total Bookings</span>
-                      <span className="font-medium">{lead.customer.totalBookings}</span>
+                      <span className="text-muted-foreground">
+                        Total Bookings
+                      </span>
+                      <span className="font-medium">
+                        {lead.customer.totalBookings}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Avg Booking</span>
-                      <span className="font-medium">{formatCurrency(lead.customer.avgBookingValue)}</span>
+                      <span className="font-medium">
+                        {formatCurrency(lead.customer.avgBookingValue)}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Repeat Rate</span>
-                      <span className="font-medium">{lead.customer.repeatRate.toFixed(1)}%</span>
+                      <span className="font-medium">
+                        {lead.customer.repeatRate.toFixed(1)}%
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -414,14 +498,19 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
                     <Target className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm font-medium">Win Probability</span>
                   </div>
-                  <span className="text-2xl font-bold">{Math.round(winProbability)}%</span>
+                  <span className="text-2xl font-bold">
+                    {Math.round(winProbability)}%
+                  </span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2">
-                  <div 
+                  <div
                     className={cn(
                       "h-2 rounded-full transition-all",
-                      winProbability >= 70 ? "bg-green-500" :
-                      winProbability >= 40 ? "bg-orange-500" : "bg-blue-500"
+                      winProbability >= 70
+                        ? "bg-green-500"
+                        : winProbability >= 40
+                          ? "bg-orange-500"
+                          : "bg-blue-500"
                     )}
                     style={{ width: `${winProbability}%` }}
                   />
@@ -435,7 +524,10 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
                 <div className="text-sm font-medium mb-2">Recommendations</div>
                 <div className="space-y-2">
                   {recommendations.map((rec, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm p-2 rounded bg-muted/30">
+                    <div
+                      key={i}
+                      className="flex items-start gap-2 text-sm p-2 rounded bg-muted/30"
+                    >
                       <CheckCircle2 className="w-4 h-4 mt-0.5 text-green-500" />
                       <span>{rec}</span>
                     </div>
@@ -447,24 +539,39 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
             {/* Similar Customers */}
             {similarLeads && similarLeads.length > 0 && (
               <div>
-                <div className="text-sm font-medium mb-2">Similar Customers</div>
+                <div className="text-sm font-medium mb-2">
+                  Similar Customers
+                </div>
                 <div className="space-y-2">
-                  {similarLeads.map((similar) => (
-                    <div key={similar.id} className="flex items-center justify-between p-2 rounded border hover:bg-accent/50 transition-colors">
+                  {similarLeads.map(similar => (
+                    <div
+                      key={similar.id}
+                      className="flex items-center justify-between p-2 rounded border hover:bg-accent/50 transition-colors"
+                    >
                       <div className="flex items-center gap-2">
                         <Avatar className="h-8 w-8">
                           <AvatarFallback className="text-xs">
-                            {similar.customerName.split(' ').map(n => n[0]).join('')}
+                            {similar.customerName
+                              .split(" ")
+                              .map(n => n[0])
+                              .join("")}
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <div className="text-sm font-medium">{similar.customerName}</div>
+                          <div className="text-sm font-medium">
+                            {similar.customerName}
+                          </div>
                           <div className="text-xs text-muted-foreground">
                             {Math.round(similar.similarity)}% match
                           </div>
                         </div>
                       </div>
-                      <Badge className={cn(statusColors[similar.status] || 'bg-muted')} variant="outline">
+                      <Badge
+                        className={cn(
+                          statusColors[similar.status] || "bg-muted"
+                        )}
+                        variant="outline"
+                      >
                         {similar.status}
                       </Badge>
                     </div>
@@ -507,10 +614,10 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
               Email Tråd
             </DialogTitle>
             <DialogDescription>
-              {lead.gmail?.subject || 'Email korrespondance'}
+              {lead.gmail?.subject || "Email korrespondance"}
             </DialogDescription>
           </DialogHeader>
-          
+
           <ScrollArea className="h-[60vh] pr-4">
             <div className="space-y-4">
               {/* Email Header */}
@@ -539,10 +646,14 @@ export function CustomerCard({ lead, similarLeads, winProbability, recommendatio
               {/* Email Body */}
               <div className="space-y-4">
                 <div>
-                  <div className="text-xs text-muted-foreground mb-2">Besked</div>
+                  <div className="text-xs text-muted-foreground mb-2">
+                    Besked
+                  </div>
                   <div className="p-4 rounded-lg border bg-card">
                     <div className="text-sm whitespace-pre-wrap">
-                      {lead.gmail?.body || lead.gmail?.snippet || 'Ingen indhold tilgængeligt'}
+                      {lead.gmail?.body ||
+                        lead.gmail?.snippet ||
+                        "Ingen indhold tilgængeligt"}
                     </div>
                   </div>
                 </div>

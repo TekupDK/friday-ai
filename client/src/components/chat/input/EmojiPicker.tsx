@@ -5,18 +5,145 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { Smile, Search } from "lucide-react";
 
 const EMOJI_CATEGORIES = {
-  smileys: ['😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '😚', '😙'],
-  gestures: ['👋', '🤚', '🖐', '✋', '🖖', '👌', '🤌', '🤏', '✌', '🤞', '🤟', '🤘', '🤙', '👈', '👉', '👆', '🖕', '👇', '☝', '👍'],
-  hearts: ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔', '❤️‍🔥', '❤️‍🩹', '💕', '💞', '💓', '💗', '💖', '💘', '💝'],
-  celebration: ['🎉', '🎊', '🎈', '🎁', '🎀', '🏆', '🥇', '🥈', '🥉', '⭐', '🌟', '✨', '💫', '🔥', '💯', '✅', '☑️', '✔️'],
-  objects: ['💼', '📁', '📂', '📅', '📆', '🗓', '📊', '📈', '📉', '🗂', '📋', '📌', '📍', '📎', '🖇', '📏', '📐', '✂️', '🗃', '🗄'],
-  symbols: ['⚠️', '🚫', '✅', '❌', '⭕', '🔴', '🟠', '🟡', '🟢', '🔵', '🟣', '⚪', '⚫', '🟤', '💬', '💭', '🗯', '💡', '🔔', '🔕']
+  smileys: [
+    "😀",
+    "😃",
+    "😄",
+    "😁",
+    "😆",
+    "😅",
+    "🤣",
+    "😂",
+    "🙂",
+    "🙃",
+    "😉",
+    "😊",
+    "😇",
+    "🥰",
+    "😍",
+    "🤩",
+    "😘",
+    "😗",
+    "😚",
+    "😙",
+  ],
+  gestures: [
+    "👋",
+    "🤚",
+    "🖐",
+    "✋",
+    "🖖",
+    "👌",
+    "🤌",
+    "🤏",
+    "✌",
+    "🤞",
+    "🤟",
+    "🤘",
+    "🤙",
+    "👈",
+    "👉",
+    "👆",
+    "🖕",
+    "👇",
+    "☝",
+    "👍",
+  ],
+  hearts: [
+    "❤️",
+    "🧡",
+    "💛",
+    "💚",
+    "💙",
+    "💜",
+    "🖤",
+    "🤍",
+    "🤎",
+    "💔",
+    "❤️‍🔥",
+    "❤️‍🩹",
+    "💕",
+    "💞",
+    "💓",
+    "💗",
+    "💖",
+    "💘",
+    "💝",
+  ],
+  celebration: [
+    "🎉",
+    "🎊",
+    "🎈",
+    "🎁",
+    "🎀",
+    "🏆",
+    "🥇",
+    "🥈",
+    "🥉",
+    "⭐",
+    "🌟",
+    "✨",
+    "💫",
+    "🔥",
+    "💯",
+    "✅",
+    "☑️",
+    "✔️",
+  ],
+  objects: [
+    "💼",
+    "📁",
+    "📂",
+    "📅",
+    "📆",
+    "🗓",
+    "📊",
+    "📈",
+    "📉",
+    "🗂",
+    "📋",
+    "📌",
+    "📍",
+    "📎",
+    "🖇",
+    "📏",
+    "📐",
+    "✂️",
+    "🗃",
+    "🗄",
+  ],
+  symbols: [
+    "⚠️",
+    "🚫",
+    "✅",
+    "❌",
+    "⭕",
+    "🔴",
+    "🟠",
+    "🟡",
+    "🟢",
+    "🔵",
+    "🟣",
+    "⚪",
+    "⚫",
+    "🟤",
+    "💬",
+    "💭",
+    "🗯",
+    "💡",
+    "🔔",
+    "🔕",
+  ],
 };
 
 interface EmojiPickerProps {
@@ -28,8 +155,10 @@ export function EmojiPicker({ onSelect, compact = false }: EmojiPickerProps) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
 
-  const filteredEmojis = search 
-    ? Object.values(EMOJI_CATEGORIES).flat().filter(e => e.includes(search))
+  const filteredEmojis = search
+    ? Object.values(EMOJI_CATEGORIES)
+        .flat()
+        .filter(e => e.includes(search))
     : null;
 
   return (
@@ -45,7 +174,7 @@ export function EmojiPicker({ onSelect, compact = false }: EmojiPickerProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={e => setSearch(e.target.value)}
             placeholder="Søg emoji..."
             className="pl-9 h-9"
           />
@@ -70,12 +199,24 @@ export function EmojiPicker({ onSelect, compact = false }: EmojiPickerProps) {
         ) : (
           <Tabs defaultValue="smileys" className="w-full">
             <TabsList className="grid grid-cols-6 w-full">
-              <TabsTrigger value="smileys" className="text-lg">😊</TabsTrigger>
-              <TabsTrigger value="gestures" className="text-lg">👋</TabsTrigger>
-              <TabsTrigger value="hearts" className="text-lg">❤️</TabsTrigger>
-              <TabsTrigger value="celebration" className="text-lg">🎉</TabsTrigger>
-              <TabsTrigger value="objects" className="text-lg">📋</TabsTrigger>
-              <TabsTrigger value="symbols" className="text-lg">⭐</TabsTrigger>
+              <TabsTrigger value="smileys" className="text-lg">
+                😊
+              </TabsTrigger>
+              <TabsTrigger value="gestures" className="text-lg">
+                👋
+              </TabsTrigger>
+              <TabsTrigger value="hearts" className="text-lg">
+                ❤️
+              </TabsTrigger>
+              <TabsTrigger value="celebration" className="text-lg">
+                🎉
+              </TabsTrigger>
+              <TabsTrigger value="objects" className="text-lg">
+                📋
+              </TabsTrigger>
+              <TabsTrigger value="symbols" className="text-lg">
+                ⭐
+              </TabsTrigger>
             </TabsList>
 
             {Object.entries(EMOJI_CATEGORIES).map(([key, emojis]) => (

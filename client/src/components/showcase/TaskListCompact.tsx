@@ -8,52 +8,52 @@ interface Task {
   id: string;
   title: string;
   dueDate?: string;
-  priority: 'low' | 'medium' | 'high';
+  priority: "low" | "medium" | "high";
   completed: boolean;
   category?: string;
 }
 
 const tasks: Task[] = [
   {
-    id: '1',
-    title: 'Hvad kan jeg hjælpe med?',
-    category: 'Chat Suggestion',
-    priority: 'low',
-    completed: false
+    id: "1",
+    title: "Hvad kan jeg hjælpe med?",
+    category: "Chat Suggestion",
+    priority: "low",
+    completed: false,
   },
   {
-    id: '2',
-    title: 'Tjek min kalender i dag',
-    dueDate: 'I dag',
-    priority: 'medium',
-    completed: false
+    id: "2",
+    title: "Tjek min kalender i dag",
+    dueDate: "I dag",
+    priority: "medium",
+    completed: false,
   },
   {
-    id: '3',
-    title: 'Vis ubetalte fakturaer',
-    dueDate: 'I dag',
-    priority: 'high',
-    completed: false
+    id: "3",
+    title: "Vis ubetalte fakturaer",
+    dueDate: "I dag",
+    priority: "high",
+    completed: false,
   },
   {
-    id: '4',
-    title: 'Find nye leads',
-    priority: 'medium',
-    completed: false
+    id: "4",
+    title: "Find nye leads",
+    priority: "medium",
+    completed: false,
   },
   {
-    id: '5',
-    title: 'Hvad kan Friday?',
-    category: 'Info',
-    priority: 'low',
-    completed: true
-  }
+    id: "5",
+    title: "Hvad kan Friday?",
+    category: "Info",
+    priority: "low",
+    completed: true,
+  },
 ];
 
 const priorityConfig = {
-  low: { color: 'text-gray-500', bg: 'bg-gray-500/10' },
-  medium: { color: 'text-orange-500', bg: 'bg-orange-500/10' },
-  high: { color: 'text-red-500', bg: 'bg-red-500/10' }
+  low: { color: "text-gray-500", bg: "bg-gray-500/10" },
+  medium: { color: "text-orange-500", bg: "bg-orange-500/10" },
+  high: { color: "text-red-500", bg: "bg-red-500/10" },
 };
 
 export function TaskListCompact() {
@@ -67,10 +67,10 @@ export function TaskListCompact() {
           </Badge>
         </CardTitle>
       </CardHeader>
-      
+
       <CardContent>
         <div className="space-y-2">
-          {tasks.map((task) => (
+          {tasks.map(task => (
             <div
               key={task.id}
               className={cn(
@@ -79,21 +79,20 @@ export function TaskListCompact() {
                 task.completed && "opacity-50"
               )}
             >
-              <Checkbox 
-                checked={task.completed}
-                className="mt-0.5"
-              />
-              
+              <Checkbox checked={task.completed} className="mt-0.5" />
+
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className={cn(
-                    "text-sm font-medium",
-                    task.completed && "line-through text-muted-foreground"
-                  )}>
+                  <span
+                    className={cn(
+                      "text-sm font-medium",
+                      task.completed && "line-through text-muted-foreground"
+                    )}
+                  >
                     {task.title}
                   </span>
                 </div>
-                
+
                 <div className="flex items-center gap-2 text-xs">
                   {task.dueDate && (
                     <div className="flex items-center gap-1 text-muted-foreground">
@@ -109,14 +108,18 @@ export function TaskListCompact() {
                 </div>
               </div>
 
-              <div className={cn(
-                "w-2 h-2 rounded-full flex-shrink-0 mt-2",
-                priorityConfig[task.priority].bg
-              )}>
-                <div className={cn(
-                  "w-full h-full rounded-full",
-                  priorityConfig[task.priority].color.replace('text-', 'bg-')
-                )} />
+              <div
+                className={cn(
+                  "w-2 h-2 rounded-full flex-shrink-0 mt-2",
+                  priorityConfig[task.priority].bg
+                )}
+              >
+                <div
+                  className={cn(
+                    "w-full h-full rounded-full",
+                    priorityConfig[task.priority].color.replace("text-", "bg-")
+                  )}
+                />
               </div>
             </div>
           ))}

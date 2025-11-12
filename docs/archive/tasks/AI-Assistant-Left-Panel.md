@@ -55,6 +55,7 @@
 ## LLM Context Schema (ChatPanel)
 
 Sent with each message (cleaned of `undefined` and empty arrays):
+
 - `page`: "email-tab" when path includes `/inbox`.
 - `selectedThreads`: string[] from `EmailContext.state.selectedThreads`.
 - `emailFolder`: `inbox | sent | archive | starred`.
@@ -132,6 +133,7 @@ See also: `SHORTWAVE_CONTEXT_FEATURE.md` for intent and tests.
 ## Task Status: ✅ COMPLETED
 
 All major features for left panel (AI Assistant) are implemented and tested:
+
 - Layout integration with 3-panel design
 - Chat functionality with LLM integration and rich context
 - Stop streaming capability

@@ -2,7 +2,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { Mail, Flame, Clock, DollarSign, CheckCircle, Circle } from "lucide-react";
+import {
+  Mail,
+  Flame,
+  Clock,
+  DollarSign,
+  CheckCircle,
+  Circle,
+} from "lucide-react";
 
 interface SmartSplit {
   id: string;
@@ -15,41 +22,41 @@ interface SmartSplit {
 
 const smartSplits: SmartSplit[] = [
   {
-    id: 'all',
-    name: 'Alle Emails',
+    id: "all",
+    name: "Alle Emails",
     icon: Mail,
-    color: 'text-blue-500',
+    color: "text-blue-500",
     count: 20,
-    active: true
+    active: true,
   },
   {
-    id: 'hot-leads',
-    name: 'Hot Leads',
+    id: "hot-leads",
+    name: "Hot Leads",
     icon: Flame,
-    color: 'text-red-500',
-    count: 0
+    color: "text-red-500",
+    count: 0,
   },
   {
-    id: 'waiting',
-    name: 'Venter på Svar',
+    id: "waiting",
+    name: "Venter på Svar",
     icon: Clock,
-    color: 'text-yellow-500',
-    count: 0
+    color: "text-yellow-500",
+    count: 0,
   },
   {
-    id: 'finance',
-    name: 'Finance',
+    id: "finance",
+    name: "Finance",
     icon: DollarSign,
-    color: 'text-green-500',
-    count: 0
+    color: "text-green-500",
+    count: 0,
   },
   {
-    id: 'completed',
-    name: 'Afsluttet',
+    id: "completed",
+    name: "Afsluttet",
     icon: CheckCircle,
-    color: 'text-gray-500',
-    count: 0
-  }
+    color: "text-gray-500",
+    count: 0,
+  },
 ];
 
 export function SmartSplitsDemo() {
@@ -61,40 +68,44 @@ export function SmartSplitsDemo() {
           AI-powered email kategorisering
         </p>
       </div>
-      
+
       <ScrollArea className="h-[300px]">
         <div className="space-y-1">
-          {smartSplits.map((split) => {
+          {smartSplits.map(split => {
             const Icon = split.icon;
-            
+
             return (
               <button
                 key={split.id}
                 className={cn(
                   "w-full flex items-center justify-between p-3 rounded-lg transition-all",
                   "hover:bg-accent/50",
-                  split.active 
-                    ? "bg-primary/10 border border-primary/20" 
+                  split.active
+                    ? "bg-primary/10 border border-primary/20"
                     : "border border-transparent"
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center",
-                    split.active ? "bg-primary/20" : "bg-muted"
-                  )}>
+                  <div
+                    className={cn(
+                      "w-8 h-8 rounded-lg flex items-center justify-center",
+                      split.active ? "bg-primary/20" : "bg-muted"
+                    )}
+                  >
                     <Icon className={cn("w-4 h-4", split.color)} />
                   </div>
-                  
-                  <span className={cn(
-                    "text-sm font-medium",
-                    split.active && "text-primary"
-                  )}>
+
+                  <span
+                    className={cn(
+                      "text-sm font-medium",
+                      split.active && "text-primary"
+                    )}
+                  >
                     {split.name}
                   </span>
                 </div>
-                
-                <Badge 
+
+                <Badge
                   variant={split.active ? "default" : "secondary"}
                   className="rounded-full min-w-[32px] justify-center"
                 >

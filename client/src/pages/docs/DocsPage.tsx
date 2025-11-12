@@ -10,11 +10,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { 
-  FileText, 
-  Search, 
-  Plus, 
-  Home, 
+import {
+  FileText,
+  Search,
+  Plus,
+  Home,
   AlertCircle,
   Filter,
   BookOpen,
@@ -24,7 +24,7 @@ import {
   Calendar,
   Sparkles,
   Zap,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react";
 import { useLocation } from "wouter";
 import { DocumentList } from "@/components/docs/DocumentList";
@@ -34,7 +34,10 @@ import { ConflictList } from "@/components/docs/ConflictList";
 import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
 import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
-import { useKeyboardShortcuts, KeyboardShortcutsHint } from "@/hooks/docs/useKeyboardShortcuts";
+import {
+  useKeyboardShortcuts,
+  KeyboardShortcutsHint,
+} from "@/hooks/docs/useKeyboardShortcuts";
 import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 import {
   Dialog,
@@ -47,7 +50,7 @@ import { Keyboard } from "lucide-react";
 
 /**
  * Documentation Management Page
- * 
+ *
  * Features:
  * - Full-screen docs management (outside 3-panel layout)
  * - List, view, edit, create documents
@@ -57,71 +60,77 @@ import { Keyboard } from "lucide-react";
  */
 // Templates configuration
 const DOC_TEMPLATES = [
-  { id: 'feature', name: 'Feature Spec', icon: Target, color: 'text-blue-500' },
-  { id: 'bug', name: 'Bug Report', icon: Bug, color: 'text-red-500' },
-  { id: 'guide', name: 'Guide', icon: Book, color: 'text-green-500' },
-  { id: 'meeting', name: 'Meeting Notes', icon: Calendar, color: 'text-purple-500' },
+  { id: "feature", name: "Feature Spec", icon: Target, color: "text-blue-500" },
+  { id: "bug", name: "Bug Report", icon: Bug, color: "text-red-500" },
+  { id: "guide", name: "Guide", icon: Book, color: "text-green-500" },
+  {
+    id: "meeting",
+    name: "Meeting Notes",
+    icon: Calendar,
+    color: "text-purple-500",
+  },
 ];
 
 // Categories from our recategorization
 const CATEGORIES = [
-  'All',
-  'Invoices & Billy',
-  'Email System',
-  'Database & Migrations',
-  'Testing & QA',
-  'AI & Friday',
-  'DevOps & Deployment',
-  'Frontend & UI',
-  'API & Backend',
-  'Planning & Roadmap',
-  'General',
+  "All",
+  "Invoices & Billy",
+  "Email System",
+  "Database & Migrations",
+  "Testing & QA",
+  "AI & Friday",
+  "DevOps & Deployment",
+  "Frontend & UI",
+  "API & Backend",
+  "Planning & Roadmap",
+  "General",
 ];
 
 const TAG_FILTERS = [
-  { value: 'all', label: 'All Docs' },
-  { value: 'outdated', label: '⚠️ Needs Review', badge: true },
-  { value: 'urgent', label: '🔴 Urgent' },
-  { value: 'completed', label: '✅ Completed' },
-  { value: 'guide', label: '📖 Guides' },
+  { value: "all", label: "All Docs" },
+  { value: "outdated", label: "⚠️ Needs Review", badge: true },
+  { value: "urgent", label: "🔴 Urgent" },
+  { value: "completed", label: "✅ Completed" },
+  { value: "guide", label: "📖 Guides" },
 ];
 
 export default function DocsPage() {
   const [, navigate] = useLocation();
-  const [view, setView] = useState<'list' | 'view' | 'edit' | 'create'>('list');
+  const [view, setView] = useState<"list" | "view" | "edit" | "create">("list");
   const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<string>('All');
-  const [tagFilter, setTagFilter] = useState<string>('all');
-  
+  const [categoryFilter, setCategoryFilter] = useState<string>("All");
+  const [tagFilter, setTagFilter] = useState<string>("all");
+
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const { documents, total, isLoading } = useDocuments({
     search: searchQuery || undefined,
-    category: categoryFilter !== 'All' ? categoryFilter : undefined,
-    tags: tagFilter !== 'all' ? [tagFilter] : undefined,
+    category: categoryFilter !== "All" ? categoryFilter : undefined,
+    tags: tagFilter !== "all" ? [tagFilter] : undefined,
     limit: 50,
   });
 
   const { conflicts } = useConflicts();
   const { isConnected } = useDocsWebSocket();
-  const { generateWeeklyDigest, bulkGenerateLeadDocs, isGenerating } = useAIGeneration();
-  
+  const { generateWeeklyDigest, bulkGenerateLeadDocs, isGenerating } =
+    useAIGeneration();
+
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onSearch: () => {
-      if (view === 'list') {
+      if (view === "list") {
         searchInputRef.current?.focus();
       }
     },
     onNew: () => {
-      if (view === 'list') {
+      if (view === "list") {
         handleCreateDocument();
       }
     },
     onEscape: () => {
-      if (view !== 'list') {
+      if (view !== "list") {
         handleBackToList();
       }
     },
@@ -129,22 +138,22 @@ export default function DocsPage() {
 
   const handleViewDocument = (docId: string) => {
     setSelectedDocId(docId);
-    setView('view');
+    setView("view");
   };
 
   const handleEditDocument = (docId: string) => {
     setSelectedDocId(docId);
-    setView('edit');
+    setView("edit");
   };
 
   const handleCreateDocument = (template?: string) => {
     setSelectedDocId(null);
     setSelectedTemplate(template || null);
-    setView('create');
+    setView("create");
   };
 
   const handleBackToList = () => {
-    setView('list');
+    setView("list");
     setSelectedDocId(null);
   };
 
@@ -155,11 +164,7 @@ export default function DocsPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate('/')}
-              >
+              <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
                 <Home className="h-4 w-4 mr-2" />
                 Back to Workspace
               </Button>
@@ -174,7 +179,11 @@ export default function DocsPage() {
               {/* Keyboard shortcuts help */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" size="icon" title="Keyboard Shortcuts">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    title="Keyboard Shortcuts"
+                  >
                     <Keyboard className="h-4 w-4" />
                   </Button>
                 </DialogTrigger>
@@ -188,8 +197,10 @@ export default function DocsPage() {
 
               {/* Connection status */}
               <Badge variant={isConnected ? "default" : "secondary"}>
-                <div className={`h-2 w-2 rounded-full mr-2 ${isConnected ? 'bg-green-500' : 'bg-gray-400'}`} />
-                {isConnected ? 'Live' : 'Offline'}
+                <div
+                  className={`h-2 w-2 rounded-full mr-2 ${isConnected ? "bg-green-500" : "bg-gray-400"}`}
+                />
+                {isConnected ? "Live" : "Offline"}
               </Badge>
 
               {/* Conflict indicator */}
@@ -201,46 +212,48 @@ export default function DocsPage() {
               )}
 
               {/* Create button with template dropdown */}
-              {view === 'list' && (
+              {view === "list" && (
                 <div className="flex items-center gap-2">
                   <Button onClick={() => handleCreateDocument()}>
                     <Plus className="h-4 w-4 mr-2" />
                     New Document
                   </Button>
-                  <Select onValueChange={(value) => handleCreateDocument(value)}>
+                  <Select onValueChange={value => handleCreateDocument(value)}>
                     <SelectTrigger className="w-[140px]">
                       <SelectValue placeholder="Template" />
                     </SelectTrigger>
                     <SelectContent>
-                      {DOC_TEMPLATES.map((template) => (
+                      {DOC_TEMPLATES.map(template => (
                         <SelectItem key={template.id} value={template.id}>
                           <div className="flex items-center gap-2">
-                            <template.icon className={`h-4 w-4 ${template.color}`} />
+                            <template.icon
+                              className={`h-4 w-4 ${template.color}`}
+                            />
                             {template.name}
                           </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  
+
                   {/* AI Generation Buttons */}
                   <div className="h-6 w-px bg-border" />
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={() => generateWeeklyDigest.mutate()}
                     disabled={isGenerating}
                   >
                     <Calendar className="h-4 w-4 mr-2" />
                     Weekly Digest
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={() => bulkGenerateLeadDocs.mutate()}
                     disabled={isGenerating}
                     title="Generate AI docs for all leads"
                   >
                     <Zap className="h-4 w-4 mr-2" />
-                    {isGenerating ? 'Generating...' : 'Bulk Generate'}
+                    {isGenerating ? "Generating..." : "Bulk Generate"}
                   </Button>
                 </div>
               )}
@@ -248,7 +261,7 @@ export default function DocsPage() {
           </div>
 
           {/* Search & Filters (only in list view) */}
-          {view === 'list' && (
+          {view === "list" && (
             <div className="mt-4 space-y-3">
               <div className="flex items-center gap-3">
                 <div className="flex-1 relative">
@@ -257,16 +270,19 @@ export default function DocsPage() {
                     ref={searchInputRef}
                     placeholder="Search documentation... (Ctrl+K)"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={e => setSearchQuery(e.target.value)}
                     className="pl-9"
                   />
                 </div>
-                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <Select
+                  value={categoryFilter}
+                  onValueChange={setCategoryFilter}
+                >
                   <SelectTrigger className="w-[200px]">
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
                   <SelectContent>
-                    {CATEGORIES.map((cat) => (
+                    {CATEGORIES.map(cat => (
                       <SelectItem key={cat} value={cat}>
                         {cat}
                       </SelectItem>
@@ -278,7 +294,7 @@ export default function DocsPage() {
                     <SelectValue placeholder="Filter" />
                   </SelectTrigger>
                   <SelectContent>
-                    {TAG_FILTERS.map((filter) => (
+                    {TAG_FILTERS.map(filter => (
                       <SelectItem key={filter.value} value={filter.value}>
                         {filter.label}
                       </SelectItem>
@@ -293,7 +309,7 @@ export default function DocsPage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6">
-        {view === 'list' && (
+        {view === "list" && (
           <Tabs defaultValue="documents" className="w-full">
             <TabsList>
               <TabsTrigger value="documents">
@@ -333,7 +349,7 @@ export default function DocsPage() {
           </Tabs>
         )}
 
-        {view === 'view' && selectedDocId && (
+        {view === "view" && selectedDocId && (
           <DocumentViewer
             documentId={selectedDocId}
             onEdit={() => handleEditDocument(selectedDocId)}
@@ -341,7 +357,7 @@ export default function DocsPage() {
           />
         )}
 
-        {view === 'edit' && selectedDocId && (
+        {view === "edit" && selectedDocId && (
           <DocumentEditor
             documentId={selectedDocId}
             onSave={handleBackToList}
@@ -349,7 +365,7 @@ export default function DocsPage() {
           />
         )}
 
-        {view === 'create' && (
+        {view === "create" && (
           <DocumentEditor
             documentId={null}
             template={selectedTemplate}

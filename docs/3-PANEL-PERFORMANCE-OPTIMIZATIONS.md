@@ -1,9 +1,11 @@
 # 3-Panel Performance Optimeringer - Email Center
 
 ## 📋 Overview
+
 Dokumentation af performance optimeringer implementeret for EmailTab i 3-panel layoutet (AI Assistant | Email Center | Workflow).
 
 ## 🎯 Mål
+
 - **Instant navigation** mellem tabs uden reload
 - **Infinite scroll** med proaktiv prefetch
 - **Cache persistence** for hurtig genindlæsning
@@ -13,8 +15,10 @@ Dokumentation af performance optimeringer implementeret for EmailTab i 3-panel l
 ## 🔧 Implementerede Optimeringer
 
 ### 1. Scroll Container Arkitektur
+
 **Problem**: Nested scrollbars i 3-panel layout
-**Løsning**: 
+**Løsning**:
+
 - `InboxPanel.tsx`: `TabsContent` bruger `overflow-hidden`
 - Hver tab styrer sin egen scroller (`overflow-y-auto`)
 
@@ -27,7 +31,9 @@ Dokumentation af performance optimeringer implementeret for EmailTab i 3-panel l
 ```
 
 ### 2. Infinite Scroll med Prefetch
+
 **EmailTab.tsx** optimeringer:
+
 - `rootMargin: "400px"` for tidligere prefetch i midterpanelet
 - Proaktiv next-page prefetch efter første side
 - Performance tracking logs
@@ -41,7 +47,9 @@ console.log(`[EmailTab Performance] Scroll load completed: ${time}ms`);
 ```
 
 ### 3. Smart Cache System
+
 **localStorage persistence**:
+
 - 2-minutters cache for instant paint
 - Cache hit detection i performance logs
 - Pagineret data persistence
@@ -51,11 +59,15 @@ console.log(`[EmailTab Performance] Scroll load completed: ${time}ms`);
 if (age > 2 * 60 * 1000) return undefined;
 
 // Performance tracking
-console.log(`[EmailTab Performance] Initial render: ${renderTime}ms (cache hit: ${cacheHit})`);
+console.log(
+  `[EmailTab Performance] Initial render: ${renderTime}ms (cache hit: ${cacheHit})`
+);
 ```
 
 ### 4. Search Coverage
+
 **Dynamisk pageSize**:
+
 - Normal visning: 25 resultater
 - Søgning: 100 resultater (hele inbox)
 
@@ -65,7 +77,9 @@ const pageSize = isSearching ? 100 : 25;
 ```
 
 ### 5. Cross-Tab Navigation
+
 **EmailContext integration**:
+
 - `pendingThreadToOpen` for Leads → Email navigation
 - State preservation med `forceMount`
 
@@ -83,6 +97,7 @@ useEffect(() => {
 ## 📊 Performance Metrics
 
 ### Console Logs
+
 Følgende logs er tilgængelige for debugging:
 
 ```
@@ -96,6 +111,7 @@ Følgende logs er tilgængelige for debugging:
 ```
 
 ### React Query Configuration
+
 ```tsx
 {
   staleTime: 2 * 60 * 1000,    // 2 minutter
@@ -108,23 +124,27 @@ Følgende logs er tilgængelige for debugging:
 ## 🧪 Validation Checklist
 
 ### ✅ Scroll Performance
+
 - [ ] Kun én scrollbar i Email-tab
 - [ ] Infinite scroll trigger ved bunden
 - [ ] Prefetch starter efter første side
 - [ ] Console viser performance logs
 
-### ✅ Cache Performance  
+### ✅ Cache Performance
+
 - [ ] Instant load ved tab-skift
 - [ ] Ingen "ingen emails" flash
 - [ ] Cache hit logs ved genbesøg
 - [ ] localStorage persistence virker
 
 ### ✅ Search Coverage
+
 - [ ] Søgning returnerer op til 100 resultater
 - [ ] Søgning dækker hele inbox
 - [ ] Performance logs for søgning
 
 ### ✅ Cross-Tab Navigation
+
 - [ ] Leads → Email navigation virker
 - [ ] Toast vises ved navigation
 - [ ] Korrekt tråd åbnes i Email-tab
@@ -132,6 +152,7 @@ Følgende logs er tilgængelige for debugging:
 ## 📁 Filer Ændret
 
 ### Core Files
+
 - `client/src/components/InboxPanel.tsx`
   - `TabsContent` `overflow-hidden` for alle tabs
 - `client/src/components/inbox/EmailTab.tsx`
@@ -140,12 +161,14 @@ Følgende logs er tilgængelige for debugging:
   - Cache persistence monitoring
 
 ### Context Files
+
 - `client/src/contexts/EmailContext.tsx`
   - `pendingThreadToOpen` for cross-tab navigation
 
 ## 🚀 Resultater
 
 ### Før Optimeringer
+
 - Nested scrollbars i 3-panel layout
 - Tab navigation med reload delay
 - "Ingen emails" flash ved skift
@@ -153,6 +176,7 @@ Følgende logs er tilgængelige for debugging:
 - Manglende performance visibility
 
 ### Efter Optimeringer
+
 - ✅ Clean scroll i midterpanelet
 - ✅ Instant tab navigation
 - ✅ Ingen flash, state bevares
@@ -162,12 +186,14 @@ Følgende logs er tilgængelige for debugging:
 ## 🔮 Fremtidige Forbedringer
 
 ### Potentielle Optimeringer
+
 - **Virtual scrolling** for store lister
 - **Web Workers** for AI processing
 - **Service Worker** for offline cache
 - **Predictive prefetch** baseret på user patterns
 
 ### Monitoring
+
 - **Performance dashboard** for real-time metrics
 - **Error boundary** for bedre error handling
 - **Analytics integration** for user behavior

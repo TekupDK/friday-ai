@@ -20,15 +20,17 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
 ## ✅ Implementerede Tilpasninger
 
 ### 1. **EmailCenterPanel Integration**
+
 - EmailTab er korrekt indpakket i EmailCenterPanel wrapper
 - EmailCenterPanel er placeret i midterpanelet i 3-panel layout med 50% bredde
 - InboxPanel har `overflow-hidden` for at undgå nested scrollbars
 
 ### 2. **Responsive Design**
+
 - **Sidebar Bredde**: `w-48 sm:w-56 lg:w-64` (tilpasser sig forskellige skærmstørrelser)
 - **Border Separation**: Tilføjet `border-r border-border/30` til sidebar for visuel adskillelse
 - **Kompakt UI**: Tilføjet density-toggle for tættere layout i smallere midterpanel
-- **Responsive Toolbar**: 
+- **Responsive Toolbar**:
   ```tsx
   <div className="flex flex-col lg:flex-row gap-2 lg:gap-3 items-stretch lg:items-center p-2 lg:p-3">
   ```
@@ -38,6 +40,7 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
   ```
 
 ### 3. **Cross-Panel Navigation**
+
 - **WorkflowContext Integration**: Tilføjet til EmailTab for deling af data mellem paneler
   ```tsx
   const { openCustomerProfile } = useWorkflowContext();
@@ -50,6 +53,7 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
   ```
 
 ### 4. **Performance Optimering**
+
 - **IntersectionObserver Tuning**: Øget rootMargin til 400px for bedre prefetch i smallere panel
   ```tsx
   { root: parentRef.current, rootMargin: "400px" }
@@ -76,12 +80,14 @@ Vi har tilføjet nye keyboard shortcuts specifikt designet til at forbedre navig
 Da midterpanelet er smallere i 3-panel layout, har vi implementeret to density modes for at optimere pladsen:
 
 ### 1. **Comfortable Mode (Default)**
+
 - Standard spacing mellem emails
 - Fuld visning af sender, emne og indhold
 - AI features synlige på hover
 - Bedst til store skærme
 
 ### 2. **Compact Mode (Shortwave-Style)**
+
 - Tæt spacing mellem emails
 - Sender + Subject på samme linje
 - Skjulte AI features og labels

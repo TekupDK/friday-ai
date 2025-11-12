@@ -6,60 +6,60 @@ import { Mail, Phone, Calendar, FileText, Check, Clock } from "lucide-react";
 
 interface TimelineEvent {
   id: number;
-  type: 'email' | 'call' | 'meeting' | 'note';
+  type: "email" | "call" | "meeting" | "note";
   title: string;
   description: string;
   timestamp: string;
-  status: 'completed' | 'pending' | 'upcoming';
+  status: "completed" | "pending" | "upcoming";
 }
 
 const events: TimelineEvent[] = [
   {
     id: 1,
-    type: 'email',
-    title: 'Email sendt til kunde',
-    description: 'Tilbud på vinduespudsning sendt',
-    timestamp: '10:30',
-    status: 'completed'
+    type: "email",
+    title: "Email sendt til kunde",
+    description: "Tilbud på vinduespudsning sendt",
+    timestamp: "10:30",
+    status: "completed",
   },
   {
     id: 2,
-    type: 'call',
-    title: 'Opkald til kunde',
-    description: 'Bekræftet mødetidspunkt',
-    timestamp: '14:15',
-    status: 'completed'
+    type: "call",
+    title: "Opkald til kunde",
+    description: "Bekræftet mødetidspunkt",
+    timestamp: "14:15",
+    status: "completed",
   },
   {
     id: 3,
-    type: 'meeting',
-    title: 'Møde planlagt',
-    description: 'Besigtigelse af kontor',
-    timestamp: 'I morgen 10:00',
-    status: 'upcoming'
+    type: "meeting",
+    title: "Møde planlagt",
+    description: "Besigtigelse af kontor",
+    timestamp: "I morgen 10:00",
+    status: "upcoming",
   },
   {
     id: 4,
-    type: 'note',
-    title: 'Note tilføjet',
-    description: 'Kunde ønsker månedlig service',
-    timestamp: '16:45',
-    status: 'pending'
-  }
+    type: "note",
+    title: "Note tilføjet",
+    description: "Kunde ønsker månedlig service",
+    timestamp: "16:45",
+    status: "pending",
+  },
 ];
 
 const iconMap = {
   email: Mail,
   call: Phone,
   meeting: Calendar,
-  note: FileText
+  note: FileText,
 };
 
 const colorMap = {
-  email: 'text-blue-500',
-  call: 'text-green-500',
-  meeting: 'text-purple-500',
-  note: 'text-orange-500'
+  email: "text-blue-500",
+  call: "text-green-500",
+  meeting: "text-purple-500",
+  note: "text-orange-500",
 };
 
 export function AnimatedTimeline() {
@@ -90,8 +90,8 @@ export function AnimatedTimeline() {
               key={event.id}
               className={cn(
                 "relative pl-16 transition-all duration-500 ease-out",
-                isVisible 
-                  ? "opacity-100 translate-x-0" 
+                isVisible
+                  ? "opacity-100 translate-x-0"
                   : "opacity-0 -translate-x-4"
               )}
               style={{ transitionDelay: `${idx * 100}ms` }}
@@ -102,9 +102,12 @@ export function AnimatedTimeline() {
                   className={cn(
                     "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500",
                     "bg-background border-2",
-                    event.status === 'completed' && "border-green-500 bg-green-500/10",
-                    event.status === 'pending' && "border-orange-500 bg-orange-500/10",
-                    event.status === 'upcoming' && "border-blue-500 bg-blue-500/10",
+                    event.status === "completed" &&
+                      "border-green-500 bg-green-500/10",
+                    event.status === "pending" &&
+                      "border-orange-500 bg-orange-500/10",
+                    event.status === "upcoming" &&
+                      "border-blue-500 bg-blue-500/10",
                     isVisible && "scale-100",
                     !isVisible && "scale-0"
                   )}
@@ -113,7 +116,7 @@ export function AnimatedTimeline() {
                 </div>
 
                 {/* Status indicator */}
-                {event.status === 'completed' && (
+                {event.status === "completed" && (
                   <Check
                     className={cn(
                       "absolute -top-1 -right-1 w-5 h-5 text-green-500 bg-background rounded-full transition-all duration-300",
@@ -142,19 +145,23 @@ export function AnimatedTimeline() {
 
                     <Badge
                       variant={
-                        event.status === 'completed' ? 'default' :
-                        event.status === 'pending' ? 'secondary' :
-                        'outline'
+                        event.status === "completed"
+                          ? "default"
+                          : event.status === "pending"
+                            ? "secondary"
+                            : "outline"
                       }
                       className={cn(
                         "whitespace-nowrap transition-all duration-300",
-                        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                        isVisible
+                          ? "opacity-100 scale-100"
+                          : "opacity-0 scale-75"
                       )}
                       style={{ transitionDelay: `${idx * 100 + 200}ms` }}
                     >
-                      {event.status === 'completed' && '✓ Færdig'}
-                      {event.status === 'pending' && '⏳ Afventer'}
-                      {event.status === 'upcoming' && '📅 Planlagt'}
+                      {event.status === "completed" && "✓ Færdig"}
+                      {event.status === "pending" && "⏳ Afventer"}
+                      {event.status === "upcoming" && "📅 Planlagt"}
                     </Badge>
                   </div>
 

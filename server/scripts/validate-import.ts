@@ -1,9 +1,9 @@
 /**
  * Friday AI Import Validation Script
- * 
+ *
  * Validates that v4.3.5 lead data was correctly imported into Supabase.
  * Reports counts, data quality, and highlights any issues.
- * 
+ *
  * Usage:
  *   npx tsx server/scripts/validate-import.ts
  */
@@ -223,7 +223,9 @@ async function main() {
   console.log("\n📌 LEADS:");
   console.log(`   Total:                  ${report.leads.total}`);
   console.log(`   From v4.3.5:            ${report.leads.v4_3_5}`);
-  console.log(`   With customer profiles: ${report.leads.withCustomerProfiles}`);
+  console.log(
+    `   With customer profiles: ${report.leads.withCustomerProfiles}`
+  );
   console.log(`   With invoices:          ${report.leads.withInvoices}`);
   console.log(`   Premium customers:      ${report.leads.premiumCustomers}`);
   console.log(`   Recurring customers:    ${report.leads.recurringCustomers}`);
@@ -236,23 +238,21 @@ async function main() {
   console.log(`   Total:              ${report.customerProfiles.total}`);
   console.log(`   With leads:         ${report.customerProfiles.withLeads}`);
   console.log(
-    `   Total invoiced:     ${(report.customerProfiles.totalInvoiced / 100).toFixed(2)} kr`,
+    `   Total invoiced:     ${(report.customerProfiles.totalInvoiced / 100).toFixed(2)} kr`
   );
   console.log(
-    `   Total paid:         ${(report.customerProfiles.totalPaid / 100).toFixed(2)} kr`,
+    `   Total paid:         ${(report.customerProfiles.totalPaid / 100).toFixed(2)} kr`
   );
   console.log("\n   By Status:");
   for (const [status, count] of Object.entries(
-    report.customerProfiles.byStatus,
+    report.customerProfiles.byStatus
   )) {
     console.log(`      ${status.padEnd(12)}: ${count}`);
   }
 
   console.log("\n💰 INVOICES:");
   console.log(`   Total:         ${report.invoices.total}`);
-  console.log(
-    `   Total amount:  ${report.invoices.totalAmount.toFixed(2)} kr`,
-  );
+  console.log(`   Total amount:  ${report.invoices.totalAmount.toFixed(2)} kr`);
   console.log(`   Paid amount:   ${report.invoices.paidAmount.toFixed(2)} kr`);
   console.log("\n   By Status:");
   for (const [status, count] of Object.entries(report.invoices.byStatus)) {
@@ -260,11 +260,17 @@ async function main() {
   }
 
   console.log("\n🔍 DATA QUALITY:");
-  console.log(`   Leads without email:       ${report.dataQuality.leadsWithoutEmail}`);
-  console.log(`   Leads without phone:       ${report.dataQuality.leadsWithoutPhone}`);
-  console.log(`   Synthetic emails used:     ${report.dataQuality.syntheticEmails}`);
   console.log(
-    `   Profiles without invoices: ${report.dataQuality.profilesWithoutInvoices}`,
+    `   Leads without email:       ${report.dataQuality.leadsWithoutEmail}`
+  );
+  console.log(
+    `   Leads without phone:       ${report.dataQuality.leadsWithoutPhone}`
+  );
+  console.log(
+    `   Synthetic emails used:     ${report.dataQuality.syntheticEmails}`
+  );
+  console.log(
+    `   Profiles without invoices: ${report.dataQuality.profilesWithoutInvoices}`
   );
 
   console.log("\n" + "=".repeat(60));
@@ -278,19 +284,19 @@ async function main() {
 
   if (report.leads.withCustomerProfiles < report.leads.v4_3_5 * 0.9) {
     warnings.push(
-      "⚠️  Less than 90% of leads have customer profiles - check linkage",
+      "⚠️  Less than 90% of leads have customer profiles - check linkage"
     );
   }
 
   if (report.dataQuality.syntheticEmails > report.leads.total * 0.1) {
     warnings.push(
-      "⚠️  More than 10% synthetic emails - consider data quality improvement",
+      "⚠️  More than 10% synthetic emails - consider data quality improvement"
     );
   }
 
   if (warnings.length > 0) {
     console.log("\n⚠️  WARNINGS:");
-    warnings.forEach((w) => console.log(`   ${w}`));
+    warnings.forEach(w => console.log(`   ${w}`));
   } else {
     console.log("\n✅ All validation checks passed!");
   }
@@ -299,7 +305,7 @@ async function main() {
   process.exit(0);
 }
 
-void main().catch((error) => {
+void main().catch(error => {
   console.error("❌ Validation failed:", error);
   process.exit(1);
 });

@@ -25,29 +25,33 @@ export interface StreamingChatResponse {
 export const chatStreamingRouter = router({
   // New streaming chat endpoint
   sendMessageStreaming: protectedProcedure
-    .input(z.object({
-      conversationId: z.number(),
-      content: z.string(),
-      context: z.object({
-        selectedEmails: z.array(z.string()).optional(),
-        calendarEvents: z.array(z.any()).optional(),
-        searchQuery: z.string().optional(),
-        hasEmails: z.boolean().optional(),
-        hasCalendar: z.boolean().optional(),
-        hasInvoices: z.boolean().optional(),
-        page: z.string().optional(),
-        folder: z.string().optional(),
-        viewMode: z.string().optional(),
-        selectedThreads: z.array(z.string()).optional(),
-        openThreadId: z.string().optional(),
-        selectedLabels: z.array(z.string()).optional(),
-        openDrafts: z.number().optional(),
-        previewThreadId: z.string().optional(),
-      }).optional(),
-    }))
+    .input(
+      z.object({
+        conversationId: z.number(),
+        content: z.string(),
+        context: z
+          .object({
+            selectedEmails: z.array(z.string()).optional(),
+            calendarEvents: z.array(z.any()).optional(),
+            searchQuery: z.string().optional(),
+            hasEmails: z.boolean().optional(),
+            hasCalendar: z.boolean().optional(),
+            hasInvoices: z.boolean().optional(),
+            page: z.string().optional(),
+            folder: z.string().optional(),
+            viewMode: z.string().optional(),
+            selectedThreads: z.array(z.string()).optional(),
+            openThreadId: z.string().optional(),
+            selectedLabels: z.array(z.string()).optional(),
+            openDrafts: z.number().optional(),
+            previewThreadId: z.string().optional(),
+          })
+          .optional(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const flags = getFeatureFlags(ctx.user.id);
-      
+
       if (!flags.useServerSideChat) {
         throw new Error("Server-side chat is not enabled for this user");
       }
@@ -74,27 +78,33 @@ export const chatStreamingRouter = router({
         };
       } catch (error) {
         console.error("Chat streaming error:", error);
-        throw new Error(`Failed to process message: ${error instanceof Error ? error.message : "Unknown error"}`);
+        throw new Error(
+          `Failed to process message: ${error instanceof Error ? error.message : "Unknown error"}`
+        );
       }
     }),
 
   // Streaming endpoint using tRPC subscriptions (alternative)
   sendMessageStream: protectedProcedure
-    .input(z.object({
-      conversationId: z.number(),
-      content: z.string(),
-      context: z.object({
-        selectedEmails: z.array(z.string()).optional(),
-        calendarEvents: z.array(z.any()).optional(),
-        searchQuery: z.string().optional(),
-        hasEmails: z.boolean().optional(),
-        hasCalendar: z.boolean().optional(),
-        hasInvoices: z.boolean().optional(),
-      }).optional(),
-    }))
+    .input(
+      z.object({
+        conversationId: z.number(),
+        content: z.string(),
+        context: z
+          .object({
+            selectedEmails: z.array(z.string()).optional(),
+            calendarEvents: z.array(z.any()).optional(),
+            searchQuery: z.string().optional(),
+            hasEmails: z.boolean().optional(),
+            hasCalendar: z.boolean().optional(),
+            hasInvoices: z.boolean().optional(),
+          })
+          .optional(),
+      })
+    )
     .subscription(async function* ({ ctx, input }) {
       const flags = getFeatureFlags(ctx.user.id);
-      
+
       if (!flags.enableStreaming) {
         throw new Error("Streaming is not enabled for this user");
       }
@@ -104,18 +114,23 @@ export const chatStreamingRouter = router({
 
         // Build messages with context
         const messages: any[] = [{ role: "user", content: input.content }];
-        
+
         // Add context if provided
         if (input.context) {
           const contextString = Object.entries(input.context)
-            .filter(([_, value]) => value && (Array.isArray(value) ? value.length > 0 : true))
-            .map(([key, value]) => `${key.toUpperCase()}: ${JSON.stringify(value)}`)
-            .join('\n');
-          
+            .filter(
+              ([_, value]) =>
+                value && (Array.isArray(value) ? value.length > 0 : true)
+            )
+            .map(
+              ([key, value]) => `${key.toUpperCase()}: ${JSON.stringify(value)}`
+            )
+            .join("\n");
+
           if (contextString) {
             messages.unshift({
               role: "system",
-              content: `<CONTEXT>\n${contextString}\n</CONTEXT>`
+              content: `<CONTEXT>\n${contextString}\n</CONTEXT>`,
             });
           }
         }
@@ -131,16 +146,17 @@ export const chatStreamingRouter = router({
 
         yield { type: "complete", data: { message: "Response complete" } };
       } catch (error) {
-        yield { 
-          type: "error", 
-          data: { error: error instanceof Error ? error.message : "Unknown error" } 
+        yield {
+          type: "error",
+          data: {
+            error: error instanceof Error ? error.message : "Unknown error",
+          },
         };
       }
     }),
 
   // Get feature flags for current user
-  getFeatureFlags: protectedProcedure
-    .query(async ({ ctx }) => {
-      return getFeatureFlags(ctx.user.id);
-    }),
+  getFeatureFlags: protectedProcedure.query(async ({ ctx }) => {
+    return getFeatureFlags(ctx.user.id);
+  }),
 });

@@ -1,15 +1,15 @@
 /**
  * Phase 9.8: Billy Automation Service
- * 
+ *
  * Automatically creates customers and invoices from leads
  * Provides real-time financial integration.
  */
 
-import { 
-  createInvoice, 
-  getInvoices, 
+import {
+  createInvoice,
+  getInvoices,
   searchCustomerByEmail,
-  createCustomer
+  createCustomer,
 } from "./billy";
 import { getDb } from "./db";
 import { leads, customerProfiles } from "../drizzle/schema";
@@ -44,19 +44,20 @@ interface LeadToInvoiceResult {
  * Phase 9.8: Billy automation service
  */
 export class BillyAutomationService {
-  
   /**
    * Create Billy customer from lead data
    */
   async createCustomerFromLead(leadId: number): Promise<BillyCustomer | null> {
     try {
-      console.log(`[BillyAutomation] Creating Billy customer from lead ${leadId}`);
+      console.log(
+        `[BillyAutomation] Creating Billy customer from lead ${leadId}`
+      );
 
       const db = await getDb();
       if (!db) {
         throw new Error("Database not available");
       }
-      
+
       // Get lead data
       const [lead] = await db
         .select()
@@ -71,7 +72,9 @@ export class BillyAutomationService {
       // Check if customer already exists in Billy
       const existingCustomer = await searchCustomerByEmail(lead.email || "");
       if (existingCustomer) {
-        console.log(`[BillyAutomation] Customer already exists: ${existingCustomer.id}`);
+        console.log(
+          `[BillyAutomation] Customer already exists: ${existingCustomer.id}`
+        );
         return existingCustomer;
       }
 
@@ -89,7 +92,7 @@ export class BillyAutomationService {
       };
 
       const billyCustomer = await createCustomer(customerData);
-      
+
       if (!billyCustomer) {
         throw new Error("Failed to create Billy customer");
       }
@@ -98,19 +101,23 @@ export class BillyAutomationService {
       const leadMetadata = JSON.parse(lead.metadata || "{}");
       await db
         .update(leads)
-        .set({ 
+        .set({
           metadata: JSON.stringify({
             ...leadMetadata,
             billyCustomerId: billyCustomer.id,
-          })
+          }),
         })
         .where(eq(leads.id, leadId));
 
-      console.log(`[BillyAutomation] ✅ Created Billy customer: ${billyCustomer.id}`);
+      console.log(
+        `[BillyAutomation] ✅ Created Billy customer: ${billyCustomer.id}`
+      );
       return billyCustomer;
-
     } catch (error) {
-      console.error(`[BillyAutomation] Error creating customer from lead ${leadId}:`, error);
+      console.error(
+        `[BillyAutomation] Error creating customer from lead ${leadId}:`,
+        error
+      );
       return null;
     }
   }
@@ -128,7 +135,9 @@ export class BillyAutomationService {
     description?: string;
   }): Promise<LeadToInvoiceResult> {
     try {
-      console.log(`[BillyAutomation] Creating invoice for job from lead ${jobData.leadId}`);
+      console.log(
+        `[BillyAutomation] Creating invoice for job from lead ${jobData.leadId}`
+      );
 
       const db = await getDb();
       if (!db) {
@@ -137,7 +146,7 @@ export class BillyAutomationService {
           error: "Database not available",
         };
       }
-      
+
       // Get lead data
       const [lead] = await db
         .select()
@@ -154,7 +163,7 @@ export class BillyAutomationService {
 
       // Get or create Billy customer
       let billyCustomer: BillyCustomer | null = null;
-      
+
       // Check if customer already exists
       const leadMetadata = JSON.parse(lead.metadata || "{}");
       if (leadMetadata.billyCustomerId) {
@@ -184,11 +193,15 @@ export class BillyAutomationService {
         contactId: billyCustomer.id,
         entryDate: new Date().toISOString(),
         paymentTermsDays: 14,
-        lines: [{
-          description: jobData.description || `${jobData.jobType} - ${jobData.hoursWorked} timer`,
-          quantity: jobData.hoursWorked,
-          unitPrice: jobData.hourlyRate,
-        }],
+        lines: [
+          {
+            description:
+              jobData.description ||
+              `${jobData.jobType} - ${jobData.hoursWorked} timer`,
+            quantity: jobData.hoursWorked,
+            unitPrice: jobData.hourlyRate,
+          },
+        ],
       };
 
       const invoice = await createInvoice(invoiceData);
@@ -203,18 +216,20 @@ export class BillyAutomationService {
       // Update lead with invoice info
       await db
         .update(leads)
-        .set({ 
+        .set({
           status: "proposal", // Move to proposal stage
           metadata: JSON.stringify({
             ...leadMetadata,
             billyInvoiceId: invoice.id,
             invoiceAmount: totalAmount,
             invoiceDate: new Date().toISOString(),
-          })
+          }),
         })
         .where(eq(leads.id, jobData.leadId));
 
-      console.log(`[BillyAutomation] ✅ Created invoice: ${invoice.id} for ${totalAmount} kr`);
+      console.log(
+        `[BillyAutomation] ✅ Created invoice: ${invoice.id} for ${totalAmount} kr`
+      );
 
       return {
         success: true,
@@ -222,9 +237,11 @@ export class BillyAutomationService {
         invoiceId: invoice.id || "",
         invoiceUrl: "", // TODO: Get invoice URL from Billy API
       };
-
     } catch (error) {
-      console.error(`[BillyAutomation] Error creating invoice from job:`, error);
+      console.error(
+        `[BillyAutomation] Error creating invoice from job:`,
+        error
+      );
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -237,20 +254,26 @@ export class BillyAutomationService {
    */
   async getCustomerInvoices(customerId: string): Promise<any[]> {
     try {
-      console.log(`[BillyAutomation] Getting invoices for customer ${customerId}`);
-
-      const invoices = await getInvoices();
-      
-      // Filter invoices for this customer
-      const customerInvoices = invoices.filter(invoice => 
-        invoice.customerId === customerId
+      console.log(
+        `[BillyAutomation] Getting invoices for customer ${customerId}`
       );
 
-      console.log(`[BillyAutomation] Found ${customerInvoices.length} invoices for customer ${customerId}`);
-      return customerInvoices;
+      const invoices = await getInvoices();
 
+      // Filter invoices for this customer
+      const customerInvoices = invoices.filter(
+        invoice => invoice.customerId === customerId
+      );
+
+      console.log(
+        `[BillyAutomation] Found ${customerInvoices.length} invoices for customer ${customerId}`
+      );
+      return customerInvoices;
     } catch (error) {
-      console.error(`[BillyAutomation] Error getting customer invoices:`, error);
+      console.error(
+        `[BillyAutomation] Error getting customer invoices:`,
+        error
+      );
       return [];
     }
   }
@@ -260,10 +283,12 @@ export class BillyAutomationService {
    */
   async syncPaymentStatus(invoiceId: string): Promise<boolean> {
     try {
-      console.log(`[BillyAutomation] Syncing payment status for invoice ${invoiceId}`);
+      console.log(
+        `[BillyAutomation] Syncing payment status for invoice ${invoiceId}`
+      );
 
       const db = await getDb();
-      
+
       // Get invoice from Billy
       const invoices = await getInvoices();
       const invoice = invoices.find(inv => inv.id === invoiceId);
@@ -281,7 +306,9 @@ export class BillyAutomationService {
         .limit(1);
 
       if (!lead) {
-        console.error(`[BillyAutomation] Lead for invoice ${invoiceId} not found`);
+        console.error(
+          `[BillyAutomation] Lead for invoice ${invoiceId} not found`
+        );
         return false;
       }
 
@@ -296,22 +323,23 @@ export class BillyAutomationService {
       if (newStatus !== lead.status) {
         await db
           .update(leads)
-          .set({ 
+          .set({
             status: newStatus,
             updatedAt: new Date(),
             metadata: JSON.stringify({
               ...JSON.parse(lead.metadata || "{}"),
               paymentStatus: invoice.status,
               paymentDate: invoice.paymentDate,
-            })
+            }),
           })
           .where(eq(leads.id, lead.id));
 
-        console.log(`[BillyAutomation] ✅ Updated lead ${lead.id} status to ${newStatus}`);
+        console.log(
+          `[BillyAutomation] ✅ Updated lead ${lead.id} status to ${newStatus}`
+        );
       }
 
       return true;
-
     } catch (error) {
       console.error(`[BillyAutomation] Error syncing payment status:`, error);
       return false;
@@ -321,7 +349,10 @@ export class BillyAutomationService {
   /**
    * Get financial summary for leads
    */
-  async getFinancialSummary(startDate: Date, endDate: Date): Promise<{
+  async getFinancialSummary(
+    startDate: Date,
+    endDate: Date
+  ): Promise<{
     totalRevenue: number;
     totalInvoices: number;
     paidInvoices: number;
@@ -330,10 +361,12 @@ export class BillyAutomationService {
     revenueBySource: Record<string, number>;
   }> {
     try {
-      console.log(`[BillyAutomation] Getting financial summary for ${startDate.toISOString()} to ${endDate.toISOString()}`);
+      console.log(
+        `[BillyAutomation] Getting financial summary for ${startDate.toISOString()} to ${endDate.toISOString()}`
+      );
 
       const db = await getDb();
-      
+
       // Get leads with invoices in the period
       const leadsWithInvoices = await db
         .select()
@@ -352,20 +385,31 @@ export class BillyAutomationService {
         return invoiceDate >= startDate && invoiceDate <= endDate;
       });
 
-      const totalRevenue = periodInvoices.reduce((sum, inv) => sum + (inv.amount || 0), 0);
-      const paidInvoices = periodInvoices.filter(inv => inv.status === "paid").length;
-      const outstandingInvoices = periodInvoices.filter(inv => inv.status !== "paid").length;
-      const averageInvoiceAmount = periodInvoices.length > 0 ? totalRevenue / periodInvoices.length : 0;
+      const totalRevenue = periodInvoices.reduce(
+        (sum, inv) => sum + (inv.amount || 0),
+        0
+      );
+      const paidInvoices = periodInvoices.filter(
+        inv => inv.status === "paid"
+      ).length;
+      const outstandingInvoices = periodInvoices.filter(
+        inv => inv.status !== "paid"
+      ).length;
+      const averageInvoiceAmount =
+        periodInvoices.length > 0 ? totalRevenue / periodInvoices.length : 0;
 
       // Revenue by source
       const revenueBySource: Record<string, number> = {};
-      
+
       for (const lead of leadsWithInvoices) {
         const leadMetadata = JSON.parse(lead.metadata || "{}");
-        const invoice = periodInvoices.find(inv => inv.id === leadMetadata.billyInvoiceId);
-        
+        const invoice = periodInvoices.find(
+          inv => inv.id === leadMetadata.billyInvoiceId
+        );
+
         if (invoice && lead.source) {
-          revenueBySource[lead.source] = (revenueBySource[lead.source] || 0) + (invoice.amount || 0);
+          revenueBySource[lead.source] =
+            (revenueBySource[lead.source] || 0) + (invoice.amount || 0);
         }
       }
 
@@ -380,9 +424,11 @@ export class BillyAutomationService {
 
       console.log(`[BillyAutomation] ✅ Financial summary:`, summary);
       return summary;
-
     } catch (error) {
-      console.error(`[BillyAutomation] Error getting financial summary:`, error);
+      console.error(
+        `[BillyAutomation] Error getting financial summary:`,
+        error
+      );
       return {
         totalRevenue: 0,
         totalInvoices: 0,
@@ -397,19 +443,26 @@ export class BillyAutomationService {
   /**
    * Auto-create customer from high-confidence lead
    */
-  async autoCreateCustomer(leadId: number, confidence: number): Promise<boolean> {
+  async autoCreateCustomer(
+    leadId: number,
+    confidence: number
+  ): Promise<boolean> {
     try {
       // Only auto-create for high confidence leads (>90%)
       if (confidence < 90) {
-        console.log(`[BillyAutomation] Confidence too low (${confidence}%) for auto-creation`);
+        console.log(
+          `[BillyAutomation] Confidence too low (${confidence}%) for auto-creation`
+        );
         return false;
       }
 
       const customer = await this.createCustomerFromLead(leadId);
       return customer !== null;
-
     } catch (error) {
-      console.error(`[BillyAutomation] Error in auto-creating customer:`, error);
+      console.error(
+        `[BillyAutomation] Error in auto-creating customer:`,
+        error
+      );
       return false;
     }
   }

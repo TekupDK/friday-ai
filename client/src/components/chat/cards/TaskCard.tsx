@@ -14,8 +14,8 @@ export interface TaskCardProps {
     id: string;
     title: string;
     description: string;
-    status: 'pending' | 'in-progress' | 'completed';
-    priority: 'low' | 'medium' | 'high';
+    status: "pending" | "in-progress" | "completed";
+    priority: "low" | "medium" | "high";
     assignee: string;
     dueDate: string;
     progress: number;
@@ -25,36 +25,42 @@ export interface TaskCardProps {
   onView?: () => void;
 }
 
-export function TaskCard({ 
+export function TaskCard({
   task = {
-    id: '1',
-    title: 'Opdater kundedata',
-    description: 'Gennemgå og opdater alle kundeoplysninger i CRM systemet',
-    status: 'in-progress',
-    priority: 'high',
-    assignee: 'John Smith',
-    dueDate: 'I morgen',
-    progress: 65
+    id: "1",
+    title: "Opdater kundedata",
+    description: "Gennemgå og opdater alle kundeoplysninger i CRM systemet",
+    status: "in-progress",
+    priority: "high",
+    assignee: "John Smith",
+    dueDate: "I morgen",
+    progress: 65,
   },
   onStart,
   onComplete,
-  onView
+  onView,
 }: TaskCardProps) {
   const [status, setStatus] = useState(task.status);
 
   const getPriorityColor = () => {
     switch (task.priority) {
-      case 'high': return 'bg-red-500';
-      case 'medium': return 'bg-yellow-500';
-      default: return 'bg-green-500';
+      case "high":
+        return "bg-red-500";
+      case "medium":
+        return "bg-yellow-500";
+      default:
+        return "bg-green-500";
     }
   };
 
   const getStatusBadge = () => {
     switch (status) {
-      case 'completed': return <Badge className="bg-green-500">Færdig</Badge>;
-      case 'in-progress': return <Badge className="bg-blue-500">I gang</Badge>;
-      default: return <Badge variant="secondary">Afventer</Badge>;
+      case "completed":
+        return <Badge className="bg-green-500">Færdig</Badge>;
+      case "in-progress":
+        return <Badge className="bg-blue-500">I gang</Badge>;
+      default:
+        return <Badge variant="secondary">Afventer</Badge>;
     }
   };
 
@@ -71,7 +77,11 @@ export function TaskCard({
               <div className="flex items-center gap-2 mt-1">
                 {getStatusBadge()}
                 <Badge className={getPriorityColor()}>
-                  {task.priority === 'high' ? 'Høj' : task.priority === 'medium' ? 'Medium' : 'Lav'}
+                  {task.priority === "high"
+                    ? "Høj"
+                    : task.priority === "medium"
+                      ? "Medium"
+                      : "Lav"}
                 </Badge>
               </div>
             </div>
@@ -90,7 +100,7 @@ export function TaskCard({
             <span>{task.progress}%</span>
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-purple-500 transition-all"
               style={{ width: `${task.progress}%` }}
             />
@@ -109,19 +119,25 @@ export function TaskCard({
             </div>
           </div>
           <div className="flex gap-1">
-            {status === 'pending' && (
-              <Button size="sm" onClick={() => {
-                setStatus('in-progress');
-                onStart?.();
-              }}>
+            {status === "pending" && (
+              <Button
+                size="sm"
+                onClick={() => {
+                  setStatus("in-progress");
+                  onStart?.();
+                }}
+              >
                 Start
               </Button>
             )}
-            {status === 'in-progress' && (
-              <Button size="sm" onClick={() => {
-                setStatus('completed');
-                onComplete?.();
-              }}>
+            {status === "in-progress" && (
+              <Button
+                size="sm"
+                onClick={() => {
+                  setStatus("completed");
+                  onComplete?.();
+                }}
+              >
                 Færdig
               </Button>
             )}

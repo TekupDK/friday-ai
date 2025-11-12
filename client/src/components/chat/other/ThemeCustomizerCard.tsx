@@ -1,10 +1,10 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Palette,
   Sun,
@@ -14,22 +14,23 @@ import {
   Download,
   Save,
   RotateCcw,
-  CheckCircle
-} from "lucide-react"
+  CheckCircle,
+} from "lucide-react";
 
-export interface ThemeCustomizerCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  currentTheme: 'light' | 'dark' | 'system'
+export interface ThemeCustomizerCardProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  currentTheme: "light" | "dark" | "system";
   customColors?: {
-    primary?: string
-    secondary?: string
-    accent?: string
-    background?: string
-  }
-  onThemeChange?: (theme: 'light' | 'dark' | 'system') => void
-  onColorChange?: (colorType: string, color: string) => void
-  onReset?: () => void
-  onSave?: () => void
-  isLoading?: boolean
+    primary?: string;
+    secondary?: string;
+    accent?: string;
+    background?: string;
+  };
+  onThemeChange?: (theme: "light" | "dark" | "system") => void;
+  onColorChange?: (colorType: string, color: string) => void;
+  onReset?: () => void;
+  onSave?: () => void;
+  isLoading?: boolean;
 }
 
 export function ThemeCustomizerCard({
@@ -44,17 +45,22 @@ export function ThemeCustomizerCard({
   ...props
 }: ThemeCustomizerCardProps) {
   const themes = [
-    { id: 'light', label: 'Lys', icon: Sun, description: 'Klassisk lys tema' },
-    { id: 'dark', label: 'Mørk', icon: Moon, description: 'Nem på øjnene' },
-    { id: 'system', label: 'System', icon: Monitor, description: 'Følger enhedens indstilling' }
-  ] as const
+    { id: "light", label: "Lys", icon: Sun, description: "Klassisk lys tema" },
+    { id: "dark", label: "Mørk", icon: Moon, description: "Nem på øjnene" },
+    {
+      id: "system",
+      label: "System",
+      icon: Monitor,
+      description: "Følger enhedens indstilling",
+    },
+  ] as const;
 
   const colorOptions = [
-    { key: 'primary', label: 'Primær', default: '#3b82f6' },
-    { key: 'secondary', label: 'Sekundær', default: '#6b7280' },
-    { key: 'accent', label: 'Accent', default: '#10b981' },
-    { key: 'background', label: 'Baggrund', default: '#ffffff' }
-  ]
+    { key: "primary", label: "Primær", default: "#3b82f6" },
+    { key: "secondary", label: "Sekundær", default: "#6b7280" },
+    { key: "accent", label: "Accent", default: "#10b981" },
+    { key: "background", label: "Baggrund", default: "#ffffff" },
+  ];
 
   return (
     <Card className={cn("w-full", className)} {...props}>
@@ -73,9 +79,9 @@ export function ThemeCustomizerCard({
         <div className="space-y-4">
           <Label className="text-sm font-medium">Tema</Label>
           <div className="grid grid-cols-3 gap-3">
-            {themes.map((theme) => {
-              const Icon = theme.icon
-              const isSelected = currentTheme === theme.id
+            {themes.map(theme => {
+              const Icon = theme.icon;
+              const isSelected = currentTheme === theme.id;
 
               return (
                 <button
@@ -99,7 +105,7 @@ export function ThemeCustomizerCard({
                     <CheckCircle className="h-4 w-4 text-primary" />
                   )}
                 </button>
-              )
+              );
             })}
           </div>
         </div>
@@ -108,24 +114,35 @@ export function ThemeCustomizerCard({
         <div className="space-y-4">
           <Label className="text-sm font-medium">Tilpassede Farver</Label>
           <div className="grid grid-cols-2 gap-4">
-            {colorOptions.map((option) => (
+            {colorOptions.map(option => (
               <div key={option.key} className="space-y-2">
                 <Label className="text-xs">{option.label}</Label>
                 <div className="flex gap-2">
                   <div
                     className="w-8 h-8 rounded border-2 border-border cursor-pointer"
-                    style={{ backgroundColor: customColors[option.key as keyof typeof customColors] || option.default }}
+                    style={{
+                      backgroundColor:
+                        customColors[option.key as keyof typeof customColors] ||
+                        option.default,
+                    }}
                     onClick={() => {
                       // In a real implementation, this would open a color picker
-                      const newColor = prompt(`Indtast farve for ${option.label}:`, customColors[option.key as keyof typeof customColors] || option.default)
+                      const newColor = prompt(
+                        `Indtast farve for ${option.label}:`,
+                        customColors[option.key as keyof typeof customColors] ||
+                          option.default
+                      );
                       if (newColor) {
-                        onColorChange?.(option.key, newColor)
+                        onColorChange?.(option.key, newColor);
                       }
                     }}
                   />
                   <Input
-                    value={customColors[option.key as keyof typeof customColors] || option.default}
-                    onChange={(e) => onColorChange?.(option.key, e.target.value)}
+                    value={
+                      customColors[option.key as keyof typeof customColors] ||
+                      option.default
+                    }
+                    onChange={e => onColorChange?.(option.key, e.target.value)}
                     placeholder={option.default}
                     className="flex-1 text-xs font-mono"
                   />
@@ -144,10 +161,14 @@ export function ThemeCustomizerCard({
                 <div className="w-8 h-8 rounded-full bg-primary"></div>
                 <div>
                   <div className="font-medium text-sm">John Doe</div>
-                  <div className="text-xs text-muted-foreground">john@example.com</div>
+                  <div className="text-xs text-muted-foreground">
+                    john@example.com
+                  </div>
                 </div>
               </div>
-              <Button size="sm" className="w-full">Test Knap</Button>
+              <Button size="sm" className="w-full">
+                Test Knap
+              </Button>
               <div className="flex gap-2">
                 <Badge>Primær</Badge>
                 <Badge variant="secondary">Sekundær</Badge>
@@ -165,10 +186,10 @@ export function ThemeCustomizerCard({
           </Button>
           <Button onClick={onSave} disabled={isLoading} className="flex-1">
             <Save className="h-4 w-4 mr-2" />
-            {isLoading ? 'Gemmer...' : 'Gem'}
+            {isLoading ? "Gemmer..." : "Gem"}
           </Button>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

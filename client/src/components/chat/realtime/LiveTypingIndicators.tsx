@@ -6,14 +6,22 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Type, Edit3, Users, MessageSquare, Eye, Zap, Pause } from "lucide-react";
+import {
+  Type,
+  Edit3,
+  Users,
+  MessageSquare,
+  Eye,
+  Zap,
+  Pause,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 export interface TypingUser {
   id: string;
   name: string;
   avatar?: string;
-  status: 'typing' | 'paused' | 'stopped';
+  status: "typing" | "paused" | "stopped";
   lastTyped: string;
   text?: string;
   cursorPosition?: number;
@@ -35,12 +43,12 @@ interface LiveTypingIndicatorsProps {
   onPauseNotifications?: () => void;
 }
 
-export function LiveTypingIndicators({ 
+export function LiveTypingIndicators({
   typingUsers = [],
   documents = [],
   onJoinTyping,
   onShowUserCursor,
-  onPauseNotifications 
+  onPauseNotifications,
 }: LiveTypingIndicatorsProps) {
   const [activeDocument, setActiveDocument] = useState<string | null>(null);
   const [showCursors, setShowCursors] = useState(true);
@@ -49,105 +57,129 @@ export function LiveTypingIndicators({
   // Default typing users
   const defaultTypingUsers: TypingUser[] = [
     {
-      id: '1',
-      name: 'John Smith',
-      status: 'typing',
-      lastTyped: 'lige nu',
-      text: 'Kan du hjælpe mig med at oprette en ny',
+      id: "1",
+      name: "John Smith",
+      status: "typing",
+      lastTyped: "lige nu",
+      text: "Kan du hjælpe mig med at oprette en ny",
       cursorPosition: 42,
-      documentId: '1'
+      documentId: "1",
     },
     {
-      id: '2',
-      name: 'Sarah Johnson',
-      status: 'paused',
-      lastTyped: 'for 5 sekunder siden',
-      text: 'Jeg skal bruge prislisten for REN-00',
+      id: "2",
+      name: "Sarah Johnson",
+      status: "paused",
+      lastTyped: "for 5 sekunder siden",
+      text: "Jeg skal bruge prislisten for REN-00",
       cursorPosition: 38,
-      documentId: '2'
+      documentId: "2",
     },
     {
-      id: '3',
-      name: 'Mike Wilson',
-      status: 'typing',
-      lastTyped: 'lige nu',
-      text: 'Mødet er flyttet til kl. 14:00',
+      id: "3",
+      name: "Mike Wilson",
+      status: "typing",
+      lastTyped: "lige nu",
+      text: "Mødet er flyttet til kl. 14:00",
       cursorPosition: 31,
-      documentId: '1'
+      documentId: "1",
     },
     {
-      id: '4',
-      name: 'Emma Davis',
-      status: 'stopped',
-      lastTyped: 'for 15 sekunder siden',
-      text: 'Send faktura til kunde',
-      documentId: '3'
-    }
+      id: "4",
+      name: "Emma Davis",
+      status: "stopped",
+      lastTyped: "for 15 sekunder siden",
+      text: "Send faktura til kunde",
+      documentId: "3",
+    },
   ];
 
   // Default documents
   const defaultDocuments: TypingDocument[] = [
     {
-      id: '1',
-      title: 'Faktura - ABC Corporation',
-      typers: ['1', '3'],
-      lastActivity: 'lige nu'
+      id: "1",
+      title: "Faktura - ABC Corporation",
+      typers: ["1", "3"],
+      lastActivity: "lige nu",
     },
     {
-      id: '2',
-      title: 'Email - Support team',
-      typers: ['2'],
-      lastActivity: 'for 5 sekunder siden'
+      id: "2",
+      title: "Email - Support team",
+      typers: ["2"],
+      lastActivity: "for 5 sekunder siden",
     },
     {
-      id: '3',
-      title: 'Chat - Kunde henvendelse',
-      typers: ['4'],
-      lastActivity: 'for 15 sekunder siden'
-    }
+      id: "3",
+      title: "Chat - Kunde henvendelse",
+      typers: ["4"],
+      lastActivity: "for 15 sekunder siden",
+    },
   ];
 
-  const liveTypingUsers = typingUsers.length > 0 ? typingUsers : defaultTypingUsers;
+  const liveTypingUsers =
+    typingUsers.length > 0 ? typingUsers : defaultTypingUsers;
   const liveDocuments = documents.length > 0 ? documents : defaultDocuments;
 
-  const activeTypers = liveTypingUsers.filter(user => user.status === 'typing');
-  const pausedTypers = liveTypingUsers.filter(user => user.status === 'paused');
-  const totalActiveTypers = liveTypingUsers.filter(user => user.status !== 'stopped').length;
+  const activeTypers = liveTypingUsers.filter(user => user.status === "typing");
+  const pausedTypers = liveTypingUsers.filter(user => user.status === "paused");
+  const totalActiveTypers = liveTypingUsers.filter(
+    user => user.status !== "stopped"
+  ).length;
 
-  const getStatusColor = (status: TypingUser['status']) => {
+  const getStatusColor = (status: TypingUser["status"]) => {
     switch (status) {
-      case 'typing': return 'bg-green-500';
-      case 'paused': return 'bg-yellow-500';
-      case 'stopped': return 'bg-gray-500';
-      default: return 'bg-gray-500';
+      case "typing":
+        return "bg-green-500";
+      case "paused":
+        return "bg-yellow-500";
+      case "stopped":
+        return "bg-gray-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const getStatusLabel = (status: TypingUser['status']) => {
+  const getStatusLabel = (status: TypingUser["status"]) => {
     switch (status) {
-      case 'typing': return 'Skriver';
-      case 'paused': return 'Pause';
-      case 'stopped': return 'Stoppet';
-      default: return status;
+      case "typing":
+        return "Skriver";
+      case "paused":
+        return "Pause";
+      case "stopped":
+        return "Stoppet";
+      default:
+        return status;
     }
   };
 
-  const getStatusIcon = (status: TypingUser['status']) => {
+  const getStatusIcon = (status: TypingUser["status"]) => {
     switch (status) {
-      case 'typing': return '✏️';
-      case 'paused': return '⏸️';
-      case 'stopped': return '⏹️';
-      default: return '⏹️';
+      case "typing":
+        return "✏️";
+      case "paused":
+        return "⏸️";
+      case "stopped":
+        return "⏹️";
+      default:
+        return "⏹️";
     }
   };
 
-  const getTypingAnimation = (status: TypingUser['status']) => {
-    if (status === 'typing') {
+  const getTypingAnimation = (status: TypingUser["status"]) => {
+    if (status === "typing") {
       return (
         <div className="flex items-center gap-1">
-          <div className="w-1 h-1 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-          <div className="w-1 h-1 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-          <div className="w-1 h-1 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+          <div
+            className="w-1 h-1 bg-green-500 rounded-full animate-bounce"
+            style={{ animationDelay: "0ms" }}
+          />
+          <div
+            className="w-1 h-1 bg-green-500 rounded-full animate-bounce"
+            style={{ animationDelay: "150ms" }}
+          />
+          <div
+            className="w-1 h-1 bg-green-500 rounded-full animate-bounce"
+            style={{ animationDelay: "300ms" }}
+          />
         </div>
       );
     }
@@ -156,7 +188,7 @@ export function LiveTypingIndicators({
 
   const truncateText = (text: string, maxLength: number = 30) => {
     if (text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + '...';
+    return text.substring(0, maxLength) + "...";
   };
 
   const getDocumentTypers = (documentId: string) => {
@@ -174,7 +206,9 @@ export function LiveTypingIndicators({
             </div>
             <div>
               <h4 className="font-semibold">Live Typing Indicators</h4>
-              <p className="text-xs text-muted-foreground">Viser hvem der skriver</p>
+              <p className="text-xs text-muted-foreground">
+                Viser hvem der skriver
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -187,7 +221,11 @@ export function LiveTypingIndicators({
                 onPauseNotifications?.();
               }}
             >
-              {notificationsPaused ? <Zap className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
+              {notificationsPaused ? (
+                <Zap className="w-3 h-3" />
+              ) : (
+                <Pause className="w-3 h-3" />
+              )}
             </Button>
           </div>
         </div>
@@ -199,7 +237,8 @@ export function LiveTypingIndicators({
               <div className="flex items-center gap-2">
                 <Edit3 className="w-4 h-4 text-blue-600" />
                 <span className="text-sm font-medium text-blue-700 dark:text-blue-400">
-                  Følgende skriver i: {liveDocuments.find(d => d.id === activeDocument)?.title}
+                  Følgende skriver i:{" "}
+                  {liveDocuments.find(d => d.id === activeDocument)?.title}
                 </span>
               </div>
               <Badge className="bg-blue-500">Live</Badge>
@@ -231,13 +270,13 @@ export function LiveTypingIndicators({
               onClick={() => setShowCursors(!showCursors)}
             >
               <Eye className="w-3 h-3 mr-1" />
-              {showCursors ? 'Skjul' : 'Vis'} cursors
+              {showCursors ? "Skjul" : "Vis"} cursors
             </Button>
           </div>
-          
+
           {activeTypers.length > 0 ? (
             <div className="space-y-2">
-              {activeTypers.map((user) => (
+              {activeTypers.map(user => (
                 <div
                   key={user.id}
                   className="p-3 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800"
@@ -249,7 +288,7 @@ export function LiveTypingIndicators({
                       </div>
                       <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-background animate-pulse" />
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-medium text-sm">{user.name}</span>
@@ -260,7 +299,7 @@ export function LiveTypingIndicators({
                           {getTypingAnimation(user.status)}
                         </div>
                       </div>
-                      
+
                       {/* Current Text */}
                       {user.text && (
                         <div className="mb-2 p-2 rounded bg-white/50 dark:bg-black/20 text-sm font-mono">
@@ -268,17 +307,23 @@ export function LiveTypingIndicators({
                           <span className="animate-pulse">|</span>
                         </div>
                       )}
-                      
+
                       <div className="flex items-center gap-3 text-xs text-muted-foreground">
                         <span>{user.lastTyped}</span>
                         {user.cursorPosition && (
                           <span>Position: {user.cursorPosition}</span>
                         )}
                         {user.documentId && (
-                          <span>Dokument: {liveDocuments.find(d => d.id === user.documentId)?.title}</span>
+                          <span>
+                            Dokument:{" "}
+                            {
+                              liveDocuments.find(d => d.id === user.documentId)
+                                ?.title
+                            }
+                          </span>
                         )}
                       </div>
-                      
+
                       {/* Cursor Position Indicator */}
                       {showCursors && user.cursorPosition && (
                         <div className="mt-2 p-2 rounded bg-green-100 dark:bg-green-900/30 text-xs">
@@ -291,7 +336,7 @@ export function LiveTypingIndicators({
                         </div>
                       )}
                     </div>
-                    
+
                     {/* Actions */}
                     <div className="flex items-center gap-1">
                       {user.documentId && (
@@ -331,10 +376,15 @@ export function LiveTypingIndicators({
         {/* Paused Typing */}
         {pausedTypers.length > 0 && (
           <div className="space-y-2">
-            <h5 className="text-sm font-semibold">Pause ({pausedTypers.length}):</h5>
+            <h5 className="text-sm font-semibold">
+              Pause ({pausedTypers.length}):
+            </h5>
             <div className="space-y-1">
-              {pausedTypers.map((user) => (
-                <div key={user.id} className="flex items-center gap-3 p-2 rounded-lg bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800">
+              {pausedTypers.map(user => (
+                <div
+                  key={user.id}
+                  className="flex items-center gap-3 p-2 rounded-lg bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800"
+                >
                   <div className="w-8 h-8 rounded-full bg-linear-to-br from-yellow-400 to-amber-600 flex items-center justify-center text-white text-sm font-medium">
                     {user.name.charAt(0)}
                   </div>
@@ -342,7 +392,9 @@ export function LiveTypingIndicators({
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">{user.name}</span>
                       <Badge className="bg-yellow-500">Pause</Badge>
-                      <span className="text-xs text-muted-foreground">{user.lastTyped}</span>
+                      <span className="text-xs text-muted-foreground">
+                        {user.lastTyped}
+                      </span>
                     </div>
                     {user.text && (
                       <p className="text-xs text-muted-foreground truncate">
@@ -360,11 +412,15 @@ export function LiveTypingIndicators({
         <div className="space-y-2">
           <h5 className="text-sm font-semibold">Dokumenter med aktivitet:</h5>
           <div className="space-y-2">
-            {liveDocuments.map((document) => {
+            {liveDocuments.map(document => {
               const documentTypers = getDocumentTypers(document.id);
-              const activeCount = documentTypers.filter(u => u.status === 'typing').length;
-              const pausedCount = documentTypers.filter(u => u.status === 'paused').length;
-              
+              const activeCount = documentTypers.filter(
+                u => u.status === "typing"
+              ).length;
+              const pausedCount = documentTypers.filter(
+                u => u.status === "paused"
+              ).length;
+
               return (
                 <button
                   key={document.id}
@@ -386,24 +442,32 @@ export function LiveTypingIndicators({
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-sm">{document.title}</span>
+                          <span className="font-medium text-sm">
+                            {document.title}
+                          </span>
                           {activeCount > 0 && (
-                            <Badge className="bg-green-500">{activeCount} skriver</Badge>
+                            <Badge className="bg-green-500">
+                              {activeCount} skriver
+                            </Badge>
                           )}
                           {pausedCount > 0 && (
-                            <Badge className="bg-yellow-500">{pausedCount} pause</Badge>
+                            <Badge className="bg-yellow-500">
+                              {pausedCount} pause
+                            </Badge>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground">{document.lastActivity}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {document.lastActivity}
+                        </p>
                         <div className="flex items-center gap-1 mt-1">
                           <Users className="w-3 h-3 text-muted-foreground" />
                           <span className="text-xs text-muted-foreground">
-                            {documentTypers.map(u => u.name).join(', ')}
+                            {documentTypers.map(u => u.name).join(", ")}
                           </span>
                         </div>
                       </div>
                     </div>
-                    
+
                     {activeDocument === document.id && (
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
@@ -458,7 +522,7 @@ export function LiveTypingIndicators({
 
         {/* Actions */}
         <div className="flex gap-2 pt-2 border-t">
-          <Button 
+          <Button
             onClick={() => setNotificationsPaused(!notificationsPaused)}
             variant={notificationsPaused ? "default" : "outline"}
             className="flex-1"
@@ -475,9 +539,13 @@ export function LiveTypingIndicators({
               </>
             )}
           </Button>
-          <Button onClick={() => setShowCursors(!showCursors)} variant="outline" className="flex-1">
+          <Button
+            onClick={() => setShowCursors(!showCursors)}
+            variant="outline"
+            className="flex-1"
+          >
             <Eye className="w-4 h-4 mr-2" />
-            {showCursors ? 'Skjul' : 'Vis'} cursors
+            {showCursors ? "Skjul" : "Vis"} cursors
           </Button>
         </div>
       </div>

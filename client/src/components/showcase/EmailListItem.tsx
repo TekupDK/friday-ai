@@ -11,7 +11,7 @@ interface EmailItemProps {
   hasAttachments?: boolean;
   badges?: Array<{
     label: string;
-    variant: 'default' | 'secondary' | 'destructive' | 'outline';
+    variant: "default" | "secondary" | "destructive" | "outline";
   }>;
   metrics?: {
     leads?: number;
@@ -32,7 +32,7 @@ export function EmailListItem({
   badges = [],
   metrics,
   selected,
-  onClick
+  onClick,
 }: EmailItemProps) {
   return (
     <button
@@ -46,20 +46,16 @@ export function EmailListItem({
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-semibold text-sm truncate">
-              {sender}
-            </span>
+            <span className="font-semibold text-sm truncate">{sender}</span>
             {source && (
               <Badge variant="outline" className="text-xs">
                 {source}
               </Badge>
             )}
           </div>
-          <div className="text-xs text-muted-foreground">
-            Re: {subject}
-          </div>
+          <div className="text-xs text-muted-foreground">Re: {subject}</div>
         </div>
-        
+
         <div className="flex items-center gap-2 flex-shrink-0">
           <span className="text-xs text-muted-foreground">{time}</span>
           <ChevronRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -101,14 +97,18 @@ export function EmailListItem({
             {metrics.value !== undefined && (
               <div className="flex items-center gap-1">
                 <span className="text-green-500">💰</span>
-                <span className="font-semibold">{metrics.value.toLocaleString('da-DK')} kr.</span>
+                <span className="font-semibold">
+                  {metrics.value.toLocaleString("da-DK")} kr.
+                </span>
                 <span className="text-muted-foreground">Est. Value</span>
               </div>
             )}
             {metrics.avgValue !== undefined && (
               <div className="flex items-center gap-1">
                 <span className="text-blue-500">📊</span>
-                <span className="font-semibold">{metrics.avgValue.toLocaleString('da-DK')}</span>
+                <span className="font-semibold">
+                  {metrics.avgValue.toLocaleString("da-DK")}
+                </span>
                 <span className="text-muted-foreground">Avg Value</span>
               </div>
             )}
@@ -123,32 +123,32 @@ export function EmailListItem({
 export function EmailListDemo() {
   const demoEmails = [
     {
-      sender: 'Matilde Skinneholm',
-      source: 'Rengøring.nu',
-      subject: 'Matilde Skinneholm fra Rengøring.nu - Nettbureau AS',
-      time: '22:02',
-      badges: [{ label: '🔥 HOT', variant: 'destructive' as const }],
+      sender: "Matilde Skinneholm",
+      source: "Rengøring.nu",
+      subject: "Matilde Skinneholm fra Rengøring.nu - Nettbureau AS",
+      time: "22:02",
+      badges: [{ label: "🔥 HOT", variant: "destructive" as const }],
       metrics: {
         leads: 3,
         value: 40000,
-        avgValue: 13333
-      }
+        avgValue: 13333,
+      },
     },
     {
-      sender: 'Hanne Andersen',
-      source: 'Rengøring.nu',
-      subject: 'Hanne andersen fra Rengøring.nu - Nettbureau AS',
-      time: '17:39',
-      badges: [{ label: '🔥 HOT', variant: 'destructive' as const }]
+      sender: "Hanne Andersen",
+      source: "Rengøring.nu",
+      subject: "Hanne andersen fra Rengøring.nu - Nettbureau AS",
+      time: "17:39",
+      badges: [{ label: "🔥 HOT", variant: "destructive" as const }],
     },
     {
-      sender: 'Rendetajle.dk',
-      source: 'Website',
-      subject: 'Camilla Nehuus fra Rengøring.nu - Nettbureau AS',
-      time: '20:53',
+      sender: "Rendetajle.dk",
+      source: "Website",
+      subject: "Camilla Nehuus fra Rengøring.nu - Nettbureau AS",
+      time: "20:53",
       hasAttachments: true,
-      badges: [{ label: '🔥 HOT', variant: 'destructive' as const }]
-    }
+      badges: [{ label: "🔥 HOT", variant: "destructive" as const }],
+    },
   ];
 
   return (
@@ -164,7 +164,7 @@ export function EmailListDemo() {
           <Badge>3 Hot Leads</Badge>
         </div>
       </div>
-      
+
       <div className="divide-y">
         {demoEmails.map((email, idx) => (
           <EmailListItem key={idx} {...email} selected={idx === 0} />

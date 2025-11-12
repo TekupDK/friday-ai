@@ -23,13 +23,15 @@ Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent*
 ## 5 Context States
 
 ### 1. LEAD EMAIL → Lead Analyzer
+
 - Auto-detect: m², adresse, ønsket dato
 - AI estimat: pris, tid, team
 - Kalender-check (real-time)
 - Lignende opgaver
 - Quick actions: Send tilbud, Book, Mark lost
 
-### 2. BOOKING EMAIL → Booking Manager  
+### 2. BOOKING EMAIL → Booking Manager
+
 - Booking detaljer
 - Team assignment
 - Profit calculation
@@ -37,6 +39,7 @@ Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent*
 - Quick actions: Update, Invoice, Reminder
 
 ### 3. INVOICE EMAIL → Invoice Tracker
+
 - Payment status
 - Risk analysis
 - Email historik
@@ -44,6 +47,7 @@ Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent*
 - Quick actions: Reminder, Call, Discount
 
 ### 4. CUSTOMER EMAIL → Customer Profile
+
 - Booking historik
 - Lifetime value
 - Preferences & notes
@@ -51,6 +55,7 @@ Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent*
 - Quick actions: Book next, Thank you
 
 ### 5. NO EMAIL → Business Dashboard
+
 - Today's bookings
 - Urgent actions
 - Week/month stats
@@ -62,6 +67,7 @@ Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent*
 Collapsed: `[📄] [📅] [👥] [✅]`
 
 Expanded (drawer/modal):
+
 - 📄 Fakturaer: Ubetalte, betalt, stats
 - 📅 Kalender: I dag, i morgen, uge
 - 👥 Leads: Needs reply, venter, i kalender

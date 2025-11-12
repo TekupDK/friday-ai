@@ -20,7 +20,18 @@ import { trpc } from "@/lib/trpc";
 import { BUSINESS_CONSTANTS, ERROR_MESSAGES } from "@/constants/business";
 
 // Lead source types based on Rendetalje workflow
-type LeadSource = "rengoring_nu" | "rengoring_aarhus" | "adhelp" | "website" | "referral" | "phone" | "social_media" | "billy_import" | "direct" | "unknown" | null;
+type LeadSource =
+  | "rengoring_nu"
+  | "rengoring_aarhus"
+  | "adhelp"
+  | "website"
+  | "referral"
+  | "phone"
+  | "social_media"
+  | "billy_import"
+  | "direct"
+  | "unknown"
+  | null;
 
 type SourceDetection = {
   source: LeadSource;
@@ -71,17 +82,19 @@ export function LeadAnalyzer({ context }: LeadAnalyzerProps) {
   const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(true);
   const [leadSource, setLeadSource] = useState<LeadSource>(null);
-const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(null);
+  const [sourceDetection, setSourceDetection] =
+    useState<SourceDetection | null>(null);
   const [showPhotoWarning, setShowPhotoWarning] = useState(false);
-  
+
   // Extract customer info for SmartActionBar
-  const customerName = context.from?.replace(/<.*>/, '').trim() || "Kunde";
+  const customerName = context.from?.replace(/<.*>/, "").trim() || "Kunde";
   const customerEmail = context.from?.match(/<(.+)>/)?.[1] || context.from;
-  
+
   // Extract location for SmartActionBar
   const subject = context.subject || "";
   const body = context.body || "";
-  const locationMatch = subject.match(/fra\s+([^-]+)/i) || body.match(/([A-ZÆØÅ][a-zæøå]+)/);
+  const locationMatch =
+    subject.match(/fra\s+([^-]+)/i) || body.match(/([A-ZÆØÅ][a-zæøå]+)/);
   const location = locationMatch ? locationMatch[1].trim() : "Ikke angivet";
 
   useEffect(() => {
@@ -99,31 +112,45 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
       let confidence = 50; // Default confidence
       let reasoning = "Basic pattern matching";
       let patterns: string[] = [];
-      
-      if (subject.toLowerCase().includes("rengøring.nu") || from.toLowerCase().includes("nettbureau") || from.toLowerCase().includes("leadmail")) {
+
+      if (
+        subject.toLowerCase().includes("rengøring.nu") ||
+        from.toLowerCase().includes("nettbureau") ||
+        from.toLowerCase().includes("leadmail")
+      ) {
         detectedSource = "rengoring_nu";
         confidence = 95;
         reasoning = "Domain and subject match for rengøring.nu";
-        patterns = subject.toLowerCase().includes("rengøring.nu") ? ["subject: rengøring.nu"] : ["domain: nettbureau/leadmail"];
-      } else if (subject.toLowerCase().includes("rengøring århus") || from.toLowerCase().includes("leadpoint")) {
+        patterns = subject.toLowerCase().includes("rengøring.nu")
+          ? ["subject: rengøring.nu"]
+          : ["domain: nettbureau/leadmail"];
+      } else if (
+        subject.toLowerCase().includes("rengøring århus") ||
+        from.toLowerCase().includes("leadpoint")
+      ) {
         detectedSource = "rengoring_aarhus";
         confidence = 90;
         reasoning = "Domain and subject match for rengøring århus";
-        patterns = subject.toLowerCase().includes("rengøring århus") ? ["subject: rengøring århus"] : ["domain: leadpoint"];
+        patterns = subject.toLowerCase().includes("rengøring århus")
+          ? ["subject: rengøring århus"]
+          : ["domain: leadpoint"];
       } else if (from.toLowerCase().includes("adhelp")) {
         detectedSource = "adhelp";
         confidence = 85;
         reasoning = "Domain match for adhelp";
         patterns = ["domain: adhelp"];
-      } else if (from.toLowerCase().includes("rendetalje.dk") || subject.toLowerCase().includes("kontaktformular")) {
+      } else if (
+        from.toLowerCase().includes("rendetalje.dk") ||
+        subject.toLowerCase().includes("kontaktformular")
+      ) {
         detectedSource = "website";
         confidence = 70;
         reasoning = "Own website or contact form";
         patterns = ["domain: rendetalje.dk"];
       }
-      
+
       setLeadSource(detectedSource);
-      
+
       // Phase 9.2: Store detection metadata
       const detection: SourceDetection = {
         source: detectedSource,
@@ -132,8 +159,10 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
         patterns,
       };
       setSourceDetection(detection);
-      
-      console.log(`[LeadAnalyzer] Source detected: ${detectedSource} (${confidence}% confidence)`);
+
+      console.log(
+        `[LeadAnalyzer] Source detected: ${detectedSource} (${confidence}% confidence)`
+      );
       console.log(`[LeadAnalyzer] Reasoning: ${reasoning}`);
 
       // Location already extracted at component level
@@ -143,7 +172,10 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
       try {
         // Detect job type from keywords
         let jobType = "Rengøring";
-        if (subject.toLowerCase().includes("flytte") || body.toLowerCase().includes("flytte")) {
+        if (
+          subject.toLowerCase().includes("flytte") ||
+          body.toLowerCase().includes("flytte")
+        ) {
           jobType = "Flytterengøring";
           // CRITICAL RULE (MEMORY_16): Flytterengøring ALWAYS requires photos first!
           setShowPhotoWarning(true);
@@ -158,11 +190,21 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
         }
 
         // Calculate price estimate based on real business logic
-        const estimatedHours = jobType === "Flytterengøring" ? 6 : jobType === "Hovedrengøring" ? 4 : 3;
+        const estimatedHours =
+          jobType === "Flytterengøring"
+            ? 6
+            : jobType === "Hovedrengøring"
+              ? 4
+              : 3;
         const minPrice = estimatedHours * BUSINESS_CONSTANTS.HOURLY_RATE;
         const maxPrice = (estimatedHours + 2) * BUSINESS_CONSTANTS.HOURLY_RATE;
-        const hoursRange = jobType === "Flytterengøring" ? "6-8t" : jobType === "Hovedrengøring" ? "4-6t" : "3-5t";
-        
+        const hoursRange =
+          jobType === "Flytterengøring"
+            ? "6-8t"
+            : jobType === "Hovedrengøring"
+              ? "4-6t"
+              : "3-5t";
+
         setEstimate({
           size: BUSINESS_CONSTANTS.DEFAULT_SIZE_M2, // Default, would need AI to extract from email
           type: jobType,
@@ -189,8 +231,9 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
         // Fallback to basic estimate using real business logic
         const fallbackHours = BUSINESS_CONSTANTS.DEFAULT_HOURS;
         const fallbackMinPrice = fallbackHours * BUSINESS_CONSTANTS.HOURLY_RATE;
-        const fallbackMaxPrice = (fallbackHours + 1) * BUSINESS_CONSTANTS.HOURLY_RATE;
-        
+        const fallbackMaxPrice =
+          (fallbackHours + 1) * BUSINESS_CONSTANTS.HOURLY_RATE;
+
         setEstimate({
           size: BUSINESS_CONSTANTS.DEFAULT_SIZE_M2,
           type: "Rengøring",
@@ -200,7 +243,7 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
           travelCost: BUSINESS_CONSTANTS.DEFAULT_TRAVEL_COST,
           totalPrice: `${fallbackMinPrice + BUSINESS_CONSTANTS.DEFAULT_TRAVEL_COST}-${fallbackMaxPrice + BUSINESS_CONSTANTS.DEFAULT_TRAVEL_COST} kr`,
         });
-        
+
         setSimilarJobs([
           {
             customer: customerName,
@@ -216,7 +259,12 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
       setAvailableSlots([
         { date: "2026-01-10", dayName: "Fre 10. jan", available: true },
         { date: "2026-01-11", dayName: "Lør 11. jan", available: true },
-        { date: "2026-01-12", dayName: "Søn 12. jan", available: false, reason: "BOOKET" },
+        {
+          date: "2026-01-12",
+          dayName: "Søn 12. jan",
+          available: false,
+          reason: "BOOKET",
+        },
         { date: "2026-01-13", dayName: "Man 13. jan", available: true },
         { date: "2026-01-14", dayName: "Tir 14. jan", available: true },
       ]);
@@ -257,7 +305,8 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
                 ⚠️ CRITICAL: Flytterengøring - Request Photos First!
               </p>
               <p className="text-xs text-orange-800 dark:text-orange-200">
-                MEMORY_16: ALWAYS request photos before sending quote to ensure accurate pricing and prevent overtime.
+                MEMORY_16: ALWAYS request photos before sending quote to ensure
+                accurate pricing and prevent overtime.
               </p>
             </div>
           </div>
@@ -272,7 +321,11 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
             <p className="text-xs text-muted-foreground mt-0.5">
               {leadSource && leadSourceConfig[leadSource] ? (
                 <span className="flex items-center gap-1">
-                  Lead fra <Badge variant="secondary" className={`${leadSourceConfig[leadSource].color} text-white text-xs`}>
+                  Lead fra{" "}
+                  <Badge
+                    variant="secondary"
+                    className={`${leadSourceConfig[leadSource].color} text-white text-xs`}
+                  >
                     {leadSourceConfig[leadSource].label}
                   </Badge>
                 </span>
@@ -381,7 +434,9 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-medium">{job.price.toLocaleString()} kr</div>
+                  <div className="font-medium">
+                    {job.price.toLocaleString()} kr
+                  </div>
                   <div className="text-xs text-yellow-600">
                     {"⭐".repeat(job.rating)}
                   </div>
@@ -457,7 +512,7 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
             customerName: customerName,
             customerEmail: customerEmail || "",
             estimate: {
-              totalPrice: parseInt(estimate.totalPrice.split('-')[1]) || 0,
+              totalPrice: parseInt(estimate.totalPrice.split("-")[1]) || 0,
               size: estimate.size,
               travelCost: estimate.travelCost,
             },
@@ -467,7 +522,7 @@ const [sourceDetection, setSourceDetection] = useState<SourceDetection | null>(n
           onAction={async (actionId: string, data: any) => {
             // Handle smart actions
             console.log("Smart action executed:", actionId, data);
-            
+
             // TODO: Implement actual action handlers
             switch (actionId) {
               case "send-standard-offer":

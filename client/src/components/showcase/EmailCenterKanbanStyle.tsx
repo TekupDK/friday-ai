@@ -22,25 +22,73 @@ interface EmailCard {
   subject: string;
   preview: string;
   time: string;
-  stage: 'inbox' | 'review' | 'replied' | 'done';
+  stage: "inbox" | "review" | "replied" | "done";
   hasAttachment: boolean;
-  priority: 'high' | 'normal' | 'low';
+  priority: "high" | "normal" | "low";
   tags: string[];
   comments: number;
 }
 
 const emails: EmailCard[] = [
-  { id: '1', sender: 'Matilde Skinneholm', avatar: 'MS', subject: 'Tilbud på rengøring', preview: 'Vi vil gerne have et tilbud...', time: '22:08', stage: 'inbox', hasAttachment: false, priority: 'high', tags: ['Hot Lead', 'Rengøring.nu'], comments: 2 },
-  { id: '2', sender: 'Hanne Andersen', avatar: 'HA', subject: 'Follow-up', preview: 'Jeg følger op på...', time: '17:39', stage: 'inbox', hasAttachment: false, priority: 'high', tags: ['Follow-up'], comments: 1 },
-  { id: '3', sender: 'Rendetalje.dk', avatar: 'RD', subject: 'Booking', preview: 'Vi kan tirsdag eller torsdag...', time: '20:53', stage: 'review', hasAttachment: true, priority: 'high', tags: ['Booking'], comments: 0 },
-  { id: '4', sender: 'Lars Nielsen', avatar: 'LN', subject: 'Møde bekræftelse', preview: 'Bekræftelse på mødet...', time: 'Igår', stage: 'replied', hasAttachment: false, priority: 'normal', tags: ['Meeting'], comments: 3 },
+  {
+    id: "1",
+    sender: "Matilde Skinneholm",
+    avatar: "MS",
+    subject: "Tilbud på rengøring",
+    preview: "Vi vil gerne have et tilbud...",
+    time: "22:08",
+    stage: "inbox",
+    hasAttachment: false,
+    priority: "high",
+    tags: ["Hot Lead", "Rengøring.nu"],
+    comments: 2,
+  },
+  {
+    id: "2",
+    sender: "Hanne Andersen",
+    avatar: "HA",
+    subject: "Follow-up",
+    preview: "Jeg følger op på...",
+    time: "17:39",
+    stage: "inbox",
+    hasAttachment: false,
+    priority: "high",
+    tags: ["Follow-up"],
+    comments: 1,
+  },
+  {
+    id: "3",
+    sender: "Rendetalje.dk",
+    avatar: "RD",
+    subject: "Booking",
+    preview: "Vi kan tirsdag eller torsdag...",
+    time: "20:53",
+    stage: "review",
+    hasAttachment: true,
+    priority: "high",
+    tags: ["Booking"],
+    comments: 0,
+  },
+  {
+    id: "4",
+    sender: "Lars Nielsen",
+    avatar: "LN",
+    subject: "Møde bekræftelse",
+    preview: "Bekræftelse på mødet...",
+    time: "Igår",
+    stage: "replied",
+    hasAttachment: false,
+    priority: "normal",
+    tags: ["Meeting"],
+    comments: 3,
+  },
 ];
 
 const stages = [
-  { id: 'inbox', label: 'Inbox', color: 'bg-blue-500' },
-  { id: 'review', label: 'Under Review', color: 'bg-yellow-500' },
-  { id: 'replied', label: 'Replied', color: 'bg-purple-500' },
-  { id: 'done', label: 'Done', color: 'bg-green-500' },
+  { id: "inbox", label: "Inbox", color: "bg-blue-500" },
+  { id: "review", label: "Under Review", color: "bg-yellow-500" },
+  { id: "replied", label: "Replied", color: "bg-purple-500" },
+  { id: "done", label: "Done", color: "bg-green-500" },
 ];
 
 export function EmailCenterKanbanStyle() {
@@ -51,9 +99,9 @@ export function EmailCenterKanbanStyle() {
   };
 
   const getPriorityDot = (priority: string) => {
-    if (priority === 'high') return 'bg-red-500';
-    if (priority === 'normal') return 'bg-yellow-500';
-    return 'bg-gray-400';
+    if (priority === "high") return "bg-red-500";
+    if (priority === "normal") return "bg-yellow-500";
+    return "bg-gray-400";
   };
 
   return (
@@ -62,21 +110,25 @@ export function EmailCenterKanbanStyle() {
         {/* Board Header */}
         <div className="mb-4">
           <h3 className="text-xl font-bold">Email Pipeline</h3>
-          <p className="text-sm text-muted-foreground">Kanban-style workflow • Drag cards between stages</p>
+          <p className="text-sm text-muted-foreground">
+            Kanban-style workflow • Drag cards between stages
+          </p>
         </div>
 
         {/* Kanban Columns */}
         <div className="grid grid-cols-4 gap-4">
           {stages.map(stage => {
             const stageEmails = getEmailsByStage(stage.id);
-            
+
             return (
               <div key={stage.id} className="flex flex-col">
                 {/* Column Header */}
                 <div className="flex items-center gap-2 mb-3 pb-2 border-b">
                   <div className={cn("w-2 h-2 rounded-full", stage.color)} />
                   <span className="font-semibold text-sm">{stage.label}</span>
-                  <Badge variant="secondary" className="ml-auto text-xs">{stageEmails.length}</Badge>
+                  <Badge variant="secondary" className="ml-auto text-xs">
+                    {stageEmails.length}
+                  </Badge>
                 </div>
 
                 {/* Column Content */}
@@ -93,19 +145,28 @@ export function EmailCenterKanbanStyle() {
                           "hover:shadow-md transition-all duration-200",
                           draggedId === email.id && "opacity-50 scale-95"
                         )}
-                        style={{ 
-                          animation: `cardSlide 0.3s ease-out ${idx * 0.08}s both` 
+                        style={{
+                          animation: `cardSlide 0.3s ease-out ${idx * 0.08}s both`,
                         }}
                       >
                         {/* Card Header */}
                         <div className="flex items-start gap-2 mb-3">
                           <Avatar className="h-8 w-8 shrink-0">
-                            <AvatarFallback className="text-xs font-semibold">{email.avatar}</AvatarFallback>
+                            <AvatarFallback className="text-xs font-semibold">
+                              {email.avatar}
+                            </AvatarFallback>
                           </Avatar>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-1.5 mb-1">
-                              <div className={cn("w-1.5 h-1.5 rounded-full", getPriorityDot(email.priority))} />
-                              <span className="font-medium text-sm truncate">{email.sender}</span>
+                              <div
+                                className={cn(
+                                  "w-1.5 h-1.5 rounded-full",
+                                  getPriorityDot(email.priority)
+                                )}
+                              />
+                              <span className="font-medium text-sm truncate">
+                                {email.sender}
+                              </span>
                             </div>
                             <h4 className="font-semibold text-sm line-clamp-2 leading-tight">
                               {email.subject}
@@ -121,7 +182,11 @@ export function EmailCenterKanbanStyle() {
                         {/* Tags */}
                         <div className="flex flex-wrap gap-1.5 mb-3">
                           {email.tags.map(tag => (
-                            <Badge key={tag} variant="secondary" className="text-xs px-2 py-0">
+                            <Badge
+                              key={tag}
+                              variant="secondary"
+                              className="text-xs px-2 py-0"
+                            >
                               {tag}
                             </Badge>
                           ))}
@@ -140,7 +205,7 @@ export function EmailCenterKanbanStyle() {
                               </div>
                             )}
                           </div>
-                          
+
                           <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             {email.comments > 0 && (
                               <div className="flex items-center gap-1">

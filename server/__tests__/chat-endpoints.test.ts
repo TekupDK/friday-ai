@@ -3,11 +3,11 @@
  * Tests chat router endpoints including sendMessage, getMessages, and conversations
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { TRPCError } from '@trpc/server';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { TRPCError } from "@trpc/server";
 
 // Mock dependencies
-vi.mock('../db', () => ({
+vi.mock("../db", () => ({
   getDb: vi.fn(),
   getUserConversations: vi.fn(),
   getConversationMessages: vi.fn(),
@@ -20,16 +20,16 @@ vi.mock('../db', () => ({
   trackEvent: vi.fn(),
 }));
 
-vi.mock('../rate-limiter-redis', () => ({
+vi.mock("../rate-limiter-redis", () => ({
   checkRateLimitUnified: vi.fn(),
 }));
 
-vi.mock('../ai-router', () => ({
+vi.mock("../ai-router", () => ({
   routeAI: vi.fn(),
 }));
 
-vi.mock('../action-audit', () => ({
-  generateCorrelationId: vi.fn(() => 'test-correlation-id'),
+vi.mock("../action-audit", () => ({
+  generateCorrelationId: vi.fn(() => "test-correlation-id"),
 }));
 
 import {
@@ -38,15 +38,15 @@ import {
   createConversation,
   createMessage,
   trackEvent,
-} from '../db';
-import { checkRateLimitUnified } from '../rate-limiter-redis';
-import { routeAI } from '../ai-router';
+} from "../db";
+import { checkRateLimitUnified } from "../rate-limiter-redis";
+import { routeAI } from "../ai-router";
 
-describe('Chat TRPC Endpoints', () => {
+describe("Chat TRPC Endpoints", () => {
   const mockUser = {
     id: 123,
-    email: 'test@example.com',
-    name: 'Test User',
+    email: "test@example.com",
+    name: "Test User",
   };
 
   const mockCtx = {
@@ -59,11 +59,11 @@ describe('Chat TRPC Endpoints', () => {
     vi.clearAllMocks();
   });
 
-  describe('getConversations', () => {
-    it('should return user conversations', async () => {
+  describe("getConversations", () => {
+    it("should return user conversations", async () => {
       const mockConversations = [
-        { id: 1, title: 'Chat 1', userId: mockUser.id },
-        { id: 2, title: 'Chat 2', userId: mockUser.id },
+        { id: 1, title: "Chat 1", userId: mockUser.id },
+        { id: 2, title: "Chat 2", userId: mockUser.id },
       ];
 
       (getUserConversations as any).mockResolvedValue(mockConversations);
@@ -74,7 +74,7 @@ describe('Chat TRPC Endpoints', () => {
       expect(getUserConversations).toHaveBeenCalledWith(mockUser.id);
     });
 
-    it('should handle empty conversations', async () => {
+    it("should handle empty conversations", async () => {
       (getUserConversations as any).mockResolvedValue([]);
 
       const result = await getUserConversations(mockUser.id);
@@ -83,12 +83,12 @@ describe('Chat TRPC Endpoints', () => {
     });
   });
 
-  describe('getMessages', () => {
-    it('should return paginated messages', async () => {
+  describe("getMessages", () => {
+    it("should return paginated messages", async () => {
       const mockMessages = Array.from({ length: 30 }, (_, i) => ({
         id: i + 1,
         content: `Message ${i + 1}`,
-        role: i % 2 === 0 ? 'user' : 'assistant',
+        role: i % 2 === 0 ? "user" : "assistant",
         conversationId: 1,
       }));
 
@@ -97,14 +97,16 @@ describe('Chat TRPC Endpoints', () => {
       // Simulate pagination logic
       const input = { conversationId: 1, cursor: 0, limit: 20 };
       const allMessages = await getConversationMessages(input.conversationId);
-      
+
       const startIndex = input.cursor || 0;
       const endIndex = startIndex + input.limit + 1;
       const slicedMessages = allMessages.slice(startIndex, endIndex);
-      
+
       const hasMore = slicedMessages.length > input.limit;
-      const messages = hasMore ? slicedMessages.slice(0, input.limit) : slicedMessages;
-      
+      const messages = hasMore
+        ? slicedMessages.slice(0, input.limit)
+        : slicedMessages;
+
       const result = {
         messages,
         hasMore,
@@ -116,25 +118,27 @@ describe('Chat TRPC Endpoints', () => {
       expect(result.nextCursor).toBe(20);
     });
 
-    it('should handle last page of messages', async () => {
+    it("should handle last page of messages", async () => {
       const mockMessages = Array.from({ length: 15 }, (_, i) => ({
         id: i + 1,
         content: `Message ${i + 1}`,
-        role: 'user',
+        role: "user",
       }));
 
       (getConversationMessages as any).mockResolvedValue(mockMessages);
 
       const input = { conversationId: 1, cursor: 0, limit: 20 };
       const allMessages = await getConversationMessages(input.conversationId);
-      
+
       const startIndex = input.cursor || 0;
       const endIndex = startIndex + input.limit + 1;
       const slicedMessages = allMessages.slice(startIndex, endIndex);
-      
+
       const hasMore = slicedMessages.length > input.limit;
-      const messages = hasMore ? slicedMessages.slice(0, input.limit) : slicedMessages;
-      
+      const messages = hasMore
+        ? slicedMessages.slice(0, input.limit)
+        : slicedMessages;
+
       const result = {
         messages,
         hasMore,
@@ -147,12 +151,12 @@ describe('Chat TRPC Endpoints', () => {
     });
   });
 
-  describe('createConversation', () => {
-    it('should create new conversation', async () => {
+  describe("createConversation", () => {
+    it("should create new conversation", async () => {
       const mockConversation = {
         id: 1,
         userId: mockUser.id,
-        title: 'New Chat',
+        title: "New Chat",
         createdAt: new Date(),
       };
 
@@ -160,17 +164,17 @@ describe('Chat TRPC Endpoints', () => {
 
       const result = await createConversation({
         userId: mockUser.id,
-        title: 'New Chat',
+        title: "New Chat",
       });
 
       expect(result).toEqual(mockConversation);
       expect(createConversation).toHaveBeenCalledWith({
         userId: mockUser.id,
-        title: 'New Chat',
+        title: "New Chat",
       });
     });
 
-    it('should create conversation without title', async () => {
+    it("should create conversation without title", async () => {
       const mockConversation = {
         id: 1,
         userId: mockUser.id,
@@ -188,39 +192,41 @@ describe('Chat TRPC Endpoints', () => {
     });
   });
 
-  describe('sendMessage', () => {
+  describe("sendMessage", () => {
     beforeEach(() => {
       // Default: rate limit passes
       (checkRateLimitUnified as any).mockResolvedValue({ success: true });
-      
+
       // Default: AI responds
       (routeAI as any).mockResolvedValue({
-        content: 'AI response',
-        model: 'test-model',
+        content: "AI response",
+        model: "test-model",
       });
-      
+
       // Default: messages saved
       (createMessage as any).mockResolvedValue({ id: 1 });
       (getConversationMessages as any).mockResolvedValue([]);
       (trackEvent as any).mockResolvedValue(undefined);
     });
 
-    it('should send message and get AI response', async () => {
+    it("should send message and get AI response", async () => {
       const input = {
         conversationId: 1,
-        content: 'Hello Friday',
+        content: "Hello Friday",
       };
 
       // Save user message
       await createMessage({
         conversationId: input.conversationId,
         content: input.content,
-        role: 'user',
+        role: "user",
       });
 
       // Get conversation history
-      const conversationHistory = await getConversationMessages(input.conversationId);
-      
+      const conversationHistory = await getConversationMessages(
+        input.conversationId
+      );
+
       // Format messages for AI
       const messages = conversationHistory.map((msg: any) => ({
         role: msg.role,
@@ -230,10 +236,10 @@ describe('Chat TRPC Endpoints', () => {
       // Get AI response
       const aiResponse = await routeAI({
         messages,
-        taskType: 'chat',
+        taskType: "chat",
         userId: mockUser.id,
         requireApproval: false,
-        correlationId: 'test-correlation-id',
+        correlationId: "test-correlation-id",
         tools: [],
       });
 
@@ -241,23 +247,23 @@ describe('Chat TRPC Endpoints', () => {
       await createMessage({
         conversationId: input.conversationId,
         content: aiResponse.content,
-        role: 'assistant',
+        role: "assistant",
       });
 
       expect(createMessage).toHaveBeenCalledTimes(2);
       expect(createMessage).toHaveBeenNthCalledWith(1, {
         conversationId: 1,
-        content: 'Hello Friday',
-        role: 'user',
+        content: "Hello Friday",
+        role: "user",
       });
       expect(createMessage).toHaveBeenNthCalledWith(2, {
         conversationId: 1,
-        content: 'AI response',
-        role: 'assistant',
+        content: "AI response",
+        role: "assistant",
       });
     });
 
-    it('should enforce rate limiting', async () => {
+    it("should enforce rate limiting", async () => {
       (checkRateLimitUnified as any).mockResolvedValue({
         success: false,
         reset: Date.now() / 1000 + 30, // 30 seconds from now
@@ -272,10 +278,10 @@ describe('Chat TRPC Endpoints', () => {
       expect(rateLimit.reset).toBeGreaterThan(Date.now() / 1000);
     });
 
-    it('should track message sent event', async () => {
+    it("should track message sent event", async () => {
       const input = {
         conversationId: 1,
-        content: 'Test message',
+        content: "Test message",
         context: {
           hasEmails: true,
           hasCalendar: false,
@@ -285,12 +291,12 @@ describe('Chat TRPC Endpoints', () => {
       await createMessage({
         conversationId: input.conversationId,
         content: input.content,
-        role: 'user',
+        role: "user",
       });
 
       await trackEvent({
         userId: mockUser.id,
-        eventType: 'chat_message_sent',
+        eventType: "chat_message_sent",
         eventData: {
           conversationId: input.conversationId,
           messageLength: input.content.length,
@@ -301,7 +307,7 @@ describe('Chat TRPC Endpoints', () => {
 
       expect(trackEvent).toHaveBeenCalledWith({
         userId: mockUser.id,
-        eventType: 'chat_message_sent',
+        eventType: "chat_message_sent",
         eventData: expect.objectContaining({
           conversationId: 1,
           messageLength: 12,
@@ -310,39 +316,39 @@ describe('Chat TRPC Endpoints', () => {
       });
     });
 
-    it('should validate message length', () => {
-      const tooLongMessage = 'a'.repeat(10001);
-      
+    it("should validate message length", () => {
+      const tooLongMessage = "a".repeat(10001);
+
       // In real implementation, Zod would throw
       expect(tooLongMessage.length).toBeGreaterThan(10000);
     });
 
-    it('should validate empty message', () => {
-      const emptyMessage = '';
-      
+    it("should validate empty message", () => {
+      const emptyMessage = "";
+
       // In real implementation, Zod would throw
       expect(emptyMessage.length).toBe(0);
     });
 
-    it('should pass context to AI', async () => {
+    it("should pass context to AI", async () => {
       const context = {
-        selectedEmails: ['email1', 'email2'],
+        selectedEmails: ["email1", "email2"],
         hasCalendar: true,
-        page: 'inbox',
+        page: "inbox",
       };
 
       await createMessage({
         conversationId: 1,
-        content: 'Check my emails',
-        role: 'user',
+        content: "Check my emails",
+        role: "user",
       });
 
       await routeAI({
         messages: [],
-        taskType: 'chat',
+        taskType: "chat",
         userId: mockUser.id,
         requireApproval: false,
-        correlationId: 'test-id',
+        correlationId: "test-id",
         tools: [],
         context,
       });
@@ -354,11 +360,11 @@ describe('Chat TRPC Endpoints', () => {
       );
     });
 
-    it('should include conversation history', async () => {
+    it("should include conversation history", async () => {
       const mockHistory = [
-        { id: 1, role: 'user', content: 'First message' },
-        { id: 2, role: 'assistant', content: 'First response' },
-        { id: 3, role: 'user', content: 'Second message' },
+        { id: 1, role: "user", content: "First message" },
+        { id: 2, role: "assistant", content: "First response" },
+        { id: 3, role: "user", content: "Second message" },
       ];
 
       (getConversationMessages as any).mockResolvedValue(mockHistory);
@@ -371,55 +377,55 @@ describe('Chat TRPC Endpoints', () => {
 
       await routeAI({
         messages,
-        taskType: 'chat',
+        taskType: "chat",
         userId: mockUser.id,
         requireApproval: false,
-        correlationId: 'test-id',
+        correlationId: "test-id",
         tools: [],
       });
 
       expect(routeAI).toHaveBeenCalledWith(
         expect.objectContaining({
           messages: expect.arrayContaining([
-            { role: 'user', content: 'First message' },
-            { role: 'assistant', content: 'First response' },
+            { role: "user", content: "First message" },
+            { role: "assistant", content: "First response" },
           ]),
         })
       );
     });
   });
 
-  describe('Error Handling', () => {
-    it('should handle database errors gracefully', async () => {
-      const dbError = new Error('Database connection failed');
+  describe("Error Handling", () => {
+    it("should handle database errors gracefully", async () => {
+      const dbError = new Error("Database connection failed");
       (createMessage as any).mockRejectedValue(dbError);
 
       await expect(
         createMessage({
           conversationId: 1,
-          content: 'Test',
-          role: 'user',
+          content: "Test",
+          role: "user",
         })
-      ).rejects.toThrow('Database connection failed');
+      ).rejects.toThrow("Database connection failed");
     });
 
-    it('should handle AI router errors', async () => {
-      const aiError = new Error('AI service unavailable');
+    it("should handle AI router errors", async () => {
+      const aiError = new Error("AI service unavailable");
       (routeAI as any).mockRejectedValue(aiError);
 
       await expect(
         routeAI({
           messages: [],
-          taskType: 'chat',
+          taskType: "chat",
           userId: mockUser.id,
           requireApproval: false,
-          correlationId: 'test-id',
+          correlationId: "test-id",
           tools: [],
         })
-      ).rejects.toThrow('AI service unavailable');
+      ).rejects.toThrow("AI service unavailable");
     });
 
-    it('should handle rate limit errors', async () => {
+    it("should handle rate limit errors", async () => {
       (checkRateLimitUnified as any).mockResolvedValue({
         success: false,
         reset: Date.now() / 1000 + 60,
@@ -431,38 +437,52 @@ describe('Chat TRPC Endpoints', () => {
       });
 
       expect(rateLimit.success).toBe(false);
-      
+
       // In real implementation, would throw TRPCError
       if (!rateLimit.success) {
-        const waitTime = Math.ceil((rateLimit.reset * 1000 - Date.now()) / 1000);
+        const waitTime = Math.ceil(
+          (rateLimit.reset * 1000 - Date.now()) / 1000
+        );
         expect(waitTime).toBeGreaterThan(0);
       }
     });
   });
 
-  describe('Message Formatting', () => {
-    it('should format messages correctly for AI', () => {
+  describe("Message Formatting", () => {
+    it("should format messages correctly for AI", () => {
       const rawMessages = [
-        { id: 1, role: 'user', content: 'Hello', conversationId: 1, createdAt: new Date() },
-        { id: 2, role: 'assistant', content: 'Hi', conversationId: 1, createdAt: new Date() },
+        {
+          id: 1,
+          role: "user",
+          content: "Hello",
+          conversationId: 1,
+          createdAt: new Date(),
+        },
+        {
+          id: 2,
+          role: "assistant",
+          content: "Hi",
+          conversationId: 1,
+          createdAt: new Date(),
+        },
       ];
 
       const formatted = rawMessages.map(msg => ({
-        role: msg.role as 'user' | 'assistant',
+        role: msg.role as "user" | "assistant",
         content: msg.content,
       }));
 
       expect(formatted).toEqual([
-        { role: 'user', content: 'Hello' },
-        { role: 'assistant', content: 'Hi' },
+        { role: "user", content: "Hello" },
+        { role: "assistant", content: "Hi" },
       ]);
     });
 
-    it('should preserve message order', () => {
+    it("should preserve message order", () => {
       const messages = [
-        { id: 1, role: 'user', content: 'First' },
-        { id: 2, role: 'assistant', content: 'Second' },
-        { id: 3, role: 'user', content: 'Third' },
+        { id: 1, role: "user", content: "First" },
+        { id: 2, role: "assistant", content: "Second" },
+        { id: 3, role: "user", content: "Third" },
       ];
 
       const formatted = messages.map(msg => ({
@@ -470,9 +490,9 @@ describe('Chat TRPC Endpoints', () => {
         content: msg.content,
       }));
 
-      expect(formatted[0].content).toBe('First');
-      expect(formatted[1].content).toBe('Second');
-      expect(formatted[2].content).toBe('Third');
+      expect(formatted[0].content).toBe("First");
+      expect(formatted[1].content).toBe("Second");
+      expect(formatted[2].content).toBe("Third");
     });
   });
 });

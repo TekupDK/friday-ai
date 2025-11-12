@@ -94,7 +94,9 @@ export function useKeyboardShortcuts(
         const shiftMatches = !!s.shiftKey === event.shiftKey;
         const altMatches = !!s.altKey === event.altKey;
 
-        return keyMatches && ctrlMatches && metaMatches && shiftMatches && altMatches;
+        return (
+          keyMatches && ctrlMatches && metaMatches && shiftMatches && altMatches
+        );
       });
 
       if (shortcut) {

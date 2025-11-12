@@ -142,11 +142,11 @@ User Experience:
 // Configure in sentry.config.js
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
-  environment: 'production',
-  release: '3-panel-v1.0',
+  environment: "production",
+  release: "3-panel-v1.0",
   beforeSend(event) {
     // Filter noise
-    if (event.exception?.values?.[0]?.type === 'ChunkLoadError') {
+    if (event.exception?.values?.[0]?.type === "ChunkLoadError") {
       return null; // Ignore chunk load errors
     }
     return event;
@@ -162,6 +162,7 @@ Sentry.init({
 ### Common Issues & Fixes
 
 **Issue: Panel won't load**
+
 ```
 Symptom: Infinite loading skeleton
 Cause: Bundle chunk failed to load
@@ -169,6 +170,7 @@ Fix: Hard refresh (Ctrl+Shift+R)
 ```
 
 **Issue: Panel crashes**
+
 ```
 Symptom: Error boundary shown
 Cause: Component render error
@@ -176,6 +178,7 @@ Fix: Click "Retry" or reload page
 ```
 
 **Issue: Slow panel switching**
+
 ```
 Symptom: Mode switch takes > 1s
 Cause: Not using persistent mounting
@@ -213,11 +216,13 @@ Fix: Deploy hotfix with persistent mounting
 ## 🎯 Success Criteria
 
 **Technical:**
+
 - ✅ 0 critical bugs
 - ✅ Performance targets met
 - ✅ 80%+ test coverage maintained
 
 **Business:**
+
 - ✅ +30% email processing speed
 - ✅ +50% AI usage
 - ✅ +25% task completion
@@ -250,4 +255,4 @@ Rollback needed: [Yes/No]
 
 ---
 
-*Follow this runbook for safe, gradual deployment of 3-panel workspace system*
+_Follow this runbook for safe, gradual deployment of 3-panel workspace system_

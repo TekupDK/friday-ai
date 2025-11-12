@@ -1,6 +1,6 @@
 /**
  * AI Generation Progress Indicator
- * 
+ *
  * Shows step-by-step progress during AI doc generation:
  * 1. Collecting data
  * 2. Analyzing with AI
@@ -17,7 +17,7 @@ interface AIGenerationProgressProps {
   onComplete?: () => void;
 }
 
-type GenerationStep = 
+type GenerationStep =
   | "idle"
   | "collecting"
   | "analyzing"
@@ -32,9 +32,9 @@ const STEPS = [
   { key: "saving", label: "Gemmer", duration: 2000 },
 ] as const;
 
-export function AIGenerationProgress({ 
-  isGenerating, 
-  onComplete 
+export function AIGenerationProgress({
+  isGenerating,
+  onComplete,
 }: AIGenerationProgressProps) {
   const [currentStep, setCurrentStep] = useState<GenerationStep>("idle");
   const [progress, setProgress] = useState(0);
@@ -54,19 +54,24 @@ export function AIGenerationProgress({
     setElapsedTime(0);
 
     const startTime = Date.now();
-    
+
     // Timer for elapsed time
     const timeInterval = setInterval(() => {
       setElapsedTime(Date.now() - startTime);
     }, 100);
 
     // Simulate progress through steps
-    const steps: GenerationStep[] = ["collecting", "analyzing", "generating", "saving"];
+    const steps: GenerationStep[] = [
+      "collecting",
+      "analyzing",
+      "generating",
+      "saving",
+    ];
     let currentStepIndex = 0;
 
     const stepInterval = setInterval(() => {
       currentStepIndex++;
-      
+
       if (currentStepIndex < steps.length) {
         setCurrentStep(steps[currentStepIndex]);
         setProgress((currentStepIndex / steps.length) * 100);
@@ -75,7 +80,7 @@ export function AIGenerationProgress({
         setProgress(100);
         clearInterval(stepInterval);
         clearInterval(timeInterval);
-        
+
         setTimeout(() => {
           onComplete?.();
         }, 1000);
@@ -106,7 +111,9 @@ export function AIGenerationProgress({
           )}
           <div>
             <h3 className="font-semibold text-lg">
-              {currentStep === "complete" ? "Færdig!" : "Genererer AI Dokumentation"}
+              {currentStep === "complete"
+                ? "Færdig!"
+                : "Genererer AI Dokumentation"}
             </h3>
             <p className="text-sm text-muted-foreground">
               {currentStepInfo?.label || "Arbejder..."}
@@ -128,8 +135,8 @@ export function AIGenerationProgress({
                   isComplete
                     ? "text-green-600"
                     : isCurrent
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground"
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground"
                 }`}
               >
                 {isComplete ? (
@@ -166,7 +173,11 @@ export function AIGenerationProgress({
 /**
  * Compact version for inline display
  */
-export function AIGenerationProgressInline({ isGenerating }: { isGenerating: boolean }) {
+export function AIGenerationProgressInline({
+  isGenerating,
+}: {
+  isGenerating: boolean;
+}) {
   const [dots, setDots] = useState("");
 
   useEffect(() => {

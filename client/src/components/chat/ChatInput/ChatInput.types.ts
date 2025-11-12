@@ -1,6 +1,6 @@
 /**
  * ChatInput Types
- * 
+ *
  * Clean type definitions - no UI, no logic
  */
 

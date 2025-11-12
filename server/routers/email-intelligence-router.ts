@@ -20,7 +20,7 @@ import {
   createSenderProfile,
 } from "../email-intelligence/priority-scorer";
 import { getDb } from "../db";
-import { 
+import {
   emailCategoriesInFridayAi,
   emailPrioritiesInFridayAi,
   responseSuggestionsInFridayAi,
@@ -68,10 +68,10 @@ export const emailIntelligenceRouter = router({
 
         return category;
       } catch (error) {
-        console.error('Error categorizing email:', error);
+        console.error("Error categorizing email:", error);
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to categorize email',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to categorize email",
         });
       }
     }),
@@ -83,7 +83,7 @@ export const emailIntelligenceRouter = router({
     .input(z.object({ threadId: z.string() }))
     .query(async ({ input }) => {
       const db = await getDb();
-      
+
       // Check if we have a recent categorization
       const cached = await db!
         .select()
@@ -117,7 +117,7 @@ export const emailIntelligenceRouter = router({
         subject: z.string(),
         body: z.string(),
         senderRelationship: z
-          .enum(['vip', 'customer', 'colleague', 'unknown'])
+          .enum(["vip", "customer", "colleague", "unknown"])
           .optional(),
       })
     )
@@ -161,10 +161,10 @@ export const emailIntelligenceRouter = router({
 
         return suggestions;
       } catch (error) {
-        console.error('Error generating responses:', error);
+        console.error("Error generating responses:", error);
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to generate response suggestions',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to generate response suggestions",
         });
       }
     }),
@@ -176,7 +176,7 @@ export const emailIntelligenceRouter = router({
     .input(z.object({ threadId: z.string() }))
     .query(async ({ input }) => {
       const db = await getDb();
-      
+
       const suggestions = await db!
         .select()
         .from(responseSuggestionsInFridayAi)
@@ -202,7 +202,7 @@ export const emailIntelligenceRouter = router({
     .input(z.object({ suggestionId: z.number() }))
     .mutation(async ({ input }) => {
       const db = await getDb();
-      
+
       await db!
         .update(responseSuggestionsInFridayAi)
         .set({ used: true, usedAt: new Date().toISOString() })
@@ -254,10 +254,10 @@ export const emailIntelligenceRouter = router({
 
         return priority;
       } catch (error) {
-        console.error('Error scoring priority:', error);
+        console.error("Error scoring priority:", error);
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to score email priority',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to score email priority",
         });
       }
     }),
@@ -269,7 +269,7 @@ export const emailIntelligenceRouter = router({
     .input(z.object({ threadId: z.string() }))
     .query(async ({ input }) => {
       const db = await getDb();
-      
+
       const cached = await db!
         .select()
         .from(emailPrioritiesInFridayAi)
@@ -283,8 +283,8 @@ export const emailIntelligenceRouter = router({
           score: p.priorityScore,
           level: p.priorityLevel,
           factors: {
-            sender_importance: parseFloat(p.senderImportance || '0'),
-            content_urgency: parseFloat(p.contentUrgency || '0'),
+            sender_importance: parseFloat(p.senderImportance || "0"),
+            content_urgency: parseFloat(p.contentUrgency || "0"),
             deadline_mentioned: p.deadlineMentioned || false,
             requires_action: p.requiresAction || false,
             time_sensitive: p.timeSensitive || false,
@@ -302,7 +302,7 @@ export const emailIntelligenceRouter = router({
    */
   getCategoryStats: protectedProcedure.query(async ({ ctx }) => {
     const db = await getDb();
-    
+
     // Get all categories for this user's emails
     const categories = await db!
       .select()
@@ -369,16 +369,18 @@ export const emailIntelligenceRouter = router({
    * Efficient endpoint for email list view
    */
   getBatchIntelligence: protectedProcedure
-    .input(z.object({ 
-      threadIds: z.array(z.string()).max(50) // Limit to 50 for performance
-    }))
+    .input(
+      z.object({
+        threadIds: z.array(z.string()).max(50), // Limit to 50 for performance
+      })
+    )
     .query(async ({ input }) => {
       if (input.threadIds.length === 0) {
         return {};
       }
 
       const db = await getDb();
-      
+
       // Fetch all intelligence data in parallel
       const [categories, priorities] = await Promise.all([
         // Get categories for all threadIds
@@ -396,10 +398,17 @@ export const emailIntelligenceRouter = router({
       ]);
 
       // Build result map
-      const result: Record<string, {
-        category?: { category: string; subcategory: string | null; confidence: number };
-        priority?: { level: string; score: number; reasoning: string | null };
-      }> = {};
+      const result: Record<
+        string,
+        {
+          category?: {
+            category: string;
+            subcategory: string | null;
+            confidence: number;
+          };
+          priority?: { level: string; score: number; reasoning: string | null };
+        }
+      > = {};
 
       // Group by threadId
       categories.forEach((cat: any) => {

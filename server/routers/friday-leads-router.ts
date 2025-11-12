@@ -1,6 +1,6 @@
 /**
  * Friday AI + Leads Integration Router
- * 
+ *
  * Exposes API endpoints for Friday AI to query and analyze customer lead data.
  * Integrates ChromaDB semantic search with Supabase lead database.
  */
@@ -9,7 +9,11 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { router, protectedProcedure } from "../_core/trpc";
 import { getDb } from "../db";
-import { leads, customerProfiles, customerInvoices } from "../../drizzle/schema";
+import {
+  leads,
+  customerProfiles,
+  customerInvoices,
+} from "../../drizzle/schema";
 import { eq, and, desc, sql } from "drizzle-orm";
 
 /**
@@ -24,7 +28,7 @@ export const fridayLeadsRouter = router({
       z.object({
         query: z.string().min(1),
         includeInvoices: z.boolean().optional().default(false),
-      }),
+      })
     )
     .query(async ({ ctx, input }) => {
       const db = await getDb();
@@ -49,8 +53,8 @@ export const fridayLeadsRouter = router({
               LOWER(${leads.name}) LIKE ${searchQuery} OR
               LOWER(${leads.email}) LIKE ${searchQuery} OR
               LOWER(${leads.phone}) LIKE ${searchQuery}
-            )`,
-          ),
+            )`
+          )
         )
         .limit(10);
 
@@ -63,7 +67,7 @@ export const fridayLeadsRouter = router({
 
       // Get customer profiles and optionally invoices
       const results = await Promise.all(
-        matchingLeads.map(async (lead) => {
+        matchingLeads.map(async lead => {
           const profile = await db
             .select()
             .from(customerProfiles)
@@ -84,7 +88,7 @@ export const fridayLeadsRouter = router({
             profile: profile[0] || null,
             invoices,
           };
-        }),
+        })
       );
 
       return {
@@ -102,7 +106,7 @@ export const fridayLeadsRouter = router({
         leadId: z.number().optional(),
         customerId: z.number().optional(),
         email: z.string().email().optional(),
-      }),
+      })
     )
     .query(async ({ ctx, input }) => {
       const db = await getDb();
@@ -141,8 +145,8 @@ export const fridayLeadsRouter = router({
           .where(
             and(
               eq(customerProfiles.userId, userId),
-              eq(customerProfiles.id, input.customerId),
-            ),
+              eq(customerProfiles.id, input.customerId)
+            )
           )
           .limit(1);
         profile = profileResult[0] || null;
@@ -161,8 +165,8 @@ export const fridayLeadsRouter = router({
           .where(
             and(
               eq(customerProfiles.userId, userId),
-              sql`LOWER(${customerProfiles.email}) = ${input.email.toLowerCase()}`,
-            ),
+              sql`LOWER(${customerProfiles.email}) = ${input.email.toLowerCase()}`
+            )
           )
           .limit(1);
         profile = profileResult[0] || null;
@@ -228,7 +232,7 @@ export const fridayLeadsRouter = router({
           pipelineStatus: metadata.pipelineStatus || null,
           quality: metadata.quality || null,
         },
-        recentInvoices: invoices.slice(0, 5).map((inv) => ({
+        recentInvoices: invoices.slice(0, 5).map(inv => ({
           id: inv.id,
           invoiceNumber: inv.invoiceNumber,
           amount: inv.amount,
@@ -253,7 +257,7 @@ export const fridayLeadsRouter = router({
           .optional()
           .default("all"),
         limit: z.number().min(1).max(100).optional().default(20),
-      }),
+      })
     )
     .query(async ({ ctx, input }) => {
       const db = await getDb();
@@ -268,15 +272,18 @@ export const fridayLeadsRouter = router({
       const insights: any[] = [];
 
       // Missing bookings: recurring customers without recent invoices
-      if (input.insightType === "missing_bookings" || input.insightType === "all") {
+      if (
+        input.insightType === "missing_bookings" ||
+        input.insightType === "all"
+      ) {
         const recurringProfiles = await db
           .select()
           .from(customerProfiles)
           .where(
             and(
               eq(customerProfiles.userId, userId),
-              sql`${customerProfiles.tags}::jsonb @> '["recurring"]'`,
-            ),
+              sql`${customerProfiles.tags}::jsonb @> '["recurring"]'`
+            )
           )
           .limit(input.limit);
 
@@ -287,8 +294,8 @@ export const fridayLeadsRouter = router({
             .where(
               and(
                 eq(customerInvoices.customerId, profile.id),
-                sql`${customerInvoices.entryDate} > NOW() - INTERVAL '90 days'`,
-              ),
+                sql`${customerInvoices.entryDate} > NOW() - INTERVAL '90 days'`
+              )
             )
             .limit(1);
 
@@ -322,8 +329,8 @@ export const fridayLeadsRouter = router({
           .where(
             and(
               eq(customerProfiles.userId, userId),
-              eq(customerProfiles.status, "at_risk"),
-            ),
+              eq(customerProfiles.status, "at_risk")
+            )
           )
           .limit(input.limit);
 
@@ -357,8 +364,8 @@ export const fridayLeadsRouter = router({
           .where(
             and(
               eq(customerProfiles.userId, userId),
-              eq(customerProfiles.status, "vip"),
-            ),
+              eq(customerProfiles.status, "vip")
+            )
           )
           .orderBy(desc(customerProfiles.totalInvoiced))
           .limit(input.limit);
@@ -434,8 +441,8 @@ export const fridayLeadsRouter = router({
       .where(
         and(
           eq(customerProfiles.userId, userId),
-          sql`${customerProfiles.tags}::jsonb @> '["recurring"]'`,
-        ),
+          sql`${customerProfiles.tags}::jsonb @> '["recurring"]'`
+        )
       );
 
     return {

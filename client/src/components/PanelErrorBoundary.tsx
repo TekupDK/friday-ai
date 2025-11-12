@@ -1,6 +1,6 @@
-import { Component, ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
-import { AlertTriangle } from 'lucide-react';
+import { Component, ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle } from "lucide-react";
 
 interface Props {
   children: ReactNode;
@@ -42,7 +42,7 @@ export class PanelErrorBoundary extends Component<Props, State> {
 
     // Log to console with structured data
     console.error(`[${this.props.name} Panel Error]`, logData);
-    
+
     // Panel-level breadcrumb tracking (stub for future Sentry integration)
     const breadcrumb = {
       message: `Panel ${this.props.name} encountered an error`,
@@ -51,15 +51,15 @@ export class PanelErrorBoundary extends Component<Props, State> {
       data: logData,
     };
     console.info("[Panel Breadcrumb]", breadcrumb);
-    
+
     // TODO: Send to error tracking service when available
-    // Sentry.captureException(error, { 
-    //   contexts: { 
-    //     panel: { 
+    // Sentry.captureException(error, {
+    //   contexts: {
+    //     panel: {
     //       name: this.props.name,
     //       errorInfo,
     //       timestamp: logData.timestamp
-    //     } 
+    //     }
     //   },
     //   tags: {
     //     component: "panel",
@@ -84,18 +84,21 @@ export class PanelErrorBoundary extends Component<Props, State> {
 
             {/* Error Message */}
             <div className="space-y-2">
-              <h3 className="font-semibold text-lg">{this.props.name} Panel Error</h3>
+              <h3 className="font-semibold text-lg">
+                {this.props.name} Panel Error
+              </h3>
               <p className="text-sm text-muted-foreground">
-                This panel encountered an error. Other panels continue to work normally.
+                This panel encountered an error. Other panels continue to work
+                normally.
               </p>
-              {process.env.NODE_ENV === 'development' && this.state.error && (
+              {process.env.NODE_ENV === "development" && this.state.error && (
                 <details className="mt-4 text-left">
                   <summary className="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
                     Error Details
                   </summary>
                   <pre className="mt-2 p-2 bg-muted rounded text-xs overflow-auto max-h-32">
                     {this.state.error.message}
-                    {'\n\n'}
+                    {"\n\n"}
                     {this.state.error.stack}
                   </pre>
                 </details>
@@ -104,17 +107,10 @@ export class PanelErrorBoundary extends Component<Props, State> {
 
             {/* Actions */}
             <div className="flex gap-2 justify-center">
-              <Button 
-                onClick={this.handleReset}
-                variant="outline"
-                size="sm"
-              >
+              <Button onClick={this.handleReset} variant="outline" size="sm">
                 Try Again
               </Button>
-              <Button 
-                onClick={() => window.location.reload()} 
-                size="sm"
-              >
+              <Button onClick={() => window.location.reload()} size="sm">
                 Reload Page
               </Button>
             </div>

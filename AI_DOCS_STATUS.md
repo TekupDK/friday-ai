@@ -12,12 +12,15 @@
 **Schema Alignment:** ⚠️ Needs Minor Fixes
 
 ### Issue
+
 Data collector bruger forkerte column navne - skal fixes til:
+
 - `emailThreads` → participants (jsonb), subject, snippet
 - `conversations` → skal bruge messages tabel
 - Lead ID er number, ikke string
 
 ### Quick Fix Needed (15 min)
+
 1. Fix lead ID type (number vs string)
 2. Simplify email collection (kun emailThreads tabel)
 3. Simplify conversations (skip eller brug messages)
@@ -28,12 +31,14 @@ Data collector bruger forkerte column navne - skal fixes til:
 ## ✅ HVAD VIRKER 100%
 
 ### AI Modules
+
 - ✅ **analyzer.ts** - OpenRouter integration perfekt
 - ✅ **generator.ts** - Markdown generation klar
 - ✅ **auto-create.ts** - Pipeline klar
 - ✅ **tRPC endpoints** - 4 endpoints defineret
 
 ### Integration
+
 - ✅ Bruger jeres OpenRouter setup
 - ✅ FREE GLM-4.5-Air model
 - ✅ Ingen costs
@@ -44,7 +49,9 @@ Data collector bruger forkerte column navne - skal fixes til:
 ## 🔧 QUICK FIX PLAN
 
 ### Option 1: Simplify (10 min) - RECOMMENDED
+
 Lav en minimal version der kun henter:
+
 - Lead basic info
 - Email count (ikke content)
 - Skip calendar
@@ -53,7 +60,9 @@ Lav en minimal version der kun henter:
 Generer doc baseret på lead metadata alene - stadig nyttigt!
 
 ### Option 2: Schema Align (30 min)
+
 Fix alle type errors og align med jeres schema:
+
 - Fix lead ID type
 - Parse email participants jsonb
 - Use correct message fields
@@ -66,22 +75,26 @@ Fix alle type errors og align med jeres schema:
 **SIMPLIFY FØRST:**
 
 Lav en super simpel version der virker 100%:
+
 1. Collect lead data only
 2. Generate doc fra lead metadata
 3. Test det virker
 4. Udvid senere med emails osv.
 
 **Output eksempel:**
+
 ```markdown
 # Lead: Acme Corp
 
 ## Info
+
 - Name: John Doe
 - Email: john@acme.com
 - Status: Active
 - Created: 2024-11-01
 
 ## AI Analysis
+
 [Based on lead status and metadata]
 
 This lead has been active for 7 days.

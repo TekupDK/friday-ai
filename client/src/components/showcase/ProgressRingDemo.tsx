@@ -10,12 +10,12 @@ interface ProgressRingProps {
   label?: string;
 }
 
-function ProgressRing({ 
-  progress, 
-  size = 120, 
+function ProgressRing({
+  progress,
+  size = 120,
   strokeWidth = 8,
   color = "text-primary",
-  label 
+  label,
 }: ProgressRingProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
@@ -48,7 +48,7 @@ function ProgressRing({
           strokeLinecap="round"
         />
       </svg>
-      
+
       {/* Center text */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="text-2xl font-bold">{Math.round(progress)}%</span>
@@ -83,8 +83,8 @@ export function ProgressRingDemo() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <Card className="hover:shadow-lg transition-shadow">
           <CardContent className="pt-6 flex flex-col items-center">
-            <ProgressRing 
-              progress={progress1} 
+            <ProgressRing
+              progress={progress1}
               color="text-blue-500"
               label="Emails"
             />
@@ -95,8 +95,8 @@ export function ProgressRingDemo() {
 
         <Card className="hover:shadow-lg transition-shadow">
           <CardContent className="pt-6 flex flex-col items-center">
-            <ProgressRing 
-              progress={progress2} 
+            <ProgressRing
+              progress={progress2}
               color="text-green-500"
               label="Tasks"
             />
@@ -107,8 +107,8 @@ export function ProgressRingDemo() {
 
         <Card className="hover:shadow-lg transition-shadow">
           <CardContent className="pt-6 flex flex-col items-center">
-            <ProgressRing 
-              progress={progress3} 
+            <ProgressRing
+              progress={progress3}
               color="text-purple-500"
               label="Leads"
             />
@@ -119,8 +119,8 @@ export function ProgressRingDemo() {
 
         <Card className="hover:shadow-lg transition-shadow">
           <CardContent className="pt-6 flex flex-col items-center">
-            <ProgressRing 
-              progress={progress4} 
+            <ProgressRing
+              progress={progress4}
               color="text-orange-500"
               label="Docs"
             />
@@ -139,7 +139,12 @@ export function ProgressRingDemo() {
           <div className="flex items-center justify-around flex-wrap gap-6">
             <ProgressRing progress={85} size={80} color="text-red-500" />
             <ProgressRing progress={65} size={100} color="text-yellow-500" />
-            <ProgressRing progress={95} size={140} strokeWidth={12} color="text-emerald-500" />
+            <ProgressRing
+              progress={95}
+              size={140}
+              strokeWidth={12}
+              color="text-emerald-500"
+            />
           </div>
         </CardContent>
       </Card>

@@ -88,6 +88,7 @@ The autonomous operations system enables Friday AI to automatically:
 Loads enriched lead data from the v4.3.5 dataset and upserts into Supabase.
 
 **Features:**
+
 - ✅ Idempotent (uses `datasetLeadId` in metadata)
 - ✅ Synthetic email generation for missing data
 - ✅ Links leads → customer profiles → invoices
@@ -95,6 +96,7 @@ Loads enriched lead data from the v4.3.5 dataset and upserts into Supabase.
 - ✅ Detailed logging and error handling
 
 **Usage:**
+
 ```bash
 # Default dataset path
 npx tsx server/scripts/import-pipeline-v4_3_5.ts
@@ -104,6 +106,7 @@ npx tsx server/scripts/import-pipeline-v4_3_5.ts path/to/dataset.json
 ```
 
 **Output:**
+
 ```
 ================= Import Summary =================
 Processed leads:       231
@@ -122,17 +125,20 @@ Errors:                0
 Validates import data quality and generates a detailed report.
 
 **Checks:**
+
 - Lead counts by status
 - Customer profile linkage
 - Invoice data completeness
 - Data quality metrics (missing emails/phones, synthetic emails)
 
 **Usage:**
+
 ```bash
 npx tsx server/scripts/validate-import.ts
 ```
 
 **Output:**
+
 ```
 📋 VALIDATION REPORT
 =================================================
@@ -166,27 +172,30 @@ tRPC API endpoints for Friday AI integration.
 **Endpoints:**
 
 #### `fridayLeads.lookupCustomer`
+
 Search for customer by name, email, or phone.
 
 ```typescript
 const result = await trpc.fridayLeads.lookupCustomer.query({
   query: "John Doe",
-  includeInvoices: true
+  includeInvoices: true,
 });
 ```
 
 #### `fridayLeads.getCustomerIntelligence`
+
 Get comprehensive customer intelligence for Friday AI.
 
 ```typescript
 const intel = await trpc.fridayLeads.getCustomerIntelligence.query({
-  leadId: 123
+  leadId: 123,
   // OR customerId: 456
   // OR email: "customer@example.com"
 });
 ```
 
 **Response:**
+
 ```json
 {
   "customer": {
@@ -217,16 +226,18 @@ const intel = await trpc.fridayLeads.getCustomerIntelligence.query({
 ```
 
 #### `fridayLeads.getActionableInsights`
+
 Get autonomous action recommendations.
 
 ```typescript
 const insights = await trpc.fridayLeads.getActionableInsights.query({
   insightType: "all", // or "missing_bookings", "at_risk", "upsell"
-  limit: 20
+  limit: 20,
 });
 ```
 
 **Response:**
+
 ```json
 {
   "insights": [
@@ -249,6 +260,7 @@ const insights = await trpc.fridayLeads.getActionableInsights.query({
 ```
 
 #### `fridayLeads.getDashboardStats`
+
 Get high-level dashboard statistics.
 
 ```typescript
@@ -260,11 +272,13 @@ const stats = await trpc.fridayLeads.getDashboardStats.query();
 Autonomous detection and action creation for insights.
 
 **Actions:**
+
 - 📞 **Missing Bookings**: Creates follow-up tasks for recurring customers without recent activity (90+ days)
 - ⚠️ **At-Risk Customers**: Creates review tasks for customers flagged as at-risk
 - 💎 **Upsell Opportunities**: Creates upsell tasks for VIP customers with high lifetime value (>10K kr)
 
 **Usage:**
+
 ```bash
 # Dry run (no database changes)
 npx tsx server/scripts/action-handler.ts --dry-run
@@ -274,6 +288,7 @@ npx tsx server/scripts/action-handler.ts
 ```
 
 **Output:**
+
 ```
 📊 ACTION HANDLER SUMMARY
 =================================================
@@ -335,6 +350,7 @@ npx tsx server/scripts/action-handler.ts --dry-run
 #### Windows Task Scheduler
 
 **Import Pipeline** (daily at 02:30):
+
 ```powershell
 # Run as Administrator
 .\scripts\register-import-schedule.ps1
@@ -347,6 +363,7 @@ npx tsx server/scripts/action-handler.ts --dry-run
 ```
 
 **Action Handler** (every 4 hours):
+
 ```powershell
 # Run as Administrator
 .\scripts\register-action-schedule.ps1
@@ -361,11 +378,13 @@ npx tsx server/scripts/action-handler.ts --dry-run
 #### Linux/Mac Cron
 
 **Import Pipeline** (daily at 02:30):
+
 ```bash
 30 2 * * * cd /path/to/tekup-ai-v2 && npx tsx server/scripts/import-pipeline-v4_3_5.ts >> logs/import-pipeline.log 2>&1
 ```
 
 **Action Handler** (every 4 hours):
+
 ```bash
 0 */4 * * * cd /path/to/tekup-ai-v2 && npx tsx server/scripts/action-handler.ts >> logs/action-handler.log 2>&1
 ```
@@ -377,13 +396,13 @@ The `fridayLeadsRouter` is already registered in `server/routers.ts`. Friday AI 
 ```typescript
 // In Friday AI conversation context
 const customerInfo = await trpc.fridayLeads.lookupCustomer.query({
-  query: userMessage.extractedEmail
+  query: userMessage.extractedEmail,
 });
 
 if (customerInfo.found) {
   // Include in AI prompt context
   const intelligence = await trpc.fridayLeads.getCustomerIntelligence.query({
-    customerId: customerInfo.customers[0].profile.id
+    customerId: customerInfo.customers[0].profile.id,
   });
 }
 ```
@@ -430,19 +449,19 @@ Get-ScheduledTaskInfo -TaskName "Friday-AI-Pipeline-Import"
 
 ```sql
 -- Count leads from v4.3.5
-SELECT COUNT(*) 
-FROM friday_ai.leads 
+SELECT COUNT(*)
+FROM friday_ai.leads
 WHERE metadata->>'datasetVersion' = '4.3.5';
 
 -- Recent tasks created by action handler
-SELECT * 
-FROM friday_ai.tasks 
+SELECT *
+FROM friday_ai.tasks
 WHERE metadata->>'generatedBy' = 'action_handler'
-ORDER BY created_at DESC 
+ORDER BY created_at DESC
 LIMIT 10;
 
 -- Customer profile stats
-SELECT 
+SELECT
   status,
   COUNT(*) as count,
   SUM(total_invoiced)/100 as total_invoiced_kr
@@ -457,7 +476,8 @@ GROUP BY status;
 ### Import Issues
 
 **Problem**: "OWNER_OPEN_ID missing"
-**Solution**: 
+**Solution**:
+
 ```bash
 # Set in .env.supabase
 OWNER_OPEN_ID=your-owner-openid
@@ -474,13 +494,15 @@ OWNER_OPEN_ID=your-owner-openid
 ### Action Handler Issues
 
 **Problem**: No insights generated
-**Solution**: 
+**Solution**:
+
 - Check if customer_profiles have `tags` array with "recurring"
 - Verify `status` field is set correctly ("at_risk", "vip")
 - Run validation script to check data quality
 
 **Problem**: Task creation fails
-**Solution**: 
+**Solution**:
+
 - Ensure `friday_ai.tasks` table exists
 - Check user permissions on tasks table
 - Run with `--dry-run` to test logic without DB writes
@@ -489,6 +511,7 @@ OWNER_OPEN_ID=your-owner-openid
 
 **Problem**: Task doesn't run
 **Solution**:
+
 - Verify task status: `Get-ScheduledTask -TaskName "Friday-AI-*"`
 - Check task history: `Get-ScheduledTaskInfo`
 - Ensure user has login rights and network access
@@ -496,6 +519,7 @@ OWNER_OPEN_ID=your-owner-openid
 
 **Problem**: Task runs but no output
 **Solution**:
+
 - Check log files in `logs/` directory
 - Verify working directory is set correctly
 - Test script manually from project root
@@ -530,6 +554,7 @@ OWNER_OPEN_ID=your-owner-openid
 ## Support
 
 For questions or issues:
+
 - Check logs in `logs/` directory
 - Run validation: `npx tsx server/scripts/validate-import.ts`
 - Test manually: `npx tsx server/scripts/action-handler.ts --dry-run`

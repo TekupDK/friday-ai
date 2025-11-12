@@ -78,35 +78,35 @@ model_list:
 router_settings:
   # Use fallback routing strategy
   routing_strategy: fallback
-  
+
   # Model aliases (for compatibility)
   model_group_alias:
     gpt-4o: glm-4.5-air
     gpt-4: glm-4.5-air
     claude-3: glm-4.5-air
-  
+
   # Retry configuration
-  retry_after: 0.5  # seconds
-  allowed_fails: 2  # Max fails before trying fallback
-  cooldown_time: 60  # seconds before retrying failed model
-  num_retries: 3  # Total retry attempts
-  timeout: 30  # Request timeout in seconds
+  retry_after: 0.5 # seconds
+  allowed_fails: 2 # Max fails before trying fallback
+  cooldown_time: 60 # seconds before retrying failed model
+  num_retries: 3 # Total retry attempts
+  timeout: 30 # Request timeout in seconds
 
 # General settings
 general_settings:
   # Master key for API authentication (optional)
   master_key: os.environ/LITELLM_MASTER_KEY
-  
+
   # Disable database completely
   use_queue: false
-  
+
   # Logging
   set_verbose: true
   json_logs: true
-  
+
   # Health checks
   health_check: true
-  
+
   # Disable telemetry
   telemetry: false
 
@@ -114,12 +114,12 @@ general_settings:
 litellm_settings:
   # Drop params not supported by provider
   drop_params: true
-  
+
   # Set completion cost
   set_completion_cost: false
-  
+
   # Success callback
   success_callback: []
-  
-  # Failure callback  
+
+  # Failure callback
   failure_callback: []

@@ -9,6 +9,7 @@
 ## ✅ COMPLETED TODAY
 
 ### Backend: Batch Intelligence Endpoint ✅
+
 ```typescript
 trpc.emailIntelligence.getBatchIntelligence
 
@@ -30,10 +31,12 @@ Features:
 ### 1. Email List Intelligence Badges (1 hour) ⏸️
 
 **Files to Modify:**
+
 - `client/src/components/inbox/EmailListAI.tsx`
 - `client/src/components/inbox/EmailListV2.tsx`
 
 **Implementation:**
+
 ```typescript
 // In EmailListAI/EmailListV2
 const visibleThreadIds = emails.map(e => e.id);
@@ -48,15 +51,15 @@ const { data: intelligence } = trpc.emailIntelligence.getBatchIntelligence.useQu
 // In EmailListItem component
 <div className="flex items-center gap-2">
   <span>{email.from}</span>
-  
+
   {intelligence?.[email.id]?.category && (
-    <CategoryBadge 
+    <CategoryBadge
       category={intelligence[email.id].category.category}
       confidence={intelligence[email.id].category.confidence}
       className="text-xs"
     />
   )}
-  
+
   {intelligence?.[email.id]?.priority && (
     <PriorityIndicator
       level={intelligence[email.id].priority.level}
@@ -68,6 +71,7 @@ const { data: intelligence } = trpc.emailIntelligence.getBatchIntelligence.useQu
 ```
 
 **Visual Design:**
+
 ```
 ┌────────────────────────────────────────────────────┐
 │ [☐] ⭐ John Doe [💼 Work] [⚡ High 85]            │
@@ -81,9 +85,11 @@ const { data: intelligence } = trpc.emailIntelligence.getBatchIntelligence.useQu
 ### 2. Smart Category Filters (45 min) ⏸️
 
 **Files to Modify:**
+
 - `client/src/components/inbox/EmailSearchV2.tsx`
 
 **Implementation:**
+
 ```typescript
 // Add category filter state
 const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -118,6 +124,7 @@ const categoryCounts = useMemo(() => {
 ```
 
 **Create FilterChip Component:**
+
 ```typescript
 // client/src/components/inbox/FilterChip.tsx
 interface FilterChipProps {
@@ -149,10 +156,12 @@ export function FilterChip({ label, count, active, onClick }: FilterChipProps) {
 ### 3. Priority-Based Sorting (30 min) ⏸️
 
 **Files to Modify:**
+
 - `client/src/components/inbox/EmailTabV2.tsx`
 - `client/src/components/inbox/EmailSearchV2.tsx`
 
 **Implementation:**
+
 ```typescript
 // Add sort state
 const [sortBy, setSortBy] = useState<'date' | 'priority' | 'urgent'>('date');
@@ -160,13 +169,13 @@ const [sortBy, setSortBy] = useState<'date' | 'priority' | 'urgent'>('date');
 // Sort function
 const sortedEmails = useMemo(() => {
   if (!emails) return [];
-  
+
   const emailsWithIntel = emails.map(email => ({
     email,
     priority: intelligence?.[email.id]?.priority?.score || 0,
     isUrgent: intelligence?.[email.id]?.priority?.level === 'urgent',
   }));
-  
+
   switch (sortBy) {
     case 'priority':
       return emailsWithIntel.sort((a, b) => b.priority - a.priority).map(e => e.email);
@@ -195,9 +204,11 @@ const sortedEmails = useMemo(() => {
 ### 4. Quick Actions Menu (45 min) ⏸️
 
 **Files to Create:**
+
 - `client/src/components/inbox/EmailQuickActions.tsx`
 
 **Implementation:**
+
 ```typescript
 interface EmailQuickActionsProps {
   email: EmailMessage;
@@ -208,9 +219,9 @@ interface EmailQuickActionsProps {
 
 export function EmailQuickActions({ email, onArchive, onStar, onDelete }: EmailQuickActionsProps) {
   const [isVisible, setIsVisible] = useState(false);
-  
+
   return (
-    <div 
+    <div
       className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity"
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
@@ -227,7 +238,7 @@ export function EmailQuickActions({ email, onArchive, onStar, onDelete }: EmailQ
         >
           <Star className="h-4 w-4" />
         </Button>
-        
+
         <Button
           size="icon"
           variant="ghost"
@@ -239,7 +250,7 @@ export function EmailQuickActions({ email, onArchive, onStar, onDelete }: EmailQ
         >
           <Archive className="h-4 w-4" />
         </Button>
-        
+
         <Button
           size="icon"
           variant="ghost"
@@ -273,17 +284,20 @@ export function EmailQuickActions({ email, onArchive, onStar, onDelete }: EmailQ
 ## 🧪 TESTING CHECKLIST
 
 ### Unit Tests
+
 - [ ] getBatchIntelligence endpoint
 - [ ] FilterChip component
 - [ ] Sort function logic
 - [ ] Quick actions handlers
 
 ### Integration Tests
+
 - [ ] Batch intelligence + list rendering
 - [ ] Filter + sort combinations
 - [ ] Quick actions + list updates
 
 ### E2E Tests
+
 - [ ] Filter by category workflow
 - [ ] Sort by priority workflow
 - [ ] Quick actions from list
@@ -294,6 +308,7 @@ export function EmailQuickActions({ email, onArchive, onStar, onDelete }: EmailQ
 ## 📊 EXPECTED IMPACT
 
 ### User Experience
+
 ```
 Time to find important email:     -50%
 Emails processed per session:     +30%
@@ -302,6 +317,7 @@ Quick actions usage:              60% adoption
 ```
 
 ### Performance
+
 ```
 List render time:                 <100ms (with intelligence)
 Intelligence data load:           <200ms (batch endpoint)
@@ -316,6 +332,7 @@ Scroll FPS:                       60fps maintained
 ### To Continue Implementation:
 
 **Step 1: Add Intelligence to List (1 hour)**
+
 ```bash
 # Edit EmailListAI.tsx
 # Add getBatchIntelligence query
@@ -323,6 +340,7 @@ Scroll FPS:                       60fps maintained
 ```
 
 **Step 2: Add Category Filters (45 min)**
+
 ```bash
 # Create FilterChip.tsx component
 # Edit EmailSearchV2.tsx
@@ -331,6 +349,7 @@ Scroll FPS:                       60fps maintained
 ```
 
 **Step 3: Add Sorting (30 min)**
+
 ```bash
 # Add sort state to EmailTabV2
 # Add sort dropdown to EmailSearchV2
@@ -338,6 +357,7 @@ Scroll FPS:                       60fps maintained
 ```
 
 **Step 4: Add Quick Actions (45 min)**
+
 ```bash
 # Create EmailQuickActions.tsx
 # Add to EmailListItem with hover state
@@ -351,18 +371,21 @@ Scroll FPS:                       60fps maintained
 ## 💡 TIPS & BEST PRACTICES
 
 ### Performance
+
 - Cache intelligence data (5 min staleTime)
 - Only fetch for visible emails
 - Use virtual scrolling (already implemented)
 - Debounce filter/sort changes
 
 ### UX
+
 - Show loading state for intelligence
 - Graceful degradation if no data
 - Tooltip on hover for more info
 - Keyboard shortcuts (later phase)
 
 ### Code Quality
+
 - TypeScript strict mode
 - Comprehensive error handling
 - Suspense for lazy loading
@@ -373,6 +396,7 @@ Scroll FPS:                       60fps maintained
 ## 📚 RELATED FILES
 
 ### Backend
+
 ```
 ✅ server/routers/email-intelligence-router.ts (getBatchIntelligence)
 ✅ server/email-intelligence/categorizer.ts
@@ -381,6 +405,7 @@ Scroll FPS:                       60fps maintained
 ```
 
 ### Frontend (To Modify)
+
 ```
 ⏸️ client/src/components/inbox/EmailListAI.tsx
 ⏸️ client/src/components/inbox/EmailListV2.tsx
@@ -389,6 +414,7 @@ Scroll FPS:                       60fps maintained
 ```
 
 ### Frontend (To Create)
+
 ```
 ⏸️ client/src/components/inbox/FilterChip.tsx
 ⏸️ client/src/components/inbox/EmailQuickActions.tsx
@@ -399,6 +425,7 @@ Scroll FPS:                       60fps maintained
 ## 🎯 SUCCESS CRITERIA
 
 Phase 1 is complete when:
+
 - ✅ Intelligence badges visible in email list
 - ✅ Category filters working with counts
 - ✅ Priority sorting functional

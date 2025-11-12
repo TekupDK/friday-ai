@@ -1,6 +1,6 @@
 /**
  * COMPLETE DATA COLLECTION V4
- * 
+ *
  * Goals:
  * - Fetch ALL relevant Gmail threads in Jul–Dec 2025 via pagination
  * - Filter by labels and partner signals (Leadpoint, Rengøring.nu, AdHelp)
@@ -130,7 +130,11 @@ function isSpam(email: string, subject: string): boolean {
 }
 
 // Identify lead source from subject/from/labels
-function identifyLeadSource(subject: string, from: string, labels: string[] = []): { source: LeadSource; hint: string } {
+function identifyLeadSource(
+  subject: string,
+  from: string,
+  labels: string[] = []
+): { source: LeadSource; hint: string } {
   const s = (subject || "").toLowerCase();
   const f = (from || "").toLowerCase();
   const lbl = (labels || []).map(l => l.toLowerCase());
@@ -163,7 +167,12 @@ function identifyLeadSource(subject: string, from: string, labels: string[] = []
   }
 
   // AdHelp
-  if (f.includes("adhelp.dk") || f.includes("mw@adhelp.dk") || f.includes("sp@adhelp.dk") || lbl.includes("adhelp")) {
+  if (
+    f.includes("adhelp.dk") ||
+    f.includes("mw@adhelp.dk") ||
+    f.includes("sp@adhelp.dk") ||
+    lbl.includes("adhelp")
+  ) {
     return { source: LeadSource.ADHELP, hint: "AdHelp" };
   }
 
@@ -212,7 +221,9 @@ function parseTimeEstimate(text: string): TimeEstimate | undefined {
   }
 
   // "N personer × M timer" / "3x2 personer"
-  const personsTimes = t.match(/(\d+)\s*(?:personer|pers)\s*[×x*]\s*(\d+(?:[.,]\d+)?)\s*timer/i);
+  const personsTimes = t.match(
+    /(\d+)\s*(?:personer|pers)\s*[×x*]\s*(\d+(?:[.,]\d+)?)\s*timer/i
+  );
   if (personsTimes) {
     const persons = parseInt(personsTimes[1]);
     const hours = parseFloat(personsTimes[2].replace(",", "."));
@@ -227,14 +238,15 @@ function parseTimeEstimate(text: string): TimeEstimate | undefined {
     const sm = parseInt(range[2]);
     const eh = parseInt(range[3]);
     const em = parseInt(range[4]);
-    const minutes = (eh * 60 + em) - (sh * 60 + sm);
+    const minutes = eh * 60 + em - (sh * 60 + sm);
     if (minutes > 0) {
       out.estimatedHours = minutes / 60;
       out.text = range[0];
     }
   }
 
-  if (out.estimatedHours != null) out.totalMinutes = Math.round(out.estimatedHours * 60);
+  if (out.estimatedHours != null)
+    out.totalMinutes = Math.round(out.estimatedHours * 60);
   return Object.keys(out).length > 0 ? out : undefined;
 }
 
@@ -246,7 +258,8 @@ function extractParsedFields(text: string): ParsedFields {
   if (emails && emails.length > 0) p.email = emails[0];
 
   const phoneMatch = t.match(phoneRegex);
-  if (phoneMatch && phoneMatch.length > 0) p.phone = phoneMatch[0].replace(/\s/g, "");
+  if (phoneMatch && phoneMatch.length > 0)
+    p.phone = phoneMatch[0].replace(/\s/g, "");
 
   const addr = t.match(addressLineRegex);
   if (addr) p.address = addr[1].trim();
@@ -265,8 +278,10 @@ function extractParsedFields(text: string): ParsedFields {
   if (lower.includes("fast rengøring")) p.serviceType = "REN-005";
   else if (lower.includes("flytte")) p.serviceType = "REN-003";
   else if (lower.includes("hoved")) p.serviceType = "REN-002";
-  else if (lower.includes("erhverv") || lower.includes("restaurant")) p.serviceType = "REN-004";
-  else if (!p.serviceType && (lower.includes("rengøring"))) p.serviceType = "REN-001";
+  else if (lower.includes("erhverv") || lower.includes("restaurant"))
+    p.serviceType = "REN-004";
+  else if (!p.serviceType && lower.includes("rengøring"))
+    p.serviceType = "REN-001";
 
   const te = parseTimeEstimate(t);
   if (te) p.timeEstimate = te;
@@ -278,7 +293,10 @@ function extractParsedFields(text: string): ParsedFields {
   return p;
 }
 
-function mergeParsedFields(base: ParsedFields, extra: ParsedFields): ParsedFields {
+function mergeParsedFields(
+  base: ParsedFields,
+  extra: ParsedFields
+): ParsedFields {
   return {
     name: base.name || extra.name,
     email: base.email || extra.email,
@@ -322,7 +340,11 @@ async function collectV4() {
 
   do {
     page += 1;
-    const paged = await searchGmailThreadsPaged({ query: q, maxResults: 100, pageToken });
+    const paged = await searchGmailThreadsPaged({
+      query: q,
+      maxResults: 100,
+      pageToken,
+    });
     console.log(`   Page ${page}: ${paged.threads.length} threads`);
 
     for (const th of paged.threads) {
@@ -331,7 +353,11 @@ async function collectV4() {
       const labels = th.labels || [];
 
       // Determine partner source
-      const { source: leadSource, hint } = identifyLeadSource(subject, from, labels);
+      const { source: leadSource, hint } = identifyLeadSource(
+        subject,
+        from,
+        labels
+      );
 
       // Evaluate spam
       const emailMatch = (from || "").match(/([^<]+)?<?([^>@]+@[^>]+)>?/);
@@ -347,10 +373,14 @@ async function collectV4() {
         // Combine earliest and last message body for maximum extraction
         const first = th.messages[0];
         const last = th.messages[th.messages.length - 1];
-        parsed = mergeParsedFields(extractParsedFields(first.bodyText || first.body || ""), extractParsedFields(last.bodyText || last.body || ""));
+        parsed = mergeParsedFields(
+          extractParsedFields(first.bodyText || first.body || ""),
+          extractParsedFields(last.bodyText || last.body || "")
+        );
       }
 
-      const derivedName = parsed.name || (email ? email.split("@")[0] : "Unknown");
+      const derivedName =
+        parsed.name || (email ? email.split("@")[0] : "Unknown");
 
       leads.push({
         id: `GMAIL_${th.id}`,
@@ -360,7 +390,8 @@ async function collectV4() {
         name: derivedName,
         email: parsed.email || email || null,
         phone: parsed.phone || null,
-        company: (parsed.email || email) ? (parsed.email || email)!.split("@")[1] : null,
+        company:
+          parsed.email || email ? (parsed.email || email)!.split("@")[1] : null,
         address: parsed.address || null,
         serviceType: parsed.serviceType || null,
         propertySize: parsed.propertySize || null,
@@ -379,7 +410,9 @@ async function collectV4() {
     if (pageToken) await sleep(250); // rate-limit friendly
   } while (pageToken && page < maxPages);
 
-  console.log(`✅ Gmail leads collected: ${leads.filter(l => l.source === "gmail").length} (spam filtered: ${spamFiltered})`);
+  console.log(
+    `✅ Gmail leads collected: ${leads.filter(l => l.source === "gmail").length} (spam filtered: ${spamFiltered})`
+  );
 
   console.log("\n📅 STEP 2: Calendar (full parsing)");
   console.log("-".repeat(70));
@@ -407,7 +440,7 @@ async function collectV4() {
       email: p.email || null,
       phone: p.phone || null,
       company: p.email ? p.email.split("@")[1] : null,
-      address: p.address || (location || null),
+      address: p.address || location || null,
       serviceType: p.serviceType || null,
       propertySize: p.propertySize || null,
       deadline: p.deadline || null,
@@ -445,7 +478,10 @@ async function collectV4() {
   }
 
   // Save
-  const outPath = resolve(process.cwd(), "server/integrations/chromadb/test-data/complete-leads-v4.json");
+  const outPath = resolve(
+    process.cwd(),
+    "server/integrations/chromadb/test-data/complete-leads-v4.json"
+  );
   const summary = {
     collected: new Date().toISOString(),
     period: { start: startDate.toISOString(), end: endDate.toISOString() },
@@ -457,7 +493,10 @@ async function collectV4() {
       spamFiltered,
     },
     leadSources: Object.fromEntries(
-      Object.values(LeadSource).map(ls => [ls, leads.filter(l => l.leadSource === ls).length])
+      Object.values(LeadSource).map(ls => [
+        ls,
+        leads.filter(l => l.leadSource === ls).length,
+      ])
     ),
     parsedFieldCoverage: {
       withEmail: leads.filter(l => !!l.email).length,
@@ -470,17 +509,16 @@ async function collectV4() {
     },
   };
 
-  writeFileSync(
-    outPath,
-    JSON.stringify({ metadata: summary, leads }, null, 2)
-  );
+  writeFileSync(outPath, JSON.stringify({ metadata: summary, leads }, null, 2));
   console.log(`\n✅ Saved to: ${outPath}`);
 
   console.log("\n" + "=".repeat(70));
   console.log("📊 V4 COLLECTION SUMMARY");
   console.log("=".repeat(70));
   console.log(`\nTotal: ${summary.counts.total}`);
-  console.log(`  • Gmail: ${summary.counts.gmail} (spam filtered: ${spamFiltered})`);
+  console.log(
+    `  • Gmail: ${summary.counts.gmail} (spam filtered: ${spamFiltered})`
+  );
   console.log(`  • Calendar: ${summary.counts.calendar}`);
   console.log(`  • Billy: ${summary.counts.billy}`);
   console.log("\nLead sources:");

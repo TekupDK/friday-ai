@@ -241,7 +241,7 @@ tekup-docs ai generate "Document the email sync engine" \
 
 ```bash
 # Search
-tekup-docs search "websocket" 
+tekup-docs search "websocket"
 
 # View result
 tekup-docs view abc-123-def --format=pretty

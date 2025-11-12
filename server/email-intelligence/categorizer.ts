@@ -7,7 +7,13 @@ import { routeAI } from "../ai-router";
 import { generateCorrelationId } from "../action-audit";
 
 export interface EmailCategory {
-  category: 'work' | 'personal' | 'finance' | 'marketing' | 'important' | 'other';
+  category:
+    | "work"
+    | "personal"
+    | "finance"
+    | "marketing"
+    | "important"
+    | "other";
   confidence: number; // 0-1
   subcategory?: string;
   reasoning?: string;
@@ -55,21 +61,21 @@ export async function categorizeEmail(
 ): Promise<EmailCategory> {
   try {
     // Truncate long content for LLM efficiency
-    const truncatedBody = email.body.length > 2000 
-      ? email.body.substring(0, 2000) + '...'
-      : email.body;
+    const truncatedBody =
+      email.body.length > 2000
+        ? email.body.substring(0, 2000) + "..."
+        : email.body;
 
     // Build prompt with email data
-    const prompt = CATEGORIZATION_PROMPT
-      .replace('{from}', email.from)
-      .replace('{to}', email.to)
-      .replace('{subject}', email.subject)
-      .replace('{body}', truncatedBody);
+    const prompt = CATEGORIZATION_PROMPT.replace("{from}", email.from)
+      .replace("{to}", email.to)
+      .replace("{subject}", email.subject)
+      .replace("{body}", truncatedBody);
 
     // Call LLM
     const response = await routeAI({
-      messages: [{ role: 'user', content: prompt }],
-      taskType: 'chat',
+      messages: [{ role: "user", content: prompt }],
+      taskType: "chat",
       userId,
       requireApproval: false,
       correlationId: generateCorrelationId(),
@@ -78,11 +84,11 @@ export async function categorizeEmail(
 
     // Parse LLM response
     const result = parseCategorizationResponse(response.content);
-    
+
     return result;
   } catch (error) {
-    console.error('Email categorization error:', error);
-    
+    console.error("Email categorization error:", error);
+
     // Fallback to basic categorization
     return basicCategorization(email);
   }
@@ -96,15 +102,22 @@ function parseCategorizationResponse(content: string): EmailCategory {
     // Extract JSON from response (handle markdown code blocks)
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      throw new Error('No JSON found in response');
+      throw new Error("No JSON found in response");
     }
 
     const parsed = JSON.parse(jsonMatch[0]);
-    
+
     // Validate category
-    const validCategories = ['work', 'personal', 'finance', 'marketing', 'important', 'other'];
+    const validCategories = [
+      "work",
+      "personal",
+      "finance",
+      "marketing",
+      "important",
+      "other",
+    ];
     if (!validCategories.includes(parsed.category)) {
-      throw new Error('Invalid category');
+      throw new Error("Invalid category");
     }
 
     return {
@@ -114,7 +127,7 @@ function parseCategorizationResponse(content: string): EmailCategory {
       reasoning: parsed.reasoning,
     };
   } catch (error) {
-    throw new Error('Failed to parse categorization response');
+    throw new Error("Failed to parse categorization response");
   }
 }
 
@@ -128,57 +141,57 @@ function basicCategorization(email: EmailMessage): EmailCategory {
 
   // Marketing patterns
   if (
-    subject.includes('unsubscribe') ||
-    subject.includes('nyhedsbrev') ||
-    subject.includes('tilbud') ||
-    body.includes('unsubscribe')
+    subject.includes("unsubscribe") ||
+    subject.includes("nyhedsbrev") ||
+    subject.includes("tilbud") ||
+    body.includes("unsubscribe")
   ) {
     return {
-      category: 'marketing',
+      category: "marketing",
       confidence: 0.7,
-      subcategory: 'newsletter',
-      reasoning: 'Contains marketing keywords',
+      subcategory: "newsletter",
+      reasoning: "Contains marketing keywords",
     };
   }
 
   // Finance patterns
   if (
-    subject.includes('faktura') ||
-    subject.includes('invoice') ||
-    subject.includes('betaling') ||
-    subject.includes('payment') ||
-    from.includes('bank') ||
-    from.includes('payment')
+    subject.includes("faktura") ||
+    subject.includes("invoice") ||
+    subject.includes("betaling") ||
+    subject.includes("payment") ||
+    from.includes("bank") ||
+    from.includes("payment")
   ) {
     return {
-      category: 'finance',
+      category: "finance",
       confidence: 0.75,
-      subcategory: 'invoice',
-      reasoning: 'Contains financial keywords',
+      subcategory: "invoice",
+      reasoning: "Contains financial keywords",
     };
   }
 
   // Important patterns
   if (
-    subject.includes('urgent') ||
-    subject.includes('vigtig') ||
-    subject.includes('deadline') ||
-    subject.includes('asap')
+    subject.includes("urgent") ||
+    subject.includes("vigtig") ||
+    subject.includes("deadline") ||
+    subject.includes("asap")
   ) {
     return {
-      category: 'important',
+      category: "important",
       confidence: 0.8,
-      subcategory: 'urgent',
-      reasoning: 'Contains urgency keywords',
+      subcategory: "urgent",
+      reasoning: "Contains urgency keywords",
     };
   }
 
   // Default to work
   return {
-    category: 'work',
+    category: "work",
     confidence: 0.5,
-    subcategory: 'general',
-    reasoning: 'No specific patterns detected, defaulting to work',
+    subcategory: "general",
+    reasoning: "No specific patterns detected, defaulting to work",
   };
 }
 
@@ -196,7 +209,7 @@ export async function categorizeEmailBatch(
   for (let i = 0; i < emails.length; i += BATCH_SIZE) {
     const batch = emails.slice(i, i + BATCH_SIZE);
     const batchResults = await Promise.all(
-      batch.map(email => 
+      batch.map(email =>
         categorizeEmail(email, userId).catch(error => {
           console.error(`Failed to categorize email ${email.id}:`, error);
           return basicCategorization(email);
@@ -237,6 +250,7 @@ export function getCategoryStats(categories: EmailCategory[]): {
 
   return {
     distribution,
-    averageConfidence: categories.length > 0 ? totalConfidence / categories.length : 0,
+    averageConfidence:
+      categories.length > 0 ? totalConfidence / categories.length : 0,
   };
 }

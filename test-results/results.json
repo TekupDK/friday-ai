@@ -31,10 +31,7 @@
           "outputFile": "test-results/junit.xml"
         }
       ],
-      [
-        "list",
-        null
-      ]
+      ["list", null]
     ],
     "reportSlowTests": {
       "max": 5,
@@ -51,9 +48,7 @@
         "name": "chromium",
         "testDir": "C:/Users/empir/Tekup/services/tekup-ai-v2/tests",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 60000
       },
       {
@@ -65,9 +60,7 @@
         "name": "firefox",
         "testDir": "C:/Users/empir/Tekup/services/tekup-ai-v2/tests",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 60000
       },
       {
@@ -79,9 +72,7 @@
         "name": "webkit",
         "testDir": "C:/Users/empir/Tekup/services/tekup-ai-v2/tests",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 60000
       },
       {
@@ -93,9 +84,7 @@
         "name": "Mobile Chrome",
         "testDir": "C:/Users/empir/Tekup/services/tekup-ai-v2/tests",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 60000
       },
       {
@@ -107,9 +96,7 @@
         "name": "Mobile Safari",
         "testDir": "C:/Users/empir/Tekup/services/tekup-ai-v2/tests",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 60000
       },
       {
@@ -121,9 +108,7 @@
         "name": "ai-tests",
         "testDir": "C:/Users/empir/Tekup/services/tekup-ai-v2/tests",
         "testIgnore": [],
-        "testMatch": [
-          "**/ai/**/*.test.ts"
-        ],
+        "testMatch": ["**/ai/**/*.test.ts"],
         "timeout": 60000
       }
     ],

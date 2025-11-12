@@ -18,7 +18,9 @@ import { warmupCache } from "./lib/cacheStrategy";
 import { useEffect } from "react";
 
 function Router() {
-  const { isAuthenticated, loading } = useAuth({ redirectOnUnauthenticated: false });
+  const { isAuthenticated, loading } = useAuth({
+    redirectOnUnauthenticated: false,
+  });
 
   // Show loading spinner while checking auth
   if (loading) {
@@ -72,7 +74,7 @@ function CacheWarmer() {
       try {
         warmupCache(queryClient, String(user.id));
       } catch (err) {
-        console.warn('[Cache] Warmup failed:', err);
+        console.warn("[Cache] Warmup failed:", err);
       }
     }
     // queryClient is stable and doesn't need to be in dependencies

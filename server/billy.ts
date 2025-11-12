@@ -281,17 +281,20 @@ export async function getInvoice(
 /**
  * Create a new invoice
  */
-export async function createInvoice(invoice: {
-  contactId: string;
-  entryDate: string;
-  paymentTermsDays?: number;
-  lines: Array<{
-    description: string;
-    quantity: number;
-    unitPrice: number;
-    productId?: string;
-  }>;
-}, options?: { correlationId?: string }): Promise<BillyInvoice> {
+export async function createInvoice(
+  invoice: {
+    contactId: string;
+    entryDate: string;
+    paymentTermsDays?: number;
+    lines: Array<{
+      description: string;
+      quantity: number;
+      unitPrice: number;
+      productId?: string;
+    }>;
+  },
+  options?: { correlationId?: string }
+): Promise<BillyInvoice> {
   const bodyWithOrg = {
     invoice: {
       ...invoice,

@@ -12,7 +12,7 @@
 
 1. **SPLITS Sidebar (Venstre side)**
    - ✅ "Alle Emails (20)" synlig
-   - ✅ "Hot Leads (0)" synlig  
+   - ✅ "Hot Leads (0)" synlig
    - ✅ "Venter på Svar (0)" synlig
    - ✅ "Finance (0)" synlig
    - ✅ "Afsluttet (0)" synlig
@@ -36,9 +36,11 @@
 ## ⚠️ IKKE SYNLIGT I SCREENSHOT (Men det er NORMALT)
 
 ### 1. **Quick Actions (Hover-activated)**
+
 **Hvorfor ikke synligt:** Quick Actions vises KUN ved hover!
 
 **Test nødvendig:**
+
 ```
 1. Hover over en email i listen
 2. Se efter icons: 📂 (archive), ⭐ (star), 🗑️ (delete), ⋯ (more)
@@ -47,6 +49,7 @@
 ```
 
 **Forventet resultat:**
+
 - Actions skal fade in smoothly ved hover
 - Archive, Star, Delete, More skal være synlige
 - Console logs: "Archive: threadId", "Star: threadId", etc.
@@ -54,16 +57,18 @@
 ---
 
 ### 2. **Badge Reduction (Conditional rendering)**
+
 **Hvorfor ikke synligt:** Screenshot opløsning ikke høj nok til at se badge detaljer.
 
 **Test nødvendig:**
+
 ```
 1. Find en email med lead score >= 70
    → Skal have 🔥 badge synlig
-   
+
 2. Find en email med lead score < 70
    → Skal IKKE have nogen badges
-   
+
 3. Verificer INGEN af disse badges vises:
    - 🟢 Source badges (Rengøring.nu, Direct, etc.)
    - ⏰ Urgency badges (Urgent, Medium, Low)
@@ -74,6 +79,7 @@
 ```
 
 **Forventet resultat:**
+
 - Kun hot leads (score >= 70) har badges
 - Alle andre badges fjernet
 - Clean, minimal look
@@ -85,11 +91,13 @@
 ### Test 1: Hot Lead Badge Conditional Rendering
 
 **Current data fra screenshot:**
+
 - "0 Hot Leads" shown in stats
 - This means NO emails have score >= 70
 - Therefore: NO badges should be visible! ✅
 
 **Manual test:**
+
 ```
 1. Find emails i listen
 2. Verificer INGEN badges synlige (da 0 hot leads)
@@ -104,6 +112,7 @@
 **Cannot verify from screenshot** (static image)
 
 **Manual test required:**
+
 ```
 1. Open Email Center: http://localhost:3002
 2. Hover over first email
@@ -114,6 +123,7 @@
 ```
 
 **Expected behavior:**
+
 - Smooth opacity transition (0 → 100)
 - Icons appear on right side of email
 - Console logs on click
@@ -126,6 +136,7 @@
 **From screenshot analysis:**
 
 **Current layout (fra screenshot):**
+
 ```
 [Icon] Navn                     Emne text                    [Time] [Toggle]
 ```
@@ -133,11 +144,13 @@
 **Expected layout (Phase 1):**
 
 **Compact:**
+
 ```
 [●] Navn    Emne                              [Time] [🔥75 if hot] [Actions on hover]
 ```
 
 **Comfortable:**
+
 ```
 [●] Navn                                      [Time] [🔥75 if hot] [Actions on hover]
     Emne text her
@@ -145,6 +158,7 @@
 ```
 
 **Manual verification needed:**
+
 1. Check if layout matches expected
 2. Verify spacing is correct
 3. Check if snippet is visible (comfortable mode)
@@ -154,9 +168,11 @@
 ## 🐛 POTENTIAL ISSUES TO CHECK
 
 ### Issue #1: Dev Server Cache
+
 **Problem:** Changes might not be hot-reloaded
 
 **Fix:**
+
 ```bash
 # Hard refresh browser
 Ctrl + Shift + R (Windows)
@@ -169,19 +185,24 @@ npm run dev
 ---
 
 ### Issue #2: React Component Not Re-rendering
+
 **Problem:** EmailListAI might not be the active component
 
 **Check:**
+
 ```tsx
 // In EmailTabV2.tsx, verify which list is rendered:
-{useAIEnhancedList ? (
-  <EmailListAI />  // ← Should be this one!
-) : (
-  <EmailListV2 />  // ← Old version
-)}
+{
+  useAIEnhancedList ? (
+    <EmailListAI /> // ← Should be this one!
+  ) : (
+    <EmailListV2 /> // ← Old version
+  );
+}
 ```
 
 **Manual test:**
+
 1. Open browser dev tools
 2. Check component hierarchy
 3. Verify EmailListAI is rendered
@@ -190,9 +211,11 @@ npm run dev
 ---
 
 ### Issue #3: Styling Not Applied
+
 **Problem:** Tailwind classes might not compile
 
 **Check:**
+
 ```
 1. Open browser dev tools
 2. Inspect email item
@@ -207,12 +230,14 @@ npm run dev
 ## ✅ PHASE 1 SUCCESS CRITERIA
 
 ### Visual Criteria:
+
 - [ ] No badge clutter (only hot lead badges for score >= 70)
 - [ ] Clean email item layout (name, subject, snippet, time)
 - [ ] Quick Actions visible on hover
 - [ ] Smooth hover animations
 
 ### Functional Criteria:
+
 - [ ] Email click opens detail view
 - [ ] Checkbox selection works
 - [ ] Quick Actions trigger console logs
@@ -220,6 +245,7 @@ npm run dev
 - [ ] SPLITS filtering works
 
 ### Code Criteria:
+
 - [ ] EmailQuickActions imported
 - [ ] Conditional badge rendering (score >= 70)
 - [ ] Hover opacity transitions
@@ -231,14 +257,18 @@ npm run dev
 ## 🚀 NEXT STEPS
 
 ### If All Tests Pass ✅
+
 **Proceed to Phase 2:**
+
 - Thread Integration
 - EmailThreadGroup component
 - Group by threadId
 - Thread expansion/collapse
 
 ### If Issues Found ❌
+
 **Fix before Phase 2:**
+
 1. Document bug details
 2. Create fix
 3. Test fix
@@ -250,6 +280,7 @@ npm run dev
 ## 📝 MANUAL TEST CHECKLIST
 
 ### Browser Testing (Required):
+
 ```
 1. [ ] Open http://localhost:3002
 2. [ ] Navigate to Email Center
@@ -264,6 +295,7 @@ npm run dev
 ```
 
 ### Console Inspection (Required):
+
 ```
 1. [ ] Open DevTools (F12)
 2. [ ] Check Console tab for errors
@@ -277,6 +309,7 @@ npm run dev
 ## 🎯 ANALYSIS SUMMARY
 
 **Based on screenshot alone:**
+
 - ✅ SPLITS system works
 - ✅ Email list renders
 - ✅ Layout looks clean
@@ -287,12 +320,13 @@ npm run dev
 **Confidence Level:** 70%
 
 **Reason:** Static screenshot cannot verify:
+
 - Hover interactions
 - Badge conditional rendering (no hot leads to test)
 - Animation smoothness
 - Console logs
 
-**Recommendation:** 
+**Recommendation:**
 **MANUAL BROWSER TESTING REQUIRED** to verify Phase 1 fully! 🧪
 
 ---

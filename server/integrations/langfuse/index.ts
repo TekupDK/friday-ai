@@ -10,7 +10,7 @@ export {
   shutdownLangfuse,
   tracedOperation,
   langfuse,
-} from './client';
+} from "./client";
 
 // Re-export for convenience
-export { getLangfuseClient as default } from './client';
+export { getLangfuseClient as default } from "./client";

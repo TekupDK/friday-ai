@@ -1,0 +1,102 @@
+/**
+ * ScrollToTop Styles
+ *
+ * iOS-style scroll-to-top button
+ */
+
+.button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1100;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  /* background controlled by theme */
+  border: none;
+  border-radius: 50%;
+  /* box-shadow controlled by theme */
+  cursor: pointer;
+  /* color controlled by theme */
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background: #0051d5;
+  box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+}
+
+.button:active {
+  background: #004fc4;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+}
+
+/* ============================================================================
+   LIGHT MODE
+   ============================================================================ */
+
+[data-theme="light"] .button {
+  background: #007aff;
+  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+}
+
+[data-theme="light"] .button:hover {
+  background: #0051d5;
+  box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+}
+
+[data-theme="light"] .button:active {
+  background: #004fc4;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+[data-theme="dark"] .button {
+  background: #0a84ff;
+  box-shadow: 0 4px 16px rgba(10, 132, 255, 0.4);
+}
+
+[data-theme="dark"] .button:hover {
+  background: #409cff;
+  box-shadow: 0 6px 20px rgba(10, 132, 255, 0.5);
+}
+
+[data-theme="dark"] .button:active {
+  background: #0077ed;
+}
+
+/* Support system preference as well */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .button {
+    background: #0a84ff;
+    box-shadow: 0 4px 16px rgba(10, 132, 255, 0.4);
+  }
+
+  html:not([data-theme]) .button:hover {
+    background: #409cff;
+    box-shadow: 0 6px 20px rgba(10, 132, 255, 0.5);
+  }
+
+  html:not([data-theme]) .button:active {
+    background: #0077ed;
+  }
+}
+
+/* ============================================================================
+   MOBILE
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .button {
+    bottom: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}

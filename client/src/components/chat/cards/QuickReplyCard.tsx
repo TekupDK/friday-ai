@@ -24,47 +24,53 @@ export interface QuickReplyCardProps {
   onEditTemplate?: (id: string) => void;
 }
 
-export function QuickReplyCard({ 
+export function QuickReplyCard({
   quickReply = {
-    id: '1',
-    title: 'Hurtige svar',
+    id: "1",
+    title: "Hurtige svar",
     templates: [
       {
-        id: '1',
-        label: 'Tak for henvendelse',
-        message: 'Tak for din henvendelse. Vi vender tilbage inden for 24 timer.',
-        category: 'standard'
+        id: "1",
+        label: "Tak for henvendelse",
+        message:
+          "Tak for din henvendelse. Vi vender tilbage inden for 24 timer.",
+        category: "standard",
       },
       {
-        id: '2',
-        label: 'Booking bekræftet',
-        message: 'Din booking er bekræftet. Du vil modtage en bekræftelse på email.',
-        category: 'booking'
+        id: "2",
+        label: "Booking bekræftet",
+        message:
+          "Din booking er bekræftet. Du vil modtage en bekræftelse på email.",
+        category: "booking",
       },
       {
-        id: '3',
-        label: 'Mere info nødvendig',
-        message: 'Vi har brug for mere information for at kunne hjælpe dig videre.',
-        category: 'support'
+        id: "3",
+        label: "Mere info nødvendig",
+        message:
+          "Vi har brug for mere information for at kunne hjælpe dig videre.",
+        category: "support",
       },
       {
-        id: '4',
-        label: 'Videresender til support',
-        message: 'Jeg videresender din henvendelse til vores support team.',
-        category: 'support'
-      }
-    ]
+        id: "4",
+        label: "Videresender til support",
+        message: "Jeg videresender din henvendelse til vores support team.",
+        category: "support",
+      },
+    ],
   },
   onSendReply,
-  onEditTemplate
+  onEditTemplate,
 }: QuickReplyCardProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'booking': return 'bg-green-500';
-      case 'support': return 'bg-blue-500';
-      default: return 'bg-gray-500';
+      case "booking":
+        return "bg-green-500";
+      case "support":
+        return "bg-blue-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
@@ -90,7 +96,7 @@ export function QuickReplyCard({
         </div>
 
         <div className="space-y-2">
-          {quickReply.templates.map((template) => (
+          {quickReply.templates.map(template => (
             <button
               key={template.id}
               onClick={() => setSelectedTemplate(template.id)}
@@ -104,7 +110,9 @@ export function QuickReplyCard({
               <div className="flex items-start justify-between gap-2">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-sm">{template.label}</span>
+                    <span className="font-medium text-sm">
+                      {template.label}
+                    </span>
                     <Badge className={getCategoryColor(template.category)}>
                       {template.category}
                     </Badge>
@@ -122,10 +130,12 @@ export function QuickReplyCard({
         </div>
 
         <div className="flex gap-1 pt-2 border-t">
-          <Button 
-            size="sm" 
+          <Button
+            size="sm"
             onClick={() => {
-              const template = quickReply.templates.find(t => t.id === selectedTemplate);
+              const template = quickReply.templates.find(
+                t => t.id === selectedTemplate
+              );
               if (template) {
                 onSendReply?.(template.message);
               }
@@ -135,10 +145,12 @@ export function QuickReplyCard({
             <Send className="w-3 h-3 mr-1" />
             Send svar
           </Button>
-          <Button 
-            size="sm" 
+          <Button
+            size="sm"
             variant="outline"
-            onClick={() => selectedTemplate && onEditTemplate?.(selectedTemplate)}
+            onClick={() =>
+              selectedTemplate && onEditTemplate?.(selectedTemplate)
+            }
             disabled={!selectedTemplate}
           >
             Rediger

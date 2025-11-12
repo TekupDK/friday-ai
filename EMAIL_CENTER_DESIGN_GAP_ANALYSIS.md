@@ -55,6 +55,7 @@
 ### Problem 1: **INFORMATION OVERLOAD** 🔴
 
 **Vores Nuværende Design:**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │ [Intelligence Header - Fylder 120px]                         │
@@ -79,6 +80,7 @@
 **ALT FOR MEGET INFORMATION PER EMAIL! 😰**
 
 **Shortwave's Design:**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │ [Søg...]                                              [Filtre]│
@@ -103,6 +105,7 @@
 **Shortwave:** Grupperer alle beskeder i tråde
 
 **Konsekvens:**
+
 - ❌ Svært at følge samtaler
 - ❌ Duplikeret information
 - ❌ Forvirrende at navigere
@@ -115,6 +118,7 @@
 ### Problem 3: **FOR MANGE SYNLIGE BADGES** 🔴
 
 **Vores emails har:**
+
 ```
 [🔥 Lead Score] [● Unread] [🟢 Source Badge] [⏰ Urgency Badge]
 📍 Location | 🎯 Job Type | 💰 Value | ✓ Confidence
@@ -123,6 +127,7 @@
 **= 8+ badges/icons per email! 🤯**
 
 **Shortwave's emails har:**
+
 ```
 [Navn]                     [Tid]
 [Emne]                     [Besked count]
@@ -136,6 +141,7 @@
 ### Problem 4: **INTELLIGENCE HEADER FYLDER FOR MEGET** 🔴
 
 **Vores Intelligence Header:**
+
 ```
 ┌────────────────────────────────────────────────────────┐
 │ [Search] [Sort]                                        │
@@ -143,14 +149,17 @@
 │ 🔥 5 Hot | 💰 12.450 kr | 🎯 2.450 kr avg             │
 └────────────────────────────────────────────────────────┘
 ```
+
 **Højde: ~120px** (fylder ALT for meget!)
 
 **Shortwave:**
+
 ```
 ┌────────────────────────────────────────────────────────┐
 │ [Søg...]                                      [Filtre] │
 └────────────────────────────────────────────────────────┘
 ```
+
 **Højde: ~60px** (minimal!)
 
 ---
@@ -158,6 +167,7 @@
 ### Problem 5: **SPLITS SIDEBAR DESIGN** 🟡
 
 **Vores SPLITS Sidebar:**
+
 ```
 ┌──────────────────┐
 │ SMART SPLITS     │
@@ -171,6 +181,7 @@
 ```
 
 **Fungerer godt! ✅** Men kan forbedres:
+
 - Kunne være smallere (200px i stedet for 256px)
 - Kunne have collapse/expand funktion
 - Kunne have mere spacing
@@ -184,12 +195,14 @@
 **Vi har EmailQuickActions component... MEN DEN BRUGES IKKE! 😤**
 
 **Shortwave:**
+
 - Hover over email → actions appear
 - Archive, Snooze, Star, More - alle synlige
 - Smooth animations
 - Intuitive
 
 **Vores:**
+
 - Ingen hover actions
 - Checkbox bliver synlig (det er fint)
 - Men ingen quick actions på emails
@@ -199,29 +212,34 @@
 ## 🎯 SHORTWAVE'S DESIGN PRINCIPPER
 
 ### 1. **MINIMAL UI**
+
 - Fokus på indhold, ikke chrome
 - Kun viser hvad der er nødvendigt
 - Badges/icons kun når relevant
 
 ### 2. **TRÅD-FOKUSERET**
+
 - Grupperer relaterede emails
 - Viser besked-count
 - Latest message preview
 - Expandable conversations
 
 ### 3. **HOVER INTERACTIONS**
+
 - Quick actions på hover
 - Smooth transitions
 - Non-intrusive
 - Efficient workflow
 
 ### 4. **INTELLIGENT SPACING**
+
 - Luftig design
 - Ikke tætpakket
 - Hvid plads matters
 - Readable
 
 ### 5. **CONTEXT-AWARE**
+
 - Badges kun når relevant
 - Priority kun for vigtige emails
 - Categories ikke overalt
@@ -236,6 +254,7 @@
 **Status:** Component klar ✅, integration mangler ❌
 
 **Action:**
+
 ```typescript
 // I EmailListAI.tsx
 1. Group emails by threadId
@@ -245,7 +264,8 @@
 5. Collapse multiple messages
 ```
 
-**Impact:** 
+**Impact:**
+
 - ✅ Meget mere Shortwave-like
 - ✅ Bedre conversation tracking
 - ✅ Mindre clutter
@@ -260,6 +280,7 @@
 **Status:** Component klar ✅, integration mangler ❌
 
 **Action:**
+
 ```typescript
 // I EmailThreadGroup.tsx / EmailListAI.tsx
 1. Add EmailQuickActions on hover
@@ -269,6 +290,7 @@
 ```
 
 **Impact:**
+
 - ✅ Effektiv workflow
 - ✅ Shortwave-style interactions
 - ✅ Power user features
@@ -283,6 +305,7 @@
 **Status:** For mange badges ❌
 
 **Action:**
+
 ```typescript
 // Vis kun relevante badges:
 1. Lead Score → Kun hvis >= 70 (hot leads)
@@ -293,6 +316,7 @@
 ```
 
 **Impact:**
+
 - ✅ Cleaner design
 - ✅ Mere fokus på indhold
 - ✅ Bedre readability
@@ -307,6 +331,7 @@
 **Status:** Fylder for meget ❌
 
 **Action:**
+
 ```typescript
 // Ny design:
 1. Fjern filter buttons (bruger SPLITS i stedet)
@@ -316,6 +341,7 @@
 ```
 
 **Impact:**
+
 - ✅ Meget mere plads til emails
 - ✅ Cleaner interface
 - ✅ Shortwave-style minimal header
@@ -332,12 +358,14 @@
 **Ny design (Shortwave-inspired):**
 
 **Compact Mode:**
+
 ```
 [●] Matilde Skinneholm                            12:45 [🔥75]
     Flytterengøring - URGENT                      [Quick Actions]
 ```
 
 **Comfortable Mode:**
+
 ```
 [●] Matilde Skinneholm                            12:45
     Flytterengøring - URGENT                      [2 beskeder]
@@ -346,6 +374,7 @@
 ```
 
 **Regler:**
+
 - Navn + Tid + (optional hot badge)
 - Emne + besked count
 - Snippet
@@ -353,6 +382,7 @@
 - Ingen intelligence i list (kun i detail view)
 
 **Impact:**
+
 - ✅ MEGET mere Shortwave-like
 - ✅ Clean, professional
 - ✅ Fokus på indhold
@@ -421,6 +451,7 @@
 ## 🎨 BEFORE & AFTER MOCKUP
 
 ### BEFORE (Nu):
+
 ```
 ┌────────┬─────────────────────────────────────────────────────┐
 │ SPLITS │ [Intelligence Header - 120px]                       │
@@ -436,9 +467,11 @@
 │        │    📍København|🎯Type|💰3500|✓92%                  │
 └────────┴─────────────────────────────────────────────────────┘
 ```
+
 **= INFORMATION OVERLOAD! 🤯**
 
 ### AFTER (Shortwave-style):
+
 ```
 ┌────────┬─────────────────────────────────────────────────────┐
 │ SPLITS │ [Søg emails...]                            [View ▼] │
@@ -453,6 +486,7 @@
 │ Done   │                                                     │
 └────────┴─────────────────────────────────────────────────────┘
 ```
+
 **= CLEAN, PROFESSIONAL, SHORTWAVE-LIKE! ✨**
 
 ---
@@ -460,6 +494,7 @@
 ## 💰 ROI AF FORBEDRINGER
 
 ### Nuværende Design:
+
 - ❌ Information overload
 - ❌ Svært at scanne hurtigt
 - ❌ For mange distractioner
@@ -467,6 +502,7 @@
 - **Email triage tid: ~45 sek per email**
 
 ### Efter Shortwave-style Forbedringer:
+
 - ✅ Clean, fokuseret
 - ✅ Hurtig scanning
 - ✅ Minimal distraction
@@ -480,15 +516,17 @@
 ## 🎯 ANBEFALING
 
 ### Start med Phase 1 (Quick Wins) - 2-3 timer:
+
 ```
 1. ✅ Integrer Quick Actions
-2. ✅ Reducer Badge Clutter  
+2. ✅ Reducer Badge Clutter
 3. ✅ Simplificer Email Items
 ```
 
 **Dette giver MASSIV forbedring med minimal indsats! 🎉**
 
 ### Derefter Phase 2 (Thread Integration) - 3-4 timer:
+
 ```
 1. ✅ Integrer EmailThreadGroup
 2. ✅ Group by threadId
@@ -498,6 +536,7 @@
 **Dette gør det SHORTWAVE-LEVEL professional! 🚀**
 
 ### Endelig Phase 3 (Header) - 2-3 timer:
+
 ```
 1. ✅ Simplify intelligence header
 2. ✅ Move stats to sidebar
@@ -585,6 +624,7 @@
 **Vi har en SOLID foundation! ✅**
 
 Men designet har room for improvement:
+
 - ❌ For mange badges
 - ❌ Information overload
 - ❌ Thread grouping ikke integreret

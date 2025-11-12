@@ -10,6 +10,7 @@
 ## 🎯 Problem Statement
 
 RenDetalje needed a system to:
+
 1. **Identify recurring customers** from calendar bookings
 2. **Detect data quality issues** before they impact revenue
 3. **Extract actionable insights** from unstructured calendar data
@@ -21,6 +22,7 @@ RenDetalje needed a system to:
 ## 💡 Solution Delivered
 
 An **AI-powered data pipeline** that automatically:
+
 - Extracts customer intelligence from Google Calendar events
 - Validates recurring patterns with AI frequency detection
 - Flags quality issues (complaints, payment problems)
@@ -41,7 +43,7 @@ After (v4.3.5):   24 recurring customers (+5 customers, +26%)
 
 Distribution:
   🟢 Weekly:      3 → 4 customers
-  🟡 Biweekly:    6 → 7 customers  
+  🟡 Biweekly:    6 → 7 customers
   🟠 Triweekly:   7 → 9 customers
   🔵 Monthly:     1 → 3 customers
 ```
@@ -71,14 +73,14 @@ Processing Time:           ~2-3 sec/event
 
 ### **Immediate Revenue Opportunities**
 
-| Opportunity | Value | Timeline | Action Required |
-|-------------|-------|----------|-----------------|
-| **Missing Bookings Recovery** | 15-20k kr | Week 1-2 | Data audit |
-| **Payment Collection** | 7-10k kr | Week 1-2 | Follow-up |
-| **Problematic Customer Review** | 8-10k kr saved | Week 2 | Quality check |
-| **Premium Customer Upsell** | 30-40k kr/year | Week 3-4 | Sales campaign |
-| **Frequency Optimization** | 15-20k kr/year | Month 2 | Retention program |
-| **TOTAL ANNUAL IMPACT** | **65-85k kr** | **3 months** | **See action plan** |
+| Opportunity                     | Value          | Timeline     | Action Required     |
+| ------------------------------- | -------------- | ------------ | ------------------- |
+| **Missing Bookings Recovery**   | 15-20k kr      | Week 1-2     | Data audit          |
+| **Payment Collection**          | 7-10k kr       | Week 1-2     | Follow-up           |
+| **Problematic Customer Review** | 8-10k kr saved | Week 2       | Quality check       |
+| **Premium Customer Upsell**     | 30-40k kr/year | Week 3-4     | Sales campaign      |
+| **Frequency Optimization**      | 15-20k kr/year | Month 2      | Retention program   |
+| **TOTAL ANNUAL IMPACT**         | **65-85k kr**  | **3 months** | **See action plan** |
 
 ### **ROI Analysis**
 
@@ -98,12 +100,12 @@ Payback Period:       Immediate
 
 AI detected customers with higher booking numbers than visible in our system:
 
-| Customer | Visible | AI Detected | Missing |
-|----------|---------|-------------|---------|
-| Tommy Callesen | 4 bookings | Booking #7 | 3 bookings |
-| Vindunor | 8 bookings | Booking #11 | 3 bookings |
-| Nadia Møllebjerg | 3 bookings | Booking #7 | 4 bookings |
-| Lasse Marling | 2 bookings | Booking #8 | 6 bookings |
+| Customer         | Visible    | AI Detected | Missing    |
+| ---------------- | ---------- | ----------- | ---------- |
+| Tommy Callesen   | 4 bookings | Booking #7  | 3 bookings |
+| Vindunor         | 8 bookings | Booking #11 | 3 bookings |
+| Nadia Møllebjerg | 3 bookings | Booking #7  | 4 bookings |
+| Lasse Marling    | 2 bookings | Booking #8  | 6 bookings |
 
 **Recommendation:** Audit historical data for missing revenue.
 
@@ -122,23 +124,27 @@ AI identified 6 customers as recurring despite only 1 visible booking:
 ### **3. Problematic Customers**
 
 **Birgit Joost Blak** - Complaint about first cleaning:
+
 - 2 bookings, 4,712 kr revenue
 - Issue: Communication error, unsatisfactory first service
 - **Recommendation:** Quality review, improved onboarding
 
 **3 Additional customers** with quality flags
+
 - Total exposure: ~8,000 kr
 - **Recommendation:** Proactive quality monitoring
 
 ### **4. Premium Customer Segment**
 
 **28 customers identified** with premium indicators:
+
 - Larger properties (120+ m²)
 - Special requirements (sæbespåner, egen nøgle)
 - High booking frequency
 - Higher average spend
 
-**Opportunity:** 
+**Opportunity:**
+
 - Premium pricing (+15-20%)
 - Dedicated service coordinator
 - Priority scheduling
@@ -150,6 +156,7 @@ AI identified 6 customers as recurring despite only 1 visible booking:
 ### **Segment 1: VIP Recurring (24 customers, 22.6% revenue)**
 
 **Profile:**
+
 - 2+ confirmed bookings
 - Predictable patterns (weekly/biweekly/etc.)
 - Low churn risk
@@ -161,6 +168,7 @@ AI identified 6 customers as recurring despite only 1 visible booking:
 ### **Segment 2: Premium One-Time (28 customers, ~31% revenue)**
 
 **Profile:**
+
 - High deal value
 - Special requirements
 - Large properties
@@ -173,6 +181,7 @@ AI identified 6 customers as recurring despite only 1 visible booking:
 ### **Segment 3: Standard Active (70 customers, ~36% revenue)**
 
 **Profile:**
+
 - Active Oct-Nov 2025
 - Standard services
 - Volume-based
@@ -184,6 +193,7 @@ AI identified 6 customers as recurring despite only 1 visible booking:
 ### **Segment 4: At-Risk (4 customers, ~4% revenue)**
 
 **Profile:**
+
 - Complaint history
 - Quality issues
 - Churn risk
@@ -328,15 +338,15 @@ Duplicate Rate:       <2%
 
 ## ✅ Success Criteria Met
 
-| Criterion | Target | Achieved | Status |
-|-----------|--------|----------|--------|
-| Recurring Detection | 15+ customers | 24 customers | ✅ Exceeded |
-| AI Parsing Success | 95%+ | 100% | ✅ Exceeded |
-| Data Coverage | 60%+ | 66% calendar, 41% invoice | ✅ Met |
-| Cost | <1000 kr | 0 kr (FREE tier) | ✅ Exceeded |
-| Revenue Impact | 50k kr | 65-85k kr potential | ✅ Exceeded |
-| Quality Insights | Manual review | Auto-detected | ✅ Met |
-| Time to Value | 2 weeks | Immediate | ✅ Exceeded |
+| Criterion           | Target        | Achieved                  | Status      |
+| ------------------- | ------------- | ------------------------- | ----------- |
+| Recurring Detection | 15+ customers | 24 customers              | ✅ Exceeded |
+| AI Parsing Success  | 95%+          | 100%                      | ✅ Exceeded |
+| Data Coverage       | 60%+          | 66% calendar, 41% invoice | ✅ Met      |
+| Cost                | <1000 kr      | 0 kr (FREE tier)          | ✅ Exceeded |
+| Revenue Impact      | 50k kr        | 65-85k kr potential       | ✅ Exceeded |
+| Quality Insights    | Manual review | Auto-detected             | ✅ Met      |
+| Time to Value       | 2 weeks       | Immediate                 | ✅ Exceeded |
 
 ---
 
@@ -391,6 +401,6 @@ The V4.3.5 AI-Enhanced Lead Data Pipeline delivers:
 ✅ **100% AI parsing success** with zero cost  
 ✅ **65-85k kr annual impact** from discovered opportunities  
 ✅ **Automated quality intelligence** for proactive management  
-✅ **Production-ready system** with comprehensive documentation  
+✅ **Production-ready system** with comprehensive documentation
 
 **The system is ready for immediate business use and value delivery.**

@@ -1,31 +1,36 @@
-/**
- * Phase 10: Email Assistant Testing Guide
- * 
- * Step-by-step guide til at teste AI Email Assistant
- */
+/\*\*
+
+- Phase 10: Email Assistant Testing Guide
+-
+- Step-by-step guide til at teste AI Email Assistant
+  \*/
 
 # 🎯 **EMAIL ASSISTANT TESTING GUIDE**
 
 ## 🚀 **QUICK START - LOKAL TESTING:**
 
 ### **1. START DEVELOPMENT SERVER:**
+
 ```bash
 npm run dev
 ```
 
 ### **2. ÅBEN WORKSPACE:**
+
 - Gå til: http://localhost:5173 (eller 3000)
 - Login med jeres credentials
 - Åbn workspace view
 
 ### **3. FIND EMAIL TIL TESTING:**
+
 - Gå til venstre panel (email list)
 - Find en email der ligner:
-  * Rengørings henvendelse
-  * Pris forespørgsel
-  * Booking request
+  - Rengørings henvendelse
+  - Pris forespørgsel
+  - Booking request
 
 ### **4. ÅBN EMAIL I MIDTERSTE PANEL:**
+
 - Klik på emailen
 - Vent på at EmailThreadView åbner
 - Se AI Assistant load under label suggestions
@@ -33,6 +38,7 @@ npm run dev
 ## 🎨 **HVAD DU SKAL SE:**
 
 ### **✨ AI EMAIL ASSISTANT VISER:**
+
 ```
 ┌─────────────────────────────────┐
 │ ✨ AI Email Assistant (3-4)      │
@@ -56,6 +62,7 @@ npm run dev
 ## 🧪 **TESTING STEPS:**
 
 ### **1. AI ANALYSE TEST:**
+
 - ✅ Kunde navn ekstraheres?
 - ✅ Job type genkendes?
 - ✅ Location detekteres?
@@ -63,12 +70,14 @@ npm run dev
 - ✅ Source detection virker?
 
 ### **2. FORSLAG TEST:**
+
 - ✅ 3-4 forslag vises?
 - ✅ Confidence scores virker?
 - ✅ Reasoning er relevant?
 - ✅ Kategorier er korrekte?
 
 ### **3. INTERAKTION TEST:**
+
 - ✅ Klik på forslag virker?
 - ✅ Tekst indsættes i editor?
 - ✅ Redigering virker?
@@ -76,6 +85,7 @@ npm run dev
 - ✅ Send Email knap virker?
 
 ### **4. INTEGRATION TEST:**
+
 - ✅ Passer i 3-panel layout?
 - ✅ Loading states virker?
 - ✅ Error handling virker?
@@ -84,6 +94,7 @@ npm run dev
 ## 🐛 **HVIS DER ER PROBLEMER:**
 
 ### **COMMON ISSUES:**
+
 1. **AI Assistant vises ikke:**
    - Check browser console for errors
    - Verify tRPC endpoints virker
@@ -100,6 +111,7 @@ npm run dev
    - Check tRPC mutations
 
 ### **DEBUGGING:**
+
 ```bash
 # Check server logs
 npm run dev:server
@@ -114,6 +126,7 @@ F12 → Network tab → tpc requests
 ## 🎯 **SUCCESS KRITERIER:**
 
 ### **✅ WORKING = SUCCESS:**
+
 - AI Assistant vises under label suggestions
 - 3-4 relevante forslag genereres
 - One-click insertion virker
@@ -121,6 +134,7 @@ F12 → Network tab → tpc requests
 - Analytics logging virker
 
 ### **🏆 EXCELLENT = BONUS:**
+
 - Forslag er super relevante
 - Prisestimering er præcis
 - Source detection virker perfekt
@@ -131,16 +145,19 @@ F12 → Network tab → tpc requests
 ## 🚀 **NÆSTE SKRIDT EFTER TESTING:**
 
 ### **1. FEEDBACK COLLECTION:**
+
 - Noter hvad der virker
 - Noter hvad der kan forbedres
 - Tag screenshots af issues
 
 ### **2. DEPLOYMENT:**
+
 - Fix eventuelle bugs
 - Deploy til staging
 - Test med rigtige Gmail data
 
 ### **3. PRODUCTION ROLLOUT:**
+
 - Deploy til production
 - Monitor performance
 - Collect user feedback

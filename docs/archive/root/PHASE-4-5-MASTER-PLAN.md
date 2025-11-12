@@ -9,11 +9,13 @@
 ### 4.1: LeadAnalyzer - Tilføj Rendetalje-Specifik Logik ✅
 
 **Hvad vi har:**
+
 - ✅ Kunde navn parsing
 - ✅ Location detection
 - ✅ Job type detection
 
 **Hvad vi skal tilføje:**
+
 1. **Lead Source Detection**
    - Detect: Rengøring.nu, Rengøring Århus, AdHelp, Direct
    - Viser badge med source
@@ -41,10 +43,12 @@
 ### 4.2: InvoiceTracker - Billy Integration ✅
 
 **Hvad vi har:**
+
 - ✅ Invoice number parsing
 - ✅ Customer info extraction
 
 **Hvad vi skal tilføje:**
+
 1. **Real Billy Data**
    - Fetch invoice fra Billy API
    - Show actual status (draft, sent, paid, overdue)
@@ -72,11 +76,13 @@
 ### 4.3: BookingManager - Calendar Integration ✅
 
 **Hvad vi har:**
+
 - ✅ Customer name parsing
 - ✅ Month detection
 - ✅ Booking type detection
 
 **Hvad vi skal tilføje:**
+
 1. **Real Calendar Data**
    - Fetch fra Google Calendar
    - Show actual booking time
@@ -105,10 +111,12 @@
 ### 4.4: CustomerProfile - Full History ✅
 
 **Hvad vi har:**
+
 - ✅ Customer name parsing
 - ✅ Basic info extraction
 
 **Hvad vi skal tilføje:**
+
 1. **Complete Customer Data**
    - All previous bookings
    - All invoices (paid/unpaid)
@@ -139,9 +147,11 @@
 ### 4.5: BusinessDashboard - Real Stats ✅
 
 **Hvad vi har:**
+
 - ✅ Dynamic date
 
 **Hvad vi skal tilføje:**
+
 1. **Today's Real Bookings**
    - Fetch fra Google Calendar
    - Show team assignments
@@ -196,26 +206,31 @@
 **Dynamisk baseret på context:**
 
 **Når Lead Email er valgt:**
+
 ```
 [📧 Send Tilbud] [📅 Book Møde] [📸 Request Photos] [💾 Gem Lead]
 ```
 
 **Når Invoice Email er valgt:**
+
 ```
 [💰 Mark Paid] [📧 Send Reminder] [📞 Call Customer] [📄 Credit Note]
 ```
 
 **Når Booking Email er valgt:**
+
 ```
 [✅ Bekræft] [📅 Flyt Tid] [👥 Tilføj Team] [📧 Send Reminder]
 ```
 
 **Når Customer Thread er valgt:**
+
 ```
 [📧 Send Email] [📞 Call] [📝 Add Note] [📊 View History]
 ```
 
 **Når ingen email er valgt:**
+
 ```
 [📧 Ny Email] [📅 Ny Booking] [💰 Ny Faktura] [🎯 Nyt Lead]
 ```
@@ -238,6 +253,7 @@ Søg efter:
 ```
 
 **Features:**
+
 - Fuzzy search
 - Recent actions
 - Keyboard navigation
@@ -256,6 +272,7 @@ Søg efter:
 ```
 
 **Benefits:**
+
 - Visual pipeline status
 - One-click stage changes
 - Triggers automation (auto-calendar, auto-invoice)
@@ -266,6 +283,7 @@ Søg efter:
 ### 5.4: Notification Center (Top-right)
 
 **Real-time alerts:**
+
 ```
 🔔 (3)
 ├─ Ny lead fra Rengøring.nu
@@ -274,6 +292,7 @@ Søg efter:
 ```
 
 **Features:**
+
 - Real-time updates
 - Click to jump to item
 - Mark as read
@@ -284,12 +303,14 @@ Søg efter:
 ## 🎯 Hvorfor Denne Tilgang?
 
 ### Problems med Mini-Tabs:
+
 - ❌ Takes up space
 - ❌ Static, ikke context-aware
 - ❌ Requires extra clicks
 - ❌ Doesn't match workflow
 
 ### Benefits af Smart Actions:
+
 - ✅ Context-aware (viser kun relevante actions)
 - ✅ One-click workflows
 - ✅ Matches Rendetalje's actual process
@@ -302,6 +323,7 @@ Søg efter:
 ## 📊 Implementation Priority
 
 ### Phase 4 Improvements (Højeste prioritet):
+
 1. **LeadAnalyzer:** Lead source detection + Critical rules
 2. **InvoiceTracker:** Billy API integration
 3. **BookingManager:** Google Calendar integration
@@ -309,6 +331,7 @@ Søg efter:
 5. **BusinessDashboard:** Real stats
 
 ### Phase 5 Smart Actions (Medium prioritet):
+
 1. **Smart Action Bar:** Context-aware buttons
 2. **Pipeline Stage Buttons:** In email list
 3. **Quick Command Palette:** Cmd+K
@@ -319,6 +342,7 @@ Søg efter:
 ## 🎯 Success Metrics
 
 ### Phase 4 Complete When:
+
 - ✅ All workspace components use real API data
 - ✅ Billy invoices show correctly
 - ✅ Google Calendar bookings show correctly
@@ -327,6 +351,7 @@ Søg efter:
 - ✅ Customer history is complete
 
 ### Phase 5 Complete When:
+
 - ✅ Smart Action Bar works for all contexts
 - ✅ Pipeline stage buttons work
 - ✅ Quick Command Palette is functional
@@ -338,6 +363,7 @@ Søg efter:
 ## 💡 Key Insights fra Rendetalje Workflow
 
 ### Critical Business Rules:
+
 1. **Flytterengøring:** ALWAYS request photos first
 2. **Calendar Events:** NEVER add attendees (no auto-invites)
 3. **Invoices:** ALWAYS draft-only (manual approval required)
@@ -345,6 +371,7 @@ Søg efter:
 5. **Lead Sources:** Track for conversion analysis
 
 ### Pipeline Stages:
+
 1. **Needs Action** → Ny lead, needs response
 2. **Venter på Svar** → Waiting for customer
 3. **I Kalender** → Booking confirmed (auto-create calendar)
@@ -352,6 +379,7 @@ Søg efter:
 5. **Afsluttet** → Paid and completed
 
 ### Automation Triggers:
+
 - **"I Kalender" stage** → Auto-create Google Calendar event
 - **"Finance" stage** → Auto-create Billy invoice (draft)
 - **Job completion** → Run 6-step checklist

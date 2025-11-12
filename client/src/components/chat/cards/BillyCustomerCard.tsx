@@ -7,7 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Users, Plus, Edit2, Save, X, Mail, Phone, MapPin, Building } from "lucide-react";
+import {
+  Users,
+  Plus,
+  Edit2,
+  Save,
+  X,
+  Mail,
+  Phone,
+  MapPin,
+  Building,
+} from "lucide-react";
 import { useState } from "react";
 
 export interface CustomerData {
@@ -18,33 +28,37 @@ export interface CustomerData {
   phone?: string;
   address?: string;
   cvr?: string;
-  type: 'person' | 'company';
-  status: 'active' | 'inactive' | 'prospect';
+  type: "person" | "company";
+  status: "active" | "inactive" | "prospect";
   totalInvoices?: number;
   lastInvoice?: string;
 }
 
 interface BillyCustomerCardProps {
   customer?: CustomerData;
-  mode?: 'view' | 'edit' | 'create';
+  mode?: "view" | "edit" | "create";
   onSave?: (customer: CustomerData) => void;
   onCancel?: () => void;
 }
 
-export function BillyCustomerCard({ 
+export function BillyCustomerCard({
   customer,
-  mode = 'view',
+  mode = "view",
   onSave,
-  onCancel 
+  onCancel,
 }: BillyCustomerCardProps) {
-  const [data, setData] = useState<CustomerData>(customer || {
-    id: Math.random().toString(),
-    name: '',
-    email: '',
-    type: 'person',
-    status: 'prospect'
-  });
-  const [isEditing, setIsEditing] = useState(mode === 'edit' || mode === 'create');
+  const [data, setData] = useState<CustomerData>(
+    customer || {
+      id: Math.random().toString(),
+      name: "",
+      email: "",
+      type: "person",
+      status: "prospect",
+    }
+  );
+  const [isEditing, setIsEditing] = useState(
+    mode === "edit" || mode === "create"
+  );
 
   const update = (field: keyof CustomerData, value: any) => {
     setData(prev => ({ ...prev, [field]: value }));
@@ -52,26 +66,34 @@ export function BillyCustomerCard({
 
   const handleSave = () => {
     onSave?.(data);
-    if (mode !== 'create') {
+    if (mode !== "create") {
       setIsEditing(false);
     }
   };
 
-  const getStatusColor = (status: CustomerData['status']) => {
+  const getStatusColor = (status: CustomerData["status"]) => {
     switch (status) {
-      case 'active': return 'bg-green-500';
-      case 'inactive': return 'bg-gray-500';
-      case 'prospect': return 'bg-blue-500';
-      default: return 'bg-gray-500';
+      case "active":
+        return "bg-green-500";
+      case "inactive":
+        return "bg-gray-500";
+      case "prospect":
+        return "bg-blue-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const getStatusLabel = (status: CustomerData['status']) => {
+  const getStatusLabel = (status: CustomerData["status"]) => {
     switch (status) {
-      case 'active': return 'Aktiv';
-      case 'inactive': return 'Inaktiv';
-      case 'prospect': return 'Prospect';
-      default: return 'Ukendt';
+      case "active":
+        return "Aktiv";
+      case "inactive":
+        return "Inaktiv";
+      case "prospect":
+        return "Prospect";
+      default:
+        return "Ukendt";
     }
   };
 
@@ -86,7 +108,11 @@ export function BillyCustomerCard({
             </div>
             <div>
               <h4 className="font-semibold">
-                {mode === 'create' ? 'Opret Kunde' : isEditing ? 'Rediger Kunde' : 'Kunde Detaljer'}
+                {mode === "create"
+                  ? "Opret Kunde"
+                  : isEditing
+                    ? "Rediger Kunde"
+                    : "Kunde Detaljer"}
               </h4>
               <p className="text-xs text-muted-foreground">Billy.dk kunde</p>
             </div>
@@ -102,7 +128,11 @@ export function BillyCustomerCard({
             <div>
               <label className="text-xs text-muted-foreground">Navn</label>
               {isEditing ? (
-                <Input value={data.name} onChange={(e) => update('name', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  value={data.name}
+                  onChange={e => update("name", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
                 <p className="font-medium text-sm mt-1">{data.name}</p>
               )}
@@ -110,29 +140,37 @@ export function BillyCustomerCard({
             <div>
               <label className="text-xs text-muted-foreground">Type</label>
               {isEditing ? (
-                <select 
-                  value={data.type} 
-                  onChange={(e) => update('type', e.target.value)}
+                <select
+                  value={data.type}
+                  onChange={e => update("type", e.target.value)}
                   className="w-full h-9 px-2 border rounded text-sm mt-1"
                 >
                   <option value="person">Person</option>
                   <option value="company">Virksomhed</option>
                 </select>
               ) : (
-                <p className="text-sm mt-1">{data.type === 'person' ? 'Person' : 'Virksomhed'}</p>
+                <p className="text-sm mt-1">
+                  {data.type === "person" ? "Person" : "Virksomhed"}
+                </p>
               )}
             </div>
           </div>
 
-          {data.type === 'company' && (
+          {data.type === "company" && (
             <div>
               <label className="text-xs text-muted-foreground flex items-center gap-1">
                 <Building className="w-3 h-3" /> Virksomhed
               </label>
               {isEditing ? (
-                <Input value={data.company || ''} onChange={(e) => update('company', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  value={data.company || ""}
+                  onChange={e => update("company", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
-                <p className="text-sm mt-1">{data.company || 'Ingen virksomhed'}</p>
+                <p className="text-sm mt-1">
+                  {data.company || "Ingen virksomhed"}
+                </p>
               )}
             </div>
           )}
@@ -143,7 +181,12 @@ export function BillyCustomerCard({
                 <Mail className="w-3 h-3" /> Email
               </label>
               {isEditing ? (
-                <Input type="email" value={data.email} onChange={(e) => update('email', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  type="email"
+                  value={data.email}
+                  onChange={e => update("email", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
                 <p className="text-sm mt-1">{data.email}</p>
               )}
@@ -153,9 +196,15 @@ export function BillyCustomerCard({
                 <Phone className="w-3 h-3" /> Telefon
               </label>
               {isEditing ? (
-                <Input value={data.phone || ''} onChange={(e) => update('phone', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  value={data.phone || ""}
+                  onChange={e => update("phone", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
-                <p className="text-sm mt-1">{data.phone || 'Intet telefonnummer'}</p>
+                <p className="text-sm mt-1">
+                  {data.phone || "Intet telefonnummer"}
+                </p>
               )}
             </div>
           </div>
@@ -165,19 +214,29 @@ export function BillyCustomerCard({
               <MapPin className="w-3 h-3" /> Addresse
             </label>
             {isEditing ? (
-              <Input value={data.address || ''} onChange={(e) => update('address', e.target.value)} className="h-9 mt-1" />
+              <Input
+                value={data.address || ""}
+                onChange={e => update("address", e.target.value)}
+                className="h-9 mt-1"
+              />
             ) : (
-              <p className="text-sm mt-1">{data.address || 'Ingen addresse'}</p>
+              <p className="text-sm mt-1">{data.address || "Ingen addresse"}</p>
             )}
           </div>
 
-          {data.type === 'company' && (
+          {data.type === "company" && (
             <div>
-              <label className="text-xs text-muted-foreground">CVR Nummer</label>
+              <label className="text-xs text-muted-foreground">
+                CVR Nummer
+              </label>
               {isEditing ? (
-                <Input value={data.cvr || ''} onChange={(e) => update('cvr', e.target.value)} className="h-9 mt-1" />
+                <Input
+                  value={data.cvr || ""}
+                  onChange={e => update("cvr", e.target.value)}
+                  className="h-9 mt-1"
+                />
               ) : (
-                <p className="text-sm mt-1">{data.cvr || 'Intet CVR'}</p>
+                <p className="text-sm mt-1">{data.cvr || "Intet CVR"}</p>
               )}
             </div>
           )}
@@ -187,12 +246,18 @@ export function BillyCustomerCard({
             <div className="p-3 rounded-lg bg-muted/50">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-muted-foreground">Total fakturaer:</span>
-                  <span className="ml-2 font-medium">{data.totalInvoices || 0}</span>
+                  <span className="text-muted-foreground">
+                    Total fakturaer:
+                  </span>
+                  <span className="ml-2 font-medium">
+                    {data.totalInvoices || 0}
+                  </span>
                 </div>
                 <div>
                   <span className="text-muted-foreground">Sidste faktura:</span>
-                  <span className="ml-2 font-medium">{data.lastInvoice || 'Ingen'}</span>
+                  <span className="ml-2 font-medium">
+                    {data.lastInvoice || "Ingen"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -213,9 +278,12 @@ export function BillyCustomerCard({
             </>
           ) : (
             <>
-              <Button onClick={handleSave} className="flex-1 bg-linear-to-r from-green-600 to-emerald-600">
+              <Button
+                onClick={handleSave}
+                className="flex-1 bg-linear-to-r from-green-600 to-emerald-600"
+              >
                 <Save className="w-4 h-4 mr-2" />
-                {mode === 'create' ? 'Opret' : 'Gem'}
+                {mode === "create" ? "Opret" : "Gem"}
               </Button>
               <Button onClick={onCancel} variant="outline" className="flex-1">
                 <X className="w-4 h-4 mr-2" />

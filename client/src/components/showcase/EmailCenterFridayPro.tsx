@@ -5,14 +5,23 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { 
-  Mail, Calendar, FileText, TrendingUp, DollarSign, Users,
-  Clock, CheckCircle2, Sparkles, Zap, Target
+import {
+  Mail,
+  Calendar,
+  FileText,
+  TrendingUp,
+  DollarSign,
+  Users,
+  Clock,
+  CheckCircle2,
+  Sparkles,
+  Zap,
+  Target,
 } from "lucide-react";
 
 /**
  * FRIDAY AI PRO - UNIFIED WORKSPACE
- * 
+ *
  * Features:
  * - Email + Calendar + Invoices integrated
  * - Mesh gradients & depth
@@ -23,63 +32,63 @@ import {
 
 interface Activity {
   id: string;
-  type: 'email' | 'calendar' | 'invoice';
+  type: "email" | "calendar" | "invoice";
   title: string;
   description: string;
   time: string;
-  priority?: 'high' | 'medium' | 'low';
+  priority?: "high" | "medium" | "low";
   value?: number;
   status?: string;
 }
 
 const activities: Activity[] = [
   {
-    id: '1',
-    type: 'email',
-    title: 'Ny lead fra Matilde',
-    description: 'Tilbudsanmodning på kontorrengøring 250m²',
-    time: 'Nu',
-    priority: 'high',
-    value: 40000
+    id: "1",
+    type: "email",
+    title: "Ny lead fra Matilde",
+    description: "Tilbudsanmodning på kontorrengøring 250m²",
+    time: "Nu",
+    priority: "high",
+    value: 40000,
   },
   {
-    id: '2',
-    type: 'calendar',
-    title: 'Møde med Lars Nielsen',
-    description: 'Besigtigelse og tilbudspræsentation',
-    time: 'I dag kl. 14:00',
-    priority: 'high'
+    id: "2",
+    type: "calendar",
+    title: "Møde med Lars Nielsen",
+    description: "Besigtigelse og tilbudspræsentation",
+    time: "I dag kl. 14:00",
+    priority: "high",
   },
   {
-    id: '3',
-    type: 'invoice',
-    title: 'Faktura #1234 betalt',
-    description: 'Maria Hansen - Hovedrengøring',
-    time: '2t siden',
+    id: "3",
+    type: "invoice",
+    title: "Faktura #1234 betalt",
+    description: "Maria Hansen - Hovedrengøring",
+    time: "2t siden",
     value: 8500,
-    status: 'paid'
-  }
+    status: "paid",
+  },
 ];
 
 export function EmailCenterFridayPro() {
-  const [activeContext, setActiveContext] = useState('all');
+  const [activeContext, setActiveContext] = useState("all");
 
   const getActivityIcon = (type: string) => {
-    if (type === 'email') return Mail;
-    if (type === 'calendar') return Calendar;
+    if (type === "email") return Mail;
+    if (type === "calendar") return Calendar;
     return FileText;
   };
 
   const getActivityColor = (type: string) => {
-    if (type === 'email') return 'from-blue-500 to-cyan-500';
-    if (type === 'calendar') return 'from-purple-500 to-pink-500';
-    return 'from-green-500 to-emerald-500';
+    if (type === "email") return "from-blue-500 to-cyan-500";
+    if (type === "calendar") return "from-purple-500 to-pink-500";
+    return "from-green-500 to-emerald-500";
   };
 
   const getPriorityDot = (priority?: string) => {
-    if (priority === 'high') return 'bg-red-500';
-    if (priority === 'medium') return 'bg-yellow-500';
-    return 'bg-gray-400';
+    if (priority === "high") return "bg-red-500";
+    if (priority === "medium") return "bg-yellow-500";
+    return "bg-gray-400";
   };
 
   return (
@@ -105,7 +114,9 @@ export function EmailCenterFridayPro() {
                     <Sparkles className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Friday AI Pro</h1>
+                    <h1 className="text-2xl font-bold text-gray-900">
+                      Friday AI Pro
+                    </h1>
                     <p className="text-sm text-gray-600">Unified Workspace</p>
                   </div>
                 </div>
@@ -113,10 +124,10 @@ export function EmailCenterFridayPro() {
                 {/* Context Pills */}
                 <div className="flex items-center gap-2">
                   {[
-                    { id: 'all', label: 'All', icon: Target },
-                    { id: 'emails', label: 'Emails', icon: Mail },
-                    { id: 'calendar', label: 'Calendar', icon: Calendar },
-                    { id: 'invoices', label: 'Invoices', icon: FileText }
+                    { id: "all", label: "All", icon: Target },
+                    { id: "emails", label: "Emails", icon: Mail },
+                    { id: "calendar", label: "Calendar", icon: Calendar },
+                    { id: "invoices", label: "Invoices", icon: FileText },
                   ].map(ctx => {
                     const Icon = ctx.icon;
                     const isActive = activeContext === ctx.id;
@@ -132,7 +143,9 @@ export function EmailCenterFridayPro() {
                         )}
                       >
                         <Icon className="w-4 h-4" />
-                        <span className="font-semibold text-sm">{ctx.label}</span>
+                        <span className="font-semibold text-sm">
+                          {ctx.label}
+                        </span>
                       </button>
                     );
                   })}
@@ -148,8 +161,12 @@ export function EmailCenterFridayPro() {
             {/* Left - Activity Feed */}
             <div className="col-span-2">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Today's Activity</h2>
-                <p className="text-sm text-gray-600">Real-time updates across all channels</p>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Today's Activity
+                </h2>
+                <p className="text-sm text-gray-600">
+                  Real-time updates across all channels
+                </p>
               </div>
 
               <ScrollArea className="h-[calc(100%-80px)]">
@@ -157,43 +174,62 @@ export function EmailCenterFridayPro() {
                   {activities.map((activity, idx) => {
                     const Icon = getActivityIcon(activity.type);
                     const gradient = getActivityColor(activity.type);
-                    
+
                     return (
                       <div
                         key={activity.id}
                         className="relative group"
-                        style={{ animation: `slideUp 0.5s ease-out ${idx * 0.1}s both` }}
+                        style={{
+                          animation: `slideUp 0.5s ease-out ${idx * 0.1}s both`,
+                        }}
                       >
                         {/* Glow Effect */}
-                        <div className={cn(
-                          "absolute -inset-1 rounded-3xl opacity-0 group-hover:opacity-50 blur-2xl transition-all duration-500 bg-gradient-to-r",
-                          gradient
-                        )} />
-                        
+                        <div
+                          className={cn(
+                            "absolute -inset-1 rounded-3xl opacity-0 group-hover:opacity-50 blur-2xl transition-all duration-500 bg-gradient-to-r",
+                            gradient
+                          )}
+                        />
+
                         <Card className="relative overflow-hidden backdrop-blur-xl bg-white/90 border-2 border-white/60 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]">
                           {/* Gradient Top Border */}
-                          <div className={cn("h-1 bg-gradient-to-r", gradient)} />
-                          
+                          <div
+                            className={cn("h-1 bg-gradient-to-r", gradient)}
+                          />
+
                           <div className="p-6">
                             <div className="flex items-start gap-4">
                               {/* Icon with Gradient */}
-                              <div className={cn(
-                                "w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl bg-gradient-to-br",
-                                gradient
-                              )}>
+                              <div
+                                className={cn(
+                                  "w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl bg-gradient-to-br",
+                                  gradient
+                                )}
+                              >
                                 <Icon className="w-7 h-7 text-white" />
                               </div>
 
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-start justify-between mb-2">
                                   <div className="flex-1">
-                                    <h3 className="font-bold text-lg text-gray-900 mb-1">{activity.title}</h3>
-                                    <p className="text-sm text-gray-600">{activity.description}</p>
+                                    <h3 className="font-bold text-lg text-gray-900 mb-1">
+                                      {activity.title}
+                                    </h3>
+                                    <p className="text-sm text-gray-600">
+                                      {activity.description}
+                                    </p>
                                   </div>
                                   {activity.priority && (
                                     <div className="flex items-center gap-2 ml-4">
-                                      <div className={cn("w-2 h-2 rounded-full", getPriorityDot(activity.priority))} />
-                                      <span className="text-xs font-semibold text-gray-500 uppercase">{activity.priority}</span>
+                                      <div
+                                        className={cn(
+                                          "w-2 h-2 rounded-full",
+                                          getPriorityDot(activity.priority)
+                                        )}
+                                      />
+                                      <span className="text-xs font-semibold text-gray-500 uppercase">
+                                        {activity.priority}
+                                      </span>
                                     </div>
                                   )}
                                 </div>
@@ -209,13 +245,16 @@ export function EmailCenterFridayPro() {
                                       <div className="flex items-center gap-2">
                                         <DollarSign className="w-4 h-4 text-green-600" />
                                         <span className="font-bold text-green-700">
-                                          {activity.value.toLocaleString('da-DK')} kr
+                                          {activity.value.toLocaleString(
+                                            "da-DK"
+                                          )}{" "}
+                                          kr
                                         </span>
                                       </div>
                                     </div>
                                   )}
 
-                                  {activity.status === 'paid' && (
+                                  {activity.status === "paid" && (
                                     <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg">
                                       <CheckCircle2 className="w-3 h-3 mr-1" />
                                       Paid
@@ -225,10 +264,20 @@ export function EmailCenterFridayPro() {
 
                                 {/* Quick Actions on Hover */}
                                 <div className="mt-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  <Button size="sm" className={cn("bg-gradient-to-r text-white shadow-md", gradient)}>
+                                  <Button
+                                    size="sm"
+                                    className={cn(
+                                      "bg-gradient-to-r text-white shadow-md",
+                                      gradient
+                                    )}
+                                  >
                                     Take Action
                                   </Button>
-                                  <Button size="sm" variant="outline" className="bg-white/80 backdrop-blur-sm">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="bg-white/80 backdrop-blur-sm"
+                                  >
                                     View Details
                                   </Button>
                                 </div>
@@ -248,27 +297,55 @@ export function EmailCenterFridayPro() {
               {/* Quick Stats Grid */}
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Mail, label: 'Unread', value: '3', gradient: 'from-blue-500 to-cyan-500' },
-                  { icon: Calendar, label: 'Today', value: '2', gradient: 'from-purple-500 to-pink-500' },
-                  { icon: FileText, label: 'Unpaid', value: '1', gradient: 'from-orange-500 to-red-500' },
-                  { icon: CheckCircle2, label: 'Done', value: '12', gradient: 'from-green-500 to-emerald-500' }
+                  {
+                    icon: Mail,
+                    label: "Unread",
+                    value: "3",
+                    gradient: "from-blue-500 to-cyan-500",
+                  },
+                  {
+                    icon: Calendar,
+                    label: "Today",
+                    value: "2",
+                    gradient: "from-purple-500 to-pink-500",
+                  },
+                  {
+                    icon: FileText,
+                    label: "Unpaid",
+                    value: "1",
+                    gradient: "from-orange-500 to-red-500",
+                  },
+                  {
+                    icon: CheckCircle2,
+                    label: "Done",
+                    value: "12",
+                    gradient: "from-green-500 to-emerald-500",
+                  },
                 ].map((stat, i) => {
                   const Icon = stat.icon;
                   return (
                     <div key={i} className="relative group">
-                      <div className={cn(
-                        "absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-40 blur-xl transition-opacity bg-gradient-to-r",
-                        stat.gradient
-                      )} />
-                      <Card className="relative p-5 backdrop-blur-xl bg-white/90 border-2 border-white/60 shadow-xl hover:shadow-2xl transition-all hover:scale-105">
-                        <div className={cn(
-                          "w-10 h-10 rounded-xl mb-3 flex items-center justify-center bg-gradient-to-br shadow-lg",
+                      <div
+                        className={cn(
+                          "absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-40 blur-xl transition-opacity bg-gradient-to-r",
                           stat.gradient
-                        )}>
+                        )}
+                      />
+                      <Card className="relative p-5 backdrop-blur-xl bg-white/90 border-2 border-white/60 shadow-xl hover:shadow-2xl transition-all hover:scale-105">
+                        <div
+                          className={cn(
+                            "w-10 h-10 rounded-xl mb-3 flex items-center justify-center bg-gradient-to-br shadow-lg",
+                            stat.gradient
+                          )}
+                        >
                           <Icon className="w-5 h-5 text-white" />
                         </div>
-                        <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                        <div className="text-xs text-gray-600 font-semibold uppercase">{stat.label}</div>
+                        <div className="text-3xl font-bold text-gray-900 mb-1">
+                          {stat.value}
+                        </div>
+                        <div className="text-xs text-gray-600 font-semibold uppercase">
+                          {stat.label}
+                        </div>
                       </Card>
                     </div>
                   );
@@ -281,10 +358,16 @@ export function EmailCenterFridayPro() {
                 <div className="relative p-6">
                   <div className="flex items-center gap-2 mb-3">
                     <TrendingUp className="w-5 h-5 text-green-600" />
-                    <span className="text-sm font-semibold text-green-700 uppercase">Revenue</span>
+                    <span className="text-sm font-semibold text-green-700 uppercase">
+                      Revenue
+                    </span>
                   </div>
-                  <div className="text-4xl font-bold text-green-700 mb-1">48.5k kr</div>
-                  <div className="text-sm text-green-600">This month • +23% vs last</div>
+                  <div className="text-4xl font-bold text-green-700 mb-1">
+                    48.5k kr
+                  </div>
+                  <div className="text-sm text-green-600">
+                    This month • +23% vs last
+                  </div>
                 </div>
               </Card>
 
@@ -302,7 +385,8 @@ export function EmailCenterFridayPro() {
                       <div className="flex items-start gap-2">
                         <Zap className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
                         <p className="text-xs text-gray-700 leading-relaxed">
-                          3 hot leads need immediate attention. Estimated total value: 65.000 kr
+                          3 hot leads need immediate attention. Estimated total
+                          value: 65.000 kr
                         </p>
                       </div>
                     </div>

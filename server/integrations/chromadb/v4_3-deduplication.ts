@@ -1,6 +1,6 @@
 /**
  * V4.3 Deduplication & Merging
- * 
+ *
  * Handles:
  * - Multiple Gmail threads from same customer
  * - Multiple Calendar events for same customer
@@ -9,8 +9,8 @@
  * - Dead/spam lead filtering
  */
 
-import { LeadStatus, determineLeadStatus } from './v4_3-config';
-import { V4_3_Lead } from './v4_3-types';
+import { LeadStatus, determineLeadStatus } from "./v4_3-config";
+import { V4_3_Lead } from "./v4_3-types";
 
 // ============================================================================
 // DEDUPLICATION KEY GENERATION
@@ -40,7 +40,7 @@ export function generateCustomerKey(lead: {
     return `name:${normalizeName(lead.customerName)}`;
   }
 
-  return 'unknown';
+  return "unknown";
 }
 
 function normalizeEmail(email: string): string {
@@ -49,7 +49,7 @@ function normalizeEmail(email: string): string {
 
 function normalizePhone(phone: string): string {
   // Remove all non-digits
-  return phone.replace(/\D/g, '');
+  return phone.replace(/\D/g, "");
 }
 
 function normalizeName(name: string): string {
@@ -57,8 +57,8 @@ function normalizeName(name: string): string {
   return name
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, ' ')
-    .replace(/[^a-zæøå\s]/gi, '');
+    .replace(/\s+/g, " ")
+    .replace(/[^a-zæøå\s]/gi, "");
 }
 
 // ============================================================================
@@ -67,7 +67,7 @@ function normalizeName(name: string): string {
 
 /**
  * Merge multiple leads for the same customer into one canonical lead
- * 
+ *
  * Strategy:
  * - Keep most complete Gmail data
  * - Keep all Calendar events (track multiple bookings)
@@ -76,7 +76,7 @@ function normalizeName(name: string): string {
  */
 export function mergeCustomerLeads(leads: V4_3_Lead[]): V4_3_Lead {
   if (leads.length === 0) {
-    throw new Error('Cannot merge empty leads array');
+    throw new Error("Cannot merge empty leads array");
   }
 
   if (leads.length === 1) {
@@ -85,8 +85,8 @@ export function mergeCustomerLeads(leads: V4_3_Lead[]): V4_3_Lead {
 
   // Use the most recent lead as base
   const baseLead = leads.sort((a, b) => {
-    const dateA = a.gmail?.date || a.calendar?.startTime || '';
-    const dateB = b.gmail?.date || b.calendar?.startTime || '';
+    const dateA = a.gmail?.date || a.calendar?.startTime || "";
+    const dateB = b.gmail?.date || b.calendar?.startTime || "";
     return dateB.localeCompare(dateA);
   })[0];
 
@@ -111,11 +111,14 @@ export function mergeCustomerLeads(leads: V4_3_Lead[]): V4_3_Lead {
   // Use most complete data for each field
   const merged: V4_3_Lead = {
     ...baseLead,
-    
+
     // Use best available email/phone/name
-    customerEmail: leads.find(l => l.customerEmail)?.customerEmail || baseLead.customerEmail,
-    customerPhone: leads.find(l => l.customerPhone)?.customerPhone || baseLead.customerPhone,
-    customerName: leads.find(l => l.customerName)?.customerName || baseLead.customerName,
+    customerEmail:
+      leads.find(l => l.customerEmail)?.customerEmail || baseLead.customerEmail,
+    customerPhone:
+      leads.find(l => l.customerPhone)?.customerPhone || baseLead.customerPhone,
+    customerName:
+      leads.find(l => l.customerName)?.customerName || baseLead.customerName,
 
     // Use most recent Gmail data (but track all threads internally)
     gmail: gmailThreads[0] || null,
@@ -136,23 +139,30 @@ export function mergeCustomerLeads(leads: V4_3_Lead[]): V4_3_Lead {
   merged.customer = {
     isRepeatCustomer: billyInvoices.length > 1 || calendarEvents.length > 1,
     totalBookings: calendarEvents.length,
-    lifetimeValue: billyInvoices.reduce((sum, inv) => sum + inv.invoicedPrice, 0),
-    averageBookingValue: billyInvoices.length > 0
-      ? billyInvoices.reduce((sum, inv) => sum + inv.invoicedPrice, 0) / billyInvoices.length
-      : 0,
-    firstBookingDate: calendarEvents.length > 0
-      ? calendarEvents[calendarEvents.length - 1].startTime
-      : null,
-    lastBookingDate: calendarEvents.length > 0
-      ? calendarEvents[0].startTime
-      : null,
+    lifetimeValue: billyInvoices.reduce(
+      (sum, inv) => sum + inv.invoicedPrice,
+      0
+    ),
+    averageBookingValue:
+      billyInvoices.length > 0
+        ? billyInvoices.reduce((sum, inv) => sum + inv.invoicedPrice, 0) /
+          billyInvoices.length
+        : 0,
+    firstBookingDate:
+      calendarEvents.length > 0
+        ? calendarEvents[calendarEvents.length - 1].startTime
+        : null,
+    lastBookingDate:
+      calendarEvents.length > 0 ? calendarEvents[0].startTime : null,
     daysBetweenBookings: calculateAvgDaysBetweenBookings(calendarEvents),
   };
 
   return merged;
 }
 
-function calculateAvgDaysBetweenBookings(events: Array<{ startTime: string }>): number | null {
+function calculateAvgDaysBetweenBookings(
+  events: Array<{ startTime: string }>
+): number | null {
   if (events.length < 2) return null;
 
   const sortedDates = events
@@ -177,7 +187,7 @@ export interface LeadFilterConfig {
   includeDead: boolean;
   includeNoResponse: boolean;
   minDataCompleteness?: number; // 0-100%
-  requiredFields?: Array<'billy' | 'calendar' | 'gmail'>;
+  requiredFields?: Array<"billy" | "calendar" | "gmail">;
 }
 
 export const DEFAULT_FILTER_CONFIG: LeadFilterConfig = {
@@ -216,7 +226,9 @@ export function filterLeads(
 
     // Check data completeness
     if (config.minDataCompleteness && config.minDataCompleteness > 0) {
-      if (lead.calculated.quality.dataCompleteness < config.minDataCompleteness) {
+      if (
+        lead.calculated.quality.dataCompleteness < config.minDataCompleteness
+      ) {
         return false;
       }
     }
@@ -240,7 +252,7 @@ export function filterLeads(
 
 /**
  * Complete deduplication workflow
- * 
+ *
  * 1. Group leads by customer key (email/phone/name)
  * 2. Merge leads for same customer
  * 3. Filter spam/dead/low-quality leads
@@ -271,7 +283,9 @@ export function deduplicateLeads(
 
   for (const [key, groupLeads] of customerGroups.entries()) {
     if (groupLeads.length > 1) {
-      console.log(`  → Merging ${groupLeads.length} leads for customer: ${key}`);
+      console.log(
+        `  → Merging ${groupLeads.length} leads for customer: ${key}`
+      );
       totalMerged += groupLeads.length - 1;
     }
     const merged = mergeCustomerLeads(groupLeads);
@@ -281,7 +295,9 @@ export function deduplicateLeads(
   console.log(`  → Merged ${totalMerged} duplicate leads`);
 
   // Apply filters
-  const filtered = filterConfig ? filterLeads(mergedLeads, filterConfig) : mergedLeads;
+  const filtered = filterConfig
+    ? filterLeads(mergedLeads, filterConfig)
+    : mergedLeads;
 
   console.log(`  → After filtering: ${filtered.length} leads remaining`);
   console.log(`  → Removed: ${mergedLeads.length - filtered.length} leads\n`);
@@ -318,9 +334,8 @@ export function generateDeduplicationSummary(
   inputLeads: V4_3_Lead[],
   outputLeads: V4_3_Lead[]
 ): DeduplicationSummary {
-  const uniqueCustomers = new Set(
-    outputLeads.map(l => generateCustomerKey(l))
-  ).size;
+  const uniqueCustomers = new Set(outputLeads.map(l => generateCustomerKey(l)))
+    .size;
 
   const statusCounts: Record<string, number> = {};
   for (const lead of outputLeads) {

@@ -19,16 +19,19 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 ## 🏗️ App Architecture
 
 ### **1. 3-Panel Workspace Layout**
+
 ```tsx
 <ThreePanelDemo />
 ```
 
 **Viser:**
+
 - Left Panel (20%): Friday AI Assistant
 - Center Panel (60%): Email Center
 - Right Panel (20%): Smart Workspace
 
 **Features:**
+
 - Resizable panels med drag handles
 - Min/max constraints (15-30% for sides, 40% min for center)
 - Lazy loading med Suspense
@@ -37,6 +40,7 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 - Keyboard shortcuts (Ctrl+1/2/3)
 
 **Files:**
+
 - `WorkspaceLayout.tsx` - Main layout
 - `AIAssistantPanelV2.tsx` - Left panel
 - `EmailCenterPanel.tsx` - Center panel
@@ -45,11 +49,13 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 ---
 
 ### **2. Header & User Menu**
+
 ```tsx
 <HeaderDemo />
 ```
 
 **Viser:**
+
 - App logo (Bot icon)
 - "Friday AI" title
 - Workspace badge
@@ -57,12 +63,14 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 - User dropdown menu
 
 **User Menu Items:**
+
 - Profile (User icon)
 - Settings (Settings icon)
 - Documentation (BookOpen icon)
 - Log out (LogOut icon, red)
 
 **Features:**
+
 - Avatar med initials fallback
 - Email display i dropdown
 - Mobile responsive
@@ -71,6 +79,7 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 ---
 
 ### **3. AI Email Assistant**
+
 ```tsx
 <AIEmailAssistantDemo />
 ```
@@ -79,6 +88,7 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 Jeres EmailAssistant3Panel features i full detalje:
 
 **Email Analysis:**
+
 - Customer info (navn, email, telefon)
 - Job type (Vinduespudsning, Flytning, etc.)
 - Location
@@ -88,6 +98,7 @@ Jeres EmailAssistant3Panel features i full detalje:
 - Time estimation
 
 **AI Suggestions (Horizontal Scroll):**
+
 - 3 suggestion cards
 - Confidence percentage (95%, 85%, 75%)
 - Category icons (Quote, Question, Booking)
@@ -96,6 +107,7 @@ Jeres EmailAssistant3Panel features i full detalje:
 - Selected state (checkmark)
 
 **Email Draft Editor:**
+
 - Textarea med AI-generated content
 - "Insert Draft" button
 - "Send Email" button
@@ -109,11 +121,13 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ## 💬 Chat Components (Figma Style)
 
 ### **4. AI Thinking Indicator**
+
 ```tsx
 <AIThinking message="AI Thinking..." />
 ```
 
 **Features:**
+
 - 3 pulserende dots
 - Staggered animation (0ms, 150ms, 300ms delay)
 - Customizable message
@@ -125,6 +139,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ---
 
 ### **5. Tool Execution Box (Inline)**
+
 ```tsx
 <ToolExecutionBox
   emoji="🔍"
@@ -135,6 +150,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ```
 
 **Features:**
+
 - Light blue background (ikke modal!)
 - Emoji icon til venstre
 - Message text
@@ -150,6 +166,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ---
 
 ### **6. Weather Card (Brilliant Blue)**
+
 ```tsx
 <WeatherCard
   city="København"
@@ -163,6 +180,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ```
 
 **Features:**
+
 - Solid blue background (#007AFF) - som Figma!
 - White text
 - Large temperature display
@@ -173,11 +191,13 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ---
 
 ### **7. Invoice Cards (Billy Integration)**
+
 ```tsx
 <InvoiceCards invoices={[...]} />
 ```
 
 **Features:**
+
 - 3-column grid layout
 - Minimal white design
 - Emoji icons (📄, ✅, ⚠️)
@@ -191,6 +211,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ---
 
 ### **8. Email Thread Card (Gmail)**
+
 ```tsx
 <EmailThreadCard
   data={{
@@ -199,12 +220,13 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
     messageCount: 5,
     summary: "AI-genereret summary",
     labels: ["Lead", "Høj prioritet"],
-    priority: "high"
+    priority: "high",
   }}
 />
 ```
 
 **Features:**
+
 - AI summary box (light blue)
 - Priority color-coded left border
 - Message count badge
@@ -217,6 +239,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ---
 
 ### **9. Calendar Event Card (Google Calendar)**
+
 ```tsx
 <CalendarEventCard
   data={{
@@ -224,12 +247,13 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
     startTime: new Date(),
     endTime: new Date(),
     location: "Google Meet",
-    attendees: ["Hans", "Peter"]
+    attendees: ["Hans", "Peter"],
   }}
 />
 ```
 
 **Features:**
+
 - Emoji icons (📅 🕐 📍 👥)
 - Grøn border når booket
 - "✓ Booket" badge
@@ -242,6 +266,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ---
 
 ### **10. Search Results Card**
+
 ```tsx
 <SearchResultsCard
   query="AI trends 2024"
@@ -250,6 +275,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ```
 
 **Features:**
+
 - Search query display
 - Result count badge
 - Numbered results (1., 2., 3.)
@@ -265,6 +291,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ## 🎮 Interactive Chat Flow Demos
 
 ### **11. Full Conversation Flows**
+
 ```tsx
 <ChatFlowDemo scenario="weather" />
 // Scenarios: 'weather' | 'email' | 'calendar' | 'invoices' | 'search'
@@ -303,10 +330,12 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
    - Result: Search Results Card
 
 **Controls:**
+
 - ▶️ Play Demo - Auto-plays entire flow (1.5s per step)
 - 🔄 Reset - Reset til start
 
 **Features:**
+
 - Smooth animations
 - Realistic timing
 - User message (slide-in from right)
@@ -319,6 +348,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ## 🎯 Use Cases Covered
 
 ### **Gmail Integration:**
+
 - ✅ Email thread analysis
 - ✅ AI summaries
 - ✅ Priority detection
@@ -326,6 +356,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 - ✅ Attachment detection
 
 ### **Google Calendar Integration:**
+
 - ✅ Meeting booking
 - ✅ Availability checking
 - ✅ Attendee management
@@ -333,12 +364,14 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 - ✅ Confirmation feedback
 
 ### **Billy Integration:**
+
 - ✅ Invoice listing
 - ✅ Status tracking (Paid, Pending, Overdue)
 - ✅ Payment reminders
 - ✅ Due date warnings
 
 ### **General AI Features:**
+
 - ✅ Tool execution visibility
 - ✅ Progress tracking
 - ✅ Thinking indicator
@@ -362,6 +395,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ## 🎨 Design System
 
 ### **Colors Used:**
+
 - Primary: Blue (#007AFF for weather)
 - Success: Green (completed, booked, paid)
 - Warning: Yellow/Orange (medium priority)
@@ -369,6 +403,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 - Muted: Gray (secondary text)
 
 ### **Animations:**
+
 - `animate-in` - Base entrance
 - `fade-in` - Opacity fade
 - `slide-in-from-bottom` - Slide up
@@ -378,6 +413,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 - Staggered delays for multiple items
 
 ### **Typography:**
+
 - Headers: font-semibold, text-lg/2xl/3xl
 - Body: text-sm
 - Metadata: text-xs, text-muted-foreground
@@ -389,6 +425,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ## 🔧 Technical Details
 
 ### **Performance:**
+
 - Lazy loading med React.lazy
 - Memoized components
 - Virtual scrolling (email lists)
@@ -397,12 +434,14 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 - Connection pooling
 
 ### **Responsive:**
+
 - 3-panel → 1-panel på mobile
 - Drawer navigation
 - Touch-friendly buttons
 - Overflow scroll på små skærme
 
 ### **Accessibility:**
+
 - Keyboard navigation
 - Focus management
 - ARIA labels
@@ -410,6 +449,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 - Screen reader support
 
 ### **Error Handling:**
+
 - Error boundaries per panel
 - Graceful degradation
 - Retry mechanisms
@@ -420,18 +460,21 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ## 🚀 Next Steps
 
 ### **Phase 1: Backend Integration**
+
 1. Extend Message type med `toolExecution` og `cardData` felter
 2. Update database schema
 3. Modify AI router til at return structured data
 4. Add tRPC subscriptions for tool progress
 
 ### **Phase 2: ShortWaveChatPanel Update**
+
 1. Import nye komponenter
 2. Update message rendering logic
 3. Add conditional rendering for cards
 4. Test med real data
 
 ### **Phase 3: Production Polish**
+
 1. Add loading skeletons
 2. Error state handling
 3. Empty state designs
@@ -445,6 +488,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 All components can be tested at: **http://localhost:3000/showcase**
 
 Sections:
+
 1. Scroll to "App Architecture" for workspace demos
 2. Scroll to "Chat Components" for Figma-style AI features
 3. Scroll to "Integration Components" for Gmail/Calendar/Billy
@@ -455,18 +499,21 @@ Sections:
 ## 💡 Pro Tips
 
 **For Testing:**
+
 - Use Ctrl+F to find specific components
 - Click "Play Demo" buttons for interactive flows
 - Resize browser to test responsive
 - Toggle theme to test dark mode
 
 **For Development:**
+
 - All components are standalone
 - Easy to copy into real chat
 - Dummy data included
 - Type-safe with TypeScript
 
 **For Presentation:**
+
 - Showcase tells complete product story
 - Shows technical capabilities
 - Demonstrates UX thinking

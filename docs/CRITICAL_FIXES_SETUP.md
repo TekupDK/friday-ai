@@ -11,12 +11,14 @@
 ### **1. Rate Limiting (Redis-based)** ✅
 
 **Before:**
+
 - In-memory rate limiting
 - Lost on server restart
 - No distributed support
 - Memory leak potential
 
 **After:**
+
 - Redis-based rate limiting
 - Persistent across restarts
 - Distributed support
@@ -24,6 +26,7 @@
 - Fallback to in-memory if Redis unavailable
 
 **Files Changed:**
+
 - ✅ Created: `server/rate-limiter-redis.ts`
 - ✅ Updated: `server/routers.ts`
 
@@ -32,16 +35,19 @@
 ### **2. Input Validation** ✅
 
 **Before:**
+
 - No length limits
 - DoS attack vector
 - Potential high costs
 
 **After:**
+
 - Min: 1 character
 - Max: 10,000 characters
 - Clear error messages
 
 **Files Changed:**
+
 - ✅ Updated: `server/routers.ts` (line 93-95)
 
 ---
@@ -111,6 +117,7 @@ pnpm dev
 - **Error Message:** Shows wait time
 
 **Example Error:**
+
 ```
 Rate limit exceeded. Please wait 45s before sending more messages.
 ```
@@ -125,6 +132,7 @@ Rate limit exceeded. Please wait 45s before sending more messages.
 - **Error Messages:** Clear and user-friendly
 
 **Example Errors:**
+
 ```
 "Message cannot be empty"
 "Message too long (max 10,000 characters)"
@@ -140,7 +148,7 @@ Edit `server/routers.ts` (line 107-110):
 
 ```typescript
 const rateLimit = await checkRateLimitUnified(ctx.user.id, {
-  limit: 20,        // Change limit
+  limit: 20, // Change limit
   windowMs: 120000, // Change window (2 minutes)
 });
 ```
@@ -221,6 +229,7 @@ pnpm logs | grep "validation"
 ### **Issue: Rate limiting not working**
 
 **Solution:**
+
 1. Check Redis env vars are set
 2. Verify Upstash dashboard shows database
 3. Check server logs for Redis connection errors
@@ -231,6 +240,7 @@ pnpm logs | grep "validation"
 ### **Issue: "Cannot find module '@upstash/redis'"**
 
 **Solution:**
+
 ```bash
 pnpm install
 # or
@@ -243,6 +253,7 @@ pnpm add @upstash/redis
 
 **Solution:**
 Adjust limits in `server/routers.ts`:
+
 ```typescript
 limit: 20,        // Increase limit
 windowMs: 120000, // Increase window
@@ -253,12 +264,14 @@ windowMs: 120000, // Increase window
 ## 🎯 **NEXT STEPS**
 
 ### **Completed:** ✅
+
 - [x] Redis-based rate limiting
 - [x] Input validation
 - [x] Fallback mechanism
 - [x] Better error messages
 
 ### **Recommended Next:**
+
 1. **Message History Limit** - Prevent unbounded growth
 2. **Pagination UI** - Add "Load More" button
 3. **Caching** - Add Redis caching for responses
@@ -269,6 +282,7 @@ windowMs: 120000, // Increase window
 ## 📈 **IMPACT**
 
 ### **Before:**
+
 - ❌ Rate limits reset on deploy
 - ❌ No distributed support
 - ❌ Memory leak potential
@@ -276,6 +290,7 @@ windowMs: 120000, // Increase window
 - ❌ DoS attack vector
 
 ### **After:**
+
 - ✅ Persistent rate limiting
 - ✅ Distributed support
 - ✅ Automatic cleanup
@@ -288,12 +303,14 @@ windowMs: 120000, // Increase window
 ## 🚀 **DEPLOYMENT**
 
 ### **Development:**
+
 ```bash
 # Add env vars to .env.dev
 pnpm dev
 ```
 
 ### **Production:**
+
 ```bash
 # Add env vars to .env.prod
 pnpm build
@@ -319,15 +336,18 @@ pnpm start
 ## 📝 **NOTES**
 
 **Redis Free Tier:**
+
 - 10,000 requests/day
 - 256 MB storage
 - Enough for ~100 users
 
 **Upgrade if needed:**
+
 - Pay-as-you-go: $0.20 per 100K requests
 - Pro: $10/month (1M requests)
 
 **Alternative:**
+
 - Use existing database for rate limiting
 - Less performant but no extra cost
 

@@ -27,30 +27,32 @@ export interface EmailCardProps {
   onArchive?: () => void;
 }
 
-export function EmailCard({ 
+export function EmailCard({
   email = {
-    id: '1',
-    from: 'kunde@example.com',
-    to: 'support@tekup.dk',
-    subject: 'Spørgsmål om faktura',
-    preview: 'Jeg har et spørgsmål angående min sidste faktura fra januar...',
-    timestamp: 'for 2 timer siden',
+    id: "1",
+    from: "kunde@example.com",
+    to: "support@tekup.dk",
+    subject: "Spørgsmål om faktura",
+    preview: "Jeg har et spørgsmål angående min sidste faktura fra januar...",
+    timestamp: "for 2 timer siden",
     read: false,
     starred: true,
     hasAttachments: true,
-    labels: ['Vigtig', 'Kunde']
+    labels: ["Vigtig", "Kunde"],
   },
   onReply,
   onForward,
-  onArchive
+  onArchive,
 }: EmailCardProps) {
   const [isStarred, setIsStarred] = useState(email.starred);
 
   return (
-    <Card className={cn(
-      "border-l-4 transition-all",
-      email.read ? "border-l-gray-400" : "border-l-green-500"
-    )}>
+    <Card
+      className={cn(
+        "border-l-4 transition-all",
+        email.read ? "border-l-gray-400" : "border-l-green-500"
+      )}
+    >
       <div className="p-4 space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -62,7 +64,9 @@ export function EmailCard({
                 <span className="font-semibold">{email.from}</span>
                 {!email.read && <Badge className="bg-green-500">Ulæst</Badge>}
               </div>
-              <span className="text-xs text-muted-foreground">{email.timestamp}</span>
+              <span className="text-xs text-muted-foreground">
+                {email.timestamp}
+              </span>
             </div>
           </div>
           <Button
@@ -70,13 +74,20 @@ export function EmailCard({
             variant="ghost"
             onClick={() => setIsStarred(!isStarred)}
           >
-            <Star className={cn("w-4 h-4", isStarred ? "fill-yellow-400 text-yellow-400" : "")} />
+            <Star
+              className={cn(
+                "w-4 h-4",
+                isStarred ? "fill-yellow-400 text-yellow-400" : ""
+              )}
+            />
           </Button>
         </div>
 
         <div>
           <h4 className="font-medium">{email.subject}</h4>
-          <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{email.preview}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+            {email.preview}
+          </p>
         </div>
 
         <div className="flex items-center justify-between pt-2 border-t">
@@ -86,7 +97,9 @@ export function EmailCard({
                 {label}
               </Badge>
             ))}
-            {email.hasAttachments && <Paperclip className="w-4 h-4 text-muted-foreground" />}
+            {email.hasAttachments && (
+              <Paperclip className="w-4 h-4 text-muted-foreground" />
+            )}
           </div>
           <div className="flex gap-1">
             <Button size="sm" variant="ghost" onClick={onReply}>

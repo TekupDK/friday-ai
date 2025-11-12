@@ -124,3 +124,6 @@ temp/
 pnpm test:ai*
 pnpm playwright test*
 tsx run-ai-tests.ts
+
+*storybook.log
+storybook-static

@@ -1,6 +1,6 @@
 /**
  * Phase 9.8: Workflow Automation Service
- * 
+ *
  * Orchestrates the complete lead-to-cash workflow
  * Connects email monitoring, source detection, and Billy automation.
  */
@@ -36,7 +36,6 @@ interface WorkflowResult {
  * Phase 9.8: Complete workflow automation service
  */
 export class WorkflowAutomationService {
-  
   private config: AutomationConfig = {
     enableEmailMonitoring: true,
     enableBillyAutomation: true,
@@ -56,7 +55,9 @@ export class WorkflowAutomationService {
       return;
     }
 
-    console.log("[WorkflowAutomation] 🚀 Starting complete workflow automation...");
+    console.log(
+      "[WorkflowAutomation] 🚀 Starting complete workflow automation..."
+    );
     this.isRunning = true;
 
     try {
@@ -69,8 +70,9 @@ export class WorkflowAutomationService {
       // Setup webhook handlers for real-time processing
       this.setupEventHandlers();
 
-      console.log("[WorkflowAutomation] ✅ Complete workflow automation started");
-
+      console.log(
+        "[WorkflowAutomation] ✅ Complete workflow automation started"
+      );
     } catch (error) {
       console.error("[WorkflowAutomation] Error starting automation:", error);
       this.isRunning = false;
@@ -107,7 +109,9 @@ export class WorkflowAutomationService {
     body: string;
   }): Promise<WorkflowResult> {
     try {
-      console.log(`[WorkflowAutomation] 🎯 Processing lead workflow for: ${emailData.subject}`);
+      console.log(
+        `[WorkflowAutomation] 🎯 Processing lead workflow for: ${emailData.subject}`
+      );
 
       // Step 1: Intelligent source detection
       const sourceDetection = detectLeadSourceIntelligent({
@@ -117,16 +121,23 @@ export class WorkflowAutomationService {
         body: emailData.body,
       });
 
-      console.log(`[WorkflowAutomation] ✅ Source detected: ${sourceDetection.source} (${sourceDetection.confidence}% confidence)`);
+      console.log(
+        `[WorkflowAutomation] ✅ Source detected: ${sourceDetection.source} (${sourceDetection.confidence}% confidence)`
+      );
 
       // Step 2: Get workflow for this source
       const workflow = getWorkflowFromDetection(sourceDetection);
-      
-      console.log(`[WorkflowAutomation] ✅ Workflow: ${workflow.workflow.priority} priority, ${workflow.workflow.responseTime} response time`);
+
+      console.log(
+        `[WorkflowAutomation] ✅ Workflow: ${workflow.workflow.priority} priority, ${workflow.workflow.responseTime} response time`
+      );
 
       // Step 3: Create lead in database
-      const leadId = await this.createLeadInDatabase(emailData, sourceDetection);
-      
+      const leadId = await this.createLeadInDatabase(
+        emailData,
+        sourceDetection
+      );
+
       if (!leadId) {
         return {
           success: false,
@@ -139,12 +150,17 @@ export class WorkflowAutomationService {
 
       // Step 4: Auto-create Billy customer if high confidence
       let customerId: string | undefined;
-      
-      if (sourceDetection.confidence >= this.config.autoCreateCustomerThreshold) {
-        const billyCustomer = await billyAutomation.createCustomerFromLead(leadId);
+
+      if (
+        sourceDetection.confidence >= this.config.autoCreateCustomerThreshold
+      ) {
+        const billyCustomer =
+          await billyAutomation.createCustomerFromLead(leadId);
         if (billyCustomer) {
           customerId = billyCustomer.id;
-          console.log(`[WorkflowAutomation] ✅ Billy customer created: ${customerId}`);
+          console.log(
+            `[WorkflowAutomation] ✅ Billy customer created: ${customerId}`
+          );
         }
       }
 
@@ -153,11 +169,16 @@ export class WorkflowAutomationService {
 
       // Step 6: Create calendar event if enabled
       let calendarEventId: string | null = null;
-      
-      if (this.config.enableCalendarSync && workflow.workflow.responseTime === "immediate") {
+
+      if (
+        this.config.enableCalendarSync &&
+        workflow.workflow.responseTime === "immediate"
+      ) {
         calendarEventId = await this.createFollowUpEvent(leadId, emailData);
         if (calendarEventId) {
-          console.log(`[WorkflowAutomation] ✅ Calendar event created: ${calendarEventId}`);
+          console.log(
+            `[WorkflowAutomation] ✅ Calendar event created: ${calendarEventId}`
+          );
         }
       }
 
@@ -171,7 +192,6 @@ export class WorkflowAutomationService {
         customerId,
         calendarEventId,
       };
-
     } catch (error) {
       console.error("[WorkflowAutomation] Error in lead workflow:", error);
       return {
@@ -186,7 +206,7 @@ export class WorkflowAutomationService {
    * Create lead in database
    */
   private async createLeadInDatabase(
-    emailData: any, 
+    emailData: any,
     sourceDetection: any
   ): Promise<number | null> {
     try {
@@ -200,31 +220,36 @@ export class WorkflowAutomationService {
       const customerEmail = this.extractCustomerEmail(emailData.from);
       const customerPhone = this.extractPhoneFromEmail(emailData.body);
 
-      const [lead] = await db.insert(leads).values({
-        // userId: 1, // TODO: Check if this field exists in schema
-        // source: sourceDetection.source, // TODO: Check if this field exists in schema
-        name: customerName,
-        email: customerEmail,
-        phone: customerPhone,
-        score: this.calculateLeadScore(sourceDetection),
-        status: "new",
-        notes: `Auto-detected from email: ${emailData.subject} (${sourceDetection.source})`,
-        metadata: JSON.stringify({
-          emailId: emailData.emailId,
-          threadId: emailData.threadId,
-          sourceDetection,
-          workflow: getWorkflowFromDetection(sourceDetection),
-          source: sourceDetection.source, // Store in metadata instead
-          createdAt: new Date().toISOString(),
-        }),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }).returning({ id: leads.id });
+      const [lead] = await db
+        .insert(leads)
+        .values({
+          // userId: 1, // TODO: Check if this field exists in schema
+          // source: sourceDetection.source, // TODO: Check if this field exists in schema
+          name: customerName,
+          email: customerEmail,
+          phone: customerPhone,
+          score: this.calculateLeadScore(sourceDetection),
+          status: "new",
+          notes: `Auto-detected from email: ${emailData.subject} (${sourceDetection.source})`,
+          metadata: JSON.stringify({
+            emailId: emailData.emailId,
+            threadId: emailData.threadId,
+            sourceDetection,
+            workflow: getWorkflowFromDetection(sourceDetection),
+            source: sourceDetection.source, // Store in metadata instead
+            createdAt: new Date().toISOString(),
+          }),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .returning({ id: leads.id });
 
       return lead?.id || null;
-
     } catch (error) {
-      console.error("[WorkflowAutomation] Error creating lead in database:", error);
+      console.error(
+        "[WorkflowAutomation] Error creating lead in database:",
+        error
+      );
       return null;
     }
   }
@@ -238,18 +263,22 @@ export class WorkflowAutomationService {
     workflow: any
   ): Promise<void> {
     try {
-      console.log(`[WorkflowAutomation] ⚡ Executing immediate actions for ${sourceDetection.source}`);
+      console.log(
+        `[WorkflowAutomation] ⚡ Executing immediate actions for ${sourceDetection.source}`
+      );
 
       for (const action of workflow.workflow.requiredActions) {
         console.log(`[WorkflowAutomation] 📋 Required action: ${action.title}`);
-        
+
         // Create task for required actions
         await this.createTaskForAction(leadId, action, true);
       }
 
       for (const action of workflow.workflow.suggestedActions) {
-        console.log(`[WorkflowAutomation] 💡 Suggested action: ${action.title}`);
-        
+        console.log(
+          `[WorkflowAutomation] 💡 Suggested action: ${action.title}`
+        );
+
         // Create task for suggested actions (lower priority)
         await this.createTaskForAction(leadId, action, false);
       }
@@ -257,13 +286,17 @@ export class WorkflowAutomationService {
       // Execute auto-actions
       for (const autoAction of workflow.workflow.autoActions) {
         if (autoAction.trigger === "immediate") {
-          console.log(`[WorkflowAutomation] 🤖 Auto-action: ${autoAction.title}`);
+          console.log(
+            `[WorkflowAutomation] 🤖 Auto-action: ${autoAction.title}`
+          );
           await this.executeAutoAction(leadId, autoAction);
         }
       }
-
     } catch (error) {
-      console.error("[WorkflowAutomation] Error executing immediate actions:", error);
+      console.error(
+        "[WorkflowAutomation] Error executing immediate actions:",
+        error
+      );
     }
   }
 
@@ -278,7 +311,9 @@ export class WorkflowAutomationService {
     try {
       const db = await getDb();
       if (!db) {
-        console.error("[WorkflowAutomation] Database not available for task creation");
+        console.error(
+          "[WorkflowAutomation] Database not available for task creation"
+        );
         return;
       }
 
@@ -294,7 +329,6 @@ export class WorkflowAutomationService {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-
     } catch (error) {
       console.error("[WorkflowAutomation] Error creating task:", error);
     }
@@ -303,28 +337,32 @@ export class WorkflowAutomationService {
   /**
    * Execute auto-action
    */
-  private async executeAutoAction(leadId: number, autoAction: any): Promise<void> {
+  private async executeAutoAction(
+    leadId: number,
+    autoAction: any
+  ): Promise<void> {
     try {
       switch (autoAction.title) {
         case "Auto-tag lead":
           // Lead is already tagged in metadata
           console.log(`[WorkflowAutomation] ✅ Lead auto-tagged`);
           break;
-          
+
         case "Notify sales":
           // TODO: Send notification to sales team
           console.log(`[WorkflowAutomation] 📢 Sales team notified`);
           break;
-          
+
         case "Geo tag":
           // TODO: Add geographic tagging
           console.log(`[WorkflowAutomation] 📍 Geographic tag added`);
           break;
-          
-        default:
-          console.log(`[WorkflowAutomation] ❓ Unknown auto-action: ${autoAction.title}`);
-      }
 
+        default:
+          console.log(
+            `[WorkflowAutomation] ❓ Unknown auto-action: ${autoAction.title}`
+          );
+      }
     } catch (error) {
       console.error("[WorkflowAutomation] Error executing auto-action:", error);
     }
@@ -333,7 +371,10 @@ export class WorkflowAutomationService {
   /**
    * Create follow-up calendar event
    */
-  private async createFollowUpEvent(leadId: number, emailData: any): Promise<string | null> {
+  private async createFollowUpEvent(
+    leadId: number,
+    emailData: any
+  ): Promise<string | null> {
     try {
       const eventData = {
         summary: `Follow-up: ${emailData.subject}`,
@@ -345,9 +386,11 @@ export class WorkflowAutomationService {
 
       const event = await createCalendarEvent(eventData);
       return event?.id || null;
-
     } catch (error) {
-      console.error("[WorkflowAutomation] Error creating calendar event:", error);
+      console.error(
+        "[WorkflowAutomation] Error creating calendar event:",
+        error
+      );
       return null;
     }
   }
@@ -361,7 +404,9 @@ export class WorkflowAutomationService {
     workflow: any
   ): Promise<void> {
     try {
-      console.log(`[WorkflowAutomation] 📬 Sending notifications for lead ${leadId}`);
+      console.log(
+        `[WorkflowAutomation] 📬 Sending notifications for lead ${leadId}`
+      );
 
       // TODO: Implement notification channels
       // - Slack notification
@@ -370,7 +415,6 @@ export class WorkflowAutomationService {
       // - Push notification
 
       console.log(`[WorkflowAutomation] ✅ Notifications sent`);
-
     } catch (error) {
       console.error("[WorkflowAutomation] Error sending notifications:", error);
     }
@@ -409,15 +453,15 @@ export class WorkflowAutomationService {
 
     // Bonus for high-value sources
     const sourceBonus: Record<string, number> = {
-      "referral": 20,
-      "website": 15,
-      "phone": 10,
-      "rengoring_nu": 5,
-      "rengoring_aarhus": 5,
-      "direct": 0,
-      "adhelp": -5,
-      "social_media": -5,
-      "unknown": -10,
+      referral: 20,
+      website: 15,
+      phone: 10,
+      rengoring_nu: 5,
+      rengoring_aarhus: 5,
+      direct: 0,
+      adhelp: -5,
+      social_media: -5,
+      unknown: -10,
     };
 
     score += sourceBonus[sourceDetection.source] || 0;

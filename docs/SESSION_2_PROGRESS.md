@@ -15,11 +15,13 @@ pnpm add @upstash/redis
 ```
 
 **Result:**
+
 - ✅ Package installed: `@upstash/redis ^1.35.6`
 - ✅ No errors
 - ✅ Ready to use
 
 **Files Ready:**
+
 - `server/rate-limiter-redis.ts` - Can now be used
 - `server/routers.ts` - Rate limiting active
 
@@ -38,6 +40,7 @@ pnpm add @upstash/redis
 ```
 
 **Expected Result:**
+
 - 33 files deleted
 - 18 test files moved
 - 47% fewer root-level files
@@ -51,6 +54,7 @@ pnpm build
 ```
 
 **What to check:**
+
 - No TypeScript errors
 - No build errors
 - Rate limiter compiles correctly
@@ -64,6 +68,7 @@ pnpm test
 ```
 
 **What to check:**
+
 - All tests pass
 - No regressions
 - New fixes work

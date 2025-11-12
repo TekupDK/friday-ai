@@ -1,13 +1,15 @@
-/**
- * Phase 10+: Venstre Panel Redesign Notes
- * 
- * Integration notes til senere arbejde med venstre panel
- * Baseret på nuværende samtale om Email Assistant integration
- */
+/\*\*
+
+- Phase 10+: Venstre Panel Redesign Notes
+-
+- Integration notes til senere arbejde med venstre panel
+- Baseret på nuværende samtale om Email Assistant integration
+  \*/
 
 # 🎯 **VENSTRE PANEL REDESIGN - PHASE 10+ NOTES**
 
 ## 📋 **NUVÆRENDE STATUS:**
+
 ```typescript
 📧 VENSTRE PANEL (Nuværende):
 - Standard Gmail email list
@@ -25,6 +27,7 @@
 ```
 
 ## 🎯 **ØNSKEDE FORBEDRINGER (FRA SAMTALE):**
+
 ```typescript
 🚀 INTELLIGENT EMAIL LIST:
 1. **Lead Score Integration:**
@@ -56,6 +59,7 @@
 ```
 
 ## 🔧 **TEKNISK INTEGRATION:**
+
 ```typescript
 🎯 INTEGRATION MED EMAIL ASSISTANT:
 - Samme AI analysis engine
@@ -78,6 +82,7 @@
 ```
 
 ## 🎨 **DESIGN KONCEPT:**
+
 ```typescript
 📐 NY LAYOUT STRUKTUR:
 ┌─────────────────────────────────┐
@@ -105,6 +110,7 @@
 ```
 
 ## 🚀 **IMPLEMENTATION PLAN:**
+
 ```typescript
 🎯 PHASE 10: INTELLIGENT EMAIL LIST
 - Lead score integration
@@ -128,6 +134,7 @@
 ```
 
 ## 📊 **BUSINESS VALUE:**
+
 ```typescript
 💰 FORVENTET ROI:
 - 50% hurtigere lead identification
@@ -143,6 +150,7 @@
 ```
 
 ---
+
 **NOTE: Disse features skal implementeres efter Email Assistant er færdig og testet!**
 **Priority: Medium - kan vente til Phase 10+**
 **Dependencies: Email Assistant integration complete**

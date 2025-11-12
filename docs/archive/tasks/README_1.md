@@ -51,10 +51,10 @@ tasks/ai-email-integration/
 
 AI/MCP integration kræver at integrationslagene er konfigureret korrekt:
 
-| Variable         | Status             | Notes                                                                                 |
-| ---------------- | ------------------ | ------------------------------------------------------------------------------------- |
-| `GOOGLE_MCP_URL` | ⚠️ Partial/Legacy   | Ikke påkrævet for Calendar. Nogle Gmail-funktioner (threads/drafts) bruger stadig MCP |
-| `GMAIL_MCP_URL`  | ⚠️ Partial/Legacy   | Bruges af `server/mcp.ts` til `getGmailThread` og `createGmailDraft`                  |
+| Variable         | Status            | Notes                                                                                 |
+| ---------------- | ----------------- | ------------------------------------------------------------------------------------- |
+| `GOOGLE_MCP_URL` | ⚠️ Partial/Legacy | Ikke påkrævet for Calendar. Nogle Gmail-funktioner (threads/drafts) bruger stadig MCP |
+| `GMAIL_MCP_URL`  | ⚠️ Partial/Legacy | Bruges af `server/mcp.ts` til `getGmailThread` og `createGmailDraft`                  |
 
 > ℹ️ **Migration Status (Nov 6, 2025):** Gmail/Calendar er delvist migreret til direkte Google API-kald via `server/google-api.ts` og `server/gmail-labels.ts`. Der er stadig MCP-brug for specifikke Gmail-funktioner (læse tråde/oprette udkast). Plan: udfase MCP helt og konsolidere på Google API.
 

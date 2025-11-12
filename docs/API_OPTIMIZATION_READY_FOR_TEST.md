@@ -141,7 +141,7 @@ Når testning er færdig, opdater:
 ```markdown
 ## Test Results Summary
 
-**Date:** ******\_\_\_******
+**Date:** **\*\***\_\_\_**\*\***
 **Overall Status:** ✅ Pass / ⚠️ Partial / ❌ Fail
 
 **Metrics:**

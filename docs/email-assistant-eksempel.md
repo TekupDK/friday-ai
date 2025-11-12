@@ -1,8 +1,9 @@
-/**
- * Phase 9.9: Konkret Email Analyse Eksempel
- * 
- * Viser hvordan AI analyserer Jens Hansen's email
- */
+/\*\*
+
+- Phase 9.9: Konkret Email Analyse Eksempel
+-
+- Viser hvordan AI analyserer Jens Hansen's email
+  \*/
 
 # 🎯 **AI ANALYSE RESULTAT:**
 
@@ -10,7 +11,7 @@
 🤖 EMAIL ANALYSIS ENGINE OUTPUT:
 {
   customerName: "Jens Hansen",
-  customerEmail: "jens.hansen@email.dk", 
+  customerEmail: "jens.hansen@email.dk",
   customerPhone: null,
   jobType: "Hovedrengøring",
   location: "Aarhus C",
@@ -34,6 +35,7 @@
 # 💡 **AI GENEREREDE FORSLAG:**
 
 ## 🏆 **FORSLAG 1: PRISOVERSLAG (85% CONFIDENCE)**
+
 ```typescript
 📝 CONTENT:
 "Kære Jens Hansen,
@@ -72,6 +74,7 @@ Telefon: [Dit Telefonnummer]"
 ```
 
 ## 🎯 **FORSLAG 2: INFORMATION REQUEST (75% CONFIDENCE)**
+
 ```typescript
 📝 CONTENT:
 "Kære Jens Hansen,
@@ -101,6 +104,7 @@ Rendetalje.dk"
 ```
 
 ## 📅 **FORSLAG 3: BOOKING FORSLAG (70% CONFIDENCE)**
+
 ```typescript
 📝 CONTENT:
 "Kære Jens Hansen,
@@ -138,6 +142,7 @@ Rendetalje.dk"
 ```
 
 ## 🎯 **FORSLAG 4: AARHUS SPECIAL (90% CONFIDENCE)**
+
 ```typescript
 📝 CONTENT:
 "Kære Jens Hansen,
@@ -180,7 +185,8 @@ Rendetalje.dk - Din lokale rengøringspartner i Aarhus"
 
 ## 🎨 **HVORDAN DET SER UD I EMAIL TRÅDEN:**
 
-### **📧 **EMAIL TRÅD EFTER INTEGRATION:**
+### **📧 **EMAIL TRÅD EFTER INTEGRATION:\*\*
+
 ```typescript
 ┌─────────────────────────────────┐
 │ Subject: Rengøring i Aarhus...   │
@@ -193,7 +199,7 @@ Rendetalje.dk - Din lokale rengøringspartner i Aarhus"
 ├─────────────────────────────────┤
 │ ✨ **AI EMAIL ASSISTANT**        │
 │ ┌─────────────────────────────┐ │
-│ │ ✨ AI Email Assistant (4)    │ │  
+│ │ ✨ AI Email Assistant (4)    │ │
 │ │ 👤 Kunde: Jens Hansen        │ │
 │ │ 🏢 Job: Hovedrengøring      │ │
 │ │ 📍 Aarhus C • ⚡ Medium     │ │
@@ -221,7 +227,8 @@ Rendetalje.dk - Din lokale rengøringspartner i Aarhus"
 
 ## 🎯 **USER EXPERIENCE - STEP BY STEP:**
 
-### **👆 **HVAD BRUGEREN GØR:**
+### **👆 **HVAD BRUGEREN GØR:\*\*
+
 ```typescript
 1️⃣ EMAIL ÅBNES:
    - Bruger klikker på "Rengøring i Aarhus" email
@@ -230,7 +237,7 @@ Rendetalje.dk - Din lokale rengøringspartner i Aarhus"
 
 2️⃣ ANALYSE VISER:
    - "👤 Kunde: Jens Hansen"
-   - "🏢 Job: Hovedrengøring" 
+   - "🏢 Job: Hovedrengøring"
    - "📍 Aarhus C • ⚡ Medium"
    - "💰 1.800 kr. • ⏰ 4 timer"
 
@@ -257,11 +264,12 @@ Rendetalje.dk - Din lokale rengøringspartner i Aarhus"
 
 ## 🏆 **KONKLUSION - EKSEMPEL!**
 
-### **✅ **HVAD JERES SYSTEM KAN NU:**
+### **✅ **HVAD JERES SYSTEM KAN NU:\*\*
+
 ```typescript
 🎯 FROM EMAIL TO REPLY:
 - Email ind kunde → AI analysis på 3 sekunder
-- Business intelligence → 4 relevante forslag  
+- Business intelligence → 4 relevante forslag
 - One-click selection → Professional email content
 - Personal touch → Perfect customer communication
 

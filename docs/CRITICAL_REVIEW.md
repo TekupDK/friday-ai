@@ -11,6 +11,7 @@
 **Overall Status:** ✅ Production Ready med forbedringspotentiale
 
 **Key Findings:**
+
 - ✅ Solid arkitektur og god test coverage
 - ⚠️ 37 TODO comments (teknisk gæld)
 - ⚠️ 78 filer skal organiseres
@@ -26,6 +27,7 @@
 ### **TODO/FIXME Analysis**
 
 **Server (37 TODOs):**
+
 - `workflow-automation.ts` - 7 TODOs
 - `_core/rollout-config.ts` - 5 TODOs
 - `_core/ab-testing.ts` - 3 TODOs
@@ -35,6 +37,7 @@
 - 19 andre filer - 1 TODO hver
 
 **Client (37 TODOs):**
+
 - `inbox/TasksTab.tsx` - 11 TODOs (⚠️ HIGH)
 - `inbox/EmailTabV2.tsx` - 6 TODOs
 - `Map.tsx` - 3 TODOs
@@ -43,6 +46,7 @@
 **Total:** 74 TODOs across codebase
 
 **Risk Assessment:**
+
 - 🔴 HIGH: 11 TODOs in single file (TasksTab.tsx)
 - 🟡 MEDIUM: Multiple TODOs in core files
 - 🟢 LOW: Single TODOs in utility files
@@ -66,17 +70,20 @@ function checkRateLimit(userId: number, limit = 10, windowMs = 60000): boolean {
 ```
 
 **Problems:**
+
 - ❌ Lost on server restart
 - ❌ Not shared across instances
 - ❌ Memory leak potential (no cleanup)
 - ❌ No distributed support
 
 **Impact:** 🔴 HIGH
+
 - Rate limits reset on deploy
 - Doesn't work with multiple servers
 - Memory grows unbounded
 
 **Recommendation:**
+
 ```typescript
 // Use Redis or database for rate limiting
 import { Ratelimit } from "@upstash/ratelimit";
@@ -109,21 +116,24 @@ let query = `
 ```
 
 **Problems:**
+
 - ⚠️ SQL injection risk (mitigated by params)
 - ⚠️ No type safety
 - ⚠️ Manual query building
 - ⚠️ Inconsistent with Drizzle ORM usage
 
 **Impact:** 🟡 MEDIUM
+
 - Harder to maintain
 - Potential bugs
 - Type safety lost
 
 **Recommendation:**
+
 ```typescript
 // Use Drizzle ORM consistently
-import { messages } from './db/schema';
-import { eq, lt, desc } from 'drizzle-orm';
+import { messages } from "./db/schema";
+import { eq, lt, desc } from "drizzle-orm";
 
 const result = await db
   .select()
@@ -154,15 +164,18 @@ const result = await db
 ```
 
 **Problems:**
+
 - ⚠️ `Date.now()` can collide if messages sent quickly
 - ⚠️ No guarantee of uniqueness
 - ⚠️ Potential UI bugs
 
 **Impact:** 🟡 MEDIUM
+
 - Rare but possible collision
 - Messages might disappear/duplicate
 
 **Recommendation:**
+
 ```typescript
 import { nanoid } from 'nanoid';
 
@@ -189,24 +202,30 @@ import { nanoid } from 'nanoid';
 **Issue:** Loads only 20 messages, no "load more" button
 
 ```typescript
-const { data: messagesData } = trpc.chat.getMessages.useQuery({ 
-  conversationId: conversationId || 0,
-  limit: 20 
-}, {
-  enabled: !!conversationId
-});
+const { data: messagesData } = trpc.chat.getMessages.useQuery(
+  {
+    conversationId: conversationId || 0,
+    limit: 20,
+  },
+  {
+    enabled: !!conversationId,
+  }
+);
 ```
 
 **Problems:**
+
 - ⚠️ Users can't see older messages
 - ⚠️ Pagination implemented server-side but not client-side
 - ⚠️ No infinite scroll
 
 **Impact:** 🟡 MEDIUM
+
 - Limited conversation history
 - Poor UX for long conversations
 
 **Recommendation:**
+
 - Add "Load More" button
 - Or implement infinite scroll
 - Use cursor-based pagination (already supported server-side)
@@ -226,17 +245,20 @@ const conversationHistory = await getConversationMessages(input.conversationId);
 ```
 
 **Problems:**
+
 - ⚠️ No limit on history size
 - ⚠️ Could load 1000+ messages
 - ⚠️ Sent to LLM (token cost)
 - ⚠️ Slow for long conversations
 
 **Impact:** 🟡 MEDIUM
+
 - Performance degrades over time
 - High LLM costs
 - Slow response times
 
 **Recommendation:**
+
 ```typescript
 // Load only last N messages for context
 const conversationHistory = await getConversationMessages(
@@ -254,17 +276,20 @@ const conversationHistory = await getConversationMessages(
 **Issue:** Every request hits database and LLM
 
 **Problems:**
+
 - ❌ No response caching
 - ❌ No conversation summary caching
 - ❌ No tool result caching
 - ❌ Repeated LLM calls for similar queries
 
 **Impact:** 🟡 MEDIUM
+
 - Higher costs
 - Slower responses
 - More database load
 
 **Recommendation:**
+
 ```typescript
 // Add Redis caching
 import { Redis } from '@upstash/redis';
@@ -291,27 +316,30 @@ await redis.setex(cacheKey, 3600, response);
 **Issue:** User content passed directly to AI
 
 ```typescript
-.input(z.object({ 
-  conversationId: z.number(), 
+.input(z.object({
+  conversationId: z.number(),
   content: z.string(), // No length limit!
   // ...
 }))
 ```
 
 **Problems:**
+
 - ⚠️ No max length validation
 - ⚠️ Could send 1MB message
 - ⚠️ Potential DoS attack
 - ⚠️ High LLM costs
 
 **Impact:** 🟡 MEDIUM
+
 - Cost attack vector
 - Performance issues
 
 **Recommendation:**
+
 ```typescript
-.input(z.object({ 
-  conversationId: z.number(), 
+.input(z.object({
+  conversationId: z.number(),
   content: z.string()
     .min(1, "Message cannot be empty")
     .max(10000, "Message too long (max 10,000 chars)"),
@@ -328,16 +356,19 @@ await redis.setex(cacheKey, 3600, response);
 **Issue:** Static API keys in environment
 
 **Problems:**
+
 - ⚠️ No key rotation strategy
 - ⚠️ Keys in plaintext .env files
 - ⚠️ No key expiration
 - ⚠️ Hard to revoke compromised keys
 
 **Impact:** 🟡 MEDIUM
+
 - Security risk if keys leaked
 - No recovery plan
 
 **Recommendation:**
+
 - Use secret management (AWS Secrets Manager, Azure Key Vault)
 - Implement key rotation
 - Add key expiration
@@ -352,23 +383,26 @@ await redis.setex(cacheKey, 3600, response);
 **Issue:** Direct tRPC procedures without middleware
 
 **Problems:**
+
 - ⚠️ No request logging
 - ⚠️ No anomaly detection
 - ⚠️ No abuse monitoring
 - ⚠️ Hard to debug issues
 
 **Impact:** 🟢 LOW
+
 - Harder to detect attacks
 - Limited observability
 
 **Recommendation:**
+
 ```typescript
 // Add middleware
 const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
   const start = Date.now();
   const result = await next();
   const duration = Date.now() - start;
-  
+
   logger.info({ path, duration, userId: ctx.user?.id });
   return result;
 });
@@ -387,10 +421,12 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 **Concerns:**
 
 1. **React 19 (RC)**
+
    ```json
    "react": "^19.1.1",
    "react-dom": "^19.1.1"
    ```
+
    - ⚠️ React 19 is still in RC
    - ⚠️ Potential breaking changes
    - ✅ But seems stable
@@ -419,6 +455,7 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **Current Coverage:**
 
 **E2E Tests (Playwright):**
+
 - ✅ Phase 1: Chat functionality
 - ✅ Phase 2: AI integration
 - ✅ Phase 3: Error handling
@@ -426,6 +463,7 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 - ✅ Mocked tests for speed
 
 **Unit Tests (Vitest):**
+
 - ✅ `useFridayChatSimple` hook
 - ✅ Server chat endpoints
 - ⚠️ Limited coverage of other hooks
@@ -462,11 +500,13 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 **Current:** ~150 files in root
 
 **Problems:**
+
 - ❌ Hard to navigate
 - ❌ Cluttered workspace
 - ❌ Unclear structure
 
 **Solution:** Already identified in cleanup analysis
+
 - Delete 33 files
 - Move 22 files
 - Consolidate 23 docs
@@ -478,11 +518,13 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **2. Inconsistent Naming Conventions**
 
 **Examples:**
+
 - `AIAssistantPanelV2.tsx` vs `ShortWaveChatPanel.tsx`
 - `useFridayChat.ts` vs `useFridayChatSimple.ts`
 - `friday-tools.ts` vs `fridayTools.ts`
 
 **Recommendation:**
+
 - Standardize on kebab-case for files
 - Use PascalCase for components
 - Use camelCase for functions/hooks
@@ -494,12 +536,14 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **3. Large Files**
 
 **Files > 500 lines:**
+
 - `server/google-api.ts` - 1,400+ lines
 - `server/intent-actions.ts` - 1,100+ lines
 - `server/db.ts` - 900+ lines
 - `server/friday-tool-handlers.ts` - 700+ lines
 
 **Recommendation:**
+
 - Split into smaller modules
 - Group related functions
 - Improve maintainability
@@ -547,13 +591,13 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 
 ## 📊 **RISK MATRIX**
 
-| Issue | Impact | Probability | Risk | Priority |
-|-------|--------|-------------|------|----------|
-| Rate limiting failure | HIGH | MEDIUM | 🔴 HIGH | Fix now |
-| Input validation bypass | MEDIUM | LOW | 🟡 MEDIUM | Fix soon |
-| Message history overflow | MEDIUM | MEDIUM | 🟡 MEDIUM | Fix soon |
-| Optimistic update collision | LOW | LOW | 🟢 LOW | Backlog |
-| Large file maintainability | LOW | HIGH | 🟢 LOW | Backlog |
+| Issue                       | Impact | Probability | Risk      | Priority |
+| --------------------------- | ------ | ----------- | --------- | -------- |
+| Rate limiting failure       | HIGH   | MEDIUM      | 🔴 HIGH   | Fix now  |
+| Input validation bypass     | MEDIUM | LOW         | 🟡 MEDIUM | Fix soon |
+| Message history overflow    | MEDIUM | MEDIUM      | 🟡 MEDIUM | Fix soon |
+| Optimistic update collision | LOW    | LOW         | 🟢 LOW    | Backlog  |
+| Large file maintainability  | LOW    | HIGH        | 🟢 LOW    | Backlog  |
 
 ---
 
@@ -590,16 +634,19 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **Week 1: Critical Fixes**
 
 **Day 1-2:**
+
 - [ ] Run cleanup scripts
 - [ ] Fix rate limiting (Redis)
 - [ ] Add input validation
 
 **Day 3-4:**
+
 - [ ] Limit message history
 - [ ] Fix optimistic update IDs
 - [ ] Add pagination UI
 
 **Day 5:**
+
 - [ ] Testing & verification
 - [ ] Deploy to staging
 - [ ] Monitor metrics
@@ -609,16 +656,19 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **Week 2: Security & Performance**
 
 **Day 1-2:**
+
 - [ ] Add request logging
 - [ ] Implement key rotation
 - [ ] Add security tests
 
 **Day 3-4:**
+
 - [ ] Add caching layer
 - [ ] Optimize database queries
 - [ ] Load testing
 
 **Day 5:**
+
 - [ ] Documentation updates
 - [ ] Deploy to production
 - [ ] Monitor & iterate
@@ -629,13 +679,13 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 
 **After Fixes:**
 
-| Metric | Before | Target | Measurement |
-|--------|--------|--------|-------------|
-| Rate limit reliability | 0% (resets) | 100% | Redis-backed |
-| Message load time | ~500ms | <200ms | With caching |
-| Test coverage | 60% | 80% | Add integration tests |
-| Code organization | Cluttered | Clean | -47% root files |
-| Security score | B | A | Add validations |
+| Metric                 | Before      | Target | Measurement           |
+| ---------------------- | ----------- | ------ | --------------------- |
+| Rate limit reliability | 0% (resets) | 100%   | Redis-backed          |
+| Message load time      | ~500ms      | <200ms | With caching          |
+| Test coverage          | 60%         | 80%    | Add integration tests |
+| Code organization      | Cluttered   | Clean  | -47% root files       |
+| Security score         | B           | A      | Add validations       |
 
 ---
 
@@ -668,18 +718,21 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 **Overall Assessment:** ✅ **GOOD - Production Ready**
 
 **Strengths:**
+
 - Solid architecture
 - Working features
 - Good test coverage
 - Modern tech stack
 
 **Weaknesses:**
+
 - Technical debt (74 TODOs)
 - Some performance concerns
 - Security hardening needed
 - Code organization
 
-**Verdict:** 
+**Verdict:**
+
 - ✅ Safe to deploy to production
 - ⚠️ Address high-priority issues within 1 week
 - 📈 Plan for medium-priority improvements

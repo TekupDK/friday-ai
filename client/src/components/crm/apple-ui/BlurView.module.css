@@ -1,0 +1,8 @@
+/**
+ * BlurView Styles
+ */
+
+.blurView {
+  position: relative;
+  overflow: hidden;
+}

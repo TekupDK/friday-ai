@@ -24,11 +24,12 @@ function generateCustomerKey(lead) {
   if (lead.email) return `email:${normalize(email)}`;
   if (lead.phone) return `phone:${normalize(phone)}`;
   if (lead.name) return `name:${normalize(name)}`;
-  return 'unknown';
+  return "unknown";
 }
 ```
 
 **Example:**
+
 ```
 lars.joenstrup@live.dk → "email:lars.joenstrup@live.dk"
 40456319             → "phone:40456319"
@@ -59,7 +60,7 @@ function mergeCustomerLeads(leads) {
     gmail: mostRecentGmail(leads),
     calendar: mostRecentCalendar(leads),
     billy: mostRecentBilly(leads),
-    
+
     // Aggregate customer value
     customer: {
       isRepeatCustomer: leads.length > 1,
@@ -67,23 +68,30 @@ function mergeCustomerLeads(leads) {
       lifetimeValue: sumBillyInvoices(leads),
       firstBookingDate: minDate(leads),
       lastBookingDate: maxDate(leads),
-    }
+    },
   };
 }
 ```
 
 **Example Output:**
+
 ```json
 {
   "id": "LEAD_lars_dollerup",
   "customerEmail": "lars.joenstrup@live.dk",
-  "gmail": { /* most recent thread */ },
-  "calendar": { /* most recent booking */ },
-  "billy": { /* most recent invoice */ },
+  "gmail": {
+    /* most recent thread */
+  },
+  "calendar": {
+    /* most recent booking */
+  },
+  "billy": {
+    /* most recent invoice */
+  },
   "customer": {
     "isRepeatCustomer": true,
     "totalBookings": 3,
-    "lifetimeValue": 5250.00,
+    "lifetimeValue": 5250.0,
     "firstBookingDate": "2025-07-15",
     "lastBookingDate": "2025-11-10"
   }
@@ -98,18 +106,18 @@ function mergeCustomerLeads(leads) {
 
 ```typescript
 enum LeadStatus {
-  SPAM = 'spam',                    // ❌ Filtered noise
-  NEW = 'new',                      // 🆕 No action yet
-  CONTACTED = 'contacted',          // 📧 We replied
-  NO_RESPONSE = 'no_response',      // ⏰ 7+ days no reply
-  DEAD = 'dead',                    // 💀 30+ days no reply
-  QUOTED = 'quoted',                // 💰 Quote sent
-  SCHEDULED = 'scheduled',          // 📅 Booking confirmed
-  INVOICED = 'invoiced',            // 📄 Invoice sent
-  PAID = 'paid',                    // ✅ Payment received
-  ACTIVE_RECURRING = 'active_recurring', // 🔄 Ongoing customer
-  LOST = 'lost',                    // ❌ Declined/cancelled
-  CANCELLED = 'cancelled',          // ❌ Booking cancelled
+  SPAM = "spam", // ❌ Filtered noise
+  NEW = "new", // 🆕 No action yet
+  CONTACTED = "contacted", // 📧 We replied
+  NO_RESPONSE = "no_response", // ⏰ 7+ days no reply
+  DEAD = "dead", // 💀 30+ days no reply
+  QUOTED = "quoted", // 💰 Quote sent
+  SCHEDULED = "scheduled", // 📅 Booking confirmed
+  INVOICED = "invoiced", // 📄 Invoice sent
+  PAID = "paid", // ✅ Payment received
+  ACTIVE_RECURRING = "active_recurring", // 🔄 Ongoing customer
+  LOST = "lost", // ❌ Declined/cancelled
+  CANCELLED = "cancelled", // ❌ Booking cancelled
 }
 ```
 
@@ -118,24 +126,24 @@ enum LeadStatus {
 ```typescript
 function determineLeadStatus(lead) {
   // 1. Check spam labels
-  if (lead.gmail.labels.includes('Spam')) return SPAM;
-  
+  if (lead.gmail.labels.includes("Spam")) return SPAM;
+
   // 2. Check Billy invoice status
   if (lead.billy?.isPaid) {
     // Special case: Fast rengøring = recurring customer
-    if (lead.serviceType === 'REN-005') {
+    if (lead.serviceType === "REN-005") {
       return ACTIVE_RECURRING;
     }
     return PAID;
   }
-  if (lead.billy?.state === 'sent') return INVOICED;
-  
+  if (lead.billy?.state === "sent") return INVOICED;
+
   // 3. Check calendar booking
   if (lead.calendar) {
     if (isFutureEvent(lead.calendar)) return SCHEDULED;
     return QUOTED; // Past event without invoice
   }
-  
+
   // 4. Check Gmail timeline
   if (lead.firstReplyDate) {
     const daysSinceReply = daysSince(lead.firstReplyDate);
@@ -143,11 +151,11 @@ function determineLeadStatus(lead) {
     if (daysSinceReply > 7) return NO_RESPONSE;
     return CONTACTED;
   }
-  
+
   // 5. No action yet
   const daysSinceReceived = daysSince(lead.leadReceivedDate);
   if (daysSinceReceived > 30) return DEAD;
-  
+
   return NEW;
 }
 ```
@@ -160,11 +168,11 @@ function determineLeadStatus(lead) {
 
 ```typescript
 const PRODUCTION_FILTER = {
-  includeSpam: false,           // ❌ Remove spam
-  includeDead: false,           // ❌ Remove dead leads
-  includeNoResponse: true,      // ✅ Keep (might convert later)
-  minDataCompleteness: 30,      // 30% minimum
-  requiredFields: [],           // No requirements
+  includeSpam: false, // ❌ Remove spam
+  includeDead: false, // ❌ Remove dead leads
+  includeNoResponse: true, // ✅ Keep (might convert later)
+  minDataCompleteness: 30, // 30% minimum
+  requiredFields: [], // No requirements
 };
 ```
 
@@ -172,10 +180,10 @@ const PRODUCTION_FILTER = {
 
 ```typescript
 const ANALYSIS_FILTER = {
-  includeSpam: true,            // ✅ Keep for spam analysis
-  includeDead: true,            // ✅ Keep for conversion metrics
-  includeNoResponse: true,      // ✅ Keep all
-  minDataCompleteness: 0,       // No minimum
+  includeSpam: true, // ✅ Keep for spam analysis
+  includeDead: true, // ✅ Keep for conversion metrics
+  includeNoResponse: true, // ✅ Keep all
+  minDataCompleteness: 0, // No minimum
   requiredFields: [],
 };
 ```
@@ -187,8 +195,8 @@ const WON_DEALS_FILTER = {
   includeSpam: false,
   includeDead: false,
   includeNoResponse: false,
-  minDataCompleteness: 80,      // High quality only
-  requiredFields: ['billy'],    // Must have invoice
+  minDataCompleteness: 80, // High quality only
+  requiredFields: ["billy"], // Must have invoice
 };
 ```
 
@@ -197,6 +205,7 @@ const WON_DEALS_FILTER = {
 ## 📊 Expected Output Distribution
 
 ### Input (Raw Data)
+
 ```
 Gmail Threads:     662
 Calendar Events:   210
@@ -205,6 +214,7 @@ Total Raw Leads:   ~800
 ```
 
 ### After Deduplication
+
 ```
 Unique Customers:  ~350
   ├─ Single lead:    250 (71%)
@@ -215,6 +225,7 @@ Merged/Removed:    ~450 duplicate entries
 ```
 
 ### After Filtering (Production)
+
 ```
 SPAM:              50  (removed) ❌
 DEAD:              80  (removed) ❌
@@ -247,14 +258,14 @@ Final Output:      270 leads
   },
   "customer": {
     "isRepeatCustomer": true,
-    "totalBookings": 12,          // 12 monthly cleanings
-    "lifetimeValue": 41880.00,    // 12 × 3490 kr
+    "totalBookings": 12, // 12 monthly cleanings
+    "lifetimeValue": 41880.0, // 12 × 3490 kr
     "firstBookingDate": "2024-11-01",
     "lastBookingDate": "2025-10-01",
-    "daysBetweenBookings": 30      // Every ~30 days
+    "daysBetweenBookings": 30 // Every ~30 days
   },
   "billy": {
-    "invoicedPrice": 3490.00,
+    "invoicedPrice": 3490.0,
     "state": "paid",
     "isPaid": true
   },
@@ -326,17 +337,20 @@ Final Output:      270 leads
 ## ✅ Benefits
 
 ### 1. **Clean Data**
+
 - Én lead per kunde (no duplicates)
 - Spam og noise filtreret væk
 - Dead leads removed (eller markeret)
 
 ### 2. **Accurate Metrics**
+
 - Lifetime value baseret på **alle** invoices
 - Total bookings = **alle** calendar events
 - Repeat customer tracking
 - Avg days between bookings
 
 ### 3. **Correct Pipeline Stages**
+
 ```
 ACTIVE_RECURRING: Fast rengøring customers
 PAID: Completed one-time jobs
@@ -346,6 +360,7 @@ DEAD: Archive/ignore
 ```
 
 ### 4. **Smart Filtering**
+
 - Production: Clean, actionable leads only
 - Analysis: Full data for insights
 - Custom: Filter by any criteria
@@ -355,32 +370,33 @@ DEAD: Archive/ignore
 ## 🎯 Use Cases
 
 ### Sales Dashboard
+
 ```typescript
 const activeOpportunities = filterLeads(leads, {
   includeSpam: false,
   includeDead: false,
   includeNoResponse: true, // Follow-up targets
-  requiredFields: ['gmail'],
+  requiredFields: ["gmail"],
 });
 // → Show leads that need action
 ```
 
 ### Financial Report
+
 ```typescript
 const wonDeals = filterLeads(leads, {
   includeSpam: false,
   includeDead: false,
   includeNoResponse: false,
-  requiredFields: ['billy'],
+  requiredFields: ["billy"],
 });
 // → Calculate revenue, profit, margins
 ```
 
 ### Customer Retention
+
 ```typescript
-const recurring = leads.filter(l => 
-  l.pipeline.status === 'active_recurring'
-);
+const recurring = leads.filter(l => l.pipeline.status === "active_recurring");
 // → Track fast rengøring customers
 ```
 

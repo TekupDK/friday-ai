@@ -17,6 +17,7 @@ This enables accurate performance tracking and better quote estimation.
 ### 1. Billy Invoices (Most Precise)
 
 **What we extract:**
+
 - Actual hours worked (from line item quantity)
 - Actual price (from invoice amount)
 - Actual m² (from invoice description parsing)
@@ -24,10 +25,12 @@ This enables accurate performance tracking and better quote estimation.
 - Invoice date and status
 
 **Filtering:**
+
 - Only approved, sent, or paid invoices (exclude drafts)
 - Match by customer email
 
 **Example:**
+
 ```json
 {
   "contactEmail": "lars.joenstrup@live.dk",
@@ -42,6 +45,7 @@ This enables accurate performance tracking and better quote estimation.
 ```
 
 **Lead enrichment:**
+
 ```json
 {
   "actuals": {
@@ -61,12 +65,14 @@ This enables accurate performance tracking and better quote estimation.
 ### 2. Calendar History
 
 **What we extract:**
+
 - Booked duration (end time - start time in minutes)
 - Number of attendees/resources
 - Calculated work hours (duration × attendees)
 - Booking date and title
 
 **Calculation:**
+
 ```
 Work Hours = (Duration in minutes / 60) × Number of Attendees
 ```
@@ -74,6 +80,7 @@ Work Hours = (Duration in minutes / 60) × Number of Attendees
 Example: 2-hour booking with 2 people = 4 work hours
 
 **Example:**
+
 ```json
 {
   "email": "lars.joenstrup@live.dk",
@@ -85,6 +92,7 @@ Example: 2-hour booking with 2 people = 4 work hours
 ```
 
 **Lead enrichment:**
+
 ```json
 {
   "actuals": {
@@ -103,6 +111,7 @@ Example: 2-hour booking with 2 people = 4 work hours
 ### 3. Email Confirmations
 
 **What we extract:**
+
 - Completion emails ("Opgaven er udført")
 - Actual hours worked
 - Estimated hours (for comparison)
@@ -110,11 +119,13 @@ Example: 2-hour booking with 2 people = 4 work hours
 - Completion date
 
 **Types:**
+
 - `completion` - Job done, actual vs estimated time
 - `feedback` - Customer feedback on timing accuracy
 - `time_report` - Detailed time tracking
 
 **Example:**
+
 ```json
 {
   "email": "lars.joenstrup@live.dk",
@@ -127,6 +138,7 @@ Example: 2-hour booking with 2 people = 4 work hours
 ```
 
 **Lead enrichment:**
+
 ```json
 {
   "actuals": {
@@ -178,16 +190,19 @@ interface LeadActuals {
 ## Matching Strategy
 
 ### Email Matching (Primary)
+
 - Normalize email addresses (lowercase, trim)
 - Exact match required
 - Highest confidence
 
 ### Phone Matching (Secondary)
+
 - Remove non-digits
 - Exact match on normalized phone
 - Used if email not available
 
 ### Name + Date Matching (Tertiary)
+
 - Fuzzy name similarity (>50% threshold)
 - Date proximity bonus (within 7 days)
 - Lower confidence, used as fallback
@@ -198,15 +213,16 @@ interface LeadActuals {
 
 ### V4.2 Coverage (with mock data)
 
-| Metric | Count | % of Total |
-|--------|-------|-----------|
-| Total Leads | 662 | 100% |
-| Enriched with Actuals | 2 | 0.3% |
-| Invoice Matches | 2 | 0.3% |
-| Calendar Matches | 2 | 0.3% |
-| Email Matches | 2 | 0.3% |
+| Metric                | Count | % of Total |
+| --------------------- | ----- | ---------- |
+| Total Leads           | 662   | 100%       |
+| Enriched with Actuals | 2     | 0.3%       |
+| Invoice Matches       | 2     | 0.3%       |
+| Calendar Matches      | 2     | 0.3%       |
+| Email Matches         | 2     | 0.3%       |
 
 **Note:** Mock data used for demonstration. Real data will come from:
+
 - Billy API (getInvoices, getInvoice)
 - Google Calendar API (listEvents)
 - Gmail API (searchThreads with "Opgaven er udført" pattern)
@@ -216,14 +232,16 @@ interface LeadActuals {
 ## Integration Points
 
 ### Billy API Integration
+
 ```typescript
 // Get all invoices
 const invoices = await getInvoices();
 
 // Filter by state and customer
-const customerInvoices = invoices.filter(inv =>
-  ['approved', 'sent', 'paid'].includes(inv.state) &&
-  inv.contactId === customerId
+const customerInvoices = invoices.filter(
+  inv =>
+    ["approved", "sent", "paid"].includes(inv.state) &&
+    inv.contactId === customerId
 );
 
 // Extract line items
@@ -232,20 +250,23 @@ const price = invoice.grossAmount;
 ```
 
 ### Google Calendar API Integration
+
 ```typescript
 // Get calendar events
 const events = await listCalendarEvents({
-  timeMin: '2025-07-01T00:00:00Z',
-  timeMax: '2025-12-31T23:59:59Z',
+  timeMin: "2025-07-01T00:00:00Z",
+  timeMax: "2025-12-31T23:59:59Z",
 });
 
 // Calculate work hours
-const durationMs = new Date(event.end).getTime() - new Date(event.start).getTime();
+const durationMs =
+  new Date(event.end).getTime() - new Date(event.start).getTime();
 const durationHours = durationMs / (1000 * 60 * 60);
 const workHours = durationHours * (event.attendees?.length || 1);
 ```
 
 ### Gmail API Integration
+
 ```typescript
 // Search for completion emails
 const threads = await searchGmailThreads(
@@ -264,6 +285,7 @@ const actualHours = hourMatch ? parseFloat(hourMatch[1]) : null;
 V4.2 actuals improve the quote estimation engine:
 
 ### Hierarchy (Updated)
+
 1. **Actual invoiced hours** (highest confidence)
 2. **Average actual hours from completions** (high confidence)
 3. **Estimated time from lead** (medium confidence)
@@ -271,6 +293,7 @@ V4.2 actuals improve the quote estimation engine:
 5. **Service type default** (fallback)
 
 ### Example
+
 ```typescript
 function estimateHours(lead: Lead): number {
   // Use actual invoiced hours if available
@@ -332,27 +355,32 @@ interface TimeAccuracy {
 ## Next Steps
 
 ### Phase 1: Real Data Integration
+
 - [ ] Connect to Billy API (getInvoices with state filter)
 - [ ] Parse invoice line items for hours and m²
 - [ ] Extract service type from product/description
 
 ### Phase 2: Calendar Integration
+
 - [ ] Fetch calendar events from Google Calendar API
 - [ ] Parse attendee count from event
 - [ ] Calculate work hours (duration × attendees)
 
 ### Phase 3: Email Integration
+
 - [ ] Search Gmail for completion patterns
 - [ ] Extract actual hours from email body
 - [ ] Parse customer feedback
 
 ### Phase 4: Analytics & Reporting
+
 - [ ] Time accuracy dashboard
 - [ ] Service type performance metrics
 - [ ] Lead source ROI analysis
 - [ ] Quote accuracy improvements
 
 ### Phase 5: V5 Rebuild
+
 - [ ] Rebuild customer cards with actual data
 - [ ] Improve quote engine with time accuracy insights
 - [ ] Add performance metrics to UI

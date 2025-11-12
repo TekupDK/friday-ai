@@ -1,6 +1,7 @@
 # Architecture Redesign - Brainstorm & Analysis
 
 ## 🎯 Problem Statement
+
 Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Opgaver) som konkurrerer om plads. Vi vil optimere for bedre email-fokus og workflow.
 
 ---
@@ -8,6 +9,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ## 💡 Option 1: Business Center i Højre Panel (Initial forslag)
 
 ### Struktur
+
 ```
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Business   │
@@ -22,11 +24,13 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ```
 
 ### ✅ Fordele
+
 - Email får fuld fokus i midten
 - Business tools samlet ét sted
 - Klar separation af concerns
 
 ### ❌ Ulemper
+
 - Højre panel bliver overfyldt (4 tabs i 20% plads)
 - Tab-switching i højre panel kan være forvirrende
 - Mindre plads til hver business tool
@@ -37,6 +41,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ## 💡 Option 2: Unified Workspace Panel (Højre)
 
 ### Struktur
+
 ```
 ┌─────────┬──────────────────┬─────────────────┐
 │   AI    │   Email Center   │   Workspace     │
@@ -52,12 +57,14 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ```
 
 ### ✅ Fordele
+
 - **Kontekstuel navigation** - højre panel viser relevant info baseret på valgt email
 - Mindre cognitive load - ikke mange tabs
 - Smart workflow integration
 - Plads til dyb information
 
 ### ❌ Ulemper
+
 - Kompleks logik for context-switching
 - Brugere skal lære det nye pattern
 - Fakturaer/kalender mindre tilgængelige
@@ -67,6 +74,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ## 💡 Option 3: Drawer System (Shortwave-inspireret)
 
 ### Struktur
+
 ```
 ┌─────────┬──────────────────────────────────┐
 │   AI    │   Email Center (80%)             │
@@ -79,12 +87,14 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ```
 
 ### ✅ Fordele
+
 - **Maksimal email-plads** (80% af skærm)
 - Business tools tilgængelige via quick-access
 - Modern, clean design
 - Ingen permanent højre panel
 
 ### ❌ Ulemper
+
 - Drawers dækker email-indhold
 - Ikke multi-tasking venligt
 - Mindre desktop-optimeret
@@ -94,6 +104,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ## 💡 Option 4: Smart Tabs i Email Center (Hybrid)
 
 ### Struktur
+
 ```
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Workflow   │
@@ -107,12 +118,14 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ```
 
 ### ✅ Fordele
+
 - Email primær, andre sekundære
 - Workflow panel bevaret til opgaver
 - Fakturaer/kalender/leads som mini-tabs
 - Balance mellem fokus og tilgængelighed
 
 ### ❌ Ulemper
+
 - Stadig tabs i midten (mindre forvirrende dog)
 - Sekundære tabs kan blive glemt
 
@@ -121,6 +134,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ## 💡 Option 5: Command Bar + Modal System
 
 ### Struktur
+
 ```
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Workflow   │
@@ -136,12 +150,14 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ```
 
 ### ✅ Fordele
+
 - **Power user friendly** - Cmd+K for alt
 - Email får fuld fokus
 - Workflow panel bevaret
 - Fakturaer/kalender/leads via command palette eller modals
 
 ### ❌ Ulemper
+
 - Mindre discoverable for nye brugere
 - Kræver keyboard shortcuts
 - Ikke altid visuelt tilgængeligt
@@ -151,6 +167,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ## 💡 Option 6: Adaptive Panels (AI-drevet)
 
 ### Struktur
+
 ```
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Smart      │
@@ -165,12 +182,14 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ```
 
 ### ✅ Fordele
+
 - **Intelligent context** - AI viser relevant info
 - Minimal manual navigation
 - Fremtidssikret design
 - Personaliseret workflow
 
 ### ❌ Ulemper
+
 - Kompleks AI-logik
 - Kan være upredictable
 - Kræver træning/data
@@ -179,14 +198,14 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ## 📊 Sammenligning
 
-| Criteria | Opt 1 | Opt 2 | Opt 3 | Opt 4 | Opt 5 | Opt 6 |
-|----------|-------|-------|-------|-------|-------|-------|
-| Email fokus | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| Tilgængelighed | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-| Simplicitet | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| Workflow | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| Implementation | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐ |
-| Skalerbarhed | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Criteria       | Opt 1    | Opt 2      | Opt 3      | Opt 4    | Opt 5      | Opt 6      |
+| -------------- | -------- | ---------- | ---------- | -------- | ---------- | ---------- |
+| Email fokus    | ⭐⭐⭐⭐ | ⭐⭐⭐⭐   | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   |
+| Tilgængelighed | ⭐⭐⭐   | ⭐⭐⭐⭐   | ⭐⭐⭐     | ⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐⭐⭐⭐ |
+| Simplicitet    | ⭐⭐⭐   | ⭐⭐       | ⭐⭐⭐⭐   | ⭐⭐⭐   | ⭐⭐⭐     | ⭐⭐       |
+| Workflow       | ⭐⭐     | ⭐⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ |
+| Implementation | ⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐⭐     | ⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐         |
+| Skalerbarhed   | ⭐⭐     | ⭐⭐⭐⭐   | ⭐⭐⭐     | ⭐⭐⭐   | ⭐⭐⭐⭐   | ⭐⭐⭐⭐⭐ |
 
 ---
 
@@ -224,20 +243,24 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ### Implementation Phases
 
 **Phase 1: Email-only midterpanel**
+
 - Fjern alle tabs fra EmailCenterPanel
 - Kun EmailTab synlig
 
 **Phase 2: Smart Workspace Panel (højre)**
+
 - Opret WorkspacePanel komponent
 - Context detection (hvilken email er valgt?)
 - Vis relevant lead/customer info
 
 **Phase 3: Mini-tabs (bottom af email center)**
+
 - Collapsed tabs for fakturaer/kalender
 - Click → drawer/modal åbner
 - Ikke permanent synlige
 
 **Phase 4: AI Integration**
+
 - Automatisk context detection
 - Smart suggestions i workspace panel
 - Predictive actions
@@ -267,16 +290,19 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 ## 🚀 Min Top 3 Anbefalinger
 
 ### 🥇 **1. Smart Workspace (Hybrid)**
+
 - Bedste balance mellem fokus og funktionalitet
 - Kontekstuel navigation
 - Skalerbar og moderne
 
 ### 🥈 **2. Command Bar + Modals**
+
 - Maksimal email-fokus
 - Power user friendly
 - Minimal UI clutter
 
 ### 🥉 **3. Drawer System**
+
 - Meget moderne
 - Maksimal plads til emails
 - God mobile support
