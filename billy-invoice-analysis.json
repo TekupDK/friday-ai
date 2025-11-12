@@ -1,0 +1,178 @@
+{
+  "summary": {
+    "totalInvoices": 121,
+    "totalRevenue": 240055.58,
+    "totalTax": 46187.1,
+    "totalOutstanding": 55489.97,
+    "totalPaid": 217324.61,
+    "analysisDate": "2025-11-06T20:40:59.134Z"
+  },
+  "breakdown": {
+    "byType": {
+      "creditNote": {
+        "count": 9,
+        "revenue": -16379.5
+      },
+      "invoice": {
+        "count": 112,
+        "revenue": 256435.08
+      }
+    },
+    "byState": {
+      "voided": {
+        "count": 19,
+        "revenue": 24950.47
+      },
+      "approved": {
+        "count": 102,
+        "revenue": 215105.11000000002
+      }
+    },
+    "byPaymentStatus": {
+      "paid": {
+        "count": 92,
+        "revenue": 195035.61000000002
+      },
+      "unpaid": {
+        "count": 29,
+        "revenue": 45019.97
+      }
+    }
+  },
+  "timeline": {
+    "byMonth": {
+      "2025-05": {
+        "count": 3,
+        "revenue": 698,
+        "paid": 698,
+        "unpaid": 0
+      },
+      "2025-06": {
+        "count": 2,
+        "revenue": 2617.5,
+        "paid": 2617.5,
+        "unpaid": 0
+      },
+      "2025-07": {
+        "count": 21,
+        "revenue": 46546.130000000005,
+        "paid": 38390,
+        "unpaid": 8156.13
+      },
+      "2025-08": {
+        "count": 26,
+        "revenue": 62038.979999999996,
+        "paid": 52615.979999999996,
+        "unpaid": 9423
+      },
+      "2025-09": {
+        "count": 37,
+        "revenue": 77141.43,
+        "paid": 74872.93,
+        "unpaid": 2268.5
+      },
+      "2025-10": {
+        "count": 29,
+        "revenue": 45391.2,
+        "paid": 21502.2,
+        "unpaid": 23889
+      },
+      "2025-11": {
+        "count": 3,
+        "revenue": 5622.34,
+        "paid": 4339,
+        "unpaid": 1283.3400000000001
+      }
+    },
+    "recentActivity": [
+      {
+        "date": "2025-11-03",
+        "invoiceNo": "1120",
+        "amount": 700,
+        "type": "invoice",
+        "state": "approved"
+      },
+      {
+        "date": "2025-11-03",
+        "invoiceNo": "1119",
+        "amount": 583.34,
+        "type": "invoice",
+        "state": "voided"
+      },
+      {
+        "date": "2025-11-02",
+        "invoiceNo": "1118",
+        "amount": 4339,
+        "type": "invoice",
+        "state": "approved"
+      },
+      {
+        "date": "2025-10-31",
+        "invoiceNo": "1109",
+        "amount": 1396,
+        "type": "invoice",
+        "state": "approved"
+      },
+      {
+        "date": "2025-10-31",
+        "invoiceNo": "1104",
+        "amount": 698,
+        "type": "invoice",
+        "state": "approved"
+      },
+      {
+        "date": "2025-10-31",
+        "invoiceNo": "1105",
+        "amount": 2094,
+        "type": "invoice",
+        "state": "approved"
+      },
+      {
+        "date": "2025-10-31",
+        "invoiceNo": "1106",
+        "amount": 1745,
+        "type": "invoice",
+        "state": "approved"
+      },
+      {
+        "date": "2025-10-31",
+        "invoiceNo": "1116",
+        "amount": 2500,
+        "type": "invoice",
+        "state": "voided"
+      },
+      {
+        "date": "2025-10-31",
+        "invoiceNo": "1115",
+        "amount": 523.5,
+        "type": "invoice",
+        "state": "approved"
+      },
+      {
+        "date": "2025-10-31",
+        "invoiceNo": "1103",
+        "amount": 1396,
+        "type": "invoice",
+        "state": "approved"
+      }
+    ]
+  },
+  "insights": {
+    "averageInvoiceValue": 1983.93,
+    "largestInvoice": {
+      "invoiceNo": "1030",
+      "amount": 8376,
+      "date": "2025-08-09"
+    },
+    "smallestInvoice": {
+      "invoiceNo": "1100",
+      "amount": -523.5,
+      "date": "2025-10-29"
+    },
+    "paymentRate": 76.03,
+    "mostCommonState": "approved",
+    "trends": [
+      "Revenue decreased by 87.6% from previous month"
+    ]
+  }
+}

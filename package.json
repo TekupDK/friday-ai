@@ -62,6 +62,7 @@
     "crm:test:staging:chroma": "cross-env CHROMA_ENABLED=true pnpm exec dotenv -e .env.staging -- vitest run server/__tests__/crm-smoke.test.ts",
     "analyze:customer": "dotenv -e .env.dev -- tsx server/scripts/analyze-emil-laerke.ts",
     "analyze:customer:prod": "dotenv -e .env.prod -- tsx server/scripts/analyze-emil-laerke.ts",
+    "analyze:billy": "tsx server/scripts/analyze-billy-invoices.ts",
     "logs": "powershell -File scripts/monitor-logs.ps1",
     "logs:ai": "powershell -File scripts/monitor-logs.ps1 -Filter '\\[AI|\\[Chat|\\[LLM'",
     "logs:email": "powershell -File scripts/monitor-logs.ps1 -Filter '\\[Email|\\[Gmail|\\[Calendar'",
