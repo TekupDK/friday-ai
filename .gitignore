@@ -113,6 +113,10 @@ jspm_packages/
 # Temporary folders
 tmp/
 temp/
+logs/
+
+# Test outputs
+tests/results/
 
 # Database
 *.db

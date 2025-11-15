@@ -10,6 +10,8 @@
 
 import { defineConfig, devices } from "@playwright/test";
 
+const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
+
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
@@ -17,13 +19,13 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : 4,
   reporter: [
-    ["html", { outputFolder: "playwright-report" }],
-    ["json", { outputFile: "test-results/results.json" }],
-    ["junit", { outputFile: "test-results/junit.xml" }],
+    ["html", { outputFolder: "tests/results/reports" }],
+    ["json", { outputFile: "tests/results/playwright/results.json" }],
+    ["junit", { outputFile: "tests/results/playwright/junit.xml" }],
     ["list"], // Show test progress in console
   ],
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: BASE_URL,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
@@ -38,9 +40,8 @@ export default defineConfig({
     // Network conditions for testing
     offline: false,
 
-    // Geolocation and permissions
+    // Geolocation (permission configuration moved to browser-specific projects)
     geolocation: { latitude: 55.6761, longitude: 12.5683 }, // Copenhagen
-    permissions: ["clipboard-read"],
     launchOptions: {
       args: ["--enable-precise-memory-info", "--js-flags=--expose-gc"],
     },
@@ -49,29 +50,50 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        // Chromium supports clipboard-read permission reliably
+        permissions: ["clipboard-read"],
+      },
     },
 
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
+    // Enable Firefox only when ALL_BROWSERS env is set due to unsupported permissions
+    ...(process.env.ALL_BROWSERS
+      ? ([
+          {
+            name: "firefox",
+            use: { ...devices["Desktop Firefox"] },
+          },
+        ] as const)
+      : []),
 
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
+    // Enable WebKit only when ALL_BROWSERS env is set; some UI differences may require selectors tweaks
+    ...(process.env.ALL_BROWSERS
+      ? ([
+          {
+            name: "webkit",
+            use: { ...devices["Desktop Safari"] },
+          },
+        ] as const)
+      : []),
 
     // Mobile testing
     {
       name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
+      use: {
+        ...devices["Pixel 5"],
+        permissions: ["clipboard-read"],
+      },
     },
 
-    {
-      name: "Mobile Safari",
-      use: { ...devices["iPhone 12"] },
-    },
+    ...(process.env.ALL_BROWSERS
+      ? ([
+          {
+            name: "Mobile Safari",
+            use: { ...devices["iPhone 12"] },
+          },
+        ] as const)
+      : []),
 
     // AI-specific test project with slower timeouts
     {
@@ -104,7 +126,7 @@ export default defineConfig({
   // Web server (if needed)
   webServer: {
     command: "pnpm dev",
-    url: "http://localhost:3000",
+    url: BASE_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },
