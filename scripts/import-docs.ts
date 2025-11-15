@@ -59,6 +59,9 @@ function inferCategory(path: string): string {
     }
     return "Documentation";
   }
+  // Handle archived task docs after repo cleanup
+  if (path.startsWith("archive/tasks/")) return "Tasks";
+  if (path.startsWith("docs/archive/tasks/")) return "Tasks";
   if (path.startsWith("tasks/invoices")) return "Invoices";
   if (path.startsWith("tasks/email")) return "Email";
   if (path.startsWith("tasks/ai")) return "AI";

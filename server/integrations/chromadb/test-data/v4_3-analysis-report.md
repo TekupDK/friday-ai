@@ -13,7 +13,7 @@
 | Total Revenue        | 169.422,13 kr     |
 | Total Lead Cost      | 7.415 kr          |
 | Total Labor Cost     | 0 kr              |
-| **Total Net Profit** | **162.007,13 kr** |
+| **Total Net Profit**|**162.007,13 kr** |
 | Avg Gross Margin     | 100.0%            |
 | Avg Net Margin       | 95.6%             |
 | Avg Revenue/Lead     | 1.002,498 kr      |
@@ -67,6 +67,6 @@
 
 | Name               | Email                                   | LTV      | Bookings |
 | ------------------ | --------------------------------------- | -------- | -------- |
-| Jesper Vestergaard | jesper vestergaard <system@leadpoint.dk | 3.490 kr | 0        |
-| Pia Duffy          | pia duffy <system@leadpoint.dk          | 1.745 kr | 0        |
-| "Rengøring Aarhus" | "rengøring aarhus" <system@leadpoint.dk | 1.047 kr | 0        |
+| Jesper Vestergaard | jesper vestergaard <system@leadpoint.dk> | 3.490 kr | 0        |
+| Pia Duffy          | pia duffy <system@leadpoint.dk>          | 1.745 kr | 0        |
+| "Rengøring Aarhus" | "rengøring aarhus" <system@leadpoint.dk> | 1.047 kr | 0        |

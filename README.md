@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
-> **⚡ Quick Start:** Copy `.env.dev.template` → `.env.dev`, fill secrets, run `pnpm dev`  
-> **🔧 Environment Guide:** [QUICK_ENV_REFERENCE.md](QUICK_ENV_REFERENCE.md) | **📘 Full Setup:** [ENV_SETUP_GUIDE.md](ENV_SETUP_GUIDE.md)
+> **⚡ Quick Start:** Copy `.env.dev.template` → `.env.dev`, fill secrets, run `pnpm dev`
+> **🔧 Environment Guide:**[QUICK_ENV_REFERENCE.md](QUICK_ENV_REFERENCE.md) |**📘 Full Setup:** [ENV_SETUP_GUIDE.md](ENV_SETUP_GUIDE.md)
 
 Friday AI is an intelligent email management system inspired by Shortwave.ai. It combines AI-powered conversation with real-time inbox management, calendar bookings, invoice handling, and lead tracking.
 
@@ -29,7 +29,7 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
 
 **Live Demo:** [Chat Components Showcase](https://3000-ijhgukurr5hhbd1h5s5sk-e0f84be7.manusvm.computer/chat-components-showcase)
 
-#### 📦 Component Categories:
+#### 📦 Component Categories
 
 - **💬 Chat Cards (12)**: MessageCard, EmailCard, NotificationCard, TaskCard, CalendarCard, DocumentCard, ContactCard, FileCard, InvoiceCard, AnalyticsCard, StatusCard, QuickReplyCard
 - **⚡ Interactive (5)**: ApprovalCard, ThinkingIndicator, SyncStatusCard, PhaseTracker, ActionButtonsGroup
@@ -39,7 +39,7 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
 - **🎨 Advanced Layouts (9)**: SplitViewPanel, MessageThread, FloatingChatWindow, DocumentViewer, MessageToolbar, NotificationSystem, PanelSizeVariants, IntegrationPanel, ChatSkeleton variants
 - **Input/Smart/Realtime/Other (29)**: SlashCommandsMenu, MentionAutocomplete, MarkdownPreview, AttachmentPreview, SmartSuggestions, AIAssistant, ContextAwareness, AutoComplete, LiveCollaboration, RealtimeNotifications, LiveTypingIndicators, LiveActivityFeed, QuickActions, SearchEverywhere, CommandPalette, SettingsPanel, HelpCenter, UserProfile, AboutInfo
 
-#### ✨ Key Features:
+#### ✨ Key Features
 
 - **Production-Ready**: TypeScript strict mode, Tailwind CSS, Radix UI primitives
 - **Theme Compliant**: Friday AI solid colors (no gradients), dark mode support
@@ -136,7 +136,7 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
 
 ### 📧 Unified Inbox (Shortwave.ai-inspired)
 
-- **Email Tab** ✅ **Production Ready (11 Core Components)**:
+- **Email Tab**✅**Production Ready (11 Core Components)**:
   - **EmailTab.tsx** (998 lines) - Main email list with virtualized scrolling
   - **EmailThreadView.tsx** (255 lines) - Thread rendering with AI sidebar integration
   - **EmailAISummary.tsx** (179 lines) - Shortwave-inspired AI email summaries ✨ NEW
@@ -150,6 +150,7 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
   - **EmailIframeView.tsx** (154 lines) - HTML email renderer with CID images
 
   **✅ Implemented Features (November 2025):**
+
   - ✅ **AI Email Summaries** ✨ NEW (v1.4.0)
     - 150-char summaries in Danish with Gemini 2.0 Flash
     - Smart skip logic (<200 words, newsletters, no-reply)
@@ -189,6 +190,7 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
     - `?` - Show keyboard shortcuts help modal
 
   **🔜 High-Impact Enhancements:**
+
   - 🔜 Unread count badges on folders/labels
   - 🔜 Rate limit countdown timer (visual feedback)
 
@@ -202,12 +204,12 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
 Friday automatically detects and executes 7 types of actions:
 
 1. **Create Lead** - Extracts contact info from messages
-2. **Create Task** - Parses Danish date/time and priority
-3. **Book Meeting** - Google Calendar integration (NO attendees - MEMORY_19)
-4. **Create Invoice** - Billy API draft-only (349 kr/hour - MEMORY_17)
-5. **Search Email** - Gmail API for duplicate detection
-6. **Request Photos** - Flytterengøring workflow (MEMORY_16)
-7. **Job Completion** - 6-step checklist automation (MEMORY_24)
+1. **Create Task** - Parses Danish date/time and priority
+1. **Book Meeting** - Google Calendar integration (NO attendees - MEMORY_19)
+1. **Create Invoice** - Billy API draft-only (349 kr/hour - MEMORY_17)
+1. **Search Email** - Gmail API for duplicate detection
+1. **Request Photos** - Flytterengøring workflow (MEMORY_16)
+1. **Job Completion** - 6-step checklist automation (MEMORY_24)
 
 ### 🧠 25 MEMORY Business Rules
 
@@ -285,54 +287,61 @@ Critical business logic embedded in AI system prompt:
 
 1. **Clone repository**
 
+   ```bash
+   git clone <https://github.com/TekupDK/tekup-friday.git>
+   cd tekup-friday
+
+```text
+
+1. **Install dependencies**
+
+   ```bash
+   pnpm install
+
+```text
+
+1. **Configure environment variables**
+
+   ```powershell
+   # Copy template to create your local .env.dev file
+   Copy-Item .env.dev.template .env.dev
+
+   # Edit .env.dev and fill in your secrets
+   code .env.dev
+
+   # Required variables
+   DATABASE_URL=postgresql://postgres:<PASSWORD@db.xxx.supabase.co>:5432/postgres?schema=friday_ai&sslmode=require
+   JWT_SECRET=your-secret-minimum-32-chars
+   OWNER_OPEN_ID=owner-friday-ai-dev
+   VITE_APP_ID=tekup-friday-dev
+
+   # Optional but recommended
+   OPENAI_API_KEY=sk-...
+   GEMINI_API_KEY=AIza...
+   GOOGLE_SERVICE_ACCOUNT_KEY=./google-service-account.json
+   GOOGLE_IMPERSONATED_USER=<info@rendetalje.dk>
+   BILLY_API_KEY=your-billy-api-key
+   BILLY_ORGANIZATION_ID=your-billy-org-id
+
+```text
+
+1. **Push database schema**
+
+   ```bash
+   pnpm db:push
+
+```text
+
+1. **Start development server**
+
+   ```bash
+   pnpm dev
+
 ```bash
-git clone https://github.com/TekupDK/tekup-friday.git
-cd tekup-friday
-```
-
-2. **Install dependencies**
-
-```bash
-pnpm install
-```
-
-3. **Configure environment variables**
-
-```powershell
-# Copy template to create your local .env.dev file
-Copy-Item .env.dev.template .env.dev
-
-# Edit .env.dev and fill in your secrets:
-code .env.dev
-
-# Required variables:
-DATABASE_URL=postgresql://postgres:PASSWORD@db.xxx.supabase.co:5432/postgres?schema=friday_ai&sslmode=require
-JWT_SECRET=your-secret-minimum-32-chars
-OWNER_OPEN_ID=owner-friday-ai-dev
-VITE_APP_ID=tekup-friday-dev
-
-# Optional but recommended:
-OPENAI_API_KEY=sk-...
-GEMINI_API_KEY=AIza...
-GOOGLE_SERVICE_ACCOUNT_KEY=./google-service-account.json
-GOOGLE_IMPERSONATED_USER=info@rendetalje.dk
-BILLY_API_KEY=your-billy-api-key
-BILLY_ORGANIZATION_ID=your-billy-org-id
-```
-
-4. **Push database schema**
-
-```bash
-pnpm db:push
-```
-
-5. **Start development server**
-
-```bash
-pnpm dev
-```
 
 Server runs on `http://localhost:3000`
+
+> `pnpm dev` kører nu automatisk `node check-env.js` før serverstart. Hvis den stopper, mangler der variabler i `.env.dev` – se fejlmeddelelsen for præcis liste.
 
 ## 🗄️ Database Schema
 
@@ -372,7 +381,7 @@ See `drizzle/schema.ts` and `drizzle/0003_minor_lester.sql` for full schema.
 
 ### Project Structure
 
-```
+```text
 tekup-friday/
 ├── client/               # Frontend React app
 │   ├── src/
@@ -389,37 +398,102 @@ tekup-friday/
 │   └── mcp.ts           # MCP framework
 ├── drizzle/             # Database schema
 └── shared/              # Shared types
-```
-
 ### Key Commands
 
 ```bash
+
 # Development
+
 pnpm dev              # Start dev server (localhost:3000)
 pnpm dev:tunnel       # Start dev + ngrok tunnel (public URL)
 pnpm build            # Build for production
+
+```bash
+
+#### Dev health check (`check-env`)
+
+- Script loads `.env.dev` and requires keys like `DATABASE_URL`, `JWT_SECRET`, `OWNER_OPEN_ID`, `VITE_APP_ID` before starting the server.
+- Optional but recommended keys (OpenAI, Gemini, OpenRouter) are logged as warnings.
+- You can run it manually with `pnpm run check:env` or use a different environment by setting `ENV_FILE=.env.staging node check-env.js`.
+
+#### Tunnel workflow (`pnpm dev:tunnel`)
+
+1. The script reuses a local dev server if it's already running, otherwise starts `pnpm dev`.
+2. Port 3000-3010 is scanned until the server responds; output shows which port was chosen.
+3. `ngrok` is found via `NGROK_PATH`, WindowsApps symlink, Winget paths, or global `PATH`. If none is found, installation instructions are shown.
+4. When the tunnel is ready, the URL is dumped both in the terminal and `tmp/tunnel-url.txt`, along with a link to the ngrok dashboard (`http://127.0.0.1:4040`).
+5. Ctrl+C closes both the dev server and tunnel, so you don't leave hanging processes.
+
+> See also `docs/DEV_PROMPTS.md` for pre-made AI prompts to troubleshoot environment, HMR, and tunnel setup.
+
+```bash
+
 pnpm check            # TypeScript type check
 
+### Login debug helper
+
+If you run into issues with Google login or cookies not being set during development, see `development-notes/LOGIN_DEBUG.md` for a step-by-step debug guide.
+
 # Database
+
 pnpm db:push          # Push schema changes
 pnpm db:migrate       # Run migrations
 pnpm db:studio        # Open Drizzle Studio
 
 # Testing
+
 pnpm test             # Run Vitest tests
 pnpm test:e2e         # Run Playwright E2E tests
 
 # Utilities
+
 pnpm format           # Format code with Prettier
-```
+
+```text
+
+### Tekup Docs CLI
+
+Tekup Docs er et separat CLI (`@tekup/docs-cli`), som gør det muligt at søge, oprette og redigere dokumenter uden at bladre manuelt i `docs/`.
+
+```bash
+
+# Install dependencies (fra repo-roden)
+
+pnpm install
+
+# Udvikling / watch-mode
+
+pnpm --filter @tekup/docs-cli dev
+
+# Global link (valgfrit, så kommandoen kan køres overalt)
+
+pnpm --filter @tekup/docs-cli link --global
+
+# Miljøvariabler (Windows PowerShell eksempel)
+
+$env:DOCS_API_URL="<http://localhost:3000">
+$env:DOCS_API_KEY="your-api-key"
+
+# Eksempler
+
+tekup-docs list --category "Email"
+tekup-docs search "rate limit"
+tekup-docs create "New API Guide" --category api --tags guide,api
+tekup-docs status
+
+```text
+
+CLI'en validerer kategorier og tags mod en fast taksonomi (se fejloutput for tilladte værdier). Ved API-nedetid kan du arbejde direkte i `docs/` og efterfølgende køre `tekup-docs resolve` for at synkronisere.
 
 ### Public Tunnel for Demos
 
 For AI reviews or live demos, use the auto-tunnel command:
 
 ```bash
+
 pnpm dev:tunnel
-```
+
+```text
 
 This automatically:
 
@@ -428,7 +502,7 @@ This automatically:
 - Prints public URL (e.g., `https://xxx.ngrok-free.app`)
 - Works with ngrok 3.24.0-msix (WinGet installation)
 
-See [EXPOSE_LOCALHOST.md](tasks/EXPOSE_LOCALHOST.md) for setup and alternatives.
+See [EXPOSE_LOCALHOST.md](docs/archive/tasks/EXPOSE_LOCALHOST.md) for setup and alternatives.
 
 ## 🚀 Deployment
 
@@ -441,39 +515,50 @@ See [EXPOSE_LOCALHOST.md](tasks/EXPOSE_LOCALHOST.md) for setup and alternatives.
 ### Manual Deployment
 
 ```bash
+
 pnpm build
+
 # Deploy dist/ folder to your hosting
-```
+
+```text
 
 ## 📖 Usage Guide
 
 ### Creating a Lead
 
 ```bash
-User: "Ny lead fra Rengøring.nu: Hans Jensen, hans@email.dk, 12345678"
+
+User: "Ny lead fra Rengøring.nu: Hans Jensen, <hans@email.dk>, 12345678"
 Friday: [Creates lead in database] "Lead oprettet! Skal jeg sende en tilbudsmail?"
-```
+
+```text
 
 ### Booking Calendar
 
 ```bash
+
 User: "Book møde med kunde i morgen kl 14"
 Friday: [Checks calendar, creates event] "Møde booket 14:00 i morgen ✓"
-```
+
+```text
 
 ### Invoice Creation
 
 ```bash
+
 User: "Lav faktura til Hans Jensen for 3 timer rengøring"
 Friday: [Creates Billy draft at 349 kr/hour] "Faktura-udkast oprettet i Billy (1047 kr)"
-```
+
+```text
 
 ### Flytterengøring Workflow
 
 ```bash
+
 User: "Kunde vil have tilbud på flytterengøring"
 Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejligheden?"
 [Blocks quote sending until photos received]
+
 ```
 
 ## 🧪 Testing
@@ -498,18 +583,18 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 
 ### Integration Tests
 
-✅ Lead creation with flytterengøring (MEMORY_16 working)  
-✅ Task creation with Danish date/time parsing  
-✅ Calendar booking (Intent sent successfully)  
+✅ Lead creation with flytterengøring (MEMORY_16 working)
+✅ Task creation with Danish date/time parsing
+✅ Calendar booking (Intent sent successfully)
 ✅ Database-first queries (5x performance improvement)
 
 ### Manual Testing (November 2025)
 
-✅ **Email Tab**: All core features verified working  
-✅ **Label mapping**: Label_185 → "Leads" functional  
-✅ **Date formatting**: Danish format throughout  
-✅ **HTML emails**: Gmail table rendering perfect  
-✅ **Bulk actions**: Archive/Delete with selection UI  
+✅ **Email Tab**: All core features verified working
+✅ **Label mapping**: Label_185 → "Leads" functional
+✅ **Date formatting**: Danish format throughout
+✅ **HTML emails**: Gmail table rendering perfect
+✅ **Bulk actions**: Archive/Delete with selection UI
 ✅ **Search**: Label filtering and text search working
 
 ### Test Coverage
@@ -538,12 +623,13 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
    - Component: `EmailComposer.tsx` (exists, just needs trigger)
    - Location: Top-right of email list
    - Quick win: Component is fully functional
-2. **Show Attachment Icons**
+
+1. **Show Attachment Icons**
    - Data: `hasAttachment` field already exists in email objects
    - UI: Add 📎 icon badge to emails with attachments
    - Visibility boost for important emails
 
-3. **Search Placeholder Text**
+1. **Search Placeholder Text**
    - Current: Empty input field
    - Proposed: "Søg emails, kontakter, labels..."
    - Better UX guidance
@@ -553,21 +639,20 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 #### Priority 2: Power User Features
 
 1. **Keyboard Shortcuts** 🔥
+   - `j`/`k` - Navigate emails up/down
+   - `r` - Reply to current email
+   - `f` - Forward current email
+   - `c` - Compose new email
+   - `/` - Focus search field
+   - `Escape` - Close email thread
+   - Implementation: Global keyboard listener in EmailTab
 
-- `j`/`k` - Navigate emails up/down
-- `r` - Reply to current email
-- `f` - Forward current email
-- `c` - Compose new email
-- `/` - Focus search field
-- `Escape` - Close email thread
-- Implementation: Global keyboard listener in EmailTab
-
-2. **Unread Count Badges**
+1. **Unread Count Badges**
    - Show unread count on each folder/label in sidebar
    - Example: "Inbox (5)", "Leads (2)"
    - Helps prioritize where to focus attention
 
-3. **Rate Limit Countdown Timer**
+1. **Rate Limit Countdown Timer**
    - Current: Disabled refresh button during rate limit
    - Proposed: Show "Refresh available in 30s..."
    - Better feedback for polling restrictions
@@ -577,14 +662,14 @@ Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejli
 #### Priority 3: Nice-to-Have
 
 1. **Email Preview on Hover**
+   - `EmailPreviewModal` exists
+   - Could add tooltip-style quick preview
 
-- `EmailPreviewModal` exists
-- Could add tooltip-style quick preview
-
-2. **Compact Density Toggle**
+1. **Compact Density Toggle**
    - Switch between comfortable/compact list view
    - More emails visible at once
-3. **Active Filter Feedback**
+
+1. **Active Filter Feedback**
    - Show which labels are currently filtering emails
    - Example: "Filtering by: Leads, Finance"
 

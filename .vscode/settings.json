@@ -50,6 +50,23 @@
 	// Suppress Tailwind CSS v4 at-rule warnings (valid syntax but VS Code doesn't recognize)
 	"css.lint.unknownAtRules": "ignore",
 
+	// === Stop Auto-Opening Files & Panels ===
+	// Disable preview mode - files open in permanent tabs
+	"workbench.editor.enablePreview": false,
+	"workbench.editor.enablePreviewFromQuickOpen": false,
+	
+	// Don't auto-open files when dragging into explorer
+	"explorer.autoOpenDroppedFile": false,
+	
+	// Don't auto-open welcome screen on startup
+	"workbench.startupEditor": "none",
+	
+	// Don't auto-restore/open output panels
+	"debug.openDebug": "neverOpen",
+	
+	// Always show tabs (not just when multiple files open)
+	"workbench.editor.showTabs": "multiple",
+
 	// === MCP Server Configuration for Tekup AI v2 ===
 	// NOTE: PostgreSQL MCP requires DATABASE_URL to be set in your system/user environment
 	// To set: $env:DATABASE_URL = "postgresql://..." in PowerShell profile
@@ -98,5 +115,9 @@
 		"other": "on",
 		"comments": "on",
 		"strings": "on"
-	}
+	},
+	
+	// Stop Copilot from auto-opening files in tabs
+	"github.copilot.chat.search.semanticTextResults": 0,
+	"github.copilot.chat.openSymbolInEditor": false
 }

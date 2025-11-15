@@ -1,0 +1,32 @@
+# Generated and build outputs
+node_modules/
+dist/
+storybook-static/
+.out
+.storybook-out
+coverage/
+.nyc_output
+
+# Test artifacts
+playwright-report/
+test-results/
+tests/results/
+
+# Generated docs
+# These are machine-generated and may violate table/formatting rules
+# without affecting human-authored documentation quality
+/docs/ai-automation/docs-generation/
+
+# Archives and legacy
+archive/
+docs/archive/
+docs/lint-exceptions/
+
+# Third-party model READMEs (external content)
+models/
+
+# Temporary and logs
+tmp/
+temp/
+logs/
+*.log
