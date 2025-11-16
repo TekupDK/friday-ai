@@ -1,9 +1,14 @@
 import { Command } from "commander";
+import fs from "fs/promises";
 import inquirer from "inquirer";
 import ora from "ora";
-import fs from "fs/promises";
 import { createClient } from "../api/client";
-import { success, error } from "../utils/formatter";
+import {
+  describeTaxonomy,
+  resolveCategory,
+  resolveTags,
+} from "../config/taxonomy";
+import { error, success, warning } from "../utils/formatter";
 
 export function registerEditCommand(program: Command) {
   program
@@ -67,13 +72,31 @@ export function registerEditCommand(program: Command) {
 
           const updateData: any = { id };
           if (answers.title !== doc.title) updateData.title = answers.title;
-          if (answers.category !== doc.category)
-            updateData.category = answers.category;
-          if (answers.tags) {
-            updateData.tags = answers.tags
-              .split(",")
-              .map((t: string) => t.trim());
+
+          if (answers.category && answers.category !== doc.category) {
+            try {
+              updateData.category = resolveCategory(answers.category);
+            } catch (taxonomyError: any) {
+              warning(describeTaxonomy());
+              throw taxonomyError;
+            }
           }
+
+          if (answers.tags) {
+            const tagInput = answers.tags
+              .split(",")
+              .map((t: string) => t.trim())
+              .filter(Boolean);
+            if (tagInput.length > 0) {
+              try {
+                updateData.tags = resolveTags(tagInput);
+              } catch (taxonomyError: any) {
+                warning(describeTaxonomy());
+                throw taxonomyError;
+              }
+            }
+          }
+
           if (answers.content) updateData.content = answers.content;
 
           const spinner = ora("Updating document...").start();
@@ -87,11 +110,27 @@ export function registerEditCommand(program: Command) {
           const updateData: any = { id };
 
           if (options.title) updateData.title = options.title;
-          if (options.category) updateData.category = options.category;
+          if (options.category) {
+            try {
+              updateData.category = resolveCategory(options.category);
+            } catch (taxonomyError: any) {
+              warning(describeTaxonomy());
+              throw taxonomyError;
+            }
+          }
           if (options.tags) {
-            updateData.tags = options.tags
+            const tagInput = options.tags
               .split(",")
-              .map((t: string) => t.trim());
+              .map((t: string) => t.trim())
+              .filter(Boolean);
+            if (tagInput.length > 0) {
+              try {
+                updateData.tags = resolveTags(tagInput);
+              } catch (taxonomyError: any) {
+                warning(describeTaxonomy());
+                throw taxonomyError;
+              }
+            }
           }
           if (options.file) {
             updateData.content = await fs.readFile(options.file, "utf-8");

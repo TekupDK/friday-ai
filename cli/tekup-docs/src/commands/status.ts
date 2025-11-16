@@ -1,8 +1,8 @@
+import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";
-import chalk from "chalk";
 import { createClient } from "../api/client";
-import { formatConflicts, error, success } from "../utils/formatter";
+import { error, formatConflicts } from "../utils/formatter";
 
 export function registerStatusCommand(program: Command) {
   program
@@ -20,12 +20,31 @@ export function registerStatusCommand(program: Command) {
         // Get document count
         const docs = await client.listDocuments({ limit: 1 });
 
+        // Get aggregate facets for categories/authors
+        const summary = await client.search({ limit: 0, offset: 0 });
+        const categories = summary.facets?.categories || {};
+        const authors = summary.facets?.authors || {};
+
         spinner.stop();
 
         console.log(chalk.bold("\n📊 Documentation System Status\n"));
         console.log(chalk.cyan("━".repeat(60)));
         console.log(chalk.gray(`Total Documents: ${docs.total}`));
         console.log(chalk.gray(`Conflicts: ${conflicts.length}`));
+        if (Object.keys(categories).length > 0) {
+          console.log(chalk.gray("Categories:"));
+          Object.entries(categories).forEach(([cat, count]) => {
+            console.log(chalk.gray(`  • ${cat}: ${count}`));
+          });
+        }
+
+        const authorEntries = Object.entries(authors);
+        if (authorEntries.length > 0) {
+          console.log(chalk.gray("Top Authors:"));
+          authorEntries.slice(0, 5).forEach(([author, count]) => {
+            console.log(chalk.gray(`  • ${author}: ${count}`));
+          });
+        }
         console.log(chalk.cyan("━".repeat(60)));
 
         if (conflicts.length > 0) {

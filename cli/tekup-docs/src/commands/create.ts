@@ -1,10 +1,14 @@
 import { Command } from "commander";
+import fs from "fs/promises";
 import inquirer from "inquirer";
 import ora from "ora";
-import fs from "fs/promises";
-import path from "path";
 import { createClient } from "../api/client";
-import { success, error, info } from "../utils/formatter";
+import {
+  describeTaxonomy,
+  resolveCategory,
+  resolveTags,
+} from "../config/taxonomy";
+import { error, info, success, warning } from "../utils/formatter";
 
 export function registerCreateCommand(program: Command) {
   program
@@ -30,14 +34,14 @@ export function registerCreateCommand(program: Command) {
           {
             type: "input",
             name: "category",
-            message: "Category:",
+            message: `Category (enter one of: ${describeTaxonomy().split("\n")[0].replace("Categories: ", "")}):`,
             when: !options.category,
             default: "General",
           },
           {
             type: "input",
             name: "tags",
-            message: "Tags (comma-separated):",
+            message: `Tags (comma-separated, allowed set in taxonomy):`,
             when: !options.tags,
           },
           {
@@ -89,13 +93,36 @@ export function registerCreateCommand(program: Command) {
 
         const spinner = ora("Creating document...").start();
 
+        let normalizedCategory: string;
+        let normalizedTags: string[] = [];
+
+        try {
+          normalizedCategory = resolveCategory(category);
+        } catch (taxonomyError: any) {
+          spinner.stop();
+          warning(describeTaxonomy());
+          throw taxonomyError;
+        }
+
+        if (tags) {
+          try {
+            normalizedTags = resolveTags(
+              tags.split(",").map((t: string) => t.trim())
+            );
+          } catch (taxonomyError: any) {
+            spinner.stop();
+            warning(describeTaxonomy());
+            throw taxonomyError;
+          }
+        }
+
         const client = createClient();
         const doc = await client.createDocument({
           path: `docs/${docPath}`,
           title,
           content,
-          category,
-          tags: tags ? tags.split(",").map((t: string) => t.trim()) : [],
+          category: normalizedCategory,
+          tags: normalizedTags,
         });
 
         spinner.stop();

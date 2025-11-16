@@ -1,15 +1,15 @@
 # 🤖 Friday AI + Lead Intelligence System
 
-**Version:** 1.0.0  
-**Status:** ✅ Ready for Implementation  
-**Customer:** RenDetalje  
+**Version:** 1.0.0
+**Status:** ✅ Ready for Implementation
+**Customer:** RenDetalje
 **Data Source:** V4.3.5 Lead Pipeline (231 leads)
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 friday-ai-leads/
 ├── 📖 README.md                     # This file - overview & guide
 ├── 📦 package.json                  # Dependencies & scripts
@@ -97,7 +97,8 @@ friday-ai-leads/
     ├── INTEGRATION.md              # Integration guide
     ├── USE-CASES.md                # Use case documentation
     └── TROUBLESHOOTING.md          # Troubleshooting guide
-```
+
+```text
 
 ---
 
@@ -108,36 +109,41 @@ friday-ai-leads/
 ```bash
 cd friday-ai-leads
 npm install
-```
+
+```text
 
 ### **2. Configure ChromaDB**
 
 ```typescript
 // config/chromadb.config.ts
 export const CHROMADB_CONFIG = {
-  url: "http://localhost:8000",
+  url: "<http://localhost:8000",>
   collection: "leads_v4_3_3",
   embeddings: "text-embedding-ada-002",
 };
-```
+
+```text
 
 ### **3. Import Lead Data**
 
 ```bash
 npm run import-data
-```
+
+```text
 
 ### **4. Test Connection**
 
 ```bash
 npm run test-connection
-```
+
+```text
 
 ### **5. Start Friday AI Service**
 
 ```bash
 npm run start
-```
+
+```text
 
 ---
 
@@ -175,17 +181,20 @@ npm run start
 
 ## 📈 Expected Impact
 
-```
+```text
 Efficiency Gains:
+
 - Customer lookup: 100x faster
 - Booking prediction: Automated
 - Quality monitoring: Proactive
 - Revenue identification: Data-driven
 
 Revenue Impact:
+
 - Immediate: 30-40k kr
 - Year 1: 95-125k kr
 - ROI: ∞ (zero cost)
+
 ```
 
 ---
@@ -212,20 +221,20 @@ Revenue Impact:
 ## 🎯 Next Steps
 
 1. **Review structure** - Check if folder organization meets needs
-2. **Configure settings** - Set up ChromaDB connection
-3. **Import data** - Load V4.3.5 lead data
-4. **Test intents** - Verify basic functionality
-5. **Deploy** - Integrate with Friday AI
+1. **Configure settings** - Set up ChromaDB connection
+1. **Import data** - Load V4.3.5 lead data
+1. **Test intents** - Verify basic functionality
+1. **Deploy** - Integrate with Friday AI
 
 ---
 
 ## 📞 Support
 
-**Technical:** Development Team  
-**Business:** Project Manager  
+**Technical:** Development Team
+**Business:** Project Manager
 **Data:** See `../docs/integrations/ChromaDB/leads-v4.3.5/`
 
 ---
 
-**Status:** ✅ Ready for Implementation  
+**Status:** ✅ Ready for Implementation
 **Last Updated:** November 10, 2025

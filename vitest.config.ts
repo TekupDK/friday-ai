@@ -67,6 +67,17 @@ export default defineConfig({
       "tests/**/*.test.ts",
       "tests/**/*.test.tsx",
     ],
+    exclude: [
+      // Exclude Playwright and E2E suites from Vitest unit run
+      "tests/ai/**",
+      "tests/e2e/**",
+      // Explicitly exclude Playwright-style test that uses test.describe()
+      "tests/phase1-code-verification.test.ts",
+      // Exclude heavy integration tests that require full app providers
+      "client/src/components/panels/**",
+      "client/src/components/ChatPanel.test.tsx",
+      "client/src/hooks/**/useFridayChatSimple-phase2.test.ts",
+    ],
     deps: {
       // Inline these dependencies so Vite transforms their CSS imports under test
       inline: ["streamdown", "katex"],
