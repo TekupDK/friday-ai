@@ -1,7 +1,7 @@
 # Friday AI Chat - Development Guide for Cursor IDE
 
-**Author:** Manus AI
-**Last Updated:** November 1, 2025
+**Author:** Manus AI  
+**Last Updated:** November 16, 2025  
 **Version:** 1.0.0
 
 ## Overview
@@ -31,7 +31,7 @@ Before starting development, ensure you have the following installed on your loc
 ### 1. Clone Repository
 
 ```bash
-git clone <https://github.com/TekupDK/tekup-friday.git>
+git clone https://github.com/TekupDK/friday-ai.git
 cd tekup-friday
 
 ```text
@@ -518,10 +518,14 @@ async function seed() {
     },
   ]);
 
-  console.log("Database seeded successfully");
+  const { logger } = await import("./_core/logger");
+  logger.info("[Seed] Database seeded successfully");
 }
 
-seed().catch(console.error);
+seed().catch(async (error) => {
+  const { logger } = await import("./_core/logger");
+  logger.error({ err: error }, "[Seed] Failed to seed database");
+});
 
 ```text
 
@@ -890,7 +894,10 @@ const newToolSchema = {
 
 ```typescript
 // server/friday-tool-handlers.ts
-export async function handleNewTool(args: { param1: string; param2?: number }) {
+export async function handleNewTool(
+  args: { param1: string; param2?: number },
+  correlationId?: string
+): Promise<ToolCallResult> {
   // Implement tool logic
   const result = await someOperation(args.param1, args.param2);
 
@@ -911,11 +918,16 @@ export const FRIDAY_TOOLS = [
   newToolSchema,
 ];
 
-export async function executeFridayTool(toolName: string, args: any) {
+export async function executeFridayTool(
+  toolName: string,
+  args: any,
+  userId: number,
+  correlationId?: string
+) {
   switch (toolName) {
     // ... existing cases
     case "new_tool":
-      return await handleNewTool(args);
+      return await handleNewTool(args, correlationId);
     default:
       throw new Error(`Unknown tool: ${toolName}`);
   }
@@ -1051,11 +1063,21 @@ test("user can log in", async ({ page }) => {
 
 ### Backend Debugging
 
-**Console Logging:**
+**Structured Logging:**
+
+All server-side logging uses the structured logger. Never use `console.log/error/warn` in server code.
 
 ```typescript
-console.log("[Debug] User ID:", userId);
-console.error("[Error] Failed to create lead:", error);
+import { logger } from "./_core/logger";
+
+// ✅ Good: Structured logging with context
+logger.info({ userId: 1 }, "[Auth] User logged in");
+logger.error({ err: error }, "[Operation] Failed to execute");
+logger.warn({ userId: 1, action: "login" }, "[Auth] Unusual login pattern");
+
+// ❌ Bad: Console logging (replaced with logger)
+console.log("[Debug] User ID:", userId); // Don't use
+console.error("Error:", error); // Don't use
 
 ```text
 
@@ -1211,19 +1233,19 @@ test: Add unit tests for customer-db helpers
 
 ### GitHub Integration
 
-The project is hosted at <https://github.com/TekupDK/tekup-friday>
+The project is hosted at https://github.com/TekupDK/friday-ai
 
 **Clone:**
 
 ```bash
-git clone <https://github.com/TekupDK/tekup-friday.git>
+git clone https://github.com/TekupDK/friday-ai.git
 
 ```text
 
 **Add Remote:**
 
 ```bash
-git remote add github <https://github.com/TekupDK/tekup-friday.git>
+git remote add github https://github.com/TekupDK/friday-ai.git
 
 ```text
 
@@ -1358,7 +1380,7 @@ For Cursor AI assistance, refer to `docs/CURSOR_RULES.md` which contains:
 
 **GitHub Repository:**
 
-- <https://github.com/TekupDK/tekup-friday>
+- https://github.com/TekupDK/friday-ai
 
 ---
 
