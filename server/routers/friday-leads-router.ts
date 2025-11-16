@@ -14,7 +14,8 @@ import {
   customerProfiles,
   customerInvoices,
 } from "../../drizzle/schema";
-import { eq, and, desc, sql } from "drizzle-orm";
+import { eq, and, desc, sql, or, ilike } from "drizzle-orm";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
 
 /**
  * Customer lookup by name, email, or phone
@@ -26,7 +27,7 @@ export const fridayLeadsRouter = router({
   lookupCustomer: protectedProcedure
     .input(
       z.object({
-        query: z.string().min(1),
+        query: z.string().min(1).max(500), // ✅ SECURITY: Max length to prevent DoS
         includeInvoices: z.boolean().optional().default(false),
       })
     )
@@ -40,23 +41,29 @@ export const fridayLeadsRouter = router({
       }
 
       const userId = ctx.user.id;
-      const searchQuery = `%${input.query.toLowerCase()}%`;
 
-      // Search leads by name, email, or phone
-      const matchingLeads = await db
-        .select()
-        .from(leads)
-        .where(
-          and(
-            eq(leads.userId, userId),
-            sql`(
-              LOWER(${leads.name}) LIKE ${searchQuery} OR
-              LOWER(${leads.email}) LIKE ${searchQuery} OR
-              LOWER(${leads.phone}) LIKE ${searchQuery}
-            )`
-          )
-        )
-        .limit(10);
+      // ✅ SECURITY FIX: Use parameterized queries with Drizzle's ilike for case-insensitive search
+      // ilike properly parameterizes the search value, preventing SQL injection
+      // ✅ ERROR HANDLING: Wrap database query with error handling
+      const matchingLeads = await withDatabaseErrorHandling(
+        async () => {
+          return await db
+            .select()
+            .from(leads)
+            .where(
+              and(
+                eq(leads.userId, userId),
+                or(
+                  ilike(leads.name, `%${input.query}%`),
+                  ilike(leads.email, `%${input.query}%`),
+                  ilike(leads.phone, `%${input.query}%`)
+                )!
+              )
+            )
+            .limit(10);
+        },
+        "Failed to search leads"
+      );
 
       if (matchingLeads.length === 0) {
         return {
@@ -159,13 +166,14 @@ export const fridayLeadsRouter = router({
           lead = leadResult[0] || null;
         }
       } else if (input.email) {
+        // ✅ SECURITY FIX: Use parameterized query with ilike for case-insensitive comparison
         const profileResult = await db
           .select()
           .from(customerProfiles)
           .where(
             and(
               eq(customerProfiles.userId, userId),
-              sql`LOWER(${customerProfiles.email}) = ${input.email.toLowerCase()}`
+              ilike(customerProfiles.email, input.email)
             )
           )
           .limit(1);

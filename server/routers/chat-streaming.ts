@@ -28,23 +28,23 @@ export const chatStreamingRouter = router({
     .input(
       z.object({
         conversationId: z.number(),
-        content: z.string(),
+        content: z.string().min(1).max(5000), // ✅ SECURITY: Max length to prevent DoS
         context: z
           .object({
-            selectedEmails: z.array(z.string()).optional(),
-            calendarEvents: z.array(z.any()).optional(),
-            searchQuery: z.string().optional(),
+            selectedEmails: z.array(z.string().max(100)).max(50).optional(), // ✅ SECURITY: Limit array and string length
+            calendarEvents: z.array(z.any()).max(100).optional(), // ✅ SECURITY: Limit array size
+            searchQuery: z.string().max(500).optional(), // ✅ SECURITY: Max length
             hasEmails: z.boolean().optional(),
             hasCalendar: z.boolean().optional(),
             hasInvoices: z.boolean().optional(),
-            page: z.string().optional(),
-            folder: z.string().optional(),
-            viewMode: z.string().optional(),
-            selectedThreads: z.array(z.string()).optional(),
-            openThreadId: z.string().optional(),
-            selectedLabels: z.array(z.string()).optional(),
+            page: z.string().max(100).optional(), // ✅ SECURITY: Max length
+            folder: z.string().max(100).optional(), // ✅ SECURITY: Max length
+            viewMode: z.string().max(50).optional(), // ✅ SECURITY: Max length
+            selectedThreads: z.array(z.string().max(100)).max(50).optional(), // ✅ SECURITY: Limit array and string length
+            openThreadId: z.string().max(100).optional(), // ✅ SECURITY: Max length
+            selectedLabels: z.array(z.string().max(100)).max(50).optional(), // ✅ SECURITY: Limit array and string length
             openDrafts: z.number().optional(),
-            previewThreadId: z.string().optional(),
+            previewThreadId: z.string().max(100).optional(), // ✅ SECURITY: Max length
           })
           .optional(),
       })
@@ -89,12 +89,12 @@ export const chatStreamingRouter = router({
     .input(
       z.object({
         conversationId: z.number(),
-        content: z.string(),
+        content: z.string().min(1).max(5000), // ✅ SECURITY: Max length to prevent DoS
         context: z
           .object({
-            selectedEmails: z.array(z.string()).optional(),
-            calendarEvents: z.array(z.any()).optional(),
-            searchQuery: z.string().optional(),
+            selectedEmails: z.array(z.string().max(100)).max(50).optional(), // ✅ SECURITY: Limit array and string length
+            calendarEvents: z.array(z.any()).max(100).optional(), // ✅ SECURITY: Limit array size
+            searchQuery: z.string().max(500).optional(), // ✅ SECURITY: Max length
             hasEmails: z.boolean().optional(),
             hasCalendar: z.boolean().optional(),
             hasInvoices: z.boolean().optional(),
@@ -136,8 +136,8 @@ export const chatStreamingRouter = router({
         }
 
         // Stream response
-        const stream = await streamResponse({
-          model: "gemma-3-27b-free", // Will be enhanced with model routing
+        const stream = await streamResponse(messages, {
+          // model routing will be enhanced later
         });
 
         for await (const chunk of stream) {

@@ -10,7 +10,11 @@ import {
   emailsInFridayAi,
   emailThreads,
 } from "../../drizzle/schema";
-import { protectedProcedure, router } from "../_core/trpc";
+import {
+  protectedProcedure,
+  rateLimitedProcedure,
+  router,
+} from "../_core/trpc";
 import { batchGenerateSummaries, getEmailSummary } from "../ai-email-summary";
 import {
   applyLabelSuggestion,
@@ -30,24 +34,26 @@ import {
   bulkUpdateTaskOrder,
   bulkUpdateTaskPriority,
   bulkUpdateTaskStatus,
-  createLead,
   createTask,
   deleteTask,
   getDb,
-  getLeadCalendarEvents,
   getPipelineState,
   getPipelineTransitions,
-  getUserLeads,
   getUserPipelineStates,
   getUserTasks,
   trackEvent,
-  updateLeadScore,
-  updateLeadStatus,
   updatePipelineStage,
   updateTask,
   updateTaskOrder,
   updateTaskStatus,
 } from "../db";
+import {
+  createLead,
+  getLeadCalendarEvents,
+  getUserLeads,
+  updateLeadScore,
+  updateLeadStatus,
+} from "../lead-db";
 import {
   addLabelToThread,
   archiveThread,
@@ -76,7 +82,7 @@ export const inboxRouter = router({
     mapThreadsToEmailIds: protectedProcedure
       .input(
         z.object({
-          threadIds: z.array(z.string()).min(1),
+          threadIds: z.array(z.string().max(100)).min(1).max(100), // ✅ SECURITY: Limit array size and string length
         })
       )
       .query(async ({ ctx, input }) => {
@@ -105,7 +111,7 @@ export const inboxRouter = router({
       .input(
         z.object({
           maxResults: z.number().optional(),
-          query: z.string().optional(),
+          query: z.string().max(500).optional(), // ✅ SECURITY: Max length to prevent DoS
         })
       )
       .query(async ({ ctx, input }) => {
@@ -290,8 +296,8 @@ export const inboxRouter = router({
       .input(
         z.object({
           maxResults: z.number().optional(),
-          query: z.string().optional(),
-          pageToken: z.string().optional(),
+          query: z.string().max(500).optional(), // ✅ SECURITY: Max length to prevent DoS
+          pageToken: z.string().max(500).optional(), // ✅ SECURITY: Max length to prevent DoS
         })
       )
       .query(async ({ ctx, input }) => {
@@ -507,13 +513,13 @@ export const inboxRouter = router({
           bcc: input.bcc,
         })
       ),
-    archive: protectedProcedure
+    archive: rateLimitedProcedure
       .input(z.object({ threadId: z.string() }))
       .mutation(async ({ input }) => {
         await archiveThread(input.threadId);
         return { success: true };
       }),
-    delete: protectedProcedure
+    delete: rateLimitedProcedure
       .input(z.object({ threadId: z.string() }))
       .mutation(async ({ input }) => {
         // Safer default: move to TRASH instead of permanent delete
@@ -524,37 +530,37 @@ export const inboxRouter = router({
         });
         return { success: true, trashed: true } as const;
       }),
-    addLabel: protectedProcedure
+    addLabel: rateLimitedProcedure
       .input(z.object({ threadId: z.string(), labelName: z.string() }))
       .mutation(async ({ input }) => {
         await addLabelToThread(input.threadId, input.labelName);
         return { success: true };
       }),
-    removeLabel: protectedProcedure
+    removeLabel: rateLimitedProcedure
       .input(z.object({ threadId: z.string(), labelName: z.string() }))
       .mutation(async ({ input }) => {
         await removeLabelFromThread(input.threadId, input.labelName);
         return { success: true };
       }),
-    star: protectedProcedure
+    star: rateLimitedProcedure
       .input(z.object({ messageId: z.string() }))
       .mutation(async ({ input }) => {
         await googleStarMessage(input.messageId, true);
         return { success: true };
       }),
-    unstar: protectedProcedure
+    unstar: rateLimitedProcedure
       .input(z.object({ messageId: z.string() }))
       .mutation(async ({ input }) => {
         await googleStarMessage(input.messageId, false);
         return { success: true };
       }),
-    markAsRead: protectedProcedure
+    markAsRead: rateLimitedProcedure
       .input(z.object({ messageId: z.string() }))
       .mutation(async ({ input }) => {
         await googleMarkAsRead(input.messageId, true);
         return { success: true };
       }),
-    markAsUnread: protectedProcedure
+    markAsUnread: rateLimitedProcedure
       .input(z.object({ messageId: z.string() }))
       .mutation(async ({ input }) => {
         await googleMarkAsRead(input.messageId, false);
@@ -902,7 +908,7 @@ export const inboxRouter = router({
           unread: !thread.isRead,
         };
       }),
-    createLeadFromEmail: protectedProcedure
+    createLeadFromEmail: rateLimitedProcedure
       .input(
         z.object({
           email: z.string().email(),
