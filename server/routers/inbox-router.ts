@@ -1,83 +1,84 @@
 import { TRPCError } from "@trpc/server";
 import { and, asc, desc, eq, inArray, or } from "drizzle-orm";
 import { z } from "zod";
-import { validationSchemas } from "../_core/validation";
+
 import {
-  attachments,
-  customerInvoices,
-  customerProfiles,
-  emailPipelineState,
-  emails,
-  emailsInFridayAi,
-  emailThreads,
+    attachments,
+    customerInvoices,
+    customerProfiles,
+    emailPipelineState,
+    emails,
+    emailsInFridayAi,
+    emailThreads,
 } from "../../drizzle/schema";
-import {
-  permissionProcedure,
-  protectedProcedure,
-  rateLimitedProcedure,
-  router,
-} from "../_core/trpc";
 import { logger } from "../_core/logger";
+import {
+    permissionProcedure,
+    protectedProcedure,
+    rateLimitedProcedure,
+    router,
+} from "../_core/trpc";
+import { validationSchemas } from "../_core/validation";
 import { batchGenerateSummaries, getEmailSummary } from "../ai-email-summary";
 import {
-  applyLabelSuggestion,
-  autoApplyHighConfidenceLabels,
-  batchGenerateLabelSuggestions,
-  getEmailLabelSuggestions,
-  type LabelCategory,
+    applyLabelSuggestion,
+    autoApplyHighConfidenceLabels,
+    batchGenerateLabelSuggestions,
+    getEmailLabelSuggestions,
+    type LabelCategory,
 } from "../ai-label-suggestions";
 import type { BillyInvoice } from "../billy";
 import {
-  createInvoice as createBillyInvoice,
-  getInvoices as getBillyInvoices,
-  searchCustomerByEmail,
+    createInvoice as createBillyInvoice,
+    getInvoices as getBillyInvoices,
+    searchCustomerByEmail,
 } from "../billy";
 import {
-  bulkDeleteTasks,
-  bulkUpdateTaskOrder,
-  bulkUpdateTaskPriority,
-  bulkUpdateTaskStatus,
-  createTask,
-  deleteTask,
-  getDb,
-  getPipelineState,
-  getPipelineTransitions,
-  getUserPipelineStates,
-  getUserTasks,
-  trackEvent,
-  updatePipelineStage,
-  updateTask,
-  updateTaskOrder,
-  updateTaskStatus,
+    bulkDeleteTasks,
+    bulkUpdateTaskOrder,
+    bulkUpdateTaskPriority,
+    bulkUpdateTaskStatus,
+    createTask,
+    deleteTask,
+    getDb,
+    getPipelineState,
+    getPipelineTransitions,
+    getUserPipelineStates,
+    getUserTasks,
+    trackEvent,
+    updatePipelineStage,
+    updateTask,
+    updateTaskOrder,
+    updateTaskStatus,
 } from "../db";
 import {
-  createLead,
-  getLeadCalendarEvents,
-  getUserLeads,
-  updateLeadScore,
-  updateLeadStatus,
-} from "../lead-db";
-import {
-  addLabelToThread,
-  archiveThread,
-  getGmailLabels,
-  removeLabelFromThread,
+    addLabelToThread,
+    archiveThread,
+    getGmailLabels,
+    removeLabelFromThread,
 } from "../gmail-labels";
 import {
-  checkCalendarAvailability,
-  createCalendarEvent,
-  createGmailDraft,
-  deleteCalendarEvent,
-  getGmailThread,
-  markGmailMessageAsRead as googleMarkAsRead,
-  starGmailMessage as googleStarMessage,
-  listCalendarEvents,
-  modifyGmailThread,
-  searchGmailThreads,
-  sendGmailMessage,
-  updateCalendarEvent,
+    checkCalendarAvailability,
+    createCalendarEvent,
+    createGmailDraft,
+    deleteCalendarEvent,
+    getGmailThread,
+    markGmailMessageAsRead as googleMarkAsRead,
+    starGmailMessage as googleStarMessage,
+    listCalendarEvents,
+    modifyGmailThread,
+    searchGmailThreads,
+    sendGmailMessage,
+    updateCalendarEvent,
 } from "../google-api";
 import { cacheInvoicesToDatabase } from "../invoice-cache";
+import {
+    createLead,
+    getLeadCalendarEvents,
+    getUserLeads,
+    updateLeadScore,
+    updateLeadStatus,
+} from "../lead-db";
 
 export const inboxRouter = router({
   email: router({
@@ -680,7 +681,11 @@ export const inboxRouter = router({
           total: input.threadIds.length,
         };
       }),
-    bulkDelete: rateLimitedProcedure
+    bulkDelete: permissionProcedure("delete_email")
+      .use(
+        // ✅ RBAC: Add rate limiting on top of permission check (admin-only but still rate limited)
+        createRateLimitMiddleware(INBOX_CRM_RATE_LIMIT, "email-delete")
+      )
       .input(
         z.object({
           threadIds: z.array(validationSchemas.threadId).min(1).max(100), // ✅ SECURITY: Limit batch size
