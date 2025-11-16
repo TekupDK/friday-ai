@@ -33,7 +33,7 @@ services:
       # Frontend variables
       - VITE_APP_ID=friday-ai
       - VITE_APP_TITLE=Friday AI Chat
-      - VITE_APP_LOGO=/logo.svg
+      - VITE_APP_LOGO=/brandkit/logo-app-icon.png
     # NOTE: No depends_on db service - using external Supabase
     restart: unless-stopped
     networks:

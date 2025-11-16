@@ -36,7 +36,7 @@ services:
       # Frontend variables (Vite needs these at build time)
       - VITE_APP_ID=friday-ai
       - VITE_APP_TITLE=Friday AI Chat
-      - VITE_APP_LOGO=/logo.svg
+      - VITE_APP_LOGO=/brandkit/logo-app-icon.png
     # NOTE: When using Supabase, remove depends_on db service
     # depends_on:
     #   db:

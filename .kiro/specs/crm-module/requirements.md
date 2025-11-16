@@ -28,10 +28,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User opens a customer profile, THE System SHALL display customer name, email, phone, status, tags, and customer type
-2. WHEN a User views a customer profile, THE System SHALL display financial summary including total invoiced, total paid, balance, and invoice count
-3. WHEN a User views a customer profile, THE System SHALL display activity metrics including email count, last contact date, and last sync date
-4. WHERE a customer has an AI-generated resume, THE System SHALL display the AI resume in the customer profile
-5. WHEN a User updates customer information, THE System SHALL save changes to the database and update the timestamp
+1. WHEN a User views a customer profile, THE System SHALL display financial summary including total invoiced, total paid, balance, and invoice count
+1. WHEN a User views a customer profile, THE System SHALL display activity metrics including email count, last contact date, and last sync date
+1. WHERE a customer has an AI-generated resume, THE System SHALL display the AI resume in the customer profile
+1. WHEN a User updates customer information, THE System SHALL save changes to the database and update the timestamp
 
 ### Requirement 2: Property (Ejendom) Management
 
@@ -40,10 +40,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User adds a property to a customer profile, THE System SHALL store address, city, postal code, and coordinates
-2. WHEN a User views customer properties, THE System SHALL display all properties with primary property highlighted
-3. WHERE a property has custom attributes, THE System SHALL store and display property type, size, access codes, parking information, and special requirements
-4. WHEN a User marks a property as primary, THE System SHALL update only one property as primary per customer
-5. WHEN a User adds property notes, THE System SHALL store and display notes with timestamp
+1. WHEN a User views customer properties, THE System SHALL display all properties with primary property highlighted
+1. WHERE a property has custom attributes, THE System SHALL store and display property type, size, access codes, parking information, and special requirements
+1. WHEN a User marks a property as primary, THE System SHALL update only one property as primary per customer
+1. WHEN a User adds property notes, THE System SHALL store and display notes with timestamp
 
 ### Requirement 3: Service Template Configuration
 
@@ -52,10 +52,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User creates a service template, THE System SHALL store title, description, category, duration in minutes, and price in DKK
-2. WHEN a User views service templates, THE System SHALL display all active templates grouped by category
-3. WHERE a service template has category "vinduespolering", THE System SHALL apply category-specific defaults
-4. WHEN a User deactivates a service template, THE System SHALL set isActive to false without deleting the template
-5. WHEN a User creates a booking, THE System SHALL allow selection from active service templates
+1. WHEN a User views service templates, THE System SHALL display all active templates grouped by category
+1. WHERE a service template has category "vinduespolering", THE System SHALL apply category-specific defaults
+1. WHEN a User deactivates a service template, THE System SHALL set isActive to false without deleting the template
+1. WHEN a User creates a booking, THE System SHALL allow selection from active service templates
 
 ### Requirement 4: Booking Management
 
@@ -64,10 +64,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User creates a booking, THE System SHALL require customer profile, scheduled start time, and status
-2. WHEN a User creates a booking with a service template, THE System SHALL pre-fill title, duration, and notes from the template
-3. WHERE a booking is linked to a property, THE System SHALL display property address and access information
-4. WHEN a User assigns a booking to a field worker, THE System SHALL store assignee user ID and send notification
-5. WHEN a booking status changes to "completed", THE System SHALL trigger invoice creation workflow
+1. WHEN a User creates a booking with a service template, THE System SHALL pre-fill title, duration, and notes from the template
+1. WHERE a booking is linked to a property, THE System SHALL display property address and access information
+1. WHEN a User assigns a booking to a field worker, THE System SHALL store assignee user ID and send notification
+1. WHEN a booking status changes to "completed", THE System SHALL trigger invoice creation workflow
 
 ### Requirement 5: Lead Assignment and Conversion
 
@@ -76,10 +76,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User assigns a lead, THE System SHALL store assigned user ID, assignment timestamp, and optional notes
-2. WHEN a User views assigned leads, THE System SHALL display leads grouped by assignee
-3. WHEN a User converts a lead to customer, THE System SHALL create customer profile with lead ID reference
-4. WHERE a lead has metadata, THE System SHALL transfer relevant metadata to customer profile during conversion
-5. WHEN a lead is converted, THE System SHALL update lead status to "won" and set conversion timestamp
+1. WHEN a User views assigned leads, THE System SHALL display leads grouped by assignee
+1. WHEN a User converts a lead to customer, THE System SHALL create customer profile with lead ID reference
+1. WHERE a lead has metadata, THE System SHALL transfer relevant metadata to customer profile during conversion
+1. WHEN a lead is converted, THE System SHALL update lead status to "won" and set conversion timestamp
 
 ### Requirement 6: CRM Dashboard and Analytics
 
@@ -88,10 +88,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User opens the CRM dashboard, THE System SHALL display total customer count, active customer count, and VIP customer count
-2. WHEN a User views the dashboard, THE System SHALL display total revenue, paid revenue, and outstanding balance
-3. WHEN a User views the dashboard, THE System SHALL display booking statistics including planned, in-progress, and completed bookings
-4. WHERE there are at-risk customers, THE System SHALL display at-risk customer count with alert indicator
-5. WHEN a User clicks a dashboard metric, THE System SHALL navigate to filtered view of relevant entities
+1. WHEN a User views the dashboard, THE System SHALL display total revenue, paid revenue, and outstanding balance
+1. WHEN a User views the dashboard, THE System SHALL display booking statistics including planned, in-progress, and completed bookings
+1. WHERE there are at-risk customers, THE System SHALL display at-risk customer count with alert indicator
+1. WHEN a User clicks a dashboard metric, THE System SHALL navigate to filtered view of relevant entities
 
 ### Requirement 7: Customer Search and Filtering
 
@@ -100,10 +100,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User enters search text, THE System SHALL search customer name, email, and phone fields
-2. WHEN a User applies status filter, THE System SHALL display only customers matching selected status
-3. WHEN a User applies tag filter, THE System SHALL display only customers with selected tags
-4. WHERE a User applies multiple filters, THE System SHALL combine filters with AND logic
-5. WHEN search results exceed 50 records, THE System SHALL implement pagination with 50 records per page
+1. WHEN a User applies status filter, THE System SHALL display only customers matching selected status
+1. WHEN a User applies tag filter, THE System SHALL display only customers with selected tags
+1. WHERE a User applies multiple filters, THE System SHALL combine filters with AND logic
+1. WHEN search results exceed 50 records, THE System SHALL implement pagination with 50 records per page
 
 ### Requirement 8: Task Management Integration
 
@@ -112,10 +112,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User creates a task from customer profile, THE System SHALL link task to customer ID
-2. WHEN a User creates a task from lead view, THE System SHALL link task to lead ID
-3. WHEN a User views customer profile, THE System SHALL display all related tasks with status and priority
-4. WHERE a task has due date, THE System SHALL display overdue indicator when due date has passed
-5. WHEN a User completes a task, THE System SHALL update task status and set completion timestamp
+1. WHEN a User creates a task from lead view, THE System SHALL link task to lead ID
+1. WHEN a User views customer profile, THE System SHALL display all related tasks with status and priority
+1. WHERE a task has due date, THE System SHALL display overdue indicator when due date has passed
+1. WHEN a User completes a task, THE System SHALL update task status and set completion timestamp
 
 ### Requirement 9: Email Integration with Customer Context
 
@@ -124,10 +124,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN an email is received from a known customer email, THE System SHALL link email to customer profile
-2. WHEN a User views customer profile, THE System SHALL display email count and recent emails
-3. WHEN a User clicks an email in customer profile, THE System SHALL open email in Email Center panel
-4. WHERE an email matches multiple customers, THE System SHALL prompt User to select correct customer
-5. WHEN a User manually links an email to customer, THE System SHALL create customer email association
+1. WHEN a User views customer profile, THE System SHALL display email count and recent emails
+1. WHEN a User clicks an email in customer profile, THE System SHALL open email in Email Center panel
+1. WHERE an email matches multiple customers, THE System SHALL prompt User to select correct customer
+1. WHEN a User manually links an email to customer, THE System SHALL create customer email association
 
 ### Requirement 10: Invoice Integration with Billy
 
@@ -136,10 +136,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a booking is completed, THE System SHALL create invoice draft in Billy with customer details
-2. WHEN Billy invoice is created, THE System SHALL store Billy invoice ID and sync invoice data
-3. WHEN a User views customer profile, THE System SHALL display all invoices with status and amounts
-4. WHERE an invoice is paid in Billy, THE System SHALL update invoice status and paid amount
-5. WHEN invoice data changes in Billy, THE System SHALL sync changes within 5 minutes
+1. WHEN Billy invoice is created, THE System SHALL store Billy invoice ID and sync invoice data
+1. WHEN a User views customer profile, THE System SHALL display all invoices with status and amounts
+1. WHERE an invoice is paid in Billy, THE System SHALL update invoice status and paid amount
+1. WHEN invoice data changes in Billy, THE System SHALL sync changes within 5 minutes
 
 ### Requirement 11: Mobile Field Worker Interface
 
@@ -148,10 +148,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a Field Worker logs in on mobile device, THE System SHALL display today's bookings in chronological order
-2. WHEN a Field Worker opens a booking, THE System SHALL display customer name, property address, access codes, and service notes
-3. WHEN a Field Worker starts a booking, THE System SHALL update booking status to "in_progress" and record start time
-4. WHERE a booking requires photo documentation, THE System SHALL allow photo upload with before/during/after labels
-5. WHEN a Field Worker completes a booking, THE System SHALL update status to "completed" and trigger invoice creation
+1. WHEN a Field Worker opens a booking, THE System SHALL display customer name, property address, access codes, and service notes
+1. WHEN a Field Worker starts a booking, THE System SHALL update booking status to "in_progress" and record start time
+1. WHERE a booking requires photo documentation, THE System SHALL allow photo upload with before/during/after labels
+1. WHEN a Field Worker completes a booking, THE System SHALL update status to "completed" and trigger invoice creation
 
 ### Requirement 12: Capacity Planning and Scheduling
 
@@ -160,10 +160,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User views capacity calendar, THE System SHALL display all bookings grouped by assigned field worker
-2. WHEN a User creates a booking, THE System SHALL check for scheduling conflicts and display warning
-3. WHERE multiple bookings overlap for same field worker, THE System SHALL highlight conflict with red indicator
-4. WHEN a User views weekly capacity, THE System SHALL display total booked hours per field worker
-5. WHEN capacity exceeds threshold, THE System SHALL display capacity warning with suggested actions
+1. WHEN a User creates a booking, THE System SHALL check for scheduling conflicts and display warning
+1. WHERE multiple bookings overlap for same field worker, THE System SHALL highlight conflict with red indicator
+1. WHEN a User views weekly capacity, THE System SHALL display total booked hours per field worker
+1. WHEN capacity exceeds threshold, THE System SHALL display capacity warning with suggested actions
 
 ### Requirement 13: Customer Status Automation
 
@@ -172,10 +172,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a recurring customer has no bookings for 90 days, THE System SHALL update status to "at_risk"
-2. WHEN a customer total invoiced exceeds 50000 DKK, THE System SHALL update status to "vip"
-3. WHEN a new customer profile is created, THE System SHALL set status to "new"
-4. WHERE a customer has completed 3 or more bookings, THE System SHALL update status to "active"
-5. WHEN a customer has no activity for 180 days, THE System SHALL update status to "inactive"
+1. WHEN a customer total invoiced exceeds 50000 DKK, THE System SHALL update status to "vip"
+1. WHEN a new customer profile is created, THE System SHALL set status to "new"
+1. WHERE a customer has completed 3 or more bookings, THE System SHALL update status to "active"
+1. WHEN a customer has no activity for 180 days, THE System SHALL update status to "inactive"
 
 ### Requirement 14: AI-Powered Lead Intelligence
 
@@ -184,10 +184,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a lead is created, THE System SHALL generate AI lead score based on available data
-2. WHEN a User views lead details, THE System SHALL display AI-suggested next actions
-3. WHERE a customer has multiple interactions, THE System SHALL generate AI customer resume
-4. WHEN AI generates insights, THE System SHALL store confidence score with each insight
-5. WHEN a User requests actionable insights, THE System SHALL return prioritized list of opportunities
+1. WHEN a User views lead details, THE System SHALL display AI-suggested next actions
+1. WHERE a customer has multiple interactions, THE System SHALL generate AI customer resume
+1. WHEN AI generates insights, THE System SHALL store confidence score with each insight
+1. WHEN a User requests actionable insights, THE System SHALL return prioritized list of opportunities
 
 ### Requirement 15: CRM Navigation and Routing
 
@@ -196,10 +196,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User clicks CRM navigation item, THE System SHALL navigate to /crm/customers route
-2. WHEN a User is on CRM route, THE System SHALL highlight active CRM navigation item
-3. WHEN a User navigates to /crm/leads, THE System SHALL display lead management interface
-4. WHERE a User navigates to /crm/bookings, THE System SHALL display booking calendar view
-5. WHEN a User uses keyboard shortcut Alt+C, THE System SHALL navigate to CRM dashboard
+1. WHEN a User is on CRM route, THE System SHALL highlight active CRM navigation item
+1. WHEN a User navigates to /crm/leads, THE System SHALL display lead management interface
+1. WHERE a User navigates to /crm/bookings, THE System SHALL display booking calendar view
+1. WHEN a User uses keyboard shortcut Alt+C, THE System SHALL navigate to CRM dashboard
 
 ### Requirement 16: Data Export and Reporting
 
@@ -208,10 +208,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User clicks export button, THE System SHALL generate CSV file with selected data
-2. WHEN a User exports customers, THE System SHALL include all customer fields and calculated metrics
-3. WHERE a User applies filters before export, THE System SHALL export only filtered records
-4. WHEN export file is generated, THE System SHALL download file with timestamp in filename
-5. WHEN export exceeds 1000 records, THE System SHALL process export in background and notify when complete
+1. WHEN a User exports customers, THE System SHALL include all customer fields and calculated metrics
+1. WHERE a User applies filters before export, THE System SHALL export only filtered records
+1. WHEN export file is generated, THE System SHALL download file with timestamp in filename
+1. WHEN export exceeds 1000 records, THE System SHALL process export in background and notify when complete
 
 ### Requirement 17: Customer Notes and Activity Timeline
 
@@ -220,10 +220,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User adds a note to customer profile, THE System SHALL store note with user ID and timestamp
-2. WHEN a User views customer timeline, THE System SHALL display notes, emails, bookings, and invoices in chronological order
-3. WHERE a timeline item is a booking, THE System SHALL display booking status and assigned field worker
-4. WHEN a User edits a note, THE System SHALL update note content and set updated timestamp
-5. WHEN timeline has more than 20 items, THE System SHALL implement infinite scroll loading
+1. WHEN a User views customer timeline, THE System SHALL display notes, emails, bookings, and invoices in chronological order
+1. WHERE a timeline item is a booking, THE System SHALL display booking status and assigned field worker
+1. WHEN a User edits a note, THE System SHALL update note content and set updated timestamp
+1. WHEN timeline has more than 20 items, THE System SHALL implement infinite scroll loading
 
 ### Requirement 18: Permission and Access Control
 
@@ -232,10 +232,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a User with role "user" accesses CRM, THE System SHALL allow view and edit of own assigned customers
-2. WHEN a User with role "admin" accesses CRM, THE System SHALL allow view and edit of all customers
-3. WHERE a User attempts unauthorized action, THE System SHALL display permission denied message
-4. WHEN a User views customer list, THE System SHALL filter customers based on user permissions
-5. WHEN an Admin assigns customer to User, THE System SHALL grant User access to that customer
+1. WHEN a User with role "admin" accesses CRM, THE System SHALL allow view and edit of all customers
+1. WHERE a User attempts unauthorized action, THE System SHALL display permission denied message
+1. WHEN a User views customer list, THE System SHALL filter customers based on user permissions
+1. WHEN an Admin assigns customer to User, THE System SHALL grant User access to that customer
 
 ### Requirement 19: Seasonal Business Logic
 
@@ -244,10 +244,10 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN current date is between May and September, THE System SHALL display "flytterengøring peak season" indicator
-2. WHEN a User views capacity for peak season, THE System SHALL highlight weeks exceeding 80% capacity
-3. WHERE a booking is created in peak season, THE System SHALL suggest earlier booking dates if capacity is low
-4. WHEN seasonal demand increases, THE System SHALL send capacity alert to Admin users
-5. WHEN a User views historical data, THE System SHALL display seasonal trends chart
+1. WHEN a User views capacity for peak season, THE System SHALL highlight weeks exceeding 80% capacity
+1. WHERE a booking is created in peak season, THE System SHALL suggest earlier booking dates if capacity is low
+1. WHEN seasonal demand increases, THE System SHALL send capacity alert to Admin users
+1. WHEN a User views historical data, THE System SHALL display seasonal trends chart
 
 ### Requirement 20: Offline Support for Mobile Workers
 
@@ -256,7 +256,7 @@ The system will be built on the existing Friday AI infrastructure (React 19, Typ
 #### Acceptance Criteria
 
 1. WHEN a Field Worker opens mobile app with internet connection, THE System SHALL cache today's bookings locally
-2. WHEN a Field Worker loses internet connection, THE System SHALL display cached booking data
-3. WHERE a Field Worker updates booking offline, THE System SHALL queue changes for sync
-4. WHEN internet connection is restored, THE System SHALL sync queued changes to server
-5. WHEN sync conflicts occur, THE System SHALL prompt Field Worker to resolve conflicts
+1. WHEN a Field Worker loses internet connection, THE System SHALL display cached booking data
+1. WHERE a Field Worker updates booking offline, THE System SHALL queue changes for sync
+1. WHEN internet connection is restored, THE System SHALL sync queued changes to server
+1. WHEN sync conflicts occur, THE System SHALL prompt Field Worker to resolve conflicts

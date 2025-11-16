@@ -1,8 +1,8 @@
 # 🎯 CRM Backend Handoff til Kiro (Frontend Team)
 
-**Dato:** 12. november 2025 (Updated)  
-**Status:** ✅ Backend 100% Færdig - Klar til Frontend Development  
-**Backend Team:** Jonas @ Friday AI  
+**Dato:** 12. november 2025 (Updated)
+**Status:** ✅ Backend 100% Færdig - Klar til Frontend Development
+**Backend Team:** Jonas @ Friday AI
 **Frontend Team:** Kiro UI Developers
 
 ---
@@ -36,7 +36,8 @@
 ✅ deleteOpportunity({ id })
 ✅ getPipelineStats() → { stage: { count, totalValue, avgProbability } }
 ✅ getRevenueForecast() → { totalValue, weightedValue, count }
-```
+
+```text
 
 **Use Case:** Sales pipeline Kanban board, revenue forecasting dashboard
 
@@ -54,7 +55,8 @@
 ✅ addToSegment({ segmentId, customerProfileIds: number[] })
 ✅ removeFromSegment({ segmentId, customerProfileIds: number[] })
 ✅ getSegmentMembers({ segmentId, limit?, offset? })
-```
+
+```text
 
 **Use Case:** Smart customer lists, bulk actions, marketing campaigns
 
@@ -70,7 +72,8 @@
 ✅ createDocument({ customerProfileId, filename, storageUrl, mimeType, filesize, category?, tags?, ... })
 ✅ listDocuments({ customerProfileId, category?, limit?, offset? })
 ✅ deleteDocument({ id })
-```
+
+```text
 
 **Use Case:** Contract uploads, invoice attachments, customer photos
 
@@ -81,7 +84,8 @@
 ```typescript
 ✅ logAudit({ entityType, entityId, action, changes?, ipAddress?, userAgent? })
 ✅ getAuditLog({ entityType?, entityId?, action?, limit?, offset? })
-```
+
+```text
 
 **Use Case:** GDPR compliance, change history, security audits
 
@@ -89,7 +93,8 @@
 
 ```json
 { "status": { "old": "lead", "new": "active" } }
-```
+
+```text
 
 ### 🔟 Relationship Mapping (`crm.extensions`)
 
@@ -97,7 +102,8 @@
 ✅ createRelationship({ customerProfileId, relatedCustomerProfileId, relationshipType, strength?, ... })
 ✅ getRelationships({ customerProfileId, relationshipType? })
 ✅ deleteRelationship({ id })
-```
+
+```text
 
 **Use Case:** Referral tracking, company hierarchies, partner networks
 
@@ -122,7 +128,8 @@
 ✅ listNotes({ customerProfileId, limit?, offset? })
 ✅ updateNote({ id, content })
 ✅ deleteNote({ id })
-```
+
+```text
 
 **Use Case:** CustomerList, CustomerProfile, PropertyManager components
 
@@ -135,7 +142,8 @@
 ✅ getLead({ id })
 ✅ updateLeadStatus({ id, status })
 ✅ convertLeadToCustomer({ id })
-```
+
+```text
 
 **Use Case:** LeadPipelineBoard (kanban), Lead conversion workflow
 
@@ -148,7 +156,8 @@
 ✅ createBooking({ customerProfileId, scheduledStart, ... })
 ✅ updateBookingStatus({ id, status })
 ✅ deleteBooking({ id })
-```
+
+```text
 
 **Use Case:** BookingCalendar, BookingForm wizard, Field worker mobile UI
 
@@ -162,7 +171,8 @@
 ✅ create({ title, description?, ... })
 ✅ update({ id, title?, ... })
 ✅ delete({ id })
-```
+
+```text
 
 **Use Case:** ServiceTemplates admin, BookingForm service dropdown
 
@@ -179,7 +189,8 @@
     revenue: { total, paid, outstanding },
     bookings: { planned, inProgress, completed }
   }
-```
+
+```text
 
 **Use Case:** CRM Dashboard overview metrics
 
@@ -197,7 +208,8 @@ Alle tables findes i `friday_ai` PostgreSQL schema:
 ✅ bookings                -- Service bookings
 ✅ service_templates       -- Standard service library
 ✅ customer_invoices       -- Billy integration (read-only)
-```
+
+```text
 
 **Seeded Data:**
 
@@ -245,7 +257,8 @@ import { createTRPCReact } from "@trpc/react-query";
 import type { AppRouter } from "../../../server/routers";
 
 export const trpc = createTRPCReact<AppRouter>();
-```
+
+```text
 
 ### 2. Query Example (CustomerList)
 
@@ -267,7 +280,8 @@ export function CustomerList() {
     </div>
   );
 }
-```
+
+```text
 
 ### 3. Mutation Example (Create Booking)
 
@@ -290,7 +304,8 @@ export function BookingForm() {
     });
   };
 }
-```
+
+```text
 
 ### 4. Dashboard Stats Example
 
@@ -316,7 +331,8 @@ export function CRMDashboard() {
     </Grid>
   );
 }
-```
+
+```text
 
 ---
 
@@ -333,7 +349,8 @@ pnpm run crm:test:staging
 
 # Seed service templates
 pnpm run crm:seed:templates
-```
+
+```text
 
 ### Data Validation
 
@@ -397,6 +414,7 @@ const customers = await db
   .select()
   .from(customerProfiles)
   .where(eq(customerProfiles.userId, ctx.user.id));
+
 ```
 
 **Note:** Users can only access their own data. No cross-user data leakage.
@@ -422,11 +440,11 @@ const customers = await db
 
 ### Backend Contact
 
-**Jonas**  
-Email: [jonas@rendetalje.dk](mailto:jonas@rendetalje.dk)  
+**Jonas**
+Email: [<jonas@rendetalje.dk>](mailto:jonas@rendetalje.dk)
 Role: Friday AI Backend Developer
 
-### Questions?
+### Questions
 
 - **API issues:** Check API_REFERENCE.md først
 - **Schema questions:** Se `drizzle/schema.ts`
@@ -439,14 +457,14 @@ Role: Friday AI Backend Developer
 
 ---
 
-## 🎉 Ready to Start!
+## 🎉 Ready to Start
 
 Alt backend infrastructure er klar. Kiro kan nu:
 
 1. ✅ Starte frontend development
-2. ✅ Bruge alle 23 TRPC endpoints
-3. ✅ Følge tasks.md implementation plan
-4. ✅ Teste mod staging database
+1. ✅ Bruge alle 23 TRPC endpoints
+1. ✅ Følge tasks.md implementation plan
+1. ✅ Teste mod staging database
 
 **Næste milestone:** Phase 1 Complete (CustomerList + CustomerProfile) → 2 uger
 

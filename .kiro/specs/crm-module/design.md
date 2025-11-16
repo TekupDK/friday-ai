@@ -9,18 +9,18 @@ The CRM module provides Friday AI with the necessary customer data and workflows
 ### Design Principles
 
 1. **Integrated Module**: CRM is part of Friday AI, not a separate system - same repo, same database, same auth
-2. **Build on Existing Foundation**: Extend current `customer_profiles`, `leads`, and `tasks` tables rather than creating parallel systems
-3. **Manual-First, AI-Enhanced**: Core workflows are manual with optional AI assistance (Fase 1: Manual, Fase 2: AI-enhanced)
-4. **Mobile-Optimized**: Field worker interface prioritizes mobile usability
-5. **Type-Safe**: 100% TypeScript coverage with TRPC for API layer
-6. **Performance**: Sub-500ms API responses, optimistic UI updates
-7. **Rendetalje-Specific**: Tailored for cleaning business workflows (ejendom-centric, service templates, booking workflows)
+1. **Build on Existing Foundation**: Extend current `customer_profiles`, `leads`, and `tasks` tables rather than creating parallel systems
+1. **Manual-First, AI-Enhanced**: Core workflows are manual with optional AI assistance (Fase 1: Manual, Fase 2: AI-enhanced)
+1. **Mobile-Optimized**: Field worker interface prioritizes mobile usability
+1. **Type-Safe**: 100% TypeScript coverage with TRPC for API layer
+1. **Performance**: Sub-500ms API responses, optimistic UI updates
+1. **Rendetalje-Specific**: Tailored for cleaning business workflows (ejendom-centric, service templates, booking workflows)
 
 ## Architecture
 
 ### System Architecture Diagram
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │              FRIDAY AI WORKSPACE (Single Platform)           │
 │                                                               │
@@ -90,6 +90,7 @@ The CRM module provides Friday AI with the necessary customer data and workflows
 │  - bookings (scheduled services)                             │
 │  - customer_notes (activity notes)                           │
 └─────────────────────────────────────────────────────────────┘
+
 ```
 
 ### Technology Stack
@@ -138,7 +139,7 @@ The CRM module provides Friday AI with the necessary customer data and workflows
 
 ### Frontend Component Structure (Within Friday AI Repo)
 
-```
+```bash
 client/src/
 ├── pages/
 │   ├── WorkspaceLayout.tsx           # EXISTING: Main 3-panel layout
@@ -180,11 +181,12 @@ client/src/
         ├── useServiceTemplates.ts     # Service template hooks
         ├── useCRMStats.ts             # Dashboard stats hooks
         └── useCRMFilters.ts           # Filter state management
+
 ```
 
 ### Backend Router Structure (Within Friday AI Repo)
 
-```
+```text
 server/
 ├── routers/
 │   ├── friday-leads-router.ts         # EXISTING: Lead intelligence (extend)
@@ -205,6 +207,7 @@ server/
 │   └── email-customer-link.ts        # NEW: Auto-link emails to customers
 │
 └── db.ts                             # EXISTING: Database connection (shared)
+
 ```
 
 ### Key TypeScript Interfaces
@@ -352,7 +355,8 @@ interface CRMDashboardStats {
     conversionRate: number;
   };
 }
-```
+
+```text
 
 ## Data Models
 
@@ -386,7 +390,8 @@ CREATE INDEX idx_bookings_scheduled_start ON friday_ai.bookings(scheduled_start)
 CREATE INDEX idx_bookings_assignee ON friday_ai.bookings(assignee_user_id);
 CREATE INDEX idx_customer_properties_customer ON friday_ai.customer_properties(customer_profile_id);
 CREATE INDEX idx_service_templates_category ON friday_ai.service_templates(category);
-```
+
+```text
 
 ### Data Relationships
 
@@ -414,19 +419,20 @@ users (existing)
   └── tasks (existing, extend)
       ├── customer_profiles (customer link)
       └── leads (lead link)
-```
+
+```text
 
 ## Error Handling
 
 ### Error Categories
 
 1. **Validation Errors**: Invalid input data (400 Bad Request)
-2. **Authentication Errors**: Missing or invalid JWT (401 Unauthorized)
-3. **Authorization Errors**: Insufficient permissions (403 Forbidden)
-4. **Not Found Errors**: Resource doesn't exist (404 Not Found)
-5. **Conflict Errors**: Duplicate or conflicting data (409 Conflict)
-6. **Integration Errors**: External API failures (502 Bad Gateway)
-7. **Database Errors**: Query failures (500 Internal Server Error)
+1. **Authentication Errors**: Missing or invalid JWT (401 Unauthorized)
+1. **Authorization Errors**: Insufficient permissions (403 Forbidden)
+1. **Not Found Errors**: Resource doesn't exist (404 Not Found)
+1. **Conflict Errors**: Duplicate or conflicting data (409 Conflict)
+1. **Integration Errors**: External API failures (502 Bad Gateway)
+1. **Database Errors**: Query failures (500 Internal Server Error)
 
 ### Error Handling Strategy
 
@@ -454,7 +460,8 @@ throw new TRPCError({
   message: "You do not have permission to edit this customer",
   cause: { customerId, userId },
 });
-```
+
+```text
 
 ### Frontend Error Display
 
@@ -477,7 +484,8 @@ const form = useForm({
     });
   },
 });
-```
+
+```text
 
 ### Retry Logic
 
@@ -497,11 +505,12 @@ const queryClient = new QueryClient({
         // Retry up to 3 times for 5xx errors
         return failureCount < 3;
       },
-      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+      retryDelay: attemptIndex => Math.min(1000 *2** attemptIndex, 30000),
     },
   },
 });
-```
+
+```text
 
 ## Testing Strategy
 
@@ -515,7 +524,7 @@ describe("CustomerService", () => {
   it("should create customer profile", async () => {
     const customer = await CustomerService.createCustomer({
       userId: 1,
-      email: "test@example.com",
+      email: "<test@example.com>",
       name: "Test Customer",
     });
     expect(customer.id).toBeDefined();
@@ -530,7 +539,8 @@ describe("CustomerService", () => {
     expect(customer.status).toBe("vip");
   });
 });
-```
+
+```text
 
 **Frontend (Vitest + React Testing Library):**
 
@@ -542,7 +552,7 @@ describe('CustomerCard', () => {
       id: 1,
       name: 'Test Customer',
       status: 'active',
-      email: 'test@example.com'
+      email: '<test@example.com>'
     };
     render(<CustomerCard customer={customer} />);
     expect(screen.getByText('Test Customer')).toBeInTheDocument();
@@ -556,7 +566,8 @@ describe('CustomerCard', () => {
     expect(onEdit).toHaveBeenCalledWith(mockCustomer);
   });
 });
-```
+
+```bash
 
 ### Integration Tests
 
@@ -568,7 +579,7 @@ test("should create and view customer", async ({ page }) => {
   await page.goto("/crm/customers");
   await page.click('button:has-text("Ny Kunde")');
   await page.fill('input[name="name"]', "Test Customer");
-  await page.fill('input[name="email"]', "test@example.com");
+  await page.fill('input[name="email"]', "<test@example.com>");
   await page.click('button:has-text("Gem")');
 
   await expect(page.locator("text=Test Customer")).toBeVisible();
@@ -583,7 +594,8 @@ test("should assign lead to user", async ({ page }) => {
 
   await expect(page.locator("text=Assigned to")).toBeVisible();
 });
-```
+
+```text
 
 ### E2E Tests
 
@@ -613,7 +625,8 @@ test("complete booking workflow", async ({ page }) => {
   // 6. Verify invoice created
   await expect(page.locator("text=Invoice created")).toBeVisible();
 });
-```
+
+```text
 
 ### Performance Tests
 
@@ -632,7 +645,8 @@ test("should handle 100 concurrent customer queries", async () => {
 
   expect(duration).toBeLessThan(5000); // 5 seconds for 100 queries
 });
-```
+
+```text
 
 ## Performance Considerations
 
@@ -644,12 +658,12 @@ test("should handle 100 concurrent customer queries", async () => {
    - `bookings.scheduled_start`
    - `bookings.assignee_user_id`
 
-2. **Query Optimization**:
+1. **Query Optimization**:
    - Use `select()` to fetch only needed fields
    - Implement pagination (50 records per page)
    - Use database-level aggregations for stats
 
-3. **Caching Strategy**:
+1. **Caching Strategy**:
    - TanStack Query cache (5 minutes stale time)
    - Redis cache for dashboard stats (1 minute TTL)
    - Service worker cache for mobile offline support
@@ -660,16 +674,16 @@ test("should handle 100 concurrent customer queries", async () => {
    - Lazy load CRM pages
    - Dynamic imports for heavy components
 
-2. **Memoization**:
+1. **Memoization**:
    - `useMemo` for expensive calculations
    - `React.memo` for pure components
    - `useCallback` for event handlers
 
-3. **Virtual Scrolling**:
+1. **Virtual Scrolling**:
    - Implement for customer lists > 100 items
    - Use `react-window` or `react-virtual`
 
-4. **Optimistic Updates**:
+1. **Optimistic Updates**:
    - Update UI immediately on mutations
    - Rollback on error
 
@@ -679,11 +693,11 @@ test("should handle 100 concurrent customer queries", async () => {
    - TRPC batch link for multiple queries
    - Combine related data fetches
 
-2. **Response Compression**:
+1. **Response Compression**:
    - Enable gzip compression
    - Minimize JSON payload size
 
-3. **Rate Limiting**:
+1. **Rate Limiting**:
    - 100 requests per minute per user
    - Exponential backoff on rate limit
 
@@ -692,15 +706,15 @@ test("should handle 100 concurrent customer queries", async () => {
 ### Authentication & Authorization
 
 1. **JWT Validation**: All CRM endpoints require valid JWT
-2. **Role-Based Access**: Admin vs User permissions
-3. **Row-Level Security**: Users can only access their own data
+1. **Role-Based Access**: Admin vs User permissions
+1. **Row-Level Security**: Users can only access their own data
 
 ### Data Protection
 
 1. **Input Validation**: Zod schemas for all inputs
-2. **SQL Injection Prevention**: Drizzle ORM parameterized queries
-3. **XSS Prevention**: DOMPurify for user-generated content
-4. **CSRF Protection**: SameSite cookies
+1. **SQL Injection Prevention**: Drizzle ORM parameterized queries
+1. **XSS Prevention**: DOMPurify for user-generated content
+1. **CSRF Protection**: SameSite cookies
 
 ### Audit Logging
 
@@ -715,7 +729,8 @@ await db.insert(auditLogs).values({
   ipAddress: ctx.req.ip,
   userAgent: ctx.req.headers["user-agent"],
 });
-```
+
+```text
 
 ## Integration Points
 
@@ -749,7 +764,8 @@ async function createInvoiceFromBooking(booking: Booking) {
     status: "draft",
   });
 }
-```
+
+```text
 
 ### Google Calendar Integration
 
@@ -783,7 +799,8 @@ async function syncBookingToCalendar(booking: Booking) {
     endTime: booking.scheduledEnd,
   });
 }
-```
+
+```text
 
 ### Email Intelligence Integration
 
@@ -815,7 +832,8 @@ async function linkEmailToCustomer(email: Email) {
       .where(eq(customerProfiles.id, customer[0].id));
   }
 }
-```
+
+```text
 
 ## Deployment Strategy
 
@@ -856,13 +874,13 @@ async function linkEmailToCustomer(email: Email) {
    - Database query times
    - Frontend render times
 
-2. **Business Metrics**:
+1. **Business Metrics**:
    - Customer creation rate
    - Booking completion rate
    - Invoice generation rate
    - Lead conversion rate
 
-3. **Error Metrics**:
+1. **Error Metrics**:
    - Error rate by endpoint
    - Failed integrations
    - User-reported issues
@@ -881,7 +899,8 @@ logger.info(
   },
   "Booking created successfully"
 );
-```
+
+```text
 
 ## Future Enhancements
 
@@ -892,29 +911,29 @@ logger.info(
    - Churn risk scoring
    - Revenue forecasting
 
-2. **Automation**:
+1. **Automation**:
    - Automatic booking reminders
    - Smart scheduling suggestions
    - Predictive maintenance alerts
 
-3. **Mobile App**:
+1. **Mobile App**:
    - Native iOS/Android apps
    - Offline-first architecture
    - Push notifications
 
-4. **Team Collaboration**:
+1. **Team Collaboration**:
    - Internal messaging
    - Task assignment workflows
    - Team performance dashboards
 
-5. **Customer Portal**:
+1. **Customer Portal**:
    - Self-service booking
    - Invoice viewing
    - Service history
 
 ## Design Decisions and Rationale
 
-### Why Extend Existing Tables?
+### Why Extend Existing Tables
 
 **Decision**: Extend `customer_profiles` and `leads` rather than create new tables.
 
@@ -925,7 +944,7 @@ logger.info(
 - Reduces migration complexity
 - Preserves historical data
 
-### Why Manual-First Approach?
+### Why Manual-First Approach
 
 **Decision**: Core workflows are manual with optional AI assistance.
 
@@ -936,7 +955,7 @@ logger.info(
 - Reduces risk of automation errors
 - Easier to debug and maintain
 
-### Why TRPC Over REST?
+### Why TRPC Over REST
 
 **Decision**: Use TRPC for all new CRM endpoints.
 
@@ -947,7 +966,7 @@ logger.info(
 - Better developer experience
 - Consistent with existing architecture
 
-### Why Mobile-Optimized Over Native App?
+### Why Mobile-Optimized Over Native App
 
 **Decision**: Build mobile-optimized web interface first.
 
@@ -1032,7 +1051,8 @@ const navigationItems = [
   { icon: Calendar, label: "Bookings", path: "/crm/bookings" },
   { icon: BarChart, label: "CRM Dashboard", path: "/crm/dashboard" },
 ];
-```
+
+```text
 
 ### Data Sharing
 
@@ -1340,10 +1360,10 @@ This section details all UI components needed for the CRM module, organized by c
 
 - `BookingWizard` - Multi-step booking creation:
   1. Select Customer
-  2. Select Property
-  3. Select Service
-  4. Set Date/Time
-  5. Confirm
+  1. Select Property
+  1. Select Service
+  1. Set Date/Time
+  1. Confirm
 - `LeadConversionWizard` - Lead to customer conversion steps
 
 ---
@@ -1410,7 +1430,7 @@ interface CustomerCardProps {
 // Visual Structure:
 // ┌─────────────────────────────────────┐
 // │ [Avatar] Name              [Status] │
-// │          email@example.com          │
+// │          <email@example.com>          │
 // │          +45 12 34 56 78            │
 // │                                     │
 // │ [Tag1] [Tag2] [Tag3]               │
@@ -1419,7 +1439,8 @@ interface CustomerCardProps {
 // │                                     │
 // │ [Edit] [View] [More ▼]             │
 // └─────────────────────────────────────┘
-```
+
+```text
 
 #### **2. BookingFormModal Component**
 
@@ -1448,7 +1469,8 @@ interface BookingFormModalProps {
 // │                                     │
 // │        [Annuller] [Opret Booking]  │
 // └─────────────────────────────────────┘
-```
+
+```text
 
 #### **3. LeadPipelineBoard Component**
 
@@ -1470,7 +1492,8 @@ interface LeadPipelineBoardProps {
 // │[Lead]│      │      │      │[Lead]│      │
 // │[Lead]│      │      │      │[Lead]│      │
 // └──────┴──────┴──────┴──────┴──────┴──────┘
-```
+
+```text
 
 #### **4. CRMDashboard Layout**
 
@@ -1504,7 +1527,8 @@ interface LeadPipelineBoardProps {
 // │ │ • Booking Z completed                   │   │
 // │ └─────────────────────────────────────────┘   │
 // └─────────────────────────────────────────────────┘
-```
+
+```text
 
 #### **5. CustomerProfileDrawer Component**
 
@@ -1520,7 +1544,7 @@ interface CustomerProfileDrawerProps {
 // │ [X] Customer Profile                │
 // ├─────────────────────────────────────┤
 // │ [Avatar] John Doe          [Status] │
-// │          john@example.com           │
+// │          <john@example.com>           │
 // │          +45 12 34 56 78            │
 // │                                     │
 // │ [Overview][Properties][Bookings]... │
@@ -1545,7 +1569,8 @@ interface CustomerProfileDrawerProps {
 // │                                     │
 // │ [Edit Customer] [Create Booking]   │
 // └─────────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -1574,7 +1599,8 @@ const statusColors = {
   won: "bg-green-500 text-white",
   lost: "bg-red-100 text-red-800",
 };
-```
+
+```text
 
 ### Component Sizing
 
@@ -1596,7 +1622,8 @@ const componentSizes = {
     lg: "px-5 py-3 text-lg",
   },
 };
-```
+
+```text
 
 ---
 
@@ -1623,7 +1650,8 @@ const gridLayouts = {
     desktop: "lg:grid-cols-3",
   },
 };
-```
+
+```text
 
 ---
 
@@ -1632,11 +1660,11 @@ const gridLayouts = {
 All components must meet WCAG 2.1 AA standards:
 
 1. **Keyboard Navigation**: All interactive elements accessible via keyboard
-2. **Screen Reader Support**: Proper ARIA labels and roles
-3. **Color Contrast**: Minimum 4.5:1 contrast ratio for text
-4. **Focus Indicators**: Visible focus states for all interactive elements
-5. **Error Messages**: Clear, descriptive error messages
-6. **Form Labels**: All form inputs have associated labels
+1. **Screen Reader Support**: Proper ARIA labels and roles
+1. **Color Contrast**: Minimum 4.5:1 contrast ratio for text
+1. **Focus Indicators**: Visible focus states for all interactive elements
+1. **Error Messages**: Clear, descriptive error messages
+1. **Form Labels**: All form inputs have associated labels
 
 ```typescript
 // Example: Accessible Button
@@ -1647,7 +1675,8 @@ All components must meet WCAG 2.1 AA standards:
 >
   <Edit className="w-4 h-4" />
 </Button>
-```
+
+```text
 
 ---
 
@@ -1678,16 +1707,17 @@ export function CustomerManagement() {
       exit="exit"
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      {/* Page content */}
+      {/*Page content*/}
     </motion.div>
   );
 }
-```
+
+```text
 
 #### **2. Card Hover Effects**
 
 ```css
-/* CustomerCard hover animation */
+/*CustomerCard hover animation*/
 .customer-card {
   transition: all 0.2s ease-in-out;
   transform: translateY(0);
@@ -1699,7 +1729,7 @@ export function CustomerManagement() {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* Smooth border color transition */
+/*Smooth border color transition*/
 .customer-card {
   border: 2px solid transparent;
   transition: border-color 0.2s ease;
@@ -1708,7 +1738,8 @@ export function CustomerManagement() {
 .customer-card:hover {
   border-color: var(--crm-primary);
 }
-```
+
+```text
 
 #### **3. Status Badge Animations**
 
@@ -1734,7 +1765,8 @@ const StatusBadge = ({ status }: { status: CustomerStatus }) => {
     </motion.div>
   );
 };
-```
+
+```text
 
 #### **4. Modal/Drawer Animations**
 
@@ -1750,7 +1782,7 @@ export function CustomerProfileDrawer({ open, onClose }: DrawerProps) {
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop fade */}
+          {/*Backdrop fade*/}
           <motion.div
             className="drawer-backdrop"
             initial={{ opacity: 0 }}
@@ -1759,7 +1791,7 @@ export function CustomerProfileDrawer({ open, onClose }: DrawerProps) {
             onClick={onClose}
           />
 
-          {/* Drawer slide */}
+          {/*Drawer slide*/}
           <motion.div
             className="drawer-content"
             variants={drawerVariants}
@@ -1768,14 +1800,15 @@ export function CustomerProfileDrawer({ open, onClose }: DrawerProps) {
             exit="closed"
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
-            {/* Drawer content */}
+            {/*Drawer content*/}
           </motion.div>
         </>
       )}
     </AnimatePresence>
   );
 }
-```
+
+```text
 
 #### **5. List Item Stagger Animation**
 
@@ -1812,7 +1845,8 @@ export function CustomerList({ customers }: { customers: Customer[] }) {
     </motion.div>
   );
 }
-```
+
+```text
 
 #### **6. Loading Skeletons**
 
@@ -1858,12 +1892,13 @@ export function CustomerCardSkeleton() {
     </div>
   );
 }
-```
+
+```text
 
 #### **7. Button Interactions**
 
 ```css
-/* Button press animation */
+/*Button press animation*/
 .crm-button {
   transition: all 0.15s ease;
   transform: scale(1);
@@ -1878,7 +1913,7 @@ export function CustomerCardSkeleton() {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Loading spinner in button */
+/*Loading spinner in button*/
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1888,7 +1923,8 @@ export function CustomerCardSkeleton() {
 .button-spinner {
   animation: spin 1s linear infinite;
 }
-```
+
+```text
 
 #### **8. Toast Notifications**
 
@@ -1926,7 +1962,8 @@ const showErrorToast = (message: string) => {
     duration: 5000,
   });
 };
-```
+
+```text
 
 #### **9. Drag and Drop Visual Feedback**
 
@@ -1939,7 +1976,7 @@ export function LeadPipelineBoard() {
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      {/* Kanban columns */}
+      {/*Kanban columns*/}
 
       <DragOverlay>
         {activeId && (
@@ -1968,7 +2005,8 @@ const dragCSS = `
   border: 2px dashed #3b82f6;
 }
 `;
-```
+
+```text
 
 #### **10. Form Field Animations**
 
@@ -1993,7 +2031,8 @@ const FormField = ({ error }: { error?: string }) => {
     </motion.div>
   );
 };
-```
+
+```text
 
 ---
 
@@ -2035,7 +2074,8 @@ const RippleButton = ({ children, onClick }: ButtonProps) => {
     </button>
   );
 };
-```
+
+```text
 
 #### **2. Progress Indicators**
 
@@ -2069,7 +2109,8 @@ const CircularProgress = ({ size = 40 }: { size?: number }) => (
     />
   </svg>
 );
-```
+
+```text
 
 #### **3. Tooltip Animations**
 
@@ -2101,7 +2142,8 @@ const Tooltip = ({ content, children }: TooltipProps) => {
     </div>
   );
 };
-```
+
+```text
 
 #### **4. Number Counter Animation**
 
@@ -2131,7 +2173,8 @@ const AnimatedNumber = ({ value, duration = 1 }: NumberProps) => {
 
   return <span>{displayValue.toLocaleString("da-DK")}</span>;
 };
-```
+
+```text
 
 #### **5. Scroll Reveal Animations**
 
@@ -2154,7 +2197,8 @@ const ScrollReveal = ({ children }: { children: React.ReactNode }) => {
     </motion.div>
   );
 };
-```
+
+```text
 
 #### **6. Confetti Effect on Success**
 
@@ -2177,7 +2221,8 @@ const handleConversion = async () => {
   celebrateSuccess();
   toast.success("Lead converted to customer! 🎉");
 };
-```
+
+```text
 
 ---
 
@@ -2186,20 +2231,20 @@ const handleConversion = async () => {
 #### **Mobile Optimizations**
 
 ```css
-/* Touch-friendly button sizes */
+/*Touch-friendly button sizes*/
 @media (max-width: 768px) {
   .crm-button {
-    min-height: 44px; /* iOS recommended touch target */
+    min-height: 44px; /*iOS recommended touch target*/
     min-width: 44px;
     padding: 12px 20px;
   }
 
-  /* Larger tap targets for mobile */
+  /*Larger tap targets for mobile*/
   .customer-card {
     padding: 16px;
   }
 
-  /* Bottom sheet for mobile modals */
+  /*Bottom sheet for mobile modals*/
   .modal-mobile {
     position: fixed;
     bottom: 0;
@@ -2209,7 +2254,8 @@ const handleConversion = async () => {
     max-height: 90vh;
   }
 }
-```
+
+```text
 
 #### **Gesture Support**
 
@@ -2236,18 +2282,19 @@ const SwipeableCard = ({ onDelete }: { onDelete: () => void }) => {
         }
       }}
     >
-      {/* Card content */}
+      {/*Card content*/}
     </motion.div>
   );
 };
-```
+
+```text
 
 ---
 
 ### Dark Mode Support
 
 ```css
-/* CRM Dark Mode Theme */
+/*CRM Dark Mode Theme*/
 :root[data-theme="dark"] {
   --crm-background: #0f172a;
   --crm-surface: #1e293b;
@@ -2255,21 +2302,24 @@ const SwipeableCard = ({ onDelete }: { onDelete: () => void }) => {
   --crm-text: #f1f5f9;
   --crm-text-secondary: #94a3b8;
 
-  /* Status colors adjusted for dark mode */
+  /*Status colors adjusted for dark mode*/
   --crm-status-new: #3b82f6;
   --crm-status-active: #10b981;
   --crm-status-vip: #f59e0b;
   --crm-status-at-risk: #ef4444;
 }
 
-/* Smooth theme transition */
+/*Smooth theme transition*/
+
 * {
+
   transition:
     background-color 0.3s ease,
     color 0.3s ease,
     border-color 0.3s ease;
 }
-```
+
+```text
 
 ---
 
@@ -2317,7 +2367,8 @@ export function VirtualCustomerList({ customers }: { customers: Customer[] }) {
     </div>
   );
 }
-```
+
+```text
 
 #### **2. Image Lazy Loading**
 
@@ -2339,7 +2390,8 @@ const LazyImage = ({ src, alt }: { src: string; alt: string }) => {
     </div>
   );
 };
-```
+
+```text
 
 ---
 
@@ -2357,11 +2409,12 @@ export function Modal({ open, onClose }: ModalProps) {
 
   return (
     <div ref={modalRef} role="dialog" aria-modal="true">
-      {/* Modal content */}
+      {/*Modal content*/}
     </div>
   );
 }
-```
+
+```text
 
 #### **Keyboard Navigation**
 
@@ -2378,7 +2431,8 @@ export function CRMKeyboardShortcuts() {
 
   return null;
 }
-```
+
+```text
 
 ---
 
@@ -2397,8 +2451,8 @@ export function CRMKeyboardShortcuts() {
 **Visual Hierarchy**:
 
 1. **Primary actions**: Bold colors, prominent placement
-2. **Secondary actions**: Muted colors, smaller size
-3. **Tertiary actions**: Icon-only, minimal styling
+1. **Secondary actions**: Muted colors, smaller size
+1. **Tertiary actions**: Icon-only, minimal styling
 
 **Feedback Loops**:
 
@@ -2416,8 +2470,8 @@ This comprehensive visual design ensures a modern, polished, and delightful user
 The CRM module follows Apple's Human Interface Guidelines with three core principles:
 
 1. **Clarity**: Text is legible, icons are precise, functionality is intuitive
-2. **Deference**: UI helps understanding without competing for attention
-3. **Depth**: Visual layers and realistic motion provide hierarchy and vitality
+1. **Deference**: UI helps understanding without competing for attention
+1. **Depth**: Visual layers and realistic motion provide hierarchy and vitality
 
 ### Typography System (San Francisco Inspired)
 
@@ -2500,7 +2554,8 @@ export const fontFamily = {
   system: `-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif`,
   mono: `'SF Mono', 'Monaco', 'Menlo', monospace`,
 };
-```
+
+```text
 
 ### Color System (Apple System Colors)
 
@@ -2596,7 +2651,8 @@ export const statusColors = {
   completed: colors.systemGreen,
   cancelled: colors.systemGray,
 };
-```
+
+```text
 
 ### Spacing System (8pt Grid)
 
@@ -2627,7 +2683,8 @@ export const componentSpacing = {
   buttonPadding: "12px 20px",
   inputPadding: "10px 16px",
 };
-```
+
+```text
 
 ### Border Radius System
 
@@ -2650,7 +2707,8 @@ export const borderRadius = {
   modal: "20px",
   sheet: "16px",
 };
-```
+
+```text
 
 ### Shadow System
 
@@ -2676,7 +2734,8 @@ export const shadows = {
   // Inset shadows (for pressed states)
   inset: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
 };
-```
+
+```text
 
 ### Material Effects (Frosted Glass)
 
@@ -2738,7 +2797,8 @@ export const materialCSS = `
   }
 }
 `;
-```
+
+```text
 
 ### Animation System (Apple Springs)
 
@@ -2810,7 +2870,8 @@ export const durations = {
   slower: 800,
   slowest: 1200,
 };
-```
+
+```text
 
 ### Icon System (SF Symbols Style)
 
@@ -2844,7 +2905,8 @@ import { Mail } from 'lucide-react';
     strokeLinejoin: 'round',
   }}
 />
-```
+
+```text
 
 ### Component Patterns
 
@@ -2908,7 +2970,8 @@ export const buttonVariants = {
     },
   },
 };
-```
+
+```text
 
 #### Card Variants
 
@@ -2946,7 +3009,8 @@ export const cardVariants = {
     border: `0.5px solid ${colors.systemGray4}`,
   },
 };
-```
+
+```text
 
 ### Responsive Design
 
@@ -2982,7 +3046,8 @@ export const mediaQueries = {
   // Reduced motion
   reducedMotion: "@media (prefers-reduced-motion: reduce)",
 };
-```
+
+```text
 
 ### Accessibility (Apple Standards)
 
@@ -3012,7 +3077,8 @@ export const a11y = {
     animation: "none",
   },
 };
-```
+
+```text
 
 This Apple-inspired design system ensures a premium, polished, and consistent user experience throughout the CRM module, following industry-leading design standards.
 
@@ -3023,7 +3089,7 @@ This Apple-inspired design system ensures a premium, polished, and consistent us
 ```typescript
 // Progressive enhancement for backdrop-filter
 export const glassFallback = `
-/* Modern browsers with backdrop-filter support */
+/*Modern browsers with backdrop-filter support*/
 @supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) {
   .glass-card {
     backdrop-filter: blur(20px) saturate(180%);
@@ -3032,7 +3098,7 @@ export const glassFallback = `
   }
 }
 
-/* Fallback for browsers without backdrop-filter */
+/*Fallback for browsers without backdrop-filter*/
 @supports not (backdrop-filter: blur(20px)) and not (-webkit-backdrop-filter: blur(20px)) {
   .glass-card {
     background-color: rgba(255, 255, 255, 0.98);
@@ -3072,7 +3138,8 @@ export function GlassCard({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-```
+
+```text
 
 ### Browser Support Matrix
 
@@ -3144,11 +3211,12 @@ export function CustomerCard({ customer }: CustomerCardProps) {
       className={enableBlur ? 'glass-card' : 'solid-card'}
       animate={enableComplexAnimations ? complexAnimation : simpleAnimation}
     >
-      {/* Card content */}
+      {/*Card content*/}
     </motion.div>
   );
 }
-```
+
+```text
 
 ### Reduced Motion Support
 
@@ -3204,7 +3272,8 @@ const reducedMotionCSS = `
   }
 }
 `;
-```
+
+```text
 
 ### Performance Budget
 
@@ -3254,7 +3323,8 @@ export function usePerformanceMonitoring() {
     requestAnimationFrame(measureFPS);
   }, []);
 }
-```
+
+```text
 
 These fallbacks and optimizations ensure the CRM module works smoothly across all devices and browsers while maintaining the premium Apple-inspired experience on capable devices.
 
@@ -3268,7 +3338,8 @@ npx storybook@latest init
 
 # Install addons
 npm install --save-dev @storybook/addon-a11y @storybook/addon-viewport @storybook/addon-themes
-```
+
+```text
 
 ### Storybook Configuration
 
@@ -3296,7 +3367,8 @@ const config: StorybookConfig = {
 };
 
 export default config;
-```
+
+```text
 
 ```typescript
 // .storybook/preview.ts
@@ -3355,7 +3427,8 @@ const preview: Preview = {
 };
 
 export default preview;
-```
+
+```text
 
 ### Example Story: AppleButton
 
@@ -3487,7 +3560,8 @@ export const AllVariants: Story = {
     </div>
   ),
 };
-```
+
+```text
 
 ### Example Story: CustomerCard
 
@@ -3517,7 +3591,7 @@ type Story = StoryObj<typeof meta>;
 const mockCustomer: CustomerProfile = {
   id: 1,
   userId: 1,
-  email: 'john.doe@example.com',
+  email: '<john<.doe@example.co>m>',
   name: 'John Doe',
   phone: '+45 12 34 56 78',
   status: 'active',
@@ -3595,7 +3669,8 @@ export const Grid: Story = {
     </div>
   ),
 };
-```
+
+```text
 
 ### Storybook Scripts
 
@@ -3608,7 +3683,8 @@ export const Grid: Story = {
     "storybook:test": "test-storybook"
   }
 }
-```
+
+```text
 
 ### Accessibility Testing in Storybook
 
@@ -3635,7 +3711,8 @@ export const KeyboardNavigation: Story = {
     await userEvent.keyboard(" ");
   },
 };
-```
+
+```text
 
 Storybook provides a comprehensive component documentation and testing environment, making it easy to develop, test, and showcase the Apple-inspired CRM components.
 
@@ -3682,7 +3759,8 @@ export const isIOS = () => {
     /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
   );
 };
-```
+
+```text
 
 #### Android (Chrome Mobile)
 
@@ -3717,7 +3795,8 @@ export const androidOptimizations = {
 export const isAndroid = () => {
   return /Android/.test(navigator.userAgent);
 };
-```
+
+```text
 
 #### Windows (Chrome/Edge)
 
@@ -3726,21 +3805,21 @@ export const isAndroid = () => {
 export const windowsOptimizations = {
   // Windows scrollbar styling
   scrollbar: `
-    /* Custom scrollbar for Windows */
+    /*Custom scrollbar for Windows*/
     ::-webkit-scrollbar {
       width: 12px;
       height: 12px;
     }
-    
+
     ::-webkit-scrollbar-track {
       background: #F2F2F7;
     }
-    
+
     ::-webkit-scrollbar-thumb {
       background: #C7C7CC;
       border-radius: 6px;
     }
-    
+
     ::-webkit-scrollbar-thumb:hover {
       background: #AEAEB2;
     }
@@ -3765,7 +3844,8 @@ export const windowsOptimizations = {
 export const isWindows = () => {
   return /Win/.test(navigator.platform);
 };
-```
+
+```text
 
 #### macOS (Safari/Chrome)
 
@@ -3781,17 +3861,17 @@ export const macOSOptimizations = {
 
   // macOS scrollbar (overlay style)
   scrollbar: `
-    /* macOS overlay scrollbar */
+    /*macOS overlay scrollbar*/
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
-    
+
     ::-webkit-scrollbar-thumb {
       background: rgba(0, 0, 0, 0.3);
       border-radius: 4px;
     }
-    
+
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(0, 0, 0, 0.5);
     }
@@ -3809,7 +3889,8 @@ export const macOSOptimizations = {
 export const isMacOS = () => {
   return /Mac/.test(navigator.platform);
 };
-```
+
+```text
 
 #### Linux (Chrome/Firefox)
 
@@ -3818,16 +3899,16 @@ export const isMacOS = () => {
 export const linuxOptimizations = {
   // Linux scrollbar styling
   scrollbar: `
-    /* Linux scrollbar */
+    /*Linux scrollbar*/
     ::-webkit-scrollbar {
       width: 14px;
       height: 14px;
     }
-    
+
     ::-webkit-scrollbar-track {
       background: #E5E5EA;
     }
-    
+
     ::-webkit-scrollbar-thumb {
       background: #8E8E93;
       border-radius: 7px;
@@ -3846,7 +3927,8 @@ export const linuxOptimizations = {
 export const isLinux = () => {
   return /Linux/.test(navigator.platform);
 };
-```
+
+```text
 
 ### Unified Platform Detection Hook
 
@@ -3896,7 +3978,8 @@ export function usePlatform() {
 
   return platform;
 }
-```
+
+```text
 
 ### Adaptive Component Example
 
@@ -3939,65 +4022,67 @@ export function CustomerCard({ customer }: CustomerCardProps) {
           : animationConfig[platform.os]
       }
     >
-      {/* Card content */}
+      {/*Card content*/}
     </motion.div>
   );
 }
-```
+
+```text
 
 ### Platform-Specific Styling
 
 ```css
-/* iOS-specific styles */
+/*iOS-specific styles*/
 @supports (-webkit-touch-callout: none) {
   .customer-card {
-    /* iOS safe area */
+    /*iOS safe area*/
     padding-bottom: env(safe-area-inset-bottom);
   }
 
-  /* iOS momentum scrolling */
+  /*iOS momentum scrolling*/
   .scrollable-list {
     -webkit-overflow-scrolling: touch;
   }
 }
 
-/* Android-specific styles */
+/*Android-specific styles*/
 @media (hover: none) and (pointer: coarse) {
   .customer-card {
-    /* Larger touch targets for Android */
+    /*Larger touch targets for Android*/
     min-height: 48px;
   }
 
-  /* Material Design ripple effect */
+  /*Material Design ripple effect*/
   .button {
     position: relative;
     overflow: hidden;
   }
 }
 
-/* Windows-specific styles */
+/*Windows-specific styles*/
 @media (min-width: 1024px) and (hover: hover) {
-  /* Windows scrollbar */
+  /*Windows scrollbar*/
   ::-webkit-scrollbar {
     width: 12px;
   }
 
-  /* Windows focus outline */
+  /*Windows focus outline*/
   button:focus-visible {
     outline: 2px solid #007aff;
     outline-offset: 2px;
   }
 }
 
-/* macOS-specific styles */
+/*macOS-specific styles*/
 @supports (-webkit-backdrop-filter: blur(20px)) {
   .glass-card {
-    /* macOS frosted glass works best */
+    /*macOS frosted glass works best*/
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     backdrop-filter: blur(20px) saturate(180%);
   }
 }
-```
+
+```text
 
 ### Responsive Breakpoints (All Platforms)
 
@@ -4039,7 +4124,8 @@ export const breakpoints = {
     devices: ["4K monitors", 'iMac 27"', "Ultra-wide displays"],
   },
 };
-```
+
+```text
 
 ### Touch vs Mouse Interactions
 
@@ -4105,6 +4191,7 @@ export function AdaptiveButton({ children, onClick }: ButtonProps) {
     </motion.button>
   );
 }
+
 ```
 
 ### Platform Testing Matrix

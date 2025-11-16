@@ -1,8 +1,8 @@
 # CRM Module Specification - FINAL
 
-**Version**: 1.0.0  
-**Status**: ✅ **APPROVED - READY FOR IMPLEMENTATION**  
-**Date**: November 11, 2025  
+**Version**: 1.0.0
+**Status**: ✅ **APPROVED - READY FOR IMPLEMENTATION**
+**Date**: November 11, 2025
 **Project**: Friday AI CRM Module for Rendetalje
 
 ---
@@ -134,8 +134,8 @@ Includes:
 The CRM module follows Apple's three core design principles:
 
 1. **Clarity**: Text is legible, icons are precise, functionality is intuitive
-2. **Deference**: UI helps understanding without competing for attention
-3. **Depth**: Visual layers and realistic motion provide hierarchy and vitality
+1. **Deference**: UI helps understanding without competing for attention
+1. **Depth**: Visual layers and realistic motion provide hierarchy and vitality
 
 ### Key Design Features
 
@@ -185,7 +185,8 @@ The CRM module follows Apple's three core design principles:
     "@storybook/addon-a11y": "Accessibility testing"
   }
 }
-```
+
+```text
 
 ### Backend Stack (Already Implemented ✅)
 
@@ -200,7 +201,8 @@ The CRM module follows Apple's three core design principles:
   "api": "TRPC (type-safe)",
   "validation": "Zod schemas"
 }
-```
+
+```text
 
 ### Available Backend Endpoints
 
@@ -273,7 +275,8 @@ const prefersReducedMotion = useReducedMotion();
 
 // Animations disabled or simplified for users who prefer reduced motion
 // All spring animations fallback to instant transitions
-```
+
+```text
 
 ---
 
@@ -442,10 +445,10 @@ const prefersReducedMotion = useReducedMotion();
 ### Immediate Actions
 
 1. ✅ **Spec Approved** - This document
-2. 🚀 **Start Fase 0** - Apple Design System Foundation
-3. 📚 **Setup Storybook** - Component documentation
-4. 🎨 **Build First Components** - AppleButton, AppleCard
-5. 🧪 **Test Cross-Platform** - iOS, Android, Windows, Mac, Linux
+1. 🚀 **Start Fase 0** - Apple Design System Foundation
+1. 📚 **Setup Storybook** - Component documentation
+1. 🎨 **Build First Components** - AppleButton, AppleCard
+1. 🧪 **Test Cross-Platform** - iOS, Android, Windows, Mac, Linux
 
 ### Getting Started
 
@@ -461,6 +464,7 @@ npm run dev
 
 # Start Storybook
 npm run storybook
+
 ```
 
 ---
@@ -477,7 +481,7 @@ npm run storybook
 
 **Specification Status**: ✅ **APPROVED FOR IMPLEMENTATION**
 
-**Approved By**: User  
+**Approved By**: User
 **Date**: November 11, 2025
 
 **Ready for**: Fase 0 - Apple Design System Foundation

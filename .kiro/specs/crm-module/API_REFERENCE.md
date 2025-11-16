@@ -1,7 +1,7 @@
 # CRM API Reference for Frontend (Kiro)
 
-**Generated:** November 11, 2025  
-**Status:** Backend Ready - Frontend kan starte  
+**Generated:** November 11, 2025
+**Status:** Backend Ready - Frontend kan starte
 **Tech Stack:** TRPC + Drizzle ORM + PostgreSQL (Supabase)
 
 ---
@@ -52,7 +52,8 @@ const { data } = trpc.crm.customer.listProfiles.useQuery({
   search: "jensen",
   limit: 50
 });
-```
+
+```text
 
 #### `getProfile`
 
@@ -69,7 +70,8 @@ CustomerProfile;
 
 // Example
 const { data } = trpc.crm.customer.getProfile.useQuery({ id: 123 });
-```
+
+```text
 
 #### `listProperties`
 
@@ -99,7 +101,8 @@ CustomerProperty[] = [
 const { data } = trpc.crm.customer.listProperties.useQuery({
   customerProfileId: 123
 });
-```
+
+```text
 
 #### `createProperty`
 
@@ -135,7 +138,8 @@ mutate({
     parking: "Gade parkering"
   }
 });
-```
+
+```text
 
 #### `updateProperty`
 
@@ -159,7 +163,8 @@ CustomerProperty
 // Example
 const { mutate } = trpc.crm.customer.updateProperty.useMutation();
 mutate({ id: 456, isPrimary: true });
-```
+
+```text
 
 #### `deleteProperty`
 
@@ -175,7 +180,8 @@ mutate({ id: 456, isPrimary: true });
 {
   success: boolean;
 }
-```
+
+```text
 
 ---
 
@@ -216,7 +222,8 @@ Lead[] = [
 
 // Example
 const { data } = trpc.crm.lead.listLeads.useQuery({ status: "new" });
-```
+
+```text
 
 #### `getLead`
 
@@ -230,7 +237,8 @@ const { data } = trpc.crm.lead.listLeads.useQuery({ status: "new" });
 
 // Output
 Lead;
-```
+
+```text
 
 #### `updateLeadStatus`
 
@@ -251,7 +259,8 @@ Lead;
 // Example (Kanban board)
 const { mutate } = trpc.crm.lead.updateLeadStatus.useMutation();
 mutate({ id: 789, status: "qualified" });
-```
+
+```text
 
 #### `convertLeadToCustomer`
 
@@ -279,7 +288,8 @@ mutate(
     },
   }
 );
-```
+
+```text
 
 ---
 
@@ -324,7 +334,8 @@ const { data } = trpc.crm.booking.listBookings.useQuery({
   start: "2025-11-01T00:00:00Z",
   end: "2025-11-30T23:59:59Z"
 });
-```
+
+```text
 
 #### `createBooking`
 
@@ -357,7 +368,8 @@ mutate({
   assigneeUserId: 2,
   notes: "Husk adgangskode: 1234"
 });
-```
+
+```text
 
 #### `updateBookingStatus`
 
@@ -376,7 +388,8 @@ Booking;
 // Example (Field worker app)
 const { mutate } = trpc.crm.booking.updateBookingStatus.useMutation();
 mutate({ id: 999, status: "in_progress" }); // Worker started job
-```
+
+```text
 
 #### `deleteBooking`
 
@@ -392,7 +405,8 @@ mutate({ id: 999, status: "in_progress" }); // Worker started job
 {
   success: boolean;
 }
-```
+
+```text
 
 ---
 
@@ -432,7 +446,8 @@ ServiceTemplate[] = [
 const { data: templates } = trpc.crm.serviceTemplate.list.useQuery({
   isActive: true
 });
-```
+
+```text
 
 #### `get`
 
@@ -446,7 +461,8 @@ const { data: templates } = trpc.crm.serviceTemplate.list.useQuery({
 
 // Output
 ServiceTemplate;
-```
+
+```text
 
 #### `create`
 
@@ -466,7 +482,8 @@ ServiceTemplate;
 
 // Output
 ServiceTemplate
-```
+
+```text
 
 #### `update`
 
@@ -487,7 +504,8 @@ ServiceTemplate
 
 // Output
 ServiceTemplate
-```
+
+```text
 
 #### `delete`
 
@@ -503,7 +521,8 @@ ServiceTemplate
 {
   success: boolean;
 }
-```
+
+```bash
 
 ---
 
@@ -512,11 +531,11 @@ ServiceTemplate
 Følgende templates er seedet i databasen (kørt via `pnpm run crm:seed:templates`):
 
 1. **Grundrengøring** - 4t, 1396 kr (349 kr/t)
-2. **Flytterengøring** - 8t, 2792 kr (kræver fotos)
-3. **Vinduespudsning - Lejlighed** - 2t, 698 kr
-4. **Vinduespudsning - Villa** - 4t, 1396 kr
-5. **Erhvervsrengøring - Kontor** - 3t, 1047 kr (recurring support)
-6. **Dybderengøring** - 6t, 2094 kr (forår/efterår)
+1. **Flytterengøring** - 8t, 2792 kr (kræver fotos)
+1. **Vinduespudsning - Lejlighed** - 2t, 698 kr
+1. **Vinduespudsning - Villa** - 4t, 1396 kr
+1. **Erhvervsrengøring - Kontor** - 3t, 1047 kr (recurring support)
+1. **Dybderengøring** - 6t, 2094 kr (forår/efterår)
 
 ---
 
@@ -573,7 +592,8 @@ const { data: stats } = trpc.crm.stats.getDashboardStats.useQuery();
     <p>Outstanding: {(stats.revenue.outstanding / 100).toLocaleString('da-DK')} kr</p>
   </Card>
 </div>
-```
+
+```text
 
 ---
 
@@ -606,7 +626,8 @@ addNote.mutate({
   customerProfileId: 123,
   content: "Kunde ønsker service kl. 08:00. Adgangskode til port: 1234",
 });
-```
+
+```text
 
 ### **crm.customer.listNotes**
 
@@ -644,7 +665,8 @@ const { data: notes } = trpc.crm.customer.listNotes.useQuery({
     <small>{new Date(note.createdAt).toLocaleString('da-DK')}</small>
   </TimelineItem>
 ))}
-```
+
+```text
 
 ### **crm.customer.updateNote**
 
@@ -666,7 +688,8 @@ updateNote.mutate({
   id: 456,
   content: "OPDATERET: Ny adgangskode til port: 5678",
 });
-```
+
+```text
 
 ### **crm.customer.deleteNote**
 
@@ -686,7 +709,8 @@ updateNote.mutate({
 // Example
 const deleteNote = trpc.crm.customer.deleteNote.useMutation();
 deleteNote.mutate({ id: 456 });
-```
+
+```text
 
 ---
 
@@ -714,6 +738,7 @@ This section documents the advanced CRM backend features implemented in Phase 2-
 **Purpose:** Opret en ny opportunity/deal for en kunde
 
 ```typescript
+
 // Input
 {
   customerProfileId: number;
@@ -728,11 +753,13 @@ This section documents the advanced CRM backend features implemented in Phase 2-
 
 // Output
 Opportunity
-````
+
+```text
 
 **Example:**
 
 ```typescript
+
 const { mutate } = trpc.crm.extensions.createOpportunity.useMutation();
 mutate({
   customerProfileId: 1,
@@ -742,13 +769,15 @@ mutate({
   stage: "proposal",
   expectedCloseDate: "2025-11-25",
 });
-```
+
+```text
 
 ### **crm.extensions.listOpportunities**
 
 **Purpose:** List opportunities with filters & pagination
 
 ```typescript
+
 // Input
 {
   customerProfileId?: number;
@@ -761,13 +790,15 @@ mutate({
 
 // Output
 Opportunity[]
-```
+
+```text
 
 ### **crm.extensions.updateOpportunity**
 
 **Purpose:** Update an existing opportunity
 
 ```typescript
+
 // Input
 {
   id: number;
@@ -783,13 +814,15 @@ Opportunity[]
 
 // Output
 Opportunity
-```
+
+```text
 
 ### **crm.extensions.deleteOpportunity**
 
 **Purpose:** Delete an opportunity
 
 ```typescript
+
 // Input
 {
   id: number;
@@ -798,23 +831,27 @@ Opportunity
 {
   success: boolean;
 }
-```
+
+```text
 
 ### **crm.extensions.getPipelineStats**
 
 **Purpose:** Get aggregated pipeline stats by stage
 
 ```typescript
+
 // Input: none
 // Output:
 { [stage: string]: { count: number; totalValue: number; avgProbability: number } }
-```
+
+```text
 
 ### **crm.extensions.getRevenueForecast**
 
 **Purpose:** Get revenue forecast (total & weighted by probability)
 
 ```typescript
+
 // Input: none
 // Output:
 {
@@ -822,7 +859,8 @@ Opportunity
   weightedValue: number;
   count: number;
 }
-```
+
+```text
 
 ---
 
@@ -831,6 +869,7 @@ Opportunity
 **Purpose:** Create a customer segment (manual or automatic)
 
 ```typescript
+
 // Input
 {
   name: string;
@@ -842,51 +881,60 @@ Opportunity
 
 // Output
 Segment
-```
+
+```text
 
 ### **crm.extensions.listSegments**
 
 **Purpose:** List segments for the authenticated user
 
 ```typescript
+
 // Input
 { limit?: number; offset?: number }
 // Output
 Segment[]
-```
+
+```text
 
 ### **crm.extensions.addToSegment**
 
 **Purpose:** Batch add customers to a segment
 
 ```typescript
+
 // Input
 { segmentId: number; customerProfileIds: number[] }
 // Output
 { added: number }
-```
+
+```text
 
 ### **crm.extensions.removeFromSegment**
 
 **Purpose:** Batch remove customers from a segment
 
 ```typescript
+
 // Input
 { segmentId: number; customerProfileIds: number[] }
 // Output
 { removed: number }
-```
+
+```text
 
 ### **crm.extensions.getSegmentMembers**
 
 **Purpose:** List members of a segment
 
 ```typescript
+
 // Input
 { segmentId: number; limit?: number; offset?: number }
 // Output
 CustomerProfile[]
-```
+
+```text
 
 ---
 
@@ -895,6 +943,7 @@ CustomerProfile[]
 **Purpose:** Create a document metadata record for a customer (file upload handled by Supabase Storage)
 
 ```typescript
+
 // Input
 {
   customerProfileId: number;
@@ -908,24 +957,28 @@ CustomerProfile[]
 
 // Output
 CustomerDocument
-```
+
+```text
 
 ### **crm.extensions.listDocuments**
 
 **Purpose:** List documents for a customer
 
 ```typescript
+
 // Input
 { customerProfileId: number; category?: string; limit?: number; offset?: number }
 // Output
 CustomerDocument[]
-```
+
+```text
 
 ### **crm.extensions.deleteDocument**
 
 **Purpose:** Delete document metadata record (storage deletion optional)
 
 ```typescript
+
 // Input
 {
   id: number;
@@ -934,7 +987,8 @@ CustomerDocument[]
 {
   success: boolean;
 }
-```
+
+```text
 
 ---
 
@@ -943,6 +997,7 @@ CustomerDocument[]
 **Purpose:** Log an audit entry for GDPR and security
 
 ```typescript
+
 // Input
 {
   entityType: string; // e.g., 'customer', 'opportunity'
@@ -954,18 +1009,21 @@ CustomerDocument[]
 }
 // Output
 AuditLogEntry
-```
+
+```text
 
 ### **crm.extensions.getAuditLog**
 
 **Purpose:** Retrieve audit logs with filters
 
 ```typescript
+
 // Input
 { entityType?: string; entityId?: number; action?: string; limit?: number; offset?: number }
 // Output
 AuditLogEntry[]
-```
+
+```text
 
 ---
 
@@ -974,6 +1032,7 @@ AuditLogEntry[]
 **Purpose:** Create a relationship between two customers
 
 ```typescript
+
 // Input
 {
   customerProfileId: number;
@@ -984,24 +1043,28 @@ AuditLogEntry[]
 }
 // Output
 CustomerRelationship
-```
+
+```text
 
 ### **crm.extensions.getRelationships**
 
 **Purpose:** List relationships for a customer
 
 ```typescript
+
 // Input
 { customerProfileId?: number; relationshipType?: string; limit?: number; offset?: number }
 // Output
 CustomerRelationship[]
-```
+
+```text
 
 ### **crm.extensions.deleteRelationship**
 
 **Purpose:** Delete a relationship entry
 
 ```typescript
+
 // Input
 {
   id: number;
@@ -1010,7 +1073,8 @@ CustomerRelationship[]
 {
   success: boolean;
 }
-```
+
+```text
 
 ---
 
@@ -1035,7 +1099,7 @@ import { trpc } from './lib/trpc';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      staleTime: 5 *60* 1000, // 5 minutes
       retry: 1,
     },
   },
@@ -1062,7 +1126,8 @@ root.render(
     </QueryClientProvider>
   </trpc.Provider>
 );
-````
+
+```text
 
 ### 3. Example Usage i Components
 
@@ -1107,7 +1172,8 @@ export function BookingForm() {
     });
   };
 }
-```
+
+```text
 
 ---
 
@@ -1124,12 +1190,13 @@ pnpm run crm:test:staging:chroma
 
 # Watch mode til iteration
 pnpm run crm:test:staging:watch
+
 ```
 
 ---
 
 ## 📞 Support
 
-**Backend kontakt:** Jonas ([jonas@rendetalje.dk](mailto:jonas@rendetalje.dk))  
-**Docs:** `.kiro/specs/crm-module/` folder  
+**Backend kontakt:** Jonas ([<jonas@rendetalje.dk>](mailto:jonas@rendetalje.dk))
+**Docs:** `.kiro/specs/crm-module/` folder
 **Tests:** `server/__tests__/crm-smoke.test.ts`
