@@ -36,7 +36,8 @@ interface User {
 // Bad
 var userName = "Hello, " + user.name;
 let status: any = "pending";
-```
+
+```text
 
 ### React Components
 
@@ -63,7 +64,8 @@ export default function MyComponent({ title, onSubmit }: Props) {
 export default function MyComponent(props: any) {
   return <div>{props.title}</div>;
 }
-```
+
+```bash
 
 ### Naming Conventions
 
@@ -97,7 +99,8 @@ import { useAuth } from "@/hooks/useAuth";
 // 5. Types and constants
 import type { User } from "@/types";
 import { APP_TITLE } from "@/const";
-```
+
+```bash
 
 ## File Structure Rules
 
@@ -154,7 +157,8 @@ export const users = mysqlTable("users", {
   created_at: timestamp("created_at").defaultNow().notNull(),
   last_login: timestamp("last_login").defaultNow().notNull(),
 });
-```
+
+```text
 
 ### Table Design
 
@@ -169,7 +173,8 @@ export const users = mysqlTable("users", {
 export const users = mysqlTable("users", { ... });
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
-```
+
+```text
 
 ## tRPC API Rules
 
@@ -190,7 +195,8 @@ procedureName: protectedProcedure
     const result = await updateData(ctx.user.id, input);
     return { success: true, data: result };
   }),
-```
+
+```text
 
 ### Input Validation
 
@@ -207,7 +213,8 @@ const createLeadInput = z.object({
   phone: z.string().optional(),
   source: z.string(),
 });
-```
+
+```text
 
 ### Error Handling
 
@@ -229,7 +236,8 @@ throw new TRPCError({
   code: "BAD_REQUEST", // 400
   message: "Invalid input",
 });
-```
+
+```text
 
 ## Frontend Patterns
 
@@ -251,7 +259,8 @@ const createMutation = trpc.leads.create.useMutation({
 });
 
 await createMutation.mutateAsync({ name: "John" });
-```
+
+```text
 
 ### Optimistic Updates
 
@@ -280,7 +289,8 @@ const updateMutation = trpc.leads.updateStatus.useMutation({
     trpc.useUtils().leads.list.invalidate();
   },
 });
-```
+
+```text
 
 ### Component Structure
 
@@ -306,11 +316,12 @@ export default function MyComponent() {
   // 5. Render
   return (
     <div>
-      {/* Component JSX */}
+      {/*Component JSX*/}
     </div>
   );
 }
-```
+
+```text
 
 ## Tailwind CSS Rules
 
@@ -319,26 +330,28 @@ export default function MyComponent() {
 ```tsx
 // Mobile-first approach
 <div className="p-4 sm:p-6 md:p-8 lg:p-12">
-  {/* Padding increases on larger screens */}
+  {/*Padding increases on larger screens*/}
 </div>
 
 // Grid layout
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  {/* 1 column mobile, 2 tablet, 3 desktop */}
+  {/*1 column mobile, 2 tablet, 3 desktop*/}
 </div>
 
 // Hide/show elements
 <div className="hidden md:block">Desktop only</div>
 <div className="block md:hidden">Mobile only</div>
-```
+
+```text
 
 ### Dark Mode
 
 ```tsx
 <div className="bg-white dark:bg-gray-900 text-black dark:text-white">
-  {/* Automatic dark mode support */}
+  {/*Automatic dark mode support*/}
 </div>
-```
+
+```text
 
 ### Custom Classes
 
@@ -354,7 +367,8 @@ export default function MyComponent() {
 
 // Bad
 <div style={{ backgroundColor: "#fff", color: "#000" }}>
-```
+
+```text
 
 ## AI Integration Rules
 
@@ -375,7 +389,8 @@ const toolSchema = {
     required: ["param1"],
   },
 };
-```
+
+```text
 
 ### Intent Actions
 
@@ -401,7 +416,8 @@ export async function executeAction(intent: Intent, userId: number): Promise<Act
       };
   }
 }
-```
+
+```text
 
 ## Common Patterns
 
@@ -441,7 +457,8 @@ export async function updateLeadStatus(leadId: number, status: string) {
 
   await db.update(leads).set({ status }).where(eq(leads.id, leadId));
 }
-```
+
+```text
 
 ### Error Handling
 
@@ -467,7 +484,8 @@ const mutation = trpc.operation.useMutation({
     toast.error(error.message);
   },
 });
-```
+
+```text
 
 ## Anti-Patterns (AVOID)
 
@@ -480,7 +498,8 @@ const users = await db.select().from(usersTable);
 
 // Good
 const { data: users } = trpc.users.list.useQuery();
-```
+
+```text
 
 ### ❌ Hardcoded Values
 
@@ -491,7 +510,8 @@ if (score > 80) { ... }
 // Good
 const HIGH_SCORE_THRESHOLD = 80;
 if (score > HIGH_SCORE_THRESHOLD) { ... }
-```
+
+```text
 
 ### ❌ Any Type
 
@@ -505,7 +525,8 @@ interface Data {
   name: string;
 }
 const data: Data = await fetchData();
-```
+
+```text
 
 ### ❌ Inline Styles
 
@@ -515,7 +536,8 @@ const data: Data = await fetchData();
 
 // Good
 <div className="p-4 bg-white">
-```
+
+```text
 
 ### ❌ Mutable State
 
@@ -527,7 +549,8 @@ users.push(newUser);
 // Good
 const [users, setUsers] = useState<User[]>([]);
 setUsers([...users, newUser]);
-```
+
+```bash
 
 ## Testing Guidelines
 
@@ -561,7 +584,8 @@ describe("getUserById", () => {
     expect(user).toBeUndefined();
   });
 });
-```
+
+```text
 
 **Component Tests:**
 
@@ -575,7 +599,8 @@ describe("Button", () => {
     expect(screen.getByText("Click me")).toBeInTheDocument();
   });
 });
-```
+
+```text
 
 ## Documentation Rules
 
@@ -589,16 +614,21 @@ describe("Button", () => {
 
 ```typescript
 /**
+
  * Calculates lead score based on engagement metrics.
  * Higher scores indicate more qualified leads.
+
  *
+
  * @param lead - Lead object with email, phone, and interaction history
  * @returns Score between 0-100
+
  */
 export function calculateLeadScore(lead: Lead): number {
   // Implementation...
 }
-```
+
+```text
 
 ### TODO Comments
 
@@ -606,13 +636,14 @@ export function calculateLeadScore(lead: Lead): number {
 // TODO: Add rate limiting to prevent abuse
 // FIXME: Handle edge case when user has no email
 // NOTE: This is a temporary workaround until API v2 is ready
-```
+
+```bash
 
 ## Git Commit Messages
 
 Follow conventional commit format:
 
-```
+```text
 feat: Add customer profile modal
 fix: Fix email detail view TypeScript errors
 docs: Update API reference with customer endpoints
@@ -620,7 +651,8 @@ refactor: Extract customer sync logic to separate file
 test: Add unit tests for customer-db helpers
 chore: Update dependencies
 style: Format code with prettier
-```
+
+```text
 
 ## Performance Guidelines
 
@@ -645,6 +677,7 @@ import { useDebouncedCallback } from "use-debounce";
 const debouncedSearch = useDebouncedCallback(query => {
   searchMutation.mutate({ query });
 }, 300); // 300ms delay
+
 ```
 
 ## Security Guidelines
@@ -660,16 +693,16 @@ const debouncedSearch = useDebouncedCallback(query => {
 When assisting with Friday AI Chat development:
 
 1. **Read existing code** before suggesting changes
-2. **Follow established patterns** in the codebase
-3. **Suggest TypeScript types** for all functions
-4. **Provide complete code blocks** - No placeholders like `// ... rest of code`
-5. **Explain trade-offs** when multiple approaches exist
-6. **Reference documentation** (ARCHITECTURE.md, API_REFERENCE.md, DEVELOPMENT_GUIDE.md)
-7. **Check for errors** before suggesting code
-8. **Update TODO.md** when adding features
-9. **Maintain consistency** with existing code style
+1. **Follow established patterns** in the codebase
+1. **Suggest TypeScript types** for all functions
+1. **Provide complete code blocks** - No placeholders like `// ... rest of code`
+1. **Explain trade-offs** when multiple approaches exist
+1. **Reference documentation** (ARCHITECTURE.md, API_REFERENCE.md, DEVELOPMENT_GUIDE.md)
+1. **Check for errors** before suggesting code
+1. **Update TODO.md** when adding features
+1. **Maintain consistency** with existing code style
 
 ---
 
-**Last Updated:** November 1, 2025  
+**Last Updated:** November 1, 2025
 **Maintained by:** TekupDK Development Team

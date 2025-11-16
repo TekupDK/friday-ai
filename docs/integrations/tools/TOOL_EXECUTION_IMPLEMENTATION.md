@@ -19,7 +19,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
    - Cancel button integration
    - Danish labels og icons for alle Friday AI tools
 
-2. **`client/src/components/chat/ResponseCards.tsx`** (455 linjer)
+1. **`client/src/components/chat/ResponseCards.tsx`** (455 linjer)
    - Structured response cards for:
      - ✅ Lead created cards
      - ✅ Task created cards
@@ -29,7 +29,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
    - Hover effects og actions
    - Friday AI-specifik styling
 
-3. **`client/src/components/chat/AIMemoryPanel.tsx`** (252 linjer)
+1. **`client/src/components/chat/AIMemoryPanel.tsx`** (252 linjer)
    - Timeline af seneste AI actions
    - Grouping by date (I dag, I går, osv.)
    - Relative timestamps (5 min siden, 2 timer siden)
@@ -38,7 +38,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
 
 ### Backend Services
 
-4. **`server/tool-execution-tracker.ts`** (301 linjer)
+1. **`server/tool-execution-tracker.ts`** (301 linjer)
    - In-memory tracking af tool executions
    - EventEmitter for real-time updates
    - Subtask definitions for alle 8 tool types:
@@ -53,7 +53,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
    - Progress calculation (0-100%)
    - Auto-cleanup efter 30 sekunder
 
-5. **`server/routers/tool-execution-router.ts`** (69 linjer)
+1. **`server/routers/tool-execution-router.ts`** (69 linjer)
    - tRPC subscription endpoint for real-time updates
    - `subscribe()` - WebSocket-style updates
    - `getActive()` - Get all active executions
@@ -86,7 +86,8 @@ export const appRouter = router({
   }),
   // ... rest
 });
-```
+
+```text
 
 ### Step 2: Opdater intent-actions.ts med tracking
 
@@ -152,7 +153,8 @@ async function executeCreateLead(
     throw error;
   }
 }
-```
+
+```text
 
 **Alternativt brug helper function:**
 
@@ -184,7 +186,8 @@ async function executeCreateLead(params: any, userId: number): Promise<ActionRes
     };
   });
 }
-```
+
+```bash
 
 ### Step 3: Opdater ShortWaveChatPanel med subscription
 
@@ -233,29 +236,29 @@ export default function ShortWaveChatPanel({ ... }: ShortWaveChatPanelProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Tool Execution Modal */}
+      {/*Tool Execution Modal*/}
       <ToolExecutionModal
         execution={currentExecution}
         onCancel={handleCancelExecution}
         onClose={() => setCurrentExecution(null)}
       />
 
-      {/* Welcome Screen */}
+      {/*Welcome Screen*/}
       {chatMessages.length === 0 && !isLoading && (
         <WelcomeScreen onSuggestionClick={handleSuggestionClick} />
       )}
 
-      {/* Messages */}
+      {/*Messages*/}
       <ScrollArea className="flex-1 p-2">
         <div className="space-y-2">
           {chatMessages.map((message: any) => (
             <div key={message.id}>
-              {/* Regular message */}
+              {/*Regular message*/}
               <div className={...}>
                 <p className="text-xs">{message.content}</p>
               </div>
 
-              {/* Response cards if present */}
+              {/*Response cards if present*/}
               {message.cardData && (
                 <div className="mt-2">
                   <ResponseCard data={message.cardData} />
@@ -264,12 +267,12 @@ export default function ShortWaveChatPanel({ ... }: ShortWaveChatPanelProps) {
             </div>
           ))}
 
-          {/* Loading indicator */}
+          {/*Loading indicator*/}
           {isLoading && <LoadingIndicator />}
         </div>
       </ScrollArea>
 
-      {/* AI Memory Panel */}
+      {/*AI Memory Panel*/}
       {memoryItems.length > 0 && (
         <div className="border-t">
           <AIMemoryPanel
@@ -282,14 +285,15 @@ export default function ShortWaveChatPanel({ ... }: ShortWaveChatPanelProps) {
         </div>
       )}
 
-      {/* Input */}
+      {/*Input*/}
       <div className="p-4 border-t">
         <ChatInput ... />
       </div>
     </div>
   );
 }
-```
+
+```text
 
 ### Step 4: Opdater message format til at inkludere cardData
 
@@ -347,7 +351,8 @@ export default function ShortWaveChatPanel({ ... }: ShortWaveChatPanelProps) {
     });
   }
 })
-```
+
+```text
 
 ---
 
@@ -362,13 +367,15 @@ export const messages = pgTable("messages", {
   // ... existing columns
   cardData: text("card_data"), // JSON string of ResponseCardData
 });
-```
+
+```text
 
 **Migration:**
 
 ```bash
 pnpm db:push
-```
+
+```text
 
 ---
 
@@ -380,23 +387,24 @@ pnpm db:push
 
    ```bash
    pnpm dev
-   ```
 
-2. **Test tool execution modal:**
-   - Send message: "Opret lead: Hans Jensen, hans@email.dk, 12345678"
+```bash
+
+1. **Test tool execution modal:**
+   - Send message: "Opret lead: Hans Jensen, <hans@email.dk>, 12345678"
    - Modal should appear showing:
      - Progress bar animating 0% → 100%
      - 4 subtasks completing one by one
      - "Lead oprettet" badge when done
    - Modal auto-closes after 2 seconds
 
-3. **Test response cards:**
+1. **Test response cards:**
    - After lead creation, card should appear with:
      - Icon (UserPlus)
      - Name, email, phone
      - Green styling
 
-4. **Test AI Memory:**
+1. **Test AI Memory:**
    - After multiple actions, memory panel shows:
      - "I dag" section with recent actions
      - Relative timestamps (5 min siden)
@@ -427,7 +435,8 @@ describe('ToolExecutionModal', () => {
     expect(screen.getByText('50%')).toBeInTheDocument();
   });
 });
-```
+
+```text
 
 ---
 
@@ -469,13 +478,14 @@ describe('ToolExecutionModal', () => {
 
    ```typescript
    await new Promise(resolve => setTimeout(resolve, 300));
-   ```
 
-2. **Error Handling:** Altid call `completeToolExecution(id, false, error)` i catch blocks
+```text
 
-3. **Cleanup:** Tool executions cleanes automatisk efter 30 sekunder
+1. **Error Handling:** Altid call `completeToolExecution(id, false, error)` i catch blocks
 
-4. **Redis Integration:** For multi-instance, erstat in-memory Map med Redis:
+1. **Cleanup:** Tool executions cleanes automatisk efter 30 sekunder
+
+1. **Redis Integration:** For multi-instance, erstat in-memory Map med Redis:
 
    ```typescript
    // server/tool-execution-tracker.ts
@@ -486,9 +496,10 @@ describe('ToolExecutionModal', () => {
      set: (id: string, data: ToolExecution) =>
        redis.set(`tool:${id}`, JSON.stringify(data), "EX", 30),
    };
-   ```
 
-5. **WebSocket Alternative:** Hvis tRPC subscriptions ikke virker, brug Server-Sent Events (SSE):
+```text
+
+1. **WebSocket Alternative:** Hvis tRPC subscriptions ikke virker, brug Server-Sent Events (SSE):
 
    ```typescript
    // server/routers/tool-execution-router.ts
@@ -503,6 +514,7 @@ describe('ToolExecutionModal', () => {
 
      req.on("close", unsubscribe);
    }
+
    ```
 
 ---
@@ -528,8 +540,8 @@ describe('ToolExecutionModal', () => {
 
 ## 📚 Reference
 
-- Figma mockups: https://trout-cling-66917018.figma.site/
-- Claude tool use: https://docs.anthropic.com/claude/docs/tool-use
-- tRPC subscriptions: https://trpc.io/docs/subscriptions
+- Figma mockups: <https://trout-cling-66917018.figma.site/>
+- Claude tool use: <https://docs.anthropic.com/claude/docs/tool-use>
+- tRPC subscriptions: <https://trpc.io/docs/subscriptions>
 
 **Built with ❤️ for Friday AI**

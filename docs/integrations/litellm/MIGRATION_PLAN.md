@@ -1,8 +1,8 @@
 # LiteLLM Migration Plan - Step by Step
 
-**Version:** 1.0.0  
-**Date:** November 9, 2025  
-**Timeline:** 2-3 weeks  
+**Version:** 1.0.0
+**Date:** November 9, 2025
+**Timeline:** 2-3 weeks
 **Status:** Ready for Execution
 
 ---
@@ -29,18 +29,19 @@ Detailed step-by-step migration plan for integrating LiteLLM into Friday AI with
 ```bash
 pip install 'litellm[proxy]'
 litellm --version
-```
 
-2. Create docker-compose.litellm.yml
-3. Create litellm.config.yaml with FREE models
-4. Test: `docker-compose up`
+```bash
+
+1. Create docker-compose.litellm.yml
+1. Create litellm.config.yaml with FREE models
+1. Test: `docker-compose up`
 
 **Afternoon (4h): Type System**
 
 1. Create types.ts (80 lines)
-2. Create errors.ts (60 lines)
-3. Create constants.ts (40 lines)
-4. Create client.ts (100 lines)
+1. Create errors.ts (60 lines)
+1. Create constants.ts (40 lines)
+1. Create client.ts (100 lines)
 
 **Deliverables:**
 
@@ -55,14 +56,14 @@ litellm --version
 **Morning (3h): Core Wrapper**
 
 1. Create index.ts with invokeLLM() wrapper
-2. Update server/\_core/env.ts (add ENABLE_LITELLM)
-3. Update feature-flags.ts (add litellm flags)
+1. Update server/\_core/env.ts (add ENABLE_LITELLM)
+1. Update feature-flags.ts (add litellm flags)
 
 **Afternoon (4h): Monitoring & Tests**
 
 1. Create monitoring/metrics.ts (100 lines)
-2. Create monitoring/logger.ts (80 lines)
-3. Write unit tests (150 lines)
+1. Create monitoring/logger.ts (80 lines)
+1. Write unit tests (150 lines)
 
 **Deliverables:**
 
@@ -77,15 +78,15 @@ litellm --version
 **Full Day (6h): Integration Testing**
 
 1. Start LiteLLM: `docker-compose up`
-2. Test health: `curl localhost:4000/health`
-3. Test direct API calls
-4. Enable in Friday AI: `ENABLE_LITELLM=true`
-5. Test all features:
+1. Test health: `curl localhost:4000/health`
+1. Test direct API calls
+1. Enable in Friday AI: `ENABLE_LITELLM=true`
+1. Test all features:
    - Chat
    - Friday Docs generation
    - Email AI
-6. Performance test (100 concurrent requests)
-7. Document results
+1. Performance test (100 concurrent requests)
+1. Document results
 
 **Deliverables:**
 
@@ -107,7 +108,8 @@ import { invokeLLM } from "@/server/_core/llm";
 
 // NEW:
 import { invokeLLM } from "@/server/integrations/litellm";
-```
+
+```bash
 
 Files to update:
 
@@ -131,15 +133,15 @@ Files to update:
 **Morning (3h): Complete Docs**
 
 1. SETUP.md (installation guide)
-2. API.md (API reference)
-3. TROUBLESHOOTING.md (common issues)
+1. API.md (API reference)
+1. TROUBLESHOOTING.md (common issues)
 
 **Afternoon (4h): Deploy to Staging**
 
 1. Build: `pnpm build`
-2. Deploy LiteLLM to staging server
-3. Deploy Friday AI to staging
-4. 24h monitoring
+1. Deploy LiteLLM to staging server
+1. Deploy Friday AI to staging
+1. 24h monitoring
 
 **Deliverables:**
 
@@ -156,7 +158,8 @@ Files to update:
 ```bash
 # Production .env
 LITELLM_ROLLOUT_PERCENTAGE=10
-```
+
+```text
 
 - Monitor for 48h
 - Track metrics
@@ -174,7 +177,8 @@ LITELLM_ROLLOUT_PERCENTAGE=10
 
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=50
-```
+
+```text
 
 - Monitor for 48h
 - Compare with 10% metrics
@@ -190,7 +194,8 @@ LITELLM_ROLLOUT_PERCENTAGE=50
 
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=100
-```
+
+```text
 
 - All users on LiteLLM
 - Monitor closely for 48h
@@ -206,9 +211,9 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 ### Week 3, Wed-Fri: Verification
 
 1. Final metrics review
-2. Team retrospective
-3. Update docs
-4. Mark complete
+1. Team retrospective
+1. Update docs
+1. Mark complete
 
 ---
 
@@ -237,26 +242,30 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=0
-```
+
+```text
 
 ### Level 2: Code Rollback (5 min)
 
 ```typescript
 // Revert imports to original
 import { invokeLLM } from "@/server/_core/llm";
-```
+
+```text
 
 ### Level 3: Stop LiteLLM (10 min)
 
 ```bash
 docker-compose stop litellm
-```
+
+```bash
 
 ### Level 4: Git Revert (15 min)
 
 ```bash
 git revert <commit>
 git push
+
 ```
 
 ---
@@ -318,8 +327,8 @@ git push
 
 ---
 
-**Status:** ✅ READY TO START  
-**Next Action:** Day 1, Task 1.1 - Install LiteLLM  
-**Estimated Completion:** 2-3 weeks  
-**Risk Level:** LOW  
+**Status:** ✅ READY TO START
+**Next Action:** Day 1, Task 1.1 - Install LiteLLM
+**Estimated Completion:** 2-3 weeks
+**Risk Level:** LOW
 **Cost Impact:** $0.00

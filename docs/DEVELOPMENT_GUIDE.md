@@ -1,7 +1,7 @@
 # Friday AI Chat - Development Guide for Cursor IDE
 
-**Author:** Manus AI  
-**Last Updated:** November 1, 2025  
+**Author:** Manus AI
+**Last Updated:** November 1, 2025
 **Version:** 1.0.0
 
 ## Overview
@@ -31,15 +31,17 @@ Before starting development, ensure you have the following installed on your loc
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/TekupDK/tekup-friday.git
+git clone <https://github.com/TekupDK/tekup-friday.git>
 cd tekup-friday
-```
+
+```text
 
 ### 2. Install Dependencies
 
 ```bash
 pnpm install
-```
+
+```text
 
 This will install all frontend and backend dependencies defined in `package.json`.
 
@@ -54,14 +56,14 @@ DATABASE_URL=mysql://user:password@host:port/database
 # Manus OAuth
 JWT_SECRET=your-jwt-secret-here
 VITE_APP_ID=your-app-id
-OAUTH_SERVER_URL=https://api.manus.im
-VITE_OAUTH_PORTAL_URL=https://auth.manus.im
+OAUTH_SERVER_URL=<https://api.manus.im>
+VITE_OAUTH_PORTAL_URL=<https://auth.manus.im>
 OWNER_OPEN_ID=your-owner-openid
 OWNER_NAME=Your Name
 
 # Google Workspace
 GOOGLE_SERVICE_ACCOUNT_KEY='{"type":"service_account",...}'
-GOOGLE_IMPERSONATED_USER=info@rendetalje.dk
+GOOGLE_IMPERSONATED_USER=<info@rendetalje.dk>
 GOOGLE_CALENDAR_ID=primary
 
 # Billy.dk
@@ -69,10 +71,10 @@ BILLY_API_KEY=your-billy-api-key
 BILLY_ORGANIZATION_ID=your-org-id
 
 # Manus AI Services
-BUILT_IN_FORGE_API_URL=https://forge.manus.im
+BUILT_IN_FORGE_API_URL=<https://forge.manus.im>
 BUILT_IN_FORGE_API_KEY=your-forge-api-key
 VITE_FRONTEND_FORGE_API_KEY=your-frontend-key
-VITE_FRONTEND_FORGE_API_URL=https://forge.manus.im
+VITE_FRONTEND_FORGE_API_URL=<https://forge.manus.im>
 
 # Gemini API (optional, for local testing)
 GEMINI_API_KEY=your-gemini-api-key
@@ -82,12 +84,13 @@ OPENAI_API_KEY=your-openai-api-key
 
 # App Branding
 VITE_APP_TITLE=Friday
-VITE_APP_LOGO=https://your-logo-url.com/logo.png
+VITE_APP_LOGO=<https://your-logo-url.com/logo.png>
 
 # Analytics (optional)
 VITE_ANALYTICS_WEBSITE_ID=your-website-id
-VITE_ANALYTICS_ENDPOINT=https://analytics.example.com
-```
+VITE_ANALYTICS_ENDPOINT=<https://analytics.example.com>
+
+```text
 
 **Important Notes:**
 
@@ -101,16 +104,17 @@ Run database migrations to create all tables:
 
 ```bash
 pnpm db:push
-```
+
+```text
 
 This command executes two steps:
 
 1. `drizzle-kit generate` - Generates SQL migration files
-2. `drizzle-kit migrate` - Applies migrations to database
+1. `drizzle-kit migrate` - Applies migrations to database
 
 **Expected Output:**
 
-```
+```text
 13 tables
 analytics_events 5 columns 0 indexes 0 fks
 calendar_events 11 columns 0 indexes 0 fks
@@ -126,30 +130,33 @@ messages 8 columns 0 indexes 0 fks
 tasks 10 columns 0 indexes 0 fks
 users 9 columns 0 indexes 0 fks
 [✓] migrations applied successfully!
-```
+
+```text
 
 ### 5. Start Development Server
 
 ```bash
 pnpm dev
-```
+
+```text
 
 The server will start on `http://localhost:3000` with hot-reload enabled.
 
 **Expected Console Output:**
 
-```
+```bash
 [11:54:48] > tekup-friday@1.0.0 dev
 [11:54:48] > NODE_ENV=development tsx watch server/_core/index.ts
-[11:54:50] [OAuth] Initialized with baseURL: https://api.manus.im
-[11:54:52] Server running on http://localhost:3000/
-```
+[11:54:50] [OAuth] Initialized with baseURL: <https://api.manus.im>
+[11:54:52] Server running on <http://localhost:3000/>
+
+```text
 
 ## Project Structure
 
 Understanding the codebase organization is crucial for efficient development:
 
-```
+```bash
 tekup-friday/
 ├── client/                    # Frontend React application
 │   ├── public/                # Static assets (served at root)
@@ -198,7 +205,8 @@ tekup-friday/
 ├── tailwind.config.js         # Tailwind CSS configuration
 ├── vite.config.ts             # Vite build configuration
 └── README.md                  # Project overview
-```
+
+```text
 
 **Key Directories:**
 
@@ -238,7 +246,8 @@ Brief description of the feature
 - [ ] Build frontend UI
 - [ ] Test integration
 - [ ] Update documentation
-```
+
+```text
 
 **2. Database Schema Changes**
 
@@ -250,7 +259,8 @@ If the feature requires new tables or columns:
 
 # Generate and apply migration
 pnpm db:push
-```
+
+```text
 
 **Example: Adding a new table**
 
@@ -265,7 +275,8 @@ export const newTable = mysqlTable("new_table", {
 
 export type NewTable = typeof newTable.$inferSelect;
 export type InsertNewTable = typeof newTable.$inferInsert;
-```
+
+```text
 
 **3. Backend Implementation**
 
@@ -287,7 +298,8 @@ export async function getNewRecords(userId: number) {
 
   return await db.select().from(newTable).where(eq(newTable.userId, userId));
 }
-```
+
+```text
 
 Add tRPC procedures in `server/routers.ts`:
 
@@ -315,7 +327,8 @@ export const appRouter = router({
       }),
   }),
 });
-```
+
+```text
 
 **4. Frontend Implementation**
 
@@ -347,7 +360,8 @@ export default function NewFeature() {
     </div>
   );
 }
-```
+
+```text
 
 **5. Testing**
 
@@ -357,23 +371,26 @@ Test the feature manually:
 # Start dev server
 pnpm dev
 
-# Open http://localhost:3000
+# Open <http://localhost:3000>
 # Test feature functionality
 # Check browser console for errors
 # Verify database updates
-```
+
+```text
 
 **6. Mark Complete**
 
 Update `todo.md` to mark tasks as complete:
 
 ```markdown
+
 - [x] Update database schema if needed
 - [x] Create backend endpoints
 - [x] Build frontend UI
 - [x] Test integration
 - [ ] Update documentation
-```
+
+```text
 
 ### TypeScript Compilation
 
@@ -381,19 +398,22 @@ Always check for TypeScript errors before committing:
 
 ```bash
 pnpm tsc --noEmit
-```
+
+```text
 
 **Expected Output (no errors):**
 
-```
+```text
 (No output means success)
-```
+
+```text
 
 **If errors exist:**
 
-```
+```bash
 client/src/components/Example.tsx(10,5): error TS2339: Property 'foo' does not exist on type 'Bar'.
-```
+
+```bash
 
 Fix all errors before proceeding.
 
@@ -412,10 +432,10 @@ The project uses TypeScript strict mode and follows these conventions:
 **Import Order:**
 
 1. External libraries (React, tRPC, etc.)
-2. Internal components
-3. UI components (`@/components/ui/*`)
-4. Utilities and hooks
-5. Types and constants
+1. Internal components
+1. UI components (`@/components/ui/*`)
+1. Utilities and hooks
+1. Types and constants
 
 **Example:**
 
@@ -425,7 +445,8 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import type { User } from "@/types";
-```
+
+```text
 
 ## Database Management
 
@@ -441,13 +462,15 @@ export const users = mysqlTable("users", {
   // ... existing columns
   newColumn: varchar("newColumn", { length: 255 }), // Add new column
 });
-```
+
+```text
 
 **2. Generate Migration**
 
 ```bash
 pnpm db:push
-```
+
+```text
 
 This generates a migration file in `drizzle/migrations/` and applies it immediately.
 
@@ -457,7 +480,8 @@ Check the database to ensure the migration was applied:
 
 ```sql
 DESCRIBE users;
-```
+
+```text
 
 ### Data Seeding
 
@@ -474,8 +498,8 @@ async function seed() {
 
   // Insert test users
   await db.insert(users).values([
-    { openId: "test1", name: "Test User 1", email: "test1@example.com" },
-    { openId: "test2", name: "Test User 2", email: "test2@example.com" },
+    { openId: "test1", name: "Test User 1", email: "<test1@example.com>" },
+    { openId: "test2", name: "Test User 2", email: "<test2@example.com>" },
   ]);
 
   // Insert test leads
@@ -484,13 +508,13 @@ async function seed() {
       userId: 1,
       source: "website",
       name: "John Doe",
-      email: "john@example.com",
+      email: "<john@example.com>",
     },
     {
       userId: 1,
       source: "referral",
       name: "Jane Smith",
-      email: "jane@example.com",
+      email: "<jane@example.com>",
     },
   ]);
 
@@ -498,13 +522,15 @@ async function seed() {
 }
 
 seed().catch(console.error);
-```
+
+```text
 
 Run the seed script:
 
 ```bash
 tsx scripts/seed.ts
-```
+
+```text
 
 ### Database Queries
 
@@ -515,25 +541,29 @@ Use Drizzle ORM for all database operations:
 ```typescript
 const users = await db.select().from(usersTable);
 const user = await db.select().from(usersTable).where(eq(usersTable.id, 1));
-```
+
+```text
 
 **Insert:**
 
 ```typescript
 await db.insert(usersTable).values({ openId: "123", name: "John" });
-```
+
+```text
 
 **Update:**
 
 ```typescript
 await db.update(usersTable).set({ name: "Jane" }).where(eq(usersTable.id, 1));
-```
+
+```text
 
 **Delete:**
 
 ```typescript
 await db.delete(usersTable).where(eq(usersTable.id, 1));
-```
+
+```text
 
 **Joins:**
 
@@ -542,7 +572,8 @@ const result = await db
   .select()
   .from(conversations)
   .leftJoin(messages, eq(conversations.id, messages.conversationId));
-```
+
+```text
 
 ## API Development
 
@@ -561,7 +592,8 @@ const createLeadInput = z.object({
   phone: z.string().optional(),
   source: z.string(),
 });
-```
+
+```text
 
 **2. Create Procedure**
 
@@ -596,7 +628,8 @@ export const appRouter = router({
       }),
   }),
 });
-```
+
+```text
 
 **3. Use in Frontend**
 
@@ -614,10 +647,11 @@ const createLeadMutation = trpc.leads.create.useMutation({
 
 await createLeadMutation.mutateAsync({
   name: "John Doe",
-  email: "john@example.com",
+  email: "<john@example.com>",
   source: "website",
 });
-```
+
+```text
 
 ### Error Handling
 
@@ -655,7 +689,8 @@ throw new TRPCError({
   code: "INTERNAL_SERVER_ERROR",
   message: "Something went wrong",
 });
-```
+
+```text
 
 ## Frontend Development
 
@@ -685,7 +720,8 @@ export default function MyComponent({ title, onSubmit }: Props) {
     </div>
   );
 }
-```
+
+```text
 
 **tRPC Hooks:**
 
@@ -701,7 +737,8 @@ const createMutation = trpc.leads.create.useMutation({
 });
 
 await createMutation.mutateAsync({ name: "John" });
-```
+
+```text
 
 **Optimistic Updates:**
 
@@ -736,7 +773,8 @@ const updateMutation = trpc.leads.updateStatus.useMutation({
     trpc.useUtils().leads.list.invalidate();
   },
 });
-```
+
+```text
 
 ### Styling with Tailwind
 
@@ -746,21 +784,23 @@ Use Tailwind utility classes for styling:
 
 ```tsx
 <div className="p-4 sm:p-6 md:p-8 lg:p-12">
-  {/* Padding increases on larger screens */}
+  {/*Padding increases on larger screens*/}
 </div>
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  {/* 1 column on mobile, 2 on tablet, 3 on desktop */}
+  {/*1 column on mobile, 2 on tablet, 3 on desktop*/}
 </div>
-```
+
+```text
 
 **Dark Mode:**
 
 ```tsx
 <div className="bg-white dark:bg-gray-900 text-black dark:text-white">
-  {/* Automatic dark mode support */}
+  {/*Automatic dark mode support*/}
 </div>
-```
+
+```text
 
 **Custom Classes:**
 
@@ -771,16 +811,17 @@ Edit `client/src/index.css` for global styles:
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    /* ... other CSS variables */
+    /*... other CSS variables*/
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    /* ... other CSS variables */
+    /*... other CSS variables*/
   }
 }
-```
+
+```text
 
 ### shadcn/ui Components
 
@@ -788,7 +829,8 @@ The project uses shadcn/ui for UI components. To add new components:
 
 ```bash
 npx shadcn-ui@latest add dialog
-```
+
+```bash
 
 This adds the component to `client/src/components/ui/dialog.tsx`.
 
@@ -810,7 +852,8 @@ import {
     <p>Dialog content here</p>
   </DialogContent>
 </Dialog>;
-```
+
+```text
 
 ## AI Integration
 
@@ -840,7 +883,8 @@ const newToolSchema = {
     required: ["param1"],
   },
 };
-```
+
+```text
 
 **2. Implement Tool Handler**
 
@@ -855,7 +899,8 @@ export async function handleNewTool(args: { param1: string; param2?: number }) {
     data: result,
   };
 }
-```
+
+```text
 
 **3. Register Tool**
 
@@ -875,7 +920,8 @@ export async function executeFridayTool(toolName: string, args: any) {
       throw new Error(`Unknown tool: ${toolName}`);
   }
 }
-```
+
+```text
 
 ### Adding New Intents
 
@@ -889,7 +935,8 @@ export type Intent =
   | { intent: "search_gmail"; params: { query: string } }
   | { intent: "new_intent"; params: { param1: string } } // Add new intent
   | // ... other intents
-```
+
+```text
 
 **2. Implement Intent Action**
 
@@ -917,7 +964,8 @@ export async function executeAction(
       };
   }
 }
-```
+
+```text
 
 **3. Update Intent Parser**
 
@@ -931,7 +979,8 @@ The AI will automatically recognize the new intent if you update the system prom
 
 ```bash
 pnpm dev
-```
+
+```text
 
 **2. Test in Browser**
 
@@ -947,7 +996,8 @@ Connect to your database and verify data changes:
 
 ```sql
 SELECT * FROM leads ORDER BY createdAt DESC LIMIT 10;
-```
+
+```text
 
 ### Automated Testing (Future)
 
@@ -957,7 +1007,8 @@ The project does not currently have automated tests. Recommended setup:
 
 ```bash
 pnpm add -D vitest @testing-library/react @testing-library/jest-dom
-```
+
+```text
 
 **Example Test:**
 
@@ -972,13 +1023,15 @@ describe("Button", () => {
     expect(screen.getByText("Click me")).toBeInTheDocument();
   });
 });
-```
+
+```bash
 
 **Integration Tests (Playwright):**
 
 ```bash
 pnpm add -D @playwright/test
-```
+
+```text
 
 **Example Test:**
 
@@ -987,11 +1040,12 @@ pnpm add -D @playwright/test
 import { test, expect } from "@playwright/test";
 
 test("user can log in", async ({ page }) => {
-  await page.goto("http://localhost:3000");
+  await page.goto("<http://localhost:3000>");
   await page.click("text=Login");
   await expect(page).toHaveURL(/auth\.manus\.im/);
 });
-```
+
+```text
 
 ## Debugging
 
@@ -1002,14 +1056,15 @@ test("user can log in", async ({ page }) => {
 ```typescript
 console.log("[Debug] User ID:", userId);
 console.error("[Error] Failed to create lead:", error);
-```
+
+```text
 
 **Cursor Debugger:**
 
 1. Open Cursor IDE
-2. Set breakpoint in `server/*.ts` file
-3. Press F5 to start debugging
-4. Debugger will pause at breakpoints
+1. Set breakpoint in `server/*.ts` file
+1. Press F5 to start debugging
+1. Debugger will pause at breakpoints
 
 **Database Queries:**
 
@@ -1026,7 +1081,8 @@ export default {
   },
   verbose: true, // Enable query logging
 };
-```
+
+```text
 
 ### Frontend Debugging
 
@@ -1040,7 +1096,8 @@ Add tRPC DevTools for query inspection:
 
 ```bash
 pnpm add @trpc/react-query-devtools
-```
+
+```text
 
 ```tsx
 // client/src/main.tsx
@@ -1050,7 +1107,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
   <App />
   <ReactQueryDevtools initialIsOpen={false} />
 </QueryClientProvider>;
-```
+
+```text
 
 **Network Tab:**
 
@@ -1069,7 +1127,8 @@ Test production build locally:
 ```bash
 pnpm build
 pnpm start
-```
+
+```text
 
 This builds the frontend and backend, then starts the production server.
 
@@ -1079,9 +1138,10 @@ This builds the frontend and backend, then starts the production server.
 
 In Manus IDE, create a checkpoint:
 
-```
+```text
 Checkpoint description: "Feature XYZ complete"
-```
+
+```text
 
 **2. Click Publish**
 
@@ -1096,20 +1156,23 @@ Visit your deployed URL: `https://[your-domain].manus.space`
 To use a custom domain:
 
 1. Open Management UI → Settings → Domains
-2. Enter your custom domain (e.g., `friday.rendetalje.dk`)
-3. Add CNAME record in your DNS:
-   ```
+1. Enter your custom domain (e.g., `friday.rendetalje.dk`)
+1. Add CNAME record in your DNS:
+
+```text
    friday.rendetalje.dk → [your-app-id].manus.space
-   ```
-4. Wait for DNS propagation (up to 48 hours)
+
+```bash
+
+1. Wait for DNS propagation (up to 48 hours)
 
 ### Environment Variables
 
 Production environment variables are managed in Management UI:
 
 1. Open Management UI → Settings → Secrets
-2. View/edit existing secrets
-3. **Do not** add new secrets here - use `webdev_request_secrets` tool in Manus IDE
+1. View/edit existing secrets
+1. **Do not** add new secrets here - use `webdev_request_secrets` tool in Manus IDE
 
 ## Git Workflow
 
@@ -1130,41 +1193,46 @@ git push origin feature/customer-profiles
 
 # Create pull request on GitHub
 # Merge after review
-```
+
+```text
 
 ### Commit Messages
 
 Follow conventional commit format:
 
-```
+```text
 feat: Add customer profile modal
 fix: Fix email detail view TypeScript errors
 docs: Update API reference with customer endpoints
 refactor: Extract customer sync logic to separate file
 test: Add unit tests for customer-db helpers
-```
+
+```text
 
 ### GitHub Integration
 
-The project is hosted at https://github.com/TekupDK/tekup-friday
+The project is hosted at <https://github.com/TekupDK/tekup-friday>
 
 **Clone:**
 
 ```bash
-git clone https://github.com/TekupDK/tekup-friday.git
-```
+git clone <https://github.com/TekupDK/tekup-friday.git>
+
+```text
 
 **Add Remote:**
 
 ```bash
-git remote add github https://github.com/TekupDK/tekup-friday.git
-```
+git remote add github <https://github.com/TekupDK/tekup-friday.git>
+
+```text
 
 **Push:**
 
 ```bash
 git push github main
-```
+
+```text
 
 ## Common Issues
 
@@ -1175,11 +1243,13 @@ git push github main
 **Solution:**
 
 1. Verify `DATABASE_URL` in `.env`
-2. Check database server is running
-3. Test connection with MySQL client:
+1. Check database server is running
+1. Test connection with MySQL client:
+
    ```bash
    mysql -h host -u user -p database
-   ```
+
+```bash
 
 ### TypeScript Errors
 
@@ -1188,8 +1258,8 @@ git push github main
 **Solution:**
 
 1. Check type definitions in `drizzle/schema.ts`
-2. Regenerate types: `pnpm db:push`
-3. Restart TypeScript server in Cursor: Cmd+Shift+P → "TypeScript: Restart TS Server"
+1. Regenerate types: `pnpm db:push`
+1. Restart TypeScript server in Cursor: Cmd+Shift+P → "TypeScript: Restart TS Server"
 
 ### tRPC Errors
 
@@ -1198,8 +1268,8 @@ git push github main
 **Solution:**
 
 1. Verify procedure exists in `server/routers.ts`
-2. Check import in `client/src/lib/trpc.ts`
-3. Restart dev server: `pnpm dev`
+1. Check import in `client/src/lib/trpc.ts`
+1. Restart dev server: `pnpm dev`
 
 ### OAuth Errors
 
@@ -1208,8 +1278,8 @@ git push github main
 **Solution:**
 
 1. Clear browser cookies
-2. Verify `JWT_SECRET` in `.env`
-3. Check `OAUTH_SERVER_URL` is correct
+1. Verify `JWT_SECRET` in `.env`
+1. Check `OAUTH_SERVER_URL` is correct
 
 ## Best Practices
 
@@ -1230,7 +1300,8 @@ if (score > 80) { ... }
 // Good
 const HIGH_SCORE_THRESHOLD = 80;
 if (score > HIGH_SCORE_THRESHOLD) { ... }
-```
+
+```text
 
 ### Performance
 
@@ -1248,6 +1319,7 @@ import { useDebouncedCallback } from "use-debounce";
 const debouncedSearch = useDebouncedCallback(query => {
   searchMutation.mutate({ query });
 }, 300);
+
 ```
 
 ### Security
@@ -1286,10 +1358,10 @@ For Cursor AI assistance, refer to `docs/CURSOR_RULES.md` which contains:
 
 **GitHub Repository:**
 
-- https://github.com/TekupDK/tekup-friday
+- <https://github.com/TekupDK/tekup-friday>
 
 ---
 
-**Document Version:** 1.0.0  
-**Last Updated:** November 1, 2025  
+**Document Version:** 1.0.0
+**Last Updated:** November 1, 2025
 **Maintained by:** TekupDK Development Team

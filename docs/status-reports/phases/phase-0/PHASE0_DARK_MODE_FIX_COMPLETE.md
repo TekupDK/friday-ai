@@ -1,7 +1,7 @@
 # ✅ Phase 0 Dark Mode Color Review - COMPLETE
 
-**Dato:** 11. November 2025  
-**Status:** ✨ **100% FÆRDIG** ✨
+**Dato:** 11. November 2025
+**Status:**✨**100% FÆRDIG** ✨
 
 ---
 
@@ -23,31 +23,32 @@ Alle CSS filer opdateret til at bruge **dual dark mode support:**
 **Opdaterede filer:**
 
 1. `AppleButton.module.css` - Button variants (primary, secondary, tertiary)
-2. `AppleInput.module.css` - Input states (focused, error, disabled)
-3. `AppleSearchField.module.css` - Search field styling
-4. `AppleListItem.module.css` - List item backgrounds, text colors
-5. `AppleModal.module.css` - Modal backdrop, content, close button
-6. `AppleDrawer.module.css` - Drawer backgrounds, headers
-7. `AppleSheet.module.css` - Bottom sheet styling, handle
-8. `ScrollToTop.module.css` - Scroll-to-top button colors
+1. `AppleInput.module.css` - Input states (focused, error, disabled)
+1. `AppleSearchField.module.css` - Search field styling
+1. `AppleListItem.module.css` - List item backgrounds, text colors
+1. `AppleModal.module.css` - Modal backdrop, content, close button
+1. `AppleDrawer.module.css` - Drawer backgrounds, headers
+1. `AppleSheet.module.css` - Bottom sheet styling, handle
+1. `ScrollToTop.module.css` - Scroll-to-top button colors
 
 **Pattern brugt:**
 
 ```css
-/* Primary: data-theme attribute */
+/*Primary: data-theme attribute*/
 [data-theme="dark"] .element {
   background: #1c1c1e;
   color: #ffffff;
 }
 
-/* Fallback: system preference */
+/*Fallback: system preference*/
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) .element {
     background: #1c1c1e;
     color: #ffffff;
   }
 }
-```
+
+```bash
 
 ### 2. React Component Updates (2 komponenter)
 
@@ -72,7 +73,8 @@ planned: #007AFF → #0A84FF
 in_progress: #FF9500 → #FF9F0A
 completed: #34C759 → #30D158
 cancelled: #8E8E93 → #8E8E93
-```
+
+```bash
 
 #### AppleTag.tsx ✅
 
@@ -128,7 +130,8 @@ Background: #FFFFFF
 Secondary Background: #F2F2F7
 Label: #000000
 Secondary Label: rgba(60, 60, 67, 0.6)
-```
+
+```text
 
 ### Dark Mode Colors (Apple HIG Standard)
 
@@ -146,7 +149,8 @@ Secondary Background: #1C1C1E
 Tertiary Background: #2C2C2E
 Label: #FFFFFF
 Secondary Label: rgba(235, 235, 245, 0.6)
-```
+
+```text
 
 **✅ Alle farver matcher Apple HIG specifikationer!**
 
@@ -160,6 +164,7 @@ Secondary Label: rgba(235, 235, 245, 0.6)
 ✅ AppleBadge.tsx - Zero errors
 ✅ AppleTag.tsx - Zero errors
 ✅ All CSS modules - Zero errors
+
 ```
 
 ### Storybook Dark Mode

@@ -20,9 +20,9 @@ Complete guide to the autonomous lead intelligence and action handling system fo
 The autonomous operations system enables Friday AI to automatically:
 
 1. **Import enriched lead data** from the v4.3.5 AI pipeline into Supabase
-2. **Detect actionable insights** (missing bookings, at-risk customers, upsell opportunities)
-3. **Create follow-up tasks** automatically for sales/operations teams
-4. **Provide intelligent lead context** to Friday AI conversations
+1. **Detect actionable insights** (missing bookings, at-risk customers, upsell opportunities)
+1. **Create follow-up tasks** automatically for sales/operations teams
+1. **Provide intelligent lead context** to Friday AI conversations
 
 ### Key Benefits
 
@@ -36,7 +36,7 @@ The autonomous operations system enables Friday AI to automatically:
 
 ## Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                    v4.3.5 Lead Pipeline                      │
 │  (ChromaDB + AI Enhancement + Deduplication + Metrics)       │
@@ -77,7 +77,8 @@ The autonomous operations system enables Friday AI to automatically:
 │  • Creates upsell tasks for VIPs (>10K kr)                   │
 │  • Runs every 4 hours (scheduled task)                       │
 └─────────────────────────────────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -103,11 +104,12 @@ npx tsx server/scripts/import-pipeline-v4_3_5.ts
 
 # Custom dataset
 npx tsx server/scripts/import-pipeline-v4_3_5.ts path/to/dataset.json
-```
+
+```text
 
 **Output:**
 
-```
+```text
 ================= Import Summary =================
 Processed leads:       231
 Created leads:         231
@@ -118,7 +120,8 @@ Invoices upserted:     95
 Synthetic emails used: 0
 Errors:                0
 =================================================
-```
+
+```text
 
 ### 2. Validation Script (`server/scripts/validate-import.ts`)
 
@@ -135,11 +138,12 @@ Validates import data quality and generates a detailed report.
 
 ```bash
 npx tsx server/scripts/validate-import.ts
-```
+
+```text
 
 **Output:**
 
-```
+```text
 📋 VALIDATION REPORT
 =================================================
 📌 LEADS:
@@ -163,7 +167,8 @@ npx tsx server/scripts/validate-import.ts
    Synthetic emails used:     0
 
 ✅ All validation checks passed!
-```
+
+```text
 
 ### 3. Friday Leads Router (`server/routers/friday-leads-router.ts`)
 
@@ -180,7 +185,8 @@ const result = await trpc.fridayLeads.lookupCustomer.query({
   query: "John Doe",
   includeInvoices: true,
 });
-```
+
+```text
 
 #### `fridayLeads.getCustomerIntelligence`
 
@@ -190,9 +196,10 @@ Get comprehensive customer intelligence for Friday AI.
 const intel = await trpc.fridayLeads.getCustomerIntelligence.query({
   leadId: 123,
   // OR customerId: 456
-  // OR email: "customer@example.com"
+  // OR email: "<customer@example.com>"
 });
-```
+
+```text
 
 **Response:**
 
@@ -201,7 +208,7 @@ const intel = await trpc.fridayLeads.getCustomerIntelligence.query({
   "customer": {
     "id": 123,
     "name": "John Doe",
-    "email": "john@example.com",
+    "email": "<john@example.com>",
     "status": "vip",
     "tags": ["recurring", "premium"]
   },
@@ -223,7 +230,8 @@ const intel = await trpc.fridayLeads.getCustomerIntelligence.query({
     "quality": { "dataCompleteness": 95 }
   }
 }
-```
+
+```text
 
 #### `fridayLeads.getActionableInsights`
 
@@ -234,7 +242,8 @@ const insights = await trpc.fridayLeads.getActionableInsights.query({
   insightType: "all", // or "missing_bookings", "at_risk", "upsell"
   limit: 20,
 });
-```
+
+```text
 
 **Response:**
 
@@ -247,7 +256,7 @@ const insights = await trpc.fridayLeads.getActionableInsights.query({
       "customer": {
         "id": 123,
         "name": "John Doe",
-        "email": "john@example.com"
+        "email": "<john@example.com>"
       },
       "message": "Recurring customer John Doe has no bookings in the last 90 days",
       "actionable": true,
@@ -257,7 +266,8 @@ const insights = await trpc.fridayLeads.getActionableInsights.query({
   "count": 15,
   "generatedAt": "2024-11-10T22:00:00Z"
 }
-```
+
+```text
 
 #### `fridayLeads.getDashboardStats`
 
@@ -265,7 +275,8 @@ Get high-level dashboard statistics.
 
 ```typescript
 const stats = await trpc.fridayLeads.getDashboardStats.query();
-```
+
+```text
 
 ### 4. Action Handler (`server/scripts/action-handler.ts`)
 
@@ -285,11 +296,12 @@ npx tsx server/scripts/action-handler.ts --dry-run
 
 # Production run
 npx tsx server/scripts/action-handler.ts
-```
+
+```text
 
 **Output:**
 
-```
+```text
 📊 ACTION HANDLER SUMMARY
 =================================================
 Total insights:     25
@@ -305,7 +317,8 @@ By Type:
    ✅ missing_booking • John Doe: Follow-up task created
    ✅ at_risk • Jane Smith: Review task created
    ✅ upsell • Bob Johnson: Upsell task created
-```
+
+```text
 
 ---
 
@@ -330,7 +343,8 @@ VITE_APP_ID=tekup-friday-dev
 
 # Optional: Disable ChromaDB during import
 CHROMA_ENABLED=false
-```
+
+```text
 
 ### 2. Initial Import
 
@@ -343,7 +357,8 @@ npx tsx server/scripts/validate-import.ts
 
 # 3. Test action handler (dry run)
 npx tsx server/scripts/action-handler.ts --dry-run
-```
+
+```text
 
 ### 3. Schedule Autonomous Tasks
 
@@ -360,7 +375,8 @@ npx tsx server/scripts/action-handler.ts --dry-run
 
 # Remove
 .\scripts\register-import-schedule.ps1 -Unregister
-```
+
+```text
 
 **Action Handler** (every 4 hours):
 
@@ -373,7 +389,8 @@ npx tsx server/scripts/action-handler.ts --dry-run
 
 # Remove
 .\scripts\register-action-schedule.ps1 -Unregister
-```
+
+```text
 
 #### Linux/Mac Cron
 
@@ -381,13 +398,15 @@ npx tsx server/scripts/action-handler.ts --dry-run
 
 ```bash
 30 2 * * * cd /path/to/tekup-ai-v2 && npx tsx server/scripts/import-pipeline-v4_3_5.ts >> logs/import-pipeline.log 2>&1
-```
+
+```text
 
 **Action Handler** (every 4 hours):
 
 ```bash
 0 */4 * * * cd /path/to/tekup-ai-v2 && npx tsx server/scripts/action-handler.ts >> logs/action-handler.log 2>&1
-```
+
+```text
 
 ### 4. Wire Friday AI Integration
 
@@ -405,7 +424,8 @@ if (customerInfo.found) {
     customerId: customerInfo.customers[0].profile.id,
   });
 }
-```
+
+```text
 
 ---
 
@@ -429,7 +449,8 @@ Get-Content logs/action-handler-$(Get-Date -Format 'yyyyMMdd').log -Tail 50
 
 # Watch live
 Get-Content logs/action-handler-$(Get-Date -Format 'yyyyMMdd').log -Wait
-```
+
+```text
 
 ### Task Status
 
@@ -443,7 +464,8 @@ Start-ScheduledTask -TaskName "Friday-AI-Action-Handler"
 
 # View last run result
 Get-ScheduledTaskInfo -TaskName "Friday-AI-Pipeline-Import"
-```
+
+```text
 
 ### Database Checks
 
@@ -467,7 +489,8 @@ SELECT
   SUM(total_invoiced)/100 as total_invoiced_kr
 FROM friday_ai.customer_profiles
 GROUP BY status;
-```
+
+```text
 
 ---
 
@@ -483,6 +506,7 @@ GROUP BY status;
 OWNER_OPEN_ID=your-owner-openid
 
 # Or create user by logging into Friday AI once
+
 ```
 
 **Problem**: "Owner user not found"

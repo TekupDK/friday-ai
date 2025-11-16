@@ -1,9 +1,12 @@
 /\*\*
 
 - Phase 10+: Venstre Panel Redesign Notes
+
 -
+
 - Integration notes til senere arbejde med venstre panel
 - Baseret på nuværende samtale om Email Assistant integration
+
   \*/
 
 # 🎯 **VENSTRE PANEL REDESIGN - PHASE 10+ NOTES**
@@ -12,6 +15,7 @@
 
 ```typescript
 📧 VENSTRE PANEL (Nuværende):
+
 - Standard Gmail email list
 - Subject/From/Date preview
 - Basic unread/read status
@@ -19,17 +23,20 @@
 - Manuel sorting og filtering
 
 🤖 PROBLEMSTILLINGER:
+
 - Ingen lead score visning
 - Ingen source detection i list
 - Ingen prioritetering baseret på værdi
 - Ingen AI-powered sorting
 - Manuel process at finde vigtige emails
-```
+
+```text
 
 ## 🎯 **ØNSKEDE FORBEDRINGER (FRA SAMTALE):**
 
 ```typescript
 🚀 INTELLIGENT EMAIL LIST:
+
 1. **Lead Score Integration:**
    - Vis lead score (1-100) i email list
    - Color-coded baseret på score
@@ -56,18 +63,21 @@
    - Filter by source
    - Filter by job type
    - Filter by location
-```
+
+```text
 
 ## 🔧 **TEKNISK INTEGRATION:**
 
 ```typescript
 🎯 INTEGRATION MED EMAIL ASSISTANT:
+
 - Samme AI analysis engine
 - Deling af lead detection data
 - Consistent source badges
 - Unified analytics
 
 📊 DATA FLOW:
+
 1. Email ind → AI analysis
 2. Lead score + source detection
 3. Data vises i venstre panel
@@ -75,11 +85,13 @@
 5. Analytics tracking på begge panels
 
 🔄 PERFORMANCE:
+
 - Caching af lead data
 - Lazy loading af badges
 - Optimized sorting algorithms
 - Real-time updates
-```
+
+```text
 
 ## 🎨 **DESIGN KONCEPT:**
 
@@ -107,46 +119,55 @@
 │    Odense • Erhverv              │
 │    3.500 kr. • 2 dage siden     │
 └─────────────────────────────────┘
-```
+
+```text
 
 ## 🚀 **IMPLEMENTATION PLAN:**
 
 ```typescript
 🎯 PHASE 10: INTELLIGENT EMAIL LIST
+
 - Lead score integration
 - Source detection badges
 - Enhanced sorting
 
 🎯 PHASE 11: BUSINESS INTELLIGENCE
+
 - Estimeret værdi visning
 - Job type indicators
 - Location badges
 
 🎯 PHASE 12: ADVANCED FILTERING
+
 - Multi-dimensional filtering
 - Custom views
 - Saved searches
 
 🎯 PHASE 13: PREDICTIVE ANALYTICS
+
 - Konvertering prediction
 - Response time optimization
 - Automated prioritization
-```
+
+```text
 
 ## 📊 **BUSINESS VALUE:**
 
 ```typescript
 💰 FORVENTET ROI:
+
 - 50% hurtigere lead identification
 - 30% højere konvertering på hot leads
 - 25% tidsbesparelse i email processing
 - 100% bedre overview af pipeline
 
 🎯 SUCCESS METRICS:
+
 - Time to identify hot leads
 - Lead score accuracy
 - Conversion rate improvement
 - User satisfaction scores
+
 ```
 
 ---

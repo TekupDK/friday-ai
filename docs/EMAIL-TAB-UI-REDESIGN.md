@@ -4,7 +4,7 @@
 
 ### Layout Struktur
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │ [Sidebar]  │  [Search & Actions]                        │
 │            │  ┌──────────────────────────────────────┐  │
@@ -19,16 +19,17 @@
 │ • ...      │  │     ...                              │  │
 │            │  └──────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────┘
-```
+
+```text
 
 ### 🎯 Styrker (Bevar disse)
 
 1. ✅ **Sidebar navigation** - God folder/label struktur
-2. ✅ **Virtual scrolling** - Performance optimeret
-3. ✅ **Time-based sections** - "TODAY", "YESTERDAY", "LAST 7 DAYS"
-4. ✅ **AI integration** - Summaries og label suggestions
-5. ✅ **Keyboard navigation** - j/k shortcuts
-6. ✅ **Bulk actions** - Multi-select med checkboxes
+1. ✅ **Virtual scrolling** - Performance optimeret
+1. ✅ **Time-based sections** - "TODAY", "YESTERDAY", "LAST 7 DAYS"
+1. ✅ **AI integration** - Summaries og label suggestions
+1. ✅ **Keyboard navigation** - j/k shortcuts
+1. ✅ **Bulk actions** - Multi-select med checkboxes
 
 ### ❌ Problemer & Forbedringer
 
@@ -53,7 +54,8 @@ className="py-3"  // Mere luft mellem emails
 <Card className="p-4 hover:bg-accent/50">
   // Til:
 <Card className="p-5 hover:bg-accent/30">
-```
+
+```text
 
 #### 2. **AI Features - For iøjnefaldende**
 
@@ -78,7 +80,8 @@ className="py-3"  // Mere luft mellem emails
 <Badge variant="outline" className="border-blue-500 text-blue-600">
   Ulæst
 </Badge>
-```
+
+```text
 
 #### 3. **Email Card Design - Mangler hierarki**
 
@@ -92,7 +95,7 @@ className="py-3"  // Mere luft mellem emails
 
 ```tsx
 <div className="flex items-start justify-between">
-  {/* Left: Sender + Subject */}
+  {/*Left: Sender + Subject*/}
   <div className="flex-1 min-w-0">
     <div className="flex items-baseline gap-2 mb-0.5">
       <span className="font-semibold text-base">{sender}</span>
@@ -104,7 +107,7 @@ className="py-3"  // Mere luft mellem emails
     <p className="text-xs text-muted-foreground line-clamp-2">{snippet}</p>
   </div>
 
-  {/* Right: Time + Icons */}
+  {/*Right: Time + Icons*/}
   <div className="flex flex-col items-end gap-1 ml-4">
     <time className="text-xs text-muted-foreground whitespace-nowrap">
       {formatTime(date)}
@@ -115,7 +118,8 @@ className="py-3"  // Mere luft mellem emails
     </div>
   </div>
 </div>
-```
+
+```text
 
 #### 4. **Search Bar - Mangler prominence**
 
@@ -136,7 +140,8 @@ className="py-3"  // Mere luft mellem emails
   />
   <Kbd className="absolute right-3 top-1/2 -translate-y-1/2">/</Kbd>
 </div>
-```
+
+```text
 
 #### 5. **Actions Bar - For mange knapper**
 
@@ -149,20 +154,21 @@ className="py-3"  // Mere luft mellem emails
 
 ```tsx
 <div className="flex items-center gap-3">
-  {/* Primary Action */}
+  {/*Primary Action*/}
   <Button size="default" className="gap-2">
     <PenSquare className="w-4 h-4" />
     Ny Email
   </Button>
 
-  {/* Secondary Actions */}
+  {/*Secondary Actions*/}
   <div className="flex gap-1">
     <TooltipButton icon={RefreshCw} label="Opdater" />
     <TooltipButton icon={Sparkles} label="AI Tools" />
     <ViewToggle />
   </div>
 </div>
-```
+
+```text
 
 #### 6. **Section Headers - For subtile**
 
@@ -185,7 +191,8 @@ className="py-3"  // Mere luft mellem emails
     </Badge>
   </div>
 </div>
-```
+
+```text
 
 ---
 
@@ -193,7 +200,7 @@ className="py-3"  // Mere luft mellem emails
 
 ### Option 1: **Gmail-Inspired (Minimalistisk)**
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │ [≡] Inbox (24)          [/ Søg...]         [+ Ny Email] │
 ├─────────────────────────────────────────────────────────┤
@@ -209,11 +216,12 @@ className="py-3"  // Mere luft mellem emails
 
 ✨ Hover state: Vis quick actions (archive, delete, star)
 🎯 Clean, scannable, professionel
-```
+
+```text
 
 ### Option 2: **Superhuman-Style (Keyboard First)**
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │ Inbox                  Tryk ? for shortcuts    [Compose] │
 ├─────────────────────────────────────────────────────────┤
@@ -230,11 +238,12 @@ className="py-3"  // Mere luft mellem emails
 
 ✨ ">" indikerer keyboard selection
 🎯 Keyboard-first, hurtig navigation, power user fokus
-```
+
+```text
 
 ### Option 3: **Notion-Style (Moderne & Luftig)**
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │ 📧 Emails / Inbox                          [+ Ny email] │
 ├─────────────────────────────────────────────────────────┤
@@ -257,6 +266,7 @@ className="py-3"  // Mere luft mellem emails
 
 ✨ Card-based, god spacing, moderne æstetik
 🎯 User-friendly, visuelt tiltalende, god for ikke-power users
+
 ```
 
 ---
@@ -266,23 +276,23 @@ className="py-3"  // Mere luft mellem emails
 ### **Phase 1: Quick Wins (1-2 dage)**
 
 1. **Øg spacing** mellem emails (py-2 → py-3)
-2. **Collapse AI features** til hover state
-3. **Forbedre visual hierarki** i email cards
-4. **Større søgefelt** med keyboard shortcut (/)
+1. **Collapse AI features** til hover state
+1. **Forbedre visual hierarki** i email cards
+1. **Større søgefelt** med keyboard shortcut (/)
 
 ### **Phase 2: Visual Refresh (3-5 dage)**
 
 1. **Ny email card design** med bedre typografi
-2. **Forbedrede section headers** med gradient + sticky
-3. **Hover actions** (archive, star, delete) ved hover
-4. **Better attachment indicators**
+1. **Forbedrede section headers** med gradient + sticky
+1. **Hover actions** (archive, star, delete) ved hover
+1. **Better attachment indicators**
 
 ### **Phase 3: Advanced Features (1 uge)**
 
 1. **Inbox Zero celebration** animation
-2. **Smart categorization** badges (Work, Personal, Finance)
-3. **Quick preview** på hover (tooltip med første linjer)
-4. **Drag and drop** til folders/labels
+1. **Smart categorization** badges (Work, Personal, Finance)
+1. **Quick preview** på hover (tooltip med første linjer)
+1. **Drag and drop** til folders/labels
 
 ---
 
@@ -320,11 +330,11 @@ className="py-3"  // Mere luft mellem emails
 
 ---
 
-## 🎯 Hvilken retning vil du tage?
+## 🎯 Hvilken retning vil du tage
 
-**A) Gmail-Inspired** - Minimalistisk, professionel, kendt UI  
-**B) Superhuman-Style** - Keyboard-first, power user fokus  
-**C) Notion-Style** - Moderne, luftig, user-friendly  
+**A) Gmail-Inspired** - Minimalistisk, professionel, kendt UI
+**B) Superhuman-Style** - Keyboard-first, power user fokus
+**C) Notion-Style** - Moderne, luftig, user-friendly
 **D) Hybrid** - Kombiner det bedste fra alle
 
 Vil du have mig til at implementere en specifik direction?

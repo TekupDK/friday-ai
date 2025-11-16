@@ -1,7 +1,7 @@
 # 🧹 Workspace Cleanup Guide
 
-**Date:** 2025-11-08  
-**Status:** Ready to Execute  
+**Date:** 2025-11-08
+**Status:** Ready to Execute
 **Estimated Time:** 20 minutes
 
 ---
@@ -11,8 +11,8 @@
 This guide will help you clean up the workspace by:
 
 1. Deleting 19 unnecessary files
-2. Organizing 18 test files
-3. Consolidating documentation
+1. Organizing 18 test files
+1. Consolidating documentation
 
 **Result:** Cleaner, more organized workspace with 47% fewer root-level files
 
@@ -27,7 +27,8 @@ Delete files that are definitely not needed:
 ```powershell
 # Run from project root
 .\scripts\cleanup-phase1.ps1
-```
+
+```text
 
 **What it does:**
 
@@ -47,7 +48,8 @@ Move test scripts to proper location:
 ```powershell
 # Run from project root
 .\scripts\organize-test-files.ps1
-```
+
+```text
 
 **What it does:**
 
@@ -68,7 +70,8 @@ git status
 
 # Review changes
 git diff
-```
+
+```text
 
 ---
 
@@ -79,7 +82,8 @@ Commit the cleanup:
 ```powershell
 git add .
 git commit -m "chore: cleanup workspace - delete empty files and organize tests"
-```
+
+```text
 
 ---
 
@@ -90,8 +94,8 @@ git commit -m "chore: cleanup workspace - delete empty files and organize tests"
 These migration scripts can be deleted if migrations are done:
 
 ```powershell
-# Check if migrations are complete first!
-# Then delete these files:
+# Check if migrations are complete first
+# Then delete these files
 
 Remove-Item add-alias-columns.ts
 Remove-Item add-missing-columns.ts
@@ -108,7 +112,8 @@ Remove-Item resync-invoices.ts
 Remove-Item run-email-threads-migration.ts
 Remove-Item run-pipeline-migration.mjs
 Remove-Item setup-enums-via-cli.ts
-```
+
+```text
 
 **Total:** 15 additional files (only if migrations are complete)
 
@@ -118,25 +123,29 @@ Remove-Item setup-enums-via-cli.ts
 
 ### **Before Cleanup:**
 
-```
+```text
 Root directory:
+
 - ~150 files
 - 18 test scripts mixed with source
 - 11 empty files
 - 5 temporary files (1.1MB)
 - Cluttered and hard to navigate
-```
+
+```text
 
 ### **After Cleanup:**
 
-```
+```text
 Root directory:
+
 - ~80 files (47% reduction)
 - All tests in tests/ folder
 - No empty files
 - No temporary files
 - Clean and professional
-```
+
+```bash
 
 ---
 
@@ -174,7 +183,8 @@ pnpm build
 # 5. Commit
 git add .
 git commit -m "chore: cleanup workspace"
-```
+
+```text
 
 **Total time:** ~10 minutes
 
@@ -243,9 +253,9 @@ git commit -m "chore: cleanup workspace"
 ## ⚠️ **IMPORTANT NOTES**
 
 1. **Backup First:** All files remain in git history
-2. **Test After:** Run `pnpm build` and `pnpm test` after cleanup
-3. **Migration Scripts:** Only delete after verifying migrations are complete
-4. **Team Communication:** Inform team about cleanup
+1. **Test After:** Run `pnpm build` and `pnpm test` after cleanup
+1. **Migration Scripts:** Only delete after verifying migrations are complete
+1. **Team Communication:** Inform team about cleanup
 
 ---
 
@@ -268,13 +278,14 @@ Run the first cleanup script:
 
 ```powershell
 .\scripts\cleanup-phase1.ps1
+
 ```
 
 **It will:**
 
 1. Show you what will be deleted
-2. Ask for confirmation
-3. Delete files
-4. Show summary
+1. Ask for confirmation
+1. Delete files
+1. Show summary
 
 **Safe to run!** ✅

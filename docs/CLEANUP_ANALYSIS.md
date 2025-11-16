@@ -1,6 +1,6 @@
 # 🧹 Workspace Cleanup Analysis
 
-**Generated:** 2025-11-08 17:42 UTC+01:00  
+**Generated:** 2025-11-08 17:42 UTC+01:00
 **Purpose:** Identify outdated, duplicate, and unnecessary files
 
 ---
@@ -10,11 +10,11 @@
 After analyzing the workspace, I've identified several categories of files that can be cleaned up:
 
 1. **Empty/Placeholder Files** - Files with 0 bytes
-2. **Duplicate Documentation** - Similar docs covering same topics
-3. **Old Test Files** - Outdated test scripts
-4. **Temporary Files** - Migration scripts no longer needed
-5. **Backup Files** - Old backups
-6. **Deprecated Docs** - Already marked as deprecated
+1. **Duplicate Documentation** - Similar docs covering same topics
+1. **Old Test Files** - Outdated test scripts
+1. **Temporary Files** - Migration scripts no longer needed
+1. **Backup Files** - Old backups
+1. **Deprecated Docs** - Already marked as deprecated
 
 ---
 
@@ -22,7 +22,7 @@ After analyzing the workspace, I've identified several categories of files that 
 
 ### **1. Empty Files (0 bytes)**
 
-```
+```text
 Root Level:
 ├── DEBUG_AKTUEL_STATUS.md (0 bytes) ❌ DELETE
 ├── FIX_500_ERROR.md (0 bytes) ❌ DELETE
@@ -36,7 +36,8 @@ Root Level:
 ├── check-env.js (0 bytes) ❌ DELETE
 ├── test-database.js (0 bytes) ❌ DELETE
 └── .gitkeep (0 bytes) ⚠️ KEEP (intentional)
-```
+
+```text
 
 **Total:** 11 empty files to delete
 
@@ -44,10 +45,11 @@ Root Level:
 
 ### **2. Backup Files**
 
-```
+```text
 drizzle/
 └── schema.backup.ts ❌ DELETE (backup no longer needed)
-```
+
+```text
 
 **Reason:** Schema is stable, backup not needed
 
@@ -55,11 +57,12 @@ drizzle/
 
 ### **3. Deprecated Documentation**
 
-```
+```text
 docs/
 ├── DEPRECATED_CODE_CLEANUP.md ❌ DELETE (meta-doc about deprecated code)
 └── DEPRECATED_FILES.md ❌ DELETE (list of deprecated files)
-```
+
+```text
 
 **Reason:** These are meta-documents about deprecation, no longer relevant
 
@@ -69,7 +72,7 @@ docs/
 
 **Ad-hoc test scripts that should be in `tests/` or deleted:**
 
-```
+```text
 Root Level Test Scripts:
 ├── test-all-email-functions.mjs ⚠️ MOVE to tests/ or DELETE
 ├── test-billy-api.ts ⚠️ MOVE to tests/ or DELETE
@@ -89,7 +92,8 @@ Root Level Test Scripts:
 ├── test-sidebar-logic.md ⚠️ MOVE to docs/ or DELETE
 ├── test-ui-state.mjs ⚠️ MOVE to tests/ or DELETE
 └── verify-email-fix.mjs ⚠️ DELETE (one-time verification)
-```
+
+```text
 
 **Total:** 18 test files in wrong location
 
@@ -104,7 +108,7 @@ Root Level Test Scripts:
 
 **One-time migration scripts no longer needed:**
 
-```
+```text
 Root Level:
 ├── add-alias-columns.ts ❌ DELETE (migration done)
 ├── add-missing-columns.ts ❌ DELETE (migration done)
@@ -123,7 +127,8 @@ Root Level:
 ├── run-pipeline-migration.mjs ❌ DELETE (migration done)
 ├── setup-enums-via-cli.ts ❌ DELETE (setup done)
 └── test-migration.ps1 ⚠️ MOVE to scripts/ or DELETE
-```
+
+```text
 
 **Total:** 16 migration scripts to delete/move
 
@@ -135,7 +140,7 @@ Root Level:
 
 #### **Login Documentation (Redundant)**
 
-```
+```text
 Root Level:
 ├── LOGIN_DEBUG_GUIDE.md ⚠️ CONSOLIDATE
 ├── LOGIN_FIXES_COMPLETE.md (empty) ❌ DELETE
@@ -144,7 +149,8 @@ Root Level:
 ├── README_LOGIN_FIX.md (empty) ❌ DELETE
 ├── TEST_LOGIN_GUIDE.md (empty) ❌ DELETE
 └── VISUAL_LOGIN_GUIDE.md (empty) ❌ DELETE
-```
+
+```text
 
 **Action:** Keep only `LOGIN_DEBUG_GUIDE.md`, delete rest
 
@@ -152,7 +158,7 @@ Root Level:
 
 #### **Status/Summary Docs (Redundant)**
 
-```
+```text
 Root Level:
 ├── STATUS.md ⚠️ KEEP (main status)
 ├── FINAL_STATUS_NOW.md ⚠️ CONSOLIDATE into STATUS.md
@@ -160,7 +166,8 @@ Root Level:
 ├── TEKUP_AI_V2_FINAL_STATUS.md ⚠️ CONSOLIDATE
 ├── TEKUP_AI_V2_COMPLETE_REPORT.md ⚠️ KEEP (detailed report)
 └── SESSION-SUMMARY-FINAL.md ⚠️ ARCHIVE or DELETE
-```
+
+```text
 
 **Action:** Consolidate into main `STATUS.md` and `README.md`
 
@@ -168,7 +175,7 @@ Root Level:
 
 #### **Setup/Guide Docs (Redundant)**
 
-```
+```text
 Root Level:
 ├── QUICK_START.md (empty) ❌ DELETE
 ├── START_GUIDE.md ⚠️ KEEP
@@ -177,7 +184,8 @@ Root Level:
 ├── ENV_FILES_COMPLETE_GUIDE.md ⚠️ CONSOLIDATE
 ├── ENV_SUMMARY.md ⚠️ CONSOLIDATE
 └── QUICK_ENV_REFERENCE.md ⚠️ CONSOLIDATE
-```
+
+```text
 
 **Action:** Consolidate ENV docs into one comprehensive guide
 
@@ -185,13 +193,14 @@ Root Level:
 
 #### **Migration Docs (Redundant)**
 
-```
+```text
 Root Level:
 ├── MIGRATION_GUIDE.md ⚠️ KEEP
 ├── MIGRATION_COMPLETE_SUCCESS.md ⚠️ ARCHIVE
 ├── FINAL_MIGRATION_REPORT.md ⚠️ ARCHIVE
 └── README_MIGRATION.md ⚠️ CONSOLIDATE
-```
+
+```text
 
 **Action:** Keep main guide, archive completion reports
 
@@ -199,7 +208,7 @@ Root Level:
 
 #### **Email Docs (Too Many)**
 
-```
+```text
 Root Level:
 ├── EMAIL_FUNCTIONS_DOCUMENTATION.md ⚠️ KEEP (comprehensive)
 ├── EMAIL_QUICK_REFERENCE.md ⚠️ KEEP (useful quick ref)
@@ -209,7 +218,8 @@ Root Level:
 ├── EMAIL_TAB_CACHE_ANALYSIS.md ⚠️ ARCHIVE
 ├── EMAIL_TEST_DOCUMENTATION_SUMMARY.md ⚠️ CONSOLIDATE
 └── EMAIL_THREAD_LOADING_PERFORMANCE.md ⚠️ ARCHIVE
-```
+
+```text
 
 **Action:** Keep main docs, archive analysis docs
 
@@ -217,7 +227,7 @@ Root Level:
 
 #### **Phase Docs (Scattered)**
 
-```
+```text
 Root Level:
 ├── PHASE-4-5-MASTER-PLAN.md ⚠️ MOVE to docs/
 ├── PHASE-4-COMPLETE.md ⚠️ MOVE to docs/
@@ -232,7 +242,8 @@ docs/
 ├── PHASE_3_TEST_REPORT.md ✅ KEEP
 ├── PHASE_4_5_COMPLETE.md ✅ KEEP
 └── PHASE_4_TEST_REPORT.md ✅ KEEP
-```
+
+```text
 
 **Action:** Move all phase docs to `docs/` folder
 
@@ -240,14 +251,15 @@ docs/
 
 ### **7. Temporary/Analysis Files**
 
-```
+```text
 Root Level:
 ├── analysis-emil-laerke.json ❌ DELETE (one-time analysis)
 ├── billy-api-response.json ❌ DELETE (sample response, 187KB)
 ├── cookies.txt ❌ DELETE (test cookies)
 ├── stats.html ❌ DELETE (1.1MB stats file)
 └── env.template.txt ⚠️ CONSOLIDATE with .env.*.template
-```
+
+```bash
 
 **Total:** 5 temporary files
 
@@ -255,7 +267,7 @@ Root Level:
 
 ### **8. Old Docker Files**
 
-```
+```bash
 Root Level:
 ├── docker-compose.supabase.yml ⚠️ KEEP if using Supabase
 ├── docker-compose.yml ✅ KEEP (main)
@@ -263,7 +275,8 @@ Root Level:
 ├── DOCKER_COMPLETE.md ⚠️ CONSOLIDATE
 ├── DOCKER_SETUP.md ⚠️ CONSOLIDATE
 └── DOCKER_TEST_SETUP.md ⚠️ CONSOLIDATE
-```
+
+```bash
 
 **Action:** Consolidate Docker docs into one guide
 
@@ -280,7 +293,7 @@ Root Level:
 | Deprecated docs   | 2      | ❌ DELETE  |
 | Migration scripts | 14     | ❌ DELETE  |
 | Temporary files   | 5      | ❌ DELETE  |
-| **TOTAL**         | **33** | **DELETE** |
+| **TOTAL**|**33**|**DELETE** |
 
 ### **Files to Move/Reorganize:**
 
@@ -288,7 +301,7 @@ Root Level:
 | ------------ | ------ | ----------------- |
 | Test scripts | 18     | 📦 MOVE to tests/ |
 | Phase docs   | 4      | 📦 MOVE to docs/  |
-| **TOTAL**    | **22** | **MOVE**          |
+| **TOTAL**|**22**|**MOVE**          |
 
 ### **Files to Consolidate:**
 
@@ -299,7 +312,7 @@ Root Level:
 | ENV docs    | 4      | 📝 CONSOLIDATE  |
 | Email docs  | 5      | 📝 CONSOLIDATE  |
 | Docker docs | 3      | 📝 CONSOLIDATE  |
-| **TOTAL**   | **23** | **CONSOLIDATE** |
+| **TOTAL**|**23**|**CONSOLIDATE** |
 
 ---
 
@@ -335,7 +348,8 @@ Remove-Item analysis-emil-laerke.json
 Remove-Item billy-api-response.json
 Remove-Item cookies.txt
 Remove-Item stats.html
-```
+
+```text
 
 **Total:** 20 files deleted
 
@@ -352,7 +366,8 @@ New-Item -ItemType Directory -Path tests\manual -Force
 # Move test files
 Move-Item test-*.* tests\manual\
 Move-Item verify-email-fix.mjs tests\manual\
-```
+
+```text
 
 ---
 
@@ -376,7 +391,8 @@ Remove-Item resync-invoices.ts
 Remove-Item run-email-threads-migration.ts
 Remove-Item run-pipeline-migration.mjs
 Remove-Item setup-enums-via-cli.ts
-```
+
+```bash
 
 **Total:** 15 files deleted
 
@@ -387,10 +403,10 @@ Remove-Item setup-enums-via-cli.ts
 Create consolidated docs:
 
 1. **`docs/LOGIN_GUIDE.md`** - Consolidate all login docs
-2. **`docs/ENV_SETUP_COMPLETE.md`** - Consolidate all ENV docs
-3. **`docs/DOCKER_GUIDE.md`** - Consolidate all Docker docs
-4. **`docs/EMAIL_GUIDE.md`** - Consolidate email docs
-5. **Update `README.md`** - Main entry point with links
+1. **`docs/ENV_SETUP_COMPLETE.md`** - Consolidate all ENV docs
+1. **`docs/DOCKER_GUIDE.md`** - Consolidate all Docker docs
+1. **`docs/EMAIL_GUIDE.md`** - Consolidate email docs
+1. **Update `README.md`** - Main entry point with links
 
 Then delete old docs.
 
@@ -400,7 +416,7 @@ Then delete old docs.
 
 Create better structure in `docs/`:
 
-```
+```text
 docs/
 ├── guides/              # User guides
 │   ├── LOGIN_GUIDE.md
@@ -421,7 +437,8 @@ docs/
 └── archive/             # Historical docs
     ├── MIGRATION_COMPLETE.md
     └── ...
-```
+
+```bash
 
 ---
 
@@ -481,10 +498,10 @@ docs/
 ## ⚠️ **IMPORTANT NOTES**
 
 1. **Backup First:** Create a git commit before cleanup
-2. **Verify Migrations:** Ensure all migrations are complete before deleting scripts
-3. **Check Dependencies:** Verify no scripts reference deleted files
-4. **Team Communication:** Inform team about cleanup
-5. **Git History:** Old files remain in git history if needed
+1. **Verify Migrations:** Ensure all migrations are complete before deleting scripts
+1. **Check Dependencies:** Verify no scripts reference deleted files
+1. **Team Communication:** Inform team about cleanup
+1. **Git History:** Old files remain in git history if needed
 
 ---
 
@@ -504,6 +521,7 @@ git checkout -b cleanup/workspace-organization
 # Commit
 git add .
 git commit -m "chore: cleanup empty and deprecated files"
+
 ```
 
 Vil du have mig til at lave cleanup scripts? 🧹

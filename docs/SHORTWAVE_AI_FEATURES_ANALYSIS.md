@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Shortwave.ai er designet med fokus på **AI-drevet email intelligence** og **workflow automation**, ikke bare fancy UI. Deres features er dybt integreret i workflow'et, ikke bare "nice-to-have" additions.
+Shortwave.ai er designet med fokus på **AI-drevet email intelligence**og**workflow automation**, ikke bare fancy UI. Deres features er dybt integreret i workflow'et, ikke bare "nice-to-have" additions.
 
 ---
 
@@ -49,7 +49,8 @@ interface EmailSummary {
   actionRequired: boolean;
   suggestedLabel?: string; // "Leads", "Needs Reply", etc.
 }
-```
+
+```text
 
 **Når skal det vises:**
 
@@ -86,7 +87,8 @@ interface SmartLabel {
   }>;
   autoApply?: boolean; // Hvis confidence > 0.9
 }
-```
+
+```text
 
 **Labels til Tekup AI v2 workflow:**
 
@@ -111,7 +113,7 @@ interface SmartLabel {
 
 - Analyserer email indhold + kontekst
 - Foreslår **3-4 reply options** med forskellige tones
-- Shortwave bruger **templates** + **AI completion**
+- Shortwave bruger **templates**+**AI completion**
 - Templates er **workflow-specifikke** - ikke generiske
 
 **Implementering for Tekup AI v2:**
@@ -124,14 +126,15 @@ interface SuggestedReply {
   estimatedLength: number; // words
   includesPlaceholders: boolean; // For personalization
 }
-```
+
+```text
 
 **Reply Templates for Tekup AI v2:**
 
 1. **Lead Response** - "Tak for din forespørgsel om rengøring..."
-2. **Quote Follow-up** - "Vi har sendt tilbud for..."
-3. **Payment Reminder** - "Venligst betal faktura..."
-4. **Booking Confirmation** - "Vi bekræfter booking..."
+1. **Quote Follow-up** - "Vi har sendt tilbud for..."
+1. **Payment Reminder** - "Venligst betal faktura..."
+1. **Booking Confirmation** - "Vi bekræfter booking..."
 
 **Når skal det aktiveres:**
 
@@ -166,7 +169,8 @@ interface EmailBundle {
   preview: string;
   unreadCount: number;
 }
-```
+
+```text
 
 **Grouping Logic:**
 
@@ -199,7 +203,8 @@ interface SmartTemplate {
     defaultValue?: string;
   }>;
 }
-```
+
+```text
 
 **Template Examples:**
 
@@ -207,11 +212,11 @@ interface SmartTemplate {
    - Auto-fills: customer name, address, service type
    - Pulls from: lead data + email context
 
-2. **"Bekræft Booking"**
+1. **"Bekræft Booking"**
    - Auto-fills: date, time, address, customer
    - Pulls from: calendar event + lead
 
-3. **"Betalingspåmindelse"**
+1. **"Betalingspåmindelse"**
    - Auto-fills: invoice number, amount, due date
    - Pulls from: Billy.dk invoice data
 
@@ -226,24 +231,24 @@ interface SmartTemplate {
    - Forbedrer workflow betydeligt
    - Relativt simpel implementering
 
-2. **Smart Auto-Labeling** - Høj prioritet
+1. **Smart Auto-Labeling** - Høj prioritet
    - Kritisk for workflow organization
    - Reducerer manuel arbejde drastisk
    - Kan starte med simple pattern matching, upgrade til AI senere
 
 ### Phase 2: Productivity Features (Vigtigt) 🚀
 
-3. **Auto-Suggest Replies** - Medium prioritet
+1. **Auto-Suggest Replies** - Medium prioritet
    - Stort tidsbesparende potentiale
    - Kræver god template-system først
 
-4. **Smart Templates** - Medium prioritet
+1. **Smart Templates** - Medium prioritet
    - Afhænger af Phase 1 (labels + summaries)
    - Kræver cross-system integration
 
 ### Phase 3: Advanced Features (Nice-to-have) ✨
 
-5. **Email Bundling** - Lav prioritet
+1. **Email Bundling** - Lav prioritet
    - Nice-to-have, men ikke kritisk
    - Kan vente til Phase 1-2 er solidt
 
@@ -251,24 +256,24 @@ interface SmartTemplate {
 
 ## Technical Requirements
 
-### AI/ML Capabilities Nødvendige:
+### AI/ML Capabilities Nødvendige
 
 1. **Text Analysis**
    - Summarization (GPT-4o eller Gemini 2.5 Flash)
    - Intent Classification (er det lead, invoice, booking?)
    - Entity Extraction (customer name, service type, amount)
 
-2. **Context Awareness**
+1. **Context Awareness**
    - Cross-system lookups (leads, invoices, calendar)
    - Historical patterns (hvad har vi sendt denne kunde før?)
    - Workflow state (er lead allerede konverteret?)
 
-3. **Learning System**
+1. **Learning System**
    - Track label choices over tid
    - Improve suggestions baseret på bruger-feedback
    - Pattern recognition i email content
 
-### Database Schema Additions:
+### Database Schema Additions
 
 ```sql
 -- Email AI Analysis Cache
@@ -303,20 +308,21 @@ CREATE TABLE label_patterns (
   usage_count INT,
   last_updated TIMESTAMP
 );
+
 ```
 
 ---
 
 ## Success Metrics
 
-### For hver feature, måle:
+### For hver feature, måle
 
 1. **Adoption Rate** - Hvor mange brugere bruger det?
-2. **Time Saved** - Hvor meget tid spares per dag?
-3. **Accuracy** - Hvor præcise er AI-forslagene?
-4. **Workflow Impact** - Forbedrer det workflow'et?
+1. **Time Saved** - Hvor meget tid spares per dag?
+1. **Accuracy** - Hvor præcise er AI-forslagene?
+1. **Workflow Impact** - Forbedrer det workflow'et?
 
-### Minimum Viable Thresholds:
+### Minimum Viable Thresholds
 
 - **Summaries**: 80%+ accuracy, 30%+ time saved
 - **Auto-Labeling**: 85%+ accuracy, 50%+ labels auto-applied
@@ -335,7 +341,7 @@ CREATE TABLE label_patterns (
 
 ### 2. **Transparent**
 
-- Brugere skal forstå **hvad** AI gør og **hvorfor**
+- Brugere skal forstå **hvad**AI gør og**hvorfor**
 - Vis confidence scores
 - Tillad manual override altid
 
@@ -360,17 +366,17 @@ CREATE TABLE label_patterns (
    - Cache results i database
    - Vis i inbox-listen
 
-2. **Implement Smart Auto-Labeling** (Phase 1)
+1. **Implement Smart Auto-Labeling** (Phase 1)
    - Start med pattern matching (keywords)
    - Upgrade til AI classification senere
    - Track accuracy og lær over tid
 
-3. **Build Template System** (Phase 2 foundation)
+1. **Build Template System** (Phase 2 foundation)
    - Database schema
    - Template editor UI
    - Variable system
 
-4. **Add Auto-Suggest Replies** (Phase 2)
+1. **Add Auto-Suggest Replies** (Phase 2)
    - Integrer med templates
    - AI completion
    - Context-aware suggestions

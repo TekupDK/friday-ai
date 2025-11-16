@@ -80,7 +80,7 @@ Ny til InvoicesTab eller skal fixe bugs? Følg denne guide:
 
 ## 🗺️ IMPLEMENTATION ROADMAP
 
-```
+```text
 Week 1: Critical Fixes (Dag 1-2)
 ├── Fix memory leak (15 min)
 ├── Add TypeScript interfaces (1-2 timer)
@@ -102,7 +102,8 @@ Week 1: Critical Fixes (Dag 1-2)
                 ├── Bulk actions (4-6 timer)
                 ├── Smart filters (6-8 timer)
                 └── AI suggestions (12-16 timer)
-```
+
+```text
 
 ---
 
@@ -187,7 +188,7 @@ Week 1: Critical Fixes (Dag 1-2)
 
 ## 🏗️ ARCHITECTURE OVERVIEW
 
-```
+```bash
 ┌─────────────────────────────────────────────────────────────┐
 │                      InvoicesTab.tsx                        │
 │  ┌──────────────┐  ┌───────────┐  ┌──────────────────┐    │
@@ -207,14 +208,15 @@ Week 1: Critical Fixes (Dag 1-2)
     │ Billy API │  │  Database   │  │ AI (LLM)│
     │  (MCP)    │  │ (Postgres)  │  │ (Gemini)│
     └───────────┘  └─────────────┘  └─────────┘
-```
+
+```text
 
 ### Data Flow
 
 1. **List Invoices:** Database-first (cache), fallback to Billy API
-2. **AI Analysis:** Direct LLM call with invoice summary
-3. **Feedback:** Store in analytics_events table
-4. **CSV Export:** Client-side generation (Blob + download)
+1. **AI Analysis:** Direct LLM call with invoice summary
+1. **Feedback:** Store in analytics_events table
+1. **CSV Export:** Client-side generation (Blob + download)
 
 ---
 
@@ -237,7 +239,8 @@ pnpm lint
 
 # Format
 pnpm format
-```
+
+```text
 
 ### Database
 
@@ -250,7 +253,8 @@ pnpm drizzle-kit push
 
 # Studio (GUI)
 pnpm drizzle-kit studio
-```
+
+```text
 
 ### Production
 
@@ -263,25 +267,27 @@ pnpm preview
 
 # Deploy
 # (CI/CD handles this)
-```
+
+```text
 
 ---
 
 ## 📞 SUPPORT & ESCALATION
 
-### Questions?
+### Questions
 
 1. Check this index for relevant docs
-2. Read TECHNICAL_ANALYSIS.md for bug details
-3. Check IMPLEMENTATION_PLAN.md for code examples
-4. Ask in #frontend channel
-5. Tag @frontend-team if urgent
+1. Read TECHNICAL_ANALYSIS.md for bug details
+1. Check IMPLEMENTATION_PLAN.md for code examples
+1. Ask in #frontend channel
+1. Tag @frontend-team if urgent
 
 ### Escalation Path
 
-```
+```text
 Developer → Tech Lead → Engineering Manager → CTO
-```
+
+```text
 
 ### Critical Issues
 
@@ -304,9 +310,9 @@ Developer → Tech Lead → Engineering Manager → CTO
 ### Recommended Reading
 
 1. [React Performance Optimization](https://react.dev/learn/render-and-commit)
-2. [TypeScript Best Practices](https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html)
-3. [Accessibility (a11y) Guidelines](https://www.a11yproject.com/)
-4. [Memory Management in JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management)
+1. [TypeScript Best Practices](https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html)
+1. [Accessibility (a11y) Guidelines](https://www.a11yproject.com/)
+1. [Memory Management in JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management)
 
 ---
 
@@ -335,12 +341,13 @@ Developer → Tech Lead → Engineering Manager → CTO
 
 ### Commit Conventions
 
-```
+```text
 <type>(invoices): <description>
 
 <body>
 
 Fixes #<issue>
+
 ```
 
 **Types:** fix, feat, refactor, perf, a11y, test, docs, chore
@@ -352,9 +359,9 @@ Fixes #<issue>
 **Ready to start?**
 
 1. **Read** [TECHNICAL_ANALYSIS.md](../tasks/invoices-ui/TECHNICAL_ANALYSIS.md)
-2. **Follow** [IMPLEMENTATION_PLAN.md](../tasks/invoices-ui/IMPLEMENTATION_PLAN.md)
-3. **Track** with [QUICK_CHECKLIST.md](../tasks/invoices-ui/QUICK_CHECKLIST.md)
-4. **Update** [STATUS.md](../tasks/invoices-ui/STATUS.md) as you complete tasks
+1. **Follow** [IMPLEMENTATION_PLAN.md](../tasks/invoices-ui/IMPLEMENTATION_PLAN.md)
+1. **Track** with [QUICK_CHECKLIST.md](../tasks/invoices-ui/QUICK_CHECKLIST.md)
+1. **Update** [STATUS.md](../tasks/invoices-ui/STATUS.md) as you complete tasks
 
 **Questions?** Check [README.md](../tasks/invoices-ui/README.md) or ask the team.
 

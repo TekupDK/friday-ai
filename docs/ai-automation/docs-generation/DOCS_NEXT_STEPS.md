@@ -1,6 +1,6 @@
 # 📚 Docs System - Næste Steps
 
-**Status:** Ready for Next Phase  
+**Status:** Ready for Next Phase
 **Dato:** 2024-11-08
 
 ---
@@ -54,7 +54,8 @@ const templates = [
     <Option value={t.id}>{t.icon} {t.name}</Option>
   ))}
 </Select>
-```
+
+```text
 
 #### 2. Tilføj "Outdated" Filter
 
@@ -65,7 +66,8 @@ const filterOptions = [
   { label: "⚠️ Needs Review (49)", value: "outdated" },
   { label: "✅ Active", value: "active" },
 ];
-```
+
+```text
 
 #### 3. Quick Actions Menu
 
@@ -77,7 +79,8 @@ const filterOptions = [
   <DropdownItem>⚠️ Mark Outdated</DropdownItem>
   <DropdownItem>🗄️ Archive</DropdownItem>
 </DropdownMenu>
-```
+
+```text
 
 ---
 
@@ -98,14 +101,15 @@ suggestCategory: protectedProcedure
     const prompt = `Categorize this document:
     Title: ${input.title}
     Content: ${input.content.slice(0, 500)}...
-    
+
     Choose from: Email System, Invoices & Billy, AI & Friday, ...
     Response format: { category, confidence, tags[] }`;
 
     const result = await ai.complete(prompt);
     return JSON.parse(result);
   });
-```
+
+```text
 
 #### 2. Smart Search (Semantic)
 
@@ -126,7 +130,8 @@ searchSemantic: protectedProcedure
 
     return similar;
   });
-```
+
+```text
 
 #### 3. Auto-Summary
 
@@ -149,7 +154,8 @@ summarize: protectedProcedure
 
     return { summary };
   });
-```
+
+```text
 
 ---
 
@@ -168,7 +174,8 @@ summarize: protectedProcedure
     </TreeNode>
   </TreeNode>
 </Tree>
-```
+
+```text
 
 #### 2. Better Markdown Editor
 
@@ -176,9 +183,10 @@ summarize: protectedProcedure
 # Install
 pnpm add @uiw/react-md-editor
 
-# Replace textarea med:
+# Replace textarea med
 <MDEditor value={content} onChange={setContent} />
-```
+
+```text
 
 **Features:**
 
@@ -201,7 +209,8 @@ pnpm add @uiw/react-md-editor
     ⚠️ 2 marked outdated
   </TimelineItem>
 </Timeline>
-```
+
+```text
 
 ---
 
@@ -228,7 +237,8 @@ if (userAsks("analyze email thread")) {
 
   return "Analysis saved to docs! [View](link)";
 }
-```
+
+```text
 
 #### 2. Task Complete → Generate Changelog
 
@@ -244,7 +254,8 @@ onTaskComplete(async task => {
     tags: ["changelog", "completed"],
   });
 });
-```
+
+```text
 
 #### 3. Error → Link to Troubleshooting
 
@@ -262,7 +273,8 @@ onError(async error => {
     logger.info(`💡 See: ${docs[0].title}`);
   }
 });
-```
+
+```text
 
 ---
 
@@ -292,6 +304,7 @@ const metrics = {
   searchQueries: 234,
   avgResultsClicked: 1.8,
 };
+
 ```
 
 ---
@@ -335,23 +348,23 @@ const metrics = {
 **Ved ny feature:**
 
 1. Start med Feature Spec template
-2. Link til relaterede docs
-3. Update når feature er færdig
-4. Archive når deprecated
+1. Link til relaterede docs
+1. Update når feature er færdig
+1. Archive når deprecated
 
 **Ved bug:**
 
 1. Brug Bug Report template
-2. Link til fix PR
-3. Update status når fixed
-4. Keep for reference
+1. Link til fix PR
+1. Update status når fixed
+1. Keep for reference
 
 **Ved guide:**
 
 1. Brug Guide template
-2. Test at steps virker
-3. Add screenshots
-4. Update ved API changes
+1. Test at steps virker
+1. Add screenshots
+1. Update ved API changes
 
 ### For Teamet
 
@@ -375,21 +388,21 @@ const metrics = {
 ### Dag 1: Test Systemet
 
 1. Gå til `/docs`
-2. Test search på "email"
-3. Klik på et doc og læs det
-4. Test filter by category
+1. Test search på "email"
+1. Klik på et doc og læs det
+1. Test filter by category
 
 ### Dag 2: Create Din Første Doc
 
 1. Klik "New Document"
-2. Vælg template (fx Bug Report)
-3. Udfyld template
-4. Gem og se den i listen
+1. Vælg template (fx Bug Report)
+1. Udfyld template
+1. Gem og se den i listen
 
 ### Dag 3: Cleanup Outdated
 
 1. Filter by "outdated" (49 docs)
-2. Review hver en:
+1. Review hver en:
    - Still relevant? → Remove tag
    - Truly outdated? → Archive
    - Needs update? → Add to backlog
@@ -397,9 +410,9 @@ const metrics = {
 ### Dag 4: Plan Improvements
 
 1. Review DOCS_STRATEGY.md
-2. Prioriter features
-3. Estimate effort
-4. Start implementing!
+1. Prioriter features
+1. Estimate effort
+1. Start implementing!
 
 ---
 

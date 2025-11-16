@@ -54,9 +54,9 @@
 **Next Steps:**
 
 1. Verify handler is being called
-2. Check if body parsing is working
-3. Verify database connection
-4. Test with curl directly
+1. Check if body parsing is working
+1. Verify database connection
+1. Test with curl directly
 
 ### Pending Tests
 
@@ -89,17 +89,19 @@
 
 ### Test Run 1 (2025-11-02 22:36)
 
-```
+```text
 Status Code: 400
 Response: (empty)
-```
+
+```text
 
 ### Test Run 2 (2025-11-02 22:37)
 
-```
+```text
 Status Code: 400
 Response: (empty)
 Handler logs: Checking...
+
 ```
 
 ## Known Issues
@@ -113,7 +115,7 @@ Handler logs: Checking...
      - Added detailed logging to handler
      - Checking Docker logs for handler execution
 
-2. **Empty Response**: Response body is empty even though handler should return JSON
+1. **Empty Response**: Response body is empty even though handler should return JSON
    - **Possible Causes:**
      - Response not being sent
      - Error before response
@@ -122,7 +124,7 @@ Handler logs: Checking...
 ## Next Actions
 
 1. Check Docker logs for handler execution
-2. Test with curl for direct HTTP testing
-3. Verify Express JSON middleware is working
-4. Test database connection independently
-5. Create test database record manually to verify schema
+1. Test with curl for direct HTTP testing
+1. Verify Express JSON middleware is working
+1. Test database connection independently
+1. Create test database record manually to verify schema

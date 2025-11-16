@@ -1,7 +1,7 @@
 # Email Tab & Inbox - Status & Næste Skridt
 
-**Dato:** 5. november 2025  
-**Version:** 1.4.0  
+**Dato:** 5. november 2025
+**Version:** 1.4.0
 **Status:** AI Features Complete ✅ | Pipeline Features Next 🎯
 
 ---
@@ -10,7 +10,7 @@
 
 ### Phase 1: Core Intelligence - AI Features ✅ COMPLETE
 
-**Udviklet:** 3.5 timer (2h 45min implementation + 45min testing)  
+**Udviklet:** 3.5 timer (2h 45min implementation + 45min testing)
 **Status:** Production-ready, alle tests passing
 
 #### ✅ 1.1: AI Email Summaries (Phase 1-3)
@@ -66,12 +66,13 @@ Dette er **næste prioritet** efter AI features er færdige.
 
 **UI Components at oprette:**
 
-```
+```bash
 EmailPipelineBoard.tsx      (350-400 lines)
 ├── PipelineColumn.tsx      (150-200 lines)
 ├── EmailCard.tsx           (100-150 lines)
 └── PipelineDragDrop.tsx    (200-250 lines)
-```
+
+```text
 
 **Features:**
 
@@ -110,7 +111,8 @@ function detectLeadSource(email: Email): LeadSource {
 
   return "direct";
 }
-```
+
+```text
 
 **Auto-Label Rules:**
 
@@ -169,7 +171,8 @@ const ACTIONS = {
     sideEffects: () => archiveEmail(),
   },
 };
-```
+
+```text
 
 **UI Integration:**
 
@@ -206,7 +209,8 @@ if (email.source === "rengoring_nu") {
   // Warning hvis bruger forsøger at reply direkte
   showWarning("⚠️ Send IKKE svar til Rengøring.nu - send til kundens email!");
 }
-```
+
+```text
 
 **AdHelp Rule:**
 
@@ -221,12 +225,13 @@ if (email.source === "adhelp") {
   }
 
   openEmailComposer({
-    to: customerEmail, // IKKE mw@adhelp.dk eller sp@adhelp.dk
+    to: customerEmail, // IKKE <mw@adhelp.dk> eller <sp@adhelp.dk>
     subject: `Tilbud - ${detectServiceType(email)}`,
     template: "adhelp_quote",
   });
 }
-```
+
+```text
 
 **UI:**
 
@@ -270,7 +275,8 @@ onPipelineStageChange(threadId, 'i_kalender', async (email) => {
 
   showToast(`✅ Kalender-event oprettet: ${formatDate(dateTime)}`);
 });
-```
+
+```text
 
 **Estimated Time:** 1-2 timer
 
@@ -311,6 +317,7 @@ onPipelineStageChange(threadId, 'finance', async (email) => {
 
   showToast(`✅ Faktura-draft oprettet: ${invoice.invoiceNo}`);
 });
+
 ```
 
 **Estimated Time:** 1-2 timer
@@ -354,9 +361,9 @@ onPipelineStageChange(threadId, 'finance', async (email) => {
 **Start med:**
 
 1. Opret `EmailPipelineBoard.tsx` component
-2. Setup drag-and-drop med dnd-kit
-3. Opret `email_pipeline_state` tabel
-4. Implementer stage transitions
+1. Setup drag-and-drop med dnd-kit
+1. Opret `email_pipeline_state` tabel
+1. Implementer stage transitions
 
 ### Option B: Test AI Features Grundigt Først
 
@@ -369,9 +376,9 @@ onPipelineStageChange(threadId, 'finance', async (email) => {
 **Gør:**
 
 1. Deploy til production
-2. Monitor AI costs og performance
-3. Test med rigtige emails
-4. Juster confidence thresholds hvis nødvendigt
+1. Monitor AI costs og performance
+1. Test med rigtige emails
+1. Juster confidence thresholds hvis nødvendigt
 
 ### Option C: Fokus på Gmail Rate Limit Fix
 
@@ -404,8 +411,8 @@ Start med **Phase 2.1: Pipeline Board** - det giver størst business value og er
 
 ---
 
-**Næste Sprint:** Pipeline Workflow (Phase 2)  
-**Estimeret tid:** 4-6 timer  
+**Næste Sprint:** Pipeline Workflow (Phase 2)
+**Estimeret tid:** 4-6 timer
 **Business value:** ⭐⭐⭐⭐⭐ (Høj - core workflow feature)
 
 Vil du starte med pipeline features nu, eller vil du teste AI features først? 🚀

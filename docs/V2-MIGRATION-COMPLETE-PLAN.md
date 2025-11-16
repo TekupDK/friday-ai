@@ -2,11 +2,11 @@
 
 ## 🎯 Executive Summary
 
-Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspireret workspace**.
+Vi migrerer fra **gammel tab-baseret arkitektur**til**moderne Shortwave-inspireret workspace**.
 
-**Scope:** 47 filer skal opdateres/oprettes  
-**Estimeret tid:** 8-12 timer  
-**Risk level:** Medium (mange dependencies)  
+**Scope:** 47 filer skal opdateres/oprettes
+**Estimeret tid:** 8-12 timer
+**Risk level:** Medium (mange dependencies)
 **Impact:** Høj (fundamentale arkitektur ændringer)
 
 ---
@@ -15,7 +15,7 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 
 ### ✅ COMPLETED (Allerede lavet)
 
-```
+```bash
 ✓ client/src/pages/WorkspaceLayout.tsx          (NY - erstatter ChatInterface)
 ✓ client/src/components/panels/EmailCenterPanel.tsx  (REFACTORED - kun emails)
 ✓ client/src/components/panels/WorkflowPanelV2.tsx   (NY - wrapper)
@@ -27,7 +27,8 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 ✓ client/src/components/workspace/BusinessDashboard.tsx (NY)
 ✓ client/src/components/inbox/EmailSidebarV2.tsx      (NY)
 ✓ client/src/App.tsx                            (OPDATERET - bruger WorkspaceLayout)
-```
+
+```text
 
 **Status:** 11/47 filer (23% done)
 
@@ -37,7 +38,7 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 
 #### 1. Context & State Management
 
-```
+```bash
 ❌ client/src/contexts/EmailContext.tsx
    Problem: Mangler selectedEmail property
    Fix: Tilføj selectedEmail state + setSelectedEmail action
@@ -47,11 +48,12 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
    Problem: Hardcoded til gammel WorkflowPanel struktur
    Fix: Opdater til at understøtte SmartWorkspace states
    Impact: Højre panel state management
-```
+
+```text
 
 #### 2. InboxPanel (Skal fjernes/refactores)
 
-```
+```bash
 ❌ client/src/components/InboxPanel.tsx
    Problem: Indeholder 5 tabs (Email, Invoices, Calendar, Leads, Tasks)
    Fix: Skal IKKE bruges mere - EmailCenterPanel kalder direkte EmailTab
@@ -61,11 +63,12 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
    Problem: Tester InboxPanel integration
    Fix: Opdater tests til at teste EmailTab direkte
    Impact: Tests fejler
-```
+
+```text
 
 #### 3. Tab Components (Skal flyttes til mini-tabs)
 
-```
+```bash
 ❌ client/src/components/inbox/InvoicesTab.tsx
    Status: Bruges ikke i V2 (skal i mini-tabs senere)
    Fix: Opret InvoicesTabV2.tsx til mini-tabs system
@@ -81,7 +84,8 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 ❌ client/src/components/inbox/TasksTab.tsx
    Status: Bruges ikke i V2 (skal i mini-tabs senere)
    Fix: Opret TasksTabV2.tsx til mini-tabs system
-```
+
+```text
 
 ---
 
@@ -89,7 +93,7 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 
 #### 4. Tests (Integration & Unit)
 
-```
+```bash
 ❌ client/src/pages/__tests__/ChatInterface.integration.test.tsx
    Problem: Tester ChatInterface (gammelt navn)
    Fix: Opret WorkspaceLayout.integration.test.tsx
@@ -105,23 +109,27 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 ❌ tests/chat-streaming.spec.ts
    Problem: Kan have references til ChatInterface
    Fix: Verificer og opdater hvis nødvendigt
-```
+
+```text
 
 #### 5. EmailTab Integration
 
-```
+```bash
 ❌ client/src/components/inbox/EmailTab.tsx
    Problem: Skal kommunikere med SmartWorkspacePanel
    Fix:
+
    - Tilføj setSelectedEmail når email vælges
    - Opdater EmailContext når thread åbnes
    - Sikr preview modal også opdaterer context
+
    Impact: Context detection virker ikke uden dette
-```
+
+```text
 
 #### 6. Workspace Components (Skal have rigtige data)
 
-```
+```bash
 ⚠️ client/src/components/workspace/LeadAnalyzer.tsx
    Status: Bruger mock data
    Fix: Integrer med tRPC endpoints for real data
@@ -141,7 +149,8 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 ⚠️ client/src/components/workspace/BusinessDashboard.tsx
    Status: Bruger mock data
    Fix: Integrer med stats endpoints
-```
+
+```text
 
 ---
 
@@ -149,7 +158,7 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 
 #### 7. Mini-Tabs System
 
-```
+```bash
 ⏳ client/src/components/inbox/MiniTabsBar.tsx
    Status: Ikke oprettet endnu
    Fix: Opret komponent til bottom tabs
@@ -169,11 +178,12 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 ⏳ client/src/components/inbox/TasksDrawer.tsx
    Status: Ikke oprettet endnu
    Fix: Drawer til opgaver
-```
+
+```text
 
 #### 8. Documentation & Cleanup
 
-```
+```bash
 ⏳ docs/V2-API-INTEGRATION.md
    Status: Skal oprettes
    Fix: Dokumenter alle API integrationer
@@ -193,7 +203,8 @@ Vi migrerer fra **gammel tab-baseret arkitektur** til **moderne Shortwave-inspir
 🗑️ client/src/components/InboxPanel.tsx
    Status: Kan slettes når migration er done
    Fix: Backup først, slet derefter
-```
+
+```text
 
 ---
 
@@ -227,7 +238,8 @@ interface EmailContextValue {
   // ✨ NY: Set selected email
   setSelectedEmail: (email: EmailContextState["selectedEmail"]) => void;
 }
-```
+
+```bash
 
 **Files to update:**
 
@@ -249,7 +261,8 @@ export interface WorkflowContextState {
   workspaceContext: "lead" | "booking" | "invoice" | "customer" | "dashboard";
   workspaceData: any; // Context-specific data
 }
-```
+
+```bash
 
 **Files to update:**
 
@@ -271,7 +284,8 @@ import InboxPanel from "@/components/InboxPanel";
 export default function EmailCenterPanel({ activeTab, onTabChange }) {
   return <InboxPanel activeTab={activeTab} onTabChange={onTabChange} />;
 }
-```
+
+```text
 
 **Already done in V2:**
 
@@ -282,7 +296,8 @@ import EmailTab from "@/components/inbox/EmailTab";
 export default function EmailCenterPanel() {
   return <EmailTab />;
 }
-```
+
+```text
 
 #### Step 2.2: Opdater alle imports
 
@@ -293,7 +308,8 @@ export default function EmailCenterPanel() {
 grep -r "InboxPanel" client/src/
 
 # Replace med EmailTab direkte
-```
+
+```bash
 
 **Files affected:**
 
@@ -334,13 +350,14 @@ export default function EmailTab() {
     const email = findEmailByThreadId(threadId);
     if (email) {
       setSelectedEmail({
-        /* ... */
+        /*...*/
       });
     }
     // ... existing preview logic
   };
 }
-```
+
+```bash
 
 **Files to update:**
 
@@ -379,7 +396,8 @@ export function LeadAnalyzer({ context }: LeadAnalyzerProps) {
 
   // ... rest of component
 }
-```
+
+```bash
 
 **Files to update:**
 
@@ -418,7 +436,8 @@ describe('WorkspaceLayout', () => {
     // ... test context detection
   });
 });
-```
+
+```bash
 
 **Files to create/update:**
 
@@ -441,7 +460,7 @@ export function MiniTabsBar() {
 
   return (
     <>
-      {/* Collapsed tabs bar */}
+      {/*Collapsed tabs bar*/}
       <div className="border-t border-border/20 p-2 flex items-center justify-center gap-2">
         <Button
           variant="ghost"
@@ -452,19 +471,20 @@ export function MiniTabsBar() {
           <FileText className="w-4 h-4" />
           <span className="text-xs">Fakturaer</span>
         </Button>
-        {/* ... other tabs */}
+        {/*... other tabs*/}
       </div>
 
-      {/* Drawers */}
+      {/*Drawers*/}
       <InvoicesDrawer
         open={activeDrawer === 'invoices'}
         onClose={() => setActiveDrawer(null)}
       />
-      {/* ... other drawers */}
+      {/*... other drawers*/}
     </>
   );
 }
-```
+
+```bash
 
 **Files to create:**
 
@@ -538,20 +558,20 @@ export function MiniTabsBar() {
 ### High Risk
 
 1. **EmailContext breaking changes** - Mange komponenter bruger det
-2. **InboxPanel removal** - Kan bryde tests og imports
-3. **tRPC endpoints** - Skal oprettes på backend også
+1. **InboxPanel removal** - Kan bryde tests og imports
+1. **tRPC endpoints** - Skal oprettes på backend også
 
 ### Medium Risk
 
 1. **Test failures** - Mange tests skal opdateres
-2. **Type errors** - TypeScript kan klage over context changes
-3. **State synchronization** - Email selection → Workspace context
+1. **Type errors** - TypeScript kan klage over context changes
+1. **State synchronization** - Email selection → Workspace context
 
 ### Low Risk
 
 1. **Mini-tabs** - Isoleret feature, påvirker ikke core
-2. **Cleanup** - Kan altid rulles tilbage
-3. **Documentation** - Ingen teknisk risk
+1. **Cleanup** - Kan altid rulles tilbage
+1. **Documentation** - Ingen teknisk risk
 
 ---
 
@@ -582,7 +602,7 @@ export function MiniTabsBar() {
 
 ## 📊 Estimeret Timeline
 
-```
+```text
 Week 1:
 ├── Day 1-2: Phase 1-2 (Context + InboxPanel removal)
 ├── Day 3-4: Phase 3 (EmailTab integration)
@@ -594,6 +614,7 @@ Week 2:
 └── Day 5: Phase 7 (Cleanup) + Buffer
 
 Total: 8-12 arbejdsdage
+
 ```
 
 ---
@@ -601,8 +622,8 @@ Total: 8-12 arbejdsdage
 ## 🚀 Næste Skridt
 
 1. **Review denne plan** - Er der noget vi har glemt?
-2. **Prioriter phases** - Hvilke er mest kritiske?
-3. **Start Phase 1** - Context opdateringer
-4. **Iterativ development** - Test efter hver phase
+1. **Prioriter phases** - Hvilke er mest kritiske?
+1. **Start Phase 1** - Context opdateringer
+1. **Iterativ development** - Test efter hver phase
 
 Skal vi starte med Phase 1?

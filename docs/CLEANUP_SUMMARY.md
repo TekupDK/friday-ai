@@ -1,6 +1,6 @@
-# 🧹 Cleanup Scripts - Hvad Bliver Slettet/Flyttet?
+# 🧹 Cleanup Scripts - Hvad Bliver Slettet/Flyttet
 
-**Dato:** 2025-11-08  
+**Dato:** 2025-11-08
 **Scripts:** 2 stk (cleanup-phase1.ps1 + organize-test-files.ps1)
 
 ---
@@ -11,7 +11,7 @@
 
 #### **1. Tomme Filer (11 stk, 0 bytes)**
 
-```
+```text
 ❌ DEBUG_AKTUEL_STATUS.md
 ❌ FIX_500_ERROR.md
 ❌ LOGIN_FIXES_COMPLETE.md
@@ -23,7 +23,8 @@
 ❌ VISUAL_LOGIN_GUIDE.md
 ❌ check-env.js
 ❌ test-database.js
-```
+
+```text
 
 **Hvorfor:** Alle er 0 bytes - tomme placeholder filer
 
@@ -31,9 +32,10 @@
 
 #### **2. Backup Filer (1 stk)**
 
-```
+```text
 ❌ drizzle/schema.backup.ts
-```
+
+```text
 
 **Hvorfor:** Gammel backup, ikke længere nødvendig
 
@@ -41,10 +43,11 @@
 
 #### **3. Deprecated Docs (2 stk)**
 
-```
+```text
 ❌ docs/DEPRECATED_CODE_CLEANUP.md
 ❌ docs/DEPRECATED_FILES.md
-```
+
+```text
 
 **Hvorfor:** Meta-dokumenter om deprecated kode, ikke relevante længere
 
@@ -52,13 +55,14 @@
 
 #### **4. Temporary Filer (5 stk, ~1.3 MB)**
 
-```
+```text
 ❌ analysis-emil-laerke.json (1.2 MB)
 ❌ billy-api-response.json
 ❌ cookies.txt
 ❌ stats.html
 ❌ env.template.txt
-```
+
+```text
 
 **Hvorfor:** Midlertidige filer fra tests/debugging
 
@@ -78,7 +82,7 @@
 
 #### **Test Filer (18 stk) → `tests/manual/`**
 
-```
+```text
 📦 test-all-email-functions.mjs
 📦 test-billy-api.ts
 📦 test-billy-invoice-response.mjs
@@ -97,7 +101,8 @@
 📦 test-sidebar-logic.md
 📦 test-ui-state.mjs
 📦 verify-email-fix.mjs
-```
+
+```text
 
 **Hvorfor:** Test filer skal ikke ligge i root, men i `tests/manual/`
 
@@ -116,23 +121,25 @@
 
 ### **Før Cleanup:**
 
-```
+```text
 Root Directory:
 ├── ~150 filer
 ├── Mange test filer
 ├── Tomme placeholder filer
 └── Temporary filer
-```
+
+```text
 
 ### **Efter Cleanup:**
 
-```
+```text
 Root Directory:
 ├── ~80 filer (-47%)
 ├── Ingen test filer (flyttet til tests/)
 ├── Ingen tomme filer
 └── Ingen temporary filer
-```
+
+```bash
 
 ---
 
@@ -155,10 +162,10 @@ Root Directory:
 ### **Scripts er sikre fordi:**
 
 1. **Interaktive** - Beder om bekræftelse før sletning
-2. **Viser liste** - Du ser præcis hvad der slettes/flyttes
-3. **Ingen wildcards** - Kun specifikke filer
-4. **Reversible** - Git kan gendanne hvis nødvendigt
-5. **Ingen kode** - Kun docs og test filer
+1. **Viser liste** - Du ser præcis hvad der slettes/flyttes
+1. **Ingen wildcards** - Kun specifikke filer
+1. **Reversible** - Git kan gendanne hvis nødvendigt
+1. **Ingen kode** - Kun docs og test filer
 
 ---
 
@@ -179,7 +186,8 @@ Files to delete: 19
   ... (liste af alle filer)
 
 Do you want to delete these files? (yes/no): _
-```
+
+```text
 
 **Du skal skrive "yes" for at fortsætte**
 
@@ -201,7 +209,8 @@ Files to move: 18
   ... (liste af alle filer)
 
 Do you want to move these files? (yes/no): _
-```
+
+```text
 
 **Du skal skrive "yes" for at fortsætte**
 
@@ -224,6 +233,7 @@ git status
 # 4. Commit hvis du er tilfreds
 git add .
 git commit -m "chore: cleanup workspace - remove 19 files, organize 18 tests"
+
 ```
 
 ---
@@ -231,10 +241,10 @@ git commit -m "chore: cleanup workspace - remove 19 files, organize 18 tests"
 ## 💡 **FORDELE:**
 
 1. **Renere workspace** - 47% færre filer i root
-2. **Bedre organisation** - Test filer på rette sted
-3. **Lettere navigation** - Mindre rod
-4. **Mindre forvirring** - Ingen tomme filer
-5. **Professionelt** - Pæn struktur
+1. **Bedre organisation** - Test filer på rette sted
+1. **Lettere navigation** - Mindre rod
+1. **Mindre forvirring** - Ingen tomme filer
+1. **Professionelt** - Pæn struktur
 
 ---
 

@@ -22,8 +22,8 @@
 **Recommendation:** Test manually using:
 
 1. Postman or similar HTTP client
-2. Browser DevTools Network tab
-3. Direct curl command (with proper escaping)
+1. Browser DevTools Network tab
+1. Direct curl command (with proper escaping)
 
 **Endpoint:** `POST http://localhost:3000/api/inbound/email`
 
@@ -31,14 +31,15 @@
 
 ```json
 {
-  "from": "lead@leadmail.no",
-  "to": "info@rendetalje.dk",
+  "from": "<lead@leadmail.no>",
+  "to": "<info@rendetalje.dk>",
   "subject": "Test Email",
   "text": "Email body",
   "html": "<p>Email body</p>",
   "messageId": "unique-message-id",
   "receivedAt": "2025-01-15T10:00:00Z"
 }
+
 ```
 
 ## ✅ Implementation Complete
@@ -60,27 +61,27 @@ All Phase 0 code components are implemented:
    - Verify database insertion
    - Check enrichment pipeline execution
 
-2. **Database Verification**
+1. **Database Verification**
    - Query `emails` table after webhook test
    - Verify `emailPipelineState` creation
    - Check lead source detection
 
-3. **tRPC Endpoint Testing**
+1. **tRPC Endpoint Testing**
    - Test `getInboundEmails` query
    - Test `getEmailById` query
    - Test `getEmailThread` query
 
-4. **Inbound-Email Service Setup**
+1. **Inbound-Email Service Setup**
    - Clone `inbound-email` repository
    - Configure environment variables
    - Start Docker service
 
-5. **Google Workspace Configuration**
+1. **Google Workspace Configuration**
    - Configure auto-forward or Dual Delivery
    - Test with real email
 
 ## 🎯 Conclusion
 
-**Phase 0 Core Implementation:** ✅ **COMPLETE**
+**Phase 0 Core Implementation:**✅**COMPLETE**
 
 The codebase is ready for Phase 0 deployment. All components are implemented and database migration is successful. Manual testing of the webhook endpoint is recommended to verify end-to-end functionality.

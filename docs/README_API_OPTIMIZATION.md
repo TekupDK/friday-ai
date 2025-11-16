@@ -74,14 +74,14 @@ Komplet API optimering implementation med **50-70% forventet reduktion i API cal
 ### Quick Test (5 minutter)
 
 1. Åbn [`API_OPTIMIZATION_QUICK_TEST.md`](./API_OPTIMIZATION_QUICK_TEST.md)
-2. Følg test scenarier
-3. Brug template til notater
+1. Følg test scenarier
+1. Brug template til notater
 
 ### Full Test Suite (30-60 minutter)
 
 1. Åbn [`API_OPTIMIZATION_TEST_REPORT.md`](./API_OPTIMIZATION_TEST_REPORT.md)
-2. Kør alle 7 test scenarier
-3. Dokumenter i [`API_OPTIMIZATION_TEST_NOTES_TEMPLATE.md`](./API_OPTIMIZATION_TEST_NOTES_TEMPLATE.md)
+1. Kør alle 7 test scenarier
+1. Dokumenter i [`API_OPTIMIZATION_TEST_NOTES_TEMPLATE.md`](./API_OPTIMIZATION_TEST_NOTES_TEMPLATE.md)
 
 ## 🔍 Debugging
 
@@ -101,7 +101,8 @@ window.__apiMonitor?.getCacheHitRate();
 [RequestQueue] - Queue activity
 [AdaptivePolling] - Polling errors
 [APIMonitor] - API call tracking (dev only)
-```
+
+```bash
 
 **Full Guide:** See [`API_OPTIMIZATION_MONITORING.md`](./API_OPTIMIZATION_MONITORING.md)
 
@@ -134,7 +135,7 @@ window.__apiMonitor?.getCacheHitRate();
 
 ## 📚 Documentation Structure
 
-```
+```text
 docs/
 ├── README_API_OPTIMIZATION.md (denne fil)
 ├── API_OPTIMIZATION_READY_FOR_TEST.md ⭐ START HER
@@ -150,6 +151,7 @@ docs/
 ├── API_OPTIMIZATION_FINAL_STATUS.md
 ├── API_OPTIMIZATION_DOCUMENTATION_INDEX.md
 └── VIRTUAL_SCROLLING_INTEGRATION.md
+
 ```
 
 ---
@@ -157,9 +159,9 @@ docs/
 ## 🚀 Next Steps
 
 1. **Start Testing:** Se [`API_OPTIMIZATION_READY_FOR_TEST.md`](./API_OPTIMIZATION_READY_FOR_TEST.md)
-2. **Quick Verification:** Kør 5-min test
-3. **Full Validation:** Kør complete test suite
-4. **Document Results:** Brug test notes template
+1. **Quick Verification:** Kør 5-min test
+1. **Full Validation:** Kør complete test suite
+1. **Document Results:** Brug test notes template
 
 ---
 

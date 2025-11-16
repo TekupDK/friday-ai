@@ -1,14 +1,14 @@
 # 📚 Friday Docs - Complete Documentation System
 
-**Official Name:** Friday Docs  
-**Alternative:** Friday Knowledge System  
-**Version:** 1.0.0  
-**Status:** ✅ Production Ready  
+**Official Name:** Friday Docs
+**Alternative:** Friday Knowledge System
+**Version:** 1.0.0
+**Status:** ✅ Production Ready
 **Release Date:** November 9, 2025
 
 ---
 
-## 🎯 Hvad Er Friday Docs?
+## 🎯 Hvad Er Friday Docs
 
 Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en del af Friday AI-økosystemet. Systemet kombinerer klassisk dokumenthåndtering med avanceret AI-generering for at automatisere og forbedre dokumentation af leads, processer og viden.
 
@@ -139,7 +139,7 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
 
 ## 📊 System Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                      Friday Docs System                      │
 └─────────────────────────────────────────────────────────────┘
@@ -158,11 +158,12 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
 │Database│ │WebSocket│ │OpenRouter│ │ Queue  │ │Metrics │
 │Postgres│ │Real-time│ │ AI (FREE)│ │System  │ │Tracker │
 └────────┘ └─────────┘ └──────────┘ └────────┘ └────────┘
-```
+
+```text
 
 ### Data Flow
 
-```
+```text
 User Action → Frontend Component → tRPC API → Backend Service
                                                      │
                                         ┌────────────┼────────────┐
@@ -175,7 +176,8 @@ User Action → Frontend Component → tRPC API → Backend Service
                                              WebSocket Update
                                                      │
                                               Frontend Refresh
-```
+
+```text
 
 ---
 
@@ -183,7 +185,7 @@ User Action → Frontend Component → tRPC API → Backend Service
 
 ### Backend Files (10)
 
-```
+```bash
 server/
 ├── docs/
 │   ├── ai/
@@ -197,11 +199,12 @@ server/
 │       └── git-sync-engine.ts   # Git integration (planned)
 └── routers/
     └── docs-router.ts           # tRPC API endpoints (10)
-```
+
+```text
 
 ### Frontend Files (7)
 
-```
+```bash
 client/src/
 ├── pages/docs/
 │   └── DocsPage.tsx             # Main docs page
@@ -220,11 +223,12 @@ client/src/
 │   └── useKeyboardShortcuts.ts  # Shortcuts
 └── components/inbox/
     └── LeadsTab.tsx             # Leads integration
-```
+
+```text
 
 ### Test Files (6)
 
-```
+```text
 tests/
 ├── ai/
 │   └── ai-docs-generator.test.ts    # AI feature tests
@@ -234,11 +238,12 @@ tests/
 ├── ai-docs-step3.spec.ts            # Analytics tests
 └── scripts/
     └── test-ai-docs.mjs             # Backend test
-```
 
-**Total Files:** 35+  
-**Lines of Code:** ~8,300  
-**Tests:** 21 test suites, 70+ tests  
+```text
+
+**Total Files:** 35+
+**Lines of Code:** ~8,300
+**Tests:** 21 test suites, 70+ tests
 **Pass Rate:** 80%
 
 ---
@@ -262,7 +267,8 @@ docs.resolveComment({ commentId })
 // Conflicts
 docs.listConflicts()     // List conflicts
 docs.resolveConflict({ conflictId })
-```
+
+```text
 
 ### AI Generation (3 endpoints)
 
@@ -270,7 +276,8 @@ docs.resolveConflict({ conflictId })
 docs.generateLeadDoc({ leadId }); // Generate for lead
 docs.generateWeeklyDigest(); // Weekly report
 docs.bulkGenerateLeadDocs(); // Bulk generate
-```
+
+```text
 
 ### Analytics (3 endpoints)
 
@@ -278,7 +285,8 @@ docs.bulkGenerateLeadDocs(); // Bulk generate
 docs.getAIMetrics(); // All metrics
 docs.getGenerationStats({ period }); // Period stats
 docs.calculateSavings({ totalDocs }); // ROI calc
-```
+
+```text
 
 ---
 
@@ -290,7 +298,7 @@ docs.calculateSavings({ totalDocs }); // ROI calc
 - **Cost per doc:** $0.00
 - **Monthly cost:** $0.00
 - **Annual cost:** $0.00
-- **Status:** 🎉 **100% FREE FOREVER**
+- **Status:**🎉**100% FREE FOREVER**
 
 ### Time Savings (per doc)
 
@@ -319,14 +327,15 @@ docs.calculateSavings({ totalDocs }); // ROI calc
 
 ### Test Coverage
 
-```
+```text
 Backend Tests:     ✅ 1/1 passed (100%)
 Unit Tests:        ✅ 70+ tests
 E2E Tests:         ✅ 80% pass rate
 Performance:       ✅ < 2s load time
 Mobile:            ✅ Responsive
 Accessibility:     ✅ Keyboard nav
-```
+
+```text
 
 ### Quality Metrics
 
@@ -353,41 +362,49 @@ Accessibility:     ✅ Keyboard nav
 
 #### 1. View & Manage Docs
 
-```
-1. Go to: http://localhost:3000/docs
+```text
+
+1. Go to: <http://localhost:3000/docs>
 2. See all documents
 3. Search & filter
 4. Click to view
 5. Edit with Markdown
-```
+
+```text
 
 #### 2. Generate AI Doc from Lead
 
-```
+```text
+
 1. Go to: Inbox → Leads
 2. Find lead in list
 3. Click dropdown menu (•••)
 4. Click "✨ Generer AI Dok"
 5. Wait 20-30 seconds
 6. Toast notification → Click "View"
-```
+
+```text
 
 #### 3. Generate Weekly Digest
 
-```
+```text
+
 1. Go to: /docs
 2. Click "📅 Weekly Digest" button
 3. Wait 30 seconds
 4. View generated report
-```
+
+```text
 
 #### 4. View Analytics
 
-```
+```text
+
 1. Go to: /docs
 2. Click "AI Analytics" tab
 3. See metrics, savings, activity
-```
+
+```text
 
 ### For Developers
 
@@ -411,7 +428,8 @@ function MyComponent() {
     </button>
   );
 }
-```
+
+```text
 
 #### Use Reusable Button
 
@@ -422,7 +440,8 @@ import { GenerateLeadDocButton } from "@/components/docs/GenerateLeadDocButton";
   leadId={lead.id}
   leadName={lead.name}
 />
-```
+
+```text
 
 #### Get Analytics
 
@@ -431,6 +450,7 @@ const { data: metrics } = trpc.docs.getAIMetrics.useQuery();
 
 console.log(metrics.totalGenerated);
 console.log(metrics.successRate);
+
 ```
 
 ---
@@ -560,9 +580,9 @@ console.log(metrics.successRate);
 
 ---
 
-**Version:** 1.0.0  
-**Release Date:** November 9, 2025  
-**Status:** ✅ Production Ready  
+**Version:** 1.0.0
+**Release Date:** November 9, 2025
+**Status:** ✅ Production Ready
 **Next Version:** TBD (feature requests welcome!)
 
 **Made with ❤️ as part of Friday AI by Tekup**

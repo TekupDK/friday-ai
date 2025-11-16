@@ -28,7 +28,8 @@
 cd c:\Users\empir\Tekup\services\tekup-ai-v2
 $env:DATABASE_URL='mysql://friday_user:friday_password@localhost:3306/friday_ai'
 pnpm migrate:emails 1 50
-```
+
+```text
 
 **Expected Result:**
 
@@ -41,6 +42,7 @@ pnpm migrate:emails 1 50
 
 ```bash
 docker exec friday-ai-db mysql -ufriday_user -pfriday_password friday_ai -e "SELECT COUNT(*) FROM emails; SELECT COUNT(*) FROM email_threads;"
+
 ```
 
 ### 3. Test Frontend Integration
@@ -65,10 +67,10 @@ docker exec friday-ai-db mysql -ufriday_user -pfriday_password friday_ai -e "SEL
 ## 📊 Expected Flow After Migration
 
 1. **Migration runs** → Emails inserted into database
-2. **Enrichment runs** → Customer lookup, lead source detection, auto-labeling
-3. **Frontend queries** → `getInboundEmails` returns from database
-4. **New emails** → Webhook receives, stores, enriches
-5. **Gmail API** → Only used as fallback if database unavailable
+1. **Enrichment runs** → Customer lookup, lead source detection, auto-labeling
+1. **Frontend queries** → `getInboundEmails` returns from database
+1. **New emails** → Webhook receives, stores, enriches
+1. **Gmail API** → Only used as fallback if database unavailable
 
 ## ⚠️ Notes
 

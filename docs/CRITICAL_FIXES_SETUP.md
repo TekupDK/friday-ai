@@ -1,7 +1,7 @@
 # 🔴 Critical Fixes - Setup Guide
 
-**Date:** 2025-11-08  
-**Status:** Implementation Complete  
+**Date:** 2025-11-08
+**Status:** Implementation Complete
 **Priority:** HIGH
 
 ---
@@ -58,16 +58,17 @@
 
 ```bash
 pnpm add @upstash/redis
-```
+
+```text
 
 ---
 
 ### **Step 2: Setup Upstash Redis (Free Tier)**
 
-1. Go to [https://upstash.com/](https://upstash.com/)
-2. Sign up (free tier: 10,000 requests/day)
-3. Create new Redis database
-4. Copy credentials
+1. Go to [<https://upstash.com/](https://upstash.com>/)
+1. Sign up (free tier: 10,000 requests/day)
+1. Create new Redis database
+1. Copy credentials
 
 ---
 
@@ -77,9 +78,10 @@ Add to `.env.dev` and `.env.prod`:
 
 ```bash
 # Redis Rate Limiting (Upstash)
-UPSTASH_REDIS_REST_URL=https://your-redis-url.upstash.io
+UPSTASH_REDIS_REST_URL=<https://your-redis-url.upstash.io>
 UPSTASH_REDIS_REST_TOKEN=your-token-here
-```
+
+```text
 
 ---
 
@@ -89,9 +91,10 @@ UPSTASH_REDIS_REST_TOKEN=your-token-here
 # Start dev server
 pnpm dev
 
-# Test in browser console:
+# Test in browser console
 # Send 11 messages quickly - 11th should be rate limited
-```
+
+```text
 
 ---
 
@@ -118,9 +121,10 @@ pnpm dev
 
 **Example Error:**
 
-```
+```text
 Rate limit exceeded. Please wait 45s before sending more messages.
-```
+
+```text
 
 ---
 
@@ -133,10 +137,11 @@ Rate limit exceeded. Please wait 45s before sending more messages.
 
 **Example Errors:**
 
-```
+```text
 "Message cannot be empty"
 "Message too long (max 10,000 characters)"
-```
+
+```text
 
 ---
 
@@ -151,7 +156,8 @@ const rateLimit = await checkRateLimitUnified(ctx.user.id, {
   limit: 20, // Change limit
   windowMs: 120000, // Change window (2 minutes)
 });
-```
+
+```text
 
 ---
 
@@ -163,7 +169,8 @@ Edit `server/routers.ts` (line 93-95):
 content: z.string()
   .min(1, "Message cannot be empty")
   .max(20000, "Message too long (max 20,000 characters)"), // Change max
-```
+
+```text
 
 ---
 
@@ -186,7 +193,8 @@ const sendMessages = async () => {
 
 sendMessages();
 // Expected: First 10 succeed, 11th and 12th fail with rate limit error
-```
+
+```text
 
 ---
 
@@ -200,7 +208,8 @@ await sendMessage("");
 // Too long message
 await sendMessage("a".repeat(10001));
 // Expected: "Message too long (max 10,000 characters)"
-```
+
+```text
 
 ---
 
@@ -220,7 +229,8 @@ pnpm logs | grep "Rate limit"
 
 # Monitor validation errors
 pnpm logs | grep "validation"
-```
+
+```text
 
 ---
 
@@ -231,9 +241,9 @@ pnpm logs | grep "validation"
 **Solution:**
 
 1. Check Redis env vars are set
-2. Verify Upstash dashboard shows database
-3. Check server logs for Redis connection errors
-4. Fallback should work automatically
+1. Verify Upstash dashboard shows database
+1. Check server logs for Redis connection errors
+1. Fallback should work automatically
 
 ---
 
@@ -245,7 +255,8 @@ pnpm logs | grep "validation"
 pnpm install
 # or
 pnpm add @upstash/redis
-```
+
+```text
 
 ---
 
@@ -257,7 +268,8 @@ Adjust limits in `server/routers.ts`:
 ```typescript
 limit: 20,        // Increase limit
 windowMs: 120000, // Increase window
-```
+
+```text
 
 ---
 
@@ -273,9 +285,9 @@ windowMs: 120000, // Increase window
 ### **Recommended Next:**
 
 1. **Message History Limit** - Prevent unbounded growth
-2. **Pagination UI** - Add "Load More" button
-3. **Caching** - Add Redis caching for responses
-4. **Monitoring** - Add request logging middleware
+1. **Pagination UI** - Add "Load More" button
+1. **Caching** - Add Redis caching for responses
+1. **Monitoring** - Add request logging middleware
 
 ---
 
@@ -307,7 +319,8 @@ windowMs: 120000, // Increase window
 ```bash
 # Add env vars to .env.dev
 pnpm dev
-```
+
+```text
 
 ### **Production:**
 
@@ -315,6 +328,7 @@ pnpm dev
 # Add env vars to .env.prod
 pnpm build
 pnpm start
+
 ```
 
 ---

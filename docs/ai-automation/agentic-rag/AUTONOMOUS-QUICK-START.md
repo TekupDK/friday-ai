@@ -25,7 +25,8 @@ DATABASE_URL=postgresql://...?schema=friday_ai
 OWNER_OPEN_ID=owner-friday-ai-dev
 JWT_SECRET=your-secure-secret
 VITE_APP_ID=tekup-friday-dev
-```
+
+```text
 
 ## 🎯 Step 2: Run Import (2 minutes)
 
@@ -35,11 +36,12 @@ npx tsx server/scripts/import-pipeline-v4_3_5.ts
 
 # Validate (optional)
 npx tsx server/scripts/validate-import.ts
-```
+
+```text
 
 **Expected output:**
 
-```
+```text
 ✅ Dataset loaded (version 4.3 → import as 4.3.5)
    Leads: 231
 
@@ -49,18 +51,20 @@ Customers linked:      231
 Invoices upserted:     95
 Errors:                0
 =================================================
-```
+
+```text
 
 ## 🎯 Step 3: Test Action Handler (1 minute)
 
 ```bash
 # Dry run (no database changes)
 npx tsx server/scripts/action-handler.ts --dry-run
-```
+
+```text
 
 **Expected output:**
 
-```
+```text
 📊 ACTION HANDLER SUMMARY
 Total insights:     25
 Actions created:    23  (would create in dry run)
@@ -69,7 +73,8 @@ By Type:
    missing_booking     : 15
    at_risk            : 5
    upsell             : 5
-```
+
+```text
 
 ## 🎯 Step 4: Schedule Automation (1 minute)
 
@@ -84,7 +89,8 @@ cd C:\Users\empir\Tekup\services\tekup-ai-v2
 
 # Schedule action handler (every 4 hours)
 .\scripts\register-action-schedule.ps1
-```
+
+```text
 
 ### Linux/Mac
 
@@ -92,10 +98,11 @@ cd C:\Users\empir\Tekup\services\tekup-ai-v2
 # Edit crontab
 crontab -e
 
-# Add these lines:
+# Add these lines
 30 2 * * * cd /path/to/tekup-ai-v2 && npx tsx server/scripts/import-pipeline-v4_3_5.ts >> logs/import.log 2>&1
 0 */4 * * * cd /path/to/tekup-ai-v2 && npx tsx server/scripts/action-handler.ts >> logs/actions.log 2>&1
-```
+
+```text
 
 ## 🎯 Step 5: Start Server & Test API (30 seconds)
 
@@ -104,8 +111,9 @@ crontab -e
 npm run dev
 
 # In another terminal, test API endpoint
-curl http://localhost:3000/api/trpc/fridayLeads.getDashboardStats
-```
+curl <http://localhost:3000/api/trpc/fridayLeads.getDashboardStats>
+
+```text
 
 ## ✅ Verification Checklist
 
@@ -116,7 +124,7 @@ curl http://localhost:3000/api/trpc/fridayLeads.getDashboardStats
 - [ ] Server starts without errors
 - [ ] API endpoints respond
 
-## 📊 What's Running Now?
+## 📊 What's Running Now
 
 | Component                   | Schedule      | Purpose                               |
 | --------------------------- | ------------- | ------------------------------------- |
@@ -136,9 +144,10 @@ Get-ScheduledTask -TaskName "Friday-AI-*"
 
 # View recent actions
 psql $DATABASE_URL -c "SELECT * FROM friday_ai.tasks WHERE metadata->>'generatedBy' = 'action_handler' ORDER BY created_at DESC LIMIT 10;"
+
 ```
 
-## 🎉 You're Done!
+## 🎉 You're Done
 
 Friday AI now autonomously:
 
@@ -158,13 +167,13 @@ Friday AI now autonomously:
 
 ## 🆘 Troubleshooting
 
-**Import fails**: Check `OWNER_OPEN_ID` in `.env`  
-**No insights**: Run `npx tsx server/scripts/validate-import.ts`  
-**Task not running**: Verify with `Get-ScheduledTask` and check logs  
+**Import fails**: Check `OWNER_OPEN_ID` in `.env`
+**No insights**: Run `npx tsx server/scripts/validate-import.ts`
+**Task not running**: Verify with `Get-ScheduledTask` and check logs
 **API errors**: Ensure server is running and database is accessible
 
 ---
 
-**Status**: ✅ Production Ready  
-**Version**: v4.3.5  
+**Status**: ✅ Production Ready
+**Version**: v4.3.5
 **Last Updated**: November 10, 2024

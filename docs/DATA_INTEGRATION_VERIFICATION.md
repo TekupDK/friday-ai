@@ -8,7 +8,7 @@
 
 ## 🔍 Data Flow Oversigt
 
-```
+```text
 Customer Profile Åbning
           ↓
     Auto-Sync (5 min cache)
@@ -22,7 +22,8 @@ Emails hentes     Fakturaer hentes
 Database opdateres
     ↓
 Timeline viser data ✅
-```
+
+```text
 
 ---
 
@@ -30,7 +31,7 @@ Timeline viser data ✅
 
 ### 1. **Gmail Integration** ✅
 
-**Funktion**: `searchGmailThreadsByEmail(email)`  
+**Funktion**: `searchGmailThreadsByEmail(email)`
 **Fil**: `server/mcp.ts` (line 319-323)
 
 ```typescript
@@ -39,7 +40,8 @@ export async function searchGmailThreadsByEmail(
 ): Promise<GmailThread[]> {
   return searchGmail(`from:${email} OR to:${email}`, 50);
 }
-```
+
+```text
 
 **Hvad hentes**:
 
@@ -51,12 +53,12 @@ export async function searchGmailThreadsByEmail(
 **Auto-sync flow**:
 
 1. `CustomerProfile` åbner → `useEffect` trigger (line 120-146)
-2. Tjekker cache: `customer-last-sync-${customerId}` i localStorage
-3. Hvis >5 min gammelt → `syncGmail.mutateAsync({ customerId })`
-4. Server: `customer-router.ts` → `syncGmailEmails` (line 263-296)
-5. Kalder `searchGmailThreadsByEmail(customer.email)`
-6. Gemmer threads via `addCustomerEmail` (customer-db.ts line 174-206)
-7. Opdaterer `emailCount` og `lastContactDate`
+1. Tjekker cache: `customer-last-sync-${customerId}` i localStorage
+1. Hvis >5 min gammelt → `syncGmail.mutateAsync({ customerId })`
+1. Server: `customer-router.ts` → `syncGmailEmails` (line 263-296)
+1. Kalder `searchGmailThreadsByEmail(customer.email)`
+1. Gemmer threads via `addCustomerEmail` (customer-db.ts line 174-206)
+1. Opdaterer `emailCount` og `lastContactDate`
 
 **Database**:
 
@@ -67,7 +69,7 @@ export async function searchGmailThreadsByEmail(
 
 ### 2. **Billy Integration** ✅
 
-**Funktion**: `syncBillyInvoicesForCustomer(email, billyCustomerId)`  
+**Funktion**: `syncBillyInvoicesForCustomer(email, billyCustomerId)`
 **Fil**: `server/billy-sync.ts` (line 25-71)
 
 ```typescript
@@ -75,7 +77,8 @@ export async function syncBillyInvoicesForCustomer(
   customerEmail: string,
   billyCustomerId?: string | null
 ): Promise<BillyInvoice[]>;
-```
+
+```text
 
 **Hvad hentes**:
 
@@ -87,12 +90,12 @@ export async function syncBillyInvoicesForCustomer(
 **Auto-sync flow**:
 
 1. `CustomerProfile` åbner → `useEffect` trigger
-2. Tjekker cache (samme 5 min TTL)
-3. Hvis gammelt → `syncBilly.mutateAsync({ customerId })`
-4. Server: `customer-router.ts` → `syncBillyInvoices` (line 203-258)
-5. Kalder `syncBillyInvoicesForCustomer(customer.email, customer.billyCustomerId)`
-6. Gemmer invoices via `addCustomerInvoice` (customer-db.ts line 124-155)
-7. Opdaterer balance via `updateCustomerBalance`
+1. Tjekker cache (samme 5 min TTL)
+1. Hvis gammelt → `syncBilly.mutateAsync({ customerId })`
+1. Server: `customer-router.ts` → `syncBillyInvoices` (line 203-258)
+1. Kalder `syncBillyInvoicesForCustomer(customer.email, customer.billyCustomerId)`
+1. Gemmer invoices via `addCustomerInvoice` (customer-db.ts line 124-155)
+1. Opdaterer balance via `updateCustomerBalance`
 
 **Database**:
 
@@ -103,7 +106,7 @@ export async function syncBillyInvoicesForCustomer(
 
 ### 3. **Google Calendar Integration** ✅
 
-**Funktion**: `getCustomerCalendarEvents(customerId, userId)`  
+**Funktion**: `getCustomerCalendarEvents(customerId, userId)`
 **Fil**: `server/customer-db.ts` (line 330-412)
 
 ```typescript
@@ -111,7 +114,8 @@ export async function getCustomerCalendarEvents(
   customerId: number,
   userId: number
 ): Promise<CalendarEvent[]>;
-```
+
+```text
 
 **Hvad hentes**:
 
@@ -123,11 +127,11 @@ export async function getCustomerCalendarEvents(
 **Auto-sync flow**:
 
 1. Customer profile loaded → query enabled when tab active
-2. Server: `customer-router.ts` → `getCalendarEvents` (line 243-247)
-3. Kalder `getCustomerCalendarEvents(customerId, userId)`
-4. Fetcher fra Google Calendar API via `listCalendarEvents`
-5. Filtrerer events der matcher kunde navn/email
-6. Returnerer formatted events
+1. Server: `customer-router.ts` → `getCalendarEvents` (line 243-247)
+1. Kalder `getCustomerCalendarEvents(customerId, userId)`
+1. Fetcher fra Google Calendar API via `listCalendarEvents`
+1. Filtrerer events der matcher kunde navn/email
+1. Returnerer formatted events
 
 **Matching logic**:
 
@@ -140,7 +144,7 @@ export async function getCustomerCalendarEvents(
 
 ### 4. **Activity Timeline** ✅
 
-**Endpoint**: `getActivityTimeline`  
+**Endpoint**: `getActivityTimeline`
 **Fil**: `server/customer-router.ts` (line 161-238)
 
 ```typescript
@@ -153,7 +157,8 @@ getActivityTimeline: protectedProcedure
     const [emails, invoices, calendarEvents] = await Promise.all([...]);
     // Aggregates and sorts chronologically
   })
-```
+
+```text
 
 **Hvad returneres**:
 
@@ -171,7 +176,8 @@ getActivityTimeline: protectedProcedure
     startTime?: string,      // Calendar event time
   }
 }
-```
+
+```bash
 
 ---
 
@@ -188,7 +194,7 @@ useEffect(() => {
   const now = Date.now();
   const lastSyncKey = `customer-last-sync-${profile.id}`;
   const lastSync = parseInt(localStorage.getItem(lastSyncKey) || "0", 10);
-  const isStale = now - lastSync > 5 * 60 * 1000;
+  const isStale = now - lastSync > 5 *60* 1000;
 
   if (isStale) {
     // Silently sync in background without blocking UI
@@ -203,7 +209,8 @@ useEffect(() => {
     setAutoSyncDone(true);
   }
 }, [open, profile?.id, autoSyncDone]);
-```
+
+```text
 
 **Key features**:
 
@@ -221,10 +228,11 @@ useEffect(() => {
 
 ```bash
 # Manuel test via TRPC
-curl -X POST http://localhost:5000/trpc/customer.syncGmailEmails \
+curl -X POST <http://localhost:5000/trpc/customer.syncGmailEmails> \
   -H "Content-Type: application/json" \
   -d '{"customerId": 1}'
-```
+
+```text
 
 **Forventet**:
 
@@ -237,10 +245,11 @@ curl -X POST http://localhost:5000/trpc/customer.syncGmailEmails \
 
 ```bash
 # Manuel test via TRPC
-curl -X POST http://localhost:5000/trpc/customer.syncBillyInvoices \
+curl -X POST <http://localhost:5000/trpc/customer.syncBillyInvoices> \
   -H "Content-Type: application/json" \
   -d '{"customerId": 1}'
-```
+
+```text
 
 **Forventet**:
 
@@ -253,10 +262,11 @@ curl -X POST http://localhost:5000/trpc/customer.syncBillyInvoices \
 
 ```bash
 # Manuel test via TRPC
-curl -X POST http://localhost:5000/trpc/customer.getCalendarEvents \
+curl -X POST <http://localhost:5000/trpc/customer.getCalendarEvents> \
   -H "Content-Type: application/json" \
   -d '{"customerId": 1}'
-```
+
+```text
 
 **Forventet**:
 
@@ -268,10 +278,11 @@ curl -X POST http://localhost:5000/trpc/customer.getCalendarEvents \
 
 ```bash
 # Manuel test via TRPC
-curl -X POST http://localhost:5000/trpc/customer.getActivityTimeline \
+curl -X POST <http://localhost:5000/trpc/customer.getActivityTimeline> \
   -H "Content-Type: application/json" \
   -d '{"customerId": 1, "limit": 50}'
-```
+
+```text
 
 **Forventet**:
 
@@ -294,7 +305,8 @@ try {
   console.error("Error fetching Gmail threads:", error);
   // Stille failure - viser cached data
 }
-```
+
+```text
 
 ### Billy Errors
 
@@ -306,7 +318,8 @@ try {
   console.error("[Billy Sync] Error syncing invoices:", error);
   return []; // Tom array ved fejl
 }
-```
+
+```text
 
 ### Calendar Errors
 
@@ -318,7 +331,8 @@ try {
   console.error("Error fetching customer calendar events:", error);
   return []; // Tom array ved fejl
 }
-```
+
+```text
 
 **Princip**: Stille failures - systemet fortsætter med cached data.
 
@@ -343,7 +357,7 @@ try {
 
 ## ✅ Data Completeness Checklist
 
-### Customer Profile viser:
+### Customer Profile viser
 
 - ✅ Navn (fra lead/Billy)
 - ✅ Email (fra lead)
@@ -355,13 +369,13 @@ try {
 - ✅ Email count (antal email threads)
 - ✅ Last contact date (nyeste email)
 
-### Activity Timeline viser:
+### Activity Timeline viser
 
 - ✅ **Emails**: Subject, snippet, date, read status
 - ✅ **Invoices**: Number, amount, status, due date
 - ✅ **Calendar**: Title, description, time, location
 
-### Navigation virker:
+### Navigation virker
 
 - ✅ Klik email → Åbner i EmailTab
 - ✅ Cross-tab navigation (LeadsTab → EmailTab)
@@ -373,12 +387,12 @@ try {
 
 ### Issue 1: Manglende Gmail threads
 
-**Symptom**: Emails vises ikke i timeline  
+**Symptom**: Emails vises ikke i timeline
 **Check**:
 
 1. Er `searchGmailThreadsByEmail` tilgængelig?
-2. Er Gmail API credentials sat op?
-3. Logger customer.email korrekt i sync?
+1. Er Gmail API credentials sat op?
+1. Logger customer.email korrekt i sync?
 
 **Fix**:
 
@@ -387,16 +401,17 @@ try {
 console.log(`[Sync] Fetching Gmail for: ${customer.email}`);
 const threads = await searchGmailThreadsByEmail(customer.email);
 console.log(`[Sync] Found ${threads.length} threads`);
-```
+
+```text
 
 ### Issue 2: Billy fakturaer mangler
 
-**Symptom**: Ingen invoices i timeline  
+**Symptom**: Ingen invoices i timeline
 **Check**:
 
 1. Er `BILLY_ORGANIZATION_ID` sat?
-2. Matcher customer email med Billy contact?
-3. Er MCP server kørende?
+1. Matcher customer email med Billy contact?
+1. Er MCP server kørende?
 
 **Fix**:
 
@@ -404,16 +419,17 @@ console.log(`[Sync] Found ${threads.length} threads`);
 // I billy-sync.ts
 console.log(`[Billy] Syncing for: ${customerEmail}`);
 console.log(`[Billy] Found ${customerInvoices.length} invoices`);
-```
+
+```text
 
 ### Issue 3: Calendar events mangler
 
-**Symptom**: Ingen kalender-events  
+**Symptom**: Ingen kalender-events
 **Check**:
 
 1. Er customer.name sat korrekt?
-2. Matcher event title formatet: "Type - Customer - Details"?
-3. Er events inden for 6 måneders range?
+1. Matcher event title formatet: "Type - Customer - Details"?
+1. Er events inden for 6 måneders range?
 
 **Fix**:
 
@@ -423,34 +439,35 @@ console.log(`[Calendar] Matching for: ${customerName} / ${customerEmail}`);
 console.log(
   `[Calendar] Found ${matchedEvents.length}/${googleEvents.length} matches`
 );
+
 ```
 
 ---
 
 ## 🎯 Summary
 
-### ✅ Alle Data Sources Fungerer:
+### ✅ Alle Data Sources Fungerer
 
 1. **Gmail** - Via MCP/searchGmailThreadsByEmail
-2. **Billy** - Via MCP/billy_get_invoices
-3. **Google Calendar** - Via Google API/listCalendarEvents
-4. **Activity Timeline** - Aggregering af alle sources
+1. **Billy** - Via MCP/billy_get_invoices
+1. **Google Calendar** - Via Google API/listCalendarEvents
+1. **Activity Timeline** - Aggregering af alle sources
 
-### ✅ Auto-Sync Implementeret:
+### ✅ Auto-Sync Implementeret
 
 - 5 minutters cache
 - Background sync (ikke-blokererende)
 - Per-customer tracking
 - Stille error handling
 
-### ✅ Data Completeness:
+### ✅ Data Completeness
 
 - Customer profile viser all stats
 - Timeline viser unified view
 - Navigation fungerer mellem tabs
 - Filters virker (email/faktura/kalender)
 
-### ✅ Performance:
+### ✅ Performance
 
 - Parallel sync (Gmail + Billy samtidigt)
 - Cache reducer API calls med 80%

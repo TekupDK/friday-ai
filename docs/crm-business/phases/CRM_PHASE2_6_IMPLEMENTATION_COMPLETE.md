@@ -2,8 +2,8 @@
 
 ## ✅ Status: 100% Færdig
 
-**Dato:** 11. november 2025  
-**Backend Developer:** AI Assistant  
+**Dato:** 11. november 2025
+**Backend Developer:** AI Assistant
 **Test Status:** Alle tests passeret ✅
 
 ---
@@ -44,7 +44,8 @@ crm.extensions.updateOpportunity; // Update deal, auto-close date
 crm.extensions.deleteOpportunity; // Delete deal
 crm.extensions.getPipelineStats; // Count + value by stage
 crm.extensions.getRevenueForecast; // Weighted revenue calc
-```
+
+```text
 
 **Test Results:**
 
@@ -60,7 +61,8 @@ crm.extensions.listSegments; // List all segments
 crm.extensions.addToSegment; // Add customers to segment
 crm.extensions.removeFromSegment; // Remove customers
 crm.extensions.getSegmentMembers; // List segment members
-```
+
+```text
 
 **Test Results:**
 
@@ -74,7 +76,8 @@ crm.extensions.getSegmentMembers; // List segment members
 crm.extensions.createDocument; // Create document metadata
 crm.extensions.listDocuments; // List customer documents
 crm.extensions.deleteDocument; // Delete document
-```
+
+```text
 
 **Test Results:**
 
@@ -87,7 +90,8 @@ crm.extensions.deleteDocument; // Delete document
 ```typescript
 crm.extensions.logAudit; // Log action to audit trail
 crm.extensions.getAuditLog; // Query audit log (filter by entity)
-```
+
+```text
 
 **Test Results:**
 
@@ -101,7 +105,8 @@ crm.extensions.getAuditLog; // Query audit log (filter by entity)
 crm.extensions.createRelationship; // Create customer relationship
 crm.extensions.getRelationships; // List relationships
 crm.extensions.deleteRelationship; // Delete relationship
-```
+
+```text
 
 **Test Results:**
 
@@ -138,13 +143,14 @@ crm.extensions.deleteRelationship; // Delete relationship
 
 **Test Script:** `server/scripts/test-crm-extensions.ts`
 
-```
+```text
 ✅ Opportunities: 4 created
 ✅ Segments: 4 created
 ✅ Documents: 4 created
 ✅ Audit logs: 2+ entries
 ✅ Relationships: 2 tested
-```
+
+```text
 
 **Pipeline Stats:**
 
@@ -180,11 +186,11 @@ crm.extensions.deleteRelationship; // Delete relationship
 **Phase 2-6 Tables:**
 
 1. `opportunities` (lines 738-774)
-2. `customer_segments` (lines 776-796)
-3. `customer_segment_members` (lines 798-818)
-4. `customer_documents` (lines 820-853)
-5. `audit_log` (lines 855-893)
-6. `customer_relationships` (lines 895-928)
+1. `customer_segments` (lines 776-796)
+1. `customer_segment_members` (lines 798-818)
+1. `customer_documents` (lines 820-853)
+1. `audit_log` (lines 855-893)
+1. `customer_relationships` (lines 895-928)
 
 **Enums:**
 
@@ -206,14 +212,16 @@ const opportunity = await trpc.crm.extensions.createOpportunity.mutate({
   stage: "proposal",
   expectedCloseDate: "2025-11-25",
 });
-```
+
+```text
 
 ### Get Revenue Forecast
 
 ```typescript
 const forecast = await trpc.crm.extensions.getRevenueForecast.useQuery();
 // { totalValue: 222000, weightedValue: 147600, count: 4 }
-```
+
+```text
 
 ### Create Automatic Segment
 
@@ -224,7 +232,8 @@ const segment = await trpc.crm.extensions.createSegment.mutate({
   rules: { healthScore: { lt: 50 } },
   color: "#FF4444",
 });
-```
+
+```text
 
 ### Log Audit Trail
 
@@ -239,6 +248,7 @@ await trpc.crm.extensions.logAudit.mutate({
   ipAddress: req.ip,
   userAgent: req.headers["user-agent"],
 });
+
 ```
 
 ---
@@ -320,14 +330,14 @@ await trpc.crm.extensions.logAudit.mutate({
 **Filer oprettet:**
 
 1. `CRM_PHASE1_COMPLETE.md` - Phase 1 status
-2. `CRM_PHASE2_6_COMPLETE.md` - Database foundation
-3. `CRM_PHASE2_6_IMPLEMENTATION_COMPLETE.md` (denne fil)
+1. `CRM_PHASE2_6_COMPLETE.md` - Database foundation
+1. `CRM_PHASE2_6_IMPLEMENTATION_COMPLETE.md` (denne fil)
 
 **Test Scripts:**
 
 1. `server/scripts/test-crm-features.ts` - Phase 1 tests
-2. `server/scripts/test-crm-phase2-6.ts` - Database verification
-3. `server/scripts/test-crm-extensions.ts` - Full endpoint tests
+1. `server/scripts/test-crm-phase2-6.ts` - Database verification
+1. `server/scripts/test-crm-extensions.ts` - Full endpoint tests
 
 ---
 
@@ -376,6 +386,6 @@ await trpc.crm.extensions.logAudit.mutate({
 
 ---
 
-**Status:** ✅ 100% COMPLETE - Production Ready  
-**Next Owner:** Kiro (Frontend)  
+**Status:** ✅ 100% COMPLETE - Production Ready
+**Next Owner:** Kiro (Frontend)
 **Next Action:** Start UI implementation Week 1-2

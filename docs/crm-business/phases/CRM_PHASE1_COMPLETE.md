@@ -1,7 +1,7 @@
 # 🎉 CRM Phase 1 Complete - Activity Tracking & Health Scores
 
-**Status:** ✅ **100% DONE**  
-**Dato:** 11. november 2025  
+**Status:**✅**100% DONE**
+**Dato:** 11. november 2025
 **Implementeret af:** Friday AI Backend Team
 
 ---
@@ -24,7 +24,8 @@
 ✅ getActivityStats({ customerProfileId })
 ✅ updateActivity({ id, subject?, description?, ... })
 ✅ deleteActivity({ id })
-```
+
+```text
 
 **Features:**
 
@@ -52,14 +53,16 @@ Health Score = Weighted Average of:
   • Payment Speed (30%):     On-time payments + balance
   • Booking Frequency (20%): Regular bookings + recency
   • Activity Level (10%):    Notes, calls, meetings
-```
+
+```text
 
 **TRPC Endpoints (crm.customer):**
 
 ```typescript
 ✅ getHealthScore({ customerProfileId })
 ✅ recalculateHealthScore({ customerProfileId })
-```
+
+```text
 
 **Risk Levels:**
 
@@ -77,7 +80,8 @@ Health Score = Weighted Average of:
 ```typescript
 ✅ getEmailHistory({ customerProfileId, limit?, offset? })
 ✅ linkEmailToCustomer({ customerProfileId, threadId })
-```
+
+```text
 
 **Features:**
 
@@ -105,13 +109,14 @@ Health Score = Weighted Average of:
 
 **Test Script:** `server/scripts/test-crm-features.ts`
 
-```
+```text
 ✅ Activity logging: Working
 ✅ Activity statistics: Working
 ✅ Health score calculation: Working
 ✅ Health score storage: Working
 ✅ Email history retrieval: Working
-```
+
+```text
 
 **Test Customer:**
 
@@ -129,24 +134,26 @@ Health Score = Weighted Average of:
 
 ### **Before (23 endpoints):**
 
-```
+```text
 crm.customer      - 9 endpoints
 crm.lead          - 4 endpoints
 crm.booking       - 4 endpoints
 crm.serviceTemplate - 5 endpoints
 crm.stats         - 1 endpoint
-```
+
+```text
 
 ### **After (31 endpoints):** ⬆️ +8 endpoints
 
-```
+```text
 crm.customer      - 11 endpoints (+2: health score)
 crm.lead          - 4 endpoints
 crm.booking       - 4 endpoints
 crm.serviceTemplate - 5 endpoints
 crm.stats         - 1 endpoint
 crm.activity      - 5 endpoints (NEW!)
-```
+
+```text
 
 ---
 
@@ -161,7 +168,8 @@ const { data: activities } = trpc.crm.activity.listActivities.useQuery({
 });
 
 // Activities include: calls, meetings, notes, emails
-```
+
+```text
 
 ### **Health Score Badge:**
 
@@ -171,7 +179,8 @@ const { data: health } = trpc.crm.customer.getHealthScore.useQuery({
 });
 
 // Display: score, riskLevel, churnProbability, factors breakdown
-```
+
+```text
 
 ### **Log Customer Interaction:**
 
@@ -186,6 +195,7 @@ await logActivity.mutateAsync({
   outcome: "Aftalt møde",
   nextSteps: "Send kalender",
 });
+
 ```
 
 ---
@@ -199,20 +209,20 @@ await logActivity.mutateAsync({
    - Deal value forecasting
    - Win/loss reasons
 
-2. **Customer Segmentation** 🟡
+1. **Customer Segmentation** 🟡
    - Saved filters/smart lists
    - Bulk actions på segments
    - Auto-tag suggestions
 
-3. **Documents & Files** 🟠
+1. **Documents & Files** 🟠
    - Upload photos, contracts, receipts
    - Link documents to customers
 
-4. **Audit Log** 🟢
+1. **Audit Log** 🟢
    - Change tracking for GDPR
    - "Who changed customer status?"
 
-5. **Relationship Mapping** 🟢
+1. **Relationship Mapping** 🟢
    - Track referrals
    - B2B company hierarchies
 
@@ -237,19 +247,19 @@ await logActivity.mutateAsync({
    - Health Score badge (color-coded by risk)
    - "Log Activity" button → modal
 
-2. **CustomerList Page:**
+1. **CustomerList Page:**
    - Health score column (sortable)
    - Risk filter (show only high/critical)
    - Activity count badges
 
 ### **Uge 3-4 (Nice-to-Have):**
 
-3. **Activity Modal:**
+1. **Activity Modal:**
    - Form til log call/meeting/note
    - Duration picker
    - Outcome & next steps fields
 
-4. **Health Score Dashboard:**
+1. **Health Score Dashboard:**
    - Risk distribution chart
    - At-risk customers widget
    - Churn probability trends

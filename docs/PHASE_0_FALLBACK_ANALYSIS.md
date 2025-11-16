@@ -12,9 +12,9 @@
 **Nuværende Flow (Før Phase 0 er fuldt aktiveret):**
 
 1. Frontend kalder `inbox.email.list` eller `inbox.email.getInboundEmails`
-2. Backend tjekker database først
-3. Hvis database er tom → Fallback til **Gmail API**
-4. Emails kommer fra Gmail API (med rate limit risiko)
+1. Backend tjekker database først
+1. Hvis database er tom → Fallback til **Gmail API**
+1. Emails kommer fra Gmail API (med rate limit risiko)
 
 ## 🔄 Fallback Mekanisme - Implementeret
 
@@ -25,11 +25,13 @@
 **Flow:**
 
 ```typescript
+
 1. Tjek database connection
 2. Hvis database IKKE tilgængelig → Fallback til Gmail API
 3. Hvis database tilgængelig → Query fra database
 4. Transform database emails til GmailThread format (for kompatibilitet)
-```
+
+```text
 
 **Kode:**
 
@@ -42,7 +44,8 @@ if (!db) {
 
 // Query emails from database
 const emailRecords = await db.select().from(emails)...
-```
+
+```text
 
 ### 2. `list` Endpoint (Standard Email List)
 
@@ -51,11 +54,13 @@ const emailRecords = await db.select().from(emails)...
 **Flow:**
 
 ```typescript
+
 1. Tjek database connection
 2. Hvis database tilgængelig → Query fra database
 3. Hvis database tom → Fallback til Gmail API
 4. Returner kombineret resultat (database + Gmail API)
-```
+
+```text
 
 **Kode:**
 
@@ -76,7 +81,8 @@ if (db) {
 
 // Fallback to Gmail API
 return mcpSearchGmailThreads(...);
-```
+
+```text
 
 ### 3. `getEmailThread` Endpoint
 
@@ -85,10 +91,12 @@ return mcpSearchGmailThreads(...);
 **Flow:**
 
 ```typescript
+
 1. Tjek database først
 2. Hvis thread IKKE fundet i database → Fallback til Gmail API
 3. Returner thread fra database eller Gmail API
-```
+
+```text
 
 ## ⚠️ Problemer med Nuværende Setup
 
@@ -119,18 +127,18 @@ return mcpSearchGmailThreads(...);
    - Emails kommer i realtid via SMTP
    - Lagret lokalt i database
 
-2. **Database Bliver Primary Source**
+1. **Database Bliver Primary Source**
    - `getInboundEmails` henter fra database
    - `list` henter fra database
    - Gmail API bliver kun fallback
 
-3. **Enrichment Pipeline Kører Automatisk**
+1. **Enrichment Pipeline Kører Automatisk**
    - Billy customer lookup
    - Lead source detection
    - Auto-labeling
    - Pipeline state management
 
-4. **Resilient Fallback**
+1. **Resilient Fallback**
    - Hvis database fejler → Fallback til Gmail API
    - Hvis webhook fejler → Gmail API fortsætter at virke
    - Ingen data loss
@@ -168,27 +176,29 @@ return mcpSearchGmailThreads(...);
 
 ## 📈 Forventet Resultat Efter Phase 0
 
-### Før Phase 0:
+### Før Phase 0
 
-```
+```text
 Frontend → Backend → Gmail API → Emails (rate limited)
-```
 
-### Efter Phase 0:
+```text
 
-```
+### Efter Phase 0
+
+```text
 Frontend → Backend → Database → Emails ✅
                          ↓ (hvis database fejler)
                     Gmail API (fallback)
+
 ```
 
-### Benefits:
+### Benefits
 
 1. ✅ **Ingen rate limits** - SMTP server modtager direkte
-2. ✅ **Realtid emails** - Kommer ind med det samme
-3. ✅ **Enrichment** - Billy lookup, lead detection kører automatisk
-4. ✅ **Resilient** - Fallback til Gmail API hvis nødvendigt
-5. ✅ **Performance** - Database queries er hurtigere end Gmail API
+1. ✅ **Realtid emails** - Kommer ind med det samme
+1. ✅ **Enrichment** - Billy lookup, lead detection kører automatisk
+1. ✅ **Resilient** - Fallback til Gmail API hvis nødvendigt
+1. ✅ **Performance** - Database queries er hurtigere end Gmail API
 
 ## 🔍 Konklusion
 
@@ -202,6 +212,6 @@ Frontend → Backend → Database → Emails ✅
 **Næste Actions:**
 
 1. Test webhook manuelt
-2. Setup inbound-email service
-3. Configure Google Workspace
-4. Verify at database bliver primary source
+1. Setup inbound-email service
+1. Configure Google Workspace
+1. Verify at database bliver primary source

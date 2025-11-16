@@ -1,8 +1,8 @@
 # 🔧 useEffect Dependency Fixes - Action Plan
 
-**Date:** 2025-11-08  
-**Priority:** 🔴 HIGH  
-**Estimated Time:** 2 days  
+**Date:** 2025-11-08
+**Priority:** 🔴 HIGH
+**Estimated Time:** 2 days
 **Files Affected:** 44 files, 79 useEffect calls
 
 ---
@@ -23,10 +23,10 @@ Fix all useEffect dependency issues to:
 ### **Critical Issues (Fix First):**
 
 1. **AIAssistantPanelV2.tsx** - Mutation in dependencies
-2. **App.tsx** - queryClient in dependencies
-3. **ShortWaveChatPanel.tsx** - Scroll behavior
-4. **CalendarTab.tsx** - Multiple useEffects
-5. **EmailListAI.tsx** - Polling logic
+1. **App.tsx** - queryClient in dependencies
+1. **ShortWaveChatPanel.tsx** - Scroll behavior
+1. **CalendarTab.tsx** - Multiple useEffects
+1. **EmailListAI.tsx** - Polling logic
 
 ### **Medium Issues:**
 
@@ -53,7 +53,8 @@ useEffect(() => {
     setIsInitialized(true);
   }
 }, [isInitialized, createConversation]); // ❌ createConversation changes every render
-```
+
+```text
 
 **Problem:**
 
@@ -69,7 +70,8 @@ useEffect(() => {
   createConversation.mutate({ title: "Friday AI Chat" });
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []); // Run once on mount
-```
+
+```bash
 
 **Impact:** 🔴 HIGH - Prevents potential infinite loops
 
@@ -87,7 +89,8 @@ useEffect(() => {
     warmupCache(queryClient, String(user.id));
   }
 }, [isAuthenticated, user?.id, queryClient]); // ❌ queryClient is stable but unnecessary
-```
+
+```text
 
 **Problem:**
 
@@ -105,7 +108,8 @@ useEffect(() => {
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [isAuthenticated, user?.id]); // Remove queryClient
-```
+
+```bash
 
 **Impact:** 🟡 MEDIUM - Cleanup, no functional change
 
@@ -121,7 +125,8 @@ useEffect(() => {
 useEffect(() => {
   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 }, [messages]); // ❌ Scrolls on every message change
-```
+
+```text
 
 **Problem:**
 
@@ -145,7 +150,8 @@ const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
   const isAtBottom = scrollHeight - scrollTop - clientHeight < 100;
   setAutoScroll(isAtBottom);
 };
-```
+
+```bash
 
 **Impact:** 🟡 MEDIUM - Better UX
 
@@ -194,7 +200,8 @@ const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
 
 ```bash
 git checkout -b fix/useeffect-dependencies
-```
+
+```text
 
 ### **2. Fix Files One by One**
 
@@ -214,7 +221,8 @@ pnpm build
 
 # Manual testing
 pnpm dev
-```
+
+```text
 
 ### **4. Merge**
 
@@ -223,7 +231,8 @@ git push origin fix/useeffect-dependencies
 # Create PR
 # Review
 # Merge
-```
+
+```text
 
 ---
 
@@ -238,7 +247,8 @@ Add to `.eslintrc.json`:
     "react-hooks/exhaustive-deps": "warn"
   }
 }
-```
+
+```text
 
 ---
 
@@ -251,21 +261,21 @@ Create `docs/REACT_PATTERNS.md`:
 
 ## useEffect Dependencies
 
-### ✅ DO:
+### ✅ DO
 
 - Include all values used inside effect
 - Use primitive dependencies when possible
 - Add eslint-disable comment when intentional
 
-### ❌ DON'T:
+### ❌ DON'T
 
 - Include stable refs (queryClient, etc.)
 - Include mutation objects
 - Ignore ESLint warnings without comment
 
-### Examples:
+### Examples
 
-#### Good:
+#### Good
 
 \`\`\`typescript
 useEffect(() => {
@@ -273,7 +283,7 @@ fetchData(userId);
 }, [userId]); // Primitive dependency
 \`\`\`
 
-#### Bad:
+#### Bad
 
 \`\`\`typescript
 useEffect(() => {
@@ -281,7 +291,7 @@ mutation.mutate();
 }, [mutation]); // Mutation changes every render
 \`\`\`
 
-#### Intentional:
+#### Intentional
 
 \`\`\`typescript
 useEffect(() => {
@@ -289,6 +299,7 @@ initOnce();
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []); // Intentionally run once
 \`\`\`
+
 ```
 
 ---
@@ -327,11 +338,11 @@ initOnce();
 **Next Steps:**
 
 1. Create branch
-2. Fix AIAssistantPanelV2.tsx
-3. Fix App.tsx
-4. Fix ShortWaveChatPanel.tsx
-5. Test
-6. Commit
+1. Fix AIAssistantPanelV2.tsx
+1. Fix App.tsx
+1. Fix ShortWaveChatPanel.tsx
+1. Test
+1. Commit
 
 **Estimated Time:** 2 days
 

@@ -98,31 +98,31 @@ Fuld dokumentation suite til API optimeringer - alt hvad du skal bruge.
 ### Starting Testing
 
 1. `API_OPTIMIZATION_READY_FOR_TEST.md`
-2. `API_OPTIMIZATION_QUICK_TEST.md`
-3. `API_OPTIMIZATION_TESTING_CHECKLIST.md`
+1. `API_OPTIMIZATION_QUICK_TEST.md`
+1. `API_OPTIMIZATION_TESTING_CHECKLIST.md`
 
 ### During Testing
 
 1. `API_OPTIMIZATION_TEST_NOTES_TEMPLATE.md` (fyld ud)
-2. `API_OPTIMIZATION_TEST_REPORT.md` (follow scenarios)
-3. `API_OPTIMIZATION_TESTING_CHECKLIST.md` (track progress)
+1. `API_OPTIMIZATION_TEST_REPORT.md` (follow scenarios)
+1. `API_OPTIMIZATION_TESTING_CHECKLIST.md` (track progress)
 
 ### Debugging Issues
 
 1. `API_OPTIMIZATION_IMPLEMENTATION_NOTES.md`
-2. `API_OPTIMIZATION_STATUS.md`
-3. `VIRTUAL_SCROLLING_INTEGRATION.md` (hvis relevant)
+1. `API_OPTIMIZATION_STATUS.md`
+1. `VIRTUAL_SCROLLING_INTEGRATION.md` (hvis relevant)
 
 ### Understanding Implementation
 
 1. `API_OPTIMIZATION_SUMMARY.md`
-2. `API_OPTIMIZATION_IMPLEMENTATION_NOTES.md`
-3. `API_OPTIMIZATION_STATUS.md`
+1. `API_OPTIMIZATION_IMPLEMENTATION_NOTES.md`
+1. `API_OPTIMIZATION_STATUS.md`
 
 ### Development Workflow
 
 1. `API_OPTIMIZATION_WORKFLOW.md`
-2. `QUICK_START_OTHER_CHATS.md` (branch workflow)
+1. `QUICK_START_OTHER_CHATS.md` (branch workflow)
 
 ## 📈 Metrics & Tracking
 
@@ -140,15 +140,17 @@ Fuld dokumentation suite til API optimeringer - alt hvad du skal bruge.
 // Browser Console
 window.__requestQueue?.getQueueSize();
 window.__requestQueue?.isRateLimited();
-```
+
+```text
 
 ### Console Logs to Watch
 
-```
+```text
 [Rate Limit] - Rate limit state changes
 [AdaptivePolling] - Polling errors
 [API Query Error] - General errors
 [API Mutation Error] - Mutation errors
+
 ```
 
 ### Key Files to Monitor

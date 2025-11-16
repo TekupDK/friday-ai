@@ -1,7 +1,7 @@
 # 📸 PHASE 1 - Screenshot Analysis & Test Results
 
-**Dato:** November 9, 2025, 9:53am  
-**Screenshot:** Email Center forside  
+**Dato:** November 9, 2025, 9:53am
+**Screenshot:** Email Center forside
 **Status:** Analyzing implementation
 
 ---
@@ -18,14 +18,14 @@
    - ✅ "Afsluttet (0)" synlig
    - **Status:** IMPLEMENTED & WORKING ✨
 
-2. **Email List Structure**
-   - ✅ Emails viser navne (Matilde Skinneholm, info@rendetalje.dk, etc.)
+1. **Email List Structure**
+   - ✅ Emails viser navne (Matilde Skinneholm, <info@rendetalje.dk>, etc.)
    - ✅ Emner er synlige (Re: Matilde Skinneholm fra Rengøring.nu...)
    - ✅ Tider vises (22:43, 19:03, 17:33, 12:25, etc.)
    - ✅ Layout ser clean ud
    - **Status:** LOOKS GOOD ✨
 
-3. **Filter System (Top bar)**
+1. **Filter System (Top bar)**
    - ✅ "Søg i emails..." search bar
    - ✅ Filter chips: "All (20)", "Rengøring.nu (0)", "Direct (20)"
    - ✅ Score button synlig
@@ -41,12 +41,14 @@
 
 **Test nødvendig:**
 
-```
+```text
+
 1. Hover over en email i listen
 2. Se efter icons: 📂 (archive), ⭐ (star), 🗑️ (delete), ⋯ (more)
 3. Check fade-in animation
 4. Click på hver action → Console logs
-```
+
+```text
 
 **Forventet resultat:**
 
@@ -62,11 +64,14 @@
 
 **Test nødvendig:**
 
-```
+```text
+
 1. Find en email med lead score >= 70
+
    → Skal have 🔥 badge synlig
 
 2. Find en email med lead score < 70
+
    → Skal IKKE have nogen badges
 
 3. Verificer INGEN af disse badges vises:
@@ -76,7 +81,8 @@
    - 🎯 Job Type display
    - 💰 Estimated Value
    - ✓ Confidence percentage
-```
+
+```text
 
 **Forventet resultat:**
 
@@ -98,12 +104,15 @@
 
 **Manual test:**
 
-```
+```text
+
 1. Find emails i listen
 2. Verificer INGEN badges synlige (da 0 hot leads)
 3. If you add test data with score >= 70:
+
    → Check badge appears
-```
+
+```text
 
 ---
 
@@ -113,14 +122,16 @@
 
 **Manual test required:**
 
-```
-1. Open Email Center: http://localhost:3002
+```text
+
+1. Open Email Center: <http://localhost:3002>
 2. Hover over first email
 3. Wait ~100ms for fade-in
 4. Check icons appear: 📂⭐🗑️⋯
 5. Click Archive → Console: "Archive: threadId"
 6. Move mouse away → Actions fade out
-```
+
+```text
 
 **Expected behavior:**
 
@@ -137,31 +148,34 @@
 
 **Current layout (fra screenshot):**
 
-```
+```text
 [Icon] Navn                     Emne text                    [Time] [Toggle]
-```
+
+```text
 
 **Expected layout (Phase 1):**
 
 **Compact:**
 
-```
+```text
 [●] Navn    Emne                              [Time] [🔥75 if hot] [Actions on hover]
-```
+
+```text
 
 **Comfortable:**
 
-```
+```text
 [●] Navn                                      [Time] [🔥75 if hot] [Actions on hover]
     Emne text her
     Snippet preview...
-```
+
+```text
 
 **Manual verification needed:**
 
 1. Check if layout matches expected
-2. Verify spacing is correct
-3. Check if snippet is visible (comfortable mode)
+1. Verify spacing is correct
+1. Check if snippet is visible (comfortable mode)
 
 ---
 
@@ -180,7 +194,8 @@ Cmd + Shift + R (Mac)
 
 # Or restart dev server
 npm run dev
-```
+
+```text
 
 ---
 
@@ -199,14 +214,15 @@ npm run dev
     <EmailListV2 /> // ← Old version
   );
 }
-```
+
+```text
 
 **Manual test:**
 
 1. Open browser dev tools
-2. Check component hierarchy
-3. Verify EmailListAI is rendered
-4. Check for console errors
+1. Check component hierarchy
+1. Verify EmailListAI is rendered
+1. Check for console errors
 
 ---
 
@@ -216,27 +232,29 @@ npm run dev
 
 **Check:**
 
-```
+```text
+
 1. Open browser dev tools
 2. Inspect email item
 3. Check if classes are applied:
    - "opacity-0 group-hover:opacity-100"
    - "transition-opacity"
    - "shrink-0"
-```
+
+```text
 
 ---
 
 ## ✅ PHASE 1 SUCCESS CRITERIA
 
-### Visual Criteria:
+### Visual Criteria
 
 - [ ] No badge clutter (only hot lead badges for score >= 70)
 - [ ] Clean email item layout (name, subject, snippet, time)
 - [ ] Quick Actions visible on hover
 - [ ] Smooth hover animations
 
-### Functional Criteria:
+### Functional Criteria
 
 - [ ] Email click opens detail view
 - [ ] Checkbox selection works
@@ -244,7 +262,7 @@ npm run dev
 - [ ] Scroll performance is smooth
 - [ ] SPLITS filtering works
 
-### Code Criteria:
+### Code Criteria
 
 - [ ] EmailQuickActions imported
 - [ ] Conditional badge rendering (score >= 70)
@@ -270,19 +288,20 @@ npm run dev
 **Fix before Phase 2:**
 
 1. Document bug details
-2. Create fix
-3. Test fix
-4. Re-verify all tests
-5. Then proceed to Phase 2
+1. Create fix
+1. Test fix
+1. Re-verify all tests
+1. Then proceed to Phase 2
 
 ---
 
 ## 📝 MANUAL TEST CHECKLIST
 
-### Browser Testing (Required):
+### Browser Testing (Required)
 
-```
-1. [ ] Open http://localhost:3002
+```text
+
+1. [ ] Open <http://localhost:3002>
 2. [ ] Navigate to Email Center
 3. [ ] Hover over 3-5 different emails
 4. [ ] Verify Quick Actions appear
@@ -292,17 +311,20 @@ npm run dev
 8. [ ] Test scroll performance
 9. [ ] Test SPLITS switching
 10. [ ] Check for any visual glitches
-```
 
-### Console Inspection (Required):
+```text
 
-```
+### Console Inspection (Required)
+
+```text
+
 1. [ ] Open DevTools (F12)
 2. [ ] Check Console tab for errors
 3. [ ] Hover emails → Check for Quick Action logs
 4. [ ] Check Network tab for failed requests
 5. [ ] Check React DevTools for component hierarchy
-```
+
+```text
 
 ---
 
@@ -351,6 +373,7 @@ npm run type-check
 
 # 5. Check for build errors
 npm run build
+
 ```
 
 ---

@@ -8,7 +8,7 @@
 
 ### Komponenter
 
-```
+```bash
 client/src/
 ├── lib/
 │   ├── retryStrategy.ts       # Exponential backoff + jitter
@@ -22,7 +22,8 @@ client/src/
 
 server/_core/
 └── trpc.ts                    # Error formatter
-```
+
+```text
 
 ## 🔧 Tekniske Detaljer
 
@@ -35,7 +36,8 @@ server/_core/
 exponentialBackoffWithJitter(attemptIndex);
 // Base: 1s, 2s, 4s, 8s, 16s, 30s (max)
 // Jitter: Random 0-50% af delay
-```
+
+```text
 
 **Integration:**
 
@@ -58,11 +60,14 @@ exponentialBackoffWithJitter(attemptIndex);
 ```typescript
 // client/src/lib/requestQueue.ts
 class RequestQueue {
+
   - Priority queue (high/normal/low)
   - Auto-processing efter rate limit clear
   - Rate limit state management
+
 }
-```
+
+```bash
 
 **Integration Points:**
 
@@ -76,7 +81,8 @@ class RequestQueue {
 // Automatic via TRPC error handlers
 // Manual queue:
 queueTRPCRequest(() => api.call(), "high");
-```
+
+```text
 
 **Rationale:**
 
@@ -100,7 +106,8 @@ useAdaptivePolling({
   pauseOnHidden: true,
   onPoll: () => refetch(),
 });
-```
+
+```bash
 
 **Features:**
 
@@ -129,9 +136,10 @@ useAdaptivePolling({
 
 ```typescript
 staleTime: 60 * 1000,      // 1 minut (op fra 30s)
-gcTime: 15 * 60 * 1000,    // 15 minutter (op fra 5min)
+gcTime: 15 *60* 1000,    // 15 minutter (op fra 5min)
 structuralSharing: true,    // Object identity preservation
-```
+
+```text
 
 **Query-Specific Overrides:**
 
@@ -164,14 +172,16 @@ errorFormatter({ shape, error }) {
     }
   }
 }
-```
+
+```bash
 
 **Client Side (`client/src/main.tsx`):**
 
 ```typescript
 // Extract retry-after og update request queue
 requestQueue.setRateLimitUntil(retryAfter);
-```
+
+```text
 
 **Rationale:**
 
@@ -237,16 +247,16 @@ requestQueue.setRateLimitUntil(retryAfter);
    - Adaptive polling ikke implementeret endnu
    - Afventer email-tab branch merge
 
-2. **Request Queue**
+1. **Request Queue**
    - Kun manuel usage via `queueTRPCRequest()`
    - Automatic integration kun ved rate limit errors
    - Future: Automatic queue ved rate limit detection
 
-3. **Cache Invalidation**
+1. **Cache Invalidation**
    - Manual invalidation nødvendig ved specifikke events
    - Structural sharing kan give false cache hits i edge cases
 
-4. **Activity Detection**
+1. **Activity Detection**
    - Baseret på DOM events (mouse/keyboard)
    - Kan miss tab switches til andre apps
    - Page Visibility API dækker tab switches
@@ -261,11 +271,11 @@ requestQueue.setRateLimitUntil(retryAfter);
    - Integrer når email-tab branch merges
    - Samme pattern som CalendarTab/InvoicesTab
 
-2. **Request Queue Auto-Integration**
+1. **Request Queue Auto-Integration**
    - Automatic queue ved rate limit detection (før fejl)
    - Predictive rate limiting
 
-3. **Cache Metrics**
+1. **Cache Metrics**
    - Track cache hit rates
    - Monitor stale data usage
 
@@ -275,11 +285,11 @@ requestQueue.setRateLimitUntil(retryAfter);
    - Incremental sync via historyId
    - 70-90% reduktion i Gmail API calls
 
-2. **WebSocket/SSE**
+1. **WebSocket/SSE**
    - Real-time push updates
    - Eliminer polling helt
 
-3. **Persistent Cache**
+1. **Persistent Cache**
    - LocalStorage/IndexedDB cache
    - Background sync support
 
@@ -329,7 +339,8 @@ requestQueue.setRateLimitUntil(retryAfter);
 // Check queue status
 console.log("Queue size:", requestQueue.getQueueSize());
 console.log("Rate limited:", requestQueue.isRateLimited());
-```
+
+```text
 
 **Adaptive Polling:**
 
@@ -337,13 +348,15 @@ console.log("Rate limited:", requestQueue.isRateLimited());
 // Check polling state
 const { currentInterval, isActive, isVisible } = useAdaptivePolling(...);
 console.log('Polling:', { currentInterval, isActive, isVisible });
-```
+
+```text
 
 **Rate Limit State:**
 
 ```typescript
 // Global rate limit state
 console.log("Rate limit:", globalRateLimitState);
+
 ```
 
 ### Common Issues
@@ -352,11 +365,11 @@ console.log("Rate limit:", globalRateLimitState);
    - Tjek `enabled` prop i `useAdaptivePolling`
    - Verificer `rateLimit.isRateLimited` state
 
-2. **Queue proceses ikke**
+1. **Queue proceses ikke**
    - Tjek console for rate limit logs
    - Verificer at `setRateLimitUntil()` kaldes
 
-3. **Cache hit rate lav**
+1. **Cache hit rate lav**
    - Tjek at `staleTime` er sat korrekt
    - Verificer at queries har unik keys
 

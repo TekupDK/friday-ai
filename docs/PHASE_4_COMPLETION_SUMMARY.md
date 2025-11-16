@@ -59,7 +59,8 @@ export function detectCity(text: string): string | null {
   const found = cities.find(city => text.toLowerCase().includes(city));
   return found ? found.charAt(0).toUpperCase() + found.slice(1) : null;
 }
-```
+
+```text
 
 ### **If You Need Email Notifications:**
 
@@ -69,7 +70,8 @@ async function sendEmail(to: string, subject: string, body: string) {
   // Use SendGrid, AWS SES, or existing email service
   console.log(`📧 Email to ${to}: ${subject}`);
 }
-```
+
+```text
 
 ### **If You Need Webhooks:**
 
@@ -82,6 +84,7 @@ async function triggerWebhook(url: string, data: any) {
     body: JSON.stringify(data),
   });
 }
+
 ```
 
 ---
@@ -118,7 +121,7 @@ Instead of 500-line files we might not use:
 
 ---
 
-## 🚀 Ready for Phase 5 & 6!
+## 🚀 Ready for Phase 5 & 6
 
 We have solid foundation. Next phases:
 

@@ -29,12 +29,12 @@ Formål: Friday følger brugerens kontekst og handlinger, foreslår næste skrid
 - “Følg op om X dage” (skabelon)
 - “Sæt label” (Needs Reply/Finance) / “Markér som læst” / “Arkivér”
 
-2. Pipeline/Leads
+1. Pipeline/Leads
 
 - “Flyt stage” (needs_action → venter_pa_svar → i_kalender → finance → afsluttet)
 - “Opret lead fra mail”
 
-3. Kalender/Økonomi
+1. Kalender/Økonomi
 
 - “Opret bekræftelses‑event i kalender”
 - “Opret faktura i Billy” (ved Gennemført)

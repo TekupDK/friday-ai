@@ -1,7 +1,7 @@
 # Open Source Stack - Implementation Roadmap 🗺️
 
-**Project:** Langfuse + ChromaDB + Crawl4AI Integration  
-**Timeline:** 2-3 Weeks  
+**Project:** Langfuse + ChromaDB + Crawl4AI Integration
+**Timeline:** 2-3 Weeks
 **Status:** Planning Complete, Ready to Start
 
 ---
@@ -41,8 +41,9 @@ cd server/integrations/langfuse/docker
 docker compose -f docker-compose.langfuse.yml up -d
 
 # 4. Verify
-curl http://localhost:3000/api/public/health
-```
+curl <http://localhost:3000/api/public/health>
+
+```text
 
 **Afternoon (2h): TypeScript Client**
 
@@ -132,8 +133,9 @@ mkdir -p server/integrations/chromadb/docker
 docker compose -f docker-compose.chromadb.yml up -d
 
 # 3. Verify
-curl http://localhost:8000/api/v1/heartbeat
-```
+curl <http://localhost:8000/api/v1/heartbeat>
+
+```text
 
 **Afternoon (2h): TypeScript Client**
 
@@ -156,20 +158,24 @@ curl http://localhost:8000/api/v1/heartbeat
 
 ```typescript
 // server/integrations/chromadb/indexers/lead-indexer.ts
+
 - Index all existing leads
 - Auto-index new leads
 - Update on lead changes
 - Metadata extraction
-```
+
+```text
 
 **Afternoon (2h): Semantic Lead Search**
 
 ```typescript
 // API endpoints:
+
 - POST /api/leads/semantic-search
 - GET /api/leads/similar/:id
 - POST /api/leads/duplicates/check
-```
+
+```text
 
 **Success Criteria:**
 
@@ -185,20 +191,24 @@ curl http://localhost:8000/api/v1/heartbeat
 
 ```typescript
 // server/integrations/chromadb/indexers/email-indexer.ts
+
 - Index email threads
 - Subject + body vectorization
 - Semantic email search
 - Related thread discovery
-```
+
+```text
 
 **Afternoon (2h): Document Indexer (Friday Docs)**
 
 ```typescript
 // server/integrations/chromadb/indexers/document-indexer.ts
+
 - Index Friday Docs
 - RAG preparation
 - Semantic doc search
-```
+
+```text
 
 **Success Criteria:**
 
@@ -227,7 +237,8 @@ leads.checkDuplicates(lead);
 emails.semanticSearch(query, limit);
 emails.findRelated(emailId, limit);
 docs.semanticSearch(query, limit);
-```
+
+```text
 
 **Success Criteria:**
 
@@ -268,7 +279,8 @@ pip install crawl4ai
 
 # Node.js wrapper
 mkdir -p server/integrations/crawl4ai
-```
+
+```text
 
 **Afternoon (1h): Basic Testing**
 
@@ -290,21 +302,25 @@ mkdir -p server/integrations/crawl4ai
 
 ```typescript
 // server/integrations/crawl4ai/lead-enricher.ts
+
 - Scrape company websites
 - Extract structured data
 - Store enrichment results
 - Error handling
-```
+
+```text
 
 **Afternoon (2h): Background Jobs**
 
 ```typescript
 // Async processing:
+
 - Job queue setup
 - Retry logic
 - Rate limiting
 - Progress tracking
-```
+
+```text
 
 **Success Criteria:**
 
@@ -327,10 +343,12 @@ mkdir -p server/integrations/crawl4ai
 
 ```typescript
 // Hooks:
+
 - onCreate: Auto-enrich if website exists
 - onUpdate: Re-enrich if website changes
 - Manual: Button in UI to trigger
-```
+
+```text
 
 **Success Criteria:**
 
@@ -375,7 +393,7 @@ mkdir -p server/integrations/crawl4ai
 
 **Files to Create:**
 
-```
+```text
 docs/integrations/open-source-stack/
 ├── LANGFUSE_GUIDE.md
 ├── CHROMADB_GUIDE.md
@@ -383,7 +401,8 @@ docs/integrations/open-source-stack/
 ├── DEPLOYMENT.md
 ├── MONITORING.md
 └── TROUBLESHOOTING.md
-```
+
+```bash
 
 **Success Criteria:**
 
@@ -436,25 +455,33 @@ services:
       POSTGRES_USER: langfuse
       POSTGRES_PASSWORD: langfuse
     volumes:
+
       - langfuse-db:/var/lib/postgresql/data
+
     ports:
+
       - "5433:5432"
 
   langfuse:
     image: langfuse/langfuse:latest
     depends_on:
+
       - langfuse-db
+
     ports:
+
       - "3000:3000"
+
     environment:
       DATABASE_URL: postgresql://langfuse:langfuse@langfuse-db:5432/langfuse
       NEXTAUTH_SECRET: langfuse-secret-change-in-production
-      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_URL: <http://localhost:3000>
       SALT: langfuse-salt-change-in-production
 
 volumes:
   langfuse-db:
-```
+
+```text
 
 #### TypeScript Client
 
@@ -466,7 +493,7 @@ import { ENV } from "../_core/env";
 export const langfuseClient = new Langfuse({
   publicKey: ENV.langfusePublicKey,
   secretKey: ENV.langfuseSecretKey,
-  baseUrl: ENV.langfuseBaseUrl || "http://localhost:3000",
+  baseUrl: ENV.langfuseBaseUrl || "<http://localhost:3000",>
 });
 
 export async function createTrace(params: {
@@ -508,7 +535,8 @@ export async function createGeneration(
       : undefined,
   });
 }
-```
+
+```text
 
 #### LLM Wrapper
 
@@ -578,7 +606,8 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     throw error;
   }
 }
-```
+
+```bash
 
 ---
 
@@ -594,17 +623,23 @@ services:
   chromadb:
     image: chromadb/chroma:latest
     ports:
+
       - "8000:8000"
+
     volumes:
+
       - chromadb-data:/chroma/chroma
+
     environment:
+
       - IS_PERSISTENT=TRUE
       - PERSIST_DIRECTORY=/chroma/chroma
       - ANONYMIZED_TELEMETRY=FALSE
 
 volumes:
   chromadb-data:
-```
+
+```text
 
 #### TypeScript Client
 
@@ -614,7 +649,7 @@ import { ChromaClient } from "chromadb";
 import { ENV } from "../_core/env";
 
 export const chromaClient = new ChromaClient({
-  path: ENV.chromaUrl || "http://localhost:8000",
+  path: ENV.chromaUrl || "<http://localhost:8000",>
 });
 
 export async function getOrCreateCollection(name: string) {
@@ -625,7 +660,8 @@ export async function getOrCreateCollection(name: string) {
     },
   });
 }
-```
+
+```text
 
 #### Lead Indexer
 
@@ -701,7 +737,8 @@ export async function checkLeadDuplicate(
     duplicateIds: duplicates || [],
   };
 }
-```
+
+```text
 
 ---
 
@@ -721,7 +758,8 @@ pip install crawl4ai[llm]  # With LLM support
 
 # Test installation
 python -c "from crawl4ai import AsyncWebCrawler; print('✅ Crawl4AI installed')"
-```
+
+```bash
 
 #### Node.js Wrapper
 
@@ -802,7 +840,8 @@ export async function enrichLeadFromWebsite(
     }, 60000);
   });
 }
-```
+
+```bash
 
 #### Python Scraper Script
 
@@ -825,6 +864,7 @@ async def scrape_website(url, api_key):
                 api_token=api_key,
                 instruction="""
                 Extract company information from this website:
+
                 - Company name
                 - Industry/services offered
                 - Contact information (email, phone, address)
@@ -863,7 +903,8 @@ if __name__ == "__main__":
     api_key = sys.argv[2]
 
     asyncio.run(scrape_website(url, api_key))
-```
+
+```text
 
 ---
 
@@ -899,33 +940,36 @@ if __name__ == "__main__":
 
 ### Development Costs
 
-```
+```text
 Week 1: 13 hours × $50/hour = $650
 Week 2: 21 hours × $50/hour = $1,050
 Week 3: 21 hours × $50/hour = $1,050
 Week 4: 15 hours × $50/hour = $750
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total: 70 hours = $3,500
-```
+
+```text
 
 ### Operational Costs (Annual)
 
-```
+```text
 Langfuse (self-hosted): $0
 ChromaDB (self-hosted): $0
 Crawl4AI (self-hosted): $0
 LLM API calls: $0 (using FREE models)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total: $0/year 🎉
-```
+
+```text
 
 ### ROI Analysis
 
-```
+```text
 Annual savings: $9,000+
 Development cost: $3,500
 ROI: 257% in year 1
 Break-even: 5 months
+
 ```
 
 ---
@@ -936,16 +980,16 @@ Break-even: 5 months
 
 1. **Performance degradation**
    - Mitigation: Async processing, caching, monitoring
-2. **Integration bugs**
+1. **Integration bugs**
    - Mitigation: Comprehensive testing, gradual rollout
-3. **Data privacy**
+1. **Data privacy**
    - Mitigation: Self-hosted, no external data transfer
 
 ### Operational Risks
 
 1. **Deployment complexity**
    - Mitigation: Docker Compose, detailed docs
-2. **Maintenance burden**
+1. **Maintenance burden**
    - Mitigation: Simple architecture, good monitoring
 
 ---
@@ -953,14 +997,14 @@ Break-even: 5 months
 ## 📝 Next Steps
 
 1. **Review this roadmap** ✅
-2. **Start Day 2: Langfuse deployment** (Tomorrow)
-3. **Daily progress updates**
-4. **Weekly check-ins**
+1. **Start Day 2: Langfuse deployment** (Tomorrow)
+1. **Daily progress updates**
+1. **Weekly check-ins**
 
 ---
 
-**Status:** ✅ Roadmap Complete  
-**Ready to Start:** Day 2 (Tomorrow)  
+**Status:** ✅ Roadmap Complete
+**Ready to Start:** Day 2 (Tomorrow)
 **Timeline:** On track for 3-week completion
 
 **Last Updated:** November 9, 2025 12:10 PM

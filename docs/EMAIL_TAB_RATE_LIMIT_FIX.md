@@ -17,8 +17,8 @@
 
 **Nu:**
 
-- Cache labels i 5 minutter (`staleTime: 5 * 60 * 1000`)
-- Keep i cache i 10 minutter (`cacheTime: 10 * 60 * 1000`)
+- Cache labels i 5 minutter (`staleTime: 5 *60* 1000`)
+- Keep i cache i 10 minutter (`cacheTime: 10 *60* 1000`)
 - Ingen retry på fejl (labels ændrer sig sjældent)
 
 **File:** `client/src/components/inbox/EmailSidebar.tsx`
@@ -26,23 +26,24 @@
 ```typescript
 const { data: labels, isLoading: labelsLoading } =
   trpc.inbox.email.getLabels.useQuery(undefined, {
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutter
-    cacheTime: 10 * 60 * 1000, // Keep in cache for 10 minutter
+    staleTime: 5 *60* 1000, // Cache for 5 minutter
+    cacheTime: 10 *60* 1000, // Keep in cache for 10 minutter
     retry: false, // Don't retry on error - labels change rarely
   });
+
 ```
 
 ---
 
 ## 📊 Forventet Effekt
 
-### Før Forbedringer:
+### Før Forbedringer
 
 - **Labels API calls:** ~Hver gang komponenten renders
 - **Email API calls:** Hver 60 sekunder
 - **Total requests:** ~60+ per time
 
-### Efter Forbedringer:
+### Efter Forbedringer
 
 - **Labels API calls:** ~Hver 5. minut (kun hvis data er stale)
 - **Email API calls:** Hver 60 sekunder (uændret)
@@ -60,26 +61,26 @@ const { data: labels, isLoading: labelsLoading } =
 ## 🧪 Test Plan (Efter Rate Limit Reset)
 
 1. ✅ Refresh browser
-2. ✅ Klik "Opdater" for at hente emails
-3. ✅ Verificer labels cache (skal kun hente én gang)
-4. ✅ Test email liste loading
-5. ✅ Test label visning med farvekodning
+1. ✅ Klik "Opdater" for at hente emails
+1. ✅ Verificer labels cache (skal kun hente én gang)
+1. ✅ Test email liste loading
+1. ✅ Test label visning med farvekodning
 
 ---
 
 ## 📝 Next Steps (Future Improvements)
 
-### Kort Sigte:
+### Kort Sigte
 
 1. ✅ Labels caching - **DONE**
-2. ⏳ Bedre rate limit UI feedback
-3. ⏳ Email threads caching
+1. ⏳ Bedre rate limit UI feedback
+1. ⏳ Email threads caching
 
-### Lang Sigte:
+### Lang Sigte
 
 1. ⏳ Request batching
-2. ⏳ Smart caching baseret på timestamps
-3. ⏳ Rate limit monitoring & automatic backoff
+1. ⏳ Smart caching baseret på timestamps
+1. ⏳ Rate limit monitoring & automatic backoff
 
 ---
 

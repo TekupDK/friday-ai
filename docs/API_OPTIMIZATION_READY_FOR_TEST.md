@@ -1,7 +1,7 @@
 # API Optimering - Ready for Testing ✅
 
 **Dato:** ${new Date().toISOString().split('T')[0]}
-**Status:** 🧪 **READY FOR USER TESTING**
+**Status:**🧪**READY FOR USER TESTING**
 
 ## ✅ Implementation Complete
 
@@ -16,19 +16,22 @@ For isoleret testning:
 ```powershell
 cd C:\Users\empir\Tekup\services\tekup-ai-v2
 .\scripts\create-chat-branch.ps1
-```
+
+```text
 
 Eller manuelt:
 
 ```bash
 git checkout -b test/api-optimization-$(date +%Y%m%d-%H%M%S)
-```
+
+```text
 
 ### 2. Start Development Server
 
 ```bash
 pnpm dev
-```
+
+```text
 
 ### 3. Åbn Browser DevTools
 
@@ -79,14 +82,15 @@ window.__requestQueue?.isRateLimited();
 // Check logs
 // [Rate Limit] - Rate limit state
 // [AdaptivePolling] - Polling errors
-```
+
+```text
 
 ### Network Tab Tips
 
 1. **Filter:** XHR eller Fetch
-2. **Group by:** Endpoint
-3. **Preserve log:** ✅ (for bedre tracking)
-4. **Throttling:** Fast 3G (simuler langsomt netværk)
+1. **Group by:** Endpoint
+1. **Preserve log:** ✅ (for bedre tracking)
+1. **Throttling:** Fast 3G (simuler langsomt netværk)
 
 ## 📚 Documentation Reference
 
@@ -155,6 +159,7 @@ Når testning er færdig, opdater:
 
 1. ***
 2. ***
+
 ```
 
 ---
@@ -172,4 +177,4 @@ Når testning er færdig, opdater:
 
 **Next Step:** Kør Quick Test (5 min) → Dokumenter → Full Test Suite (30-60 min)
 
-**Status:** 🧪 **READY FOR TESTING**
+**Status:**🧪**READY FOR TESTING**

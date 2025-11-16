@@ -16,17 +16,17 @@ Denne rapport dokumenterer implementeringen af API optimeringer til at reducere 
    - Aktiveret i QueryClient (`main.tsx`)
    - Forbedrer cache hit rates og reducerer re-renders
 
-2. **Intelligent Caching Strategi**
+1. **Intelligent Caching Strategi**
    - Global staleTime: 30s → 60s
    - Global gcTime: 5min → 15min
    - Query-specifikke overrides mulige
 
-3. **Exponential Backoff med Jitter**
+1. **Exponential Backoff med Jitter**
    - Fil: `client/src/lib/retryStrategy.ts`
    - Intelligent retry baseret på error type
    - Random jitter forhindrer thundering herd problem
 
-4. **EmailSidebar Cache Fix**
+1. **EmailSidebar Cache Fix**
    - Fixet deprecated `cacheTime` → `gcTime`
    - React Query v5 kompatibilitet
 
@@ -61,9 +61,9 @@ Denne rapport dokumenterer implementeringen af API optimeringer til at reducere 
 **Steps:**
 
 1. Åbn CalendarTab eller InvoicesTab
-2. Observer Network tab i DevTools
-3. Skift til anden tab og tilbage igen
-4. Verificer at ingen nye API calls forekommer (data skal være cached)
+1. Observer Network tab i DevTools
+1. Skift til anden tab og tilbage igen
+1. Verificer at ingen nye API calls forekommer (data skal være cached)
 
 **Forventet Resultat:**
 
@@ -72,11 +72,12 @@ Denne rapport dokumenterer implementeringen af API optimeringer til at reducere 
 
 **Måling:**
 
-```
+```text
 Før: ~2-3 requests ved tab switch
 Efter: ~0 requests (hvis inden for staleTime)
 Reduktion: 100% for cached requests
-```
+
+```text
 
 ---
 
@@ -87,9 +88,9 @@ Reduktion: 100% for cached requests
 **Steps:**
 
 1. Simuler rate limit error (eller vent på faktisk rate limit)
-2. Observer console logs for retry attempts
-3. Verificer at retry delays stiger eksponentielt
-4. Verificer at jitter tilføjes (random variation)
+1. Observer console logs for retry attempts
+1. Verificer at retry delays stiger eksponentielt
+1. Verificer at jitter tilføjes (random variation)
 
 **Forventet Resultat:**
 
@@ -99,11 +100,12 @@ Reduktion: 100% for cached requests
 
 **Måling:**
 
-```
+```text
 Retry 1: ~1000-1500ms (med jitter)
 Retry 2: ~2000-3000ms (med jitter)
 Retry 3: ~4000-6000ms (med jitter)
-```
+
+```text
 
 ---
 
@@ -114,10 +116,10 @@ Retry 3: ~4000-6000ms (med jitter)
 **Steps:**
 
 1. Åbn CalendarTab eller InvoicesTab
-2. Observer Network tab
-3. Interager med siden (klik, scroll, etc.) - observer polling interval
-4. Lad siden stå i 1+ minut uden interaktion
-5. Observer at polling interval øges
+1. Observer Network tab
+1. Interager med siden (klik, scroll, etc.) - observer polling interval
+1. Lad siden stå i 1+ minut uden interaktion
+1. Observer at polling interval øges
 
 **Forventet Resultat:**
 
@@ -127,12 +129,13 @@ Retry 3: ~4000-6000ms (med jitter)
 
 **Måling:**
 
-```
+```text
 Aktiv: ~30s interval
 Inaktiv (1min): ~45s interval
 Inaktiv (2min): ~90s interval
 Inaktiv (5min): Max interval (180s-300s)
-```
+
+```text
 
 ---
 
@@ -143,11 +146,11 @@ Inaktiv (5min): Max interval (180s-300s)
 **Steps:**
 
 1. Åbn CalendarTab eller InvoicesTab
-2. Observer Network tab
-3. Skift til anden browser tab (eller minimer vinduet)
-4. Vent 2 minutter
-5. Skift tilbage til original tab
-6. Observer at polling genoptages
+1. Observer Network tab
+1. Skift til anden browser tab (eller minimer vinduet)
+1. Vent 2 minutter
+1. Skift tilbage til original tab
+1. Observer at polling genoptages
 
 **Forventet Resultat:**
 
@@ -157,10 +160,11 @@ Inaktiv (5min): Max interval (180s-300s)
 
 **Måling:**
 
-```
+```text
 Tab skjult: 0 API calls
 Tab synlig igen: Umiddelbar API call + normal polling resume
-```
+
+```text
 
 ---
 
@@ -171,10 +175,10 @@ Tab synlig igen: Umiddelbar API call + normal polling resume
 **Steps:**
 
 1. Trigger rate limit (gennem mange requests)
-2. Prøv at lave flere API calls mens rate limited
-3. Observer console logs for queue status
-4. Vent til retry-after period udløber
-5. Verificer at queued requests proceses
+1. Prøv at lave flere API calls mens rate limited
+1. Observer console logs for queue status
+1. Vent til retry-after period udløber
+1. Verificer at queued requests proceses
 
 **Forventet Resultat:**
 
@@ -185,11 +189,12 @@ Tab synlig igen: Umiddelbar API call + normal polling resume
 
 **Måling:**
 
-```
+```text
 Rate limit: Request queue size vises i console
 Efter retry-after: Queue proceses automatisk
 Processing order: High → Normal → Low priority
-```
+
+```text
 
 ---
 
@@ -200,9 +205,9 @@ Processing order: High → Normal → Low priority
 **Steps:**
 
 1. Observer UI når rate limit opstår
-2. Verificer at countdown timer vises
-3. Verificer at polling pauser
-4. Verificer at retry-after timestamp er korrekt
+1. Verificer at countdown timer vises
+1. Verificer at polling pauser
+1. Verificer at retry-after timestamp er korrekt
 
 **Forventet Resultat:**
 
@@ -213,11 +218,12 @@ Processing order: High → Normal → Low priority
 
 **Måling:**
 
-```
+```text
 Error visning: "Rate limit: X minutter" countdown
 Polling status: Paused
 Auto-resume: Efter retry-after timestamp
-```
+
+```text
 
 ---
 
@@ -228,9 +234,9 @@ Auto-resume: Efter retry-after timestamp
 **Steps:**
 
 1. Åbn alle tabs (EmailTab, CalendarTab, InvoicesTab)
-2. Observer Network tab i 10 minutter
-3. Tæl total antal API calls
-4. Sammenlign med baseline (før optimeringer)
+1. Observer Network tab i 10 minutter
+1. Tæl total antal API calls
+1. Sammenlign med baseline (før optimeringer)
 
 **Forventet Resultat:**
 
@@ -240,19 +246,21 @@ Auto-resume: Efter retry-after timestamp
 
 **Baseline (Før):**
 
-```
+```text
 EmailTab: ~7 calls/10min (90s interval)
 CalendarTab: ~7 calls/10min (90s interval)
 InvoicesTab: ~10 calls/10min (60s interval)
 Total: ~24 calls/10min
-```
+
+```text
 
 **Forventet (Efter):**
 
-```
+```text
 Aktiv brug: ~15-17 calls/10min (40-50% reduktion)
 Inaktiv brug: ~7-10 calls/10min (60-70% reduktion)
-```
+
+```text
 
 ---
 
@@ -309,8 +317,8 @@ Inaktiv brug: ~7-10 calls/10min (60-70% reduktion)
 **Løsninger:**
 
 1. Tjek at `structuralSharing: true` er aktiveret
-2. Verificer at `staleTime` er sat korrekt
-3. Tjek Network tab for cache headers
+1. Verificer at `staleTime` er sat korrekt
+1. Tjek Network tab for cache headers
 
 ### Problem: Adaptive Polling justerer ikke interval
 
@@ -322,8 +330,8 @@ Inaktiv brug: ~7-10 calls/10min (60-70% reduktion)
 **Løsninger:**
 
 1. Tjek at `useAdaptivePolling` hook er korrekt implementeret
-2. Verificer at `inactivityThreshold` er sat korrekt
-3. Tjek console for errors i hook
+1. Verificer at `inactivityThreshold` er sat korrekt
+1. Tjek console for errors i hook
 
 ### Problem: Request Queue proceses ikke
 
@@ -335,8 +343,8 @@ Inaktiv brug: ~7-10 calls/10min (60-70% reduktion)
 **Løsninger:**
 
 1. Tjek console logs for queue status
-2. Verificer at `requestQueue.setRateLimitUntil()` kaldes
-3. Tjek at `retry-after` timestamp er korrekt
+1. Verificer at `requestQueue.setRateLimitUntil()` kaldes
+1. Tjek at `retry-after` timestamp er korrekt
 
 ### Problem: Rate Limit Errors fortsætter
 
@@ -348,8 +356,8 @@ Inaktiv brug: ~7-10 calls/10min (60-70% reduktion)
 **Løsninger:**
 
 1. Verificer at rate limit detection virker (`isRateLimitError`)
-2. Tjek at `retry: shouldRetry` bruges i queries
-3. Verificer at polling pauser ved rate limit
+1. Tjek at `retry: shouldRetry` bruges i queries
+1. Verificer at polling pauser ved rate limit
 
 ---
 
@@ -365,25 +373,28 @@ Inaktiv brug: ~7-10 calls/10min (60-70% reduktion)
 
 **Observations:**
 
-```
+```text
 [Indsæt notater her under testning]
-```
+
+```text
 
 **Issues Found:**
 
-```
+```text
 [Indsæt issues fundet under testning]
-```
+
+```text
 
 **Metrics Collected:**
 
-```
+```text
 API Calls (10min aktiv): _____
 API Calls (10min inaktiv): _____
 Cache Hit Rate: _____%
 Rate Limit Errors: _____
 Average Polling Interval (aktiv): _____
 Average Polling Interval (inaktiv): _____
+
 ```
 
 ---
@@ -397,12 +408,12 @@ Efter testning:
    - Overvej at implementere Gmail History API (Phase 3)
    - Integrer adaptive polling i EmailTab
 
-2. **Hvis issues findes:**
+1. **Hvis issues findes:**
    - Dokumenter alle issues
    - Prioritér fixes
    - Retest efter fixes
 
-3. **Optimering:**
+1. **Optimering:**
    - Juster intervals baseret på test data
    - Tune cache times baseret på usage patterns
    - Fine-tune adaptive polling thresholds

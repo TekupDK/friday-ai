@@ -1,24 +1,24 @@
 # 🚀 Integration Implementation Plan - Professional Edition
 
-**Created:** November 9, 2025  
-**Status:** Ready for Implementation  
+**Created:** November 9, 2025
+**Status:** Ready for Implementation
 **Focus:** Quality, Maintainability, Clean Code
 
 ---
 
 ## 🎯 OVERALL STRATEGY
 
-### Core Principles:
+### Core Principles
 
 1. ✅ **Small Files** - Max 200 lines per file
-2. ✅ **Single Responsibility** - One concern per module
-3. ✅ **Proper TypeScript** - Full type safety
-4. ✅ **Comprehensive Tests** - Test coverage >80%
-5. ✅ **Clear Documentation** - README per feature
-6. ✅ **Incremental Rollout** - Feature flags
-7. ✅ **Error Handling** - Graceful degradation
+1. ✅ **Single Responsibility** - One concern per module
+1. ✅ **Proper TypeScript** - Full type safety
+1. ✅ **Comprehensive Tests** - Test coverage >80%
+1. ✅ **Clear Documentation** - README per feature
+1. ✅ **Incremental Rollout** - Feature flags
+1. ✅ **Error Handling** - Graceful degradation
 
-### Anti-Patterns to Avoid:
+### Anti-Patterns to Avoid
 
 - ❌ God objects (>500 lines)
 - ❌ Mixed concerns in one file
@@ -32,8 +32,8 @@
 
 ## 📋 PHASE 1: LiteLLM Integration (Priority 1)
 
-**Timeline:** Week 1 (5 days)  
-**Goal:** Production-ready AI gateway with fallback  
+**Timeline:** Week 1 (5 days)
+**Goal:** Production-ready AI gateway with fallback
 **Success Criteria:** 99.9% AI uptime, automatic failover
 
 ### Day 1: Planning & Setup
@@ -44,12 +44,13 @@
 
 **Files to Create:**
 
-```
+```text
 docs/integrations/litellm/
 ├── ARCHITECTURE.md          (architecture overview)
 ├── DECISIONS.md            (technical decisions)
 └── MIGRATION_PLAN.md       (migration strategy)
-```
+
+```text
 
 **Content:**
 
@@ -74,22 +75,23 @@ docs/integrations/litellm/
 
 **Files to Create:**
 
-```
+```bash
 server/integrations/litellm/
 ├── config/
 │   ├── litellm.config.yaml    (max 50 lines)
 │   └── providers.config.ts     (max 100 lines)
 └── docker/
     └── docker-compose.litellm.yml
-```
+
+```bash
 
 **Steps:**
 
 1. Install LiteLLM: `pip install litellm`
-2. Create config file with providers
-3. Setup Docker compose
-4. Test local startup
-5. Verify health endpoint
+1. Create config file with providers
+1. Setup Docker compose
+1. Test local startup
+1. Verify health endpoint
 
 **Acceptance Criteria:**
 
@@ -108,13 +110,14 @@ server/integrations/litellm/
 
 **Files to Create:**
 
-```
+```text
 server/integrations/litellm/
 ├── client.ts                 (max 100 lines - client setup)
 ├── types.ts                  (max 80 lines - type definitions)
 ├── errors.ts                 (max 60 lines - error classes)
 └── constants.ts              (max 40 lines - constants)
-```
+
+```text
 
 **Code Structure:**
 
@@ -140,7 +143,8 @@ export class LiteLLMClient {
     // Max 10 lines
   }
 }
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -158,13 +162,14 @@ export class LiteLLMClient {
 
 **Files to Create:**
 
-```
+```text
 server/integrations/litellm/
 ├── fallback/
 │   ├── strategy.ts           (max 120 lines)
 │   ├── retry.ts              (max 80 lines)
 │   └── circuit-breaker.ts    (max 100 lines)
-```
+
+```text
 
 **Features:**
 
@@ -191,13 +196,14 @@ server/integrations/litellm/
 
 **Files to Create:**
 
-```
+```text
 server/integrations/litellm/
 ├── adapters/
 │   ├── openrouter-adapter.ts   (max 80 lines)
 │   ├── anthropic-adapter.ts    (max 80 lines)
 │   └── openai-adapter.ts       (max 80 lines)
-```
+
+```text
 
 **Purpose:**
 
@@ -220,18 +226,19 @@ server/integrations/litellm/
 
 **Files to Modify:**
 
-```
+```text
 server/docs/ai/
 ├── analyzer.ts               (update AI calls)
 ├── generator.ts              (update AI calls)
 └── auto-create.ts            (update AI calls)
-```
+
+```text
 
 **Migration Strategy:**
 
 ```typescript
 // Before (analyzer.ts):
-const response = await fetch('https://openrouter.ai/...');
+const response = await fetch('<https://openrouter.ai/...>');
 
 // After (analyzer.ts):
 import { litellm } from '@/integrations/litellm';
@@ -241,7 +248,8 @@ const response = await litellm.chatCompletion({
   messages: [...],
   fallback: ['claude-3-opus', 'gpt-3.5-turbo']
 });
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -260,14 +268,15 @@ const response = await litellm.chatCompletion({
 
 **Files to Create:**
 
-```
+```text
 tests/integrations/litellm/
 ├── client.test.ts            (max 150 lines)
 ├── fallback.test.ts          (max 120 lines)
 ├── retry.test.ts             (max 100 lines)
 ├── circuit-breaker.test.ts   (max 100 lines)
 └── e2e.test.ts               (max 150 lines)
-```
+
+```text
 
 **Test Coverage:**
 
@@ -293,13 +302,14 @@ tests/integrations/litellm/
 
 **Files to Create:**
 
-```
+```text
 server/integrations/litellm/
 ├── monitoring/
 │   ├── metrics.ts            (max 100 lines)
 │   ├── logger.ts             (max 80 lines)
 │   └── health.ts             (max 60 lines)
-```
+
+```text
 
 **Metrics to Track:**
 
@@ -326,7 +336,7 @@ server/integrations/litellm/
 
 **Files to Create:**
 
-```
+```text
 docs/integrations/litellm/
 ├── README.md                 (overview)
 ├── SETUP.md                  (setup guide)
@@ -334,7 +344,8 @@ docs/integrations/litellm/
 ├── MONITORING.md             (monitoring guide)
 ├── TROUBLESHOOTING.md        (common issues)
 └── EXAMPLES.md               (usage examples)
-```
+
+```text
 
 **Content:**
 
@@ -361,11 +372,11 @@ docs/integrations/litellm/
 **Steps:**
 
 1. Deploy LiteLLM proxy to staging
-2. Update Friday AI staging config
-3. Run smoke tests
-4. Monitor for 24 hours
-5. Fix any issues
-6. Get approval for production
+1. Update Friday AI staging config
+1. Run smoke tests
+1. Monitor for 24 hours
+1. Fix any issues
+1. Get approval for production
 
 **Acceptance Criteria:**
 
@@ -399,21 +410,21 @@ docs/integrations/litellm/
 
 ## 📊 PHASE 1 DELIVERABLES
 
-### Code Files (All < 200 lines):
+### Code Files (All < 200 lines)
 
 - [ ] 15 implementation files
 - [ ] 5 test files
 - [ ] 3 config files
 - [ ] Total: ~2,500 lines (well-organized)
 
-### Documentation:
+### Documentation
 
 - [ ] 10 markdown docs
 - [ ] API reference
 - [ ] Setup guides
 - [ ] Troubleshooting
 
-### Quality Metrics:
+### Quality Metrics
 
 - [ ] Test coverage > 80%
 - [ ] No files > 200 lines
@@ -425,8 +436,8 @@ docs/integrations/litellm/
 
 ## 📋 PHASE 2: Ragie.ai Integration (Priority 2)
 
-**Timeline:** Week 2-3 (8 days)  
-**Goal:** Semantic search in Friday Docs  
+**Timeline:** Week 2-3 (8 days)
+**Goal:** Semantic search in Friday Docs
 **Success Criteria:** 10x better search relevance
 
 ### Day 1-2: Planning & Setup
@@ -437,12 +448,13 @@ docs/integrations/litellm/
 
 **Files to Create:**
 
-```
+```text
 docs/integrations/ragie/
 ├── ARCHITECTURE.md
 ├── SEARCH_STRATEGY.md
 └── INDEX_SCHEMA.md
-```
+
+```text
 
 **Design:**
 
@@ -465,14 +477,15 @@ docs/integrations/ragie/
 
 **Files to Create:**
 
-```
+```text
 server/integrations/ragie/
 ├── client.ts                 (max 120 lines)
 ├── types.ts                  (max 100 lines)
 ├── errors.ts                 (max 60 lines)
 ├── indexer.ts                (max 150 lines)
 └── retriever.ts              (max 150 lines)
-```
+
+```text
 
 **Structure:**
 
@@ -502,7 +515,8 @@ export class RagieRetriever {
     // Max 40 lines
   }
 }
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -521,13 +535,14 @@ export class RagieRetriever {
 
 **Files to Create:**
 
-```
+```text
 server/docs/search/
 ├── indexing-pipeline.ts      (max 150 lines)
 ├── document-transformer.ts   (max 100 lines)
 ├── metadata-extractor.ts     (max 120 lines)
 └── index-queue.ts            (max 100 lines)
-```
+
+```text
 
 **Features:**
 
@@ -552,7 +567,7 @@ server/docs/search/
 
 **Files to Create/Modify:**
 
-```
+```text
 server/routers/
 ├── search-router.ts          (NEW, max 150 lines)
 
@@ -560,7 +575,8 @@ server/docs/search/
 ├── semantic-search.ts        (max 120 lines)
 ├── hybrid-search.ts          (max 150 lines)
 └── search-ranker.ts          (max 100 lines)
-```
+
+```text
 
 **Endpoints:**
 
@@ -571,24 +587,25 @@ export const searchRouter = router({
   semantic: protectedProcedure
     .input(z.object({ query: z.string(), limit: z.number() }))
     .query(async ({ input }) => {
-      /* max 30 lines */
+      /*max 30 lines*/
     }),
 
   // Similar documents
   similar: protectedProcedure
     .input(z.object({ docId: z.string() }))
     .query(async ({ input }) => {
-      /* max 25 lines */
+      /*max 25 lines*/
     }),
 
   // Hybrid search (keyword + semantic)
   hybrid: protectedProcedure
     .input(z.object({ query: z.string() }))
     .query(async ({ input }) => {
-      /* max 35 lines */
+      /*max 35 lines*/
     }),
 });
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -607,14 +624,15 @@ export const searchRouter = router({
 
 **Files to Create:**
 
-```
+```bash
 client/src/components/search/
 ├── SemanticSearchInput.tsx   (max 150 lines)
 ├── SearchResults.tsx         (max 120 lines)
 ├── SearchFilters.tsx         (max 100 lines)
 ├── SimilarDocs.tsx           (max 80 lines)
 └── SearchHighlight.tsx       (max 60 lines)
-```
+
+```text
 
 **Features:**
 
@@ -638,7 +656,8 @@ export function SearchResults({ results, query }: Props) {
   // Max 50 lines - just rendering results
   // No search logic here!
 }
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -656,13 +675,14 @@ export function SearchResults({ results, query }: Props) {
 
 **Files to Create:**
 
-```
+```text
 client/src/hooks/search/
 ├── useSemanticSearch.ts      (max 100 lines)
 ├── useSimilarDocs.ts         (max 80 lines)
 ├── useSearchFilters.ts       (max 80 lines)
 └── useSearchHistory.ts       (max 60 lines)
-```
+
+```text
 
 **Example:**
 
@@ -680,7 +700,8 @@ export function useSemanticSearch() {
   return { results: data, isLoading, setQuery, setFilters };
   // Max 40 lines total
 }
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -699,13 +720,14 @@ export function useSemanticSearch() {
 
 **Files to Create:**
 
-```
+```text
 tests/integrations/ragie/
 ├── indexing.test.ts          (max 150 lines)
 ├── retrieval.test.ts         (max 150 lines)
 ├── search-api.test.ts        (max 120 lines)
 └── e2e-search.spec.ts        (max 180 lines)
-```
+
+```bash
 
 **Test Cases:**
 
@@ -734,7 +756,7 @@ tests/integrations/ragie/
 
 **Files to Create:**
 
-```
+```text
 docs/integrations/ragie/
 ├── README.md
 ├── SETUP.md
@@ -742,7 +764,8 @@ docs/integrations/ragie/
 ├── API_REFERENCE.md
 ├── INDEXING_STRATEGY.md
 └── TROUBLESHOOTING.md
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -776,7 +799,7 @@ docs/integrations/ragie/
 
 ## 📊 PHASE 2 DELIVERABLES
 
-### Code Files:
+### Code Files
 
 - [ ] 20 implementation files
 - [ ] 8 component files
@@ -784,7 +807,7 @@ docs/integrations/ragie/
 - [ ] 4 test files
 - [ ] Total: ~3,000 lines (well-structured)
 
-### Quality Metrics:
+### Quality Metrics
 
 - [ ] Test coverage > 80%
 - [ ] No files > 200 lines
@@ -796,8 +819,8 @@ docs/integrations/ragie/
 
 ## 📋 PHASE 3: Firecrawl Integration (Priority 3)
 
-**Timeline:** Week 4 (5 days)  
-**Goal:** Automatic lead enrichment  
+**Timeline:** Week 4 (5 days)
+**Goal:** Automatic lead enrichment
 **Success Criteria:** 80% leads auto-enriched
 
 ### Day 1: Planning
@@ -808,13 +831,14 @@ docs/integrations/ragie/
 
 **Files to Create:**
 
-```
+```text
 docs/integrations/firecrawl/
 ├── ARCHITECTURE.md
 ├── SCRAPING_STRATEGY.md
 ├── DATA_SCHEMA.md
 └── PRIVACY_POLICY.md
-```
+
+```text
 
 **Strategy:**
 
@@ -841,14 +865,15 @@ docs/integrations/firecrawl/
 
 **Files to Create:**
 
-```
+```text
 server/integrations/firecrawl/
 ├── client.ts                 (max 100 lines)
 ├── types.ts                  (max 120 lines)
 ├── errors.ts                 (max 60 lines)
 ├── scraper.ts                (max 150 lines)
 └── extractor.ts              (max 150 lines)
-```
+
+```text
 
 **Structure:**
 
@@ -875,7 +900,8 @@ export class DataExtractor {
     // Max 50 lines - extract contact details
   }
 }
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -894,14 +920,15 @@ export class DataExtractor {
 
 **Files to Create:**
 
-```
+```text
 server/leads/enrichment/
 ├── pipeline.ts               (max 150 lines)
 ├── enricher.ts               (max 120 lines)
 ├── validator.ts              (max 80 lines)
 ├── queue.ts                  (max 100 lines)
 └── storage.ts                (max 80 lines)
-```
+
+```text
 
 **Features:**
 
@@ -926,7 +953,8 @@ export class EnrichmentPipeline {
     // Total: ~60 lines, clean flow
   }
 }
-```
+
+```text
 
 **Acceptance Criteria:**
 
@@ -945,13 +973,14 @@ export class EnrichmentPipeline {
 
 **Files to Create:**
 
-```
+```text
 tests/integrations/firecrawl/
 ├── scraper.test.ts           (max 150 lines)
 ├── extractor.test.ts         (max 120 lines)
 ├── pipeline.test.ts          (max 150 lines)
 └── e2e-enrichment.spec.ts    (max 180 lines)
-```
+
+```text
 
 **Test Cases:**
 
@@ -977,12 +1006,13 @@ tests/integrations/firecrawl/
 
 **Files to Create:**
 
-```
+```text
 server/leads/enrichment/
 ├── metrics.ts                (max 80 lines)
 ├── analytics.ts              (max 100 lines)
 └── reporting.ts              (max 80 lines)
-```
+
+```text
 
 **Metrics:**
 
@@ -1009,7 +1039,7 @@ server/leads/enrichment/
 
 **Files to Create:**
 
-```
+```text
 docs/integrations/firecrawl/
 ├── README.md
 ├── SETUP.md
@@ -1017,6 +1047,7 @@ docs/integrations/firecrawl/
 ├── DATA_SCHEMA.md
 ├── PRIVACY.md
 └── TROUBLESHOOTING.md
+
 ```
 
 **Acceptance Criteria:**
@@ -1051,13 +1082,13 @@ docs/integrations/firecrawl/
 
 ## 📊 PHASE 3 DELIVERABLES
 
-### Code Files:
+### Code Files
 
 - [ ] 15 implementation files
 - [ ] 4 test files
 - [ ] Total: ~2,200 lines
 
-### Quality Metrics:
+### Quality Metrics
 
 - [ ] Test coverage > 80%
 - [ ] No files > 200 lines
@@ -1068,14 +1099,14 @@ docs/integrations/firecrawl/
 
 ## 🎯 OVERALL PROJECT METRICS
 
-### Timeline:
+### Timeline
 
 - **Phase 1 (LiteLLM):** 1 week
 - **Phase 2 (Ragie):** 2 weeks
 - **Phase 3 (Firecrawl):** 1 week
 - **Total:** 4 weeks
 
-### Code Quality:
+### Code Quality
 
 - **Total Files:** ~50 implementation files
 - **Total Lines:** ~7,700 lines (well-structured)
@@ -1083,14 +1114,14 @@ docs/integrations/firecrawl/
 - **Max File Size:** 200 lines
 - **Test Coverage:** >80% all phases
 
-### Documentation:
+### Documentation
 
 - **Total Docs:** 30+ markdown files
 - **API References:** 3
 - **Setup Guides:** 6
 - **Troubleshooting:** 6
 
-### Team Impact:
+### Team Impact
 
 - **Code Reviews:** After each phase
 - **Knowledge Sharing:** Weekly demos
@@ -1101,7 +1132,7 @@ docs/integrations/firecrawl/
 
 ## 🔍 CODE QUALITY CHECKLIST
 
-### Every File Must Have:
+### Every File Must Have
 
 - [ ] Clear single responsibility
 - [ ] < 200 lines
@@ -1111,7 +1142,7 @@ docs/integrations/firecrawl/
 - [ ] Unit tests
 - [ ] Import organization (external → internal)
 
-### Every Module Must Have:
+### Every Module Must Have
 
 - [ ] README.md
 - [ ] index.ts (exports)
@@ -1120,7 +1151,7 @@ docs/integrations/firecrawl/
 - [ ] constants.ts (if needed)
 - [ ] Test file(s)
 
-### Every API Must Have:
+### Every API Must Have
 
 - [ ] Input validation (Zod)
 - [ ] Error responses
@@ -1129,7 +1160,7 @@ docs/integrations/firecrawl/
 - [ ] Logging
 - [ ] Monitoring
 
-### Every Component Must Have:
+### Every Component Must Have
 
 - [ ] Props interface
 - [ ] Default props (if needed)
@@ -1143,46 +1174,46 @@ docs/integrations/firecrawl/
 
 ## 📋 DAILY WORKFLOW
 
-### Morning (30 min):
+### Morning (30 min)
 
 1. Review previous day's code
-2. Check monitoring/errors
-3. Plan today's tasks
-4. Update task board
+1. Check monitoring/errors
+1. Plan today's tasks
+1. Update task board
 
-### During Development (per task):
+### During Development (per task)
 
 1. Create branch: `feat/phase-X-task-Y`
-2. Write failing test first (TDD)
-3. Implement minimal code
-4. Make test pass
-5. Refactor if needed
-6. Document changes
-7. Self code review
-8. Commit with clear message
-9. Push and create PR
+1. Write failing test first (TDD)
+1. Implement minimal code
+1. Make test pass
+1. Refactor if needed
+1. Document changes
+1. Self code review
+1. Commit with clear message
+1. Push and create PR
 
-### End of Day (30 min):
+### End of Day (30 min)
 
 1. Code review PRs
-2. Update documentation
-3. Check CI/CD
-4. Plan tomorrow
-5. Update progress
+1. Update documentation
+1. Check CI/CD
+1. Plan tomorrow
+1. Update progress
 
-### End of Week:
+### End of Week
 
 1. Phase review
-2. Team demo
-3. Retrospective
-4. Plan next week
-5. Update docs
+1. Team demo
+1. Retrospective
+1. Plan next week
+1. Update docs
 
 ---
 
 ## 🚨 RED FLAGS TO WATCH
 
-### Code Smells:
+### Code Smells
 
 - ⚠️ File > 200 lines → Split it!
 - ⚠️ Function > 30 lines → Extract helper
@@ -1192,7 +1223,7 @@ docs/integrations/firecrawl/
 - ⚠️ Magic numbers → Use constants
 - ⚠️ Nested ternaries → Use if/else
 
-### Architecture Smells:
+### Architecture Smells
 
 - ⚠️ Circular dependencies → Refactor
 - ⚠️ God objects → Split concerns
@@ -1200,7 +1231,7 @@ docs/integrations/firecrawl/
 - ⚠️ Tight coupling → Add abstraction
 - ⚠️ No interfaces → Define contracts
 
-### Process Smells:
+### Process Smells
 
 - ⚠️ No code review → Require reviews
 - ⚠️ Broken tests → Fix immediately
@@ -1212,7 +1243,7 @@ docs/integrations/firecrawl/
 
 ## ✅ SUCCESS CRITERIA
 
-### Phase 1 Complete When:
+### Phase 1 Complete When
 
 - [ ] LiteLLM running in production
 - [ ] 99.9% AI uptime achieved
@@ -1221,7 +1252,7 @@ docs/integrations/firecrawl/
 - [ ] Documentation complete
 - [ ] Team trained
 
-### Phase 2 Complete When:
+### Phase 2 Complete When
 
 - [ ] Semantic search live
 - [ ] 10x better search relevance
@@ -1230,7 +1261,7 @@ docs/integrations/firecrawl/
 - [ ] Documentation complete
 - [ ] User feedback positive
 
-### Phase 3 Complete When:
+### Phase 3 Complete When
 
 - [ ] Lead enrichment working
 - [ ] 80% leads auto-enriched
@@ -1239,7 +1270,7 @@ docs/integrations/firecrawl/
 - [ ] Documentation complete
 - [ ] Privacy compliant
 
-### Overall Project Complete When:
+### Overall Project Complete When
 
 - [ ] All 3 phases deployed
 - [ ] All tests passing
@@ -1250,6 +1281,6 @@ docs/integrations/firecrawl/
 
 ---
 
-**Status:** Ready to start Phase 1 Monday! 🚀  
-**Next Action:** Review plan with team  
+**Status:** Ready to start Phase 1 Monday! 🚀
+**Next Action:** Review plan with team
 **Estimated Completion:** 4 weeks

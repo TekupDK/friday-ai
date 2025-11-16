@@ -90,7 +90,8 @@
 - DOM Nodes (50 emails): **\_** (target: 10-15)
 - Scroll Performance: Smooth/Slow
 - Rendering Performance: Good/Poor
-```
+
+```bash
 
 ---
 
@@ -138,22 +139,23 @@
 
 **Quick Results:**
 
-```
+```text
 [ ] All tests passed
 [ ] Some tests failed (see details)
 [ ] Major issues found
+
 ```
 
 **Key Findings:**
 
 1. ***
-2. ***
-3. ***
+1. ***
+1. ***
 
 **Next Actions:**
 
 1. ***
-2. ***
+1. ***
 
 ---
 

@@ -1,6 +1,6 @@
 # 🧪 AI Documentation Generator - Test Summary
 
-**Kørende:** AI Test Suite med Playwright  
+**Kørende:** AI Test Suite med Playwright
 **Test File:** `tests/ai/ai-docs-generator.test.ts`
 
 ---
@@ -10,22 +10,22 @@
 ### UI Tests (8 tests)
 
 1. ✅ **AI Doc Structure** - Verify generated doc format
-2. ✅ **Weekly Digest Button** - Test generation trigger
-3. ✅ **Loading States** - Check disabled/enabled states
-4. ✅ **AI Icons** - Verify Sparkles, Zap, Calendar icons
-5. ✅ **Generated Doc** - Check existing AI doc structure
-6. ✅ **Keyboard Shortcuts** - Test shortcut UI
-7. ✅ **API Monitoring** - Monitor OpenRouter calls
-8. ✅ **Performance** - Measure load times
+1. ✅ **Weekly Digest Button** - Test generation trigger
+1. ✅ **Loading States** - Check disabled/enabled states
+1. ✅ **AI Icons** - Verify Sparkles, Zap, Calendar icons
+1. ✅ **Generated Doc** - Check existing AI doc structure
+1. ✅ **Keyboard Shortcuts** - Test shortcut UI
+1. ✅ **API Monitoring** - Monitor OpenRouter calls
+1. ✅ **Performance** - Measure load times
 
 ### Component Tests (2 tests)
 
-9. ✅ **Button Component** - GenerateLeadDocButton rendering
-10. ✅ **Toast System** - Sonner notifications
+1. ✅ **Button Component** - GenerateLeadDocButton rendering
+1. ✅ **Toast System** - Sonner notifications
 
 ### Security Tests (1 test)
 
-11. ✅ **Route Protection** - Auth required for AI features
+1. ✅ **Route Protection** - Auth required for AI features
 
 ---
 
@@ -61,7 +61,8 @@
 
 // Lead Doc Button Component
 <GenerateLeadDocButton leadId={lead.id} />
-```
+
+```text
 
 ### AI Hook
 
@@ -72,7 +73,8 @@ const {
   bulkGenerateLeadDocs,
   isGenerating,
 } = useAIGeneration();
-```
+
+```text
 
 ### Backend API
 
@@ -81,7 +83,8 @@ const {
 docs.generateLeadDoc({ leadId });
 docs.generateWeeklyDigest();
 docs.bulkGenerateLeadDocs();
-```
+
+```text
 
 ---
 
@@ -151,7 +154,8 @@ Tests measure:
 
 ```bash
 npx playwright test tests/ai/ai-docs-generator.test.ts --reporter=list
-```
+
+```text
 
 **Options:**
 
@@ -167,13 +171,14 @@ npx playwright test tests/ai/ai-docs-generator.test.ts -g "weekly digest"
 
 # With UI
 npx playwright test tests/ai/ai-docs-generator.test.ts --ui
-```
+
+```text
 
 ---
 
 ## 📋 Test Results (Expected)
 
-```
+```text
 ✓ should generate AI doc for lead with correct structure
 ✓ should trigger weekly digest generation
 ✓ should display AI generation loading states
@@ -187,6 +192,7 @@ npx playwright test tests/ai/ai-docs-generator.test.ts --ui
 ✓ should protect AI generation endpoints
 
 11 passed (30s)
+
 ```
 
 ---
@@ -194,9 +200,9 @@ npx playwright test tests/ai/ai-docs-generator.test.ts --ui
 ## 🐛 Known Issues / Limitations
 
 1. **Auth Required** - Tests need proper login flow
-2. **AI Generation Time** - Actual generation takes 20-30s
-3. **API Key** - Requires OPENROUTER_API_KEY in .env
-4. **Database** - Needs actual lead data
+1. **AI Generation Time** - Actual generation takes 20-30s
+1. **API Key** - Requires OPENROUTER_API_KEY in .env
+1. **Database** - Needs actual lead data
 
 ---
 

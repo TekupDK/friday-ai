@@ -1,7 +1,7 @@
 # ChromaDB Vector Database Integration
 
-**Status:** ✅ Docker Running, Ready for Integration  
-**Date Started:** November 9, 2025  
+**Status:** ✅ Docker Running, Ready for Integration
+**Date Started:** November 9, 2025
 **Version:** ChromaDB Latest (V2 API)
 
 ---
@@ -15,7 +15,7 @@
 
 ---
 
-## 🎯 What Is ChromaDB?
+## 🎯 What Is ChromaDB
 
 ChromaDB is an open-source vector database that enables:
 
@@ -34,22 +34,25 @@ ChromaDB is an open-source vector database that enables:
 ```bash
 cd server/integrations/chromadb
 npm run start
-```
+
+```text
 
 ### 2. Verify Running
 
 ```bash
-curl http://localhost:8000/api/v2/heartbeat
+curl <http://localhost:8000/api/v2/heartbeat>
 # Expected: {"nanosecond heartbeat":...}
-```
+
+```text
 
 ### 3. Add to .env.dev
 
 ```bash
 CHROMA_ENABLED=true
-CHROMA_URL=http://localhost:8000
+CHROMA_URL=<http://localhost:8000>
 CHROMA_AUTH_TOKEN=friday-chromadb-token-dev
-```
+
+```text
 
 ### 4. Use in Code
 
@@ -67,13 +70,14 @@ await addDocuments("friday_leads", [
 
 // Search similar
 const results = await searchSimilar("friday_leads", "ACME", 5);
-```
+
+```text
 
 ---
 
 ## 📊 Current Status
 
-```
+```bash
 ✅ Docker:              Running on port 8000
 ✅ TypeScript Client:   Complete
 ✅ Collections:         Ready to use
@@ -82,7 +86,8 @@ const results = await searchSimilar("friday_leads", "ACME", 5);
 ❌ Embeddings:          Simple hash (needs upgrade)
 ❌ Lead Integration:    Not yet done
 ❌ Email Integration:   Not yet done
-```
+
+```bash
 
 ---
 
@@ -119,7 +124,8 @@ if (similar && similar.distances[0] < 0.2) {
   // Lead already exists!
   return existingLead;
 }
-```
+
+```text
 
 ### 2. Email Context
 
@@ -127,7 +133,8 @@ if (similar && similar.distances[0] < 0.2) {
 // When processing email:
 const context = await searchSimilar("friday_emails", emailText, 5);
 // Use context to generate better AI response
-```
+
+```text
 
 ### 3. Document Search
 
@@ -135,7 +142,8 @@ const context = await searchSimilar("friday_emails", emailText, 5);
 // When user asks question:
 const relevantDocs = await searchSimilar("friday_docs", question, 3);
 // Use as context for RAG
-```
+
+```text
 
 ---
 
@@ -149,37 +157,39 @@ const relevantDocs = await searchSimilar("friday_docs", question, 3);
 
 ## 📈 Performance
 
-```
+```text
 Embeddings:        ~100ms per document (API dependent)
 Search:            <50ms for up to 1M vectors
 Storage:           ~1KB per vector (384 dimensions)
 Memory:            ~200-500 MB
 Scalability:       Millions of vectors
-```
+
+```text
 
 ---
 
 ## 🆘 Troubleshooting
 
-### ChromaDB not starting?
+### ChromaDB not starting
 
 ```bash
 docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.yml logs
+
 ```
 
-### Can't connect?
+### Can't connect
 
 1. Check `CHROMA_ENABLED=true` in .env.dev
-2. Verify ChromaDB running: `docker ps`
-3. Test health: `curl http://localhost:8000/api/v2/heartbeat`
+1. Verify ChromaDB running: `docker ps`
+1. Test health: `curl http://localhost:8000/api/v2/heartbeat`
 
-### No search results?
+### No search results
 
 1. Check embeddings are being generated
-2. Verify documents were added: `countDocuments('collection_name')`
-3. Check collection exists: `listCollections()`
+1. Verify documents were added: `countDocuments('collection_name')`
+1. Check collection exists: `listCollections()`
 
 ---
 
-**Last Updated:** November 9, 2025 14:51  
+**Last Updated:** November 9, 2025 14:51
 **Status:** Foundation Ready, Integration In Progress

@@ -71,7 +71,7 @@
 
 ```typescript
 // Tjekker om data er ældre end 5 minutter
-const isStale = now - lastSync > 5 * 60 * 1000;
+const isStale = now - lastSync > 5 *60* 1000;
 
 if (isStale) {
   // Sync i baggrund uden at blokere
@@ -80,7 +80,8 @@ if (isStale) {
     syncBilly.mutateAsync({ customerId: profile.id }),
   ]);
 }
-```
+
+```text
 
 ### Caching Strategy
 
@@ -96,7 +97,7 @@ if (isStale) {
 
 ## 📊 Dataflow
 
-```
+```text
 Klik på afsender → Resolve/Create Lead → Prefetch profil
                                               ↓
                                         Åbn sidepanel
@@ -108,6 +109,7 @@ Klik på afsender → Resolve/Create Lead → Prefetch profil
                         Auto-sync (stille)
                                 ↓
                           Opdater UI
+
 ```
 
 ## 🎯 Sammenligning: Før vs. Nu
@@ -125,20 +127,20 @@ Klik på afsender → Resolve/Create Lead → Prefetch profil
 ## 💡 Best Practices
 
 1. **Auto-sync interval**: 5 min er balancen mellem freshness og API-cost
-2. **Manual refresh**: Altid tilgængelig via ghost-knap i hver fane
-3. **Error handling**: Stille failures → data vises fra cache, ingen toast spam
-4. **Mobile-ready**: Sidepanel width responsiv (`sm:max-w-[840px]`)
+1. **Manual refresh**: Altid tilgængelig via ghost-knap i hver fane
+1. **Error handling**: Stille failures → data vises fra cache, ingen toast spam
+1. **Mobile-ready**: Sidepanel width responsiv (`sm:max-w-[840px]`)
 
 ## 🔄 Workflow Eksempel
 
-1. Bruger klikker på afsender "rendetalje@gmail.com" i inbox
-2. Lead resolves eller oprettes automatisk
-3. Profil-data prefetches
-4. Sidepanel glider ind fra højre → Emails-fanen
-5. Hvis data > 5 min gammelt: auto-sync starter stille
-6. Lille spinner i "Emails" og "Invoices" faner
-7. Data opdateres uden UX-disruption
-8. Bruger kan klikke Quick Actions eller browse faner
+1. Bruger klikker på afsender "<rendetalje@gmail.com>" i inbox
+1. Lead resolves eller oprettes automatisk
+1. Profil-data prefetches
+1. Sidepanel glider ind fra højre → Emails-fanen
+1. Hvis data > 5 min gammelt: auto-sync starter stille
+1. Lille spinner i "Emails" og "Invoices" faner
+1. Data opdateres uden UX-disruption
+1. Bruger kan klikke Quick Actions eller browse faner
 
 ---
 

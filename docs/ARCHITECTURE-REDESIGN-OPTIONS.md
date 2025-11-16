@@ -10,7 +10,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### Struktur
 
-```
+```text
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Business   │
 │  20%    │      60%         │   Center    │
@@ -21,7 +21,8 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │                  │  - Leads    │
 │         │                  │  - Tasks    │
 └─────────┴──────────────────┴─────────────┘
-```
+
+```text
 
 ### ✅ Fordele
 
@@ -42,7 +43,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### Struktur
 
-```
+```text
 ┌─────────┬──────────────────┬─────────────────┐
 │   AI    │   Email Center   │   Workspace     │
 │  20%    │      60%         │     20%         │
@@ -54,7 +55,8 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │                  │  - Ingen email  │
 │         │                  │    → Dashboard  │
 └─────────┴──────────────────┴─────────────────┘
-```
+
+```text
 
 ### ✅ Fordele
 
@@ -75,7 +77,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### Struktur
 
-```
+```text
 ┌─────────┬──────────────────────────────────┐
 │   AI    │   Email Center (80%)             │
 │  20%    │                                  │
@@ -84,7 +86,8 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │                                  │
 │         │  Click → drawer slides up        │
 └─────────┴──────────────────────────────────┘
-```
+
+```bash
 
 ### ✅ Fordele
 
@@ -105,7 +108,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### Struktur
 
-```
+```text
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Workflow   │
 │  20%    │      60%         │    20%      │
@@ -115,7 +118,8 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │  [📄][📅][👥]   │             │
 │         │  (collapsed)     │             │
 └─────────┴──────────────────┴─────────────┘
-```
+
+```text
 
 ### ✅ Fordele
 
@@ -135,7 +139,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### Struktur
 
-```
+```text
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Workflow   │
 │  20%    │      60%         │    20%      │
@@ -147,7 +151,8 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │  - Kalender      │             │
 │         │  - Leads         │             │
 └─────────┴──────────────────┴─────────────┘
-```
+
+```text
 
 ### ✅ Fordele
 
@@ -168,7 +173,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### Struktur
 
-```
+```text
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Smart      │
 │  20%    │      60%         │  Panel      │
@@ -179,7 +184,8 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │  → højre viser   │  → Tasks    │
 │         │     lead info    │  → Invoice  │
 └─────────┴──────────────────┴─────────────┘
-```
+
+```text
 
 ### ✅ Fordele
 
@@ -213,7 +219,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### **"Smart Workspace" Design**
 
-```
+```text
 ┌─────────┬──────────────────┬─────────────────┐
 │   AI    │   Email Center   │  Smart          │
 │  20%    │      60%         │  Workspace      │
@@ -230,15 +236,16 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │  [📄][📅]       │   → Dashboard   │
 │         │  (collapsed)     │   → Quick stats │
 └─────────┴──────────────────┴─────────────────┘
+
 ```
 
-### Hvorfor denne løsning?
+### Hvorfor denne løsning
 
 1. **Email får primær fokus** (60% + ingen konkurrerende tabs)
-2. **Smart højre panel** viser relevant info baseret på context
-3. **Mini-tabs for fakturaer/kalender** (collapsed, kun ikoner)
-4. **Workflow integration** - opgaver vises kontekstuelt
-5. **Skalerbar** - let at tilføje nye features
+1. **Smart højre panel** viser relevant info baseret på context
+1. **Mini-tabs for fakturaer/kalender** (collapsed, kun ikoner)
+1. **Workflow integration** - opgaver vises kontekstuelt
+1. **Skalerbar** - let at tilføje nye features
 
 ### Implementation Phases
 
@@ -273,15 +280,15 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
    - Hvis sjældent → Command bar (Option 5)
    - Hvis ofte → Smart workspace (min anbefaling)
 
-2. **Er workflow/opgaver kritiske at have synlige hele tiden?**
+1. **Er workflow/opgaver kritiske at have synlige hele tiden?**
    - Ja → Behold højre panel til opgaver
    - Nej → Integrer i smart workspace
 
-3. **Foretrækker I keyboard shortcuts eller visuel navigation?**
+1. **Foretrækker I keyboard shortcuts eller visuel navigation?**
    - Keyboard → Command bar system
    - Visuelt → Smart workspace med tabs
 
-4. **Skal leads/fakturaer kunne åbnes samtidig med emails?**
+1. **Skal leads/fakturaer kunne åbnes samtidig med emails?**
    - Ja → Behold højre panel
    - Nej → Drawer/modal system
 

@@ -1,7 +1,7 @@
 # Day 3: Langfuse LLM Integration Complete! 🎉
 
-**Date:** November 9, 2025  
-**Time:** ~15 minutes  
+**Date:** November 9, 2025
+**Time:** ~15 minutes
 **Status:** ✅ COMPLETE - Fully Integrated!
 
 ---
@@ -10,12 +10,13 @@
 
 ### 1. Langfuse Deployed ✅
 
-```
+```bash
 ✅ Docker containers running
 ✅ PostgreSQL database healthy
 ✅ Langfuse app started
-✅ http://localhost:3000 accessible
-```
+✅ <http://localhost:3000> accessible
+
+```text
 
 ### 2. LLM Tracing Integrated ✅
 
@@ -54,7 +55,8 @@ const generation = trace?.generation({
 });
 
 const startTime = Date.now();
-```
+
+```text
 
 **Added success tracking:**
 
@@ -70,13 +72,14 @@ generation?.end({
   } : undefined,
   metadata: {
     responseTime,
-    model: /* detected model */,
+    model: /*detected model*/,
   },
 });
 
 // Flush to Langfuse
 await flushLangfuse();
-```
+
+```text
 
 **Added error tracking:**
 
@@ -89,7 +92,8 @@ generation?.end({
     error: error.message,
   },
 });
-```
+
+```text
 
 ---
 
@@ -97,11 +101,11 @@ generation?.end({
 
 ### Step 1: Setup Langfuse Account
 
-1. Open: **http://localhost:3000**
-2. Create account (first user = admin)
-3. Create project: "Friday AI"
-4. Go to **Settings → API Keys**
-5. Copy keys
+1. Open: **<http://localhost:3000**>
+1. Create account (first user = admin)
+1. Create project: "Friday AI"
+1. Go to **Settings → API Keys**
+1. Copy keys
 
 ### Step 2: Configure Environment
 
@@ -112,39 +116,42 @@ Add to `.env.dev`:
 LANGFUSE_ENABLED=true
 LANGFUSE_PUBLIC_KEY=pk-lf-XXXXXXXXXXXXXXXX
 LANGFUSE_SECRET_KEY=sk-lf-XXXXXXXXXXXXXXXX
-LANGFUSE_BASE_URL=http://localhost:3000
-```
+LANGFUSE_BASE_URL=<http://localhost:3000>
+
+```text
 
 ### Step 3: Restart Friday AI
 
 ```bash
 # Stop current server (Ctrl+C)
 pnpm dev
-```
+
+```text
 
 ### Step 4: Make an AI Request
 
 Option A - Via UI:
 
 1. Open Friday AI (http://localhost:5173)
-2. Go to Leads tab
-3. Request a lead analysis
-4. Or use chat to ask Friday anything
+1. Go to Leads tab
+1. Request a lead analysis
+1. Or use chat to ask Friday anything
 
 Option B - Via tRPC:
 
 ```bash
 # In another terminal
-curl http://localhost:5173/api/trpc/ai.chat \
+curl <http://localhost:5173/api/trpc/ai.chat> \
   -H "Content-Type: application/json" \
   -d '{"message": "Hello Friday!"}'
-```
+
+```text
 
 ### Step 5: View Traces in Langfuse
 
-1. Go to **http://localhost:3000**
-2. Click **Traces** in sidebar
-3. You should see your AI call!
+1. Go to **<http://localhost:3000**>
+1. Click **Traces** in sidebar
+1. You should see your AI call!
 
 **Expected data:**
 
@@ -162,14 +169,15 @@ curl http://localhost:5173/api/trpc/ai.chat \
 
 ### Main Dashboard
 
-```
+```text
 Recent Traces
 ├── llm-invocation (2 seconds ago)
 │   ├── Model: z-ai/glm-4.5-air:free
 │   ├── Tokens: 150 prompt + 200 completion
 │   ├── Response Time: 3.2s
 │   └── Status: ✅ Success
-```
+
+```text
 
 ### Trace Details
 
@@ -222,7 +230,7 @@ If an error occurs:
 
 ## 🔍 Advanced Features (Future)
 
-### Not yet implemented, but available:
+### Not yet implemented, but available
 
 1. **User tracking:**
 
@@ -231,66 +239,74 @@ const trace = langfuse?.trace({
   name: "llm-invocation",
   userId: userId.toString(), // Add this!
 });
-```
 
-2. **Session tracking:**
+```text
+
+1. **Session tracking:**
 
 ```typescript
 const trace = langfuse?.trace({
   name: "llm-invocation",
   sessionId: conversationId, // Group by conversation
 });
-```
 
-3. **Feedback scores:**
+```text
+
+1. **Feedback scores:**
 
 ```typescript
 trace?.score({
   name: "user-feedback",
   value: 1, // thumbs up
 });
-```
 
-4. **Custom tags:**
+```text
+
+1. **Custom tags:**
 
 ```typescript
 const trace = langfuse?.trace({
   name: "llm-invocation",
   tags: ["lead-analysis", "high-priority"],
 });
-```
+
+```text
 
 ---
 
 ## 🐛 Troubleshooting
 
-### No traces appearing?
+### No traces appearing
 
 1. **Check Langfuse is running:**
 
    ```bash
-   curl http://localhost:3000/api/public/health
-   ```
+   curl <http://localhost:3000/api/public/health>
 
-2. **Check environment variables:**
+```text
+
+1. **Check environment variables:**
 
    ```bash
-   # In Friday AI console, you should see:
+   # In Friday AI console, you should see
    [Langfuse] ✅ Client initialized (http://localhost:3000)
-   ```
 
-3. **Check API keys are correct:**
+```text
+
+1. **Check API keys are correct:**
    - Go to Langfuse Settings → API Keys
    - Verify keys match your `.env.dev`
 
-4. **Check logs:**
+1. **Check logs:**
+
    ```bash
    # Friday AI logs
    pnpm dev
    # Look for [Langfuse] messages
-   ```
 
-### Traces are delayed?
+```bash
+
+### Traces are delayed
 
 This is **normal**! Traces are flushed asynchronously:
 
@@ -298,16 +314,16 @@ This is **normal**! Traces are flushed asynchronously:
 - Traces appear within 1-2 seconds
 - No impact on AI response time
 
-### Error: "Failed to flush"?
+### Error: "Failed to flush"
 
 1. Check Langfuse is running
-2. Check network connectivity
-3. Check API keys are valid
-4. This won't block AI calls - errors are logged but ignored
+1. Check network connectivity
+1. Check API keys are valid
+1. This won't block AI calls - errors are logged but ignored
 
 ---
 
-## 📊 What's Next?
+## 📊 What's Next
 
 ### Day 4-5: ChromaDB (Next Session)
 
@@ -328,7 +344,7 @@ This is **normal**! Traces are flushed asynchronously:
 
 ### Today's Progress
 
-```
+```bash
 Time Spent: ~1 hour total
 ├── Day 2: Langfuse setup (30 min)
 └── Day 3: LLM integration (15 min)
@@ -342,11 +358,12 @@ Files Created/Modified: 11
 Lines of Code: ~2,700+
 
 Cost: $0/month (self-hosted) 🎉
-```
+
+```text
 
 ### What Works Now
 
-```
+```text
 ✅ Every AI call is automatically traced
 ✅ Success & error tracking
 ✅ Token usage monitoring
@@ -354,6 +371,7 @@ Cost: $0/month (self-hosted) 🎉
 ✅ Model identification
 ✅ Real-time dashboard
 ✅ Zero cost, full control
+
 ```
 
 ---
@@ -362,12 +380,12 @@ Cost: $0/month (self-hosted) 🎉
 
 ### Immediate (Now)
 
-1. **Open Langfuse:** http://localhost:3000
-2. **Setup account & get API keys**
-3. **Add keys to `.env.dev`**
-4. **Restart Friday AI**
-5. **Make an AI request**
-6. **View trace in dashboard!** 🎉
+1. **Open Langfuse:** <http://localhost:3000>
+1. **Setup account & get API keys**
+1. **Add keys to `.env.dev`**
+1. **Restart Friday AI**
+1. **Make an AI request**
+1. **View trace in dashboard!** 🎉
 
 ### Tomorrow
 
@@ -377,9 +395,9 @@ Cost: $0/month (self-hosted) 🎉
 
 ---
 
-**Status:** ✅ Day 2 & 3 Complete!  
-**Observability:** 100% Active  
-**Cost:** $0/month  
+**Status:** ✅ Day 2 & 3 Complete!
+**Observability:** 100% Active
+**Cost:** $0/month
 **Next:** Setup Langfuse account & test! 🚀
 
 **Last Updated:** November 9, 2025 12:25 PM

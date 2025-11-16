@@ -1,7 +1,7 @@
 # 🔬 DEEP DIVE - Område 1 & 2 Arkitektur Analyse
 
-**Date:** 2025-11-08  
-**Type:** Advanced Technical Analysis  
+**Date:** 2025-11-08
+**Type:** Advanced Technical Analysis
 **Focus:** Architecture, Patterns, Performance
 
 ---
@@ -47,7 +47,8 @@
     </EmailContextProvider>
   </ThemeProvider>
 </ErrorBoundary>
-```
+
+```text
 
 **Analysis:**
 
@@ -67,12 +68,13 @@
 
 ```typescript
 // Split contexts by update frequency
-<StaticProviders> {/* Theme, Tooltip */}
-  <DynamicProviders> {/* Email, Workflow */}
+<StaticProviders> {/*Theme, Tooltip*/}
+  <DynamicProviders> {/*Email, Workflow*/}
     <Router />
   </DynamicProviders>
 </StaticProviders>
-```
+
+```text
 
 ---
 
@@ -90,7 +92,8 @@ function Router() {
   if (!isAuthenticated) return <LoginPage />;
   return <Switch>...</Switch>;
 }
-```
+
+```text
 
 **Analysis:**
 
@@ -115,7 +118,8 @@ function Router() {
   component={WorkspaceLayout}
   requiredRole="user"
 />
-```
+
+```bash
 
 ---
 
@@ -136,7 +140,8 @@ function CacheWarmer() {
 
   return null;
 }
-```
+
+```text
 
 **Analysis:**
 
@@ -162,7 +167,8 @@ useEffect(() => {
     );
   }
 }, [isAuthenticated, user?.id]); // Remove queryClient
-```
+
+```bash
 
 ---
 
@@ -181,7 +187,8 @@ useEffect(() => {
     setIsInitialized(true);
   }
 }, [isInitialized, createConversation]);
-```
+
+```text
 
 **Analysis:**
 
@@ -196,7 +203,8 @@ useEffect(() => {
 ```typescript
 const createConversation = trpc.chat.createConversation.useMutation({...});
 // This object is recreated on every render!
-```
+
+```text
 
 **Proper Solution:**
 
@@ -226,7 +234,8 @@ const useAutoCreateConversation = () => {
 
   return mutation;
 };
-```
+
+```text
 
 **Impact:** 🟡 MEDIUM
 
@@ -241,9 +250,9 @@ const useAutoCreateConversation = () => {
 **Found 4 contexts:**
 
 1. `ThemeContext` - Theme state
-2. `EmailContext` - Email state
-3. `WorkflowContext` - Workflow state
-4. `TooltipProvider` - UI state
+1. `EmailContext` - Email state
+1. `WorkflowContext` - Workflow state
+1. `TooltipProvider` - UI state
 
 **Analysis:**
 
@@ -251,12 +260,13 @@ const useAutoCreateConversation = () => {
 
 ```typescript
 // Every context update re-renders ALL children
-<EmailContextProvider> {/* 1000+ components */}
-  <WorkflowContextProvider> {/* 800+ components */}
-    <Component /> {/* Re-renders on ANY context change */}
+<EmailContextProvider> {/*1000+ components*/}
+  <WorkflowContextProvider> {/*800+ components*/}
+    <Component /> {/*Re-renders on ANY context change*/}
   </WorkflowContextProvider>
 </EmailContextProvider>
-```
+
+```text
 
 **Performance Impact:**
 
@@ -268,12 +278,12 @@ const useAutoCreateConversation = () => {
 
 ```typescript
 // Split contexts by update frequency
-<StaticContext> {/* Rarely changes */}
+<StaticContext> {/*Rarely changes*/}
   <Theme />
   <Tooltip />
 </StaticContext>
 
-<DynamicContext> {/* Changes often */}
+<DynamicContext> {/*Changes often*/}
   <Email />
   <Workflow />
 </DynamicContext>
@@ -287,7 +297,8 @@ const useEmailStore = create((set) => ({
   setEmails: (emails) => set({ emails }),
   // Only components using selectedEmail re-render
 }));
-```
+
+```text
 
 ---
 
@@ -309,7 +320,8 @@ useEffect(() => {
 useEffect(() => {
   doSomething(prop);
 }, [prop]);
-```
+
+```text
 
 **Issue 2: Unstable Dependencies**
 
@@ -324,7 +336,8 @@ useEffect(() => {
   mutation.mutate();
   // eslint-disable-next-line
 }, []); // Intentionally empty
-```
+
+```text
 
 **Issue 3: Object Dependencies**
 
@@ -338,7 +351,8 @@ useEffect(() => {
 useEffect(() => {
   fetch(config);
 }, [config.url, config.method]); // Primitive dependencies
-```
+
+```text
 
 **Recommendation:** Audit all 79 useEffect calls
 
@@ -367,7 +381,8 @@ export async function routeAI(options) {
   const handler = createHandler(model);
   return handler.execute(options);
 }
-```
+
+```text
 
 **Analysis:**
 
@@ -414,7 +429,8 @@ async function executeWithFallback(options) {
 
   throw new Error("All models failed");
 }
-```
+
+```text
 
 ---
 
@@ -440,7 +456,8 @@ export function parseIntent(message: string): ParsedIntent {
 
   // ... more rules
 }
-```
+
+```text
 
 **Analysis:**
 
@@ -453,21 +470,24 @@ export function parseIntent(message: string): ParsedIntent {
 "Vis min kalender" → ✅ Works
 "Kan du vise kalenderen?" → ❌ Fails (no "kalender")
 "Show calendar" → ❌ Fails (no "vis")
-```
+
+```text
 
 **Issue 2: No Confidence Scoring**
 
 ```typescript
 // All intents return fixed confidence
 confidence: 0.95; // Always same, regardless of match quality
-```
+
+```text
 
 **Issue 3: No Ambiguity Handling**
 
 ```typescript
 // What if message matches multiple intents?
 "Opret lead og book møde" → Only first match returned
-```
+
+```text
 
 **Recommendation:**
 
@@ -476,13 +496,14 @@ confidence: 0.95; // Always same, regardless of match quality
 export async function parseIntent(message: string): Promise<ParsedIntent> {
   const prompt = `
     Classify this user message into one of these intents:
+
     - check_calendar
     - create_lead
     - book_meeting
     - create_invoice
-    
+
     Message: "${message}"
-    
+
     Return JSON: { intent: string, params: object, confidence: number }
   `;
 
@@ -495,7 +516,8 @@ import { pipeline } from "@xenova/transformers";
 
 const classifier = await pipeline("text-classification", "intent-model");
 const result = await classifier(message);
-```
+
+```text
 
 ---
 
@@ -515,7 +537,8 @@ function generateActionPreview(intentType, params) {
     // ... 8 more cases
   }
 }
-```
+
+```text
 
 **Analysis:**
 
@@ -540,14 +563,18 @@ import Handlebars from "handlebars";
 const templates = {
   create_lead: Handlebars.compile(`
     Opret nyt lead:
+
     - Navn: {{name}}
     - Email: {{email}}
     - Telefon: {{phone}}
+
   `),
   book_meeting: Handlebars.compile(`
     Book kalenderaftale:
+
     - Titel: {{summary}}
     - Start: {{formatDate start}}
+
   `),
 };
 
@@ -556,7 +583,8 @@ function generateActionPreview(intentType, params) {
   if (!template) return JSON.stringify(params);
   return template(params);
 }
-```
+
+```text
 
 ---
 
@@ -577,7 +605,8 @@ function getRiskLevel(intentType: string) {
   };
   return riskMap[intentType] || "medium";
 }
-```
+
+```text
 
 **Analysis:**
 
@@ -614,7 +643,8 @@ function getRiskLevel(intentType, params, user) {
 
   return risk;
 }
-```
+
+```text
 
 ---
 
@@ -627,31 +657,31 @@ function getRiskLevel(intentType, params, user) {
    - Quality: Good
    - Issue: Overuse
 
-2. **Hook Pattern** ✅
+1. **Hook Pattern** ✅
    - Used for: useFridayChat, useAuth
    - Quality: Excellent
    - Issue: Some dependency issues
 
-3. **Strategy Pattern** ✅
+1. **Strategy Pattern** ✅
    - Used for: Model selection
    - Quality: Good
    - Issue: No fallback
 
-4. **Factory Pattern** ✅
+1. **Factory Pattern** ✅
    - Used for: AI handler creation
    - Quality: Good
    - Issue: Limited
 
-5. **Observer Pattern** ⚠️
+1. **Observer Pattern** ⚠️
    - Used for: React Query
    - Quality: Good
    - Issue: No custom events
 
-6. **Command Pattern** ❌
+1. **Command Pattern** ❌
    - Missing: Action queue/undo
    - Would help: Action history, undo
 
-7. **Memento Pattern** ❌
+1. **Memento Pattern** ❌
    - Missing: State snapshots
    - Would help: Conversation restore
 
@@ -680,7 +710,8 @@ const InvoicesTab = lazy(() => import("./InvoicesTab"));
 // Tree shaking
 import { Button } from "@radix-ui/react-button"; // ✅
 import * as Radix from "@radix-ui/react"; // ❌
-```
+
+```text
 
 ---
 
@@ -689,8 +720,8 @@ import * as Radix from "@radix-ui/react"; // ❌
 **Problem Areas:**
 
 1. **Context Updates** - 1000+ components re-render
-2. **No Memoization** - Expensive components recalculate
-3. **Inline Functions** - New functions every render
+1. **No Memoization** - Expensive components recalculate
+1. **Inline Functions** - New functions every render
 
 **Example:**
 
@@ -706,7 +737,8 @@ const onClick = useCallback(() => handleClick(id), [id]);
 const MemoButton = memo(({ onClick }) => (
   <Button onClick={onClick}>Click</Button>
 ));
-```
+
+```text
 
 ---
 
@@ -730,7 +762,8 @@ const prefetchEmail = usePrefetchQuery();
 <EmailRow
   onMouseEnter={() => prefetchEmail(['email', id])}
 />
-```
+
+```text
 
 ---
 
@@ -773,6 +806,7 @@ trackMetric("ai_response_time", duration, {
   model: result.model,
   tokens: result.usage.totalTokens,
 });
+
 ```
 
 ---
@@ -781,76 +815,76 @@ trackMetric("ai_response_time", duration, {
 
 ### **Priority 1: Fix useEffect Issues** 🔴
 
-**Impact:** HIGH  
-**Effort:** 2 days  
+**Impact:** HIGH
+**Effort:** 2 days
 **Risk:** MEDIUM
 
 **Action:**
 
 1. Audit all 79 useEffect calls
-2. Fix dependency arrays
-3. Add ESLint rules
-4. Document patterns
+1. Fix dependency arrays
+1. Add ESLint rules
+1. Document patterns
 
 ---
 
 ### **Priority 2: Optimize Context Usage** 🟡
 
-**Impact:** HIGH  
-**Effort:** 3 days  
+**Impact:** HIGH
+**Effort:** 3 days
 **Risk:** MEDIUM
 
 **Action:**
 
 1. Split contexts by update frequency
-2. Add memoization
-3. Consider Zustand/Jotai
-4. Measure performance improvement
+1. Add memoization
+1. Consider Zustand/Jotai
+1. Measure performance improvement
 
 ---
 
 ### **Priority 3: Add Caching Layer** 🟡
 
-**Impact:** MEDIUM  
-**Effort:** 2 days  
+**Impact:** MEDIUM
+**Effort:** 2 days
 **Risk:** LOW
 
 **Action:**
 
 1. Add Redis caching for AI responses
-2. Cache conversation summaries
-3. Cache tool results
-4. Implement cache invalidation
+1. Cache conversation summaries
+1. Cache tool results
+1. Implement cache invalidation
 
 ---
 
 ### **Priority 4: Improve Intent Parsing** 🟢
 
-**Impact:** MEDIUM  
-**Effort:** 3 days  
+**Impact:** MEDIUM
+**Effort:** 3 days
 **Risk:** LOW
 
 **Action:**
 
 1. Use LLM for intent classification
-2. Add confidence scoring
-3. Handle ambiguity
-4. Support multiple languages
+1. Add confidence scoring
+1. Handle ambiguity
+1. Support multiple languages
 
 ---
 
 ### **Priority 5: Add Monitoring** 🟢
 
-**Impact:** LOW  
-**Effort:** 1 day  
+**Impact:** LOW
+**Effort:** 1 day
 **Risk:** LOW
 
 **Action:**
 
 1. Add Sentry for errors
-2. Add performance monitoring
-3. Track LLM costs
-4. Monitor API latency
+1. Add performance monitoring
+1. Track LLM costs
+1. Monitor API latency
 
 ---
 
@@ -906,8 +940,8 @@ trackMetric("ai_response_time", duration, {
 Hvad vil du fokusere på?
 
 1. **🔴 Fix useEffect Issues** - Start her
-2. **🟡 Optimize Contexts** - Performance boost
-3. **🟡 Add Caching** - Cost reduction
-4. **🗄️ Continue to Område 3** - Database review
+1. **🟡 Optimize Contexts** - Performance boost
+1. **🟡 Add Caching** - Cost reduction
+1. **🗄️ Continue to Område 3** - Database review
 
 Hvad siger du? 🎯

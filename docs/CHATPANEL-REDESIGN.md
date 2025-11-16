@@ -32,28 +32,34 @@ ChatPanel har undergået et komplet redesign med fokus på moderne UX/UI princip
 ### Header
 
 ```tsx
+
 - Logo og titel venstre
 - Ny samtale knap
 - Samtale selector dropdown højre
-```
+
+```text
 
 ### Messages Area
 
 ```tsx
+
 - Centreret indhold (max-w-4xl)
 - Welcome screen når tom
 - Besked-bobler med avatarer
 - Smooth scrolling til bund
-```
+
+```text
 
 ### Input Area
 
 ```tsx
+
 - Auto-resize textarea
 - Send knap integreret
 - Disclaimer tekst
 - Streaming stop knap
-```
+
+```text
 
 ## Features
 
@@ -82,20 +88,23 @@ ChatPanel har undergået et komplet redesign med fokus på moderne UX/UI princip
 
 ### Fil Struktur
 
-```
+```bash
 client/src/components/
 ├── ChatPanel.tsx          # Ny redesignede version
 └── ChatPanel.old.tsx      # Backup af original
-```
+
+```text
 
 ### Dependencies
 
 ```tsx
+
 - shadcn/ui components (Button, Input, ScrollArea, Badge)
 - lucide-react icons
 - sonner toast notifications
 - trpc for API calls
-```
+
+```text
 
 ### State Management
 
@@ -106,7 +115,8 @@ const [selectedConversationId, setSelectedConversationId] = useState<
 const [inputMessage, setInputMessage] = useState("");
 const [showConversations, setShowConversations] = useState(false);
 const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
-```
+
+```text
 
 ## Migration Guide
 
@@ -116,13 +126,15 @@ const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
 
 ```bash
 client/src/components/ChatPanel.old.tsx
-```
+
+```text
 
 **For at rulle tilbage:**
 
 ```bash
 mv client/src/components/ChatPanel.old.tsx client/src/components/ChatPanel.tsx
-```
+
+```text
 
 ### Breaking Changes
 
@@ -133,6 +145,7 @@ mv client/src/components/ChatPanel.old.tsx client/src/components/ChatPanel.tsx
 ## Responsive Breakpoints
 
 ```css
+
 - Mobile: < 640px (sm)
   - Skjuler samtale selector tekst
   - Fuld bredde messages
@@ -144,14 +157,15 @@ mv client/src/components/ChatPanel.old.tsx client/src/components/ChatPanel.tsx
 - Desktop: > 1024px (lg+)
   - Fuld featured interface
   - Optimal læsbarhed med max-w-4xl
-```
+
+```text
 
 ## Performance Optimizations
 
 1. **Memo-wrapped component**: Forhindrer unødvendige re-renders
-2. **Lazy loading**: Samtaler hentes kun når nødvendigt
-3. **Query caching**: 30s cache på samtaler, 10s på beskeder
-4. **Auto-scroll optimization**: Kun trigger ved nye beskeder
+1. **Lazy loading**: Samtaler hentes kun når nødvendigt
+1. **Query caching**: 30s cache på samtaler, 10s på beskeder
+1. **Auto-scroll optimization**: Kun trigger ved nye beskeder
 
 ## Accessibility
 
@@ -180,7 +194,7 @@ mv client/src/components/ChatPanel.old.tsx client/src/components/ChatPanel.tsx
 
 ### Desktop View
 
-```
+```text
 ┌─────────────────────────────────────────┐
 │ [Logo] Friday AI    [+ Ny] [Samtaler▼] │
 ├─────────────────────────────────────────┤
@@ -191,11 +205,12 @@ mv client/src/components/ChatPanel.old.tsx client/src/components/ChatPanel.tsx
 │ [────── Input felt ──────]  [Send]      │
 │      Friday kan lave fejl...            │
 └─────────────────────────────────────────┘
-```
+
+```text
 
 ### With Messages
 
-```
+```text
 ┌─────────────────────────────────────────┐
 │ [Logo] Friday AI    [+ Ny] [Samtaler▼] │
 ├─────────────────────────────────────────┤
@@ -207,7 +222,8 @@ mv client/src/components/ChatPanel.old.tsx client/src/components/ChatPanel.tsx
 ├─────────────────────────────────────────┤
 │ [────── Input felt ──────]  [Send]      │
 └─────────────────────────────────────────┘
-```
+
+```text
 
 ## Testing
 
@@ -228,12 +244,14 @@ mv client/src/components/ChatPanel.old.tsx client/src/components/ChatPanel.tsx
 
 ```bash
 npm test -- ChatPanel
-```
+
+```text
 
 ### E2E Tests
 
 ```bash
 npx playwright test --grep "chat"
+
 ```
 
 ## Support
@@ -241,9 +259,9 @@ npx playwright test --grep "chat"
 For spørgsmål eller problemer:
 
 1. Check denne dokumentation
-2. Sammenlign med ChatPanel.old.tsx
-3. Review commit history
-4. Kontakt team lead
+1. Sammenlign med ChatPanel.old.tsx
+1. Review commit history
+1. Kontakt team lead
 
 ## Changelog
 

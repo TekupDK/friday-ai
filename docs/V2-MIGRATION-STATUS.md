@@ -6,9 +6,10 @@
 
 ## 🎯 Overall Progress: 55% Complete
 
-```
+```text
 ████████████████████░░░░░░░░░░░░░░░░ 55%
-```
+
+```bash
 
 ---
 
@@ -137,7 +138,7 @@
 
 ### 1. Core Integration Working! ✅
 
-```
+```text
 User clicks email → EmailTab → setSelectedEmail()
                                       ↓
                             EmailContext updated
@@ -145,7 +146,8 @@ User clicks email → EmailTab → setSelectedEmail()
                         SmartWorkspacePanel detects
                                       ↓
                           Shows correct component
-```
+
+```text
 
 **This is the foundation - IT WORKS!** 🚀
 
@@ -167,7 +169,7 @@ User clicks email → EmailTab → setSelectedEmail()
 
 ### ✅ V2 Files (Ready)
 
-```
+```bash
 ✅ client/src/pages/WorkspaceLayout.tsx
 ✅ client/src/components/panels/EmailCenterPanel.tsx (refactored)
 ✅ client/src/components/panels/WorkflowPanelV2.tsx
@@ -180,20 +182,22 @@ User clicks email → EmailTab → setSelectedEmail()
 ✅ client/src/components/inbox/EmailSidebarV2.tsx
 ✅ client/src/contexts/EmailContext.tsx (updated)
 ✅ client/src/App.tsx (uses WorkspaceLayout)
-```
+
+```text
 
 ### ⚠️ Deprecated Files (Reference Only)
 
-```
+```bash
 ⚠️ client/src/pages/ChatInterface.tsx
 ⚠️ client/src/components/InboxPanel.tsx
 ⚠️ client/src/components/panels/WorkflowPanel.tsx
 ⚠️ client/src/components/inbox/EmailSidebar.tsx (V1)
-```
+
+```text
 
 ### ⏳ Pending Files (To Be Created)
 
-```
+```bash
 ⏳ client/src/components/inbox/MiniTabsBar.tsx
 ⏳ client/src/components/inbox/InvoicesDrawer.tsx
 ⏳ client/src/components/inbox/CalendarDrawer.tsx
@@ -202,7 +206,8 @@ User clicks email → EmailTab → setSelectedEmail()
 ⏳ client/src/pages/__tests__/WorkspaceLayout.integration.test.tsx
 ⏳ docs/V2-API-INTEGRATION.md
 ⏳ docs/V2-TESTING-GUIDE.md
-```
+
+```text
 
 ---
 
@@ -210,23 +215,23 @@ User clicks email → EmailTab → setSelectedEmail()
 
 ### 1. Mock Data in Workspace Components
 
-**Issue:** LeadAnalyzer, BookingManager, etc. use mock data  
-**Impact:** Medium - Features work but show fake data  
-**Fix:** Phase 4 - Connect to real APIs  
+**Issue:** LeadAnalyzer, BookingManager, etc. use mock data
+**Impact:** Medium - Features work but show fake data
+**Fix:** Phase 4 - Connect to real APIs
 **Priority:** High
 
 ### 2. Missing Mini-Tabs
 
-**Issue:** Fakturaer, Kalender, Leads, Opgaver not accessible  
-**Impact:** Medium - Users can't access these features  
-**Fix:** Phase 5 - Create mini-tabs system  
+**Issue:** Fakturaer, Kalender, Leads, Opgaver not accessible
+**Impact:** Medium - Users can't access these features
+**Fix:** Phase 5 - Create mini-tabs system
 **Priority:** Medium
 
 ### 3. Tests Need Updates
 
-**Issue:** Some tests still reference old architecture  
-**Impact:** Low - Tests may fail but code works  
-**Fix:** Phase 6 - Update all tests  
+**Issue:** Some tests still reference old architecture
+**Impact:** Low - Tests may fail but code works
+**Fix:** Phase 6 - Update all tests
 **Priority:** Low
 
 ---
@@ -236,27 +241,27 @@ User clicks email → EmailTab → setSelectedEmail()
 ### Immediate (Today)
 
 1. ✅ Complete Phase 2 (deprecation) - DONE!
-2. 🔄 Start Phase 4 (real data integration)
-3. Test workspace components with real emails
+1. 🔄 Start Phase 4 (real data integration)
+1. Test workspace components with real emails
 
 ### Short-term (This Week)
 
 1. Complete Phase 4 (real data)
-2. Start Phase 5 (mini-tabs)
-3. Update integration tests
+1. Start Phase 5 (mini-tabs)
+1. Update integration tests
 
 ### Medium-term (Next Week)
 
 1. Complete Phase 5 (mini-tabs)
-2. Complete Phase 6 (tests)
-3. Complete Phase 7 (docs & cleanup)
-4. Production deployment
+1. Complete Phase 6 (tests)
+1. Complete Phase 7 (docs & cleanup)
+1. Production deployment
 
 ---
 
 ## 💡 Tips for Continuing
 
-### If you need to test V2:
+### If you need to test V2
 
 ```bash
 # Start dev server
@@ -264,10 +269,11 @@ npm run dev
 
 # Open browser
 # Click on an email
-# Watch right panel change based on email type!
-```
+# Watch right panel change based on email type
 
-### If you need to rollback to V1:
+```text
+
+### If you need to rollback to V1
 
 ```typescript
 // In App.tsx
@@ -275,9 +281,10 @@ import ChatInterface from "./pages/ChatInterface";  // V1
 // import WorkspaceLayout from "./pages/WorkspaceLayout";  // V2
 
 <Route path={"/"} component={ChatInterface} />
+
 ```
 
-### If you get TypeScript errors:
+### If you get TypeScript errors
 
 - Check EmailContext has `selectedEmail` property
 - Check SmartWorkspacePanel uses `emailState.selectedEmail`

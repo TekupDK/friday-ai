@@ -1,7 +1,7 @@
 # 📋 Workspace Review Summary
 
-**Date:** 2025-11-08  
-**Status:** Område 1 & 2 Complete  
+**Date:** 2025-11-08
+**Status:** Område 1 & 2 Complete
 **Progress:** 25% (2/8 områder)
 
 ---
@@ -154,19 +154,19 @@
    - Type-safe API (tRPC)
    - Modern tech stack
 
-2. **AI System**
+1. **AI System**
    - 35+ tools working
    - Multi-model routing
    - High success rate (95%+)
    - Good error handling
 
-3. **UI/UX**
+1. **UI/UX**
    - Shortwave-inspired design
    - Optimistic updates
    - Error boundaries
    - Loading states
 
-4. **Testing**
+1. **Testing**
    - E2E tests (Playwright)
    - Unit tests (Vitest)
    - Mocked tests for speed
@@ -180,13 +180,13 @@
    - 23 docs skal konsolideres
    - Root directory cluttered
 
-2. **Documentation**
+1. **Documentation**
    - Scattered across root
    - Duplicate docs
    - No clear structure
    - Needs consolidation
 
-3. **Known Issues**
+1. **Known Issues**
    - Calendar attendees bug
    - Date parsing quirks
    - Model costs (GPT-4)
@@ -209,7 +209,8 @@ pnpm build
 
 # Commit
 git commit -m "chore: cleanup workspace"
-```
+
+```text
 
 **Resultat:** Renere workspace, bedre navigation
 
@@ -219,7 +220,7 @@ git commit -m "chore: cleanup workspace"
 
 Opret struktur:
 
-```
+```text
 docs/
 ├── guides/              # User guides
 │   ├── QUICK_START.md
@@ -236,7 +237,8 @@ docs/
 │   └── ...
 └── archive/             # Historical docs
     └── ...
-```
+
+```text
 
 ---
 
@@ -279,7 +281,7 @@ Næste områder:
 
 ## 📈 **PROGRESS TRACKER**
 
-```
+```text
 Workspace Review Progress: 25% (2/8)
 
 ✅ Område 1: Core Application
@@ -290,6 +292,7 @@ Workspace Review Progress: 25% (2/8)
 ⏳ Område 6: Configuration
 ⏳ Område 7: Tasks
 ⏳ Område 8: Dev Tools
+
 ```
 
 ---
@@ -301,17 +304,17 @@ Workspace Review Progress: 25% (2/8)
    - AI system working reliably
    - Good test coverage
 
-2. **Needs Organization**
+1. **Needs Organization**
    - Too many files in root
    - Documentation scattered
    - Cleanup required
 
-3. **Production Ready**
+1. **Production Ready**
    - All phases tested
    - Features working
    - Ready for deployment
 
-4. **Next Focus**
+1. **Next Focus**
    - Database structure
    - Test organization
    - Documentation consolidation
@@ -336,7 +339,7 @@ Workspace Review Progress: 25% (2/8)
 Hvad vil du gøre nu?
 
 1. **🧹 Cleanup** - Kør scripts og ryd op (10 min)
-2. **🗄️ Database** - Fortsæt til Område 3 (15 min)
-3. **⏸️ Pause** - Review og diskuter findings
+1. **🗄️ Database** - Fortsæt til Område 3 (15 min)
+1. **⏸️ Pause** - Review og diskuter findings
 
 Hvad siger du? 🎯

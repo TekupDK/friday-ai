@@ -1,7 +1,7 @@
 # Friday AI Chat - System Architecture
 
-**Author:** Manus AI  
-**Last Updated:** November 1, 2025  
+**Author:** Manus AI
+**Last Updated:** November 1, 2025
 **Version:** 1.0.0
 
 ## Executive Summary
@@ -42,7 +42,7 @@ The application is built on the following core technologies:
 
 ### Architecture Diagram
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                        Frontend Layer                        │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
@@ -129,7 +129,8 @@ The application is built on the following core technologies:
 │  │ - OAuth    │  │ - MCP      │  │ - OAuth    │          │
 │  └────────────┘  └────────────┘  └────────────┘          │
 └───────────────────────────────────────────────────────────┘
-```
+
+```bash
 
 ## Core Components
 
@@ -153,7 +154,7 @@ The frontend follows a component-based architecture with clear separation of con
 
 **Component Structure:**
 
-```
+```bash
 client/src/
 ├── pages/
 │   ├── ChatInterface.tsx      # Main app interface
@@ -176,7 +177,8 @@ client/src/
 │   └── useAuth.ts              # Authentication hook
 └── lib/
     └── trpc.ts                 # tRPC client setup
-```
+
+```text
 
 ### 2. Backend Architecture
 
@@ -252,7 +254,7 @@ The AI system uses a multi-model approach with intelligent routing:
 
 **Model Selection Strategy:**
 
-```
+```text
 Task Type          → Primary Model      → Fallback
 ─────────────────────────────────────────────────────
 chat               → gemini-2.5-flash   → gpt-4o
@@ -262,19 +264,20 @@ calendar-check     → gemini-2.5-flash   → gpt-4o
 lead-analysis      → claude-3-5-sonnet  → gemini
 data-analysis      → gemini-2.5-flash   → claude
 code-generation    → claude-3-5-sonnet  → gpt-4o
-```
+
+```text
 
 **Intent Recognition System:**
 
 The system recognizes 7 core intents with confidence scoring:
 
 1. **search_gmail**: Search email threads
-2. **book_meeting**: Schedule calendar events
-3. **create_invoice**: Generate Billy invoices
-4. **create_lead**: Add new sales leads
-5. **create_task**: Create tasks/reminders
-6. **request_flytter_photos**: Request moving photos from customers
-7. **job_completion**: Mark jobs as complete
+1. **book_meeting**: Schedule calendar events
+1. **create_invoice**: Generate Billy invoices
+1. **create_lead**: Add new sales leads
+1. **create_task**: Create tasks/reminders
+1. **request_flytter_photos**: Request moving photos from customers
+1. **job_completion**: Mark jobs as complete
 
 **Tool System:**
 
@@ -328,40 +331,44 @@ Built-in services provided by Manus platform:
 
 1. **User sends message in chat:**
 
-   ```
+```text
    User → ChatPanel → trpc.chat.sendMessage
    → AI Router → Intent Parser → Tool Handler
    → External API → Database → Response
    → AI Router → ChatPanel → User
-   ```
 
-2. **Customer profile view:**
+```text
 
-   ```
+1. **Customer profile view:**
+
+```text
    User → LeadsTab → "View Profile" button
    → trpc.customer.getProfileByLeadId
    → customer-db.ts → Database
    → CustomerProfile component → User
-   ```
 
-3. **Invoice sync:**
-   ```
+```text
+
+1. **Invoice sync:**
+
+```text
    User → CustomerProfile → "Opdater" button
    → trpc.customer.syncBillyInvoices
    → billy-sync.ts → Billy MCP → Billy API
    → customer-db.ts → Database
    → Balance calculation → UI update
-   ```
+
+```text
 
 ## Security Architecture
 
 ### Authentication Flow
 
 1. User clicks login → Redirected to Manus OAuth portal
-2. OAuth callback → JWT token issued
-3. Token stored in HTTP-only cookie (`COOKIE_NAME`)
-4. Every request → Cookie validated → User context injected
-5. Protected procedures check `ctx.user` existence
+1. OAuth callback → JWT token issued
+1. Token stored in HTTP-only cookie (`COOKIE_NAME`)
+1. Every request → Cookie validated → User context injected
+1. Protected procedures check `ctx.user` existence
 
 ### Authorization Model
 
@@ -443,7 +450,8 @@ Built-in services provided by Manus platform:
 pnpm install
 pnpm db:push          # Migrate database
 pnpm dev              # Start dev server (port 3000)
-```
+
+```text
 
 **Environment Variables:**
 
@@ -456,20 +464,22 @@ pnpm dev              # Start dev server (port 3000)
 **Manus Platform Deployment:**
 
 1. Create checkpoint: `webdev_save_checkpoint`
-2. Click "Publish" in Management UI
-3. Auto-deployed to `*.manus.space` domain
-4. Custom domain binding available in Settings
+1. Click "Publish" in Management UI
+1. Auto-deployed to `*.manus.space` domain
+1. Custom domain binding available in Settings
 
 **Database Migration:**
 
 ```bash
 pnpm db:push  # Generates and applies migrations
-```
+
+```text
 
 **Build Process:**
 
 ```bash
 pnpm build    # Builds frontend and backend
+
 ```
 
 ## Monitoring & Observability
@@ -548,18 +558,18 @@ pnpm build    # Builds frontend and backend
 **Potential Bottlenecks:**
 
 1. Billy API sync for large customer bases
-2. Gmail API quota limits for high-volume users
-3. LLM API latency for real-time chat
+1. Gmail API quota limits for high-volume users
+1. LLM API latency for real-time chat
 
 **Mitigation Strategies:**
 
 1. Background job queue for Billy sync
-2. Caching layer for Gmail threads
-3. Streaming responses for LLM (already implemented)
+1. Caching layer for Gmail threads
+1. Streaming responses for LLM (already implemented)
 
 ## Technology Decisions
 
-### Why tRPC?
+### Why tRPC
 
 **Advantages:**
 
@@ -575,7 +585,7 @@ pnpm build    # Builds frontend and backend
 - Less suitable for public APIs
 - Requires shared types between client/server
 
-### Why Drizzle ORM?
+### Why Drizzle ORM
 
 **Advantages:**
 
@@ -590,7 +600,7 @@ pnpm build    # Builds frontend and backend
 - Less mature tooling
 - Manual relationship management
 
-### Why Gemini 2.5 Flash?
+### Why Gemini 2.5 Flash
 
 **Advantages:**
 
@@ -613,22 +623,22 @@ pnpm build    # Builds frontend and backend
    - Server-sent events for inbox updates
    - Optimistic UI updates for all mutations
 
-2. **Caching Layer:**
+1. **Caching Layer:**
    - Redis for session storage
    - Gmail thread caching
    - Invoice data caching
 
-3. **Background Jobs:**
+1. **Background Jobs:**
    - Bull queue for async tasks
    - Scheduled Billy sync (hourly)
    - Email polling (every 5 minutes)
 
-4. **Enhanced Analytics:**
+1. **Enhanced Analytics:**
    - User behavior tracking
    - AI performance metrics
    - Business intelligence dashboard
 
-5. **Mobile App:**
+1. **Mobile App:**
    - React Native wrapper
    - Push notifications
    - Offline support
@@ -638,25 +648,25 @@ pnpm build    # Builds frontend and backend
 **Current Known Issues:**
 
 1. No automated testing (unit/integration/e2e)
-2. No error tracking service integration
-3. No performance monitoring
-4. Limited input sanitization
-5. No rate limiting on API endpoints
+1. No error tracking service integration
+1. No performance monitoring
+1. Limited input sanitization
+1. No rate limiting on API endpoints
 
 **Recommended Fixes:**
 
 1. Add Vitest for unit testing
-2. Integrate Sentry for error tracking
-3. Add performance monitoring (e.g., New Relic)
-4. Implement DOMPurify for XSS prevention
-5. Add express-rate-limit middleware
+1. Integrate Sentry for error tracking
+1. Add performance monitoring (e.g., New Relic)
+1. Implement DOMPurify for XSS prevention
+1. Add express-rate-limit middleware
 
 ## References
 
-This architecture document is based on the codebase structure and implementation details found in the Friday AI Chat repository at https://github.com/TekupDK/tekup-friday.
+This architecture document is based on the codebase structure and implementation details found in the Friday AI Chat repository at <https://github.com/TekupDK/tekup-friday.>
 
 ---
 
-**Document Version:** 1.0.0  
-**Last Updated:** November 1, 2025  
+**Document Version:** 1.0.0
+**Last Updated:** November 1, 2025
 **Maintained by:** TekupDK Development Team

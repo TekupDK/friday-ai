@@ -1,6 +1,6 @@
 # Real-time Documentation System - Implementation Status
 
-**Opdateret:** 8. November 2025, 20:40  
+**Opdateret:** 8. November 2025, 20:40
 **Status:** ✅ Phase 1 Komplet - Klar til test og videre udvikling
 
 ---
@@ -78,21 +78,21 @@
    - Indexes på path, category, author
    - Timestamps: createdAt, updatedAt
 
-2. **document_changes**
+1. **document_changes**
    - Audit log af alle ændringer
    - Links til document + user
    - Operation type (create/update/delete)
    - Diff storage
    - Git hash reference
 
-3. **document_comments**
+1. **document_comments**
    - UUID primary key
    - Links til document + user
    - Comment content + optional line number
    - Resolved status
    - Indexes på documentId + userId
 
-4. **document_conflicts**
+1. **document_conflicts**
    - Git conflict storage
    - Local vs remote content
    - Base content (for 3-way merge)
@@ -159,7 +159,8 @@ DOCS_AUTO_PUSH=false                 # Auto-push to remote (careful!)
 
 # WebSocket port
 DOCS_WS_PORT=3002                    # Real-time updates port
-```
+
+```bash
 
 ---
 
@@ -192,55 +193,63 @@ DOCS_WS_PORT=3002                    # Real-time updates port
 **Oprettet guides:**
 
 1. `REALTIME_DOCS_SYSTEM_ARCHITECTURE.md` (451 linjer) - Komplet arkitektur
-2. `REALTIME_DOCS_QUICK_START.md` (411 linjer) - Setup guide
-3. `REALTIME_DOCS_IMPLEMENTATION_ROADMAP.md` (457 linjer) - 4-ugers roadmap
-4. `DOCUMENTATION_SYSTEM_DEPENDENCIES.md` (161 linjer) - Dependencies
-5. `REALTIME_DOCS_SUMMARY.md` (387 linjer) - Project summary
-6. `REALTIME_DOCS_IMPLEMENTATION_STATUS.md` (dette dokument)
+1. `REALTIME_DOCS_QUICK_START.md` (411 linjer) - Setup guide
+1. `REALTIME_DOCS_IMPLEMENTATION_ROADMAP.md` (457 linjer) - 4-ugers roadmap
+1. `DOCUMENTATION_SYSTEM_DEPENDENCIES.md` (161 linjer) - Dependencies
+1. `REALTIME_DOCS_SUMMARY.md` (387 linjer) - Project summary
+1. `REALTIME_DOCS_IMPLEMENTATION_STATUS.md` (dette dokument)
 
 ---
 
 ## 🧪 Test Setup
 
-### Sådan tester du det:
+### Sådan tester du det
 
 1. **Aktivér service** - Tilføj til `.env.dev`:
 
    ```env
    DOCS_ENABLE=true
-   ```
 
-2. **Kør migration** (først gang):
+```text
+
+1. **Kør migration** (først gang):
 
    ```bash
    pnpm db:generate
    pnpm db:migrate:dev
-   ```
 
-3. **Start server:**
+```text
+
+1. **Start server:**
 
    ```bash
    pnpm dev
-   ```
 
-4. **Forventet i logs:**
-   ```
+```text
+
+1. **Forventet i logs:**
+
+```text
    [Docs] Service started { repoPath, docsPath, branch, wsPort }
    [GitSync] Initialized { repoPath, branch }
    [GitSync] File watcher started { cwd }
    [WSHub] WebSocket server started { addr }
-   ```
+
+```bash
 
 ### Test Git Sync
 
 1. Rediger en `.md` fil i `docs/` mappen
-2. Vent ~1-2 sekunder
-3. Se i logs:
-   ```
+1. Vent ~1-2 sekunder
+1. Se i logs:
+
+```text
    [GitSync] Committed changes { count: 1 }
    [Docs] sync complete { count: 1 }
-   ```
-4. Tjek Git log: `git log -1 --oneline`
+
+```bash
+
+1. Tjek Git log: `git log -1 --oneline`
 
 ### Test WebSocket
 
@@ -256,7 +265,8 @@ wscat -c "ws://localhost:3002?userId=test-user"
 
 # Du får svar tilbage
 < {"type":"presence:joined","user_id":"test-user","document_id":"test-doc"}
-```
+
+```text
 
 ### Test API Endpoints
 
@@ -285,7 +295,8 @@ const comment = await trpc.docs.addComment.mutate({
   content: "Great documentation!",
   lineNumber: 5,
 });
-```
+
+```bash
 
 ---
 
@@ -372,8 +383,8 @@ const comment = await trpc.docs.addComment.mutate({
 | AI Integration         | 🔴 Mangler | 0%      | -         |
 | Testing                | 🔴 Mangler | 0%      | -         |
 
-**Samlet Progress:** ~45% af komplet system  
-**Tid investeret:** ~6.5 timer  
+**Samlet Progress:** ~45% af komplet system
+**Tid investeret:** ~6.5 timer
 **Estimeret tid tilbage:** ~2-3 uger for fuld feature-set
 
 ---
@@ -383,31 +394,31 @@ const comment = await trpc.docs.addComment.mutate({
 ### Immediate (i dag/i morgen)
 
 1. ✅ Kør migration: `pnpm db:generate && pnpm db:migrate:dev`
-2. ✅ Test docs service starter korrekt
-3. ✅ Test Git sync ved at redigere en `.md` fil
-4. ✅ Test WebSocket connection
-5. ✅ Test API endpoints via tRPC
+1. ✅ Test docs service starter korrekt
+1. ✅ Test Git sync ved at redigere en `.md` fil
+1. ✅ Test WebSocket connection
+1. ✅ Test API endpoints via tRPC
 
 ### Kort sigt (denne uge)
 
 1. Implementer CLI command handlers
-2. Basic frontend docs page (list + view)
-3. Test E2E flow: CLI → API → Database → WebSocket
+1. Basic frontend docs page (list + view)
+1. Test E2E flow: CLI → API → Database → WebSocket
 
 ### Mellem sigt (næste uge)
 
 1. Frontend editor med real-time updates
-2. Comment system UI
-3. Conflict resolution UI
-4. AI integration (generate + improve)
+1. Comment system UI
+1. Conflict resolution UI
+1. AI integration (generate + improve)
 
 ### Lang sigt (uge 3-4)
 
 1. Advanced search med facets
-2. Version history UI
-3. Batch operations
-4. Testing suite
-5. Production deployment
+1. Version history UI
+1. Batch operations
+1. Testing suite
+1. Production deployment
 
 ---
 
@@ -433,7 +444,8 @@ tekup-docs ai generate "Create API documentation for user authentication"
 
 # AI improve
 tekup-docs ai improve doc-uuid --focus="examples,clarity"
-```
+
+```text
 
 ### Fra API
 
@@ -461,7 +473,8 @@ await trpc.docs.addComment.mutate({
   content: "Looks good!",
   lineNumber: 10,
 });
-```
+
+```text
 
 ### Fra WebSocket
 
@@ -477,6 +490,7 @@ subscribe("doc-uuid");
 ws.on("doc:updated", doc => {
   console.log("Document updated:", doc);
 });
+
 ```
 
 ---
@@ -516,9 +530,9 @@ ws.on("doc:updated", doc => {
 **Spørgsmål:**
 
 1. Skal jeg implementere CLI handlers næste?
-2. Vil du have frontend portal først?
-3. Skal AI integration prioriteres?
-4. Noget andet der er vigtigere?
+1. Vil du have frontend portal først?
+1. Skal AI integration prioriteres?
+1. Noget andet der er vigtigere?
 
 **Kontakt:** Sig til hvad du vil have mig til at fokusere på!
 

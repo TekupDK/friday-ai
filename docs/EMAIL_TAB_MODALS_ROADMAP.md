@@ -7,7 +7,7 @@
 
 ## 📋 Eksisterende Modals/Dialogs
 
-### ✅ Implementeret:
+### ✅ Implementeret
 
 1. **EmailComposer** ✅
    - **Type:** Dialog (Radix UI)
@@ -15,7 +15,7 @@
    - **File:** `client/src/components/inbox/EmailComposer.tsx`
    - **Status:** Fungerer korrekt
 
-2. **CustomerProfile** ✅
+1. **CustomerProfile** ✅
    - **Type:** Modal/Dialog
    - **Funktionalitet:** Vis kundeprofil fra email
    - **File:** `client/src/components/CustomerProfile.tsx`
@@ -114,21 +114,21 @@
 
 ## 🎨 Design Principper
 
-### Modal Sizes:
+### Modal Sizes
 
 - **Small:** `sm:max-w-md` (Confirmation dialogs)
 - **Medium:** `sm:max-w-lg` (Snooze, Label Management)
 - **Large:** `sm:max-w-2xl` (Email Preview, Bulk Actions)
 - **XLarge:** `sm:max-w-4xl` (Email Composer, Templates)
 
-### Modal Patterns:
+### Modal Patterns
 
 1. **Confirmation Dialogs:** Kort og præcis, primær action fremhævet
-2. **Form Modals:** Scrollable content, action buttons fixed i footer
-3. **Preview Modals:** Header + scrollable content + fixed actions
-4. **List Modals:** Header + scrollable list + fixed actions
+1. **Form Modals:** Scrollable content, action buttons fixed i footer
+1. **Preview Modals:** Header + scrollable content + fixed actions
+1. **List Modals:** Header + scrollable list + fixed actions
 
-### Teknologi:
+### Teknologi
 
 - **Radix UI Dialog** (allerede i brug)
 - **Consistent styling** med eksisterende EmailComposer
@@ -141,22 +141,22 @@
 ### Phase 1: Quick Wins (1-2 timer)
 
 1. ✅ Confirmation Dialogs (Delete, Archive)
-2. ✅ Email Quick Preview Modal
+1. ✅ Email Quick Preview Modal
 
 ### Phase 2: Core Features (2-4 timer)
 
-3. ✅ Snooze Email Modal
-4. ✅ Label Management Modal
+1. ✅ Snooze Email Modal
+1. ✅ Label Management Modal
 
 ### Phase 3: Advanced (4-6 timer)
 
-5. ✅ Bulk Actions Modal
-6. ✅ Email Templates Modal
+1. ✅ Bulk Actions Modal
+1. ✅ Email Templates Modal
 
 ### Phase 4: Polish (2-4 timer)
 
-7. ✅ Email Settings Modal
-8. ✅ Search Filters Modal
+1. ✅ Email Settings Modal
+1. ✅ Search Filters Modal
 
 ---
 
@@ -234,5 +234,5 @@
 **Priority 2 Modals:**
 
 1. Snooze Email Modal (Google Inbox-style)
-2. Bulk Actions Modal (for bulk operations)
-3. Label Management Modal (for label administration)
+1. Bulk Actions Modal (for bulk operations)
+1. Label Management Modal (for label administration)

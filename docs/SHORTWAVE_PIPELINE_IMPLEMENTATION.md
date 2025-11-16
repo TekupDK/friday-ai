@@ -8,19 +8,19 @@
 
 ## 🎯 MVP Scope (Minimum Viable Pipeline)
 
-### Core Features:
+### Core Features
 
 1. **Pipeline Status View**
    - Column layout med 4 hovedstages
    - Drag-and-drop emails mellem stages
    - Visual feedback
 
-2. **Smart Label Detection**
+1. **Smart Label Detection**
    - Auto-detect lead source (Rengøring.nu, Rengøring Århus, AdHelp)
    - Auto-apply source label
    - Auto-apply "Needs Action" for nye leads
 
-3. **Pipeline Quick Actions**
+1. **Pipeline Quick Actions**
    - "Send Tilbud" button
    - "Bekræft Booking" button
    - "Send Faktura" button
@@ -30,7 +30,7 @@
 
 ## 📋 Implementation Checklist
 
-### Backend (2 timer):
+### Backend (2 timer)
 
 - [ ] Create `email_pipeline_state` table
 - [ ] Create `email_pipeline_transitions` table
@@ -43,7 +43,7 @@
   - [ ] `inbox.email.transitionToBooked`
   - [ ] `inbox.email.transitionToInvoiced`
 
-### Frontend (3 timer):
+### Frontend (3 timer)
 
 - [ ] Create `EmailPipelineView.tsx` component
 - [ ] Create `PipelineColumn.tsx` component
@@ -52,7 +52,7 @@
 - [ ] Create `SmartLabelDetector.tsx` component
 - [ ] Integrer i `EmailTab.tsx`
 
-### Testing (1 time):
+### Testing (1 time)
 
 - [ ] Test med faktiske emails
 - [ ] Test pipeline transitions
@@ -63,7 +63,7 @@
 
 ## 🔧 Technical Details
 
-### Pipeline Stages:
+### Pipeline Stages
 
 ```typescript
 type PipelineStage =
@@ -72,9 +72,10 @@ type PipelineStage =
   | "i_kalender" // Booking bekræftet
   | "finance" // Faktura sendt
   | "afsluttet"; // Opgave udført + betalt
-```
 
-### Lead Sources:
+```text
+
+### Lead Sources
 
 ```typescript
 type LeadSource =
@@ -82,9 +83,10 @@ type LeadSource =
   | "rengoring_aarhus" // Leadpoint.dk
   | "adhelp" // AdHelp
   | "direct"; // Direkte henvendelse
-```
 
-### Task Types:
+```text
+
+### Task Types
 
 ```typescript
 type TaskType =
@@ -92,6 +94,7 @@ type TaskType =
   | "flytterengoring" // Move-out
   | "hovedrengoring" // Deep clean
   | "engangsopgaver"; // One-time
+
 ```
 
 ---
@@ -103,12 +106,12 @@ type TaskType =
 
 Se `GMAIL_RATE_LIMIT_ALTERNATIVES.md` for fuld implementation guide.
 
-### Quick Setup:
+### Quick Setup
 
 1. Deploy `inbound-email` SMTP server
-2. Setup Google Workspace forwarding
-3. Create `/api/inbound/email` webhook endpoint
-4. Test email ingestion
+1. Setup Google Workspace forwarding
+1. Create `/api/inbound/email` webhook endpoint
+1. Test email ingestion
 
 ---
 
@@ -118,8 +121,8 @@ Se `GMAIL_RATE_LIMIT_ALTERNATIVES.md` for fuld implementation guide.
 Jeg kan starte med:
 
 1. **Priority 0:** Setup SMTP infrastructure (inbound-email)
-2. **Priority 1:** Database schema for pipeline
-3. **Priority 2:** Backend API endpoints
-4. **Priority 3:** Frontend Pipeline View component
+1. **Priority 1:** Database schema for pipeline
+1. **Priority 2:** Backend API endpoints
+1. **Priority 3:** Frontend Pipeline View component
 
 Eller vil du først se en mere detaljeret design spec?

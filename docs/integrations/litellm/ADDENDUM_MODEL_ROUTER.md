@@ -1,15 +1,15 @@
 # LiteLLM Integration Addendum - Model Router System
 
-**Version:** 1.0.0  
-**Date:** November 9, 2025  
-**Status:** CRITICAL SUPPLEMENT  
+**Version:** 1.0.0
+**Date:** November 9, 2025
+**Status:** CRITICAL SUPPLEMENT
 **Priority:** Must Read Before Implementation
 
 ---
 
 ## 🚨 KRITISK OPDAGELSE
 
-Under dyb analyse af kodebasen blev der opdaget et **avanceret model routing system** som IKKE var inkluderet i den originale plan. Dette system er **KRITISK** for LiteLLM integration!
+Under dyb analyse af kodebasen blev der opdaget et **avanceret model routing system**som IKKE var inkluderet i den originale plan. Dette system er**KRITISK** for LiteLLM integration!
 
 ---
 
@@ -42,7 +42,8 @@ export type TaskType =
   | "data-analysis"
   | "code-generation"
   | "complex-reasoning";
-```
+
+```text
 
 ### Intelligent Model Selection
 
@@ -72,7 +73,8 @@ const MODEL_ROUTING_MATRIX: Record<TaskType, ModelRoutingConfig> = {
   },
   // ... 7 more task types
 };
-```
+
+```text
 
 ### `invokeLLMWithRouting()` - Wrapper Funktion
 
@@ -115,7 +117,8 @@ export async function invokeLLMWithRouting(
     throw error; // All fallbacks failed
   }
 }
-```
+
+```text
 
 ---
 
@@ -153,7 +156,8 @@ export async function routeAI(options: AIRouterOptions) {
 
   return response;
 }
-```
+
+```text
 
 **Dette betyder:**
 
@@ -167,7 +171,8 @@ export async function routeAI(options: AIRouterOptions) {
 
 ### Gruppe 1: Direct `invokeLLM()` (8 filer)
 
-```
+```text
+
 1. server/_core/llm.ts                    (DEFINITION)
 2. server/docs/ai/analyzer.ts             (2 calls)
 3. server/ai-email-summary.ts             (1 call)
@@ -176,22 +181,27 @@ export async function routeAI(options: AIRouterOptions) {
 6. server/customer-router.ts              (1 call)
 7. server/ai-router.ts                    (1 call, MAIN)
 8. server/model-router.ts                 (1 call, ROUTING)
-```
+
+```text
 
 ### Gruppe 2: Via `invokeLLMWithRouting()` (indirect)
 
-```
+```text
+
 1. server/ai-router.ts                    (calls routing)
 2. server/_core/streaming.ts              (uses routing)
-```
+
+```text
 
 ### Gruppe 3: `streamResponse()` (3 filer)
 
-```
+```text
+
 1. server/_core/streaming.ts
 2. server/routers/chat-streaming.ts
 3. server/model-router.ts
-```
+
+```text
 
 ---
 
@@ -207,7 +217,8 @@ export async function invokeLLM(params) {
   }
   return originalInvokeLLM(params);
 }
-```
+
+```text
 
 **Problem:** Bypasser model router logic! ❌
 
@@ -248,7 +259,8 @@ export async function invokeLLMWithRouting(
     throw error;
   }
 }
-```
+
+```text
 
 **Fordele:**
 
@@ -273,7 +285,8 @@ export async function invokeLLMWithRouting(...) {
   // Uses invokeLLM internally
   // Routing logic preserved
 }
-```
+
+```text
 
 **Fordele:**
 
@@ -308,11 +321,12 @@ export function mapToLiteLLMModel(fridayModel: AIModel): string {
 
   return mapping[fridayModel] || mapping["glm-4.5-air-free"];
 }
-```
+
+```text
 
 ---
 
-## 📊 Environment Variables - Allerede Implementeret!
+## 📊 Environment Variables - Allerede Implementeret
 
 Friday AI har ALLEREDE rollout system:
 
@@ -326,16 +340,18 @@ FORCE_OPENROUTER=false
 # Feature flags (EXISTING!)
 enableOpenRouterModels=true
 enableModelRouting=true
-```
+
+```text
 
 **LiteLLM skal tilføje:**
 
 ```bash
 # New for LiteLLM
 ENABLE_LITELLM=false
-LITELLM_BASE_URL=http://localhost:4000
+LITELLM_BASE_URL=<http://localhost:4000>
 LITELLM_ROLLOUT_PERCENTAGE=0
-```
+
+```bash
 
 ---
 
@@ -355,7 +371,8 @@ LITELLM_ROLLOUT_PERCENTAGE=0
 // NEW FILE: server/integrations/litellm/model-mappings.ts
 export function mapToLiteLLMModel(model: AIModel): string;
 export function mapToFridayModel(litellmModel: string): AIModel;
-```
+
+```text
 
 **Task 2.2: Integration i Model Router** (CRITICAL!)
 
@@ -377,7 +394,8 @@ export async function invokeLLMWithRouting(...) {
 
   // Original logic
 }
-```
+
+```text
 
 **Task 2.3: Fallback Wrapper (Backup)**
 
@@ -391,19 +409,22 @@ export async function invokeLLM(params: InvokeParams) {
 
   // Original implementation
 }
-```
+
+```text
 
 ### Phase 3: Testing (UPDATED!)
 
 **Test Matrix:**
 
-```
+```text
+
 1. Direct invokeLLM() calls → LiteLLM
 2. invokeLLMWithRouting() calls → LiteLLM with routing
 3. Task-based routing → Correct model selection
 4. Fallback logic → Works with LiteLLM
 5. Feature flags → Gradual rollout
-```
+
+```text
 
 ---
 
@@ -438,27 +459,33 @@ export async function invokeLLM(params: InvokeParams) {
 
 ### Must Modify (3 filer)
 
-```
+```text
+
 1. server/model-router.ts              - KRITISK! Main integration point
 2. server/_core/llm.ts                 - Backup wrapper
 3. server/integrations/litellm/model-mappings.ts - NEW! Mapping
-```
+
+```text
 
 ### Should Review (5 filer)
 
-```
+```text
+
 4. server/ai-router.ts                 - Uses routing
 5. server/_core/streaming.ts           - Streaming logic
 6. server/title-generator.ts           - Direct calls
 7. server/customer-router.ts           - Direct calls
 8. server/ai-label-suggestions.ts      - Direct calls
-```
+
+```text
 
 ### Auto-Covered via Router (2 filer)
 
-```
+```text
+
 9. server/docs/ai/analyzer.ts          - Via routing
 10. server/ai-email-summary.ts         - Via routing
+
 ```
 
 ---
@@ -478,9 +505,9 @@ export async function invokeLLM(params: InvokeParams) {
 **Implementation:**
 
 1. Integrer LiteLLM i `invokeLLMWithRouting()`
-2. Tilføj model mapping layer
-3. Test med alle task types
-4. Gradual rollout via feature flag
+1. Tilføj model mapping layer
+1. Test med alle task types
+1. Gradual rollout via feature flag
 
 **Timeline:** +1 dag til original plan (total 6 dage)
 
@@ -505,17 +532,17 @@ export async function invokeLLM(params: InvokeParams) {
 ## ✅ NEXT STEPS
 
 1. **Review** denne addendum med team
-2. **Update** MIGRATION_PLAN.md med model router tasks
-3. **Create** model-mappings.ts specification
-4. **Test** task-based routing lokalt
-5. **Proceed** med updated plan
+1. **Update** MIGRATION_PLAN.md med model router tasks
+1. **Create** model-mappings.ts specification
+1. **Test** task-based routing lokalt
+1. **Proceed** med updated plan
 
 ---
 
-**Status:** ✅ CRITICAL INFORMATION ADDED  
-**Impact:** HIGH - Changes migration approach  
-**Action Required:** Review & approve updated strategy  
+**Status:** ✅ CRITICAL INFORMATION ADDED
+**Impact:** HIGH - Changes migration approach
+**Action Required:** Review & approve updated strategy
 **Timeline Impact:** +1 day (6 days total for Phase 1)
 
-**Last Updated:** November 9, 2025  
+**Last Updated:** November 9, 2025
 **Author:** Friday AI Implementation Team

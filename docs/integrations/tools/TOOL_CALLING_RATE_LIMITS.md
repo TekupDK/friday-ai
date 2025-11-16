@@ -8,7 +8,7 @@
 
 ### Normal Request (UDEN tools)
 
-```
+```text
 User: "Hvad koster rengøring?"
   ↓
 1 API Call → LiteLLM → OpenRouter
@@ -16,29 +16,44 @@ User: "Hvad koster rengøring?"
 Response: "Det koster 500kr"
 
 Total API Calls: 1 ✅
-```
+
+```text
 
 ### Tool Calling Request (MED tools)
 
-```
+```text
 User: "Book rengøring til i morgen kl 10"
   ↓
+
 1. API Call: AI vurderer hvilke tools at bruge
+
   ↓
+
 2. AI caller: checkAvailability(date, time)
+
   ↓
+
 3. Server eksekverer tool lokalt (IKKE API call)
+
   ↓
+
 4. API Call: AI får tool result, beslutter næste skridt
+
   ↓
+
 5. AI caller: createBooking(...)
+
   ↓
+
 6. Server eksekverer tool lokalt (IKKE API call)
+
   ↓
+
 7. API Call: AI laver final response med confirmation
 
 Total API Calls: 3 ⚠️
-```
+
+```text
 
 ---
 
@@ -46,20 +61,23 @@ Total API Calls: 3 ⚠️
 
 ### OpenRouter FREE Tier
 
-```
+```text
 Limit: 16 API calls per minut
 
 UDEN Tools:
+
 - 16 simple requests OK ✅
 
 MED Tools (average 3 API calls per conversation):
+
 - Kun 5 conversations per minut! ⚠️
 - 16 ÷ 3 = ~5 conversations
-```
+
+```text
 
 ### Real-World Example
 
-```
+```text
 10 leads med tool calling på 2 minutter:
   ↓
 10 conversations × 3 API calls = 30 API calls
@@ -75,7 +93,8 @@ Under limit (16/min) ✅
 45 calls / 1 min = 45 calls/min
   ↓
 OVER LIMIT! ❌ (kun 16/min tilladt)
-```
+
+```text
 
 ---
 
@@ -87,7 +106,8 @@ OVER LIMIT! ❌ (kun 16/min tilladt)
 // rate-limiter.ts
 maxRequestsPerMinute: 12; // Was 14, now 12 for tool safety
 maxConcurrent: 2; // Was 3, now 2 (tools spawn multiple calls)
-```
+
+```text
 
 **Hvorfor?**
 
@@ -102,7 +122,8 @@ maxConcurrent: 2; // Was 3, now 2 (tools spawn multiple calls)
 // Execute multiple tools in parallel, not sequential
 // Reduces: 3 tool calls × 2 API each = 6 API calls
 // To:      1 API call + batch + 1 API call = 2 API calls
-```
+
+```text
 
 ### 3. Smart Priority
 
@@ -111,7 +132,8 @@ maxConcurrent: 2; // Was 3, now 2 (tools spawn multiple calls)
 conversation.hasTools && toolCount >= 3
   ? (priority = "high")
   : (priority = "medium");
-```
+
+```text
 
 ---
 
@@ -127,23 +149,27 @@ conversation.hasTools && toolCount >= 3
      checkAvailability(),
      getPricing(),
    ]);
-   ```
 
-2. **Cache tool results** for stabile data
+```text
+
+1. **Cache tool results** for stabile data
 
    ```typescript
    // Pricing ændrer sig ikke hvert minut
    const pricing = await getCachedPricing(); // ✅
-   ```
 
-3. **Brug priority** for tool-heavy requests
+```text
+
+1. **Brug priority** for tool-heavy requests
+
    ```typescript
    await litellmClient.chatCompletion({
      messages,
      tools,
      priority: "high", // Tool calls får priority
    });
-   ```
+
+```text
 
 ### ❌ DON'Ts
 
@@ -155,15 +181,18 @@ conversation.hasTools && toolCount >= 3
    const price = await getPricing();
    const booking = await createBooking();
    // = Slow + many API calls ❌
-   ```
 
-2. **Undgå redundante tool calls**
+```text
+
+1. **Undgå redundante tool calls**
+
    ```typescript
    // Dårlig: Kalder samme tool flere gange
    await getBusinessHours(); // Call 1
    await getBusinessHours(); // Call 2 (WASTE!)
    // Brug cache i stedet! ✅
-   ```
+
+```text
 
 ---
 
@@ -185,7 +214,8 @@ Available slots: ${stats.availableSlots}
 // Estimate tool impact
 const estimatedCalls = toolOptimizer.estimateApiCalls(3); // 3 tools
 console.log(`3 tools = ~${estimatedCalls} API calls`);
-```
+
+```text
 
 ---
 
@@ -196,20 +226,21 @@ console.log(`3 tools = ~${estimatedCalls} API calls`);
 **Typiske Tools:**
 
 1. `checkAvailability` - Tjek kalender
-2. `getPricing` - Få priser
-3. `createBooking` - Book opgave
-4. `sendConfirmation` - Send bekræftelse
+1. `getPricing` - Få priser
+1. `createBooking` - Book opgave
+1. `sendConfirmation` - Send bekræftelse
 
 **Expected API Calls per Lead:**
 
-```
+```text
 Lead UDEN booking: 1 API call ✅
 Lead MED booking:  3-4 API calls ⚠️
 
 Average: ~2 API calls per lead
 
 Safe rate: 12 calls/min = 6 leads/min ✅
-```
+
+```text
 
 ### Anbefalet Setup
 
@@ -226,6 +257,7 @@ for (const lead of leads) {
 
   // Queue handles waiting automatically! ✅
 }
+
 ```
 
 ---
@@ -235,9 +267,9 @@ for (const lead of leads) {
 **Tool calling bruger flere API calls, MEN:**
 
 1. ✅ Vores rate limiter er justeret (12/min i stedet for 14)
-2. ✅ Tool optimizer batches calls intelligent
-3. ✅ Priority queue håndterer tool-heavy requests
-4. ✅ Automatic retry hvis rate limit hit
+1. ✅ Tool optimizer batches calls intelligent
+1. ✅ Priority queue håndterer tool-heavy requests
+1. ✅ Automatic retry hvis rate limit hit
 
 **Du behøver IKKE bekymre dig!**
 

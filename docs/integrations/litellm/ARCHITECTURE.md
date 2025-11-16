@@ -1,8 +1,8 @@
 # LiteLLM Integration Architecture
 
-**Version:** 1.0.0  
-**Status:** Design Phase  
-**Author:** Friday AI Team  
+**Version:** 1.0.0
+**Status:** Design Phase
+**Author:** Friday AI Team
 **Date:** November 9, 2025
 
 ---
@@ -21,7 +21,7 @@ LiteLLM serves as our unified AI gateway, providing:
 
 ## 🏗️ System Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                    Friday AI Application                     │
 └──────────────────────┬──────────────────────────────────────┘
@@ -48,13 +48,14 @@ LiteLLM serves as our unified AI gateway, providing:
 │  (Primary)        │ │(Fallback1)│ │(Fallback2)│ │(Fallback3)│
 │  $0.00 FREE ✅    │ │$0.00 FREE│ │$0.00 FREE│ │$0.00 FREE │
 └───────────────────┘ └───────────┘ └──────────┘ └───────────┘
-```
+
+```text
 
 ---
 
 ## 📂 File Structure
 
-```
+```bash
 server/integrations/litellm/
 ├── config/
 │   ├── litellm.config.yaml     # LiteLLM proxy config
@@ -85,7 +86,8 @@ docs/integrations/litellm/
 ├── API.md                      # API reference
 ├── MONITORING.md               # Monitoring guide
 └── TROUBLESHOOTING.md          # Common issues
-```
+
+```text
 
 ---
 
@@ -93,60 +95,78 @@ docs/integrations/litellm/
 
 ### Happy Path (Primary Provider Success)
 
-```
+```text
+
 1. Friday AI → LiteLLM Client
+
    ├─ model: "gpt-4o"
    ├─ messages: [...]
    └─ fallback: ["claude-3-opus", "gpt-3.5-turbo"]
 
 2. LiteLLM Client → LiteLLM Proxy (localhost:4000)
+
    └─ POST /chat/completions
 
 3. LiteLLM Proxy → OpenRouter (Primary)
+
    └─ Uses glm-4.5-air:free model
 
 4. OpenRouter → LiteLLM Proxy
+
    └─ Success response
 
 5. LiteLLM Proxy → LiteLLM Client
+
    └─ Normalized response
 
 6. LiteLLM Client → Friday AI
+
    └─ Success ✅
-```
+
+```text
 
 ### Fallback Path (Primary Fails)
 
-```
+```text
+
 1. Friday AI → LiteLLM Client
+
    └─ Same request
 
 2. LiteLLM Proxy → OpenRouter DeepSeek (Primary)
+
    └─ ❌ Timeout / Rate Limit / Error
 
 3. Circuit Breaker Activates
+
    └─ Mark DeepSeek as degraded
 
 4. LiteLLM Proxy → OpenRouter GLM-4.5 (Fallback #1 FREE!)
+
    └─ Use GLM-4.5-air:free model
 
 5. OpenRouter → LiteLLM Proxy
+
    └─ Success response
 
 6. LiteLLM Client → Friday AI
+
    └─ Success ✅ (with fallback metadata)
    └─ Still $0.00 cost! 🎉
-```
+
+```text
 
 ### All Providers Fail
 
-```
+```text
+
 1. Try all providers in cascade
 2. Log detailed error information
 3. Return graceful error to user
 4. Metrics record failure
 5. Alert if threshold exceeded
-```
+
+```text
 
 ---
 
@@ -154,8 +174,8 @@ docs/integrations/litellm/
 
 ### 1. LiteLLM Client (`client.ts`)
 
-**Purpose:** Thin wrapper around LiteLLM proxy  
-**Max Lines:** 100  
+**Purpose:** Thin wrapper around LiteLLM proxy
+**Max Lines:** 100
 **Responsibilities:**
 
 - HTTP requests to proxy
@@ -171,12 +191,13 @@ export class LiteLLMClient {
     // Retry: Handled by proxy
   }
 }
-```
+
+```text
 
 ### 2. Fallback Strategy (`fallback/strategy.ts`)
 
-**Purpose:** Define provider cascade  
-**Max Lines:** 120  
+**Purpose:** Define provider cascade
+**Max Lines:** 120
 **Responsibilities:**
 
 - Provider priority order
@@ -191,12 +212,13 @@ export class FallbackStrategy {
     // Based on: cost, availability, model support
   }
 }
-```
+
+```text
 
 ### 3. Circuit Breaker (`fallback/circuit-breaker.ts`)
 
-**Purpose:** Prevent cascading failures  
-**Max Lines:** 100  
+**Purpose:** Prevent cascading failures
+**Max Lines:** 100
 **Responsibilities:**
 
 - Track provider health
@@ -212,8 +234,8 @@ export class FallbackStrategy {
 
 ### 4. Retry Logic (`fallback/retry.ts`)
 
-**Purpose:** Smart retry with backoff  
-**Max Lines:** 80  
+**Purpose:** Smart retry with backoff
+**Max Lines:** 80
 **Responsibilities:**
 
 - Exponential backoff
@@ -223,8 +245,8 @@ export class FallbackStrategy {
 
 ### 5. OpenRouter Adapter (`adapters/openrouter-adapter.ts`)
 
-**Purpose:** Normalize OpenRouter responses  
-**Max Lines:** 80  
+**Purpose:** Normalize OpenRouter responses
+**Max Lines:** 80
 **Responsibilities:**
 
 - Convert OpenRouter format → Standard format
@@ -239,7 +261,9 @@ export class FallbackStrategy {
 ### Primary: OpenRouter FREE - DeepSeek Chat
 
 ```yaml
+
 - model_name: deepseek-chat
+
   litellm_params:
     model: openrouter/deepseek/deepseek-chat:free
     api_key: env/OPENROUTER_API_KEY
@@ -248,12 +272,15 @@ export class FallbackStrategy {
     max_tokens: 8000
     supports_streaming: true
     quality: high
-```
+
+```text
 
 ### Fallback 1: OpenRouter FREE - GLM-4.5 Air
 
 ```yaml
+
 - model_name: glm-4.5-air
+
   litellm_params:
     model: openrouter/01-ai/yi-lightning:free
     api_key: env/OPENROUTER_API_KEY
@@ -262,12 +289,15 @@ export class FallbackStrategy {
     max_tokens: 4096
     supports_streaming: true
     quality: medium-high
-```
+
+```text
 
 ### Fallback 2: OpenRouter FREE - Mistral 7B
 
 ```yaml
+
 - model_name: mistral-7b
+
   litellm_params:
     model: openrouter/mistralai/mistral-7b-instruct:free
     api_key: env/OPENROUTER_API_KEY
@@ -276,12 +306,15 @@ export class FallbackStrategy {
     max_tokens: 8000
     supports_streaming: true
     quality: medium
-```
+
+```text
 
 ### Fallback 3: OpenRouter FREE - Llama 3.2
 
 ```yaml
+
 - model_name: llama-3.2
+
   litellm_params:
     model: openrouter/meta-llama/llama-3.2-3b-instruct:free
     api_key: env/OPENROUTER_API_KEY
@@ -290,7 +323,8 @@ export class FallbackStrategy {
     max_tokens: 8000
     supports_streaming: true
     quality: medium
-```
+
+```text
 
 ---
 
@@ -354,7 +388,8 @@ interface Metrics {
   errorRate: number;
   errorsByType: Record<ErrorType, number>;
 }
-```
+
+```text
 
 ### Health Checks
 
@@ -375,23 +410,26 @@ interface Metrics {
 
 ### Development
 
-```
+```bash
 Friday AI Dev → LiteLLM Local (Docker) → Providers
-```
+
+```text
 
 ### Staging
 
-```
+```text
 Friday AI Staging → LiteLLM Staging (K8s) → Providers
-```
+
+```text
 
 ### Production
 
-```
+```text
 Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
   ├─ Pod 1 (Active)
   ├─ Pod 2 (Active)
   └─ Redis (Shared state)
+
 ```
 
 ---
@@ -468,36 +506,36 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 ### Phase 1: Setup (Week 1, Day 1-2)
 
 1. Install LiteLLM
-2. Configure providers
-3. Test locally
-4. Document setup
+1. Configure providers
+1. Test locally
+1. Document setup
 
 ### Phase 2: Integration (Week 1, Day 3)
 
 1. Create client wrapper
-2. Implement fallback
-3. Add monitoring
-4. Write tests
+1. Implement fallback
+1. Add monitoring
+1. Write tests
 
 ### Phase 3: Migration (Week 1, Day 4)
 
 1. Update Friday Docs AI calls
-2. Test with staging data
-3. Monitor metrics
-4. Fix issues
+1. Test with staging data
+1. Monitor metrics
+1. Fix issues
 
 ### Phase 4: Rollout (Week 1, Day 5)
 
 1. Deploy to staging
-2. 24h monitoring
-3. Production deployment
-4. Gradual rollout (10% → 100%)
+1. 24h monitoring
+1. Production deployment
+1. Gradual rollout (10% → 100%)
 
 ---
 
 ## ✅ Success Criteria
 
-### Phase 1 Complete When:
+### Phase 1 Complete When
 
 - [ ] LiteLLM running locally
 - [ ] All providers configured
@@ -508,7 +546,7 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 - [ ] Documentation complete
 - [ ] Team approved
 
-### Production Ready When:
+### Production Ready When
 
 - [ ] Staging stable for 24h
 - [ ] No critical bugs
@@ -523,13 +561,13 @@ Friday AI Prod → LiteLLM Prod (K8s + Redis) → Providers
 ## 📝 Next Steps
 
 1. **Review this architecture** with team
-2. **Create DECISIONS.md** (technical decisions)
-3. **Create MIGRATION_PLAN.md** (detailed migration)
-4. **Get approval** to proceed
-5. **Start Task 1.2** (Environment Setup)
+1. **Create DECISIONS.md** (technical decisions)
+1. **Create MIGRATION_PLAN.md** (detailed migration)
+1. **Get approval** to proceed
+1. **Start Task 1.2** (Environment Setup)
 
 ---
 
-**Status:** ✅ Architecture Designed  
-**Next:** Review & Approve  
+**Status:** ✅ Architecture Designed
+**Next:** Review & Approve
 **Estimated Time:** 30 min review

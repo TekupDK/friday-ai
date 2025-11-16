@@ -1,21 +1,21 @@
 # 📚 Friday Docs - Quick Reference
 
-**Officielt Navn:** Friday Docs  
-**Alternativt:** Friday Knowledge System  
+**Officielt Navn:** Friday Docs
+**Alternativt:** Friday Knowledge System
 **Version:** 1.0.0 ✅ Production Ready
 
 ---
 
-## 🎯 Hvad Skal Du Kalde Det?
+## 🎯 Hvad Skal Du Kalde Det
 
-### I Chat/Diskussioner:
+### I Chat/Diskussioner
 
 - **"Friday Docs"** (anbefalet)
 - **"Docs systemet"**
 - **"Friday Knowledge"**
 - **"Friday Docs AI"** (når du snakker om AI features)
 
-### I Kode:
+### I Kode
 
 ```typescript
 // Import paths bruger "docs"
@@ -24,9 +24,10 @@ import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
 
 // API endpoints bruger "docs"
 trpc.docs.generateLeadDoc.mutate({ leadId });
+
 ```
 
-### I URLs:
+### I URLs
 
 - Main: `/docs`
 - Analytics: `/docs` (Analytics tab)
@@ -48,7 +49,7 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 
 ---
 
-## 🚀 Hvad Kan Det?
+## 🚀 Hvad Kan Det
 
 ### Core (Friday Docs Core)
 
@@ -122,18 +123,18 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 Når du skal sælge/forklare Friday Docs:
 
 1. **"100% FREE AI"** - Ingen omkostninger
-2. **"29.5 min saved per doc"** - Massiv tidsbesparelse
-3. **"Production ready"** - Klar til brug nu
-4. **"Infinite ROI"** - $0 costs, massive savings
-5. **"43+ features"** - Komplet system
+1. **"29.5 min saved per doc"** - Massiv tidsbesparelse
+1. **"Production ready"** - Klar til brug nu
+1. **"Infinite ROI"** - $0 costs, massive savings
+1. **"43+ features"** - Komplet system
 
 ---
 
 ## 📁 Fil Referencer
 
-**Master Doc:** `FRIDAY_DOCS_SYSTEM.md`  
-**Quick Ref:** `FRIDAY_DOCS_QUICK_REF.md` (denne fil)  
-**Deployment:** `AI_DOCS_DEPLOYMENT_CHECKLIST.md`  
+**Master Doc:** `FRIDAY_DOCS_SYSTEM.md`
+**Quick Ref:** `FRIDAY_DOCS_QUICK_REF.md` (denne fil)
+**Deployment:** `AI_DOCS_DEPLOYMENT_CHECKLIST.md`
 **Usage:** `client/src/components/docs/AI_DOCS_USAGE.md`
 
 ---

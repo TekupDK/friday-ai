@@ -1,7 +1,7 @@
 # 📋 Next Session Plan - Complete Roadmap
 
-**Created:** 2025-11-08 18:55  
-**For:** Next development session  
+**Created:** 2025-11-08 18:55
+**For:** Next development session
 **Status:** Ready to execute
 
 ---
@@ -19,13 +19,13 @@
 ### **Key Achievements:**
 
 1. ✅ Complete workspace review & audit
-2. ✅ 74 TODOs catalogued
-3. ✅ Critical user ID fix
-4. ✅ Redis rate limiting
-5. ✅ Input validation
-6. ✅ useEffect fixes (2/79)
-7. ✅ AI test tools research
-8. ✅ Build verified working
+1. ✅ 74 TODOs catalogued
+1. ✅ Critical user ID fix
+1. ✅ Redis rate limiting
+1. ✅ Input validation
+1. ✅ useEffect fixes (2/79)
+1. ✅ AI test tools research
+1. ✅ Build verified working
 
 ---
 
@@ -38,6 +38,7 @@ git add .
 git commit -m "feat: comprehensive workspace review, critical fixes, and AI test tools research
 
 ## Documentation (16 files, 5,000+ lines)
+
 - Add AREA_1_CORE_APPLICATION.md (870 lines)
 - Add AREA_2_AI_SYSTEM.md (180 lines)
 - Add CLEANUP_ANALYSIS.md (500 lines)
@@ -56,6 +57,7 @@ git commit -m "feat: comprehensive workspace review, critical fixes, and AI test
 - Add NEXT_SESSION_PLAN.md (this file)
 
 ## Code Changes
+
 - Fix critical user ID hardcoding in inbound-email.ts
 - Add getUserIdFromEmailAccount() function
 - Add Redis-based rate limiting (rate-limiter-redis.ts)
@@ -65,10 +67,12 @@ git commit -m "feat: comprehensive workspace review, critical fixes, and AI test
 - Install @upstash/redis package
 
 ## Scripts
+
 - Add cleanup-phase1.ps1 (delete 19 files)
 - Add organize-test-files.ps1 (move 18 tests)
 
 ## Analysis
+
 - 74 TODOs identified and categorized
 - 16 @deprecated markers found
 - 1,448 console.logs catalogued
@@ -77,6 +81,7 @@ git commit -m "feat: comprehensive workspace review, critical fixes, and AI test
 - Week 1-4 roadmap defined
 
 ## AI Testing
+
 - Research 8 AI test tools
 - Recommend promptfoo as primary tool
 - Create implementation plan
@@ -87,7 +92,8 @@ Tests: ⏳ Pending
 Cleanup: ⏳ Pending user confirmation"
 
 git push
-```
+
+```text
 
 **Why Critical:**
 
@@ -116,7 +122,8 @@ git status
 git add .
 git commit -m "chore: workspace cleanup - remove 19 files, organize 18 tests"
 git push
-```
+
+```text
 
 **Result:**
 
@@ -131,25 +138,27 @@ git push
 
 **Only if you want to test rate limiting:**
 
-1. Go to https://upstash.com/
-2. Sign up (free tier)
-3. Create Redis database
-4. Copy credentials
+1. Go to <https://upstash.com/>
+1. Sign up (free tier)
+1. Create Redis database
+1. Copy credentials
 
-5. Add to `.env.dev`:
+1. Add to `.env.dev`:
 
 ```env
-UPSTASH_REDIS_REST_URL=https://your-url.upstash.io
+UPSTASH_REDIS_REST_URL=<https://your-url.upstash.io>
 UPSTASH_REDIS_REST_TOKEN=your-token
-```
 
-6. Test:
+```text
+
+1. Test:
 
 ```bash
 pnpm dev
 # Try sending 11 messages quickly
 # Should see rate limit error
-```
+
+```text
 
 **Note:** Not required - fallback to in-memory works!
 
@@ -170,16 +179,17 @@ pnpm promptfoo init
 
 # Create config
 # (See AI_TEST_TOOLS_EVALUATION.md for example)
-```
+
+```bash
 
 **Tasks:**
 
 1. [ ] Install promptfoo
-2. [ ] Create promptfooconfig.yaml
-3. [ ] Add 10 intent parsing tests
-4. [ ] Add 5 security tests
-5. [ ] Run first test suite
-6. [ ] Document results
+1. [ ] Create promptfooconfig.yaml
+1. [ ] Add 10 intent parsing tests
+1. [ ] Add 5 security tests
+1. [ ] Run first test suite
+1. [ ] Document results
 
 **Success:** 15 tests passing
 
@@ -192,16 +202,16 @@ pnpm promptfoo init
 **Priority files:**
 
 1. `client/src/components/inbox/EmailTabV2.tsx` (6 issues)
-2. `client/src/components/Map.tsx` (3 issues)
-3. `client/src/components/workspace/LeadAnalyzer.tsx` (2 issues)
+1. `client/src/components/Map.tsx` (3 issues)
+1. `client/src/components/workspace/LeadAnalyzer.tsx` (2 issues)
 
 **Process:**
 
 1. Read file
-2. Identify issue
-3. Apply fix from USEEFFECT_FIX_PLAN.md
-4. Test
-5. Commit
+1. Identify issue
+1. Apply fix from USEEFFECT_FIX_PLAN.md
+1. Test
+1. Commit
 
 **Success:** 12/79 useEffect issues fixed
 
@@ -218,11 +228,11 @@ pnpm promptfoo init
 **Tasks:**
 
 1. [ ] Create metrics table (if needed)
-2. [ ] Implement storeMetrics()
-3. [ ] Implement fetchMetrics()
-4. [ ] Calculate statistical significance
-5. [ ] Add tests
-6. [ ] Document usage
+1. [ ] Implement storeMetrics()
+1. [ ] Implement fetchMetrics()
+1. [ ] Calculate statistical significance
+1. [ ] Add tests
+1. [ ] Document usage
 
 **Success:** A/B test data being stored
 
@@ -239,11 +249,11 @@ pnpm promptfoo init
 **Tasks:**
 
 1. [ ] Implement checkMetrics()
-2. [ ] Add monitoring integration
-3. [ ] Add notification system
-4. [ ] Add logging
-5. [ ] Test rollback flow
-6. [ ] Document
+1. [ ] Add monitoring integration
+1. [ ] Add notification system
+1. [ ] Add logging
+1. [ ] Test rollback flow
+1. [ ] Document
 
 **Success:** Automatic rollback working
 
@@ -256,10 +266,10 @@ pnpm promptfoo init
 **Tasks:**
 
 1. [ ] Run full test suite
-2. [ ] Manual testing
-3. [ ] Update documentation
-4. [ ] Create Week 1 summary
-5. [ ] Plan Week 2
+1. [ ] Manual testing
+1. [ ] Update documentation
+1. [ ] Create Week 1 summary
+1. [ ] Plan Week 2
 
 **Success:** All Week 1 tasks complete
 
@@ -411,20 +421,20 @@ pnpm promptfoo init
 ### **Before Starting:**
 
 1. **NEXT_SESSION_PLAN.md** (this file) - Start here
-2. **FINAL_SESSION_SUMMARY.md** - What we did
-3. **DEPRECATED_CODE_AUDIT.md** - All technical debt
+1. **FINAL_SESSION_SUMMARY.md** - What we did
+1. **DEPRECATED_CODE_AUDIT.md** - All technical debt
 
 ### **During Work:**
 
-4. **USEEFFECT_FIX_PLAN.md** - How to fix useEffect
-5. **AI_TEST_TOOLS_EVALUATION.md** - AI testing guide
-6. **CRITICAL_FIXES_SETUP.md** - Redis & validation setup
+1. **USEEFFECT_FIX_PLAN.md** - How to fix useEffect
+1. **AI_TEST_TOOLS_EVALUATION.md** - AI testing guide
+1. **CRITICAL_FIXES_SETUP.md** - Redis & validation setup
 
 ### **For Reference:**
 
-7. **DEEP_DIVE_ANALYSIS.md** - Architecture insights
-8. **AREA_1_CORE_APPLICATION.md** - Client/server structure
-9. **AREA_2_AI_SYSTEM.md** - AI system details
+1. **DEEP_DIVE_ANALYSIS.md** - Architecture insights
+1. **AREA_1_CORE_APPLICATION.md** - Client/server structure
+1. **AREA_2_AI_SYSTEM.md** - AI system details
 
 ---
 
@@ -444,7 +454,8 @@ pnpm test
 
 # Type check
 pnpm check
-```
+
+```text
 
 ### **AI Testing:**
 
@@ -457,7 +468,8 @@ pnpm promptfoo view
 
 # CI mode
 pnpm promptfoo eval --ci
-```
+
+```text
 
 ### **Database:**
 
@@ -467,7 +479,8 @@ pnpm db:push:dev
 
 # Migrate
 pnpm db:migrate:dev
-```
+
+```text
 
 ---
 
@@ -476,23 +489,23 @@ pnpm db:migrate:dev
 ### **Critical:**
 
 1. ⚠️ 77 useEffect issues remaining (2/79 fixed)
-2. ⚠️ A/B testing metrics not stored
-3. ⚠️ No automatic rollback
-4. ⚠️ Workflow auto-actions incomplete
+1. ⚠️ A/B testing metrics not stored
+1. ⚠️ No automatic rollback
+1. ⚠️ Workflow auto-actions incomplete
 
 ### **Medium:**
 
 1. ⚠️ Mock data still in use
-2. ⚠️ No error tracking (Sentry)
-3. ⚠️ 1,448 console.logs
-4. ⚠️ 16 @deprecated markers
+1. ⚠️ No error tracking (Sentry)
+1. ⚠️ 1,448 console.logs
+1. ⚠️ 16 @deprecated markers
 
 ### **Low:**
 
 1. ⚠️ Large bundle size (536 KB)
-2. ⚠️ No code splitting
-3. ⚠️ Context overuse
-4. ⚠️ No caching
+1. ⚠️ No code splitting
+1. ⚠️ Context overuse
+1. ⚠️ No caching
 
 ---
 
@@ -501,10 +514,10 @@ pnpm db:migrate:dev
 ### **Start Fresh:**
 
 1. Review NEXT_SESSION_PLAN.md (this file)
-2. Review FINAL_SESSION_SUMMARY.md
-3. Commit any uncommitted work
-4. Run cleanup scripts
-5. Start with Day 1 tasks
+1. Review FINAL_SESSION_SUMMARY.md
+1. Commit any uncommitted work
+1. Run cleanup scripts
+1. Start with Day 1 tasks
 
 ### **Stay Focused:**
 
@@ -560,21 +573,23 @@ pnpm db:migrate:dev
    git add .
    git commit -m "..."
    git push
-   ```
 
-2. **Run cleanup** (5 min)
+```text
+
+1. **Run cleanup** (5 min)
 
    ```bash
    .\scripts\cleanup-phase1.ps1
    .\scripts\organize-test-files.ps1
+
    ```
 
-3. **Review docs** (10 min)
+1. **Review docs** (10 min)
    - Read FINAL_SESSION_SUMMARY.md
    - Read DEPRECATED_CODE_AUDIT.md
    - Review Week 1 plan
 
-4. **Start Day 1** (remaining time)
+1. **Start Day 1** (remaining time)
    - Install promptfoo
    - Create first tests
    - Get momentum!
@@ -583,22 +598,22 @@ pnpm db:migrate:dev
 
 ## 🎉 **YOU'RE READY!**
 
-**Everything is documented.**  
-**Everything is planned.**  
+**Everything is documented.**
+**Everything is planned.**
 **Everything is ready to go.**
 
 **Next session:**
 
 1. Commit
-2. Cleanup
-3. Start Week 1
+1. Cleanup
+1. Start Week 1
 
 **Let's build something amazing! 🚀**
 
 ---
 
-**Status:** Ready for next session  
-**Confidence:** 95%  
+**Status:** Ready for next session
+**Confidence:** 95%
 **Excitement:** 💯
 
 **See you next time!** 👋

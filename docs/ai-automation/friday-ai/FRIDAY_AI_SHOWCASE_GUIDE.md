@@ -8,11 +8,12 @@ Komponenterne er nu tilføjet til `/showcase` siden hvor du kan teste dem isoler
 
 ```bash
 pnpm dev
-```
+
+```text
 
 ### Åbn Showcase Siden
 
-Naviger til: **http://localhost:5173/showcase**
+Naviger til: **<http://localhost:5173/showcase**>
 
 Scroll ned til bunden af siden for at se de nye Friday AI komponenter.
 
@@ -32,8 +33,8 @@ Scroll ned til bunden af siden for at se de nye Friday AI komponenter.
 **Test steps:**
 
 1. Scroll til "🛠️ Friday AI: Tool Execution Modal" section
-2. Klik på **"👤 Simuler Lead Creation"** knappen
-3. Observér at modal åbner med:
+1. Klik på **"👤 Simuler Lead Creation"** knappen
+1. Observér at modal åbner med:
    - Progress bar der går fra 0% → 25% → 50% → 75% → 100%
    - Subtasks der skifter status: Pending → Running → Completed
    - Green checkmarks ved completed tasks
@@ -41,7 +42,7 @@ Scroll ned til bunden af siden for at se de nye Friday AI komponenter.
 
 **Forventet output:**
 
-```
+```text
 Modalen viser:
 ┌─────────────────────────────────┐
 │ 👤 Opretter lead          [X]   │
@@ -55,7 +56,8 @@ Modalen viser:
 │ ✓ Indsætter i database          │
 │ ⏳ Opretter lead entry          │
 └─────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -73,21 +75,22 @@ Modalen viser:
 **Test steps:**
 
 1. Scroll til "🎴 Friday AI: Response Cards" section
-2. Observér de 5 cards i grid layout
-3. Hover over cards for at se hover effect
-4. Check at alle cards viser:
+1. Observér de 5 cards i grid layout
+1. Hover over cards for at se hover effect
+1. Check at alle cards viser:
    - Icon med farvet background
    - Title og subtitle
    - Struktureret data (email, phone, dates, etc.)
 
 **Forventet output:**
 
-```
+```text
 Grid med 5 cards:
 [👤 Lead: Hans Jensen]  [✓ Task: Ring kunde]
 [📅 Meeting: Ons 10:00] [💰 Invoice: 5000 DKK]
 [📅 Calendar: I dag]
-```
+
+```text
 
 ---
 
@@ -103,17 +106,17 @@ Grid med 5 cards:
 **Test steps:**
 
 1. Scroll til "📜 Friday AI: Memory Panel" section
-2. Observér timeline med 4 items:
+1. Observér timeline med 4 items:
    - Lead (5 min siden)
    - Task (30 min siden)
    - Meeting (2 timer siden)
    - Invoice (I går)
-3. Klik på et item for at se toast notification
-4. Check at timestamps er relative (ikke absolute dates)
+1. Klik på et item for at se toast notification
+1. Check at timestamps er relative (ikke absolute dates)
 
 **Forventet output:**
 
-```
+```text
 AI Memory                       [4]
 ───────────────────────────────────
 I dag
@@ -129,6 +132,7 @@ I dag
 I går
   💰 Oprettet faktura:  1 dag siden
      Ole Olsen - 5000 kr
+
 ```
 
 ---
@@ -151,22 +155,22 @@ Alle tests passed hvis:
 
 ### Modal viser ikke
 
-**Problem:** `ToolExecutionModal` ikke fundet  
+**Problem:** `ToolExecutionModal` ikke fundet
 **Fix:** Check at import er korrekt i `ComponentShowcase.tsx`
 
 ### Cards viser ikke data
 
-**Problem:** `ResponseCard` type mismatch  
+**Problem:** `ResponseCard` type mismatch
 **Fix:** Check at `demoCards` data matcher `ResponseCardData` type
 
 ### Memory panel er tom
 
-**Problem:** `memoryItems` er ikke sat  
+**Problem:** `memoryItems` er ikke sat
 **Fix:** Check state initialization i `ComponentShowcase.tsx`
 
 ### Styling ser forkert ud
 
-**Problem:** Tailwind classes ikke loaded  
+**Problem:** Tailwind classes ikke loaded
 **Fix:** Restart dev server med `pnpm dev`
 
 ---
@@ -174,7 +178,7 @@ Alle tests passed hvis:
 ## 📊 Sammenligning med Figma Mockup
 
 Efter test, sammenlign med Figma design:
-https://trout-cling-66917018.figma.site/
+<https://trout-cling-66917018.figma.site/>
 
 **Skal matche:**
 
@@ -194,9 +198,9 @@ Når showcase tests er passed, følg integration guiden i:
 **Key integration steps:**
 
 1. Tilføj `toolExecutionRouter` til `appRouter`
-2. Update `intent-actions.ts` med tracking
-3. Integrer i `ShortWaveChatPanel.tsx`
-4. Test i real Friday AI chat
+1. Update `intent-actions.ts` med tracking
+1. Integrer i `ShortWaveChatPanel.tsx`
+1. Test i real Friday AI chat
 
 ---
 

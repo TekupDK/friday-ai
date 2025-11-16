@@ -28,7 +28,8 @@ Dokumentation af performance optimeringer implementeret for EmailTab i 3-panel l
 
 // Efter: Single scroll per tab
 <TabsContent className="... overflow-hidden">
-```
+
+```bash
 
 ### 2. Infinite Scroll med Prefetch
 
@@ -44,7 +45,8 @@ Dokumentation af performance optimeringer implementeret for EmailTab i 3-panel l
 
 // Performance logs
 console.log(`[EmailTab Performance] Scroll load completed: ${time}ms`);
-```
+
+```text
 
 ### 3. Smart Cache System
 
@@ -56,13 +58,14 @@ console.log(`[EmailTab Performance] Scroll load completed: ${time}ms`);
 
 ```tsx
 // Cache validering
-if (age > 2 * 60 * 1000) return undefined;
+if (age > 2 *60* 1000) return undefined;
 
 // Performance tracking
 console.log(
   `[EmailTab Performance] Initial render: ${renderTime}ms (cache hit: ${cacheHit})`
 );
-```
+
+```text
 
 ### 4. Search Coverage
 
@@ -74,7 +77,8 @@ console.log(
 ```tsx
 const isSearching = searchQuery && searchQuery.trim().length > 0;
 const pageSize = isSearching ? 100 : 25;
-```
+
+```text
 
 ### 5. Cross-Tab Navigation
 
@@ -92,7 +96,8 @@ useEffect(() => {
     emailContext.clearPendingThread();
   }
 }, [emailContext.state.pendingThreadToOpen]);
-```
+
+```text
 
 ## 📊 Performance Metrics
 
@@ -100,7 +105,7 @@ useEffect(() => {
 
 Følgende logs er tilgængelige for debugging:
 
-```
+```text
 [EmailTab Performance] Initial render: 45.23ms (cache hit: true)
 [EmailTab Performance] Data received: 234.56ms (25 threads)
 [EmailTab Performance] Cache persistence: 2.34ms (25 threads cached)
@@ -108,17 +113,19 @@ Følgende logs er tilgængelige for debugging:
 [EmailTab Performance] Prefetch completed: 189.45ms (25 threads)
 [EmailTab Performance] Starting scroll-triggered load
 [EmailTab Performance] Scroll load completed: 167.89ms (25 threads)
-```
+
+```text
 
 ### React Query Configuration
 
 ```tsx
 {
-  staleTime: 2 * 60 * 1000,    // 2 minutter
-  gcTime: 5 * 60 * 1000,       // 5 minutter
+  staleTime: 2 *60* 1000,    // 2 minutter
+  gcTime: 5 *60* 1000,       // 5 minutter
   initialData: initialEmailsFromCache,
   placeholderData: (prev) => prev || initialEmailsFromCache
 }
+
 ```
 
 ## 🧪 Validation Checklist
@@ -200,6 +207,6 @@ Følgende logs er tilgængelige for debugging:
 
 ---
 
-**Status**: ✅ Implementeret og testet i 3-panel layout  
-**Sidst opdateret**: 2025-11-06  
+**Status**: ✅ Implementeret og testet i 3-panel layout
+**Sidst opdateret**: 2025-11-06
 **Ansvarlig**: Cascade AI Assistant

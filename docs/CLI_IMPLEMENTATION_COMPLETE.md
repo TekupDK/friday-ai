@@ -1,6 +1,6 @@
 # CLI Implementation Complete ✅
 
-**Dato:** 8. November 2025, 20:45  
+**Dato:** 8. November 2025, 20:45
 **Status:** CLI Core Commands Implementeret
 
 ---
@@ -129,7 +129,7 @@
 
 ### Nye filer (11)
 
-```
+```text
 cli/tekup-docs/
 ├── src/
 │   ├── index.ts ✅ (opdateret)
@@ -149,7 +149,8 @@ cli/tekup-docs/
 ├── package.json ✅
 ├── tsconfig.json ✅ (ny)
 └── README.md ✅
-```
+
+```text
 
 ---
 
@@ -161,14 +162,16 @@ cli/tekup-docs/
 cd cli/tekup-docs
 pnpm install
 pnpm link
-```
+
+```text
 
 ### ENV Variabler
 
 ```bash
-export DOCS_API_URL=http://localhost:3000
+export DOCS_API_URL=<http://localhost:3000>
 export DOCS_API_KEY=optional-api-key
-```
+
+```text
 
 ### Eksempler
 
@@ -179,7 +182,8 @@ tekup-docs list
 tekup-docs list --category="API"
 tekup-docs list --tags="feature,new"
 tekup-docs list --search="authentication"
-```
+
+```text
 
 #### Create document
 
@@ -195,7 +199,8 @@ tekup-docs create "Guide" --file=./content.md
 
 # Med template
 tekup-docs create "REST API" --template=api
-```
+
+```text
 
 #### View document
 
@@ -203,14 +208,16 @@ tekup-docs create "REST API" --template=api
 tekup-docs view <doc-id>
 tekup-docs view <doc-id> --comments
 tekup-docs view <doc-id> --history
-```
+
+```text
 
 #### Search
 
 ```bash
 tekup-docs search "email sync"
 tekup-docs search "api" --category="API"
-```
+
+```text
 
 #### Edit
 
@@ -223,20 +230,23 @@ tekup-docs edit <doc-id> --file=./new-content.md
 
 # Quick update
 tekup-docs edit <doc-id> --title="New Title" --tags="updated,new"
-```
+
+```text
 
 #### Delete
 
 ```bash
 tekup-docs delete <doc-id>
 tekup-docs delete <doc-id> --force
-```
+
+```text
 
 #### Status
 
 ```bash
 tekup-docs status
-```
+
+```text
 
 #### Resolve conflict
 
@@ -245,7 +255,8 @@ tekup-docs resolve <conflict-id>
 tekup-docs resolve <conflict-id> --local
 tekup-docs resolve <conflict-id> --remote
 tekup-docs resolve <conflict-id> --manual
-```
+
+```text
 
 ---
 
@@ -253,7 +264,7 @@ tekup-docs resolve <conflict-id> --manual
 
 ### List Output
 
-```
+```text
 📚 Found 3 document(s):
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -262,15 +273,16 @@ tekup-docs resolve <conflict-id> --manual
    Path: docs/api-auth.md
    Category: API
    Tags: auth, api, security
-   Author: john@tekup.dk
+   Author: <john@tekup.dk>
    Updated: 11/8/2025, 8:30:00 PM
    Version: 3
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+
+```text
 
 ### View Output
 
-```
+```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📄 API Authentication Guide
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -278,7 +290,7 @@ ID: abc123
 Path: docs/api-auth.md
 Category: API
 Tags: auth, api, security
-Author: john@tekup.dk
+Author: <john@tekup.dk>
 Version: 3
 Updated: 11/8/2025, 8:30:00 PM
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -289,11 +301,12 @@ Updated: 11/8/2025, 8:30:00 PM
 ...
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
+
+```text
 
 ### Status Output
 
-```
+```text
 📊 Documentation System Status
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -302,7 +315,8 @@ Conflicts: 0
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✓ No conflicts detected.
-```
+
+```text
 
 ---
 
@@ -332,8 +346,8 @@ Conflicts: 0
 | Backend Services   | ✅     | 100%     |
 | API Layer          | ✅     | 100%     |
 | Server Integration | ✅     | 100%     |
-| **CLI Commands**   | ✅     | **100%** |
-| **CLI Utilities**  | ✅     | **100%** |
+| **CLI Commands**| ✅     |**100%** |
+| **CLI Utilities**| ✅     |**100%** |
 | Frontend Portal    | 🔴     | 0%       |
 | AI Integration     | 🔴     | 0%       |
 | Testing            | 🔴     | 0%       |
@@ -371,28 +385,32 @@ Conflicts: 0
 
 ## 📝 Næste Steps
 
-### For at teste CLI nu:
+### For at teste CLI nu
 
 1. **Install dependencies:**
 
    ```bash
    cd cli/tekup-docs
    pnpm install
-   ```
 
-2. **Link globally:**
+```text
+
+1. **Link globally:**
 
    ```bash
    pnpm link
-   ```
 
-3. **Test it:**
+```text
+
+1. **Test it:**
+
    ```bash
    tekup-docs --help
    tekup-docs list
-   ```
 
-### For at få fuld funktionalitet:
+```text
+
+### For at få fuld funktionalitet
 
 1. **Kør migrations:**
 
@@ -400,9 +418,10 @@ Conflicts: 0
    cd ../..
    pnpm db:generate
    pnpm db:migrate:dev
-   ```
 
-2. **Start server med docs service:**
+```text
+
+1. **Start server med docs service:**
 
    ```bash
    # Tilføj til .env.dev
@@ -410,13 +429,16 @@ Conflicts: 0
 
    # Start
    pnpm dev
-   ```
 
-3. **Test CLI mod server:**
+```text
+
+1. **Test CLI mod server:**
+
    ```bash
-   export DOCS_API_URL=http://localhost:3000
+   export DOCS_API_URL=<http://localhost:3000>
    tekup-docs list
    tekup-docs create "Test Doc"
+
    ```
 
 ---

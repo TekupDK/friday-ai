@@ -1,20 +1,21 @@
 # Shortwave Workflow Analysis & Implementation Plan
 
 **Dato:** 2. november 2025
-**Source:** User Analysis af info@rendetalje.dk workflow
+**Source:** User Analysis af <info@rendetalje.dk> workflow
 **Status:** Analysis Complete - Ready for Implementation
 
 ---
 
 ## 📊 Eksisterende Workflow Struktur
 
-### Label Pipeline (Fra Analysis):
+### Label Pipeline (Fra Analysis)
 
-```
+```text
 INBOX → Needs Action → Needs Reply → Venter på svar → I kalender → Finance → Afsluttet
-```
 
-### Label Kategorier:
+```text
+
+### Label Kategorier
 
 1. **Lead Sources (Kilde-tracking):**
    - `Leads` – generisk label
@@ -22,20 +23,20 @@ INBOX → Needs Action → Needs Reply → Venter på svar → I kalender → Fi
    - `Rengøring Århus` – Leadpoint.dk
    - `AdHelp` – AdHelp leads
 
-2. **Lead Status (Pipeline stages):**
+1. **Lead Status (Pipeline stages):**
    - `Needs Action` / `Needs Reply` – nye leads
    - `Venter på svar` – tilbud sendt
    - `I kalender` – booking bekræftet
    - `Finance` – faktura sendt
    - `Afsluttet` – opgave udført + betalt
 
-3. **Opgavetyper:**
+1. **Opgavetyper:**
    - `Fast Rengøring` – recurring
    - `Flytterengøring` – move-out
    - `Hovedrengøring` – deep cleans
    - `Engangsopgaver` – one-time
 
-4. **Special Labels:**
+1. **Special Labels:**
    - `IMPORTANT` – høj prioritet
    - `STARRED` – flagged
    - `Blocked` – problematiske kunder
@@ -43,44 +44,44 @@ INBOX → Needs Action → Needs Reply → Venter på svar → I kalender → Fi
 
 ---
 
-## 🔍 Gap Analysis: Hvad Mangler?
+## 🔍 Gap Analysis: Hvad Mangler
 
-### ❌ Mangler i Nuværende Implementation:
+### ❌ Mangler i Nuværende Implementation
 
 1. **Pipeline View**
    - ❌ Ingen visualisering af lead pipeline
    - ❌ Ingen quick actions til pipeline transitions
    - ❌ Ingen status badges per email
 
-2. **Smart Labeling**
+1. **Smart Labeling**
    - ❌ Ingen auto-detection af lead source
    - ❌ Ingen auto-labeling baseret på indhold
    - ❌ Ingen workflow automation
 
-3. **Label Management**
+1. **Label Management**
    - ⚠️ Labels kan tilføjes/fjernes, men ingen pipeline logic
    - ❌ Ingen bulk label updates
    - ❌ Ingen label templates/rules
 
-4. **Cross-System Integration**
+1. **Cross-System Integration**
    - ⚠️ Lead lookup virker, men mangler flow
    - ❌ Ingen auto-calendar creation fra "I kalender"
    - ❌ Ingen auto-invoice creation fra "Finance"
    - ❌ Ingen thread → lead → calendar → invoice tracking
 
-5. **Workflow Automation**
+1. **Workflow Automation**
    - ❌ Ingen auto-transitions (Needs Action → Venter på svar)
    - ❌ Ingen critical rules implementation
    - ❌ Ingen email source detection (Rengøring.nu vs. AdHelp)
 
-6. **Dashboard View**
+1. **Dashboard View**
    - ❌ Ingen pipeline status overview
    - ❌ Ingen metrics/statistics
    - ❌ Ingen quick filters per stage
 
 ---
 
-## ✅ Hvad Vi Allerede Har:
+## ✅ Hvad Vi Allerede Har
 
 1. **Basic Label Management:**
    - ✅ Add/Remove labels
@@ -88,12 +89,12 @@ INBOX → Needs Action → Needs Reply → Venter på svar → I kalender → Fi
    - ✅ Label filtering
    - ✅ Color coding
 
-2. **Email Actions:**
+1. **Email Actions:**
    - ✅ Reply, Forward, Archive, Delete
    - ✅ Star/Unstar
    - ✅ Mark as Read/Unread
 
-3. **Basic Integration:**
+1. **Basic Integration:**
    - ✅ Lead lookup (CustomerProfile)
    - ✅ Calendar events lookup
    - ✅ Invoice lookup (placeholder)
@@ -202,7 +203,7 @@ INBOX → Needs Action → Needs Reply → Venter på svar → I kalender → Fi
 
 ## 🏗️ Technical Implementation Plan
 
-### Database Schema Additions:
+### Database Schema Additions
 
 ```sql
 -- Pipeline State Tracking
@@ -246,9 +247,10 @@ CREATE TABLE email_label_rules (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-```
 
-### Backend API Additions:
+```text
+
+### Backend API Additions
 
 ```typescript
 // New tRPC endpoints
@@ -271,9 +273,10 @@ inbox.email: {
   handleRengoringNuLead: (threadId) => void
   handleAdHelpLead: (threadId) => void
 }
-```
 
-### Frontend Components:
+```text
+
+### Frontend Components
 
 ```typescript
 // New components
@@ -282,6 +285,7 @@ inbox.email: {
   PipelineStats.tsx - // Dashboard statistics
   SmartLabelSuggestions.tsx - // AI-powered label suggestions
   EmailSourceDetector.tsx; // Auto-detect lead source
+
 ```
 
 ---
@@ -321,10 +325,10 @@ inbox.email: {
 ## 💡 Key Insights fra Analysis
 
 1. **Pipeline er kritisk** - Det er ikke bare labels, det er en workflow
-2. **Source tracking er vigtigt** - Forskellige kilder kræver forskellige regler
-3. **Automation skal være smart** - Ikke bare auto-apply, men auto-transition
-4. **Cross-system linking** - Email → Lead → Calendar → Invoice skal være synkroniseret
-5. **Critical rules er ikke-negotiable** - Rengøring.nu og AdHelp har specifikke regler
+1. **Source tracking er vigtigt** - Forskellige kilder kræver forskellige regler
+1. **Automation skal være smart** - Ikke bare auto-apply, men auto-transition
+1. **Cross-system linking** - Email → Lead → Calendar → Invoice skal være synkroniseret
+1. **Critical rules er ikke-negotiable** - Rengøring.nu og AdHelp har specifikke regler
 
 ---
 
@@ -333,8 +337,8 @@ inbox.email: {
 **Start med Priority 1:**
 
 1. Implementer Pipeline Status View
-2. Implementer Smart Label Detection
-3. Implementer Pipeline Quick Actions
+1. Implementer Smart Label Detection
+1. Implementer Pipeline Quick Actions
 
 **Derefter Priority 2:** 4. Implementer Critical Rules 5. Implementer Auto-Calendar Integration 6. Implementer Auto-Invoice Integration
 
@@ -342,7 +346,7 @@ inbox.email: {
 
 ## 🚨 Critical Issue: Gmail Rate Limits
 
-### Problem:
+### Problem
 
 - **Gmail API Rate Limits:** 429 (RESOURCE_EXHAUSTED) fejl ved for mange API-kald
 - **Impact:** Rapporter, enrichment, og sync jobs fejler
@@ -354,7 +358,7 @@ inbox.email: {
 - **Benefits:** Zero rate limits, real-time delivery, fuld kontrol
 - **Status:** Analysis complete - Se `GMAIL_RATE_LIMIT_ALTERNATIVES.md`
 
-### Implementation Priority:
+### Implementation Priority
 
 **Priority 0 (Before Pipeline):** Setup SMTP infrastructure
 **Why:** Pipeline features kræver stabil email ingestion uden rate limits
@@ -365,4 +369,4 @@ inbox.email: {
 **Next:**
 
 1. **Priority 0:** Setup SMTP email server (inbound-email)
-2. **Priority 1:** Implementer Pipeline features
+1. **Priority 1:** Implementer Pipeline features

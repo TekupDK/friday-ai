@@ -1,6 +1,6 @@
 # Documentation System - Final Implementation Status
 
-**Dato:** 8. November 2025, 21:00  
+**Dato:** 8. November 2025, 21:00
 **Status:** ✅ 75% Complete - Ready for Testing
 
 ---
@@ -42,17 +42,17 @@
 
 ## 🎨 Frontend Design Beslutninger
 
-### Hvorfor Separat Side (Ikke 3-Panel)?
+### Hvorfor Separat Side (Ikke 3-Panel)
 
 **Valg:** Documentation er på `/docs` som separat full-screen side
 
 **Rationale:**
 
 1. **3-panel er til daglig workflow** (Email/AI/Workspace)
-2. **Docs er administration** - ikke daglig ops
-3. **Behøver fuld skærm** for markdown editing
-4. **Bedre fokus** uden distraktion
-5. **Nemt at finde** via user dropdown menu
+1. **Docs er administration** - ikke daglig ops
+1. **Behøver fuld skærm** for markdown editing
+1. **Bedre fokus** uden distraktion
+1. **Nemt at finde** via user dropdown menu
 
 **Navigation:**
 
@@ -103,16 +103,18 @@ pnpm db:migrate:dev
 
 # Verify tables created
 psql $DATABASE_URL -c "\dt friday_ai.*" | grep document
-```
+
+```text
 
 **Forventet output:**
 
-```
+```text
 friday_ai | documents         | table
 friday_ai | document_changes  | table
 friday_ai | document_comments | table
 friday_ai | document_conflicts| table
-```
+
+```text
 
 ### 2. Enable Docs Service
 
@@ -126,30 +128,33 @@ DOCS_GIT_BRANCH=main
 DOCS_AUTO_COMMIT=true
 DOCS_AUTO_PUSH=false
 DOCS_WS_PORT=3002
-```
+
+```text
 
 ### 3. Start Server
 
 ```bash
 pnpm dev
-```
+
+```text
 
 **Se efter i logs:**
 
-```
+```text
 ✅ [Docs] Service started
 ✅ [GitSync] Initialized
 ✅ [GitSync] File watcher started
 ✅ [WSHub] WebSocket server started
-```
+
+```text
 
 ### 4. Test Frontend
 
 1. Open `http://localhost:3000`
-2. Login
-3. Click user menu (top right)
-4. Click "Documentation"
-5. Should see docs page at `/docs`
+1. Login
+1. Click user menu (top right)
+1. Click "Documentation"
+1. Should see docs page at `/docs`
 
 ### 5. Test CLI
 
@@ -163,16 +168,17 @@ pnpm link
 tekup-docs --help
 tekup-docs status
 tekup-docs list
-```
+
+```text
 
 ### 6. Create First Document
 
 **Via Frontend:**
 
 1. Go to `/docs`
-2. Click "New Document"
-3. Fill in form
-4. Save
+1. Click "New Document"
+1. Fill in form
+1. Save
 
 **Via CLI:**
 
@@ -180,7 +186,8 @@ tekup-docs list
 tekup-docs create "My First Doc" \
   --category="Test" \
   --tags="test,example"
-```
+
+```bash
 
 ### 7. Verify Git Sync
 
@@ -194,7 +201,8 @@ sleep 2
 # Check Git
 git log -1 --oneline
 # Should show: "docs: update 1 file(s)"
-```
+
+```bash
 
 ---
 
@@ -289,7 +297,7 @@ git log -1 --oneline
 | AI Integration  | 0% 🔴    |
 | Testing         | 0% 🔴    |
 
-**Estimeret tid brugt:** ~10 timer  
+**Estimeret tid brugt:** ~10 timer
 **Estimeret tid tilbage:** ~8-10 timer for 100%
 
 ---
@@ -299,22 +307,22 @@ git log -1 --oneline
 ### Umiddelbart (Nu)
 
 1. ✅ Kør database migration
-2. ✅ Start server med `DOCS_ENABLE=true`
-3. ✅ Test Git sync ved at redigere en `.md` fil
-4. ✅ Test frontend på `/docs`
-5. ✅ Test CLI commands
+1. ✅ Start server med `DOCS_ENABLE=true`
+1. ✅ Test Git sync ved at redigere en `.md` fil
+1. ✅ Test frontend på `/docs`
+1. ✅ Test CLI commands
 
 ### Kort Sigt (Denne Uge)
 
 1. Add missing dependencies (`react-markdown`, `react-syntax-highlighter`, `date-fns`)
-2. Minor frontend polish
-3. AI integration (generate/improve/summarize)
+1. Minor frontend polish
+1. AI integration (generate/improve/summarize)
 
 ### Lang Sigt (Næste Uge)
 
 1. Testing suite
-2. Production deployment
-3. User documentation
+1. Production deployment
+1. User documentation
 
 ---
 
@@ -325,14 +333,16 @@ git log -1 --oneline
 ```bash
 # Already installed
 # simple-git, chokidar, ws
-```
+
+```text
 
 ### CLI
 
 ```bash
 cd cli/tekup-docs
 pnpm install
-```
+
+```text
 
 ### Frontend (Mangler)
 
@@ -340,6 +350,7 @@ pnpm install
 # Til root package.json
 pnpm add react-markdown react-syntax-highlighter date-fns
 pnpm add -D @types/react-syntax-highlighter
+
 ```
 
 ---
@@ -394,7 +405,7 @@ usion
 - Testing
 - Dependencies installation
 
-**Tid investeret:** ~10 timer  
+**Tid investeret:** ~10 timer
 **Resultat:** Komplet dokumentationssystem med CLI, API, og UI
 
 **Næste:** Test det! 🎉

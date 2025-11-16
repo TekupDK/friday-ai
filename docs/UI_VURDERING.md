@@ -26,7 +26,7 @@
 
 ### 📦 **KOMPONENTER:**
 
-```
+```bash
 client/src/components/chat/
 ├── ShortWaveChatPanel.tsx    ✅ Hovedkomponent (125 lines)
 ├── ChatInput.tsx             ✅ Input med tools (123 lines)
@@ -34,7 +34,8 @@ client/src/components/chat/
 
 client/src/config/
 └── ai-config.ts              ✅ Centraliseret config (51 lines)
-```
+
+```bash
 
 ---
 
@@ -65,13 +66,13 @@ client/src/config/
 
 ## 🐛 KENDTE ISSUES (Ikke-kritiske)
 
-### TypeScript Warnings:
+### TypeScript Warnings
 
 - ⚠️ Gamle `ChatPanel.tsx` har stadig type errors
 - **Impact:** Ingen - vi bruger den nye ShortWaveChatPanel
 - **Fix:** Kan ignoreres eller slettes
 
-### Missing Features:
+### Missing Features
 
 - ⚠️ Saved prompts (fra Shortwave billede 3)
 - ⚠️ Conversation history
@@ -96,54 +97,60 @@ client/src/config/
 
 ## 📈 ANBEFALET NÆSTE SKRIDT
 
-### Prioritet 1 (Kritisk):
+### Prioritet 1 (Kritisk)
 
 1. ✅ **Gemma model integration** - Tilslut til OpenRouter
-2. ✅ **Test send message** - Verificer AI response virker
-3. ✅ **Error handling** - Håndter API fejl elegant
+1. ✅ **Test send message** - Verificer AI response virker
+1. ✅ **Error handling** - Håndter API fejl elegant
 
-### Prioritet 2 (Vigtigt):
+### Prioritet 2 (Vigtigt)
 
 1. **Saved prompts feature** - Som vist i Shortwave billede 3
-2. **Conversation history** - Gem tidligere samtaler
-3. **Integration modals** - Settings for Gmail, Calendar, Billy
+1. **Conversation history** - Gem tidligere samtaler
+1. **Integration modals** - Settings for Gmail, Calendar, Billy
 
-### Prioritet 3 (Nice to have):
+### Prioritet 3 (Nice to have)
 
 1. **Voice recording** - Implementer voice input
-2. **Markdown support** - I AI responses
-3. **Copy/share buttons** - På beskeder
+1. **Markdown support** - I AI responses
+1. **Copy/share buttons** - På beskeder
 
 ---
 
 ## 🎨 DESIGN BESLUTNINGER
 
-### Farver & Styling:
+### Farver & Styling
 
 ```css
+
 - Background: bg-background (dynamisk fra theme)
 - Muted areas: bg-muted/50 (50% opacity)
 - Primary: bg-primary (bruger badges/buttons)
 - Foreground: text-foreground (dynamisk fra theme)
 - Borders: border-border/20 (20% opacity)
-```
 
-### Spacing:
+```text
+
+### Spacing
 
 ```css
+
 - Content max-width: 3xl (48rem/768px)
 - Padding: p-4 (1rem)
 - Gap between elements: gap-2 til gap-8
 - Rounded corners: rounded-xl (0.75rem)
-```
 
-### Typography:
+```text
+
+### Typography
 
 ```css
+
 - Header: text-2xl font-medium
 - Body: text-sm
 - Muted: text-xs text-muted-foreground
-```
+
+```text
 
 ---
 
@@ -188,9 +195,10 @@ export const AI_CONFIG = {
     { id: "billy", name: "Billy Accounting", enabled: true, toolCount: 12 },
   ],
 };
+
 ```
 
 ---
 
-**Status:** ✅ **KLAR TIL PRODUKTION** (med små justeringer)
+**Status:**✅**KLAR TIL PRODUKTION** (med små justeringer)
 **Næste:** Tilslut Gemma 3 27B Free via OpenRouter

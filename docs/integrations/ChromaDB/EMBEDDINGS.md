@@ -1,6 +1,6 @@
 # Embeddings Service Documentation
 
-**Status:** ✅ Implemented with OpenRouter  
+**Status:** ✅ Implemented with OpenRouter
 **Date:** November 9, 2025 15:00
 
 ---
@@ -15,18 +15,21 @@ The embeddings service generates vector representations of text for semantic sea
 
 ### Model Used
 
-```
+```text
 openai/text-embedding-3-small
+
 - Dimensions: 1536
 - Cost: Very low (~$0.00002 per 1K tokens)
 - Quality: Excellent for semantic search
-```
+
+```text
 
 ### API Endpoint
 
-```
-https://openrouter.ai/api/v1/embeddings
-```
+```text
+<https://openrouter.ai/api/v1/embeddings>
+
+```text
 
 ### Authentication
 
@@ -45,7 +48,8 @@ import { generateEmbedding } from "../integrations/chromadb";
 
 const embedding = await generateEmbedding("Hello World");
 console.log(embedding.length); // 1536
-```
+
+```text
 
 **Features:**
 
@@ -65,7 +69,8 @@ import { generateEmbeddings } from "../integrations/chromadb";
 const texts = ["Text 1", "Text 2", "Text 3"];
 const embeddings = await generateEmbeddings(texts);
 console.log(embeddings.length); // 3
-```
+
+```text
 
 **Features:**
 
@@ -87,7 +92,8 @@ const emb2 = await generateEmbedding("Hi World");
 
 const similarity = cosineSimilarity(emb1, emb2);
 console.log(similarity); // 0.95 (very similar)
-```
+
+```text
 
 **Returns:** Value between -1 (opposite) and 1 (identical)
 
@@ -108,7 +114,8 @@ Clear the embedding cache.
 import { clearEmbeddingCache } from "../integrations/chromadb";
 
 clearEmbeddingCache();
-```
+
+```text
 
 ---
 
@@ -121,7 +128,8 @@ import { getEmbeddingCacheStats } from "../integrations/chromadb";
 
 const stats = getEmbeddingCacheStats();
 console.log(stats); // { size: 42, maxSize: 1000 }
-```
+
+```text
 
 ---
 
@@ -131,11 +139,12 @@ console.log(stats); // { size: 42, maxSize: 1000 }
 
 ```bash
 tsx server/integrations/chromadb/test-embeddings.ts
-```
+
+```text
 
 ### Expected Output
 
-```
+```bash
 🧪 Testing OpenRouter Embeddings
 
 Test 1: Generate embedding for "Hello World"
@@ -150,7 +159,8 @@ Text 3: "Python programming language tutorial"
 Similarity 1-3: 0.2156 (should be LOW - different topic)
 
 ...
-```
+
+```text
 
 ---
 
@@ -178,7 +188,8 @@ async function isDuplicateLead(newLead, existingLeads) {
 
   return false;
 }
-```
+
+```text
 
 ### 2. Email Context Retrieval
 
@@ -194,7 +205,8 @@ async function getRelatedEmails(currentEmail) {
 
   return results?.documents || [];
 }
-```
+
+```text
 
 ### 3. Document Search (RAG)
 
@@ -206,7 +218,8 @@ async function findRelevantDocs(question) {
 
   return results?.documents.join("\n\n");
 }
-```
+
+```text
 
 ---
 
@@ -214,19 +227,20 @@ async function findRelevantDocs(question) {
 
 ### Benchmarks
 
-```
+```text
 Single embedding:    ~100-200ms (API call)
 Cached embedding:    ~1ms
 Batch (10 texts):    ~150-300ms
 Similarity calc:     <1ms
-```
+
+```text
 
 ### Optimization Tips
 
 1. **Use Batch API** when embedding multiple texts
-2. **Cache is automatic** - repeated texts are cached
-3. **Pre-generate embeddings** for existing data
-4. **Limit text length** to ~500 words for best performance
+1. **Cache is automatic** - repeated texts are cached
+1. **Pre-generate embeddings** for existing data
+1. **Limit text length** to ~500 words for best performance
 
 ---
 
@@ -248,7 +262,8 @@ Similarity calc:     <1ms
 
 ```bash
 OPENROUTER_API_KEY=sk-or-v1-...
-```
+
+```text
 
 ### Problem: API call fails
 
@@ -282,21 +297,23 @@ OPENROUTER_API_KEY=sk-or-v1-...
 
 ### OpenRouter Pricing
 
-```
+```text
 Model: openai/text-embedding-3-small
 Cost: $0.00002 per 1K tokens
 
 Example usage:
+
 - 1,000 leads @ 100 tokens each = 100K tokens = $2
 - 10,000 emails @ 200 tokens each = 2M tokens = $40
-```
+
+```text
 
 ### Cost Optimization
 
 1. **Cache frequently used embeddings**
-2. **Batch process when possible**
-3. **Limit text to essential content**
-4. **Consider local model for high volume** (see below)
+1. **Batch process when possible**
+1. **Limit text to essential content**
+1. **Consider local model for high volume** (see below)
 
 ---
 
@@ -319,6 +336,7 @@ const output = await extractor("Hello World", {
 });
 
 const embedding = Array.from(output.data); // 384 dimensions
+
 ```
 
 **Pros:**
@@ -338,12 +356,12 @@ const embedding = Array.from(output.data); // 384 dimensions
 ## 🚀 Next Steps
 
 1. ✅ Embeddings implemented
-2. 🔄 Integrate in lead deduplication
-3. 🔄 Integrate in email context
-4. 🔄 Test end-to-end
-5. 📊 Monitor performance & costs
+1. 🔄 Integrate in lead deduplication
+1. 🔄 Integrate in email context
+1. 🔄 Test end-to-end
+1. 📊 Monitor performance & costs
 
 ---
 
-**Last Updated:** November 9, 2025 15:00  
+**Last Updated:** November 9, 2025 15:00
 **Status:** Production Ready

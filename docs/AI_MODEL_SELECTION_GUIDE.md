@@ -1,11 +1,11 @@
 # AI Model Selection Guide - Friday AI
 
-**Last Updated:** Nov 8, 2025  
+**Last Updated:** Nov 8, 2025
 **Status:** ✅ Production Ready
 
 ## Executive Summary
 
-Friday AI now supports **6 new free OpenRouter models** with **100% accuracy ratings**, replacing the legacy Gemma 3 27B model. All models are completely free with no rate limits.
+Friday AI now supports **6 new free OpenRouter models**with**100% accuracy ratings**, replacing the legacy Gemma 3 27B model. All models are completely free with no rate limits.
 
 ### Recommended Default
 
@@ -27,7 +27,8 @@ Friday AI now supports **6 new free OpenRouter models** with **100% accuracy rat
 
 ```typescript
 modelId: "z-ai/glm-4.5-air:free";
-```
+
+```text
 
 - **Provider:** Z-AI
 - **Accuracy:** 100%
@@ -40,7 +41,8 @@ modelId: "z-ai/glm-4.5-air:free";
 
 ```typescript
 modelId: "openai/gpt-oss-20b:free";
-```
+
+```text
 
 - **Provider:** OpenAI
 - **Accuracy:** 100%
@@ -55,7 +57,8 @@ modelId: "openai/gpt-oss-20b:free";
 
 ```typescript
 modelId: "deepseek/deepseek-chat-v3.1:free";
-```
+
+```text
 
 - **Provider:** DeepSeek
 - **Context:** 32K tokens
@@ -69,7 +72,8 @@ modelId: "deepseek/deepseek-chat-v3.1:free";
 
 ```typescript
 modelId: "qwen/qwen3-coder:free";
-```
+
+```bash
 
 - **Provider:** Qwen
 - **Context:** 32K tokens
@@ -81,7 +85,8 @@ modelId: "qwen/qwen3-coder:free";
 
 ```typescript
 modelId: "minimax/minimax-m2:free";
-```
+
+```text
 
 - **Provider:** MiniMax
 - **Context:** 8K tokens
@@ -93,7 +98,8 @@ modelId: "minimax/minimax-m2:free";
 
 ```typescript
 modelId: "moonshotai/kimi-k2:free";
-```
+
+```text
 
 - **Provider:** Moonshot AI
 - **Context:** 200K tokens (!)
@@ -120,15 +126,17 @@ Friday AI automatically selects the optimal model based on task type:
 
 ### Fallback Chain
 
-```
+```text
 Primary Model → Fallback 1 → Fallback 2 → Fallback 3
-```
+
+```text
 
 Example for chat:
 
-```
+```text
 GLM-4.5 Air → GPT-OSS 20B → MiniMax M2 → Gemma 3 27B
-```
+
+```text
 
 ---
 
@@ -139,7 +147,7 @@ GLM-4.5 Air → GPT-OSS 20B → MiniMax M2 → Gemma 3 27B
 #### Development (`.env.dev`)
 
 ```bash
-# OpenRouter API Key (free at https://openrouter.ai/keys)
+# OpenRouter API Key (free at <https://openrouter.ai/key>s)
 OPENROUTER_API_KEY=sk-or-v1-your-api-key
 VITE_OPENROUTER_API_KEY=sk-or-v1-your-api-key
 
@@ -150,7 +158,8 @@ OPENROUTER_MODEL=z-ai/glm-4.5-air:free
 # OPENROUTER_MODEL=openai/gpt-oss-20b:free
 # OPENROUTER_MODEL=deepseek/deepseek-chat-v3.1:free
 # OPENROUTER_MODEL=qwen/qwen3-coder:free
-```
+
+```text
 
 #### Production (`.env.prod`)
 
@@ -158,7 +167,8 @@ OPENROUTER_MODEL=z-ai/glm-4.5-air:free
 OPENROUTER_API_KEY=sk-or-v1-your-production-key
 VITE_OPENROUTER_API_KEY=sk-or-v1-your-production-key
 OPENROUTER_MODEL=z-ai/glm-4.5-air:free
-```
+
+```text
 
 ### Programmatic Model Selection
 
@@ -180,7 +190,8 @@ const response = await invokeLLMWithRouting(
 const response = await invokeLLMWithRouting("chat", messages, {
   forceModel: "deepseek-chat-v3.1-free",
 });
-```
+
+```text
 
 #### Client-Side (React)
 
@@ -194,7 +205,8 @@ function ChatComponent() {
     const response = await sendMessage([{ role: "user", content: message }]);
   };
 }
-```
+
+```text
 
 ---
 
@@ -211,7 +223,8 @@ promptfoo eval -c ai-eval-config.yaml
 
 # View results
 promptfoo view
-```
+
+```bash
 
 **Configuration:** `ai-eval-config.yaml` (already configured)
 
@@ -226,7 +239,8 @@ export OPENROUTER_API_KEY=sk-or-v1-your-key
 
 # Run evaluation
 python tests/ai/deepeval-test.py
-```
+
+```text
 
 **Features:**
 
@@ -243,7 +257,8 @@ npm run test:ai
 
 // Test specific model
 npm run test:friday -- --model glm-4.5-air-free
-```
+
+```text
 
 ---
 
@@ -291,7 +306,8 @@ OPENROUTER_MODEL=google/gemma-3-27b-it:free
 
 // NEW (Recommended)
 OPENROUTER_MODEL=z-ai/glm-4.5-air:free
-```
+
+```text
 
 **Benefits:**
 
@@ -310,10 +326,10 @@ All existing code works without changes. The system uses the same OpenRouter API
 
 | Model          | Cost per 1M Tokens | Cost per Day (1000 requests) | Recommendation       |
 | -------------- | ------------------ | ---------------------------- | -------------------- |
-| GLM-4.5 Air    | **$0.00**          | **$0.00**                    | ✅ Use in production |
-| GPT-OSS 20B    | **$0.00**          | **$0.00**                    | ✅ Use in production |
-| DeepSeek v3.1  | **$0.00**          | **$0.00**                    | ✅ Use in production |
-| Qwen3 Coder    | **$0.00**          | **$0.00**                    | ✅ Use in production |
+| GLM-4.5 Air    | **$0.00**|**$0.00**                    | ✅ Use in production |
+| GPT-OSS 20B    | **$0.00**|**$0.00**                    | ✅ Use in production |
+| DeepSeek v3.1  | **$0.00**|**$0.00**                    | ✅ Use in production |
+| Qwen3 Coder    | **$0.00**|**$0.00**                    | ✅ Use in production |
 | GPT-4o Mini    | $0.15              | $150                         | ⚠️ Fallback only     |
 | Claude 3 Haiku | $0.25              | $250                         | ⚠️ Fallback only     |
 
@@ -330,7 +346,8 @@ All existing code works without changes. The system uses the same OpenRouter API
 await invokeLLMWithRouting("email-draft", messages);
 
 // Don't hardcode models unless necessary
-```
+
+```text
 
 ### 2. Implement Fallbacks
 
@@ -338,7 +355,8 @@ await invokeLLMWithRouting("email-draft", messages);
 // Fallbacks are automatic in model router
 const config = getModelConfig("chat");
 console.log(config.fallbacks); // ["gpt-oss-20b-free", "minimax-m2-free", ...]
-```
+
+```text
 
 ### 3. Monitor Performance
 
@@ -349,7 +367,8 @@ import { getModelStats } from "./server/model-router";
 const stats = getModelStats();
 console.log(stats.modelUsage);
 console.log(stats.errorRate);
-```
+
+```text
 
 ### 4. Test Before Deployment
 
@@ -362,7 +381,8 @@ npm run test:danish
 
 # Check response times
 npm run test:performance
-```
+
+```text
 
 ---
 
@@ -375,9 +395,10 @@ npm run test:performance
 echo $OPENROUTER_API_KEY
 
 # Test connectivity
-curl https://openrouter.ai/api/v1/auth/key \
+curl <https://openrouter.ai/api/v1/auth/key> \
   -H "Authorization: Bearer $OPENROUTER_API_KEY"
-```
+
+```text
 
 ### Model Not Available
 
@@ -385,7 +406,8 @@ curl https://openrouter.ai/api/v1/auth/key \
 // Check if model is in mapping
 import { MODEL_ID_MAPPING } from "./server/_core/model-mappings";
 console.log(MODEL_ID_MAPPING["glm-4.5-air-free"]);
-```
+
+```text
 
 ### Slow Responses
 
@@ -394,7 +416,8 @@ console.log(MODEL_ID_MAPPING["glm-4.5-air-free"]);
 await invokeLLMWithRouting("chat", messages, {
   forceModel: "minimax-m2-free", // Fastest
 });
-```
+
+```text
 
 ### Poor Quality Responses
 
@@ -403,6 +426,7 @@ await invokeLLMWithRouting("chat", messages, {
 await invokeLLMWithRouting("complex-reasoning", messages, {
   forceModel: "deepseek-chat-v3.1-free",
 });
+
 ```
 
 ---
@@ -452,8 +476,8 @@ await invokeLLMWithRouting("complex-reasoning", messages, {
 For issues or questions:
 
 1. Check this documentation
-2. Review `AI_MODEL_SELECTION_GUIDE.md`
-3. Run evaluation tests
-4. Contact development team
+1. Review `AI_MODEL_SELECTION_GUIDE.md`
+1. Run evaluation tests
+1. Contact development team
 
 **Status:** ✅ All systems operational with 100% free tier models

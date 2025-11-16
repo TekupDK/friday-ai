@@ -1,7 +1,7 @@
 # 📊 Session 2 Progress - 2025-11-08
 
-**Start Time:** 18:28  
-**Focus:** Quick Wins & Testing  
+**Start Time:** 18:28
+**Focus:** Quick Wins & Testing
 **Status:** In Progress
 
 ---
@@ -12,7 +12,8 @@
 
 ```bash
 pnpm add @upstash/redis
-```
+
+```text
 
 **Result:**
 
@@ -37,7 +38,8 @@ pnpm add @upstash/redis
 
 # Organize test files
 .\scripts\organize-test-files.ps1
-```
+
+```text
 
 **Expected Result:**
 
@@ -51,7 +53,8 @@ pnpm add @upstash/redis
 
 ```bash
 pnpm build
-```
+
+```text
 
 **What to check:**
 
@@ -65,7 +68,8 @@ pnpm build
 
 ```bash
 pnpm test
-```
+
+```text
 
 **What to check:**
 
@@ -79,14 +83,15 @@ pnpm test
 
 If you want to test Redis rate limiting:
 
-1. Go to https://upstash.com/
-2. Sign up (free tier)
-3. Create database
-4. Copy credentials to `.env.dev`:
+1. Go to <https://upstash.com/>
+1. Sign up (free tier)
+1. Create database
+1. Copy credentials to `.env.dev`:
 
 ```env
-UPSTASH_REDIS_REST_URL=https://your-url.upstash.io
+UPSTASH_REDIS_REST_URL=<https://your-url.upstash.io>
 UPSTASH_REDIS_REST_TOKEN=your-token
+
 ```
 
 **Note:** Not required immediately - fallback to in-memory works!
@@ -108,10 +113,10 @@ UPSTASH_REDIS_REST_TOKEN=your-token
 
 Hvad vil du gøre nu?
 
-**A)** 🧹 **Run Cleanup Scripts** - Quick win (10 min)  
-**B)** 🔨 **Test Build** - Verify everything works  
-**C)** 🧪 **Run Tests** - Check for regressions  
-**D)** 🔧 **Continue useEffect Fixes** - More code fixes  
-**E)** ⏸️ **Pause** - Review what we have
+**A)**🧹**Run Cleanup Scripts** - Quick win (10 min)
+**B)**🔨**Test Build** - Verify everything works
+**C)**🧪**Run Tests** - Check for regressions
+**D)**🔧**Continue useEffect Fixes** - More code fixes
+**E)**⏸️**Pause** - Review what we have
 
 Vælg A-E! 🎯

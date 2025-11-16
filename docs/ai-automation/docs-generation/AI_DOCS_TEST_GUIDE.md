@@ -6,14 +6,15 @@
 
 ```bash
 node scripts/test-ai-docs.mjs
-```
+
+```text
 
 Dette tester:
 
 1. ✅ Data collection (leads, emails, conversations)
-2. ✅ AI analysis (OpenRouter FREE model)
-3. ✅ Markdown generation
-4. ✅ Database insertion
+1. ✅ AI analysis (OpenRouter FREE model)
+1. ✅ Markdown generation
+1. ✅ Database insertion
 
 ### Option 2: Manual Test via tRPC
 
@@ -26,13 +27,14 @@ await fetch("/api/trpc/docs.generateLeadDoc", {
     leadId: 1, // Brug faktisk lead ID
   }),
 });
-```
+
+```text
 
 ---
 
 ## 📊 Forventet Output
 
-```
+```text
 🧪 Testing AI Documentation Generator
 
 ============================================================
@@ -60,11 +62,13 @@ await fetch("/api/trpc/docs.generateLeadDoc", {
   ✓ Risks identified: 1
 
   Topics discussed:
+
     - Invoice payment terms
     - Software integration
     - Timeline and budget
 
   Action items:
+
     - Schedule follow-up meeting
     - Send contract for review
     - Prepare technical demo
@@ -79,11 +83,13 @@ await fetch("/api/trpc/docs.generateLeadDoc", {
   ----------------------------------------------------------
   # 🤝 Lead: Acme Corp
 
-  > 🟠 **Priority:** HIGH | 😊 **Sentiment:** positive
+  > 🟠 **Priority:**HIGH | 😊**Sentiment:** positive
 
   ## 📋 Overview
+
   - **Contact:** John Doe
   - **Company:** Acme Corp
+
   ...
   ----------------------------------------------------------
   ... (130 more lines)
@@ -110,7 +116,8 @@ await fetch("/api/trpc/docs.generateLeadDoc", {
 
 🎉 AI Documentation Generator is working perfectly!
 ============================================================
-```
+
+```text
 
 ---
 
@@ -122,8 +129,9 @@ await fetch("/api/trpc/docs.generateLeadDoc", {
 
 ```sql
 INSERT INTO friday_ai.leads (name, email, company, status)
-VALUES ('Test Lead', 'test@example.com', 'Test Corp', 'active');
-```
+VALUES ('Test Lead', '<test@example.com>', 'Test Corp', 'active');
+
+```bash
 
 ### Error: "Database not available"
 
@@ -144,15 +152,15 @@ VALUES ('Test Lead', 'test@example.com', 'Test Corp', 'active');
 ### Hvis Test Passer ✅
 
 1. **Add UI buttons** - Gør det tilgængeligt i frontend
-2. **Test med flere leads** - Bulk generation
-3. **Review output quality** - Adjust prompts hvis nødvendigt
+1. **Test med flere leads** - Bulk generation
+1. **Review output quality** - Adjust prompts hvis nødvendigt
 
 ### Hvis Test Fejler ❌
 
 1. Check error message
-2. Verify database connection
-3. Verify OpenRouter API key
-4. Check logs for details
+1. Verify database connection
+1. Verify OpenRouter API key
+1. Check logs for details
 
 ---
 
@@ -178,14 +186,16 @@ node scripts/test-ai-docs.mjs
 
 # Lead uden emails (skal stadig virke)
 # Modify script to use specific lead ID
-```
+
+```text
 
 **Check generated doc:**
 
 ```bash
 # Efter test, åbn docs page
-# Navigate to: http://localhost:3000/docs?id=<docId>
-```
+# Navigate to: <http://localhost:3000/docs?id=><docId>
+
+```text
 
 **Check database:**
 
@@ -195,7 +205,8 @@ SELECT id, title, category, tags, author, created_at
 FROM friday_ai.documents
 WHERE author = 'ai-system'
 ORDER BY created_at DESC;
-```
+
+```text
 
 ---
 
@@ -212,7 +223,8 @@ pnpm dev
 node scripts/test-ai-docs.mjs
 
 # 4. Check output
-# Navigate to: http://localhost:3000/docs
+# Navigate to: <http://localhost:3000/docs>
+
 ```
 
 ---

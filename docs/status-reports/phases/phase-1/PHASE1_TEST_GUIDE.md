@@ -1,8 +1,8 @@
 # 🧪 PHASE 1 TEST GUIDE - Email Center Design Improvements
 
-**Dato:** November 9, 2025  
-**Status:** Testing Phase 1 forbedringer  
-**URL:** http://localhost:3002
+**Dato:** November 9, 2025
+**Status:** Testing Phase 1 forbedringer
+**URL:** <http://localhost:3002>
 
 ---
 
@@ -13,7 +13,7 @@
 **Test:**
 
 1. Åbn Email Center (Email tab)
-2. Se på email listen
+1. Se på email listen
 
 **Forventet resultat:**
 
@@ -25,19 +25,21 @@
 
 **Før (Information overload):**
 
-```
+```text
 [🔥 75] [●] Navn  12:45  [🟢 Rengøring.nu] [⏰ Urgent]
     Emne
     📍 Aarhus | 🎯 Type | 💰 2.000 kr | ✓ 85%
-```
+
+```text
 
 **Efter (Clean design):**
 
-```
+```text
 [●] Navn                           12:45  [🔥 75]
     Emne
     Snippet text...
-```
+
+```text
 
 **Test status:** [ ] PASSED / [ ] FAILED
 
@@ -52,8 +54,8 @@
 **Test:**
 
 1. Hover over en email i listen
-2. Se efter quick actions (🗑️📂⭐ icons)
-3. Klik på hver action
+1. Se efter quick actions (🗑️📂⭐ icons)
+1. Klik på hver action
 
 **Forventet resultat:**
 
@@ -78,8 +80,8 @@
 **Test:**
 
 1. Find density toggle (hvis tilgængelig)
-2. Skift til "Compact" view
-3. Se email list design
+1. Skift til "Compact" view
+1. Se email list design
 
 **Forventet resultat:**
 
@@ -102,7 +104,7 @@
 **Test:**
 
 1. Skift til "Comfortable" view (eller standard)
-2. Se email list design
+1. Se email list design
 
 **Forventet resultat:**
 
@@ -127,7 +129,7 @@
 **Test:**
 
 1. Find emails med forskellige lead scores
-2. Verificer badge display logic
+1. Verificer badge display logic
 
 **Forventet resultat:**
 
@@ -156,7 +158,7 @@
 **Test:**
 
 1. Find ulæste emails
-2. Verificer unread indicator
+1. Verificer unread indicator
 
 **Forventet resultat:**
 
@@ -177,7 +179,7 @@
 **Test:**
 
 1. Find emails med attachments
-2. Verificer paperclip icon
+1. Verificer paperclip icon
 
 **Forventet resultat:**
 
@@ -198,8 +200,8 @@
 **Test:**
 
 1. Hover over email
-2. Klik checkbox
-3. Multi-select flere emails
+1. Klik checkbox
+1. Multi-select flere emails
 
 **Forventet resultat:**
 
@@ -221,7 +223,7 @@
 **Test:**
 
 1. Klik på en email
-2. Verificer detail view åbner
+1. Verificer detail view åbner
 
 **Forventet resultat:**
 
@@ -243,8 +245,8 @@
 **Test:**
 
 1. Scroll hurtigt gennem email listen
-2. Test virtualized scrolling
-3. Check for lag eller jank
+1. Test virtualized scrolling
+1. Check for lag eller jank
 
 **Forventet resultat:**
 
@@ -266,7 +268,7 @@
 **Test:**
 
 1. Klik på forskellige splits (Hot Leads, Venter, etc.)
-2. Verificer filtering virker
+1. Verificer filtering virker
 
 **Forventet resultat:**
 
@@ -288,7 +290,7 @@
 **Test:**
 
 1. Resize browser vindue
-2. Test på forskellige skærmstørrelser
+1. Test på forskellige skærmstørrelser
 
 **Forventet resultat:**
 
@@ -307,9 +309,10 @@
 
 ## 🐛 BUG TRACKING
 
-### Critical Bugs (Must fix before Phase 2):
+### Critical Bugs (Must fix before Phase 2)
 
-```
+```text
+
 1. [BUG-ID] Description
    - Expected: ...
    - Actual: ...
@@ -317,38 +320,41 @@
    - Status: [ ] FIXED
 
 (Add more as found)
-```
 
-### Minor Issues (Can defer):
+```text
 
-```
+### Minor Issues (Can defer)
+
+```text
+
 1. [ISSUE-ID] Description
    - Impact: Low/Medium
    - Priority: Low
    - Notes: ...
 
 (Add more as found)
+
 ```
 
 ---
 
 ## 🎯 OVERALL PHASE 1 ASSESSMENT
 
-### Visual Improvements:
+### Visual Improvements
 
 - [ ] Badge clutter DRASTICALLY reduced
 - [ ] Clean Shortwave-style design achieved
 - [ ] Professional look & feel
 - [ ] Improved readability
 
-### Functional Improvements:
+### Functional Improvements
 
 - [ ] Quick Actions work smoothly
 - [ ] Hover interactions feel natural
 - [ ] Performance is good (no lag)
 - [ ] All core features still work
 
-### User Experience:
+### User Experience
 
 - [ ] Faster email scanning
 - [ ] Less visual noise
@@ -373,9 +379,9 @@
 
 ## 📝 TEST NOTES
 
-**Tester:** **********\_\_\_**********  
-**Dato:** **********\_\_\_**********  
-**Browser:** **********\_\_\_**********  
+**Tester:** **********\_\_\_**********
+**Dato:** **********\_\_\_**********
+**Browser:** **********\_\_\_**********
 **Screen Size:** **********\_\_\_**********
 
 **General feedback:**

@@ -1,16 +1,19 @@
 /\*\*
 
 - WORKSPACE INTERFACE - COMPLETE ARCHITECTURE OVERVIEW
+
 -
+
 - Denne fil dokumenterer hele workspace interface strukturen
 - fra top-level layout til individuelle komponenter
+
   \*/
 
 # 🎯 **WORKSPACE INTERFACE - COMPLETE ARCHITECTURE**
 
 ## 📁 **OVERORDNET MAPPE STRUKTUR**
 
-```
+```bash
 client/src/
 ├── App.tsx                    # Main app component
 ├── main.tsx                   # React entry point
@@ -68,7 +71,8 @@ client/src/
 │
 └── types/                  # 📝 TYPE DEFINITIONS
     └── enhanced-email.ts   # Email data types
-```
+
+```bash
 
 ---
 
@@ -81,43 +85,44 @@ client/src/
 function WorkspaceLayout() {
   return (
     <div className="h-full">
-      {/* HEADER */}
+      {/*HEADER*/}
       <header className="h-14 border-b">
         <Bot className="w-6 h-6" />
         <h1>Friday AI</h1>
         <Badge>Workspace</Badge>
       </header>
 
-      {/* 3-PANEL DESKTOP LAYOUT */}
+      {/*3-PANEL DESKTOP LAYOUT*/}
       <ResizablePanelGroup direction="horizontal">
-        {/* VENSTRE PANEL (20%): AI ASSISTANT */}
+        {/*VENSTRE PANEL (20%): AI ASSISTANT*/}
         <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
           <AIAssistantPanel />
         </ResizablePanel>
 
         <ResizableHandle />
 
-        {/* MIDTERSTE PANEL (60%): EMAIL CENTER */}
+        {/*MIDTERSTE PANEL (60%): EMAIL CENTER*/}
         <ResizablePanel defaultSize={60} minSize={40}>
           <EmailCenterPanel />
         </ResizablePanel>
 
         <ResizableHandle />
 
-        {/* HØJRE PANEL (20%): SMART WORKSPACE */}
+        {/*HØJRE PANEL (20%): SMART WORKSPACE*/}
         <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
           <SmartWorkspacePanel />
         </ResizablePanel>
       </ResizablePanelGroup>
 
-      {/* MOBILE LAYOUT */}
+      {/*MOBILE LAYOUT*/}
       <div className="md:hidden">
-        <AIAssistantPanel /> {/* Mobile: AI first */}
+        <AIAssistantPanel /> {/*Mobile: AI first*/}
       </div>
     </div>
   );
 }
-```
+
+```bash
 
 ### **📊 **PANEL KOMPONENTER:\*\*
 
@@ -128,14 +133,15 @@ function WorkspaceLayout() {
 export default function AIAssistantPanel() {
   return (
     <div className="h-full bg-background">
-      {/* AI CHAT INTERFACE */}
-      <ChatPanel />           {/* Main chat interface */}
-      <AIChatBox />           {/* Chat input */}
-      {/* AI tools og suggestions */}
+      {/*AI CHAT INTERFACE*/}
+      <ChatPanel />           {/*Main chat interface*/}
+      <AIChatBox />           {/*Chat input*/}
+      {/*AI tools og suggestions*/}
     </div>
   );
 }
-```
+
+```bash
 
 #### **📧 **MIDTERSTE PANEL: EmailCenterPanel.tsx\*\*
 
@@ -144,21 +150,22 @@ export default function AIAssistantPanel() {
 export default function EmailCenterPanel() {
   return (
     <div className="h-full bg-background">
-      {/* EMAIL CENTER HEADER */}
+      {/*EMAIL CENTER HEADER*/}
       <div className="px-4 py-3 border-b">
         <Mail className="w-5 h-5 text-primary" />
         <h2>Email Center</h2>
         <p>AI-powered email workspace</p>
       </div>
 
-      {/* EMAIL CONTENT */}
+      {/*EMAIL CONTENT*/}
       <Suspense fallback={<EmailSkeleton />}>
-        <EmailTabV2 />  {/* Main email interface */}
+        <EmailTabV2 />  {/*Main email interface*/}
       </Suspense>
     </div>
   );
 }
-```
+
+```bash
 
 #### **🎯 **HØJRE PANEL: SmartWorkspacePanel.tsx\*\*
 
@@ -167,15 +174,16 @@ export default function EmailCenterPanel() {
 export default function SmartWorkspacePanel() {
   return (
     <div className="h-full bg-background">
-      {/* CONTEXT-AWARE BUSINESS INTELLIGENCE */}
-      <BusinessDashboard />    {/* Metrics og KPIs */}
-      <LeadAnalyzer />         {/* Lead analysis */}
-      <CustomerProfile />      {/* Customer details */}
-      <SmartActionBar />       {/* Context actions */}
+      {/*CONTEXT-AWARE BUSINESS INTELLIGENCE*/}
+      <BusinessDashboard />    {/*Metrics og KPIs*/}
+      <LeadAnalyzer />         {/*Lead analysis*/}
+      <CustomerProfile />      {/*Customer details*/}
+      <SmartActionBar />       {/*Context actions*/}
     </div>
   );
 }
-```
+
+```text
 
 ---
 
@@ -196,7 +204,8 @@ EmailListV2.tsx               // Standard email list (fallback)
 EmailThreadView.tsx           // Email content viewer
     ↓
 EmailAssistant3Panel.tsx      // AI suggestions panel
-```
+
+```bash
 
 ### **📋 **EMAIL KOMPONENTER OVERSIGT:\*\*
 
@@ -243,7 +252,8 @@ interface EmailContextType {
   markAsRead: (threadId: string) => Promise<void>;
   // ... flere email operations
 }
-```
+
+```bash
 
 #### **🤖 **AIContext.tsx\*\*
 
@@ -258,7 +268,8 @@ interface AIContextType {
   executeAction: (action: AIAction) => Promise<void>;
   // ... AI state management
 }
-```
+
+```bash
 
 #### **⚙️ **WorkflowContext.tsx\*\*
 
@@ -273,7 +284,8 @@ interface WorkflowContextType {
   createLead: (data: LeadData) => Promise<void>;
   // ... workflow operations
 }
-```
+
+```text
 
 ### **🪝 **CUSTOM HOOKS:\*\*
 
@@ -286,7 +298,8 @@ useKeyboardShortcuts([
   { key: "2", ctrlKey: true, handler: () => focusPanel("email") },
   { key: "3", ctrlKey: true, handler: () => focusPanel("workflow") },
 ]);
-```
+
+```text
 
 #### **⏱️ **useRateLimit.ts\*\*
 
@@ -296,7 +309,8 @@ const { isRateLimited, timeUntilReset } = useRateLimit({
   maxRequests: 100,
   windowMs: 60000,
 });
-```
+
+```text
 
 #### **🔄 **useAdaptivePolling.ts\*\*
 
@@ -306,7 +320,8 @@ const { data, isLoading } = useAdaptivePolling({
   queryFn: fetchEmails,
   enabled: isActiveTab,
 });
-```
+
+```text
 
 ---
 
@@ -314,7 +329,7 @@ const { data, isLoading } = useAdaptivePolling({
 
 ### **📦 **UI PRIMITIVES (shadcn/ui):\*\*
 
-```
+```bash
 components/ui/
 ├── badge.tsx          # Status indicators
 ├── button.tsx         # All button variants
@@ -326,7 +341,8 @@ components/ui/
 ├── skeleton.tsx       # Loading states
 ├── resizable.tsx      # 🏗️ Panel resizing
 └── [45 flere]         # Complete UI library
-```
+
+```text
 
 ### **🔧 **PANEL RESIZING:\*\*
 
@@ -334,14 +350,15 @@ components/ui/
 // ResizablePanelGroup from shadcn/ui
 <ResizablePanelGroup direction="horizontal">
   <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
-    {/* Panel content */}
+    {/*Panel content*/}
   </ResizablePanel>
   <ResizableHandle withHandle />
   <ResizablePanel defaultSize={60} minSize={40}>
-    {/* Panel content */}
+    {/*Panel content*/}
   </ResizablePanel>
 </ResizablePanelGroup>
-```
+
+```text
 
 ---
 
@@ -359,7 +376,8 @@ export const trpc = createTRPCReact<AppRouter>();
 // Usage in components:
 const { data: emails } = trpc.email.list.useQuery();
 const analyzeEmail = trpc.automation.analyzeEmail.useMutation();
-```
+
+```text
 
 ### **🎯 **COMPONENT COMMUNICATION:\*\*
 
@@ -372,7 +390,8 @@ WorkspaceLayout → EmailCenterPanel → EmailTabV2 → EmailListAI
 
 // Event bubbling
 EmailListAI → EmailTabV2 → EmailCenterPanel → WorkspaceLayout
-```
+
+```text
 
 ---
 
@@ -392,7 +411,8 @@ const EmailCenterPanel = lazy(
 // Component lazy loading
 const EmailAISummary = lazy(() => import("./EmailAISummary"));
 const EmailAssistant3Panel = lazy(() => import("./EmailAssistant3Panel"));
-```
+
+```text
 
 ### **🔄 **VIRTUAL SCROLLING:\*\*
 
@@ -404,18 +424,20 @@ const virtualizer = useVirtualizer({
   estimateSize: () => 80, // Compact: 60px, Comfortable: 80px
   overscan: 5,
 });
-```
+
+```text
 
 ### **💾 **CACHING STRATEGIES:\*\*
 
 ```typescript
 // lib/cacheStrategy.ts
 export const emailCacheStrategy = {
-  staleTime: 5 * 60 * 1000, // 5 minutes
-  gcTime: 10 * 60 * 1000, // 10 minutes
+  staleTime: 5 *60* 1000, // 5 minutes
+  gcTime: 10 *60* 1000, // 10 minutes
   refetchOnWindowFocus: false,
 };
-```
+
+```text
 
 ---
 
@@ -423,7 +445,7 @@ export const emailCacheStrategy = {
 
 ### **🎯 **WORKSPACE INTERFACE LAYER CAKE:\*\*
 
-```
+```bash
 ┌─────────────────────────────────────────────────────────────┐
 │ 📱 WORKSPACE LAYOUT (WorkspaceLayout.tsx)                   │
 │ - 3-panel resizable layout                                  │
@@ -457,7 +479,8 @@ export const emailCacheStrategy = {
 │ ├── Form controls                                           │
 │ └── Visual primitives                                       │
 └─────────────────────────────────────────────────────────────┘
-```
+
+```text
 
 ### **🚀 **KEY ARCHITECTURAL DECISIONS:\*\*
 
@@ -490,6 +513,7 @@ export const emailCacheStrategy = {
 
 ```typescript
 ✅ IMPLEMENTATION COMPLETE:
+
 - 3-panel layout: 100% functional
 - EmailListAI: 100% implemented with AI features
 - Email Assistant: 100% integrated
@@ -498,11 +522,13 @@ export const emailCacheStrategy = {
 - Production ready: ✅
 
 🚀 BUSINESS VALUE:
+
 - 10x email identification speed
 - AI-powered lead prioritization
 - Source-aware workflow optimization
 - Professional email automation
 - Immediate ROI potential
+
 ```
 
 **Workspace interface er en complete, AI-powered 3-panel email system!** 🎯

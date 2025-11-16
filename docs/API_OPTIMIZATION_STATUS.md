@@ -103,16 +103,18 @@ window.__requestQueue.isRateLimited();
 
 // Check adaptive polling state
 // (View in React DevTools component state)
-```
+
+```text
 
 ### Console Logs
 
-```
+```text
 [Rate Limit] { retryAfter, message, queueSize }
 [AdaptivePolling] Error in poll callback
 [API Query Error]
 [API Mutation Error]
-```
+
+```text
 
 ## 📊 Expected Performance
 
@@ -138,12 +140,12 @@ window.__requestQueue.isRateLimited();
    - Kan konfliktere med email-tab development branch
    - Koordiner merge nødvendig
 
-2. **Request Queue Manual Usage**
+1. **Request Queue Manual Usage**
    - Kun automatisk ved rate limit errors
    - Manuel usage: `queueTRPCRequest(procedure, priority)`
    - Future: Automatic queue ved predictive detection
 
-3. **Activity Detection Edge Cases**
+1. **Activity Detection Edge Cases**
    - Baseret på DOM events
    - Kan miss system-level tab switches
    - Page Visibility API dækker browser tabs
@@ -163,21 +165,22 @@ window.__requestQueue.isRateLimited();
 ### Next Steps for Testing
 
 1. Kør test scenarier fra `API_OPTIMIZATION_TEST_REPORT.md`
-2. Dokumenter resultater
-3. Fine-tune baseret på metrics
-4. Fix eventuelle issues
+1. Dokumenter resultater
+1. Fine-tune baseret på metrics
+1. Fix eventuelle issues
 
 ## 📈 Success Metrics Tracking
 
 Tilføj metrics under testning:
 
-```
+```text
 API Calls (10min aktiv): _______
 API Calls (10min inaktiv): _______
 Cache Hit Rate: _______%
 Rate Limit Errors: _______
 Average Polling (aktiv): _______
 Average Polling (inaktiv): _______
+
 ```
 
 ## 🔄 Future Improvements

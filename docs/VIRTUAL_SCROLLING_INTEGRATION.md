@@ -17,11 +17,11 @@ Virtual scrolling er **fuldt kompatibel** med alle API optimeringer:
    - Virtual scrolling påvirker ikke polling intervals
    - Adaptive polling virker uændret
 
-2. **Cache Optimering** ✅
+1. **Cache Optimering** ✅
    - Virtual scrolling reducerer rendering overhead
    - Kombineret med cache = dobbelt performance boost
 
-3. **Rate Limit Handling** ✅
+1. **Rate Limit Handling** ✅
    - Virtual scrolling har ingen indflydelse på API calls
    - Rate limit håndtering virker som før
 
@@ -43,11 +43,12 @@ Virtual scrolling er **fuldt kompatibel** med alle API optimeringer:
 
 ### Kombineret Med API Optimeringer
 
-```
+```text
 API Optimeringer: 50-70% reduktion i API calls
 Virtual Scrolling: 80-90% reduktion i DOM nodes
 Kombineret: Signifikant forbedret overall performance
-```
+
+```text
 
 ## 🔧 Implementation Details
 
@@ -64,7 +65,8 @@ const virtualizer = useVirtualizer({
   },
   overscan: 5, // Render 5 extra items for smooth scrolling
 });
-```
+
+```bash
 
 ### Data Structure
 
@@ -88,12 +90,12 @@ const virtualizer = useVirtualizer({
    - Observer smooth scrolling
    - Check DOM node count (kun synlige)
 
-2. **Adaptive Polling Integration**
+1. **Adaptive Polling Integration**
    - Verificer at polling fortsætter normalt
    - Test page visibility pausing
    - Test activity-based adjustments
 
-3. **Cache Integration**
+1. **Cache Integration**
    - Verificer at cache virker med virtual scrolling
    - Test refetch behavior
    - Check at virtual list opdateres korrekt
@@ -104,11 +106,11 @@ const virtualizer = useVirtualizer({
    - Current: Fixed 100px per email
    - Future: Could use actual measurement for variabel højde
 
-2. **Section Headers**
+1. **Section Headers**
    - Fixed 40px højde
    - Works well for current design
 
-3. **Empty State**
+1. **Empty State**
    - Virtual scrolling deaktiveres ved tom liste
    - Fallback til normal rendering
 
@@ -125,12 +127,14 @@ const virtualizer = useVirtualizer({
 
 ### Kombineret Med API Optimeringer
 
-```
+```text
 Total Performance Gain:
+
 - API Calls: 50-70% reduktion
 - DOM Rendering: 70-80% reduktion
 - Memory: 50-70% reduktion
 - Overall: Signifikant forbedret UX
+
 ```
 
 ## ✅ Status

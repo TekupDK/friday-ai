@@ -20,9 +20,9 @@
 **Steps:**
 
 1. Opdater `drizzle.config.ts` til PostgreSQL
-2. Konverter MySQL schema til PostgreSQL kompatibelt
-3. Opret tabeller i Supabase
-4. Migrer eksisterende data (hvis nogen)
+1. Konverter MySQL schema til PostgreSQL kompatibelt
+1. Opret tabeller i Supabase
+1. Migrer eksisterende data (hvis nogen)
 
 ### Option 2: Keep MySQL but Use Supabase for Emails
 
@@ -40,7 +40,7 @@
 
 ## 📋 Recommended: Full Migration to Supabase
 
-### Why Supabase?
+### Why Supabase
 
 - ✅ Central Tekup database (alle projekter deler)
 - ✅ PostgreSQL (bedre til JSON/relational data)
@@ -62,7 +62,8 @@ export default defineConfig({
     url: process.env.DATABASE_URL, // PostgreSQL connection string
   },
 });
-```
+
+```text
 
 #### 2. Update Schema to PostgreSQL
 
@@ -86,13 +87,15 @@ export async function getDb() {
   }
   return _db;
 }
-```
+
+```text
 
 #### 4. Update Environment Variables
 
 ```bash
 # .env
-DATABASE_URL=postgresql://postgres:PASSWORD@db.oaevagdgrasfppbrxbey.supabase.co:5432/postgres?schema=friday_ai
+DATABASE_URL=postgresql://postgres:<PASSWORD@db.oaevagdgrasfppbrxbey.supabase.co>:5432/postgres?schema=friday_ai
+
 ```
 
 ## 🎯 Immediate Action
@@ -102,9 +105,9 @@ DATABASE_URL=postgresql://postgres:PASSWORD@db.oaevagdgrasfppbrxbey.supabase.co:
 If yes:
 
 1. I'll update schema to PostgreSQL
-2. Create migration script
-3. Update all database queries
-4. Test with Supabase connection
+1. Create migration script
+1. Update all database queries
+1. Test with Supabase connection
 
 **Current Status:**
 

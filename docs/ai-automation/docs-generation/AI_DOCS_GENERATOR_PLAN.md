@@ -1,6 +1,6 @@
 # 🤖 AI Documentation Generator - Implementation Plan
 
-**Dato:** 2024-11-08  
+**Dato:** 2024-11-08
 **Formål:** Auto-generér dokumentation baseret på leads, emails, samtaler og kalender
 
 ---
@@ -33,15 +33,21 @@
 ### Email Threads (5)
 
 - Thread 1: Re: Invoice discussion - 2024-11-05
+
   Summary: Discussed invoice terms...
+
 - Thread 2: Meeting follow-up - 2024-11-03
+
   Summary: Confirmed requirements...
 
 ### Meetings (3)
 
 - 2024-11-06: Initial consultation
+
   Notes: Discussed project scope...
+
 - 2024-11-04: Requirements gathering
+
   Notes: Customer needs...
 
 ### Chat Conversations (2)
@@ -73,7 +79,8 @@
 - High priority lead - active engagement
 - Consider upsell opportunities
 - Schedule regular check-ins
-```
+
+```text
 
 ### 2. Project Documentation
 
@@ -115,7 +122,8 @@ Status: [In Progress/Completed]
 ## Risk Analysis
 
 [AI detected potential issues]
-```
+
+```text
 
 ### 3. Weekly Digest
 
@@ -149,7 +157,8 @@ Status: [In Progress/Completed]
 - Increased interest in Feature X
 - 3 new leads from cold outreach
 - 2 deals close to closing
-```
+
+```text
 
 ---
 
@@ -192,7 +201,8 @@ async function collectLeadData(leadId: string): Promise<DataSources> {
 
   return { lead, emailThreads, calendarEvents, chatMessages };
 }
-```
+
+```text
 
 ### Phase 2: AI Analysis
 
@@ -231,6 +241,7 @@ Description: \${e.description}
 \`).join('\\n')}
 
 Provide:
+
 1. Executive summary (2-3 sentences)
 2. Key topics discussed
 3. Overall sentiment
@@ -250,7 +261,8 @@ Format as JSON.
 
   return JSON.parse(response.choices[0].message.content);
 }
-```
+
+```text
 
 ### Phase 3: Document Generation
 
@@ -269,6 +281,7 @@ async function generateLeadDoc(leadId: string): Promise<string> {
 # Lead: ${data.lead.company || data.lead.name}
 
 ## Overview
+
 - **Contact:** ${data.lead.name}
 - **Email:** ${data.lead.email}
 - **Phone:** ${data.lead.phone || 'N/A'}
@@ -321,7 +334,8 @@ ${analysis.risks.map(r => \`- ⚠️ ${r}\`).join('\\n')}
 
   return markdown;
 }
-```
+
+```text
 
 ### Phase 4: Auto-Create Doc
 
@@ -361,7 +375,8 @@ async function autoCreateLeadDoc(leadId: string) {
 
   return docId;
 }
-```
+
+```text
 
 ---
 
@@ -408,7 +423,8 @@ generateAllLeadDocs: protectedProcedure
 
     return { count: docIds.length, docIds };
   }),
-```
+
+```text
 
 ### Step 3: Frontend UI (30 min)
 
@@ -428,7 +444,8 @@ generateAllLeadDocs: protectedProcedure
   <Sparkles className="h-4 w-4 mr-2" />
   Generate Weekly Digest
 </Button>
-```
+
+```text
 
 ### Step 4: Automation (30 min)
 
@@ -462,6 +479,7 @@ cron.schedule("0 0 * * *", async () => {
 cron.schedule("0 20 * * 0", async () => {
   await generateWeeklyDigest();
 });
+
 ```
 
 ---
@@ -479,21 +497,21 @@ cron.schedule("0 20 * * 0", async () => {
 ### Benefits
 
 1. **Time saving:** 30 min manual work → 30 sec auto
-2. **Consistency:** All docs same format
-3. **Insights:** AI spots patterns humans miss
-4. **Up-to-date:** Auto-regenerate on new data
-5. **Searchable:** All context in one place
+1. **Consistency:** All docs same format
+1. **Insights:** AI spots patterns humans miss
+1. **Up-to-date:** Auto-regenerate on new data
+1. **Searchable:** All context in one place
 
 ---
 
 ## 🚀 Next Steps
 
 1. Implement data collector
-2. Integrate OpenAI API
-3. Create doc generator
-4. Add UI buttons
-5. Test with real lead data
-6. Set up automation
+1. Integrate OpenAI API
+1. Create doc generator
+1. Add UI buttons
+1. Test with real lead data
+1. Set up automation
 
 **ETA:** 3-4 timer total
 
@@ -502,8 +520,8 @@ cron.schedule("0 20 * * 0", async () => {
 ## 💡 Future Enhancements
 
 1. **Voice-to-doc:** Transcribe meetings → auto-doc
-2. **Slack integration:** Pull Slack threads
-3. **Smart updates:** Only regenerate changed sections
-4. **Multi-language:** Support dansk/english
-5. **Custom templates:** Per lead type
-6. **Export:** PDF med branding
+1. **Slack integration:** Pull Slack threads
+1. **Smart updates:** Only regenerate changed sections
+1. **Multi-language:** Support dansk/english
+1. **Custom templates:** Per lead type
+1. **Export:** PDF med branding

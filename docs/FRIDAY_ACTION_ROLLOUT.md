@@ -7,8 +7,8 @@
 ## Rul ud i trin
 
 1. Intern dogfood (10%)
-2. Udvid til 50% af brugere
-3. 100% når metrikker er grønne
+1. Udvid til 50% af brugere
+1. 100% når metrikker er grønne
 
 ## Canary & Policy
 

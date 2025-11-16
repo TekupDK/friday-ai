@@ -7,24 +7,24 @@
 
 ## 📋 Oversigt
 
-### ✅ Implementeret:
+### ✅ Implementeret
 
 1. **EmailConfirmationDialog** - Generisk confirmation dialog
-2. **EmailPreviewModal** - Quick preview af emails
-3. **Integration** - Begge modals integreret i EmailTab og EmailActions
+1. **EmailPreviewModal** - Quick preview af emails
+1. **Integration** - Begge modals integreret i EmailTab og EmailActions
 
 ---
 
 ## 🎨 EmailConfirmationDialog
 
-### Features:
+### Features
 
 - Generisk confirmation dialog
 - Destructive variant for delete actions
 - Loading states med spinner
 - Customizable title, description, og button labels
 
-### Props:
+### Props
 
 ```typescript
 interface EmailConfirmationDialogProps {
@@ -38,9 +38,10 @@ interface EmailConfirmationDialogProps {
   isLoading?: boolean;
   variant?: "default" | "destructive";
 }
-```
 
-### Eksempel Brug:
+```text
+
+### Eksempel Brug
 
 ```typescript
 <EmailConfirmationDialog
@@ -54,13 +55,14 @@ interface EmailConfirmationDialogProps {
   isLoading={deleteMutation.isPending}
   variant="destructive"
 />
-```
+
+```text
 
 ---
 
 ## 🎨 EmailPreviewModal
 
-### Features:
+### Features
 
 - Quick preview af email content
 - Viser latest message i thread
@@ -69,7 +71,7 @@ interface EmailConfirmationDialogProps {
 - Viser antal beskeder hvis multiple messages
 - Loading state mens email loader
 
-### Props:
+### Props
 
 ```typescript
 interface EmailPreviewModalProps {
@@ -80,9 +82,10 @@ interface EmailPreviewModalProps {
   onForward?: (forwardFrom: any) => void;
   onOpenFull?: () => void;
 }
-```
 
-### Eksempel Brug:
+```text
+
+### Eksempel Brug
 
 ```typescript
 <EmailPreviewModal
@@ -103,9 +106,10 @@ interface EmailPreviewModalProps {
     setSelectedThreadId(previewThreadId);
   }}
 />
+
 ```
 
-### Trigger:
+### Trigger
 
 - **Double-click** på email card i EmailTab liste
 - Åbner preview modal med email content
@@ -114,13 +118,13 @@ interface EmailPreviewModalProps {
 
 ## 🔌 Integration
 
-### EmailTab Integration:
+### EmailTab Integration
 
 - ✅ State for preview modal (`previewModalOpen`, `previewThreadId`)
 - ✅ Double-click handler på email cards
 - ✅ Preview modal component
 
-### EmailActions Integration:
+### EmailActions Integration
 
 - ✅ State for confirmation dialogs (`showDeleteConfirm`, `showArchiveConfirm`)
 - ✅ Delete og Archive buttons trigger confirmation dialogs
@@ -130,19 +134,19 @@ interface EmailPreviewModalProps {
 
 ## 🎯 Næste Modals at Implementere
 
-### Priority 2 (Foreslået):
+### Priority 2 (Foreslået)
 
 1. **Snooze Email Modal**
    - Date/time picker
    - Preset durations (1 time, 3 timer, i morgen, næste uge)
    - Custom date/time
 
-2. **Bulk Actions Modal**
+1. **Bulk Actions Modal**
    - Checkbox selection
    - Bulk operations (Archive, Delete, Label, Mark as Read/Unread)
    - Progress indicator
 
-3. **Label Management Modal**
+1. **Label Management Modal**
    - Liste af alle labels
    - Apply/Remove labels
    - Opret nyt label

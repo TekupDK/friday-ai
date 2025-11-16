@@ -1,6 +1,6 @@
 # 📧 Email Center - Analyse & Forbedringer Plan
 
-**Dato:** November 8, 2025  
+**Dato:** November 8, 2025
 **Status:** Analyzing & Planning
 
 ---
@@ -9,7 +9,7 @@
 
 ### Email Center Struktur
 
-```
+```text
 EmailCenterPanel (Middleware section - 60% width)
 ├── Email Header (Mall icon + title)
 ├── EmailTabV2 (Main component)
@@ -17,17 +17,19 @@ EmailCenterPanel (Middleware section - 60% width)
     ├── EmailBulkActionsV2 (Bulk operations)
     ├── EmailListV2 / EmailListAI (Email list with virtual scrolling)
     └── EmailThreadView (Selected email detail)
-```
+
+```text
 
 ### Email Intelligence Integration ✅
 
-```
+```text
 EmailThreadView now includes:
 ✅ CategoryBadge in header
 ✅ PriorityIndicator in header
 ✅ ResponseSuggestions panel
 ✅ AI-powered insights
-```
+
+```text
 
 ---
 
@@ -35,7 +37,7 @@ EmailThreadView now includes:
 
 ### 1. **Visual Email Intelligence i Listen** (HIGH PRIORITY)
 
-**Problem:** Category og Priority vises kun EFTER man åbner emailen  
+**Problem:** Category og Priority vises kun EFTER man åbner emailen
 **Løsning:** Vis badges direkte i email listen
 
 **Fordele:**
@@ -56,7 +58,7 @@ EmailThreadView now includes:
 
 ### 2. **Smart Kategorisering Filter** (HIGH PRIORITY)
 
-**Problem:** Ingen måde at filtrere emails baseret på AI categories  
+**Problem:** Ingen måde at filtrere emails baseret på AI categories
 **Løsning:** Add category filters til EmailSearchV2
 
 **Features:**
@@ -69,15 +71,16 @@ EmailThreadView now includes:
 
 **UI Design:**
 
-```
+```text
 [🗂️ Alle] [💼 Arbejde (23)] [👤 Personlig (5)] [💰 Økonomi (3)] [📧 Marketing (12)]
-```
+
+```text
 
 ---
 
 ### 3. **Priority-Based Sorting** (MEDIUM PRIORITY)
 
-**Problem:** Emails sorteres kun efter dato  
+**Problem:** Emails sorteres kun efter dato
 **Løsning:** Add intelligent sorting options
 
 **Sorting Options:**
@@ -98,7 +101,7 @@ EmailThreadView now includes:
 
 ### 4. **Bulk Intelligence Operations** (MEDIUM PRIORITY)
 
-**Problem:** Can't bulk categorize or prioritize  
+**Problem:** Can't bulk categorize or prioritize
 **Løsning:** Enhance EmailBulkActionsV2
 
 **New Bulk Actions:**
@@ -113,7 +116,7 @@ EmailThreadView now includes:
 
 ### 5. **Email Intelligence Dashboard** (LOW PRIORITY)
 
-**Problem:** No overview of email patterns  
+**Problem:** No overview of email patterns
 **Løsning:** Add analytics dashboard
 
 **Metrics to Show:**
@@ -130,7 +133,7 @@ EmailThreadView now includes:
 
 ### 6. **Smart Search Enhancement** (MEDIUM PRIORITY)
 
-**Problem:** Search doesn't use AI metadata  
+**Problem:** Search doesn't use AI metadata
 **Løsning:** AI-powered search
 
 **Search Enhancements:**
@@ -145,7 +148,7 @@ EmailThreadView now includes:
 
 ### 7. **Performance Optimizations** (HIGH PRIORITY)
 
-**Problem:** Large inboxes can be slow  
+**Problem:** Large inboxes can be slow
 **Løsning:** Multiple optimizations
 
 **Optimizations:**
@@ -161,7 +164,7 @@ EmailThreadView now includes:
 
 ### 8. **Quick Actions från Listen** (HIGH PRIORITY)
 
-**Problem:** Must open email for most actions  
+**Problem:** Must open email for most actions
 **Løsning:** Quick actions i list hover
 
 **Quick Actions:**
@@ -180,7 +183,7 @@ EmailThreadView now includes:
 
 ### 9. **Keyboard Shortcuts** (MEDIUM PRIORITY)
 
-**Problem:** Alt kræver mus  
+**Problem:** Alt kræver mus
 **Løsning:** Comprehensive keyboard shortcuts
 
 **Shortcuts:**
@@ -199,7 +202,7 @@ EmailThreadView now includes:
 
 ### 10. **Mobile Responsiveness** (LOW PRIORITY)
 
-**Problem:** Layout optimeret til desktop  
+**Problem:** Layout optimeret til desktop
 **Løsning:** Responsive design improvements
 
 **Mobile Enhancements:**
@@ -216,7 +219,7 @@ EmailThreadView now includes:
 
 ### Phase 1: Core Enhancements (2-3 hours)
 
-```
+```text
 Priority: HIGH
 Impact: IMMEDIATE
 
@@ -224,29 +227,32 @@ Impact: IMMEDIATE
 2. ✅ Smart Category Filters
 3. ✅ Priority-Based Sorting
 4. ✅ Quick Actions in List
-```
+
+```text
 
 ### Phase 2: Productivity Features (2-3 hours)
 
-```
+```text
 Priority: MEDIUM
 Impact: HIGH
 
 5. ⏸️ Bulk Intelligence Operations
 6. ⏸️ Smart Search Enhancement
 7. ⏸️ Keyboard Shortcuts
-```
+
+```text
 
 ### Phase 3: Analytics & Polish (1-2 hours)
 
-```
+```text
 Priority: LOW
 Impact: MEDIUM
 
 8. ⏸️ Email Intelligence Dashboard
 9. ⏸️ Performance Optimizations
 10. ⏸️ Mobile Responsiveness
-```
+
+```text
 
 ---
 
@@ -268,7 +274,8 @@ interface EmailListItemProps {
 const { data: intelligence } = trpc.emailIntelligence.getBatch.useQuery({
   threadIds: visibleEmails.map(e => e.id),
 });
-```
+
+```text
 
 ### 2. Enhanced EmailSearchV2
 
@@ -285,7 +292,8 @@ const { data: intelligence } = trpc.emailIntelligence.getBatch.useQuery({
     />
   ))}
 </div>
-```
+
+```text
 
 ### 3. Smart Sorting
 
@@ -301,7 +309,8 @@ const sortEmails = (emails: Email[], sort: SortOption) => {
     // ...
   }
 };
-```
+
+```text
 
 ---
 
@@ -309,24 +318,26 @@ const sortEmails = (emails: Email[], sort: SortOption) => {
 
 ### Email List Item Design
 
-```
+```text
 ┌────────────────────────────────────────────────────┐
 │ [☐] ⭐ John Doe              [💼 Work] [⚡ High]   │
 │     Meeting Tomorrow          12:34 PM             │
 │     Can we meet to discuss... [1 draft] [📎 2]     │
 │                                        [Actions →] │
 └────────────────────────────────────────────────────┘
-```
+
+```text
 
 ### Filter Bar Design
 
-```
+```text
 ┌──────────────────────────────────────────────────┐
 │ [🔍 Search...] [⚡ Urgent (3)] [▼ Sort: Priority]│
 │                                                   │
 │ [🗂️ Alle] [💼 Work (23)] [👤 Personal (5)]      │
 │ [💰 Finance (3)] [📧 Marketing (12)] [+ More]    │
 └──────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -397,5 +408,5 @@ const sortEmails = (emails: Email[], sort: SortOption) => {
 
 **Ready to implement Phase 1! 🚀**
 
-Estimated Time: 2-3 hours for core features  
+Estimated Time: 2-3 hours for core features
 Expected Impact: MASSIVE productivity boost

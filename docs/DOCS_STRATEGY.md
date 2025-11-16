@@ -1,6 +1,6 @@
 # 📚 Documentation Strategy - Ny Tilgang
 
-**Dato:** 2024-11-08  
+**Dato:** 2024-11-08
 **Status:** Proposal
 
 ---
@@ -20,10 +20,11 @@ En **levende dokumentation** der:
 
 ### ❌ Gamle Tilgang (Path-Based)
 
-```
+```text
 tasks/invoice-ui/PLAN.md → Category: "Tasks"
 .copilot/DEBUG.md → Category: "Development"
-```
+
+```text
 
 **Problemer:**
 
@@ -35,7 +36,8 @@ tasks/invoice-ui/PLAN.md → Category: "Tasks"
 
 #### 1️⃣ Primary Categories (Broad)
 
-```
+```text
+
 - 🏗️ Architecture & Design
 - 💼 Business Logic (Invoices, Leads, etc.)
 - 🎨 Frontend & UI
@@ -45,12 +47,14 @@ tasks/invoice-ui/PLAN.md → Category: "Tasks"
 - 🧪 Testing & QA
 - 🚀 DevOps & Deploy
 - 📖 Guides & Tutorials
-```
+
+```text
 
 #### 2️⃣ Secondary Tags (Specific)
 
-```
+```text
 Feature Tags:
+
 - #email-system
 - #invoice-integration
 - #calendar
@@ -58,12 +62,14 @@ Feature Tags:
 - #authentication
 
 Status Tags:
+
 - #active
 - #deprecated
 - #archived
 - #draft
 
 Type Tags:
+
 - #spec
 - #guide
 - #changelog
@@ -72,22 +78,26 @@ Type Tags:
 - #meeting-notes
 
 Priority Tags:
+
 - #critical
 - #important
 - #nice-to-have
-```
+
+```text
 
 #### 3️⃣ Smart Auto-Tags
 
 AI-genererede baseret på content:
 
-```
+```text
+
 - #contains-code
 - #has-screenshots
 - #needs-update
 - #frequently-accessed
 - #related-to-[other-doc]
-```
+
+```bash
 
 ---
 
@@ -98,18 +108,18 @@ AI-genererede baseret på content:
 **Gammel måde:**
 
 1. Lav `tasks/new-feature/PLAN.md`
-2. Skriv content
-3. Commit til git
-4. (Doc findes kun i git)
+1. Skriv content
+1. Commit til git
+1. (Doc findes kun i git)
 
 **Ny måde:**
 
 1. Klik "New Document" i `/docs` UI
-2. Vælg template (Plan, Guide, Bug, Feature Spec)
-3. System foreslår kategori + tags baseret på titel
-4. Skriv content med live markdown preview
-5. Auto-save til database
-6. Auto-commit til git (hvis enabled)
+1. Vælg template (Plan, Guide, Bug, Feature Spec)
+1. System foreslår kategori + tags baseret på titel
+1. Skriv content med live markdown preview
+1. Auto-save til database
+1. Auto-commit til git (hvis enabled)
 
 ### Scenario 2: AI/Tool Genererer Doc
 
@@ -130,7 +140,8 @@ await trpc.docs.create.mutate({
     confidence: 0.95,
   },
 });
-```
+
+```text
 
 ### Scenario 3: Import fra External Source
 
@@ -149,7 +160,8 @@ tekup-docs import --source notion --path ./export.zip
 
 # Eller UI upload
 # Drag & drop .md/.html files → Auto-convert & categorize
-```
+
+```text
 
 ---
 
@@ -166,7 +178,8 @@ const suggestedCategory = await analyzedContent({
 });
 
 // Forslag: "Denne doc ligner 'Email System' docs (87% match)"
-```
+
+```text
 
 ### 2. Deprecation Detection
 
@@ -179,7 +192,8 @@ const outdatedDocs = await findOutdatedDocs({
 });
 
 // Auto-add tag: #needs-review eller #deprecated
-```
+
+```text
 
 ### 3. Smart Linking
 
@@ -190,9 +204,11 @@ const outdatedDocs = await findOutdatedDocs({
 // AI foreslår:
 💡 Did you mean: [Email Thread Loading Performance](link)?
 💡 Related docs:
+
    - Email Functions Documentation
    - Email Tab Analysis
-```
+
+```text
 
 ### 4. Auto-Summary
 
@@ -204,7 +220,8 @@ const summary = await generateSummary(doc.content);
 📝 TL;DR: This document describes the email sync process...
 ⏱️ Est. read time: 5 min
 🔑 Key points: Auth, Error handling, Performance
-```
+
+```text
 
 ---
 
@@ -212,9 +229,10 @@ const summary = await generateSummary(doc.content);
 
 ### States
 
-```
+```text
 Draft → Active → Maintenance → Deprecated → Archived
-```
+
+```text
 
 ### Auto-Transitions
 
@@ -241,7 +259,8 @@ if (daysSinceDeprecated > 180 && notAccessed) {
   doc.status = "archived";
   moveToArchive(doc);
 }
-```
+
+```text
 
 ---
 
@@ -249,7 +268,7 @@ if (daysSinceDeprecated > 180 && notAccessed) {
 
 ### Option A: Flat Database (Anbefalet)
 
-```
+```bash
 Database:
   └── documents (alle docs)
        ├── Kategorier via tags
@@ -258,7 +277,8 @@ Database:
 
 Frontend:
   └── Dynamisk træ baseret på filters
-```
+
+```bash
 
 **Fordele:**
 
@@ -268,7 +288,7 @@ Frontend:
 
 ### Option B: Hybrid (Git + Database)
 
-```
+```bash
 Git repo:
   docs/
     ├── active/           ← Aktive docs (sync to DB)
@@ -280,7 +300,8 @@ Git repo:
 
 Database:
   └── Mirror of active/ + metadata
-```
+
+```bash
 
 **Fordele:**
 
@@ -294,17 +315,18 @@ Database:
 
 ### Current: List View
 
-```
+```text
 [Search box]
 [Filter by category dropdown]
 [Document 1]
 [Document 2]
 ...
-```
+
+```text
 
 ### Proposed: Multi-View
 
-```
+```text
 ┌─────────────────────────────────────┐
 │ 📚 Documentation                     │
 ├─────────────────────────────────────┤
@@ -324,11 +346,12 @@ Database:
 │ │ #active  │         [Edit] [Share] │
 │ └──────────┘         [Export] [AI]  │
 └─────────────────────────────────────┘
-```
+
+```text
 
 ### Tree View (Ny!)
 
-```
+```text
 📁 Email System (117)
 ├─ 📄 Email Functions Guide
 ├─ 📄 Email Sync Implementation
@@ -341,11 +364,12 @@ Database:
 📁 Invoices & Billy (156)
 ├─ 📄 Billy Integration
 └─ ...
-```
+
+```text
 
 ### Timeline View (Ny!)
 
-```
+```text
 Today
 ├─ 📄 New doc created
 └─ 📄 3 docs updated
@@ -357,26 +381,31 @@ This Week
 This Month
 ├─ 📝 23 new docs
 └─ ⚠️ 8 marked outdated
-```
+
+```text
 
 ### AI View (Ny!)
 
-```
+```text
 🤖 AI Insights
 
 📊 Most Important Docs (This Week)
+
   1. Email Sync - Accessed 45 times
   2. Invoice Flow - 12 updates
 
 ⚠️ Needs Attention
+
   - "Old Login Flow" - References deleted code
   - "V1 Migration" - Not accessed in 6 months
 
 💡 Suggested Reading
   Based on your recent work on email:
+
   - Email Thread Performance
   - Gmail API Limits
-```
+
+```text
 
 ---
 
@@ -406,7 +435,8 @@ POST /api/docs/summarize
 // 4. Related docs
 GET /api/docs/:id/related
 → [similar docs based on content]
-```
+
+```text
 
 ### Phase 3: UI Improvements (3-4 dage)
 
@@ -433,7 +463,8 @@ New feature merged → Suggest creating guide
 
 // 4. Fra errors/bugs
 Error logged → Link to troubleshooting doc
-```
+
+```text
 
 ### Phase 5: Advanced Features (2 uger)
 
@@ -449,11 +480,12 @@ Error logged → Link to troubleshooting doc
 
 ### 1. Doc Naming Convention
 
-```
+```text
 ❌ Bad:  PLAN.md, STATUS.md, notes.md
 ✅ Good: Email-Sync-Implementation-Plan.md
 ✅ Good: Invoice-UI-Refactor-Status.md
-```
+
+```text
 
 ### 2. Required Metadata
 
@@ -470,7 +502,8 @@ reviewers: []
 ---
 
 # Content here...
-```
+
+```text
 
 ### 3. Template Usage
 
@@ -503,7 +536,8 @@ Architecture diagram...
 
 - [Link to design doc]
 - [Link to API spec]
-```
+
+```text
 
 ### 4. Link Everything
 
@@ -515,7 +549,8 @@ Når du nævner noget:
 - API endpoint → Link til API reference
 
 Brug: [Email Functions](link) ikke bare "email"
-```
+
+```text
 
 ---
 
@@ -544,6 +579,7 @@ analytics.track({
   commentsPerDoc: avg,
   docsShared: count,
 });
+
 ```
 
 ### Monthly Review
@@ -560,18 +596,18 @@ analytics.track({
 ### Nøgle-Principper
 
 1. **Tag-first, not folder-first** - Flexibilitet
-2. **AI-assisted, not AI-driven** - Mennesket beslutter
-3. **Living documentation** - Ikke statisk
-4. **Integrated workflow** - Del af development process
-5. **Measurable quality** - Track metrics
+1. **AI-assisted, not AI-driven** - Mennesket beslutter
+1. **Living documentation** - Ikke statisk
+1. **Integrated workflow** - Del af development process
+1. **Measurable quality** - Track metrics
 
 ### Quick Wins (Næste Step)
 
 1. ✅ Tilføj doc templates i UI
-2. ✅ Implementer semantic search (AI)
-3. ✅ Auto-suggest tags ved oprettelse
-4. ✅ Tree view i UI
-5. ✅ Weekly digest email: "Docs that need attention"
+1. ✅ Implementer semantic search (AI)
+1. ✅ Auto-suggest tags ved oprettelse
+1. ✅ Tree view i UI
+1. ✅ Weekly digest email: "Docs that need attention"
 
 ### Long-term Vision
 

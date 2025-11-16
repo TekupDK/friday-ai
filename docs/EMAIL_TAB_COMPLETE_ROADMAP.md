@@ -10,7 +10,7 @@
 
 Dette dokument konsoliderer alle email tab features, issues, og implementation plans i én komplet roadmap.
 
-### Dokumenter:
+### Dokumenter
 
 - `SHORTWAVE_WORKFLOW_ANALYSIS.md` - Workflow analysis og pipeline features
 - `SHORTWAVE_PIPELINE_IMPLEMENTATION.md` - Pipeline implementation guide
@@ -27,7 +27,7 @@ Dette dokument konsoliderer alle email tab features, issues, og implementation p
 **Problem:** Gmail API rate limits (429 errors) blokerer alle email features
 **Solution:** Self-hosted SMTP server via `inbound-email`
 
-#### Tasks:
+#### Tasks
 
 - [ ] **Setup inbound-email SMTP server**
   - Clone `github.com/sendbetter/inbound-email`
@@ -171,7 +171,7 @@ Dette dokument konsoliderer alle email tab features, issues, og implementation p
 
 ## 🔧 Technical Stack
 
-### Backend:
+### Backend
 
 - **Email Ingestion:** `inbound-email` (SMTP → Webhook)
 - **Email Parsing:** `mailparser` (MIME parsing)
@@ -179,14 +179,14 @@ Dette dokument konsoliderer alle email tab features, issues, og implementation p
 - **Database:** Supabase (PostgreSQL)
 - **Email Actions:** Gmail API (kun sending/modifications, ikke reading)
 
-### Frontend:
+### Frontend
 
 - **Framework:** React + Next.js
 - **UI:** Tailwind CSS + Radix UI
 - **State:** React Query (tRPC)
 - **Components:** Custom email components
 
-### Integrations:
+### Integrations
 
 - **Billy:** Customer data, invoices
 - **Google Calendar:** Event creation, availability
@@ -196,7 +196,7 @@ Dette dokument konsoliderer alle email tab features, issues, og implementation p
 
 ## 📋 Database Schema
 
-### Email Tables:
+### Email Tables
 
 ```sql
 -- Emails (from SMTP webhook)
@@ -272,7 +272,8 @@ CREATE TABLE email_label_rules (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-```
+
+```text
 
 ---
 
@@ -282,19 +283,20 @@ CREATE TABLE email_label_rules (
 
 ```bash
 # Clone inbound-email
-git clone https://github.com/sendbetter/inbound-email.git
+git clone <https://github.com/sendbetter/inbound-email.git>
 cd inbound-email
 
 # Configure
 cp .env.example .env
-# Set: WEBHOOK_URL=https://friday-ai.tekup.dk/api/inbound/email
+# Set: WEBHOOK_URL=<https://friday-ai.tekup.dk/api/inbound/email>
 # Set: PORT=25
 # Set: STORAGE_TYPE=supabase
 
 # Docker build & run
 docker build -t inbound-email .
 docker run -d -p 25:25 inbound-email
-```
+
+```text
 
 ### 2. Create Webhook Endpoint
 
@@ -304,20 +306,22 @@ export async function POST(req: Request) {
   const email = await req.json();
   // Insert into Supabase, run enrichment, etc.
 }
-```
+
+```text
 
 ### 3. Implement Pipeline View
 
 ```typescript
 // client/src/components/inbox/EmailPipelineView.tsx
 // Column-based pipeline view med drag-and-drop
+
 ```
 
 ---
 
 ## 📊 Progress Tracking
 
-### Completed:
+### Completed
 
 - ✅ Basic email tab UI
 - ✅ Modals (Confirmation, Preview)
@@ -325,12 +329,12 @@ export async function POST(req: Request) {
 - ✅ Label management
 - ✅ Search functionality
 
-### In Progress:
+### In Progress
 
 - 🔄 Rate limit fix (SMTP alternative)
 - 🔄 Pipeline status view
 
-### Pending:
+### Pending
 
 - ⏳ Smart label detection
 - ⏳ Pipeline quick actions

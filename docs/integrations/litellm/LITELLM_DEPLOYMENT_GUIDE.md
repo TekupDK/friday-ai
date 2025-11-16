@@ -1,7 +1,7 @@
 # LiteLLM Deployment Guide 🚀
 
-**Version:** 1.0  
-**Date:** November 9, 2025  
+**Version:** 1.0
+**Date:** November 9, 2025
 **Status:** Production Ready (98%)
 
 ---
@@ -9,19 +9,19 @@
 ## 📋 Table of Contents
 
 1. [Overview](#overview)
-2. [Prerequisites](#prerequisites)
-3. [Local Development Setup](#local-development-setup)
-4. [Staging Deployment](#staging-deployment)
-5. [Production Rollout](#production-rollout)
-6. [Monitoring & Maintenance](#monitoring--maintenance)
-7. [Troubleshooting](#troubleshooting)
-8. [Rollback Procedures](#rollback-procedures)
+1. [Prerequisites](#prerequisites)
+1. [Local Development Setup](#local-development-setup)
+1. [Staging Deployment](#staging-deployment)
+1. [Production Rollout](#production-rollout)
+1. [Monitoring & Maintenance](#monitoring--maintenance)
+1. [Troubleshooting](#troubleshooting)
+1. [Rollback Procedures](#rollback-procedures)
 
 ---
 
 ## Overview
 
-### What is LiteLLM?
+### What is LiteLLM
 
 LiteLLM integration provides:
 
@@ -35,13 +35,14 @@ LiteLLM integration provides:
 
 ### Key Benefits
 
-```
+```text
 Cost:          $0.00/month (FREE models only)
 Success Rate:  99.9% (with automatic retry)
 Cache Savings: 40% fewer API calls
 Rate Limits:   Never hit (smart queuing)
 Fallback:      3 layers of reliability
-```
+
+```bash
 
 ---
 
@@ -79,8 +80,9 @@ docker compose -f server/integrations/litellm/docker/docker-compose.litellm.yml 
 docker ps | grep friday-litellm
 
 # Check health
-curl http://localhost:4000/health
-```
+curl <http://localhost:4000/health>
+
+```text
 
 **Expected Response:**
 
@@ -91,7 +93,8 @@ curl http://localhost:4000/health
   "healthy_count": 0,
   "unhealthy_count": 0
 }
-```
+
+```text
 
 ### Step 2: Configure Environment Variables
 
@@ -99,7 +102,7 @@ curl http://localhost:4000/health
 
 ```bash
 # LiteLLM Configuration
-LITELLM_BASE_URL=http://localhost:4000
+LITELLM_BASE_URL=<http://localhost:4000>
 LITELLM_MASTER_KEY=friday-litellm-dev-key-2025
 
 # Enable LiteLLM (feature flag)
@@ -111,7 +114,8 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 
 # OpenRouter API Key (FREE tier)
 OPENROUTER_API_KEY=your-openrouter-key-here
-```
+
+```text
 
 ### Step 3: Test Basic Functionality
 
@@ -127,7 +131,8 @@ node test-model-router-litellm.mjs
 
 # Test with real lead data
 node test-real-leads-sim.mjs
-```
+
+```text
 
 **Expected Results:**
 
@@ -143,7 +148,8 @@ node test-real-leads-sim.mjs
 pnpm vitest run server/integrations/litellm/__tests__
 
 # Expected: 38/38 tests passing (100%)
-```
+
+```text
 
 ### Step 5: Start Development Server
 
@@ -151,15 +157,16 @@ pnpm vitest run server/integrations/litellm/__tests__
 # Start Friday AI dev server
 pnpm dev
 
-# Server should start on http://localhost:5173
-```
+# Server should start on <http://localhost:5173>
+
+```bash
 
 **Verify Integration:**
 
-1. Open http://localhost:5173
-2. Navigate to Leads tab
-3. Request lead analysis (should use LiteLLM)
-4. Check console logs for `[LiteLLM]` messages
+1. Open <http://localhost:5173>
+1. Navigate to Leads tab
+1. Request lead analysis (should use LiteLLM)
+1. Check console logs for `[LiteLLM]` messages
 
 ---
 
@@ -185,8 +192,9 @@ nano .env.staging
 docker compose -f docker-compose.staging.yml up -d
 
 # Verify
-curl http://localhost:4000/health
-```
+curl <http://localhost:4000/health>
+
+```bash
 
 **Option B: Docker Swarm/Kubernetes**
 
@@ -207,24 +215,35 @@ spec:
         app: friday-litellm
     spec:
       containers:
+
         - name: litellm
+
           image: ghcr.io/berriai/litellm:main-latest
           ports:
+
             - containerPort: 4000
+
           env:
+
             - name: OPENROUTER_API_KEY
+
               valueFrom:
                 secretKeyRef:
                   name: litellm-secrets
                   key: openrouter-api-key
           volumeMounts:
+
             - name: config
+
               mountPath: /app/config
       volumes:
+
         - name: config
+
           configMap:
             name: litellm-config
-```
+
+```text
 
 #### 1.2 Configure Staging Environment
 
@@ -235,7 +254,7 @@ spec:
 NODE_ENV=staging
 
 # LiteLLM Configuration
-LITELLM_BASE_URL=http://friday-litellm:4000
+LITELLM_BASE_URL=<http://friday-litellm:4000>
 LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY_STAGING}
 ENABLE_LITELLM=true
 
@@ -244,7 +263,8 @@ LITELLM_ROLLOUT_PERCENTAGE=50
 
 # Database (Supabase staging)
 DATABASE_URL=${SUPABASE_STAGING_URL}
-```
+
+```text
 
 #### 1.3 Deploy Friday AI to Staging
 
@@ -256,8 +276,9 @@ pnpm build
 # (Your existing deployment process)
 
 # Verify deployment
-curl https://staging.friday-ai.com/api/health
-```
+curl <https://staging.friday-ai.com/api/health>
+
+```text
 
 ### Phase 2: Staging Validation (24-48 hours)
 
@@ -265,25 +286,26 @@ curl https://staging.friday-ai.com/api/health
 
 ```bash
 # Health check
-curl https://staging.friday-ai.com/api/litellm/health
+curl <https://staging.friday-ai.com/api/litellm/health>
 
 # Model test
-curl -X POST https://staging.friday-ai.com/api/litellm/test \
+curl -X POST <https://staging.friday-ai.com/api/litellm/test> \
   -H "Content-Type: application/json" \
   -d '{"message": "Test"}'
-```
+
+```text
 
 #### 2.2 Functional Tests
 
 **Test Cases:**
 
 1. Lead analysis with LiteLLM
-2. Email draft generation
-3. Task planning with tools
-4. Booking creation (tool calling)
-5. Priority queue handling
-6. Cache hit rate monitoring
-7. Rate limit resilience
+1. Email draft generation
+1. Task planning with tools
+1. Booking creation (tool calling)
+1. Priority queue handling
+1. Cache hit rate monitoring
+1. Rate limit resilience
 
 **Success Criteria:**
 
@@ -299,6 +321,7 @@ curl -X POST https://staging.friday-ai.com/api/litellm/test \
 
 ```typescript
 // LiteLLM Metrics
+
 - API calls per hour
 - Success rate (%)
 - Average response time (ms)
@@ -308,11 +331,13 @@ curl -X POST https://staging.friday-ai.com/api/litellm/test \
 - Concurrent requests (avg)
 
 // Business Metrics
+
 - Leads processed
 - Emails generated
 - Bookings created
 - User satisfaction
-```
+
+```text
 
 **Tools:**
 
@@ -325,11 +350,12 @@ curl -X POST https://staging.friday-ai.com/api/litellm/test \
 
 ```bash
 # Install k6 (load testing tool)
-# https://k6.io/docs/getting-started/installation/
+# <https://k6.io/docs/getting-started/installation/>
 
 # Run load test
 k6 run tests/load-test-litellm.js
-```
+
+```text
 
 **Load Test Script:**
 
@@ -352,7 +378,7 @@ export const options = {
 
 export default function () {
   const res = http.post(
-    "https://staging.friday-ai.com/api/ai/analyze-lead",
+    "<https://staging.friday-ai.com/api/ai/analyze-lead",>
     JSON.stringify({
       leadId: 123,
       taskType: "lead-analysis",
@@ -369,7 +395,8 @@ export default function () {
 
   sleep(1);
 }
-```
+
+```text
 
 **Expected Results:**
 
@@ -389,7 +416,8 @@ export default function () {
 ```bash
 # .env.production
 LITELLM_ROLLOUT_PERCENTAGE=10
-```
+
+```text
 
 **Monitoring Focus:**
 
@@ -409,7 +437,8 @@ LITELLM_ROLLOUT_PERCENTAGE=10
 
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=25
-```
+
+```text
 
 **Additional Checks:**
 
@@ -421,7 +450,8 @@ LITELLM_ROLLOUT_PERCENTAGE=25
 
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=50
-```
+
+```text
 
 **Full Week Monitoring:**
 
@@ -436,7 +466,8 @@ LITELLM_ROLLOUT_PERCENTAGE=50
 
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=75
-```
+
+```text
 
 **Validation:**
 
@@ -448,7 +479,8 @@ LITELLM_ROLLOUT_PERCENTAGE=75
 
 ```bash
 LITELLM_ROLLOUT_PERCENTAGE=100
-```
+
+```text
 
 **🎉 Production Complete!**
 
@@ -468,11 +500,12 @@ LITELLM_ROLLOUT_PERCENTAGE=100
 
 ```bash
 # Check LiteLLM health
-curl http://localhost:4000/health
+curl <http://localhost:4000/health>
 
 # Check rate limiter stats
 # (In your monitoring dashboard or logs)
-```
+
+```text
 
 ### Weekly Reviews
 
@@ -480,12 +513,12 @@ curl http://localhost:4000/health
    - Verify $0.00 cost
    - Check FREE tier limits
 
-2. **Performance Metrics**
+1. **Performance Metrics**
    - Success rate > 99%
    - Avg response time < 10s
    - Cache hit rate > 30%
 
-3. **Error Analysis**
+1. **Error Analysis**
    - Review error logs
    - Check rate limit incidents
    - Investigate failures
@@ -523,7 +556,8 @@ curl http://localhost:4000/health
 
 - [Goal 1]
 - [Goal 2]
-```
+
+```text
 
 ---
 
@@ -533,9 +567,10 @@ curl http://localhost:4000/health
 
 **Symptoms:**
 
-```
+```text
 Error: Container friday-litellm exited with code 1
-```
+
+```bash
 
 **Solutions:**
 
@@ -543,33 +578,38 @@ Error: Container friday-litellm exited with code 1
 
 ```bash
 docker info
-```
 
-2. Check logs:
+```text
+
+1. Check logs:
 
 ```bash
 docker logs friday-litellm
-```
 
-3. Verify config file:
+```text
+
+1. Verify config file:
 
 ```bash
 cat server/integrations/litellm/config/litellm.config.yaml
-```
 
-4. Restart container:
+```text
+
+1. Restart container:
 
 ```bash
 docker restart friday-litellm
-```
+
+```text
 
 ### Issue 2: Rate Limit Errors
 
 **Symptoms:**
 
-```
+```text
 Error: Rate limit exceeded: free-models-per-min
-```
+
+```text
 
 **Solutions:**
 
@@ -577,27 +617,31 @@ Error: Rate limit exceeded: free-models-per-min
 
 ```typescript
 console.log(rateLimiter.getStats());
-```
 
-2. Increase wait time (already configured to 12/min):
+```text
+
+1. Increase wait time (already configured to 12/min):
 
 ```typescript
 // Already optimal at 12/min
-```
 
-3. Wait 60 seconds for reset:
+```text
+
+1. Wait 60 seconds for reset:
 
 ```bash
 # Rate limits reset every minute
-```
+
+```text
 
 ### Issue 3: High Response Times
 
 **Symptoms:**
 
-```
+```text
 Lead analysis taking > 15 seconds
-```
+
+```text
 
 **Solutions:**
 
@@ -605,28 +649,32 @@ Lead analysis taking > 15 seconds
 
 ```typescript
 rateLimiter.getStats().queueLength;
-```
 
-2. Check cache hit rate:
+```text
+
+1. Check cache hit rate:
 
 ```typescript
 responseCache.getStats().totalHits;
-```
 
-3. Verify model selection:
+```text
+
+1. Verify model selection:
 
 ```bash
 # Check logs for model used
 grep "\[LiteLLM\]" logs/friday-ai.log
-```
+
+```text
 
 ### Issue 4: Cache Not Working
 
 **Symptoms:**
 
-```
+```text
 Cache hit rate = 0%
-```
+
+```text
 
 **Solutions:**
 
@@ -634,19 +682,22 @@ Cache hit rate = 0%
 
 ```typescript
 // Check in client.ts
-```
 
-2. Clear and restart:
+```text
+
+1. Clear and restart:
 
 ```typescript
 responseCache.clear();
-```
 
-3. Check TTL settings:
+```text
+
+1. Check TTL settings:
 
 ```typescript
 // Default: 5 minutes
-```
+
+```text
 
 ---
 
@@ -665,8 +716,9 @@ ENABLE_LITELLM=false
 pm2 restart friday-ai
 
 # Step 3: Verify fallback to legacy
-curl https://app.friday-ai.com/api/health
-```
+curl <https://app.friday-ai.com/api/health>
+
+```text
 
 **Recovery Time:** < 2 minutes
 
@@ -679,17 +731,18 @@ curl https://app.friday-ai.com/api/health
 LITELLM_ROLLOUT_PERCENTAGE=50  # or 25, or 10
 
 # Monitor affected vs unaffected users
-```
+
+```bash
 
 ### Full Rollback
 
 **If fundamental issues discovered:**
 
 1. Set `ENABLE_LITELLM=false`
-2. Stop Docker container: `docker stop friday-litellm`
-3. Remove from deployment config
-4. Document lessons learned
-5. Plan remediation
+1. Stop Docker container: `docker stop friday-litellm`
+1. Remove from deployment config
+1. Document lessons learned
+1. Plan remediation
 
 **Note:** Legacy path (direct API) always available as fallback!
 
@@ -733,35 +786,38 @@ LITELLM_ROLLOUT_PERCENTAGE=50  # or 25, or 10
 
 ### Week 1 Goals
 
-```
+```text
 Success Rate:     > 95%
 Response Time:    < 10s (p95)
 Cost:             = $0.00
 Cache Hit Rate:   > 20%
 Rate Limit Hits:  = 0
 User Complaints:  < 5
-```
+
+```text
 
 ### Month 1 Goals
 
-```
+```text
 Success Rate:     > 99%
 Response Time:    < 8s (p95)
 Cost:             = $0.00
 Cache Hit Rate:   > 30%
 Rate Limit Hits:  = 0
 API Call Savings: > 30%
-```
+
+```text
 
 ### Quarter 1 Goals
 
-```
+```text
 Success Rate:     > 99.5%
 Response Time:    < 5s (p95)
 Cost:             = $0.00
 Cache Hit Rate:   > 40%
 User Satisfaction: > 90%
-```
+
+```text
 
 ---
 
@@ -795,12 +851,13 @@ import { rateLimiter, responseCache } from "./integrations/litellm";
 
 console.log("Rate Limiter:", rateLimiter.getStats());
 console.log("Cache:", responseCache.getStats());
+
 ```
 
 ---
 
-**Last Updated:** November 9, 2025  
-**Version:** 1.0  
+**Last Updated:** November 9, 2025
+**Version:** 1.0
 **Status:** ✅ Production Ready (98%)
 
 **Next Step:** Deploy to staging and monitor for 24-48 hours before production rollout! 🚀

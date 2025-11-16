@@ -35,9 +35,10 @@
 
 **Når du åbner Friday skal det føles som:**
 
-```
+```text
 Du: "Tjek min kalender i dag"
 Friday: "Du har 3 aftaler i dag:
+
         - 10:00 Flytterengøring på Åboulevarden 52
         - 14:00 Kontorrengøring Tekup
         - 16:30 Opfølgning med Morten"
@@ -48,9 +49,11 @@ Friday: "Jeg tjekker først om vi har sendt til dem før...
 
 Du: "Vis ubetalte fakturaer"
 Friday: "Du har 4 ubetalte fakturaer til i alt 12.450 kr:
+
         - Faktura #1234: 3.500 kr (forfaldet for 5 dage siden)
         - ..."
-```
+
+```text
 
 **= Som at arbejde med Cascade, men for forretningsopgaver!**
 
@@ -60,9 +63,10 @@ Friday: "Du har 4 ubetalte fakturaer til i alt 12.450 kr:
 
 ### **Input Field:**
 
-```
+```text
 Placeholder: "Tjek kalender, send tilbud, opret faktura, søg emails..."
-```
+
+```text
 
 - **Shortwave style:** Clean, muted, rounded
 - **Friday tone:** Arbejdsfokuserede actions
@@ -70,14 +74,16 @@ Placeholder: "Tjek kalender, send tilbud, opret faktura, søg emails..."
 
 ### **Welcome Screen:**
 
-```
+```text
 Header: "Hvad kan jeg hjælpe med i dag?"
 Suggestions:
+
 - "Tjek min kalender i dag"
 - "Vis ubetalte fakturaer"
 - "Find nye leads"
 - "Hvad kan Friday?"
-```
+
+```text
 
 - **Shortwave style:** Centered, minimal, elegant
 - **Friday tone:** Konkrete business actions
@@ -85,10 +91,11 @@ Suggestions:
 
 ### **Model Info:**
 
-```
+```text
 Standard • Gemma 3 27B Free
 Gmail, Kalender, Billy (35 værktøjer)
-```
+
+```text
 
 - **Shortwave style:** Subtle, bottom info
 - **Friday specifikt:** Viser faktiske integrationer
@@ -149,28 +156,28 @@ Gmail, Kalender, Billy (35 værktøjer)
 ### **Hvad vi tog fra Shortwave:**
 
 1. ✅ Minimal, clean UI
-2. ✅ Smart input field layout
-3. ✅ Suggestion pills design
-4. ✅ Integration icon placement
-5. ✅ Model selector at bottom
-6. ✅ No visual clutter philosophy
+1. ✅ Smart input field layout
+1. ✅ Suggestion pills design
+1. ✅ Integration icon placement
+1. ✅ Model selector at bottom
+1. ✅ No visual clutter philosophy
 
 ### **Hvad vi ændrede til Friday:**
 
 1. ✅ 100% dansk tekst
-2. ✅ Arbejdsfokuserede suggestions
-3. ✅ Rendetalje-specifik funktionalitet
-4. ✅ Friday's professionelle tone
-5. ✅ Business-orienterede placeholders
-6. ✅ Gemma model i stedet for Claude
+1. ✅ Arbejdsfokuserede suggestions
+1. ✅ Rendetalje-specifik funktionalitet
+1. ✅ Friday's professionelle tone
+1. ✅ Business-orienterede placeholders
+1. ✅ Gemma model i stedet for Claude
 
 ### **Hvad vi tilføjede (Cascade-inspireret):**
 
 1. ✅ Chatbot arbejdspartner mentalitet
-2. ✅ Kontinuerlig samtale workflow
-3. ✅ Handlingsorienteret sprog
-4. ✅ Context-aware responses
-5. ✅ Multi-system integration viden
+1. ✅ Kontinuerlig samtale workflow
+1. ✅ Handlingsorienteret sprog
+1. ✅ Context-aware responses
+1. ✅ Multi-system integration viden
 
 ---
 
@@ -190,16 +197,17 @@ Gmail, Kalender, Billy (35 værktøjer)
 
 ### **Komponenter:**
 
-```
+```bash
 ✅ ShortWaveChatPanel.tsx   - Hovedkomponent (Fusion)
 ✅ ChatInput.tsx            - Input med dansk placeholder
 ✅ WelcomeScreen.tsx        - Dansk welcome + suggestions
 ✅ ai-config.ts             - Friday identity + Gemma config
-```
+
+```text
 
 ### **Features:**
 
-```
+```text
 ✅ Dansk UI (100%)
 ✅ Shortwave design
 ✅ Friday personlighed
@@ -207,6 +215,7 @@ Gmail, Kalender, Billy (35 værktøjer)
 ✅ Rendetalje integrationer
 ✅ Arbejdsfokuserede suggestions
 ✅ Professionel men varm tone
+
 ```
 
 ---

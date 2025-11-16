@@ -1,7 +1,7 @@
 # Phase 2 UX Analysis & Improvement Plan
 
-**Dato:** 9. November 2025  
-**Status:** ChatGPT Feedback Integration Analysis  
+**Dato:** 9. November 2025
+**Status:** ChatGPT Feedback Integration Analysis
 **Autor:** Cascade (med bruger feedback)
 
 ---
@@ -40,7 +40,8 @@ export function groupEmailsByThread(emails: EnhancedEmailMessage[]) {
     const threadId = senderEmail;
   });
 }
-```
+
+```text
 
 **IMPACT:** Reducerer "7 separate Rendstelsje.dk items" → "1 customer thread [7]"
 
@@ -57,7 +58,8 @@ const leadScoreConfig = maxLeadScore >= 70 ? getLeadScoreConfig(maxLeadScore) : 
     {leadScoreConfig.label}
   </Badge>
 )}
-```
+
+```text
 
 **IMPACT:** Reducerer badge clutter ved kun at vise vigtige leads
 
@@ -72,7 +74,8 @@ const leadScoreConfig = maxLeadScore >= 70 ? getLeadScoreConfig(maxLeadScore) : 
     onReply={handleReply}
   />
 </div>
-```
+
+```text
 
 **IMPACT:** Hover-activated actions, ikke altid synlige
 
@@ -86,7 +89,8 @@ const virtualizer = useVirtualizer({
   estimateSize: () => (density === "compact" ? 60 : 100),
   overscan: 5,
 });
-```
+
+```text
 
 **IMPACT:** Hurtig rendering af 1000+ emails
 
@@ -100,10 +104,11 @@ const virtualizer = useVirtualizer({
 
 **ChatGPT anbefaling:**
 
-```
+```text
 Sticky actionbar øverst når 1+ emails er valgt:
 Svar, Book, Opret opgave, Label, Arkiver
-```
+
+```text
 
 **VORES LØSNING:**
 
@@ -125,13 +130,13 @@ export function EmailStickyActionBar({
 }: EmailStickyActionBarProps) {
   return (
     <div className="sticky top-0 z-10 bg-primary text-primary-foreground px-4 py-2 flex items-center justify-between shadow-md">
-      {/* Left: Selection count */}
+      {/*Left: Selection count*/}
       <div className="flex items-center gap-2">
         <Checkbox checked={true} onCheckedChange={() => actions.onClose()} />
         <span className="font-medium">{selectedThreads.length} valgt</span>
       </div>
 
-      {/* Right: Actions */}
+      {/*Right: Actions*/}
       <div className="flex items-center gap-2">
         <Button size="sm" variant="secondary" onClick={actions.onReply}>
           <Reply className="w-4 h-4 mr-1" />
@@ -145,12 +150,13 @@ export function EmailStickyActionBar({
           <CheckSquare className="w-4 h-4 mr-1" />
           Opgave
         </Button>
-        {/* ... more actions */}
+        {/*... more actions*/}
       </div>
     </div>
   );
 }
-```
+
+```text
 
 #### 2. **VISUEL FORENKLING: Badges** ⚠️ (Delvist gjort)
 
@@ -158,11 +164,13 @@ export function EmailStickyActionBar({
 
 **ChatGPT anbefaling:**
 
-```
+```text
 Reducer badges til to farver:
+
 - Status (grøn)
 - Risiko (gul/rød)
-```
+
+```text
 
 **VORES NUVÆRENDE:**
 
@@ -173,7 +181,8 @@ if (score >= 60)
   return { color: "bg-green-100", icon: TrendingUp, label: "High" }; // GRØN
 if (score >= 40) return { color: "bg-blue-100", icon: Target, label: "Medium" }; // BLÅ
 return { color: "bg-gray-100", icon: Circle, label: "Low" }; // GRÅ
-```
+
+```text
 
 **FORESLÅET FORBEDRING:**
 
@@ -194,7 +203,8 @@ const getLeadScoreConfig = (score: number) => {
   // ✅ STATUS (Grøn) - kun hvis behov
   return null; // Vis INGEN badge for low/medium leads
 };
-```
+
+```text
 
 #### 3. **LINE-HEIGHT & LÆSBARHED** ⚠️
 
@@ -202,27 +212,29 @@ const getLeadScoreConfig = (score: number) => {
 
 **ChatGPT anbefaling:**
 
-```
+```text
 Øg line-height i email-rækker til ~1.4
 Gør afsender semibold, emne normal, metadata mutet
-```
+
+```text
 
 **VORES NUVÆRENDE:**
 
 ```tsx
 // EmailThreadGroup.tsx
 <div className="flex-1 min-w-0">
-  {/* Sender */}
+  {/*Sender*/}
   <div className="font-medium text-sm truncate">
     {getDisplayName(latestMessage.from)}
   </div>
 
-  {/* Subject */}
+  {/*Subject*/}
   <div className="text-sm text-muted-foreground truncate">
     {latestMessage.subject}
   </div>
 </div>
-```
+
+```text
 
 **FORESLÅET FORBEDRING:**
 
@@ -230,27 +242,28 @@ Gør afsender semibold, emne normal, metadata mutet
 // Better spacing og hierarchy
 <div className="flex-1 min-w-0 space-y-1">
   {" "}
-  {/* ✅ space-y-1 for breathing room */}
-  {/* Sender - semibold */}
+  {/*✅ space-y-1 for breathing room*/}
+  {/*Sender - semibold*/}
   <div className="font-semibold text-sm truncate leading-relaxed">
     {" "}
-    {/* ✅ semibold + leading-relaxed */}
+    {/*✅ semibold + leading-relaxed*/}
     {getDisplayName(latestMessage.from)}
   </div>
-  {/* Subject - normal weight */}
+  {/*Subject - normal weight*/}
   <div className="text-sm text-foreground/80 truncate leading-relaxed">
     {" "}
-    {/* ✅ foreground/80 for contrast */}
+    {/*✅ foreground/80 for contrast*/}
     {latestMessage.subject}
   </div>
-  {/* Metadata - muted */}
+  {/*Metadata - muted*/}
   <div className="text-xs text-muted-foreground">
     {" "}
-    {/* ✅ smaller, muted */}
+    {/*✅ smaller, muted*/}
     {formatTime(latestMessage.date)}
   </div>
 </div>
-```
+
+```text
 
 #### 4. **UTF-8 ENCODING FIX** ❌ (KRITISK!)
 
@@ -258,12 +271,14 @@ Gør afsender semibold, emne normal, metadata mutet
 
 **ChatGPT anbefaling:**
 
-```
+```text
 Sikr charset=utf-8 i:
+
 1. DB-connection
 2. API-headers
 3. <meta charset="utf-8">
-```
+
+```text
 
 **VORES FIX:**
 
@@ -283,9 +298,10 @@ export async function getEmails(req, res) {
 
 // 3. HTML meta: client/index.html
 <head>
-  <meta charset="UTF-8" />  {/* ✅ Already present */}
+  <meta charset="UTF-8" />  {/*✅ Already present*/}
 </head>
-```
+
+```text
 
 #### 5. **EMPTY STATES & DISMISSIBLE ALERTS** ⚠️
 
@@ -293,10 +309,11 @@ export async function getEmails(req, res) {
 
 **ChatGPT anbefaling:**
 
-```
+```text
 Progress/"Low confidence" som dismissible alert med lille ikon
 Tydelige empty states med CTA'er
-```
+
+```text
 
 **FORESLÅET IMPLEMENTERING:**
 
@@ -335,7 +352,8 @@ export function EmailEmptyState({
     );
   }
 }
-```
+
+```bash
 
 ---
 
@@ -428,7 +446,8 @@ export function EmailEmptyState({
 
 ```bash
 touch client/src/components/inbox/EmailStickyActionBar.tsx
-```
+
+```text
 
 **1.2 Implementation**
 
@@ -462,7 +481,7 @@ export default function EmailStickyActionBar({
 }: EmailStickyActionBarProps) {
   return (
     <div className="sticky top-0 z-10 bg-primary text-primary-foreground px-4 py-3 flex items-center justify-between shadow-lg border-b border-primary/20">
-      {/* Left: Selection count */}
+      {/*Left: Selection count*/}
       <div className="flex items-center gap-3">
         <Checkbox
           checked={true}
@@ -474,7 +493,7 @@ export default function EmailStickyActionBar({
         </span>
       </div>
 
-      {/* Right: Primary actions */}
+      {/*Right: Primary actions*/}
       <div className="flex items-center gap-2">
         <Button
           size="sm"
@@ -526,7 +545,7 @@ export default function EmailStickyActionBar({
           Arkiver
         </Button>
 
-        {/* Close button */}
+        {/*Close button*/}
         <Button
           size="sm"
           variant="ghost"
@@ -539,7 +558,8 @@ export default function EmailStickyActionBar({
     </div>
   );
 }
-```
+
+```text
 
 **1.3 Integrate in EmailListAI**
 
@@ -577,10 +597,10 @@ export default function EmailListAI({ ... }: EmailListAIProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Intelligence Header */}
-      {/* ... existing header code ... */}
+      {/*Intelligence Header*/}
+      {/*... existing header code ...*/}
 
-      {/* NEW: Sticky ActionBar - only when threads selected */}
+      {/*NEW: Sticky ActionBar - only when threads selected*/}
       {selectedThreadsList.length > 0 && (
         <EmailStickyActionBar
           selectedThreads={selectedThreadsList}
@@ -593,14 +613,15 @@ export default function EmailListAI({ ... }: EmailListAIProps) {
         />
       )}
 
-      {/* Email List */}
+      {/*Email List*/}
       <div ref={parentRef} className="flex-1 overflow-y-auto">
-        {/* ... existing virtualized list ... */}
+        {/*... existing virtualized list ...*/}
       </div>
     </div>
   );
 }
-```
+
+```text
 
 ### Step 2: UTF-8 Fix
 
@@ -623,7 +644,8 @@ export default defineConfig({
     },
   },
 });
-```
+
+```text
 
 **2.2 API Headers**
 
@@ -633,7 +655,8 @@ export function setUTF8Headers(res: Response) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Content-Encoding", "utf-8");
 }
-```
+
+```text
 
 ### Step 3: Badge Simplification
 
@@ -679,40 +702,49 @@ const leadScoreConfig = getLeadScoreConfig(maxLeadScore);
     {leadScoreConfig.label}
   </Badge>
 )}
-```
+
+```text
 
 ---
 
 ## 📈 SUCCESS METRICS (Før/Efter)
 
-### Kvantitative Metrics:
+### Kvantitative Metrics
 
-```
+```text
+
 1. time_to_reply (gennemsnitstid fra email læst → svar sendt)
+
    BEFORE: ?
    TARGET: -30%
 
 2. clicks_per_action (antal klik for at arkivere/svare/booke)
+
    BEFORE: 3-4 klik (open email → kebab → action)
    TARGET: 1-2 klik (select → actionbar)
 
 3. badge_clutter_score (antal badges synlige samtidigt)
+
    BEFORE: ~3-5 badges per email
    TARGET: 0-1 badge per email
 
 4. scroll_distance (hvor langt user scroller for at finde info)
+
    BEFORE: ?
    TARGET: -20%
-```
 
-### Kvalitative Metrics:
+```text
 
-```
+### Kvalitative Metrics
+
+```text
 User feedback:
+
 - "Kan du hurtigere finde hot leads?"
 - "Er det nemmere at scanne emails?"
 - "Føles interfacet mindre cluttered?"
-```
+
+```text
 
 ---
 
@@ -720,27 +752,30 @@ User feedback:
 
 ### Week 1: Phase 2.1 - Quick Wins
 
-```
+```text
 ✅ Day 1-2: Sticky ActionBar (HIGH impact, LOW effort)
 ✅ Day 2: UTF-8 Fix (CRITICAL, LOW effort)
 ✅ Day 3: Badge Simplification (MEDIUM impact, LOW effort)
 ✅ Day 4-5: Testing & refinement
-```
+
+```text
 
 ### Week 2: Phase 2.2 - Polish
 
-```
+```text
 ✅ Day 1-2: Line-height & Readability improvements
 ✅ Day 3-4: Empty States & Dismissible Alerts
 ✅ Day 5: Full E2E testing
-```
+
+```text
 
 ### Week 3+: Phase 3 - Advanced Features
 
-```
+```text
 ✅ Context Panel Tabs (Lead | Booking | Kalender)
 ✅ AI Panel Kommandoer (/triage, /book, /draft)
 ✅ Advanced keyboard navigation
+
 ```
 
 ---
@@ -749,13 +784,13 @@ User feedback:
 
 1. **To-panel fokus** (fjern venstre AI-panel)
    - Reason: AI-panelet er "kontroltårnet" - skal blive
-2. **Komplet redesign af højre-rail**
+1. **Komplet redesign af højre-rail**
    - Reason: Phase 3 - fokus på midte først
 
-3. **Inline booking-wizard som side-sheet**
+1. **Inline booking-wizard som side-sheet**
    - Reason: Larger feature, needs design work
 
-4. **Email-kort som tabel-layout**
+1. **Email-kort som tabel-layout**
    - Reason: Would require significant refactor
 
 ---
@@ -763,10 +798,10 @@ User feedback:
 ## 🎯 NÆSTE SKRIDT
 
 1. **Review denne analyse med team/bruger**
-2. **Godkend prioriteret forbedringsliste**
-3. **Start implementation: Sticky ActionBar først!**
-4. **Mål før/efter metrics**
-5. **Iterér baseret på feedback**
+1. **Godkend prioriteret forbedringsliste**
+1. **Start implementation: Sticky ActionBar først!**
+1. **Mål før/efter metrics**
+1. **Iterér baseret på feedback**
 
 ---
 
@@ -780,6 +815,6 @@ User feedback:
 
 ---
 
-**STATUS:** Ready for implementation 🚀  
-**ESTIMATED TIME:** Phase 2.1 = 1 uge, Phase 2.2 = 1 uge  
+**STATUS:** Ready for implementation 🚀
+**ESTIMATED TIME:** Phase 2.1 = 1 uge, Phase 2.2 = 1 uge
 **IMPACT:** HIGH - adresserer kerneproblemerne i UX

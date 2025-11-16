@@ -1,7 +1,7 @@
 # Real-time Documentation System - Quick Start Guide
 
-**Status:** 🟡 Ready for Implementation  
-**Last Updated:** November 8, 2025  
+**Status:** 🟡 Ready for Implementation
+**Last Updated:** November 8, 2025
 **Version:** 1.0.0
 
 ---
@@ -18,7 +18,8 @@ pnpm add simple-git@^3.20.0 chokidar@^3.5.3 ws@^8.14.2 commander@^11.1.0 inquire
 
 # Install dev dependencies
 pnpm add -D @types/ws@^8.5.9 @types/markdown-it@^13.0.7 @types/inquirer@^9.0.7
-```
+
+```text
 
 ### Step 2: Configure Environment
 
@@ -32,21 +33,24 @@ DOCS_GIT_BRANCH=main
 DOCS_AUTO_COMMIT=true
 DOCS_AUTO_PUSH=false
 DOCS_WS_PORT=3002
-```
+
+```text
 
 ### Step 3: Run Database Migrations
 
 ```bash
 # Create documentation tables
 pnpm db:migrate:dev
-```
+
+```text
 
 ### Step 4: Start the Documentation Service
 
 ```bash
 # Start dev server (includes docs service)
 pnpm dev
-```
+
+```text
 
 ### Step 5: Install CLI Tool (Optional)
 
@@ -57,7 +61,8 @@ pnpm link --global
 
 # Test installation
 tekup-docs --version
-```
+
+```text
 
 ---
 
@@ -79,17 +84,18 @@ tekup-docs search "email sync"
 
 # Sync with Git
 tekup-docs sync
-```
+
+```text
 
 ### From API
 
 ```typescript
 // Fetch all documents
-const response = await fetch("http://localhost:3000/api/docs");
+const response = await fetch("<http://localhost:3000/api/docs>");
 const docs = await response.json();
 
 // Create new document
-await fetch("http://localhost:3000/api/docs", {
+await fetch("<http://localhost:3000/api/docs",> {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -99,7 +105,8 @@ await fetch("http://localhost:3000/api/docs", {
     tags: ["api", "new"],
   }),
 });
-```
+
+```text
 
 ### From WebSocket
 
@@ -121,13 +128,14 @@ ws.on("message", data => {
   const event = JSON.parse(data.toString());
   console.log("Document updated:", event);
 });
-```
+
+```text
 
 ---
 
 ## 🏗️ Project Structure
 
-```
+```bash
 tekup-ai-v2/
 ├── server/
 │   └── docs/
@@ -166,7 +174,8 @@ Legend:
 ✅ Complete
 🔄 In Progress
 ⏳ Pending
-```
+
+```bash
 
 ---
 
@@ -185,7 +194,8 @@ const gitConfig = {
   watchPatterns: ["**/*.md"],
   ignorePatterns: ["**/node_modules/**", "**/.git/**"],
 };
-```
+
+```text
 
 ### WebSocket Configuration
 
@@ -195,7 +205,8 @@ const wsConfig = {
   heartbeatInterval: 30000, // 30 seconds
   maxConnections: 1000,
 };
-```
+
+```text
 
 ### AI Configuration
 
@@ -207,7 +218,8 @@ const aiConfig = {
   maxTokens: 4000,
   temperature: 0.7,
 };
-```
+
+```bash
 
 ---
 
@@ -225,7 +237,8 @@ sleep 2
 # Check Git log
 git log -1 --oneline
 # Should show: "docs: Update 1 file(s)"
-```
+
+```text
 
 ### Test WebSocket
 
@@ -239,7 +252,8 @@ wscat -c "ws://localhost:3002?userId=test"
 
 # Send subscription
 {"type":"doc:subscribe","document_id":"test-123"}
-```
+
+```text
 
 ### Test CLI
 
@@ -252,7 +266,8 @@ tekup-docs create "Test Document"
 
 # Check sync status
 tekup-docs status
-```
+
+```text
 
 ---
 
@@ -265,7 +280,8 @@ tekup-docs status
 pnpm store prune
 rm -rf node_modules
 pnpm install
-```
+
+```text
 
 ### Issue: TypeScript Errors
 
@@ -275,7 +291,8 @@ pnpm check
 
 # If logger errors persist, see server/docs/sync/git-sync-engine.ts
 # The pino logger expects: logger.info('message', { context })
-```
+
+```bash
 
 ### Issue: Git Sync Not Working
 
@@ -291,7 +308,8 @@ echo $DOCS_GIT_BRANCH
 # Check file watcher
 # Files should be in the watched directory
 ls -la docs/
-```
+
+```text
 
 ### Issue: WebSocket Connection Failed
 
@@ -302,7 +320,8 @@ netstat -an | grep 3002
 # Verify WebSocket server started
 # Look for: "[WSHub] WebSocket server started" in logs
 pnpm logs
-```
+
+```text
 
 ### Issue: CLI Command Not Found
 
@@ -313,7 +332,8 @@ pnpm link --global
 
 # Or use npx
 npx tekup-docs list
-```
+
+```bash
 
 ---
 
@@ -326,12 +346,12 @@ npx tekup-docs list
    - Add missing type definitions
    - Fix iterator issues with downlevelIteration
 
-2. **Complete API Router**
+1. **Complete API Router**
    - Implement tRPC procedures
    - Add authentication middleware
    - Set up rate limiting
 
-3. **Build CLI Commands**
+1. **Build CLI Commands**
    - Implement all command handlers
    - Add API client
    - Create utilities
@@ -343,7 +363,7 @@ npx tekup-docs list
    - Add presence tracking
    - Implement collaborative features
 
-2. **Frontend Portal**
+1. **Frontend Portal**
    - Create documentation browser
    - Add markdown renderer
    - Implement live updates
@@ -355,7 +375,7 @@ npx tekup-docs list
    - Content improvement
    - Quality analysis
 
-2. **Automated Workflows**
+1. **Automated Workflows**
    - Auto-update on code changes
    - Smart suggestions
    - Context-aware assistance
@@ -367,7 +387,7 @@ npx tekup-docs list
    - Integration tests
    - E2E tests
 
-2. **Deployment**
+1. **Deployment**
    - CI/CD pipeline
    - Production config
    - Monitoring setup
@@ -401,9 +421,9 @@ npx tekup-docs list
 For questions or issues:
 
 1. Check existing documentation
-2. Review troubleshooting section
-3. Check GitHub issues
-4. Ask in team chat
+1. Review troubleshooting section
+1. Check GitHub issues
+1. Ask in team chat
 
 ---
 
@@ -413,4 +433,5 @@ For questions or issues:
 
 ```bash
 pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter @types/ws @types/markdown-it @types/inquirer -D
+
 ```

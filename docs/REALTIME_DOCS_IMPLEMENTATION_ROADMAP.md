@@ -1,8 +1,8 @@
 # Real-time Documentation System - Implementation Roadmap
 
-**Project:** Tekup AI Documentation System  
-**Status:** 🟡 Phase 1 - Foundation Complete  
-**Started:** November 8, 2025  
+**Project:** Tekup AI Documentation System
+**Status:** 🟡 Phase 1 - Foundation Complete
+**Started:** November 8, 2025
 **Target Completion:** December 6, 2025 (4 weeks)
 
 ---
@@ -16,10 +16,10 @@ This roadmap outlines the complete implementation of a real-time documentation s
 ## 🎯 Goals
 
 1. **Developer-Friendly:** CLI-first approach for team and AI agents
-2. **Real-time Sync:** Instant updates across all clients
-3. **Git Integration:** Full version control and conflict resolution
-4. **AI-Powered:** Automated documentation generation and improvement
-5. **Collaborative:** Multi-user editing with presence tracking
+1. **Real-time Sync:** Instant updates across all clients
+1. **Git Integration:** Full version control and conflict resolution
+1. **AI-Powered:** Automated documentation generation and improvement
+1. **Collaborative:** Multi-user editing with presence tracking
 
 ---
 
@@ -49,15 +49,18 @@ This roadmap outlines the complete implementation of a real-time documentation s
 
   ```bash
   pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter
-  ```
+
+```text
 
 - [ ] Complete database schema
+
   ```sql
   -- server/docs/db/schema.ts
   CREATE TABLE documents (...)
   CREATE TABLE document_changes (...)
   CREATE TABLE comments (...)
-  ```
+
+```bash
 
 #### Pending ⏳
 
@@ -103,7 +106,7 @@ This roadmap outlines the complete implementation of a real-time documentation s
 
 - [ ] **Commands** (cli/tekup-docs/src/commands/)
 
-  ```
+```bash
   ├── list.ts       - List documents
   ├── create.ts     - Create document
   ├── edit.ts       - Edit document
@@ -117,7 +120,8 @@ This roadmap outlines the complete implementation of a real-time documentation s
   ├── ai.ts         - AI operations
   ├── batch.ts      - Batch operations
   └── tui.ts        - Terminal UI
-  ```
+
+```bash
 
 - [ ] **API Client** (cli/tekup-docs/src/api/)
   - [ ] HTTP client with retry logic
@@ -303,13 +307,13 @@ This roadmap outlines the complete implementation of a real-time documentation s
    - **Fix:** Update logger usage, fix Zod schemas, add downlevelIteration
    - **ETA:** Day 1
 
-2. **Missing Dependencies**
+1. **Missing Dependencies**
    - **Impact:** High
    - **Priority:** Critical
    - **Fix:** Install all required packages
    - **ETA:** Day 1
 
-3. **Database Schema Not Created**
+1. **Database Schema Not Created**
    - **Impact:** Medium
    - **Priority:** High
    - **Fix:** Create Drizzle schema and migration
@@ -321,15 +325,15 @@ This roadmap outlines the complete implementation of a real-time documentation s
    - **Risk:** Manual conflict resolution may be complex
    - **Mitigation:** Implement smart merge strategies, clear UI
 
-2. **WebSocket Scalability**
+1. **WebSocket Scalability**
    - **Risk:** May need Redis for multi-server deployment
    - **Mitigation:** Design with Redis pub/sub from start
 
-3. **AI API Costs**
+1. **AI API Costs**
    - **Risk:** High usage may increase costs
    - **Mitigation:** Implement caching, rate limiting
 
-4. **Performance at Scale**
+1. **Performance at Scale**
    - **Risk:** Large repos may slow down
    - **Mitigation:** Implement pagination, virtual scrolling, caching
 
@@ -465,10 +469,12 @@ This roadmap outlines the complete implementation of a real-time documentation s
 
 ```bash
 pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter @types/ws @types/markdown-it @types/inquirer -D
-```
+
+```text
 
 **Status Check:**
 
 ```bash
 tekup-docs status  # (after CLI is functional)
+
 ```

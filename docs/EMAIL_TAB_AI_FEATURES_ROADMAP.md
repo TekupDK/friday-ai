@@ -40,7 +40,8 @@ interface EmailSummary {
 // API Endpoint
 POST /api/inbox/email/summarize
 GET /api/inbox/email/:threadId/summary
-```
+
+```text
 
 **UI Integration:**
 
@@ -81,7 +82,8 @@ GET /api/inbox/email/:threadId/summary
 
 **Labels til Friday AI v2 workflow:**
 
-```
+```text
+
 - "Leads"           → Nye kunder der anmoder om tilbud
 - "Needs Reply"     → Emails der kræver svar (høj prioritet)
 - "Venter på svar"  → Vi har sendt tilbud, venter på kundesvar
@@ -91,7 +93,8 @@ GET /api/inbox/email/:threadId/summary
 - "Fast Rengøring" → Relateret til fast rengøring
 - "Flytterengøring" → Flytterengøring opgaver
 - etc.
-```
+
+```text
 
 **Implementering:**
 
@@ -112,7 +115,8 @@ interface LabelSuggestion {
 POST /api/inbox/email/:threadId/suggest-labels
 POST /api/inbox/email/:threadId/apply-label
 GET /api/inbox/labels/patterns (learning data)
-```
+
+```text
 
 **UI Integration:**
 
@@ -130,7 +134,8 @@ const PATTERNS = {
   "Needs Reply": ["spørgsmål", "?", "henvendelse"],
   // ... etc
 };
-```
+
+```text
 
 **Når aktiveres det:**
 
@@ -174,7 +179,8 @@ interface SuggestedReply {
 // API Endpoint
 POST /api/inbox/email/:threadId/suggest-replies
 POST /api/inbox/email/:threadId/use-suggestion/:suggestionId
-```
+
+```text
 
 **UI Integration:**
 
@@ -187,9 +193,9 @@ POST /api/inbox/email/:threadId/use-suggestion/:suggestionId
 **Reply Types for Friday AI v2:**
 
 1. **Lead Response** - "Tak for din forespørgsel om rengøring..."
-2. **Quote Follow-up** - "Vi har sendt tilbud for..."
-3. **Payment Reminder** - "Venligst betal faktura..."
-4. **Booking Confirmation** - "Vi bekræfter booking..."
+1. **Quote Follow-up** - "Vi har sendt tilbud for..."
+1. **Payment Reminder** - "Venligst betal faktura..."
+1. **Booking Confirmation** - "Vi bekræfter booking..."
 
 **Når aktiveres det:**
 
@@ -240,7 +246,8 @@ POST /api/inbox/templates
 PUT /api/inbox/templates/:id
 POST /api/inbox/templates/:id/resolve (fill variables)
 DELETE /api/inbox/templates/:id
-```
+
+```text
 
 **Template Examples:**
 
@@ -253,6 +260,7 @@ const template = {
 Tak for din forespørgsel om flytterengøring.
 
 Vi kan tilbyde:
+
 - {{serviceDetails}}
 - Pris: {{estimatedPrice}} kr.
 - Adresse: {{address}}
@@ -268,7 +276,8 @@ Rendetalje.dk`,
     { key: "address", source: "lead", required: true },
   ],
 };
-```
+
+```text
 
 **UI Integration:**
 
@@ -321,7 +330,7 @@ Rendetalje.dk`,
 
 ## 🎯 Success Metrics
 
-### For hver feature:
+### For hver feature
 
 **AI Summaries:**
 
@@ -351,7 +360,7 @@ Rendetalje.dk`,
 
 ## 🔧 Technical Requirements
 
-### Database Schema:
+### Database Schema
 
 ```sql
 -- Email AI Analysis
@@ -390,9 +399,10 @@ CREATE TABLE label_patterns (
   usage_count INT DEFAULT 0,
   last_updated TIMESTAMP
 );
+
 ```
 
-### AI/ML Services:
+### AI/ML Services
 
 - GPT-4o eller Gemini 2.5 Flash for summaries
 - Simple pattern matching for labels (start)
@@ -400,11 +410,11 @@ CREATE TABLE label_patterns (
 
 ---
 
-## ✅ Ready to Start?
+## ✅ Ready to Start
 
 **Phase 1 er klar til implementering:**
 
 1. AI Email Summaries - Umiddelbar value
-2. Smart Auto-Labeling - Kritisk for workflow
+1. Smart Auto-Labeling - Kritisk for workflow
 
 Skal vi starte med Phase 1, eller vil du se flere detaljer først?

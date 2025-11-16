@@ -44,7 +44,8 @@ cp .env.dev.template .env.dev
 
 # Edit .env.dev
 VITE_OPENROUTER_API_KEY=sk-or-v1-your-openrouter-key-here
-```
+
+```text
 
 ### **2. Run Automated Tests**
 
@@ -54,7 +55,8 @@ pnpm install
 
 # Run comprehensive test suite
 pnpm tsx run-friday-tests.ts
-```
+
+```text
 
 ### **3. Interactive Testing**
 
@@ -64,26 +66,29 @@ pnpm dev
 
 # Navigate to Friday AI panel
 # Click "Test Mode" to access interactive testing
-```
+
+```text
 
 ## 📊 TEST RESULTS
 
 ### **Quality Scoring System**
 
-```
+```text
 🇩🇰 Danish Language: 3+ Danish words detected
 💼 Professional Tone: 1+ professional words found
 🏢 Business Context: 2+ business terms used
 📏 Response Length: 50-1000 characters
-```
+
+```text
 
 ### **Performance Metrics**
 
-```
+```text
 ⚡ Response Time: < 3000ms (good), < 2000ms (excellent)
 💰 Token Usage: Monitor for cost optimization
 🎯 Context Usage: % of responses using provided context
-```
+
+```text
 
 ## 🧪 A/B TESTING FRAMEWORK
 
@@ -93,45 +98,49 @@ pnpm dev
 
 ```typescript
 system: `Du er Friday, dansk executive assistant for Rendetalje rengøring. Hjælp med emails, kalender, fakturaer, leads og opgaver. Professionel, dansk tone.`;
-```
 
-_Pros: Fast, direct responses_  
+```text
+
+_Pros: Fast, direct responses_
 _Cons: Less personality, may miss context_
 
 #### **2. Persona Prompt**
 
 ```typescript
 system: `Jeg er Friday, din erfarne danske AI-assistant for rengøringsbranchen. Med 5+ års erfaring...`;
-```
 
-_Pros: Strong personality, professional_  
+```text
+
+_Pros: Strong personality, professional_
 _Cons: Longer responses, more tokens_
 
 #### **3. Task-Oriented Prompt**
 
 ```typescript
 system: `FRIDAY AI ASSISTANT - RENDETALE\n\nKERNEFUNKTIONER:\n📧 Email Management...`;
-```
 
-_Pros: Structured, clear functions_  
+```text
+
+_Pros: Structured, clear functions_
 _Cons: May feel robotic, less conversational_
 
 #### **4. Business Prompt**
 
 ```typescript
 system: `Som Friday, din strategiske forretningspartner for Rendetalje, fokuserer jeg på at optimere...`;
-```
 
-_Pros: Strategic, growth-focused_  
+```text
+
+_Pros: Strategic, growth-focused_
 _Cons: May be too formal for simple tasks_
 
 ### **Test Cases**
 
 1. **Introduction**: "Hej Friday, præsenter dig selv"
-2. **Capabilities**: "Hvad kan du hjælpe mig med?"
-3. **Context Task**: "Opsummer kundeemails og foreslå handlinger"
-4. **Calendar**: "Tjek min kalender for i dag"
-5. **Invoices**: "Vis mig ubetalte fakturaer"
+1. **Capabilities**: "Hvad kan du hjælpe mig med?"
+1. **Context Task**: "Opsummer kundeemails og foreslå handlinger"
+1. **Calendar**: "Tjek min kalender for i dag"
+1. **Invoices**: "Vis mig ubetalte fakturaer"
 
 ## 📈 OPTIMIZATION RECOMMENDATIONS
 
@@ -142,14 +151,15 @@ _Cons: May be too formal for simple tasks_
 ```typescript
 // Production prompt with 3.5/4 average score
 system: `Du er Friday, en professionel dansk executive assistant specialiseret i rengøringsbranchen...`;
-```
+
+```text
 
 #### **🔄 CONTINUOUS IMPROVEMENT**
 
 1. **Weekly Testing**: Run A/B tests with new variations
-2. **Quality Monitoring**: Track quality scores over time
-3. **User Feedback**: Collect real usage feedback
-4. **Performance Tuning**: Optimize for speed vs quality
+1. **Quality Monitoring**: Track quality scores over time
+1. **User Feedback**: Collect real usage feedback
+1. **Performance Tuning**: Optimize for speed vs quality
 
 ### **Context Optimization**
 
@@ -160,7 +170,8 @@ selectPrompt({
   hasCalendar: true, // Add calendar context
   userIntent: "action", // Tailor response style
 });
-```
+
+```text
 
 ## 🛠️ DEBUGGING TOOLS
 
@@ -172,7 +183,8 @@ localStorage.setItem("friday-debug", "true");
 
 // Check API calls
 // Look for "🤖 Friday AI Request" logs
-```
+
+```text
 
 ### **2. Quality Monitoring**
 
@@ -180,7 +192,8 @@ localStorage.setItem("friday-debug", "true");
 // Real-time quality scores
 const { lastQualityScore } = useOpenRouter();
 console.log("Quality Score:", lastQualityScore?.overallScore);
-```
+
+```text
 
 ### **3. Performance Tracking**
 
@@ -188,6 +201,7 @@ console.log("Quality Score:", lastQualityScore?.overallScore);
 // Response time monitoring
 console.log("Response Time:", responseTime);
 console.log("Token Usage:", tokenCount);
+
 ```
 
 ## 📋 TESTING CHECKLIST

@@ -19,9 +19,9 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Login with dev credentials
-2. Set viewport to 1920x1080
-3. Wait for all panels to load (timeout: 10s)
-4. Verify each panel is visible
+1. Set viewport to 1920x1080
+1. Wait for all panels to load (timeout: 10s)
+1. Verify each panel is visible
 
 **Assertions**:
 
@@ -36,8 +36,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Wait for AI panel to load
-2. Get bounding boxes for all three panels
-3. Calculate width ratios
+1. Get bounding boxes for all three panels
+1. Calculate width ratios
 
 **Assertions**:
 
@@ -51,10 +51,10 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Get initial AI panel width
-2. Find first resize handle
-3. Drag handle 100px to the right
-4. Wait 500ms for resize completion
-5. Get new AI panel width
+1. Find first resize handle
+1. Drag handle 100px to the right
+1. Wait 500ms for resize completion
+1. Get new AI panel width
 
 **Assertions**:
 
@@ -71,8 +71,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Press Ctrl+1
-2. Wait 200ms for focus to apply
-3. Check if AI panel or its descendants have focus
+1. Wait 200ms for focus to apply
+1. Check if AI panel or its descendants have focus
 
 **Assertions**:
 
@@ -101,8 +101,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Press Alt+2 to focus Email panel
-2. Wait 200ms
-3. Verify focus
+1. Wait 200ms
+1. Verify focus
 
 **Assertions**:
 
@@ -119,7 +119,7 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Set viewport to 375x667 (iPhone SE)
-2. Wait for layout to render
+1. Wait for layout to render
 
 **Assertions**:
 
@@ -133,8 +133,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Find mobile menu button
-2. Click menu button
-3. Wait 500ms for drawer animation
+1. Click menu button
+1. Wait 500ms for drawer animation
 
 **Assertions**:
 
@@ -148,8 +148,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Open drawer via menu button
-2. Click on overlay/backdrop
-3. Wait 500ms
+1. Click on overlay/backdrop
+1. Wait 500ms
 
 **Assertions**:
 
@@ -166,7 +166,7 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Navigate to root path
-2. Quickly check for loading text
+1. Quickly check for loading text
 
 **Assertions**:
 
@@ -180,8 +180,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Monitor network requests
-2. Filter for .js files containing "Panel" or "chunk"
-3. Navigate to root
+1. Filter for .js files containing "Panel" or "chunk"
+1. Navigate to root
 
 **Assertions**:
 
@@ -199,7 +199,7 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Simulate error in AI panel (DOM manipulation)
-2. Check other panels remain functional
+1. Check other panels remain functional
 
 **Assertions**:
 
@@ -241,8 +241,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Select email tab
-2. Resize panel via drag handle
-3. Verify panel remains visible with same state
+1. Resize panel via drag handle
+1. Verify panel remains visible with same state
 
 **Assertions**:
 
@@ -256,8 +256,8 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 **Steps**:
 
 1. Get initial AI panel width
-2. Try to drag resize handle far left (below minimum)
-3. Check final width
+1. Try to drag resize handle far left (below minimum)
+1. Check final width
 
 **Assertions**:
 
@@ -272,19 +272,22 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 
 ```bash
 npm run test:e2e
-```
+
+```text
 
 ### Run Only 3-Panel Tests
 
 ```bash
 npx playwright test 3-panel-layout
-```
+
+```text
 
 ### Run in UI Mode (Interactive)
 
 ```bash
 npx playwright test 3-panel-layout --ui
-```
+
+```text
 
 ### Run Specific Test Suite
 
@@ -292,12 +295,14 @@ npx playwright test 3-panel-layout --ui
 npx playwright test -g "Desktop Layout"
 npx playwright test -g "Keyboard Navigation"
 npx playwright test -g "Mobile Responsive"
-```
+
+```text
 
 ### Debug Mode
 
 ```bash
 npx playwright test 3-panel-layout --debug
+
 ```
 
 ---
@@ -323,11 +328,11 @@ npx playwright test 3-panel-layout --debug
 
 1. **Error Injection**: Currently uses DOM manipulation for error simulation. Real error injection would require development mode error triggers.
 
-2. **Loading Timing**: Loading skeleton tests may not always catch the skeleton due to fast loading times.
+1. **Loading Timing**: Loading skeleton tests may not always catch the skeleton due to fast loading times.
 
-3. **Mobile Drawer**: Menu button selector may vary; tests try multiple selectors for robustness.
+1. **Mobile Drawer**: Menu button selector may vary; tests try multiple selectors for robustness.
 
-4. **Resize Precision**: Resize tests allow tolerance in ratios due to flexbox rounding.
+1. **Resize Precision**: Resize tests allow tolerance in ratios due to flexbox rounding.
 
 ---
 
@@ -349,11 +354,11 @@ npx playwright test 3-panel-layout --debug
 ## Future Enhancements
 
 1. **Visual Regression Testing**: Add screenshot comparisons
-2. **Performance Metrics**: Measure panel load times
-3. **Accessibility Testing**: Verify ARIA attributes and screen reader support
-4. **Touch Gestures**: Test mobile swipe interactions
-5. **Panel Collapse**: Test panel hide/show functionality if implemented
-6. **Cross-browser**: Extend tests to Safari, Firefox
+1. **Performance Metrics**: Measure panel load times
+1. **Accessibility Testing**: Verify ARIA attributes and screen reader support
+1. **Touch Gestures**: Test mobile swipe interactions
+1. **Panel Collapse**: Test panel hide/show functionality if implemented
+1. **Cross-browser**: Extend tests to Safari, Firefox
 
 ---
 

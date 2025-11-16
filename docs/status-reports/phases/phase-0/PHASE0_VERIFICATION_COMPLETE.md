@@ -200,7 +200,7 @@ Dato: 22. November 2024
 - ✅ Dark mode toggle addon tilføjet
 - ✅ Viewport addon konfigureret (iPhone, iPad, Desktop)
 - ✅ Global decorators med data-theme support
-- ✅ Running på http://localhost:6006/
+- ✅ Running på <http://localhost:6006/>
 
 **Verification:** Storybook kører perfekt! ✅
 
@@ -213,20 +213,20 @@ Dato: 22. November 2024
 **Stories lavet (60+ variations total):**
 
 1. ✅ AppleButton.stories.tsx (7 stories)
-2. ✅ AppleCard.stories.tsx (7 stories)
-3. ✅ AppleInput.stories.tsx (6 stories)
-4. ✅ AppleSearchField.stories.tsx (4 stories)
-5. ✅ AppleBadge.stories.tsx (8 stories)
-6. ✅ AppleListItem.stories.tsx (6 stories)
-7. ✅ AppleTag.stories.tsx (8 stories)
-8. ✅ AppleModal.stories.tsx (3 stories)
-9. ✅ AppleDrawer.stories.tsx (3 stories)
-10. ✅ AppleSheet.stories.tsx (3 stories)
-11. ✅ BlurView.stories.tsx (3 stories)
-12. ✅ SpringTransition.stories.tsx (3 stories)
-13. ✅ ScrollReveal.stories.tsx (2 stories)
-14. ✅ ScrollToTop.stories.tsx (2 stories)
-15. ✅ AppleIcon.stories.tsx (7 stories)
+1. ✅ AppleCard.stories.tsx (7 stories)
+1. ✅ AppleInput.stories.tsx (6 stories)
+1. ✅ AppleSearchField.stories.tsx (4 stories)
+1. ✅ AppleBadge.stories.tsx (8 stories)
+1. ✅ AppleListItem.stories.tsx (6 stories)
+1. ✅ AppleTag.stories.tsx (8 stories)
+1. ✅ AppleModal.stories.tsx (3 stories)
+1. ✅ AppleDrawer.stories.tsx (3 stories)
+1. ✅ AppleSheet.stories.tsx (3 stories)
+1. ✅ BlurView.stories.tsx (3 stories)
+1. ✅ SpringTransition.stories.tsx (3 stories)
+1. ✅ ScrollReveal.stories.tsx (2 stories)
+1. ✅ ScrollToTop.stories.tsx (2 stories)
+1. ✅ AppleIcon.stories.tsx (7 stories)
 
 **Alle stories har:**
 
@@ -278,21 +278,21 @@ Dato: 22. November 2024
 ### ✅ **Komponenter lavet: 16**
 
 1. AppleButton
-2. AppleCard
-3. AppleInput
-4. AppleSearchField
-5. AppleBadge
-6. AppleListItem
-7. AppleTag
-8. AppleModal
-9. AppleDrawer
-10. AppleSheet
-11. BlurView
-12. SpringTransition
-13. ScrollReveal
-14. ScrollToTop
-15. AppleIcon
-16. Icons system (60+ ikoner)
+1. AppleCard
+1. AppleInput
+1. AppleSearchField
+1. AppleBadge
+1. AppleListItem
+1. AppleTag
+1. AppleModal
+1. AppleDrawer
+1. AppleSheet
+1. BlurView
+1. SpringTransition
+1. ScrollReveal
+1. ScrollToTop
+1. AppleIcon
+1. Icons system (60+ ikoner)
 
 ### ✅ **Storybook Stories: 15 filer (60+ variations)**
 
@@ -301,10 +301,10 @@ Alle komponenter har fulde interactive stories
 ### ✅ **Hooks lavet: 5**
 
 1. useSmoothScroll
-2. useReducedMotion
-3. useFeatureDetection
-4. usePerformanceTier
-5. useAdaptiveRendering
+1. useReducedMotion
+1. useFeatureDetection
+1. usePerformanceTier
+1. useAdaptiveRendering
 
 ### ✅ **Design System:**
 
@@ -361,7 +361,7 @@ Alle komponenter har fulde interactive stories
 
 ---
 
-## 🚀 Ready for Phase 1!
+## 🚀 Ready for Phase 1
 
 **Phase 0 er 100% færdig og klar til produktion!**
 

@@ -1,8 +1,11 @@
 /\*\*
 
 - Phase 10: Email Assistant Testing Guide
+
 -
+
 - Step-by-step guide til at teste AI Email Assistant
+
   \*/
 
 # 🎯 **EMAIL ASSISTANT TESTING GUIDE**
@@ -13,11 +16,12 @@
 
 ```bash
 npm run dev
-```
+
+```text
 
 ### **2. ÅBEN WORKSPACE:**
 
-- Gå til: http://localhost:5173 (eller 3000)
+- Gå til: <http://localhost:5173> (eller 3000)
 - Login med jeres credentials
 - Åbn workspace view
 
@@ -39,7 +43,7 @@ npm run dev
 
 ### **✨ AI EMAIL ASSISTANT VISER:**
 
-```
+```text
 ┌─────────────────────────────────┐
 │ ✨ AI Email Assistant (3-4)      │
 ├─────────────────────────────────┤
@@ -57,7 +61,8 @@ npm run dev
 │ [AI-genereret content...]       │
 │ [Insert Reply] [Send Email]     │
 └─────────────────────────────────┘
-```
+
+```text
 
 ## 🧪 **TESTING STEPS:**
 
@@ -100,12 +105,12 @@ npm run dev
    - Verify tRPC endpoints virker
    - Check email data format
 
-2. **Forslag er tomme:**
+1. **Forslag er tomme:**
    - Check server logs
    - Verify email analysis engine
    - Check API responses
 
-3. **Insert/Send virker ikke:**
+1. **Insert/Send virker ikke:**
    - Check Gmail integration
    - Verify permissions
    - Check tRPC mutations
@@ -121,6 +126,7 @@ F12 → Console tab
 
 # Network requests
 F12 → Network tab → tpc requests
+
 ```
 
 ## 🎯 **SUCCESS KRITERIER:**

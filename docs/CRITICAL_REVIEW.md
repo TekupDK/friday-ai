@@ -1,7 +1,7 @@
 # 🔍 CRITICAL REVIEW - Dybdegående Analyse
 
-**Date:** 2025-11-08  
-**Type:** Technical Debt & Code Quality Analysis  
+**Date:** 2025-11-08
+**Type:** Technical Debt & Code Quality Analysis
 **Status:** Action Items Identified
 
 ---
@@ -67,7 +67,8 @@ const rateLimitMap = new Map<number, number[]>();
 function checkRateLimit(userId: number, limit = 10, windowMs = 60000): boolean {
   // ... implementation
 }
-```
+
+```text
 
 **Problems:**
 
@@ -92,7 +93,8 @@ const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
   limiter: Ratelimit.slidingWindow(10, "1 m"),
 });
-```
+
+```text
 
 **Priority:** 🔴 HIGH - Fix before scaling
 
@@ -113,7 +115,8 @@ let query = `
   FROM friday_ai.messages
   WHERE conversation_id = $1
 `;
-```
+
+```text
 
 **Problems:**
 
@@ -141,7 +144,8 @@ const result = await db
   .where(eq(messages.conversationId, input.conversationId))
   .orderBy(desc(messages.createdAt))
   .limit(input.limit);
-```
+
+```text
 
 **Priority:** 🟡 MEDIUM - Refactor when time allows
 
@@ -161,7 +165,8 @@ const result = await db
   content: variables.content,
   createdAt: new Date().toISOString(),
 }
-```
+
+```text
 
 **Problems:**
 
@@ -187,7 +192,8 @@ import { nanoid } from 'nanoid';
   createdAt: new Date().toISOString(),
   isOptimistic: true, // Flag for UI
 }
-```
+
+```text
 
 **Priority:** 🟡 MEDIUM - Low probability but easy fix
 
@@ -211,7 +217,8 @@ const { data: messagesData } = trpc.chat.getMessages.useQuery(
     enabled: !!conversationId,
   }
 );
-```
+
+```text
 
 **Problems:**
 
@@ -242,7 +249,8 @@ const { data: messagesData } = trpc.chat.getMessages.useQuery(
 
 ```typescript
 const conversationHistory = await getConversationMessages(input.conversationId);
-```
+
+```text
 
 **Problems:**
 
@@ -265,7 +273,8 @@ const conversationHistory = await getConversationMessages(
   input.conversationId,
   { limit: 50 } // Last 50 messages
 );
-```
+
+```text
 
 **Priority:** 🟡 MEDIUM - Cost optimization
 
@@ -301,7 +310,8 @@ if (cached) return cached;
 
 const response = await routeAI(...);
 await redis.setex(cacheKey, 3600, response);
-```
+
+```text
 
 **Priority:** 🟢 LOW - Optimization for scale
 
@@ -321,7 +331,8 @@ await redis.setex(cacheKey, 3600, response);
   content: z.string(), // No length limit!
   // ...
 }))
-```
+
+```text
 
 **Problems:**
 
@@ -345,7 +356,8 @@ await redis.setex(cacheKey, 3600, response);
     .max(10000, "Message too long (max 10,000 chars)"),
   // ...
 }))
-```
+
+```text
 
 **Priority:** 🟡 MEDIUM - Security hardening
 
@@ -406,7 +418,8 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
   logger.info({ path, duration, userId: ctx.user?.id });
   return result;
 });
-```
+
+```text
 
 **Priority:** 🟢 LOW - Observability improvement
 
@@ -425,23 +438,24 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
    ```json
    "react": "^19.1.1",
    "react-dom": "^19.1.1"
+
    ```
 
    - ⚠️ React 19 is still in RC
    - ⚠️ Potential breaking changes
    - ✅ But seems stable
 
-2. **Large Bundle Size**
+1. **Large Bundle Size**
    - 30+ Radix UI components
    - FullCalendar (heavy)
    - Recharts (heavy)
    - **Recommendation:** Code splitting
 
-3. **Outdated Packages**
+1. **Outdated Packages**
    - Check for security updates
    - Run `pnpm audit`
 
-4. **Unused Dependencies?**
+1. **Unused Dependencies?**
    - `@aws-sdk/client-s3` - Is S3 used?
    - `ngrok` - Only for dev?
    - Review and remove unused
@@ -477,13 +491,13 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
    - ❌ Billy API integration
    - ❌ Database operations
 
-2. **Load Tests**
+1. **Load Tests**
    - ❌ Concurrent users
    - ❌ Message throughput
    - ❌ Database performance
    - ❌ LLM rate limits
 
-3. **Security Tests**
+1. **Security Tests**
    - ❌ SQL injection attempts
    - ❌ XSS attempts
    - ❌ CSRF protection
@@ -557,9 +571,9 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **High Priority (Fix Soon):**
 
 1. **🔴 Rate Limiting** - Move to Redis/database
-2. **🔴 Workspace Cleanup** - Run cleanup scripts
-3. **🟡 Input Validation** - Add max length limits
-4. **🟡 Message History Limit** - Prevent unbounded growth
+1. **🔴 Workspace Cleanup** - Run cleanup scripts
+1. **🟡 Input Validation** - Add max length limits
+1. **🟡 Message History Limit** - Prevent unbounded growth
 
 **Estimated Effort:** 2-3 days
 
@@ -568,10 +582,10 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **Medium Priority (Next Sprint):**
 
 1. **🟡 Pagination UI** - Add "Load More" button
-2. **🟡 Database Queries** - Use Drizzle consistently
-3. **🟡 Optimistic Updates** - Fix ID collision
-4. **🟡 Testing** - Add integration tests
-5. **🟡 Security** - API key rotation
+1. **🟡 Database Queries** - Use Drizzle consistently
+1. **🟡 Optimistic Updates** - Fix ID collision
+1. **🟡 Testing** - Add integration tests
+1. **🟡 Security** - API key rotation
 
 **Estimated Effort:** 1 week
 
@@ -580,10 +594,10 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **Low Priority (Backlog):**
 
 1. **🟢 Caching** - Add Redis caching
-2. **🟢 Dependencies** - Audit and update
-3. **🟢 Code Organization** - Refactor large files
-4. **🟢 Naming** - Standardize conventions
-5. **🟢 Monitoring** - Add request middleware
+1. **🟢 Dependencies** - Audit and update
+1. **🟢 Code Organization** - Refactor large files
+1. **🟢 Naming** - Standardize conventions
+1. **🟢 Monitoring** - Add request middleware
 
 **Estimated Effort:** 2 weeks
 
@@ -611,18 +625,18 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
    - ✅ Modern tech stack
    - ✅ Good error handling
 
-2. **AI System**
+1. **AI System**
    - ✅ 35+ tools working
    - ✅ Multi-model routing
    - ✅ 95%+ success rate
    - ✅ Good prompts
 
-3. **Testing**
+1. **Testing**
    - ✅ E2E tests comprehensive
    - ✅ Mocked tests for speed
    - ✅ Good coverage of core features
 
-4. **Documentation**
+1. **Documentation**
    - ✅ Detailed phase reports
    - ✅ System prompts documented
    - ✅ API documented
@@ -694,28 +708,28 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 ### **Immediate (This Week):**
 
 1. **Run cleanup scripts** - 10 min, big impact
-2. **Fix rate limiting** - 2 hours, critical
-3. **Add input validation** - 1 hour, security
+1. **Fix rate limiting** - 2 hours, critical
+1. **Add input validation** - 1 hour, security
 
 ### **Short-term (Next 2 Weeks):**
 
 1. **Add pagination UI** - 4 hours
-2. **Limit message history** - 2 hours
-3. **Add integration tests** - 8 hours
-4. **Implement caching** - 8 hours
+1. **Limit message history** - 2 hours
+1. **Add integration tests** - 8 hours
+1. **Implement caching** - 8 hours
 
 ### **Long-term (Next Month):**
 
 1. **Refactor large files** - 16 hours
-2. **Security audit** - 8 hours
-3. **Performance optimization** - 16 hours
-4. **Documentation consolidation** - 8 hours
+1. **Security audit** - 8 hours
+1. **Performance optimization** - 16 hours
+1. **Documentation consolidation** - 8 hours
 
 ---
 
 ## 💡 **CONCLUSION**
 
-**Overall Assessment:** ✅ **GOOD - Production Ready**
+**Overall Assessment:**✅**GOOD - Production Ready**
 
 **Strengths:**
 
@@ -746,8 +760,8 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
 Hvad vil du fokusere på?
 
 1. **🔴 Critical Fixes** - Start med rate limiting
-2. **🧹 Cleanup** - Kør scripts nu
-3. **🗄️ Continue Review** - Område 3 (Database)
-4. **📋 Action Plan** - Lav detaljeret plan
+1. **🧹 Cleanup** - Kør scripts nu
+1. **🗄️ Continue Review** - Område 3 (Database)
+1. **📋 Action Plan** - Lav detaljeret plan
 
 Hvad siger du? 🚀

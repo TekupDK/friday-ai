@@ -1,8 +1,11 @@
 /\*\*
 
 - Phase 10.2: Venstre Panel AI Assistant Design
+
 -
+
 - Complete design specification for intelligent email list
+
   \*/
 
 # 🎯 **VENSTRE PANEL AI ASSISTANT - DESIGN SPECIFICATION**
@@ -17,7 +20,8 @@
 │ [🔥Hot] [💰Rengøring.nu] [📍Aarhus] │
 │ [📅Today] [⭐High Score] [🔄Sort] │
 ├─────────────────────────────────┤
-```
+
+```text
 
 ### **📊 **INTELLIGENCE SUMMARY:\*\*
 
@@ -29,7 +33,8 @@
 │ ⭐ High Score: 23 (80%+)         │
 │ 💰 Est. Value: 45.000 kr.        │
 ├─────────────────────────────────┤
-```
+
+```text
 
 ### **📧 **ENHANCED EMAIL LIST:\*\*
 
@@ -57,7 +62,8 @@
 │ │    📧1 dag siden • 🏢Business│ │
 │ └─────────────────────────────┘ │
 └─────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -67,73 +73,88 @@
 
 ```typescript
 🔥 HOT LEADS (80-100):
+
 - Background: 🔥 Red gradient
 - Priority: Top of list
 - Action: Immediate response
 
 💰 HIGH VALUE (60-79):
+
 - Background: 💰 Green gradient
 - Priority: High
 - Action: Same day response
 
 📍 MEDIUM VALUE (40-59):
+
 - Background: 📍 Blue gradient
 - Priority: Normal
 - Action: Standard response
 
 ⏪ LOW VALUE (0-39):
+
 - Background: ⏪ Gray gradient
 - Priority: Low
 - Action: Batch processing
-```
+
+```text
 
 ### **🏷️ **SOURCE BADGES:\*\*
 
 ```typescript
 💰 RENGØRING.NU:
+
 - Color: Green (high conversion)
 - Price: 450 kr./time (fixed)
 - Priority: High
 
 🎯 LEADPOINT:
+
 - Color: Blue (Aarhus focus)
 - Price: 500 kr./time (variable)
 - Priority: Medium
 
 🏢 ADHELP:
+
 - Color: Orange (business)
 - Price: 600 kr./time (premium)
 - Priority: Medium
 
 📧 DIRECT:
+
 - Color: Purple (direct contact)
 - Price: Custom pricing
 - Priority: Variable
-```
+
+```text
 
 ### **📍 **LOCATION BADGES:\*\*
 
 ```typescript
 🏙️ AARHUS:
+
 - Icon: 📍
 - Color: Blue
 - Special: Local expertise
 
 🌍 KØBENHAVN:
+
 - Icon: 🏙️
 - Color: Red
 - Special: Premium pricing
 
 🏘️ ODENSE:
+
 - Icon: 🏘️
 - Color: Green
 - Special: Standard pricing
 
 📍 OTHER:
+
 - Icon: 📍
 - Color: Gray
 - Special: Custom pricing
-```
+
+```text
 
 ---
 
@@ -143,6 +164,7 @@
 
 ```typescript
 🎯 SORT ALGORITHMS:
+
 1. **Lead Score Priority:**
    - Hot leads (80-100) først
    - High value (60-79) derefter
@@ -162,12 +184,14 @@
    - High estimated value op
    - Business priority op
    - Quick wins op
-```
+
+```text
 
 ### **📊 **PREDICTIVE ANALYTICS:\*\*
 
 ```typescript
 🎯 CONVERSION PREDICTION:
+
 - Email content analysis
 - Source conversion history
 - Location-based success rates
@@ -175,12 +199,14 @@
 - Customer behavior tracking
 
 🎯 VALUE ESTIMATION:
+
 - Job type pricing models
 - Location-based adjustments
 - Source-specific rates
 - Urgency multipliers
 - Historical data
-```
+
+```text
 
 ---
 
@@ -212,12 +238,14 @@ interface EnhancedEmailItem {
   responseTime?: number;
   threadId: string;
 }
-```
+
+```text
 
 ### **🔄 **INTEGRATION FLOW:\*\*
 
 ```typescript
 🎯 EMAIL PROCESSING:
+
 1. New email arrives
 2. AI analysis engine processes
 3. Lead score calculated
@@ -228,13 +256,15 @@ interface EnhancedEmailItem {
 8. Real-time UI update
 
 🎯 USER INTERACTION:
+
 1. User sees prioritized list
 2. Clicks on high-value email
 3. Email Assistant loads in middle panel
 4. AI suggestions ready
 5. One-click response possible
 6. Analytics tracked
-```
+
+```text
 
 ---
 
@@ -244,41 +274,48 @@ interface EnhancedEmailItem {
 
 ```typescript
 🚀 BEFORE:
+
 - Manual email scanning
 - No priority indication
 - Random order
 - Time wasted on low-value emails
 
 ⚡ AFTER:
+
 - AI-prioritized list
 - Clear value indication
 - Optimized sorting
 - Focus on high-impact emails
 - 10x faster identification
 - Better time allocation
-```
+
+```text
 
 ### **🎯 **BENEFITS:\*\*
 
 ```typescript
 💰 TIME SAVINGS:
+
 - Immediate identification of hot leads
 - No wasted time on low-value emails
 - Prioritized response workflow
 - Better time management
 
 🎯 CONVERSION IMPROVEMENT:
+
 - Faster response to hot leads
 - Consistent follow-up on high-value
 - Better lead qualification
 - Higher closing rates
 
 📊 BUSINESS INTELLIGENCE:
+
 - Clear overview of pipeline
 - Value-based forecasting
 - Source performance tracking
 - Location-based insights
-```
+
+```text
 
 ---
 
@@ -288,22 +325,26 @@ interface EnhancedEmailItem {
 
 ```typescript
 🎯 EFFICIENCY METRICS:
+
 - Time to identify hot leads
 - Response time improvement
 - Email processing speed
 - User satisfaction score
 
 💰 BUSINESS METRICS:
+
 - Lead conversion rate by source
 - Average deal value improvement
 - Response time vs conversion correlation
 - Pipeline value visibility
 
 🤖 AI PERFORMANCE:
+
 - Lead score accuracy
 - Source detection precision
 - Value estimation accuracy
 - User adoption rate
+
 ```
 
 **Dette er complete design specification for jeres Venstre Panel AI Assistant!** 🎯

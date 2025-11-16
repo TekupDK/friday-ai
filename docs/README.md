@@ -140,10 +140,10 @@
 When adding new documentation:
 
 1. Create the document in `docs/` directory
-2. Add entry to this README.md index
-3. Use consistent naming: `TOPIC_DESCRIPTION.md`
-4. Include last updated date
-5. Link from relevant sections
+1. Add entry to this README.md index
+1. Use consistent naming: `TOPIC_DESCRIPTION.md`
+1. Include last updated date
+1. Link from relevant sections
 
 ---
 

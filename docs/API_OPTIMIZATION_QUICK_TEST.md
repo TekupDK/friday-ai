@@ -8,18 +8,22 @@
 
 ```bash
 # Browser DevTools (F12)
+
 - Network tab: Monitor API calls
 - Console tab: Se rate limit logs
-```
+
+```text
 
 ### 2. Test Cache (2 minutter)
 
-```
+```text
+
 1. Åbn CalendarTab
 2. Skift til InvoicesTab
 3. Skift tilbage til CalendarTab
 4. Observer: Ingen API call (cache hit)
-```
+
+```text
 
 ✅ **Success:** Ingen API call når data er cached (< 60s)
 
@@ -29,25 +33,29 @@
 
 **Test A: Activity Detection**
 
-```
+```text
+
 1. Åbn CalendarTab
 2. Observer Network tab
 3. Interager (klik, scroll) → Polling: ~30s
 4. Stop interaktion → Vent 2 min
 5. Observer → Polling: ~90-180s (øget)
-```
+
+```text
 
 ✅ **Success:** Interval stiger ved inaktivitet
 
 **Test B: Page Visibility**
 
-```
+```text
+
 1. Åbn CalendarTab
 2. Observer polling i Network tab
 3. Skift til anden tab (eller minimer)
 4. Vent 2 minutter
 5. Skift tilbage → Observer: Umiddelbar API call
-```
+
+```text
 
 ✅ **Success:** Ingen polling når tab skjult, resume ved return
 
@@ -57,13 +65,15 @@
 
 **Hvis rate limit opstår:**
 
-```
+```text
+
 1. Observer UI: Countdown timer vises
 2. Observer Console: "[Rate Limit]" log med queue size
 3. Observer Network: Polling pauser
 4. Vent til countdown når 0
 5. Observer: Polling resume automatisk
-```
+
+```text
 
 ✅ **Success:** Rate limit håndteres automatisk
 
@@ -85,13 +95,15 @@
 - Aktiv brug: ~15-17 calls (40-50% reduktion)
 - Inaktiv brug: ~7-10 calls (60-70% reduktion)
 
-### Observer i Network Tab:
+### Observer i Network Tab
 
-```
+```text
+
 - Filter: XHR eller Fetch
 - Group by: Endpoint eller Domain
 - Tæl requests over 10 minutter
-```
+
+```text
 
 ---
 
@@ -104,7 +116,8 @@
 window.__requestQueue?.getQueueSize();
 window.__requestQueue?.isRateLimited();
 window.__requestQueue?.clearRateLimit(); // Manual clear
-```
+
+```text
 
 **Check API Performance:**
 
@@ -117,7 +130,8 @@ window.__apiMonitor?.getCacheHitRate(); // Returns percentage
 
 // Recent API calls
 window.__apiMonitor?.getRecentMetrics(20);
-```
+
+```text
 
 **Check Rate Limit State:**
 
@@ -125,7 +139,8 @@ window.__apiMonitor?.getRecentMetrics(20);
 // Se i console logs
 // "[Rate Limit]" viser state
 // "[RequestQueue]" viser queue activity
-```
+
+```text
 
 **Check Cache State:**
 
@@ -133,6 +148,7 @@ window.__apiMonitor?.getRecentMetrics(20);
 // React Query DevTools (hvis installeret)
 // Eller observer Network tab for cache headers
 // Eller brug: window.__apiMonitor?.getCacheHitRate()
+
 ```
 
 **Full Monitoring Guide:** Se `API_OPTIMIZATION_MONITORING.md`

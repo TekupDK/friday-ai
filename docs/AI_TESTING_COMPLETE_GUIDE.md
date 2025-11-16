@@ -31,18 +31,20 @@ Dette er din komplette guide til at teste Friday AI med Playwright og AI-powered
 🎨 UI/UX: 20% panel layout and interactions
 ♿ Accessibility: WCAG compliance
 🔍 Error Handling: Network failures and edge cases
-```
+
+```text
 
 ### **3. 📈 Test Results**
 
-```
+```text
 ⚡ Page Load Time: 144ms (EXCELLENT!)
 💾 Memory Usage: 13MB / 15MB (EFFICIENT!)
 🎨 UI Consistency: PASSED
 🤖 Redirect Handling: PASSED
 📸 Screenshots: CAPTURED
 🎥 Videos: RECORDED
-```
+
+```text
 
 ---
 
@@ -65,7 +67,8 @@ pnpm test:playwright
 
 # Åbn Playwright UI mode
 pnpm test:playwright:ui
-```
+
+```text
 
 ### **Se Test Rapporter**
 
@@ -81,7 +84,8 @@ ls test-results/ai-videos/
 
 # Se traces
 ls test-results/ai-traces/
-```
+
+```text
 
 ---
 
@@ -107,7 +111,8 @@ ls test-results/ai-traces/
 [data-testid="friday-input-left-icons"]      // Venstre ikoner
 [data-testid="friday-input-right-icons"]     // Højre ikoner
 [data-testid="friday-model-info"]            // Model info display
-```
+
+```text
 
 ### **Brug i Tests**
 
@@ -131,7 +136,8 @@ const response = await page
   .locator('[data-testid="friday-message-assistant"]')
   .last();
 const text = await response.textContent();
-```
+
+```text
 
 ---
 
@@ -144,7 +150,7 @@ import { test, expect } from "@playwright/test";
 
 test("Min Friday AI Test", async ({ page }) => {
   // Navigate til app
-  await page.goto("http://localhost:3000");
+  await page.goto("<http://localhost:3000>");
 
   // Find Friday AI
   const fridayPanel = await page.locator('[data-testid="friday-ai-panel"]');
@@ -164,7 +170,8 @@ test("Min Friday AI Test", async ({ page }) => {
     .last();
   expect(await response.isVisible()).toBe(true);
 });
-```
+
+```text
 
 ### **Advanced Test med AI Validation**
 
@@ -172,7 +179,7 @@ test("Min Friday AI Test", async ({ page }) => {
 import { test, expect } from "@playwright/test";
 
 test("Danish Language Quality Test", async ({ page }) => {
-  await page.goto("http://localhost:3000");
+  await page.goto("<http://localhost:3000>");
 
   const chatInput = await page.locator('[data-testid="friday-chat-input"]');
   const sendButton = await page.locator('[data-testid="friday-send-button"]');
@@ -209,7 +216,8 @@ test("Danish Language Quality Test", async ({ page }) => {
   expect(hasBusiness).toBe(true);
   expect(response?.length).toBeGreaterThan(50);
 });
-```
+
+```text
 
 ### **Performance Test Template**
 
@@ -217,7 +225,7 @@ test("Danish Language Quality Test", async ({ page }) => {
 import { test, expect } from "@playwright/test";
 
 test("Response Time Performance", async ({ page }) => {
-  await page.goto("http://localhost:3000");
+  await page.goto("<http://localhost:3000>");
 
   const chatInput = await page.locator('[data-testid="friday-chat-input"]');
   const sendButton = await page.locator('[data-testid="friday-send-button"]');
@@ -237,7 +245,8 @@ test("Response Time Performance", async ({ page }) => {
   // Performance assertion
   expect(responseTime).toBeLessThan(10000); // 10 seconds max
 });
-```
+
+```text
 
 ---
 
@@ -275,7 +284,8 @@ test("Email Context Test", async ({ page }) => {
 
   expect(mentionsEmails).toBe(true);
 });
-```
+
+```text
 
 ### **Generate Calendar Events**
 
@@ -304,7 +314,8 @@ test("Calendar Context Test", async ({ page }) => {
 
   expect(mentionsEvents).toBe(true);
 });
-```
+
+```bash
 
 ---
 
@@ -319,7 +330,8 @@ test("Calendar Context Test", async ({ page }) => {
 // Mobile Chrome - Pixel 5
 // Mobile Safari - iPhone 12
 // ai-tests - AI-specific tests with longer timeouts
-```
+
+```text
 
 ### **Custom Configuration**
 
@@ -330,7 +342,7 @@ export default defineConfig({
   timeout: 60000, // 60s total test timeout
 
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: "<http://localhost:3000",>
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
@@ -350,7 +362,8 @@ export default defineConfig({
     },
   ],
 });
-```
+
+```text
 
 ---
 
@@ -363,7 +376,8 @@ export default defineConfig({
 # Test real email summarization
 # Validate calendar booking
 # Test Billy invoice generation
-```
+
+```text
 
 ### **2. 🤖 AI-Powered Test Generation**
 
@@ -372,7 +386,8 @@ export default defineConfig({
 # Auto-detect edge cases
 # Generate test data dynamically
 # Self-healing tests
-```
+
+```bash
 
 ### **3. 📊 CI/CD Integration**
 
@@ -381,7 +396,8 @@ export default defineConfig({
 # Automated test runs on PR
 # Performance regression detection
 # Visual regression testing
-```
+
+```text
 
 ### **4. 🌐 Cross-Browser Matrix**
 
@@ -390,7 +406,8 @@ export default defineConfig({
 # Mobile device testing
 # Accessibility testing
 # Internationalization testing
-```
+
+```text
 
 ---
 
@@ -400,14 +417,15 @@ export default defineConfig({
 
 ```typescript
 // Use redirect-safe test pattern
-await page.goto("http://localhost:3000", {
+await page.goto("<http://localhost:3000",> {
   waitUntil: "domcontentloaded",
   timeout: 10000,
 });
 
 // Wait for redirects to settle
 await page.waitForTimeout(2000);
-```
+
+```text
 
 ### **Element Not Found**
 
@@ -430,7 +448,8 @@ for (const selector of fridaySelectors) {
     continue;
   }
 }
-```
+
+```text
 
 ### **Slow Response Times**
 
@@ -443,7 +462,8 @@ await page.waitForSelector('[data-testid="friday-message-assistant"]', {
 // Use loading indicator
 await page.waitForSelector('[data-testid="friday-loading-indicator"]');
 await page.waitForSelector('[data-testid="friday-message-assistant"]');
-```
+
+```text
 
 ---
 
@@ -457,7 +477,8 @@ await page.locator('[data-testid="friday-send-button"]').click();
 
 // ❌ BAD
 await page.locator("button.send").click();
-```
+
+```text
 
 ### **2. Wait for Elements Properly**
 
@@ -469,7 +490,8 @@ const panel = await page.locator('[data-testid="friday-ai-panel"]');
 // ❌ BAD
 const panel = await page.locator('[data-testid="friday-ai-panel"]');
 await panel.click(); // Might fail if not loaded
-```
+
+```text
 
 ### **3. Handle Errors Gracefully**
 
@@ -486,7 +508,8 @@ try {
 
 // ❌ BAD
 await page.waitForSelector('[data-testid="friday-ai-panel"]'); // Crashes test
-```
+
+```text
 
 ### **4. Take Screenshots for Debugging**
 
@@ -498,7 +521,8 @@ try {
   await page.screenshot({ path: "test-results/error-screenshot.png" });
   throw error;
 }
-```
+
+```text
 
 ---
 
@@ -506,22 +530,24 @@ try {
 
 ### **Current Performance**
 
-```
+```bash
 ⚡ Page Load Time: 144ms
 💾 Memory Usage: 13MB / 15MB
 🎯 Test Success Rate: 100%
 📊 Test Coverage: 80%+
 🚀 CI/CD Ready: YES
-```
+
+```text
 
 ### **Quality Scores**
 
-```
+```text
 🇩🇰 Danish Language: 90%
 💼 Professional Tone: 85%
 🏢 Business Context: 95%
 ⚡ Performance: 95%
 ♿ Accessibility: 80%
+
 ```
 
 ---
@@ -542,7 +568,7 @@ try {
 
 ## 📞 **SUPPORT:**
 
-- 📖 **Playwright Docs**: https://playwright.dev
+- 📖 **Playwright Docs**: <https://playwright.dev>
 - 🤖 **Friday AI Docs**: `/docs/FRIDAY_AI_TESTING_GUIDE.md`
 - 🎯 **OpenRouter Docs**: `/docs/OPENROUTER_SETUP.md`
 - 💡 **Test Examples**: `/tests/ai/`

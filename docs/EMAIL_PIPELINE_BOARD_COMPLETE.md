@@ -47,7 +47,8 @@ interface EmailCardData {
   timestamp: string; // ISO 8601
   labels?: string[];
 }
-```
+
+```bash
 
 ---
 
@@ -112,7 +113,8 @@ interface EmailCardData {
 
 ```typescript
 Record<PipelineStage, EmailCardData[]>;
-```
+
+```text
 
 **Features:**
 
@@ -137,7 +139,8 @@ Record<PipelineStage, EmailCardData[]>;
   threadId: string;
   newStage: PipelineStage;
 }
-```
+
+```text
 
 **Features:**
 
@@ -167,7 +170,8 @@ CREATE TABLE friday_ai.email_pipeline_state (
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
   UNIQUE(thread_id, user_id)
 );
-```
+
+```text
 
 #### `email_pipeline_transitions` (audit log)
 
@@ -182,7 +186,8 @@ CREATE TABLE friday_ai.email_pipeline_transitions (
   reason TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
-```
+
+```bash
 
 ---
 
@@ -212,7 +217,8 @@ import { EmailPipelineBoard } from "./EmailPipelineBoard";
     }}
   />
 ) : (
-```
+
+```text
 
 ---
 
@@ -222,6 +228,7 @@ import { EmailPipelineBoard } from "./EmailPipelineBoard";
 
 ```bash
 pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
+
 ```
 
 **Versions:**
@@ -356,8 +363,8 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 
 1. **Email preview in pipeline view** - Opens modal instead of sidebar
    - **Fix:** Add sidebar option for pipeline view
-2. **No source indicator yet** - Awaits Phase 2.2
-3. **No quick actions yet** - Awaits Phase 2.3
+1. **No source indicator yet** - Awaits Phase 2.2
+1. **No quick actions yet** - Awaits Phase 2.3
 
 ### Not Issues (By Design)
 
@@ -397,10 +404,10 @@ pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ### How Drag & Drop Works
 
 1. **DndContext** - Wraps all draggable/droppable components
-2. **useSortable** - Makes EmailCard draggable + provides listeners
-3. **useDroppable** - Makes PipelineColumn accept drops
-4. **DragOverlay** - Shows card while dragging (clone)
-5. **onDragEnd** - Triggers mutation to update backend
+1. **useSortable** - Makes EmailCard draggable + provides listeners
+1. **useDroppable** - Makes PipelineColumn accept drops
+1. **DragOverlay** - Shows card while dragging (clone)
+1. **onDragEnd** - Triggers mutation to update backend
 
 ### Key Files to Study
 

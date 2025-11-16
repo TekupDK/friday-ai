@@ -1,7 +1,7 @@
 # 🎯 Day 6-8: ChromaDB Integration Plan
 
-**Start Time:** November 9, 2025 14:51  
-**Estimated Duration:** 1-2 hours  
+**Start Time:** November 9, 2025 14:51
+**Estimated Duration:** 1-2 hours
 **Status:** 🔄 In Progress
 
 ---
@@ -11,9 +11,9 @@
 Nu har vi ChromaDB kørende og TypeScript client klar. Nu skal vi:
 
 1. **Opgradere embeddings** fra simple hash til rigtige embeddings
-2. **Integrere i leads** for intelligent deduplication
-3. **Integrere i emails** for context retrieval
-4. **Teste** at alt virker sammen
+1. **Integrere i leads** for intelligent deduplication
+1. **Integrere i emails** for context retrieval
+1. **Teste** at alt virker sammen
 
 ---
 
@@ -21,7 +21,7 @@ Nu har vi ChromaDB kørende og TypeScript client klar. Nu skal vi:
 
 ### Problem
 
-Nuværende: Simple hash-based embeddings (ikke semantiske)  
+Nuværende: Simple hash-based embeddings (ikke semantiske)
 Mål: Rigtige vector embeddings for semantic search
 
 ### Options
@@ -43,7 +43,8 @@ async function generateEmbedding(text: string): Promise<number[]> {
   });
   return response.data[0].embedding;
 }
-```
+
+```text
 
 #### Option B: Voyage AI (Gratis Tier)
 
@@ -62,7 +63,8 @@ async function generateEmbedding(text: string): Promise<number[]> {
   });
   return result.data[0].embedding;
 }
-```
+
+```text
 
 #### Option C: Local Model (100% Gratis)
 
@@ -73,7 +75,8 @@ async function generateEmbedding(text: string): Promise<number[]> {
 
 // Install: pip install sentence-transformers
 // Run: Local Python service or use @xenova/transformers
-```
+
+```text
 
 **Valg:** Start med Option A (OpenAI) - bedste kvalitet og vi har API key
 
@@ -91,7 +94,8 @@ export async function createLead(data) {
   // 2. Insert into database
   // 3. Return lead
 }
-```
+
+```text
 
 ### New Flow (Med ChromaDB)
 
@@ -131,7 +135,8 @@ export async function createLead(data) {
   // 6. Return lead
   return lead;
 }
-```
+
+```text
 
 ### Threshold Values
 
@@ -140,7 +145,8 @@ export async function createLead(data) {
 const DUPLICATE_THRESHOLD = 0.15; // Almost identical
 const SIMILAR_THRESHOLD = 0.3; // Very similar
 const RELATED_THRESHOLD = 0.5; // Somewhat related
-```
+
+```text
 
 ---
 
@@ -202,7 +208,8 @@ async function indexEmail(email: Email) {
     },
   ]);
 }
-```
+
+```text
 
 ---
 
@@ -224,7 +231,8 @@ for (const test of tests) {
   console.log(`Results:`, results?.documents);
   console.log(`Distances:`, results?.distances);
 }
-```
+
+```text
 
 ### Test 2: Duplicate Detection
 
@@ -232,7 +240,7 @@ for (const test of tests) {
 // Create duplicate lead
 const lead1 = await createLead({
   name: "John Doe",
-  email: "john@acme.com",
+  email: "<john@acme.com>",
   company: "ACME Corp",
   message: "Interested in product",
 });
@@ -240,7 +248,7 @@ const lead1 = await createLead({
 // Try creating similar lead (should detect duplicate)
 const lead2 = await createLead({
   name: "John Doe",
-  email: "john.doe@acme.com", // Slightly different
+  email: "<john<.doe@acme.co>m>", // Slightly different
   company: "ACME Corporation", // Slightly different
   message: "Want product info", // Similar intent
 });
@@ -248,7 +256,8 @@ const lead2 = await createLead({
 console.log("Lead1 ID:", lead1.id);
 console.log("Lead2 ID:", lead2.id);
 console.log("Same?", lead1.id === lead2.id); // Should be true
-```
+
+```text
 
 ### Test 3: Email Context
 
@@ -256,19 +265,19 @@ console.log("Same?", lead1.id === lead2.id); // Should be true
 // Index test emails
 await indexEmail({
   id: 1,
-  from: "client@acme.com",
+  from: "<client@acme.com>",
   subject: "Re: Project",
   body: "Thanks for the proposal",
 });
 await indexEmail({
   id: 2,
-  from: "client@acme.com",
+  from: "<client@acme.com>",
   subject: "Re: Project",
   body: "When can we start?",
 });
 await indexEmail({
   id: 3,
-  from: "other@xyz.com",
+  from: "<other@xyz.com>",
   subject: "Question",
   body: "How much does it cost?",
 });
@@ -282,7 +291,8 @@ const related = await searchSimilar(
 
 console.log("Related emails:", related?.documents);
 // Should return emails 1 & 2 (project related), not 3
-```
+
+```text
 
 ---
 
@@ -295,7 +305,8 @@ console.log("Related emails:", related?.documents);
 ```typescript
 // Implement OpenAI embeddings
 // Export: generateEmbedding(text: string): Promise<number[]>
-```
+
+```text
 
 ### 2. Lead Creation
 
@@ -305,7 +316,8 @@ console.log("Related emails:", related?.documents);
 ```typescript
 // Add: ChromaDB duplicate check before insert
 // Add: ChromaDB indexing after insert
-```
+
+```text
 
 ### 3. Email Processing
 
@@ -314,7 +326,8 @@ console.log("Related emails:", related?.documents);
 ```typescript
 // Add: ChromaDB context retrieval
 // Add: ChromaDB indexing after processing
-```
+
+```text
 
 ### 4. Client Update
 
@@ -322,32 +335,35 @@ console.log("Related emails:", related?.documents);
 
 ```typescript
 // Update: OpenRouterEmbeddings class to use real API
-```
+
+```text
 
 ---
 
 ## ⏱️ Estimated Time
 
-```
+```text
 Step 1: Embeddings API          30 min
 Step 2: Lead Integration        20 min
 Step 3: Email Integration       20 min
 Step 4: Testing                 20 min
 ─────────────────────────────────────
 Total:                          90 min (~1.5 hours)
-```
+
+```text
 
 ---
 
 ## ✅ Success Criteria
 
-```
+```text
 ✅ OpenAI embeddings working
 ✅ Duplicate leads detected and merged
 ✅ Email context improves AI responses
 ✅ All tests passing
 ✅ Performance acceptable (<200ms per operation)
 ✅ Documentation updated
+
 ```
 
 ---
@@ -372,14 +388,14 @@ Total:                          90 min (~1.5 hours)
 ## 💡 Tips
 
 1. **Start Simple:** Test embeddings with console.log først
-2. **Small Batches:** Test med få leads/emails først
-3. **Monitor Performance:** Check response times
-4. **Iterate:** Start med leads, derefter emails
-5. **Document:** Opdater docs løbende
+1. **Small Batches:** Test med få leads/emails først
+1. **Monitor Performance:** Check response times
+1. **Iterate:** Start med leads, derefter emails
+1. **Document:** Opdater docs løbende
 
 ---
 
 **Ready to start?** Lad os begynde med Step 1: Embeddings! 🚀
 
-**Current Time:** 14:51  
+**Current Time:** 14:51
 **Next:** Implement OpenAI embeddings

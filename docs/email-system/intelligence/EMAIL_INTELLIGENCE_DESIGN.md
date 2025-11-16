@@ -8,12 +8,12 @@
 
 Add AI-powered email intelligence capabilities to Friday AI to help users manage their inbox more efficiently.
 
-### Core Features:
+### Core Features
 
 1. **Smart Categorization** - Automatic email classification
-2. **Auto-Response Suggestions** - AI-generated reply templates
-3. **Priority Detection** - Intelligent importance scoring
-4. **Smart Summaries** - Quick email overviews (already exists, enhance)
+1. **Auto-Response Suggestions** - AI-generated reply templates
+1. **Priority Detection** - Intelligent importance scoring
+1. **Smart Summaries** - Quick email overviews (already exists, enhance)
 
 ---
 
@@ -46,7 +46,8 @@ async function categorizeEmail(email: EmailMessage): Promise<EmailCategory> {
     reasoning: "Email discusses project timeline from team member",
   };
 }
-```
+
+```text
 
 **Benefits:**
 
@@ -89,7 +90,8 @@ async function generateResponseSuggestions(
     },
   ];
 }
-```
+
+```text
 
 **Benefits:**
 
@@ -134,7 +136,8 @@ async function scorePriority(email: EmailMessage): Promise<EmailPriority> {
     },
   };
 }
-```
+
+```text
 
 **Benefits:**
 
@@ -151,7 +154,7 @@ async function scorePriority(email: EmailMessage): Promise<EmailPriority> {
 
 **Files to Create:**
 
-```
+```text
 server/email-intelligence/
 ├── categorizer.ts          # Email categorization logic
 ├── response-generator.ts   # Response suggestion engine
@@ -161,7 +164,8 @@ server/email-intelligence/
     ├── categorizer.test.ts
     ├── response-generator.test.ts
     └── priority-scorer.test.ts
-```
+
+```text
 
 **Dependencies:**
 
@@ -210,7 +214,8 @@ CREATE TABLE response_suggestions (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (thread_id) REFERENCES email_threads(id)
 );
-```
+
+```text
 
 ---
 
@@ -250,7 +255,8 @@ export const emailIntelligenceRouter = router({
     return getEmailCategoryStats(ctx.user.id);
   }),
 });
-```
+
+```text
 
 ---
 
@@ -258,7 +264,7 @@ export const emailIntelligenceRouter = router({
 
 **Components to Create:**
 
-```
+```bash
 client/src/components/email-intelligence/
 ├── CategoryBadge.tsx          # Display email category
 ├── PriorityIndicator.tsx      # Show priority level
@@ -266,7 +272,8 @@ client/src/components/email-intelligence/
 ├── CategoryFilter.tsx         # Filter by category
 └── __tests__/
     └── email-intelligence.test.tsx
-```
+
+```text
 
 **Example Usage:**
 
@@ -278,19 +285,20 @@ client/src/components/email-intelligence/
     <CategoryBadge category={category} />
   </EmailHeader>
 
-  <EmailContent>{/* existing content */}</EmailContent>
+  <EmailContent>{/*existing content*/}</EmailContent>
 
   <EmailActions>
     <ResponseSuggestions threadId={threadId} onSelect={handleUseSuggestion} />
   </EmailActions>
 </EmailThread>
-```
+
+```text
 
 ---
 
 ## 📊 TESTING STRATEGY
 
-### Unit Tests (30 min):
+### Unit Tests (30 min)
 
 ```typescript
 // Test categorization logic
@@ -313,9 +321,10 @@ describe("Priority Scorer", () => {
   it("should score VIP senders higher");
   it("should identify action items");
 });
-```
 
-### Integration Tests:
+```text
+
+### Integration Tests
 
 - TRPC endpoint functionality
 - Database persistence
@@ -344,7 +353,7 @@ describe("Priority Scorer", () => {
 
 ## 📝 IMPLEMENTATION CHECKLIST
 
-### Backend (1-2 hours):
+### Backend (1-2 hours)
 
 - [ ] Create categorizer.ts
 - [ ] Create response-generator.ts
@@ -353,7 +362,7 @@ describe("Priority Scorer", () => {
 - [ ] Create TRPC endpoints
 - [ ] Write unit tests
 
-### Frontend (1-2 hours):
+### Frontend (1-2 hours)
 
 - [ ] Create CategoryBadge component
 - [ ] Create PriorityIndicator component
@@ -362,7 +371,7 @@ describe("Priority Scorer", () => {
 - [ ] Add filtering capabilities
 - [ ] Write component tests
 
-### Testing & Polish (30 min):
+### Testing & Polish (30 min)
 
 - [ ] Run all tests
 - [ ] Manual testing
@@ -424,6 +433,7 @@ Generate 2-3 professional response suggestions for this email in Danish.
 Email: {content}
 
 Consider:
+
 - Sender relationship
 - Email tone
 - Action required
@@ -431,6 +441,7 @@ Consider:
 
 Return JSON array of suggestions.
 `;
+
 ```
 
 **Rate Limiting:**

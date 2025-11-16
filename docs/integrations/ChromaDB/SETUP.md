@@ -1,7 +1,7 @@
-# ✅ Day 4-5: ChromaDB Setup Complete!
+# ✅ Day 4-5: ChromaDB Setup Complete
 
-**Date:** November 9, 2025 14:48  
-**Status:** Docker Deployed, Client Ready  
+**Date:** November 9, 2025 14:48
+**Status:** Docker Deployed, Client Ready
 **Version:** ChromaDB Latest (V2 API)
 
 ---
@@ -10,17 +10,18 @@
 
 ### ✅ Docker Deployment
 
-```
+```text
 ChromaDB:        Running on port 8000
 Health API:      ✅ {"nanosecond heartbeat":...}
 Data Volume:     friday-chromadb-data (persistent)
 Network:         friday-chromadb-network
 Authentication:  Token-based (dev token)
-```
+
+```text
 
 ### ✅ Files Created
 
-```
+```bash
 server/integrations/chromadb/
 ├── docker/
 │   └── docker-compose.chromadb.yml  # Docker setup (V2 API)
@@ -32,7 +33,8 @@ server/integrations/chromadb/
 Modified:
 ├── server/_core/env.ts               # Added CHROMA_* config vars
 └── package.json (root)               # Added chromadb dependency
-```
+
+```text
 
 ### ✅ TypeScript Client
 
@@ -48,6 +50,7 @@ Modified:
 **Functions:**
 
 ```typescript
+
 - getChromaClient()
 - getCollection(name, metadata?)
 - addDocuments(collectionName, documents[])
@@ -60,7 +63,8 @@ Modified:
 - listCollections()
 - formatLeadForEmbedding(lead)
 - formatEmailForEmbedding(email)
-```
+
+```bash
 
 ---
 
@@ -71,9 +75,10 @@ $ docker ps --filter "name=chromadb"
 NAME             IMAGE                   STATUS    PORTS
 friday-chromadb  chromadb/chroma:latest  Up 2min   0.0.0.0:8000->8000/tcp
 
-$ curl http://localhost:8000/api/v2/heartbeat
+$ curl <http://localhost:8000/api/v2/heartbeat>
 {"nanosecond heartbeat":1762696136202811355}
-```
+
+```text
 
 ---
 
@@ -84,9 +89,10 @@ $ curl http://localhost:8000/api/v2/heartbeat
 ```bash
 # ChromaDB Vector Database
 CHROMA_ENABLED=true
-CHROMA_URL=http://localhost:8000
+CHROMA_URL=<http://localhost:8000>
 CHROMA_AUTH_TOKEN=friday-chromadb-token-dev
-```
+
+```bash
 
 ### Docker Commands
 
@@ -102,7 +108,8 @@ docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.ym
 
 # Check status
 docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.yml ps
-```
+
+```bash
 
 ### npm Scripts (in server/integrations/chromadb/)
 
@@ -113,7 +120,8 @@ npm run restart    # Restart
 npm run logs       # View logs
 npm run status     # Check status
 npm run health     # Test health endpoint
-```
+
+```text
 
 ---
 
@@ -141,7 +149,8 @@ const results = await searchSimilar(
 );
 
 console.log('Similar leads:', results?.documents);
-```
+
+```text
 
 ### Lead Deduplication
 
@@ -169,7 +178,8 @@ async function findDuplicateLeads(newLead: Lead) {
 
   return duplicates;
 }
-```
+
+```text
 
 ### Email Context Retrieval
 
@@ -192,13 +202,14 @@ async function findRelatedEmails(currentEmail: Email) {
 
   return related?.documents || [];
 }
-```
+
+```text
 
 ---
 
 ## 🔍 What's Working
 
-```
+```bash
 ✅ ChromaDB Docker:         Running on port 8000
 ✅ V2 API:                  Responding correctly
 ✅ TypeScript Client:       Compiled without errors
@@ -208,20 +219,22 @@ async function findRelatedEmails(currentEmail: Email) {
 ✅ Authentication:          Token-based (configured)
 ✅ Environment Config:      Added to env.ts
 ✅ npm Package:             chromadb@^3.1.1 installed
-```
+
+```text
 
 ---
 
 ## ⚠️ What's NOT Done Yet
 
-```
+```text
 ❌ Embeddings:              Using simple hash (placeholder)
 ❌ Lead Integration:        Not yet integrated in db.ts
 ❌ Email Integration:       Not yet integrated
 ❌ Document Integration:    Not yet integrated
 ❌ .env.dev Update:         User needs to add CHROMA_ENABLED=true
 ❌ Server Restart:          Friday AI needs restart to load config
-```
+
+```text
 
 ---
 
@@ -229,7 +242,7 @@ async function findRelatedEmails(currentEmail: Email) {
 
 ### 1. Improve Embeddings (Priority 1)
 
-Current: Simple hash-based (not real embeddings)  
+Current: Simple hash-based (not real embeddings)
 Need: Integrate with proper embeddings API
 
 **Options:**
@@ -241,11 +254,12 @@ Need: Integrate with proper embeddings API
 
 ### 2. Lead Deduplication Integration
 
-**File:** `server/db.ts`  
+**File:** `server/db.ts`
 **Function:** `createLead()`
 
 ```typescript
 // Before creating lead:
+
 1. Format lead for embedding
 2. Search ChromaDB for similar leads
 3. If similar found with distance < threshold:
@@ -253,7 +267,8 @@ Need: Integrate with proper embeddings API
    - Or merge information
 4. Else create new lead
 5. Add to ChromaDB
-```
+
+```text
 
 ### 3. Email Context Integration
 
@@ -261,11 +276,13 @@ Need: Integrate with proper embeddings API
 
 ```typescript
 // When processing email:
+
 1. Format email for embedding
 2. Search ChromaDB for related emails
 3. Use context for better AI responses
 4. Add new email to ChromaDB
-```
+
+```text
 
 ### 4. Document Search (Optional)
 
@@ -273,10 +290,12 @@ Need: Integrate with proper embeddings API
 
 ```typescript
 // When user asks about documents:
+
 1. Search ChromaDB for relevant chunks
 2. Use as context for LLM
 3. Generate informed response
-```
+
+```text
 
 ---
 
@@ -289,14 +308,15 @@ Need: Integrate with proper embeddings API
 docker ps --filter "name=chromadb"
 
 # 2. Test V2 API
-curl http://localhost:8000/api/v2/heartbeat
+curl <http://localhost:8000/api/v2/heartbeat>
 # Expected: {"nanosecond heartbeat":...}
 
 # 3. Test Collections
-curl -X POST http://localhost:8000/api/v2/collections \
+curl -X POST <http://localhost:8000/api/v2/collections> \
   -H "Content-Type: application/json" \
   -d '{"name":"test_collection"}'
-```
+
+```text
 
 ### TypeScript Test
 
@@ -313,7 +333,8 @@ async function testChroma() {
 }
 
 testChroma();
-```
+
+```text
 
 ---
 
@@ -325,7 +346,8 @@ testChroma();
 
 ```bash
 docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.yml logs chromadb
-```
+
+```bash
 
 **Common fixes:**
 
@@ -338,9 +360,9 @@ docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.ym
 **Check:**
 
 1. `CHROMA_ENABLED=true` in .env.dev
-2. `CHROMA_URL=http://localhost:8000` is correct
-3. ChromaDB is actually running (`docker ps`)
-4. Friday AI server restarted after config change
+1. `CHROMA_URL=http://localhost:8000` is correct
+1. ChromaDB is actually running (`docker ps`)
+1. Friday AI server restarted after config change
 
 ### Problem: Authentication errors
 
@@ -361,7 +383,8 @@ friday-chromadb-data → /var/lib/docker/volumes/friday-chromadb-data
 
 # Inside container
 /chroma/chroma → Persistent storage
-```
+
+```text
 
 ### Backup
 
@@ -373,13 +396,14 @@ docker run --rm -v friday-chromadb-data:/data -v $(pwd):/backup \
 # Restore volume
 docker run --rm -v friday-chromadb-data:/data -v $(pwd):/backup \
   alpine tar xzf /backup/chromadb_backup.tar.gz -C /
-```
+
+```text
 
 ---
 
 ## 📊 Resource Usage
 
-```
+```text
 Memory:          ~200 MB (idle)
                  ~500 MB (under load)
 CPU:             <5% (idle)
@@ -387,13 +411,14 @@ CPU:             <5% (idle)
 Disk:            ~100 MB (base)
                  +size of vectors stored
 Port:            8000 (HTTP API)
-```
+
+```text
 
 ---
 
 ## 🎯 Success Metrics
 
-```
+```bash
 ✅ Zero Cost:            Self-hosted, no fees
 ✅ Fast Deployment:      < 1 minute Docker startup
 ✅ Type-Safe Client:     Full TypeScript support
@@ -401,13 +426,14 @@ Port:            8000 (HTTP API)
 ✅ Semantic Search:      Ready for embeddings
 ✅ Flexible Schema:      Metadata support
 ✅ Scalable:             Can handle millions of vectors
-```
+
+```text
 
 ---
 
 ## 🚀 Summary
 
-```
+```bash
 ╔══════════════════════════════════════════════════════════╗
 ║      DAY 4-5: ChromaDB SETUP COMPLETE! ✅               ║
 ╠══════════════════════════════════════════════════════════╣
@@ -430,12 +456,13 @@ Port:            8000 (HTTP API)
 ║                       - Email context                    ║
 ║                                                          ║
 ╚══════════════════════════════════════════════════════════╝
+
 ```
 
 ---
 
-**Status:** ✅ Foundation Ready!  
-**Next Session:** Integrate with leads & emails  
+**Status:** ✅ Foundation Ready!
+**Next Session:** Integrate with leads & emails
 **Estimated Time:** 1-2 hours
 
 **Last Updated:** November 9, 2025 14:48 PM

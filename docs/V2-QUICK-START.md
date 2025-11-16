@@ -4,7 +4,7 @@
 
 ---
 
-## 🎯 Hvad er V2?
+## 🎯 Hvad er V2
 
 V2 er den nye **Shortwave-inspirerede workspace** med:
 
@@ -21,7 +21,8 @@ V2 er den nye **Shortwave-inspirerede workspace** med:
 
 ```bash
 npm run dev
-```
+
+```text
 
 Appen starter på: `http://localhost:5000`
 
@@ -38,39 +39,45 @@ Brug dine normale login credentials.
 **Forventet adfærd:**
 
 1. Klik på en email i listen
-2. Højre panel skifter automatisk baseret på email type
-3. Relevant information vises (Lead analyzer, Booking manager, etc.)
+1. Højre panel skifter automatisk baseret på email type
+1. Relevant information vises (Lead analyzer, Booking manager, etc.)
 
 **Hvad skal du se:**
 
-```
+```text
 Email Type          →  Workspace Shows
 ─────────────────────────────────────────
 Lead email          →  🎯 Lead Analyzer
   (fra rengoring.nu)     - AI estimat
+
                          - Kalender check
                          - Quick actions
 
 Booking email       →  📅 Booking Manager
   (label: I kalender)    - Booking detaljer
+
                          - Team info
                          - Timeline
 
 Invoice email       →  💰 Invoice Tracker
   (label: Finance)       - Payment status
+
                          - Risk analysis
                          - Actions
 
 Customer email      →  👤 Customer Profile
   (multiple threads)     - Historik
+
                          - Stats
                          - Preferences
 
 No email selected   →  📊 Business Dashboard
+
                          - Today's bookings
                          - Urgent actions
                          - Week stats
-```
+
+```text
 
 ### Test 2: Context Detection
 
@@ -81,17 +88,17 @@ No email selected   →  📊 Business Dashboard
    - Eller email med label "Leads"
    - Højre panel viser: Lead Analyzer
 
-2. **Booking Email:**
+1. **Booking Email:**
    - Klik på email med label "I kalender"
    - Eller email med "bekræft" i subject
    - Højre panel viser: Booking Manager
 
-3. **Invoice Email:**
+1. **Invoice Email:**
    - Klik på email med label "Finance"
    - Eller email med "faktura" i subject
    - Højre panel viser: Invoice Tracker
 
-4. **Customer Email:**
+1. **Customer Email:**
    - Klik på email med mange messages i thread
    - Eller email med label "Afsluttet"
    - Højre panel viser: Customer Profile
@@ -99,8 +106,8 @@ No email selected   →  📊 Business Dashboard
 ### Test 3: No Email Selected
 
 1. Klik tilbage til email liste (uden at vælge email)
-2. Højre panel viser: Business Dashboard
-3. Se today's bookings, urgent actions, week stats
+1. Højre panel viser: Business Dashboard
+1. Se today's bookings, urgent actions, week stats
 
 ---
 
@@ -116,7 +123,8 @@ No email selected   →  📊 Business Dashboard
 [SmartWorkspace] Context detection started
 [SmartWorkspace] Detected context: lead
 [SmartWorkspace] Showing LeadAnalyzer
-```
+
+```text
 
 ### Verify Context Updates
 
@@ -124,7 +132,8 @@ No email selected   →  📊 Business Dashboard
 // I browser console, check EmailContext:
 // (Dette er kun for debugging)
 console.log("Email Context:", window.__emailContext);
-```
+
+```text
 
 ### Common Issues
 
@@ -138,7 +147,8 @@ console.log("Email Context:", window.__emailContext);
 
 ```bash
 npm run check
-```
+
+```bash
 
 **Issue 3: Workspace viser forkert component**
 
@@ -151,7 +161,7 @@ npm run check
 
 ### File Structure
 
-```
+```bash
 V2 Architecture:
 ├── WorkspaceLayout.tsx          (Main layout - replaces ChatInterface)
 ├── EmailCenterPanel.tsx         (Middle - only emails)
@@ -164,25 +174,37 @@ V2 Architecture:
 │       ├── CustomerProfile.tsx
 │       └── BusinessDashboard.tsx
 └── EmailContext.tsx             (State management)
-```
+
+```text
 
 ### Data Flow
 
-```
+```bash
+
 1. User clicks email
+
    ↓
+
 2. EmailTab.tsx (line ~1872)
+
    emailContext.setSelectedEmail({ id, subject, from, ... })
    ↓
+
 3. EmailContext.tsx
+
    setState({ selectedEmail: email })
    ↓
+
 4. SmartWorkspacePanel.tsx (useEffect)
+
    Detects context based on email
    ↓
+
 5. Renders correct component
+
    LeadAnalyzer | BookingManager | InvoiceTracker | etc.
-```
+
+```text
 
 ---
 
@@ -210,24 +232,28 @@ V2 Architecture:
 
 ```bash
 npm run dev
-```
+
+```text
 
 ### Type Check
 
 ```bash
 npm run check
-```
+
+```text
 
 ### Run Tests
 
 ```bash
 npm test
-```
+
+```text
 
 ### Build Production
 
 ```bash
 npm run build
+
 ```
 
 ---
@@ -309,24 +335,24 @@ npm run build
 ### For Testing
 
 1. **Use different email types** - Test all 5 workspace states
-2. **Check console logs** - Verify context detection
-3. **Try edge cases** - No email selected, multiple clicks, etc.
+1. **Check console logs** - Verify context detection
+1. **Try edge cases** - No email selected, multiple clicks, etc.
 
 ### For Development
 
 1. **Hot reload works** - Changes reflect immediately
-2. **TypeScript strict** - Fix errors as they appear
-3. **Component isolation** - Each workspace component is independent
+1. **TypeScript strict** - Fix errors as they appear
+1. **Component isolation** - Each workspace component is independent
 
 ### For Debugging
 
 1. **React DevTools** - Inspect component state
-2. **Console logs** - Added throughout for debugging
-3. **Network tab** - Check API calls (Phase 4)
+1. **Console logs** - Added throughout for debugging
+1. **Network tab** - Check API calls (Phase 4)
 
 ---
 
-## 📞 Need Help?
+## 📞 Need Help
 
 ### Documentation
 
@@ -353,7 +379,7 @@ A: Yes! In `App.tsx`, change import to `ChatInterface` instead of `WorkspaceLayo
 
 ---
 
-## 🎉 Enjoy Testing V2!
+## 🎉 Enjoy Testing V2
 
 **Core functionality is working - test it and see the magic!** ✨
 

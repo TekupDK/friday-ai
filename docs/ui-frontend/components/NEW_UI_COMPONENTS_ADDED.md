@@ -1,4 +1,4 @@
-# 🎨 5 NYE UI Komponenter Fra Jeres Design!
+# 🎨 5 NYE UI Komponenter Fra Jeres Design
 
 **Baseret på screenshot:** Friday AI Email Center + Business Dashboard
 
@@ -298,7 +298,8 @@ import { SmartSplitsDemo } from "@/components/showcase/SmartSplitsDemo";
 <aside className="w-64 border-r">
   <SmartSplitsDemo />
 </aside>;
-```
+
+```text
 
 ### **Business Metrics i Dashboard:**
 
@@ -307,9 +308,10 @@ import { BusinessMetricsCard } from "@/components/showcase/BusinessMetricsCard";
 
 <div className="grid grid-cols-3 gap-4">
   <BusinessMetricsCard />
-  {/* Other widgets */}
+  {/*Other widgets*/}
 </div>;
-```
+
+```text
 
 ### **Email List i Center Panel:**
 
@@ -319,6 +321,7 @@ import { EmailListDemo } from "@/components/showcase/EmailListItem";
 <main className="flex-1">
   <EmailListDemo />
 </main>;
+
 ```
 
 ---
@@ -368,18 +371,18 @@ import { EmailListDemo } from "@/components/showcase/EmailListItem";
 
 ## 🎉 Summary
 
-**Tilføjet:** 5 nye produktionsklar UI komponenter  
-**Lines:** 640+ ny kode  
-**Design:** Baseret på jeres moderne Figma/screenshot  
-**Style:** Dark mode, compact, metrics-rich  
+**Tilføjet:** 5 nye produktionsklar UI komponenter
+**Lines:** 640+ ny kode
+**Design:** Baseret på jeres moderne Figma/screenshot
+**Style:** Dark mode, compact, metrics-rich
 **Ready:** Klar til integration i WorkspaceLayout! ✨
 
 **Jeres showcase viser nu BÅDE generiske shadcn komponenter OG jeres unikke Friday AI business UI! 🚀**
 
 ---
 
-**Test nu:** `http://localhost:3000/showcase`  
-**Søg:** Ctrl+K → "email" eller "metrics" eller "chat"  
+**Test nu:** `http://localhost:3000/showcase`
+**Søg:** Ctrl+K → "email" eller "metrics" eller "chat"
 **Navigate:** Sidebar → Email Center UI eller Chat & Tasks
 
 **Total komponenter i showcase:** 60+ 🎊

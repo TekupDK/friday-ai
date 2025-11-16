@@ -1,7 +1,7 @@
 # Code-Based UI/UX Analysis - Email Center
 
-**Dato:** 9. November 2025  
-**Metode:** Source code analysis (TailwindCSS classes)  
+**Dato:** 9. November 2025
+**Metode:** Source code analysis (TailwindCSS classes)
 **Filer analyseret:**
 
 - `client/src/components/inbox/EmailThreadGroup.tsx` (278 linjer)
@@ -42,7 +42,8 @@ const getLeadScoreConfig = (score: number) => {
     label: "Low",
   }; // GRAY
 };
-```
+
+```text
 
 **PROBLEMS:**
 
@@ -63,9 +64,10 @@ const getLeadScoreConfig = (score: number) => {
 <Badge className="ml-1 h-4 px-1.5 text-xs">  // ANOTHER badge
   {unreadCount} ulæst
 </Badge>
-```
 
-**VISUAL RESULT:** Up to **3-4 badges per email thread!** 🚨
+```text
+
+**VISUAL RESULT:**Up to**3-4 badges per email thread!** 🚨
 
 **ChatGPT was RIGHT:** "For mange sekundære signaler (badges, ikoner, chips)"
 
@@ -80,13 +82,14 @@ const getLeadScoreConfig = (score: number) => {
 className={`group p-3 cursor-pointer ${
   density === 'compact' ? 'py-2' : 'py-3'
 }`}
-```
+
+```text
 
 **VALUES:**
 
-- **Padding:** `p-3` = **12px** all around
-- **Compact mode:** `py-2` = **8px** top/bottom
-- **Comfortable mode:** `py-3` = **12px** top/bottom
+- **Padding:**`p-3` =**12px** all around
+- **Compact mode:**`py-2` =**8px** top/bottom
+- **Comfortable mode:**`py-3` =**12px** top/bottom
 
 **PROBLEM:**
 
@@ -100,15 +103,16 @@ className={`group p-3 cursor-pointer ${
 // EmailListAI.tsx line 190
 <div className="border-b border-border/20 p-4 bg-muted/30">
   <div className="space-y-3">  // 12px between sections
-```
+
+```text
 
 **VALUES:**
 
-- **Header padding:** `p-4` = **16px**
-- **Section spacing:** `space-y-3` = **12px**
-- **Gap between filters:** `gap-2` = **8px**
+- **Header padding:**`p-4` =**16px**
+- **Section spacing:**`space-y-3` =**12px**
+- **Gap between filters:**`gap-2` =**8px**
 
-**VERDICT:** Header spacing is **OK**, but thread spacing is **TIGHT!**
+**VERDICT:**Header spacing is**OK**, but thread spacing is **TIGHT!**
 
 ---
 
@@ -136,14 +140,15 @@ className={`group p-3 cursor-pointer ${
 <p className="text-xs text-muted-foreground/70 line-clamp-2">
   {latestMessage.snippet}
 </p>
-```
+
+```text
 
 **PROBLEMS:**
 
 1. ❌ **Sender and Subject both `text-sm`** → No clear hierarchy!
-2. ❌ **No explicit `line-height`** → Uses browser default (~1.5)
-3. ❌ Sender is `font-medium`, subject can be `font-semibold` when unread → **Inconsistent**
-4. ⚠️ All text is **14px** (`text-sm`) or **12px** (`text-xs`) → **Very small!**
+1. ❌ **No explicit `line-height`** → Uses browser default (~1.5)
+1. ❌ Sender is `font-medium`, subject can be `font-semibold` when unread → **Inconsistent**
+1. ⚠️ All text is **14px**(`text-sm`) or**12px**(`text-xs`) →**Very small!**
 
 **ChatGPT was RIGHT:** "Gør afsender semibold, emne normal, metadata mutet"
 
@@ -158,7 +163,8 @@ className={`group p-3 cursor-pointer ${
 
 // METADATA: Smaller, muted
 <span className="text-xs text-muted-foreground">  // 12px, muted
-```
+
+```text
 
 ---
 
@@ -171,7 +177,8 @@ className={`group p-3 cursor-pointer ${
 <span className="text-sm">...</span>  // Uses default 1.5
 <h3 className="text-sm mb-1">...</h3>  // Uses default 1.5
 <p className="text-xs">...</p>  // Uses default 1.5
-```
+
+```text
 
 **PROBLEM:**
 
@@ -188,7 +195,8 @@ className={`group p-3 cursor-pointer ${
 <span className="text-sm leading-relaxed">  // 1.625 (162.5%)
 <h3 className="text-sm leading-relaxed mb-2">  // More space!
 <p className="text-xs leading-relaxed">  // Even small text needs air
-```
+
+```text
 
 **CALCULATION:**
 
@@ -202,33 +210,37 @@ className={`group p-3 cursor-pointer ${
 #### Badge Colors (5 different color schemes!)
 
 ```tsx
+
 1. RED:    bg-red-100 text-red-800 border-red-200      // Hot (>= 80)
 2. GREEN:  bg-green-100 text-green-800 border-green-200  // High (>= 60)
 3. BLUE:   bg-blue-100 text-blue-800 border-blue-200    // Medium (>= 40)
 4. GRAY:   bg-gray-100 text-gray-800 border-gray-200    // Low (< 40)
 5. BLUE-2: bg-blue-50 text-blue-700 border-blue-200     // Message count
-```
 
-**PROBLEM:** Too many color shades = **visual noise!**
+```text
+
+**PROBLEM:**Too many color shades =**visual noise!**
 
 #### Text Colors
 
 ```tsx
+
 1. text-foreground          // Primary text (black/white)
 2. text-foreground/90       // Slightly dimmed
 3. text-foreground/70       // Dimmed
 4. text-muted-foreground    // Gray text
 5. text-muted-foreground/70 // Very gray
 6. text-muted-foreground/60 // Even more gray
-```
 
-**VERDICT:** 6 different text opacity levels is **TOO MANY!**
+```text
+
+**VERDICT:**6 different text opacity levels is**TOO MANY!**
 
 **RECOMMENDED:** Max 3 text colors:
 
 1. `text-foreground` (primary)
-2. `text-foreground/80` (secondary)
-3. `text-muted-foreground` (tertiary)
+1. `text-foreground/80` (secondary)
+1. `text-muted-foreground` (tertiary)
 
 ---
 
@@ -243,7 +255,8 @@ className={`group p-3 cursor-pointer ${
 <div className="opacity-0 group-hover:opacity-100 transition-opacity">
   <EmailQuickActions ... />
 </div>
-```
+
+```text
 
 **PROBLEM:**
 
@@ -259,37 +272,44 @@ className={`group p-3 cursor-pointer ${
 
 ### **Header (Intelligence Summary)**
 
-```
+```text
 Container:
+
 - border-b border-border/20
 - p-4 (16px padding)
 - bg-muted/30 (light gray)
 
 Spacing:
+
 - space-y-3 (12px between sections)
 - gap-2 (8px between filter buttons)
 - gap-3 (12px in grid)
 
 Typography:
+
 - text-sm (14px) for labels
 - font-medium for values
-```
+
+```text
 
 ### **Thread Item**
 
-```
+```text
 Container:
+
 - border-b border-border/20
 - p-3 (12px padding)
 - py-2 (compact) / py-3 (comfortable)
 - hover:bg-muted/30
 
 Inner spacing:
+
 - gap-3 (12px between checkbox/content)
 - gap-2 (8px in header row)
 - mb-1 (4px between rows) ← TOO TIGHT!
 
 Typography:
+
 - text-sm (14px) sender & subject
 - text-xs (12px) timestamp & snippet
 - font-medium (sender)
@@ -297,27 +317,32 @@ Typography:
 - NO line-height specified! ← PROBLEM!
 
 Badges (UP TO 4 PER THREAD!):
+
 1. Message count: bg-blue-50 text-blue-700
 2. Lead score: 4 color variants (red/green/blue/gray)
 3. Unread count: variant="secondary"
 4. (potentially more badges from AI analysis)
-```
+
+```text
 
 ### **Expanded Thread Messages**
 
-```
+```text
 Container:
+
 - border-t border-border/10
 - bg-muted/20
 - p-2 pl-12 (8px padding, 48px left)
 - space-y-1 (4px between messages)
 
 Message item:
+
 - p-2 (8px padding)
 - border border-border/20
 - rounded
 - text-xs (12px)
-```
+
+```text
 
 ---
 
@@ -325,43 +350,48 @@ Message item:
 
 ### 1. **BADGE CLUTTER** (CRITICAL)
 
-```
+```text
 PROBLEM: Up to 4 badges per thread
 IMPACT: High cognitive load, visual noise
 FIX PRIORITY: 🔴 HIGH
-```
+
+```text
 
 ### 2. **NO STICKY ACTIONBAR** (CRITICAL)
 
-```
+```text
 PROBLEM: Actions only on hover, no bulk actions
 IMPACT: Poor UX for managing multiple emails
 FIX PRIORITY: 🔴 HIGH
-```
+
+```text
 
 ### 3. **TIGHT SPACING & NO LINE-HEIGHT** (HIGH)
 
-```
+```text
 PROBLEM: mb-1 (4px) + no explicit line-height
 IMPACT: Hard to scan, feels cramped
 FIX PRIORITY: 🟡 MEDIUM-HIGH
-```
+
+```text
 
 ### 4. **WEAK TYPOGRAPHY HIERARCHY** (MEDIUM)
 
-```
+```text
 PROBLEM: Sender & subject both text-sm
 IMPACT: Hard to distinguish important info
 FIX PRIORITY: 🟡 MEDIUM
-```
+
+```text
 
 ### 5. **TOO MANY COLOR SHADES** (LOW-MEDIUM)
 
-```
+```text
 PROBLEM: 5 badge colors, 6 text opacity levels
 IMPACT: Inconsistent visual language
 FIX PRIORITY: 🟢 MEDIUM-LOW
-```
+
+```text
 
 ---
 
@@ -377,7 +407,8 @@ if (score >= 80) return { color: "bg-red-100 ...", label: "Hot" };
 if (score >= 60) return { color: "bg-green-100 ...", label: "High" };
 if (score >= 40) return { color: "bg-blue-100 ...", label: "Medium" };
 return { color: "bg-gray-100 ...", label: "Low" };
-```
+
+```text
 
 **AFTER:**
 
@@ -407,7 +438,8 @@ const getLeadScoreConfig = (score: number) => {
 // Usage (line 63):
 const leadScoreConfig =
   maxLeadScore >= 70 ? getLeadScoreConfig(maxLeadScore) : null;
-```
+
+```text
 
 **RESULT:** Max 2 badges per thread instead of 4! ✅
 
@@ -419,12 +451,12 @@ const leadScoreConfig =
 // In EmailListAI.tsx after header (line 263):
 
 {
-  /* NEW: Sticky ActionBar when threads selected */
+  /*NEW: Sticky ActionBar when threads selected*/
 }
 {
   selectedEmails.size > 0 && (
     <div className="sticky top-0 z-10 bg-primary text-primary-foreground px-4 py-3 flex items-center justify-between shadow-lg border-b border-primary/20">
-      {/* Left: Selection count */}
+      {/*Left: Selection count*/}
       <div className="flex items-center gap-3">
         <Checkbox
           checked={true}
@@ -436,7 +468,7 @@ const leadScoreConfig =
         </span>
       </div>
 
-      {/* Right: Actions */}
+      {/*Right: Actions*/}
       <div className="flex items-center gap-2">
         <Button size="sm" variant="secondary">
           <Reply className="w-4 h-4 mr-1" />
@@ -454,7 +486,8 @@ const leadScoreConfig =
     </div>
   );
 }
-```
+
+```text
 
 ---
 
@@ -476,7 +509,8 @@ const leadScoreConfig =
 
 // Line 220-222: Add line-height to snippet
 <p className="text-xs leading-relaxed text-muted-foreground/70 line-clamp-2">  // added leading-relaxed
-```
+
+```text
 
 **RESULT:**
 
@@ -497,7 +531,8 @@ const leadScoreConfig =
 
 // Timestamp: SMALLER, MUTED
 <span className="text-xs text-muted-foreground leading-relaxed">  // 12px, muted
-```
+
+```text
 
 ---
 
@@ -518,7 +553,8 @@ text - muted - foreground / 60;
 text - foreground; // Primary (sender, subject)
 text - foreground / 80; // Secondary (unread indicator text)
 text - muted - foreground; // Tertiary (timestamp, snippet)
-```
+
+```text
 
 **Badge Colors (reduce from 5 → 2):**
 
@@ -533,7 +569,8 @@ bg-blue-50 text-blue-700 border-blue-200
 // AFTER: 2 solid colors (no borders, no 3-shade system)
 bg-red-500 text-white    // Hot
 bg-amber-500 text-white  // Warm
-```
+
+```text
 
 ---
 
@@ -541,7 +578,7 @@ bg-amber-500 text-white  // Warm
 
 ### **BEFORE (Current):**
 
-```
+```text
 ╔═══════════════════════════════════════════════════╗
 ║  [🔍 Search] [Sort]                               ║
 ║  [All 45] [Rengøring.nu 30] [Direct 15]          ║
@@ -565,11 +602,12 @@ PROBLEMS:
 ❌ Tight spacing (mb-1 = 4px)
 ❌ Sender & subject both text-sm (no hierarchy)
 ❌ No line-height = cramped feeling
-```
+
+```text
 
 ### **AFTER (Proposed):**
 
-```
+```text
 ╔═══════════════════════════════════════════════════╗
 ║  [🔍 Search] [Sort]                               ║
 ║  [All] [Rengøring.nu]                             ║
@@ -602,7 +640,8 @@ IMPROVEMENTS:
 ✅ Bigger sender font (text-base vs text-sm)
 ✅ Explicit line-height (leading-relaxed)
 ✅ Easier to scan!
-```
+
+```bash
 
 ---
 
@@ -648,8 +687,9 @@ IMPROVEMENTS:
 
 ## 📈 SUCCESS METRICS
 
-```
+```text
 BEFORE:
+
 - Badges per thread: 3-4
 - Badge colors: 5
 - Text opacity levels: 6
@@ -659,6 +699,7 @@ BEFORE:
 - Typography: text-sm for both sender & subject
 
 AFTER (TARGET):
+
 - Badges per thread: 0-1 ✅ (75% reduction!)
 - Badge colors: 2 ✅ (60% reduction!)
 - Text opacity levels: 3 ✅ (50% reduction!)
@@ -668,10 +709,12 @@ AFTER (TARGET):
 - Typography: text-base sender, text-sm subject ✅ (clear hierarchy)
 
 EXPECTED IMPACT:
+
 - Visual clutter: -60%
 - Scan speed: +40%
 - Action efficiency: +50% (bulk actions)
 - User satisfaction: +HIGH
+
 ```
 
 ---
@@ -679,10 +722,10 @@ EXPECTED IMPACT:
 ## 🚀 NEXT STEPS
 
 1. **Review this analysis** med team/bruger ✅
-2. **Prioritize fixes** (vi foreslår: Sticky Bar → Badges → Spacing)
-3. **Start implementation** (Sticky Bar først = biggest impact!)
-4. **Test iterativt** (efter hver fix)
-5. **Measure results** (before/after metrics)
+1. **Prioritize fixes** (vi foreslår: Sticky Bar → Badges → Spacing)
+1. **Start implementation** (Sticky Bar først = biggest impact!)
+1. **Test iterativt** (efter hver fix)
+1. **Measure results** (before/after metrics)
 
 ---
 

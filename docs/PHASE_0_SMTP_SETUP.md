@@ -61,14 +61,16 @@ Run Drizzle migration to create new tables:
 ```bash
 # From project root
 pnpm db:push
-```
+
+```text
 
 Or manually:
 
 ```bash
 drizzle-kit generate
 drizzle-kit migrate
-```
+
+```text
 
 **Verify Migration:**
 
@@ -81,11 +83,12 @@ Add to `.env` file:
 
 ```bash
 # Inbound Email SMTP Server
-INBOUND_EMAIL_WEBHOOK_URL=http://localhost:3000/api/inbound/email
+INBOUND_EMAIL_WEBHOOK_URL=<http://localhost:3000/api/inbound/email>
 INBOUND_EMAIL_WEBHOOK_SECRET=your-webhook-secret-key
 INBOUND_STORAGE_TYPE=local
 INBOUND_STORAGE_PATH=./storage/attachments
-```
+
+```text
 
 ### Step 3: Setup Inbound-Email Repository
 
@@ -94,9 +97,10 @@ INBOUND_STORAGE_PATH=./storage/attachments
 ```bash
 # From project root
 cd inbound-email
-git clone https://github.com/sendbetter/inbound-email.git .
+git clone <https://github.com/sendbetter/inbound-email.git> .
 npm install
-```
+
+```bash
 
 **Option B: Use Pre-built Image**
 
@@ -106,7 +110,8 @@ If Docker image is available, update `docker-compose.yml`:
 inbound-email:
   image: sendbetter/inbound-email:latest
   # Remove build section
-```
+
+```text
 
 ### Step 4: Build and Start Services
 
@@ -120,65 +125,78 @@ docker-compose up -d
 # Check logs
 docker-compose logs -f inbound-email
 docker-compose logs -f friday-ai
-```
+
+```text
 
 ### Step 5: Test Webhook Endpoint
 
 ```bash
 # Test webhook (should return 200 OK)
-curl -X POST http://localhost:3000/api/inbound/email \
+curl -X POST <http://localhost:3000/api/inbound/email> \
   -H "Content-Type: application/json" \
   -d '{
-    "from": "test@example.com",
-    "to": "info@rendetalje.dk",
+    "from": "<test@example.com>",
+    "to": "<info@rendetalje.dk>",
     "subject": "Test Email",
     "text": "Test body",
     "html": "<p>Test body</p>",
     "receivedAt": "2025-01-15T10:00:00Z",
     "messageId": "test-123"
   }'
-```
+
+```text
 
 ### Step 6: Configure Google Workspace
 
 **Option A: Auto-Forward**
 
 1. Go to Google Workspace Admin Console
-2. Navigate to `Apps` → `Google Workspace` → `Gmail`
-3. Go to `Routing` → `Default routing`
-4. Add forwarding rule:
+1. Navigate to `Apps` → `Google Workspace` → `Gmail`
+1. Go to `Routing` → `Default routing`
+1. Add forwarding rule:
    - **Recipient:** `info@rendetalje.dk`
    - **Action:** Forward to `parse@tekup.dk` (or your SMTP server domain)
 
 **Option B: Dual Delivery**
 
 1. Same location as above
-2. Enable "Dual delivery"
-3. Configure secondary delivery to your SMTP server
+1. Enable "Dual delivery"
+1. Configure secondary delivery to your SMTP server
 
 **Option C: MX Records (Production)**
 
 1. Setup DNS MX record:
-   ```
+
+```text
    parse.tekup.dk → [SMTP Server IP]
-   ```
-2. Google Workspace will route emails to your server
+
+```text
+
+1. Google Workspace will route emails to your server
 
 ### Step 7: Verify Integration
 
 1. **Send test email** to `info@rendetalje.dk`
-2. **Check webhook logs:**
+1. **Check webhook logs:**
+
    ```bash
    docker-compose logs -f friday-ai | grep "InboundEmail"
-   ```
-3. **Verify database:**
+
+```text
+
+1. **Verify database:**
+
    ```sql
    SELECT * FROM emails ORDER BY receivedAt DESC LIMIT 10;
-   ```
-4. **Check enrichment:**
+
+```text
+
+1. **Check enrichment:**
+
    ```sql
    SELECT * FROM email_pipeline_state ORDER BY createdAt DESC LIMIT 10;
-   ```
+
+```text
 
 ## Testing
 
@@ -190,8 +208,8 @@ Create test script `test-inbound-email.js`:
 const http = require("http");
 
 const payload = JSON.stringify({
-  from: "lead@rengoring.nu",
-  to: "info@rendetalje.dk",
+  from: "<lead@rengoring.nu>",
+  to: "<info@rendetalje.dk>",
   subject: "Test Lead - Rengøring",
   text: "Hej, jeg leder efter rengøring.",
   html: "<p>Hej, jeg leder efter rengøring.</p>",
@@ -223,13 +241,15 @@ req.on("error", e => {
 
 req.write(payload);
 req.end();
-```
+
+```text
 
 Run:
 
 ```bash
 node test-inbound-email.js
-```
+
+```text
 
 ## Troubleshooting
 
@@ -238,48 +258,70 @@ node test-inbound-email.js
 **Check:**
 
 1. Verify webhook endpoint is accessible:
+
    ```bash
-   curl http://localhost:3000/api/inbound/email
-   ```
-2. Check `friday-ai` service logs:
+   curl <http://localhost:3000/api/inbound/email>
+
+```text
+
+1. Check `friday-ai` service logs:
+
    ```bash
    docker-compose logs friday-ai | grep "inbound"
-   ```
-3. Verify network connectivity between containers:
+
+```text
+
+1. Verify network connectivity between containers:
+
    ```bash
-   docker exec inbound-email-container curl http://friday-ai:3000/api/inbound/email
-   ```
+   docker exec inbound-email-container curl <http://friday-ai:3000/api/inbound/email>
+
+```text
 
 ### Issue: Database Connection Errors
 
 **Check:**
 
 1. Verify database is running:
+
    ```bash
    docker-compose ps db
-   ```
-2. Test connection string:
+
+```text
+
+1. Test connection string:
+
    ```bash
    mysql -h localhost -u friday_user -p friday_ai
-   ```
-3. Check database logs:
+
+```text
+
+1. Check database logs:
+
    ```bash
    docker-compose logs db
-   ```
+
+```text
 
 ### Issue: Enrichment Not Running
 
 **Check:**
 
 1. Verify enrichment function is called:
+
    ```bash
    docker-compose logs friday-ai | grep "EmailEnrichment"
-   ```
-2. Check for errors in enrichment:
+
+```text
+
+1. Check for errors in enrichment:
+
    ```bash
    docker-compose logs friday-ai | grep "error"
-   ```
-3. Verify Billy API connection:
+
+```text
+
+1. Verify Billy API connection:
    - Check `BILLY_API_KEY` and `BILLY_ORGANIZATION_ID` in `.env`
 
 ### Issue: Attachments Not Saving
@@ -287,24 +329,30 @@ node test-inbound-email.js
 **Check:**
 
 1. Verify storage directory exists:
+
    ```bash
    docker exec inbound-email-container ls -la /app/storage
-   ```
-2. Check permissions:
+
+```text
+
+1. Check permissions:
+
    ```bash
    docker exec inbound-email-container ls -la /app/storage/attachments
+
    ```
-3. Verify `INBOUND_STORAGE_PATH` in environment
+
+1. Verify `INBOUND_STORAGE_PATH` in environment
 
 ## Next Steps
 
 After Phase 0 is complete:
 
 1. **Phase 1:** Pipeline Status View with column layout
-2. **Phase 1:** Smart Label Detection improvements
-3. **Phase 1:** Pipeline Quick Actions
-4. **Phase 2:** Workflow Automation (calendar, invoices)
-5. **Phase 3:** Advanced Features (dashboard, bulk ops, templates)
+1. **Phase 1:** Smart Label Detection improvements
+1. **Phase 1:** Pipeline Quick Actions
+1. **Phase 2:** Workflow Automation (calendar, invoices)
+1. **Phase 3:** Advanced Features (dashboard, bulk ops, templates)
 
 ## References
 

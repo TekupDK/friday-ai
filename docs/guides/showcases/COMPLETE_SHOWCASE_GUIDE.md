@@ -9,10 +9,10 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 ## 📚 Table of Contents
 
 1. [Shadcn/ui Components](#shadcnui-components) - Standard UI library
-2. [App Architecture](#app-architecture) - 3-panel system, header, menus
-3. [Chat Components (Figma Style)](#chat-components-figma-style) - AI chat features
-4. [Integration Components](#integration-components) - Gmail, Calendar, Billy
-5. [Interactive Demos](#interactive-demos) - Full conversation flows
+1. [App Architecture](#app-architecture) - 3-panel system, header, menus
+1. [Chat Components (Figma Style)](#chat-components-figma-style) - AI chat features
+1. [Integration Components](#integration-components) - Gmail, Calendar, Billy
+1. [Interactive Demos](#interactive-demos) - Full conversation flows
 
 ---
 
@@ -22,7 +22,8 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 
 ```tsx
 <ThreePanelDemo />
-```
+
+```bash
 
 **Viser:**
 
@@ -52,7 +53,8 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 
 ```tsx
 <HeaderDemo />
-```
+
+```text
 
 **Viser:**
 
@@ -82,7 +84,8 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 
 ```tsx
 <AIEmailAssistantDemo />
-```
+
+```text
 
 **Viser:**
 Jeres EmailAssistant3Panel features i full detalje:
@@ -124,7 +127,8 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 
 ```tsx
 <AIThinking message="AI Thinking..." />
-```
+
+```text
 
 **Features:**
 
@@ -147,7 +151,8 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
   progress={60}
   status="running"
 />
-```
+
+```text
 
 **Features:**
 
@@ -177,7 +182,8 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
   wind={12}
   forecast={[...]}
 />
-```
+
+```text
 
 **Features:**
 
@@ -194,7 +200,8 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 
 ```tsx
 <InvoiceCards invoices={[...]} />
-```
+
+```text
 
 **Features:**
 
@@ -216,14 +223,15 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 <EmailThreadCard
   data={{
     subject: "Tilbud på projekt",
-    from: "kunde@firma.dk",
+    from: "<kunde@firma.dk>",
     messageCount: 5,
     summary: "AI-genereret summary",
     labels: ["Lead", "Høj prioritet"],
     priority: "high",
   }}
 />
-```
+
+```text
 
 **Features:**
 
@@ -250,7 +258,8 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
     attendees: ["Hans", "Peter"],
   }}
 />
-```
+
+```text
 
 **Features:**
 
@@ -272,7 +281,8 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
   query="AI trends 2024"
   results={[...]}
 />
-```
+
+```text
 
 **Features:**
 
@@ -295,6 +305,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ```tsx
 <ChatFlowDemo scenario="weather" />
 // Scenarios: 'weather' | 'email' | 'calendar' | 'invoices' | 'search'
+
 ```
 
 **5 Interactive Demos:**
@@ -305,25 +316,25 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
    - Tool: "Fetching weather data..." (progress 0-100%)
    - Result: Weather Card
 
-2. **📧 Email Flow**
+1. **📧 Email Flow**
    - User: "Vis mine vigtigste emails"
    - AI Thinking
    - Tool: "Analyzing inbox..."
    - Result: Email Thread Card
 
-3. **📅 Calendar Flow**
+1. **📅 Calendar Flow**
    - User: "Book møde med teamet"
    - AI Thinking
    - Tool: "Checking availability..."
    - Result: Calendar Event Card (✓ Booket)
 
-4. **💰 Faktura Flow (Billy)**
+1. **💰 Faktura Flow (Billy)**
    - User: "Vis ubetalte fakturaer"
    - AI Thinking
    - Tool: "Fetching from Billy..."
    - Result: Invoice Cards (3 invoices)
 
-5. **🔍 Search Flow**
+1. **🔍 Search Flow**
    - User: "Find information om AI trends 2024"
    - AI Thinking
    - Tool: "Searching the web..."
@@ -462,37 +473,37 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 ### **Phase 1: Backend Integration**
 
 1. Extend Message type med `toolExecution` og `cardData` felter
-2. Update database schema
-3. Modify AI router til at return structured data
-4. Add tRPC subscriptions for tool progress
+1. Update database schema
+1. Modify AI router til at return structured data
+1. Add tRPC subscriptions for tool progress
 
 ### **Phase 2: ShortWaveChatPanel Update**
 
 1. Import nye komponenter
-2. Update message rendering logic
-3. Add conditional rendering for cards
-4. Test med real data
+1. Update message rendering logic
+1. Add conditional rendering for cards
+1. Test med real data
 
 ### **Phase 3: Production Polish**
 
 1. Add loading skeletons
-2. Error state handling
-3. Empty state designs
-4. Onboarding tooltips
-5. Analytics tracking
+1. Error state handling
+1. Empty state designs
+1. Onboarding tooltips
+1. Analytics tracking
 
 ---
 
 ## 📸 Screenshots Location
 
-All components can be tested at: **http://localhost:3000/showcase**
+All components can be tested at: **<http://localhost:3000/showcase**>
 
 Sections:
 
 1. Scroll to "App Architecture" for workspace demos
-2. Scroll to "Chat Components" for Figma-style AI features
-3. Scroll to "Integration Components" for Gmail/Calendar/Billy
-4. Scroll to "Full Chat Flow Demos" for interactive flows
+1. Scroll to "Chat Components" for Figma-style AI features
+1. Scroll to "Integration Components" for Gmail/Calendar/Billy
+1. Scroll to "Full Chat Flow Demos" for interactive flows
 
 ---
 

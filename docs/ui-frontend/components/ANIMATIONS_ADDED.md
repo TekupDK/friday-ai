@@ -1,4 +1,4 @@
-# ✨ Animationer & Effects Tilføjet!
+# ✨ Animationer & Effects Tilføjet
 
 **3 nye animation komponenter til showcase**
 
@@ -27,7 +27,7 @@
 - Conversion: 68%
 - Active Tasks: 12
 
-**Duration:** 300ms - 2000ms  
+**Duration:** 300ms - 2000ms
 **Easing:** cubic-bezier, ease-out
 
 ---
@@ -68,11 +68,11 @@
 **6 Forskellige Hover Effects:**
 
 1. **Lift Effect** - translateY(-8px)
-2. **Icon Rotation** - rotate(6deg) + scale(1.1)
-3. **Gradient Fade** - Colored gradient fade-in
-4. **Progress Bar** - Width 0→100% fill
-5. **Shimmer Sweep** - Shine effect across card
-6. **Corner Accent** - Decorative corner scale-in
+1. **Icon Rotation** - rotate(6deg) + scale(1.1)
+1. **Gradient Fade** - Colored gradient fade-in
+1. **Progress Bar** - Width 0→100% fill
+1. **Shimmer Sweep** - Shine effect across card
+1. **Corner Accent** - Decorative corner scale-in
 
 **6 Card Types:**
 
@@ -101,7 +101,8 @@
 
 ```css
 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-```
+
+```text
 
 **Transform Animations:**
 
@@ -134,7 +135,8 @@ transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 ```tsx
 style={{ transitionDelay: `${idx * 100}ms` }}
-```
+
+```text
 
 ### **Number Counter:**
 
@@ -143,14 +145,16 @@ const increment = target / steps;
 setInterval(() => {
   value = Math.min(value + increment, target);
 }, interval);
-```
+
+```text
 
 ### **Hover State:**
 
 ```tsx
 const [hoveredId, setHoveredId] = useState<number | null>(null);
 onMouseEnter={() => setHoveredId(id)}
-```
+
+```text
 
 ### **Conditional Classes:**
 
@@ -159,7 +163,8 @@ className={cn(
   "base-classes",
   isHovered && "hover-classes"
 )}
-```
+
+```text
 
 ---
 
@@ -167,11 +172,12 @@ className={cn(
 
 **Ny Kategori:**
 
-```
+```text
 ✨ Animationer & Effects
   📊 Animated Stats
   ⏳ Skeleton Loading
   🎨 Interactive Hover
+
 ```
 
 **Sidebar Navigation:**
@@ -319,17 +325,17 @@ className={cn(
 
 ## 🎉 Summary
 
-**Tilføjet:** 3 animation komponenter  
-**Total Animations:** 15+ forskellige effects  
-**Lines:** 500+ ny kode  
-**Quality:** Production-ready  
+**Tilføjet:** 3 animation komponenter
+**Total Animations:** 15+ forskellige effects
+**Lines:** 500+ ny kode
+**Quality:** Production-ready
 **Performance:** Optimeret
 
 **Jeres showcase har nu moderne, smooth animationer som konkurrerer med Notion, Linear og Figma! ✨🚀**
 
 ---
 
-**Total Komponenter:** 65+  
-**Med Animationer:** ✅  
-**Moderne UI:** ✅  
+**Total Komponenter:** 65+
+**Med Animationer:** ✅
+**Moderne UI:** ✅
 **Production Ready:** ✅

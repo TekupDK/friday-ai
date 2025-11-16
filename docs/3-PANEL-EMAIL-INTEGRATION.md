@@ -6,7 +6,7 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
 
 ### 🔍 Oversigt over 3-Panel Integration
 
-```
+```text
 ┌─────────────────┬─────────────────────────┬─────────────────┐
 │                 │                         │                 │
 │                 │                         │                 │
@@ -15,7 +15,8 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
 │                 │                         │                 │
 │                 │                         │                 │
 └─────────────────┴─────────────────────────┴─────────────────┘
-```
+
+```text
 
 ## ✅ Implementerede Tilpasninger
 
@@ -31,37 +32,53 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
 - **Border Separation**: Tilføjet `border-r border-border/30` til sidebar for visuel adskillelse
 - **Kompakt UI**: Tilføjet density-toggle for tættere layout i smallere midterpanel
 - **Responsive Toolbar**:
+
   ```tsx
   <div className="flex flex-col lg:flex-row gap-2 lg:gap-3 items-stretch lg:items-center p-2 lg:p-3">
-  ```
+
+```text
+
 - **Overflow Control**: Sikret korrekt scroll-containment:
+
   ```tsx
   <div className="overflow-y-auto border-r border-border/30">
-  ```
+
+```text
 
 ### 3. **Cross-Panel Navigation**
 
 - **WorkflowContext Integration**: Tilføjet til EmailTab for deling af data mellem paneler
+
   ```tsx
   const { openCustomerProfile } = useWorkflowContext();
-  ```
+
+```text
+
 - **Email-to-Workflow Navigation**: Support for cross-panel aktioner:
+
   ```tsx
   <Button onClick={() => openCustomerProfile(customerId)}>
     Vis kunde profil
   </Button>
-  ```
+
+```text
 
 ### 4. **Performance Optimering**
 
 - **IntersectionObserver Tuning**: Øget rootMargin til 400px for bedre prefetch i smallere panel
+
   ```tsx
   { root: parentRef.current, rootMargin: "400px" }
-  ```
+
+```text
+
 - **TabsContent Configuration**: Fjernet nested scrollbars ved korrekt overflow indstilling
+
   ```tsx
   <TabsContent className="overflow-hidden">
+
   ```
+
 - **Compact Layout**: Tilføjet density toggle for mere effektiv pladsudnyttelse i 3-panel
 
 ## 🚀 Keyboard Shortcuts for 3-Panel Layout
@@ -105,17 +122,17 @@ EmailTab er også optimeret til mobile visning:
 ## 🛠 Anbefalet Fremtidige Forbedringer
 
 1. **Dynamic Panel Save/Restore**: Gem seneste email view state når man skifter panel
-2. **Context-aware Actions**: Tilpas actions based på hvilket panel der har fokus
-3. **Panel Communication API**: Formaliseret kommunikation mellem panels
-4. **Panel Memory**: Gendan scroll position når man kommer tilbage til EmailTab
-5. **Shared Context Hooks**: Centralisér cross-panel state management
+1. **Context-aware Actions**: Tilpas actions based på hvilket panel der har fokus
+1. **Panel Communication API**: Formaliseret kommunikation mellem panels
+1. **Panel Memory**: Gendan scroll position når man kommer tilbage til EmailTab
+1. **Shared Context Hooks**: Centralisér cross-panel state management
 
 ## 📝 Udviklernoter
 
 For at sikre optimal integration med 3-panel layout, følg disse guidelines når du udvider eller vedligeholder EmailTab:
 
 1. Brug responsive breakpoints (sm, md, lg) for alle spacing og container størrelser
-2. Undgå nested scrollbars ved at holde scrolling containment korrekt
-3. Implementér density toggling for komponenter med meget indhold
-4. Sørg for at IntersectionObserver har korrekt rootMargin for 3-panel
-5. Brug WorkflowContext for cross-panel kommunikation
+1. Undgå nested scrollbars ved at holde scrolling containment korrekt
+1. Implementér density toggling for komponenter med meget indhold
+1. Sørg for at IntersectionObserver har korrekt rootMargin for 3-panel
+1. Brug WorkflowContext for cross-panel kommunikation

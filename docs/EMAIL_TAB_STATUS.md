@@ -60,7 +60,7 @@
 
 ## 🎯 Test Resultater
 
-### Browser Observations:
+### Browser Observations
 
 **✅ Positivt:**
 
@@ -81,8 +81,8 @@
 ## 📋 Next Steps
 
 1. **Test med faktiske emails** - Når emails er tilgængelige i Gmail
-2. **Verificer label visning** - Når labels er oprettet i Gmail
-3. **Phase 1 AI Features** - Når email-tabben er verificeret fungerende
+1. **Verificer label visning** - Når labels er oprettet i Gmail
+1. **Phase 1 AI Features** - Når email-tabben er verificeret fungerende
 
 ---
 

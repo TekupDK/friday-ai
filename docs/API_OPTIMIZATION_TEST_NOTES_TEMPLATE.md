@@ -20,9 +20,10 @@
 
 **Observations:**
 
-```
+```text
 [Indsæt notater her]
-```
+
+```text
 
 **Result:**
 
@@ -44,12 +45,13 @@
 
 **Observations:**
 
-```
+```text
 Retry 1: _____ms
 Retry 2: _____ms
 Retry 3: _____ms
 Jitter observed: Yes/No
-```
+
+```text
 
 **Result:**
 
@@ -73,11 +75,12 @@ Jitter observed: Yes/No
 
 **Observations:**
 
-```
+```text
 Active interval: _____s (forventet: 30s)
 After 1min inactive: _____s
 After 2min inactive: _____s (forventet: ~90s+)
-```
+
+```text
 
 **Result:**
 
@@ -101,11 +104,12 @@ After 2min inactive: _____s (forventet: ~90s+)
 
 **Observations:**
 
-```
+```text
 Tab hidden: _____ API calls (forventet: 0)
 Tab visible again: Immediate call? Yes/No
 Polling resumed: Yes/No
-```
+
+```text
 
 **Result:**
 
@@ -129,12 +133,13 @@ Polling resumed: Yes/No
 
 **Observations:**
 
-```
+```text
 Rate limit triggered: Yes/No
 Queue size: _____
 Console logs: _______________
 Queue processed: Yes/No
-```
+
+```text
 
 **Result:**
 
@@ -157,13 +162,14 @@ Queue processed: Yes/No
 
 **Observations:**
 
-```
+```text
 UI Error shown: Yes/No
 Countdown visible: Yes/No
 Countdown time: _____
 Polling paused: Yes/No
 Retry-after timestamp: _______________
-```
+
+```text
 
 **Result:**
 
@@ -187,21 +193,25 @@ Retry-after timestamp: _______________
 
 **Observations:**
 
-```
+```text
 Test Duration: _____ minutter
 
 Aktiv Brug (10min):
+
 - EmailTab calls: _____
 - CalendarTab calls: _____
 - InvoicesTab calls: _____
 - Total: _____ (forventet: ~15-17)
 
 Inaktiv Brug (10min):
+
 - Total: _____ (forventet: ~7-10)
 
 Tab Hidden:
+
 - Total: _____ (forventet: ~0)
-```
+
+```text
 
 **Result:**
 
@@ -214,7 +224,7 @@ Tab Hidden:
 
 ## 📊 Metrics Collected
 
-```
+```text
 API Calls (10min aktiv): _______
 API Calls (10min inaktiv): _______
 Cache Hit Rate: _______%
@@ -223,7 +233,8 @@ Average Polling (aktiv): _______s
 Average Polling (inaktiv): _______s
 DOM Nodes (50 emails): _______ (for virtual scrolling)
 Scroll Performance: _______ (subjektiv: Smooth/Slow)
-```
+
+```text
 
 ---
 
@@ -253,15 +264,16 @@ Scroll Performance: _______ (subjektiv: Smooth/Slow)
 
 **Summary:**
 
-```
+```text
 [Kort sammenfatning af test resultater]
+
 ```
 
 **Recommendations:**
 
 1. ***
-2. ***
-3. ***
+1. ***
+1. ***
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## 🎯 Overview
 
-Vi har redesignet hele arkitekturen fra bunden med fokus på **Shortwave-inspireret workflow** og **context-aware intelligence**.
+Vi har redesignet hele arkitekturen fra bunden med fokus på **Shortwave-inspireret workflow**og**context-aware intelligence**.
 
 ---
 
@@ -10,7 +10,7 @@ Vi har redesignet hele arkitekturen fra bunden med fokus på **Shortwave-inspire
 
 ### ❌ Gammel Arkitektur (V1)
 
-```
+```bash
 ChatInterface.tsx (forvirrende navn)
 ├── EmailCenterPanel
 │   └── InboxPanel (5 tabs: Email, Fakturaer, Kalender, Leads, Opgaver)
@@ -20,7 +20,8 @@ ChatInterface.tsx (forvirrende navn)
 │       ├── LeadsTab
 │       └── TasksTab
 └── WorkflowPanel (Opgaver + Kunder tabs)
-```
+
+```text
 
 **Problemer:**
 
@@ -31,7 +32,7 @@ ChatInterface.tsx (forvirrende navn)
 
 ### ✅ Ny Arkitektur (V2)
 
-```
+```bash
 WorkspaceLayout.tsx (klart navn)
 ├── AIAssistantPanel (20%)
 │   └── Friday AI chat
@@ -48,7 +49,8 @@ WorkspaceLayout.tsx (klart navn)
         ├── InvoiceTracker (når faktura email valgt)
         ├── CustomerProfile (når kunde email valgt)
         └── BusinessDashboard (når ingen email valgt)
-```
+
+```text
 
 **Fordele:**
 
@@ -64,7 +66,7 @@ WorkspaceLayout.tsx (klart navn)
 
 ### Nye Filer (V2)
 
-```
+```bash
 client/src/
 ├── pages/
 │   ├── WorkspaceLayout.tsx          ✨ NY - Erstatter ChatInterface
@@ -89,13 +91,14 @@ client/src/
 │       └── EmailSidebar.tsx         🔒 GAMMEL - Deaktiveret
 │
 └── App.tsx                          ♻️ OPDATERET - Bruger WorkspaceLayout
-```
+
+```text
 
 ---
 
 ## 🔄 Context Detection Flow
 
-### Hvordan SmartWorkspacePanel virker:
+### Hvordan SmartWorkspacePanel virker
 
 ```typescript
 // 1. Lytter til EmailContext
@@ -157,7 +160,8 @@ switch (context.type) {
   case "customer": return <CustomerProfile />;
   default: return <BusinessDashboard />;
 }
-```
+
+```text
 
 ---
 
@@ -209,62 +213,72 @@ switch (context.type) {
 
 #### 1. LeadAnalyzer 🎯
 
-```
+```text
 Når: Lead email valgt
 Viser:
+
 - AI estimat (pris, tid, team)
 - Lignende opgaver (historik)
 - Real-time kalender check
 - Kritiske checks
 - Quick actions (send tilbud, book)
-```
+
+```text
 
 #### 2. BookingManager 📅
 
-```
+```text
 Når: Booking email valgt
 Viser:
+
 - Booking detaljer
 - Team assignment
 - Profit calculation
 - Timeline & reminders
 - Quick actions (update, call)
-```
+
+```text
 
 #### 3. InvoiceTracker 💰
 
-```
+```text
 Når: Faktura email valgt
 Viser:
+
 - Payment status
 - Days overdue
 - Risk analysis
 - Recommendations
 - Quick actions (reminder, discount)
-```
+
+```text
 
 #### 4. CustomerProfile 👤
 
-```
+```text
 Når: Kunde email valgt
 Viser:
+
 - Booking historik
 - Lifetime value
 - Preferences & notes
 - Trends
 - Quick actions (book next, thank you)
-```
+
+```text
 
 #### 5. BusinessDashboard 📊
 
-```
+```text
 Når: Ingen email valgt
 Viser:
+
 - Today's bookings
 - Urgent actions (ubetalte, leads)
 - Week stats
 - Quick actions (follow up, chase)
-```
+
+```text
 
 ---
 
@@ -272,8 +286,9 @@ Viser:
 
 ### Før (Manuel Workflow)
 
-```
+```text
 Lead → Booking proces:
+
 1. Læs lead email           (2 min)
 2. Åbn kalender manuelt     (5 min)
 3. Beregn pris mentalt      (3 min)
@@ -281,14 +296,17 @@ Lead → Booking proces:
 5. Kunde svarer             [venter]
 6. Opret kalender event     (12 min)
 7. Send bekræftelse         (10 min)
+
 ────────────────────────────────────
 TOTAL: ~47 min per lead
-```
+
+```text
 
 ### Efter (Smart Workspace)
 
-```
+```text
 Lead → Booking proces:
+
 1. Læs lead email           (2 min)
 2. AI viser auto:
    - Estimat                (0 min - auto)
@@ -298,11 +316,13 @@ Lead → Booking proces:
 4. Kunde svarer             [venter]
 5. Klik "Book direkte"      (2 min - one-click)
 6. Auto bekræftelse         (1 min - template)
+
 ────────────────────────────────────
 TOTAL: ~7 min per lead
 
 BESPARELSE: 40 min per lead (85%)
-```
+
+```text
 
 **Med 50 leads/måned:**
 
@@ -318,16 +338,18 @@ BESPARELSE: 40 min per lead (85%)
 
 Tilføj mini-tabs i bunden af EmailTab for quick access:
 
-```
+```text
 EmailTab
 └── [📄] [📅] [👥] [✅]  ← Mini-tabs (collapsed)
     │
     └── Click → Drawer åbner med:
+
         - 📄 Fakturaer (ubetalte, stats)
         - 📅 Kalender (i dag, uge)
         - 👥 Leads (pipeline view)
         - ✅ Opgaver (urgent, today)
-```
+
+```text
 
 ### Phase 5: AI Integration
 
@@ -347,7 +369,7 @@ EmailTab
 
 ## 📝 Migration Guide
 
-### Hvis du vil skifte tilbage til V1:
+### Hvis du vil skifte tilbage til V1
 
 ```typescript
 // I App.tsx
@@ -356,9 +378,10 @@ import ChatInterface from "./pages/ChatInterface";  // Gammel
 
 // I routing
 <Route path={"/"} component={ChatInterface} />
-```
 
-### Hvis du vil teste V2 (nuværende):
+```text
+
+### Hvis du vil teste V2 (nuværende)
 
 ```typescript
 // I App.tsx
@@ -366,6 +389,7 @@ import WorkspaceLayout from "./pages/WorkspaceLayout";  // Ny
 
 // I routing
 <Route path={"/"} component={WorkspaceLayout} />
+
 ```
 
 ---
@@ -389,10 +413,10 @@ import WorkspaceLayout from "./pages/WorkspaceLayout";  // Ny
 
 Vi har nu en **moderne, Shortwave-inspireret workspace** med:
 
-✅ **Bedre navngivning** (WorkspaceLayout, ikke ChatInterface)  
-✅ **Email-fokus** (60% af skærmen, ingen tabs)  
-✅ **Context-aware højre panel** (intelligent assistance)  
-✅ **85% tidsbesparelse** på lead → booking workflow  
+✅ **Bedre navngivning** (WorkspaceLayout, ikke ChatInterface)
+✅ **Email-fokus** (60% af skærmen, ingen tabs)
+✅ **Context-aware højre panel** (intelligent assistance)
+✅ **85% tidsbesparelse** på lead → booking workflow
 ✅ **Skalerbar arkitektur** (let at tilføje nye features)
 
 **Klar til produktion!** 🚀

@@ -70,7 +70,8 @@
 
 ```bash
 pnpm db:push
-```
+
+```text
 
 ### 2. Inbound-Email Repository Setup
 
@@ -79,8 +80,9 @@ pnpm db:push
 
 ```bash
 cd inbound-email
-git clone https://github.com/sendbetter/inbound-email.git .
+git clone <https://github.com/sendbetter/inbound-email.git> .
 npm install
+
 ```
 
 ### 3. Google Workspace Configuration
@@ -152,21 +154,21 @@ npm install
 ### Immediate (After Phase 0 Complete)
 
 1. Run database migration
-2. Setup inbound-email service
-3. Test end-to-end flow
-4. Configure Google Workspace
+1. Setup inbound-email service
+1. Test end-to-end flow
+1. Configure Google Workspace
 
 ### Phase 1 (After Phase 0 Verified)
 
 1. Pipeline Status View (column layout)
-2. Smart Label Detection improvements
-3. Pipeline Quick Actions
+1. Smart Label Detection improvements
+1. Pipeline Quick Actions
 
 ### Phase 2 (After Phase 1)
 
 1. Critical Rules implementation
-2. Auto-calendar integration
-3. Auto-invoice integration
+1. Auto-calendar integration
+1. Auto-invoice integration
 
 ## 🔗 Related Documentation
 
@@ -177,7 +179,7 @@ npm install
 
 ## ✨ Summary
 
-**Phase 0 Core Implementation:** ✅ **COMPLETE**
+**Phase 0 Core Implementation:**✅**COMPLETE**
 
 All code components are implemented and ready for deployment:
 

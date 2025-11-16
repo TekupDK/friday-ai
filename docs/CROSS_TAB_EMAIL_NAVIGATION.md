@@ -1,6 +1,6 @@
 # Cross-Tab Email Navigation - Implementeringsguide
 
-## ✅ Komplet implementeret!
+## ✅ Komplet implementeret
 
 **Feature**: Automatisk tab-skift og email-åbning når du klikker email i LeadsTab Timeline.
 
@@ -10,7 +10,7 @@
 
 ### Flowet
 
-```
+```text
 LeadsTab → Klik lead → CustomerProfile åbner (Timeline-tab)
                                     ↓
                       Klik email i Timeline
@@ -18,7 +18,8 @@ LeadsTab → Klik lead → CustomerProfile åbner (Timeline-tab)
                 CustomerProfile lukker + skift til EmailTab
                                     ↓
                           Email åbner automatisk
-```
+
+```bash
 
 ### Før vs. Nu
 
@@ -47,7 +48,8 @@ interface EmailContextValue {
   requestOpenThread: (threadId: string) => void; // NEW: Request to open thread
   clearPendingThread: () => void; // NEW: Clear pending state
 }
-```
+
+```bash
 
 **Funktioner**:
 
@@ -62,7 +64,8 @@ interface EmailContextValue {
 interface LeadsTabProps {
   onRequestTabChange?: (tab: "email") => void;
 }
-```
+
+```text
 
 **Opdateret CustomerProfile callback**:
 
@@ -75,7 +78,8 @@ onOpenEmailThread={(threadId) => {
     toast.success("Åbner email i Email-tabben...");
   }
 }}
-```
+
+```bash
 
 ### 3. **InboxPanel** (`client/src/components/InboxPanel.tsx`)
 
@@ -83,7 +87,8 @@ onOpenEmailThread={(threadId) => {
 
 ```tsx
 <LeadsTab onRequestTabChange={onTabChange} />
-```
+
+```bash
 
 ### 4. **EmailTab** (`client/src/components/inbox/EmailTab.tsx`)
 
@@ -98,7 +103,8 @@ useEffect(() => {
     console.log("[EmailTab] Opened pending thread:", pendingThread);
   }
 }, [emailContext.state.pendingThreadToOpen]);
-```
+
+```bash
 
 ### 5. **ChatInterface** (`client/src/pages/ChatInterface.tsx`)
 
@@ -112,18 +118,20 @@ const [activeInboxTab, setActiveInboxTab] = useState<
 const handleTabChange = useCallback((tab: ...) => {
   setActiveInboxTab(tab);
 }, []);
-```
+
+```text
 
 ---
 
 ## 📊 Dataflow Diagram
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
 │                      CROSS-TAB NAVIGATION                     │
 └──────────────────────────────────────────────────────────────┘
 
 1. LeadsTab (Customer Profile)
+
    │
    ├─ User clicks email in Timeline
    │
@@ -146,7 +154,8 @@ const handleTabChange = useCallback((tab: ...) => {
                           ├─> emailContext.clearPendingThread()
                           │
                           └─> Email thread opens! ✅
-```
+
+```text
 
 ---
 
@@ -166,16 +175,17 @@ const handleTabChange = useCallback((tab: ...) => {
   previewThreadId: string | null,
   pendingThreadToOpen: string | null,  // ← NEW for cross-tab nav
 }
-```
+
+```text
 
 ### Lifecycle
 
 1. **Request**: LeadsTab → `requestOpenThread(threadId)`
-2. **Storage**: EmailContext → `pendingThreadToOpen = threadId`
-3. **Tab Switch**: ChatInterface → `setActiveInboxTab("email")`
-4. **Detection**: EmailTab → `useEffect` detects pending thread
-5. **Action**: EmailTab → Opens thread + clears pending
-6. **Cleanup**: EmailContext → `pendingThreadToOpen = null`
+1. **Storage**: EmailContext → `pendingThreadToOpen = threadId`
+1. **Tab Switch**: ChatInterface → `setActiveInboxTab("email")`
+1. **Detection**: EmailTab → `useEffect` detects pending thread
+1. **Action**: EmailTab → Opens thread + clears pending
+1. **Cleanup**: EmailContext → `pendingThreadToOpen = null`
 
 ---
 
@@ -184,26 +194,26 @@ const handleTabChange = useCallback((tab: ...) => {
 ### Test 1: Email fra LeadsTab
 
 1. Gå til **Leads-tabben**
-2. Klik på en lead
-3. CustomerProfile åbner på **Timeline**-fanen
-4. Klik på en email i timeline
-5. ✅ Tab skifter automatisk til **Emails**
-6. ✅ Email-tråd åbner direkte
-7. ✅ Toast vises: "Åbner email i Email-tabben..."
+1. Klik på en lead
+1. CustomerProfile åbner på **Timeline**-fanen
+1. Klik på en email i timeline
+1. ✅ Tab skifter automatisk til **Emails**
+1. ✅ Email-tråd åbner direkte
+1. ✅ Toast vises: "Åbner email i Email-tabben..."
 
 ### Test 2: Multiple Clicks
 
 1. Klik email i LeadsTab → skift til Emails
-2. Gå tilbage til Leads
-3. Klik anden email
-4. ✅ Tab skifter igen
-5. ✅ Ny email åbner (ikke den gamle)
+1. Gå tilbage til Leads
+1. Klik anden email
+1. ✅ Tab skifter igen
+1. ✅ Ny email åbner (ikke den gamle)
 
 ### Test 3: Fallback (uden callback)
 
 1. Hvis `onRequestTabChange` ikke er sat
-2. ✅ Toast vises: "Email åbnet - skift til Emails-tabben for at se den"
-3. ✅ Ingen crash eller fejl
+1. ✅ Toast vises: "Email åbnet - skift til Emails-tabben for at se den"
+1. ✅ Ingen crash eller fejl
 
 ---
 
@@ -233,10 +243,10 @@ const handleTabChange = useCallback((tab: ...) => {
 ### Mulige udvidelser
 
 1. **Deep linking** - URL params for direkte email-links
-2. **History tracking** - "Back" knap til forrige view
-3. **Multiple tabs** - Support for flere åbne emails samtidigt
-4. **Cross-component** - Også fra CalendarTab, TasksTab, etc.
-5. **Animation** - Smooth transition mellem tabs
+1. **History tracking** - "Back" knap til forrige view
+1. **Multiple tabs** - Support for flere åbne emails samtidigt
+1. **Cross-component** - Også fra CalendarTab, TasksTab, etc.
+1. **Animation** - Smooth transition mellem tabs
 
 ### Eksempel: Deep Linking
 
@@ -247,7 +257,8 @@ const threadToOpen = searchParams.get("thread");
 if (threadToOpen) {
   emailContext.requestOpenThread(threadToOpen);
 }
-```
+
+```text
 
 ---
 
@@ -268,7 +279,8 @@ onOpenEmailThread={(threadId) => {
     toast.info("Email åbnet - skift til Emails-tabben");
   }
 }}
-```
+
+```text
 
 ### Fra EmailTab - Detect and open
 
@@ -282,6 +294,7 @@ useEffect(() => {
     console.log("[EmailTab] Opened:", pendingThread);
   }
 }, [emailContext.state.pendingThreadToOpen]);
+
 ```
 
 ---
@@ -291,20 +304,20 @@ useEffect(() => {
 ### Email åbner ikke
 
 1. Tjek console for log: `[EmailTab] Opened pending thread: <id>`
-2. Verificer at `pendingThreadToOpen` er sat i EmailContext
-3. Tjek at EmailTab er mounted når tab skiftes
+1. Verificer at `pendingThreadToOpen` er sat i EmailContext
+1. Tjek at EmailTab er mounted når tab skiftes
 
 ### Tab skifter ikke
 
 1. Verificer at `onRequestTabChange` callback er sat på LeadsTab
-2. Tjek at InboxPanel passer `onTabChange` videre
-3. Se efter fejl i ChatInterface.handleTabChange
+1. Tjek at InboxPanel passer `onTabChange` videre
+1. Se efter fejl i ChatInterface.handleTabChange
 
 ### Multiple emails åbner
 
 1. Pending thread cleares ikke korrekt
-2. useEffect dependency array mangler felt
-3. Fix: Tilføj `emailContext.clearPendingThread()` cleanup
+1. useEffect dependency array mangler felt
+1. Fix: Tilføj `emailContext.clearPendingThread()` cleanup
 
 ---
 
@@ -325,9 +338,9 @@ LeadsTab (click email) → EmailContext (store threadId) → Tab Switch → Emai
 **Files Changed**:
 
 1. `contexts/EmailContext.tsx` - State management
-2. `components/inbox/LeadsTab.tsx` - Trigger navigation
-3. `components/InboxPanel.tsx` - Pass callback
-4. `components/inbox/EmailTab.tsx` - Open thread
+1. `components/inbox/LeadsTab.tsx` - Trigger navigation
+1. `components/InboxPanel.tsx` - Pass callback
+1. `components/inbox/EmailTab.tsx` - Open thread
 
 ---
 

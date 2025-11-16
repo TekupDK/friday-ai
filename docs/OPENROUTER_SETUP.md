@@ -5,9 +5,9 @@
 ### 1. Get OpenRouter API Key
 
 1. Go to [OpenRouter.ai](https://openrouter.ai/)
-2. Sign up/login
-3. Go to API Keys → Create new key
-4. Copy your key: `sk-or-v1-...`
+1. Sign up/login
+1. Go to API Keys → Create new key
+1. Copy your key: `sk-or-v1-...`
 
 ### 2. Update .env.dev
 
@@ -17,13 +17,15 @@ cp .env.dev.template .env.dev
 
 # Edit and add your key
 NEXT_PUBLIC_OPENROUTER_API_KEY=sk-or-v1-your-actual-key-here
-```
+
+```text
 
 ### 3. Start Development
 
 ```bash
 pnpm dev
-```
+
+```bash
 
 ## 🎯 WHAT'S ENABLED
 
@@ -47,20 +49,20 @@ pnpm dev
 ### Test Basic Chat
 
 1. Open Friday AI panel (left side)
-2. Type: "Hej Friday, hvad kan du hjælpe med?"
-3. Should get Danish response
+1. Type: "Hej Friday, hvad kan du hjælpe med?"
+1. Should get Danish response
 
 ### Test Context
 
 1. Select some emails in inbox
-2. Ask: "Opsummer de valgte emails"
-3. Friday should use email context
+1. Ask: "Opsummer de valgte emails"
+1. Friday should use email context
 
 ### Test Business Features
 
 1. Try: "Tjek min kalender i dag"
-2. Try: "Vis ubetalte fakturaer"
-3. Try: "Find nye leads"
+1. Try: "Vis ubetalte fakturaer"
+1. Try: "Find nye leads"
 
 ## 🔧 TROUBLESHOOTING
 
@@ -71,7 +73,8 @@ pnpm dev
 echo $NEXT_PUBLIC_OPENROUTER_API_KEY
 
 # Should start with: sk-or-v1-
-```
+
+```text
 
 ### Network Issues
 
@@ -99,6 +102,7 @@ echo $NEXT_PUBLIC_OPENROUTER_API_KEY
 // In browser console:
 localStorage.setItem("friday-debug", "true");
 // Reload to see detailed logs
+
 ```
 
 ## 🚀 NEXT STEPS
@@ -123,7 +127,7 @@ localStorage.setItem("friday-debug", "true");
 
 ---
 
-## 🎉 READY TO GO!
+## 🎉 READY TO GO
 
 Your Friday AI is now powered by:
 

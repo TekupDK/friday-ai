@@ -1,7 +1,7 @@
 # LiteLLM Integration - Technical Decisions
 
-**Version:** 1.0.0  
-**Date:** November 9, 2025  
+**Version:** 1.0.0
+**Date:** November 9, 2025
 **Status:** Approved for Implementation
 
 ---
@@ -12,7 +12,7 @@ This document records the key technical decisions for integrating LiteLLM as Fri
 
 ---
 
-## 🎯 Decision 1: Why LiteLLM?
+## 🎯 Decision 1: Why LiteLLM
 
 ### Problem Statement
 
@@ -31,11 +31,11 @@ Friday AI currently uses direct API calls to OpenRouter with:
 ### Rationale
 
 1. **Zero Cost** - Self-hosted, open source ($0.00/month)
-2. **Provider Flexibility** - Easy to switch between FREE models
-3. **Automatic Fallback** - Built-in retry/fallback logic
-4. **Battle-Tested** - Used by 100+ companies in production
-5. **OpenAI Compatible** - Drop-in replacement for existing code
-6. **Monitoring Built-in** - Metrics, logging, health checks
+1. **Provider Flexibility** - Easy to switch between FREE models
+1. **Automatic Fallback** - Built-in retry/fallback logic
+1. **Battle-Tested** - Used by 100+ companies in production
+1. **OpenAI Compatible** - Drop-in replacement for existing code
+1. **Monitoring Built-in** - Metrics, logging, health checks
 
 ### Alternatives Considered
 
@@ -78,19 +78,21 @@ We need provider diversity but cannot increase costs beyond $0.00/month.
 ### Rationale
 
 1. **Cost Constraint** - Friday AI budget: $0.00/month for LLM
-2. **5+ FREE Options** - OpenRouter has excellent FREE tier
-3. **Quality Maintained** - GLM-4.5 Air has "100% Accuracy" rating
-4. **Danish Support** - Current model (GLM-4.5) supports Danish well
+1. **5+ FREE Options** - OpenRouter has excellent FREE tier
+1. **Quality Maintained** - GLM-4.5 Air has "100% Accuracy" rating
+1. **Danish Support** - Current model (GLM-4.5) supports Danish well
 
 ### Provider Cascade (All FREE!)
 
 ```yaml
+
 1. glm-4.5-air:free          ($0.00) - Primary (current)
 2. deepseek-chat-v3.1:free   ($0.00) - Fallback 1 (coding)
 3. minimax-m2:free           ($0.00) - Fallback 2 (fast)
 4. kimi-k2:free              ($0.00) - Fallback 3 (long context)
 5. qwen3-coder:free          ($0.00) - Fallback 4 (code tasks)
-```
+
+```text
 
 **Total Cost:** $0.00/month 🎉
 
@@ -115,9 +117,9 @@ We need provider diversity but cannot increase costs beyond $0.00/month.
 ### Rationale
 
 1. **Zero Breaking Changes** - Existing code works unchanged
-2. **Gradual Migration** - Can update one file at a time
-3. **Easy Rollback** - Just change import path
-4. **Test Compatibility** - All tests pass without modification
+1. **Gradual Migration** - Can update one file at a time
+1. **Easy Rollback** - Just change import path
+1. **Test Compatibility** - All tests pass without modification
 
 ### Implementation
 
@@ -134,7 +136,8 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
 // Migration: Just change import!
 // OLD: import { invokeLLM } from '@/server/_core/llm';
 // NEW: import { invokeLLM } from '@/server/integrations/litellm';
-```
+
+```text
 
 ### Alternatives Considered
 
@@ -157,9 +160,9 @@ How to safely deploy LiteLLM to production without big-bang release?
 ### Rationale
 
 1. **Risk Mitigation** - Can quickly disable if issues
-2. **User-Based Testing** - Consistent experience per user
-3. **Easy Monitoring** - Track metrics by flag state
-4. **Already Built** - Feature flags exist in codebase
+1. **User-Based Testing** - Consistent experience per user
+1. **Easy Monitoring** - Track metrics by flag state
+1. **Already Built** - Feature flags exist in codebase
 
 ### Rollout Plan
 
@@ -175,7 +178,8 @@ LITELLM_ROLLOUT_PERCENTAGE=50
 
 // Phase 4: 100% - Everyone
 LITELLM_ROLLOUT_PERCENTAGE=100
-```
+
+```text
 
 ### Feature Flag Implementation
 
@@ -192,7 +196,8 @@ if (featureFlags.enableLiteLLM) {
 } else {
   return originalInvokeLLM(params);
 }
-```
+
+```text
 
 ### Alternatives Considered
 
@@ -215,9 +220,9 @@ Run LiteLLM as SaaS (hosted) or self-hosted?
 ### Rationale
 
 1. **Zero Cost** - No SaaS fees
-2. **Data Privacy** - All requests stay in our infrastructure
-3. **Full Control** - Can customize config, no rate limits
-4. **Low Latency** - Localhost connection (~1-2ms)
+1. **Data Privacy** - All requests stay in our infrastructure
+1. **Full Control** - Can customize config, no rate limits
+1. **Low Latency** - Localhost connection (~1-2ms)
 
 ### Deployment Options
 
@@ -229,10 +234,14 @@ services:
   litellm:
     image: ghcr.io/berriai/litellm:main-stable
     ports:
+
       - "4000:4000"
+
     environment:
+
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-```
+
+```text
 
 #### Production
 
@@ -240,7 +249,8 @@ services:
 # Same Docker Compose (server)
 # Or: Kubernetes sidecar pattern
 # Or: Separate service in same VPC
-```
+
+```text
 
 ### Alternatives Considered
 
@@ -263,9 +273,9 @@ How to track LiteLLM performance and reliability?
 ### Rationale
 
 1. **Built-in Metrics** - LiteLLM provides /metrics endpoint
-2. **Existing Infrastructure** - Friday AI has analytics system
-3. **Cost Tracking** - Even at $0.00, track usage
-4. **Error Detection** - Quick identification of issues
+1. **Existing Infrastructure** - Friday AI has analytics system
+1. **Cost Tracking** - Even at $0.00, track usage
+1. **Error Detection** - Quick identification of issues
 
 ### Metrics to Track
 
@@ -290,16 +300,18 @@ interface LiteLLMMetrics {
   errorRate: number;
   errorsByType: Record<string, number>;
 }
-```
+
+```text
 
 ### Monitoring Endpoints
 
-```
+```text
 GET /health              - LiteLLM health check
 GET /health/providers    - Per-provider status
 GET /metrics            - Prometheus metrics
 GET /api/litellm/stats  - Friday AI custom stats
-```
+
+```text
 
 ---
 
@@ -316,13 +328,13 @@ Where to place LiteLLM integration code?
 ### Rationale
 
 1. **Clear Separation** - Integration code isolated
-2. **Easy to Find** - Clear naming convention
-3. **Maintainable** - Small, focused files
-4. **Testable** - Easy to mock/test independently
+1. **Easy to Find** - Clear naming convention
+1. **Maintainable** - Small, focused files
+1. **Testable** - Easy to mock/test independently
 
 ### Structure
 
-```
+```text
 server/integrations/litellm/
 ├── config/
 │   ├── litellm.config.yaml     (50 lines)
@@ -340,7 +352,8 @@ server/integrations/litellm/
 └── index.ts                    (30 lines - exports)
 
 Total: ~880 lines (well-organized)
-```
+
+```bash
 
 ### Alternatives Considered
 
@@ -363,9 +376,9 @@ How to ensure LiteLLM integration works correctly?
 ### Rationale
 
 1. **Coverage >80%** - High confidence in code
-2. **Fast Feedback** - Unit tests run in seconds
-3. **Real Scenarios** - E2E tests with actual providers
-4. **Safety Net** - Catch issues before production
+1. **Fast Feedback** - Unit tests run in seconds
+1. **Real Scenarios** - E2E tests with actual providers
+1. **Safety Net** - Catch issues before production
 
 ### Test Layers
 
@@ -378,7 +391,8 @@ describe("LiteLLMClient", () => {
   it("should handle timeouts", () => {});
   it("should retry on failure", () => {});
 });
-```
+
+```text
 
 #### 2. Integration Tests (Vitest + Mock Server)
 
@@ -388,7 +402,8 @@ describe("LiteLLM Integration", () => {
   it("should fallback to secondary provider", () => {});
   it("should activate circuit breaker", () => {});
 });
-```
+
+```bash
 
 #### 3. E2E Tests (Playwright)
 
@@ -397,7 +412,8 @@ describe("LiteLLM Integration", () => {
 test("AI chat with LiteLLM", async ({ page }) => {
   // Test full flow with real LiteLLM proxy
 });
-```
+
+```text
 
 #### 4. Manual Testing
 
@@ -428,13 +444,13 @@ How to document LiteLLM integration for team?
 ### Rationale
 
 1. **Team Onboarding** - New devs can understand quickly
-2. **Troubleshooting** - Common issues documented
-3. **Operations** - Clear deployment/monitoring guides
-4. **Future Reference** - Decisions recorded (this doc!)
+1. **Troubleshooting** - Common issues documented
+1. **Operations** - Clear deployment/monitoring guides
+1. **Future Reference** - Decisions recorded (this doc!)
 
 ### Documentation Structure
 
-```
+```text
 docs/integrations/litellm/
 ├── ARCHITECTURE.md         ✅ System design
 ├── DECISIONS.md           ✅ This document
@@ -444,7 +460,8 @@ docs/integrations/litellm/
 ├── MONITORING.md          🔜 Monitoring guide
 ├── TROUBLESHOOTING.md     🔜 Common issues
 └── FRIDAY_AI_CURRENT_STATE.md ✅ Current analysis
-```
+
+```text
 
 ### Documentation Standards
 
@@ -476,7 +493,8 @@ LITELLM_ROLLOUT_PERCENTAGE=0
 
 # Or force disable
 FORCE_DIRECT_OPENROUTER=true
-```
+
+```text
 
 #### Level 2: Code Rollback (5 minutes)
 
@@ -487,7 +505,8 @@ import { invokeLLM } from '@/server/_core/llm';
 
 # Restart server
 pnpm dev
-```
+
+```bash
 
 #### Level 3: Docker Rollback (10 minutes)
 
@@ -496,7 +515,8 @@ pnpm dev
 docker-compose stop litellm
 
 # Friday AI automatically falls back to direct calls
-```
+
+```bash
 
 #### Level 4: Git Revert (15 minutes)
 
@@ -504,6 +524,7 @@ docker-compose stop litellm
 git revert <commit-hash>
 git push
 # Redeploy
+
 ```
 
 ### Rollback Decision Criteria
@@ -527,11 +548,11 @@ None identified - wrapper pattern is low risk
 1. **Latency Increase**
    - Risk: +5-10ms per request
    - Mitigation: Localhost deployment, monitor metrics
-2. **New Dependency**
+1. **New Dependency**
    - Risk: LiteLLM bugs/breaking changes
    - Mitigation: Use stable release, pin version
 
-3. **Configuration Complexity**
+1. **Configuration Complexity**
    - Risk: Misconfigured providers
    - Mitigation: Extensive testing, clear docs
 
@@ -539,9 +560,9 @@ None identified - wrapper pattern is low risk
 
 1. **Breaking Changes**
    - Risk: LOW - wrapper pattern maintains compatibility
-2. **Cost Increase**
+1. **Cost Increase**
    - Risk: ZERO - only FREE models
-3. **Rollback Difficulty**
+1. **Rollback Difficulty**
    - Risk: LOW - multiple rollback options
 
 ---
@@ -579,6 +600,7 @@ None identified - wrapper pattern is low risk
 - Architecture design
 - Technical decisions
 - Migration planning
+
   **Status:** DONE
 
 ### Phase 2: Implementation (Week 1)
@@ -587,6 +609,7 @@ None identified - wrapper pattern is low risk
 - Configure providers
 - Create wrapper
 - Write tests
+
   **Estimate:** 5 days
 
 ### Phase 3: Testing (Week 1-2)
@@ -595,6 +618,7 @@ None identified - wrapper pattern is low risk
 - Integration tests
 - E2E tests
 - Manual verification
+
   **Estimate:** 3 days
 
 ### Phase 4: Rollout (Week 2-3)
@@ -603,6 +627,7 @@ None identified - wrapper pattern is low risk
 - 10% (early adopters)
 - 50% (half users)
 - 100% (everyone)
+
   **Estimate:** 1 week
 
 **Total Timeline:** 2-3 weeks
@@ -620,16 +645,16 @@ None identified - wrapper pattern is low risk
 ### Next Steps
 
 1. ✅ Review this document
-2. 🔜 Proceed with MIGRATION_PLAN.md
-3. 🔜 Start implementation (Task 1.2)
+1. 🔜 Proceed with MIGRATION_PLAN.md
+1. 🔜 Start implementation (Task 1.2)
 
 ---
 
-**Document Status:** ✅ APPROVED  
-**Ready for Implementation:** ✅ YES  
-**Risk Level:** LOW  
-**Estimated Impact:** HIGH (better reliability)  
+**Document Status:** ✅ APPROVED
+**Ready for Implementation:** ✅ YES
+**Risk Level:** LOW
+**Estimated Impact:** HIGH (better reliability)
 **Cost Impact:** ZERO ($0.00)
 
-**Last Updated:** November 9, 2025  
+**Last Updated:** November 9, 2025
 **Next Review:** After Phase 2 completion

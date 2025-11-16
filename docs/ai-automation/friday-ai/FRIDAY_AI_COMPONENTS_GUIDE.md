@@ -28,7 +28,8 @@ Komplet guide til alle Friday AI chat komponenter baseret på Figma design og je
 import { AIThinking } from "@/components/chat/AIThinking";
 
 <AIThinking message="AI Thinking..." />;
-```
+
+```text
 
 **Features:**
 
@@ -52,7 +53,8 @@ import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
   progress={60}
   status="running" // 'running' | 'completed' | 'failed'
 />;
-```
+
+```text
 
 **Features:**
 
@@ -77,7 +79,7 @@ import { EmailThreadCard } from "@/components/chat/EmailThreadCard";
 <EmailThreadCard
   data={{
     subject: "Tilbud på website projekt",
-    from: "kunde@firma.dk",
+    from: "<kunde@firma.dk>",
     messageCount: 5,
     summary: "AI-genereret summary af email thread",
     labels: ["Lead", "Høj prioritet"],
@@ -86,7 +88,8 @@ import { EmailThreadCard } from "@/components/chat/EmailThreadCard";
   }}
   onClick={() => console.log("Open email")}
 />;
-```
+
+```text
 
 **Features:**
 
@@ -119,7 +122,8 @@ import { CalendarEventCard } from "@/components/chat/CalendarEventCard";
     isBooked: true,
   }}
 />;
-```
+
+```text
 
 **Features:**
 
@@ -154,7 +158,8 @@ import { InvoiceCards } from "@/components/chat/InvoiceCards";
     },
   ]}
 />;
-```
+
+```text
 
 **Features:**
 
@@ -182,13 +187,14 @@ import { SearchResultsCard } from "@/components/chat/SearchResultsCard";
   results={[
     {
       title: "Article Title",
-      url: "https://...",
+      url: "<https://...",>
       snippet: "Preview text...",
       source: "TechCrunch",
     },
   ]}
 />;
-```
+
+```text
 
 **Features:**
 
@@ -220,7 +226,8 @@ import { WeatherCard } from "@/components/chat/WeatherCard";
   wind={12}
   forecast={[{ day: "Man", temp: 19, emoji: "☀️" }]}
 />;
-```
+
+```text
 
 **Features:**
 
@@ -241,14 +248,15 @@ import { ChatFlowDemo } from "@/components/chat/ChatFlowDemo";
 
 <ChatFlowDemo scenario="weather" />;
 // Scenarios: 'weather' | 'email' | 'calendar' | 'invoices' | 'search'
-```
+
+```text
 
 **Flow steps:**
 
 1. User message (slide-in from right)
-2. AI Thinking (pulserende dots)
-3. Tool Execution (progress bar)
-4. Response Card (result)
+1. AI Thinking (pulserende dots)
+1. Tool Execution (progress bar)
+1. Response Card (result)
 
 **Features:**
 
@@ -284,7 +292,8 @@ interface Message {
     data: any;
   };
 }
-```
+
+```text
 
 ### **Phase 2: Opdater ShortWaveChatPanel**
 
@@ -294,24 +303,25 @@ interface Message {
 {
   chatMessages.map(message => (
     <div key={message.id}>
-      {/* Tool execution */}
+      {/*Tool execution*/}
       {message.toolExecution && <ToolExecutionBox {...message.toolExecution} />}
 
-      {/* Regular message */}
+      {/*Regular message*/}
       <MessageBubble>{message.content}</MessageBubble>
 
-      {/* Response cards */}
+      {/*Response cards*/}
       {message.cardData?.type === "weather" && (
         <WeatherCard {...message.cardData.data} />
       )}
       {message.cardData?.type === "invoices" && (
         <InvoiceCards invoices={message.cardData.data} />
       )}
-      {/* ... etc */}
+      {/*... etc*/}
     </div>
   ));
 }
-```
+
+```text
 
 ### **Phase 3: Backend Integration**
 
@@ -330,7 +340,8 @@ if (toolUsed === "get_weather") {
     },
   });
 }
-```
+
+```text
 
 ---
 
@@ -362,7 +373,7 @@ Alle komponenter bruger jeres eksisterende theme system:
 
 ## 📍 File Locations
 
-```
+```bash
 client/src/components/chat/
 ├── AIThinking.tsx              # Pulserende dots
 ├── ToolExecutionBox.tsx        # Inline tool progress
@@ -380,6 +391,7 @@ client/src/pages/
 server/
 ├── routers.ts                  # Message creation
 └── tool-execution-tracker.ts   # Tool tracking
+
 ```
 
 ---
@@ -387,17 +399,17 @@ server/
 ## 🚀 Next Steps
 
 1. ✅ **Komponenter oprettet** - Alle komponenter er klar
-2. ⏳ **Database schema** - Tilføj `cardData` og `toolExecution` felter
-3. ⏳ **ShortWaveChatPanel** - Integrer komponenter i chat panel
-4. ⏳ **Backend** - Return cardData fra AI responses
-5. ⏳ **Testing** - Test alle flows end-to-end
+1. ⏳ **Database schema** - Tilføj `cardData` og `toolExecution` felter
+1. ⏳ **ShortWaveChatPanel** - Integrer komponenter i chat panel
+1. ⏳ **Backend** - Return cardData fra AI responses
+1. ⏳ **Testing** - Test alle flows end-to-end
 
 ---
 
 ## 📸 Screenshots
 
 Alle komponenter kan testes på:
-**http://localhost:3000/showcase**
+**<http://localhost:3000/showcase**>
 
 Scroll til "Friday AI" sections for at se:
 

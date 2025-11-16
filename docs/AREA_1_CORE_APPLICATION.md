@@ -1,6 +1,6 @@
 # 📁 OMRÅDE 1: CORE APPLICATION - Komplet Analyse
 
-**Generated:** 2025-11-08 17:39 UTC+01:00  
+**Generated:** 2025-11-08 17:39 UTC+01:00
 **Status:** Production Ready ✅
 
 ---
@@ -13,7 +13,7 @@ Core Application består af:
 - **Server (Backend):** Node.js + tRPC + Express
 - **Shared:** Fælles types og utilities
 
-**Total Files:** 150+ core files  
+**Total Files:** 150+ core files
 **Tech Stack:** React, TypeScript, tRPC, Drizzle ORM, PostgreSQL
 
 ---
@@ -22,7 +22,7 @@ Core Application består af:
 
 ### **Root Level (`client/src/`)**
 
-```
+```bash
 client/src/
 ├── App.tsx              # Main app component (routing, layout)
 ├── main.tsx             # Entry point (React.render)
@@ -38,7 +38,8 @@ client/src/
 ├── config/              # Configuration
 ├── _core/               # Core utilities
 └── __tests__/           # Client tests
-```
+
+```text
 
 ---
 
@@ -50,7 +51,7 @@ client/src/
 
 **Files:**
 
-```
+```bash
 chat/
 ├── ChatInput.tsx              # Message input with suggestions
 ├── ShortWaveChatPanel.tsx     # Main chat panel (Shortwave-style)
@@ -58,7 +59,8 @@ chat/
 ├── ChatMessage.tsx            # Message display component
 ├── MessageList.tsx            # Message list with virtualization
 └── TypingIndicator.tsx        # Loading indicator
-```
+
+```bash
 
 **Key Features:**
 
@@ -82,14 +84,15 @@ chat/
 
 **Files:**
 
-```
+```bash
 panels/
 ├── AIAssistantPanelV2.tsx     # Friday AI chat panel (RIGHT)
 ├── EmailCenterPanel.tsx       # Email center (MIDDLE)
 ├── SmartWorkspacePanel.tsx    # Workspace panel (LEFT)
 ├── LeadsPanel.tsx             # Leads management
 └── AnalyticsPanel.tsx         # Analytics dashboard
-```
+
+```text
 
 **Key Features:**
 
@@ -101,7 +104,7 @@ panels/
 
 **Architecture:**
 
-```
+```text
 ┌─────────────┬──────────────┬─────────────┐
 │  Workspace  │    Email     │  Friday AI  │
 │   (LEFT)    │   (MIDDLE)   │   (RIGHT)   │
@@ -110,7 +113,8 @@ panels/
 │  - Tasks    │  - Messages  │  - Context  │
 │  - Calendar │  - Actions   │  - Tools    │
 └─────────────┴──────────────┴─────────────┘
-```
+
+```text
 
 ---
 
@@ -120,14 +124,15 @@ panels/
 
 **Files:**
 
-```
+```bash
 inbox/
 ├── EmailList.tsx              # Email thread list
 ├── EmailThread.tsx            # Thread view
 ├── EmailComposer.tsx          # Compose email
 ├── EmailActions.tsx           # Email actions (archive, label, etc.)
 └── EmailFilters.tsx           # Filter controls
-```
+
+```text
 
 **Key Features:**
 
@@ -145,7 +150,7 @@ inbox/
 
 **Files:**
 
-```
+```bash
 workspace/
 ├── LeadCard.tsx               # Lead display
 ├── TaskList.tsx               # Task management
@@ -153,7 +158,8 @@ workspace/
 ├── InvoiceView.tsx            # Invoice display
 ├── CalendarView.tsx           # Calendar integration
 └── DashboardStats.tsx         # Analytics widgets
-```
+
+```text
 
 **Key Features:**
 
@@ -171,7 +177,7 @@ workspace/
 
 **Files:** 30+ components
 
-```
+```bash
 ui/
 ├── button.tsx                 # Button component
 ├── input.tsx                  # Input component
@@ -185,7 +191,8 @@ ui/
 ├── separator.tsx              # Divider
 ├── skeleton.tsx               # Loading skeleton
 └── ... (20+ more)
-```
+
+```text
 
 **Tech:** shadcn/ui + Radix UI + Tailwind CSS
 
@@ -193,7 +200,7 @@ ui/
 
 ### **6. Other Components**
 
-```
+```bash
 components/
 ├── ErrorBoundary.tsx          # Error boundary wrapper
 ├── PanelErrorBoundary.tsx     # Panel-specific error handling
@@ -204,7 +211,8 @@ components/
 ├── ActivityTimeline.tsx       # Activity feed
 ├── SafeHtmlView.tsx           # Safe HTML rendering
 └── Map.tsx                    # Map component
-```
+
+```text
 
 ---
 
@@ -225,7 +233,8 @@ const {
   conversationId,
   context, // Email/calendar context
 });
-```
+
+```bash
 
 **Features:**
 
@@ -254,7 +263,8 @@ const {
   conversationId,
   maxMessages: 50, // Memory management
 });
-```
+
+```text
 
 **Features:**
 
@@ -279,7 +289,8 @@ const {
     // Handle each chunk
   },
 });
-```
+
+```bash
 
 **Features:**
 
@@ -324,7 +335,7 @@ const {
 
 ## 📄 **PAGES - MAIN ROUTES**
 
-```
+```bash
 pages/
 ├── Home.tsx                   # Dashboard home (/)
 ├── LoginPage.tsx              # Login page (/login)
@@ -332,7 +343,8 @@ pages/
 ├── ChatInterface.tsx          # Chat interface
 ├── ComponentShowcase.tsx      # UI component showcase
 └── NotFound.tsx               # 404 page
-```
+
+```text
 
 **Routing:**
 
@@ -342,14 +354,16 @@ pages/
 /workspace → WorkspaceLayout (3-panel)
 /chat → ChatInterface
 /showcase → ComponentShowcase
+
 * → NotFound
-```
+
+```text
 
 ---
 
 ## 🔧 **LIB - UTILITIES & HELPERS**
 
-```
+```text
 lib/
 ├── trpc.ts                    # tRPC client setup
 ├── utils.ts                   # General utilities (cn, etc.)
@@ -358,7 +372,8 @@ lib/
 ├── date.ts                    # Date utilities
 ├── email.ts                   # Email utilities
 └── validation.ts              # Validation helpers
-```
+
+```text
 
 **Key Utilities:**
 
@@ -372,25 +387,27 @@ lib/
 
 ## 🎯 **CORE UTILITIES (`_core/`)**
 
-```
+```text
 _core/
 ├── types.ts                   # Core types
 ├── constants.ts               # Core constants
 ├── errors.ts                  # Error classes
 └── config.ts                  # Core config
-```
+
+```text
 
 ---
 
 ## 🌐 **CONTEXTS - REACT CONTEXTS**
 
-```
+```bash
 contexts/
 ├── AuthContext.tsx            # Authentication state
 ├── ThemeContext.tsx           # Theme (dark/light)
 ├── WorkspaceContext.tsx       # Workspace state
 └── EmailContext.tsx           # Email state
-```
+
+```text
 
 ---
 
@@ -411,7 +428,7 @@ contexts/
 
 ### **Root Level (`server/`)**
 
-```
+```text
 server/
 ├── routers.ts               # Main tRPC router ⭐
 ├── ai-router.ts             # AI orchestration ⭐
@@ -426,7 +443,8 @@ server/
 ├── api/                     # API endpoints
 ├── scripts/                 # Server scripts
 └── __tests__/               # Server tests
-```
+
+```text
 
 ---
 
@@ -446,7 +464,8 @@ chat: {
   getMessages(); // Get conversation messages
   sendMessage(); // Send message + AI response
 }
-```
+
+```text
 
 ### **Email Endpoints**
 
@@ -459,7 +478,8 @@ email: {
   labelThread(); // Add/remove labels
   searchEmails(); // Search emails
 }
-```
+
+```text
 
 ### **Calendar Endpoints**
 
@@ -470,7 +490,8 @@ calendar: {
   updateEvent(); // Update event
   deleteEvent(); // Delete event
 }
-```
+
+```text
 
 ### **Billy Endpoints**
 
@@ -481,7 +502,8 @@ billy: {
   getCustomers(); // Get customers
   syncData(); // Sync Billy data
 }
-```
+
+```text
 
 ### **Analytics Endpoints**
 
@@ -491,7 +513,8 @@ analytics: {
   getMetrics(); // Get metrics
   getDashboard(); // Get dashboard data
 }
-```
+
+```text
 
 ---
 
@@ -503,7 +526,8 @@ analytics: {
 
 **Flow:**
 
-```
+```text
+
 1. Receive message + context + history
 2. Select appropriate AI model
 3. Inject system prompts
@@ -513,7 +537,8 @@ analytics: {
 7. Handle tool calls
 8. Create pending actions
 9. Return response
-```
+
+```text
 
 **Features:**
 
@@ -555,7 +580,8 @@ export async function routeAI({
   // 5. Return response
   return response;
 }
-```
+
+```text
 
 ---
 
@@ -583,7 +609,8 @@ export async function routeAI({
   gmail_get_draft - // Get draft
   gmail_create_draft - // Create draft
   gmail_send_draft; // Send draft
-```
+
+```text
 
 ### **2. Calendar Tools (8 tools)**
 
@@ -596,7 +623,8 @@ export async function routeAI({
   calendar_get_free_busy - // Get availability
   calendar_list_calendars - // List calendars
   calendar_create_calendar; // Create calendar
-```
+
+```text
 
 ### **3. Billy Tools (7 tools)**
 
@@ -608,7 +636,8 @@ export async function routeAI({
   billy_get_products - // Get products
   billy_sync_data - // Sync data
   billy_get_stats; // Get statistics
-```
+
+```text
 
 ### **4. Database Tools (5 tools)**
 
@@ -618,7 +647,8 @@ export async function routeAI({
   db_update_lead - // Update lead
   db_get_tasks - // Get tasks
   db_create_task; // Create task
-```
+
+```text
 
 **Total:** 35+ tools
 
@@ -646,7 +676,8 @@ export const toolHandlers = {
 
   // ... 35+ handlers
 };
-```
+
+```text
 
 **Features:**
 
@@ -672,7 +703,8 @@ export const toolHandlers = {
   getUserConversations() - // Get user's conversations
   deleteConversation() - // Delete conversation
   updateConversation(); // Update conversation
-```
+
+```text
 
 ### **Message Functions**
 
@@ -681,7 +713,8 @@ export const toolHandlers = {
   getMessages() - // Get messages
   getConversationMessages() - // Get conversation messages
   deleteMessage(); // Delete message
-```
+
+```text
 
 ### **Email Functions**
 
@@ -690,7 +723,8 @@ export const toolHandlers = {
   getEmailThreads() - // Get email threads
   updateEmailThread() - // Update thread
   deleteEmailThread(); // Delete thread
-```
+
+```text
 
 ### **Analytics Functions**
 
@@ -698,7 +732,8 @@ export const toolHandlers = {
 -trackEvent() - // Track event
   getAnalytics() - // Get analytics
   getMetrics(); // Get metrics
-```
+
+```text
 
 **Tech:** Drizzle ORM + PostgreSQL
 
@@ -706,7 +741,7 @@ export const toolHandlers = {
 
 ## 🔧 **CORE SERVER UTILITIES (`_core/`)**
 
-```
+```text
 _core/
 ├── index.ts                   # Main server entry
 ├── trpc.ts                    # tRPC setup
@@ -716,7 +751,8 @@ _core/
 ├── cookies.ts                 # Cookie handling
 ├── feature-flags.ts           # Feature flags
 └── errors.ts                  # Error handling
-```
+
+```text
 
 **Key Files:**
 
@@ -734,7 +770,8 @@ export async function createContext({ req, res }) {
     db: getDb(),
   };
 }
-```
+
+```text
 
 **2. `trpc.ts`** - tRPC Setup
 
@@ -744,7 +781,8 @@ export const t = initTRPC.context<Context>().create();
 export const router = t.router;
 export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use(authMiddleware);
-```
+
+```text
 
 **3. `llm.ts`** - LLM Client
 
@@ -752,7 +790,7 @@ export const protectedProcedure = t.procedure.use(authMiddleware);
 export async function callLLM({ model, messages, tools, stream = false }) {
   // Call OpenRouter API
   const response = await fetch(
-    "https://openrouter.ai/api/v1/chat/completions",
+    "<https://openrouter.ai/api/v1/chat/completions",>
     {
       method: "POST",
       headers: {
@@ -770,7 +808,8 @@ export async function callLLM({ model, messages, tools, stream = false }) {
 
   return response.json();
 }
-```
+
+```text
 
 ---
 
@@ -791,50 +830,94 @@ export async function callLLM({ model, messages, tools, stream = false }) {
 
 ### **Chat Message Flow:**
 
-```
+```bash
+
 1. USER TYPES MESSAGE
+
    ↓
+
 2. ChatInput.tsx
+
    ↓
+
 3. useFridayChatSimple.sendMessage()
+
    ↓
+
 4. tRPC: chat.sendMessage
+
    ↓
+
 5. server/routers.ts
+
    ↓
+
 6. Analytics: trackEvent('chat_message_sent')
+
    ↓
+
 7. Rate Limit: checkRateLimit()
+
    ↓
+
 8. Database: createMessage()
+
    ↓
+
 9. Load conversation history
+
    ↓
+
 10. server/ai-router.ts: routeAI()
+
     ↓
+
 11. Select model + inject context
+
     ↓
+
 12. Add tools (35+)
+
     ↓
+
 13. Call OpenRouter LLM
+
     ↓
+
 14. Parse response + tool calls
+
     ↓
+
 15. Execute tools (if needed)
+
     ↓
+
 16. Create pending actions
+
     ↓
+
 17. Database: createMessage() (AI response)
+
     ↓
+
 18. Analytics: trackEvent('chat_ai_response')
+
     ↓
+
 19. Return response to client
+
     ↓
+
 20. useFridayChatSimple: optimistic update
+
     ↓
+
 21. ShortWaveChatPanel: display message
+
     ↓
+
 22. Auto-scroll to bottom
+
 ```
 
 ---
@@ -878,19 +961,19 @@ export async function callLLM({ model, messages, tools, stream = false }) {
 ### **Client:**
 
 1. `client/src/App.tsx` - Main app
-2. `client/src/components/panels/AIAssistantPanelV2.tsx` - Friday AI panel
-3. `client/src/components/chat/ShortWaveChatPanel.tsx` - Chat UI
-4. `client/src/hooks/useFridayChatSimple.ts` - Chat hook
-5. `client/src/lib/trpc.ts` - tRPC client
+1. `client/src/components/panels/AIAssistantPanelV2.tsx` - Friday AI panel
+1. `client/src/components/chat/ShortWaveChatPanel.tsx` - Chat UI
+1. `client/src/hooks/useFridayChatSimple.ts` - Chat hook
+1. `client/src/lib/trpc.ts` - tRPC client
 
 ### **Server:**
 
 1. `server/routers.ts` - Main API router
-2. `server/ai-router.ts` - AI orchestration
-3. `server/friday-tools.ts` - AI tools (35+)
-4. `server/friday-tool-handlers.ts` - Tool implementations
-5. `server/db.ts` - Database operations
-6. `server/_core/index.ts` - Server entry point
+1. `server/ai-router.ts` - AI orchestration
+1. `server/friday-tools.ts` - AI tools (35+)
+1. `server/friday-tool-handlers.ts` - Tool implementations
+1. `server/db.ts` - Database operations
+1. `server/_core/index.ts` - Server entry point
 
 ---
 

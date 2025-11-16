@@ -1,15 +1,18 @@
 /\*\*
 
 - Phase 9.9: 3-Panel Layout Integration Guide
+
 -
+
 - Visuel guide til hvordan Email Assistant integreres i eksisterende 3-panel system
+
   \*/
 
 # 🎨 **3-PANEL EMAIL ASSISTANT - VISUEL DESIGN**
 
 ## 📐 **LAYOUT STRUKTUR:**
 
-```
+```text
 ┌─────────────────┬─────────────────────────────────┬─────────────────┐
 │   VENSTRE PANEL │         MIDTERSTE PANEL          │   HØJRE PANEL   │
 │                 │                                 │                 │
@@ -42,7 +45,8 @@
 │                 │  │ [Standard Gmail reply]      │ │                 │
 │                 │  └─────────────────────────────┘ │                 │
 └─────────────────┴─────────────────────────────────┴─────────────────┘
-```
+
+```text
 
 ## 🎯 **INTEGRATIONS PUNKTER:**
 
@@ -50,41 +54,49 @@
 
 ```typescript
 📍 NØJAGTIG PLACERING:
+
 - Under email content
 - Over standard reply box
 - Synlig når email åbnes
 - Collapsible for mere plads
 
 🎨 VISUEL SEPARATION:
+
 - Border top adskiller fra email
 - Gray background i header
 - Card layout for struktureret visning
 - Horizontal scroll for forslag
-```
+
+```text
 
 ### **2. RESPONSIVE DESIGN:**
 
 ```typescript
 📱 DESKTOP (Fuld skærm):
+
 - Komplet visning med alle detaljer
 - Horizontal scroll for forslag cards
 - Full-size email editor
 
 📱 TABLET (Medium skærm):
+
 - Kompakt visning
 - Stacked forslag i stedet for scroll
 - Mindre font sizes
 
 📱 MOBILE (Lille skærm):
+
 - Minimal visning
 - Collapse som default
 - Kun vigtigste information
-```
+
+```text
 
 ### **3. INTERAKTIVE ELEMENTER:**
 
 ```typescript
 🎯 CLICK FLOW:
+
 1. Email åbnes → AI analyserer automatisk
 2. Analyse vises → Kunde info, job, pris
 3. Forslag cards → Bruger klikker på ønskede
@@ -92,11 +104,13 @@
 5. Insert/Send → One-click integration
 
 ⚡ SHORTCUTS:
+
 - Click på forslag → instant insertion
 - Keyboard shortcuts → Ctrl+Enter for send
 - Auto-select → Highest confidence forslag
 - Quick edit → Inline redigering
-```
+
+```text
 
 ## 🎨 **VISUELLE KOMPONENTER:**
 
@@ -104,6 +118,7 @@
 
 ```typescript
 🎨 DESIGN ELEMENTS:
+
 - Kunde info med User icon
 - Job type med Building icon
 - Location med MapPin icon
@@ -112,16 +127,19 @@
 - Price/Estimates med Dollar/Clock icons
 
 📱 LAYOUT:
+
 - Horizontal info rows
 - Compact badges
 - Smart color coding
 - Clear visual hierarchy
-```
+
+```text
 
 ### **💡 SUGGESTION CARDS:**
 
 ```typescript
 🎨 CARD DESIGN:
+
 - Rounded corners
 - Subtle borders
 - Hover effects
@@ -130,17 +148,20 @@
 - Category icons
 
 📱 INTERAKTION:
+
 - Horizontal scroll
 - Click to select
 - Visual feedback
 - Smooth transitions
 - Mobile-friendly
-```
+
+```text
 
 ### **✏️ EMAIL EDITOR:**
 
 ```typescript
 🎨 EDITOR FEATURES:
+
 - Clean textarea
 - Monospace font
 - Auto-resize height
@@ -149,12 +170,14 @@
 - Help text
 
 📱 UX:
+
 - Auto-focus ved selection
 - Keyboard shortcuts
 - Auto-save draft
 - Undo/redo support
 - Preview mode
-```
+
+```text
 
 ## 🚀 **PERFORMANCE OPTIMERING:**
 
@@ -162,22 +185,26 @@
 
 ```typescript
 🎯 STRATEGI:
+
 - Analyser kun ved åbning
 - Cache suggestions per email
 - Minimal re-renders
 - Optimized API calls
 
 📱 MOBILE OPTIMERING:
+
 - Collapse som default
 - Touch-friendly cards
 - Swipe gestures
 - Reduced animations
-```
+
+```text
 
 ### **🔄 REAL-TIME UPDATES:**
 
 ```typescript
 ⚡ LIVE FEATURES:
+
 - Instant analysis
 - Real-time suggestions
 - Live preview
@@ -185,11 +212,13 @@
 - Progress indicators
 
 🎯 RESPONSIVE:
+
 - Fast initial load
 - Progressive enhancement
 - Graceful degradation
 - Offline support
-```
+
+```text
 
 ## 🎯 **USER EXPERIENCE FLOW:**
 
@@ -197,30 +226,36 @@
 
 ```typescript
 1️⃣ EMAIL ÅBNES:
+
    - AI starter automatisk analyse
    - Loading state vises
    - Kunde info ekstraheres
 
 2️⃣ ANALYSE FÆRDIG:
+
    - Komplet information vises
    - 3-4 forslag genereres
    - Auto-select af bedste forslag
 
 3️⃣ FORSLAG VALGT:
+
    - One-click insertion
    - Tekst vises i editor
    - Bruger kan redigere
 
 4️⃣ EMAIL Klar:
+
    - Insert i Gmail reply
    - Eller send direkte
    - Analytics logges
 
 5️⃣ SUCCESS:
+
    - Email sendt
    - Lead opdateret
    - Næste email klar
-```
+
+```text
 
 ## 🏆 **RESULTAT:**
 
@@ -228,22 +263,26 @@
 
 ```typescript
 🎨 VISUEL HARMONI:
+
 - Passer perfekt i eksisterende layout
 - Consistent med brand design
 - Intuitiv navigation
 - Professional udseende
 
 ⚡ PERFORMANCE:
+
 - Ingen impact på email load
 - Instant AI analysis
 - Smooth transitions
 - Mobile optimized
 
 🎯 BUSINESS VALUE:
+
 - 10x hurtigere email svar
 - 100% konsistent branding
 - 50% højere konvertering
 - Perfekt AI/human balance
+
 ```
 
 **Email Assistant integrerer perfekt i jeres 3-panel system med minimal disruption og maximum value!** 🎯

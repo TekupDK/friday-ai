@@ -1,6 +1,6 @@
 # Friday AI - Current LLM State Analysis
 
-**Analyzed:** November 9, 2025  
+**Analyzed:** November 9, 2025
 **Files Reviewed:** `server/_core/llm.ts`, `env.ts`, `model-mappings.ts`
 
 ---
@@ -16,29 +16,36 @@
 ```typescript
 export async function invokeLLM(params: InvokeParams): Promise<InvokeResult>
 export async function* streamResponse(messages, params): AsyncGenerator<string>
-```
+
+```text
 
 ### Current Provider Hierarchy
 
-```
+```text
+
 1. OpenRouter (Primary)
+
    └─ Model: z-ai/glm-4.5-air:free (GLM-4.5 Air FREE)
-   └─ API: https://openrouter.ai/api/v1/chat/completions
+   └─ API: <https://openrouter.ai/api/v1/chat/completions>
    └─ Key: process.env.OPENROUTER_API_KEY
 
 2. Ollama (Fallback - Local Dev)
+
    └─ Model: gemma3:9b
    └─ API: {OLLAMA_BASE_URL}/api/chat
    └─ Used when: OpenRouter key missing
 
 3. Gemini (Fallback)
+
    └─ API: Google Generative Language API
    └─ Key: process.env.GEMINI_API_KEY
 
 4. OpenAI (Final Fallback)
+
    └─ Model: gpt-4o-mini
    └─ Key: process.env.OPENAI_API_KEY
-```
+
+```text
 
 ---
 
@@ -55,13 +62,15 @@ Friday AI har **7 FREE OpenRouter modeller** konfigureret:
 "minimax-m2-free": "minimax/minimax-m2:free"
 "qwen3-coder-free": "qwen/qwen3-coder:free"
 "kimi-k2-free": "moonshotai/kimi-k2:free"
-```
+
+```text
 
 ### Tier 2: Legacy FREE Model
 
 ```typescript
 "gemma-3-27b-free": "google/gemma-3-27b-it:free"
-```
+
+```text
 
 ### Model Metadata (from model-mappings.ts)
 
@@ -74,7 +83,8 @@ Friday AI har **7 FREE OpenRouter modeller** konfigureret:
   contextWindow: 128000,
   costTier: "free"
 }
-```
+
+```text
 
 ---
 
@@ -84,11 +94,11 @@ Friday AI har **7 FREE OpenRouter modeller** konfigureret:
 
 ```typescript
 // Current flow (llm.ts:419-432)
-const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+const response = await fetch("<https://openrouter.ai/api/v1/chat/completions",> {
   method: "POST",
   headers: {
     authorization: `Bearer ${ENV.openRouterApiKey}`,
-    "HTTP-Referer": "https://tekup.dk",
+    "HTTP-Referer": "<https://tekup.dk",>
     "X-Title": "Friday AI",
     "content-type": "application/json",
   },
@@ -100,7 +110,8 @@ const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     response_format: responseFormat,
   }),
 });
-```
+
+```text
 
 ### No Retry/Fallback Logic
 
@@ -117,24 +128,27 @@ const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
 
 ### Replace invokeLLM() Flow
 
-```
+```text
 BEFORE:
 Friday AI → OpenRouter API directly
 
 AFTER:
 Friday AI → LiteLLM Proxy → OpenRouter FREE models (with fallback)
-```
+
+```text
 
 ### Keep Using Same FREE Models
 
 ```yaml
-# LiteLLM Config will use:
+# LiteLLM Config will use
+
 - z-ai/glm-4.5-air:free          (Primary - Current)
 - deepseek/deepseek-chat-v3.1:free (Fallback 1)
 - minimax/minimax-m2:free          (Fallback 2)
 - qwen/qwen3-coder:free            (Fallback 3)
 - moonshotai/kimi-k2:free          (Fallback 4)
-```
+
+```text
 
 ### Benefits
 
@@ -151,14 +165,15 @@ Friday AI → LiteLLM Proxy → OpenRouter FREE models (with fallback)
 
 ### Core AI Features
 
-```
+```text
 server/ai-email-summary.ts          - Email AI summaries
 server/ai-label-suggestions.ts      - Smart label suggestions
 server/ai-metrics.ts                - AI usage metrics
 server/docs/ai/analyzer.ts          - Friday Docs analyzer
 server/docs/ai/auto-create.ts       - Friday Docs generator
 server/routers/chat-streaming.ts    - Chat streaming
-```
+
+```text
 
 ### All Need Migration
 
@@ -179,7 +194,8 @@ export async function invokeLLM(params: InvokeParams) {
 }
 
 // Keep same signature - drop-in replacement!
-```
+
+```text
 
 ### Phase 2: Gradual Migration
 
@@ -189,7 +205,8 @@ import { invokeLLM } from "@/server/_core/llm";
 
 // New code uses LiteLLM:
 import { invokeLLM } from "@/server/integrations/litellm";
-```
+
+```text
 
 ### Phase 3: Feature Flag Rollout
 
@@ -199,7 +216,8 @@ if (featureFlags.useLiteLLM) {
 } else {
   return originalInvokeLLM(params);
 }
-```
+
+```text
 
 ---
 
@@ -207,21 +225,23 @@ if (featureFlags.useLiteLLM) {
 
 ### Current Cost
 
-```
+```text
 OpenRouter FREE: $0.00/month
 No fallback cost
 Total: $0.00/month
-```
+
+```text
 
 ### With LiteLLM
 
-```
+```text
 OpenRouter FREE models only: $0.00/month
 LiteLLM Proxy: $0.00 (self-hosted)
 Total: $0.00/month
 
 STILL FREE! 🎉
-```
+
+```text
 
 ---
 
@@ -232,7 +252,9 @@ STILL FREE! 🎉
 ```yaml
 model_list:
   # Primary - Current model
+
   - model_name: glm-4.5-air
+
     litellm_params:
       model: openrouter/z-ai/glm-4.5-air:free
       api_key: os.environ/OPENROUTER_API_KEY
@@ -242,25 +264,33 @@ model_list:
       supports_vision: false
 
   # Fallback 1 - DeepSeek (coding/reasoning)
+
   - model_name: deepseek-chat
+
     litellm_params:
       model: openrouter/deepseek/deepseek-chat-v3.1:free
       api_key: os.environ/OPENROUTER_API_KEY
 
   # Fallback 2 - MiniMax (fast general purpose)
+
   - model_name: minimax-m2
+
     litellm_params:
       model: openrouter/minimax/minimax-m2:free
       api_key: os.environ/OPENROUTER_API_KEY
 
   # Fallback 3 - Qwen Coder (code-specific)
+
   - model_name: qwen-coder
+
     litellm_params:
       model: openrouter/qwen/qwen3-coder:free
       api_key: os.environ/OPENROUTER_API_KEY
 
   # Fallback 4 - Kimi K2 (long context)
+
   - model_name: kimi-k2
+
     litellm_params:
       model: openrouter/moonshotai/kimi-k2:free
       api_key: os.environ/OPENROUTER_API_KEY
@@ -270,7 +300,8 @@ router_settings:
   retry_after: 0.5
   allowed_fails: 2
   cooldown_time: 60
-```
+
+```text
 
 ---
 
@@ -294,13 +325,14 @@ router_settings:
 
 ### Files to Update
 
-```
+```text
 server/_core/llm.ts                 - Core wrapper
 server/ai-email-summary.ts          - Email AI
 server/ai-label-suggestions.ts      - Labels
 server/docs/ai/analyzer.ts          - Docs analyzer
 server/docs/ai/auto-create.ts       - Docs generator
 server/routers/chat-streaming.ts    - Chat
+
 ```
 
 ---
@@ -329,10 +361,10 @@ server/routers/chat-streaming.ts    - Chat
 ### Recommended Approach
 
 1. **Keep it simple** - Wrapper pattern
-2. **No breaking changes** - Same function signatures
-3. **Gradual rollout** - Feature flag controlled
-4. **Test thoroughly** - All AI features
-5. **Monitor closely** - Metrics & alerts
+1. **No breaking changes** - Same function signatures
+1. **Gradual rollout** - Feature flag controlled
+1. **Test thoroughly** - All AI features
+1. **Monitor closely** - Metrics & alerts
 
 ### Timeline
 
@@ -344,7 +376,7 @@ server/routers/chat-streaming.ts    - Chat
 
 ---
 
-**Analysis Complete:** ✅  
-**Ready for Implementation:** ✅  
-**Cost Impact:** $0.00 (no change)  
+**Analysis Complete:** ✅
+**Ready for Implementation:** ✅
+**Cost Impact:** $0.00 (no change)
 **Risk Level:** LOW (wrapper pattern)

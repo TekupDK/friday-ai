@@ -1,6 +1,6 @@
 # 🎯 Friday AI Lead Flow - Komplet Analyse
 
-**Analyseret:** November 9, 2025  
+**Analyseret:** November 9, 2025
 **Formål:** Forstå præcis hvordan LiteLLM skal integreres i lead håndtering
 
 ---
@@ -26,15 +26,17 @@ Friday AI har et sofistikeret lead management system med:
 
 #### 1.1 Email Monitoring (Auto)
 
-```
+```text
 Email arrives in inbox
   ↓
 EmailMonitorService detects new email (every 30s)
   ↓
 detectLeadSourceIntelligent() analyzes:
+
   - From domain
   - Subject keywords
   - Body patterns
+
   → Outputs: { source, confidence, reasoning }
   ↓
 createLeadInDatabase() with metadata
@@ -42,7 +44,8 @@ createLeadInDatabase() with metadata
 executeImmediateActions() based on source workflow
   ↓
 Lead created with status="new"
-```
+
+```text
 
 **Code:**
 
@@ -52,7 +55,7 @@ Lead created with status="new"
 
 #### 1.2 Manual Creation (UI)
 
-```
+```text
 User clicks "Ny Lead" in LeadsTab
   ↓
 Fills form: name, email, phone, source, company
@@ -62,7 +65,8 @@ createLead() via inbox-router.ts
 createOrUpdateCustomerProfile()
   ↓
 Lead created with status="new"
-```
+
+```bash
 
 **Code:**
 
@@ -72,7 +76,7 @@ Lead created with status="new"
 
 #### 1.3 From Email Thread (Context)
 
-```
+```text
 User views email in inbox
   ↓
 Clicks "Create lead from email"
@@ -82,17 +86,19 @@ Extract name, email from sender
 createLead() + createOrUpdateCustomerProfile()
   ↓
 Link to email thread via metadata
-```
+
+```text
 
 #### 1.4 Billy Import (Sync)
 
-```
+```text
 Billy customer exists
   ↓
 Sync to Friday AI as lead
   ↓
 status="new", source="billy_import"
-```
+
+```text
 
 ---
 
@@ -103,6 +109,7 @@ status="new", source="billy_import"
 **8 Supported Sources:**
 
 ```typescript
+
 1. rengoring_nu       - High priority, immediate response
 2. rengoring_aarhus   - Medium priority, 1h response
 3. leadpoint          - Medium priority, 1h response
@@ -111,7 +118,8 @@ status="new", source="billy_import"
 6. website            - High priority, 1h response
 7. referral           - High priority, 1h response
 8. phone              - High priority, immediate response
-```
+
+```text
 
 **Detection Algorithm:**
 
@@ -139,7 +147,8 @@ function detectLeadSourceIntelligent(email) {
 
   return { source, confidence, reasoning };
 }
-```
+
+```text
 
 #### 2.2 Workflow Assignment
 
@@ -161,26 +170,35 @@ function detectLeadSourceIntelligent(email) {
   ],
   notes: ["context", "best practices"]
 }
-```
+
+```text
 
 **Eksempel - rengoring.nu:**
 
-```
+```text
 Priority: HIGH
 Response: IMMEDIATE
 Required Actions:
+
   - Send øjeblikkeligt tilbud (15 min)
   - Bekræft lokation (5 min)
+
 Suggested Actions:
+
   - Tjek konkurrentpriser (10 min)
   - Planlæg opfølgning (5 min)
+
 Auto Actions:
+
   - Auto-tag lead
   - Notificer salg
+
 Notes:
+
   - Priskonsciente kunder
   - Hurtig respons KRITISK
-```
+
+```text
 
 ---
 
@@ -217,7 +235,8 @@ async processLeadWorkflow(emailData) {
   // 7. Send notifications
   sendNotifications(); // Slack, email, etc.
 }
-```
+
+```text
 
 #### 3.2 Task Creation
 
@@ -235,7 +254,8 @@ for (action of requiredActions) {
     dueDate: NOW + 1 hour
   });
 }
-```
+
+```text
 
 **Suggested Actions → Tasks:**
 
@@ -248,7 +268,8 @@ for (action of suggestedActions) {
     dueDate: NOW + 4 hours
   });
 }
-```
+
+```text
 
 ---
 
@@ -256,7 +277,7 @@ for (action of suggestedActions) {
 
 #### 4.1 Status Flow
 
-```
+```text
 new (auto-created)
   ↓ (user contacts lead)
 contacted
@@ -267,7 +288,8 @@ proposal
   ↓ (two outcomes)
   ├── won (kunde accepterer)
   └── lost (kunde afviser)
-```
+
+```text
 
 #### 4.2 Status Change Triggers
 
@@ -282,7 +304,8 @@ proposal
 if (invoice.status === "paid") {
   updateLeadStatus(leadId, "won");
 }
-```
+
+```text
 
 ---
 
@@ -293,15 +316,20 @@ if (invoice.status === "paid") {
 **Lead Tools:**
 
 ```typescript
+
 1. listLeads(userId, { status, source })
+
    → Returns filtered leads
 
 2. createLead(userId, { source, name, email, phone, notes })
+
    → Creates new lead
 
 3. updateLeadStatus(leadId, status)
+
    → Changes lead status
-```
+
+```text
 
 **Usage Example:**
 
@@ -312,15 +340,17 @@ User: "Vis mine nye leads fra rengøring.nu"
 AI calls: listLeads(userId, { status: "new", source: "rengoring_nu" })
   ↓
 Returns: [{ id, name, email, source, status }, ...]
-```
+
+```text
 
 #### 5.2 AI Tasks Per Lead
 
 **1. Lead Analysis**
 
-```
+```text
 Input: Lead data (name, email, phone, notes, source)
 Task: Analyze and suggest:
+
   - Priority (høj/mellem/lav)
   - Konvertering likelihood
   - Næste skridt
@@ -329,24 +359,27 @@ Task: Analyze and suggest:
 Tool: lead-analysis task type
 Model: kimi-k2-free (long context)
 API Calls: 1 request
-```
+
+```text
 
 **2. Email Draft**
 
-```
+```text
 Input: Lead context + purpose (follow-up, tilbud, etc.)
 Task: Generate professional Danish email
 
 Tool: email-draft task type
 Model: glm-4.5-air-free
 API Calls: 1 request
-```
+
+```text
 
 **3. Task Planning**
 
-```
+```text
 Input: Lead + required/suggested actions
 Task: Create task schedule with:
+
   - Timing
   - Duration estimates
   - Resources needed
@@ -354,13 +387,15 @@ Task: Create task schedule with:
 Tool: complex-reasoning task type
 Model: deepseek-chat-v3.1-free
 API Calls: 1 request
-```
+
+```text
 
 **4. Booking Creation (Med Tools!)**
 
-```
+```text
 Input: Lead wants booking for "i morgen kl 10"
 Task:
+
   1. Check calendar availability → tool call
   2. Create booking → tool call
   3. Send confirmation → tool call
@@ -368,7 +403,8 @@ Task:
 Tool: Multiple tools (checkAvailability, createBooking, sendEmail)
 Model: glm-4.5-air-free
 API Calls: 3-4 requests (tool calling!)
-```
+
+```text
 
 ---
 
@@ -398,7 +434,8 @@ createCustomerFromLead(leadId) {
     metadata: { billyCustomerId: billyCustomer.id }
   });
 }
-```
+
+```text
 
 #### 6.2 Invoice & Payment Sync
 
@@ -416,7 +453,8 @@ syncPaymentStatus(invoiceId) {
     updateLeadStatus(lead.id, "proposal"); // Still in limbo
   }
 }
-```
+
+```text
 
 ---
 
@@ -440,7 +478,8 @@ createFollowUpEvent(leadId, emailData) {
     metadata: { calendarEventId: event.id }
   });
 }
-```
+
+```text
 
 #### 7.2 Conflict Checking (Tool)
 
@@ -458,7 +497,8 @@ checkCalendarConflicts(start, end) {
     }))
   };
 }
-```
+
+```text
 
 ---
 
@@ -468,17 +508,18 @@ checkCalendarConflicts(start, end) {
 
 **Current Challenge:**
 
-```
+```text
 User requests: "Analyser alle nye leads fra i dag"
   ↓
 10 leads × 1 API call each = 10 API calls
   ↓
 Risk: Rate limit if > 16 leads
-```
+
+```text
 
 **With LiteLLM Optimization:**
 
-```
+```text
 10 leads queued
   ↓
 Rate limiter: Process 12/min (safe rate)
@@ -488,23 +529,25 @@ Priority: "medium" (not urgent)
 Cache: Similar leads use cached responses
   ↓
 Result: 10 leads analyzed in ~1 minute, 30% fewer API calls
-```
+
+```text
 
 ### 2. Email Draft Generation
 
 **Current Challenge:**
 
-```
+```text
 Generate email for each lead
   ↓
 Similar requests: "Send tilbud for rengøring"
   ↓
 Duplicate API calls for same template
-```
+
+```text
 
 **With LiteLLM Optimization:**
 
-```
+```text
 Request: Draft email for rengøring lead
   ↓
 Cache check: Similar request in last 5 min?
@@ -512,13 +555,14 @@ Cache check: Similar request in last 5 min?
 Cache HIT: Return cached template + personalize
   ↓
 API calls saved: ~40%
-```
+
+```text
 
 ### 3. Booking with Tools (CRITICAL!)
 
 **Current Challenge:**
 
-```
+```text
 "Book rengøring til i morgen kl 10"
   ↓
 API Call 1: AI analyzes request
@@ -527,11 +571,12 @@ API Call 3: createBooking tool result
 API Call 4: Final confirmation
   ↓
 = 4 API calls per booking
-```
+
+```text
 
 **With LiteLLM Optimization:**
 
-```
+```text
 Request queued with priority="high" (booking is urgent)
   ↓
 Rate limiter: Ensures safe processing
@@ -541,13 +586,14 @@ Tool calls: Batched where possible
 Retry: Automatic if rate limit hit
   ↓
 Result: 100% success rate, even with tools
-```
+
+```text
 
 ### 4. Source Detection Enhancement
 
 **Future Opportunity:**
 
-```
+```text
 Current: Rule-based detection (patterns)
   ↓
 LiteLLM Enhancement: AI-powered detection
@@ -561,7 +607,8 @@ Outputs: {
 }
   ↓
 More accurate than pattern matching!
-```
+
+```text
 
 ---
 
@@ -569,7 +616,7 @@ More accurate than pattern matching!
 
 ### Normal Day (50 leads)
 
-```
+```text
 Lead Analysis:    50 × 1 = 50 calls
 Email Drafts:     50 × 1 = 50 calls
 Bookings:         10 × 4 = 40 calls (tool calling!)
@@ -578,14 +625,16 @@ Source Detection: 50 × 1 = 50 calls (future)
 TOTAL:           190 API calls/day
 
 With LiteLLM optimization:
+
 - Cache savings: ~40% → 114 calls
 - Rate limiting: Spread over ~10 minutes (safe!)
 - Success rate: 99.9% (vs 92% without)
-```
+
+```text
 
 ### High Volume Day (200 leads)
 
-```
+```text
 Without optimization: 760 API calls
   → Risk: Multiple rate limit hits
   → Success: ~85%
@@ -594,7 +643,8 @@ With LiteLLM:     456 API calls (40% saved)
   → Queue processing: ~38 minutes
   → Success: 99.9%
   → Cost: $0.00 (FREE models!)
-```
+
+```text
 
 ---
 
@@ -604,6 +654,7 @@ With LiteLLM:     456 API calls (40% saved)
 
 ```typescript
 // HIGH PRIORITY (immediate)
+
 - Booking requests with tools
 - Phone leads (immediate response)
 - rengøring.nu leads (fast response critical)
@@ -614,6 +665,7 @@ await litellmClient.chatCompletion({
 });
 
 // MEDIUM PRIORITY (normal)
+
 - Lead analysis
 - Email drafts
 - Most workflows
@@ -624,6 +676,7 @@ await litellmClient.chatCompletion({
 });
 
 // LOW PRIORITY (batch)
+
 - Bulk lead analysis
 - Report generation
 - Background tasks
@@ -632,7 +685,8 @@ await litellmClient.chatCompletion({
   messages,
   priority: 'low'
 });
-```
+
+```text
 
 ### Caching Strategy
 
@@ -647,7 +701,8 @@ await litellmClient.chatCompletion({
 ❌ Personalized content (names, dates)
 ❌ Real-time availability
 ❌ Customer-specific data
-```
+
+```text
 
 ---
 
@@ -682,30 +737,33 @@ await litellmClient.chatCompletion({
 
 ### Target Performance
 
-```
+```text
 Lead Analysis:      < 10s per lead
 Email Draft:        < 8s per draft
 Booking (w/tools):  < 15s per booking
 Success Rate:       > 99%
 Cost:               $0.00/month
 Rate Limit Hits:    0 per day
-```
+
+```text
 
 ### Monitoring Points
 
-```
+```text
+
 - API calls per hour
 - Cache hit rate
 - Queue length
 - Average wait time
 - Tool call success rate
 - Source detection accuracy
+
 ```
 
 ---
 
-**Status:** ✅ KOMPLET ANALYSE  
-**Ready for:** Day 4 Implementation  
+**Status:** ✅ KOMPLET ANALYSE
+**Ready for:** Day 4 Implementation
 **Confidence:** VERY HIGH
 
 **Last Updated:** November 9, 2025 11:45 AM

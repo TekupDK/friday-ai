@@ -1,7 +1,7 @@
 # Day 6-8: ChromaDB Integration - COMPLETE ✅
 
-**Date:** November 9, 2025  
-**Duration:** 1.5 hours  
+**Date:** November 9, 2025
+**Duration:** 1.5 hours
 **Status:** ✅ Production Ready
 
 ---
@@ -39,7 +39,8 @@ generateEmbeddings(texts: string[]): Promise<number[][]>
 cosineSimilarity(a: number[], b: number[]): number
 clearEmbeddingCache(): void
 getEmbeddingCacheStats(): object
-```
+
+```text
 
 ### 2. Lead Deduplication
 
@@ -48,28 +49,30 @@ getEmbeddingCacheStats(): object
 **Logic:**
 
 1. Before creating lead → Search ChromaDB for similar leads
-2. If similarity > 0.85 → Return existing lead (duplicate detected)
-3. If similarity < 0.85 → Create new lead
-4. After creation → Index new lead in ChromaDB
+1. If similarity > 0.85 → Return existing lead (duplicate detected)
+1. If similarity < 0.85 → Create new lead
+1. After creation → Index new lead in ChromaDB
 
 **Example:**
 
 ```typescript
 const lead = await createLead({
   name: "John Doe",
-  email: "john@acme.com",
+  email: "<john@acme.com>",
   company: "ACME Corp",
 });
 // Automatically checks for duplicates
 // Returns existing if found
-```
+
+```text
 
 **Console Output:**
 
-```
+```text
 [ChromaDB] Duplicate lead detected (similarity: 0.932), returning existing lead #123
 [ChromaDB] Indexed new lead #456
-```
+
+```text
 
 ### 3. Email Context Retrieval
 
@@ -91,7 +94,8 @@ const relatedEmails = await getRelatedEmailThreads(currentEmail, 5);
 // Use in AI prompt:
 const context = relatedEmails.map(e => e.snippet).join("\n\n");
 const prompt = `Context from related emails:\n${context}\n\nCurrent email: ...`;
-```
+
+```text
 
 ---
 
@@ -101,7 +105,8 @@ const prompt = `Context from related emails:\n${context}\n\nCurrent email: ...`;
 
 ```bash
 npx tsx server/integrations/chromadb/test-embeddings.ts
-```
+
+```text
 
 **Results:**
 
@@ -127,7 +132,7 @@ Remaining 76 errors are pre-existing (not from this integration).
 
 ## 🎨 Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │                    Friday AI Server                     │
 ├─────────────────────────────────────────────────────────┤
@@ -159,7 +164,8 @@ Remaining 76 errors are pre-existing (not from this integration).
 │  2. Use as context  ←──────────────  Search            │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -167,7 +173,7 @@ Remaining 76 errors are pre-existing (not from this integration).
 
 ### Created
 
-```
+```text
 ✅ server/integrations/chromadb/embeddings.ts         (225 lines)
 ✅ server/integrations/chromadb/test-embeddings.ts    (80 lines)
 ✅ server/integrations/chromadb/test-lead-dedup.ts    (100 lines)
@@ -177,16 +183,18 @@ Remaining 76 errors are pre-existing (not from this integration).
 ✅ docs/integrations/ChromaDB/PLAN_DAY6-8.md          (405 lines)
 ✅ docs/integrations/ChromaDB/TESTING.md              (230 lines)
 ✅ docs/integrations/ChromaDB/DAY6-8_COMPLETE.md      (This file)
-```
+
+```text
 
 ### Modified
 
-```
+```text
 ✅ server/integrations/chromadb/client.ts             (Use real embeddings)
 ✅ server/integrations/chromadb/index.ts              (Export embeddings functions)
 ✅ server/db.ts                                        (+80 lines: Lead + Email)
 ✅ .env.dev                                            (ChromaDB config)
-```
+
+```text
 
 ---
 
@@ -197,38 +205,43 @@ Remaining 76 errors are pre-existing (not from this integration).
 ```bash
 cd server/integrations/chromadb/docker
 docker-compose -f docker-compose.chromadb.yml up -d
-```
+
+```text
 
 ### Verify Running
 
 ```bash
-curl http://localhost:8000/api/v2/heartbeat
+curl <http://localhost:8000/api/v2/heartbeat>
 # {"nanosecond heartbeat":1762697478540449462}
-```
+
+```text
 
 ### Test Embeddings
 
 ```bash
 npx tsx server/integrations/chromadb/test-embeddings.ts
-```
+
+```text
 
 ### Test Lead Deduplication
 
 ```bash
 npx tsx server/integrations/chromadb/test-lead-dedup.ts
-```
+
+```text
 
 ### Use in Production
 
 ```bash
-# Ensure .env.dev has:
+# Ensure .env.dev has
 CHROMA_ENABLED=true
-CHROMA_URL=http://localhost:8000
+CHROMA_URL=<http://localhost:8000>
 OPENROUTER_API_KEY=sk-or-v1-...
 
 # Start Friday AI
 pnpm dev
-```
+
+```text
 
 ---
 
@@ -240,7 +253,7 @@ pnpm dev
 // Just create leads normally
 const lead = await createLead({
   name: "John Doe",
-  email: "john@acme.com",
+  email: "<john@acme.com>",
   company: "ACME Corporation",
 });
 
@@ -248,7 +261,8 @@ const lead = await createLead({
 // 1. Checks for duplicates
 // 2. Returns existing if found
 // 3. Indexes new leads
-```
+
+```text
 
 ### Email Context for AI
 
@@ -279,7 +293,8 @@ Draft a professional response:
 
   return await invokeLLM({ messages: [{ role: "user", content: prompt }] });
 }
-```
+
+```text
 
 ### Manual Semantic Search
 
@@ -299,7 +314,8 @@ for (const item of databaseItems) {
     console.log(`Found similar: ${item.text} (${similarity.toFixed(3)})`);
   }
 }
-```
+
+```text
 
 ---
 
@@ -339,12 +355,13 @@ for (const item of databaseItems) {
 
 ```bash
 # List all collections
-curl http://localhost:8000/api/v2/collections
+curl <http://localhost:8000/api/v2/collections>
 
 # Get collection info
-curl http://localhost:8000/api/v2/collections/friday_leads
-curl http://localhost:8000/api/v2/collections/friday_emails
-```
+curl <http://localhost:8000/api/v2/collections/friday_leads>
+curl <http://localhost:8000/api/v2/collections/friday_emails>
+
+```text
 
 ### Server Logs
 
@@ -354,13 +371,15 @@ curl http://localhost:8000/api/v2/collections/friday_emails
 [ChromaDB] Indexed new lead #456
 [ChromaDB] Indexed email thread #789
 [Embeddings] Generated embedding (1536 dimensions)
-```
+
+```bash
 
 ### Docker Logs
 
 ```bash
 docker logs friday-chromadb -f
-```
+
+```text
 
 ---
 
@@ -373,11 +392,11 @@ All TypeScript errors fixed. All tests passing. Production ready.
 ### Future Enhancements
 
 1. **Batch indexing** - Index existing leads/emails in bulk
-2. **Periodic reindexing** - Update embeddings for modified records
-3. **Advanced filters** - Filter search by date, user, status
-4. **Metrics dashboard** - Track duplicate rate, search performance
-5. **A/B testing** - Compare different embedding models
-6. **Local embeddings** - Option for privacy-sensitive data
+1. **Periodic reindexing** - Update embeddings for modified records
+1. **Advanced filters** - Filter search by date, user, status
+1. **Metrics dashboard** - Track duplicate rate, search performance
+1. **A/B testing** - Compare different embedding models
+1. **Local embeddings** - Option for privacy-sensitive data
 
 ---
 
@@ -385,16 +404,18 @@ All TypeScript errors fixed. All tests passing. Production ready.
 
 ### OpenRouter Embeddings
 
-```
+```text
 Model: openai/text-embedding-3-small
 Cost: $0.00002 per 1K tokens
 
 Example Monthly Usage:
+
 - 10,000 leads @ 100 tokens each = 1M tokens = $20
 - 50,000 emails @ 200 tokens each = 10M tokens = $200
 
 Total: ~$220/month for heavy usage
-```
+
+```text
 
 ### Alternative: Local Embeddings (Free)
 
@@ -405,6 +426,7 @@ pnpm add @xenova/transformers
 # Use in code (384 dimensions, slower but free)
 import { pipeline } from '@xenova/transformers';
 const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+
 ```
 
 **Tradeoff:**
@@ -462,7 +484,7 @@ All documentation in `docs/integrations/ChromaDB/`:
 
 ---
 
-**Status:** ✅ COMPLETE - Ready for Production  
-**Date Completed:** November 9, 2025, 22:00  
-**Time Spent:** 1.5 hours  
+**Status:** ✅ COMPLETE - Ready for Production
+**Date Completed:** November 9, 2025, 22:00
+**Time Spent:** 1.5 hours
 **Quality:** Production Ready

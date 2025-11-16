@@ -103,7 +103,7 @@
 
 ## 🧪 Test Observations
 
-### Browser Test Results:
+### Browser Test Results
 
 **✅ Positivt:**
 
@@ -113,12 +113,12 @@
    - "Syncer..." feedback vises
    - Refresh button disabled under sync
 
-2. **Labels Empty State:**
+1. **Labels Empty State:**
    - ✅ Viser BÅDE beskeder korrekt:
      - "Ingen labels fundet"
      - "Labels vil vises her når de er oprettet i Gmail"
 
-3. **Error Handling:**
+1. **Error Handling:**
    - Rate limits håndteres korrekt
    - Tomme arrays returneres i stedet for crashes
    - Empty states vises når ingen data
@@ -134,35 +134,35 @@
 ## 📁 Dokumentation Oprettet
 
 1. ✅ `EMAIL_TAB_TEST_REPORT.md` - Detaljeret test rapport
-2. ✅ `EMAIL_TAB_STATUS.md` - Quick status oversigt
-3. ✅ `EMAIL_TAB_DATA_TEST_REPORT.md` - Test med faktiske data
-4. ✅ `EMAIL_TAB_RATE_LIMIT_FIX.md` - Rate limit forbedringer
-5. ✅ `EMAIL_TAB_TEST_SUMMARY.md` - Denne fil
+1. ✅ `EMAIL_TAB_STATUS.md` - Quick status oversigt
+1. ✅ `EMAIL_TAB_DATA_TEST_REPORT.md` - Test med faktiske data
+1. ✅ `EMAIL_TAB_RATE_LIMIT_FIX.md` - Rate limit forbedringer
+1. ✅ `EMAIL_TAB_TEST_SUMMARY.md` - Denne fil
 
 ---
 
 ## 🎯 Next Steps
 
-### Immediate (Når Rate Limit Reset):
+### Immediate (Når Rate Limit Reset)
 
 1. ⏳ Refresh browseren
-2. ⏳ Klik "Opdater" for at hente emails
-3. ⏳ Verificer email liste loading
-4. ⏳ Test label visning med farvekodning
-5. ⏳ Test email thread view
-6. ⏳ Test email actions (reply, forward, etc.)
+1. ⏳ Klik "Opdater" for at hente emails
+1. ⏳ Verificer email liste loading
+1. ⏳ Test label visning med farvekodning
+1. ⏳ Test email thread view
+1. ⏳ Test email actions (reply, forward, etc.)
 
-### Short Term:
+### Short Term
 
 1. ⏳ Bedre rate limit UI feedback (countdown timer)
-2. ⏳ Email threads caching
-3. ⏳ Request batching
+1. ⏳ Email threads caching
+1. ⏳ Request batching
 
-### Long Term:
+### Long Term
 
 1. ⏳ Phase 1 AI Features (Summaries + Smart Labeling)
-2. ⏳ Smart caching baseret på timestamps
-3. ⏳ Rate limit monitoring & automatic backoff
+1. ⏳ Smart caching baseret på timestamps
+1. ⏳ Rate limit monitoring & automatic backoff
 
 ---
 

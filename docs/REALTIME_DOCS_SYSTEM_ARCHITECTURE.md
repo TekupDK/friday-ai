@@ -1,7 +1,7 @@
 # Real-time Documentation System Architecture
 
-**Status:** 🟢 Active Development  
-**Last Updated:** November 8, 2025  
+**Status:** 🟢 Active Development
+**Last Updated:** November 8, 2025
 **Version:** 1.0.0
 
 ---
@@ -12,7 +12,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
 
 ## 🏗️ System Architecture
 
-```
+```bash
 ┌─────────────────────────────────────────────────────────────┐
 │                     Documentation Portal                      │
 │                    (React + WebSocket)                        │
@@ -43,7 +43,8 @@ This document describes the architecture for the Tekup AI real-time documentatio
     │   CLI Tool        │          │  AI Documentation    │
     │   (tekup-docs)    │          │  Agent               │
     └───────────────────┘          └──────────────────────┘
-```
+
+```bash
 
 ## 📋 Core Components
 
@@ -117,51 +118,87 @@ This document describes the architecture for the Tekup AI real-time documentatio
 
 ### Write Flow (CLI → Git → Portal)
 
-```
+```bash
+
 1. User runs: tekup-docs create "New Feature"
+
    ↓
+
 2. CLI validates input & generates content
+
    ↓
+
 3. File written to docs/ directory
+
    ↓
+
 4. File watcher detects change
+
    ↓
+
 5. Sync engine commits to Git
+
    ↓
+
 6. WebSocket broadcasts change
+
    ↓
+
 7. Portal updates in real-time
-```
+
+```bash
 
 ### Read Flow (Portal → Git → Display)
 
-```
+```bash
+
 1. User opens documentation portal
+
    ↓
+
 2. API fetches docs from Git
+
    ↓
+
 3. Markdown parsed and rendered
+
    ↓
+
 4. WebSocket connection established
+
    ↓
+
 5. Live updates stream in real-time
-```
+
+```text
 
 ### Conflict Resolution Flow
 
-```
+```bash
+
 1. Concurrent edits detected
+
    ↓
+
 2. Sync engine creates conflict markers
+
    ↓
+
 3. CLI/Portal notified of conflict
+
    ↓
+
 4. User chooses: accept local, remote, or manual merge
+
    ↓
+
 5. Resolution committed to Git
+
    ↓
+
 6. All clients synchronized
-```
+
+```text
 
 ## 🗄️ Database Schema
 
@@ -181,7 +218,8 @@ interface Document {
   git_hash: string; // Latest commit hash
   version: number; // Version counter
 }
-```
+
+```text
 
 ### Document Changes Table
 
@@ -195,7 +233,8 @@ interface DocumentChange {
   git_hash: string;
   timestamp: Date;
 }
-```
+
+```text
 
 ### Comments Table
 
@@ -209,7 +248,8 @@ interface Comment {
   resolved: boolean;
   created_at: Date;
 }
-```
+
+```text
 
 ## 🔌 API Endpoints
 
@@ -244,7 +284,8 @@ GET    /api/docs/:id/comments       // Get doc comments
 POST   /api/docs/:id/comments       // Add comment
 PUT    /api/docs/:id/comments/:cid  // Update comment
 DELETE /api/docs/:id/comments/:cid  // Delete comment
-```
+
+```text
 
 ### WebSocket Events
 
@@ -263,7 +304,8 @@ DELETE /api/docs/:id/comments/:cid  // Delete comment
 "presence:joined"; // User joined document
 "presence:left"; // User left document
 "sync:status"; // Sync status update
-```
+
+```text
 
 ## 🖥️ CLI Commands
 
@@ -295,7 +337,8 @@ tekup-docs export --format <md|html|pdf>
 
 # Interactive Mode
 tekup-docs tui                     # Launch Terminal UI
-```
+
+```text
 
 ## 🤖 AI Integration
 
@@ -310,11 +353,13 @@ Context: ${context}
 Code References: ${codeFiles}
 
 Include:
+
 - Overview and purpose
 - Usage examples
 - API reference
 - Best practices
 - Related documents
+
 `;
 
 // Improve Documentation
@@ -323,19 +368,22 @@ Improve this documentation:
 ${currentContent}
 
 Focus on:
+
 - Clarity and readability
 - Completeness
 - Code examples
 - Structure and organization
+
 `;
-```
+
+```bash
 
 ### Auto-Update Triggers
 
 1. **Code Changes:** When code files change, AI suggests doc updates
-2. **API Changes:** When API endpoints change, auto-update API docs
-3. **Test Results:** When tests fail, add troubleshooting sections
-4. **User Feedback:** Comments trigger AI review and improvements
+1. **API Changes:** When API endpoints change, auto-update API docs
+1. **Test Results:** When tests fail, add troubleshooting sections
+1. **User Feedback:** Comments trigger AI review and improvements
 
 ## 🔐 Security & Permissions
 
@@ -375,7 +423,7 @@ Focus on:
 
 ### Production Setup
 
-```
+```bash
 ┌──────────────┐
 │ Load Balancer│
 └──────┬───────┘
@@ -399,6 +447,7 @@ Focus on:
    │ Git Repository     │
    │ (Source of Truth)  │
    └────────────────────┘
+
 ```
 
 ## 🔄 Migration Plan
@@ -461,17 +510,17 @@ Focus on:
 ## 🎯 Success Metrics
 
 1. **Sync Latency:** < 2 seconds from edit to broadcast
-2. **Search Speed:** < 100ms for full-text search
-3. **AI Generation:** < 10 seconds for new docs
-4. **Conflict Rate:** < 1% of all edits
-5. **Uptime:** 99.9% for all services
+1. **Search Speed:** < 100ms for full-text search
+1. **AI Generation:** < 10 seconds for new docs
+1. **Conflict Rate:** < 1% of all edits
+1. **Uptime:** 99.9% for all services
 
 ---
 
 **Next Steps:**
 
 1. Review and approve architecture
-2. Set up development environment
-3. Implement Phase 1 components
-4. Test with team workflow
-5. Iterate based on feedback
+1. Set up development environment
+1. Implement Phase 1 components
+1. Test with team workflow
+1. Iterate based on feedback

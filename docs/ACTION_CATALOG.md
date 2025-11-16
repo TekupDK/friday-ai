@@ -33,6 +33,7 @@ interface ActionDef<P extends z.ZodTypeAny, R = unknown> {
     ctx: Ctx & { idempotencyKey: string }
   ) => Promise<R>;
 }
+
 ```
 
 ## Startkatalog (MVP)
@@ -43,35 +44,35 @@ interface ActionDef<P extends z.ZodTypeAny, R = unknown> {
 - Dry‑run: generér email‑preview; beregn pris/slots
 - Execute: opret draft/send via `inbox.email.reply`/`mcpSendGmailMessage`
 
-2. `email.follow_up_reminder` (low)
+1. `email.follow_up_reminder` (low)
 
 - Params: `threadId: string`, `delayDays: number`, `templateId?: string`
 - Execute: opret draft med skabelon
 
-3. `pipeline.move_stage` (low)
+1. `pipeline.move_stage` (low)
 
 - Params: `threadId: string`, `toStage: 'needs_action'|'venter_pa_svar'|'i_kalender'|'finance'|'afsluttet'`
 - Execute: `updatePipelineStage`
 
-4. `calendar.create_confirmation_event` (medium)
+1. `calendar.create_confirmation_event` (medium)
 
 - Params: `threadId: string`, `date: string`, `durationMinutes: number`
 - Dry‑run: preview af event (start/end)
 - Execute: `mcpCreateCalendarEvent`
 
-5. `billing.create_invoice` (high)
+1. `billing.create_invoice` (high)
 
 - Params: `leadId?: number`, `customerEmail?: string`, `amount: number`, `lines: { description: string; quantity: number; unitPrice: number }[]`
 - Dry‑run: total/afrunding
 - Execute: `createBillyInvoice`
 
-6. `calendar.check_calendar` (medium)
+1. `calendar.check_calendar` (medium)
 
 - Params: `date?: string`, `query?: string`
 - Dry‑run: preview af dato/tidsinterval som skal tjekkes
 - Execute: `listCalendarEvents` og formatér resultat med brugervenlig output
 
-7. `email.set_label` (low) / `email.archive` (low) / `email.mark_read` (low)
+1. `email.set_label` (low) / `email.archive` (low) / `email.mark_read` (low)
 
 - Execute: `addLabelToThread` / `archiveThread` / `googleMarkAsRead`
 

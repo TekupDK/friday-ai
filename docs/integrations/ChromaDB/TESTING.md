@@ -1,6 +1,6 @@
 # ChromaDB Integration Testing Guide
 
-**Date:** November 9, 2025  
+**Date:** November 9, 2025
 **Status:** Testing Lead Deduplication
 
 ---
@@ -11,7 +11,8 @@
 
 ```bash
 npx tsx server/integrations/chromadb/test-embeddings.ts
-```
+
+```text
 
 **Expected Results:**
 
@@ -30,13 +31,14 @@ npx tsx server/integrations/chromadb/test-embeddings.ts
 
 ```bash
 npx tsx server/integrations/chromadb/test-lead-dedup.ts
-```
+
+```text
 
 **Test Scenario:**
 
 1. Create Lead 1: John Doe @ ACME Corporation
-2. Create Lead 2: John Doe @ ACME Corp (slight variation)
-3. Create Lead 3: Jane Smith @ XYZ Industries
+1. Create Lead 2: John Doe @ ACME Corp (slight variation)
+1. Create Lead 3: Jane Smith @ XYZ Industries
 
 **Expected Results:**
 
@@ -47,11 +49,12 @@ npx tsx server/integrations/chromadb/test-lead-dedup.ts
 
 **Check Server Logs For:**
 
-```
+```text
 [ChromaDB] Indexed new lead #1
 [ChromaDB] Duplicate lead detected (similarity: 0.93X), returning existing lead #1
 [ChromaDB] Indexed new lead #3
-```
+
+```bash
 
 ---
 
@@ -60,27 +63,27 @@ npx tsx server/integrations/chromadb/test-lead-dedup.ts
 ### Prerequisites
 
 1. ChromaDB running: `docker ps | grep chromadb`
-2. Friday AI running: `pnpm dev`
-3. `.env.dev` has `CHROMA_ENABLED=true`
+1. Friday AI running: `pnpm dev`
+1. `.env.dev` has `CHROMA_ENABLED=true`
 
 ### Steps
 
 **Step 1: Create First Lead**
 
 1. Go to Leads tab
-2. Create lead:
+1. Create lead:
    - Name: Test User
-   - Email: test@example.com
+   - Email: <test@example.com>
    - Company: Test Company
-3. Note the lead ID
+1. Note the lead ID
 
 **Step 2: Create Duplicate Lead**
 
 1. Create another lead with slight variations:
    - Name: Test User
-   - Email: test.user@example.com
+   - Email: <test<.user@example.co>m>
    - Company: Test Co
-2. Check if same lead ID is returned
+1. Check if same lead ID is returned
 
 **Expected Behavior:**
 
@@ -109,37 +112,40 @@ docker logs friday-chromadb
 
 # Restart
 docker restart friday-chromadb
-```
+
+```text
 
 ### No Duplicate Detection
 
 **Check:**
 
 1. `CHROMA_ENABLED=true` in `.env.dev`
-2. Server restarted after env change
-3. ChromaDB has data: Check collections
-4. Embeddings API working (OpenRouter key valid)
+1. Server restarted after env change
+1. ChromaDB has data: Check collections
+1. Embeddings API working (OpenRouter key valid)
 
 **Debug:**
 
 ```bash
 # Check ChromaDB collections
-curl http://localhost:8000/api/v2/collections
-```
+curl <http://localhost:8000/api/v2/collections>
+
+```text
 
 ### Embeddings Failing
 
 **Check:**
 
 1. `OPENROUTER_API_KEY` set in `.env.dev`
-2. API key is valid
-3. Network connectivity
+1. API key is valid
+1. Network connectivity
 
 **Test:**
 
 ```bash
 npx tsx server/integrations/chromadb/test-embeddings.ts
-```
+
+```text
 
 ---
 
@@ -147,25 +153,28 @@ npx tsx server/integrations/chromadb/test-embeddings.ts
 
 ### Embeddings
 
-```
+```text
 Single embedding:     ~600ms (API call)
 Cached embedding:     ~1ms
 Batch (10 texts):     ~800ms
-```
+
+```text
 
 ### Lead Deduplication
 
-```
+```text
 Duplicate check:      ~700ms (includes embedding + search)
 New lead creation:    ~800ms (includes embedding + insert)
-```
+
+```text
 
 ### ChromaDB Operations
 
-```
+```text
 Add document:         ~50ms
 Search (1M vectors):  ~50ms
-```
+
+```text
 
 ---
 
@@ -199,26 +208,29 @@ Search (1M vectors):  ~50ms
 
 ```bash
 # List collections
-curl http://localhost:8000/api/v2/collections
+curl <http://localhost:8000/api/v2/collections>
 
 # Count documents
-curl http://localhost:8000/api/v2/collections/friday_leads
-```
+curl <http://localhost:8000/api/v2/collections/friday_leads>
+
+```text
 
 ### Check Logs
 
 **Friday AI Server:**
 
-```
+```text
 [ChromaDB] Duplicate lead detected (similarity: 0.932)
 [ChromaDB] Indexed new lead #123
 [Embeddings] Generated embedding (1536 dimensions)
-```
+
+```bash
 
 **ChromaDB Docker:**
 
 ```bash
 docker logs friday-chromadb -f
+
 ```
 
 ---

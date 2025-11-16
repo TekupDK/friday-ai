@@ -12,14 +12,16 @@ For at teste API optimeringer isoleret:
 ```powershell
 cd C:\Users\empir\Tekup\services\tekup-ai-v2
 .\scripts\create-chat-branch.ps1
-```
+
+```text
 
 Eller manuelt:
 
 ```bash
 git checkout -b test/api-optimization-$(date +%Y%m%d-%H%M%S)
 git push -u origin HEAD
-```
+
+```text
 
 ### Test Workflow
 
@@ -27,18 +29,19 @@ git push -u origin HEAD
 
    ```bash
    pnpm dev
-   ```
 
-2. **Åbn Browser DevTools**
+```bash
+
+1. **Åbn Browser DevTools**
    - Network tab (filter: XHR/Fetch)
    - Console tab
    - Performance tab (optional)
 
-3. **Kør Test Scenarios**
+1. **Kør Test Scenarios**
    - Se `API_OPTIMIZATION_QUICK_TEST.md` for 5-min tests
    - Se `API_OPTIMIZATION_TEST_REPORT.md` for detailed tests
 
-4. **Dokumenter Resultater**
+1. **Dokumenter Resultater**
    - Tilføj metrics til test rapporten
    - Noter issues fundet
    - Update status dokumentation
@@ -54,12 +57,13 @@ git push -u origin HEAD
 
 ### Commit Message Format
 
-```
+```text
 feat(api-optimization): [feature description]
 
 - Add/Update/Fix: [specific change]
 - Impact: [performance improvement]
-```
+
+```text
 
 ### Branch Strategy
 
@@ -69,19 +73,19 @@ feat(api-optimization): [feature description]
 
 ## 📝 Documentation Updates
 
-### Når du tester:
+### Når du tester
 
 1. Update `API_OPTIMIZATION_STATUS.md` med:
    - Test status (✅/⏳/❌)
    - Metrics collected
    - Issues found
 
-2. Update `API_OPTIMIZATION_TEST_REPORT.md` med:
+1. Update `API_OPTIMIZATION_TEST_REPORT.md` med:
    - Actual results vs expected
    - Screenshots/logs
    - Recommendations
 
-3. Create new docs hvis nødvendigt:
+1. Create new docs hvis nødvendigt:
    - Performance metrics analysis
    - Specific issue reports
    - Optimization recommendations
@@ -99,13 +103,14 @@ pnpm test
 
 # Type check
 pnpm tsc --noEmit
-```
+
+```text
 
 ### Manual Testing Routine
 
 1. **Daily:** Quick smoke tests (5 min)
-2. **Weekly:** Full test suite (30-60 min)
-3. **Pre-Deploy:** Complete validation
+1. **Weekly:** Full test suite (30-60 min)
+1. **Pre-Deploy:** Complete validation
 
 ## 🔍 Monitoring Setup
 
@@ -118,7 +123,8 @@ window.__requestQueue?.isRateLimited();
 
 // React DevTools
 // Inspect component state for adaptive polling
-```
+
+```text
 
 ### Metrics to Track
 
@@ -141,6 +147,7 @@ git fetch origin
 git rebase origin/email-tab-development-branch
 # Resolve conflicts
 git rebase --continue
+
 ```
 
 ### Issue: Tests fail
@@ -150,9 +157,9 @@ git rebase --continue
 **Steps:**
 
 1. Check console for errors
-2. Verify all dependencies installed
-3. Check branch is up-to-date
-4. Review implementation notes
+1. Verify all dependencies installed
+1. Check branch is up-to-date
+1. Review implementation notes
 
 ### Issue: Performance ikke forbedret
 
@@ -161,9 +168,9 @@ git rebase --continue
 **Investigation:**
 
 1. Verify features er aktiveret
-2. Check Network tab for API calls
-3. Monitor cache hit rates
-4. Review polling intervals
+1. Check Network tab for API calls
+1. Monitor cache hit rates
+1. Review polling intervals
 
 ## 📚 Related Resources
 

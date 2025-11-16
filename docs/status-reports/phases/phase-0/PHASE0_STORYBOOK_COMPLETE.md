@@ -14,74 +14,74 @@ Alle Storybook stories for Phase 0 komponenter er nu færdige og TypeScript-fejl
    - WithIcon, Loading, Disabled
    - AllVariants showcase
 
-2. **AppleCard.stories.tsx** ✅
+1. **AppleCard.stories.tsx** ✅
    - Elevated, Filled, Glass, Outlined
    - WithContent, Interactive
    - AllVariants showcase (med dark mode support)
 
-3. **AppleInput.stories.tsx** ✅
+1. **AppleInput.stories.tsx** ✅
    - Default, WithValue, WithError
    - Focused, Disabled, Interactive
 
-4. **AppleSearchField.stories.tsx** ✅
+1. **AppleSearchField.stories.tsx** ✅
    - Default, WithValue, Disabled
    - Interactive search demo
 
-5. **AppleBadge.stories.tsx** ✅
+1. **AppleBadge.stories.tsx** ✅
    - Alle 9 statuses (new, active, inactive, vip, at_risk, planned, in_progress, completed, cancelled)
    - 3 sizes (small, medium, large)
    - AllStatuses, AllSizes showcases
 
-6. **AppleListItem.stories.tsx** ✅
+1. **AppleListItem.stories.tsx** ✅
    - Default, WithSubtitle, WithIcon
    - NoChevron, Clickable
    - List demo med flere items
 
-7. **AppleTag.stories.tsx** ✅
+1. **AppleTag.stories.tsx** ✅
    - Default, Primary, Success, Warning, Error, Purple
    - Removable med onRemove callback
    - AllColors showcase
 
 ### Layout Components
 
-8. **AppleModal.stories.tsx** ✅
+1. **AppleModal.stories.tsx** ✅
    - Default modal med title og actions
    - WithoutTitle (custom content)
    - LargeModal size demo
 
-9. **AppleDrawer.stories.tsx** ✅
+1. **AppleDrawer.stories.tsx** ✅
    - Default (right side)
    - LeftSide drawer
    - CustomWidth (600px demo)
 
-10. **AppleSheet.stories.tsx** ✅
+1. **AppleSheet.stories.tsx** ✅
     - Default bottom sheet
     - TallContent med snap points
     - NoHandle variant
 
 ### Effects & Animations
 
-11. **BlurView.stories.tsx** ✅
+1. **BlurView.stories.tsx** ✅
     - Default frosted glass
     - WithContent over gradient
     - Heavy blur intensity
 
-12. **SpringTransition.stories.tsx** ✅
+1. **SpringTransition.stories.tsx** ✅
     - Default gentle spring
     - BouncySpring variant
     - Interactive toggle demo
 
-13. **ScrollReveal.stories.tsx** ✅
+1. **ScrollReveal.stories.tsx** ✅
     - Default scroll reveal
     - MultipleCards med staggered delays
 
-14. **ScrollToTop.stories.tsx** ✅
+1. **ScrollToTop.stories.tsx** ✅
     - Default (300px threshold)
     - CustomThreshold (100px demo)
 
 ### Icon System
 
-15. **AppleIcon.stories.tsx** ✅
+1. **AppleIcon.stories.tsx** ✅
     - User, Mail, Search, Settings icons
     - LargeIcon (2xl), SmallIcon (xs)
     - AllIcons showcase (60+ icons fra Icons export)
@@ -106,7 +106,8 @@ args: {
   // Required props her
   children: null, // eller relevant value
 }
-```
+
+```text
 
 Dette er påkrævet af Storybook's type system.
 
@@ -123,21 +124,21 @@ Alle stories virker korrekt i både light og dark mode:
 **16 komponenter lavet i Phase 0:**
 
 1. AppleButton
-2. AppleCard
-3. AppleInput
-4. AppleSearchField
-5. AppleBadge
-6. AppleListItem
-7. AppleTag
-8. AppleModal
-9. AppleDrawer
-10. AppleSheet
-11. BlurView
-12. SpringTransition
-13. ScrollReveal
-14. ScrollToTop
-15. AppleIcon
-16. Icons system (60+ ikoner)
+1. AppleCard
+1. AppleInput
+1. AppleSearchField
+1. AppleBadge
+1. AppleListItem
+1. AppleTag
+1. AppleModal
+1. AppleDrawer
+1. AppleSheet
+1. BlurView
+1. SpringTransition
+1. ScrollReveal
+1. ScrollToTop
+1. AppleIcon
+1. Icons system (60+ ikoner)
 
 **15 Storybook story filer:**
 Alle med multiple stories hver (typisk 5-8 stories per komponent)
@@ -162,6 +163,7 @@ Alle disse kan nu bygges med de solide Apple UI komponenter vi har lavet! 🎉
 
 ```bash
 npm run storybook
+
 ```
 
 Navigate til "CRM/Apple UI" for at se alle komponenter med:

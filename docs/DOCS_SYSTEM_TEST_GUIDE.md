@@ -1,6 +1,6 @@
 # Documentation System - Test Guide
 
-**Oprettet:** 8. November 2025, 20:50  
+**Oprettet:** 8. November 2025, 20:50
 **Status:** Ready for Testing
 
 ---
@@ -15,14 +15,16 @@ pnpm db:generate
 
 # Kør migration
 pnpm db:migrate:dev
-```
+
+```text
 
 **Forventet output:**
 
-```
+```text
 ✓ Generated SQL migration
 ✓ Applied migration: create-documentation-tables
-```
+
+```text
 
 ### 2. Enable Docs Service
 
@@ -36,22 +38,25 @@ DOCS_GIT_BRANCH=main
 DOCS_AUTO_COMMIT=true
 DOCS_AUTO_PUSH=false
 DOCS_WS_PORT=3002
-```
+
+```text
 
 ### 3. Start Server
 
 ```bash
 pnpm dev
-```
+
+```text
 
 **Forventet i logs:**
 
-```
+```text
 [Docs] Service started { repoPath: './', docsPath: 'docs', branch: 'main', wsPort: 3002 }
 [GitSync] Initialized { repoPath: './', branch: 'main' }
 [GitSync] File watcher started { cwd: 'C:\\Users\\...\\docs' }
 [WSHub] WebSocket server started { addr: { port: 3002 } }
-```
+
+```text
 
 ### 4. Install & Test CLI
 
@@ -63,7 +68,8 @@ pnpm link
 # Test CLI
 tekup-docs --help
 tekup-docs status
-```
+
+```bash
 
 ---
 
@@ -83,15 +89,17 @@ echo "# Test Doc" > docs/TEST_DOC.md
 git log -1 --oneline
 
 # Forventet: "docs: update 1 file(s) (docs/TEST_DOC.md)"
-```
+
+```text
 
 **Logs at se efter:**
 
-```
+```text
 [Docs] file added { path: 'TEST_DOC.md' }
 [GitSync] Committed changes { count: 1 }
 [Docs] sync complete { count: 1 }
-```
+
+```text
 
 ### Test 2: API Endpoints ✅
 
@@ -99,7 +107,7 @@ git log -1 --oneline
 
 ```bash
 # Test via CLI
-export DOCS_API_URL=http://localhost:3000
+export DOCS_API_URL=<http://localhost:3000>
 
 # List docs (skal virke selv hvis tom)
 tekup-docs list
@@ -111,13 +119,15 @@ tekup-docs create "Test Document" \
   --path="test.md"
 
 # Forventet: "✓ Document created: Test Document"
-```
+
+```text
 
 **Eller test direkte i browser/Postman:**
 
-```
-GET http://localhost:3000/api/trpc/docs.list?input={}
-```
+```text
+GET <http://localhost:3000/api/trpc/docs.list?input={}>
+
+```text
 
 ### Test 3: WebSocket ✅
 
@@ -135,7 +145,8 @@ wscat -c "ws://localhost:3002?userId=test-user"
 
 # Forventet response
 < {"type":"presence:joined","user_id":"test-user","document_id":"test-123"}
-```
+
+```text
 
 ### Test 4: CLI CRUD ✅
 
@@ -159,7 +170,8 @@ tekup-docs delete $DOC_ID
 
 # Force delete
 tekup-docs delete $DOC_ID --force
-```
+
+```text
 
 ### Test 5: Comments ✅
 
@@ -170,7 +182,7 @@ tekup-docs delete $DOC_ID --force
 DOC_ID=$(tekup-docs create "Comment Test" --category="Test" | grep "ID:" | awk '{print $2}')
 
 # Add comment via tRPC (i browser eller curl)
-curl -X POST http://localhost:3000/api/trpc/docs.addComment \
+curl -X POST <http://localhost:3000/api/trpc/docs.addComment> \
   -H "Content-Type: application/json" \
   -d '{
     "input": {
@@ -182,7 +194,8 @@ curl -X POST http://localhost:3000/api/trpc/docs.addComment \
 
 # View med comments
 tekup-docs view $DOC_ID --comments
-```
+
+```text
 
 ### Test 6: Conflict Resolution ✅
 
@@ -210,7 +223,8 @@ tekup-docs status
 
 # 6. Resolve
 tekup-docs resolve <conflict-id> --local
-```
+
+```bash
 
 ---
 
@@ -242,7 +256,8 @@ pnpm db:push
 
 # Eller manuel migration
 psql $DATABASE_URL -f drizzle/migrations/create-documentation-tables.sql
-```
+
+```bash
 
 ### Git Sync Issues
 
@@ -257,7 +272,8 @@ git status
 
 # Check logs for fejl
 # Kig efter [GitSync] eller [Docs] entries
-```
+
+```text
 
 ### WebSocket Issues
 
@@ -269,7 +285,8 @@ netstat -an | grep 3002
 
 # Eller brug anden port
 DOCS_WS_PORT=3003
-```
+
+```text
 
 ### CLI Issues
 
@@ -282,7 +299,8 @@ pnpm link --force
 
 # Eller kør direkte
 node dist/index.js --help
-```
+
+```text
 
 **Problem:** TypeScript fejl
 
@@ -292,6 +310,7 @@ pnpm build
 
 # Eller kør i dev mode
 pnpm dev
+
 ```
 
 ---
@@ -324,10 +343,10 @@ Brug denne til at tracke test progress:
 Når alle tests er grønne:
 
 1. ✅ Backend verified
-2. ✅ CLI verified
-3. 🚀 **Start frontend portal**
-4. 🤖 **Add AI integration**
-5. 🧪 **Write automated tests**
+1. ✅ CLI verified
+1. 🚀 **Start frontend portal**
+1. 🤖 **Add AI integration**
+1. 🧪 **Write automated tests**
 
 ---
 

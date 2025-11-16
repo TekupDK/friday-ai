@@ -18,7 +18,8 @@ window.__requestQueue?.clearRateLimit();
 
 // Check queue contents (development only)
 window.__requestQueue?.queue; // Array of queued requests
-```
+
+```text
 
 #### API Monitoring
 
@@ -45,7 +46,8 @@ window.__apiMonitor?.getErrorRate("inbox.email.list"); // Specific endpoint
 
 // Clear metrics
 window.__apiMonitor?.clear();
-```
+
+```text
 
 ## 📊 Monitoring Example
 
@@ -62,7 +64,8 @@ console.log("📊 API Performance Summary:", {
   "Average Response Time": `${summary.averageResponseTime}ms`,
   "Error Rate": `${summary.errorRate.toFixed(1)}%`,
 });
-```
+
+```text
 
 ### Check Rate Limit Status
 
@@ -75,46 +78,51 @@ console.log("⚠️ Rate Limit Status:", {
   "Is Rate Limited": isLimited,
   "Queue Size": queueSize,
 });
-```
+
+```text
 
 ## 🔍 Console Log Patterns
 
 ### Rate Limit Detection
 
-```
+```text
 [Rate Limit] {
   retryAfter: "2025-01-15T14:30:00.000Z",
   message: "User-rate limit exceeded. Retry after...",
   queueSize: 3
 }
-```
+
+```text
 
 ### Request Queue Activity
 
-```
+```text
 [RequestQueue] Rate limit active until: 2025-01-15T14:30:00.000Z (45s) Queue size: 3
 [RequestQueue] Rate limit cleared. Processing queue... Queue size: 3
 [RequestQueue] Queue empty
-```
+
+```text
 
 ### Adaptive Polling Activity
 
-```
+```text
 [AdaptivePolling] Interval adjusted: 45000ms → 90000ms (user inactive)
 [AdaptivePolling] Polling paused (page hidden)
 [AdaptivePolling] Polling resumed (page visible)
-```
+
+```text
 
 ### API Monitor (Development Only)
 
-```
+```text
 [APIMonitor] {
   endpoint: "inbox.email.list",
   duration: "245ms",
   success: true,
   fromCache: false
 }
-```
+
+```text
 
 ## 📈 Performance Metrics to Track
 
@@ -124,24 +132,24 @@ console.log("⚠️ Rate Limit Status:", {
    - Target: >80%
    - Check: `window.__apiMonitor?.getCacheHitRate()`
 
-2. **Error Rate**
+1. **Error Rate**
    - Target: <1%
    - Check: `window.__apiMonitor?.getErrorRate()`
 
-3. **Average Response Time**
+1. **Average Response Time**
    - Target: <500ms
    - Check: `window.__apiMonitor?.getAverageResponseTime()`
 
-4. **Rate Limit Occurrences**
+1. **Rate Limit Occurrences**
    - Target: 0 in normal use
    - Check console for `[Rate Limit]` warnings
 
 ### Weekly Review
 
 1. Export metrics summary
-2. Review cache hit rates per endpoint
-3. Identify slow endpoints
-4. Check for rate limit patterns
+1. Review cache hit rates per endpoint
+1. Identify slow endpoints
+1. Check for rate limit patterns
 
 ## 🐛 Troubleshooting
 
@@ -158,7 +166,8 @@ console.table(
     timestamp: new Date(m.timestamp).toLocaleString(),
   }))
 );
-```
+
+```text
 
 ### Low Cache Hit Rate
 
@@ -172,7 +181,8 @@ console.log("Cache Stats:", {
 });
 
 // If low, check QueryClient staleTime settings
-```
+
+```text
 
 ### Rate Limit Issues
 
@@ -186,14 +196,15 @@ if (isLimited) {
   // Manual clear if needed (use with caution)
   // window.__requestQueue?.clearRateLimit();
 }
+
 ```
 
 ## 💡 Best Practices
 
 1. **Regular Monitoring**: Check metrics weekly
-2. **Alert Thresholds**: Set alerts for error rate >5% or cache hit rate <70%
-3. **Debug Mode**: Enable detailed logging in development
-4. **Metrics Export**: Export metrics for analysis
+1. **Alert Thresholds**: Set alerts for error rate >5% or cache hit rate <70%
+1. **Debug Mode**: Enable detailed logging in development
+1. **Metrics Export**: Export metrics for analysis
 
 ## 📝 Notes
 

@@ -2,11 +2,11 @@
 
 ## Core Concept: Context-Aware Right Panel
 
-Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent** og **context-aware**.
+Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent**og**context-aware**.
 
 ## Architecture
 
-```
+```text
 ┌──────────┬─────────────────────┬──────────────────┐
 │    AI    │   Email Center      │  Smart Workspace │
 │   20%    │       60%           │       20%        │
@@ -18,6 +18,7 @@ Baseret på Shortwave.ai workflow - højre panel skal være **ultra-intelligent*
 │          │  Mini-tabs:         │   • Invoice      │
 │          │  [📄][📅][👥][✅]  │   • Customer     │
 └──────────┴─────────────────────┴──────────────────┘
+
 ```
 
 ## 5 Context States
@@ -81,7 +82,7 @@ Expanded (drawer/modal):
 ## Implementation
 
 1. Email Center cleanup (kun EmailTab)
-2. WorkspacePanel med context detection
-3. Mini-tabs med drawer system
-4. AI integration
-5. Automation
+1. WorkspacePanel med context detection
+1. Mini-tabs med drawer system
+1. AI integration
+1. Automation

@@ -1,6 +1,6 @@
 # 🤖 OMRÅDE 2: AI SYSTEM - Komplet Analyse
 
-**Generated:** 2025-11-08 17:48 UTC+01:00  
+**Generated:** 2025-11-08 17:48 UTC+01:00
 **Status:** Production Ready ✅
 
 ---
@@ -19,7 +19,7 @@ Friday AI System - intelligent executive assistant med:
 
 ## 📂 **STRUKTUR**
 
-```
+```text
 server/
 ├── ai-router.ts              # Main AI orchestration
 ├── friday-tools.ts           # 35+ tool definitions
@@ -29,7 +29,8 @@ server/
 ├── intent-actions.ts         # Action execution
 ├── llm-evaluation.ts         # Quality monitoring
 └── _core/llm.ts             # LLM client
-```
+
+```text
 
 ---
 
@@ -40,12 +41,12 @@ server/
 **Flow:**
 
 1. Select model (GPT-4/Claude/Gemini)
-2. Build system prompt
-3. Inject 35+ tools
-4. Call LLM
-5. Parse response
-6. Execute tools
-7. Return result
+1. Build system prompt
+1. Inject 35+ tools
+1. Call LLM
+1. Parse response
+1. Execute tools
+1. Return result
 
 **Models:**
 
@@ -89,12 +90,12 @@ server/
 **Components:**
 
 1. **Main Prompt** - Personality & rules
-2. **Email Handling** - 5-step lead workflow
-3. **Billy Invoice** - Invoice creation workflow
-4. **Calendar Management** - Event formatting
-5. **Conflict Resolution** - Customer complaints
-6. **Job Completion** - 5-step checklist
-7. **Quality Control** - Pre-send verification
+1. **Email Handling** - 5-step lead workflow
+1. **Billy Invoice** - Invoice creation workflow
+1. **Calendar Management** - Event formatting
+1. **Conflict Resolution** - Customer complaints
+1. **Job Completion** - 5-step checklist
+1. **Quality Control** - Pre-send verification
 
 **Key Rules:**
 
@@ -112,7 +113,8 @@ server/
 
 **Request:** "Book møde med kunde X på tirsdag kl 14"
 
-```
+```text
+
 1. User sends message
 2. Load conversation history
 3. AI Router: Select GPT-4 (calendar task)
@@ -127,10 +129,11 @@ server/
 10. User approves
 11. Execute: create_calendar_event()
 12. Confirm: "✅ Møde booket"
+
 ```
 
-**Time:** 5-10 seconds  
-**Tools:** 3 calls  
+**Time:** 5-10 seconds
+**Tools:** 3 calls
 **LLM:** 2 calls
 
 ---
@@ -152,22 +155,22 @@ server/
 ## ✅ **KEY FEATURES**
 
 1. **Natural Language** - Dansk/engelsk
-2. **Function Calling** - 35+ tools
-3. **Context Aware** - Email/calendar context
-4. **Multi-Model** - Cost optimization
-5. **Action Approval** - Risk-based
-6. **Quality Control** - Pre-send verification
-7. **Workflow Automation** - Multi-step processes
+1. **Function Calling** - 35+ tools
+1. **Context Aware** - Email/calendar context
+1. **Multi-Model** - Cost optimization
+1. **Action Approval** - Risk-based
+1. **Quality Control** - Pre-send verification
+1. **Workflow Automation** - Multi-step processes
 
 ---
 
 ## 🐛 **KNOWN ISSUES**
 
 1. **Calendar attendees** - Causes unwanted invites (NEVER use)
-2. **Date parsing** - "after:YYYY-MM-DD" quirk
-3. **Model costs** - GPT-4 expensive
-4. **Tool limits** - Max 10 per request
-5. **Context window** - Long conversations
+1. **Date parsing** - "after:YYYY-MM-DD" quirk
+1. **Model costs** - GPT-4 expensive
+1. **Tool limits** - Max 10 per request
+1. **Context window** - Long conversations
 
 ---
 

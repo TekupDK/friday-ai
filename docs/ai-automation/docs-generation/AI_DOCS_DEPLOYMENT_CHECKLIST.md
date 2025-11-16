@@ -1,7 +1,7 @@
 # 🚀 AI Documentation Generator - Deployment Checklist
 
-**System:** AI-powered documentation generation  
-**Status:** Ready for Production  
+**System:** AI-powered documentation generation
+**Status:** Ready for Production
 **Date:** 2024-11-09
 
 ---
@@ -62,11 +62,12 @@ echo $OPENROUTER_API_KEY
 echo $OPENROUTER_MODEL
 echo $DATABASE_URL
 
-# Should see:
+# Should see
 # - OPENROUTER_API_KEY: sk-or-...
 # - OPENROUTER_MODEL: z-ai/glm-4.5-air:free
 # - DATABASE_URL: postgresql://...
-```
+
+```text
 
 ### Step 2: Database Migrations
 
@@ -76,7 +77,8 @@ pnpm drizzle-kit push
 
 # Verify documents table exists
 psql $DATABASE_URL -c "\d friday_ai.documents"
-```
+
+```text
 
 ### Step 3: Deploy Backend
 
@@ -86,7 +88,8 @@ pnpm build:server
 
 # Verify no build errors
 # Check dist/ folder created
-```
+
+```text
 
 ### Step 4: Deploy Frontend
 
@@ -96,7 +99,8 @@ pnpm build:client
 
 # Verify no build errors
 # Check dist/client/ folder created
-```
+
+```text
 
 ### Step 5: Start Production Server
 
@@ -106,18 +110,20 @@ pm2 start ecosystem.config.js
 
 # Or direct
 NODE_ENV=production node dist/server/index.js
-```
+
+```text
 
 ### Step 6: Smoke Test
 
 ```bash
 # Test backend endpoint
-curl -X POST https://your-domain.com/api/trpc/docs.generateLeadDoc \
+curl -X POST <https://your-domain.com/api/trpc/docs.generateLeadDoc> \
   -H "Content-Type: application/json" \
   -d '{"leadId": 1}'
 
 # Should return: {"success": true, "docId": "..."}
-```
+
+```text
 
 ---
 
@@ -126,22 +132,22 @@ curl -X POST https://your-domain.com/api/trpc/docs.generateLeadDoc \
 ### Manual Verification (5 min)
 
 1. **Login to app**
-   - Navigate to https://your-domain.com
+   - Navigate to <https://your-domain.com>
    - Login with credentials
 
-2. **Test Docs Page**
+1. **Test Docs Page**
    - Go to `/docs`
    - Verify "Weekly Digest" button visible
    - Verify "Bulk Generate" button visible
    - Click search - should work
 
-3. **Test Lead Integration**
+1. **Test Lead Integration**
    - Go to Leads page/inbox
    - Open lead dropdown menu (•••)
    - Verify "Generer AI Dok" option visible
    - Click it - should trigger generation
 
-4. **Test Doc Generation**
+1. **Test Doc Generation**
    - Click "Weekly Digest" button
    - Wait 20-30 seconds
    - Toast should appear: "Weekly digest generated!"
@@ -149,7 +155,7 @@ curl -X POST https://your-domain.com/api/trpc/docs.generateLeadDoc \
    - Should navigate to generated doc
    - Doc should have proper formatting
 
-5. **Verify Generated Doc**
+1. **Verify Generated Doc**
    - Check for emojis (🤖, 📋, etc.)
    - Check for sections (Overview, Analysis, etc.)
    - Verify timestamps
@@ -163,7 +169,8 @@ pnpm test:prod
 
 # Or Playwright against production
 npx playwright test --config=playwright.config.prod.ts
-```
+
+```text
 
 ---
 
@@ -175,16 +182,16 @@ npx playwright test --config=playwright.config.prod.ts
    - Track: successful vs failed generations
    - Alert if: failure rate > 10%
 
-2. **Response Times**
+1. **Response Times**
    - Track: generation time (should be 20-30s)
    - Alert if: > 60s consistently
 
-3. **OpenRouter API Usage**
+1. **OpenRouter API Usage**
    - Track: number of API calls
    - Monitor: rate limits (FREE tier)
    - Cost: Should remain $0.00
 
-4. **Database Performance**
+1. **Database Performance**
    - Track: doc insert times
    - Monitor: query performance
    - Alert if: slow queries > 5s
@@ -193,11 +200,13 @@ npx playwright test --config=playwright.config.prod.ts
 
 ```typescript
 // Ensure these logs are captured:
+
 - [AI Collector] Data collected successfully
 - [AI Analyzer] Starting analysis
 - [AI Analyzer] Analysis complete
 - [AI Auto-Create] Lead doc created successfully
-```
+
+```text
 
 ### Error Monitoring
 
@@ -207,7 +216,8 @@ npx playwright test --config=playwright.config.prod.ts
   "No response from LLM" -
   "Lead not found" -
   "Document not found";
-```
+
+```text
 
 ---
 
@@ -238,7 +248,8 @@ const ENABLE_AI_FEATURES = false;
     <Button>Bulk Generate</Button>
   </>
 )}
-```
+
+```text
 
 **Option 2: Feature Flag**
 
@@ -248,7 +259,8 @@ DISABLE_AI_DOCS=true
 
 # Restart server
 pm2 restart friday-ai
-```
+
+```text
 
 **Option 3: Revert Deployment**
 
@@ -259,6 +271,7 @@ git push origin main
 
 # Redeploy
 ./deploy.sh
+
 ```
 
 ---
@@ -345,9 +358,9 @@ Consider paid models if:
 **If Issues Occur:**
 
 1. Check logs: `pm2 logs friday-ai`
-2. Check database: `psql $DATABASE_URL`
-3. Check OpenRouter status: https://openrouter.ai/status
-4. Review error monitoring dashboard
+1. Check database: `psql $DATABASE_URL`
+1. Check OpenRouter status: <https://openrouter.ai/status>
+1. Review error monitoring dashboard
 
 ---
 
@@ -368,8 +381,8 @@ Consider paid models if:
 
 **STATUS: READY FOR PRODUCTION DEPLOYMENT! 🚀**
 
-**Estimated Deployment Time:** 15-30 minutes  
-**Risk Level:** Low (FREE API, well-tested, can be disabled)  
+**Estimated Deployment Time:** 15-30 minutes
+**Risk Level:** Low (FREE API, well-tested, can be disabled)
 **Rollback Time:** < 5 minutes
 
 **Proceed with deployment when ready!** ✅

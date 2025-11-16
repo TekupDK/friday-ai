@@ -1,7 +1,7 @@
 # Open Source AI Stack - Phase 1: Research & Analysis 🔬
 
-**Date:** November 9, 2025  
-**Status:** In Progress  
+**Date:** November 9, 2025
+**Status:** In Progress
 **Goal:** Analyze Friday AI codebase and plan integration of Langfuse, ChromaDB, and Crawl4AI
 
 ---
@@ -11,10 +11,10 @@
 We are integrating **3 powerful open source tools** to enhance Friday AI:
 
 1. **Langfuse** - LLM Observability & Analytics (FREE)
-2. **ChromaDB** - Vector Database for Semantic Search (FREE)
-3. **Crawl4AI** - Web Scraping for LLMs (FREE)
+1. **ChromaDB** - Vector Database for Semantic Search (FREE)
+1. **Crawl4AI** - Web Scraping for LLMs (FREE)
 
-**Total Cost:** $0/month forever! 🎉  
+**Total Cost:** $0/month forever! 🎉
 **Estimated Savings:** $2,000-3,000/year vs paid alternatives
 
 ---
@@ -90,13 +90,15 @@ Based on code search, Friday AI has AI integrated in these areas:
 
 ```typescript
 // Primary functions:
+
 - invokeLLM() - Main AI call function
 - streamResponse() - Streaming responses
 - Supports: OpenRouter, Ollama, Gemini, OpenAI
 
 // Current flow:
 User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Response
-```
+
+```text
 
 **Integration Point for Langfuse:**
 
@@ -108,19 +110,22 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 
 ```typescript
 // Task-based routing:
+
 - 10 task types (chat, email-draft, lead-analysis, etc.)
 - 6 FREE OpenRouter models
 - Automatic fallback logic
 - LiteLLM integration (already done!)
 
 // Current models:
+
 - glm-4.5-air-free (primary)
 - gpt-oss-20b-free
 - deepseek-chat-v3.1-free
 - minimax-m2-free
 - qwen3-coder-free
 - kimi-k2-free
-```
+
+```text
 
 **Integration Point for Langfuse:**
 
@@ -186,7 +191,7 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 
 ### Current Architecture
 
-```
+```text
 ┌─────────────┐
 │   User UI   │
 └──────┬──────┘
@@ -206,11 +211,12 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 ┌──────▼──────────┐
 │  FREE Models    │ ◄─── 6 OpenRouter models
 └─────────────────┘
-```
+
+```text
 
 ### Proposed Architecture with New Stack
 
-```
+```text
 ┌─────────────┐
 │   User UI   │
 └──────┬──────┘
@@ -256,7 +262,8 @@ User Request → AI Router → Model Router → invokeLLM → LiteLLM/API → Re
 │  • Data Extraction                  │
 │  • Async Processing                 │
 └─────────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -274,7 +281,7 @@ import { Langfuse } from "langfuse";
 const langfuse = new Langfuse({
   publicKey: ENV.langfusePublicKey,
   secretKey: ENV.langfuseSecretKey,
-  baseUrl: ENV.langfuseBaseUrl || "http://localhost:3000", // Self-hosted
+  baseUrl: ENV.langfuseBaseUrl || "<http://localhost:3000",> // Self-hosted
 });
 
 export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
@@ -315,7 +322,8 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
     throw error;
   }
 }
-```
+
+```text
 
 #### B. Track Model Router Decisions
 
@@ -343,7 +351,8 @@ export async function invokeLLMWithRouting(...) {
     }
   });
 }
-```
+
+```text
 
 ### 2. ChromaDB Integration Points
 
@@ -355,7 +364,7 @@ export async function invokeLLMWithRouting(...) {
 import { ChromaClient } from "chromadb";
 
 const client = new ChromaClient({
-  path: ENV.chromaUrl || "http://localhost:8000",
+  path: ENV.chromaUrl || "<http://localhost:8000",>
 });
 
 export async function indexLead(lead: Lead) {
@@ -400,7 +409,8 @@ export async function findSimilarLeads(lead: Lead, limit = 5) {
 
   return results.ids[0].map(id => parseInt(id));
 }
-```
+
+```text
 
 #### B. Email Semantic Search
 
@@ -443,7 +453,8 @@ export async function searchEmails(query: string, limit = 10) {
 
   return results.metadatas[0];
 }
-```
+
+```text
 
 ### 3. Crawl4AI Integration Points
 
@@ -472,13 +483,14 @@ export async function enrichLeadFromWebsite(lead: Lead) {
         provider: "openrouter/glm-4.5-air-free", // Use our FREE model!
         apiToken: ENV.openRouterApiKey,
         instruction: `Extract company information:
+
           - Company name
           - Industry/services
           - Contact phone/email
           - Location/address
           - Team size (if mentioned)
           - Key products/services
-          
+
           Return as JSON.`,
       }),
       wordCountThreshold: 10,
@@ -507,7 +519,8 @@ export async function enrichLeadFromWebsite(lead: Lead) {
     await crawler.stop();
   }
 }
-```
+
+```bash
 
 ---
 
@@ -578,30 +591,36 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 
 ### Langfuse Metrics
 
-```
+```text
+
 - 100% of AI calls tracked
 - <10ms tracing overhead
 - Dashboard accessible 24/7
 - Real-time error alerts
-```
+
+```text
 
 ### ChromaDB Metrics
 
-```
+```text
+
 - <500ms semantic search
 - >80% relevance score
 - 10,000+ vectors indexed
 - <100MB memory usage
-```
+
+```text
 
 ### Crawl4AI Metrics
 
-```
+```text
+
 - >80% successful scrapes
 - <30s per website
 - LLM-ready markdown output
 - Background processing
-```
+
+```text
 
 ---
 
@@ -609,17 +628,18 @@ export async function enrichLeadFromWebsite(lead: Lead) {
 
 ### Current Costs (Without Integration)
 
-```
+```text
 Manual lead research:    10 hours/month × $50/hour = $500/month
 Manual document work:    5 hours/month × $50/hour = $250/month
 No AI observability:     Unknown issues, debug time
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total hidden cost:       ~$750/month
-```
+
+```text
 
 ### Proposed Costs (With Integration)
 
-```
+```text
 Langfuse (self-hosted):  $0/month (FREE)
 ChromaDB (self-hosted):  $0/month (FREE)
 Crawl4AI (self-hosted):  $0/month (FREE)
@@ -627,16 +647,18 @@ LLM calls:               $0/month (already FREE with LiteLLM)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total cost:              $0/month 🎉
 Annual savings:          $9,000/year
-```
+
+```text
 
 ### ROI Analysis
 
-```
+```text
 Development time:        ~30-40 hours (1-2 weeks)
 Development cost:        ~$2,000 (if outsourced)
 Annual savings:          $9,000
 ROI:                     450% in year 1
 Break-even:              3 months
+
 ```
 
 ---
@@ -688,20 +710,20 @@ Break-even:              3 months
    - Create detailed architecture diagram
    - Define API contracts
 
-2. **Start Phase 2: Langfuse** (Tomorrow)
+1. **Start Phase 2: Langfuse** (Tomorrow)
    - Deploy Langfuse locally
    - Integrate with LiteLLM
    - Test basic tracing
 
-3. **Weekly Check-ins**
+1. **Weekly Check-ins**
    - Progress reviews
    - Adjust timeline if needed
    - Document learnings
 
 ---
 
-**Status:** ✅ Phase 1 In Progress (60% complete)  
-**Next:** Complete codebase analysis, create architecture diagram  
+**Status:** ✅ Phase 1 In Progress (60% complete)
+**Next:** Complete codebase analysis, create architecture diagram
 **Timeline:** On track for 2-3 week completion
 
 **Last Updated:** November 9, 2025 12:06 PM

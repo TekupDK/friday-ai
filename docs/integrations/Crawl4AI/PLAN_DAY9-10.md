@@ -1,7 +1,7 @@
 # Day 9-10: Crawl4AI Integration Plan
 
-**Start Date:** November 9, 2025, 22:00  
-**Duration:** 2 days (8-12 hours)  
+**Start Date:** November 9, 2025, 22:00
+**Duration:** 2 days (8-12 hours)
 **Goal:** Web scraping for lead enrichment & company intelligence
 
 ---
@@ -11,23 +11,23 @@
 ### Day 9: Setup & Basic Scraping (4-6 hours)
 
 1. Research Crawl4AI capabilities
-2. Setup Docker/Python service
-3. Create scraping endpoints
-4. Test basic web scraping
-5. Integrate with leads API
+1. Setup Docker/Python service
+1. Create scraping endpoints
+1. Test basic web scraping
+1. Integrate with leads API
 
 ### Day 10: Advanced Features & Testing (4-6 hours)
 
 1. Company intelligence gathering
-2. Social media scraping
-3. Contact information extraction
-4. Email address finding
-5. Testing & validation
-6. Documentation
+1. Social media scraping
+1. Contact information extraction
+1. Email address finding
+1. Testing & validation
+1. Documentation
 
 ---
 
-## 🕷️ What is Crawl4AI?
+## 🕷️ What is Crawl4AI
 
 **Crawl4AI** is an AI-powered web scraping tool designed for:
 
@@ -51,13 +51,14 @@
 
 ### Option 1: Python Service (Docker) ⭐ RECOMMENDED
 
-```
+```bash
 Friday AI (TypeScript)
     ↓ HTTP API
 Crawl4AI Service (Python/Docker)
     ↓ Scraping
 External Websites
-```
+
+```bash
 
 **Pros:**
 
@@ -73,13 +74,14 @@ External Websites
 
 ### Option 2: Direct Python Integration
 
-```
+```bash
 Friday AI (TypeScript)
     ↓ child_process
 Python Script (Crawl4AI)
     ↓ Scraping
 External Websites
-```
+
+```bash
 
 **Pros:**
 
@@ -134,7 +136,7 @@ External Websites
 
 **Create:**
 
-```
+```bash
 server/integrations/crawl4ai/
 ├── docker/
 │   ├── Dockerfile
@@ -145,27 +147,33 @@ server/integrations/crawl4ai/
 │   ├── scraper.py           (Crawl4AI wrapper)
 │   └── models.py            (Pydantic models)
 └── README.md
-```
+
+```text
 
 **API Endpoints:**
 
 ```python
 POST /scrape
+
     - URL to scrape
     - Returns structured data
 
 POST /enrich-lead
+
     - Lead information
     - Company URL
     - Returns enriched data
 
 POST /find-contacts
+
     - Company URL
     - Returns email addresses, phone numbers
 
 GET /health
+
     - Health check
-```
+
+```text
 
 ### Step 3: TypeScript Client (1 hour)
 
@@ -176,7 +184,8 @@ GET /health
 export async function scrapePage(url: string): Promise<ScrapedData>;
 export async function enrichLead(leadId: number): Promise<EnrichedLead>;
 export async function findContacts(companyUrl: string): Promise<Contacts>;
-```
+
+```text
 
 ### Step 4: Basic Testing (30 min)
 
@@ -225,7 +234,8 @@ interface CompanyIntel {
     facebook?: string;
   };
 }
-```
+
+```text
 
 ### Step 2: Contact Discovery (2 hours)
 
@@ -247,7 +257,7 @@ interface CompanyIntel {
 
 **Workflow:**
 
-```
+```text
 New Lead Created
     ↓
 Has company URL?
@@ -261,7 +271,8 @@ Find contacts
 Update lead in database
     ↓
 Index in ChromaDB
-```
+
+```text
 
 **Background Job:**
 
@@ -297,19 +308,20 @@ Index in ChromaDB
 
 **Before:**
 
-```
+```text
 Lead:
   Name: John Doe
-  Email: john@acme.com
+  Email: <john@acme.com>
   Company: ACME Corp
-```
+
+```text
 
 **After:**
 
-```
+```text
 Lead:
   Name: John Doe
-  Email: john@acme.com
+  Email: <john@acme.com>
   Company: ACME Corp
   CompanyInfo:
     Description: "ACME Corp is a leading..."
@@ -317,10 +329,11 @@ Lead:
     Size: "medium"
     Employees: 50-200
     Location: "Copenhagen, Denmark"
-    Website: "https://acme.com"
-    LinkedIn: "https://linkedin.com/company/acme"
+    Website: "<https://acme.com">
+    LinkedIn: "<https://linkedin.com/company/acme">
     Phone: "+45 12 34 56 78"
-```
+
+```text
 
 ### 2. Competitive Intelligence
 
@@ -356,7 +369,8 @@ def can_scrape(url: str) -> bool:
     rp.set_url(f"{url}/robots.txt")
     rp.read()
     return rp.can_fetch("*", url)
-```
+
+```text
 
 ### Rate Limiting
 
@@ -364,14 +378,16 @@ def can_scrape(url: str) -> bool:
 # Limit requests per domain
 MAX_REQUESTS_PER_DOMAIN = 10  # per hour
 DELAY_BETWEEN_REQUESTS = 2  # seconds
-```
+
+```text
 
 ### User Agent
 
 ```python
 # Identify ourselves clearly
-USER_AGENT = "FridayAI-Bot/1.0 (+https://friday-ai.com/bot)"
-```
+USER_AGENT = "FridayAI-Bot/1.0 (+<https://friday-ai.com/bo>t)"
+
+```text
 
 ### Data Privacy
 
@@ -393,7 +409,8 @@ CACHE_TTL = 86400  # seconds
 @lru_cache(maxsize=1000)
 def scrape_cached(url: str) -> ScrapedData:
     return scrape_page(url)
-```
+
+```text
 
 ### Background Processing
 
@@ -407,7 +424,8 @@ app = Celery('crawl4ai')
 def enrich_lead_async(lead_id: int):
     # Scrape and enrich in background
     pass
-```
+
+```text
 
 ### Rate Limiting
 
@@ -421,7 +439,8 @@ limiter = Limiter(key_func=get_remote_address)
 @limiter.limit("10/minute")
 async def scrape_endpoint(url: str):
     pass
-```
+
+```text
 
 ---
 
@@ -435,7 +454,8 @@ async def scrape_endpoint(url: str):
 # Use rotating user agents
 # Add delays between requests
 # Use proxies if needed (Bright Data, ScraperAPI)
-```
+
+```text
 
 **2. JavaScript-Heavy Sites**
 
@@ -451,7 +471,8 @@ async def scrape_js_site(url: str):
         content = await page.content()
         await browser.close()
         return content
-```
+
+```text
 
 **3. Timeouts**
 
@@ -465,7 +486,8 @@ async def scrape_with_timeout(url: str, timeout: int = 30):
     except asyncio.TimeoutError:
         logger.error(f"Timeout scraping {url}")
         return None
-```
+
+```text
 
 ---
 
@@ -473,34 +495,39 @@ async def scrape_with_timeout(url: str, timeout: int = 30):
 
 ### Infrastructure
 
-```
+```bash
 Crawl4AI Docker Container: Free (self-hosted)
 CPU/RAM: ~500MB RAM, 0.5 CPU
 Monthly: $0 (runs on existing server)
-```
+
+```text
 
 ### API Costs
 
-```
+```text
 OpenRouter (for AI extraction): $0.01 per page
 Hunter.io (email finding): $0.01 per search (optional)
 
 Example Monthly:
+
 - 1,000 leads enriched = $10 (OpenRouter)
 - 500 email searches = $5 (Hunter.io)
 
 Total: ~$15/month
-```
+
+```text
 
 ### Proxies (Optional)
 
-```
+```text
 If websites block you:
+
 - Bright Data: $500/month (50GB)
 - ScraperAPI: $49/month (100k requests)
 
 Only needed if scraping at scale
-```
+
+```bash
 
 ---
 
@@ -508,9 +535,9 @@ Only needed if scraping at scale
 
 ### Crawl4AI
 
-- Docs: https://crawl4ai.com/docs
-- GitHub: https://github.com/unclecode/crawl4ai
-- Examples: https://crawl4ai.com/examples
+- Docs: <https://crawl4ai.com/docs>
+- GitHub: <https://github.com/unclecode/crawl4ai>
+- Examples: <https://crawl4ai.com/examples>
 
 ### Web Scraping Best Practices
 
@@ -560,27 +587,29 @@ Only needed if scraping at scale
 
 ### Saturday (Day 9)
 
-```
+```bash
 10:00 - 11:00   Research & Planning
 11:00 - 12:30   Docker Service Setup
 12:30 - 13:00   Break
 13:00 - 14:00   TypeScript Client
 14:00 - 14:30   Basic Testing
 14:30 - 15:30   Lead Integration
-```
+
+```text
 
 ### Sunday (Day 10)
 
-```
+```text
 10:00 - 12:00   Company Intelligence
 12:00 - 13:00   Break
 13:00 - 15:00   Contact Discovery
 15:00 - 16:30   Automated Enrichment
 16:30 - 18:00   Testing & Documentation
+
 ```
 
 ---
 
-**Status:** 📋 Planned - Ready to Start  
-**Next Step:** Begin Day 9 Research & Docker Setup  
+**Status:** 📋 Planned - Ready to Start
+**Next Step:** Begin Day 9 Research & Docker Setup
 **Estimated Start:** Now (22:00, November 9, 2025)

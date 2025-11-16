@@ -20,7 +20,6 @@ Generated on 2025-11-12T17:26:10.177Z
 | items | AIMemoryItem[] | yes |  |  |
 | onItemClick | (item: AIMemoryItem) => void | no |  |  |
 
-
 ### AIThinking
 
 - File: `client/src/components/chat/AIThinking.tsx`
@@ -31,7 +30,6 @@ Generated on 2025-11-12T17:26:10.177Z
 |------|------|----------|---------|-------------|
 | className | string | no |  |  |
 | message | string | no | "AI Thinking..." |  |
-
 
 ### CalendarEventCard
 
@@ -48,7 +46,6 @@ Generated on 2025-11-12T17:26:10.177Z
 | data | CalendarEventData | yes |  |  |
 | onCreateEvent | () => void | no |  |  |
 | onSkip | () => void | no |  |  |
-
 
 ### ChatFlowDemo
 
@@ -69,14 +66,12 @@ Generated on 2025-11-12T17:26:10.177Z
 |------|------|----------|---------|-------------|
 | scenario | "search" | "email" | "calendar" | "weather" | "invoices" | yes |  |  |
 
-
 ### ChatInput
 
 - File: `client/src/components/chat/ChatInput.tsx`
 - Dependencies: (none)
 
 _No props detected._
-
 
 ### createMemoryItem
 
@@ -141,7 +136,6 @@ _No props detected._
 | trimStart | () => string | yes |  |  |
 | valueOf | () => string | yes |  |  |
 
-
 ### EmailThreadCard
 
 - File: `client/src/components/chat/EmailThreadCard.tsx`
@@ -154,7 +148,6 @@ _No props detected._
 |------|------|----------|---------|-------------|
 | data | EmailThreadData | yes |  |  |
 | onClick | () => void | no |  |  |
-
 
 ### FridayTestPanel
 
@@ -171,7 +164,6 @@ _No props detected._
 
 _No props detected._
 
-
 ### InvoiceCards
 
 - File: `client/src/components/chat/InvoiceCards.tsx`
@@ -182,7 +174,6 @@ _No props detected._
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
 | invoices | InvoiceCardData[] | yes |  |  |
-
 
 ### ResponseCard
 
@@ -198,7 +189,6 @@ _No props detected._
 |------|------|----------|---------|-------------|
 | data | ResponseCardData | yes |  |  |
 
-
 ### SearchResultsCard
 
 - File: `client/src/components/chat/SearchResultsCard.tsx`
@@ -210,7 +200,6 @@ _No props detected._
 |------|------|----------|---------|-------------|
 | query | string | yes |  |  |
 | results | SearchResult[] | yes |  |  |
-
 
 ### ShortWaveChatPanel
 
@@ -229,7 +218,6 @@ _No props detected._
 | context | { selectedEmails?: string[]; calendarEvents?: any[]; searchQuery?: string; } | no | {} |  |
 | conversationId | number | no |  |  |
 
-
 ### ToolExecutionBox
 
 - File: `client/src/components/chat/ToolExecutionBox.tsx`
@@ -243,7 +231,6 @@ _No props detected._
 | message | string | yes |  |  |
 | progress | number | yes |  |  |
 | status | "completed" | "failed" | "running" | no | "running" |  |
-
 
 ### ToolExecutionModal
 
@@ -261,7 +248,6 @@ _No props detected._
 | onCancel | () => void | no |  |  |
 | onClose | () => void | no |  |  |
 
-
 ### WeatherCard
 
 - File: `client/src/components/chat/WeatherCard.tsx`
@@ -277,7 +263,6 @@ _No props detected._
 | humidity | number | no |  |  |
 | temperature | number | yes |  |  |
 | wind | number | no |  |  |
-
 
 ### WelcomeScreen
 
@@ -310,14 +295,12 @@ _No props detected._
 | placeholder | string | no |  |  |
 | value | string | yes |  |  |
 
-
 ### ChatInput.types
 
 - File: `client/src/components/chat/ChatInput/ChatInput.types.ts`
 - Dependencies: (none)
 
 _No props detected._
-
 
 ### ChatInputActions
 
@@ -335,7 +318,6 @@ _No props detected._
 | onSend | () => void | yes |  |  |
 | onStop | () => void | yes |  |  |
 | onVoice | () => void | no | () => console.log("Voice - coming soon") |  |
-
 
 ### ChatInputField
 
@@ -375,7 +357,6 @@ _No props detected._
 | placeholder | string | no | "Send en besked til Friday AI..." |  |
 | showSlashCommands | boolean | no | true |  |
 
-
 ### ChatCommands
 
 - File: `client/src/components/chat/advanced/ChatCommands.tsx`
@@ -390,7 +371,6 @@ _No props detected._
 | input | string | yes |  |  |
 | onClose | () => void | yes |  |  |
 | onSelectCommand | (command: Command) => void | yes |  |  |
-
 
 ### CodeBlockHighlight
 
@@ -410,7 +390,6 @@ _No props detected._
 | onDownload | (filename: string, code: string) => void | no |  |  |
 | onEdit | (code: string) => void | no |  |  |
 | onRun | (code: string) => void | no |  |  |
-
 
 ### MemoryManager
 
@@ -435,7 +414,6 @@ _No props detected._
 | onToggleMemory | (enabled: boolean) => void | no |  |  |
 | projects | Project[] | yes |  |  |
 
-
 ### MentionSystem
 
 - File: `client/src/components/chat/advanced/MentionSystem.tsx`
@@ -452,7 +430,6 @@ _No props detected._
 | onMention | (userId: string) => void | no |  |  |
 | placeholder | string | no | "Skriv @ for at mentionere..." |  |
 | users | MentionUser[] | no | [] |  |
-
 
 ### MessageHistory
 
@@ -474,7 +451,6 @@ _No props detected._
 | onFilter | (filters: any) => void | no |  |  |
 | onSearch | (query: string) => void | no |  |  |
 
-
 ### MessageReactions
 
 - File: `client/src/components/chat/advanced/MessageReactions.tsx`
@@ -490,7 +466,6 @@ _No props detected._
 | onReact | (emoji: string) => void | yes |  |  |
 | onRemoveReaction | (emoji: string) => void | yes |  |  |
 | reactions | Reaction[] | yes |  |  |
-
 
 ### MessageThreading
 
@@ -508,7 +483,6 @@ _No props detected._
 | onReply | (content: string) => void | yes |  |  |
 | parentMessage | { id: string; content: string; author: string; } | yes |  |  |
 | replies | ThreadMessage[] | yes |  |  |
-
 
 ### RichTextEditor
 
@@ -528,7 +502,6 @@ _No props detected._
 | onPreview | (html: string) => void | no |  |  |
 | onSave | (content: RichTextContent) => void | no |  |  |
 
-
 ### SourcesPanel
 
 - File: `client/src/components/chat/advanced/SourcesPanel.tsx`
@@ -544,7 +517,6 @@ _No props detected._
 | onOpenSource | (url: string) => void | no |  |  |
 | showReliability | boolean | no | true |  |
 | sources | Source[] | yes |  |  |
-
 
 ### StreamingMessage
 
@@ -571,7 +543,6 @@ _No props detected._
 | showTools | boolean | no | true |  |
 | sources | { title: string; url: string; }[] | no | [] |  |
 
-
 ### ToolsPanel
 
 - File: `client/src/components/chat/advanced/ToolsPanel.tsx`
@@ -587,7 +558,6 @@ _No props detected._
 |------|------|----------|---------|-------------|
 | executions | ToolExecution[] | yes |  |  |
 | onRunTool | (tool: "search" | "analyze" | "browse" | "code", input: string) => void | no |  |  |
-
 
 ### TypingIndicator
 
@@ -907,7 +877,6 @@ _No props detected._
 | typeof | string | no |  |  |
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
-
 
 ### NotificationSystem
 
@@ -1859,7 +1828,6 @@ _No props detected._
 | status | "online" | "away" | "offline" | "busy" | no | "online" |  |
 | title | string | no | "Chat" |  |
 
-
 ### PanelSizeVariants
 
 - File: `client/src/components/chat/advanced/layouts/PanelSizeVariants.tsx`
@@ -2157,7 +2125,6 @@ _No props detected._
 | typeof | string | no |  |  |
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
-
 
 ### SplitViewPanel
 
@@ -2461,7 +2428,6 @@ _No props detected._
 | typeof | string | no |  |  |
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
-
 
 ### withPanelSizeVariants
 
@@ -2771,7 +2737,6 @@ _No props detected._
 | variant | SkeletonVariant | no | "message" |  |
 | vocab | string | no |  |  |
 
-
 ### DataGridSkeleton
 
 - File: `client/src/components/chat/advanced/loaders/ChatSkeleton.tsx`
@@ -3061,7 +3026,6 @@ _No props detected._
 | typeof | string | no |  |  |
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
-
 
 ### DocumentSkeleton
 
@@ -3353,7 +3317,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### MessageSkeleton
 
 - File: `client/src/components/chat/advanced/loaders/ChatSkeleton.tsx`
@@ -3644,7 +3607,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### SearchResultsSkeleton
 
 - File: `client/src/components/chat/advanced/loaders/ChatSkeleton.tsx`
@@ -3934,7 +3896,6 @@ _No props detected._
 | typeof | string | no |  |  |
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
-
 
 ### SidebarSkeleton
 
@@ -4555,7 +4516,6 @@ _No props detected._
 | onExport | () => void | no |  |  |
 | onViewDetails | () => void | no |  |  |
 
-
 ### AnomalyDetectionCard
 
 - File: `client/src/components/chat/cards/AnomalyDetectionCard.tsx`
@@ -4854,7 +4814,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### BillyAnalyticsCard
 
 - File: `client/src/components/chat/cards/BillyAnalyticsCard.tsx`
@@ -4872,7 +4831,6 @@ _No props detected._
 | onExport | (format: "pdf" | "excel") => void | no |  |  |
 | onPeriodChange | (period: "month" | "quarter" | "year") => void | no |  |  |
 | onRefresh | () => void | no |  |  |
-
 
 ### BillyCustomerCard
 
@@ -4893,7 +4851,6 @@ _No props detected._
 | onCancel | () => void | no |  |  |
 | onSave | (customer: CustomerData) => void | no |  |  |
 
-
 ### BillyInvoiceCard
 
 - File: `client/src/components/chat/cards/BillyInvoiceCard.tsx`
@@ -4911,7 +4868,6 @@ _No props detected._
 | onCancel | () => void | no |  |  |
 | onCreate | (invoice: BillyInvoiceData) => void | no |  |  |
 | onSend | (invoice: BillyInvoiceData) => void | no |  |  |
-
 
 ### BillyProductCard
 
@@ -4932,7 +4888,6 @@ _No props detected._
 | onSave | (product: ProductData) => void | no |  |  |
 | product | ProductData | no |  |  |
 
-
 ### CalendarCard
 
 - File: `client/src/components/chat/cards/CalendarCard.tsx`
@@ -4950,7 +4905,6 @@ _No props detected._
 | onCancel | () => void | no |  |  |
 | onEdit | () => void | no |  |  |
 | onJoin | () => void | no |  |  |
-
 
 ### CalendarEventCreateCard
 
@@ -4970,7 +4924,6 @@ _No props detected._
 | onCancel | () => void | no |  |  |
 | onCreate | (event: CalendarEventData) => void | no |  |  |
 
-
 ### CalendarEventEditCard
 
 - File: `client/src/components/chat/cards/CalendarEventEditCard.tsx`
@@ -4989,7 +4942,6 @@ _No props detected._
 | onCancel | () => void | no |  |  |
 | onDelete | (eventId: string) => void | no |  |  |
 | onUpdate | (event: CalendarEventData) => void | no |  |  |
-
 
 ### ConflictCheckCard
 
@@ -5011,7 +4963,6 @@ _No props detected._
 | proposedEvent | { date: string; time: string; duration: string; location?: string; } | no |  |  |
 | result | ConflictCheckResult | no |  |  |
 
-
 ### ContactCard
 
 - File: `client/src/components/chat/cards/ContactCard.tsx`
@@ -5025,11 +4976,10 @@ _No props detected._
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| contact | { id: string; name: string; email: string; phone: string; company: string; role: string; location: string; status: "online" | "away" | "offline"; avatar?: string; } | no | {     id: "1",     name: "Sarah Johnson",     email: "sarah@abc-corp.com",     phone: "+45 2345 6789",     company: "ABC Corporation",     role: "Sales Manager",     location: "København, Danmark",     status: "online",   } |  |
+| contact | { id: string; name: string; email: string; phone: string; company: string; role: string; location: string; status: "online" | "away" | "offline"; avatar?: string; } | no | {     id: "1",     name: "Sarah Johnson",     email: "<sarah@abc-corp.com>",     phone: "+45 2345 6789",     company: "ABC Corporation",     role: "Sales Manager",     location: "København, Danmark",     status: "online",   } |  |
 | onCall | () => void | no |  |  |
 | onEmail | () => void | no |  |  |
 | onView | () => void | no |  |  |
-
 
 ### CrossReferenceCard
 
@@ -5049,7 +4999,6 @@ _No props detected._
 | onSearch | (query: string) => void | no |  |  |
 | onSelectItem | (type: "email" | "calendar" | "invoice", id: string) => void | no |  |  |
 
-
 ### CustomerHistoryCard
 
 - File: `client/src/components/chat/cards/CustomerHistoryCard.tsx`
@@ -5068,7 +5017,6 @@ _No props detected._
 | onExport | () => void | no |  |  |
 | onScheduleMeeting | () => void | no |  |  |
 | onSendEmail | () => void | no |  |  |
-
 
 ### DataVerificationCard
 
@@ -5090,7 +5038,6 @@ _No props detected._
 | onProceedAnyway | () => void | no |  |  |
 | onVerify | (itemId: string) => void | no |  |  |
 
-
 ### DocumentCard
 
 - File: `client/src/components/chat/cards/DocumentCard.tsx`
@@ -5109,7 +5056,6 @@ _No props detected._
 | onShare | () => void | no |  |  |
 | onView | () => void | no |  |  |
 
-
 ### EmailCard
 
 - File: `client/src/components/chat/cards/EmailCard.tsx`
@@ -5123,11 +5069,10 @@ _No props detected._
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| email | { id: string; from: string; to: string; subject: string; preview: string; timestamp: string; read: boolean; starred: boolean; hasAttachments: boolean; labels?: string[]; } | no | {     id: "1",     from: "kunde@example.com",     to: "support@tekup.dk",     subject: "Spørgsmål om faktura",     preview: "Jeg har et spørgsmål angående min sidste faktura fra januar...",     timestamp: "for 2 timer siden",     read: false,     starred: true,     hasAttachments: true,     labels: ["Vigtig", "Kunde"],   } |  |
+| email | { id: string; from: string; to: string; subject: string; preview: string; timestamp: string; read: boolean; starred: boolean; hasAttachments: boolean; labels?: string[]; } | no | {     id: "1",     from: "<kunde@example.com>",     to: "<support@tekup.dk>",     subject: "Spørgsmål om faktura",     preview: "Jeg har et spørgsmål angående min sidste faktura fra januar...",     timestamp: "for 2 timer siden",     read: false,     starred: true,     hasAttachments: true,     labels: ["Vigtig", "Kunde"],   } |  |
 | onArchive | () => void | no |  |  |
 | onForward | () => void | no |  |  |
 | onReply | () => void | no |  |  |
-
 
 ### EmailDraftCard
 
@@ -5150,7 +5095,6 @@ _No props detected._
 | onImprove | () => void | no |  |  |
 | onSend | (draft: EmailDraftData) => void | no |  |  |
 
-
 ### EmailSearchCard
 
 - File: `client/src/components/chat/cards/EmailSearchCard.tsx`
@@ -5170,7 +5114,6 @@ _No props detected._
 | query | string | no | "" |  |
 | results | EmailSearchResult[] | no | [] |  |
 
-
 ### FileCard
 
 - File: `client/src/components/chat/cards/FileCard.tsx`
@@ -5188,7 +5131,6 @@ _No props detected._
 | onDelete | () => void | no |  |  |
 | onDownload | () => void | no |  |  |
 | onPreview | () => void | no |  |  |
-
 
 ### FreeBusyCard
 
@@ -5209,7 +5151,6 @@ _No props detected._
 | onChangeDate | (date: string) => void | no |  |  |
 | timeSlots | TimeSlot[] | no | [] |  |
 
-
 ### InvoiceCard
 
 - File: `client/src/components/chat/cards/InvoiceCard.tsx`
@@ -5227,7 +5168,6 @@ _No props detected._
 | onDownload | () => void | no |  |  |
 | onSend | () => void | no |  |  |
 | onView | () => void | no |  |  |
-
 
 ### LabelManagementCard
 
@@ -5248,7 +5188,6 @@ _No props detected._
 | onApplyLabels | (threadIds: string[], labels: string[]) => void | no |  |  |
 | onCancel | () => void | no |  |  |
 | threads | EmailThread[] | yes |  |  |
-
 
 ### LeadCardDetailed
 
@@ -5271,7 +5210,6 @@ _No props detected._
 | onSendQuote | () => void | no |  |  |
 | onUpdateStatus | (status: "new" | "contacted" | "qualified" | "proposal" | "won" | "lost") => void | no |  |  |
 
-
 ### LeadTrackingCard
 
 - File: `client/src/components/chat/cards/LeadTrackingCard.tsx`
@@ -5290,7 +5228,6 @@ _No props detected._
 | onAddActivity | (leadId: string, activity: string) => void | no |  |  |
 | onExport | () => void | no |  |  |
 | onUpdateStatus | (leadId: string, status: "new" | "meeting" | "contacted" | "proposal" | "negotiation" | "closed-won" | "closed-lost") => void | no |  |  |
-
 
 ### MessageCard
 
@@ -5311,7 +5248,6 @@ _No props detected._
 | onReply | () => void | no |  |  |
 | onStar | () => void | no |  |  |
 
-
 ### NotificationCard
 
 - File: `client/src/components/chat/cards/NotificationCard.tsx`
@@ -5328,7 +5264,6 @@ _No props detected._
 | notification | { id: string; type: "info" | "warning" | "success" | "error"; title: string; message: string; timestamp: string; read: boolean; actionLabel?: string; } | no | {     id: "1",     type: "info",     title: "Ny opgave tildelt",     message: 'Du er blevet tildelt opgaven "Opdater kundedata"',     timestamp: "for 10 minutter siden",     read: false,     actionLabel: "Se opgave",   } |  |
 | onAction | () => void | no |  |  |
 | onDismiss | () => void | no |  |  |
-
 
 ### PatternRecognitionCard
 
@@ -5628,7 +5563,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### PredictiveInsightsCard
 
 - File: `client/src/components/chat/cards/PredictiveInsightsCard.tsx`
@@ -5926,7 +5860,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### QuickReplyCard
 
 - File: `client/src/components/chat/cards/QuickReplyCard.tsx`
@@ -5943,7 +5876,6 @@ _No props detected._
 | onEditTemplate | (id: string) => void | no |  |  |
 | onSendReply | (message: string) => void | no |  |  |
 | quickReply | { id: string; title: string; templates: { id: string; label: string; message: string; category: string; }[]; } | no | {     id: "1",     title: "Hurtige svar",     templates: [       {         id: "1",         label: "Tak for henvendelse",         message:           "Tak for din henvendelse. Vi vender tilbage inden for 24 timer.",         category: "standard",       },       {         id: "2",         label: "Booking bekræftet",         message:           "Din booking er bekræftet. Du vil modtage en bekræftelse på email.",         category: "booking",       },       {         id: "3",         label: "Mere info nødvendig",         message:           "Vi har brug for mere information for at kunne hjælpe dig videre.",         category: "support",       },       {         id: "4",         label: "Videresender til support",         message: "Jeg videresender din henvendelse til vores support team.",         category: "support",       },     ],   } |  |
-
 
 ### RecommendationEngineCard
 
@@ -6241,7 +6173,6 @@ _No props detected._
 | typeof | string | no |  |  |
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
-
 
 ### RiskAssessmentCard
 
@@ -6542,7 +6473,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### SentimentAnalysisCard
 
 - File: `client/src/components/chat/cards/SentimentAnalysisCard.tsx`
@@ -6841,7 +6771,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### StatusCard
 
 - File: `client/src/components/chat/cards/StatusCard.tsx`
@@ -6858,7 +6787,6 @@ _No props detected._
 | onRefresh | () => void | no |  |  |
 | onViewHistory | () => void | no |  |  |
 | status | { id: string; service: string; status: "offline" | "operational" | "degraded" | "partial"; message: string; lastChecked: string; uptime: string; } | no | {     id: "1",     service: "API Server",     status: "operational",     message: "Alle systemer kører normalt",     lastChecked: "for 2 minutter siden",     uptime: "99.98%",   } |  |
-
 
 ### TaskCard
 
@@ -6877,7 +6805,6 @@ _No props detected._
 | onStart | () => void | no |  |  |
 | onView | () => void | no |  |  |
 | task | { id: string; title: string; description: string; status: "pending" | "in-progress" | "completed"; priority: "low" | "medium" | "high"; assignee: string; dueDate: string; progress: number; } | no | {     id: "1",     title: "Opdater kundedata",     description: "Gennemgå og opdater alle kundeoplysninger i CRM systemet",     status: "in-progress",     priority: "high",     assignee: "John Smith",     dueDate: "I morgen",     progress: 65,   } |  |
-
 
 ### TaskCardDetailed
 
@@ -6899,7 +6826,6 @@ _No props detected._
 | onToggleSubtask | (subtaskId: string) => void | no |  |  |
 | onUpdateStatus | (status: "done" | "todo" | "in_progress") => void | no |  |  |
 
-
 ### TodoFromEmailCard
 
 - File: `client/src/components/chat/cards/TodoFromEmailCard.tsx`
@@ -6918,7 +6844,6 @@ _No props detected._
 | onCancel | () => void | no |  |  |
 | onCreate | (todo: { name: string; notes: string; threadIds: string[]; }) => void | no |  |  |
 | threads | EmailThread[] | yes |  |  |
-
 
 ### UnsubscribeCard
 
@@ -7239,7 +7164,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### DataTable
 
 - File: `client/src/components/chat/data-visualization/DataTable.tsx`
@@ -7552,7 +7476,6 @@ _No props detected._
 | typeof | string | no |  |  |
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
-
 
 ### MetricsDashboard
 
@@ -7879,7 +7802,6 @@ _No props detected._
 | onRemove | (fileId: string) => void | no |  |  |
 | onUpload | (files: File[]) => void | no |  |  |
 
-
 ### EmojiPicker
 
 - File: `client/src/components/chat/input/EmojiPicker.tsx`
@@ -7897,7 +7819,6 @@ _No props detected._
 | compact | boolean | no | false |  |
 | onSelect | (emoji: string) => void | yes |  |  |
 
-
 ### MarkdownPreview
 
 - File: `client/src/components/chat/input/MarkdownPreview.tsx`
@@ -7911,10 +7832,9 @@ _No props detected._
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| initialMarkdown | string | no | "# Markdown Preview\n\nSkriv **bold** eller *italic* tekst.\n\n- List item 1\n- List item 2\n\n> Block quote\n\n`inline code`\n\n```javascript\n// Code block\nfunction hello() {\n  console.log('Hello World!');\n}\n```" |  |
+| initialMarkdown | string | no | "# Markdown Preview\n\nSkriv **bold**eller*italic* tekst.\n\n- List item 1\n- List item 2\n\n> Block quote\n\n`inline code`\n\n```javascript\n// Code block\nfunction hello() {\n  console.log('Hello World!');\n}\n```" |  |
 | onExport | (format: "html" | "markdown") => void | no |  |  |
 | onSave | (markdown: string) => void | no |  |  |
-
 
 ### MentionAutocomplete
 
@@ -7933,7 +7853,6 @@ _No props detected._
 | onMention | (user: MentionUser) => void | no |  |  |
 | placeholder | string | no | "Skriv @ for at mentionere..." |  |
 | users | MentionUser[] | no | [] |  |
-
 
 ### SlashCommandsMenu
 
@@ -7971,7 +7890,6 @@ _No props detected._
 | layout | "grid" | "horizontal" | "vertical" | no | "horizontal" |  |
 | onAction | (actionId: string) => void | no |  |  |
 
-
 ### ApprovalCard
 
 - File: `client/src/components/chat/interactive/ApprovalCard.tsx`
@@ -7990,7 +7908,6 @@ _No props detected._
 | onReject | (id: string, reason?: string) => void | no |  |  |
 | onView | (id: string) => void | no |  |  |
 
-
 ### PhaseTracker
 
 - File: `client/src/components/chat/interactive/PhaseTracker.tsx`
@@ -8005,7 +7922,6 @@ _No props detected._
 | compact | boolean | no | false |  |
 | phases | Phase[] | yes |  |  |
 | title | string | no | "Pipeline Status" |  |
-
 
 ### SyncStatusCard
 
@@ -8023,7 +7939,6 @@ _No props detected._
 | onSync | (serviceId: string) => void | no |  |  |
 | onSyncAll | () => void | no |  |  |
 | syncItems | SyncStatus[] | yes |  |  |
-
 
 ### ThinkingIndicator
 
@@ -8064,7 +7979,6 @@ _No props detected._
 | systemInfo | SystemInfo | no |  |  |
 | teamMembers | TeamMember[] | no | [] |  |
 
-
 ### CommandPalette
 
 - File: `client/src/components/chat/other/CommandPalette.tsx`
@@ -8082,7 +7996,6 @@ _No props detected._
 | commands | CommandItem[] | no | [] |  |
 | onCommandExecute | (commandId: string) => void | no |  |  |
 | onRecentCommands | () => void | no |  |  |
-
 
 ### ExportImportCard
 
@@ -8384,7 +8297,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### HelpCenter
 
 - File: `client/src/components/chat/other/HelpCenter.tsx`
@@ -8404,7 +8316,6 @@ _No props detected._
 | onArticleClick | (article: HelpArticle) => void | no |  |  |
 | onContactSupport | (type: string) => void | no |  |  |
 | onSearch | (query: string) => void | no |  |  |
-
 
 ### KeyboardShortcutsCard
 
@@ -8703,7 +8614,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### QuickActions
 
 - File: `client/src/components/chat/other/QuickActions.tsx`
@@ -8720,7 +8630,6 @@ _No props detected._
 | actions | QuickAction[] | no | [] |  |
 | onActionExecute | (actionId: string) => void | no |  |  |
 | onCustomAction | (action: string) => void | no |  |  |
-
 
 ### SearchEverywhere
 
@@ -8740,7 +8649,6 @@ _No props detected._
 | onResultClick | (result: SearchResult) => void | no |  |  |
 | onSearch | (query: string, filters: SearchFilters) => void | no |  |  |
 
-
 ### SettingsPanel
 
 - File: `client/src/components/chat/other/SettingsPanel.tsx`
@@ -8759,7 +8667,6 @@ _No props detected._
 | onReset | () => void | no |  |  |
 | onSave | (settings: Record<string, any>) => void | no |  |  |
 | sections | SettingsSection[] | no | [] |  |
-
 
 ### ThemeCustomizerCard
 
@@ -9061,7 +8968,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### UserProfile
 
 - File: `client/src/components/chat/other/UserProfile.tsx`
@@ -9103,7 +9009,6 @@ _No props detected._
 | onClearFeed | () => void | no |  |  |
 | onFilterChange | (filter: string) => void | no |  |  |
 
-
 ### LiveCollaboration
 
 - File: `client/src/components/chat/realtime/LiveCollaboration.tsx`
@@ -9123,7 +9028,6 @@ _No props detected._
 | onJoinDocument | (documentId: string) => void | no |  |  |
 | onTogglePermissions | (userId: string, role: "owner" | "editor" | "viewer") => void | no |  |  |
 
-
 ### LiveTypingIndicators
 
 - File: `client/src/components/chat/realtime/LiveTypingIndicators.tsx`
@@ -9142,7 +9046,6 @@ _No props detected._
 | onPauseNotifications | () => void | no |  |  |
 | onShowUserCursor | (userId: string) => void | no |  |  |
 | typingUsers | TypingUser[] | no | [] |  |
-
 
 ### RealtimeNotifications
 
@@ -9186,7 +9089,6 @@ _No props detected._
 | onSendMessage | (message: string) => void | no |  |  |
 | onVoiceToggle | () => void | no |  |  |
 
-
 ### AutoComplete
 
 - File: `client/src/components/chat/smart/AutoComplete.tsx`
@@ -9207,7 +9109,6 @@ _No props detected._
 | placeholder | string | no | "Skriv for auto-fuldførelse..." |  |
 | suggestions | AutoCompleteSuggestion[] | no | [] |  |
 
-
 ### ContextAwareness
 
 - File: `client/src/components/chat/smart/ContextAwareness.tsx`
@@ -9225,7 +9126,6 @@ _No props detected._
 | onApplyContext | (suggestion: string) => void | no |  |  |
 | onRefresh | () => void | no |  |  |
 | onUpdatePreferences | (preferences: any) => void | no |  |  |
-
 
 ### ContextualHelpCard
 
@@ -9528,7 +9428,6 @@ _No props detected._
 | unselectable | "off" | "on" | no |  |  |
 | vocab | string | no |  |  |
 
-
 ### SmartSuggestions
 
 - File: `client/src/components/chat/smart/SmartSuggestions.tsx`
@@ -9574,7 +9473,6 @@ _No props detected._
 | timestamp | Date | no |  |  |
 | title | string | yes |  |  |
 
-
 ### ChatMessage
 
 - File: `client/src/components/chat/upgraded/ChatMessage.tsx`
@@ -9597,7 +9495,6 @@ _No props detected._
 | timestamp | Date | no |  |  |
 | type | "user" | "ai" | "system" | yes |  |  |
 
-
 ### EmailThreadCardUpgraded
 
 - File: `client/src/components/chat/upgraded/EmailThreadCard.tsx`
@@ -9617,7 +9514,6 @@ _No props detected._
 | onOpen | (id: string) => void | no |  |  |
 | onReply | (id: string) => void | no |  |  |
 | onStar | (id: string) => void | no |  |  |
-
 
 ### FileUpload
 
@@ -9639,7 +9535,6 @@ _No props detected._
 | onRemove | (id: string) => void | no |  |  |
 | onUpload | (files: File[]) => Promise<void> | no |  |  |
 
-
 ### InvoiceCardUpgraded
 
 - File: `client/src/components/chat/upgraded/InvoiceCard.tsx`
@@ -9659,7 +9554,6 @@ _No props detected._
 | onSend | (id: string) => void | no |  |  |
 | onView | (id: string) => void | no |  |  |
 
-
 ### QuickActions
 
 - File: `client/src/components/chat/upgraded/QuickActions.tsx`
@@ -9673,7 +9567,6 @@ _No props detected._
 | actions | QuickAction[] | yes |  |  |
 | className | string | no |  |  |
 | layout | "grid" | "horizontal" | no | "horizontal" |  |
-
 
 ### SearchResultsCardUpgraded
 
@@ -9692,7 +9585,6 @@ _No props detected._
 | query | string | yes |  |  |
 | results | SearchResult[] | yes |  |  |
 
-
 ### ThinkingIndicator
 
 - File: `client/src/components/chat/upgraded/ThinkingIndicator.tsx`
@@ -9707,7 +9599,6 @@ _No props detected._
 | size | "sm" | "md" | "lg" | no | "md" |  |
 | variant | ThinkingVariant | no | "dots" |  |
 
-
 ### ToastProvider
 
 - File: `client/src/components/chat/upgraded/ToastNotification.tsx`
@@ -9721,7 +9612,6 @@ _No props detected._
 |------|------|----------|---------|-------------|
 | children | ReactNode | yes |  |  |
 
-
 ### useToast
 
 - File: `client/src/components/chat/upgraded/ToastNotification.tsx`
@@ -9732,7 +9622,6 @@ _No props detected._
   - react
 
 _No props detected._
-
 
 ### VoiceInput
 
@@ -9749,7 +9638,6 @@ _No props detected._
 | onAudioBlob | (blob: Blob) => void | no |  |  |
 | onTranscript | (text: string) => void | no |  |  |
 
-
 ### WeatherCardUpgraded
 
 - File: `client/src/components/chat/upgraded/WeatherCard.tsx`
@@ -9763,7 +9651,6 @@ _No props detected._
 |------|------|----------|---------|-------------|
 | data | WeatherData | yes |  |  |
 | onRefresh | () => void | no |  |  |
-
 
 ### WelcomeScreenUpgraded
 

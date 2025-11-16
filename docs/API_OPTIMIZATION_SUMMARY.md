@@ -17,22 +17,22 @@ Implementeret omfattende API optimeringer til at eliminere rate limit errors og 
    - Structural sharing aktiveret
    - Query-specific overrides
 
-2. **Exponential Backoff med Jitter**
+1. **Exponential Backoff med Jitter**
    - Intelligent retry strategi
    - Random jitter (0-50%) forhindrer thundering herd
    - Rate limit errors håndteres separat
 
-3. **Request Queue System**
+1. **Request Queue System**
    - Priority-based queueing
    - Automatic processing efter rate limit
    - Global integration
 
-4. **Adaptive Polling**
+1. **Adaptive Polling**
    - Activity-based interval adjustment
    - Page Visibility API integration
    - Implementeret i alle inbox tabs
 
-5. **Enhanced Error Handling**
+1. **Enhanced Error Handling**
    - Structured error data
    - Retry-after parsing
    - Automatic queue coordination
@@ -121,9 +121,9 @@ Alle features er implementeret og klar til test. Se:
 ### Testing Priority
 
 1. Test cache functionality først
-2. Test adaptive polling med activity
-3. Test rate limit scenarios
-4. Mål overall API call reduction
+1. Test adaptive polling med activity
+1. Test rate limit scenarios
+1. Mål overall API call reduction
 
 ## 📈 Success Criteria
 
@@ -142,8 +142,8 @@ Alle features er implementeret og klar til test. Se:
 ## 🚀 Next Steps
 
 1. **Immediate:** Test alle features
-2. **Short Term:** Fine-tune baseret på metrics
-3. **Long Term:** Gmail History API integration
+1. **Short Term:** Fine-tune baseret på metrics
+1. **Long Term:** Gmail History API integration
 
 ---
 
