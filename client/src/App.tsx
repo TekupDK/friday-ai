@@ -1,26 +1,35 @@
+import { lazy, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Route, Switch, useLocation } from "wouter";
+
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
-import ErrorBoundary from "./components/ErrorBoundary";
-import { EmailContextProvider } from "./contexts/EmailContext";
-import { WorkflowContextProvider } from "./contexts/WorkflowContext";
-import { ThemeProvider } from "./contexts/ThemeContext";
-// V2: Renamed from ChatInterface to WorkspaceLayout for clarity
-import WorkspaceLayout from "./pages/WorkspaceLayout";
-import LoginPage from "./pages/LoginPage";
-import DocsPage from "./pages/docs/DocsPage";
-import ComponentShowcase from "./pages/ComponentShowcase";
-import ChatComponentsShowcase from "./pages/ChatComponentsShowcase";
+
 import { useAuth } from "@/_core/hooks/useAuth";
-import { useQueryClient } from "@tanstack/react-query";
+
+import ErrorBoundary from "./components/ErrorBoundary";
+import { SkipLinks } from "./components/SkipLinks";
+import { EmailContextProvider } from "./contexts/EmailContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { WorkflowContextProvider } from "./contexts/WorkflowContext";
 import { warmupCache } from "./lib/cacheStrategy";
-import { useEffect } from "react";
+import ChatComponentsShowcase from "./pages/ChatComponentsShowcase";
+import ComponentShowcase from "./pages/ComponentShowcase";
+import LoginPage from "./pages/LoginPage";
+import NotFound from "@/pages/NotFound";
+import WorkspaceLayout from "./pages/WorkspaceLayout";
+import DocsPage from "./pages/docs/DocsPage";
 
 function Router() {
+  const [path] = useLocation();
   const { isAuthenticated, loading } = useAuth({
     redirectOnUnauthenticated: false,
   });
+
+  // Public preview route: render LoginPage without auth/side-effects
+  if (path === "/preview/login") {
+    return <LoginPage preview />;
+  }
 
   // Show loading spinner while checking auth
   if (loading) {
@@ -42,7 +51,32 @@ function Router() {
       <Route path={"/"} component={WorkspaceLayout} />
       <Route path={"/showcase"} component={ComponentShowcase} />
       <Route path={"/chat-components"} component={ChatComponentsShowcase} />
+      <Route
+        path={"/lead-analysis"}
+        component={lazy(() => import("./pages/LeadAnalysisDashboard"))}
+      />
       <Route path={"/docs"} component={DocsPage} />
+      <Route
+        path={"/accessibility"}
+        component={lazy(() => import("./pages/AccessibilityStatement"))}
+      />
+      {/* CRM Routes */}
+      <Route
+        path={"/crm/dashboard"}
+        component={lazy(() => import("./pages/crm/CRMDashboard"))}
+      />
+      <Route
+        path={"/crm/customers"}
+        component={lazy(() => import("./pages/crm/CustomerList"))}
+      />
+      <Route
+        path={"/crm/leads"}
+        component={lazy(() => import("./pages/crm/LeadPipeline"))}
+      />
+      <Route
+        path={"/crm/bookings"}
+        component={lazy(() => import("./pages/crm/BookingCalendar"))}
+      />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -91,6 +125,7 @@ function App() {
         <EmailContextProvider>
           <WorkflowContextProvider>
             <TooltipProvider>
+              <SkipLinks />
               <Toaster />
               <HydrationReady />
               <Router />
