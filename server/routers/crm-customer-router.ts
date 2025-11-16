@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, sql, or, ilike } from "drizzle-orm";
 import { z } from "zod";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
 import {
   customerNotesInFridayAi,
   customerProfiles,
@@ -39,26 +40,32 @@ export const crmCustomerRouter = router({
 
       const userId = ctx.user.id;
 
+      // ✅ SECURITY FIX: Use parameterized queries with Drizzle's ilike for case-insensitive search
+      // ilike properly parameterizes the search value, preventing SQL injection
       const whereClause = input.search
         ? and(
             eq(customerProfiles.userId, userId),
-            sql`(
-              LOWER(${customerProfiles.name}) LIKE ${"%" + input.search.toLowerCase() + "%"} OR
-              LOWER(${customerProfiles.email}) LIKE ${"%" + input.search.toLowerCase() + "%"} OR
-              LOWER(${customerProfiles.phone}) LIKE ${"%" + input.search.toLowerCase() + "%"}
-            )`
+            or(
+              ilike(customerProfiles.name, `%${input.search}%`),
+              ilike(customerProfiles.email, `%${input.search}%`),
+              ilike(customerProfiles.phone, `%${input.search}%`)
+            )!
           )
         : eq(customerProfiles.userId, userId);
 
-      const rows = await db
-        .select()
-        .from(customerProfiles)
-        .where(whereClause)
-        .orderBy(desc(customerProfiles.updatedAt))
-        .limit(input.limit)
-        .offset(input.offset);
-
-      return rows;
+      // ✅ ERROR HANDLING: Wrap database query with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          return await db
+            .select()
+            .from(customerProfiles)
+            .where(whereClause)
+            .orderBy(desc(customerProfiles.updatedAt))
+            .limit(input.limit)
+            .offset(input.offset);
+        },
+        "Failed to list customer profiles"
+      );
     }),
 
   // Get a single profile by id
@@ -485,15 +492,16 @@ export const crmCustomerRouter = router({
       // Get email threads for this customer's email address
       const { emailThreads } = await import("../../drizzle/schema");
 
+      // ✅ SECURITY FIX: Use parameterized query - customer.email is from DB but still parameterize for safety
+      // Note: participants is JSONB, so we use sql with proper parameterization
+      const searchPattern = `%${customer.email?.toLowerCase() || ""}%`;
       const threads = await db
         .select()
         .from(emailThreads)
         .where(
           and(
             eq(emailThreads.userId, userId),
-            sql`(
-              ${emailThreads.participants}::text LIKE ${"%" + customer.email.toLowerCase() + "%"}
-            )`
+            sql`${emailThreads.participants}::text ILIKE ${searchPattern}`
           )
         )
         .orderBy(desc(emailThreads.lastMessageAt))
