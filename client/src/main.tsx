@@ -26,6 +26,7 @@ import {
   warmupCache,
   getCacheConfig,
 } from "./lib/cacheStrategy";
+import { getCsrfHeaders } from "./lib/csrf";
 
 // Phase 7.2: Optimized QueryClient with intelligent cache strategy
 const queryClient = createOptimizedQueryClient();
@@ -278,6 +279,10 @@ const trpcClient = trpc.createClient({
           return globalThis.fetch(input, {
             ...(init ?? {}),
             credentials: "include",
+            headers: {
+              ...(init?.headers ?? {}),
+              ...getCsrfHeaders(),
+            },
             signal: chatSendAbort.controller?.signal ?? undefined,
           });
         },
@@ -289,6 +294,10 @@ const trpcClient = trpc.createClient({
           return globalThis.fetch(input, {
             ...(init ?? {}),
             credentials: "include",
+            headers: {
+              ...(init?.headers ?? {}),
+              ...getCsrfHeaders(),
+            },
           });
         },
       }),

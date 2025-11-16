@@ -10,6 +10,7 @@ import helmet from "helmet";
 
 import * as db from "../db";
 import { startDocsService } from "../docs/service";
+import * as leadDb from "../lead-db";
 import { appRouter } from "../routers";
 
 import { createContext } from "./context";
@@ -34,7 +35,7 @@ async function runAutoImportIfNeeded() {
     }
 
     // Check if user already has leads
-    const hasLeads = await db.hasUserLeads(ownerUser.id);
+    const hasLeads = await leadDb.hasUserLeads(ownerUser.id);
 
     if (hasLeads) {
       logger.info(
@@ -99,10 +100,15 @@ async function startServer() {
   // Security headers via Helmet
   app.use(
     helmet({
+      // ✅ SECURITY FIX: Content Security Policy
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Vite dev needs unsafe-eval
+          // ✅ SECURITY FIX: Only allow unsafe-eval in development (Vite HMR needs it)
+          // In production, remove unsafe-eval for better security
+          scriptSrc: ENV.isProduction
+            ? ["'self'", "'unsafe-inline'"] // Production: no unsafe-eval
+            : ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Dev: Vite needs unsafe-eval
           styleSrc: ["'self'", "'unsafe-inline'"],
           imgSrc: ["'self'", "data:", "https:"],
           connectSrc: ["'self'", "ws:", "wss:"], // WebSocket for Vite HMR
@@ -110,40 +116,100 @@ async function startServer() {
           objectSrc: ["'none'"],
           mediaSrc: ["'self'"],
           frameSrc: ["'none'"],
+          workerSrc: ["'self'", "blob:"], // Allow Vite HMR workers in dev
         },
       },
       crossOriginEmbedderPolicy: false, // Needed for some external resources
+      // ✅ SECURITY FIX: HTTP Strict Transport Security
       hsts: {
         maxAge: 31536000, // 1 year
         includeSubDomains: true,
         preload: true,
       },
+      // ✅ SECURITY FIX: X-Content-Type-Options - Prevent MIME type sniffing
+      noSniff: true,
+      // ✅ SECURITY FIX: X-Frame-Options - Prevent clickjacking (DENY is most secure)
+      frameguard: {
+        action: "deny",
+      },
+      // ✅ SECURITY FIX: X-DNS-Prefetch-Control - Disable DNS prefetching
+      dnsPrefetchControl: {
+        allow: false,
+      },
+      // ✅ SECURITY FIX: Referrer-Policy - Control referrer information
+      referrerPolicy: {
+        policy: "strict-origin-when-cross-origin",
+      },
+      // Note: permissionsPolicy is not available in Helmet types
+      // Can be set manually via res.setHeader("Permissions-Policy", "...") if needed
     })
   );
 
   // CORS configuration with strict production rules
   const allowedOrigins = ENV.corsAllowedOrigins;
 
+  // ✅ SECURITY FIX: Custom CORS middleware that handles public endpoints
+  // This runs before the cors() middleware to set headers for public endpoints
+  app.use((req, res, next) => {
+    // Check if this is a public endpoint that can accept no-origin
+    const isPublicEndpoint = 
+      req.path?.startsWith("/api/auth/") ||
+      req.path?.startsWith("/api/health") ||
+      req.path === "/api/health" ||
+      req.path === "/api/oauth/callback";
+    
+    // Store flag for cors middleware to use
+    (req as any).isPublicEndpoint = isPublicEndpoint;
+    
+    // For public endpoints in production, allow no-origin by setting CORS headers manually
+    if (isPublicEndpoint && ENV.isProduction && !req.headers.origin) {
+      // Allow no-origin for public endpoints
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Cookie, X-CSRF-Token");
+    }
+    
+    next();
+  });
+
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests with no origin (mobile apps, Postman, etc.)
+        // ✅ SECURITY FIX: Only allow no-origin for specific public endpoints
+        // or in development. In production, require origin for security.
         if (!origin) {
+          // ✅ SECURITY FIX: Only allow in development
+          // For production public endpoints, headers are set in middleware above
+          if (!ENV.isProduction) {
+            callback(null, true);
+            return;
+          }
+          
+          // ✅ SECURITY FIX: Block no-origin in production (public endpoints handled above)
+          logger.warn("CORS: Blocked no-origin request in production");
+          callback(new Error("Origin required in production"));
+          return;
+        }
+
+        // Explicit whitelist from env
+        if (allowedOrigins.includes(origin)) {
           callback(null, true);
           return;
         }
 
-        // Check if origin is in whitelist
-        if (allowedOrigins.includes(origin)) {
+        // In development: allow any localhost port to simplify HMR/fallback port usage
+        if (!ENV.isProduction && /^http:\/\/localhost:\d{2,5}$/.test(origin)) {
           callback(null, true);
-        } else {
-          logger.warn({ origin, allowedOrigins }, "CORS: Blocked origin");
-          callback(new Error("Not allowed by CORS"));
+          return;
         }
+
+        logger.warn({ origin, allowedOrigins }, "CORS: Blocked origin");
+        callback(new Error("Not allowed by CORS"));
       },
-      credentials: true, // CRITICAL: Allow cookies
+      credentials: true, // CRITICAL: Allow cookies to be sent
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+      allowedHeaders: ["Content-Type", "Authorization", "Cookie", "X-CSRF-Token"],
       exposedHeaders: ["Set-Cookie"],
       maxAge: 86400, // 24 hours preflight cache
     })
@@ -161,6 +227,10 @@ async function startServer() {
   // Apply rate limiting to all API routes
   app.use("/api/", limiter);
 
+  // ✅ SECURITY FIX: CSRF protection for state-changing operations
+  const { csrfMiddleware } = await import("./csrf");
+  app.use("/api/", csrfMiddleware);
+
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -169,6 +239,9 @@ async function startServer() {
   // Leads API for ChromaDB integration
   const leadsApi = (await import("../routes/leads-api")).default;
   app.use("/api/leads", leadsApi);
+  // Supabase auth completion
+  const supabaseAuthApi = (await import("../routes/auth-supabase")).default;
+  app.use("/api/auth/supabase", supabaseAuthApi);
   // Inbound email webhook endpoint
   const { handleInboundEmail } = await import("../api/inbound-email");
   app.post("/api/inbound/email", handleInboundEmail);
@@ -184,7 +257,7 @@ async function startServer() {
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {
-    serveStatic(app);
+    await serveStatic(app);
   }
 
   const preferredPort = parseInt(process.env.PORT || "3000");
