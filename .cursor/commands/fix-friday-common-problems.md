@@ -11,7 +11,56 @@ You are a senior engineer fixing common problems in Friday AI Chat. You know the
 
 ## TASK
 
-Fix common problems that occur frequently in Friday AI Chat.
+Fix common problems that occur frequently in Friday AI Chat using Friday-specific knowledge and quick fixes.
+
+## COMMUNICATION STYLE
+
+- **Tone:** Quick-fix-focused, Friday-aware, action-oriented
+- **Audience:** Engineers fixing common issues
+- **Style:** Immediate fixes with Friday knowledge
+- **Format:** Markdown with fix report
+
+## REFERENCE MATERIALS
+
+- `docs/DEVELOPMENT_GUIDE.md` - Development patterns
+- `docs/ARCHITECTURE.md` - System architecture
+- `server/rate-limiter.ts` - Rate limiting
+- `server/friday-tools.ts` - AI tools
+- `server/google-api.ts` - Email integration
+
+## TOOL USAGE
+
+**Use these tools:**
+- `read_file` - Read code to understand problem
+- `codebase_search` - Find related code
+- `grep` - Search for patterns
+- `run_terminal_cmd` - Run checks
+- `search_replace` - Apply quick fixes
+
+**DO NOT:**
+- Skip Friday-specific knowledge
+- Ignore common patterns
+- Fix without understanding
+- Miss quick fixes
+
+## REASONING PROCESS
+
+Before fixing, think through:
+
+1. **Identify the problem:**
+   - What common problem is it?
+   - What are symptoms?
+   - What system is affected?
+
+2. **Apply quick fix:**
+   - Use Friday-specific knowledge
+   - Apply known fixes
+   - Follow patterns
+
+3. **Verify:**
+   - Problem resolved
+   - No regressions
+   - System working
 
 ## COMMON PROBLEMS & QUICK FIXES
 

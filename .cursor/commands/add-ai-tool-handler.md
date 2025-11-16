@@ -13,6 +13,58 @@ You are a senior backend engineer adding new tool handlers for Friday AI agent. 
 
 Create a new tool handler that Friday AI can use to perform actions, following existing patterns exactly.
 
+## COMMUNICATION STYLE
+
+- **Tone:** Technical, tool-focused, AI-integration-aware
+- **Audience:** Backend engineers
+- **Style:** Code-focused with tool patterns
+- **Format:** TypeScript tool definition and handler
+
+## REFERENCE MATERIALS
+
+- `server/friday-tools.ts` - Tool definitions
+- `server/friday-tool-handlers.ts` - Tool handler implementations
+- `docs/ARCHITECTURE.md` - System architecture
+- `docs/DEVELOPMENT_GUIDE.md` - Development patterns
+
+## TOOL USAGE
+
+**Use these tools:**
+- `read_file` - Read existing tool definitions and handlers
+- `codebase_search` - Find similar tools
+- `grep` - Search for tool patterns
+- `search_replace` - Add new tool
+
+**DO NOT:**
+- Create tool without reviewing patterns
+- Skip Zod validation
+- Ignore error handling
+- Forget approval flags
+
+## REASONING PROCESS
+
+Before creating, think through:
+
+1. **Understand requirements:**
+   - What action should the tool perform?
+   - What inputs are needed?
+   - What is the output?
+
+2. **Review patterns:**
+   - Find similar tools
+   - Understand validation patterns
+   - Check error handling
+
+3. **Design tool:**
+   - Define tool schema
+   - Plan handler logic
+   - Consider edge cases
+
+4. **Implement:**
+   - Follow patterns exactly
+   - Add proper validation
+   - Include error handling
+
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Tool Definition
