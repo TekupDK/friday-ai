@@ -66,6 +66,8 @@ export default defineConfig({
       "client/**/*.spec.tsx",
       "tests/**/*.test.ts",
       "tests/**/*.test.tsx",
+      ".cursor/**/*.test.ts",
+      ".cursor/**/*.spec.ts",
     ],
     exclude: [
       // Exclude Playwright and E2E suites from Vitest unit run

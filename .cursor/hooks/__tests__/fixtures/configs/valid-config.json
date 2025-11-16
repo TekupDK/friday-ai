@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Valid test configuration",
+  "hooks": {
+    "pre-execution": [
+      {
+        "name": "validate-environment",
+        "file": ".cursor/hooks/pre-execution/validate-environment.ts",
+        "description": "Validates environment",
+        "enabled": true,
+        "priority": 1
+      }
+    ],
+    "post-execution": [
+      {
+        "name": "run-typecheck",
+        "file": ".cursor/hooks/post-execution/run-typecheck.ts",
+        "description": "Runs typecheck",
+        "enabled": true,
+        "priority": 1
+      }
+    ],
+    "error": [
+      {
+        "name": "error-logger",
+        "file": ".cursor/hooks/error/error-logger.ts",
+        "description": "Logs errors",
+        "enabled": true,
+        "priority": 1
+      }
+    ],
+    "context": [
+      {
+        "name": "load-project-context",
+        "file": ".cursor/hooks/context/load-project-context.ts",
+        "description": "Loads context",
+        "enabled": true,
+        "priority": 1
+      }
+    ]
+  },
+  "execution": {
+    "parallel": false,
+    "stopOnError": false,
+    "timeout": 30000
+  }
+}
+
