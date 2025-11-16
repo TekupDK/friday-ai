@@ -235,19 +235,24 @@ const resolveApiUrl = () => {
   return "https://api.openai.com/v1/chat/completions";
 };
 
-const assertApiKey = () => {
+const assertApiKey = async () => {
+  // ✅ SECURITY FIX: Use logger instead of console.log (redacts sensitive data)
+  const { logger } = await import("./logger");
+  
   // OpenRouter (primary)
   if (ENV.openRouterApiKey && ENV.openRouterApiKey.trim()) {
-    console.log(
-      `[LLM] Using OpenRouter (${ENV.openRouterModel}) - FREE with 100% Accuracy`
+    logger.info(
+      { model: ENV.openRouterModel },
+      "[LLM] Using OpenRouter - FREE with 100% Accuracy"
     );
     return;
   }
 
   // Ollama (local fallback)
   if (ENV.ollamaBaseUrl) {
-    console.log(
-      `[LLM] Using Ollama (${ENV.ollamaModel}) at ${ENV.ollamaBaseUrl}`
+    logger.info(
+      { model: ENV.ollamaModel, baseUrl: ENV.ollamaBaseUrl },
+      "[LLM] Using Ollama"
     );
     return;
   }
@@ -259,14 +264,14 @@ const assertApiKey = () => {
   }
 
   if (ENV.geminiApiKey && ENV.geminiApiKey.trim()) {
-    console.log("[LLM] Using Gemini API (fallback)");
+    logger.info("[LLM] Using Gemini API (fallback)");
     return;
   }
 
   if (!ENV.openAiApiKey) {
     throw new Error("OPENAI_API_KEY is not configured");
   }
-  console.log("[LLM] Using OpenAI API (fallback)");
+  logger.info("[LLM] Using OpenAI API (fallback)");
 };
 
 const normalizeResponseFormat = ({
@@ -315,7 +320,10 @@ const normalizeResponseFormat = ({
 };
 
 export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
-  assertApiKey();
+  await assertApiKey();
+
+  // ✅ ERROR HANDLING: Import error handling utilities
+  const { withApiErrorHandling, retryWithBackoff } = await import("./error-handling");
 
   const {
     messages,
@@ -456,18 +464,30 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   }
 
   try {
-    const response = await fetch(resolveApiUrl(), {
-      method: "POST",
-      headers,
-      body: JSON.stringify(payload),
-    });
+    // ✅ ERROR HANDLING: Use retry logic for transient failures
+    const response = await retryWithBackoff(
+      async () => {
+        const res = await fetch(resolveApiUrl(), {
+          method: "POST",
+          headers,
+          body: JSON.stringify(payload),
+        });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `LLM invoke failed: ${response.status} ${response.statusText} – ${errorText}`
-      );
-    }
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(
+            `LLM invoke failed: ${res.status} ${res.statusText} – ${errorText}`
+          );
+        }
+
+        return res;
+      },
+      {
+        maxAttempts: 3,
+        initialDelayMs: 1000,
+        retryableErrors: ["429", "503", "502", "timeout", "ECONNRESET", "ETIMEDOUT"],
+      }
+    );
 
     const result = (await response.json()) as InvokeResult;
 
