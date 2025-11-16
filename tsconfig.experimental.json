@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "target": "ES2022",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler"
+  },
+  "include": [
+    "server/integrations/**/*",
+    "server/scripts/**/*",
+    "client/src/pages/ChatComponentsShowcase.tsx",
+    "client/src/pages/docs/**/*",
+    "client/src/components/inbox/**/*",
+    "client/src/components/chat/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ]
+}

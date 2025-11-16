@@ -1,0 +1,1 @@
+EXCLUDE_GIT_NODEMODULES_COUNT=$((Get-ChildItem -Directory -Force | Where-Object { .Name -notin @('.git','node_modules') }).Count)

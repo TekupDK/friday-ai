@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "incremental": false,
+    "noEmit": true,
+    "module": "ESNext",
+    "target": "ES2022",
+    "downlevelIteration": true,
+    "strict": true,
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "moduleResolution": "bundler",
+    "types": ["node"],
+    "paths": {}
+  },
+  "include": [
+    "server/_core/**/*",
+    "shared/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "server/**/*",
+    "client/**/*",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}
