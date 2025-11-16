@@ -1,26 +1,159 @@
 # Friday AI Chat - API Reference
 
-**Author:** Manus AI  
-**Last Updated:** November 1, 2025  
+**Author:** Manus AI
+**Last Updated:** January 28, 2025
 **Version:** 1.0.0
 
 ## Overview
 
 This document provides a complete reference for all tRPC API endpoints, database schema, and external integrations in the Friday AI Chat system. All endpoints are type-safe and validated using Zod schemas.
 
+## Error Handling
+
+All API endpoints use error sanitization to prevent information leakage in production. See [Error Sanitization Guide](../docs/ERROR_SANITIZATION_GUIDE.md) for details.
+
+**Quick Reference:**
+```typescript
+import { sanitizeError, createSafeTRPCError } from "../_core/errors";
+
+// Option 1: Manual sanitization
+catch (error) {
+  throw new TRPCError({
+    code: "INTERNAL_SERVER_ERROR",
+    message: sanitizeError(error),
+  });
+}
+
+// Option 2: Convenience function (recommended)
+catch (error) {
+  throw createSafeTRPCError(error, "INTERNAL_SERVER_ERROR");
+}
+```
+
 ## tRPC API Endpoints
 
 ### Base URL
 
-**Development:** `http://localhost:3000/api/trpc`  
+**Development:** `http://localhost:3000/api/trpc`
 **Production:** `https://[your-domain].manus.space/api/trpc`
 
 ### Authentication
 
 All `protectedProcedure` endpoints require a valid session cookie. The cookie is set automatically after OAuth login.
 
-**Cookie Name:** `friday_session` (defined in `COOKIE_NAME` constant)  
+**Cookie Name:** `friday_session` (defined in `COOKIE_NAME` constant)
 **Cookie Options:** HTTP-only, Secure (production), SameSite=Lax
+
+---
+
+## Error Handling
+
+All API endpoints use comprehensive error handling including error sanitization, retry logic, and circuit breakers. See [Error Handling Guide](./ERROR_HANDLING_GUIDE.md) and [Error Handling Implementation](./ERROR_HANDLING_IMPLEMENTATION.md) for complete documentation.
+
+### Error Sanitization
+
+**Location:** `server/_core/errors.ts`
+
+Error messages are automatically sanitized based on the environment:
+- **Production:** Generic messages: `"An error occurred. Please try again later."`
+- **Development:** Full error messages for debugging
+
+#### `sanitizeError(error: unknown): string`
+
+Sanitizes error messages to prevent exposing sensitive information.
+
+**Example:**
+```typescript
+import { sanitizeError } from "../_core/errors";
+import { TRPCError } from "@trpc/server";
+
+try {
+  await operation();
+} catch (error) {
+  throw new TRPCError({
+    code: "INTERNAL_SERVER_ERROR",
+    message: sanitizeError(error),
+  });
+}
+```
+
+#### `createSafeTRPCError(error: unknown, code?: string): TRPCError`
+
+Convenience function that sanitizes and creates a TRPCError.
+
+**Example:**
+```typescript
+import { createSafeTRPCError } from "../_core/errors";
+
+try {
+  await operation();
+} catch (error) {
+  throw createSafeTRPCError(error, "INTERNAL_SERVER_ERROR");
+}
+```
+
+### Error Handling Utilities
+
+**Location:** `server/_core/error-handling.ts`
+
+#### `retryWithBackoff<T>(fn, config?): Promise<T>`
+
+Retries a function with exponential backoff for transient failures.
+
+**Example:**
+```typescript
+import { retryWithBackoff } from "../_core/error-handling";
+
+const result = await retryWithBackoff(
+  async () => await fetchData(),
+  { maxAttempts: 3, initialDelayMs: 1000 }
+);
+```
+
+#### `createCircuitBreaker(config?): CircuitBreaker`
+
+Creates a circuit breaker to prevent cascading failures.
+
+**Example:**
+```typescript
+import { createCircuitBreaker } from "../_core/error-handling";
+
+const breaker = createCircuitBreaker({ failureThreshold: 5 });
+const result = await breaker.execute(() => callExternalService());
+```
+
+#### `withDatabaseErrorHandling<T>(operation, errorMessage?): Promise<T>`
+
+Wraps database operations with comprehensive error handling.
+
+**Example:**
+```typescript
+import { withDatabaseErrorHandling } from "../_core/error-handling";
+
+const users = await withDatabaseErrorHandling(
+  () => db.select().from(users),
+  "Failed to fetch users"
+);
+```
+
+#### `withApiErrorHandling<T>(operation, config?): Promise<T>`
+
+Wraps external API calls with retry logic and error handling.
+
+**Example:**
+```typescript
+import { withApiErrorHandling } from "../_core/error-handling";
+
+const data = await withApiErrorHandling(
+  () => fetch("https://api.example.com/data"),
+  { maxAttempts: 3 }
+);
+```
+
+**See Also:**
+- [Error Sanitization Guide](./ERROR_SANITIZATION_GUIDE.md) - Error message sanitization
+- [Error Handling Guide](./ERROR_HANDLING_GUIDE.md) - Usage guide
+- [Error Handling Implementation](./ERROR_HANDLING_IMPLEMENTATION.md) - Complete API reference
 
 ---
 
@@ -30,8 +163,8 @@ All `protectedProcedure` endpoints require a valid session cookie. The cookie is
 
 Get current authenticated user information.
 
-**Type:** Query (Public)  
-**Input:** None  
+**Type:** Query (Public)
+**Input:** None
 **Output:**
 
 ```typescript
@@ -44,7 +177,8 @@ Get current authenticated user information.
   createdAt: Date;
   lastSignedIn: Date;
 } | undefined
-```
+
+```text
 
 **Example:**
 
@@ -53,28 +187,31 @@ const { data: user } = trpc.auth.me.useQuery();
 if (user) {
   console.log(`Logged in as ${user.name}`);
 }
-```
+
+```text
 
 ### `auth.logout`
 
 Log out current user and clear session cookie.
 
-**Type:** Mutation (Public)  
-**Input:** None  
+**Type:** Mutation (Public)
+**Input:** None
 **Output:**
 
 ```typescript
 {
   success: true;
 }
-```
+
+```text
 
 **Example:**
 
 ```typescript
 const logoutMutation = trpc.auth.logout.useMutation();
 await logoutMutation.mutateAsync();
-```
+
+```text
 
 ---
 
@@ -84,8 +221,8 @@ await logoutMutation.mutateAsync();
 
 Get all conversations for current user.
 
-**Type:** Query (Protected)  
-**Input:** None  
+**Type:** Query (Protected)
+**Input:** None
 **Output:**
 
 ```typescript
@@ -96,20 +233,22 @@ Array<{
   createdAt: Date;
   updatedAt: Date;
 }>;
-```
+
+```text
 
 ### `chat.conversations.get`
 
 Get specific conversation with messages.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
 {
   conversationId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -121,20 +260,22 @@ Get specific conversation with messages.
   createdAt: Date;
   updatedAt: Date;
 }
-```
+
+```text
 
 ### `chat.conversations.create`
 
 Create new conversation.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
 {
   title?: string; // Optional, defaults to "New Conversation"
 }
-```
+
+```text
 
 **Output:**
 
@@ -146,20 +287,22 @@ Create new conversation.
   createdAt: Date;
   updatedAt: Date;
 }
-```
+
+```text
 
 ### `chat.messages.list`
 
 Get all messages in a conversation.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
 {
   conversationId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -173,13 +316,14 @@ Array<{
   pendingAction: object | null;
   createdAt: Date;
 }>;
-```
+
+```text
 
 ### `chat.sendMessage`
 
 Send message and get AI response.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -193,7 +337,8 @@ Send message and get AI response.
     type: string;
   }>;
 }
-```
+
+```text
 
 **Output:**
 
@@ -214,22 +359,23 @@ Send message and get AI response.
     createdAt: Date;
   }
 }
-```
+
+```text
 
 **Behavior:**
 
 1. Saves user message to database
-2. Routes to AI model based on task type
-3. Parses intent and executes actions if confidence > 0.7
-4. Returns pending action if requireApproval is true
-5. Saves AI response to database
-6. Auto-generates conversation title if first message
+1. Routes to AI model based on task type
+1. Parses intent and executes actions if confidence > 0.7
+1. Returns pending action if requireApproval is true
+1. Saves AI response to database
+1. Auto-generates conversation title if first message
 
 ### `chat.analyzeInvoice`
 
 Analyze invoice with AI.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -244,7 +390,8 @@ Analyze invoice with AI.
     paymentTerms: string;
   }
 }
-```
+
+```text
 
 **Output:**
 
@@ -252,13 +399,14 @@ Analyze invoice with AI.
 {
   analysis: string; // AI-generated analysis in markdown
 }
-```
+
+```text
 
 ### `chat.submitAnalysisFeedback`
 
 Submit feedback on AI invoice analysis.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -268,7 +416,8 @@ Submit feedback on AI invoice analysis.
   analysis: string;
   comment?: string; // Optional detailed feedback
 }
-```
+
+```text
 
 **Output:**
 
@@ -276,13 +425,14 @@ Submit feedback on AI invoice analysis.
 {
   success: true;
 }
-```
+
+```text
 
 ### `chat.executeAction`
 
 Execute a pending action after user approval.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -292,7 +442,8 @@ Execute a pending action after user approval.
   actionType: string;
   actionParams: Record<string, any>;
 }
-```
+
+```text
 
 **Output:**
 
@@ -301,7 +452,8 @@ Execute a pending action after user approval.
   success: boolean;
   result: ActionResult;
 }
-```
+
+```text
 
 ---
 
@@ -311,8 +463,8 @@ Execute a pending action after user approval.
 
 List Gmail threads.
 
-**Type:** Query (Protected)  
-**Input:** None  
+**Type:** Query (Protected)
+**Input:** None
 **Output:**
 
 ```typescript
@@ -329,14 +481,15 @@ Array<{
     date: string;
   }>;
 }>;
-```
+
+```text
 
 ### `inbox.invoices.list`
 
 List Billy.dk invoices.
 
-**Type:** Query (Protected)  
-**Input:** None  
+**Type:** Query (Protected)
+**Input:** None
 **Output:**
 
 ```typescript
@@ -351,14 +504,15 @@ Array<{
   totalAmount: number;
   currency: string;
 }>;
-```
+
+```text
 
 ### `inbox.calendar.list`
 
 List Google Calendar events.
 
-**Type:** Query (Protected)  
-**Input:** None  
+**Type:** Query (Protected)
+**Input:** None
 **Output:**
 
 ```typescript
@@ -371,13 +525,14 @@ Array<{
   location: string | null;
   attendees: string[];
 }>;
-```
+
+```text
 
 ### `inbox.calendar.findFreeSlots`
 
 Find free time slots in calendar.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
@@ -386,7 +541,8 @@ Find free time slots in calendar.
   endDate: string; // ISO date
   duration: number; // Minutes
 }
-```
+
+```text
 
 **Output:**
 
@@ -395,14 +551,15 @@ Array<{
   start: Date;
   end: Date;
 }>;
-```
+
+```text
 
 ### `inbox.leads.list`
 
 List all leads.
 
-**Type:** Query (Protected)  
-**Input:** None  
+**Type:** Query (Protected)
+**Input:** None
 **Output:**
 
 ```typescript
@@ -421,13 +578,14 @@ Array<{
   createdAt: Date;
   updatedAt: Date;
 }>;
-```
+
+```text
 
 ### `inbox.leads.create`
 
 Create new lead.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -440,7 +598,8 @@ Create new lead.
   notes?: string;
   metadata?: Record<string, unknown>;
 }
-```
+
+```text
 
 **Output:**
 
@@ -451,13 +610,14 @@ Create new lead.
   source: string;
   // ... other lead fields
 }
-```
+
+```text
 
 ### `inbox.leads.updateStatus`
 
 Update lead status.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -465,7 +625,8 @@ Update lead status.
   leadId: number;
   status: "new" | "contacted" | "qualified" | "proposal" | "won" | "lost";
 }
-```
+
+```text
 
 **Output:**
 
@@ -473,13 +634,14 @@ Update lead status.
 {
   success: true;
 }
-```
+
+```text
 
 ### `inbox.leads.updateScore`
 
 Update lead score.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -487,7 +649,8 @@ Update lead score.
   leadId: number;
   score: number; // 0-100
 }
-```
+
+```text
 
 **Output:**
 
@@ -495,14 +658,15 @@ Update lead score.
 {
   success: true;
 }
-```
+
+```text
 
 ### `inbox.tasks.list`
 
 List all tasks.
 
-**Type:** Query (Protected)  
-**Input:** None  
+**Type:** Query (Protected)
+**Input:** None
 **Output:**
 
 ```typescript
@@ -518,13 +682,14 @@ Array<{
   createdAt: Date;
   updatedAt: Date;
 }>;
-```
+
+```text
 
 ### `inbox.tasks.create`
 
 Create new task.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -534,7 +699,8 @@ Create new task.
   priority?: "low" | "medium" | "high";
   dueDate?: string; // ISO date
 }
-```
+
+```text
 
 **Output:**
 
@@ -545,13 +711,14 @@ Create new task.
   title: string;
   // ... other task fields
 }
-```
+
+```text
 
 ### `inbox.tasks.updateStatus`
 
 Update task status.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -559,7 +726,8 @@ Update task status.
   taskId: number;
   status: "pending" | "in_progress" | "completed" | "cancelled";
 }
-```
+
+```text
 
 **Output:**
 
@@ -567,7 +735,8 @@ Update task status.
 {
   success: true;
 }
-```
+
+```text
 
 ---
 
@@ -577,14 +746,15 @@ Update task status.
 
 Get customer profile by lead ID.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
 {
   leadId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -609,7 +779,8 @@ Get customer profile by lead ID.
   createdAt: Date;
   updatedAt: Date;
 }
-```
+
+```text
 
 **Behavior:**
 
@@ -620,14 +791,15 @@ Get customer profile by lead ID.
 
 Get customer profile by email.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
 {
   email: string;
 }
-```
+
+```text
 
 **Output:** Same as `getProfileByLeadId`
 
@@ -635,22 +807,23 @@ Get customer profile by email.
 
 Get all customer profiles.
 
-**Type:** Query (Protected)  
-**Input:** None  
+**Type:** Query (Protected)
+**Input:** None
 **Output:** Array of customer profiles (same structure as above)
 
 ### `customer.getInvoices`
 
 Get all invoices for a customer.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
 {
   customerId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -670,20 +843,22 @@ Array<{
   createdAt: Date;
   updatedAt: Date;
 }>;
-```
+
+```text
 
 ### `customer.getEmails`
 
 Get all email threads for a customer.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
 {
   customerId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -699,20 +874,22 @@ Array<{
   isRead: boolean;
   createdAt: Date;
 }>;
-```
+
+```text
 
 ### `customer.getConversation`
 
 Get or create dedicated conversation for customer.
 
-**Type:** Query (Protected)  
+**Type:** Query (Protected)
 **Input:**
 
 ```typescript
 {
   customerId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -723,7 +900,8 @@ Get or create dedicated conversation for customer.
   conversationId: number;
   createdAt: Date;
 }
-```
+
+```text
 
 **Behavior:**
 
@@ -734,14 +912,15 @@ Get or create dedicated conversation for customer.
 
 Sync invoices from Billy.dk for customer.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
 {
   customerId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -756,28 +935,30 @@ Sync invoices from Billy.dk for customer.
     invoiceCount: number;
   }
 }
-```
+
+```text
 
 **Behavior:**
 
 1. Fetches invoices from Billy API via MCP
-2. Filters by customer email/Billy customer ID
-3. Adds/updates invoices in `customer_invoices` table
-4. Recalculates customer balance
-5. Updates `lastSyncDate` timestamp
+1. Filters by customer email/Billy customer ID
+1. Adds/updates invoices in `customer_invoices` table
+1. Recalculates customer balance
+1. Updates `lastSyncDate` timestamp
 
 ### `customer.syncGmailEmails`
 
 Sync email threads from Gmail for customer.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
 {
   customerId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -787,26 +968,28 @@ Sync email threads from Gmail for customer.
   emailCount: number;
   lastContactDate: Date | null;
 }
-```
+
+```text
 
 **Behavior:**
 
 1. Searches Gmail for threads with customer email
-2. Adds/updates threads in `customer_emails` table
-3. Updates `emailCount` and `lastContactDate`
+1. Adds/updates threads in `customer_emails` table
+1. Updates `emailCount` and `lastContactDate`
 
 ### `customer.generateResume`
 
 Generate AI summary for customer.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
 {
   customerId: number;
 }
-```
+
+```text
 
 **Output:**
 
@@ -815,25 +998,26 @@ Generate AI summary for customer.
   success: true;
   resume: string; // AI-generated markdown summary
 }
-```
+
+```text
 
 **Behavior:**
 
 1. Gathers customer data (invoices, emails, balance)
-2. Sends to LLM with structured prompt
-3. Generates summary covering:
+1. Sends to LLM with structured prompt
+1. Generates summary covering:
    - Customer relationship status
    - Service history
    - Payment behavior
    - Communication preferences
    - Next recommended actions
-4. Saves to `customer_profiles.aiResume`
+1. Saves to `customer_profiles.aiResume`
 
 ### `customer.updateProfile`
 
 Update customer profile information.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -843,7 +1027,8 @@ Update customer profile information.
   phone?: string;
   billyCustomerId?: string;
 }
-```
+
+```text
 
 **Output:**
 
@@ -851,7 +1036,8 @@ Update customer profile information.
 {
   success: true;
 }
-```
+
+```text
 
 ---
 
@@ -861,7 +1047,7 @@ Update customer profile information.
 
 Send notification to project owner.
 
-**Type:** Mutation (Protected)  
+**Type:** Mutation (Protected)
 **Input:**
 
 ```typescript
@@ -869,7 +1055,8 @@ Send notification to project owner.
   title: string;
   content: string;
 }
-```
+
+```text
 
 **Output:**
 
@@ -877,7 +1064,8 @@ Send notification to project owner.
 {
   success: boolean;
 }
-```
+
+```text
 
 **Use Cases:**
 
@@ -1081,7 +1269,7 @@ User tasks and reminders.
 | `createdAt`   | TIMESTAMP    | NOT NULL, DEFAULT NOW()     | Task created    |
 | `updatedAt`   | TIMESTAMP    | NOT NULL, ON UPDATE NOW()   | Last update     |
 
-**Status Values:** `pending`, `in_progress`, `completed`, `cancelled`  
+**Status Values:** `pending`, `in_progress`, `completed`, `cancelled`
 **Priority Values:** `low`, `medium`, `high`
 
 **Indexes:**
@@ -1296,7 +1484,8 @@ paid        → paid
 overdue     → overdue
 voided      → voided
 cancelled   → voided
-```
+
+```text
 
 ---
 
@@ -1325,7 +1514,8 @@ invokeLLM({
   tools?: Tool[];
   tool_choice?: "none" | "auto" | "required";
 })
-```
+
+```text
 
 **S3 Storage:**
 
@@ -1337,7 +1527,8 @@ storagePut(
   data: Buffer | Uint8Array | string,
   contentType?: string
 ): Promise<{ key: string; url: string }>
-```
+
+```text
 
 **Best Practices:**
 
@@ -1389,12 +1580,13 @@ storagePut(
 import rateLimit from "express-rate-limit";
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 *60* 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per window
   message: "Too many requests, please try again later",
 });
 
 app.use("/api/trpc", limiter);
+
 ```
 
 ---
@@ -1417,10 +1609,10 @@ app.use("/api/trpc", limiter);
 
 ## References
 
-This API reference is based on the codebase at https://github.com/TekupDK/tekup-friday, specifically the tRPC router definitions in `server/routers.ts`, `server/customer-router.ts`, and database schema in `drizzle/schema.ts`.
+This API reference is based on the codebase at <https://github.com/TekupDK/tekup-friday,> specifically the tRPC router definitions in `server/routers.ts`, `server/customer-router.ts`, and database schema in `drizzle/schema.ts`.
 
 ---
 
-**Document Version:** 1.0.0  
-**Last Updated:** November 1, 2025  
+**Document Version:** 1.0.0
+**Last Updated:** November 1, 2025
 **Maintained by:** TekupDK Development Team
