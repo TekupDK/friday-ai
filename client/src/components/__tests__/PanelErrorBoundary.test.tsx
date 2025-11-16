@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { PanelErrorBoundary } from "../PanelErrorBoundary";
 
@@ -65,6 +65,7 @@ describe("PanelErrorBoundary", () => {
   });
 
   it("resets error state when Try Again is clicked", async () => {
+    const user = userEvent.setup();
     const { rerender } = render(
       <PanelErrorBoundary name="Test Panel">
         <ThrowError shouldThrow={true} />
@@ -73,16 +74,17 @@ describe("PanelErrorBoundary", () => {
 
     expect(screen.getByText("Test Panel Panel Error")).toBeInTheDocument();
 
-    const tryAgainButton = screen.getByText("Try Again");
-    await userEvent.click(tryAgainButton);
-
-    // Rerender with working component
+    // First, switch the child to a non-throwing component
     rerender(
       <PanelErrorBoundary name="Test Panel">
         <ThrowError shouldThrow={false} />
       </PanelErrorBoundary>
     );
 
-    expect(screen.getByText("Working Component")).toBeInTheDocument();
+    // Then click Try Again to reset the boundary state
+    const tryAgainButton = screen.getByText("Try Again");
+    await user.click(tryAgainButton);
+
+    expect(await screen.findByText("Working Component")).toBeInTheDocument();
   });
 });

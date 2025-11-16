@@ -21,14 +21,16 @@ export const usePerformanceTier = (): PerformanceInfo => {
   });
 
   useEffect(() => {
-    // @ts-ignore - Navigator extensions
-    const deviceMemory = navigator.deviceMemory;
-    const hardwareConcurrency = navigator.hardwareConcurrency;
-    // @ts-ignore - Navigator extensions
+    const navAny =
+      typeof navigator !== "undefined" ? (navigator as any) : undefined;
+    const deviceMemory: number | undefined = navAny?.deviceMemory;
+    const hardwareConcurrency: number | undefined = (
+      typeof navigator !== "undefined"
+        ? navigator.hardwareConcurrency
+        : undefined
+    ) as number | undefined;
     const connection =
-      navigator.connection ||
-      navigator.mozConnection ||
-      navigator.webkitConnection;
+      navAny?.connection || navAny?.mozConnection || navAny?.webkitConnection;
     const connectionType = connection?.effectiveType;
 
     let tier: PerformanceTier = "medium";

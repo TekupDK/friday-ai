@@ -3,8 +3,8 @@
  * Includes pagination, memory management, and connection pooling
  */
 
-import { useState, useCallback, useEffect, useRef } from "react";
 import { trpc } from "@/lib/trpc";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ChatContext {
   selectedEmails?: string[];
@@ -121,12 +121,17 @@ export function useFridayChat({
         if (anyResp?.pendingAction) {
           setPendingAction(anyResp.pendingAction);
           onPendingAction?.(anyResp.pendingAction);
-        } else {
+        } else if (anyResp && typeof anyResp.content === "string") {
           setMessages(prev => [
             ...prev,
             { role: "assistant", content: anyResp.content },
           ]);
           onComplete?.(anyResp.content);
+        } else {
+          // No assistant content returned (e.g., aborted or empty response)
+          console.warn(
+            "[useFridayChat] No content in response; skipping append"
+          );
         }
       } catch (error) {
         setError(error as Error);

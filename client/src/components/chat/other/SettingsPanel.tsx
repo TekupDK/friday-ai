@@ -2,21 +2,21 @@
  * SETTINGS PANEL - Indstillinger og konfiguration
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
-  Settings,
-  User,
   Bell,
-  Shield,
-  Palette,
-  Globe,
   Database,
-  Zap,
-  Save,
+  Download,
   RotateCcw,
+  Save,
+  Settings,
+  Shield,
+  Upload,
+  User,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 

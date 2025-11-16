@@ -1,5 +1,6 @@
 import { loginTestUser, verifyAuthentication } from "@/__tests__/auth-helper";
 import { render, screen, waitFor } from "@/__tests__/test-utils";
+import { WorkflowContextProvider } from "@/contexts/WorkflowContext";
 import { beforeAll, describe, expect, it } from "vitest";
 import LeadsTab from "../LeadsTab";
 
@@ -35,7 +36,11 @@ describe("LeadsTab - Integration Tests (Real Data)", () => {
   });
 
   it("should render without crashing with real data", async () => {
-    render(<LeadsTab />);
+    render(
+      <WorkflowContextProvider>
+        <LeadsTab />
+      </WorkflowContextProvider>
+    );
     expect(document.body).toBeTruthy();
 
     await waitFor(
@@ -51,7 +56,11 @@ describe("LeadsTab - Integration Tests (Real Data)", () => {
   });
 
   it("should load and display real leads data from backend", async () => {
-    render(<LeadsTab />);
+    render(
+      <WorkflowContextProvider>
+        <LeadsTab />
+      </WorkflowContextProvider>
+    );
 
     await waitFor(
       () => {
@@ -70,7 +79,11 @@ describe("LeadsTab - Integration Tests (Real Data)", () => {
   });
 
   it("should handle real search functionality", async () => {
-    render(<LeadsTab />);
+    render(
+      <WorkflowContextProvider>
+        <LeadsTab />
+      </WorkflowContextProvider>
+    );
 
     await waitFor(
       () => {

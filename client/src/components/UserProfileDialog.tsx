@@ -33,13 +33,13 @@ export function UserProfileDialog({
   const { user, refresh } = useAuth();
   const t = useI18n();
 
-  const updateProfileMutation = trpc.auth.updateProfile.useMutation({
+  const updateProfileMutation = (trpc as any).auth.updateProfile.useMutation({
     onSuccess: () => {
       toast.success(t.profile.saved);
       refresh();
       onOpenChange(false);
     },
-    onError: error => {
+    onError: (error: any) => {
       toast.error(t.profile.error + ": " + error.message);
     },
   });

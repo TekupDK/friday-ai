@@ -23,6 +23,7 @@ import {
   Circle,
   MoreHorizontal,
   Trash2,
+  UserPlus,
 } from "lucide-react";
 
 export type BulkAction =
@@ -34,7 +35,8 @@ export type BulkAction =
   | "removeLabel"
   | "clearSelection"
   | "markAllAsRead"
-  | "selectAll";
+  | "selectAll"
+  | "createLead";
 
 interface EmailBulkActionsV2Props {
   selectedEmails: Set<string>;
@@ -100,6 +102,23 @@ export default function EmailBulkActionsV2({
               <Circle className="w-3 h-3 mr-1" />
               Ulæst
             </Button>
+
+            <Separator orientation="vertical" className="h-5" />
+
+            <Button
+              size="sm"
+              variant="default"
+              onClick={() => handleBulkAction("createLead")}
+              disabled={disabled || isLoading}
+              className="h-7 text-xs"
+              data-testid="create-lead-from-email"
+            >
+              <UserPlus className="w-3 h-3 mr-1" />
+              Opret Lead
+            </Button>
+
+            <Separator orientation="vertical" className="h-5" />
+
             <Button
               size="sm"
               variant="outline"

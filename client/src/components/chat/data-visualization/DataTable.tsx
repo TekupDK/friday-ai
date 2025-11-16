@@ -1,16 +1,12 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -19,24 +15,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import {
-  ChevronUp,
   ChevronDown,
   ChevronsUpDown,
-  Search,
+  ChevronUp,
+  Download,
   Filter,
   MoreHorizontal,
-  ArrowUpDown,
   RefreshCw,
-  Download,
-  Settings,
+  Search,
 } from "lucide-react";
+import * as React from "react";
 
 export interface Column<T = any> {
   id: string;
@@ -507,7 +504,7 @@ export function DataTable<T extends Record<string, any>>({
             <Select
               value={pageSize.toString()}
               onValueChange={value => {
-                setPageSize(Number(value));
+                // pageSize is controlled via props; for now only reset to first page
                 setCurrentPage(1);
               }}
             >

@@ -23,8 +23,8 @@ export default function ChatPanelComplete() {
         {/* Header */}
         <div className="flex items-center gap-4">
           <Link href="/showcase">
-            <Button variant="ghost" size="icon">
-              <ArrowLeft className="w-5 h-5" />
+            <Button variant="ghost" size="icon" aria-label="Go back to showcase">
+              <ArrowLeft className="w-5 h-5" aria-hidden="true" />
             </Button>
           </Link>
           <div className="flex-1">

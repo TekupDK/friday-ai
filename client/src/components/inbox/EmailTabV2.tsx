@@ -12,20 +12,21 @@
  * - EmailAIV2: AI features (future)
  */
 
-import { useState, useCallback, useMemo } from "react";
-import { useEmailContext } from "@/contexts/EmailContext";
-import { useRateLimit } from "@/hooks/useRateLimit";
-import { useEmailKeyboardShortcuts } from "@/hooks/useEmailKeyboardShortcuts";
-import { trpc } from "@/lib/trpc";
+import { Button } from "@/components/ui/button";
 import { UI_CONSTANTS } from "@/constants/business";
-import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
-import EmailBulkActionsV2, { type BulkAction } from "./EmailBulkActionsV2";
-import EmailListV2, { type EmailMessage } from "./EmailListV2";
-import EmailListAI from "./EmailListAI";
-import EmailSplits, { type SplitId } from "./EmailSplits";
+import { useEmailContext } from "@/contexts/EmailContext";
+import { useEmailKeyboardShortcuts } from "@/hooks/useEmailKeyboardShortcuts";
+import { useRateLimit } from "@/hooks/useRateLimit";
+import { trpc } from "@/lib/trpc";
 import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 import { AlertCircle, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useCallback, useMemo, useState } from "react";
+import CreateLeadModal from "./CreateLeadModal";
+import EmailBulkActionsV2, { type BulkAction } from "./EmailBulkActionsV2";
+import EmailListAI from "./EmailListAI";
+import EmailListV2, { type EmailMessage } from "./EmailListV2";
+import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
+import EmailSplits, { type SplitId } from "./EmailSplits";
 
 interface EmailTabV2Props {
   // Configuration
@@ -48,6 +49,17 @@ export default function EmailTabV2({
   const [selectedEmails, setSelectedEmails] = useState<Set<string>>(new Set());
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
   const [activeSplit, setActiveSplit] = useState<SplitId>("all");
+
+  // Create Lead Modal state
+  const [isCreateLeadModalOpen, setIsCreateLeadModalOpen] = useState(false);
+  const [selectedEmailForLead, setSelectedEmailForLead] = useState<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    subject?: string;
+    snippet?: string;
+    threadId?: string;
+  } | null>(null);
 
   // Context integration
   const emailContext = useEmailContext();
@@ -214,8 +226,12 @@ export default function EmailTabV2({
   // Handle email selection
   const handleEmailSelect = useCallback(
     (email: EnhancedEmailMessage) => {
+      console.log("[EmailTabV2] Email selected:", email);
       setSelectedThreadId(email.threadId);
-      setSelectedEmails(new Set()); // Clear multi-select when single email selected
+
+      // Add clicked email to selection for bulk actions
+      setSelectedEmails(new Set([email.threadId]));
+      console.log("[EmailTabV2] Selected emails updated:", [email.threadId]);
 
       // Update EmailContext for SmartWorkspacePanel
       emailContext.setSelectedEmail({
@@ -231,10 +247,44 @@ export default function EmailTabV2({
     [emailContext]
   );
 
+  // Handle Create Lead from selected email
+  const handleCreateLead = useCallback(() => {
+    // Get first selected email or currently viewed email
+    const emailId =
+      selectedEmails.size > 0
+        ? Array.from(selectedEmails)[0]
+        : selectedThreadId;
+
+    if (!emailId) return;
+
+    const email = emails.find(
+      (e: EnhancedEmailMessage) => e.threadId === emailId
+    );
+    if (!email) return;
+
+    // Extract email data for the modal
+    const fromParts = email.from.match(/(.+?)\s*<(.+?)>/);
+    const name = fromParts?.[1]?.trim() || email.from.split("@")[0];
+    const emailAddress = fromParts?.[2]?.trim() || email.from;
+
+    setSelectedEmailForLead({
+      name,
+      email: emailAddress,
+      phone: undefined,
+      subject: email.subject,
+      snippet: email.snippet,
+      threadId: email.threadId,
+    });
+    setIsCreateLeadModalOpen(true);
+  }, [selectedEmails, selectedThreadId, emails]);
+
   // Handle bulk actions
   const handleBulkAction = useCallback(
     (action: BulkAction, params?: any) => {
       switch (action) {
+        case "createLead":
+          handleCreateLead();
+          break;
         case "clearSelection":
           setSelectedEmails(new Set());
           break;
@@ -264,7 +314,7 @@ export default function EmailTabV2({
           console.log("Bulk action:", action, params);
       }
     },
-    [selectedEmails, emails]
+    [selectedEmails, emails, handleCreateLead]
   );
 
   // Handle search changes
@@ -408,6 +458,16 @@ export default function EmailTabV2({
           />
         )}
       </div>
+
+      {/* Create Lead Modal */}
+      <CreateLeadModal
+        open={isCreateLeadModalOpen}
+        onClose={() => {
+          setIsCreateLeadModalOpen(false);
+          setSelectedEmailForLead(null);
+        }}
+        defaults={selectedEmailForLead || undefined}
+      />
     </div>
   );
 }

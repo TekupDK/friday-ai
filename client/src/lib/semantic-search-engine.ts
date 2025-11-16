@@ -179,7 +179,9 @@ export class SemanticSearchEngine {
       const personFilter = `from:"${analysis.extractedPerson}" OR to:"${analysis.extractedPerson}"`;
       return {
         filter: personFilter,
-        about: analysis.hasTopicWords ? analysis.extractedTopic : null,
+        about: analysis.hasTopicWords
+          ? (analysis.extractedTopic ?? null)
+          : null,
         limit: 20,
         readMask: ["date", "participants", "subject", "bodySnippet", "labels"],
         reason: `Person-specific search for ${analysis.extractedPerson}`,

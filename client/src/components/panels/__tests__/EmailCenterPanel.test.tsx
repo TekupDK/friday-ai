@@ -1,13 +1,13 @@
 // @vitest-environment jsdom
-import { describe, it, expect, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
-// V2: Mock EmailTab instead of InboxPanel
-vi.mock("@/components/inbox/EmailTab", () => ({
+// V2: Component now uses EmailTabV2 – mock updated module
+vi.mock("@/components/inbox/EmailTabV2", () => ({
   default: () => (
-    <div data-testid="email-tab">
-      <div>Mock EmailTab</div>
+    <div data-testid="email-tab-v2">
+      <div>Mock EmailTabV2</div>
       <div>Email list would be here</div>
     </div>
   ),
@@ -23,11 +23,11 @@ describe("EmailCenterPanel V2", () => {
     expect(screen.getByText(/AI-powered email workspace/i)).toBeInTheDocument();
   });
 
-  it("renders EmailTab component", () => {
+  it("renders EmailTabV2 component", () => {
     render(<EmailCenterPanel />);
 
-    expect(screen.getByTestId("email-tab")).toBeInTheDocument();
-    expect(screen.getByText(/Mock EmailTab/i)).toBeInTheDocument();
+    expect(screen.getByTestId("email-tab-v2")).toBeInTheDocument();
+    expect(screen.getByText(/Mock EmailTabV2/i)).toBeInTheDocument();
   });
 
   it("has no tabs - dedicated to emails only", () => {

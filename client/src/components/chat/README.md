@@ -10,8 +10,9 @@ Alle chat komponenter til Tekup AI v2 er nu implementeret og klar til brug.
 
 Besøg showcase siden for at se alle komponenter i aktion:
 
-```
-http://localhost:3000/chat-components
+```text
+<http://localhost:3000/chat-components>
+
 ```
 
 ---
@@ -117,7 +118,7 @@ Hjælpeværktøjer og system funktioner
 
 ## 💻 **Brug Komponenter**
 
-### Import Eksempel:
+### Import Eksempel
 
 ```tsx
 import { EmailSearchCard } from "@/components/chat/cards/EmailSearchCard";
@@ -135,7 +136,7 @@ function MyComponent() {
 }
 ```
 
-### Med Props:
+### Med Props
 
 ```tsx
 <EmailSearchCard
@@ -152,6 +153,7 @@ function MyComponent() {
   onJoin={(userId) => console.log('User joined:', userId)}
   onLeave={(userId) => console.log('User left:', userId)}
 />
+
 ```
 
 ---
@@ -173,7 +175,7 @@ Alle komponenter inkluderer:
 
 ## 🎯 **Mappestruktur**
 
-```
+```bash
 client/src/components/chat/
 ├── cards/              # Chat Cards (12)
 │   ├── EmailSearchCard.tsx
@@ -219,6 +221,7 @@ client/src/components/chat/
     ├── HelpCenter.tsx
     ├── UserProfile.tsx
     └── AboutInfo.tsx
+
 ```
 
 ---
@@ -226,10 +229,10 @@ client/src/components/chat/
 ## 🔧 **Næste Skridt**
 
 1. **Test komponenter** - Besøg `/chat-components` showcase
-2. **Tilpas styling** - Juster farver og design
-3. **Integrer backend** - Forbind med API'er
-4. **Optimer** - Performance og accessibility
-5. **Dokumenter** - Tilføj usage guides
+1. **Tilpas styling** - Juster farver og design
+1. **Integrer backend** - Forbind med API'er
+1. **Optimer** - Performance og accessibility
+1. **Dokumenter** - Tilføj usage guides
 
 ---
 
@@ -241,6 +244,7 @@ For at fixe automatisk:
 
 ```bash
 npm run lint:fix
+
 ```
 
 ---

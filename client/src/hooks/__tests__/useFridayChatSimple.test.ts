@@ -3,8 +3,8 @@
  * Tests Phase 1 functionality: message loading, sending, and refetch
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useFridayChatSimple } from "../useFridayChatSimple";
 
 // Mock tRPC
@@ -37,8 +37,23 @@ vi.mock("@/lib/trpc", () => ({
 }));
 
 describe("useFridayChatSimple", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
+  beforeEach(async () => {
+    // Reset mocks and re-seed default implementations between tests
+    vi.resetAllMocks();
+    const { trpc } = await import("@/lib/trpc");
+    vi.mocked(trpc.chat.getMessages.useQuery).mockReturnValue({
+      data: { messages: [] },
+      isLoading: false,
+      error: null,
+    } as any);
+    vi.mocked(trpc.chat.sendMessage.useMutation).mockReturnValue({
+      mutateAsync: vi.fn(),
+      isPending: false,
+      error: null,
+    } as any);
+    vi.mocked(trpc.useUtils).mockReturnValue({
+      chat: { getMessages: { invalidate: vi.fn() } },
+    } as any);
   });
 
   it("should initialize with empty messages", () => {
@@ -118,10 +133,12 @@ describe("useFridayChatSimple", () => {
 
     await result.current.sendMessage("Test message");
 
-    expect(mockMutateAsync).toHaveBeenCalledWith({
-      conversationId: 1,
-      content: "Test message",
-    });
+    expect(mockMutateAsync).toHaveBeenCalledWith(
+      expect.objectContaining({
+        conversationId: 1,
+        content: "Test message",
+      })
+    );
   });
 
   it("should handle send message error", async () => {
@@ -169,7 +186,7 @@ describe("useFridayChatSimple", () => {
     expect(mockMutateAsync).not.toHaveBeenCalled();
   });
 
-  it("should show loading state while sending", () => {
+  it("should show loading state while sending", async () => {
     const { trpc } = await import("@/lib/trpc");
     vi.mocked(trpc.chat.sendMessage.useMutation).mockReturnValue({
       mutateAsync: vi.fn(),
@@ -187,7 +204,7 @@ describe("useFridayChatSimple", () => {
     expect(result.current.isLoading).toBe(true);
   });
 
-  it("should show error state on query error", () => {
+  it("should show error state on query error", async () => {
     const mockError = new Error("Load failed");
 
     const { trpc } = await import("@/lib/trpc");

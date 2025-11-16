@@ -37,12 +37,11 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
   const [pushNotifications, setPushNotifications] = useState(false);
 
   // Fetch preferences
-  const { data: preferences, refetch } = trpc.auth.getPreferences.useQuery(
-    undefined,
-    {
-      enabled: open,
-    }
-  );
+  const { data: preferences, refetch } = (
+    trpc as any
+  ).auth.getPreferences.useQuery(undefined, {
+    enabled: open,
+  });
 
   // Sync preferences when data is loaded
   useEffect(() => {
@@ -73,12 +72,14 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preferences]); // Only re-run when preferences change, not theme/setThemeDirect
 
-  const updatePreferencesMutation = trpc.auth.updatePreferences.useMutation({
+  const updatePreferencesMutation = (
+    trpc as any
+  ).auth.updatePreferences.useMutation({
     onSuccess: () => {
       toast.success("Indstillinger gemt");
       refetch();
     },
-    onError: error => {
+    onError: (error: any) => {
       toast.error("Fejl ved opdatering: " + error.message);
     },
   });
@@ -129,7 +130,8 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Palette className="w-5 h-5 text-primary" />
-              <h3 className="text-sm font-semibold">{t.settings.appearance}</h3>
+              {/* ✅ A11Y FIX: Changed to h2 for proper hierarchy per accessibility audit */}
+              <h2 className="text-base font-semibold">{t.settings.appearance}</h2>
             </div>
             <div className="pl-8 space-y-3">
               <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/50">
@@ -174,17 +176,18 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 text-primary" />
-              <h3 className="text-sm font-semibold">
+              {/* ✅ A11Y FIX: Changed to h2 for proper hierarchy per accessibility audit */}
+              <h2 className="text-base font-semibold">
                 {t.settings.notifications}
-              </h3>
+              </h2>
             </div>
             <div className="pl-8 space-y-3">
               <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/50">
                 <div className="flex-1">
-                  <p className="text-sm font-medium">
+                  <p id="email-notifications-label" className="text-sm font-medium">
                     {t.settings.emailNotifications}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p id="email-notifications-desc" className="text-xs text-muted-foreground">
                     {t.settings.emailNotificationsDescription}
                   </p>
                 </div>
@@ -192,14 +195,16 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                   checked={emailNotifications}
                   onCheckedChange={handleEmailNotificationsChange}
                   disabled={updatePreferencesMutation.isPending}
+                  aria-labelledby="email-notifications-label"
+                  aria-describedby="email-notifications-desc"
                 />
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/50">
                 <div className="flex-1">
-                  <p className="text-sm font-medium">
+                  <p id="push-notifications-label" className="text-sm font-medium">
                     {t.settings.pushNotifications}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p id="push-notifications-desc" className="text-xs text-muted-foreground">
                     {t.settings.pushNotificationsDescription}
                   </p>
                 </div>
@@ -207,6 +212,8 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                   checked={pushNotifications}
                   onCheckedChange={handlePushNotificationsChange}
                   disabled={updatePreferencesMutation.isPending}
+                  aria-labelledby="push-notifications-label"
+                  aria-describedby="push-notifications-desc"
                 />
               </div>
             </div>
@@ -218,7 +225,8 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Globe className="w-5 h-5 text-primary" />
-              <h3 className="text-sm font-semibold">{t.settings.language}</h3>
+              {/* ✅ A11Y FIX: Changed to h2 for proper hierarchy per accessibility audit */}
+              <h2 className="text-base font-semibold">{t.settings.language}</h2>
             </div>
             <div className="pl-8 space-y-3">
               <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/50">

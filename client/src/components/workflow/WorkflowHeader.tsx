@@ -29,8 +29,8 @@ export default function WorkflowHeader() {
         {/* Quick Actions */}
         <div className="flex items-center gap-2">
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="w-4 h-4" />
+          <Button variant="ghost" size="icon" className="relative" aria-label="View notifications">
+            <Bell className="w-4 h-4" aria-hidden="true" />
             <Badge
               variant="destructive"
               className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs"
@@ -46,8 +46,8 @@ export default function WorkflowHeader() {
           </Button>
 
           {/* Settings */}
-          <Button variant="ghost" size="icon">
-            <Settings className="w-4 h-4" />
+          <Button variant="ghost" size="icon" aria-label="Open settings">
+            <Settings className="w-4 h-4" aria-hidden="true" />
           </Button>
         </div>
       </div>

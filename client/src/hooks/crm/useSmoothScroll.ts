@@ -26,7 +26,7 @@ export const useSmoothScroll = (options: SmoothScrollOptions = {}) => {
       smooth: options.smooth !== false,
       smoothTouch: options.smoothTouch || false,
       touchMultiplier: 2,
-    });
+    } as any);
 
     lenisRef.current = lenis;
 

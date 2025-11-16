@@ -1,3 +1,4 @@
+import { usePageTitle } from "@/hooks/usePageTitle";
 import {
   Accordion,
   AccordionContent,
@@ -249,6 +250,7 @@ import { ChatPanelUIUpgradedShowcase } from "@/components/showcase/ChatPanelUIUp
 import { CustomerCard } from "@/components/leads/CustomerCardClean";
 
 export default function ComponentsShowcase() {
+  usePageTitle("Component Showcase");
   const { theme, toggleTheme } = useTheme();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [datePickerDate, setDatePickerDate] = useState<Date>();
@@ -707,11 +709,11 @@ export default function ComponentsShowcase() {
                 components={componentItems}
                 onSelect={handleNavigate}
               />
-              <Button variant="outline" size="icon" onClick={toggleTheme}>
+              <Button variant="outline" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
                 {theme === "light" ? (
-                  <Moon className="h-5 w-5" />
+                  <Moon className="h-5 w-5" aria-hidden="true" />
                 ) : (
-                  <Sun className="h-5 w-5" />
+                  <Sun className="h-5 w-5" aria-hidden="true" />
                 )}
               </Button>
             </div>
@@ -882,8 +884,8 @@ export default function ComponentsShowcase() {
                     <Button variant="link">Link</Button>
                     <Button size="sm">Small</Button>
                     <Button size="lg">Large</Button>
-                    <Button size="icon">
-                      <Check className="h-4 w-4" />
+                    <Button size="icon" aria-label="Icon button example">
+                      <Check className="h-4 w-4" aria-hidden="true" />
                     </Button>
                   </div>
                 </CardContent>

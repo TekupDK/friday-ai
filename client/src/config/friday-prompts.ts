@@ -160,11 +160,11 @@ Lav KONKRET opfølgningsstrategi med skabeloner og tidsplan.`,
       contextUsage: (response: string, context: any) => {
         if (!context || Object.keys(context).length === 0) return true;
 
-        const contextKeys = Object.keys(context).join(" ");
+        const contextKeys = Object.keys(context) as string[];
         const responseLower = response.toLowerCase();
 
         // Check if response mentions context elements
-        return contextKeys.some(key => {
+        return contextKeys.some((key: string) => {
           const value = context[key];
           if (Array.isArray(value)) {
             return value.some((item: any) =>
@@ -224,7 +224,12 @@ export function selectPrompt(context?: {
 export function createPromptTest(
   variation: keyof typeof FRIDAY_PROMPTS.testVariations
 ) {
-  const testResults = {
+  const testResults: Partial<
+    Record<
+      keyof typeof FRIDAY_PROMPTS.testVariations,
+      { quality: number; time: number; tokens: number; winner: boolean }
+    >
+  > = {
     minimal: { quality: 3, time: 5483, tokens: 303, winner: true },
     persona: { quality: 3, time: 9019, tokens: 432, winner: false },
     taskOriented: { quality: 3, time: 7265, tokens: 398, winner: false },

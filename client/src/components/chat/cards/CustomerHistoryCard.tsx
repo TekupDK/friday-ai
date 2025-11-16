@@ -2,20 +2,20 @@
  * CUSTOMER HISTORY CARD - Kundehistorik og tidligere aftaler
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
-  History,
-  User,
+  AlertCircle,
   Calendar,
   FileText,
+  History,
   Mail,
-  Phone,
   MapPin,
+  Phone,
   TrendingUp,
-  AlertCircle,
+  User,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -398,7 +398,11 @@ export function CustomerHistoryCard({
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-2 pt-2 border-t">
-          <Button onClick={onAddNote} variant="outline" className="flex-1">
+          <Button
+            onClick={() => onAddNote?.("")}
+            variant="outline"
+            className="flex-1"
+          >
             <AlertCircle className="w-4 h-4 mr-2" />
             Tilføj note
           </Button>

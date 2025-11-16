@@ -7,27 +7,27 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { trpc } from "@/lib/trpc";
 import {
   Bot,
-  Mail,
-  Clock,
-  MapPin,
-  DollarSign,
-  CheckCircle,
-  Edit3,
-  Send,
-  Lightbulb,
-  Target,
-  Calendar,
-  User,
   Building,
+  Calendar,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  Edit3,
+  Lightbulb,
+  Mail,
+  MapPin,
+  Send,
+  Target,
+  User,
 } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+import { useEffect, useState } from "react";
 
 interface EmailSuggestion {
   id: string;
@@ -93,7 +93,7 @@ export function EmailAssistant({
     setIsAnalyzing(true);
     try {
       // Call server-side analysis
-      const result = await trpc.automation.analyzeEmail.query({
+      const result = await (trpc as any).automation.analyzeEmail.query({
         from: emailData.from,
         subject: emailData.subject,
         body: emailData.body,
@@ -128,7 +128,7 @@ export function EmailAssistant({
 
       // Log the chosen suggestion for analytics
       if (selectedSuggestion) {
-        await trpc.automation.logSuggestionUsage.mutate({
+        await (trpc as any).automation.logSuggestionUsage.mutate({
           suggestionId: selectedSuggestion.id,
           emailData,
           chosenContent: editedContent,
@@ -150,7 +150,7 @@ export function EmailAssistant({
 
       // Log the usage
       if (selectedSuggestion) {
-        await trpc.automation.logSuggestionUsage.mutate({
+        await (trpc as any).automation.logSuggestionUsage.mutate({
           suggestionId: selectedSuggestion.id,
           emailData,
           chosenContent: editedContent,

@@ -9,11 +9,13 @@ import {
 } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { useEmailContext } from "@/contexts/EmailContext";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { MobileUserMenuSheet } from "@/components/MobileUserMenuSheet";
 import { SettingsDialog } from "@/components/SettingsDialog";
 import { UserProfileDialog } from "@/components/UserProfileDialog";
+import { KeyboardShortcutsDialog } from "@/components/KeyboardShortcutsDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,7 +33,18 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { getLoginUrl } from "@/const";
 import { InvoiceProvider } from "@/context/InvoiceContext";
-import { Bot, LogOut, Menu, Settings, User, BookOpen } from "lucide-react";
+import {
+  Bot,
+  LogOut,
+  Menu,
+  Settings,
+  User,
+  BookOpen,
+  BarChart3,
+  Users,
+  Target,
+  Calendar,
+} from "lucide-react";
 import { useLocation } from "wouter";
 
 // Lazy load panels for code splitting optimization
@@ -72,6 +85,7 @@ const PanelSkeleton = ({ name }: { name: string }) => (
  * - Context-aware right panel based on selected email
  */
 function WorkspaceLayout() {
+  usePageTitle("Workspace");
   const { user, isAuthenticated, loading } = useAuth();
   const { state: emailState } = useEmailContext();
   const [, navigate] = useLocation();
@@ -81,6 +95,7 @@ function WorkspaceLayout() {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showSettingsDialog, setShowSettingsDialog] = useState(false);
   const [showMobileUserMenu, setShowMobileUserMenu] = useState(false);
+  const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
 
   // Panel refs for focus management
   const aiPanelRef = useRef<HTMLDivElement>(null);
@@ -124,6 +139,20 @@ function WorkspaceLayout() {
       description: "Focus Workspace panel",
       category: "navigation",
     },
+    {
+      key: "?",
+      shiftKey: false,
+      handler: () => setShowKeyboardShortcuts(true),
+      description: "Show keyboard shortcuts",
+      category: "help",
+    },
+    {
+      key: "?",
+      shiftKey: true,
+      handler: () => setShowKeyboardShortcuts(true),
+      description: "Show keyboard shortcuts",
+      category: "help",
+    },
   ]);
 
   const handleLogout = useCallback(() => {
@@ -158,20 +187,59 @@ function WorkspaceLayout() {
     <InvoiceProvider>
       <div className="h-screen flex flex-col bg-background">
         {/* Header */}
-        <header className="h-14 border-b border-border flex items-center justify-between px-4 bg-background shrink-0">
+        <header id="navigation" className="h-14 border-b border-border flex items-center justify-between px-4 bg-background shrink-0">
           <div className="flex items-center gap-3">
             <Bot className="w-6 h-6 text-primary" />
             <h1 className="font-semibold text-lg">Friday AI</h1>
             <Badge variant="secondary" className="text-xs">
               Workspace
             </Badge>
+            {/* CRM Navigation */}
+            <div className="hidden md:flex items-center gap-1 ml-4 border-l border-border pl-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/crm/dashboard")}
+                className="text-sm"
+              >
+                <BarChart3 className="w-4 h-4 mr-1" />
+                Dashboard
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/crm/customers")}
+                className="text-sm"
+              >
+                <Users className="w-4 h-4 mr-1" />
+                Customers
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/crm/leads")}
+                className="text-sm"
+              >
+                <Target className="w-4 h-4 mr-1" />
+                Leads
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/crm/bookings")}
+                className="text-sm"
+              >
+                <Calendar className="w-4 h-4 mr-1" />
+                Bookings
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu */}
           <Sheet open={showMobileInbox} onOpenChange={setShowMobileInbox}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="w-5 h-5" />
+              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open email center menu">
+                <Menu className="w-5 h-5" aria-hidden="true" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-full sm:w-[400px] p-0">
@@ -188,8 +256,8 @@ function WorkspaceLayout() {
           {/* Desktop User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hidden md:flex">
-                <User className="w-5 h-5" />
+              <Button variant="ghost" size="icon" className="hidden md:flex" aria-label="Open user menu">
+                <User className="w-5 h-5" aria-hidden="true" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -207,6 +275,23 @@ function WorkspaceLayout() {
                 Documentation
               </DropdownMenuItem>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/crm/dashboard")}>
+                <BarChart3 className="w-4 h-4 mr-2" />
+                CRM Dashboard
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/crm/customers")}>
+                <Users className="w-4 h-4 mr-2" />
+                Customers
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/crm/leads")}>
+                <Target className="w-4 h-4 mr-2" />
+                Leads
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/crm/bookings")}>
+                <Calendar className="w-4 h-4 mr-2" />
+                Bookings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Log out
@@ -216,8 +301,9 @@ function WorkspaceLayout() {
         </header>
 
         {/* Main Content */}
-        {/* Desktop: 3-Panel Layout */}
-        <div className="hidden md:flex flex-1 overflow-hidden min-h-0">
+        <main id="main-content" className="flex-1 overflow-hidden min-h-0">
+          {/* Desktop: 3-Panel Layout */}
+          <div className="hidden md:flex h-full">
           <ResizablePanelGroup direction="horizontal" className="flex-1">
             {/* AI Assistant Panel (Left - 20%) */}
             <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
@@ -271,16 +357,17 @@ function WorkspaceLayout() {
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
-        </div>
+          </div>
 
-        {/* Mobile: Single column */}
-        <div className="md:hidden flex-1 overflow-hidden">
+          {/* Mobile: Single column */}
+          <div className="md:hidden h-full">
           <PanelErrorBoundary name="AI Assistant">
             <Suspense fallback={<PanelSkeleton name="AI Assistant" />}>
               {AIAssistantPanelMemo}
             </Suspense>
           </PanelErrorBoundary>
-        </div>
+          </div>
+        </main>
 
         {/* Dialogs */}
         <UserProfileDialog
@@ -290,6 +377,10 @@ function WorkspaceLayout() {
         <SettingsDialog
           open={showSettingsDialog}
           onOpenChange={setShowSettingsDialog}
+        />
+        <KeyboardShortcutsDialog
+          open={showKeyboardShortcuts}
+          onOpenChange={setShowKeyboardShortcuts}
         />
         <MobileUserMenuSheet
           open={showMobileUserMenu}

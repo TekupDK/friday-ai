@@ -119,7 +119,7 @@ export default function InvoicesTab() {
     setCurrentAnalysisId,
   } = useInvoiceContext();
 
-  const analyzeInvoiceMutation = trpc.chat.analyzeInvoice.useMutation();
+  const analyzeInvoiceMutation = (trpc as any).chat.analyzeInvoice.useMutation();
   const [searchInput, setSearchInput] = useState("");
   const debouncedSearch = useDebouncedValue(searchInput, 300);
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -129,7 +129,7 @@ export default function InvoicesTab() {
   );
   const [feedbackComment, setFeedbackComment] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false);
-  const submitFeedbackMutation = trpc.chat.submitAnalysisFeedback.useMutation();
+  const submitFeedbackMutation = (trpc as any).chat.submitAnalysisFeedback.useMutation();
 
   // Filter invoices based on search and status
   const filteredInvoices = useMemo((): InvoiceListItem[] => {

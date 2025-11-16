@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -95,6 +96,7 @@ const TAG_FILTERS = [
 ];
 
 export default function DocsPage() {
+  usePageTitle("Documentation");
   const [, navigate] = useLocation();
   const [view, setView] = useState<"list" | "view" | "edit" | "create">("list");
   const [selectedDocId, setSelectedDocId] = useState<string | null>(null);

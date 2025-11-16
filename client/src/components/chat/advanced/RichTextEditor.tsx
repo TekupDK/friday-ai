@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import DOMPurify from "dompurify";
 import {
   Type,
   Bold,
@@ -48,16 +49,20 @@ export function RichTextEditor({
   onPreview,
   onExport,
 }: RichTextEditorProps) {
-  const [content, setContent] = useState(initialContent);
+  // ✅ SECURITY FIX: Sanitize initial content to prevent XSS
+  const sanitizedInitialContent = DOMPurify.sanitize(initialContent);
+  const [content, setContent] = useState(sanitizedInitialContent);
   const [isPreview, setIsPreview] = useState(false);
-  const [history, setHistory] = useState<string[]>([initialContent]);
+  const [history, setHistory] = useState<string[]>([sanitizedInitialContent]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const editorRef = useRef<HTMLDivElement>(null);
 
   const updateContent = (newContent: string) => {
-    setContent(newContent);
+    // ✅ SECURITY FIX: Sanitize content before storing to prevent XSS
+    const sanitized = DOMPurify.sanitize(newContent);
+    setContent(sanitized);
     const newHistory = history.slice(0, historyIndex + 1);
-    newHistory.push(newContent);
+    newHistory.push(sanitized);
     setHistory(newHistory);
     setHistoryIndex(newHistory.length - 1);
   };
@@ -72,10 +77,12 @@ export function RichTextEditor({
   const handleUndo = () => {
     if (historyIndex > 0) {
       const newIndex = historyIndex - 1;
+      // ✅ SECURITY FIX: Sanitize history content before restoring
+      const sanitized = DOMPurify.sanitize(history[newIndex]);
       setHistoryIndex(newIndex);
-      setContent(history[newIndex]);
+      setContent(sanitized);
       if (editorRef.current) {
-        editorRef.current.innerHTML = history[newIndex];
+        editorRef.current.innerHTML = sanitized;
       }
     }
   };
@@ -83,10 +90,12 @@ export function RichTextEditor({
   const handleRedo = () => {
     if (historyIndex < history.length - 1) {
       const newIndex = historyIndex + 1;
+      // ✅ SECURITY FIX: Sanitize history content before restoring
+      const sanitized = DOMPurify.sanitize(history[newIndex]);
       setHistoryIndex(newIndex);
-      setContent(history[newIndex]);
+      setContent(sanitized);
       if (editorRef.current) {
-        editorRef.current.innerHTML = history[newIndex];
+        editorRef.current.innerHTML = sanitized;
       }
     }
   };
@@ -232,11 +241,15 @@ export function RichTextEditor({
                     onClick={() =>
                       button.custom
                         ? button.custom()
-                        : execCommand(button.command, button.value)
+                        : button.command
+                          ? (button.value !== undefined
+                              ? execCommand(button.command, button.value)
+                              : execCommand(button.command))
+                          : undefined
                     }
                     title={button.title}
                   >
-                    <Icon className="w-3 h-3" />
+                    {Icon ? <Icon className="w-3 h-3" /> : null}
                   </Button>
                 );
               })}
@@ -253,7 +266,8 @@ export function RichTextEditor({
           {isPreview ? (
             <div
               className="min-h-[200px] p-4 border rounded-lg bg-background prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: content }}
+              // ✅ SECURITY FIX: Sanitize content before rendering to prevent XSS
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
             />
           ) : (
             <div
@@ -261,7 +275,8 @@ export function RichTextEditor({
               contentEditable
               onInput={handleContentChange}
               className="min-h-[200px] p-4 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-indigo-500 prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: content }}
+              // ✅ SECURITY FIX: Sanitize content before rendering to prevent XSS
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
             />
           )}
         </div>

@@ -230,7 +230,9 @@ export const AI_MEMORY_RULES: MemoryRule[] = [
       const emojiRegex = /[\u{1F300}-\u{1F9FF}]/gu;
       const usedEmojis = context.draftEmail.match(emojiRegex) || [];
 
-      const invalidEmojis = usedEmojis.filter(e => !allowedEmojis.includes(e));
+      const invalidEmojis = usedEmojis.filter(
+        (e: string) => !allowedEmojis.includes(e)
+      );
       if (invalidEmojis.length > 0) {
         console.warn(
           `[MEMORY_24] ⚠️ Ugyldige emojis: ${invalidEmojis.join(", ")}`

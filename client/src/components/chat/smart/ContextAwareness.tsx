@@ -2,22 +2,19 @@
  * CONTEXT AWARENESS - Kontekst-bevidste forslag
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
   Brain,
-  Eye,
-  Clock,
-  MapPin,
-  User,
-  FileText,
   Calendar,
+  Clock,
+  Eye,
+  FileText,
   Mail,
-  TrendingUp,
+  MessageCircle,
   Zap,
-  MessageSquare,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -216,7 +213,8 @@ export function ContextAwareness({
               <Brain className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h4 className="font-semibold">Context Awareness</h4>
+              {/* ✅ A11Y FIX: Changed from h2 to h3 since this component is used within a section that should have h2 */}
+              <h3 className="font-semibold text-base">Context Awareness</h3>
               <p className="text-xs text-muted-foreground">
                 Kontekst-bevidste forslag
               </p>
@@ -280,7 +278,8 @@ export function ContextAwareness({
           <div className="space-y-3">
             {/* Contextual Suggestions */}
             <div className="space-y-2">
-              <h5 className="text-sm font-semibold">Kontekstuelle forslag:</h5>
+              {/* ✅ A11Y FIX: Changed from h3 to h4 since parent is h3 */}
+              <h4 className="text-sm font-semibold">Kontekstuelle forslag:</h4>
               <div className="space-y-2">
                 {contextualSuggestions.map((suggestion, index) => {
                   const Icon = suggestion.icon;
@@ -348,7 +347,8 @@ export function ContextAwareness({
 
         {expandedSection === "activity" && (
           <div className="space-y-3">
-            <h5 className="text-sm font-semibold">Seneste aktivitet:</h5>
+            {/* ✅ A11Y FIX: Changed from h3 to h4 since parent is h3 */}
+            <h4 className="text-sm font-semibold">Seneste aktivitet:</h4>
             <div className="space-y-2 max-h-48 overflow-y-auto">
               {contextData.recentActivity.map((activity, index) => {
                 const Icon = getActivityIcon(activity.type);
@@ -377,7 +377,8 @@ export function ContextAwareness({
 
         {expandedSection === "preferences" && (
           <div className="space-y-3">
-            <h5 className="text-sm font-semibold">Dine præferencer:</h5>
+            {/* ✅ A11Y FIX: Changed from h3 to h4 since parent is h3 */}
+            <h4 className="text-sm font-semibold">Dine præferencer:</h4>
             <div className="space-y-2">
               <div className="flex justify-between items-center p-2 rounded-lg bg-background border border-border">
                 <span className="text-sm">Arbejdstid</span>
@@ -414,7 +415,8 @@ export function ContextAwareness({
         {expandedSection === "business" && (
           <div className="space-y-3">
             <div className="space-y-2">
-              <h5 className="text-sm font-semibold">Aktive projekter:</h5>
+              {/* ✅ A11Y FIX: Changed from h3 to h4 since parent is h3 */}
+              <h4 className="text-sm font-semibold">Aktive projekter:</h4>
               <div className="space-y-1">
                 {contextData.businessContext.currentProjects.map(
                   (project, index) => (
@@ -430,7 +432,8 @@ export function ContextAwareness({
             </div>
 
             <div className="space-y-2">
-              <h5 className="text-sm font-semibold">Kommende deadlines:</h5>
+              {/* ✅ A11Y FIX: Changed from h3 to h4 since parent is h3 */}
+              <h4 className="text-sm font-semibold">Kommende deadlines:</h4>
               <div className="space-y-1">
                 {contextData.businessContext.upcomingDeadlines.map(
                   (deadline, index) => (
@@ -446,7 +449,8 @@ export function ContextAwareness({
             </div>
 
             <div className="space-y-2">
-              <h5 className="text-sm font-semibold">Team tilgængelighed:</h5>
+              {/* ✅ A11Y FIX: Changed from h3 to h4 since parent is h3 */}
+              <h4 className="text-sm font-semibold">Team tilgængelighed:</h4>
               <div className="grid grid-cols-2 gap-2">
                 {Object.entries(
                   contextData.businessContext.teamAvailability

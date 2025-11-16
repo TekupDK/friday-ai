@@ -7,30 +7,29 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
-import {
-  Bot,
-  Mail,
-  Clock,
-  MapPin,
-  DollarSign,
-  CheckCircle,
-  Edit3,
-  Send,
-  Lightbulb,
-  Target,
-  Calendar,
-  User,
-  Building,
-  Sparkles,
-  ArrowRight,
-} from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import {
+  ArrowRight,
+  Bot,
+  Building,
+  Calendar,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  Edit3,
+  Lightbulb,
+  Mail,
+  MapPin,
+  Send,
+  Sparkles,
+  Target,
+  User,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface EmailSuggestion {
   id: string;
@@ -102,7 +101,7 @@ export function EmailAssistant3Panel({
     setIsAnalyzing(true);
     try {
       // Call server-side analysis
-      const result = await trpc.automation["analyzeEmail"].query({
+      const result = await (trpc as any).automation["analyzeEmail"].query({
         from: emailData.from,
         subject: emailData.subject,
         body: emailData.body,
@@ -137,7 +136,7 @@ export function EmailAssistant3Panel({
 
       // Log the chosen suggestion for analytics
       if (selectedSuggestion) {
-        await trpc.automation["logSuggestionUsage"].mutate({
+        await (trpc as any).automation["logSuggestionUsage"].mutate({
           suggestionId: selectedSuggestion.id,
           emailData,
           chosenContent: editedContent,
@@ -160,7 +159,7 @@ export function EmailAssistant3Panel({
 
       // Log the usage
       if (selectedSuggestion) {
-        await trpc.automation["logSuggestionUsage"].mutate({
+        await (trpc as any).automation["logSuggestionUsage"].mutate({
           suggestionId: selectedSuggestion.id,
           emailData,
           chosenContent: selectedSuggestion.content,

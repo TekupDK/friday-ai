@@ -30,7 +30,7 @@ export function useActionSuggestions(context: {
     data,
     isLoading,
     error: queryError,
-  } = trpc.chat.getSuggestions.useQuery(
+  } = (trpc as any).chat.getSuggestions.useQuery(
     {
       conversationId: context.conversationId || 0,
       maxSuggestions: 3,
@@ -46,7 +46,9 @@ export function useActionSuggestions(context: {
   return {
     suggestions:
       enabled && data?.suggestions
-        ? data.suggestions.filter((s): s is PendingAction => s !== null)
+        ? data.suggestions.filter(
+            (s: PendingAction | null): s is PendingAction => s !== null
+          )
         : [],
     loading: isLoading,
     error: queryError ? String(queryError) : null,

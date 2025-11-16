@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="256" height="256" rx="32" fill="#ffffff"/>
+  <g transform="translate(128 96)">
+    <circle r="40" fill="url(#g)"/>
+    <circle r="14" fill="#ffffff"/>
+    <path d="M -56 0 h 20" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 36 0 h 20" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+    <path d="M -34 -34 L 0 -60 L 34 -34" fill="none" stroke="#0ea5e9" stroke-width="8" stroke-linecap="round"/>
+    <path d="M -34 34 L 0 60 L 34 34" fill="none" stroke="#0ea5e9" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <text x="128" y="200" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#0f172a" text-anchor="middle">Friday AI</text>
+</svg>

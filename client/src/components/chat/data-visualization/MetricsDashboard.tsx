@@ -1,21 +1,21 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import {
-  TrendingUp,
-  TrendingDown,
-  DollarSign,
-  Users,
   Activity,
-  Target,
-  Calendar,
   BarChart3,
+  Calendar,
+  DollarSign,
   PieChart,
-  Zap,
   RefreshCw,
+  Target,
+  TrendingDown,
+  TrendingUp,
+  Users,
+  Zap,
 } from "lucide-react";
+import * as React from "react";
 
 export interface MetricData {
   id: string;
@@ -118,6 +118,7 @@ function MetricCard({
       : metric.trend === "down"
         ? TrendingDown
         : null;
+  const TrendIcon = trendIcon;
 
   const trendColor =
     metric.change && metric.change > 0
@@ -171,7 +172,7 @@ function MetricCard({
                 compact ? "text-xs" : "text-sm"
               )}
             >
-              {trendIcon && <trendIcon className={cn("h-3 w-3", trendColor)} />}
+              {TrendIcon && <TrendIcon className={cn("h-3 w-3", trendColor)} />}
               <span className={trendColor}>
                 {metric.change > 0 ? "+" : ""}
                 {metric.change}%

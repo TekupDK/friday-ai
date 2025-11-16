@@ -29,7 +29,7 @@ Moderne card til alle typer AI actions (leads, tasks, meetings, invoices)
   badge="Lead #1247"
   status="success"
   metadata={[
-    { label: "Email", value: "matilde@gmail.com", icon: Mail },
+    { label: "Email", value: "<matilde@gmail.com>", icon: Mail },
     { label: "Phone", value: "50 65 75 40", icon: Phone },
   ]}
   actions={[{ label: "Send tilbud", onClick: () => {} }]}
@@ -175,7 +175,7 @@ Hurtige handlinger med gradient styling
 
 ## 📁 Fil Struktur
 
-```
+```bash
 client/src/components/chat/upgraded/
 ├── ActionCard.tsx              # Universal action card
 ├── ThinkingIndicator.tsx       # 5 loading varianter
@@ -183,6 +183,7 @@ client/src/components/chat/upgraded/
 ├── WelcomeScreen.tsx           # Welcome screen
 ├── QuickActions.tsx            # Inline action buttons
 └── README.md                   # Denne fil
+
 ```
 
 ---
@@ -191,9 +192,10 @@ client/src/components/chat/upgraded/
 
 Se alle komponenter i action:
 
-```
+```text
 http://localhost:3000/showcase
 → Chat & Tasks → ✨ Chat Panel OPGRADERET
+
 ```
 
 ---
@@ -208,6 +210,7 @@ http://localhost:3000/showcase
 
 // Nu:
 <ThinkingIndicator variant="dots" message="Friday tænker..." />
+
 ```
 
 ### WelcomeScreen → WelcomeScreenUpgraded
@@ -221,6 +224,7 @@ http://localhost:3000/showcase
   userName="Anders"
   onSuggestionClick={handleClick}
 />
+
 ```
 
 ### ResponseCard → ActionCard
@@ -237,6 +241,7 @@ http://localhost:3000/showcase
   metadata={[...]}
   actions={[...]}
 />
+
 ```
 
 ---
@@ -249,15 +254,15 @@ http://localhost:3000/showcase
    - Meetings: Purple-Pink
    - Invoices: Yellow-Orange
 
-2. **Hover states**
+1. **Hover states**
    - Alltid tilføj `hover:scale-105`
    - Smooth transitions med `transition-all duration-300`
 
-3. **Animations**
+1. **Animations**
    - Brug `animate-in` for indtræden
    - Stagger delays for lister
 
-4. **Accessibility**
+1. **Accessibility**
    - Icons skal have text labels
    - Buttons skal have `aria-label`
 
@@ -275,6 +280,6 @@ http://localhost:3000/showcase
 
 ---
 
-**Lavet af:** Cascade AI  
-**Dato:** Nov 10, 2025  
+**Lavet af:** Cascade AI
+**Dato:** Nov 10, 2025
 **Version:** 1.0

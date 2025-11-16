@@ -24,7 +24,8 @@ function MyComponent() {
     </Button>
   );
 }
-```
+
+```text
 
 ---
 
@@ -43,7 +44,8 @@ import { GenerateLeadDocButton } from "@/components/docs/GenerateLeadDocButton";
   variant="outline"
   size="sm"
 />;
-```
+
+```text
 
 **Icon-only version for tight spaces:**
 
@@ -51,7 +53,8 @@ import { GenerateLeadDocButton } from "@/components/docs/GenerateLeadDocButton";
 import { GenerateLeadDocIconButton } from "@/components/docs/GenerateLeadDocButton";
 
 <GenerateLeadDocIconButton leadId={lead.id} leadName={lead.name} />;
-```
+
+```bash
 
 ---
 
@@ -89,7 +92,8 @@ function LeadsTable({ leads }) {
     </Table>
   );
 }
-```
+
+```text
 
 ### In Lead Detail View
 
@@ -111,7 +115,8 @@ function LeadDetailPage({ leadId }) {
     </div>
   );
 }
-```
+
+```text
 
 ### In Dropdown Menu
 
@@ -128,7 +133,7 @@ function LeadActionsMenu({ lead }) {
     <DropdownMenu>
       <DropdownMenuTrigger>•••</DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => /* edit */ }>
+        <DropdownMenuItem onClick={() => /*edit*/ }>
           Edit Lead
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => generateLeadDoc.mutate({ leadId: lead.id })}>
@@ -139,7 +144,8 @@ function LeadActionsMenu({ lead }) {
     </DropdownMenu>
   );
 }
-```
+
+```text
 
 ---
 
@@ -164,7 +170,8 @@ generateLeadDoc.mutate(
     },
   }
 );
-```
+
+```text
 
 ### Generate Weekly Digest
 
@@ -173,7 +180,8 @@ const { generateWeeklyDigest } = useAIGeneration();
 
 // Simple trigger
 generateWeeklyDigest.mutate();
-```
+
+```text
 
 ### Bulk Generate All Leads
 
@@ -190,7 +198,8 @@ bulkGenerateLeadDocs.mutate(undefined, {
     console.log(`Failed: ${result.failed}`);
   },
 });
-```
+
+```text
 
 ---
 
@@ -223,7 +232,8 @@ function CustomButton({ leadId }) {
     </Button>
   );
 }
-```
+
+```text
 
 ### With Confirmation Dialog
 
@@ -263,7 +273,8 @@ function ConfirmGenerateButton({ leadId, leadName }) {
     </>
   );
 }
-```
+
+```text
 
 ---
 
@@ -272,14 +283,14 @@ function ConfirmGenerateButton({ leadId, leadName }) {
 ### High Priority
 
 1. ✅ **Docs Page Toolbar** - Already done!
-2. 🔲 **Leads List** - Add icon button in actions column
-3. 🔲 **Lead Detail Page** - Add prominent button
+1. 🔲 **Leads List** - Add icon button in actions column
+1. 🔲 **Lead Detail Page** - Add prominent button
 
 ### Nice to Have
 
-4. 🔲 **Lead Quick Actions Menu** - Add to dropdown
-5. 🔲 **Dashboard** - Add "Generate Weekly Digest" widget
-6. 🔲 **Settings** - Add automation options
+1. 🔲 **Lead Quick Actions Menu** - Add to dropdown
+1. 🔲 **Dashboard** - Add "Generate Weekly Digest" widget
+1. 🔲 **Settings** - Add automation options
 
 ---
 
@@ -332,6 +343,7 @@ export function MyLeadComponent({ leadId }) {
     </Button>
   );
 }
+
 ```
 
 ---

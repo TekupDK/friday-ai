@@ -2,23 +2,24 @@
  * HELP CENTER - Hjælp og support center
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import {
-  HelpCircle,
   Book,
+  ExternalLink,
+  FileText,
+  HelpCircle,
+  Mail,
   MessageSquare,
   Phone,
-  Mail,
   Search,
-  Video,
-  FileText,
+  Shield,
   Users,
+  Video,
   Zap,
-  ExternalLink,
 } from "lucide-react";
 import { useState } from "react";
 

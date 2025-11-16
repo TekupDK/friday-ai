@@ -102,7 +102,7 @@ export default function ShortWaveChatPanel({
 
       {/* Messages - compact for narrow panel */}
       <ScrollArea className="flex-1 p-2">
-        <div className="space-y-2">
+        <div data-testid="friday-message-area" className="space-y-2">
           {chatMessages.map((message: any) => (
             <div
               key={message.id}

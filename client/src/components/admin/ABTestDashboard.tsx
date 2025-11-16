@@ -3,6 +3,7 @@
  * Real-time monitoring and analysis of A/B tests
  */
 
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -10,29 +11,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
 import {
   Activity,
+  AlertTriangle,
+  CheckCircle,
   TrendingUp,
   Users,
   Zap,
-  AlertTriangle,
-  CheckCircle,
 } from "lucide-react";
 
 export default function ABTestDashboard() {
   // Fetch active tests
-  const { data: activeTests, isLoading: testsLoading } =
-    trpc.abTestAnalytics.getActiveTests.useQuery();
+  const { data: activeTests, isLoading: testsLoading } = (
+    trpc as any
+  ).abTestAnalytics.getActiveTests.useQuery();
 
   // Fetch test results for chat flow migration
-  const { data: chatResults, isLoading: resultsLoading } =
-    trpc.abTestAnalytics.getTestResults.useQuery(
-      { testName: "chat_flow_migration" },
-      { enabled: true, refetchInterval: 30000 } // Refresh every 30 seconds
-    );
+  const { data: chatResults, isLoading: resultsLoading } = (
+    trpc as any
+  ).abTestAnalytics.getTestResults.useQuery(
+    { testName: "chat_flow_migration" },
+    { enabled: true, refetchInterval: 30000 } // Refresh every 30 seconds
+  );
 
   if (testsLoading) {
     return (

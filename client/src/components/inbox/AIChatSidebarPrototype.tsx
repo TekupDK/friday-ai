@@ -28,8 +28,8 @@ export function AIChatSidebarPrototype({
 }: AIChatSidebarPrototypeProps) {
   const [summary, setSummary] = useState("");
 
-  const summarizeEmail = trpc.chat.summarizeEmail.useMutation({
-    onSuccess: data => {
+  const summarizeEmail = (trpc as any).chat.summarizeEmail.useMutation({
+    onSuccess: (data: any) => {
       // Handle both string and array formats
       const summaryText =
         typeof data.summary === "string"
@@ -39,7 +39,7 @@ export function AIChatSidebarPrototype({
             : "No summary available";
       setSummary(summaryText);
     },
-    onError: error => {
+    onError: (error: any) => {
       setSummary(`❌ Error: ${error.message}`);
     },
   });
@@ -62,8 +62,8 @@ export function AIChatSidebarPrototype({
           <Bot className="w-5 h-5 text-primary" />
           <h3 className="font-semibold">AI Assistant</h3>
         </div>
-        <Button variant="ghost" size="icon" onClick={onClose}>
-          <X className="w-4 h-4" />
+        <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close AI chat sidebar">
+          <X className="w-4 h-4" aria-hidden="true" />
         </Button>
       </div>
 

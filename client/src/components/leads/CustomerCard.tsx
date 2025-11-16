@@ -26,6 +26,13 @@ import {
   Star,
   Users,
   Send,
+  // Added icons used below
+  User,
+  Briefcase,
+  Calendar,
+  Award,
+  CheckCircle,
+  XCircle,
 } from "lucide-react";
 import {
   Card,

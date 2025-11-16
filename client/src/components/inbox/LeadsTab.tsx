@@ -739,6 +739,7 @@ export default function LeadsTab({ onRequestTabChange }: LeadsTabProps = {}) {
                 return (
                   <div
                     key={lead.id}
+                    data-testid="lead-item"
                     data-index={virtualRow.index}
                     ref={virtualizer.measureElement}
                     style={{

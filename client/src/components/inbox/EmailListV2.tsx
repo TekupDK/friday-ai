@@ -153,6 +153,10 @@ export default function EmailListV2({
 
   return (
     <div
+      data-testid="email-list"
+      role="listbox"
+      aria-label="Email list"
+      aria-multiselectable="true"
       className="flex-1 overflow-y-auto overflow-x-hidden relative nice-scrollbar"
       ref={parentRef}
     >
@@ -174,6 +178,7 @@ export default function EmailListV2({
           return (
             <div
               key={email.threadId}
+              data-testid="email-item"
               data-index={virtualRow.index}
               ref={virtualizer.measureElement}
               style={{
@@ -190,14 +195,15 @@ export default function EmailListV2({
               }`}
             >
               <div
-                className={`p-3 cursor-pointer ${
+                className={`p-3 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                   density === "compact" ? "py-2" : "py-3"
                 }`}
                 onClick={e => handleEmailClick(email, e)}
                 onKeyDown={e => handleKeyDown(e, email)}
-                role="button"
+                role="option"
                 tabIndex={0}
                 aria-selected={isSelected}
+                aria-label={`Email from ${getDisplayName(email.from || email.sender)}, ${email.subject}, ${email.unread ? 'unread' : 'read'}`}
               >
                 <div className="flex items-start gap-3">
                   {/* Checkbox for multi-select */}
@@ -205,7 +211,8 @@ export default function EmailListV2({
                     <Checkbox
                       checked={selectedEmails.has(email.threadId)}
                       onClick={e => e.stopPropagation()}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity p-2 -m-2"
+                      aria-label={`Select email from ${getDisplayName(email.from || email.sender)}`}
                     />
                   </div>
 
@@ -219,6 +226,7 @@ export default function EmailListV2({
                           )}
                           <button
                             onClick={e => e.stopPropagation()}
+                            aria-label={`View emails from ${getDisplayName(email.from || email.sender)}`}
                             className="font-medium text-sm text-foreground shrink-0 hover:underline hover:text-primary transition-colors"
                           >
                             {getDisplayName(email.from || email.sender)}
@@ -253,6 +261,7 @@ export default function EmailListV2({
                           )}
                           <button
                             onClick={e => e.stopPropagation()}
+                            aria-label={`View emails from ${getDisplayName(email.from || email.sender)}`}
                             className="font-medium text-sm text-foreground hover:underline hover:text-primary transition-colors"
                           >
                             {getDisplayName(email.from || email.sender)}
