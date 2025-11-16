@@ -5,14 +5,14 @@
  * Connects email monitoring, source detection, and Billy automation.
  */
 
-import { emailMonitor } from "./email-monitor";
+import { leads, tasks } from "../drizzle/schema";
+
 import { billyAutomation } from "./billy-automation";
+import { getDb, trackEvent } from "./db";
+import { emailMonitor } from "./email-monitor";
 import { detectLeadSourceIntelligent } from "./lead-source-detector";
 import { getWorkflowFromDetection } from "./lead-source-workflows";
 import { createCalendarEvent } from "./mcp";
-import { getDb } from "./db";
-import { leads, tasks } from "../drizzle/schema";
-import { eq, sql, and, gte, lte } from "drizzle-orm";
 
 interface AutomationConfig {
   enableEmailMonitoring: boolean;
@@ -223,24 +223,23 @@ export class WorkflowAutomationService {
       const [lead] = await db
         .insert(leads)
         .values({
-          // userId: 1, // TODO: Check if this field exists in schema
-          // source: sourceDetection.source, // TODO: Check if this field exists in schema
+          userId: 1, // TODO: extract from context
           name: customerName,
           email: customerEmail,
           phone: customerPhone,
           score: this.calculateLeadScore(sourceDetection),
           status: "new",
+          source: sourceDetection.source,
           notes: `Auto-detected from email: ${emailData.subject} (${sourceDetection.source})`,
           metadata: JSON.stringify({
             emailId: emailData.emailId,
             threadId: emailData.threadId,
             sourceDetection,
             workflow: getWorkflowFromDetection(sourceDetection),
-            source: sourceDetection.source, // Store in metadata instead
             createdAt: new Date().toISOString(),
           }),
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
         })
         .returning({ id: leads.id });
 
@@ -318,16 +317,17 @@ export class WorkflowAutomationService {
       }
 
       await db.insert(tasks).values({
-        // userId: 1, // TODO: Check if this field exists in schema
-        relatedLeadId: leadId, // Use relatedLeadId instead of leadId
+        userId: 1, // TODO: extract from context
+        relatedLeadId: leadId,
         title: action.title,
         description: action.description,
-        status: "pending",
+        status: "todo",
         priority: isRequired ? "high" : "medium",
-        estimatedTime: action.estimatedTime,
-        dueDate: new Date(Date.now() + (isRequired ? 60 : 240) * 60 * 1000), // 1h or 4h from now
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        dueDate: new Date(
+          Date.now() + (isRequired ? 60 : 240) * 60 * 1000
+        ).toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       console.error("[WorkflowAutomation] Error creating task:", error);
@@ -346,16 +346,34 @@ export class WorkflowAutomationService {
         case "Auto-tag lead":
           // Lead is already tagged in metadata
           console.log(`[WorkflowAutomation] ✅ Lead auto-tagged`);
+          // Track automation event
+          await trackEvent({
+            userId: 1,
+            eventType: "auto_action",
+            eventData: { leadId, action: "auto_tag" },
+          });
           break;
 
         case "Notify sales":
           // TODO: Send notification to sales team
           console.log(`[WorkflowAutomation] 📢 Sales team notified`);
+          // Track automation event
+          await trackEvent({
+            userId: 1,
+            eventType: "auto_action",
+            eventData: { leadId, action: "notify_sales" },
+          });
           break;
 
         case "Geo tag":
           // TODO: Add geographic tagging
           console.log(`[WorkflowAutomation] 📍 Geographic tag added`);
+          // Track automation event
+          await trackEvent({
+            userId: 1,
+            eventType: "auto_action",
+            eventData: { leadId, action: "geo_tag" },
+          });
           break;
 
         default:
@@ -490,6 +508,309 @@ export class WorkflowAutomationService {
   updateConfig(newConfig: Partial<AutomationConfig>): void {
     this.config = { ...this.config, ...newConfig };
     console.log("[WorkflowAutomation] ✅ Config updated:", this.config);
+  }
+
+  async runRendetaljeLeadEngine(options?: {
+    dryRun?: boolean;
+    daysBack?: number;
+  }): Promise<{
+    p1: any[];
+    p2: any[];
+    p3: any[];
+    rejected: any[];
+    actions: { type: string; details: string }[];
+    reportText: string;
+  }> {
+    const dryRun = !!options?.dryRun;
+    const daysBack = options?.daysBack ?? 90;
+
+    const { ENV } = await import("./_core/env");
+    const {
+      searchGmailThreads,
+      sendGmailMessage,
+      findFreeSlots,
+      checkCalendarAvailability,
+    } = await import("./google-api");
+    const {
+      ensureStandardLabels,
+      addLabelToThread,
+      getOrCreateLabel,
+      archiveThread,
+    } = await import("./gmail-labels");
+
+    await ensureStandardLabels();
+
+    const keywords = [
+      "rengøring",
+      "fast rengøring",
+      "flytterengøring",
+      "hovedrengøring",
+      "tilbud",
+      "pris",
+    ];
+    const query =
+      `newer_than:${daysBack}d (in:inbox OR in:sent) ({keywords})`.replace(
+        "{keywords}",
+        keywords.map(k => `\"${k}\"`).join(" OR ")
+      );
+
+    let threads: any[] = [];
+    try {
+      threads = await searchGmailThreads({ query, maxResults: 200 });
+    } catch (err) {
+      console.warn(
+        "[LeadEngine] Gmail search failed, continuing with empty set",
+        err
+      );
+      threads = [];
+    }
+    const now = Date.now();
+
+    const p1: any[] = [];
+    const p2: any[] = [];
+    const p3: any[] = [];
+    const rejected: any[] = [];
+    const actions: { type: string; details: string }[] = [];
+
+    function getDaysSince(dateStr: string): number {
+      const t = Date.parse(dateStr || "");
+      if (isNaN(t)) return 0;
+      return Math.floor((now - t) / 86400000);
+    }
+
+    function wroteLastIsUs(fromValue: string): boolean {
+      const me = (ENV.googleImpersonatedUser || "").toLowerCase();
+      return (fromValue || "").toLowerCase().includes(me);
+    }
+
+    function buildReplyBody(info: {
+      name?: string;
+      sqm?: number;
+      rooms?: number;
+      estHours?: number;
+      persons?: number;
+      firstSlots?: { start: string; end: string }[];
+    }): string {
+      const pricePerHour = 349;
+      const persons = info.persons ?? 2;
+      const hours = info.estHours ?? 3;
+      const totalMin = pricePerHour * persons * Math.max(hours - 0.5, 1);
+      const totalMax = pricePerHour * persons * (hours + 0.5);
+      const slotsText = (info.firstSlots || [])
+        .slice(0, 2)
+        .map(
+          s =>
+            `* ${new Date(s.start).toLocaleString()} – ${new Date(s.end).toLocaleTimeString()}`
+        )
+        .join("\n");
+      return [
+        `Hej ${info.name || ""},`,
+        "",
+        "Tak for din henvendelse!",
+        "",
+        `📏 Bolig: ${info.sqm ?? "?"}m²${info.rooms ? ` med ${info.rooms} værelser` : ""}`,
+        `👥 Medarbejdere: ${persons} personer`,
+        `⏱️ Estimeret tid: ca. ${hours} timer på stedet = ${persons * hours} arbejdstimer total`,
+        `💰 Pris: ${pricePerHour} kr/time/person = ca. ${Math.round(totalMin)}–${Math.round(totalMax)} kr inkl. moms`,
+        "",
+        "💡 Du betaler kun det faktiske tidsforbrug - estimatet er vejledende",
+        "📞 Vi ringer ved +1 times overskridelse så der ingen overraskelser er",
+        "",
+        "📅 Ledige tider:",
+        slotsText,
+        "",
+        "Vi bruger svanemærkede produkter og leverer professionel kvalitet.",
+        "",
+        "Hvad siger du til en af tiderne ovenfor?",
+        "",
+        "Mvh,",
+        "Rendetalje",
+        "22 65 02 26",
+      ].join("\n");
+    }
+
+    for (const th of threads) {
+      const lastMsg = th.messages[th.messages.length - 1];
+      const days = getDaysSince(lastMsg?.date || th.date);
+
+      const summary = {
+        id: th.id,
+        name: "",
+        email: (lastMsg?.from || "").replace(/.*<([^>]+)>.*/, "$1"),
+        type: "",
+        lastContact: lastMsg?.date || th.date,
+        daysSince: days,
+        keyInfo: th.subject || th.snippet,
+        thread: th,
+      };
+
+      const lastByUs = wroteLastIsUs(lastMsg?.from || "");
+
+      // Avvist: heuristik via labels
+      const isRejected = (th.labels || []).some((l: any) =>
+        /closed[- ]?lost/i.test(l)
+      );
+      if (isRejected) {
+        rejected.push(summary);
+        continue;
+      }
+
+      if (!lastByUs) {
+        // P1: Kunden skrev sidst
+        p1.push(summary);
+        const needsReplyId = await getOrCreateLabel("Needs Reply");
+        if (dryRun) {
+          actions.push({
+            type: "label",
+            details: `Add Needs Reply to ${th.id}`,
+          });
+        } else {
+          await addLabelToThread(th.id, "Needs Reply");
+        }
+
+        // Kalender: find 2 slots de næste 7 dage (2 timer)
+        let slots: { start: string; end: string }[] = [];
+        try {
+          const free = await findFreeSlots({
+            startDate: new Date().toISOString(),
+            endDate: new Date(Date.now() + 7 * 86400000).toISOString(),
+            durationHours: 2,
+          });
+          slots = (free || []).slice(0, 2);
+        } catch {}
+
+        const body = buildReplyBody({
+          name: "",
+          firstSlots: slots,
+        });
+        const subject = th.subject || "Vedr. rengøring";
+
+        if (dryRun) {
+          actions.push({
+            type: "email",
+            details: `Would send reply to ${summary.email}`,
+          });
+        } else if (summary.email) {
+          await sendGmailMessage({
+            to: summary.email,
+            subject,
+            body,
+            replyToThreadId: th.id,
+          });
+          actions.push({
+            type: "email",
+            details: `Sent reply to ${summary.email}`,
+          });
+        }
+      } else {
+        // Vi skrev sidst → P2/P3 via ventetid
+        if (days > 14) {
+          p3.push(summary);
+          if (dryRun) {
+            actions.push({ type: "label", details: `Archive ${th.id}` });
+          } else {
+            await addLabelToThread(th.id, "Archive");
+            await archiveThread(th.id);
+          }
+        } else {
+          p2.push(summary);
+          if (days > 10) {
+            if (dryRun) {
+              actions.push({
+                type: "email",
+                details: `Would send last ping to ${summary.email}`,
+              });
+            } else if (summary.email) {
+              const body =
+                "Sidste ping: Har du haft mulighed for at kigge? Vi har ledige tider næste uge.";
+              await sendGmailMessage({
+                to: summary.email,
+                subject: th.subject || "Opfølgning",
+                body,
+                replyToThreadId: th.id,
+              });
+              actions.push({
+                type: "email",
+                details: `Sent last ping to ${summary.email}`,
+              });
+            }
+          } else if (days > 3) {
+            if (dryRun) {
+              actions.push({
+                type: "email",
+                details: `Would send gentle follow-up to ${summary.email}`,
+              });
+            } else if (summary.email) {
+              const body =
+                "Venlig opfølgning: Sig endelig til hvis du ønsker et konkret forslag eller en booking.";
+              await sendGmailMessage({
+                to: summary.email,
+                subject: th.subject || "Opfølgning",
+                body,
+                replyToThreadId: th.id,
+              });
+              actions.push({
+                type: "email",
+                details: `Sent follow-up to ${summary.email}`,
+              });
+            }
+          }
+        }
+      }
+    }
+
+    function table(rows: any[], headers: string[]): string {
+      const head = `| ${headers.join(" | ")} |`;
+      const sep = `| ${headers.map(() => "---").join(" | ")} |`;
+      const body = rows
+        .map(
+          r =>
+            `| ${[r.name || "", r.email || "", r.type || "", r.lastContact || "", r.daysSince ?? "", r.keyInfo || ""].join(" | ")} |`
+        )
+        .join("\n");
+      return [head, sep, body].join("\n");
+    }
+
+    const reportParts: string[] = [];
+    reportParts.push(
+      "PRIORITET 1 – Klar til opfølgning\n" +
+        table(p1, [
+          "Navn",
+          "Email",
+          "Type",
+          "Sidste kontakt",
+          "Dage siden",
+          "Nøgleinfo",
+        ])
+    );
+    reportParts.push(
+      "\nPRIORITET 2 – Afventer deres svar\n" +
+        table(p2, [
+          "Navn",
+          "Email",
+          "Type",
+          "Sidste kontakt",
+          "Dage siden",
+          "Hvad vi tilbød",
+        ])
+    );
+    reportParts.push(
+      "\nPRIORITET 3 – Inaktive\n" +
+        table(p3, ["Navn", "Email", "Type", "Sidste kontakt", "Anbefaling"])
+    );
+    reportParts.push(
+      "\nHandlinger udført i Gmail:\n" +
+        actions.map(a => `- ${a.type}: ${a.details}`).join("\n")
+    );
+
+    return {
+      p1,
+      p2,
+      p3,
+      rejected,
+      actions,
+      reportText: reportParts.join("\n\n"),
+    };
   }
 }
 

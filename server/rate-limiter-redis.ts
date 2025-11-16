@@ -4,6 +4,7 @@
  */
 
 import { Redis } from "@upstash/redis";
+import { logger } from "./logger";
 
 // Initialize Redis client (will use env vars)
 let redis: Redis | null = null;
@@ -14,9 +15,8 @@ function getRedisClient(): Redis {
     const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
     if (!redisUrl || !redisToken) {
-      console.warn(
-        "⚠️ Redis not configured, falling back to in-memory rate limiting"
-      );
+      // ✅ SECURITY FIX: Use logger instead of console.warn
+      logger.warn("Redis not configured, falling back to in-memory rate limiting");
       throw new Error("Redis not configured");
     }
 
@@ -69,7 +69,7 @@ export async function checkRateLimit(
       const oldest = await client.zrange(key, 0, 0, { withScores: true });
       const resetTime =
         oldest.length > 0
-          ? (oldest[0].score as number) + config.windowMs
+          ? ((oldest[0] as any).score as number) + config.windowMs
           : now + config.windowMs;
 
       return {
@@ -94,7 +94,8 @@ export async function checkRateLimit(
       reset: Math.floor((now + config.windowMs) / 1000),
     };
   } catch (error) {
-    console.error("Rate limit check failed:", error);
+    // ✅ SECURITY FIX: Use logger instead of console.error
+    logger.error("Rate limit check failed", { err: error instanceof Error ? error : new Error(String(error)) });
     // Fail open - allow request if Redis is down
     return {
       success: true,
@@ -114,7 +115,8 @@ export async function resetRateLimit(userId: number): Promise<void> {
     const key = `ratelimit:user:${userId}`;
     await client.del(key);
   } catch (error) {
-    console.error("Failed to reset rate limit:", error);
+    // ✅ SECURITY FIX: Use logger instead of console.error
+    logger.error("Failed to reset rate limit", { err: error instanceof Error ? error : new Error(String(error)) });
   }
 }
 
@@ -141,7 +143,7 @@ export async function getRateLimitStatus(
     const oldest = await client.zrange(key, 0, 0, { withScores: true });
     const resetTime =
       oldest.length > 0
-        ? (oldest[0].score as number) + config.windowMs
+        ? ((oldest[0] as any).score as number) + config.windowMs
         : now + config.windowMs;
 
     return {
@@ -151,7 +153,8 @@ export async function getRateLimitStatus(
       reset: Math.floor(resetTime / 1000),
     };
   } catch (error) {
-    console.error("Failed to get rate limit status:", error);
+    // ✅ SECURITY FIX: Use logger instead of console.error
+    logger.error("Failed to get rate limit status", { err: error instanceof Error ? error : new Error(String(error)) });
     return {
       success: true,
       limit: config.limit,
@@ -163,19 +166,76 @@ export async function getRateLimitStatus(
 
 /**
  * Fallback in-memory rate limiter (if Redis not available)
+ * FIXED: Now supports operation-specific rate limits via keySuffix
+ * FIXED: Added cleanup mechanism to prevent memory leaks
  */
-const inMemoryLimits = new Map<number, number[]>();
+const inMemoryLimits = new Map<string, number[]>();
+
+// Cleanup interval for in-memory limits
+let cleanupInterval: NodeJS.Timeout | null = null;
+
+/**
+ * Stop cleanup interval (for graceful shutdown)
+ * FIXED: Prevents memory leaks in test environment
+ */
+export function stopInMemoryCleanup(): void {
+  if (cleanupInterval) {
+    clearInterval(cleanupInterval);
+    cleanupInterval = null;
+  }
+}
+
+// Cleanup on process exit
+if (typeof process !== 'undefined') {
+  process.on('SIGTERM', stopInMemoryCleanup);
+  process.on('SIGINT', stopInMemoryCleanup);
+}
+
+/**
+ * Start cleanup interval for in-memory limits
+ * Cleans up expired entries every minute
+ */
+function startInMemoryCleanup(): void {
+  if (cleanupInterval) return; // Already started
+  
+  cleanupInterval = setInterval(() => {
+    const now = Date.now();
+    const keysToDelete: string[] = [];
+    
+    inMemoryLimits.forEach((requests, key) => {
+      // Remove entries older than 2 minutes (safety margin for 60s windows)
+      const recentRequests = requests.filter(
+        time => now - time < 120000 // 2 minutes
+      );
+      
+      if (recentRequests.length === 0) {
+        keysToDelete.push(key);
+      } else {
+        inMemoryLimits.set(key, recentRequests);
+      }
+    });
+    
+    keysToDelete.forEach(key => inMemoryLimits.delete(key));
+  }, 60000); // Every minute
+}
 
 export function checkRateLimitInMemory(
   userId: number,
-  config: RateLimitConfig = { limit: 10, windowMs: 60000 }
+  config: RateLimitConfig = { limit: 10, windowMs: 60000 },
+  keySuffix?: string
 ): RateLimitResult {
+  // Ensure cleanup is running
+  startInMemoryCleanup();
+  
   const now = Date.now();
-  const userRequests = inMemoryLimits.get(userId) || [];
+  // Create composite key: userId:operationName or just userId
+  const key = keySuffix ? `${userId}:${keySuffix}` : userId.toString();
+  const userRequests = inMemoryLimits.get(key) || [];
 
   // Remove old requests
+  // FIXED: Use <= to include requests at exact window boundary
   const recentRequests = userRequests.filter(
-    time => now - time < config.windowMs
+    time => now - time <= config.windowMs
   );
 
   if (recentRequests.length >= config.limit) {
@@ -189,27 +249,122 @@ export function checkRateLimitInMemory(
   }
 
   recentRequests.push(now);
-  inMemoryLimits.set(userId, recentRequests);
+  inMemoryLimits.set(key, recentRequests);
+
+  // Calculate remaining: limit - current count (after adding this request)
+  const remaining = config.limit - recentRequests.length;
 
   return {
     success: true,
     limit: config.limit,
-    remaining: config.limit - recentRequests.length,
+    remaining: Math.max(0, remaining), // Ensure non-negative
     reset: Math.floor((now + config.windowMs) / 1000),
   };
 }
 
 /**
+ * Lua script for atomic rate limiting in Redis
+ * FIXED: Prevents race conditions by making operations atomic
+ */
+const RATE_LIMIT_SCRIPT = `
+  local key = KEYS[1]
+  local windowMs = tonumber(ARGV[1])
+  local limit = tonumber(ARGV[2])
+  local now = tonumber(ARGV[3])
+  local requestId = ARGV[4]
+  
+  local windowStart = now - windowMs
+  
+  -- Remove old entries (atomic)
+  redis.call('ZREMRANGEBYSCORE', key, 0, windowStart)
+  
+  -- Count current requests (atomic)
+  local count = redis.call('ZCARD', key)
+  
+  if count >= limit then
+    -- Get oldest request for reset time
+    local oldest = redis.call('ZRANGE', key, 0, 0, 'WITHSCORES')
+    local resetTime = now + windowMs
+    if #oldest > 0 then
+      resetTime = tonumber(oldest[2]) + windowMs
+    end
+    return {0, limit, 0, math.floor(resetTime / 1000)}
+  end
+  
+  -- Add current request (atomic)
+  redis.call('ZADD', key, now, requestId)
+  redis.call('EXPIRE', key, math.ceil(windowMs / 1000))
+  
+  return {1, limit, limit - count - 1, math.floor((now + windowMs) / 1000)}
+`;
+
+/**
+ * Sanitize key suffix to prevent injection and collisions
+ * FIXED: Input validation for keySuffix
+ */
+function sanitizeKeySuffix(keySuffix: string): string {
+  // Remove special characters, limit length, prevent collisions
+  return keySuffix
+    .replace(/[^a-zA-Z0-9_-]/g, '_') // Replace special chars with _
+    .replace(/_+/g, '_') // Collapse multiple underscores to single
+    .replace(/^_|_$/g, '') // Remove leading/trailing underscores
+    .toLowerCase() // Case-insensitive to prevent case collisions
+    .substring(0, 50); // Max 50 chars
+}
+
+/**
  * Unified rate limit check (tries Redis, falls back to in-memory)
+ * FIXED: Uses atomic Lua script to prevent race conditions
+ * FIXED: Validates and sanitizes keySuffix input
+ * @param userId User ID for rate limiting
+ * @param config Rate limit configuration
+ * @param keySuffix Optional suffix for operation-specific rate limits (e.g., "archive", "delete")
  */
 export async function checkRateLimitUnified(
   userId: number,
-  config: RateLimitConfig = { limit: 10, windowMs: 60000 }
+  config: RateLimitConfig = { limit: 10, windowMs: 60000 },
+  keySuffix?: string
 ): Promise<RateLimitResult> {
   try {
-    return await checkRateLimit(userId, config);
+    const client = getRedisClient();
+    // Sanitize keySuffix if provided
+    const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
+    
+    // Use operation-specific key if suffix provided
+    const key = sanitizedSuffix 
+      ? `ratelimit:user:${userId}:${sanitizedSuffix}`
+      : `ratelimit:user:${userId}`;
+    const now = Date.now();
+    const requestId = `${now}:${Math.random()}`;
+
+    // Use Lua script for atomic operations (prevents race conditions)
+    const result = await client.eval(
+      RATE_LIMIT_SCRIPT,
+      [key],
+      [config.windowMs, config.limit, now, requestId]
+    ) as [number, number, number, number];
+
+    // FIXED: Validate Lua script result format
+    if (!Array.isArray(result) || result.length !== 4) {
+      throw new Error("Invalid Lua script result format");
+    }
+
+    // Validate result types (prevent NaN/Infinity)
+    if (result.some(v => typeof v !== 'number' || !isFinite(v))) {
+      throw new Error("Invalid Lua script result values (NaN/Infinity detected)");
+    }
+
+    return {
+      success: result[0] === 1,
+      limit: result[1],
+      remaining: result[2],
+      reset: result[3],
+    };
   } catch (error) {
-    console.warn("Redis rate limiting unavailable, using in-memory fallback");
-    return checkRateLimitInMemory(userId, config);
+    // ✅ SECURITY FIX: Use logger instead of console.warn
+    logger.warn("Redis rate limiting unavailable, using in-memory fallback");
+    // Pass sanitized keySuffix to in-memory fallback
+    const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
+    return checkRateLimitInMemory(userId, config, sanitizedSuffix);
   }
 }

@@ -4,11 +4,12 @@
 
 If you see this error:
 
-```
+```text
 ❌ Google OAuth Failed:
 unauthorized_client: Client is unauthorized to retrieve access tokens using this method,
 or client not authorized for any of the scopes requested.
-```
+
+```text
 
 **Root Cause**: Service Account has Domain-Wide Delegation enabled, but the required scopes are not authorized in Google Workspace Admin Console.
 
@@ -20,36 +21,40 @@ or client not authorized for any of the scopes requested.
 
 Your service account:
 
-```
-Email: renos-319@renos-465008.iam.gserviceaccount.com
+```text
+Email: <renos<-<319@renos-465008.iam.gserviceaccount>.co>m>
 Client ID: 113277186090139582531
-```
+
+```text
 
 ### Step 2: Configure Domain-Wide Delegation
 
 1. **Go to Google Workspace Admin Console**:
 
-   ```
-   https://admin.google.com/ac/owl/domainwidedelegation
-   ```
+```text
+   <https://admin.google.com/ac/owl/domainwidedelegation>
 
-2. **Click "Add new"** (or edit existing if service account already listed)
+```text
 
-3. **Enter Client ID**:
+1. **Click "Add new"** (or edit existing if service account already listed)
 
-   ```
+1. **Enter Client ID**:
+
+```text
    113277186090139582531
-   ```
 
-4. **Enter OAuth Scopes** (copy-paste this EXACTLY):
+```text
 
-   ```
-   https://www.googleapis.com/auth/calendar.readonly,https://www.googleapis.com/auth/gmail.readonly
-   ```
+1. **Enter OAuth Scopes** (copy-paste this EXACTLY):
 
-5. **Click "Authorize"**
+```text
+   <https://www.googleapis.com/auth/calendar.readonly,<https://www.googleapis.com/auth/gmail.readonl>y>
 
-6. **Wait 5-10 minutes** for Google to propagate changes
+```text
+
+1. **Click "Authorize"**
+
+1. **Wait 5-10 minutes** for Google to propagate changes
 
 ### Step 3: Verify Setup
 
@@ -57,27 +62,30 @@ Run the collection script again:
 
 ```bash
 npx tsx server/integrations/chromadb/scripts/1-collect-and-link-v4_3.ts
-```
+
+```text
 
 You should see:
 
-```
+```text
 ✅ Google OAuth authenticated
 📧 Collecting Gmail threads...
-```
+
+```text
 
 ---
 
 ## 🔍 Troubleshooting
 
-### Still Getting `unauthorized_client`?
+### Still Getting `unauthorized_client`
 
 **Check 1: Correct Client ID**
 
 ```bash
 # Get Client ID from service account JSON
 cat .env.dev | grep GOOGLE_SERVICE_ACCOUNT_KEY | jq -r '.client_id'
-```
+
+```text
 
 **Check 2: Correct Scopes**
 Make sure you added BOTH scopes (comma-separated, no spaces):
@@ -87,9 +95,10 @@ Make sure you added BOTH scopes (comma-separated, no spaces):
 
 **Check 3: Impersonated User Exists**
 
-```
-Impersonating: info@rendetalje.dk
-```
+```text
+Impersonating: <info@rendetalje.dk>
+
+```text
 
 - This email must exist in your Google Workspace
 - Service account will act on behalf of this user
@@ -142,10 +151,11 @@ After successful collection:
     }
   },
   "leads": [
-    /* 662 linked leads */
+    /*662 linked leads*/
   ]
 }
-```
+
+```bash
 
 Output file: `server/integrations/chromadb/test-data/raw-leads-v4_3.json`
 
@@ -154,10 +164,10 @@ Output file: `server/integrations/chromadb/test-data/raw-leads-v4_3.json`
 ## 🚀 Next Steps After OAuth Fix
 
 1. ✅ Fix OAuth (this guide)
-2. Run Script 1: `npx tsx scripts/1-collect-and-link-v4_3.ts`
-3. Run Script 2: `npx tsx scripts/2-calculate-metrics-v4_3.ts`
-4. Run Script 3: `npx tsx scripts/3-pipeline-analysis-v4_3.ts`
-5. Build Customer Cards V5.1
+1. Run Script 1: `npx tsx scripts/1-collect-and-link-v4_3.ts`
+1. Run Script 2: `npx tsx scripts/2-calculate-metrics-v4_3.ts`
+1. Run Script 3: `npx tsx scripts/3-pipeline-analysis-v4_3.ts`
+1. Build Customer Cards V5.1
 
 ---
 
@@ -168,6 +178,7 @@ If you can't fix OAuth right now, you can convert existing V4.2 data:
 ```bash
 # Convert V4.2 → V4.3 format (preserves real data)
 npx tsx scripts/1-convert-v4_2-to-v4_3.ts
+
 ```
 
 This will:
@@ -184,6 +195,6 @@ This will:
 If you're still stuck:
 
 1. Check service account has domain-wide delegation enabled in GCP Console
-2. Verify `info@rendetalje.dk` has access to Gmail and Calendar
-3. Try with a different impersonated user email
-4. Check Google Workspace audit logs for denied API requests
+1. Verify `info@rendetalje.dk` has access to Gmail and Calendar
+1. Try with a different impersonated user email
+1. Check Google Workspace audit logs for denied API requests

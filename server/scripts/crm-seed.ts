@@ -5,6 +5,7 @@ import { crmCustomerRouter } from "../routers/crm-customer-router";
 import { crmLeadRouter } from "../routers/crm-lead-router";
 import { crmBookingRouter } from "../routers/crm-booking-router";
 import * as db from "../db";
+import * as leadDb from "../lead-db";
 import { ENV } from "../_core/env";
 import { leads } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
@@ -77,7 +78,7 @@ async function main() {
   const uniquePhoneA = `45${Date.now().toString().slice(-8)}`;
   const uniquePhoneB = `46${(Date.now() + 12345).toString().slice(-8)}`;
 
-  const leadAlpha = await db.createLead({
+  const leadAlpha = await leadDb.createLead({
     userId: user.id,
     source: seedToken,
     name: "Alpha Seed",
@@ -89,7 +90,7 @@ async function main() {
     phone: uniquePhoneA,
     metadata: null,
   } as any);
-  const leadBeta = await db.createLead({
+  const leadBeta = await leadDb.createLead({
     userId: user.id,
     source: seedToken,
     name: "Beta Seed",

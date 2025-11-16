@@ -1,13 +1,13 @@
 # LiteLLM Integration - Server Implementation
 
-**Location:** `server/integrations/litellm/`  
+**Location:** `server/integrations/litellm/`
 **Status:** 🚀 Day 1 Implementation Started
 
 ---
 
 ## 📁 Directory Structure
 
-```
+```bash
 server/integrations/litellm/
 ├── config/
 │   └── litellm.config.yaml       ✅ LiteLLM configuration (6 FREE models)
@@ -28,7 +28,8 @@ server/integrations/litellm/
 ├── index.ts                      🔜 Main exports
 ├── .env.litellm                  ✅ Environment template
 └── README.md                     ✅ This file
-```
+
+```text
 
 ---
 
@@ -38,32 +39,36 @@ server/integrations/litellm/
 
 ```bash
 pip install 'litellm[proxy]'
-```
+
+```text
 
 ### 2. Start LiteLLM Proxy
 
 ```bash
 cd server/integrations/litellm/docker
 docker-compose -f docker-compose.litellm.yml up -d
-```
+
+```text
 
 ### 3. Verify Health
 
 ```bash
-curl http://localhost:4000/health
+curl <http://localhost:4000/health>
 # Expected: {"status":"healthy"}
-```
+
+```text
 
 ### 4. Test Chat Completion
 
 ```bash
-curl -X POST http://localhost:4000/chat/completions \
+curl -X POST <http://localhost:4000/chat/completions> \
   -H "Content-Type: application/json" \
   -d '{
     "model": "glm-4.5-air",
     "messages": [{"role": "user", "content": "Hello!"}]
   }'
-```
+
+```text
 
 ---
 
@@ -77,19 +82,20 @@ Copy `.env.litellm` to your `.env.dev`:
 # Add to .env.dev
 OPENROUTER_API_KEY=your-key-here
 LITELLM_MASTER_KEY=friday-litellm-dev
-LITELLM_BASE_URL=http://localhost:4000
+LITELLM_BASE_URL=<http://localhost:4000>
 ENABLE_LITELLM=false
 LITELLM_ROLLOUT_PERCENTAGE=0
-```
+
+```text
 
 ### Models Configured (All FREE!)
 
 1. **glm-4.5-air** - Primary (100% accuracy, 128K context)
-2. **deepseek-chat** - Fallback 1 (Coding, 32K context)
-3. **minimax-m2** - Fallback 2 (Fast, 8K context)
-4. **kimi-k2** - Fallback 3 (Long context, 200K tokens)
-5. **qwen-coder** - Fallback 4 (Code specialist, 32K)
-6. **gemma-3-27b** - Legacy compatibility
+1. **deepseek-chat** - Fallback 1 (Coding, 32K context)
+1. **minimax-m2** - Fallback 2 (Fast, 8K context)
+1. **kimi-k2** - Fallback 3 (Long context, 200K tokens)
+1. **qwen-coder** - Fallback 4 (Code specialist, 32K)
+1. **gemma-3-27b** - Legacy compatibility
 
 **Total Cost:** $0.00/month 🎉
 
@@ -108,15 +114,17 @@ docker-compose -f docker-compose.litellm.yml up
 docker logs -f friday-litellm
 
 # Terminal 3: Test endpoints
-curl http://localhost:4000/health
-curl http://localhost:4000/models
-```
+curl <http://localhost:4000/health>
+curl <http://localhost:4000/models>
+
+```text
 
 ### Stop LiteLLM
 
 ```bash
 docker-compose -f docker-compose.litellm.yml down
-```
+
+```text
 
 ---
 
@@ -125,20 +133,23 @@ docker-compose -f docker-compose.litellm.yml down
 ### Health Check
 
 ```bash
-curl http://localhost:4000/health
-```
+curl <http://localhost:4000/health>
+
+```text
 
 ### List Models
 
 ```bash
-curl http://localhost:4000/models
-```
+curl <http://localhost:4000/models>
+
+```text
 
 ### Metrics (Prometheus format)
 
 ```bash
-curl http://localhost:4000/metrics
-```
+curl <http://localhost:4000/metrics>
+
+```text
 
 ---
 
@@ -149,13 +160,15 @@ curl http://localhost:4000/metrics
 ```bash
 # Run LiteLLM integration tests
 pnpm test tests/integrations/litellm/
-```
+
+```text
 
 ### Integration Tests
 
 ```bash
 # Test with real LiteLLM proxy
 pnpm test:litellm
+
 ```
 
 ---
@@ -189,10 +202,10 @@ pnpm test:litellm
 - **Main Docs:** `docs/integrations/litellm/`
 - **Migration Plan:** `docs/integrations/litellm/MIGRATION_PLAN.md`
 - **Architecture:** `docs/integrations/litellm/ARCHITECTURE.md`
-- **LiteLLM Docs:** https://docs.litellm.ai
+- **LiteLLM Docs:** <https://docs.litellm.ai>
 
 ---
 
-**Last Updated:** November 9, 2025  
-**Status:** Day 1 Setup In Progress  
+**Last Updated:** November 9, 2025
+**Status:** Day 1 Setup In Progress
 **Next:** Test Docker startup

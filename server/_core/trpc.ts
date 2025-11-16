@@ -1,6 +1,11 @@
 import { NOT_ADMIN_ERR_MSG, UNAUTHED_ERR_MSG } from "@shared/const";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+
+import {
+  createRateLimitMiddleware,
+  INBOX_CRM_RATE_LIMIT,
+} from "../rate-limit-middleware";
 import type { TrpcContext } from "./context";
 
 const t = initTRPC.context<TrpcContext>().create({
@@ -72,4 +77,12 @@ export const adminProcedure = t.procedure.use(
       },
     });
   })
+);
+
+/**
+ * Rate-limited protected procedure for inbox/CRM operations
+ * Limits: 10 requests per 30 seconds per user
+ */
+export const rateLimitedProcedure = protectedProcedure.use(
+  createRateLimitMiddleware(INBOX_CRM_RATE_LIMIT, "inbox-crm")
 );

@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-✅ **89% of proposed parameters are extractable** from existing data sources  
+✅ **89% of proposed parameters are extractable** from existing data sources
 ⚠️ **11% require additional configuration or assumptions**
 
 ---
@@ -31,7 +31,8 @@
 ```typescript
 const billy = await getInvoice(invoiceId);
 const invoicedHours = billy.lines.reduce((sum, line) => sum + line.quantity, 0);
-```
+
+```text
 
 ---
 
@@ -61,7 +62,8 @@ const duration =
     new Date(event.start.dateTime).getTime()) /
   (1000 * 60);
 const numberOfPeople = event.attendees?.length || 1;
-```
+
+```text
 
 ---
 
@@ -91,7 +93,8 @@ const estimatedHours = parseFloat(
   body.match(/(\d+(?:\.\d+)?)\s*(?:timer|hours?)/i)?.[1] || "0"
 );
 const leadSource = classifyLeadSource(message.from, message.subject);
-```
+
+```text
 
 ---
 
@@ -130,7 +133,8 @@ const LEAD_COSTS: Record<string, number> = {
   Direct: 0,
   Existing: 0,
 };
-```
+
+```text
 
 #### Time
 
@@ -213,7 +217,8 @@ function determinePipelineStage(lead: V4_3_Lead): {
   // Unknown
   return { stage: "unknown", substage: "uncategorized" };
 }
-```
+
+```text
 
 ---
 
@@ -244,10 +249,11 @@ function calculateCustomerValue(email: string, allLeads: V4_3_Lead[]): CustomerV
     averageBookingValue: lifetimeValue / totalBookings,
     firstBookingDate: Math.min(...bookings.map(b => new Date(b.startTime).getTime())),
     lastBookingDate: Math.max(...bookings.map(b => new Date(b.startTime).getTime())),
-    daysBetweenBookings: /* calculate avg */,
+    daysBetweenBookings: /*calculate avg*/,
   };
 }
-```
+
+```text
 
 ---
 
@@ -263,7 +269,8 @@ export const LEAD_COSTS: Record<string, number> = {
   Direct: 0,
   Existing: 0,
 };
-```
+
+```text
 
 ### 2. Service Type Mapping
 
@@ -278,7 +285,8 @@ export const SERVICE_TYPES: Record<
   "REN-004": { name: "Erhvervsrengøring", defaultHours: 4, coefficient: 0.008 },
   "REN-005": { name: "Fast rengøring", defaultHours: 3, coefficient: 0.01 },
 };
-```
+
+```text
 
 ### 3. Time Window
 
@@ -287,7 +295,8 @@ export const TIME_WINDOW = {
   start: "2025-07-01T00:00:00Z",
   end: "2025-11-30T23:59:59Z",
 };
-```
+
+```text
 
 ---
 
@@ -322,6 +331,7 @@ interface V4_3_Lead {
   // === QUOTE RECOMMENDATION ===
   quoteRecommendation: QuoteRecommendation;
 }
+
 ```
 
 ---
@@ -341,21 +351,21 @@ interface V4_3_Lead {
 ## Next Steps
 
 1. ✅ **Accept Interface** — Confirm V4.3 structure
-2. ✅ **Provide Lead Costs** — Fill in partner fees
-3. ⚡ **Build Scripts:**
+1. ✅ **Provide Lead Costs** — Fill in partner fees
+1. ⚡ **Build Scripts:**
    - `collect-and-link-v4_3.ts` — One-pass collector + linker
    - `enrich-actuals-v4_3.ts` — Pull real Billy/Calendar/Gmail actuals
    - `calculate-metrics-v4_3.ts` — Compute all TIER 4-6 fields
    - `pipeline-analysis-v4_3.ts` — Generate funnel report
-4. ⚡ **Run Pipeline** — Generate `complete-leads-v4.3.json`
-5. ⚡ **Build V5.1** — Rebuild customer cards with V4.3 data
+1. ⚡ **Run Pipeline** — Generate `complete-leads-v4.3.json`
+1. ⚡ **Build V5.1** — Rebuild customer cards with V4.3 data
 
 ---
 
 ## Summary
 
-✅ **89% extractable** from existing APIs  
-⚠️ **Lead costs config needed** for profit calculations  
+✅ **89% extractable** from existing APIs
+⚠️ **Lead costs config needed** for profit calculations
 ❌ **Overhead data** not available (optional for V4.3)
 
 **Recommendation:** Proceed with V4.3 using this interface. Start with config file for lead costs, then build the 4-script pipeline.

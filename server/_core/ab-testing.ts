@@ -140,27 +140,38 @@ export async function recordTestMetrics(
   db?: any
 ): Promise<void> {
   try {
-    console.log(`📊 A/B Test Metrics: ${metrics.testGroup}`, {
-      userId: metrics.userId,
-      responseTime: metrics.responseTime,
-      errorCount: metrics.errorCount,
-      completionRate: metrics.completionRate,
-    });
+    // ✅ SECURITY FIX: Use logger instead of console.log (redacts sensitive data)
+    const { logger } = await import("../_core/logger");
+    logger.info(
+      {
+        testGroup: metrics.testGroup,
+        userId: metrics.userId,
+        responseTime: metrics.responseTime,
+        errorCount: metrics.errorCount,
+        completionRate: metrics.completionRate,
+      },
+      "[A/B Testing] A/B Test Metrics"
+    );
 
     // TODO: Store metrics in database for analysis
     // NOTE: ab_test_metrics table not yet created in Drizzle schema
     // Will implement when Phase 2 A/B testing is fully activated
     if (db) {
-      console.log("[A/B Testing] Metrics recorded (in-memory only):", {
-        testName: "chat_flow_migration",
-        userId: metrics.userId,
-        testGroup: metrics.testGroup,
-        responseTime: metrics.responseTime,
-      });
+      logger.debug(
+        {
+          testName: "chat_flow_migration",
+          userId: metrics.userId,
+          testGroup: metrics.testGroup,
+          responseTime: metrics.responseTime,
+        },
+        "[A/B Testing] Metrics recorded (in-memory only)"
+      );
       // await db.insert(abTestMetrics).values({...}) // TODO: Implement with Drizzle schema
     }
   } catch (error) {
-    console.error("Failed to record A/B test metrics:", error);
+    // ✅ SECURITY FIX: Use logger instead of console.error
+    const { logger } = await import("../_core/logger");
+    logger.error({ err: error }, "[A/B Testing] Failed to record A/B test metrics");
   }
 }
 
@@ -182,9 +193,9 @@ export async function calculateTestResults(
   let variantMetrics: TestMetrics[] = [];
 
   if (db) {
-    console.log(
-      "[A/B Testing] Skipping database query - table not yet implemented"
-    );
+    // ✅ SECURITY FIX: Use logger instead of console.log
+    const { logger } = await import("../_core/logger");
+    logger.debug("[A/B Testing] Skipping database query - table not yet implemented");
     // TODO: Implement with Drizzle ORM when schema is ready
     // const metrics = await db.select().from(abTestMetrics)
     //   .where(and(

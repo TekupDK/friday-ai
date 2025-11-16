@@ -6,7 +6,8 @@
 
 import { getInvoices } from "./billy";
 import { createOrUpdateCustomerProfile } from "./customer-db";
-import { createLead, getHistoricalCalendarEvents, getUserLeads } from "./db";
+import { getHistoricalCalendarEvents } from "./db";
+import { createLead, getUserLeads } from "./lead-db";
 
 interface ImportResult {
   leadsCreated: number;

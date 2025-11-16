@@ -322,17 +322,17 @@ export class EmailMonitorService {
 
       // Store in email_threads table
       await db.insert(emailThreads).values({
+        userId: emailData.userId ?? 1, // TODO: get from user context
         gmailThreadId: emailData.threadId,
         subject: emailData.subject,
-        fromEmail: emailData.from,
-        toEmail: emailData.to,
-        text: emailData.body,
-        createdAt: emailData.timestamp.toISOString(),
-        updatedAt: new Date().toISOString(),
-        metadata: JSON.stringify({
-          sourceDetection: emailData.sourceDetection,
-          workflow: emailData.workflow,
+        participants: JSON.stringify({
+          from: emailData.from,
+          to: emailData.to,
         }),
+        snippet: emailData.body?.substring(0, 200),
+        labels: JSON.stringify(emailData.labels ?? []),
+        lastMessageAt: emailData.timestamp.toISOString(),
+        isRead: false,
       });
 
       console.log(

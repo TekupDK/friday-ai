@@ -16,9 +16,14 @@ vi.mock("../billy", () => ({
 
 vi.mock("../db", () => ({
   createTask: vi.fn(async x => ({ id: 1, ...x })),
+  getUserTasks: vi.fn(async () => []),
+  trackEvent: vi.fn(async () => {}),
+}));
+
+vi.mock("../lead-db", () => ({
+  createLead: vi.fn(async x => ({ id: 1, ...x })),
   getUserLeads: vi.fn(async () => []),
   updateLeadStatus: vi.fn(async () => {}),
-  trackEvent: vi.fn(async () => {}),
 }));
 
 vi.mock("../google-api", () => ({
@@ -60,7 +65,7 @@ describe("Tool router (executeToolCall)", () => {
   it("propagates API_ERROR when external call fails", async () => {
     const { executeToolCall } = await import("../friday-tool-handlers");
     const mcp = await import("../mcp");
-    (mcp.searchGmail as any).mockRejectedValueOnce(new Error("Rate limit"));
+    (mcp.searchGmail as any).mockRejectedValue(new Error("Rate limit"));
 
     const res = await executeToolCall("search_gmail", { query: "x" }, 9);
     expect(res.success).toBe(false);
@@ -86,10 +91,10 @@ describe("Tool router (executeToolCall)", () => {
 
   it("passes filters to list_leads DB call", async () => {
     const { executeToolCall } = await import("../friday-tool-handlers");
-    const db = await import("../db");
+    const leadDb = await import("../lead-db");
 
     await executeToolCall("list_leads", { status: "won" }, 7);
-    expect(db.getUserLeads).toHaveBeenCalledWith(7, {
+    expect(leadDb.getUserLeads).toHaveBeenCalledWith(7, {
       status: "won",
       source: undefined,
     });

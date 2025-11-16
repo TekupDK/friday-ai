@@ -2,6 +2,7 @@ import "dotenv/config";
 import type { TrpcContext } from "../_core/context";
 import { ENV } from "../_core/env";
 import * as db from "../db";
+import * as leadDb from "../lead-db";
 import { appRouter } from "../routers";
 
 async function main() {
@@ -48,13 +49,13 @@ async function main() {
   const caller = appRouter.createCaller(ctx);
 
   // Create or find lead
-  const leads = await db.getUserLeads(user.id, { searchQuery: email });
+  const leads = await leadDb.getUserLeads(user.id, { searchQuery: email });
   const foundLead = leads.find(
     l => l.email?.toLowerCase() === email.toLowerCase()
   );
   let leadId: number;
   if (!foundLead) {
-    const created = await db.createLead({
+    const created = await leadDb.createLead({
       userId: user.id,
       source: "analysis_script",
       name,

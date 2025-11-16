@@ -79,15 +79,15 @@ export function generateLeadDocument(
     sections.push("");
 
     data.emailThreads.slice(0, 15).forEach((thread, i) => {
-      const timeAgo = formatDistanceToNow(new Date(thread.date), {
+      const timeAgo = formatDistanceToNow(new Date((thread as any).date), {
         addSuffix: true,
         locale: da,
       });
 
       sections.push(`#### ${i + 1}. ${thread.subject}`);
-      sections.push(`**Date:** ${formatDate(thread.date)} (${timeAgo})`);
-      sections.push(`**From:** ${thread.from_email}`);
-      sections.push(`**To:** ${thread.to_email}`);
+      sections.push(`**Date:** ${formatDate((thread as any).date)} (${timeAgo})`);
+      sections.push(`**From:** ${(thread as any).from_email}`);
+      sections.push(`**To:** ${(thread as any).to_email}`);
       sections.push("");
       sections.push(`> ${thread.snippet}`);
       sections.push("");

@@ -40,17 +40,27 @@ export interface AIDocMetrics {
  */
 export async function getAIDocMetrics(): Promise<AIDocMetrics> {
   try {
-    const db = getDb();
+    const db = await getDb();
+    if (!db) {
+      return {
+        totalGenerated: 0,
+        successRate: 0,
+        averageGenerationTime: 0,
+        totalCost: 0,
+        generatedToday: 0,
+        generatedThisWeek: 0,
+        generatedThisMonth: 0,
+        topLeads: [],
+        recentGenerations: [],
+      };
+    }
 
     // Get all AI-generated docs
     const aiDocs = await db
       .select()
       .from(documents)
       .where(
-        and(
-          sql`${documents.tags} ? 'ai-generated'`,
-          eq(documents.isDeleted, false)
-        )
+        sql`${documents.tags} ? 'ai-generated'`
       )
       .orderBy(desc(documents.createdAt));
 
@@ -67,15 +77,15 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
     const generatedToday = aiDocs.filter(
-      doc => new Date(doc.createdAt) >= todayStart
+      (doc: any) => new Date(doc.createdAt) >= todayStart
     ).length;
 
     const generatedThisWeek = aiDocs.filter(
-      doc => new Date(doc.createdAt) >= weekStart
+      (doc: any) => new Date(doc.createdAt) >= weekStart
     ).length;
 
     const generatedThisMonth = aiDocs.filter(
-      doc => new Date(doc.createdAt) >= monthStart
+      (doc: any) => new Date(doc.createdAt) >= monthStart
     ).length;
 
     // Success rate (assuming all retrieved docs are successful)
@@ -90,7 +100,7 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
     // Top leads (extract from doc metadata)
     const leadCounts = new Map<string, { name: string; count: number }>();
 
-    aiDocs.forEach(doc => {
+    aiDocs.forEach((doc: any) => {
       // Try to extract lead info from title or content
       const titleMatch = doc.title?.match(/Lead:\s*(.+?)(?:\s*-|$)/);
       if (titleMatch) {
@@ -113,7 +123,7 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
       .slice(0, 5);
 
     // Recent generations
-    const recentGenerations = aiDocs.slice(0, 10).map(doc => ({
+    const recentGenerations = aiDocs.slice(0, 10).map((doc: any) => ({
       docId: doc.id,
       title: doc.title || "Untitled",
       createdAt: new Date(doc.createdAt),
@@ -193,7 +203,11 @@ export async function logAIGeneration(data: {
  */
 export async function getGenerationStats(period: "day" | "week" | "month") {
   try {
-    const db = getDb();
+    const db = await getDb();
+    if (!db) {
+      logger.warn("[AI Analytics] Database not available");
+      return { period, count: 0, docs: [] };
+    }
     const now = new Date();
 
     let startDate: Date;
@@ -220,15 +234,14 @@ export async function getGenerationStats(period: "day" | "week" | "month") {
       .where(
         and(
           sql`${documents.tags} ? 'ai-generated'`,
-          gte(documents.createdAt, startDate.toISOString()),
-          eq(documents.isDeleted, false)
+          gte(documents.createdAt, startDate.toISOString())
         )
       );
 
     return {
       period,
       count: docs.length,
-      docs: docs.map(doc => ({
+      docs: docs.map((doc: any) => ({
         id: doc.id,
         title: doc.title,
         createdAt: new Date(doc.createdAt),

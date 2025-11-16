@@ -282,4 +282,33 @@ export const automationRouter = router({
         throw new Error(`Failed to log suggestion usage: ${error}`);
       }
     }),
+
+  runRendetaljeLeadEngine: protectedProcedure
+    .input(
+      z.object({
+        dryRun: z.boolean().optional(),
+        daysBack: z.number().min(1).max(180).optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const result = await workflowAutomation.runRendetaljeLeadEngine({
+          dryRun: input.dryRun ?? true,
+          daysBack: input.daysBack ?? 90,
+        });
+        return {
+          success: true,
+          message: "Rendetalje Lead Engine executed",
+          counts: {
+            p1: result.p1.length,
+            p2: result.p2.length,
+            p3: result.p3.length,
+            actions: result.actions.length,
+          },
+          reportText: result.reportText,
+        };
+      } catch (error) {
+        throw new Error(`Failed to run lead engine: ${error}`);
+      }
+    }),
 });

@@ -18,9 +18,10 @@ As a [user type], I want [goal] so that [benefit].
 
 ### Architecture
 
-```
+```text
 [Diagram or description]
-```
+
+```text
 
 ### Data Model
 
@@ -28,6 +29,7 @@ As a [user type], I want [goal] so that [benefit].
 interface FeatureData {
   // Define data structure
 }
+
 ```
 
 ### API Endpoints
@@ -88,7 +90,7 @@ interface FeatureData {
 
 ---
 
-**Status:** Draft  
-**Author:** [Your name]  
-**Created:** [Date]  
+**Status:** Draft
+**Author:** [Your name]
+**Created:** [Date]
 **Last Updated:** [Date]

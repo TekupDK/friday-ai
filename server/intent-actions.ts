@@ -6,7 +6,8 @@
 
 import { createInvoice, getCustomers } from "./billy";
 import { checkIdempotency, storeIdempotencyRecord } from "./idempotency";
-import { createLead, createTask, getUserLeads, getUserTasks } from "./db";
+import { createTask, getUserTasks } from "./db";
+import { createLead, getUserLeads } from "./lead-db";
 import {
   createCalendarEvent,
   listCalendarEvents,

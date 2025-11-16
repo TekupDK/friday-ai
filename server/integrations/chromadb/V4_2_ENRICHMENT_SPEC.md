@@ -5,8 +5,8 @@
 V4.2 adds **actual historical data** to V4.1 leads by integrating three key data sources:
 
 1. **Billy Invoices** - Actual hours, prices, and m² from issued invoices
-2. **Calendar History** - Booked durations and team composition
-3. **Email Confirmations** - Actual vs estimated time and customer feedback
+1. **Calendar History** - Booked durations and team composition
+1. **Email Confirmations** - Actual vs estimated time and customer feedback
 
 This enables accurate performance tracking and better quote estimation.
 
@@ -33,7 +33,7 @@ This enables accurate performance tracking and better quote estimation.
 
 ```json
 {
-  "contactEmail": "lars.joenstrup@live.dk",
+  "contactEmail": "<lars.joenstrup@live.dk>",
   "invoiceNo": "INV-2025-001",
   "state": "paid",
   "actualHours": 3.5,
@@ -42,7 +42,8 @@ This enables accurate performance tracking and better quote estimation.
   "serviceType": "REN-001",
   "invoiceDate": "2025-10-28"
 }
-```
+
+```text
 
 **Lead enrichment:**
 
@@ -58,7 +59,8 @@ This enables accurate performance tracking and better quote estimation.
     }
   }
 }
-```
+
+```text
 
 ---
 
@@ -73,9 +75,10 @@ This enables accurate performance tracking and better quote estimation.
 
 **Calculation:**
 
-```
+```text
 Work Hours = (Duration in minutes / 60) × Number of Attendees
-```
+
+```text
 
 Example: 2-hour booking with 2 people = 4 work hours
 
@@ -83,13 +86,14 @@ Example: 2-hour booking with 2 people = 4 work hours
 
 ```json
 {
-  "email": "lars.joenstrup@live.dk",
+  "email": "<lars.joenstrup@live.dk>",
   "date": "2025-10-31",
   "durationMinutes": 120,
   "attendees": 2,
   "title": "Privatrengøring Park Alle 11"
 }
-```
+
+```text
 
 **Lead enrichment:**
 
@@ -104,7 +108,8 @@ Example: 2-hour booking with 2 people = 4 work hours
     }
   }
 }
-```
+
+```text
 
 ---
 
@@ -128,14 +133,15 @@ Example: 2-hour booking with 2 people = 4 work hours
 
 ```json
 {
-  "email": "lars.joenstrup@live.dk",
+  "email": "<lars.joenstrup@live.dk>",
   "date": "2025-10-31",
   "type": "completion",
   "actualHours": 3.5,
   "estimatedHours": 3.5,
   "feedback": "Opgaven er udført. Alt var som forventet."
 }
-```
+
+```text
 
 **Lead enrichment:**
 
@@ -151,7 +157,8 @@ Example: 2-hour booking with 2 people = 4 work hours
     }
   }
 }
-```
+
+```text
 
 ---
 
@@ -183,7 +190,8 @@ interface LeadActuals {
     completionCount?: number;
   };
 }
-```
+
+```text
 
 ---
 
@@ -247,7 +255,8 @@ const customerInvoices = invoices.filter(
 // Extract line items
 const hours = invoice.lines.reduce((sum, line) => sum + line.quantity, 0);
 const price = invoice.grossAmount;
-```
+
+```text
 
 ### Google Calendar API Integration
 
@@ -261,9 +270,10 @@ const events = await listCalendarEvents({
 // Calculate work hours
 const durationMs =
   new Date(event.end).getTime() - new Date(event.start).getTime();
-const durationHours = durationMs / (1000 * 60 * 60);
+const durationHours = durationMs / (1000 *60* 60);
 const workHours = durationHours * (event.attendees?.length || 1);
-```
+
+```text
 
 ### Gmail API Integration
 
@@ -276,7 +286,8 @@ const threads = await searchGmailThreads(
 // Parse actual hours from email body
 const hourMatch = emailBody.match(/(\d+(?:\.\d+)?)\s*(?:timer|hours?)/i);
 const actualHours = hourMatch ? parseFloat(hourMatch[1]) : null;
-```
+
+```text
 
 ---
 
@@ -287,10 +298,10 @@ V4.2 actuals improve the quote estimation engine:
 ### Hierarchy (Updated)
 
 1. **Actual invoiced hours** (highest confidence)
-2. **Average actual hours from completions** (high confidence)
-3. **Estimated time from lead** (medium confidence)
-4. **m² × coefficient** (lower confidence)
-5. **Service type default** (fallback)
+1. **Average actual hours from completions** (high confidence)
+1. **Estimated time from lead** (medium confidence)
+1. **m² × coefficient** (lower confidence)
+1. **Service type default** (fallback)
 
 ### Example
 
@@ -321,7 +332,8 @@ function estimateHours(lead: Lead): number {
   // Default
   return 3; // 3 hours default
 }
-```
+
+```text
 
 ---
 
@@ -348,7 +360,8 @@ interface TimeAccuracy {
   variance: 0,
   feedback: "Alt var som forventet"
 }
-```
+
+```text
 
 ---
 
@@ -401,7 +414,7 @@ interface TimeAccuracy {
 {
   "id": "GMAIL_19a1108ef71817b9",
   "name": "Lars Dollerup",
-  "email": "lars.joenstrup@live.dk",
+  "email": "<lars.joenstrup@live.dk>",
   "phone": "40456319",
   "address": "Park Alle 11, 6. Tv, 8000 Aarhus C",
   "serviceType": "REN-001",
@@ -451,4 +464,5 @@ interface TimeAccuracy {
     }
   }
 }
+
 ```

@@ -9,6 +9,7 @@ import { nanoid } from "nanoid";
 
 import { ENV } from "../_core/env";
 import * as db from "../db";
+import * as leadDb from "../lead-db";
 import type { TrpcContext } from "../_core/context";
 import { eq } from "drizzle-orm";
 import {
@@ -95,7 +96,7 @@ describe("CRM smoke tests", () => {
     // Create a unique lead for testing
     const unique = nanoid(8).toLowerCase();
     const testEmail = `crm.smoke.${unique}@example.com`;
-    const createdLead = await db.createLead({
+    const createdLead = await leadDb.createLead({
       userId,
       source: "crm_smoke_test",
       name: `Smoke Test Lead ${unique}`,
@@ -111,7 +112,7 @@ describe("CRM smoke tests", () => {
     expect(leadId).toBeGreaterThan(0);
 
     // Create a lead without email for negative test
-    const createdNoEmail = await db.createLead({
+    const createdNoEmail = await leadDb.createLead({
       userId,
       source: "crm_smoke_test",
       name: `Smoke Test Lead NoEmail ${unique}`,
@@ -139,7 +140,7 @@ describe("CRM smoke tests", () => {
     otherUserId = otherUser.id;
 
     // Create a lead for the other user
-    const otherLead = await db.createLead({
+    const otherLead = await leadDb.createLead({
       userId: otherUserId,
       source: "crm_smoke_test",
       name: `Other User Lead ${unique}`,
@@ -218,7 +219,7 @@ describe("CRM smoke tests", () => {
   it("profiles søgning og pagination på eget datasæt", async () => {
     // Opret to leads med samme søgetoken og konverter til profiler
     const token = `crm-smoke-${nanoid(6)}`;
-    const leadA = await db.createLead({
+    const leadA = await leadDb.createLead({
       userId,
       source: "crm_smoke_test",
       name: `Search Alpha ${token}`,
@@ -230,7 +231,7 @@ describe("CRM smoke tests", () => {
       notes: "Search profile A",
       metadata: null,
     } as any);
-    const leadB = await db.createLead({
+    const leadB = await leadDb.createLead({
       userId,
       source: "crm_smoke_test",
       name: `Search Beta ${token}`,
@@ -299,7 +300,7 @@ describe("CRM smoke tests", () => {
 
   it("leads status-filter og pagination", async () => {
     const token = `crm-smoke-${nanoid(6)}`;
-    const newA = await db.createLead({
+    const newA = await leadDb.createLead({
       userId,
       source: "crm_smoke_test",
       name: `New A ${token}`,
@@ -311,7 +312,7 @@ describe("CRM smoke tests", () => {
       notes: "Leads pagination A",
       metadata: null,
     } as any);
-    const newB = await db.createLead({
+    const newB = await leadDb.createLead({
       userId,
       source: "crm_smoke_test",
       name: `New B ${token}`,
@@ -323,7 +324,7 @@ describe("CRM smoke tests", () => {
       notes: "Leads pagination B",
       metadata: null,
     } as any);
-    const contacted = await db.createLead({
+    const contacted = await leadDb.createLead({
       userId,
       source: "crm_smoke_test",
       name: `Contacted ${token}`,

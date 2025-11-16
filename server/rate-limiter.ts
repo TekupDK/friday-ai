@@ -24,11 +24,21 @@ class RateLimiter {
     }, 60000);
   }
 
+  private lastCleanupTime = 0;
+  private static readonly CLEANUP_INTERVAL_MS = 5000; // 5 seconds
+
   /**
    * Check if a request should be rate limited
+   * FIXED: Check limit BEFORE incrementing to prevent count > maxRequests
    */
   isRateLimited(key: string, config: RateLimitConfig): boolean {
+    // Defensive cleanup - debounced to every 5 seconds for performance
     const now = Date.now();
+    if (now - this.lastCleanupTime > RateLimiter.CLEANUP_INTERVAL_MS) {
+      this.ensureCleanup();
+      this.lastCleanupTime = now;
+    }
+
     const entry = this.limits.get(key);
 
     // No previous requests or window expired
@@ -40,14 +50,14 @@ class RateLimiter {
       return false;
     }
 
-    // Increment count
-    entry.count++;
-
-    // Check if limit exceeded
-    if (entry.count > config.maxRequests) {
+    // Check if limit exceeded BEFORE incrementing
+    // This prevents count from exceeding maxRequests
+    if (entry.count >= config.maxRequests) {
       return true;
     }
 
+    // Increment count only if limit not exceeded
+    entry.count++;
     return false;
   }
 
@@ -73,6 +83,7 @@ class RateLimiter {
 
   /**
    * Cleanup expired entries
+   * IMPROVED: Also cleanup on every request to prevent memory leaks
    */
   private cleanup(): void {
     const now = Date.now();
@@ -85,6 +96,26 @@ class RateLimiter {
     });
 
     keysToDelete.forEach(key => this.limits.delete(key));
+  }
+
+  /**
+   * Defensive cleanup to prevent unbounded growth
+   * Maximum entries limit to prevent memory leaks
+   */
+  private static readonly MAX_ENTRIES = 10000;
+
+  private ensureCleanup(): void {
+    // Cleanup expired entries before checking
+    this.cleanup();
+
+    // Emergency cleanup if Map grows too large (only if significantly over limit)
+    // Use 1.5x threshold to avoid expensive sort operations on every cleanup
+    if (this.limits.size > RateLimiter.MAX_ENTRIES * 1.5) {
+      // More efficient: delete random 50% instead of sorting
+      const entries = Array.from(this.limits.keys());
+      const toDelete = entries.slice(0, Math.floor(entries.length / 2));
+      toDelete.forEach(key => this.limits.delete(key));
+    }
   }
 
   /**

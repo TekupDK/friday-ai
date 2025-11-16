@@ -1,8 +1,10 @@
-import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { COOKIE_NAME, ONE_YEAR_MS, SEVEN_DAYS_MS } from "@shared/const";
 import type { Express, Request, Response } from "express";
 import * as db from "../db";
 import { ENV } from "./env";
 import { sdk } from "./sdk";
+import { logger } from "./logger";
+import { getSessionCookieOptions } from "./cookies";
 
 // Phase 7.1: Rolling session refresh window (7 days)
 const ROLLING_WINDOW_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
@@ -16,10 +18,8 @@ export function registerOAuthRoutes(app: Express) {
   // Development login endpoint - Auto-login as OWNER
   // Supports both browser redirect and test mode (JSON response)
   app.get("/api/auth/login", async (req: Request, res: Response) => {
-    console.log(
-      "[AUTH] Dev-login endpoint called, NODE_ENV:",
-      process.env.NODE_ENV
-    );
+    // ✅ SECURITY FIX: Use logger instead of console.log
+    logger.debug({ nodeEnv: process.env.NODE_ENV }, "[AUTH] Dev-login endpoint called");
 
     // Check if test mode (return JSON instead of redirect)
     const isTestMode = req.query.mode === "test" || req.query.test === "true";
@@ -77,24 +77,20 @@ export function registerOAuthRoutes(app: Express) {
       // Create session token
       const sessionToken = await sdk.createSessionToken(ownerOpenId, {
         name: user.name || "Jonas",
-        expiresInMs: ONE_YEAR_MS,
+        expiresInMs: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       });
 
       // Set cookie with proper options
-      // CRITICAL FIX: For localhost development, override sameSite/secure settings
-      // The default production settings (sameSite="none" + secure=false) are INVALID
-      // and cause browsers to reject the cookie entirely
+      // ✅ SECURITY FIX: Use getSessionCookieOptions for consistent security settings
+      const cookieOptions = getSessionCookieOptions(req);
       const finalCookieOptions = {
-        maxAge: ONE_YEAR_MS,
-        httpOnly: true,
-        path: "/",
-        domain: undefined,
-        sameSite: "lax" as const,
-        secure: process.env.NODE_ENV === "production",
+        ...cookieOptions,
+        maxAge: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       };
       res.cookie(COOKIE_NAME, sessionToken, finalCookieOptions);
 
-      console.log("[AUTH] Session cookie set successfully:", {
+      // ✅ SECURITY FIX: Use logger (redacts cookie value)
+      logger.info({
         cookieName: COOKIE_NAME,
         sameSite: finalCookieOptions.sameSite,
         secure: finalCookieOptions.secure,
@@ -102,7 +98,7 @@ export function registerOAuthRoutes(app: Express) {
         maxAge: finalCookieOptions.maxAge,
         domain: finalCookieOptions.domain,
         path: finalCookieOptions.path,
-      });
+      }, "[AUTH] Session cookie set successfully");
 
       // Return JSON in test mode, redirect otherwise
       if (isTestMode || isTestEnvironment) {
@@ -137,7 +133,8 @@ export function registerOAuthRoutes(app: Express) {
         </html>
       `);
     } catch (error) {
-      console.error("[Auth] Dev login failed", error);
+      // ✅ SECURITY FIX: Use logger (redacts error details)
+      logger.error({ error }, "[Auth] Dev login failed");
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       const statusCode = errorMessage.includes("session") ? 500 : 500;
@@ -151,7 +148,8 @@ export function registerOAuthRoutes(app: Express) {
 
   // Phase 7.1: Silent session refresh endpoint
   app.post("/api/auth/refresh", async (req: Request, res: Response) => {
-    console.log("[Auth] Session refresh endpoint called");
+    // ✅ SECURITY FIX: Use logger
+    logger.debug("[Auth] Session refresh endpoint called");
 
     try {
       // Extract session cookie
@@ -207,33 +205,32 @@ export function registerOAuthRoutes(app: Express) {
       // Create new session token
       const newSessionToken = await sdk.createSessionToken(sessionData.openId, {
         name: user.name || sessionData.name,
-        expiresInMs: ONE_YEAR_MS,
+        expiresInMs: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       });
 
-      // Set new cookie with same options as login
+      // ✅ SECURITY FIX: Use getSessionCookieOptions for consistent security settings
+      const cookieOptions = getSessionCookieOptions(req);
       const finalCookieOptions = {
-        maxAge: ONE_YEAR_MS,
-        httpOnly: true,
-        path: "/",
-        domain: undefined,
-        sameSite: "lax" as const,
-        secure: process.env.NODE_ENV === "production",
+        ...cookieOptions,
+        maxAge: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       };
 
       res.cookie(COOKIE_NAME, newSessionToken, finalCookieOptions);
 
-      console.log("[Auth] Session refreshed successfully:", {
+      // ✅ SECURITY FIX: Use logger (redacts openId if sensitive)
+      logger.info({
         openId: sessionData.openId,
         oldRemainingMs: sessionData.remainingMs,
         newExpiry: "1 year",
-      });
+      }, "[Auth] Session refreshed successfully");
 
       return res.json({
         refreshed: true,
         message: "Session refreshed",
       });
     } catch (error) {
-      console.error("[Auth] Session refresh failed", error);
+      // ✅ SECURITY FIX: Use logger (redacts error details)
+      logger.error({ error }, "[Auth] Session refresh failed");
       return res.status(500).json({
         error: "Refresh failed",
         refreshed: false,

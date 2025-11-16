@@ -27,6 +27,8 @@ export const STANDARD_LABELS = [
   "I kalender",
   "Finance",
   "Afsluttet",
+  "Archive",
+  "Closed-Lost",
 ] as const;
 
 export type StandardLabel = (typeof STANDARD_LABELS)[number];

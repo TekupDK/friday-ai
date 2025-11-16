@@ -69,24 +69,26 @@ Use when: Documenting meetings or discussions
 ### Via UI (Recommended)
 
 1. Go to `/docs`
-2. Click "New Document"
-3. Select template from dropdown
-4. Fill in the template
-5. Save
+1. Click "New Document"
+1. Select template from dropdown
+1. Fill in the template
+1. Save
 
 ### Via CLI
 
 ```bash
 cd cli/tekup-docs
 pnpm run dev create --template feature-spec --title "My Feature"
-```
+
+```text
 
 ### Manual
 
 ```bash
 cp server/docs/templates/feature-spec.md docs/my-feature-spec.md
 # Edit the file
-```
+
+```text
 
 ---
 
@@ -101,21 +103,25 @@ cp server/docs/templates/feature-spec.md docs/my-feature-spec.md
 **Created:** [Date]
 **Last Updated:** [Date]
 ---
-```
+
+```text
 
 ### 2. Use Consistent Naming
 
-```
+```text
 ✅ Good:
+
 - Email-Sync-Implementation-Spec.md
 - Bug-Invoice-Calculate-Error.md
 - Guide-Setting-Up-Calendar.md
 
 ❌ Bad:
+
 - spec.md
 - bug.md
 - notes.md
-```
+
+```text
 
 ### 3. Link Related Docs
 
@@ -143,7 +149,8 @@ When doc becomes outdated:
 ```bash
 # Create new template
 echo "# My Template" > server/docs/templates/my-template.md
-```
+
+```text
 
 ### Step 2: Add to Template List
 
@@ -154,6 +161,7 @@ Edit `server/docs/service.ts` to include your template.
 ```bash
 # Create doc from template
 pnpm run dev create --template my-template
+
 ```
 
 ---
@@ -188,6 +196,6 @@ pnpm run dev create --template my-template
 
 ---
 
-## Questions?
+## Questions
 
 See: [DOCS_STRATEGY.md](../DOCS_STRATEGY.md) for overall documentation approach.

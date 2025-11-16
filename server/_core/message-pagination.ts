@@ -3,8 +3,8 @@
  * Provides efficient message loading with cursor-based pagination
  */
 
-import { eq, lt, gt, desc } from "drizzle-orm";
-import { messagesInFridayAi } from "../drizzle/schema";
+import { and, eq, lt, gt, desc, count } from "drizzle-orm";
+import { messagesInFridayAi } from "../../drizzle/schema";
 import { getDb } from "../db";
 
 export interface Message {
@@ -47,23 +47,26 @@ export async function getMessagesPaginated(
     includeTotal = false,
   } = options;
 
-  // Build base query
-  let query = db
-    .select()
-    .from(messagesInFridayAi)
-    .where(eq(messagesInFridayAi.conversationId, conversationId));
+  // Build where conditions
+  const conditions = [eq(messagesInFridayAi.conversationId, conversationId)];
 
   // Add cursor filtering
   if (cursor) {
     if (direction === "before") {
-      query = query.where(lt(messagesInFridayAi.id, cursor));
+      conditions.push(lt(messagesInFridayAi.id, cursor));
     } else {
-      query = query.where(gt(messagesInFridayAi.id, cursor));
+      conditions.push(gt(messagesInFridayAi.id, cursor));
     }
   }
 
+  // Build base query
+  const baseQuery = db
+    .select()
+    .from(messagesInFridayAi)
+    .where(and(...conditions));
+
   // Get messages in reverse order to check for more
-  const rawMessages = await query
+  const rawMessages = await baseQuery
     .orderBy(desc(messagesInFridayAi.createdAt))
     .limit(limit + 1); // +1 to check if there are more
 
@@ -76,7 +79,7 @@ export async function getMessagesPaginated(
   let totalCount = 0;
   if (includeTotal) {
     const countResult = await db
-      .select({ count: db.fn.count() })
+      .select({ count: count() })
       .from(messagesInFridayAi)
       .where(eq(messagesInFridayAi.conversationId, conversationId));
 
@@ -120,7 +123,7 @@ export async function getMessageCount(conversationId: number): Promise<number> {
   if (!db) throw new Error("Database not available");
 
   const result = await db
-    .select({ count: db.fn.count() })
+    .select({ count: count() })
     .from(messagesInFridayAi)
     .where(eq(messagesInFridayAi.conversationId, conversationId));
 

@@ -125,11 +125,11 @@ Recent emails:`);
     data.emailThreads.slice(0, 10).forEach((thread, i) => {
       sections.push(`\n### Email ${i + 1}
 Subject: ${thread.subject}
-Date: ${thread.date}
-From: ${thread.from_email}
-To: ${thread.to_email}
+Date: ${(thread as any).date}
+From: ${(thread as any).from_email}
+To: ${(thread as any).to_email}
 Preview: ${thread.snippet}
-${thread.body ? `\nBody excerpt: ${thread.body.slice(0, 500)}...` : ""}`);
+${(thread as any).body ? `\nBody excerpt: ${(thread as any).body.slice(0, 500)}...` : ""}`);
     });
   }
 

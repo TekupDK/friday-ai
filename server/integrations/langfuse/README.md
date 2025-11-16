@@ -1,12 +1,12 @@
 # Langfuse Integration - LLM Observability 🔍
 
-**Status:** Production Ready  
-**Cost:** $0/month (self-hosted)  
+**Status:** Production Ready
+**Cost:** $0/month (self-hosted)
 **Purpose:** Complete visibility into all AI operations
 
 ---
 
-## 🎯 What is Langfuse?
+## 🎯 What is Langfuse
 
 Langfuse provides **complete observability** for Friday AI's LLM operations:
 
@@ -35,11 +35,12 @@ docker compose -f docker-compose.langfuse.yml ps
 
 # View logs
 docker compose -f docker-compose.langfuse.yml logs -f langfuse
-```
+
+```bash
 
 ### 2. Verify Installation
 
-Open browser: **http://localhost:3000**
+Open browser: **<http://localhost:3000**>
 
 You should see the Langfuse login page.
 
@@ -49,10 +50,10 @@ You should see the Langfuse login page.
 
 ### 3. Get API Keys
 
-1. Go to http://localhost:3000
-2. Create account (first user is admin)
-3. Go to Settings → API Keys
-4. Copy your **Public Key** and **Secret Key**
+1. Go to <http://localhost:3000>
+1. Create account (first user is admin)
+1. Go to Settings → API Keys
+1. Copy your **Public Key**and**Secret Key**
 
 ### 4. Configure Friday AI
 
@@ -62,9 +63,10 @@ Add to `.env.dev`:
 # Langfuse Observability
 LANGFUSE_PUBLIC_KEY=pk-lf-...
 LANGFUSE_SECRET_KEY=sk-lf-...
-LANGFUSE_BASE_URL=http://localhost:3000
+LANGFUSE_BASE_URL=<http://localhost:3000>
 LANGFUSE_ENABLED=true
-```
+
+```text
 
 ### 5. Test Integration
 
@@ -73,8 +75,9 @@ LANGFUSE_ENABLED=true
 pnpm dev
 
 # Make an AI request (via UI or API)
-# Check Langfuse dashboard - you should see traces!
-```
+# Check Langfuse dashboard - you should see traces
+
+```text
 
 ---
 
@@ -87,23 +90,23 @@ pnpm dev
    - See latency and tokens
    - Filter by user, model, task type
 
-2. **Generations** - Individual LLM calls
+1. **Generations** - Individual LLM calls
    - Model used
    - Prompt and completion
    - Token usage
    - Cost (if applicable)
 
-3. **Scores** - User feedback
+1. **Scores** - User feedback
    - Thumbs up/down
    - Custom metrics
    - Quality tracking
 
-4. **Users** - Per-user analytics
+1. **Users** - Per-user analytics
    - Usage patterns
    - Cost per user
    - Performance metrics
 
-5. **Sessions** - Conversation flows
+1. **Sessions** - Conversation flows
    - Multi-turn conversations
    - Context tracking
    - User journey
@@ -120,11 +123,12 @@ LANGFUSE_PUBLIC_KEY=pk-lf-...        # Your public API key
 LANGFUSE_SECRET_KEY=sk-lf-...        # Your secret API key
 
 # Optional
-LANGFUSE_BASE_URL=http://localhost:3000  # Langfuse server URL
+LANGFUSE_BASE_URL=<http://localhost:3000>  # Langfuse server URL
 LANGFUSE_ENABLED=true                    # Enable/disable tracing
 LANGFUSE_SAMPLE_RATE=1.0                 # Sample rate (1.0 = 100%)
 LANGFUSE_FLUSH_INTERVAL=1000             # Flush interval (ms)
-```
+
+```bash
 
 ### Docker Configuration
 
@@ -165,7 +169,8 @@ generation.end({
   output: result,
   usage: { promptTokens: 100, completionTokens: 200 },
 });
-```
+
+```text
 
 ### Automatic Tracing (Already Implemented!)
 
@@ -176,7 +181,8 @@ Just use them as normal:
 ```typescript
 const result = await invokeLLM({ messages });
 // ✅ Automatically tracked in Langfuse!
-```
+
+```text
 
 ---
 
@@ -188,15 +194,15 @@ const result = await invokeLLM({ messages });
    - Target: > 99%
    - Alert if < 95%
 
-2. **Response Time**
+1. **Response Time**
    - Target: < 10s (p95)
    - Alert if > 15s
 
-3. **Error Rate**
+1. **Error Rate**
    - Target: < 1%
    - Alert if > 5%
 
-4. **Cost per Request**
+1. **Cost per Request**
    - Target: $0.00 (we use FREE models!)
    - Track for future paid model usage
 
@@ -205,8 +211,8 @@ const result = await invokeLLM({ messages });
 Langfuse supports webhooks for alerts:
 
 1. Go to Settings → Webhooks
-2. Add webhook URL
-3. Configure triggers (error rate, latency, etc.)
+1. Add webhook URL
+1. Configure triggers (error rate, latency, etc.)
 
 ---
 
@@ -218,14 +224,15 @@ Langfuse supports webhooks for alerts:
 # Check logs
 docker compose -f docker-compose.langfuse.yml logs
 
-# Common issues:
+# Common issues
 # 1. Port 3000 already in use
 #    → Change port in docker-compose.yml
 # 2. Database not ready
 #    → Wait 30s and try again
 # 3. Permission issues
 #    → Check volume permissions
-```
+
+```text
 
 ### No Traces Showing Up
 
@@ -235,23 +242,26 @@ docker compose -f docker-compose.langfuse.yml logs
    # Verify in .env.dev
    echo $LANGFUSE_PUBLIC_KEY
    echo $LANGFUSE_SECRET_KEY
-   ```
 
-2. **Check connection**
+```text
+
+1. **Check connection**
 
    ```bash
-   curl http://localhost:3000/api/public/health
+   curl <http://localhost:3000/api/public/health>
    # Should return: {"status":"ok"}
-   ```
 
-3. **Check Friday AI logs**
+```text
+
+1. **Check Friday AI logs**
 
    ```bash
    # Look for Langfuse errors
    grep -i langfuse logs/friday-ai.log
-   ```
 
-4. **Verify LANGFUSE_ENABLED=true**
+```text
+
+1. **Verify LANGFUSE_ENABLED=true**
 
 ### Traces Are Delayed
 
@@ -279,12 +289,13 @@ This is **normal**! Langfuse uses async flushing:
 ### Generate Secure Secrets
 
 ```bash
-# On Linux/Mac:
+# On Linux/Mac
 openssl rand -hex 32
 
-# On Windows (PowerShell):
+# On Windows (PowerShell)
 [Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Minimum 0 -Maximum 256 }))
-```
+
+```text
 
 ---
 
@@ -292,17 +303,20 @@ openssl rand -hex 32
 
 ### Resource Usage
 
-```
+```text
 Langfuse Application:
+
 - CPU: ~100-200 MHz (idle)
 - Memory: ~200-300 MB
 - Disk: Minimal (logs only)
 
 PostgreSQL Database:
+
 - CPU: ~50-100 MHz (idle)
 - Memory: ~100-200 MB
 - Disk: ~100 MB + traces data
-```
+
+```text
 
 ### Scaling
 
@@ -313,16 +327,19 @@ For high-volume production:
    - Easier backups
    - Can scale independently
 
-2. **Increase flush interval**
+1. **Increase flush interval**
 
    ```bash
    LANGFUSE_FLUSH_INTERVAL=5000  # 5 seconds
-   ```
 
-3. **Use sampling**
+```text
+
+1. **Use sampling**
+
    ```bash
    LANGFUSE_SAMPLE_RATE=0.5  # Track 50% of requests
-   ```
+
+```text
 
 ---
 
@@ -336,7 +353,8 @@ docker exec friday-langfuse-db pg_dump -U langfuse langfuse > langfuse-backup.sq
 
 # Restore
 docker exec -i friday-langfuse-db psql -U langfuse langfuse < langfuse-backup.sql
-```
+
+```text
 
 ### Automated Backups
 
@@ -345,6 +363,7 @@ Add to cron (Linux/Mac) or Task Scheduler (Windows):
 ```bash
 # Daily backup at 2 AM
 0 2 * * * docker exec friday-langfuse-db pg_dump -U langfuse langfuse > /backups/langfuse-$(date +\%Y\%m\%d).sql
+
 ```
 
 ---
@@ -352,10 +371,10 @@ Add to cron (Linux/Mac) or Task Scheduler (Windows):
 ## 🚀 Next Steps
 
 1. ✅ **Deploy Langfuse** (You are here!)
-2. **Integrate with Friday AI** (Day 3)
-3. **Create custom dashboards**
-4. **Setup alerts**
-5. **Train team on usage**
+1. **Integrate with Friday AI** (Day 3)
+1. **Create custom dashboards**
+1. **Setup alerts**
+1. **Train team on usage**
 
 ---
 
@@ -374,12 +393,12 @@ Add to cron (Linux/Mac) or Task Scheduler (Windows):
 
 - Check troubleshooting section above
 - View logs: `docker compose logs langfuse`
-- Langfuse Discord: https://discord.gg/langfuse
-- GitHub Issues: https://github.com/langfuse/langfuse
+- Langfuse Discord: <https://discord.gg/langfuse>
+- GitHub Issues: <https://github.com/langfuse/langfuse>
 
 ---
 
-**Status:** ✅ Ready to Deploy  
+**Status:** ✅ Ready to Deploy
 **Next:** Run `docker compose up -d` and start tracking! 🚀
 
 **Last Updated:** November 9, 2025

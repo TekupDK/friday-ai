@@ -98,7 +98,7 @@ export class BillyAutomationService {
       }
 
       // Update lead with Billy customer ID
-      const leadMetadata = JSON.parse(lead.metadata || "{}");
+      const leadMetadata = (lead.metadata as any) ?? {};
       await db
         .update(leads)
         .set({
@@ -165,7 +165,7 @@ export class BillyAutomationService {
       let billyCustomer: BillyCustomer | null = null;
 
       // Check if customer already exists
-      const leadMetadata = JSON.parse(lead.metadata || "{}");
+      const leadMetadata = (lead.metadata as any) ?? {};
       if (leadMetadata.billyCustomerId) {
         billyCustomer = await searchCustomerByEmail(lead.email || "");
       }
@@ -262,7 +262,7 @@ export class BillyAutomationService {
 
       // Filter invoices for this customer
       const customerInvoices = invoices.filter(
-        invoice => invoice.customerId === customerId
+        invoice => invoice.contactId === customerId
       );
 
       console.log(
@@ -299,6 +299,10 @@ export class BillyAutomationService {
       }
 
       // Find corresponding lead
+      if (!db) {
+        console.error("[BillyAutomation] Database not available");
+        return false;
+      }
       const [lead] = await db
         .select()
         .from(leads)
@@ -314,9 +318,9 @@ export class BillyAutomationService {
 
       // Update lead status based on payment
       let newStatus = lead.status;
-      if (invoice.status === "paid") {
+      if (invoice.state === "paid") {
         newStatus = "won";
-      } else if (invoice.status === "overdue") {
+      } else if (invoice.state === "overdue") {
         newStatus = "proposal"; // Still in proposal, but overdue
       }
 
@@ -325,11 +329,11 @@ export class BillyAutomationService {
           .update(leads)
           .set({
             status: newStatus,
-            updatedAt: new Date(),
+            updatedAt: new Date().toISOString(),
             metadata: JSON.stringify({
-              ...JSON.parse(lead.metadata || "{}"),
-              paymentStatus: invoice.status,
-              paymentDate: invoice.paymentDate,
+              ...((lead.metadata as any) ?? {}),
+              paymentStatus: invoice.state,
+              paymentDate: invoice.approvedTime ?? invoice.dueDate ?? null,
             }),
           })
           .where(eq(leads.id, lead.id));
@@ -366,6 +370,16 @@ export class BillyAutomationService {
       );
 
       const db = await getDb();
+      if (!db) {
+        return {
+          totalRevenue: 0,
+          totalInvoices: 0,
+          paidInvoices: 0,
+          outstandingInvoices: 0,
+          averageInvoiceAmount: 0,
+          revenueBySource: {},
+        };
+      }
 
       // Get leads with invoices in the period
       const leadsWithInvoices = await db
@@ -373,15 +387,15 @@ export class BillyAutomationService {
         .from(leads)
         .where(
           and(
-            gte(leads.updatedAt, startDate),
-            lte(leads.updatedAt, endDate),
+            gte(leads.updatedAt, startDate.toISOString()),
+            lte(leads.updatedAt, endDate.toISOString()),
             sql`metadata::text LIKE '%billyInvoiceId%'`
           )
         );
 
       const invoices = await getInvoices();
       const periodInvoices = invoices.filter(invoice => {
-        const invoiceDate = new Date(invoice.createdDate);
+        const invoiceDate = new Date(invoice.createdTime);
         return invoiceDate >= startDate && invoiceDate <= endDate;
       });
 
@@ -389,12 +403,8 @@ export class BillyAutomationService {
         (sum, inv) => sum + (inv.amount || 0),
         0
       );
-      const paidInvoices = periodInvoices.filter(
-        inv => inv.status === "paid"
-      ).length;
-      const outstandingInvoices = periodInvoices.filter(
-        inv => inv.status !== "paid"
-      ).length;
+      const paidInvoices = periodInvoices.filter(inv => inv.isPaid).length;
+      const outstandingInvoices = periodInvoices.filter(inv => !inv.isPaid).length;
       const averageInvoiceAmount =
         periodInvoices.length > 0 ? totalRevenue / periodInvoices.length : 0;
 
@@ -402,7 +412,7 @@ export class BillyAutomationService {
       const revenueBySource: Record<string, number> = {};
 
       for (const lead of leadsWithInvoices) {
-        const leadMetadata = JSON.parse(lead.metadata || "{}");
+        const leadMetadata = (lead.metadata as any) ?? {};
         const invoice = periodInvoices.find(
           inv => inv.id === leadMetadata.billyInvoiceId
         );

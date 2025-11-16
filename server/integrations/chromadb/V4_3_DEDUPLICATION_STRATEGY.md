@@ -5,10 +5,10 @@
 Din Gmail/Calendar/Billy data indeholder:
 
 1. **Duplicates** — Samme kunde med flere Gmail threads, calendar bookings, invoices
-2. **Spam/Noise** — Mærkedage, møder, irrelevante events
-3. **Dead Leads** — No response efter 30+ dage
-4. **Active Recurring** — Fast rengøring kunder (ongoing)
-5. **Lost Leads** — Declined, cancelled, no show
+1. **Spam/Noise** — Mærkedage, møder, irrelevante events
+1. **Dead Leads** — No response efter 30+ dage
+1. **Active Recurring** — Fast rengøring kunder (ongoing)
+1. **Lost Leads** — Declined, cancelled, no show
 
 **Mål**: Én canonical lead per customer med korrekt status og aggregated data.
 
@@ -26,15 +26,17 @@ function generateCustomerKey(lead) {
   if (lead.name) return `name:${normalize(name)}`;
   return "unknown";
 }
-```
+
+```text
 
 **Example:**
 
-```
-lars.joenstrup@live.dk → "email:lars.joenstrup@live.dk"
+```text
+<lars.joenstrup@live.dk> → "email:<lars.joenstrup@live.dk>"
 40456319             → "phone:40456319"
 Lars Dollerup        → "name:larsdollerup"
-```
+
+```text
 
 ### Step 2: Group Leads by Customer Key
 
@@ -44,12 +46,13 @@ const groups = new Map();
 // Input: 800 raw leads
 // Output: ~350 unique customers (rest are duplicates)
 
-groups.set("email:lars.joenstrup@live.dk", [
+groups.set("email:<lars.joenstrup@live.dk>", [
   { gmailThread1, calendar1, billy1 },
   { gmailThread2, calendar2, billy2 },
   { gmailThread3, null, billy3 },
 ]);
-```
+
+```text
 
 ### Step 3: Merge Leads for Same Customer
 
@@ -71,22 +74,23 @@ function mergeCustomerLeads(leads) {
     },
   };
 }
-```
+
+```text
 
 **Example Output:**
 
 ```json
 {
   "id": "LEAD_lars_dollerup",
-  "customerEmail": "lars.joenstrup@live.dk",
+  "customerEmail": "<lars.joenstrup@live.dk>",
   "gmail": {
-    /* most recent thread */
+    /*most recent thread*/
   },
   "calendar": {
-    /* most recent booking */
+    /*most recent booking*/
   },
   "billy": {
-    /* most recent invoice */
+    /*most recent invoice*/
   },
   "customer": {
     "isRepeatCustomer": true,
@@ -96,7 +100,8 @@ function mergeCustomerLeads(leads) {
     "lastBookingDate": "2025-11-10"
   }
 }
-```
+
+```text
 
 ---
 
@@ -119,7 +124,8 @@ enum LeadStatus {
   LOST = "lost", // ❌ Declined/cancelled
   CANCELLED = "cancelled", // ❌ Booking cancelled
 }
-```
+
+```text
 
 ### Detection Rules
 
@@ -158,7 +164,8 @@ function determineLeadStatus(lead) {
 
   return NEW;
 }
-```
+
+```text
 
 ---
 
@@ -174,7 +181,8 @@ const PRODUCTION_FILTER = {
   minDataCompleteness: 30, // 30% minimum
   requiredFields: [], // No requirements
 };
-```
+
+```text
 
 ### Analysis Filter (All Data)
 
@@ -186,7 +194,8 @@ const ANALYSIS_FILTER = {
   minDataCompleteness: 0, // No minimum
   requiredFields: [],
 };
-```
+
+```text
 
 ### Won Deals Only
 
@@ -198,7 +207,8 @@ const WON_DEALS_FILTER = {
   minDataCompleteness: 80, // High quality only
   requiredFields: ["billy"], // Must have invoice
 };
-```
+
+```text
 
 ---
 
@@ -206,27 +216,29 @@ const WON_DEALS_FILTER = {
 
 ### Input (Raw Data)
 
-```
+```text
 Gmail Threads:     662
 Calendar Events:   210
 Billy Invoices:    140
 Total Raw Leads:   ~800
-```
+
+```text
 
 ### After Deduplication
 
-```
+```text
 Unique Customers:  ~350
   ├─ Single lead:    250 (71%)
   ├─ 2-3 leads:       80 (23%)
   └─ 4+ leads:        20 (6%)  ← Repeat customers
 
 Merged/Removed:    ~450 duplicate entries
-```
+
+```text
 
 ### After Filtering (Production)
 
-```
+```text
 SPAM:              50  (removed) ❌
 DEAD:              80  (removed) ❌
 NO_RESPONSE:       60  (kept)    ⚠️
@@ -239,7 +251,8 @@ PAID:              45  (kept)    ✅
 ACTIVE_RECURRING:  10  (kept)    🔄
 
 Final Output:      270 leads
-```
+
+```text
 
 ---
 
@@ -275,13 +288,14 @@ Final Output:      270 leads
     "numberOfPeople": 1
   }
 }
-```
+
+```text
 
 ---
 
 ## 📋 Complete Workflow
 
-```
+```text
 ┌─────────────────────────────────────────┐
 │ 1. Raw Collection                       │
 │    Gmail: 662 threads                   │
@@ -330,7 +344,8 @@ Final Output:      270 leads
 │    • 60 opportunities (no response)     │
 │    • Full 360° data per customer        │
 └─────────────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -351,13 +366,14 @@ Final Output:      270 leads
 
 ### 3. **Correct Pipeline Stages**
 
-```
+```text
 ACTIVE_RECURRING: Fast rengøring customers
 PAID: Completed one-time jobs
 SCHEDULED: Confirmed future bookings
 NO_RESPONSE: Follow-up opportunities
 DEAD: Archive/ignore
-```
+
+```text
 
 ### 4. **Smart Filtering**
 
@@ -379,7 +395,8 @@ const activeOpportunities = filterLeads(leads, {
   requiredFields: ["gmail"],
 });
 // → Show leads that need action
-```
+
+```text
 
 ### Financial Report
 
@@ -391,13 +408,15 @@ const wonDeals = filterLeads(leads, {
   requiredFields: ["billy"],
 });
 // → Calculate revenue, profit, margins
-```
+
+```text
 
 ### Customer Retention
 
 ```typescript
 const recurring = leads.filter(l => l.pipeline.status === "active_recurring");
 // → Track fast rengøring customers
+
 ```
 
 ---

@@ -212,7 +212,9 @@ class SDKServer {
     cookieValue: string | undefined | null
   ): Promise<{ openId: string; appId: string; name: string } | null> {
     if (!cookieValue) {
-      console.warn("[Auth] Missing session cookie");
+      // ✅ SECURITY FIX: Use logger instead of console.warn (redacts sensitive data)
+      const { logger } = await import("./logger");
+      logger.debug("[Auth] Missing session cookie");
       return null;
     }
 
@@ -228,7 +230,9 @@ class SDKServer {
         !isNonEmptyString(appId) ||
         !isNonEmptyString(name)
       ) {
-        console.warn("[Auth] Session payload missing required fields");
+        // ✅ SECURITY FIX: Use logger instead of console.warn
+        const { logger } = await import("./logger");
+        logger.debug("[Auth] Session payload missing required fields");
         return null;
       }
 
@@ -238,7 +242,9 @@ class SDKServer {
         name,
       };
     } catch (error) {
-      console.warn("[Auth] Session verification failed", String(error));
+      // ✅ SECURITY FIX: Use logger instead of console.warn (redacts error details)
+      const { logger } = await import("./logger");
+      logger.debug({ err: error }, "[Auth] Session verification failed");
       return null;
     }
   }
@@ -253,7 +259,9 @@ class SDKServer {
     remainingMs: number;
   } | null> {
     if (!cookieValue) {
-      console.warn("[Auth] Missing session cookie");
+      // ✅ SECURITY FIX: Use logger instead of console.warn
+      const { logger } = await import("./logger");
+      logger.debug("[Auth] Missing session cookie");
       return null;
     }
 
@@ -270,7 +278,9 @@ class SDKServer {
         !isNonEmptyString(name) ||
         typeof exp !== "number"
       ) {
-        console.warn("[Auth] Session payload missing required fields or exp");
+        // ✅ SECURITY FIX: Use logger instead of console.warn
+        const { logger } = await import("./logger");
+        logger.debug("[Auth] Session payload missing required fields or exp");
         return null;
       }
 
@@ -286,7 +296,9 @@ class SDKServer {
         remainingMs,
       };
     } catch (error) {
-      console.warn("[Auth] Session verification failed", String(error));
+      // ✅ SECURITY FIX: Use logger instead of console.warn (redacts error details)
+      const { logger } = await import("./logger");
+      logger.debug({ err: error }, "[Auth] Session verification failed");
       return null;
     }
   }

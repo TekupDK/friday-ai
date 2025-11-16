@@ -1,7 +1,7 @@
 # V4.3 Complete System Documentation
 
-**Generated**: 2025-11-10  
-**Status**: Production Ready ✅  
+**Generated**: 2025-11-10
+**Status**: Production Ready ✅
 **Data Window**: July 1 - November 30, 2025
 
 ---
@@ -51,7 +51,7 @@ V4.3 er et komplet lead data enrichment system der integrerer Gmail, Google Cale
 
 ## 🔄 Complete Workflow
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                    SCRIPT 1: COLLECTION                      │
 ├─────────────────────────────────────────────────────────────┤
@@ -145,7 +145,8 @@ V4.3 er et komplet lead data enrichment system der integrerer Gmail, Google Cale
 │                                                              │
 │  Output: v4_3-analysis-report.json + .md                    │
 └─────────────────────────────────────────────────────────────┘
-```
+
+```text
 
 ---
 
@@ -155,9 +156,10 @@ V4.3 er et komplet lead data enrichment system der integrerer Gmail, Google Cale
 
 ```typescript
 // ❌ Matching "from" header (leadmail system email)
-const customerEmail = "system@leadpoint.dk"; // Wrong!
-const billyContact = "kunde@gmail.com"; // Never matches
-```
+const customerEmail = "<system@leadpoint.dk>"; // Wrong!
+const billyContact = "<kunde@gmail.com>"; // Never matches
+
+```text
 
 ### Solution (After)
 
@@ -165,13 +167,14 @@ const billyContact = "kunde@gmail.com"; // Never matches
 // ✅ Parse customer email from leadmail body
 const bodyText = Buffer.from(message.body.data, "base64").toString("utf-8");
 const customerEmail = bodyText.match(/E-?mail:?\s*([^\s]+@[^\s]+)/i)[1];
-// customerEmail = 'kunde@gmail.com'  // Correct!
+// customerEmail = '<kunde@gmail.com>'  // Correct!
 
 // Now Billy matching works:
 if (normalizeEmail(invoice.contactEmail) === customerEmail) {
   // Match! ✅
 }
-```
+
+```text
 
 **Result**: Billy linking success rate: 0% → Expected 60-80% 🎯
 
@@ -190,7 +193,8 @@ if (normalizeEmail(invoice.contactEmail) === customerEmail) {
     "withBilly": 60-100  ⭐ FIXED
   }
 }
-```
+
+```text
 
 ### After Processing
 
@@ -206,7 +210,8 @@ if (normalizeEmail(invoice.contactEmail) === customerEmail) {
     }
   }
 }
-```
+
+```text
 
 ---
 
@@ -237,7 +242,8 @@ LEAD_COST_CONFIG = {
     monthlyFixed: 0,
   },
 };
-```
+
+```text
 
 ---
 
@@ -245,19 +251,21 @@ LEAD_COST_CONFIG = {
 
 ### Completeness Scoring
 
-```
+```text
 100% = Gmail + Calendar + Billy (full 360° view)
 67%  = Gmail + Calendar (booking confirmed, no invoice yet)
 33%  = Gmail only (lead received, not yet scheduled)
-```
+
+```text
 
 ### Linking Confidence
 
-```
+```text
 HIGH   = Email match + Name match + Date proximity
 MEDIUM = Email match OR (Name match + Date proximity)
 LOW    = Gmail only, no Calendar/Billy match
-```
+
+```text
 
 ---
 
@@ -274,7 +282,8 @@ npx tsx server/integrations/chromadb/scripts/2-calculate-metrics-v4_3.ts
 
 # Step 3: Generate analysis (5 sec)
 npx tsx server/integrations/chromadb/scripts/3-pipeline-analysis-v4_3.ts
-```
+
+```text
 
 ### 2. Query Leads
 
@@ -297,7 +306,8 @@ const lowProfit = leads.leads.filter(
 const activeCustomers = leads.leads.filter(
   l => l.pipeline.status === "active_recurring"
 );
-```
+
+```text
 
 ### 3. Lead Source Analysis
 
@@ -308,7 +318,8 @@ const analysis = leads.metadata.counts.byLeadSource;
 //   "Direct": 70,
 //   "Rengøring.nu": 2
 // }
-```
+
+```text
 
 ---
 
@@ -317,18 +328,18 @@ const analysis = leads.metadata.counts.byLeadSource;
 ### Key Insights from V4.3
 
 1. **Conversion Funnel**: 60% dropoff fra Inbox → Contacted
-2. **Best Lead Source**: Direct (0kr cost, highest conversion)
-3. **Time Accuracy**: Vi undervurderer konsistent (316% actual vs estimated)
-4. **Customer Retention**: 5.8% repeat customer rate
-5. **Data Completeness**: 43% average (room for improvement)
+1. **Best Lead Source**: Direct (0kr cost, highest conversion)
+1. **Time Accuracy**: Vi undervurderer konsistent (316% actual vs estimated)
+1. **Customer Retention**: 5.8% repeat customer rate
+1. **Data Completeness**: 43% average (room for improvement)
 
 ### Actionable Recommendations
 
 1. ✅ Focus on direct lead generation (best ROI)
-2. ✅ Adjust m² coefficients (currently too low)
-3. ✅ Improve follow-up (reduce inbox dropoff)
-4. ✅ Track Calendar bookings better (only 31% linked)
-5. ✅ Build repeat customer program (only 5.8%)
+1. ✅ Adjust m² coefficients (currently too low)
+1. ✅ Improve follow-up (reduce inbox dropoff)
+1. ✅ Track Calendar bookings better (only 31% linked)
+1. ✅ Build repeat customer program (only 5.8%)
 
 ---
 
@@ -367,16 +378,16 @@ const analysis = leads.metadata.counts.byLeadSource;
 ### Monthly Tasks
 
 1. Run pipeline for previous month
-2. Review lead source ROI
-3. Adjust m² coefficients based on accuracy data
-4. Update lead costs if pricing changes
+1. Review lead source ROI
+1. Adjust m² coefficients based on accuracy data
+1. Update lead costs if pricing changes
 
 ### Quarterly Tasks
 
 1. Review deduplication logic
-2. Audit spam filter patterns
-3. Analyze customer retention trends
-4. Update quote recommendation engine
+1. Audit spam filter patterns
+1. Analyze customer retention trends
+1. Update quote recommendation engine
 
 ---
 
@@ -408,7 +419,8 @@ function determineLeadStatus(lead): LeadStatus {
   // Default
   return LeadStatus.NEW;
 }
-```
+
+```text
 
 ### Fuzzy Name Matching
 
@@ -425,6 +437,7 @@ const commonWords = name1
 // Match score
 if (commonWords.length >= 2) score += 50; // Good match
 if (commonWords.length === 1) score += 20; // Weak match
+
 ```
 
 ---
@@ -447,13 +460,13 @@ if (commonWords.length === 1) score += 20; // Weak match
 ## 🎯 Next Steps
 
 1. ⏳ Wait for Script 1 to complete (collecting Gmail threads...)
-2. ✅ Run Script 2 with new Billy matches
-3. ✅ Run Script 3 to generate updated analysis
-4. 📊 Build Customer Cards V5.1 with real financial data
-5. 🔌 Integrate with ChromaDB for semantic search
+1. ✅ Run Script 2 with new Billy matches
+1. ✅ Run Script 3 to generate updated analysis
+1. 📊 Build Customer Cards V5.1 with real financial data
+1. 🔌 Integrate with ChromaDB for semantic search
 
 ---
 
-**Last Updated**: 2025-11-10 12:48 CET  
-**Version**: 4.3.0  
+**Last Updated**: 2025-11-10 12:48 CET
+**Version**: 4.3.0
 **Status**: Production Ready ✅

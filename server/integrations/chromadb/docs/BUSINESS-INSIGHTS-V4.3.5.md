@@ -1,7 +1,7 @@
 # 💼 Business Insights Report - V4.3.5
 
-**Generated:** November 10, 2025  
-**Data Period:** July 1 - December 31, 2025  
+**Generated:** November 10, 2025
+**Data Period:** July 1 - December 31, 2025
 **Active Period:** October 1 - November 30, 2025
 
 ---
@@ -12,9 +12,9 @@ V4.3.5 uses **AI-enhanced parsing** to deliver unprecedented insights into custo
 
 ### **Key Findings:**
 
-✅ **24 recurring customers** identified (+26% improvement)  
-⚠️ **4 problematic customers** detected  
-🏆 **28 premium customers** identified  
+✅ **24 recurring customers** identified (+26% improvement)
+⚠️ **4 problematic customers** detected
+🏆 **28 premium customers** identified
 📉 **Missing data** flagged for 8+ customers
 
 ---
@@ -23,28 +23,31 @@ V4.3.5 uses **AI-enhanced parsing** to deliver unprecedented insights into custo
 
 ### **Revenue Metrics:**
 
-```
+```text
 Total Revenue:    224,132 kr
 Total Profit:     215,622 kr
 Profit Margin:    96.2%
 Avg Deal Value:   2,368 kr
-```
+
+```text
 
 ### **Lead Sources:**
 
-```
+```text
 Rengøring.nu (Leadmail.no):  150 leads (65%)
 Leadpoint.dk (Aarhus):       81 leads (35%)
-```
+
+```text
 
 ### **Conversion:**
 
-```
+```text
 Total Leads:  231
 Won:          84 (36%)
 Contacted:    95 (41%)
 Active:       122 (52.8%)
-```
+
+```text
 
 ---
 
@@ -59,23 +62,24 @@ Active:       122 (52.8%)
 | 🟠 Triweekly | 9      | 38%        | 2,018 kr     |
 | 🔵 Monthly   | 3      | 12%        | 2,586 kr     |
 | ⚪ Irregular | 1      | 4%         | 2,792 kr     |
-| **TOTAL**    | **24** | **100%**   | **2,114 kr** |
+| **TOTAL**|**24**|**100%**|**2,114 kr** |
 
 ### **Top Recurring Customers:**
 
 1. **Flytterengøring (BETALT)** - 11 bookings, weekly, 8,027 kr
-2. **Vindunor** - 8 bookings (#11 AI), weekly, 5,566 kr
-3. **Flytterengøring** - 8 bookings, triweekly, 4,293 kr
-4. **Tommy Callesen** - 4 bookings (#7 AI), biweekly, 7,759 kr
-5. **Fast Rengøring (MANGLER BETALING)** - 7 bookings, weekly, 7,329 kr
+1. **Vindunor** - 8 bookings (#11 AI), weekly, 5,566 kr
+1. **Flytterengøring** - 8 bookings, triweekly, 4,293 kr
+1. **Tommy Callesen** - 4 bookings (#7 AI), biweekly, 7,759 kr
+1. **Fast Rengøring (MANGLER BETALING)** - 7 bookings, weekly, 7,329 kr
 
 ### **Revenue Impact:**
 
-```
+```text
 Recurring Customers:    24 (10.4% of leads)
 Recurring Revenue:      50,738 kr (22.6% of total)
 Avg Recurring Value:    2,114 kr
-```
+
+```text
 
 ---
 
@@ -124,8 +128,8 @@ Avg Recurring Value:    2,114 kr
 ### **Top Premium Customers:**
 
 1. **Tommy Callesen** - 118 m² hus, biweekly, sæbespåner
-2. **Vindunor** - High frequency, consistent bookings
-3. **Jørn Haagensen** - 4 bookings, 6,282 kr
+1. **Vindunor** - High frequency, consistent bookings
+1. **Jørn Haagensen** - 4 bookings, 6,282 kr
 
 ---
 
@@ -171,35 +175,39 @@ Customers with potential for increased frequency:
 
 ### **Priority 1: Data Quality (High Impact)**
 
-```
+```text
 ✅ Investigate missing bookings (15-20k kr at stake)
 ✅ Implement automated booking tracking
 ✅ Validate AI findings against historical records
-```
+
+```text
 
 ### **Priority 2: Customer Retention (Medium Impact)**
 
-```
+```text
 ✅ Problematic customer quality review
 ✅ Premium customer loyalty program
 ✅ Automated satisfaction surveys
-```
+
+```text
 
 ### **Priority 3: Revenue Optimization (High Impact)**
 
-```
+```text
 ✅ Frequency upsell campaigns
 ✅ Single-booking re-engagement
 ✅ Premium pricing for special requirements
-```
+
+```text
 
 ### **Priority 4: Operational Excellence (Medium Impact)**
 
-```
+```text
 ✅ Payment collection automation
 ✅ AI-powered quality alerts
 ✅ Predictive booking scheduling
-```
+
+```text
 
 ---
 
@@ -240,20 +248,21 @@ Customers with potential for increased frequency:
 ### **What AI Uncovered:**
 
 1. **+5 Recurring Customers** (+26% improvement)
-2. **Missing Data Worth 15-20k kr**
-3. **4 Quality Issues** requiring attention
-4. **28 Premium Opportunities** for upselling
-5. **Frequency Discrepancies** for validation
+1. **Missing Data Worth 15-20k kr**
+1. **4 Quality Issues** requiring attention
+1. **28 Premium Opportunities** for upselling
+1. **Frequency Discrepancies** for validation
 
 ### **Business Value:**
 
-```
+```text
 Immediate Revenue Recovery: 15-20k kr
 Upsell Potential:          30-40k kr/year
 Churn Prevention:          8-10k kr
 Premium Pricing:           10-15k kr/year
 
 Total Potential Impact:    65-85k kr annually
+
 ```
 
 ---
@@ -285,22 +294,22 @@ Total Potential Impact:    65-85k kr annually
 ### **For Sales Team:**
 
 1. Contact customers with missing bookings
-2. Re-engage single-booking recurring customers
-3. Upsell frequency to monthly customers
+1. Re-engage single-booking recurring customers
+1. Upsell frequency to monthly customers
 
 ### **For Operations:**
 
 1. Quality review for problematic customers
-2. Payment collection for outstanding invoices
-3. Implement booking tracking improvements
+1. Payment collection for outstanding invoices
+1. Implement booking tracking improvements
 
 ### **For Management:**
 
 1. Review AI findings for data accuracy
-2. Approve premium customer program
-3. Set KPIs for recurring customer growth
+1. Approve premium customer program
+1. Set KPIs for recurring customer growth
 
 ---
 
-**Last Updated:** November 10, 2025  
+**Last Updated:** November 10, 2025
 **Next Review:** December 1, 2025

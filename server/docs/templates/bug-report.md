@@ -7,8 +7,8 @@ Clear, concise description of the bug.
 ## Steps to Reproduce
 
 1. Go to...
-2. Click on...
-3. See error
+1. Click on...
+1. See error
 
 ## Expected Behavior
 
@@ -20,8 +20,9 @@ What actually happens?
 
 ## Screenshots/Logs
 
-```
+```text
 [Paste error logs or attach screenshots]
+
 ```
 
 ## Environment
@@ -48,8 +49,8 @@ What actually happens?
 
 ---
 
-**Priority:** [Low/Medium/High/Critical]  
-**Status:** [Open/In Progress/Fixed/Closed]  
-**Reported by:** [Name]  
-**Assigned to:** [Name]  
+**Priority:** [Low/Medium/High/Critical]
+**Status:** [Open/In Progress/Fixed/Closed]
+**Reported by:** [Name]
+**Assigned to:** [Name]
 **Date:** [YYYY-MM-DD]

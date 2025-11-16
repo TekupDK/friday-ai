@@ -40,14 +40,30 @@ export function getSessionCookieOptions(
   //       : undefined;
 
   const isProduction = process.env.NODE_ENV === "production";
-  const isSecure = isSecureRequest(req);
+  let isSecure = isSecureRequest(req);
+
+  // If we're on a local host or IP we must *not* mark cookie as secure, otherwise
+  // the browser will refuse to set it over HTTP.
+  const hostname = req.hostname || "";
+  if (LOCAL_HOSTS.has(hostname) || isIpAddress(hostname)) {
+    isSecure = false;
+  }
+
+  // ✅ SECURITY FIX: Enforce HTTPS in production
+  if (isProduction && !isSecure) {
+    throw new Error("HTTPS required in production for secure cookies");
+  }
+
+  // ✅ SECURITY FIX: Use "strict" for better CSRF protection in production
+  // Note: "strict" blocks all cross-site requests. If you need cross-site functionality,
+  // consider "lax" instead (allows top-level navigation but blocks POST requests from other sites)
+  const sameSite = isProduction && isSecure ? "strict" : "lax";
 
   return {
     httpOnly: true,
     path: "/",
-    // Use "lax" for development (works with HTTP), "none" for production (requires HTTPS)
-    // This prevents cookie rejection by modern browsers in local development
-    sameSite: isProduction && isSecure ? "none" : "lax",
-    secure: isSecure,
+    domain: undefined,
+    sameSite,
+    secure: isSecure || isProduction, // ✅ SECURITY FIX: Always secure in production
   };
 }

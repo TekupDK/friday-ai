@@ -2,11 +2,11 @@
  * Email Intelligence Tests - Backend functionality
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { categorizeEmail, getCategoryStats } from "../categorizer";
-import { generateResponseSuggestions } from "../response-generator";
-import { scorePriority } from "../priority-scorer";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { EmailMessage } from "../categorizer";
+import { categorizeEmail, getCategoryStats } from "../categorizer";
+import { scorePriority } from "../priority-scorer";
+import { generateResponseSuggestions } from "../response-generator";
 
 // Mock AI router
 vi.mock("../../ai-router", () => ({
@@ -16,6 +16,10 @@ vi.mock("../../ai-router", () => ({
 vi.mock("../../action-audit", () => ({
   generateCorrelationId: vi.fn(() => "test-correlation-id"),
 }));
+
+import { routeAI } from "../../ai-router";
+
+const mockRouteAI = vi.mocked(routeAI);
 
 const mockEmail: EmailMessage = {
   id: "test-thread-1",
@@ -27,7 +31,19 @@ const mockEmail: EmailMessage = {
 };
 
 describe("Email Categorizer", () => {
-  it("should categorize email as marketing when unsubscribe is present", () => {
+  beforeEach(() => {
+    // Mock routeAI to return a proper response
+    mockRouteAI.mockResolvedValue({
+      content: JSON.stringify({
+        category: "work",
+        confidence: 0.9,
+        subcategory: null,
+        reasoning: "Test reasoning",
+      }),
+    } as any);
+  });
+
+  it("should categorize email as marketing when unsubscribe is present", async () => {
     const email = {
       ...mockEmail,
       subject: "Nyhedsbrev: Tilbud på produkter",
@@ -35,31 +51,31 @@ describe("Email Categorizer", () => {
     };
 
     // Should use fallback categorization
-    const result = categorizeEmail(email, 1);
+    const result = await categorizeEmail(email, 1);
 
     expect(result).toBeDefined();
   });
 
-  it("should categorize email as finance when invoice mentioned", () => {
+  it("should categorize email as finance when invoice mentioned", async () => {
     const email = {
       ...mockEmail,
       subject: "Faktura #12345",
       body: "Her er din faktura for denne måned",
     };
 
-    const result = categorizeEmail(email, 1);
+    const result = await categorizeEmail(email, 1);
 
     expect(result).toBeDefined();
   });
 
-  it("should categorize email as important when urgent keyword present", () => {
+  it("should categorize email as important when urgent keyword present", async () => {
     const email = {
       ...mockEmail,
       subject: "URGENT: Action required",
       body: "Please respond ASAP",
     };
 
-    const result = categorizeEmail(email, 1);
+    const result = await categorizeEmail(email, 1);
 
     expect(result).toBeDefined();
   });
@@ -102,6 +118,26 @@ describe("Email Categorizer", () => {
 });
 
 describe("Response Generator", () => {
+  beforeEach(() => {
+    // Mock routeAI to return response suggestions
+    mockRouteAI.mockResolvedValue({
+      content: JSON.stringify({
+        suggestions: [
+          {
+            type: "quick_reply",
+            text: "Thank you for your email",
+            tone: "professional",
+          },
+          {
+            type: "detailed",
+            text: "Thank you for reaching out",
+            tone: "professional",
+          },
+        ],
+      }),
+    } as any);
+  });
+
   it("should generate template responses when LLM fails", async () => {
     const result = await generateResponseSuggestions(mockEmail, 1);
 
@@ -131,6 +167,29 @@ describe("Response Generator", () => {
   });
 
   it("should handle VIP sender relationship", async () => {
+    // Mock VIP-specific response with 3 suggestions
+    mockRouteAI.mockResolvedValueOnce({
+      content: JSON.stringify({
+        suggestions: [
+          {
+            type: "quick_reply",
+            text: "Thank you for your email",
+            tone: "professional",
+          },
+          {
+            type: "detailed",
+            text: "Thank you for reaching out",
+            tone: "professional",
+          },
+          {
+            type: "vip_custom",
+            text: "I appreciate your continued partnership",
+            tone: "professional",
+          },
+        ],
+      }),
+    } as any);
+
     const result = await generateResponseSuggestions(mockEmail, 1, {
       senderRelationship: "vip",
     });
@@ -140,6 +199,23 @@ describe("Response Generator", () => {
 });
 
 describe("Priority Scorer", () => {
+  beforeEach(() => {
+    // Mock routeAI to return priority score
+    mockRouteAI.mockResolvedValue({
+      content: JSON.stringify({
+        score: 85,
+        level: "high",
+        factors: {
+          content_urgency: 0.8,
+          deadline_mentioned: true,
+          requires_action: true,
+          sender_importance: 0.7,
+        },
+        reasoning: "Test reasoning",
+      }),
+    } as any);
+  });
+
   it("should score urgent emails higher", async () => {
     const urgentEmail = {
       ...mockEmail,
@@ -185,6 +261,21 @@ describe("Priority Scorer", () => {
       body: "Just keeping you informed about progress",
     };
 
+    // Mock low priority response
+    mockRouteAI.mockResolvedValueOnce({
+      content: JSON.stringify({
+        score: 35,
+        level: "low",
+        factors: {
+          content_urgency: 0.2,
+          deadline_mentioned: false,
+          requires_action: false,
+          sender_importance: 0.3,
+        },
+        reasoning: "Informational email",
+      }),
+    } as any);
+
     const result = await scorePriority(normalEmail, 1);
 
     expect(result.score).toBeLessThan(60);
@@ -198,6 +289,21 @@ describe("Priority Scorer", () => {
       subject: "Meeting request",
     };
 
+    // Mock VIP sender response with high sender_importance
+    mockRouteAI.mockResolvedValueOnce({
+      content: JSON.stringify({
+        score: 90,
+        level: "high",
+        factors: {
+          content_urgency: 0.6,
+          deadline_mentioned: false,
+          requires_action: true,
+          sender_importance: 0.95,
+        },
+        reasoning: "VIP sender detected",
+      }),
+    } as any);
+
     const result = await scorePriority(vipEmail, 1);
 
     expect(result.factors.sender_importance).toBeGreaterThan(0.7);
@@ -205,12 +311,42 @@ describe("Priority Scorer", () => {
 });
 
 describe("Integration Tests", () => {
+  beforeEach(() => {
+    // Reset and setup mocks for integration tests
+    mockRouteAI.mockReset();
+  });
+
   it("should handle email processing end-to-end", async () => {
     const email = {
       ...mockEmail,
       subject: "Urgent: Invoice payment required",
       body: "Please process the invoice payment by tomorrow",
     };
+
+    // Mock categorization response
+    mockRouteAI.mockResolvedValueOnce({
+      content: JSON.stringify({
+        category: "finance",
+        confidence: 0.9,
+        subcategory: null,
+        reasoning: "Invoice related",
+      }),
+    } as any);
+
+    // Mock priority scoring response
+    mockRouteAI.mockResolvedValueOnce({
+      content: JSON.stringify({
+        score: 85,
+        level: "high",
+        factors: {
+          content_urgency: 0.8,
+          deadline_mentioned: true,
+          requires_action: true,
+          sender_importance: 0.5,
+        },
+        reasoning: "Urgent invoice payment",
+      }),
+    } as any);
 
     // Categorize
     const category = await categorizeEmail(email, 1);

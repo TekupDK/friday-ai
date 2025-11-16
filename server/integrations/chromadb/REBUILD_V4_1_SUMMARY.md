@@ -56,7 +56,7 @@ Rebuild V4.1 dataset with improved linking, enrichment, and data quality.
 | **Total Leads** | 749           | 662           | -87 (spam removed) |
 | **Email**       | 72.6%         | 73.0%         | +0.4%              |
 | **Phone**       | 82.0%         | 81.9%         | -0.1%              |
-| **Address**     | 61.5%         | 64.4%         | **+2.9%** ✓        |
+| **Address**| 61.5%         | 64.4%         |**+2.9%** ✓        |
 | **Time**        | 60.6%         | 60.6%         | 0.0%               |
 | **Price**       | 55.9%         | 52.7%         | -3.2%              |
 | **m²**          | 49.1%         | 46.5%         | -2.6%              |
@@ -80,10 +80,10 @@ Rebuild V4.1 dataset with improved linking, enrichment, and data quality.
 ## ✅ Quality Improvements
 
 1. ✓ Removed 33 spam/noise calendar entries
-2. ✓ Improved Calendar↔Gmail linking (54 links)
-3. ✓ Enriched addresses from Gmail bodies (+2.9%)
-4. ✓ Added time estimates via m² rules (11 new)
-5. ✓ Cleaner, more focused dataset for production
+1. ✓ Improved Calendar↔Gmail linking (54 links)
+1. ✓ Enriched addresses from Gmail bodies (+2.9%)
+1. ✓ Added time estimates via m² rules (11 new)
+1. ✓ Cleaner, more focused dataset for production
 
 ## 🚀 Next Steps
 

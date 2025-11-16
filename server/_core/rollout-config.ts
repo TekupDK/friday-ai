@@ -270,7 +270,16 @@ export function shouldTriggerRollback(
   // Check emergency rollback conditions
   const emergencyRollback = process.env.EMERGENCY_ROLLBACK === "true";
   if (emergencyRollback) {
-    console.warn(`🚨 Emergency rollback triggered for ${feature}`);
+    // ✅ SECURITY FIX: Use logger instead of console.warn
+    // Use dynamic import synchronously (logger is already available)
+    import("./logger").then(({ logger }) => {
+      logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
+    }).catch(() => {
+      // Fallback if logger import fails - use logger import again as last resort
+      import("./logger").then(({ logger }) => {
+        logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
+      });
+    });
     return true;
   }
 
@@ -285,7 +294,9 @@ export function shouldTriggerRollback(
 export async function executeRollback(
   feature: "chat_flow" | "streaming"
 ): Promise<void> {
-  console.log(`🔄 Executing rollback for ${feature}`);
+  // ✅ SECURITY FIX: Use logger instead of console.log
+  const { logger } = await import("./logger");
+  logger.info({ feature }, "[Rollout] Executing rollback");
 
   // Set environment variable to force rollback
   process.env[`ROLLBACK_${feature.toUpperCase()}`] = "true";
@@ -294,7 +305,7 @@ export async function executeRollback(
   // TODO: Log rollback event
   // TODO: Notify team members
 
-  console.log(`✅ Rollback completed for ${feature}`);
+  logger.info({ feature }, "[Rollout] Rollback completed");
 }
 
 /**
@@ -331,13 +342,15 @@ function hashUserId(userId: number, feature: string): number {
 /**
  * Manual override for testing
  */
-export function setManualRolloutOverride(
+export async function setManualRolloutOverride(
   feature: string,
   percentage: number
-): void {
+): Promise<void> {
   process.env[`MANUAL_ROLLOUT_${feature.toUpperCase()}`] =
     percentage.toString();
-  console.log(`🔧 Manual override set: ${feature} = ${percentage}%`);
+  // ✅ SECURITY FIX: Use logger instead of console.log
+  const { logger } = await import("./logger");
+  logger.info({ feature, percentage }, "[Rollout] Manual override set");
 }
 
 /**

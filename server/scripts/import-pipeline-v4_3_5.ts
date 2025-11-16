@@ -36,7 +36,8 @@ import {
   addCustomerInvoice,
   createOrUpdateCustomerProfile,
 } from "../customer-db";
-import { createLead, getDb, getUserByOpenId, upsertUser } from "../db";
+import { getDb, getUserByOpenId, upsertUser } from "../db";
+import { createLead } from "../lead-db";
 
 dotenv.config({ path: ".env.supabase" });
 dotenv.config();

@@ -1,12 +1,12 @@
 # ChromaDB Threshold Tuning Plan 🎯
 
-**Created:** November 9, 2025, 23:05  
-**Status:** Ready to Execute  
+**Created:** November 9, 2025, 23:05
+**Status:** Ready to Execute
 **Purpose:** Use real RenDetalje data to optimize duplicate detection
 
 ---
 
-## 🎉 Brilliant Idea!
+## 🎉 Brilliant Idea
 
 Brug **rigtige data fra RenDetalje** (Juli-December 2025) til at:
 
@@ -48,7 +48,8 @@ Brug **rigtige data fra RenDetalje** (Juli-December 2025) til at:
 
 ```bash
 npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
-```
+
+```text
 
 **Output:**
 
@@ -58,13 +59,14 @@ npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
 
 **Expected output:**
 
-```
+```text
 ✅ Found 245 calendar events
 ✅ Found 389 email threads
 ✅ Found 67 Billy customers
 ✅ Total unique leads: 412
 ✅ Saved to: test-data/real-leads.json
-```
+
+```text
 
 ---
 
@@ -74,23 +76,24 @@ npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
 
 ```bash
 npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
-```
+
+```text
 
 **What it does:**
 
 1. Load all collected leads
-2. Generate embeddings (OpenRouter API)
-3. Identify known duplicates (same email = duplicate)
-4. Test thresholds: **0.70, 0.75, 0.80, 0.85, 0.90, 0.95**
-5. Calculate metrics:
+1. Generate embeddings (OpenRouter API)
+1. Identify known duplicates (same email = duplicate)
+1. Test thresholds: **0.70, 0.75, 0.80, 0.85, 0.90, 0.95**
+1. Calculate metrics:
    - **Precision:** TP / (TP + FP) - How accurate?
    - **Recall:** TP / (TP + FN) - How complete?
-   - **F1 Score:** Harmonic mean - **Best metric!**
+   - **F1 Score:**Harmonic mean -**Best metric!**
    - **Accuracy:** (TP + TN) / Total
 
 **Expected output:**
 
-```
+```text
 📊 RESULTS SUMMARY
 
 Threshold | Precision | Recall | F1 Score | Accuracy
@@ -104,7 +107,8 @@ Threshold | Precision | Recall | F1 Score | Accuracy
 
 🎯 RECOMMENDATION: 0.80 (F1: 91.7%)
 💡 Update server/db.ts line ~470
-```
+
+```text
 
 ---
 
@@ -121,7 +125,8 @@ if (similarity > 0.82) {
   );
   return existingLead;
 }
-```
+
+```bash
 
 ---
 
@@ -130,9 +135,9 @@ if (similarity > 0.82) {
 **Test in production:**
 
 1. Restart server: `npm run dev`
-2. Create test leads
-3. Monitor logs for similarity scores
-4. Verify duplicate detection works better
+1. Create test leads
+1. Monitor logs for similarity scores
+1. Verify duplicate detection works better
 
 ---
 
@@ -140,7 +145,7 @@ if (similarity > 0.82) {
 
 ### Confusion Matrix
 
-```
+```text
                  Predicted
               Duplicate | Unique
 Actual ────────────────────────
@@ -150,15 +155,16 @@ Duplicate   TP         | FN
 Unique      FP         | TN
             (False     | (Correct!)
              alarm!)
-```
 
-### Which Metric to Use?
+```text
 
-**F1 Score** ← **USE THIS!**
+### Which Metric to Use
+
+**F1 Score**←**USE THIS!**
 
 - Balances precision and recall
 - Best for finding optimal threshold
-- Formula: `2 * (Precision * Recall) / (Precision + Recall)`
+- Formula: `2 *(Precision* Recall) / (Precision + Recall)`
 
 **Precision**
 
@@ -194,15 +200,16 @@ graph LR
     D --> E[Find Optimal]
     E --> F[Update Code]
     F --> G[Validate]
-```
+
+```text
 
 1. **Collect** → Real data from Calendar, Email, Billy
-2. **Embed** → Generate embeddings for all leads
-3. **Test** → Try different thresholds
-4. **Measure** → Calculate P, R, F1, Accuracy
-5. **Optimize** → Pick highest F1 score
-6. **Update** → Change threshold in code
-7. **Validate** → Test in production
+1. **Embed** → Generate embeddings for all leads
+1. **Test** → Try different thresholds
+1. **Measure** → Calculate P, R, F1, Accuracy
+1. **Optimize** → Pick highest F1 score
+1. **Update** → Change threshold in code
+1. **Validate** → Test in production
 
 ---
 
@@ -210,23 +217,23 @@ graph LR
 
 ### Real Data Benefits
 
-✅ **Actual duplicates** - Not synthetic  
-✅ **Real edge cases** - Name variations, typos  
-✅ **Production patterns** - How customers actually appear  
+✅ **Actual duplicates** - Not synthetic
+✅ **Real edge cases** - Name variations, typos
+✅ **Production patterns** - How customers actually appear
 ✅ **Domain-specific** - RenDetalje business context
 
 ### Scientific Approach
 
-✅ **Objective metrics** - Not guessing  
-✅ **Data-driven** - Based on real results  
-✅ **Reproducible** - Can re-run anytime  
+✅ **Objective metrics** - Not guessing
+✅ **Data-driven** - Based on real results
+✅ **Reproducible** - Can re-run anytime
 ✅ **Continuous improvement** - Re-tune as data grows
 
 ---
 
 ## 📁 Files Created
 
-```
+```text
 server/integrations/chromadb/
 ├── scripts/
 │   ├── README.md                    ← Full documentation
@@ -235,7 +242,8 @@ server/integrations/chromadb/
 ├── test-data/
 │   └── real-leads.json              ← Generated data (not committed)
 └── THRESHOLD_TUNING_PLAN.md         ← This file
-```
+
+```text
 
 ---
 
@@ -255,9 +263,9 @@ server/integrations/chromadb/
 ## 🐛 Known Limitations
 
 1. **Duplicate identification** - Uses email matching (may miss some)
-2. **OpenRouter API** - Rate limits may slow down embedding generation
-3. **Data freshness** - Need to re-tune as business grows
-4. **Edge cases** - Some duplicates may be subjective
+1. **OpenRouter API** - Rate limits may slow down embedding generation
+1. **Data freshness** - Need to re-tune as business grows
+1. **Edge cases** - Some duplicates may be subjective
 
 **Solutions:**
 
@@ -268,7 +276,7 @@ server/integrations/chromadb/
 
 ---
 
-## 🚀 Ready to Execute!
+## 🚀 Ready to Execute
 
 **Quick start:**
 
@@ -283,6 +291,7 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
 
 # Step 4: Test in production
 npm run dev
+
 ```
 
 ---
@@ -306,9 +315,9 @@ npm run dev
 
 ---
 
-**Status:** ✅ Scripts Ready, Awaiting Execution  
-**Next Step:** Run data collection script  
-**Estimated Time:** 1 hour total  
+**Status:** ✅ Scripts Ready, Awaiting Execution
+**Next Step:** Run data collection script
+**Estimated Time:** 1 hour total
 **Value:** Optimized duplicate detection for production
 
 **Let's do this! 🚀**

@@ -3,6 +3,7 @@ import { writeFileSync } from "fs";
 import type { TrpcContext } from "../_core/context";
 import { ENV } from "../_core/env";
 import * as db from "../db";
+import * as leadDb from "../lead-db";
 import { appRouter } from "../routers";
 
 async function main() {
@@ -43,10 +44,10 @@ async function main() {
   console.log("🔍 Fetching Emil Lærke profile...\n");
 
   // Ensure a profile exists (create a lead if needed)
-  const leads = await db.getUserLeads(user.id, { searchQuery: email });
+  const leads = await leadDb.getUserLeads(user.id, { searchQuery: email });
   let lead = leads.find(l => l.email?.toLowerCase() === email.toLowerCase());
   if (!lead) {
-    const created = await db.createLead({
+    const created = await leadDb.createLead({
       userId: user.id,
       source: "analysis_script",
       name: displayName,

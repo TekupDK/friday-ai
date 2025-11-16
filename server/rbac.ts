@@ -3,6 +3,8 @@
  * Defines roles and their permissions for action execution
  */
 
+import { TRPCError } from "@trpc/server";
+
 export type UserRole = "owner" | "admin" | "user" | "guest";
 
 export type ActionPermission =
@@ -105,7 +107,10 @@ export async function getUserRole(userId: number): Promise<UserRole> {
     return "user";
   } catch (err) {
     // Defensive: never block on RBAC resolution, default conservatively
-    console.warn("[RBAC] getUserRole failed, defaulting to 'user'", err);
+    // ✅ SECURITY FIX: Use logger instead of console.warn
+    import("./_core/logger").then(({ logger }) => {
+      logger.warn({ err }, "[RBAC] getUserRole failed, defaulting to 'user'");
+    });
     return userId === 1 ? "owner" : "user";
   }
 }
@@ -118,7 +123,10 @@ export function hasPermission(userRole: UserRole, actionType: string): boolean {
 
   // If action not in permission list, deny by default
   if (!requiredRole) {
-    console.warn(`[RBAC] Unknown action type: ${actionType}`);
+    // ✅ SECURITY FIX: Use logger instead of console.warn
+    import("./_core/logger").then(({ logger }) => {
+      logger.warn({ actionType }, "[RBAC] Unknown action type");
+    });
     return false;
   }
 
@@ -154,4 +162,84 @@ export function getRoleName(role: UserRole): string {
     guest: "Guest",
   };
   return names[role];
+}
+
+/**
+ * ✅ SECURITY FIX: Require ownership of a resource
+ * 
+ * This helper ensures that a user can only access resources they own.
+ * Use this in tRPC procedures to verify resource ownership before allowing access.
+ * 
+ * @param userId - The ID of the user making the request
+ * @param resourceUserId - The userId field from the resource (e.g., customerProfile.userId)
+ * @param resourceType - Human-readable resource type for error messages (e.g., "customer profile", "lead")
+ * @param resourceId - Optional resource ID for error messages
+ * @throws TRPCError with code FORBIDDEN if user doesn't own the resource
+ * 
+ * @example
+ * ```ts
+ * const customer = await db.select().from(customerProfiles)
+ *   .where(eq(customerProfiles.id, input.customerId))
+ *   .limit(1);
+ * 
+ * if (!customer[0]) {
+ *   throw new TRPCError({ code: "NOT_FOUND", message: "Customer not found" });
+ * }
+ * 
+ * requireOwnership(ctx.user.id, customer[0].userId, "customer profile", input.customerId);
+ * ```
+ */
+export function requireOwnership(
+  userId: number,
+  resourceUserId: number | null | undefined,
+  resourceType: string,
+  resourceId?: number | string
+): void {
+  // Allow if user owns the resource
+  if (resourceUserId === userId) {
+    return;
+  }
+
+  // Deny if resource has no userId (shouldn't happen, but be defensive)
+  if (resourceUserId === null || resourceUserId === undefined) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: `${resourceType} has no owner`,
+    });
+  }
+
+  // Deny if user doesn't own the resource
+  const resourceIdMsg = resourceId ? ` (ID: ${resourceId})` : "";
+  throw new TRPCError({
+    code: "FORBIDDEN",
+    message: `You don't have permission to access this ${resourceType}${resourceIdMsg}`,
+  });
+}
+
+/**
+ * ✅ SECURITY FIX: Require ownership of multiple resources (batch check)
+ * 
+ * Useful when checking ownership of multiple resources at once.
+ * 
+ * @param userId - The ID of the user making the request
+ * @param resources - Array of resources with userId fields
+ * @param resourceType - Human-readable resource type for error messages
+ * @throws TRPCError with code FORBIDDEN if user doesn't own any resource
+ * 
+ * @example
+ * ```ts
+ * const customers = await db.select().from(customerProfiles)
+ *   .where(inArray(customerProfiles.id, input.customerIds));
+ * 
+ * requireOwnershipBatch(ctx.user.id, customers, "customer profile");
+ * ```
+ */
+export function requireOwnershipBatch<T extends { userId: number | null | undefined }>(
+  userId: number,
+  resources: T[],
+  resourceType: string
+): void {
+  for (const resource of resources) {
+    requireOwnership(userId, resource.userId, resourceType);
+  }
 }

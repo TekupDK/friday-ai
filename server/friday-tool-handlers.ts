@@ -4,14 +4,8 @@
  */
 
 import { createInvoice, getInvoices, searchCustomerByEmail } from "./billy";
-import {
-  createLead,
-  createTask,
-  getUserLeads,
-  getUserTasks,
-  updateLeadStatus,
-  trackEvent,
-} from "./db";
+import { createTask, getUserTasks, trackEvent } from "./db";
+import { createLead, getUserLeads, updateLeadStatus } from "./lead-db";
 import { ToolName } from "./friday-tools";
 import {
   createCalendarEvent,

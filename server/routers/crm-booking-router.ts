@@ -37,24 +37,21 @@ export const crmBookingRouter = router({
 
       const userId = ctx.user.id;
 
-      let where = eq(bookings.userId, userId);
+      const conditions = [eq(bookings.userId, userId)];
       if (input.customerProfileId !== undefined) {
-        where = and(
-          where,
-          eq(bookings.customerProfileId, input.customerProfileId)
-        );
+        conditions.push(eq(bookings.customerProfileId, input.customerProfileId));
       }
       if (input.start) {
-        where = and(where, gte(bookings.scheduledStart, input.start));
+        conditions.push(gte(bookings.scheduledStart, input.start));
       }
       if (input.end) {
-        where = and(where, lte(bookings.scheduledStart, input.end));
+        conditions.push(lte(bookings.scheduledStart, input.end));
       }
 
       const rows = await db
         .select()
         .from(bookings)
-        .where(where)
+        .where(and(...conditions))
         .orderBy(desc(bookings.scheduledStart))
         .limit(input.limit)
         .offset(input.offset);

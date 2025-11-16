@@ -23,7 +23,8 @@ import {
   updateCustomerEmailCount,
   updateCustomerNote,
 } from "./customer-db";
-import { createConversation, getUserLeads } from "./db";
+import { createConversation } from "./db";
+import { getUserLeads } from "./lead-db";
 import { searchGmailThreadsByEmail } from "./mcp";
 import type { CustomerCaseAnalysis } from "./types/case-analysis";
 

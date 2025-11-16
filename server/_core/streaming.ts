@@ -111,7 +111,10 @@ export async function createStreamingResponse(
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Streaming error:", error);
+    // ✅ SECURITY FIX: Use logger instead of console.error (redacts sensitive data)
+    import("./logger").then(({ logger }) => {
+      logger.error({ err: error }, "[Streaming] Streaming error");
+    });
     onEvent({
       type: "error",
       data: {
@@ -144,7 +147,10 @@ export function createSSEHandler(req: any, res: any) {
 
   // Handle client disconnect
   req.on("close", () => {
-    console.log("SSE client disconnected");
+    // ✅ SECURITY FIX: Use logger instead of console.log
+    import("./logger").then(({ logger }) => {
+      logger.debug("[SSE] Client disconnected");
+    });
   });
 
   return res;
@@ -246,7 +252,10 @@ export async function createStreamingResponseWithRouting(
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Streaming with routing error:", error);
+    // ✅ SECURITY FIX: Use logger instead of console.error (redacts sensitive data)
+    import("./logger").then(({ logger }) => {
+      logger.error({ err: error }, "[Streaming] Streaming with routing error");
+    });
     onEvent({
       type: "error",
       data: {

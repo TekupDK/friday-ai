@@ -7,7 +7,7 @@
  * - Document search
  */
 
-import { ChromaClient, Collection, EmbeddingFunction } from "chromadb";
+import { ChromaClient, Collection, IEmbeddingFunction } from "chromadb";
 import { ENV } from "../../_core/env";
 import { generateEmbeddings } from "./embeddings";
 
@@ -18,7 +18,7 @@ let chromaClient: ChromaClient | null = null;
  * Custom embedding function using OpenRouter
  * Uses real embeddings API for semantic search
  */
-class OpenRouterEmbeddings implements EmbeddingFunction {
+class OpenRouterEmbeddings implements IEmbeddingFunction {
   async generate(texts: string[]): Promise<number[][]> {
     // Use real embeddings from OpenRouter
     return await generateEmbeddings(texts);
@@ -287,7 +287,7 @@ export async function listCollections(): Promise<string[]> {
 
   try {
     const collections = await client.listCollections();
-    return collections.map(c => c.name);
+    return (collections as any[]).map(c => c.name);
   } catch (error) {
     console.error(`[ChromaDB] Failed to list collections:`, error);
     return [];

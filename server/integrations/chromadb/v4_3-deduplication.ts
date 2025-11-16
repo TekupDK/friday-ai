@@ -136,17 +136,24 @@ export function mergeCustomerLeads(leads: V4_3_Lead[]): V4_3_Lead {
   };
 
   // Recalculate customer value metrics based on all data
+  const totalInvoiced = billyInvoices.reduce(
+    (sum, inv) => sum + inv.invoicedPrice,
+    0
+  );
+  const avgBooking =
+    billyInvoices.length > 0 ? totalInvoiced / billyInvoices.length : 0;
+  const totalBookingsCount = calendarEvents.length;
+  const isRec = totalBookingsCount > 1 || billyInvoices.length > 1;
+
   merged.customer = {
-    isRepeatCustomer: billyInvoices.length > 1 || calendarEvents.length > 1,
-    totalBookings: calendarEvents.length,
-    lifetimeValue: billyInvoices.reduce(
-      (sum, inv) => sum + inv.invoicedPrice,
-      0
-    ),
-    averageBookingValue:
-      billyInvoices.length > 0
-        ? billyInvoices.reduce((sum, inv) => sum + inv.invoicedPrice, 0) /
-          billyInvoices.length
+    isRepeatCustomer: isRec,
+    totalBookings: totalBookingsCount,
+    lifetimeValue: totalInvoiced,
+    averageBookingValue: avgBooking,
+    avgBookingValue: avgBooking, // alias
+    repeatRate:
+      totalBookingsCount > 1
+        ? ((totalBookingsCount - 1) / totalBookingsCount) * 100
         : 0,
     firstBookingDate:
       calendarEvents.length > 0
@@ -155,6 +162,12 @@ export function mergeCustomerLeads(leads: V4_3_Lead[]): V4_3_Lead {
     lastBookingDate:
       calendarEvents.length > 0 ? calendarEvents[0].startTime : null,
     daysBetweenBookings: calculateAvgDaysBetweenBookings(calendarEvents),
+    isActive: false, // TODO: compute based on Oct-Nov period
+    isRecurring: isRec,
+    recurringFrequency:
+      totalBookingsCount > 1
+        ? ("irregular" as const)
+        : null,
   };
 
   return merged;

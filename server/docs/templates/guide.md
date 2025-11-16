@@ -18,13 +18,15 @@ Description of what we're doing and why.
 
 ```bash
 # Commands or code
-```
+
+```text
 
 **Expected output:**
 
-```
+```text
 [What you should see]
-```
+
+```text
 
 ### Step 2: [Title]
 
@@ -40,18 +42,19 @@ How to verify everything is working:
 
 ```bash
 # Test commands
+
 ```
 
 ## Troubleshooting
 
 ### Issue: [Common problem]
 
-**Symptoms:** [What you see]  
+**Symptoms:** [What you see]
 **Solution:** [How to fix]
 
 ### Issue: [Common problem 2]
 
-**Symptoms:** [What you see]  
+**Symptoms:** [What you see]
 **Solution:** [How to fix]
 
 ## Next Steps
@@ -66,6 +69,6 @@ How to verify everything is working:
 
 ---
 
-**Difficulty:** [Beginner/Intermediate/Advanced]  
-**Estimated time:** [X minutes]  
+**Difficulty:** [Beginner/Intermediate/Advanced]
+**Estimated time:** [X minutes]
 **Last updated:** [Date]

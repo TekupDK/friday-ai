@@ -69,6 +69,9 @@ export const ENV = {
   langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY ?? "",
   langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY ?? "",
   langfuseBaseUrl: process.env.LANGFUSE_BASE_URL ?? "http://localhost:3001",
+  // Supabase Auth
+  supabaseUrl: process.env.SUPABASE_URL ?? "",
+  supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "",
   // ChromaDB Vector Database
   get chromaEnabled() {
     return process.env.CHROMA_ENABLED === "true";
@@ -92,10 +95,20 @@ function validateEnv() {
   const missing = required.filter(key => !process.env[key]);
 
   if (missing.length > 0) {
-    console.warn(
-      `⚠️ [ENV] Missing required environment variables: ${missing.join(", ")}`
-    );
-    console.warn("📄 Copy env.template.txt to .env and fill in your values");
+    // ✅ SECURITY FIX: Use logger instead of console.warn (redacts sensitive env values)
+    // Note: Can't use await in non-async function, so use dynamic import with then
+    import("./logger").then(({ logger }) => {
+      logger.warn(
+        { missingVars: missing },
+        "[ENV] Missing required environment variables"
+      );
+      logger.info("[ENV] Copy env.template.txt to .env and fill in your values");
+    }).catch(() => {
+      // Fallback if logger not available (shouldn't happen)
+      console.warn(
+        `⚠️ [ENV] Missing required environment variables: ${missing.join(", ")}`
+      );
+    });
   }
 }
 

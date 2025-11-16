@@ -1,15 +1,15 @@
 # 📝 Meeting Notes: [Topic]
 
-**Date:** [YYYY-MM-DD]  
-**Time:** [HH:MM - HH:MM]  
-**Attendees:** [Names]  
+**Date:** [YYYY-MM-DD]
+**Time:** [HH:MM - HH:MM]
+**Attendees:** [Names]
 **Note taker:** [Name]
 
 ## Agenda
 
 1. Topic 1
-2. Topic 2
-3. Topic 3
+1. Topic 2
+1. Topic 3
 
 ---
 
@@ -59,7 +59,7 @@ Items to discuss in future meetings:
 
 ## Next Meeting
 
-**Date:** [YYYY-MM-DD]  
+**Date:** [YYYY-MM-DD]
 **Agenda:**
 
 - Follow up on action items
@@ -72,5 +72,5 @@ Items to discuss in future meetings:
 
 ---
 
-**Meeting Type:** [Planning/Standup/Review/Retrospective]  
+**Meeting Type:** [Planning/Standup/Review/Retrospective]
 **Recording:** [Link if available]
