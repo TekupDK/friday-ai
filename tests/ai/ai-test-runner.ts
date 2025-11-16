@@ -9,8 +9,12 @@
  * - Automated reporting
  */
 
-import { test as base, expect } from "@playwright/test";
-import { chromium, type BrowserContext, type Page } from "@playwright/test";
+import {
+  test as base,
+  expect,
+  type BrowserContext,
+  type Page,
+} from "@playwright/test";
 import FridayAITestDataGenerator from "./test-data-generator";
 
 // AI Test fixture with enhanced capabilities
@@ -25,10 +29,15 @@ type AITestFixtures = {
 // Extend base test with AI fixtures
 export const test = base.extend<AITestFixtures>({
   aiPage: async ({ browser }, use) => {
+    const isTestMode = process.env.AI_TEST_MODE === "true" || process.env.FRIDAY_TEST_ENV === "playwright";
+    const extraHeaders: Record<string, string> = isTestMode
+      ? { "x-test-user-id": "test-user-123" }
+      : {};
     const context = await browser.newContext({
       viewport: { width: 1920, height: 1080 },
       // Enable AI-specific features
       permissions: ["clipboard-read"],
+      extraHTTPHeaders: extraHeaders,
       // Set Danish locale for testing
       locale: "da-DK",
       timezoneId: "Europe/Copenhagen",
@@ -65,10 +74,15 @@ export const test = base.extend<AITestFixtures>({
   },
 
   aiContext: async ({ browser }, use) => {
+    const isTestMode = process.env.AI_TEST_MODE === "true" || process.env.FRIDAY_TEST_ENV === "playwright";
+    const extraHeaders: Record<string, string> = isTestMode
+      ? { "x-test-user-id": "test-user-123" }
+      : {};
     const context = await browser.newContext({
       // AI test specific settings
       ignoreHTTPSErrors: true,
       bypassCSP: true,
+      extraHTTPHeaders: extraHeaders,
     });
     await use(context);
     await context.close();
@@ -147,9 +161,10 @@ export class AITestHelper {
       });
 
       // Wait for Friday AI panel to be ready
-      await this.page.waitForSelector('[data-testid="friday-chat-input"]', {
-        timeout: 5000,
-      });
+      const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+      await aiPanel
+        .locator('[data-testid="friday-chat-input"]')
+        .waitFor({ timeout: 5000 });
 
       console.log("✅ Friday AI loaded successfully");
       return true;
@@ -165,18 +180,21 @@ export class AITestHelper {
 
     const startTime = Date.now();
 
-    await this.page.fill('[data-testid="friday-chat-input"]', message);
-    await this.page.click('[data-testid="friday-send-button"]');
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+    await aiPanel.locator('[data-testid="friday-chat-input"]').fill(message);
+    await aiPanel.locator('[data-testid="friday-send-button"]').click();
 
     // Wait for AI response
-    await this.page.waitForSelector('[data-testid="ai-message"]:last-child', {
-      timeout: 15000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .last()
+      .waitFor({ timeout: 15000 });
 
     const responseTime = Date.now() - startTime;
-    const response = await this.page.textContent(
-      '[data-testid="ai-message"]:last-child'
-    );
+    const response = await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .last()
+      .textContent();
 
     console.log(
       `🤖 Response received in ${responseTime}ms:`,
@@ -216,13 +234,39 @@ export class AITestHelper {
   async simulateContext(type: "emails" | "calendar" | "invoices") {
     switch (type) {
       case "emails":
-        // Simulate selecting emails
-        await this.page.click('[data-testid="email-tab"]');
-        await this.page.waitForSelector('[data-testid="email-list"]');
-        const emails = await this.page
-          .locator('[data-testid="email-item"]')
-          .first(3);
-        await emails.click();
+        // Simulate selecting emails (adapted for EmailTabV2 / EmailCenterPanel)
+        const emailTabV2 = this.page.locator('[data-testid="email-tab-v2"]');
+        if (await emailTabV2.count().catch(() => 0)) {
+          await emailTabV2
+            .first()
+            .click()
+            .catch(() => {});
+        } else {
+          const header = this.page.locator("text=Email Center");
+          if (await header.count().catch(() => 0)) {
+            await header
+              .first()
+              .click()
+              .catch(() => {});
+          }
+        }
+        await Promise.race([
+          this.page
+            .waitForSelector('[data-testid="email-list"]', { timeout: 5000 })
+            .catch(() => {}),
+          this.page
+            .waitForSelector('[data-testid="email-center-panel"]', {
+              timeout: 5000,
+            })
+            .catch(() => {}),
+        ]);
+        const emails = this.page.locator('[data-testid="email-item"]');
+        if (await emails.count().catch(() => 0)) {
+          await emails
+            .first()
+            .click()
+            .catch(() => {});
+        }
         console.log("📧 Simulated email context");
         break;
 
@@ -255,19 +299,21 @@ export class AITestHelper {
 
   // Validate UI elements with AI
   async validateUI() {
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
     const validations = {
-      fridayPanelVisible: await this.page.isVisible(
-        '[data-testid="ai-assistant-panel"]'
-      ),
-      inputFieldVisible: await this.page.isVisible(
-        '[data-testid="friday-chat-input"]'
-      ),
-      sendButtonVisible: await this.page.isVisible(
-        '[data-testid="friday-send-button"]'
-      ),
-      messageAreaVisible: await this.page.isVisible(
-        '[data-testid="friday-message-area"]'
-      ),
+      fridayPanelVisible: await aiPanel.isVisible().catch(() => false),
+      inputFieldVisible: await aiPanel
+        .locator('[data-testid="friday-chat-input"]')
+        .isVisible()
+        .catch(() => false),
+      sendButtonVisible: await aiPanel
+        .locator('[data-testid="friday-send-button"]')
+        .isVisible()
+        .catch(() => false),
+      messageAreaVisible: await aiPanel
+        .locator('[data-testid="friday-message-area"]')
+        .isVisible()
+        .catch(() => false),
     };
 
     // Check 20% width constraint

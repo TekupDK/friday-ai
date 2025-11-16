@@ -9,7 +9,7 @@
  * - Context-aware validation
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import FridayAITestDataGenerator from "./test-data-generator";
 
 // Vibium-style test commands
@@ -78,8 +78,9 @@ class VibiumAIHelper {
     });
     await this.page.waitForTimeout(2000);
 
-    const chatInput = this.page.locator('[data-testid="friday-chat-input"]');
-    const sendButton = this.page.locator('[data-testid="friday-send-button"]');
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+    const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+    const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
     await chatInput.fill("Hej Friday, præsenter dig selv på dansk");
     await sendButton.click();
@@ -88,7 +89,7 @@ class VibiumAIHelper {
     await this.page.waitForTimeout(5000);
 
     const aiMessage = this.page
-      .locator('[data-testid="friday-message-assistant"]')
+      .locator('[data-testid="ai-message"]')
       .last();
     const response = await aiMessage.textContent();
 
@@ -136,8 +137,11 @@ class VibiumAIHelper {
       .map(e => `${e.subject}: ${e.body.substring(0, 100)}`)
       .join("\n");
 
-    const chatInput = this.page.locator('[data-testid="friday-chat-input"]');
-    const sendButton = this.page.locator('[data-testid="friday-send-button"]');
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+    const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+    const panel = await aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
 
     await chatInput.fill(`Opsummer disse emails:\n${emailContext}`);
     await sendButton.click();
@@ -145,7 +149,7 @@ class VibiumAIHelper {
     await this.page.waitForTimeout(5000);
 
     const aiMessage = this.page
-      .locator('[data-testid="friday-message-assistant"]')
+      .locator('[data-testid="ai-message"]')
       .last();
     const response = await aiMessage.textContent();
 
@@ -177,8 +181,9 @@ class VibiumAIHelper {
     const events = FridayAITestDataGenerator.generateCalendarEvents(2);
     const bookingRequest = `Book et møde med ${events[0].title} i morgen kl. 14:00`;
 
-    const chatInput = this.page.locator('[data-testid="friday-chat-input"]');
-    const sendButton = this.page.locator('[data-testid="friday-send-button"]');
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+    const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+    const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
     await chatInput.fill(bookingRequest);
     await sendButton.click();
@@ -186,7 +191,7 @@ class VibiumAIHelper {
     await this.page.waitForTimeout(5000);
 
     const aiMessage = this.page
-      .locator('[data-testid="friday-message-assistant"]')
+      .locator('[data-testid="ai-message"]')
       .last();
     const response = await aiMessage.textContent();
 
@@ -221,10 +226,9 @@ class VibiumAIHelper {
     for (const message of testMessages) {
       const startTime = Date.now();
 
-      const chatInput = this.page.locator('[data-testid="friday-chat-input"]');
-      const sendButton = this.page.locator(
-        '[data-testid="friday-send-button"]'
-      );
+      const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+      const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+      const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
       await chatInput.fill(message);
       await sendButton.click();
@@ -272,7 +276,8 @@ class VibiumAIHelper {
 
     // Test responsive design
     const viewport = this.page.viewportSize();
-    const panel = this.page.locator('[data-testid="friday-ai-panel"]');
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+    const panel = aiPanel.locator('[data-testid="friday-ai-panel"]').first();
 
     if (await panel.isVisible({ timeout: 3000 }).catch(() => false)) {
       const box = await panel.boundingBox();
@@ -303,12 +308,13 @@ class VibiumAIHelper {
     await this.page.waitForTimeout(2000);
 
     // Basic accessibility checks
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
     const checks = {
-      hasInput: await this.page
+      hasInput: await aiPanel
         .locator('[data-testid="friday-chat-input"]')
         .isVisible({ timeout: 3000 })
         .catch(() => false),
-      hasButton: await this.page
+      hasButton: await aiPanel
         .locator('[data-testid="friday-send-button"]')
         .isVisible({ timeout: 3000 })
         .catch(() => false),
@@ -334,8 +340,9 @@ class VibiumAIHelper {
     await this.page.waitForTimeout(2000);
 
     // Test empty message
-    const chatInput = this.page.locator('[data-testid="friday-chat-input"]');
-    const sendButton = this.page.locator('[data-testid="friday-send-button"]');
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+    const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+    const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
     // Try empty message
     await chatInput.fill("");
@@ -362,8 +369,9 @@ class VibiumAIHelper {
   private async testDanishQuality() {
     console.log("🇩🇰 Testing Danish language quality...");
 
-    const chatInput = this.page.locator('[data-testid="friday-chat-input"]');
-    const sendButton = this.page.locator('[data-testid="friday-send-button"]');
+    const aiPanel = this.page.locator('[data-testid="ai-assistant-panel"]');
+    const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+    const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
     const testPrompts = [
       "Hvad kan du hjælpe med?",
@@ -380,7 +388,7 @@ class VibiumAIHelper {
       await this.page.waitForTimeout(3000);
 
       const aiMessage = this.page
-        .locator('[data-testid="friday-message-assistant"]')
+        .locator('[data-testid="ai-message"]')
         .last();
       const response = await aiMessage.textContent();
 

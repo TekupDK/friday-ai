@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 async function devLogin(page: any) {
   await page.goto("http://localhost:3000/api/auth/login");
@@ -17,7 +17,8 @@ test("streaming can be canceled and partial output preserved", async ({
     await newConv.click();
   }
 
-  const input = page.getByPlaceholder("Skriv til Friday...");
+  const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+  const input = aiPanel.getByPlaceholder("Skriv til Friday...");
   await input.fill(
     "Skriv et langt svar om emnet præsentation af virksomheden."
   );
@@ -56,7 +57,8 @@ test("stream aborts when switching conversation", async ({ page }) => {
 
   await convoButtons.nth(0).click();
 
-  const input = page.getByPlaceholder("Skriv til Friday...");
+  const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+  const input = aiPanel.getByPlaceholder("Skriv til Friday...");
   await input.fill("Test stream ved samtaleskift");
   await input.press("Enter");
 
@@ -84,7 +86,8 @@ test("no console errors on unmount during streaming", async ({ page }) => {
     await newConv.click();
   }
 
-  const input = page.getByPlaceholder("Skriv til Friday...");
+  const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+  const input = aiPanel.getByPlaceholder("Skriv til Friday...");
   await input.fill("Start stream og naviger væk");
   await input.press("Enter");
 

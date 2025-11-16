@@ -5,7 +5,7 @@
  * Validates Danish language, business context, and performance
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("🤖 Friday AI - Real Conversation Tests", () => {
   test.beforeEach(async ({ page }) => {
@@ -23,30 +23,31 @@ test.describe("🤖 Friday AI - Real Conversation Tests", () => {
   });
 
   test("🎯 Friday AI Panel Loads and Interactive", async ({ page }) => {
-    // Check if Friday AI panel exists
-    const fridayPanel = await page.locator('[data-testid="friday-ai-panel"]');
+    // Check if Friday AI panel exists (scoped to top-level AI assistant panel to avoid duplicates)
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
 
     if (await fridayPanel.isVisible()) {
       console.log("✅ Friday AI panel found and visible");
 
       // Check message area
-      const messageArea = await page.locator(
+      const messageArea = aiPanel.locator(
         '[data-testid="friday-message-area"]'
       );
       await expect(messageArea).toBeVisible();
 
       // Check chat input
-      const chatInput = await page.locator('[data-testid="friday-chat-input"]');
+      const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
       await expect(chatInput).toBeVisible();
 
       // Check send button
-      const sendButton = await page.locator(
-        '[data-testid="friday-send-button"]'
-      );
+      const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
       await expect(sendButton).toBeVisible();
 
       // Check model info
-      const modelInfo = await page.locator('[data-testid="friday-model-info"]');
+      const modelInfo = aiPanel.locator('[data-testid="friday-model-info"]');
       await expect(modelInfo).toBeVisible();
 
       console.log("✅ All Friday AI components are visible");
@@ -68,16 +69,17 @@ test.describe("🤖 Friday AI - Real Conversation Tests", () => {
   });
 
   test("💬 Friday AI Danish Conversation Test", async ({ page }) => {
-    const fridayPanel = await page.locator('[data-testid="friday-ai-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
 
     if (await fridayPanel.isVisible()) {
       console.log("🤖 Testing Danish conversation...");
 
       // Find chat input
-      const chatInput = await page.locator('[data-testid="friday-chat-input"]');
-      const sendButton = await page.locator(
-        '[data-testid="friday-send-button"]'
-      );
+      const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+      const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
       // Type Danish message
       const danishMessage = "Hej Friday, præsenter dig selv på dansk";
@@ -91,31 +93,32 @@ test.describe("🤖 Friday AI - Real Conversation Tests", () => {
       try {
         // Wait for loading or response
         await Promise.race([
-          page.waitForSelector('[data-testid="friday-loading-indicator"]', {
-            timeout: 5000,
-          }),
-          page.waitForSelector('[data-testid="friday-message-assistant"]', {
-            timeout: 10000,
-          }),
+          aiPanel
+            .locator('[data-testid="loading-indicator"]')
+            .waitFor({ timeout: 5000 })
+            .catch(() => {}),
+          aiPanel
+            .locator('[data-testid="ai-message"]')
+            .waitFor({ timeout: 10000 })
+            .catch(() => {}),
         ]);
 
         // If loading appears, wait for actual response
         if (
-          await page
-            .locator('[data-testid="friday-loading-indicator"]')
+          await aiPanel
+            .locator('[data-testid="loading-indicator"]')
             .isVisible()
         ) {
-          await page.waitForSelector(
-            '[data-testid="friday-message-assistant"]',
-            { timeout: 15000 }
-          );
+          await aiPanel
+            .locator('[data-testid="ai-message"]')
+            .waitFor({ timeout: 15000 });
         }
 
         const responseTime = Date.now() - startTime;
 
         // Get AI response
-        const aiMessage = await page
-          .locator('[data-testid="friday-message-assistant"]')
+        const aiMessage = await aiPanel
+          .locator('[data-testid="ai-message"]')
           .last();
         const response = await aiMessage.textContent();
 
@@ -193,15 +196,16 @@ test.describe("🤖 Friday AI - Real Conversation Tests", () => {
   });
 
   test("⚡ Friday AI Performance Test", async ({ page }) => {
-    const fridayPanel = await page.locator('[data-testid="friday-ai-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
 
     if (await fridayPanel.isVisible()) {
       console.log("⚡ Testing Friday AI performance...");
 
-      const chatInput = await page.locator('[data-testid="friday-chat-input"]');
-      const sendButton = await page.locator(
-        '[data-testid="friday-send-button"]'
-      );
+      const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+      const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
       const testMessages = [
         "Hvad kan du hjælpe med?",
@@ -223,23 +227,24 @@ test.describe("🤖 Friday AI - Real Conversation Tests", () => {
         try {
           // Wait for response
           await Promise.race([
-            page.waitForSelector('[data-testid="friday-loading-indicator"]', {
-              timeout: 5000,
-            }),
-            page.waitForSelector('[data-testid="friday-message-assistant"]', {
-              timeout: 10000,
-            }),
+            aiPanel
+              .locator('[data-testid="loading-indicator"]')
+              .waitFor({ timeout: 5000 })
+              .catch(() => {}),
+            aiPanel
+              .locator('[data-testid="ai-message"]')
+              .waitFor({ timeout: 10000 })
+              .catch(() => {}),
           ]);
 
           if (
-            await page
-              .locator('[data-testid="friday-loading-indicator"]')
+            await aiPanel
+              .locator('[data-testid="loading-indicator"]')
               .isVisible()
           ) {
-            await page.waitForSelector(
-              '[data-testid="friday-message-assistant"]',
-              { timeout: 15000 }
-            );
+            await aiPanel
+              .locator('[data-testid="ai-message"]')
+              .waitFor({ timeout: 15000 });
           }
 
           const responseTime = Date.now() - startTime;
@@ -281,20 +286,21 @@ test.describe("🤖 Friday AI - Real Conversation Tests", () => {
   });
 
   test("🎨 Friday AI UI Interaction Test", async ({ page }) => {
-    const fridayPanel = await page.locator('[data-testid="friday-ai-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
 
     if (await fridayPanel.isVisible()) {
       console.log("🎨 Testing UI interactions...");
 
       // Test input field
-      const chatInput = await page.locator('[data-testid="friday-chat-input"]');
+      const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
       await chatInput.focus();
       await chatInput.fill("Test message");
 
       // Test send button state
-      const sendButton = await page.locator(
-        '[data-testid="friday-send-button"]'
-      );
+      const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
       expect(await sendButton.isEnabled()).toBe(true);
 
       // Test clear input

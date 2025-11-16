@@ -3,7 +3,7 @@
  * Fast, reliable tests using mocked AI responses
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { enableAllMocks, mockAIResponses } from "./helpers/mock-ai";
 
 // Dev login helper
@@ -25,19 +25,23 @@ test.describe("Phase 1: Mocked AI Tests (Fast)", () => {
     page,
   }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Hej Friday");
     await input.press("Enter");
 
     // With mocking, response should be fast (<2s)
-    await page.waitForSelector('[data-testid="ai-message"]', { timeout: 2000 });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 2000 });
 
-    const userMessage = page.locator('[data-testid="user-message"]').first();
+    const userMessage = aiPanel.locator('[data-testid="user-message"]').first();
     await expect(userMessage).toBeVisible();
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
 
     // Check mock response content
@@ -49,14 +53,18 @@ test.describe("Phase 1: Mocked AI Tests (Fast)", () => {
     page,
   }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send first message
     await input.fill("Message 1");
     await input.press("Enter");
-    await page.waitForSelector('[data-testid="ai-message"]', { timeout: 2000 });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 2000 });
 
     // Send second message
     await input.fill("Message 2");
@@ -64,8 +72,8 @@ test.describe("Phase 1: Mocked AI Tests (Fast)", () => {
     await page.waitForTimeout(200); // Wait for second response
 
     // Should have 2 user messages and 2 AI messages
-    const userMessages = page.locator('[data-testid="user-message"]');
-    const aiMessages = page.locator('[data-testid="ai-message"]');
+    const userMessages = aiPanel.locator('[data-testid="user-message"]');
+    const aiMessages = aiPanel.locator('[data-testid="ai-message"]');
 
     expect(await userMessages.count()).toBeGreaterThanOrEqual(2);
     expect(await aiMessages.count()).toBeGreaterThanOrEqual(2);
@@ -76,9 +84,10 @@ test.describe("Phase 1: Mocked AI Tests (Fast)", () => {
     await mockAIResponses(page, { shouldFail: true });
 
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("This will fail");
     await input.press("Enter");
 
@@ -87,21 +96,25 @@ test.describe("Phase 1: Mocked AI Tests (Fast)", () => {
     await page.waitForTimeout(1000);
 
     // User message should still be visible
-    const userMessage = page.locator('[data-testid="user-message"]').first();
+    const userMessage = aiPanel.locator('[data-testid="user-message"]').first();
     await expect(userMessage).toBeVisible();
   });
 
   test("should click suggestion and get quick response", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const suggestion = page.locator('[data-testid="suggestion-0"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const suggestion = aiPanel.locator('[data-testid="suggestion-0"]');
     await suggestion.click();
 
     // Fast response with mocking
-    await page.waitForSelector('[data-testid="ai-message"]', { timeout: 2000 });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 2000 });
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
   });
 
@@ -112,7 +125,7 @@ test.describe("Phase 1: Mocked AI Tests (Fast)", () => {
 
     // Should load in <1s with mocking
     const startTime = Date.now();
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
     const loadTime = Date.now() - startTime;
 
     expect(loadTime).toBeLessThan(1000);
@@ -127,9 +140,10 @@ test.describe("Phase 1: Performance with Mocking", () => {
 
   test("should handle rapid message sending", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send 5 messages rapidly
     for (let i = 0; i < 5; i++) {
@@ -140,7 +154,7 @@ test.describe("Phase 1: Performance with Mocking", () => {
 
     // All messages should be sent
     await page.waitForTimeout(500);
-    const userMessages = page.locator('[data-testid="user-message"]');
+    const userMessages = aiPanel.locator('[data-testid="user-message"]');
     expect(await userMessages.count()).toBeGreaterThanOrEqual(5);
   });
 
@@ -148,9 +162,10 @@ test.describe("Phase 1: Performance with Mocking", () => {
     page,
   }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     const startTime = Date.now();
     await input.fill("Performance test");
@@ -161,7 +176,7 @@ test.describe("Phase 1: Performance with Mocking", () => {
     expect(responseTime).toBeLessThan(100);
 
     // Message should appear quickly
-    await page.waitForSelector('[data-testid="user-message"]', {
+    await aiPanel.locator('[data-testid="user-message"]').first().waitFor({
       timeout: 500,
     });
   });

@@ -51,6 +51,9 @@ async function globalSetup(config: FullConfig) {
   // Setup test environment variables
   process.env.AI_TEST_MODE = "true";
   process.env.FRIDAY_TEST_ENV = "playwright";
+  // Force server-side chat & streaming for deterministic AI testing in CI/dev
+  process.env.FORCE_SERVER_SIDE_CHAT = "true";
+  process.env.FORCE_STREAMING = "true";
 
   // Create test data directories
   const testDirs = [

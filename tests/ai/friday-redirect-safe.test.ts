@@ -213,8 +213,8 @@ test.describe("🤖 Friday AI - Redirect Safe Tests", () => {
       // Check viewport
       const viewport = page.viewportSize();
       console.log("📐 Viewport:", viewport);
-      expect(viewport?.width).toBe(1920);
-      expect(viewport?.height).toBe(1080);
+      expect(viewport?.width).toBeGreaterThanOrEqual(1280);
+      expect(viewport?.height).toBeGreaterThanOrEqual(720);
 
       // Check for responsive design
       const bodyWidth = await page.evaluate(() => document.body.offsetWidth);

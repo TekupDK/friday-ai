@@ -8,9 +8,7 @@
  * - Removal of badge clutter
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render } from "@testing-library/react";
-import React from "react";
+import { describe, expect, it } from "vitest";
 
 // Simple tests that verify code structure without full rendering
 describe("Phase 1: Code Structure Verification", () => {
@@ -129,8 +127,11 @@ describe("Phase 1: Code Structure Verification", () => {
     );
     const content = fs.readFileSync(threadGroupPath, "utf-8");
 
-    // Check for compact layout (now in EmailThreadGroup)
-    expect(content).toContain("density === 'compact'");
+    // Check for compact layout (now in EmailThreadGroup) — allow either single or double quotes
+    expect(
+      content.includes("density === 'compact'") ||
+        content.includes('density === "compact"')
+    ).toBe(true);
     expect(content).toContain("truncate"); // For text truncation
   });
 

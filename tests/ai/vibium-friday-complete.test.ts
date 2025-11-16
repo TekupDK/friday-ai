@@ -9,7 +9,7 @@
  * - Business context verification
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 // Vibium-style test categories with Friday AI focus
 const vibiumFridayTests = {
@@ -226,7 +226,7 @@ class VibiumFridayTester {
     // Check for Friday AI specific components
     const components = {
       fridayPanel: await this.page
-        .locator('[data-testid="friday-ai-panel"]')
+        .locator('[data-testid="ai-assistant-panel"]')
         .isVisible()
         .catch(() => false),
       chatInput: await this.page

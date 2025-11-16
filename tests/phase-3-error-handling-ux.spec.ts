@@ -3,7 +3,7 @@
  * Tests error boundary, loading states, and scroll behavior
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 // Dev login helper
 async function devLogin(page: any) {
@@ -20,10 +20,13 @@ test.describe("Phase 3: Error Boundary", () => {
 
   test("should not crash on component errors", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
     // Chat should be visible and working
-    const chatPanel = page.locator('[data-testid="friday-ai-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const chatPanel = aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
     await expect(chatPanel).toBeVisible();
 
     // Should not show error boundary UI
@@ -51,10 +54,11 @@ test.describe("Phase 3: Error Boundary", () => {
 
   test("should handle graceful degradation", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
     // Even with errors, UI should remain functional
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await expect(input).toBeVisible();
   });
 });
@@ -68,9 +72,10 @@ test.describe("Phase 3: Loading States", () => {
     page,
   }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Test loading");
     await input.press("Enter");
 
@@ -95,16 +100,17 @@ test.describe("Phase 3: Loading States", () => {
     const isVisible = await startingText.isVisible().catch(() => false);
 
     // Eventually should load
-    await page.waitForSelector('[data-testid="friday-ai-panel"]', {
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]', {
       timeout: 5000,
     });
   });
 
   test("should hide loading indicator after AI responds", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Quick test");
     await input.press("Enter");
 
@@ -112,10 +118,11 @@ test.describe("Phase 3: Loading States", () => {
     const loadingIndicator = page.locator('[data-testid="loading-indicator"]');
     await expect(loadingIndicator).toBeVisible({ timeout: 2000 });
 
-    // Wait for AI response
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    // Wait for AI response - scope to panel
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
     // Loading should be gone
     await expect(loadingIndicator).not.toBeVisible();
@@ -123,9 +130,10 @@ test.describe("Phase 3: Loading States", () => {
 
   test("should show loading dots animation", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Animation test");
     await input.press("Enter");
 
@@ -146,14 +154,15 @@ test.describe("Phase 3: Scroll Behavior", () => {
 
   test("should auto-scroll to bottom on new message", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send first message
     await input.fill("First message");
     await input.press("Enter");
-    await page.waitForSelector('[data-testid="user-message"]', {
+    await aiPanel.locator('[data-testid="user-message"]').first().waitFor({
       timeout: 1000,
     });
 
@@ -164,34 +173,36 @@ test.describe("Phase 3: Scroll Behavior", () => {
     await page.waitForTimeout(500);
 
     // Latest message should be visible (scrolled to bottom)
-    const messages = page.locator('[data-testid="user-message"]');
+    const messages = aiPanel.locator('[data-testid="user-message"]');
     const lastMessage = messages.last();
     await expect(lastMessage).toBeInViewport();
   });
 
   test("should scroll to bottom when AI responds", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Test scroll");
     await input.press("Enter");
 
     // Wait for AI response
-    await page.waitForSelector('[data-testid="ai-message"]', {
+    await aiPanel.locator('[data-testid="ai-message"]').first().waitFor({
       timeout: 30000,
     });
 
     // AI message should be visible (scrolled to bottom)
-    const aiMessage = page.locator('[data-testid="ai-message"]').last();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').last();
     await expect(aiMessage).toBeInViewport();
   });
 
   test("should handle multiple messages with auto-scroll", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send 5 messages
     for (let i = 0; i < 5; i++) {
@@ -201,16 +212,17 @@ test.describe("Phase 3: Scroll Behavior", () => {
     }
 
     // Last message should be visible
-    const messages = page.locator('[data-testid="user-message"]');
+    const messages = aiPanel.locator('[data-testid="user-message"]');
     const lastMessage = messages.last();
     await expect(lastMessage).toBeInViewport();
   });
 
   test("should use smooth scrolling", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send message
     await input.fill("Smooth scroll test");
@@ -220,7 +232,7 @@ test.describe("Phase 3: Scroll Behavior", () => {
     await page.waitForTimeout(300);
 
     // Message should be visible
-    const userMessage = page.locator('[data-testid="user-message"]').first();
+    const userMessage = aiPanel.locator('[data-testid="user-message"]').first();
     await expect(userMessage).toBeVisible();
   });
 });
@@ -240,9 +252,10 @@ test.describe("Phase 3: Error Display", () => {
     });
 
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("This will fail");
     await input.press("Enter");
 
@@ -259,19 +272,21 @@ test.describe("Phase 3: Error Display", () => {
 
   test("should recover from errors", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
     // Even after errors, should be able to send new messages
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await expect(input).toBeEnabled();
 
     await input.fill("Recovery test");
     await input.press("Enter");
 
     // Should process normally
-    await page.waitForSelector('[data-testid="user-message"]', {
-      timeout: 1000,
-    });
+    await aiPanel
+      .locator('[data-testid="user-message"]')
+      .first()
+      .waitFor({ timeout: 1000 });
   });
 });
 
@@ -282,37 +297,40 @@ test.describe("Phase 3: UX Polish", () => {
 
   test("should show welcome screen initially", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
     // Welcome screen should be visible
-    const welcomeScreen = page.locator('[data-testid="welcome-screen"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const welcomeScreen = aiPanel.locator('[data-testid="welcome-screen"]');
     await expect(welcomeScreen).toBeVisible();
 
     // Should have suggestions
-    const suggestions = page.locator('[data-testid^="suggestion-"]');
+    const suggestions = aiPanel.locator('[data-testid^="suggestion-"]');
     expect(await suggestions.count()).toBeGreaterThanOrEqual(4);
   });
 
   test("should hide welcome screen after first message", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Hide welcome");
     await input.press("Enter");
 
     await page.waitForTimeout(500);
 
     // Welcome screen should be hidden
-    const welcomeScreen = page.locator('[data-testid="welcome-screen"]');
+    const welcomeScreen = aiPanel.locator('[data-testid="welcome-screen"]');
     await expect(welcomeScreen).not.toBeVisible();
   });
 
   test("should maintain UI responsiveness", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Input should always be responsive
     await input.fill("Test 1");
@@ -325,15 +343,17 @@ test.describe("Phase 3: UX Polish", () => {
 
   test("should show timestamps on messages", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Timestamp test");
     await input.press("Enter");
 
-    await page.waitForSelector('[data-testid="user-message"]', {
-      timeout: 1000,
-    });
+    await aiPanel
+      .locator('[data-testid="user-message"]')
+      .first()
+      .waitFor({ timeout: 1000 });
 
     // Should have timestamp
     const timestamp = page.locator(".text-xs.opacity-70");
@@ -350,9 +370,10 @@ test.describe("Phase 3: Integration", () => {
     page,
   }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send message
     await input.fill("Complete flow test");
@@ -363,19 +384,20 @@ test.describe("Phase 3: Integration", () => {
     await expect(loadingIndicator).toBeVisible({ timeout: 2000 });
 
     // Message appears (optimistic)
-    const userMessage = page.locator('[data-testid="user-message"]').first();
+    const userMessage = aiPanel.locator('[data-testid="user-message"]').first();
     await expect(userMessage).toBeVisible();
 
     // AI responds
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
     // Loading gone
     await expect(loadingIndicator).not.toBeVisible();
 
     // Scrolled to bottom
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeInViewport();
 
     // No errors

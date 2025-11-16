@@ -3,7 +3,7 @@
  * Tests tools integration, context integration, and optimistic updates
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 // Dev login helper
 async function devLogin(page: any) {
@@ -20,20 +20,21 @@ test.describe("Phase 2: Tools Integration", () => {
 
   test("should enable AI to call functions", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
-
-    const input = page.getByPlaceholder("Type your message...");
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Ask Friday to search emails (should trigger tool calling)
     await input.fill("Søg efter emails fra i dag");
     await input.press("Enter");
 
     // Wait for AI response
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
 
     // AI should have processed the request
@@ -43,52 +44,58 @@ test.describe("Phase 2: Tools Integration", () => {
 
   test("should handle calendar requests", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
 
     // Click calendar suggestion
-    const calendarSuggestion = page.locator('[data-testid="suggestion-0"]'); // "Tjek min kalender i dag"
+    const calendarSuggestion = aiPanel.locator('[data-testid="suggestion-0"]'); // "Tjek min kalender i dag"
     await calendarSuggestion.click();
 
     // Should trigger calendar tool
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
   });
 
   test("should handle invoice requests", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
 
     // Click invoice suggestion
-    const invoiceSuggestion = page.locator('[data-testid="suggestion-1"]'); // "Vis ubetalte fakturaer"
+    const invoiceSuggestion = aiPanel.locator('[data-testid="suggestion-1"]'); // "Vis ubetalte fakturaer"
     await invoiceSuggestion.click();
 
     // Should trigger Billy integration
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
   });
 
   test("should handle lead search requests", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
 
     // Click leads suggestion
-    const leadsSuggestion = page.locator('[data-testid="suggestion-2"]'); // "Find nye leads"
+    const leadsSuggestion = aiPanel.locator('[data-testid="suggestion-2"]'); // "Find nye leads"
     await leadsSuggestion.click();
 
     // Should trigger email search
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
   });
 });
@@ -100,7 +107,7 @@ test.describe("Phase 2: Context Integration", () => {
 
   test("should send context with messages", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
     // Intercept sendMessage request to verify context is sent
     let contextSent = false;
@@ -116,7 +123,8 @@ test.describe("Phase 2: Context Integration", () => {
       await route.continue();
     });
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("Test context");
     await input.press("Enter");
 
@@ -129,19 +137,20 @@ test.describe("Phase 2: Context Integration", () => {
 
   test("should handle email context", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
-
-    const input = page.getByPlaceholder("Type your message...");
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Ask about selected emails (context-aware)
     await input.fill("Hvad handler de valgte emails om?");
     await input.press("Enter");
 
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
 
     // AI should respond (even if no emails selected)
@@ -151,19 +160,20 @@ test.describe("Phase 2: Context Integration", () => {
 
   test("should handle calendar context", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
-
-    const input = page.getByPlaceholder("Type your message...");
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Ask about calendar (context-aware)
     await input.fill("Hvad har jeg i min kalender?");
     await input.press("Enter");
 
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
     await expect(aiMessage).toBeVisible();
   });
 });
@@ -175,16 +185,16 @@ test.describe("Phase 2: Optimistic Updates", () => {
 
   test("should show user message instantly", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
-
-    const input = page.getByPlaceholder("Type your message...");
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     const startTime = Date.now();
     await input.fill("Instant message test");
     await input.press("Enter");
 
     // User message should appear VERY quickly (optimistic update)
-    await page.waitForSelector('[data-testid="user-message"]', {
+    await aiPanel.locator('[data-testid="user-message"]').first().waitFor({
       timeout: 500,
     });
     const appearTime = Date.now() - startTime;
@@ -192,16 +202,16 @@ test.describe("Phase 2: Optimistic Updates", () => {
     // Should appear in less than 500ms (optimistic)
     expect(appearTime).toBeLessThan(500);
 
-    const userMessage = page.locator('[data-testid="user-message"]').first();
+    const userMessage = aiPanel.locator('[data-testid="user-message"]').first();
     await expect(userMessage).toBeVisible();
     await expect(userMessage).toContainText("Instant message test");
   });
 
   test("should handle rapid message sending", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
-
-    const input = page.getByPlaceholder("Type your message...");
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send 3 messages rapidly
     await input.fill("Message 1");
@@ -220,7 +230,7 @@ test.describe("Phase 2: Optimistic Updates", () => {
     // All user messages should appear quickly (optimistic)
     await page.waitForTimeout(500);
 
-    const userMessages = page.locator('[data-testid="user-message"]');
+    const userMessages = aiPanel.locator('[data-testid="user-message"]');
     const count = await userMessages.count();
 
     // Should have at least 3 user messages
@@ -229,7 +239,7 @@ test.describe("Phase 2: Optimistic Updates", () => {
 
   test("should rollback on error", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
     // Mock API to fail
     await page.route("**/api/trpc/chat.sendMessage*", async route => {
@@ -239,12 +249,13 @@ test.describe("Phase 2: Optimistic Updates", () => {
       });
     });
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
     await input.fill("This will fail");
     await input.press("Enter");
 
     // Message should appear optimistically
-    await page.waitForSelector('[data-testid="user-message"]', {
+    await aiPanel.locator('[data-testid="user-message"]').first().waitFor({
       timeout: 500,
     });
 
@@ -259,14 +270,14 @@ test.describe("Phase 2: Optimistic Updates", () => {
     page,
   }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
-
-    const input = page.getByPlaceholder("Type your message...");
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send first message
     await input.fill("First message");
     await input.press("Enter");
-    await page.waitForSelector('[data-testid="user-message"]', {
+    await aiPanel.locator('[data-testid="user-message"]').first().waitFor({
       timeout: 500,
     });
 
@@ -277,7 +288,7 @@ test.describe("Phase 2: Optimistic Updates", () => {
     await page.waitForTimeout(500);
 
     // Check message order
-    const userMessages = page.locator('[data-testid="user-message"]');
+    const userMessages = aiPanel.locator('[data-testid="user-message"]');
     const firstMsg = userMessages.nth(0);
     const secondMsg = userMessages.nth(1);
 
@@ -295,9 +306,10 @@ test.describe("Phase 2: Integration Tests", () => {
     page,
   }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send context-aware message that triggers tools
     const startTime = Date.now();
@@ -305,19 +317,20 @@ test.describe("Phase 2: Integration Tests", () => {
     await input.press("Enter");
 
     // User message should appear instantly (optimistic)
-    await page.waitForSelector('[data-testid="user-message"]', {
+    await aiPanel.locator('[data-testid="user-message"]').first().waitFor({
       timeout: 500,
     });
     const optimisticTime = Date.now() - startTime;
     expect(optimisticTime).toBeLessThan(500);
 
     // AI should process with tools and context
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
-    const userMessage = page.locator('[data-testid="user-message"]').first();
-    const aiMessage = page.locator('[data-testid="ai-message"]').first();
+    const userMessage = aiPanel.locator('[data-testid="user-message"]').first();
+    const aiMessage = aiPanel.locator('[data-testid="ai-message"]').first();
 
     await expect(userMessage).toBeVisible();
     await expect(aiMessage).toBeVisible();
@@ -332,16 +345,18 @@ test.describe("Phase 2: Integration Tests", () => {
 
   test("should handle multiple tool calls in sequence", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // First tool call (calendar)
     await input.fill("Tjek min kalender");
     await input.press("Enter");
-    await page.waitForSelector('[data-testid="ai-message"]', {
-      timeout: 30000,
-    });
+    await aiPanel
+      .locator('[data-testid="ai-message"]')
+      .first()
+      .waitFor({ timeout: 30000 });
 
     // Second tool call (invoices)
     await input.fill("Vis fakturaer");
@@ -349,8 +364,8 @@ test.describe("Phase 2: Integration Tests", () => {
     await page.waitForTimeout(1000);
 
     // Should have 2 user messages and 2 AI messages
-    const userMessages = page.locator('[data-testid="user-message"]');
-    const aiMessages = page.locator('[data-testid="ai-message"]');
+    const userMessages = aiPanel.locator('[data-testid="user-message"]');
+    const aiMessages = aiPanel.locator('[data-testid="ai-message"]');
 
     expect(await userMessages.count()).toBeGreaterThanOrEqual(2);
     expect(await aiMessages.count()).toBeGreaterThanOrEqual(2);
@@ -364,17 +379,19 @@ test.describe("Phase 2: Performance Tests", () => {
 
   test("optimistic updates should be under 100ms", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     const startTime = Date.now();
     await input.fill("Performance test");
     await input.press("Enter");
 
-    await page.waitForSelector('[data-testid="user-message"]', {
-      timeout: 200,
-    });
+    await aiPanel
+      .locator('[data-testid="user-message"]')
+      .first()
+      .waitFor({ timeout: 200 });
     const updateTime = Date.now() - startTime;
 
     // Optimistic update should be VERY fast
@@ -383,9 +400,10 @@ test.describe("Phase 2: Performance Tests", () => {
 
   test("should handle high message volume", async ({ page }) => {
     await page.goto("http://localhost:3000/");
-    await page.waitForSelector('[data-testid="friday-ai-panel"]');
+    await page.waitForSelector('[data-testid="ai-assistant-panel"]');
 
-    const input = page.getByPlaceholder("Type your message...");
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const input = aiPanel.getByPlaceholder("Type your message...");
 
     // Send 10 messages
     for (let i = 0; i < 10; i++) {
@@ -396,7 +414,7 @@ test.describe("Phase 2: Performance Tests", () => {
 
     // All should appear
     await page.waitForTimeout(1000);
-    const userMessages = page.locator('[data-testid="user-message"]');
+    const userMessages = aiPanel.locator('[data-testid="user-message"]');
     expect(await userMessages.count()).toBeGreaterThanOrEqual(10);
   });
 });

@@ -5,7 +5,7 @@
  * Test login flow and then proceed to Friday AI testing
  */
 
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("🔐 Friday AI Login + Testing", () => {
   test("🔑 Login Flow - Access Friday AI", async ({ page }) => {
@@ -146,8 +146,11 @@ test.describe("🔐 Friday AI Login + Testing", () => {
   async function lookForFridayAI(page: any) {
     console.log("🔍 Looking for Friday AI components...");
 
-    // Check for Friday AI panel
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]');
+    // Check for Friday AI panel (scope to ai-assistant-panel to avoid duplicates)
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
     const panelVisible = await fridayPanel
       .isVisible({ timeout: 3000 })
       .catch(() => false);
@@ -156,12 +159,12 @@ test.describe("🔐 Friday AI Login + Testing", () => {
       console.log("✅ Friday AI panel found!");
 
       // Check components
-      const chatInput = page.locator('[data-testid="friday-chat-input"]');
+      const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
       const inputVisible = await chatInput
         .isVisible({ timeout: 2000 })
         .catch(() => false);
 
-      const sendButton = page.locator('[data-testid="friday-send-button"]');
+      const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
       const buttonVisible = await sendButton
         .isVisible({ timeout: 2000 })
         .catch(() => false);
@@ -228,14 +231,17 @@ test.describe("🔐 Friday AI Login + Testing", () => {
     await page.waitForTimeout(3000);
 
     // Try to access Friday AI components
-    const fridayPanel = page.locator('[data-testid="friday-ai-panel"]');
+    const aiPanel = page.locator('[data-testid="ai-assistant-panel"]');
+    const fridayPanel = aiPanel
+      .locator('[data-testid="friday-ai-panel"]')
+      .first();
 
     if (await fridayPanel.isVisible({ timeout: 5000 }).catch(() => false)) {
       console.log("✅ Friday AI panel accessible - running tests...");
 
       // Test basic interaction
-      const chatInput = page.locator('[data-testid="friday-chat-input"]');
-      const sendButton = page.locator('[data-testid="friday-send-button"]');
+      const chatInput = aiPanel.locator('[data-testid="friday-chat-input"]');
+      const sendButton = aiPanel.locator('[data-testid="friday-send-button"]');
 
       // Type test message
       await chatInput.fill("Hej Friday, test efter login");
@@ -253,8 +259,8 @@ test.describe("🔐 Friday AI Login + Testing", () => {
         await page.waitForTimeout(5000);
 
         // Check for AI response
-        const aiMessage = page
-          .locator('[data-testid="friday-message-assistant"]')
+        const aiMessage = aiPanel
+          .locator('[data-testid="ai-message"]')
           .last();
         const hasResponse = await aiMessage
           .isVisible({ timeout: 3000 })
