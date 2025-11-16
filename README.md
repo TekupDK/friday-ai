@@ -2,7 +2,7 @@
 
 **Intelligent Email Management & Automation System** - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
 
-[![Version](https://img.shields.io/badge/version-1.8.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/TekupDK/friday-ai/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
@@ -150,7 +150,6 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
   - **EmailIframeView.tsx** (154 lines) - HTML email renderer with CID images
 
   **✅ Implemented Features (November 2025):**
-
   - ✅ **AI Email Summaries** ✨ NEW (v1.4.0)
     - 150-char summaries in Danish with Gemini 2.0 Flash
     - Smart skip logic (<200 words, newsletters, no-reply)
@@ -190,7 +189,6 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
     - `?` - Show keyboard shortcuts help modal
 
   **🔜 High-Impact Enhancements:**
-
   - 🔜 Unread count badges on folders/labels
   - 🔜 Rate limit countdown timer (visual feedback)
 
@@ -290,8 +288,9 @@ Critical business logic embedded in AI system prompt:
    ```bash
    git clone <https://github.com/TekupDK/tekup-friday.git>
    cd tekup-friday
+   ```
 
-```text
+````text
 
 1. **Install dependencies**
 
@@ -559,7 +558,7 @@ User: "Kunde vil have tilbud på flytterengøring"
 Friday: "Jeg skal bruge billeder først (MEMORY_16). Kan du sende fotos af lejligheden?"
 [Blocks quote sending until photos received]
 
-```
+````
 
 ## 🧪 Testing
 

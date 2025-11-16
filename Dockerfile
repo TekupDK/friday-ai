@@ -16,7 +16,7 @@ RUN pnpm install --frozen-lockfile || pnpm install
 # Set build-time environment variables for Vite
 ENV VITE_APP_ID=friday-ai
 ENV VITE_APP_TITLE="Friday AI Chat"
-ENV VITE_APP_LOGO=/logo.svg
+ENV VITE_APP_LOGO=/brandkit/logo-app-icon.png
 ENV VITE_ANALYTICS_ENDPOINT=""
 ENV VITE_ANALYTICS_WEBSITE_ID=""
 

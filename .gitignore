@@ -131,3 +131,6 @@ tsx run-ai-tests.ts
 
 *storybook.log
 storybook-static
+
+# Data files
+data/
