@@ -82,6 +82,28 @@ export const ENV = {
   get chromaAuthToken() {
     return process.env.CHROMA_AUTH_TOKEN ?? "friday-chromadb-token-dev";
   },
+  // Email Service (SendGrid or AWS SES)
+  emailServiceProvider: process.env.EMAIL_SERVICE_PROVIDER ?? "sendgrid", // "sendgrid" | "aws-ses" | "smtp"
+  sendgridApiKey: process.env.SENDGRID_API_KEY ?? "",
+  sendgridFromEmail: process.env.SENDGRID_FROM_EMAIL ?? "noreply@rendetalje.dk",
+  sendgridFromName: process.env.SENDGRID_FROM_NAME ?? "Friday AI",
+  // AWS SES (alternative to SendGrid)
+  awsSesRegion: process.env.AWS_SES_REGION ?? "us-east-1",
+  awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
+  awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
+  // SMTP (fallback)
+  smtpHost: process.env.SMTP_HOST ?? "",
+  smtpPort: parseInt(process.env.SMTP_PORT || "587", 10),
+  smtpUser: process.env.SMTP_USER ?? "",
+  smtpPassword: process.env.SMTP_PASSWORD ?? "",
+  // SMS Service (Twilio or AWS SNS)
+  smsServiceProvider: process.env.SMS_SERVICE_PROVIDER ?? "twilio", // "twilio" | "aws-sns"
+  // Twilio
+  twilioAccountSid: process.env.TWILIO_ACCOUNT_SID ?? "",
+  twilioAuthToken: process.env.TWILIO_AUTH_TOKEN ?? "",
+  twilioFromNumber: process.env.TWILIO_FROM_NUMBER ?? "",
+  // AWS SNS (alternative to Twilio)
+  awsSnsRegion: process.env.AWS_SNS_REGION ?? "us-east-1",
 };
 
 // Validate required environment variables

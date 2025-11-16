@@ -5,7 +5,8 @@
  * Connects email monitoring, source detection, and Billy automation.
  */
 
-import { leads, tasks } from "../drizzle/schema";
+import { eq } from "drizzle-orm";
+import { leads, tasks, users } from "../drizzle/schema";
 
 import { billyAutomation } from "./billy-automation";
 import { getDb, trackEvent } from "./db";
@@ -13,6 +14,7 @@ import { emailMonitor } from "./email-monitor";
 import { detectLeadSourceIntelligent } from "./lead-source-detector";
 import { getWorkflowFromDetection } from "./lead-source-workflows";
 import { createCalendarEvent } from "./mcp";
+import { logger } from "./_core/logger";
 
 interface AutomationConfig {
   enableEmailMonitoring: boolean;
@@ -99,6 +101,32 @@ export class WorkflowAutomationService {
   }
 
   /**
+   * Get userId from Gmail email address
+   * ✅ SECURITY FIX: Resolve userId from email instead of hardcoded fallback
+   */
+  private async getUserIdFromEmail(gmailEmail: string): Promise<number | null> {
+    try {
+      const db = await getDb();
+      if (!db) return null;
+
+      // Find user by email address
+      const userRows = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.email, gmailEmail))
+        .limit(1);
+
+      return userRows.length > 0 ? userRows[0].id : null;
+    } catch (error) {
+      logger.error(
+        { err: error, email: gmailEmail },
+        "[WorkflowAutomation] Failed to resolve userId from email"
+      );
+      return null;
+    }
+  }
+
+  /**
    * Process new lead through complete workflow
    */
   async processLeadWorkflow(emailData: {
@@ -106,6 +134,7 @@ export class WorkflowAutomationService {
     threadId: string;
     subject: string;
     from: string;
+    to?: string;
     body: string;
   }): Promise<WorkflowResult> {
     try {
@@ -132,10 +161,30 @@ export class WorkflowAutomationService {
         `[WorkflowAutomation] ✅ Workflow: ${workflow.workflow.priority} priority, ${workflow.workflow.responseTime} response time`
       );
 
-      // Step 3: Create lead in database
+      // Step 3: Resolve userId from email
+      const gmailEmail =
+        emailData.to?.split(",")[0]?.trim() ||
+        process.env.GOOGLE_IMPERSONATED_USER ||
+        "";
+      const userId = await this.getUserIdFromEmail(gmailEmail);
+
+      if (!userId) {
+        logger.warn(
+          { to: emailData.to, gmailEmail },
+          "[WorkflowAutomation] Could not resolve userId for email, skipping workflow"
+        );
+        return {
+          success: false,
+          step: "resolve_user",
+          error: "Could not resolve userId from email",
+        };
+      }
+
+      // Step 4: Create lead in database
       const leadId = await this.createLeadInDatabase(
         emailData,
-        sourceDetection
+        sourceDetection,
+        userId
       );
 
       if (!leadId) {
@@ -165,7 +214,7 @@ export class WorkflowAutomationService {
       }
 
       // Step 5: Execute immediate workflow actions
-      await this.executeImmediateActions(leadId, sourceDetection, workflow);
+      await this.executeImmediateActions(leadId, sourceDetection, workflow, userId);
 
       // Step 6: Create calendar event if enabled
       let calendarEventId: string | null = null;
@@ -207,7 +256,8 @@ export class WorkflowAutomationService {
    */
   private async createLeadInDatabase(
     emailData: any,
-    sourceDetection: any
+    sourceDetection: any,
+    userId: number
   ): Promise<number | null> {
     try {
       const db = await getDb();
@@ -223,7 +273,7 @@ export class WorkflowAutomationService {
       const [lead] = await db
         .insert(leads)
         .values({
-          userId: 1, // TODO: extract from context
+          userId, // ✅ FIXED: Use resolved userId from email
           name: customerName,
           email: customerEmail,
           phone: customerPhone,
@@ -259,7 +309,8 @@ export class WorkflowAutomationService {
   private async executeImmediateActions(
     leadId: number,
     sourceDetection: any,
-    workflow: any
+    workflow: any,
+    userId: number
   ): Promise<void> {
     try {
       console.log(
@@ -270,7 +321,7 @@ export class WorkflowAutomationService {
         console.log(`[WorkflowAutomation] 📋 Required action: ${action.title}`);
 
         // Create task for required actions
-        await this.createTaskForAction(leadId, action, true);
+        await this.createTaskForAction(leadId, action, true, userId);
       }
 
       for (const action of workflow.workflow.suggestedActions) {
@@ -279,7 +330,7 @@ export class WorkflowAutomationService {
         );
 
         // Create task for suggested actions (lower priority)
-        await this.createTaskForAction(leadId, action, false);
+        await this.createTaskForAction(leadId, action, false, userId);
       }
 
       // Execute auto-actions
@@ -288,7 +339,7 @@ export class WorkflowAutomationService {
           console.log(
             `[WorkflowAutomation] 🤖 Auto-action: ${autoAction.title}`
           );
-          await this.executeAutoAction(leadId, autoAction);
+          await this.executeAutoAction(leadId, autoAction, userId);
         }
       }
     } catch (error) {
@@ -305,7 +356,8 @@ export class WorkflowAutomationService {
   private async createTaskForAction(
     leadId: number,
     action: any,
-    isRequired: boolean
+    isRequired: boolean,
+    userId: number
   ): Promise<void> {
     try {
       const db = await getDb();
@@ -317,7 +369,7 @@ export class WorkflowAutomationService {
       }
 
       await db.insert(tasks).values({
-        userId: 1, // TODO: extract from context
+        userId, // ✅ FIXED: Use resolved userId from email
         relatedLeadId: leadId,
         title: action.title,
         description: action.description,
@@ -339,7 +391,8 @@ export class WorkflowAutomationService {
    */
   private async executeAutoAction(
     leadId: number,
-    autoAction: any
+    autoAction: any,
+    userId: number
   ): Promise<void> {
     try {
       switch (autoAction.title) {
@@ -348,7 +401,7 @@ export class WorkflowAutomationService {
           console.log(`[WorkflowAutomation] ✅ Lead auto-tagged`);
           // Track automation event
           await trackEvent({
-            userId: 1,
+            userId,
             eventType: "auto_action",
             eventData: { leadId, action: "auto_tag" },
           });
@@ -359,7 +412,7 @@ export class WorkflowAutomationService {
           console.log(`[WorkflowAutomation] 📢 Sales team notified`);
           // Track automation event
           await trackEvent({
-            userId: 1,
+            userId,
             eventType: "auto_action",
             eventData: { leadId, action: "notify_sales" },
           });
@@ -370,7 +423,7 @@ export class WorkflowAutomationService {
           console.log(`[WorkflowAutomation] 📍 Geographic tag added`);
           // Track automation event
           await trackEvent({
-            userId: 1,
+            userId,
             eventType: "auto_action",
             eventData: { leadId, action: "geo_tag" },
           });

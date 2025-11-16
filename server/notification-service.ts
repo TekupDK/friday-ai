@@ -67,28 +67,282 @@ export async function sendNotification(
 }
 
 /**
- * Send email notification
+ * Send email notification via SendGrid, AWS SES, or SMTP
  */
 async function sendEmailNotification(
   notification: Notification
 ): Promise<NotificationResult> {
-  // TODO: Integrate with email service (SendGrid, AWS SES, etc.)
-  // For now, just log
   const { logger } = await import("./_core/logger");
-  logger.info(
-    {
-      recipients: notification.recipients,
-      subject: notification.title,
-      body: notification.message,
-    },
-    "[Notifications] 📧 Email notification"
-  );
+  const { ENV } = await import("./_core/env");
 
-  return {
-    success: true,
-    channel: "email",
-    messageId: `email-${Date.now()}`,
+  // Validate recipients
+  if (!notification.recipients || notification.recipients.length === 0) {
+    logger.warn("[Notifications] No recipients specified for email notification");
+    return {
+      success: false,
+      channel: "email",
+      error: "No recipients specified",
+    };
+  }
+
+  try {
+    switch (ENV.emailServiceProvider) {
+      case "sendgrid":
+        return await sendEmailViaSendGrid(notification);
+      case "aws-ses":
+        return await sendEmailViaAWSSES(notification);
+      case "smtp":
+        return await sendEmailViaSMTP(notification);
+      default:
+        logger.warn(
+          { provider: ENV.emailServiceProvider },
+          "[Notifications] Unknown email provider, falling back to logging"
+        );
+        // Fallback to logging if provider not configured
+        logger.info(
+          {
+            recipients: notification.recipients,
+            subject: notification.title,
+            body: notification.message,
+          },
+          "[Notifications] 📧 Email notification (not sent - provider not configured)"
+        );
+        return {
+          success: false,
+          channel: "email",
+          error: `Email provider "${ENV.emailServiceProvider}" not configured`,
+        };
+    }
+  } catch (error) {
+    logger.error(
+      { err: error, provider: ENV.emailServiceProvider },
+      "[Notifications] Error sending email notification"
+    );
+    return {
+      success: false,
+      channel: "email",
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Send email via SendGrid API
+ */
+async function sendEmailViaSendGrid(
+  notification: Notification
+): Promise<NotificationResult> {
+  const { logger } = await import("./_core/logger");
+  const { ENV } = await import("./_core/env");
+
+  if (!ENV.sendgridApiKey) {
+    logger.warn("[Notifications] SendGrid API key not configured");
+    return {
+      success: false,
+      channel: "email",
+      error: "SendGrid API key not configured",
+    };
+  }
+
+  // Build email payload with proper typing for SendGrid API
+  const personalization: {
+    to: Array<{ email: string }>;
+    subject: string;
+    custom_args?: Record<string, string>;
+  } = {
+    to: notification.recipients!.map(email => ({ email })),
+    subject: notification.title,
   };
+
+  // Add metadata as custom fields if available
+  if (notification.metadata && Object.keys(notification.metadata).length > 0) {
+    personalization.custom_args = Object.entries(
+      notification.metadata
+    ).reduce((acc, [key, value]) => {
+      acc[`notification_${key.toLowerCase().replace(/\s+/g, "_")}`] =
+        String(value);
+      return acc;
+    }, {} as Record<string, string>);
+  }
+
+  const emailData = {
+    personalizations: [personalization],
+    from: {
+      email: ENV.sendgridFromEmail,
+      name: ENV.sendgridFromName,
+    },
+    content: [
+      {
+        type: "text/plain",
+        value: notification.message,
+      },
+      {
+        type: "text/html",
+        value: formatEmailHTML(notification),
+      },
+    ],
+  };
+
+  try {
+    const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${ENV.sendgridApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(emailData),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `SendGrid API error: ${response.status} ${response.statusText} - ${errorText}`
+      );
+    }
+
+    const messageId = response.headers.get("x-message-id") || `sg-${Date.now()}`;
+
+    logger.info(
+      {
+        messageId,
+        recipients: notification.recipients,
+        subject: notification.title,
+      },
+      "[Notifications] 📧 Email sent via SendGrid"
+    );
+
+    return {
+      success: true,
+      channel: "email",
+      messageId,
+    };
+  } catch (error) {
+    logger.error(
+      { err: error, recipients: notification.recipients },
+      "[Notifications] SendGrid API error"
+    );
+    throw error;
+  }
+}
+
+/**
+ * Send email via AWS SES
+ */
+async function sendEmailViaAWSSES(
+  notification: Notification
+): Promise<NotificationResult> {
+  const { logger } = await import("./_core/logger");
+  const { ENV } = await import("./_core/env");
+
+  if (!ENV.awsAccessKeyId || !ENV.awsSecretAccessKey) {
+    logger.warn("[Notifications] AWS SES credentials not configured");
+    return {
+      success: false,
+      channel: "email",
+      error: "AWS SES credentials not configured",
+    };
+  }
+
+  // Note: AWS SES SDK would be imported here
+  // For now, return error indicating implementation needed
+  logger.warn("[Notifications] AWS SES implementation pending");
+  return {
+    success: false,
+    channel: "email",
+    error: "AWS SES implementation pending - use SendGrid or SMTP",
+  };
+}
+
+/**
+ * Send email via SMTP
+ */
+async function sendEmailViaSMTP(
+  notification: Notification
+): Promise<NotificationResult> {
+  const { logger } = await import("./_core/logger");
+  const { ENV } = await import("./_core/env");
+
+  if (!ENV.smtpHost || !ENV.smtpUser || !ENV.smtpPassword) {
+    logger.warn("[Notifications] SMTP credentials not configured");
+    return {
+      success: false,
+      channel: "email",
+      error: "SMTP credentials not configured",
+    };
+  }
+
+  // Note: SMTP library (like nodemailer) would be used here
+  // For now, return error indicating implementation needed
+  logger.warn("[Notifications] SMTP implementation pending");
+  return {
+    success: false,
+    channel: "email",
+    error: "SMTP implementation pending - use SendGrid",
+  };
+}
+
+/**
+ * Format notification as HTML email
+ */
+function formatEmailHTML(notification: Notification): string {
+  const priorityColors: Record<NotificationPriority, string> = {
+    critical: "#dc2626",
+    high: "#ea580c",
+    normal: "#2563eb",
+    low: "#6b7280",
+  };
+
+  const color = priorityColors[notification.priority] || "#6b7280";
+
+  let metadataHTML = "";
+  if (notification.metadata && Object.keys(notification.metadata).length > 0) {
+    metadataHTML = `
+      <table style="margin-top: 20px; border-collapse: collapse; width: 100%;">
+        <thead>
+          <tr style="background-color: #f3f4f6;">
+            <th style="padding: 8px; text-align: left; border: 1px solid #e5e7eb;">Key</th>
+            <th style="padding: 8px; text-align: left; border: 1px solid #e5e7eb;">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${Object.entries(notification.metadata)
+            .map(
+              ([key, value]) => `
+            <tr>
+              <td style="padding: 8px; border: 1px solid #e5e7eb; font-weight: 600;">${key}</td>
+              <td style="padding: 8px; border: 1px solid #e5e7eb;">${value}</td>
+            </tr>
+          `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="border-left: 4px solid ${color}; padding-left: 16px; margin-bottom: 20px;">
+          <h2 style="margin: 0; color: ${color}; font-size: 24px;">${notification.title}</h2>
+          <p style="margin: 8px 0 0 0; color: #6b7280; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">${notification.priority} Priority</p>
+        </div>
+        <div style="background-color: #f9fafb; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+          <p style="margin: 0; white-space: pre-wrap;">${notification.message}</p>
+        </div>
+        ${metadataHTML}
+        <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+        <p style="color: #6b7280; font-size: 12px; margin: 0;">
+          This is an automated notification from Friday AI (Rendetalje.dk)
+        </p>
+      </body>
+    </html>
+  `;
 }
 
 /**
@@ -234,22 +488,201 @@ async function sendWebhookNotification(
 }
 
 /**
- * Send SMS notification (via Twilio or similar)
+ * Send SMS notification via Twilio, AWS SNS, or SMTP
  */
 async function sendSMSNotification(
   notification: Notification
 ): Promise<NotificationResult> {
-  // TODO: Integrate with SMS service (Twilio, AWS SNS, etc.)
   const { logger } = await import("./_core/logger");
-  logger.info({
-    to: notification.recipients,
-    message: `${notification.title}: ${notification.message}`,
-  }, "[Notifications] 📱 SMS notification");
+  const { ENV } = await import("./_core/env");
 
+  // Validate recipients
+  if (!notification.recipients || notification.recipients.length === 0) {
+    logger.warn("[Notifications] No recipients specified for SMS notification");
+    return {
+      success: false,
+      channel: "sms",
+      error: "No recipients specified",
+    };
+  }
+
+  // Validate phone numbers (basic format check)
+  const phoneNumbers = notification.recipients.filter(phone => {
+    // Basic validation: should contain digits and be 10+ characters
+    const cleaned = phone.replace(/[\s\-\(\)]/g, "");
+    return /^\+?[1-9]\d{9,14}$/.test(cleaned);
+  });
+
+  if (phoneNumbers.length === 0) {
+    logger.warn(
+      { recipients: notification.recipients },
+      "[Notifications] No valid phone numbers found"
+    );
+    return {
+      success: false,
+      channel: "sms",
+      error: "No valid phone numbers found",
+    };
+  }
+
+  try {
+    switch (ENV.smsServiceProvider) {
+      case "twilio":
+        return await sendSMSViaTwilio(notification, phoneNumbers);
+      case "aws-sns":
+        return await sendSMSViaAWSSNS(notification, phoneNumbers);
+      default:
+        logger.warn(
+          { provider: ENV.smsServiceProvider },
+          "[Notifications] Unknown SMS provider, falling back to logging"
+        );
+        // Fallback to logging if provider not configured
+        logger.info(
+          {
+            recipients: phoneNumbers,
+            message: `${notification.title}: ${notification.message}`,
+          },
+          "[Notifications] 📱 SMS notification (not sent - provider not configured)"
+        );
+        return {
+          success: false,
+          channel: "sms",
+          error: `SMS provider "${ENV.smsServiceProvider}" not configured`,
+        };
+    }
+  } catch (error) {
+    logger.error(
+      { err: error, provider: ENV.smsServiceProvider },
+      "[Notifications] Error sending SMS notification"
+    );
+    return {
+      success: false,
+      channel: "sms",
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Send SMS via Twilio API
+ */
+async function sendSMSViaTwilio(
+  notification: Notification,
+  phoneNumbers: string[]
+): Promise<NotificationResult> {
+  const { logger } = await import("./_core/logger");
+  const { ENV } = await import("./_core/env");
+
+  if (!ENV.twilioAccountSid || !ENV.twilioAuthToken || !ENV.twilioFromNumber) {
+    logger.warn("[Notifications] Twilio credentials not configured");
+    return {
+      success: false,
+      channel: "sms",
+      error: "Twilio credentials not configured",
+    };
+  }
+
+  try {
+    // Build SMS message (SMS has 160 character limit per segment)
+    const smsMessage = `${notification.title}: ${notification.message}`.substring(0, 1600); // Max 10 segments
+
+    // Send SMS to all recipients
+    const results = await Promise.allSettled(
+      phoneNumbers.map(async phoneNumber => {
+        const response = await fetch(
+          `https://api.twilio.com/2010-04-01/Accounts/${ENV.twilioAccountSid}/Messages.json`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `Basic ${Buffer.from(`${ENV.twilioAccountSid}:${ENV.twilioAuthToken}`).toString("base64")}`,
+            },
+            body: new URLSearchParams({
+              From: ENV.twilioFromNumber,
+              To: phoneNumber,
+              Body: smsMessage,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Twilio API error: ${response.status} ${errorText}`);
+        }
+
+        const data = await response.json();
+        return {
+          phoneNumber,
+          messageId: data.sid,
+        };
+      })
+    );
+
+    const successCount = results.filter(r => r.status === "fulfilled").length;
+    const failureCount = results.filter(r => r.status === "rejected").length;
+
+    if (successCount === 0) {
+      const firstError = results.find(r => r.status === "rejected");
+      throw new Error(
+        firstError?.status === "rejected"
+          ? firstError.reason.message
+          : "All SMS sends failed"
+      );
+    }
+
+    logger.info(
+      {
+        successCount,
+        failureCount,
+        totalRecipients: phoneNumbers.length,
+      },
+      "[Notifications] 📱 SMS sent via Twilio"
+    );
+
+    return {
+      success: true,
+      channel: "sms",
+      messageId: `twilio-${Date.now()}`,
+    };
+  } catch (error) {
+    logger.error(
+      { err: error, recipients: phoneNumbers },
+      "[Notifications] Error sending SMS via Twilio"
+    );
+    return {
+      success: false,
+      channel: "sms",
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+
+/**
+ * Send SMS via AWS SNS
+ */
+async function sendSMSViaAWSSNS(
+  notification: Notification,
+  phoneNumbers: string[]
+): Promise<NotificationResult> {
+  const { logger } = await import("./_core/logger");
+  const { ENV } = await import("./_core/env");
+
+  if (!ENV.awsAccessKeyId || !ENV.awsSecretAccessKey) {
+    logger.warn("[Notifications] AWS SNS credentials not configured");
+    return {
+      success: false,
+      channel: "sms",
+      error: "AWS SNS credentials not configured",
+    };
+  }
+
+  // Note: AWS SNS SDK would be imported here
+  // For now, return error indicating implementation needed
+  logger.warn("[Notifications] AWS SNS implementation pending");
   return {
-    success: true,
+    success: false,
     channel: "sms",
-    messageId: `sms-${Date.now()}`,
+    error: "AWS SNS implementation pending - use Twilio",
   };
 }
 

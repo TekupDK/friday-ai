@@ -3,6 +3,8 @@
  * Enables controlled rollout and comparison of old vs new flows
  */
 
+import { and, desc, eq, gte } from "drizzle-orm";
+import { abTestMetricsInFridayAi as abTestMetrics } from "../../drizzle/schema";
 import { getFeatureFlags } from "./feature-flags";
 
 export interface ABTestConfig {
@@ -137,7 +139,7 @@ export function getFeatureFlagsWithABTest(userId: number) {
  */
 export async function recordTestMetrics(
   metrics: TestMetrics,
-  db?: any
+  db?: Awaited<ReturnType<typeof import("../db").getDb>>
 ): Promise<void> {
   try {
     // ✅ SECURITY FIX: Use logger instead of console.log (redacts sensitive data)
@@ -153,20 +155,38 @@ export async function recordTestMetrics(
       "[A/B Testing] A/B Test Metrics"
     );
 
-    // TODO: Store metrics in database for analysis
-    // NOTE: ab_test_metrics table not yet created in Drizzle schema
-    // Will implement when Phase 2 A/B testing is fully activated
+    // ✅ FIXED: Store metrics in database for analysis
     if (db) {
-      logger.debug(
-        {
-          testName: "chat_flow_migration",
+      try {
+        await db.insert(abTestMetrics).values({
+          testName: "chat_flow_migration", // Default test name, can be parameterized later
           userId: metrics.userId,
           testGroup: metrics.testGroup,
           responseTime: metrics.responseTime,
-        },
-        "[A/B Testing] Metrics recorded (in-memory only)"
-      );
-      // await db.insert(abTestMetrics).values({...}) // TODO: Implement with Drizzle schema
+          userSatisfaction: metrics.userSatisfaction || null,
+          errorCount: metrics.errorCount,
+          messageCount: metrics.messageCount,
+          completionRate: metrics.completionRate.toString(),
+          metadata: null, // Can be extended later for test-specific data
+          timestamp: metrics.timestamp.toISOString(),
+        });
+
+        logger.info(
+          {
+            testName: "chat_flow_migration",
+            userId: metrics.userId,
+            testGroup: metrics.testGroup,
+            responseTime: metrics.responseTime,
+          },
+          "[A/B Testing] Metrics stored in database"
+        );
+      } catch (error) {
+        logger.error(
+          { err: error, userId: metrics.userId, testGroup: metrics.testGroup },
+          "[A/B Testing] Failed to store metrics in database"
+        );
+        // Don't throw - metrics logging should not break the flow
+      }
     }
   } catch (error) {
     // ✅ SECURITY FIX: Use logger instead of console.error
@@ -180,29 +200,77 @@ export async function recordTestMetrics(
  */
 export async function calculateTestResults(
   testName: string,
-  db?: any
+  db?: Awaited<ReturnType<typeof import("../db").getDb>>
 ): Promise<ABTestResult | null> {
   const testConfig = AB_TESTS[testName];
   if (!testConfig) {
     return null;
   }
 
-  // TODO: Fetch actual metrics from database
-  // NOTE: ab_test_metrics table not yet created in Drizzle schema
+  // ✅ FIXED: Fetch actual metrics from database
   let controlMetrics: TestMetrics[] = [];
   let variantMetrics: TestMetrics[] = [];
 
   if (db) {
-    // ✅ SECURITY FIX: Use logger instead of console.log
-    const { logger } = await import("../_core/logger");
-    logger.debug("[A/B Testing] Skipping database query - table not yet implemented");
-    // TODO: Implement with Drizzle ORM when schema is ready
-    // const metrics = await db.select().from(abTestMetrics)
-    //   .where(and(
-    //     eq(abTestMetrics.testName, testName),
-    //     gte(abTestMetrics.timestamp, new Date(Date.now() - 7 * 24 * 60 * 60 * 1000))
-    //   ))
-    //   .orderBy(desc(abTestMetrics.timestamp));
+    try {
+      const { logger } = await import("../_core/logger");
+      
+      // Fetch metrics from last 7 days
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      const metrics = await db
+        .select()
+        .from(abTestMetrics)
+        .where(
+          and(
+            eq(abTestMetrics.testName, testName),
+            gte(abTestMetrics.timestamp, sevenDaysAgo.toISOString())
+          )
+        )
+        .orderBy(desc(abTestMetrics.timestamp));
+
+      // Convert database records to TestMetrics format
+      controlMetrics = metrics
+        .filter(m => m.testGroup === "control")
+        .map(m => ({
+          userId: m.userId,
+          testGroup: m.testGroup as "control" | "variant",
+          responseTime: m.responseTime,
+          userSatisfaction: m.userSatisfaction || undefined,
+          errorCount: m.errorCount,
+          messageCount: m.messageCount,
+          completionRate: parseFloat(m.completionRate),
+          timestamp: new Date(m.timestamp),
+        }));
+
+      variantMetrics = metrics
+        .filter(m => m.testGroup === "variant")
+        .map(m => ({
+          userId: m.userId,
+          testGroup: m.testGroup as "control" | "variant",
+          responseTime: m.responseTime,
+          userSatisfaction: m.userSatisfaction || undefined,
+          errorCount: m.errorCount,
+          messageCount: m.messageCount,
+          completionRate: parseFloat(m.completionRate),
+          timestamp: new Date(m.timestamp),
+        }));
+
+      logger.debug(
+        {
+          testName,
+          controlCount: controlMetrics.length,
+          variantCount: variantMetrics.length,
+        },
+        "[A/B Testing] Metrics fetched from database"
+      );
+    } catch (error) {
+      const { logger } = await import("../_core/logger");
+      logger.error(
+        { err: error, testName },
+        "[A/B Testing] Failed to fetch metrics from database"
+      );
+      // Return empty arrays if fetch fails - test will continue with no data
+    }
   }
 
   if (controlMetrics.length === 0 || variantMetrics.length === 0) {

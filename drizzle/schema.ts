@@ -160,59 +160,129 @@ export const calendarEventsInFridayAi = fridayAi.table(
   table => [unique("calendar_events_googleEventId_key").on(table.googleEventId)]
 );
 
-export const leadsInFridayAi = fridayAi.table("leads", {
-  id: serial().primaryKey().notNull(),
-  userId: integer().notNull(),
-  name: varchar({ length: 255 }).notNull(),
-  email: varchar({ length: 320 }),
-  phone: varchar({ length: 50 }),
-  company: varchar({ length: 255 }),
-  status: leadStatusInFridayAi().default("new"),
-  source: varchar({ length: 100 }),
-  notes: text(),
-  lastContactedAt: timestamp({ mode: "string" }),
-  createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-  score: integer().default(0).notNull(),
-  metadata: jsonb(),
-});
+export const leadsInFridayAi = fridayAi.table(
+  "leads",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    name: varchar({ length: 255 }).notNull(),
+    email: varchar({ length: 320 }),
+    phone: varchar({ length: 50 }),
+    company: varchar({ length: 255 }),
+    status: leadStatusInFridayAi().default("new"),
+    source: varchar({ length: 100 }),
+    notes: text(),
+    lastContactedAt: timestamp({ mode: "string" }),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    score: integer().default(0).notNull(),
+    metadata: jsonb(),
+  },
+  table => [
+    // ✅ PERFORMANCE: Index for user-scoped queries
+    index("idx_leads_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for email lookups
+    index("idx_leads_email").using(
+      "btree",
+      table.email.asc().nullsLast().op("text_ops")
+    ),
+    // ✅ PERFORMANCE: Index for status filtering
+    index("idx_leads_status").using("btree", table.status.asc().nullsLast()),
+    // ✅ PERFORMANCE: Composite index for common query pattern (userId + createdAt)
+    index("idx_leads_user_created").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops"),
+      table.createdAt.desc().nullsLast()
+    ),
+  ]
+);
 
-export const customerInvoicesInFridayAi = fridayAi.table("customer_invoices", {
-  id: serial().primaryKey().notNull(),
-  userId: integer().notNull(),
-  customerId: integer(),
-  billyInvoiceId: varchar({ length: 100 }),
-  invoiceNumber: varchar({ length: 50 }),
-  amount: numeric({ precision: 10, scale: 2 }),
-  paidAmount: numeric({ precision: 10, scale: 2 }).default("0"),
-  grossAmount: numeric({ precision: 10, scale: 2 }),
-  taxAmount: numeric({ precision: 10, scale: 2 }).default("0"),
-  currency: varchar({ length: 3 }).default("DKK"),
-  status: customerInvoiceStatusInFridayAi().default("draft"),
-  entryDate: timestamp({ mode: "string" }),
-  dueDate: timestamp({ mode: "string" }),
-  paymentTermsDays: integer(),
-  paidAt: timestamp({ mode: "string" }),
-  createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-});
+export const customerInvoicesInFridayAi = fridayAi.table(
+  "customer_invoices",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    customerId: integer(),
+    billyInvoiceId: varchar({ length: 100 }),
+    invoiceNumber: varchar({ length: 50 }),
+    amount: numeric({ precision: 10, scale: 2 }),
+    paidAmount: numeric({ precision: 10, scale: 2 }).default("0"),
+    grossAmount: numeric({ precision: 10, scale: 2 }),
+    taxAmount: numeric({ precision: 10, scale: 2 }).default("0"),
+    currency: varchar({ length: 3 }).default("DKK"),
+    status: customerInvoiceStatusInFridayAi().default("draft"),
+    entryDate: timestamp({ mode: "string" }),
+    dueDate: timestamp({ mode: "string" }),
+    paymentTermsDays: integer(),
+    paidAt: timestamp({ mode: "string" }),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    // ✅ PERFORMANCE: Index for user-scoped queries
+    index("idx_customer_invoices_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for customer lookups
+    index("idx_customer_invoices_customer_id").using(
+      "btree",
+      table.customerId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for entryDate filtering (used in recent invoices queries)
+    index("idx_customer_invoices_entry_date").using(
+      "btree",
+      table.entryDate.desc().nullsLast()
+    ),
+    // ✅ PERFORMANCE: Composite index for common query pattern (customerId + entryDate)
+    index("idx_customer_invoices_customer_entry").using(
+      "btree",
+      table.customerId.asc().nullsLast().op("int4_ops"),
+      table.entryDate.desc().nullsLast()
+    ),
+  ]
+);
 
-export const tasksInFridayAi = fridayAi.table("tasks", {
-  id: serial().primaryKey().notNull(),
-  userId: integer().notNull(),
-  title: varchar({ length: 255 }).notNull(),
-  description: text(),
-  status: taskStatusInFridayAi().default("todo"),
-  priority: taskPriorityInFridayAi().default("medium"),
-  orderIndex: integer().default(0).notNull(),
-  dueDate: timestamp({ mode: "string" }),
-  completedAt: timestamp({ mode: "string" }),
-  relatedEmailId: integer(),
-  relatedLeadId: integer(),
-  relatedCustomerId: integer(),
-  createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-});
+export const tasksInFridayAi = fridayAi.table(
+  "tasks",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    title: varchar({ length: 255 }).notNull(),
+    description: text(),
+    status: taskStatusInFridayAi().default("todo"),
+    priority: taskPriorityInFridayAi().default("medium"),
+    orderIndex: integer().default(0).notNull(),
+    dueDate: timestamp({ mode: "string" }),
+    completedAt: timestamp({ mode: "string" }),
+    relatedEmailId: integer(),
+    relatedLeadId: integer(),
+    relatedCustomerId: integer(),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    // ✅ PERFORMANCE: Index for user-scoped queries
+    index("idx_tasks_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Composite index for user + status (common query pattern)
+    index("idx_tasks_user_status").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops"),
+      table.status.asc().nullsLast()
+    ),
+    // ✅ PERFORMANCE: Index for orderIndex (used in task ordering)
+    index("idx_tasks_order_index").using(
+      "btree",
+      table.orderIndex.asc().nullsLast().op("int4_ops")
+    ),
+  ]
+);
 
 export const emailsInFridayAi = fridayAi.table(
   "emails",
@@ -255,6 +325,32 @@ export const emailsInFridayAi = fridayAi.table(
   table => [
     unique("emails_gmailId_key").on(table.gmailId),
     unique("emails_providerid_unique").on(table.providerId),
+    // ✅ PERFORMANCE: Index for user-scoped queries (most common query pattern)
+    index("idx_emails_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Composite index for user + receivedAt (used in list queries)
+    index("idx_emails_user_received").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops"),
+      table.receivedAt.desc().nullsLast()
+    ),
+    // ✅ PERFORMANCE: Index for emailThreadId (used in thread lookups)
+    index("idx_emails_thread_id").using(
+      "btree",
+      table.emailThreadId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for threadId (Gmail thread ID lookups)
+    index("idx_emails_thread_key").using(
+      "btree",
+      table.threadId.asc().nullsLast().op("text_ops")
+    ),
+    // ✅ PERFORMANCE: Index for customerId (used in customer email lookups)
+    index("idx_emails_customer_id").using(
+      "btree",
+      table.customerId.asc().nullsLast().op("int4_ops")
+    ),
   ]
 );
 
@@ -991,6 +1087,47 @@ export const userPreferencesInFridayAi = fridayAi.table(
   table => [unique("user_preferences_userId_key").on(table.userId)]
 );
 
+// =============================================================================
+// A/B Testing: Metrics Storage
+// =============================================================================
+export const abTestMetricsInFridayAi = fridayAi.table(
+  "ab_test_metrics",
+  {
+    id: serial().primaryKey().notNull(),
+    testName: varchar({ length: 100 }).notNull(),
+    userId: integer().notNull(),
+    testGroup: varchar({ length: 20 }).notNull(), // "control" | "variant"
+    responseTime: integer().notNull(), // milliseconds
+    userSatisfaction: integer(), // 1-5 rating, optional
+    errorCount: integer().default(0).notNull(),
+    messageCount: integer().default(0).notNull(),
+    completionRate: numeric({ precision: 5, scale: 2 }).notNull(), // 0-100 percentage
+    metadata: jsonb(), // Additional test-specific data
+    timestamp: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_ab_test_metrics_test_name").using(
+      "btree",
+      table.testName.asc().nullsLast().op("text_ops")
+    ),
+    index("idx_ab_test_metrics_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_ab_test_metrics_timestamp").using(
+      "btree",
+      table.timestamp.desc().nullsLast()
+    ),
+    // Composite index for common query pattern (testName + testGroup + timestamp)
+    index("idx_ab_test_metrics_test_group").using(
+      "btree",
+      table.testName.asc().nullsLast().op("text_ops"),
+      table.testGroup.asc().nullsLast().op("text_ops"),
+      table.timestamp.desc().nullsLast()
+    ),
+  ]
+);
+
 // Backward compatibility aliases for db.ts imports
 export const emailPipelineState = emailPipelineStateInFridayAi;
 export const emailPipelineTransitions = emailPipelineTransitionsInFridayAi;
@@ -1134,6 +1271,9 @@ export type InsertEmailPipelineTransition =
 export type AnalyticsEvent = typeof analyticsEventsInFridayAi.$inferSelect;
 export type InsertAnalyticsEvent =
   typeof analyticsEventsInFridayAi.$inferInsert;
+export type ABTestMetric = typeof abTestMetricsInFridayAi.$inferSelect;
+export type InsertABTestMetric =
+  typeof abTestMetricsInFridayAi.$inferInsert;
 export type UserPreferences = typeof userPreferencesInFridayAi.$inferSelect;
 export type InsertUserPreferences =
   typeof userPreferencesInFridayAi.$inferInsert;

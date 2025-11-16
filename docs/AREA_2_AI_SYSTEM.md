@@ -99,6 +99,68 @@ server/
 
 **Key Rules:**
 
+---
+
+## 🧪 **4. A/B TESTING FRAMEWORK** ⭐ NEW
+
+**Location:** `server/_core/ab-testing.ts`
+
+**Purpose:** Controlled rollout and comparison of old vs new flows
+
+**Features:**
+
+- **Traffic Splitting:** Consistent user assignment to control/variant groups
+- **Metrics Storage:** Database-backed metrics for analysis
+- **Test Configuration:** Multiple concurrent tests supported
+- **Statistical Analysis:** Automatic significance calculation
+
+**Current Tests:**
+
+1. **chat_flow_migration** - Server-side chat rollout (10% traffic)
+2. **streaming_enabled** - Streaming response testing (5% traffic, disabled)
+3. **model_routing** - Model selection optimization (20% traffic, disabled)
+
+**Database Schema:**
+
+```typescript
+ab_test_metrics {
+  id: number
+  testName: string
+  userId: number
+  testGroup: "control" | "variant"
+  responseTime: number (ms)
+  userSatisfaction?: number (1-5)
+  errorCount: number
+  messageCount: number
+  completionRate: number (0-100)
+  metadata: jsonb
+  timestamp: timestamp
+}
+```
+
+**Usage:**
+
+```typescript
+// Get test group for user
+const group = getTestGroup(userId, "chat_flow_migration");
+
+// Record metrics
+await recordTestMetrics({
+  userId,
+  testGroup: group,
+  responseTime: 250,
+  errorCount: 0,
+  messageCount: 1,
+  completionRate: 100,
+  timestamp: new Date()
+}, db);
+
+// Calculate results
+const results = await calculateTestResults("chat_flow_migration", db);
+```
+
+**Key Rules:**
+
 - ❌ NEVER add calendar attendees
 - ✅ ALWAYS verify dates/times
 - ✅ ALWAYS check calendar before suggestions

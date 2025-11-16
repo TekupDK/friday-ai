@@ -21,6 +21,7 @@ import { trpc } from "@/lib/trpc";
 import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
+import { toast } from "sonner";
 import CreateLeadModal from "./CreateLeadModal";
 import EmailBulkActionsV2, { type BulkAction } from "./EmailBulkActionsV2";
 import EmailListAI from "./EmailListAI";
@@ -93,6 +94,13 @@ export default function EmailTabV2({
 
     return query || "in:inbox";
   }, [selectedFolder, selectedLabels, searchQuery]);
+
+  // Bulk operation mutations
+  const utils = trpc.useUtils();
+  const bulkMarkAsRead = trpc.inbox.email.bulkMarkAsRead.useMutation();
+  const bulkMarkAsUnread = trpc.inbox.email.bulkMarkAsUnread.useMutation();
+  const bulkArchive = trpc.inbox.email.bulkArchive.useMutation();
+  const bulkDelete = trpc.inbox.email.bulkDelete.useMutation();
 
   // API call with optimized configuration
   const {
@@ -288,22 +296,103 @@ export default function EmailTabV2({
         case "clearSelection":
           setSelectedEmails(new Set());
           break;
-        case "markAsRead":
-          // TODO: Implement bulk mark as read
-          console.log("Mark as read:", Array.from(selectedEmails));
+        case "markAsRead": {
+          const threadIds = Array.from(selectedEmails);
+          if (threadIds.length === 0) break;
+          
+          bulkMarkAsRead.mutate(
+            { threadIds },
+            {
+              onSuccess: (result) => {
+                toast.success(
+                  `Marked ${result.processed} email${result.processed !== 1 ? "s" : ""} as read`
+                );
+                setSelectedEmails(new Set()); // Clear selection
+                // Invalidate query to refresh list
+                utils.inbox.email.listPaged.invalidate();
+              },
+              onError: (error) => {
+                toast.error(`Failed to mark as read: ${error.message}`);
+              },
+            }
+          );
           break;
-        case "markAsUnread":
-          // TODO: Implement bulk mark as unread
-          console.log("Mark as unread:", Array.from(selectedEmails));
+        }
+        case "markAsUnread": {
+          const threadIds = Array.from(selectedEmails);
+          if (threadIds.length === 0) break;
+          
+          bulkMarkAsUnread.mutate(
+            { threadIds },
+            {
+              onSuccess: (result) => {
+                toast.success(
+                  `Marked ${result.processed} email${result.processed !== 1 ? "s" : ""} as unread`
+                );
+                setSelectedEmails(new Set()); // Clear selection
+                // Invalidate query to refresh list
+                utils.inbox.email.listPaged.invalidate();
+              },
+              onError: (error) => {
+                toast.error(`Failed to mark as unread: ${error.message}`);
+              },
+            }
+          );
           break;
-        case "archive":
-          // TODO: Implement bulk archive
-          console.log("Archive:", Array.from(selectedEmails));
+        }
+        case "archive": {
+          const threadIds = Array.from(selectedEmails);
+          if (threadIds.length === 0) break;
+          
+          bulkArchive.mutate(
+            { threadIds },
+            {
+              onSuccess: (result) => {
+                toast.success(
+                  `Archived ${result.processed} email${result.processed !== 1 ? "s" : ""}`
+                );
+                setSelectedEmails(new Set()); // Clear selection
+                // Invalidate query to refresh list
+                utils.inbox.email.listPaged.invalidate();
+              },
+              onError: (error) => {
+                toast.error(`Failed to archive: ${error.message}`);
+              },
+            }
+          );
           break;
-        case "delete":
-          // TODO: Implement bulk delete
-          console.log("Delete:", Array.from(selectedEmails));
+        }
+        case "delete": {
+          const threadIds = Array.from(selectedEmails);
+          if (threadIds.length === 0) break;
+          
+          // Confirm before deleting
+          if (
+            !confirm(
+              `Are you sure you want to delete ${threadIds.length} email${threadIds.length !== 1 ? "s" : ""}?`
+            )
+          ) {
+            break;
+          }
+          
+          bulkDelete.mutate(
+            { threadIds },
+            {
+              onSuccess: (result) => {
+                toast.success(
+                  `Deleted ${result.processed} email${result.processed !== 1 ? "s" : ""}`
+                );
+                setSelectedEmails(new Set()); // Clear selection
+                // Invalidate query to refresh list
+                utils.inbox.email.listPaged.invalidate();
+              },
+              onError: (error) => {
+                toast.error(`Failed to delete: ${error.message}`);
+              },
+            }
+          );
           break;
+        }
         case "selectAll":
           const allThreadIds = new Set(
             emails.map((email: EmailMessage) => email.threadId)
@@ -314,7 +403,7 @@ export default function EmailTabV2({
           console.log("Bulk action:", action, params);
       }
     },
-    [selectedEmails, emails, handleCreateLead]
+    [selectedEmails, emails, handleCreateLead, bulkMarkAsRead, bulkMarkAsUnread, bulkArchive, bulkDelete, utils]
   );
 
   // Handle search changes

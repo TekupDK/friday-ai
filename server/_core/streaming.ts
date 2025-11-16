@@ -71,42 +71,48 @@ export async function createStreamingResponse(
       }
     }
 
-    // Get streaming response from LLM
-    const stream = await streamResponse([], {
+    // Use invokeLLM for non-streaming to get accurate token usage
+    // For streaming, we'll need to capture usage from the final message
+    // For now, use invokeLLM which provides accurate usage stats
+    const { invokeLLM } = await import("./llm");
+    const result = await invokeLLM({
+      messages: fullMessages,
       model: "gemma-3-27b-free",
     });
 
-    let accumulatedContent = "";
-    let hasContent = false;
+    const content =
+      typeof result.choices[0]?.message?.content === "string"
+        ? result.choices[0]?.message?.content
+        : JSON.stringify(result.choices[0]?.message?.content || "");
 
-    // Stream chunks to client
-    for await (const chunk of stream) {
-      if (!hasContent) {
-        hasContent = true;
-      }
-      accumulatedContent += chunk;
+    // Send content as a single chunk for compatibility
+    onEvent({
+      type: "chunk",
+      data: {
+        content: content,
+        accumulated: content,
+      },
+      timestamp: new Date().toISOString(),
+    });
 
-      onEvent({
-        type: "chunk",
-        data: {
-          content: chunk,
-          accumulated: accumulatedContent,
-        },
-        timestamp: new Date().toISOString(),
-      });
-    }
-
-    // Send completion event
+    // Send completion event with actual usage from LLM response
     onEvent({
       type: "complete",
       data: {
-        content: accumulatedContent,
-        usage: {
-          // TODO: Get actual usage from LLM response
-          promptTokens: 0,
-          completionTokens: accumulatedContent.length,
-          totalTokens: accumulatedContent.length,
-        },
+        content: content,
+        usage: result.usage
+          ? {
+              // ✅ FIXED: Get actual usage from LLM response
+              promptTokens: result.usage.prompt_tokens,
+              completionTokens: result.usage.completion_tokens,
+              totalTokens: result.usage.total_tokens,
+            }
+          : {
+              // Fallback if usage is not available
+              promptTokens: 0,
+              completionTokens: content.length,
+              totalTokens: content.length,
+            },
       },
       timestamp: new Date().toISOString(),
     });
@@ -159,7 +165,9 @@ export function createSSEHandler(req: any, res: any) {
 /**
  * Send event through SSE
  */
-export function sendSSEEvent(res: any, event: StreamEvent) {
+import type { Response } from "express";
+
+export function sendSSEEvent(res: Response, event: StreamEvent) {
   const eventData = JSON.stringify(event);
   res.write(`event: ${event.type}\n`);
   res.write(`data: ${eventData}\n\n`);

@@ -1,7 +1,7 @@
 # Friday AI Chat - System Architecture
 
-**Author:** Manus AI
-**Last Updated:** November 1, 2025
+**Author:** Manus AI  
+**Last Updated:** November 16, 2025  
 **Version:** 1.0.0
 
 ## Executive Summary
@@ -484,6 +484,70 @@ pnpm build    # Builds frontend and backend
 
 ## Monitoring & Observability
 
+### Health Check Endpoints
+
+Friday AI Chat provides health check endpoints for monitoring and deployment verification:
+
+**GET `/api/health`** - Basic health check
+- Always returns HTTP 200 if server is running
+- Used by load balancers for basic liveness checks
+- Returns: status, timestamp, uptime, version, environment
+
+**GET `/api/ready`** - Readiness check
+- Verifies all critical dependencies (Database, Redis)
+- Returns HTTP 200 if ready, HTTP 503 if not ready
+- Used by Kubernetes readiness probes
+- Includes response times for each dependency check
+
+**Implementation:**
+- Location: `server/routes/health.ts`
+- Database check: Verifies connection with `SELECT 1` query
+- Redis check: Optional (falls back to in-memory if not configured)
+- Error handling: Graceful degradation with detailed status
+
+**Usage:**
+```bash
+# Basic health check
+curl http://localhost:3000/api/health
+
+# Readiness check
+curl http://localhost:3000/api/ready
+```
+
+**See Also:** [Health Check Endpoints Documentation](./HEALTH_CHECK_ENDPOINTS.md) for detailed usage, Kubernetes configuration, and troubleshooting.
+
+### Logging
+
+All application logging uses structured logging via Pino:
+
+**Location:** `server/_core/logger.ts`
+
+**Log Levels:**
+- `logger.error()` - Errors requiring attention
+- `logger.warn()` - Warnings and non-critical issues
+- `logger.info()` - Informational messages
+- `logger.debug()` - Debug information (development only)
+
+**Structured Logging Format:**
+```typescript
+import { logger } from "./_core/logger";
+
+// ✅ Good: Structured logging with context
+logger.error({ err: error }, "[Operation] Failed to execute");
+logger.info({ userId: 1, action: "login" }, "[Auth] User logged in");
+
+// ❌ Bad: Console logging (replaced with logger)
+console.error("Error:", error); // Don't use
+console.log("User logged in"); // Don't use
+```
+
+**Recent Improvements:**
+- Replaced all `console.log/error/warn` calls with structured logger
+- Consistent error logging format across all modules
+- Error context included in all log entries
+
+**See Also:** [Error Handling Guide](./ERROR_HANDLING_GUIDE.md) for error logging best practices.
+
 ### Analytics Tracking
 
 **Event Tracking:**
@@ -637,6 +701,7 @@ pnpm build    # Builds frontend and backend
    - User behavior tracking
    - AI performance metrics
    - Business intelligence dashboard
+   - A/B test metrics storage (✅ Implemented)
 
 1. **Mobile App:**
    - React Native wrapper
@@ -663,7 +728,7 @@ pnpm build    # Builds frontend and backend
 
 ## References
 
-This architecture document is based on the codebase structure and implementation details found in the Friday AI Chat repository at <https://github.com/TekupDK/tekup-friday.>
+This architecture document is based on the codebase structure and implementation details found in the Friday AI Chat repository at <https://github.com/TekupDK/friday-ai>.
 
 ---
 

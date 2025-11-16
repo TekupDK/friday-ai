@@ -12,6 +12,7 @@ import {
   emailThreads,
 } from "../../drizzle/schema";
 import {
+  permissionProcedure,
   protectedProcedure,
   rateLimitedProcedure,
   router,
@@ -571,6 +572,152 @@ export const inboxRouter = router({
       .mutation(async ({ input }) => {
         await googleMarkAsRead(input.messageId, false);
         return { success: true };
+      }),
+    // Bulk operations
+    bulkMarkAsRead: rateLimitedProcedure
+      .input(
+        z.object({
+          threadIds: z.array(validationSchemas.threadId).min(1).max(100), // ✅ SECURITY: Limit batch size
+        })
+      )
+      .mutation(async ({ input }) => {
+        const { logger } = await import("../_core/logger");
+        logger.info(
+          { threadCount: input.threadIds.length },
+          "[Bulk Email] Marking threads as read"
+        );
+
+        const results = await Promise.allSettled(
+          input.threadIds.map(threadId =>
+            modifyGmailThread({
+              threadId,
+              removeLabelIds: ["UNREAD"],
+            })
+          )
+        );
+
+        const successful = results.filter(r => r.status === "fulfilled").length;
+        const failed = results.filter(r => r.status === "rejected").length;
+
+        logger.info(
+          { successful, failed, total: input.threadIds.length },
+          "[Bulk Email] Mark as read completed"
+        );
+
+        return {
+          success: true,
+          processed: successful,
+          failed,
+          total: input.threadIds.length,
+        };
+      }),
+    bulkMarkAsUnread: rateLimitedProcedure
+      .input(
+        z.object({
+          threadIds: z.array(validationSchemas.threadId).min(1).max(100), // ✅ SECURITY: Limit batch size
+        })
+      )
+      .mutation(async ({ input }) => {
+        const { logger } = await import("../_core/logger");
+        logger.info(
+          { threadCount: input.threadIds.length },
+          "[Bulk Email] Marking threads as unread"
+        );
+
+        const results = await Promise.allSettled(
+          input.threadIds.map(threadId =>
+            modifyGmailThread({
+              threadId,
+              addLabelIds: ["UNREAD"],
+            })
+          )
+        );
+
+        const successful = results.filter(r => r.status === "fulfilled").length;
+        const failed = results.filter(r => r.status === "rejected").length;
+
+        logger.info(
+          { successful, failed, total: input.threadIds.length },
+          "[Bulk Email] Mark as unread completed"
+        );
+
+        return {
+          success: true,
+          processed: successful,
+          failed,
+          total: input.threadIds.length,
+        };
+      }),
+    bulkArchive: rateLimitedProcedure
+      .input(
+        z.object({
+          threadIds: z.array(validationSchemas.threadId).min(1).max(100), // ✅ SECURITY: Limit batch size
+        })
+      )
+      .mutation(async ({ input }) => {
+        const { logger } = await import("../_core/logger");
+        logger.info(
+          { threadCount: input.threadIds.length },
+          "[Bulk Email] Archiving threads"
+        );
+
+        const results = await Promise.allSettled(
+          input.threadIds.map(threadId => archiveThread(threadId))
+        );
+
+        const successful = results.filter(r => r.status === "fulfilled").length;
+        const failed = results.filter(r => r.status === "rejected").length;
+
+        logger.info(
+          { successful, failed, total: input.threadIds.length },
+          "[Bulk Email] Archive completed"
+        );
+
+        return {
+          success: true,
+          processed: successful,
+          failed,
+          total: input.threadIds.length,
+        };
+      }),
+    bulkDelete: rateLimitedProcedure
+      .input(
+        z.object({
+          threadIds: z.array(validationSchemas.threadId).min(1).max(100), // ✅ SECURITY: Limit batch size
+        })
+      )
+      .mutation(async ({ input }) => {
+        const { logger } = await import("../_core/logger");
+        logger.info(
+          { threadCount: input.threadIds.length },
+          "[Bulk Email] Deleting threads"
+        );
+
+        // Safer default: move to TRASH instead of permanent delete
+        const results = await Promise.allSettled(
+          input.threadIds.map(threadId =>
+            modifyGmailThread({
+              threadId,
+              addLabelIds: ["TRASH"],
+            })
+          )
+        );
+
+        const successful = results.filter(r => r.status === "fulfilled").length;
+        const failed = results.filter(r => r.status === "rejected").length;
+
+        logger.info(
+          { successful, failed, total: input.threadIds.length },
+          "[Bulk Email] Delete completed"
+        );
+
+        return {
+          success: true,
+          processed: successful,
+          failed,
+          total: input.threadIds.length,
+          trashed: true, // Indicates moved to trash, not permanently deleted
+        };
       }),
     getLabels: protectedProcedure.query(async () => getGmailLabels()),
     getUnreadCounts: protectedProcedure.query(async () => {
@@ -1349,7 +1496,7 @@ export const inboxRouter = router({
 
       return invoices;
     }),
-    create: protectedProcedure
+    create: permissionProcedure("create_invoice")
       .input(
         z.object({
           contactId: z.string(),
@@ -1365,7 +1512,10 @@ export const inboxRouter = router({
           ),
         })
       )
-      .mutation(async ({ input }) => createBillyInvoice(input)),
+      .mutation(async ({ input }) => {
+        // ✅ RBAC: Only owner can create invoices (enforced by permissionProcedure)
+        return createBillyInvoice(input);
+      }),
     stats: protectedProcedure.query(async () => {
       // Always use Billy API for accurate states and balances (DKK units)
       const invoices = await getBillyInvoices();
