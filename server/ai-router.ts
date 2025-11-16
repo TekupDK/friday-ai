@@ -4,22 +4,24 @@
  */
 
 import { randomBytes } from "crypto";
+
+import { applyMemoryRules } from "../client/src/lib/ai-memory-rules";
+
+import { getFeatureFlags } from "./_core/feature-flags";
 import { invokeLLM, type Message } from "./_core/llm";
-import { logger } from "./_core/logger";
 import { getFridaySystemPrompt } from "./friday-prompts";
-import {
-  invokeLLMWithRouting,
-  selectModel,
-  type TaskType,
-  type AIModel,
-} from "./model-router";
+import { responseCacheRedis } from "./integrations/litellm/response-cache-redis";
 import {
   executeAction,
   parseIntent,
   type ActionResult,
 } from "./intent-actions";
-import { getFeatureFlags } from "./_core/feature-flags";
-import { responseCacheRedis } from "./integrations/litellm/response-cache-redis";
+import {
+  invokeLLMWithRouting,
+  selectModel,
+  type AIModel,
+  type TaskType,
+} from "./model-router";
 
 // Re-export types from model-router for backward compatibility
 export type { AIModel, TaskType } from "./model-router";
@@ -79,6 +81,87 @@ export interface AIResponse {
     arguments: string;
   }>;
   pendingAction?: PendingAction;
+}
+
+/**
+ * Build memory rules context from intent and email context
+ */
+function buildMemoryContext(
+  intent: ReturnType<typeof parseIntent>,
+  emailContext?: EmailContext
+): any {
+  const context: any = {};
+
+  // Extract relevant data from intent params
+  if (intent.intent === "book_meeting") {
+    if (
+      intent.params.startHour !== undefined &&
+      intent.params.startMinute !== undefined
+    ) {
+      const hours = intent.params.startHour.toString().padStart(2, "0");
+      const minutes = intent.params.startMinute.toString().padStart(2, "0");
+      context.proposedTime = `${hours}:${minutes}`;
+    }
+    if (intent.params.dateHint) {
+      context.proposedDate = intent.params.dateHint;
+    }
+    context.calendarEvent = {
+      attendees: intent.params.attendees, // Will be checked by MEMORY_19
+    };
+  }
+
+  if (intent.intent === "create_invoice") {
+    context.invoice = {
+      state: intent.params.state || "draft",
+      lines: intent.params.lines || [],
+    };
+    context.isOffer = false; // Invoices are not offers
+  }
+
+  if (intent.intent === "create_lead") {
+    context.lead = {
+      name: intent.params.name,
+      email: intent.params.email,
+    };
+    context.customerEmail = intent.params.email;
+    if (intent.params.source?.toLowerCase().includes("flytter")) {
+      context.isFlytterengøring = true;
+      context.hasPhotos = intent.params.hasPhotos || false;
+    }
+  }
+
+  if (intent.intent === "request_flytter_photos") {
+    context.lead = {
+      name: intent.params.customerName,
+    };
+    context.isFlytterengøring = true;
+    context.hasPhotos = false; // Requesting photos means we don't have them yet
+  }
+
+  if (intent.intent === "job_completion") {
+    context.jobCompletion = {
+      invoiceId: intent.params.invoiceId,
+      team: intent.params.team,
+      paymentMethod: intent.params.paymentMethod,
+      actualTime: intent.params.actualTime,
+      calendarUpdated: intent.params.calendarUpdated,
+      labelsRemoved: intent.params.labelsRemoved,
+    };
+  }
+
+  if (intent.intent === "search_email" || emailContext) {
+    context.customerEmail = intent.params.email || emailContext?.openThreadId;
+    context.isOffer = intent.params.isOffer || false;
+  }
+
+  // Add email context if available
+  if (emailContext?.openThreadId) {
+    context.email = {
+      from: emailContext.openThreadId, // Placeholder - would need actual email data
+    };
+  }
+
+  return context;
 }
 
 /**
@@ -242,58 +325,73 @@ export async function routeAI(
     : `[AI Router]`;
 
   const { logger } = await import("./_core/logger");
-  
-  logger.debug({
-    taskType,
-    userId,
-    messageCount: messages.length,
-    hasExplicitModel: !!explicitModel,
-    hasPreferredModel: !!preferredModel,
-    requireApproval,
-    hasContext: !!context,
-    contextKeys: context ? Object.keys(context) : [],
-    correlationId,
-  }, "[AI Router] [routeAI]: Entry");
+
+  logger.debug(
+    {
+      taskType,
+      userId,
+      messageCount: messages.length,
+      hasExplicitModel: !!explicitModel,
+      hasPreferredModel: !!preferredModel,
+      requireApproval,
+      hasContext: !!context,
+      contextKeys: context ? Object.keys(context) : [],
+      correlationId,
+    },
+    "[AI Router] [routeAI]: Entry"
+  );
 
   // Use preferred model first, then explicit model, then select based on task type
-  logger.debug({
-    taskType,
-    userId,
-    explicitModel,
-    preferredModel,
-  }, "[AI Router] [routeAI]: Selecting model");
-  
+  logger.debug(
+    {
+      taskType,
+      userId,
+      explicitModel,
+      preferredModel,
+    },
+    "[AI Router] [routeAI]: Selecting model"
+  );
+
   const selectedModel = selectModelForTask(
     taskType,
     userId,
     explicitModel || preferredModel
   );
-  
-  logger.info({
-    selectedModel,
-    taskType,
-    correlationId,
-  }, "[AI Router] [routeAI]: Model selected");
+
+  logger.info(
+    {
+      selectedModel,
+      taskType,
+      correlationId,
+    },
+    "[AI Router] [routeAI]: Model selected"
+  );
 
   // Get the last user message to check for intents
   const lastUserMessage = messages.filter(m => m.role === "user").pop();
   const userMessageText =
     typeof lastUserMessage?.content === "string" ? lastUserMessage.content : "";
 
-  logger.debug({
-    userMessageLength: userMessageText.length,
-    hasLastUserMessage: !!lastUserMessage,
-    correlationId,
-  }, "[AI Router] [routeAI]: Parsing intent");
+  logger.debug(
+    {
+      userMessageLength: userMessageText.length,
+      hasLastUserMessage: !!lastUserMessage,
+      correlationId,
+    },
+    "[AI Router] [routeAI]: Parsing intent"
+  );
 
   // Parse intent from user message
   const intent = parseIntent(userMessageText);
-  logger.debug({
-    intent: intent.intent,
-    confidence: intent.confidence,
-    params: intent.params,
-    correlationId,
-  }, "[AI Router] [routeAI]: Intent parsed");
+  logger.debug(
+    {
+      intent: intent.intent,
+      confidence: intent.confidence,
+      params: intent.params,
+      correlationId,
+    },
+    "[AI Router] [routeAI]: Intent parsed"
+  );
 
   let actionResult: ActionResult | null = null;
   let pendingAction: PendingAction | undefined = undefined;
@@ -316,27 +414,41 @@ export async function routeAI(
   }
 
   // If high-confidence intent detected
-  logger.debug({
-    confidence: intent.confidence,
-    confidenceThreshold: 0.7,
-    intent: intent.intent,
-    hasUserId: !!userId,
-    requireApproval,
-    shouldExecute: intent.confidence > 0.7 && intent.intent !== "unknown" && !!userId && !requireApproval,
-    shouldCreatePending: intent.confidence > 0.7 && intent.intent !== "unknown" && !!userId && requireApproval,
-    correlationId,
-  }, "[AI Router] [routeAI]: Checking intent execution conditions");
+  logger.debug(
+    {
+      confidence: intent.confidence,
+      confidenceThreshold: 0.7,
+      intent: intent.intent,
+      hasUserId: !!userId,
+      requireApproval,
+      shouldExecute:
+        intent.confidence > 0.7 &&
+        intent.intent !== "unknown" &&
+        !!userId &&
+        !requireApproval,
+      shouldCreatePending:
+        intent.confidence > 0.7 &&
+        intent.intent !== "unknown" &&
+        !!userId &&
+        requireApproval,
+      correlationId,
+    },
+    "[AI Router] [routeAI]: Checking intent execution conditions"
+  );
 
   if (intent.confidence > 0.7 && intent.intent !== "unknown" && userId) {
     if (requireApproval) {
       // Return pending action for user approval
-      logger.info({
-        intent: intent.intent,
-        correlationId,
-      }, "[AI Router] [routeAI]: Creating pending action");
-      
+      logger.info(
+        {
+          intent: intent.intent,
+          correlationId,
+        },
+        "[AI Router] [routeAI]: Creating pending action"
+      );
+
       pendingAction = createPendingAction(intent);
-      
+
       logger.debug({
         actionId: pendingAction.id,
         actionType: pendingAction.type,
@@ -345,38 +457,88 @@ export async function routeAI(
       });
     } else {
       // Execute action immediately (legacy mode)
-      logger.info({
-        intent: intent.intent,
-        userId,
-        correlationId,
-      }, "[AI Router] [routeAI]: Executing action immediately");
-      
-      try {
-        actionResult = await executeAction(intent, userId, { correlationId });
-        logger.info({
+      logger.info(
+        {
           intent: intent.intent,
-          success: actionResult.success,
-          hasData: !!actionResult.data,
+          userId,
           correlationId,
-        }, "[AI Router] [routeAI]: Action executed successfully");
-      } catch (error) {
-        logger.error({
-          err: error,
-          intent: intent.intent,
-          correlationId,
-        }, "[AI Router] [routeAI]: Action execution failed");
+        },
+        "[AI Router] [routeAI]: Executing action immediately"
+      );
+
+      // Apply memory rules validation before executing action
+      const memoryContext = buildMemoryContext(intent, context);
+      const ruleResult = await applyMemoryRules(memoryContext);
+
+      if (!ruleResult.passed && ruleResult.violations.length > 0) {
+        logger.warn(
+          {
+            intent: intent.intent,
+            violations: ruleResult.violations,
+            warnings: ruleResult.warnings,
+            correlationId,
+          },
+          "[AI Router] [routeAI]: Memory rule violations detected - blocking action"
+        );
+
         actionResult = {
           success: false,
-          message: "Der opstod en fejl under udførelsen af handlingen.",
-          error: error instanceof Error ? error.message : String(error),
+          message: `⚠️ Regel overtrædelse opdaget:\n\n${ruleResult.violations.map(v => `❌ ${v}`).join("\n")}${ruleResult.warnings.length > 0 ? `\n\n⚠️ Advarsler:\n${ruleResult.warnings.map(w => `⚠️ ${w}`).join("\n")}` : ""}\n\nHandlingen er blokeret for at beskytte forretningsreglerne.`,
         };
+      } else {
+        if (ruleResult.warnings.length > 0) {
+          logger.info(
+            {
+              intent: intent.intent,
+              warnings: ruleResult.warnings,
+              correlationId,
+            },
+            "[AI Router] [routeAI]: Memory rule warnings (non-blocking)"
+          );
+        }
+
+        try {
+          actionResult = await executeAction(intent, userId, { correlationId });
+          logger.info(
+            {
+              intent: intent.intent,
+              success: actionResult.success,
+              hasData: !!actionResult.data,
+              correlationId,
+            },
+            "[AI Router] [routeAI]: Action executed successfully"
+          );
+        } catch (error) {
+          logger.error(
+            {
+              err: error,
+              intent: intent.intent,
+              correlationId,
+            },
+            "[AI Router] [routeAI]: Action execution failed"
+          );
+          actionResult = {
+            success: false,
+            message: "Der opstod en fejl under udførelsen af handlingen.",
+            error: error instanceof Error ? error.message : String(error),
+          };
+        }
       }
     }
   } else {
-    logger.debug({
-      reason: !userId ? "noUserId" : intent.confidence <= 0.7 ? "lowConfidence" : intent.intent === "unknown" ? "unknownIntent" : "unknown",
-      correlationId,
-    }, "[AI Router] [routeAI]: No action execution");
+    logger.debug(
+      {
+        reason: !userId
+          ? "noUserId"
+          : intent.confidence <= 0.7
+            ? "lowConfidence"
+            : intent.intent === "unknown"
+              ? "unknownIntent"
+              : "unknown",
+        correlationId,
+      },
+      "[AI Router] [routeAI]: No action execution"
+    );
   }
 
   // Add Friday system prompt if not already present
@@ -545,20 +707,26 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
     // ✅ PERFORMANCE: Check Redis cache for AI responses
     // Only cache if no actions were executed (actions make responses non-deterministic)
     const shouldCache = !actionResult && !pendingAction;
-    logger.debug({
-      shouldCache,
-      hasActionResult: !!actionResult,
-      hasPendingAction: !!pendingAction,
-      correlationId,
-    }, "[AI Router] [routeAI]: Checking cache");
+    logger.debug(
+      {
+        shouldCache,
+        hasActionResult: !!actionResult,
+        hasPendingAction: !!pendingAction,
+        correlationId,
+      },
+      "[AI Router] [routeAI]: Checking cache"
+    );
 
     if (shouldCache) {
       const cached = await responseCacheRedis.get(finalMessages, selectedModel);
       if (cached) {
-        logger.info({
-          model: selectedModel,
-          correlationId,
-        }, "[AI Router] [routeAI]: Cache hit");
+        logger.info(
+          {
+            model: selectedModel,
+            correlationId,
+          },
+          "[AI Router] [routeAI]: Cache hit"
+        );
         // Type guard: ensure cached response matches AIResponse structure
         const cachedResult = cached as AIResponse;
         return {
@@ -569,33 +737,42 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
           usage: cachedResult.usage,
         };
       } else {
-        logger.debug({
-          model: selectedModel,
-          correlationId,
-        }, "[AI Router] [routeAI]: Cache miss");
+        logger.debug(
+          {
+            model: selectedModel,
+            correlationId,
+          },
+          "[AI Router] [routeAI]: Cache miss"
+        );
       }
     }
 
     // Call AI with enhanced routing and fallbacks
     const flags = getFeatureFlags(userId);
-    logger.debug({
-      selectedModel,
-      enableModelRouting: flags.enableModelRouting,
-      hasExplicitModel: !!explicitModel,
-      hasPreferredModel: !!preferredModel,
-      messageCount: finalMessages.length,
-      correlationId,
-    }, "[AI Router] [routeAI]: Calling LLM");
+    logger.debug(
+      {
+        selectedModel,
+        enableModelRouting: flags.enableModelRouting,
+        hasExplicitModel: !!explicitModel,
+        hasPreferredModel: !!preferredModel,
+        messageCount: finalMessages.length,
+        correlationId,
+      },
+      "[AI Router] [routeAI]: Calling LLM"
+    );
 
     let response;
     if (flags.enableModelRouting && !explicitModel && !preferredModel) {
       // Use new model routing system with fallbacks
-      logger.debug({
-        taskType,
-        userId,
-        correlationId,
-      }, "[AI Router] [routeAI]: Using model routing system");
-      
+      logger.debug(
+        {
+          taskType,
+          userId,
+          correlationId,
+        },
+        "[AI Router] [routeAI]: Using model routing system"
+      );
+
       response = await invokeLLMWithRouting(taskType, finalMessages, {
         userId,
         stream: false,
@@ -603,22 +780,28 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
       });
     } else {
       // Use legacy LLM invocation
-      logger.debug({
-        model: selectedModel,
-        correlationId,
-      }, "[AI Router] [routeAI]: Using legacy LLM invocation");
-      
+      logger.debug(
+        {
+          model: selectedModel,
+          correlationId,
+        },
+        "[AI Router] [routeAI]: Using legacy LLM invocation"
+      );
+
       response = await invokeLLM({
         messages: finalMessages,
         model: selectedModel,
       });
     }
 
-    logger.debug({
-      hasResponse: !!response,
-      isStreaming: Symbol.asyncIterator in response,
-      correlationId,
-    }, "[AI Router] [routeAI]: LLM response received");
+    logger.debug(
+      {
+        hasResponse: !!response,
+        isStreaming: Symbol.asyncIterator in response,
+        correlationId,
+      },
+      "[AI Router] [routeAI]: LLM response received"
+    );
 
     // Handle both streaming and non-streaming responses
     let aiResponse: AIResponse;
@@ -677,37 +860,49 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
 
     // ✅ PERFORMANCE: Cache the final response if no actions were executed
     if (shouldCache) {
-      logger.debug({
-        model: selectedModel,
-        correlationId,
-      }, "[AI Router] [routeAI]: Caching response");
-      
+      logger.debug(
+        {
+          model: selectedModel,
+          correlationId,
+        },
+        "[AI Router] [routeAI]: Caching response"
+      );
+
       await responseCacheRedis.set(finalMessages, selectedModel, aiResponse);
     }
 
-    logger.debug({
-      model: aiResponse.model,
-      responseLength: aiResponse.content.length,
-      hasPendingAction: !!aiResponse.pendingAction,
-      usage: aiResponse.usage,
-      correlationId,
-    }, "[AI Router] [routeAI]: Complete");
+    logger.debug(
+      {
+        model: aiResponse.model,
+        responseLength: aiResponse.content.length,
+        hasPendingAction: !!aiResponse.pendingAction,
+        usage: aiResponse.usage,
+        correlationId,
+      },
+      "[AI Router] [routeAI]: Complete"
+    );
 
     return aiResponse;
   } catch (error) {
-    logger.error({
-      err: error,
-      model: selectedModel,
-      hasActionResult: !!actionResult,
-      actionSuccess: actionResult?.success,
-      correlationId,
-    }, "[AI Router] [routeAI]: Error occurred");
+    logger.error(
+      {
+        err: error,
+        model: selectedModel,
+        hasActionResult: !!actionResult,
+        actionSuccess: actionResult?.success,
+        correlationId,
+      },
+      "[AI Router] [routeAI]: Error occurred"
+    );
 
     // If action succeeded but AI failed, return action result
     if (actionResult && actionResult.success) {
-      logger.info({
-        correlationId,
-      }, "[AI Router] [routeAI]: Returning action result after AI error");
+      logger.info(
+        {
+          correlationId,
+        },
+        "[AI Router] [routeAI]: Returning action result after AI error"
+      );
       return {
         content: actionResult.message,
         model: selectedModel,

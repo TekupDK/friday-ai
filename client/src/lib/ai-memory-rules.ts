@@ -75,6 +75,22 @@ export const AI_MEMORY_RULES: MemoryRule[] = [
     },
   },
 
+  // CRITICAL EMAIL DUPLICATE CHECK
+  {
+    id: "MEMORY_2",
+    priority: "HIGH",
+    category: "EMAIL",
+    rule: "Gmail duplicate check før tilbud",
+    description: "Søg i Gmail før nye tilbud sendes",
+    enforcement: async context => {
+      if (!context.customerEmail || !context.isOffer) return true;
+
+      console.log("[MEMORY_2] Checking Gmail for duplicates...");
+      context.requiresGmailCheck = true;
+      return true;
+    },
+  },
+
   // CRITICAL EMAIL PROCESS
   {
     id: "MEMORY_7",
@@ -101,37 +117,62 @@ export const AI_MEMORY_RULES: MemoryRule[] = [
     enforcement: async context => {
       if (!context.proposedTime) return true;
 
-      const minutes = new Date(
-        `2024-01-01 ${context.proposedTime}`
-      ).getMinutes();
-      if (minutes !== 0 && minutes !== 30) {
+      // Parse the time string (format: "HH:MM" or "HH:MM:SS")
+      const timeMatch = context.proposedTime.match(/^(\d{1,2}):(\d{2})/);
+      if (!timeMatch) {
+        console.warn("[MEMORY_15] ⚠️ Invalid time format");
+        return true; // Skip validation if format is invalid
+      }
+
+      const hours = parseInt(timeMatch[1], 10);
+      const minutes = parseInt(timeMatch[2], 10);
+
+      // Round to nearest half hour (0 or 30 minutes)
+      // Ties round down (e.g., 15 rounds to 0, 45 rounds to 30)
+      // 0-15 → round to :00 (15 is tie, round down)
+      // 16-44 → round to :30
+      // 45 → tie, round down to :30
+      // 46-59 → round to :00 (next hour, but we keep current hour)
+      let roundedMinutes: number;
+      if (minutes <= 15) {
+        roundedMinutes = 0; // Round down to :00 (including tie at 15)
+      } else if (minutes <= 45) {
+        roundedMinutes = 30; // Round to :30 (including tie at 45)
+      } else {
+        roundedMinutes = 0; // 46+ rounds to :00 (next hour, but keep current hour)
+      }
+
+      if (minutes !== roundedMinutes) {
         console.warn(
           "[MEMORY_15] ⚠️ Ikke rund tid - retter til nærmeste halve time"
         );
-        context.proposedTime =
-          minutes < 15 ? ":00" : minutes < 45 ? ":30" : ":00";
+        // Preserve hours and update minutes
+        context.proposedTime = `${hours.toString().padStart(2, "0")}:${roundedMinutes.toString().padStart(2, "0")}`;
         return false;
       }
       return true;
     },
   },
 
-  // EMAIL STYLE
+  // CRITICAL FLYTTE RULES
   {
     id: "MEMORY_16",
-    priority: "HIGH",
-    category: "STYLE",
-    rule: "Max 10-12 linjer til leads",
-    description: "Korte, konkrete emails til nye leads",
+    priority: "CRITICAL",
+    category: "LEAD",
+    rule: "Altid anmod om billeder for flytterengøring",
+    description: "BLOCK quote sending until photos received",
     enforcement: async context => {
-      if (!context.draftEmail) return true;
+      if (!context.lead || !context.isFlytterengøring) return true;
 
-      const lineCount = context.draftEmail.split("\n").length;
-      if (lineCount > 12) {
-        console.warn("[MEMORY_16] ⚠️ Email for lang - skal forkortes");
-        context.requiresShortening = true;
-        return false;
+      if (!context.hasPhotos) {
+        console.error(
+          "[MEMORY_16] ❌ KRITISK: Må IKKE sende tilbud uden billeder!"
+        );
+        context.blockQuoteSending = true;
+        context.requiresPhotos = true;
+        return false; // Block quote
       }
+
       return true;
     },
   },
@@ -167,6 +208,35 @@ export const AI_MEMORY_RULES: MemoryRule[] = [
         delete context.calendarEvent.attendees;
         return false;
       }
+      return true;
+    },
+  },
+
+  // CRITICAL INVOICE RULES
+  {
+    id: "MEMORY_17",
+    priority: "CRITICAL",
+    category: "LEAD",
+    rule: "Faktura-udkast kun, aldrig auto-godkend",
+    description: "Alle fakturaer skal være draft, 349 kr/time/person",
+    enforcement: async context => {
+      if (!context.invoice) return true;
+
+      if (context.invoice.state !== "draft") {
+        console.error("[MEMORY_17] ❌ KRITISK: Faktura skal være draft!");
+        context.invoice.state = "draft";
+        return false;
+      }
+
+      // Verify price
+      const hasCorrectPrice = context.invoice.lines?.some(
+        (line: any) => line.unitPrice === 349
+      );
+      if (!hasCorrectPrice && context.invoice.lines?.length > 0) {
+        console.warn("[MEMORY_17] ⚠️ Pris skal være 349 kr/time");
+        return false;
+      }
+
       return true;
     },
   },
@@ -216,29 +286,57 @@ export const AI_MEMORY_RULES: MemoryRule[] = [
     },
   },
 
-  // EMOJI USAGE
+  // LEAD NAME VERIFICATION
+  {
+    id: "MEMORY_25",
+    priority: "MEDIUM",
+    category: "LEAD",
+    rule: "Verify lead name against actual email",
+    description: "Brug navn fra email signatur, ikke lead system",
+    enforcement: async context => {
+      if (!context.lead || !context.email) return true;
+
+      const leadName = context.lead.name?.toLowerCase();
+      const emailName = context.email.signatureName?.toLowerCase();
+
+      if (leadName && emailName && leadName !== emailName) {
+        console.warn("[MEMORY_25] ⚠️ Navn mismatch - brug email signatur navn");
+        context.useEmailName = true;
+        return false;
+      }
+
+      return true;
+    },
+  },
+
+  // CRITICAL JOB COMPLETION
   {
     id: "MEMORY_24",
-    priority: "LOW",
-    category: "STYLE",
-    rule: "Brug emojis sparsomt",
-    description: "🌿 kun ved miljø, ✅ ved bekræftelse, 📅 ved datoer",
+    priority: "CRITICAL",
+    category: "LEAD",
+    rule: "Job completion kræver 6-step checklist",
+    description: "Faktura, team, betaling, tid, kalender, labels",
     enforcement: async context => {
-      if (!context.draftEmail) return true;
+      if (!context.jobCompletion) return true;
 
-      const allowedEmojis = ["🌿", "✅", "📅", "📏", "👥", "⏰"];
-      const emojiRegex = /[\u{1F300}-\u{1F9FF}]/gu;
-      const usedEmojis = context.draftEmail.match(emojiRegex) || [];
+      const checklist = {
+        invoice: !!context.jobCompletion.invoiceId,
+        team: !!context.jobCompletion.team,
+        payment: !!context.jobCompletion.paymentMethod,
+        time: !!context.jobCompletion.actualTime,
+        calendar: !!context.jobCompletion.calendarUpdated,
+        labels: !!context.jobCompletion.labelsRemoved,
+      };
 
-      const invalidEmojis = usedEmojis.filter(
-        (e: string) => !allowedEmojis.includes(e)
-      );
-      if (invalidEmojis.length > 0) {
-        console.warn(
-          `[MEMORY_24] ⚠️ Ugyldige emojis: ${invalidEmojis.join(", ")}`
+      const allComplete = Object.values(checklist).every(v => v === true);
+      if (!allComplete) {
+        console.error(
+          "[MEMORY_24] ❌ Job completion mangler steps:",
+          checklist
         );
         return false;
       }
+
       return true;
     },
   },
