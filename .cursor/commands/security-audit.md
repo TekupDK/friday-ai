@@ -22,7 +22,7 @@ Perform a comprehensive security audit to identify and fix vulnerabilities in th
 
 ## REFERENCE MATERIALS
 
-- `docs/SECURITY_REVIEW_2025-01-28.md` - Security documentation
+- `docs/SECURITY_REVIEW_2025-11-16.md` - Security documentation
 - `docs/DEVELOPMENT_GUIDE.md` - Development patterns
 - OWASP Top 10 - Security standards
 - `server/_core/validation.ts` - Input validation patterns

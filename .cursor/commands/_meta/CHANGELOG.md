@@ -2,7 +2,7 @@
 
 This changelog tracks all changes to the Friday AI Chat commands system.
 
-## [2025-01-28] - Major Update: Prompt Engineering v2.2.0
+## [2025-11-16] - Major Update: Prompt Engineering v2.2.0
 
 ### Added
 
