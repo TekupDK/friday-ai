@@ -77,6 +77,49 @@ export const validationSchemas = {
   
   // Postal code validation
   postalCode: z.string().max(20),
+  
+  // Date validation (ISO 8601 datetime string)
+  dateTime: z.string().datetime(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).max(10),
+  
+  // Amount validation (positive numbers)
+  amount: z.number().int().min(0),
+  amountDecimal: z.number().min(0),
+  
+  // Thread/Message ID validation (Gmail thread IDs can be long)
+  threadId: z.string().max(100),
+  messageId: z.string().max(100),
+  
+  // Email addresses (for to/cc/bcc fields)
+  emailAddress: z.string().email().max(320),
+  emailAddressList: z.string().max(5000), // Comma-separated list
+  
+  // Subject line validation
+  subject: z.string().max(500),
+  
+  // Body/content validation
+  body: z.string().max(50000), // Email body can be large but limit to prevent DoS
+  content: z.string().max(5000),
+  
+  // Page token validation (for pagination)
+  pageToken: z.string().max(500),
+  
+  // MIME type validation
+  mimeType: z.string().max(100).regex(/^[a-zA-Z0-9][a-zA-Z0-9!#$&\-\^_.]*\/[a-zA-Z0-9][a-zA-Z0-9!#$&\-\^_.]*$/),
+  
+  // Storage URL validation
+  storageUrl: z.string().url().max(2048),
+  
+  // Reason/description fields
+  reason: z.string().max(1000).optional(),
+  wonReason: z.string().max(1000).optional(),
+  lostReason: z.string().max(1000).optional(),
+  
+  // Label name validation (Gmail labels)
+  labelName: z.string()
+    .min(1, "Label name cannot be empty")
+    .max(100, "Label name too long (max 100 characters)")
+    .regex(/^[a-zA-Z0-9\s\-_]+$/, "Label name contains invalid characters"),
 };
 
 /**

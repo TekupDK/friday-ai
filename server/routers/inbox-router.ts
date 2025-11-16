@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { and, asc, desc, eq, inArray, or } from "drizzle-orm";
 import { z } from "zod";
+import { validationSchemas } from "../_core/validation";
 import {
   attachments,
   customerInvoices,
@@ -15,6 +16,7 @@ import {
   rateLimitedProcedure,
   router,
 } from "../_core/trpc";
+import { logger } from "../_core/logger";
 import { batchGenerateSummaries, getEmailSummary } from "../ai-email-summary";
 import {
   applyLabelSuggestion,
@@ -231,17 +233,15 @@ export const inboxRouter = router({
             }
 
             // Database is empty - fetch from Gmail API and cache to database
-            console.log(
-              "[Email List] Database empty, fetching from Gmail API and caching..."
-            );
+            logger.info("[Email List] Database empty, fetching from Gmail API and caching...");
           } catch (error) {
-            console.warn(
-              "[Email List] Database query failed, falling back to Gmail API:",
-              error
+            logger.warn(
+              { err: error },
+              "[Email List] Database query failed, falling back to Gmail API"
             );
           }
         } else if (hasGmailQuery) {
-          console.log(
+          logger.info(
             "[Email List] Query has Gmail filters (in:/label:/is:), skipping database cache and using Gmail API directly"
           );
         }
@@ -255,7 +255,7 @@ export const inboxRouter = router({
             maxResults: input.maxResults || 20,
           });
         } catch (error: any) {
-          console.error("[Email List] Gmail API error:", error);
+          logger.error({ err: error }, "[Email List] Gmail API error");
           // Provide helpful error message instead of raw error
           const isRateLimit =
             error?.message?.includes("429") ||
@@ -284,7 +284,7 @@ export const inboxRouter = router({
         if (db && threads.length > 0) {
           const { cacheEmailsToDatabase } = await import("../email-cache");
           cacheEmailsToDatabase(threads, ctx.user.id, db).catch(error => {
-            console.error("[Email List] Background cache failed:", error);
+            logger.error({ err: error }, "[Email List] Background cache failed");
           });
         }
 
@@ -415,9 +415,9 @@ export const inboxRouter = router({
                 };
               }
             } catch (error) {
-              console.warn(
-                "[Email ListPaged] DB path failed, using Gmail API",
-                error
+              logger.warn(
+                { err: error },
+                "[Email ListPaged] DB path failed, using Gmail API"
               );
             }
           }
@@ -433,50 +433,50 @@ export const inboxRouter = router({
         return result;
       }),
     get: protectedProcedure
-      .input(z.object({ threadId: z.string() }))
+      .input(z.object({ threadId: validationSchemas.threadId }))
       .query(async ({ input }) => getGmailThread(input.threadId)),
     getThread: protectedProcedure
-      .input(z.object({ threadId: z.string() }))
+      .input(z.object({ threadId: validationSchemas.threadId }))
       .query(async ({ input }) => getGmailThread(input.threadId)),
     search: protectedProcedure
-      .input(z.object({ query: z.string() }))
+      .input(z.object({ query: validationSchemas.searchQuery }))
       .query(async ({ input }) =>
         searchGmailThreads({ query: input.query, maxResults: 50 })
       ),
     createDraft: protectedProcedure
       .input(
         z.object({
-          to: z.string(),
-          subject: z.string(),
-          body: z.string(),
-          cc: z.string().optional(),
-          bcc: z.string().optional(),
+          to: validationSchemas.emailAddressList,
+          subject: validationSchemas.subject,
+          body: validationSchemas.body,
+          cc: validationSchemas.emailAddressList.optional(),
+          bcc: validationSchemas.emailAddressList.optional(),
         })
       )
       .mutation(async ({ input }) => createGmailDraft(input)),
     send: protectedProcedure
       .input(
         z.object({
-          to: z.string(),
-          subject: z.string(),
-          body: z.string(),
-          cc: z.string().optional(),
-          bcc: z.string().optional(),
-          replyToMessageId: z.string().optional(),
-          replyToThreadId: z.string().optional(),
+          to: validationSchemas.emailAddressList,
+          subject: validationSchemas.subject,
+          body: validationSchemas.body,
+          cc: validationSchemas.emailAddressList.optional(),
+          bcc: validationSchemas.emailAddressList.optional(),
+          replyToMessageId: validationSchemas.messageId.optional(),
+          replyToThreadId: validationSchemas.threadId.optional(),
         })
       )
       .mutation(async ({ input }) => sendGmailMessage(input)),
     reply: protectedProcedure
       .input(
         z.object({
-          threadId: z.string(),
-          messageId: z.string(),
-          to: z.string(),
-          subject: z.string(),
-          body: z.string(),
-          cc: z.string().optional(),
-          bcc: z.string().optional(),
+          threadId: validationSchemas.threadId,
+          messageId: validationSchemas.messageId,
+          to: validationSchemas.emailAddressList,
+          subject: validationSchemas.subject,
+          body: validationSchemas.body,
+          cc: validationSchemas.emailAddressList.optional(),
+          bcc: validationSchemas.emailAddressList.optional(),
         })
       )
       .mutation(async ({ input }) =>
@@ -495,11 +495,11 @@ export const inboxRouter = router({
     forward: protectedProcedure
       .input(
         z.object({
-          to: z.string(),
-          subject: z.string(),
-          body: z.string(),
-          cc: z.string().optional(),
-          bcc: z.string().optional(),
+          to: validationSchemas.emailAddressList,
+          subject: validationSchemas.subject,
+          body: validationSchemas.body,
+          cc: validationSchemas.emailAddressList.optional(),
+          bcc: validationSchemas.emailAddressList.optional(),
         })
       )
       .mutation(async ({ input }) =>
@@ -514,13 +514,13 @@ export const inboxRouter = router({
         })
       ),
     archive: rateLimitedProcedure
-      .input(z.object({ threadId: z.string() }))
+      .input(z.object({ threadId: validationSchemas.threadId }))
       .mutation(async ({ input }) => {
         await archiveThread(input.threadId);
         return { success: true };
       }),
     delete: rateLimitedProcedure
-      .input(z.object({ threadId: z.string() }))
+      .input(z.object({ threadId: validationSchemas.threadId }))
       .mutation(async ({ input }) => {
         // Safer default: move to TRASH instead of permanent delete
         // Some environments/scopes block permanent delete with 403
@@ -531,37 +531,43 @@ export const inboxRouter = router({
         return { success: true, trashed: true } as const;
       }),
     addLabel: rateLimitedProcedure
-      .input(z.object({ threadId: z.string(), labelName: z.string() }))
+      .input(z.object({ 
+        threadId: validationSchemas.threadId, 
+        labelName: validationSchemas.labelName 
+      }))
       .mutation(async ({ input }) => {
         await addLabelToThread(input.threadId, input.labelName);
         return { success: true };
       }),
     removeLabel: rateLimitedProcedure
-      .input(z.object({ threadId: z.string(), labelName: z.string() }))
+      .input(z.object({ 
+        threadId: validationSchemas.threadId, 
+        labelName: validationSchemas.labelName 
+      }))
       .mutation(async ({ input }) => {
         await removeLabelFromThread(input.threadId, input.labelName);
         return { success: true };
       }),
     star: rateLimitedProcedure
-      .input(z.object({ messageId: z.string() }))
+      .input(z.object({ messageId: validationSchemas.messageId }))
       .mutation(async ({ input }) => {
         await googleStarMessage(input.messageId, true);
         return { success: true };
       }),
     unstar: rateLimitedProcedure
-      .input(z.object({ messageId: z.string() }))
+      .input(z.object({ messageId: validationSchemas.messageId }))
       .mutation(async ({ input }) => {
         await googleStarMessage(input.messageId, false);
         return { success: true };
       }),
     markAsRead: rateLimitedProcedure
-      .input(z.object({ messageId: z.string() }))
+      .input(z.object({ messageId: validationSchemas.messageId }))
       .mutation(async ({ input }) => {
         await googleMarkAsRead(input.messageId, true);
         return { success: true };
       }),
     markAsUnread: rateLimitedProcedure
-      .input(z.object({ messageId: z.string() }))
+      .input(z.object({ messageId: validationSchemas.messageId }))
       .mutation(async ({ input }) => {
         await googleMarkAsRead(input.messageId, false);
         return { success: true };
@@ -1322,13 +1328,11 @@ export const inboxRouter = router({
             );
           }
 
-          console.log(
-            "[Invoice List] Database empty, fetching from Billy API and caching..."
-          );
+          logger.info("[Invoice List] Database empty, fetching from Billy API and caching...");
         } catch (error) {
-          console.warn(
-            "[Invoice List] Database query failed, falling back to Billy API:",
-            error
+          logger.warn(
+            { err: error },
+            "[Invoice List] Database query failed, falling back to Billy API"
           );
         }
       }
@@ -1339,7 +1343,7 @@ export const inboxRouter = router({
       // Background cache to database
       if (db && invoices.length > 0) {
         cacheInvoicesToDatabase(invoices, ctx.user.id, db).catch(error => {
-          console.error("[Invoice List] Background cache failed:", error);
+          logger.error({ err: error }, "[Invoice List] Background cache failed");
         });
       }
 

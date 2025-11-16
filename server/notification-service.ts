@@ -28,9 +28,14 @@ export interface NotificationResult {
 export async function sendNotification(
   notification: Notification
 ): Promise<NotificationResult> {
-  console.log(
-    `[Notifications] 📨 Sending ${notification.priority} notification via ${notification.channel}:`,
-    notification.title
+  const { logger } = await import("./_core/logger");
+  logger.info(
+    {
+      priority: notification.priority,
+      channel: notification.channel,
+      title: notification.title,
+    },
+    `[Notifications] 📨 Sending ${notification.priority} notification via ${notification.channel}`
   );
 
   try {
@@ -49,9 +54,9 @@ export async function sendNotification(
         );
     }
   } catch (error) {
-    console.error(
-      `[Notifications] Error sending ${notification.channel} notification:`,
-      error
+    logger.error(
+      { err: error, channel: notification.channel },
+      `[Notifications] Error sending ${notification.channel} notification`
     );
     return {
       success: false,
@@ -69,11 +74,15 @@ async function sendEmailNotification(
 ): Promise<NotificationResult> {
   // TODO: Integrate with email service (SendGrid, AWS SES, etc.)
   // For now, just log
-  console.log("[Notifications] 📧 Email notification:", {
-    to: notification.recipients,
-    subject: notification.title,
-    body: notification.message,
-  });
+  const { logger } = await import("./_core/logger");
+  logger.info(
+    {
+      recipients: notification.recipients,
+      subject: notification.title,
+      body: notification.message,
+    },
+    "[Notifications] 📧 Email notification"
+  );
 
   return {
     success: true,
@@ -89,9 +98,10 @@ async function sendSlackNotification(
   notification: Notification
 ): Promise<NotificationResult> {
   const slackWebhook = process.env.SLACK_WEBHOOK_URL;
+  const { logger } = await import("./_core/logger");
 
   if (!slackWebhook) {
-    console.warn("[Notifications] Slack webhook URL not configured");
+    logger.warn("[Notifications] Slack webhook URL not configured");
     return {
       success: false,
       channel: "slack",
@@ -178,9 +188,10 @@ async function sendWebhookNotification(
   notification: Notification
 ): Promise<NotificationResult> {
   const webhookUrl = process.env.WEBHOOK_URL;
+  const { logger } = await import("./_core/logger");
 
   if (!webhookUrl) {
-    console.warn("[Notifications] Webhook URL not configured");
+    logger.warn("[Notifications] Webhook URL not configured");
     return {
       success: false,
       channel: "webhook",
@@ -229,10 +240,11 @@ async function sendSMSNotification(
   notification: Notification
 ): Promise<NotificationResult> {
   // TODO: Integrate with SMS service (Twilio, AWS SNS, etc.)
-  console.log("[Notifications] 📱 SMS notification:", {
+  const { logger } = await import("./_core/logger");
+  logger.info({
     to: notification.recipients,
     message: `${notification.title}: ${notification.message}`,
-  });
+  }, "[Notifications] 📱 SMS notification");
 
   return {
     success: true,

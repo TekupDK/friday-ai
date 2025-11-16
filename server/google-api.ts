@@ -354,50 +354,81 @@ function payloadHasAttachments(payload: any): boolean {
 }
 
 /**
- * Search Gmail threads
+ * Search Gmail threads with retry logic and rate limit handling
  */
 export async function searchGmailThreads(params: {
   query: string;
   maxResults?: number;
 }): Promise<GmailThread[]> {
+  const { retryWithBackoff } = await import("./_core/error-handling");
+  const { logger } = await import("./_core/logger");
+
   try {
     const auth = await getAuthClient();
     const gmail = google.gmail({ version: "v1", auth });
 
-    const response = await gmail.users.threads.list({
-      userId: "me",
-      q: params.query,
-      maxResults: params.maxResults || 10,
-    });
+    // Use retry logic for Gmail API calls to handle rate limits
+    const response = await retryWithBackoff(
+      async () => {
+        return await gmail.users.threads.list({
+          userId: "me",
+          q: params.query,
+          maxResults: params.maxResults || 10,
+        });
+      },
+      {
+        maxAttempts: 3,
+        initialDelayMs: 2000, // Start with 2s delay for rate limits
+        maxDelayMs: 30000, // Max 30s delay
+        retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+      }
+    );
 
-    if (!response.data.threads) {
+    // Type assertion: Gmail API response has data property
+    const responseData = (response as any).data || response;
+    if (!responseData?.threads) {
       return [];
     }
 
-    // Fetch full thread details
+    // Fetch full thread details with retry logic
     const threads: GmailThread[] = [];
-    for (const thread of response.data.threads) {
-      if (!thread.id) continue;
+    for (const thread of responseData.threads) {
+      // Type guard: ensure thread.id is a string
+      if (!thread.id || typeof thread.id !== "string") continue;
+      const threadId: string = thread.id;
 
-      const threadDetail = await gmail.users.threads.get({
-        userId: "me",
-        id: thread.id,
-      });
+      // Use retry logic for individual thread fetches
+      const threadDetailResponse = await retryWithBackoff(
+        async () => {
+          return await gmail.users.threads.get({
+            userId: "me",
+            id: threadId,
+          });
+        },
+        {
+          maxAttempts: 3,
+          initialDelayMs: 1000,
+          maxDelayMs: 10000,
+          retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+        }
+      );
 
+      // Type assertion: Gmail API response has data property
+      const threadDetail = (threadDetailResponse as any).data || threadDetailResponse;
       const messages: GmailMessage[] = [];
       let threadHasAttachments = false;
-      if (threadDetail.data.messages) {
-        for (const msg of threadDetail.data.messages) {
+      if (threadDetail?.messages) {
+        for (const msg of threadDetail.messages) {
           const headers = msg.payload?.headers || [];
           const fromHeader = headers.find(
-            h => h.name?.toLowerCase() === "from"
+            (h: any) => h.name?.toLowerCase() === "from"
           );
-          const toHeader = headers.find(h => h.name?.toLowerCase() === "to");
+          const toHeader = headers.find((h: any) => h.name?.toLowerCase() === "to");
           const subjectHeader = headers.find(
-            h => h.name?.toLowerCase() === "subject"
+            (h: any) => h.name?.toLowerCase() === "subject"
           );
           const dateHeader = headers.find(
-            h => h.name?.toLowerCase() === "date"
+            (h: any) => h.name?.toLowerCase() === "date"
           );
 
           // Extract bodies (prefer text/plain; fallback to text/html)
@@ -428,7 +459,7 @@ export async function searchGmailThreads(params: {
 
       // Extract labels from the last message in the thread
       const lastMsg =
-        threadDetail.data.messages?.[threadDetail.data.messages.length - 1];
+        threadDetail?.messages?.[threadDetail.messages.length - 1];
       const labelIds =
         lastMsg && Array.isArray(lastMsg.labelIds)
           ? (lastMsg.labelIds as string[])
@@ -440,7 +471,7 @@ export async function searchGmailThreads(params: {
 
       threads.push({
         id: thread.id,
-        snippet: threadDetail.data.snippet || "",
+        snippet: threadDetail?.data?.snippet || threadDetail?.snippet || "",
         messages,
         labels: labels,
         unread: labelIds.includes("UNREAD"),
@@ -454,10 +485,15 @@ export async function searchGmailThreads(params: {
 
     return threads;
   } catch (error: any) {
-    console.error("Error searching Gmail:", error);
-
-    // Handle rate limiting specifically
-    if (error?.response?.status === 429) {
+    // Check for rate limiting
+    const isRateLimit =
+      error?.code === 429 ||
+      error?.response?.status === 429 ||
+      error?.message?.includes("429") ||
+      error?.message?.includes("rate limit") ||
+      error?.message?.includes("RESOURCE_EXHAUSTED");
+    
+    if (isRateLimit) {
       const retryAfterHeader =
         error?.response?.headers?.["retry-after"] ||
         error?.response?.headers?.["Retry-After"];
@@ -485,9 +521,9 @@ export async function searchGmailThreads(params: {
         retryAfter = new Date(Date.now() + 60000);
       }
 
-      console.warn(
-        "Gmail API rate limit exceeded. Retry after:",
-        retryAfter.toISOString()
+      logger.warn(
+        { retryAfter: retryAfter.toISOString(), query: params.query },
+        "Gmail API rate limit exceeded. Retry after:"
       );
 
       const errorMessage = retryAfter
@@ -505,12 +541,20 @@ export async function searchGmailThreads(params: {
 
     // Handle authentication errors
     if (error?.response?.status === 401 || error?.response?.status === 403) {
-      console.error("Gmail API authentication error");
+      logger.error(
+        { err: error, query: params.query },
+        "Gmail API authentication error"
+      );
       throw new Error(
         "Gmail API authentication failed. Please check service account configuration."
       );
     }
 
+    // Other errors - log with context
+    logger.error(
+      { err: error, query: params.query },
+      "[Gmail] Error searching threads"
+    );
     throw error;
   }
 }
@@ -539,10 +583,13 @@ export async function searchGmailThreadsPaged(params: {
 
   const threads: GmailThread[] = [];
   for (const thread of response.data.threads) {
-    if (!thread.id) continue;
+    // Type guard: ensure thread.id is a string
+    if (!thread.id || typeof thread.id !== "string") continue;
+    const threadId: string = thread.id;
+    
     const threadDetail = await gmail.users.threads.get({
       userId: "me",
-      id: thread.id,
+      id: threadId,
     });
 
     const messages: GmailMessage[] = [];
