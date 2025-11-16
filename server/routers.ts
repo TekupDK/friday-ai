@@ -10,10 +10,12 @@ import {
   createConversation,
   createMessage,
   deleteConversation,
+  getConversation,
   getConversationMessages,
   getUserConversations,
   trackEvent,
 } from "./db";
+import { requireOwnership } from "./rbac";
 import { FRIDAY_TOOLS } from "./friday-tools";
 import { searchGmailThreads } from "./google-api";
 import { checkRateLimitUnified } from "./rate-limiter-redis";
@@ -69,6 +71,16 @@ export const appRouter = router({
         })
       )
       .query(async ({ ctx, input }) => {
+        // ✅ SECURITY FIX: Verify conversation ownership
+        const conversation = await getConversation(input.conversationId);
+        if (!conversation) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Conversation not found",
+          });
+        }
+        requireOwnership(ctx.user.id, conversation.userId, "conversation", input.conversationId);
+
         const allMessages = await getConversationMessages(input.conversationId);
 
         // Simple pagination: slice messages based on limit
@@ -89,7 +101,9 @@ export const appRouter = router({
       }),
 
     createConversation: protectedProcedure
-      .input(z.object({ title: z.string().optional() }))
+      .input(z.object({ 
+        title: z.string().max(255).optional() // ✅ SECURITY FIX: Added max length
+      }))
       .mutation(async ({ ctx, input }) => {
         return createConversation({
           userId: ctx.user.id,
@@ -100,26 +114,40 @@ export const appRouter = router({
     sendMessage: protectedProcedure
       .input(
         z.object({
-          conversationId: z.number(),
+          conversationId: z.number().int().positive(),
           content: z
             .string()
             .min(1, "Message cannot be empty")
-            .max(10000, "Message too long (max 10,000 characters)"),
-          model: z.string().optional(),
+            .max(5000, "Message too long (max 5,000 characters)") // ✅ SECURITY FIX: Reduced from 10,000
+            .refine(
+              (val) => val.trim().length > 0,
+              "Message cannot be only whitespace"
+            ),
+          model: z.string().max(100).optional(), // ✅ SECURITY FIX: Added max length
           context: z
             .object({
-              selectedEmails: z.array(z.string()).optional(),
-              calendarEvents: z.array(z.any()).optional(),
-              searchQuery: z.string().optional(),
+              selectedEmails: z.array(z.string().max(100)).max(50).optional(), // ✅ SECURITY FIX: Limit array size and string length
+              calendarEvents: z.array(z.any()).max(100).optional(), // ✅ SECURITY FIX: Limit array size
+              searchQuery: z.string().max(500).optional(), // ✅ SECURITY FIX: Added max length
               hasEmails: z.boolean().optional(),
               hasCalendar: z.boolean().optional(),
               hasInvoices: z.boolean().optional(),
-              page: z.string().optional(),
+              page: z.string().max(100).optional(), // ✅ SECURITY FIX: Added max length
             })
             .optional(),
         })
       )
       .mutation(async ({ ctx, input }) => {
+        // ✅ SECURITY FIX: Verify conversation ownership
+        const conversation = await getConversation(input.conversationId);
+        if (!conversation) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Conversation not found",
+          });
+        }
+        requireOwnership(ctx.user.id, conversation.userId, "conversation", input.conversationId);
+
         // Rate limiting: 10 messages per minute (Redis-based)
         const rateLimit = await checkRateLimitUnified(ctx.user.id, {
           limit: 10,
@@ -203,6 +231,16 @@ export const appRouter = router({
     deleteConversation: protectedProcedure
       .input(z.object({ conversationId: z.number() }))
       .mutation(async ({ ctx, input }) => {
+        // ✅ SECURITY FIX: Verify conversation ownership
+        const conversation = await getConversation(input.conversationId);
+        if (!conversation) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Conversation not found",
+          });
+        }
+        requireOwnership(ctx.user.id, conversation.userId, "conversation", input.conversationId);
+
         await deleteConversation(input.conversationId);
         return { success: true };
       }),
