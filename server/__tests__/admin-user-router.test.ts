@@ -111,7 +111,7 @@ describe("Admin User Router - Role-Based Access Control", () => {
       expect(result).toBeDefined();
       expect(result.users).toBeDefined();
       expect(Array.isArray(result.users)).toBe(true);
-    }, { timeout: 10000 });
+    });
 
     it("should deny regular user from listing users", async () => {
       const rbacModule = await import("../rbac");
@@ -862,62 +862,62 @@ describe("Admin User Router - Edge Cases", () => {
     }
   });
 
-  it("should handle search with empty string", async () => {
-    const rbacModule = await import("../rbac");
-    vi.spyOn(rbacModule, "getUserRole").mockResolvedValue("admin");
+    it("should handle search with empty string", async () => {
+      const rbacModule = await import("../rbac");
+      vi.spyOn(rbacModule, "getUserRole").mockResolvedValue("admin");
 
-    const ctx = createMockContext({ id: 2, role: "admin" });
-    const caller = appRouter.createCaller(ctx);
+      const ctx = createMockContext({ id: 2, role: "admin" });
+      const caller = appRouter.createCaller(ctx);
 
-    // Mock database with proper query builder chain
-    const dbModule = await import("../db");
-    
-    // Mock count query result
-    const mockCountResult = [{ count: 0 }];
-    const mockCountResolve = vi.fn().mockResolvedValue(mockCountResult);
-    const mockCountWhere = vi.fn().mockReturnValue({ then: mockCountResolve });
-    const mockCountFrom = vi.fn().mockReturnValue({ where: mockCountWhere });
-    const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
-    
-    // Mock main query result - need to handle both with and without where clause
-    const mockUsers: any[] = [];
-    const mockOffset = vi.fn().mockResolvedValue(mockUsers);
-    const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
-    const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
-    const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-    // from() can return either where() or orderBy() depending on whether whereClause exists
-    const mockFromResult = {
-      where: mockWhere,
-      orderBy: mockOrderBy,
-    };
-    const mockFrom = vi.fn().mockReturnValue(mockFromResult);
-    const mockSelectResult = { from: mockFrom };
-    const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
-    
-    // Setup getDb to return different mocks for count and main query
-    let callCount = 0;
-    vi.spyOn(dbModule, "getDb").mockImplementation(async () => {
-      callCount++;
-      if (callCount === 1) {
-        // First call: count query
-        return {
-          select: mockCountSelect,
-        } as any;
-      } else {
-        // Second call: main query - return db with select method
-        return {
-          select: mockSelect,
-        } as any;
-      }
+      // Mock database with proper query builder chain
+      const dbModule = await import("../db");
+      
+      // Mock count query result
+      const mockCountResult = [{ count: 0 }];
+      const mockCountResolve = vi.fn().mockResolvedValue(mockCountResult);
+      const mockCountWhere = vi.fn().mockReturnValue({ then: mockCountResolve });
+      const mockCountFrom = vi.fn().mockReturnValue({ where: mockCountWhere });
+      const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
+      
+      // Mock main query result - empty search means no where clause
+      const mockUsers: any[] = [];
+      const mockOffset = vi.fn().mockResolvedValue(mockUsers);
+      const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
+      const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
+      const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
+      // from() returns object with both where() and orderBy() methods
+      const mockFromResult = {
+        where: mockWhere,
+        orderBy: mockOrderBy, // Direct access to orderBy (no where clause path)
+      };
+      const mockFrom = vi.fn().mockReturnValue(mockFromResult);
+      const mockSelectResult = { from: mockFrom };
+      const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
+      
+      // Setup getDb to return different mocks for count and main query
+      let callCount = 0;
+      vi.spyOn(dbModule, "getDb").mockImplementation(async () => {
+        callCount++;
+        if (callCount === 1) {
+          // First call: count query
+          return {
+            select: mockCountSelect,
+          } as any;
+        } else {
+          // Second call: main query - return db with select method
+          return {
+            select: mockSelect,
+          } as any;
+        }
+      });
+
+      const result = await caller.admin.users.list({ 
+        search: "", // Empty string should be ignored
+        limit: 50 
+      });
+
+      expect(result).toBeDefined();
     });
-
-    const result = await caller.admin.users.list({ 
-      search: "", // Empty string should be ignored
-      limit: 50 
-    });
-
-    expect(result).toBeDefined();
-  });
 
   it("should handle pagination correctly", async () => {
     const rbacModule = await import("../rbac");

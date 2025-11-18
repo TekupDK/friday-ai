@@ -78,6 +78,7 @@ Before improving the command, think through:
    - Læs ALLE beskeder i rækkefølge
    - Identificér hvor commanden bruges eller diskuteres
    - Forstå kontekst og problemer
+   - **Hvis git/commits involveret:** Tjek git status automatisk
 
 2. **Identificér Problemer:**
    - Hvad virker ikke? (fra chat feedback)
@@ -85,18 +86,21 @@ Before improving the command, think through:
    - Hvad er forvirrende? (fra brugerens spørgsmål)
    - Hvad er ineffektivt? (fra brugerens frustration)
    - Hvad er inkonsistent? (sammenlign med lignende commands)
+   - **Hvis git/commits involveret:** Identificer problemer med commit organisering
 
 3. **Analysér Brug:**
    - Hvordan bruges commanden i praksis? (fra chat eksempler)
    - Hvad er typiske use cases? (fra chat diskussioner)
    - Hvad er edge cases? (fra chat problemer)
    - Hvad er forventninger? (fra brugerens beskrivelser)
+   - **Hvis git/commits involveret:** Analysér commit patterns og gruppering
 
 4. **Sammenlign med Lignende:**
    - Find lignende commands i `.cursor/commands/`
    - Lær fra deres struktur og approach
    - Identificér best practices
    - Se hvad der virker godt
+   - **Hvis git/commits involveret:** Sammenlign med `git-commit-session.md`, `commit-session-work.md`
 
 5. **Forbedre Command:**
    - Fix problemer identificeret i chatten
@@ -105,6 +109,7 @@ Before improving the command, think through:
    - Optimér output baseret på feedback
    - Tilføj eksempler hvis manglende
    - Forbedre struktur hvis nødvendigt
+   - **Hvis git/commits involveret:** Tilføj git integration, commit gruppering, review generation
    - **Valider før merge:** Kør TypeScript check, linting, tests
 
 6. **Test Forbedring:**
@@ -112,6 +117,31 @@ Before improving the command, think through:
    - Verificer at det virker som forventet
    - Tjek at output er bedre end før
    - Valider at alle problemer er løst
+   - **Hvis git/commits involveret:** Test commit gruppering og review generation
+
+## GIT INTEGRATION
+
+**KRITISK:** Når commanden bruges til at organisere commits eller dokumentation:
+
+1. **Tjek Git Status Automatisk:**
+   - Kør `git status --short` for at se nuværende status
+   - Identificer staged, unstaged, og untracked files
+   - Grupper filer automatisk baseret på patterns (subscription/, hooks/, docs/, etc.)
+
+2. **Automatisk Commit Gruppering:**
+   - Grupper relaterede filer automatisk
+   - Foreslå logiske commit grupper baseret på fil paths
+   - Opret commit review dokumentation automatisk
+
+3. **Edge Case Håndtering:**
+   - **Ingen staged files:** Informer brugeren og foreslå næste skridt
+   - **Mange filer:** Foreslå at organisere i flere commits
+   - **Mix af staged/unstaged:** Klarificer hvilke filer der skal committes
+
+4. **Commit Review Generation:**
+   - Generer automatisk commit review dokumentation
+   - Inkluder commit beskeder, filer, og impact assessment
+   - Foreslå commit grupper med beskrivende messages
 
 ## TOOL USAGE
 
@@ -122,6 +152,7 @@ Before improving the command, think through:
 - `read_file` - Læs analyser i `_meta/` for kontekst
 - `search_replace` - Forbedre command filen
 - `write` - Opret forbedret version
+- `run_terminal_cmd` - Kør git commands for status og commit organisering
 
 **DO NOT:**
 - Ignorere chat feedback
@@ -130,6 +161,7 @@ Before improving the command, think through:
 - Skip test af forbedringer
 - Merge forbedringer uden validation (TypeScript, linting, tests)
 - Påvirke systemet med store refactorings uden at teste først
+- Commit filer uden brugerens eksplicitte godkendelse
 
 ## VERIFICATION CHECKLIST
 
@@ -258,6 +290,20 @@ Provide structured improvement report:
 - Tilføj TOOL USAGE sektion
 - Tilføj OUTPUT FORMAT sektion
 - Tilføj eksempler
+
+### Eksempel 3: Forbedre baseret på faktisk brug (Commit Organisation)
+
+**Fra chat:** "er der blevet lavet docs og notater om alt det nye udvikling og har vi fået commitet de enkelte ændringerne osv"
+
+**Brug:**
+- Commanden blev brugt til at organisere git commits
+- Processen involverede at analysere git status, gruppere filer, oprette commit plan
+
+**Forbedring:**
+- Tilføj git integration sektion
+- Tilføj automatisk commit gruppering
+- Tilføj commit review generation
+- Tilføj edge case håndtering (ingen staged files, mange filer)
 
 ## CRITICAL: Background Mode for Store Refactorings
 
