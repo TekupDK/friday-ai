@@ -125,12 +125,11 @@ export function ReferralCodeInput({
           <p className="text-sm text-green-700 dark:text-green-400 mt-1">
             You'll receive a discount of{" "}
             <span className="font-semibold">
-              {validation.code.discountAmount / 100} kr
+              {validation.code.discountType === "percentage"
+                ? `${validation.code.discountAmount / 100}%`
+                : `${validation.code.discountAmount / 100} kr`}
             </span>
-            {validation.code.discountType === "percentage"
-              ? ` (${validation.code.discountAmount}%)`
-              : ""}{" "}
-            on your first month
+            {" "}on your first month
           </p>
         </div>
       )}

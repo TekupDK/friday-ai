@@ -151,8 +151,14 @@ export const referralRouter = router({
         limit: z.number().int().positive().max(100).default(10),
       })
     )
-    .query(async ({ input }) => {
-      return await getTopReferrers(input.limit);
+    .query(async ({ ctx, input }) => {
+      const topReferrers = await getTopReferrers(input.limit);
+      // Add isCurrentUser flag
+      return topReferrers.map((referrer) => ({
+        ...referrer,
+        isCurrentUser: referrer.userId === ctx.user.id,
+        totalReferrals: referrer.referralCount, // Alias for frontend compatibility
+      }));
     }),
 
   /**
