@@ -414,7 +414,15 @@ export class WorkflowAutomationService {
           break;
 
         case "Notify sales":
-          // TODO: Send notification to sales team
+          // Send notification to sales team
+          const { sendNotification } = await import("./notification-service");
+          await sendNotification({
+            channel: "slack",
+            priority: "normal",
+            title: "New High-Value Lead",
+            message: `Lead ${leadId} requires sales team attention`,
+            metadata: { leadId, action: "notify_sales" },
+          });
           console.log(`[WorkflowAutomation] 📢 Sales team notified`);
           // Track automation event
           await trackEvent({
@@ -425,7 +433,30 @@ export class WorkflowAutomationService {
           break;
 
         case "Geo tag":
-          // TODO: Add geographic tagging
+          // Add geographic tagging to lead metadata
+          const db = await getDb();
+          if (db) {
+            const [existingLead] = await db.select()
+              .from(leads)
+              .where(eq(leads.id, leadId))
+              .limit(1);
+            
+            if (existingLead) {
+              // Extract location from lead notes or company name
+              const locationMatch = (existingLead.notes || existingLead.company || "")
+                .match(/\b(København|Aarhus|Odense|Aalborg|Esbjerg|Randers|Kolding|Horsens|Vejle|Roskilde)\b/i);
+              
+              const geoMetadata = {
+                ...(existingLead.metadata as object || {}),
+                geoTag: locationMatch ? locationMatch[0] : "Denmark",
+                geoTaggedAt: new Date().toISOString(),
+              };
+              
+              await db.update(leads)
+                .set({ metadata: geoMetadata })
+                .where(eq(leads.id, leadId));
+            }
+          }
           console.log(`[WorkflowAutomation] 📍 Geographic tag added`);
           // Track automation event
           await trackEvent({
@@ -485,11 +516,31 @@ export class WorkflowAutomationService {
         `[WorkflowAutomation] 📬 Sending notifications for lead ${leadId}`
       );
 
-      // TODO: Implement notification channels
-      // - Slack notification
-      // - Email notification
-      // - SMS notification
-      // - Push notification
+      // Import notification service
+      const { sendNotification } = await import("./notification-service");
+
+      // Determine notification priority based on lead confidence
+      const priority = sourceDetection.confidence > 80 ? "high" : "normal";
+
+      // Send Slack notification
+      await sendNotification({
+        channel: "slack",
+        priority: priority,
+        title: `New Lead: ${sourceDetection.source}`,
+        message: `Lead ${leadId} detected from ${sourceDetection.source} with ${sourceDetection.confidence}% confidence`,
+        metadata: { leadId, sourceDetection, workflow },
+      });
+
+      // Send email notification for high-priority leads
+      if (priority === "high") {
+        await sendNotification({
+          channel: "email",
+          priority: priority,
+          title: `High Priority Lead: ${sourceDetection.source}`,
+          message: `Lead ${leadId} requires immediate attention`,
+          metadata: { leadId, sourceDetection, workflow },
+        });
+      }
 
       console.log(`[WorkflowAutomation] ✅ Notifications sent`);
     } catch (error) {

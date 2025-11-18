@@ -165,5 +165,24 @@ export function logRolloutMetric(
     `[ROLLOUT_METRIC] user=${userId} feature=${feature} action=${action} inRollout=${inRollout} percentage=${config.percentage}%`
   );
 
-  // TODO: Send to analytics service (e.g., Mixpanel, Amplitude)
+  // Send to analytics service asynchronously (non-blocking)
+  import("./db")
+    .then(db => {
+      db.trackEvent({
+        userId: userId,
+        eventType: "feature_rollout_usage",
+        eventData: {
+          feature: feature,
+          action: action,
+          inRollout: inRollout,
+          rolloutPercentage: config.percentage,
+          timestamp: new Date().toISOString(),
+        },
+      }).catch(err => {
+        console.warn("[FeatureRollout] Failed to track analytics:", err);
+      });
+    })
+    .catch(err => {
+      console.warn("[FeatureRollout] Failed to load db module:", err);
+    });
 }
