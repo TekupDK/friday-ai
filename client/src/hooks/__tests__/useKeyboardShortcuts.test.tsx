@@ -7,12 +7,12 @@ import {
 } from "../useKeyboardShortcuts";
 
 describe("useKeyboardShortcuts", () => {
-  let handleJ: ReturnType<typeof vi.fn>;
-  let handleK: ReturnType<typeof vi.fn>;
+  let handleJ: (event: KeyboardEvent) => void;
+  let handleK: (event: KeyboardEvent) => void;
 
   beforeEach(() => {
-    handleJ = vi.fn();
-    handleK = vi.fn();
+    handleJ = vi.fn() as (event: KeyboardEvent) => void;
+    handleK = vi.fn() as (event: KeyboardEvent) => void;
   });
 
   afterEach(() => {

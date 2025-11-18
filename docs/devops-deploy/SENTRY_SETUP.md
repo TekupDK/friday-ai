@@ -70,6 +70,7 @@ if (sentryEnabled && sentryDsn) {
 ### Error Context
 
 Errors include:
+
 - User context (if available)
 - Request context (URL, method, headers)
 - Stack traces
@@ -115,22 +116,80 @@ Sentry.setUser({
 
 ## Setup Steps
 
-1. **Create Sentry Account**
-   - Go to https://sentry.io
-   - Create a new project (Node.js for server, React for client)
-   - Copy the DSN
+### Step 1: Create Sentry Projects
 
-2. **Add Environment Variables**
-   - Add `SENTRY_DSN` and `VITE_SENTRY_DSN` to `.env.dev` and `.env.prod`
-   - Set `SENTRY_ENABLED=true` and `VITE_SENTRY_ENABLED=true`
+Du skal oprette **to projekter** - ét til server (Node.js) og ét til client (React):
 
-3. **Test Integration**
-   - Start the server and check logs for "[Sentry] Error tracking initialized"
-   - Trigger a test error to verify it appears in Sentry dashboard
+1. **Gå til Sentry Dashboard**
+   - https://sentry.io
+   - Log ind med din Tekup organization (`tekup-r5`)
 
-4. **Configure Alerts**
-   - Set up alerts in Sentry for critical errors
-   - Configure email/Slack notifications
+2. **Opret Server Project (Node.js)**
+   - Klik "Create Project" eller gå til Projects → Create Project
+   - Vælg **"Node.js"** platform
+   - Project Name: `friday-ai-server` (eller dit valg)
+   - Team: Vælg dit team
+   - Klik "Create Project"
+   - **Kopier DSN** - den ser ud som: `https://xxxxx@xxxxx.ingest.sentry.io/xxxxx`
+   - Gem denne som `SENTRY_DSN` i environment variables
+
+3. **Opret Client Project (React)**
+   - Klik "Create Project" igen
+   - Vælg **"React"** platform
+   - Project Name: `friday-ai-client` (eller dit valg)
+   - Team: Vælg dit team
+   - Klik "Create Project"
+   - **Kopier DSN** - den ser ud som: `https://xxxxx@xxxxx.ingest.sentry.io/xxxxx`
+   - Gem denne som `VITE_SENTRY_DSN` i environment variables
+
+**Vigtigt:** Du kan også bruge samme DSN til både server og client, men det anbefales at have separate projekter for bedre organisering.
+
+### Step 2: Add Environment Variables
+
+Tilføj til `.env.dev` og `.env.prod`:
+
+```bash
+# Sentry Error Tracking - Server
+SENTRY_DSN=https://xxxxx@xxxxx.ingest.sentry.io/xxxxx
+SENTRY_ENABLED=true
+SENTRY_TRACES_SAMPLE_RATE=0.1
+
+# Sentry Error Tracking - Client
+VITE_SENTRY_DSN=https://xxxxx@xxxxx.ingest.sentry.io/xxxxx
+VITE_SENTRY_ENABLED=true
+VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
+```
+
+**Note:** Organization tokens (som du har oprettet) bruges til CLI/API, ikke til SDK integration. Du skal bruge DSN fra projekterne.
+
+### Step 3: Test Integration
+
+1. **Start Server**
+
+   ```bash
+   pnpm dev
+   ```
+
+2. **Check Logs**
+   - Du skal se: `[Sentry] Error tracking initialized`
+   - Hvis du ser: `[Sentry] Error tracking disabled` - tjek environment variables
+
+3. **Trigger Test Error**
+   - Åbn browser console
+   - Kør: `throw new Error("Test Sentry integration")`
+   - Check Sentry dashboard - fejlen skal vises inden for få sekunder
+
+### Step 4: Configure Alerts
+
+1. **Gå til Project Settings → Alerts**
+2. **Create Alert Rule**
+   - Trigger: "An issue is created"
+   - Action: Email/Slack notification
+   - Save alert
+
+3. **Set Up Notifications**
+   - Settings → Notifications
+   - Configure email/Slack integration
 
 ## Performance Impact
 
@@ -162,4 +221,3 @@ Sentry.setUser({
 - [Sentry Documentation](https://docs.sentry.io/)
 - [Node.js Integration](https://docs.sentry.io/platforms/javascript/guides/node/)
 - [React Integration](https://docs.sentry.io/platforms/javascript/guides/react/)
-

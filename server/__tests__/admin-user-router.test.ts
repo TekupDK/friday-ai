@@ -73,7 +73,7 @@ describe("Admin User Router - Role-Based Access Control", () => {
       });
       const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
       
-      // Mock main query result
+      // Mock main query result - need to handle both with and without where clause
       const mockUsers = [
         { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
         { id: 2, name: "User 2", email: "user2@example.com", role: "admin" },
@@ -83,13 +83,14 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
       // from() can return either where() or orderBy() depending on whether whereClause exists
-      // Create a mock object that has both methods
+      // Create a mock object that has both methods as functions
       const mockFromResult = {
         where: mockWhere,
         orderBy: mockOrderBy,
       };
       const mockFrom = vi.fn().mockReturnValue(mockFromResult);
-      const mockSelect = vi.fn().mockReturnValue({ from: mockFrom });
+      const mockSelectResult = { from: mockFrom };
+      const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
       
       // Setup getDb to return different mocks for count and main query
       let callCount = 0;
@@ -101,10 +102,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
             select: mockCountSelect,
           } as any;
         } else {
-          // Second call: main query
+          // Second call: main query - return db with select method
           return {
             select: mockSelect,
-            from: mockFrom,
           } as any;
         }
       });
@@ -156,20 +156,20 @@ describe("Admin User Router - Role-Based Access Control", () => {
       });
       const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
       
-      // Mock main query result
+      // Mock main query result - need to handle both with and without where clause
       const mockUsers: any[] = [];
       const mockOffset = vi.fn().mockResolvedValue(mockUsers);
       const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
       // from() can return either where() or orderBy() depending on whether whereClause exists
-      // Create a mock object that has both methods
       const mockFromResult = {
         where: mockWhere,
         orderBy: mockOrderBy,
       };
       const mockFrom = vi.fn().mockReturnValue(mockFromResult);
-      const mockSelect = vi.fn().mockReturnValue({ from: mockFrom });
+      const mockSelectResult = { from: mockFrom };
+      const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
       
       // Setup getDb to return different mocks for count and main query
       let callCount = 0;
@@ -181,10 +181,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
             select: mockCountSelect,
           } as any;
         } else {
-          // Second call: main query
+          // Second call: main query - return db with select method
           return {
             select: mockSelect,
-            from: mockFrom,
           } as any;
         }
       });
@@ -593,32 +592,51 @@ describe("Admin User Router - Role-Based Access Control", () => {
 
       // Mock database - owner user
       const dbModule = await import("../db");
-      const ownerOpenId = ENV.ownerOpenId || "owner-openid";
-      vi.spyOn(dbModule, "getDb").mockResolvedValue({
-        select: vi.fn().mockReturnThis(),
-        from: vi.fn().mockReturnThis(),
-        where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 1, openId: ownerOpenId, role: "admin", name: "Owner", email: "owner@example.com" },
-        ]),
-      } as any);
-      // Don't mock upsertUser - update should fail before reaching it
-
-      await expect(
-        caller.admin.users.update({
-          userId: 1,
-          name: "Updated Name",
-        })
-      ).rejects.toThrow(TRPCError);
+      // Use actual ENV.ownerOpenId value, or a test value that matches what the code checks
+      const ownerOpenId = ENV.ownerOpenId || "test-owner-openid";
+      
+      // Mock ENV.ownerOpenId to ensure the check works
+      const envModule = await import("../_core/env");
+      const originalOwnerOpenId = envModule.ENV.ownerOpenId;
+      Object.defineProperty(envModule.ENV, "ownerOpenId", {
+        get: () => ownerOpenId,
+        configurable: true,
+      });
 
       try {
-        await caller.admin.users.update({
-          userId: 1,
-          name: "Updated Name",
+        // Mock the user lookup query - should return owner user
+        vi.spyOn(dbModule, "getDb").mockResolvedValue({
+          select: vi.fn().mockReturnThis(),
+          from: vi.fn().mockReturnThis(),
+          where: vi.fn().mockReturnThis(),
+          limit: vi.fn().mockResolvedValue([
+            { id: 1, openId: ownerOpenId, role: "admin", name: "Owner", email: "owner@example.com" },
+          ]),
+        } as any);
+        // Don't mock upsertUser - update should fail before reaching it due to owner check
+
+        await expect(
+          caller.admin.users.update({
+            userId: 1,
+            name: "Updated Name",
+          })
+        ).rejects.toThrow(TRPCError);
+
+        try {
+          await caller.admin.users.update({
+            userId: 1,
+            name: "Updated Name",
+          });
+        } catch (error: any) {
+          expect(error.code).toBe("FORBIDDEN");
+          expect(error.message).toContain("Cannot modify owner account");
+        }
+      } finally {
+        // Restore original value
+        Object.defineProperty(envModule.ENV, "ownerOpenId", {
+          get: () => originalOwnerOpenId,
+          configurable: true,
         });
-      } catch (error: any) {
-        expect(error.code).toBe("FORBIDDEN");
-        expect(error.message).toContain("Cannot modify owner account");
       }
     });
 
@@ -731,26 +749,46 @@ describe("Admin User Router - Role-Based Access Control", () => {
 
       // Mock database - owner user
       const dbModule = await import("../db");
-      const ownerOpenId = ENV.ownerOpenId || "owner-openid";
-      vi.spyOn(dbModule, "getDb").mockResolvedValue({
-        select: vi.fn().mockReturnThis(),
-        from: vi.fn().mockReturnThis(),
-        where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 1, openId: ownerOpenId, role: "admin" },
-        ]),
-        delete: vi.fn().mockReturnThis(),
-      } as any);
-
-      await expect(
-        caller.admin.users.delete({ userId: 1 })
-      ).rejects.toThrow(TRPCError);
+      // Use actual ENV.ownerOpenId value, or a test value that matches what the code checks
+      const ownerOpenId = ENV.ownerOpenId || "test-owner-openid";
+      
+      // Mock ENV.ownerOpenId to ensure the check works
+      const envModule = await import("../_core/env");
+      const originalOwnerOpenId = envModule.ENV.ownerOpenId;
+      Object.defineProperty(envModule.ENV, "ownerOpenId", {
+        get: () => ownerOpenId,
+        configurable: true,
+      });
 
       try {
-        await caller.admin.users.delete({ userId: 1 });
-      } catch (error: any) {
-        expect(error.code).toBe("FORBIDDEN");
-        expect(error.message).toContain("Cannot delete owner account");
+        // Mock the user lookup query - should return owner user
+        vi.spyOn(dbModule, "getDb").mockResolvedValue({
+          select: vi.fn().mockReturnThis(),
+          from: vi.fn().mockReturnThis(),
+          where: vi.fn().mockReturnThis(),
+          limit: vi.fn().mockResolvedValue([
+            { id: 1, openId: ownerOpenId, role: "admin", name: "Owner", email: "owner@example.com" },
+          ]),
+          delete: vi.fn().mockReturnThis(),
+        } as any);
+        // Don't mock delete execution - delete should fail before reaching it due to owner check
+
+        await expect(
+          caller.admin.users.delete({ userId: 1 })
+        ).rejects.toThrow(TRPCError);
+
+        try {
+          await caller.admin.users.delete({ userId: 1 });
+        } catch (error: any) {
+          expect(error.code).toBe("FORBIDDEN");
+          expect(error.message).toContain("Cannot delete owner account");
+        }
+      } finally {
+        // Restore original value
+        Object.defineProperty(envModule.ENV, "ownerOpenId", {
+          get: () => originalOwnerOpenId,
+          configurable: true,
+        });
       }
     });
 
@@ -855,14 +893,20 @@ describe("Admin User Router - Edge Cases", () => {
     const mockCountFrom = vi.fn().mockReturnValue({ where: mockCountWhere });
     const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
     
-    // Mock main query result
+    // Mock main query result - need to handle both with and without where clause
     const mockUsers: any[] = [];
     const mockOffset = vi.fn().mockResolvedValue(mockUsers);
     const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
     const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
     const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-    const mockFrom = vi.fn().mockReturnValue({ where: mockWhere });
-    const mockSelect = vi.fn().mockReturnValue({ from: mockFrom });
+    // from() can return either where() or orderBy() depending on whether whereClause exists
+    const mockFromResult = {
+      where: mockWhere,
+      orderBy: mockOrderBy,
+    };
+    const mockFrom = vi.fn().mockReturnValue(mockFromResult);
+    const mockSelectResult = { from: mockFrom };
+    const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
     
     // Setup getDb to return different mocks for count and main query
     let callCount = 0;
@@ -874,10 +918,9 @@ describe("Admin User Router - Edge Cases", () => {
           select: mockCountSelect,
         } as any;
       } else {
-        // Second call: main query
+        // Second call: main query - return db with select method
         return {
           select: mockSelect,
-          from: mockFrom,
         } as any;
       }
     });
@@ -909,14 +952,18 @@ describe("Admin User Router - Edge Cases", () => {
     
     // Mock main query with pagination tracking
     const mockUsers: any[] = [];
-    const mockOffset = vi.fn().mockReturnValue({ 
-      then: (fn: any) => Promise.resolve(fn(mockUsers))
-    });
+    const mockOffset = vi.fn().mockResolvedValue(mockUsers);
     const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
-    const mockOrderByQuery = vi.fn().mockReturnValue({ limit: mockLimit });
-    const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderByQuery });
-    const mockFrom = vi.fn().mockReturnValue({ where: mockWhere });
-    const mockSelect = vi.fn().mockReturnValue({ from: mockFrom });
+    const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
+    const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
+    // from() can return either where() or orderBy() depending on whether whereClause exists
+    const mockFromResult = {
+      where: mockWhere,
+      orderBy: mockOrderBy,
+    };
+    const mockFrom = vi.fn().mockReturnValue(mockFromResult);
+    const mockSelectResult = { from: mockFrom };
+    const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
     
     // Setup getDb to return different mocks for count and main query
     let callCount = 0;

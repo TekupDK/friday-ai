@@ -46,15 +46,10 @@ if (sentryEnabled && sentryDsn) {
     integrations: [
       // Automatically instrument browser performance
       Sentry.browserTracingIntegration(),
-      // Capture React component errors
-      Sentry.reactRouterV6BrowserTracingIntegration({
-        useEffect: React.useEffect,
-      }),
+      // Note: reactRouterV6BrowserTracingIntegration is for React Router v6
+      // Since we use wouter, we only need browserTracingIntegration
     ],
-    // Capture unhandled promise rejections
-    captureUnhandledRejections: true,
-    // Capture uncaught exceptions
-    captureUncaughtExceptions: true,
+    // Note: captureUnhandledRejections and captureUncaughtExceptions are enabled by default in v10
   });
   console.log("[Sentry] Error tracking initialized");
 } else {
@@ -358,10 +353,33 @@ const trpcClient = trpc.createClient({
   ],
 });
 
-createRoot(document.getElementById("root")!).render(
+const rootElement = document.getElementById("root")!;
+const root = createRoot(rootElement);
+
+root.render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
   </trpc.Provider>
 );
+
+// HMR: Preserve React state on hot reload
+if (import.meta.hot) {
+  import.meta.hot.accept("./App", (newModule) => {
+    if (newModule) {
+      root.render(
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+          <QueryClientProvider client={queryClient}>
+            <newModule.default />
+          </QueryClientProvider>
+        </trpc.Provider>
+      );
+    }
+  });
+
+  // Preserve query client state on HMR
+  import.meta.hot.dispose(() => {
+    // State is already persisted to localStorage, so it will be restored
+  });
+}

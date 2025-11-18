@@ -9,8 +9,27 @@ import viteConfig from "../../vite.config";
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
-    hmr: { server },
+    hmr: {
+      server,
+      protocol: "ws",
+      host: "localhost",
+      port: 5173,
+      clientPort: 5173,
+      overlay: true, // Show error overlay on HMR errors
+    },
     allowedHosts: true as const,
+    // Optimize file watching
+    watch: {
+      usePolling: false,
+      ignored: [
+        "**/node_modules/**",
+        "**/.git/**",
+        "**/dist/**",
+        "**/build/**",
+        "**/coverage/**",
+        "**/test-results/**",
+      ],
+    },
   };
 
   const vite = await createViteServer({

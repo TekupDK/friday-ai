@@ -215,4 +215,3 @@ VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 ---
 
 **Status:** Alle kritiske mangler er nu implementeret og klar til brug! 🎉
-

@@ -35,6 +35,7 @@ import { OpportunityForm } from "@/components/crm/OpportunityForm";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { trpc } from "@/lib/trpc";
+import { exportOpportunitiesToCSV } from "@/utils/csv-export";
 
 // Pipeline stage configuration
 const OPPORTUNITY_STAGES: Array<{ stage: OpportunityStage; title: string }> = [
@@ -224,80 +225,8 @@ export default function OpportunityPipeline() {
                       variant="secondary"
                       data-testid="export-opportunities-csv-button"
                       onClick={() => {
-                        // CSV escape function
-                        const csvEscape = (value: any): string => {
-                          if (value === null || value === undefined) return "";
-                          const str = String(value);
-                          if (
-                            str.includes(",") ||
-                            str.includes('"') ||
-                            str.includes("\n")
-                          ) {
-                            return `"${str.replace(/"/g, '""')}"`;
-                          }
-                          return str;
-                        };
-
-                        // Generate CSV
-                        const headers = [
-                          "ID",
-                          "Title",
-                          "Customer",
-                          "Stage",
-                          "Value (DKK)",
-                          "Probability (%)",
-                          "Expected Close Date",
-                          "Description",
-                          "Created At",
-                          "Updated At",
-                        ];
-
-                        const rows = enrichedOpportunities.map(opp => [
-                          opp.id,
-                          opp.title || "",
-                          opp.customerName || "",
-                          opp.stage || "",
-                          opp.value || 0,
-                          opp.probability || 0,
-                          opp.expectedCloseDate
-                            ? new Date(opp.expectedCloseDate).toLocaleDateString(
-                                "da-DK"
-                              )
-                            : "",
-                          opp.description || "",
-                          opp.createdAt
-                            ? new Date(opp.createdAt).toLocaleDateString(
-                                "da-DK"
-                              )
-                            : "",
-                          opp.updatedAt
-                            ? new Date(opp.updatedAt).toLocaleDateString(
-                                "da-DK"
-                              )
-                            : "",
-                        ]);
-
-                        const csvContent = [
-                          headers.map(csvEscape).join(","),
-                          ...rows.map(row => row.map(csvEscape).join(",")),
-                        ].join("\n");
-
-                        // Download CSV
-                        const blob = new Blob([csvContent], {
-                          type: "text/csv;charset=utf-8;",
-                        });
-                        const link = document.createElement("a");
-                        const url = URL.createObjectURL(blob);
-                        link.setAttribute("href", url);
-                        link.setAttribute(
-                          "download",
-                          `opportunities-export-${new Date().toISOString().split("T")[0]}.csv`
-                        );
-                        link.style.visibility = "hidden";
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(url);
+                        if (!enrichedOpportunities) return;
+                        exportOpportunitiesToCSV(enrichedOpportunities);
                         toast.success("Opportunities exported to CSV");
                       }}
                     >

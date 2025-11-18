@@ -21,15 +21,16 @@ import { registerOAuthRoutes } from "./oauth";
 import { serveStatic, setupVite } from "./vite";
 
 // Initialize Sentry error tracking (before any other imports)
+// Note: Express integration will be set up in startServer() after app is created
 if (ENV.sentryEnabled && ENV.sentryDsn) {
   Sentry.init({
     dsn: ENV.sentryDsn,
     environment: ENV.sentryEnvironment,
     tracesSampleRate: ENV.sentryTracesSampleRate,
-    // Capture unhandled promise rejections
-    captureUnhandledRejections: true,
-    // Capture uncaught exceptions
-    captureUncaughtExceptions: true,
+    integrations: [
+      // Express integration is added via app.use() in startServer()
+    ],
+    // Note: captureUnhandledRejections and captureUncaughtExceptions are enabled by default in v10
   });
   logger.info("[Sentry] Error tracking initialized");
 } else {
@@ -114,10 +115,10 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
-  // Sentry request handler (must be first middleware)
+  // Sentry Express integration (must be first middleware)
   if (ENV.sentryEnabled && ENV.sentryDsn) {
-    app.use(Sentry.Handlers.requestHandler());
-    app.use(Sentry.Handlers.tracingHandler());
+    // In Sentry v10, use app.use() to add Express integration
+    app.use(Sentry.setupExpressErrorHandler());
   }
 
   // Security headers via Helmet
@@ -286,9 +287,10 @@ async function startServer() {
     await serveStatic(app);
   }
 
-  // Sentry error handler (must be last middleware, before routes)
+  // Sentry error handler (must be last middleware)
   if (ENV.sentryEnabled && ENV.sentryDsn) {
-    app.use(Sentry.Handlers.errorHandler());
+    // In Sentry v10, use setupExpressErrorHandler() for error handling
+    Sentry.setupExpressErrorHandler(app);
   }
 
   const preferredPort = parseInt(process.env.PORT || "3000");

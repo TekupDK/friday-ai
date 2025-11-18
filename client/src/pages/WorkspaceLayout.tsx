@@ -44,6 +44,7 @@ import {
   Users,
   Target,
   Calendar,
+  CreditCard,
 } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -232,6 +233,15 @@ function WorkspaceLayout() {
                 <Calendar className="w-4 h-4 mr-1" />
                 Bookings
               </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/subscriptions")}
+                className="text-sm"
+              >
+                <CreditCard className="w-4 h-4 mr-1" />
+                Subscriptions
+              </Button>
             </div>
           </div>
 
@@ -290,6 +300,10 @@ function WorkspaceLayout() {
               <DropdownMenuItem onClick={() => navigate("/crm/bookings")}>
                 <Calendar className="w-4 h-4 mr-2" />
                 Bookings
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/subscriptions")}>
+                <CreditCard className="w-4 h-4 mr-2" />
+                Subscriptions
               </DropdownMenuItem>
               {user && (user.role === "admin" || user.openId === import.meta.env.VITE_OWNER_OPEN_ID) && (
                 <>
