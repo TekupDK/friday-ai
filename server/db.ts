@@ -217,14 +217,18 @@ export async function updateConversationTitle(
 }
 
 export async function deleteConversation(id: number): Promise<void> {
+  const { withTransaction } = await import("./db/transaction-utils");
   const db = await getDb();
   if (!db) return;
 
-  // Delete all messages first (cascade)
-  await db.delete(messages).where(eq(messages.conversationId, id));
+  // Execute deletion in transaction to ensure atomicity
+  await withTransaction(async (tx) => {
+    // Delete all messages first (cascade)
+    await tx.delete(messages).where(eq(messages.conversationId, id));
 
-  // Then delete the conversation
-  await db.delete(conversations).where(eq(conversations.id, id));
+    // Then delete the conversation
+    await tx.delete(conversations).where(eq(conversations.id, id));
+  }, "Delete Conversation");
 }
 
 // ============= Message Functions =============
@@ -918,6 +922,7 @@ export async function updatePipelineStage(
     | "afsluttet",
   triggeredBy: string = "user"
 ): Promise<EmailPipelineState | null> {
+  const { withTransaction } = await import("./db/transaction-utils");
   const db = await getDb();
   if (!db) {
     console.warn(
@@ -927,51 +932,68 @@ export async function updatePipelineStage(
   }
 
   try {
-    // Get current state to track transition
-    const currentState = await getPipelineState(userId, threadId);
-    const fromStage = currentState?.stage || null;
+    let fromStage: string | null = null;
 
-    // Update or create pipeline state
-    if (currentState) {
-      await db
-        .update(emailPipelineState)
-        .set({
-          stage,
-          transitionedAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        })
+    // Execute pipeline update in transaction
+    await withTransaction(async (tx) => {
+      // Get current state to track transition
+      const currentStateRows = await tx
+        .select()
+        .from(emailPipelineState)
         .where(
           and(
             eq(emailPipelineState.threadId, threadId),
             eq(emailPipelineState.userId, userId)
           )
         )
+        .limit(1)
         .execute();
-    } else {
-      await db
-        .insert(emailPipelineState)
+
+      const currentState = currentStateRows[0];
+      fromStage = currentState?.stage || null;
+
+      // Update or create pipeline state
+      if (currentState) {
+        await tx
+          .update(emailPipelineState)
+          .set({
+            stage,
+            transitionedAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          })
+          .where(
+            and(
+              eq(emailPipelineState.threadId, threadId),
+              eq(emailPipelineState.userId, userId)
+            )
+          )
+          .execute();
+      } else {
+        await tx
+          .insert(emailPipelineState)
+          .values({
+            userId,
+            threadId,
+            stage,
+            transitionedAt: new Date().toISOString(),
+          })
+          .execute();
+      }
+
+      // Log transition
+      await tx
+        .insert(emailPipelineTransitions)
         .values({
           userId,
           threadId,
-          stage,
-          transitionedAt: new Date().toISOString(),
+          fromStage,
+          toStage: stage,
+          transitionedBy: triggeredBy,
         })
         .execute();
-    }
+    }, "Update Pipeline Stage");
 
-    // Log transition
-    await db
-      .insert(emailPipelineTransitions)
-      .values({
-        userId,
-        threadId,
-        fromStage,
-        toStage: stage,
-        transitionedBy: triggeredBy,
-      })
-      .execute();
-
-    // Trigger workflow automation for stage transitions
+    // Trigger workflow automation for stage transitions (outside transaction - async)
     if (fromStage !== stage) {
       const { handlePipelineTransition } = await import("./pipeline-workflows");
       handlePipelineTransition(userId, threadId, stage).catch(error => {
