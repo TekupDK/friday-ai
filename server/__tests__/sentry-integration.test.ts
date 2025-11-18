@@ -134,7 +134,7 @@ describe("Sentry Integration Tests", () => {
       
       const shouldInit = 
         process.env.SENTRY_ENABLED === "true" && 
-        process.env.SENTRY_DSN && 
+        !!process.env.SENTRY_DSN && 
         process.env.SENTRY_DSN.length > 0;
       
       expect(shouldInit).toBe(false);
