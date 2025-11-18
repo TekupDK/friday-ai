@@ -48,6 +48,8 @@
     "test:subscription:email": "dotenv -e .env.dev -- tsx server/scripts/test-subscription-email.ts",
     "test:subscription:renewal": "dotenv -e .env.dev -- tsx server/scripts/test-subscription-renewal-flow.ts",
     "test:subscription:usage": "dotenv -e .env.dev -- tsx server/scripts/test-subscription-usage-tracking.ts",
+    "test:email-integration": "dotenv -e .env.dev -- tsx server/scripts/test-email-integration.ts",
+    "test:referral": "dotenv -e .env.dev -- tsx server/scripts/test-referral-system.ts",
     "test:screens": "playwright test tests/ui-screenshots.spec.ts --project=chromium",
     "db:push": "drizzle-kit push",
     "db:push:dev": "dotenv -e .env.dev -- drizzle-kit push",

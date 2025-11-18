@@ -6,7 +6,7 @@
 import { ENV } from "./_core/env";
 import { getFeatureFlags } from "./_core/feature-flags";
 import { invokeLLM, streamResponse } from "./_core/llm";
-import { trackAIMetric } from "./ai-metrics";
+import { trackAIMetric, getMetricsSummary } from "./ai-metrics";
 import {
   litellmClient,
   mapToLiteLLMModel,
@@ -313,14 +313,22 @@ export async function invokeLLMWithRouting(
 
 /**
  * Get model usage statistics for monitoring
+ * @param lastMinutes Number of minutes to look back (default: 60)
  */
-export function getModelStats() {
-  // TODO: Implement model usage tracking
+export function getModelStats(lastMinutes: number = 60) {
+  const summary = getMetricsSummary(lastMinutes);
+
+  // Map model breakdown to modelUsage format
+  const modelUsage: Record<string, number> = {};
+  Object.entries(summary.modelBreakdown).forEach(([modelId, stats]) => {
+    modelUsage[modelId] = stats.requests;
+  });
+
   return {
-    totalRequests: 0,
-    modelUsage: {} as Record<AIModel, number>,
-    averageResponseTime: 0,
-    errorRate: 0,
+    totalRequests: summary.totalRequests,
+    modelUsage: modelUsage as Record<AIModel, number>,
+    averageResponseTime: summary.avgResponseTime,
+    errorRate: summary.errorRate,
   };
 }
 

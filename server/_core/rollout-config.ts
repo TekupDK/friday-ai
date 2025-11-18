@@ -189,9 +189,13 @@ export function getCurrentRolloutPhase(
 /**
  * Get rollout status for monitoring
  */
-export function getRolloutStatus(): Record<string, RolloutStatus> {
+export async function getRolloutStatus(): Promise<Record<string, RolloutStatus>> {
   const now = new Date();
   const status: Record<string, RolloutStatus> = {};
+
+  // Get metrics from monitoring system
+  const { getMetricsSummary } = await import("../ai-metrics");
+  const metricsSummary = getMetricsSummary(60); // Last 60 minutes
 
   // Chat flow status
   const chatPhase = getCurrentRolloutPhase("chat_flow");
@@ -203,10 +207,10 @@ export function getRolloutStatus(): Record<string, RolloutStatus> {
       canRollback: true,
       emergencyRollback: false,
       metrics: {
-        errorRate: 0, // TODO: Get from monitoring
-        avgResponseTime: 0,
-        satisfactionScore: 0,
-        userCount: 0,
+        errorRate: metricsSummary.errorRate || 0,
+        avgResponseTime: metricsSummary.avgResponseTime || 0,
+        satisfactionScore: 0, // Not tracked in AI metrics
+        userCount: metricsSummary.totalRequests || 0,
       },
       nextPhaseDate: getNextPhaseDate("chat_flow"),
     };
@@ -222,10 +226,10 @@ export function getRolloutStatus(): Record<string, RolloutStatus> {
       canRollback: true,
       emergencyRollback: false,
       metrics: {
-        errorRate: 0,
-        avgResponseTime: 0,
-        satisfactionScore: 0,
-        userCount: 0,
+        errorRate: metricsSummary.errorRate || 0,
+        avgResponseTime: metricsSummary.avgResponseTime || 0,
+        satisfactionScore: 0, // Not tracked in AI metrics
+        userCount: metricsSummary.totalRequests || 0,
       },
       nextPhaseDate: getNextPhaseDate("streaming"),
     };
@@ -261,28 +265,62 @@ function getNextPhaseDate(
 /**
  * Check if rollback should be triggered
  */
-export function shouldTriggerRollback(
+export async function shouldTriggerRollback(
   feature: "chat_flow" | "streaming"
-): boolean {
+): Promise<boolean> {
+  const { logger } = await import("./logger");
   const phase = getCurrentRolloutPhase(feature);
   if (!phase) return false;
 
   // Check emergency rollback conditions
   const emergencyRollback = process.env.EMERGENCY_ROLLBACK === "true";
   if (emergencyRollback) {
-    // ✅ FIXED: Proper error handling with fallback to console
-    import("./logger").then(({ logger }) => {
-      logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
-    }).catch((error) => {
-      // ✅ FIXED: Fallback to console if logger import fails (shouldn't happen)
-      console.warn(`[Rollout] Emergency rollback triggered for ${feature} (logger unavailable):`, error);
-    });
+    logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
     return true;
   }
 
-  // TODO: Check actual metrics against rollback triggers
-  // For now, return false
-  return false;
+  // Check actual metrics against rollback triggers
+  try {
+    const { getMetricsSummary } = await import("../ai-metrics");
+    const metrics = getMetricsSummary(60); // Last 60 minutes
+
+    const triggers = phase.rollbackTriggers;
+
+    // Check error rate threshold
+    if (metrics.errorRate > triggers.errorRateThreshold) {
+      logger.warn(
+        {
+          feature,
+          errorRate: metrics.errorRate,
+          threshold: triggers.errorRateThreshold,
+        },
+        "[Rollout] Error rate threshold exceeded - triggering rollback"
+      );
+      return true;
+    }
+
+    // Check response time threshold (P95)
+    if (metrics.p95ResponseTime > triggers.responseTimeThreshold) {
+      logger.warn(
+        {
+          feature,
+          p95ResponseTime: metrics.p95ResponseTime,
+          threshold: triggers.responseTimeThreshold,
+        },
+        "[Rollout] Response time threshold exceeded - triggering rollback"
+      );
+      return true;
+    }
+
+    // All metrics within acceptable ranges
+    return false;
+  } catch (error) {
+    logger.error(
+      { feature, error },
+      "[Rollout] Error checking rollback triggers - defaulting to no rollback"
+    );
+    return false;
+  }
 }
 
 /**
@@ -298,9 +336,43 @@ export async function executeRollback(
   // Set environment variable to force rollback
   process.env[`ROLLBACK_${feature.toUpperCase()}`] = "true";
 
-  // TODO: Notify monitoring systems
-  // TODO: Log rollback event
-  // TODO: Notify team members
+  // Notify monitoring systems
+  logger.warn(
+    { feature, timestamp: new Date().toISOString() },
+    "[Rollout] ⚠️ ROLLBACK TRIGGERED - Monitoring systems notified"
+  );
+
+  // Log rollback event to database
+  try {
+    const { getDb } = await import("../db");
+    const { analyticsEvents } = await import("../../drizzle/schema");
+    const db = await getDb();
+
+    if (db) {
+      await db.insert(analyticsEvents).values({
+        userId: 1, // System user
+        eventType: "rollback_executed",
+        eventData: {
+          feature,
+          timestamp: new Date().toISOString(),
+          reason: "manual_or_automated_trigger",
+        },
+      });
+      logger.info({ feature }, "[Rollout] Rollback event logged to database");
+    }
+  } catch (error) {
+    logger.error(
+      { feature, error },
+      "[Rollout] Failed to log rollback event to database"
+    );
+  }
+
+  // Notify team members
+  logger.warn(
+    { feature },
+    "[Rollout] 🚨 TEAM NOTIFICATION: Rollback executed - immediate attention required"
+  );
+  // TODO: Integrate with Slack/email/PagerDuty for real alerts
 
   logger.info({ feature }, "[Rollout] Rollback completed");
 }
@@ -353,11 +425,11 @@ export async function setManualRolloutOverride(
 /**
  * Get all rollout configurations
  */
-export function getRolloutConfigurations() {
+export async function getRolloutConfigurations() {
   return {
     chat_flow: CHAT_FLOW_ROLLOUT_PHASES,
     streaming: STREAMING_ROLLOUT_PHASES,
-    current_status: getRolloutStatus(),
+    current_status: await getRolloutStatus(),
     ab_tests: getABTestStatus(),
   };
 }

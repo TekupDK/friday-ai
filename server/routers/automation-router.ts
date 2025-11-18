@@ -6,8 +6,10 @@
 
 import { z } from "zod";
 
+import { analyticsEvents } from "../../drizzle/schema";
 import { permissionProcedure, protectedProcedure, router } from "../_core/trpc";
 import { billyAutomation } from "../billy-automation";
+import { getDb } from "../db";
 import { emailAnalysisEngine } from "../email-analysis-engine";
 import { emailMonitor } from "../email-monitor";
 import { generateSourceAnalytics } from "../lead-source-analytics";
@@ -268,9 +270,27 @@ export const automationRouter = router({
         sent: z.boolean().optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       try {
-        // TODO: Log to analytics database
+        const db = await getDb();
+        if (!db) {
+          throw new Error("Database not available");
+        }
+
+        // Log to analytics database
+        await db.insert(analyticsEvents).values({
+          userId: ctx.user?.userId || 1,
+          eventType: "email_suggestion_used",
+          eventData: {
+            suggestionId: input.suggestionId,
+            emailSubject: input.emailData.subject,
+            emailFrom: input.emailData.from,
+            sent: input.sent || false,
+            contentLength: input.chosenContent.length,
+            timestamp: new Date().toISOString(),
+          },
+        });
+
         console.log(`[EmailAssistant] Suggestion used: ${input.suggestionId}`);
         console.log(`[EmailAssistant] Email: ${input.emailData.subject}`);
         console.log(`[EmailAssistant] Sent: ${input.sent || false}`);
@@ -280,6 +300,7 @@ export const automationRouter = router({
           message: "Suggestion usage logged",
         };
       } catch (error) {
+        console.error("[EmailAssistant] Failed to log suggestion usage:", error);
         throw new Error(`Failed to log suggestion usage: ${error}`);
       }
     }),

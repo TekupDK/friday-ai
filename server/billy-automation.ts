@@ -237,7 +237,7 @@ export class BillyAutomationService {
         success: true,
         customerId: billyCustomer.id,
         invoiceId: invoice.id || "",
-        invoiceUrl: "", // TODO: Get invoice URL from Billy API
+        invoiceUrl: invoice.downloadUrl || "",
       };
     } catch (error) {
       console.error(

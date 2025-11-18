@@ -7,6 +7,9 @@
 
 import crypto from "crypto";
 
+import { analyticsEvents } from "../drizzle/schema";
+import { getDb } from "./db";
+
 export type FeatureFlag =
   | "ai_suggestions"
   | "action_execution"
@@ -153,11 +156,11 @@ export function updateRolloutPercentage(
 /**
  * Log rollout metrics (for monitoring)
  */
-export function logRolloutMetric(
+export async function logRolloutMetric(
   userId: number,
   feature: FeatureFlag,
   action: "check" | "use" | "error"
-): void {
+): Promise<void> {
   const config = ROLLOUT_CONFIG[feature];
   const inRollout = isUserInRollout(userId, feature);
 
@@ -165,5 +168,24 @@ export function logRolloutMetric(
     `[ROLLOUT_METRIC] user=${userId} feature=${feature} action=${action} inRollout=${inRollout} percentage=${config.percentage}%`
   );
 
-  // TODO: Send to analytics service (e.g., Mixpanel, Amplitude)
+  // Send to analytics database
+  const db = await getDb();
+  if (db) {
+    try {
+      await db.insert(analyticsEvents).values({
+        userId,
+        eventType: "feature_rollout_metric",
+        eventData: {
+          feature,
+          action,
+          inRollout,
+          percentage: config.percentage,
+          enabled: config.enabled,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    } catch (error) {
+      console.error("[FeatureRollout] Failed to log metric to database:", error);
+    }
+  }
 }
