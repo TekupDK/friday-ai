@@ -43,40 +43,84 @@ Fortsæt samtalen naturligt ved at:
 - `codebase_search` - Find related work
 - `grep` - Search for patterns
 
+**CRITICAL - Chat Session Reading:**
+
+**In Cursor Context (THIS SESSION):**
+- **You have direct access to the ENTIRE Cursor chat session** in this conversation
+- Read ALL messages from the start of this Cursor session
+- Read BOTH user messages AND agent responses in chronological order
+- Use this full context to understand what was discussed and continue naturally
+
 **DO NOT:**
 
 - Lose context
 - Repeat previous work
 - Ignore decisions
 - Break continuity
+- Analyze only the current message - use full conversation context
 
 ## REASONING PROCESS
 
 Before continuing, think through:
 
-1. **Review context:**
-   - What was discussed?
-   - What was decided?
-   - What is current state?
+1. **Read entire Cursor chat session (CRITICAL FIRST STEP):**
+   - **You have direct access to ALL messages in this Cursor conversation**
+   - Read ALL messages from the start of this session
+   - Read BOTH user messages AND agent responses in chronological order
+   - Understand the full conversation flow and context
+   - Identify previous work, decisions, and context from this session
 
-2. **Understand current message:**
+2. **Review context:**
+   - What was discussed? (from THIS session)
+   - What was decided? (from THIS session)
+   - What is current state? (from THIS session)
+
+3. **Understand current message:**
    - What is being asked?
-   - How does it relate to previous?
+   - How does it relate to previous messages in THIS session?
    - What needs to continue?
 
-3. **Continue naturally:**
-   - Reference previous if relevant
-   - Continue work if ongoing
+4. **Continue naturally:**
+   - Reference previous messages from THIS session if relevant
+   - Continue work if ongoing (from THIS session)
    - Answer current question
-   - Maintain context
+   - Maintain context from THIS session
+
+## CHAT SESSION READING
+
+**KRITISK:** Læs HELE chat sessionen i denne Cursor session:
+
+**I Cursor/Copilot:**
+- Du har adgang til hele chat historikken i denne session
+- Læs ALLE beskeder fra start af sessionen
+- Læs både brugerens beskeder OG agentens svar
+- Forstå diskussionens flow og progression
+
+**Hvad du skal læse:**
+- **Brugerens beskeder:** Hvad spørger brugeren om? Hvad vil de opnå?
+- **Agentens svar:** Hvad har agenten foreslået? Hvad er blevet besluttet?
+- **Diskussioner:** Hvilke emner er diskuteret? Hvilke beslutninger er taget?
+- **Filer nævnt:** Hvilke filer er diskuteret eller ændret?
+- **Fejl nævnt:** Hvilke fejl er identificeret eller løst?
+- **Opgaver:** Hvilke opgaver er identificeret eller påbegyndt?
+
+**Brug chat historikken til at:**
+- Forstå hvad brugeren prøver at opnå
+- Husk tidligere beslutninger og diskussioner
+- Fortsætte fra hvor I slap
+- Undgå at gentage diskussioner
+- Respektere aftaler fra chatten
+- Forstå kontekst og flow
 
 ## CONTINUATION STRATEGY
 
-1. **Review conversation history:**
-   - Read previous messages in context
-   - Understand what was discussed
-   - Note decisions made
-   - Identify any open questions
+1. **Read entire Cursor chat session (CRITICAL FIRST STEP):**
+   - **You have direct access to ALL messages in this Cursor conversation**
+   - Read ALL messages from the start of this session
+   - Read BOTH user messages AND agent responses in chronological order
+   - Understand what was discussed (from THIS session)
+   - Note decisions made (from THIS session)
+   - Identify any open questions (from THIS session)
 
 2. **Maintain context:**
    - Remember previous topics

@@ -35,11 +35,20 @@ Maintain context throughout the development session by tracking decisions, patte
 - `codebase_search` - Find related work
 - `grep` - Search for patterns
 
+**CRITICAL - Chat Session Reading:**
+
+**In Cursor Context (THIS SESSION):**
+- **You have direct access to the ENTIRE Cursor chat session** in this conversation
+- Read ALL messages from the start of this Cursor session
+- Read BOTH user messages AND agent responses in chronological order
+- Use this full context to track decisions, patterns, and maintain continuity
+
 **DO NOT:**
 - Lose context
 - Repeat decisions
 - Ignore patterns
 - Break consistency
+- Track only current message - use full conversation context
 
 ## REASONING PROCESS
 

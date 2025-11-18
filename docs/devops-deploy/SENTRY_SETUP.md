@@ -44,33 +44,51 @@ if (ENV.sentryEnabled && ENV.sentryDsn) {
 
 **Express Integration (v10):**
 
-In `startServer()` function, after creating the Express app:
+The Express integration is configured in `Sentry.init()` and automatically handles everything:
 
 ```typescript
-// Sentry Express integration (must be first middleware)
+// In server/_core/index.ts - Sentry.init() call
 if (ENV.sentryEnabled && ENV.sentryDsn) {
-  // Add expressIntegration dynamically after app is created
-  const expressIntegration = Sentry.expressIntegration();
-  Sentry.addIntegration(expressIntegration);
-  if (expressIntegration.setupOnce) {
-    expressIntegration.setupOnce();
-  }
+  Sentry.init({
+    dsn: ENV.sentryDsn,
+    environment: ENV.sentryEnvironment,
+    tracesSampleRate: ENV.sentryTracesSampleRate,
+    integrations: [
+      // Express integration automatically handles:
+      // - Request/response tracking
+      // - Error capturing
+      // - Performance monitoring
+      Sentry.expressIntegration(),
+    ],
+  });
 }
+```
 
-// ... other middleware ...
+**In `startServer()` function:**
 
-// Sentry error handler (must be last middleware)
-if (ENV.sentryEnabled && ENV.sentryDsn) {
-  Sentry.setupExpressErrorHandler(app);
+No additional middleware setup is needed! The `expressIntegration()` in `Sentry.init()` automatically:
+- ✅ Instruments Express requests/responses
+- ✅ Captures unhandled errors
+- ✅ Tracks performance
+- ✅ Adds request context to errors
+
+```typescript
+// In startServer() - No Sentry middleware needed!
+// The expressIntegration() in Sentry.init() handles everything automatically
+async function startServer() {
+  const app = express();
+  // ... other middleware ...
+  // Sentry is already configured and working!
 }
 ```
 
 **Key Changes in v10:**
 
 - ❌ Removed: `Sentry.Handlers.requestHandler()` and `Sentry.Handlers.tracingHandler()`
-- ✅ New: `Sentry.expressIntegration()` for automatic instrumentation
-- ✅ New: `Sentry.setupExpressErrorHandler(app)` for error handling
+- ❌ Removed: `Sentry.setupExpressErrorHandler(app)` (automatic via expressIntegration)
+- ✅ New: `Sentry.expressIntegration()` in `Sentry.init()` - handles everything automatically
 - ✅ Automatic: Unhandled rejections/exceptions captured by default
+- ✅ Automatic: Express error handling via expressIntegration
 
 ### Client Configuration (Sentry v10)
 
