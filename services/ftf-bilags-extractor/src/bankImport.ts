@@ -204,12 +204,13 @@ async function parsePDF(filePath: string): Promise<Transaction[]> {
   // Try to find transaction rows
   // Pattern: Date (DD-MM-YYYY or DD.MM.YYYY) followed by text and amount
   const datePattern = /(\d{1,2})[-\/\.](\d{1,2})[-\/\.](\d{4})/;
-  const amountPattern = /([-]?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)/;
+  // Amount pattern: Look for amounts in parentheses (expenses) or at end of line
+  // Avoid matching years (4-digit numbers) - amounts should have commas or be in parentheses
+  const amountPattern = /\((\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\)|([-]?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)(?=\s*$)/;
 
   let currentDate: Date | null = null;
   let transactionText = "";
   let transactionAmount: number | null = null;
-  let lineIndex = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -237,9 +238,34 @@ async function parsePDF(filePath: string): Promise<Transaction[]> {
       );
 
       // Try to extract amount from same line
-      const amountMatch = line.match(amountPattern);
+      // Look for amount in parentheses first (expenses), then at end of line
+      const amountInParens = line.match(/\((\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\)/);
+      let amountMatch: RegExpMatchArray | null = null;
+      let amountStr = "";
+      let isNegative = false;
+
+      if (amountInParens) {
+        // Amount in parentheses = negative (expense)
+        amountStr = amountInParens[1];
+        isNegative = true;
+        amountMatch = amountInParens;
+      } else {
+        // Try to find amount at end of line (not part of date)
+        const endAmountMatch = line.match(/(\d{1,3}(?:\.\d{3})*(?:,\d{2})?)(?=\s*$)/);
+        if (endAmountMatch && endAmountMatch.index !== undefined) {
+          // Make sure it's not part of the date
+          const dateEnd = dateMatch.index! + dateMatch[0].length;
+          if (endAmountMatch.index > dateEnd) {
+            amountStr = endAmountMatch[1];
+            amountMatch = endAmountMatch;
+          }
+        }
+      }
+
       if (amountMatch && amountMatch.index !== undefined) {
-        transactionAmount = parseAmount(amountMatch[1]);
+        const parsedAmount = parseAmount(amountStr);
+        transactionAmount = parsedAmount !== null ? (isNegative ? -Math.abs(parsedAmount) : parsedAmount) : null;
+        
         // Extract text (everything between date and amount)
         const dateEnd = dateMatch.index! + dateMatch[0].length;
         const amountStart = amountMatch.index;
@@ -254,13 +280,14 @@ async function parsePDF(filePath: string): Promise<Transaction[]> {
       }
     } else if (currentDate) {
       // Continue accumulating text for current transaction
-      const amountMatch = line.match(amountPattern);
-      if (amountMatch && transactionAmount === null && amountMatch.index !== undefined) {
-        // Found amount on continuation line
-        transactionAmount = parseAmount(amountMatch[1]);
-        const amountStart = amountMatch.index;
+      const amountInParens = line.match(/\((\d{1,3}(?:\.\d{3})*(?:,\d{2})?)\)/);
+      if (amountInParens && transactionAmount === null) {
+        // Found amount in parentheses on continuation line
+        const parsedAmount = parseAmount(amountInParens[1]);
+        transactionAmount = parsedAmount !== null ? -Math.abs(parsedAmount) : null;
+        const amountStart = amountInParens.index!;
         transactionText += " " + line.substring(0, amountStart).trim();
-      } else if (!amountMatch) {
+      } else {
         // Just text, no amount yet
         transactionText += " " + line;
       }
