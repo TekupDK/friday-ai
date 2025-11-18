@@ -47,7 +47,11 @@ function normalizeDatabaseUrl(url: string | undefined): string | undefined {
 
 process.env.DATABASE_URL = normalizeDatabaseUrl(process.env.DATABASE_URL);
 
-describe("Subscription Smoke Tests", () => {
+// Skip tests if required environment variables are missing
+const shouldSkip = !ENV.databaseUrl || !ENV.ownerOpenId;
+const describeSkippable = shouldSkip ? describe.skip : describe;
+
+describeSkippable("Subscription Smoke Tests", () => {
   let testUserId: number;
   let testCustomerId: number;
   let testSubscriptionId: number;

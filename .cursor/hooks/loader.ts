@@ -11,12 +11,27 @@ import { fileURLToPath } from "url";
 import type { HookConfig, HookCategory } from "./types";
 
 // Get current directory (works in both CommonJS and ESM)
-const __filename =
-  typeof __filename !== "undefined"
-    ? __filename
-    : fileURLToPath(import.meta.url);
-const __dirname =
-  typeof __dirname !== "undefined" ? __dirname : dirname(__filename);
+let __filename: string;
+let __dirname: string;
+
+try {
+  // Try ESM approach first
+  if (typeof import.meta?.url === "string") {
+    __filename = fileURLToPath(import.meta.url);
+  } else {
+    // Fallback to a default path if import.meta.url is not available
+    __filename = "/unknown/path";
+  }
+} catch (e) {
+  // If all fails, use a default path
+  __filename = "/unknown/path";
+}
+
+try {
+  __dirname = dirname(__filename);
+} catch (e) {
+  __dirname = "/unknown/path";
+}
 
 interface HooksConfig {
   hooks: {

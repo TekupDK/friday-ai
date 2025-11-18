@@ -37,7 +37,12 @@ function normalizeDatabaseUrl(url: string | undefined): string | undefined {
 // Apply normalization before connecting
 process.env.DATABASE_URL = normalizeDatabaseUrl(process.env.DATABASE_URL);
 
-describe("Email → Lead E2E Flow", () => {
+// Skip tests if required environment variables are missing
+// Check directly from process.env since ENV module might fail to load
+const shouldSkip = !process.env.DATABASE_URL || !process.env.OWNER_OPEN_ID;
+const describeSkippable = shouldSkip ? describe.skip : describe;
+
+describeSkippable("Email → Lead E2E Flow", () => {
   const testRouter = router({
     inbox: inboxRouter,
   });
