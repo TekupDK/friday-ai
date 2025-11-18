@@ -1,0 +1,23 @@
+description: "Friday AI Model Evaluation"
+
+prompts:
+  - file://prompts/test1.txt
+  - file://prompts/test2.txt
+  - file://prompts/test3.txt
+
+providers:
+  - id: openrouter:z-ai/glm-4.5-air:free
+    config:
+      apiKey: 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
+  - id: openrouter:openai/gpt-oss-20b:free
+    config:
+      apiKey: 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
+  - id: openrouter:deepseek/deepseek-chat-v3.1:free
+    config:
+      apiKey: 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
+
+tests:
+  - description: "Should respond in Danish"
+    assert:
+      - type: contains-any
+        value: ["er", "kan", "vil", "skal", "har"]

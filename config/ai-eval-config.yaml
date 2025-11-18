@@ -1,0 +1,119 @@
+# AI Model Evaluation Configuration
+# Compatible with promptfoo, DeepEval, and RAGAS frameworks
+# Run with: promptfoo eval -c ai-eval-config.yaml
+
+description: "Friday AI - Model Evaluation for OpenRouter Free Tier Models"
+
+# Models to evaluate
+providers:
+  # 100% Accuracy Models (Recommended)
+  - id: openrouter:z-ai/glm-4.5-air:free
+    label: GLM-4.5 Air (100% accuracy)
+    config:
+      temperature: 0.7
+      max_tokens: 2000
+
+  - id: openrouter:openai/gpt-oss-20b:free
+    label: GPT-OSS 20B (100% accuracy)
+    config:
+      temperature: 0.7
+      max_tokens: 2000
+
+  # Advanced Reasoning Models
+  - id: openrouter:deepseek/deepseek-chat-v3.1:free
+    label: DeepSeek Chat v3.1 (Advanced reasoning)
+    config:
+      temperature: 0.7
+      max_tokens: 2000
+
+  # Specialized Models
+  - id: openrouter:qwen/qwen3-coder:free
+    label: Qwen3 Coder (Code generation)
+    config:
+      temperature: 0.5
+      max_tokens: 4000
+
+  # Fast & Efficient Models
+  - id: openrouter:minimax/minimax-m2:free
+    label: MiniMax M2 (Fast)
+    config:
+      temperature: 0.7
+      max_tokens: 2000
+
+  # Long Context Models
+  - id: openrouter:moonshotai/kimi-k2:free
+    label: Kimi K2 (Long context)
+    config:
+      temperature: 0.7
+      max_tokens: 2000
+
+# Test prompts for different use cases
+prompts:
+  # Danish Business Communication
+  - "Du er Friday, en professionel dansk executive assistant for Rendetalje. Skriv et kortfattet, professionelt svar på denne email: 'Hej, jeg vil gerne have et tilbud på en badværelsesrenovering. Hvornår kan I komme ud og se på det?' Dit svar skal være på dansk, professionelt men venligt, inkludere forslag til næste skridt, og være maksimalt 3-4 linjer."
+
+  # Calendar/Time Reasoning
+  - "Jeg skal have et møde med Peter næste uge. Mødet skal være 2 timer langt og kan kun være om onsdagen mellem 10-16. Peters kalender viser: Onsdag 10:00-11:30 eksisterende møde, og Onsdag 14:00-15:00 eksisterende møde. Hvornår kan mødet placeres? Giv 2 forslag på dansk."
+
+  # Data Extraction & Analysis
+  - "Udtræk faktura-information fra denne tekst: Vi har leveret følgende: Badekar installation 15.000 kr, Fliser 28.500 kr, VVS arbejde 12.000 kr. Arbejdet blev udført d. 15. marts 2024. Kunde: Tomas Jensen, Hovedgaden 42, 2100 København Ø. Returner som JSON med felter: items, amounts, customer, address, date"
+
+  # Complex Reasoning
+  - "En kunde ønsker en komplet badeværelsesrenovering med nedrivning, VVS, fliser, inventar. Nedrivning tager 1-2 dage, VVS 2-3 dage (skal vente 24t efter nedrivning), Fliser 3-4 dage (kan starte samtidig med VVS dag 2), Inventar 1 dag (skal vente til fliser er færdige). Hvad er den korteste projektvarighed? Forklar din reasoning på dansk."
+
+  # Email Thread Summary
+  - "Opsummer denne email-tråd på dansk (max 2 linjer): Email 1: Hej, jeg vil gerne have et tilbud på tagarbejde. Email 2: Tak for din henvendelse. Vi kan komme ud d. 15/3. Email 3: Perfekt, det passer fint. Email 4: Bekræfter aftale d. 15/3 kl 10:00"
+
+# Evaluation criteria
+tests:
+  # Danish Language Quality
+  - description: "Output should be in Danish"
+    assert:
+      - type: contains-any
+        value: ["dansk", "er", "på", "med", "til", "for"]
+        weight: 0.2
+
+  # Professional Tone
+  - description: "Should maintain professional tone"
+    assert:
+      - type: not-contains
+        value: ["haha", "lol", "🤣", "😂"]
+        weight: 0.2
+
+  # Response Length (not too verbose)
+  - description: "Response should be concise (< 500 chars for short prompts)"
+    assert:
+      - type: javascript
+        value: "output.length < 500"
+        weight: 0.1
+
+  # JSON Format (for structured outputs)
+  - description: "Structured outputs should be valid JSON"
+    assert:
+      - type: is-json
+        weight: 0.2
+
+  # Response Time
+  - description: "Should respond within reasonable time"
+    assert:
+      - type: latency
+        threshold: 5000 # 5 seconds
+        weight: 0.1
+
+  # Accuracy (manual review needed)
+  - description: "Manual review for accuracy"
+    assert:
+      - type: human
+        weight: 0.2
+
+# Output configuration
+outputPath: ./ai-eval-results.json
+
+# Environment variables
+env:
+  OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+  HTTP_REFERER: "https://tekup.dk"
+  X_TITLE: "Friday AI Evaluation"
+
+# Sharing & Reporting
+sharing: false # Set to true to share results with promptfoo.dev
