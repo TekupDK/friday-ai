@@ -14,6 +14,7 @@ import {
   getCurrentRolloutPhase,
   type RolloutPhase,
 } from "./_core/rollout-config";
+import { analyticsEvents } from "../drizzle/schema";
 import { getDb } from "./db";
 
 /**
@@ -231,8 +232,29 @@ async function triggerRollback(
   // Send Slack notification
   await sendRollbackAlert(event);
 
-  // TODO: Store in database
-  // await db.insert(rollbackEvents).values(event);
+  // Store in database
+  const db = await getDb();
+  if (db) {
+    try {
+      await db.insert(analyticsEvents).values({
+        userId: 1, // System user for automated rollbacks
+        eventType: "rollback",
+        eventData: {
+          testName: event.testName,
+          reason: event.reason,
+          metrics: event.metrics,
+          autoTriggered: event.autoTriggered,
+          timestamp: event.timestamp.toISOString(),
+        },
+      });
+      console.log("[RollbackMonitor] ✅ Rollback event stored in database");
+    } catch (error) {
+      console.error(
+        "[RollbackMonitor] ❌ Failed to store rollback event in database:",
+        error
+      );
+    }
+  }
 }
 
 /**
