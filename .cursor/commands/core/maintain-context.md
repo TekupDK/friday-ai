@@ -50,29 +50,58 @@ Maintain context throughout the development session by tracking decisions, patte
 - Break consistency
 - Track only current message - use full conversation context
 
+## CHAT SESSION READING
+
+**KRITISK:** Læs HELE chat sessionen i denne Cursor session:
+
+**I Cursor/Copilot:**
+- Du har adgang til hele chat historikken i denne session
+- Læs ALLE beskeder fra start af sessionen
+- Læs både brugerens beskeder OG agentens svar
+- Forstå diskussionens flow og progression
+
+**Hvad du skal læse:**
+- **Brugerens beskeder:** Hvad spørger brugeren om? Hvad vil de opnå?
+- **Agentens svar:** Hvad har agenten foreslået? Hvad er blevet besluttet?
+- **Diskussioner:** Hvilke emner er diskuteret? Hvilke beslutninger er taget?
+- **Filer nævnt:** Hvilke filer er diskuteret eller ændret?
+- **Patterns:** Hvilke patterns er diskuteret eller brugt?
+
+**Brug chat historikken til at:**
+- Track beslutninger fra chatten
+- Track patterns fra chatten
+- Track progress fra chatten
+- Maintain consistency baseret på chat diskussioner
+
 ## REASONING PROCESS
 
 To maintain context, think through:
 
-1. **Track decisions:**
-   - What was decided?
-   - Why was it decided?
-   - What are implications?
+1. **Read entire Cursor chat session (CRITICAL FIRST STEP):**
+   - **You have direct access to ALL messages in this Cursor conversation**
+   - Read ALL messages from the start of this session
+   - Read BOTH user messages AND agent responses in chronological order
+   - Understand the full conversation flow and context
 
-2. **Track patterns:**
-   - What patterns are used?
-   - What conventions followed?
-   - What style maintained?
+2. **Track decisions (from THIS session):**
+   - What was decided? (from chat messages)
+   - Why was it decided? (from chat discussion)
+   - What are implications? (from chat context)
 
-3. **Track progress:**
-   - What was done?
-   - What is current state?
-   - What is next?
+3. **Track patterns (from THIS session):**
+   - What patterns are used? (from chat discussion)
+   - What conventions followed? (from chat decisions)
+   - What style maintained? (from chat context)
 
-4. **Reference context:**
-   - When making decisions
-   - When implementing
-   - When explaining
+4. **Track progress (from THIS session):**
+   - What was done? (from chat messages)
+   - What is current state? (from chat discussion)
+   - What is next? (from chat flow)
+
+5. **Reference context:**
+   - When making decisions (use chat history)
+   - When implementing (use chat context)
+   - When explaining (use chat discussion)
 
 ## IMPLEMENTATION STEPS
 
