@@ -270,15 +270,12 @@ export function shouldTriggerRollback(
   // Check emergency rollback conditions
   const emergencyRollback = process.env.EMERGENCY_ROLLBACK === "true";
   if (emergencyRollback) {
-    // ✅ SECURITY FIX: Use logger instead of console.warn
-    // Use dynamic import synchronously (logger is already available)
+    // ✅ FIXED: Proper error handling with fallback to console
     import("./logger").then(({ logger }) => {
       logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
-    }).catch(() => {
-      // Fallback if logger import fails - use logger import again as last resort
-      import("./logger").then(({ logger }) => {
-        logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
-      });
+    }).catch((error) => {
+      // ✅ FIXED: Fallback to console if logger import fails (shouldn't happen)
+      console.warn(`[Rollout] Emergency rollback triggered for ${feature} (logger unavailable):`, error);
     });
     return true;
   }

@@ -9,6 +9,7 @@ import { and, eq } from "drizzle-orm";
 
 import { emails, emailThreads } from "../drizzle/schema";
 
+import { logger } from "./_core/logger";
 import { createInvoice } from "./billy";
 import { getDb, getPipelineState } from "./db";
 import {
@@ -37,13 +38,17 @@ export async function handlePipelineTransition(
 ): Promise<void> {
   const pipelineState = await getPipelineState(userId, threadId);
   if (!pipelineState) {
-    console.warn(
+    // ✅ FIXED: Use logger instead of console.warn
+    logger.warn(
+      { userId, threadId },
       `[PipelineWorkflow] No pipeline state found for thread ${threadId}`
     );
     return;
   }
 
-  console.log(
+  // ✅ FIXED: Use logger instead of console.log
+  logger.info(
+    { userId, threadId, newStage },
     `[PipelineWorkflow] Handling transition to ${newStage} for thread ${threadId}`
   );
 
@@ -68,7 +73,9 @@ async function handleCalendarStage(
   try {
     const db = await getDb();
     if (!db) {
-      console.warn(
+      // ✅ FIXED: Use logger instead of console.warn
+      logger.warn(
+        { userId, threadId },
         "[PipelineWorkflow] Database not available for calendar creation"
       );
       return;
@@ -97,7 +104,9 @@ async function handleCalendarStage(
         .execute();
 
       if (!email) {
-        console.warn(
+        // ✅ FIXED: Use logger instead of console.warn
+        logger.warn(
+          { userId, threadId },
           `[PipelineWorkflow] No email found for thread ${threadId}`
         );
         return;
@@ -170,14 +179,17 @@ async function handleCalendarStage(
         )
         .execute();
 
-      console.log(
+      // ✅ FIXED: Use logger instead of console.log
+      logger.info(
+        { userId, threadId, eventId: event.id },
         `[PipelineWorkflow] ✅ Calendar event created: ${event.id} for thread ${threadId}`
       );
     }
   } catch (error) {
-    console.error(
-      `[PipelineWorkflow] ❌ Failed to create calendar event for thread ${threadId}:`,
-      error
+    // ✅ FIXED: Use logger instead of console.error
+    logger.error(
+      { err: error, userId, threadId },
+      `[PipelineWorkflow] ❌ Failed to create calendar event for thread ${threadId}`
     );
   }
 }
@@ -193,7 +205,9 @@ async function handleFinanceStage(
   try {
     const db = await getDb();
     if (!db) {
-      console.warn(
+      // ✅ FIXED: Use logger instead of console.warn
+      logger.warn(
+        { userId, threadId },
         "[PipelineWorkflow] Database not available for invoice creation"
       );
       return;
@@ -201,7 +215,9 @@ async function handleFinanceStage(
 
     // Check if invoice already exists
     if (pipelineState.invoiceId) {
-      console.log(
+      // ✅ FIXED: Use logger instead of console.log
+      logger.info(
+        { userId, threadId, invoiceId: pipelineState.invoiceId },
         `[PipelineWorkflow] Invoice already exists for thread ${threadId}: ${pipelineState.invoiceId}`
       );
       return;
@@ -216,7 +232,8 @@ async function handleFinanceStage(
       .execute();
 
     if (!email) {
-      console.warn(`[PipelineWorkflow] No email found for thread ${threadId}`);
+      // ✅ FIXED: Use logger instead of console.warn
+      logger.warn({ userId, threadId }, `[PipelineWorkflow] No email found for thread ${threadId}`);
       return;
     }
 
@@ -224,14 +241,17 @@ async function handleFinanceStage(
     const { searchCustomerByEmail } = await import("./billy");
 
     if (!email.fromEmail) {
-      console.warn(`[PipelineWorkflow] No fromEmail for thread ${threadId}`);
+      // ✅ FIXED: Use logger instead of console.warn
+      logger.warn({ userId, threadId }, `[PipelineWorkflow] No fromEmail for thread ${threadId}`);
       return;
     }
 
     const customer = await searchCustomerByEmail(email.fromEmail);
 
     if (!customer || !customer.id) {
-      console.warn(
+      // ✅ FIXED: Use logger instead of console.warn
+      logger.warn(
+        { userId, threadId, fromEmail: email.fromEmail },
         `[PipelineWorkflow] Customer not found in Billy for ${email.fromEmail}`
       );
       return;
@@ -280,13 +300,16 @@ async function handleFinanceStage(
       )
       .execute();
 
-    console.log(
+    // ✅ FIXED: Use logger instead of console.log
+    logger.info(
+      { userId, threadId, invoiceId: invoice.id, totalAmount },
       `[PipelineWorkflow] ✅ Invoice created: ${invoice.id} for thread ${threadId}, amount: ${totalAmount} DKK`
     );
   } catch (error) {
-    console.error(
-      `[PipelineWorkflow] ❌ Failed to create invoice for thread ${threadId}:`,
-      error
+    // ✅ FIXED: Use logger instead of console.error
+    logger.error(
+      { err: error, userId, threadId },
+      `[PipelineWorkflow] ❌ Failed to create invoice for thread ${threadId}`
     );
   }
 }
@@ -320,10 +343,13 @@ export async function checkCriticalRules(
   // Phase 9.3: Get source-specific workflow
   const workflow = getWorkflowFromDetection(sourceDetection);
 
-  console.log(
+  // ✅ FIXED: Use logger instead of console.log
+  logger.info(
+    { source, confidence, workflow: workflow.workflow.priority },
     `[CriticalRules] ${source} lead detected with ${confidence}% confidence`
   );
-  console.log(
+  logger.info(
+    { priority: workflow.workflow.priority, responseTime: workflow.workflow.responseTime },
     `[CriticalRules] Workflow: ${workflow.workflow.priority} priority, ${workflow.workflow.responseTime} response time`
   );
 

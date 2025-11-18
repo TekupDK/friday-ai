@@ -992,19 +992,23 @@ export async function updatePipelineStage(
     }, "Update Pipeline Stage");
 
     // Trigger workflow automation for stage transitions (outside transaction - async)
+    // ✅ FIXED: Proper error handling for background workflow
     if (fromStage !== stage) {
       const { handlePipelineTransition } = await import("./pipeline-workflows");
+      const { logger } = await import("./_core/logger");
       handlePipelineTransition(userId, threadId, stage).catch(error => {
-        console.error(
-          `[Database] Failed to trigger pipeline workflow for thread ${threadId}:`,
-          error
+        logger.error(
+          { err: error, userId, threadId, stage },
+          `[Database] Failed to trigger pipeline workflow for thread ${threadId}`
         );
       });
     }
 
     return await getPipelineState(userId, threadId);
   } catch (error) {
-    console.error("[Database] Failed to update pipeline stage:", error);
+    // ✅ FIXED: Use logger instead of console.error
+    const { logger } = await import("./_core/logger");
+    logger.error({ err: error, userId, threadId, stage }, "[Database] Failed to update pipeline stage");
     return null;
   }
 }
