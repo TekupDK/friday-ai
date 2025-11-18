@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, sql } from "drizzle-orm";
 
 import { bookings, customerProfiles } from "../../drizzle/schema";
-import { protectedProcedure, router } from "../_core/trpc";
+import { protectedProcedure, router, statsRateLimitedProcedure } from "../_core/trpc";
 import { getDb } from "../db";
 import { getCachedQuery } from "../db-cache";
 
@@ -17,8 +17,9 @@ export const crmStatsRouter = router({
   /**
    * Get CRM Dashboard Stats
    * Requirement 6: Display total/active/vip/at-risk customers, revenue, and bookings
+   * ✅ SECURITY: Rate limited to 20 requests per 15 minutes per user
    */
-  getDashboardStats: protectedProcedure.query(async ({ ctx }) => {
+  getDashboardStats: statsRateLimitedProcedure.query(async ({ ctx }) => {
     const db = await getDb();
     if (!db) {
       throw new TRPCError({

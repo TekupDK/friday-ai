@@ -84,27 +84,42 @@ export async function getCustomerProfileById(
 export async function createOrUpdateCustomerProfile(
   data: InsertCustomerProfile
 ): Promise<number> {
+  const { withTransaction } = await import("./db/transaction-utils");
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  // Check if profile exists
-  const existing = await getCustomerProfileByEmail(data.email, data.userId);
+  // Execute upsert in transaction to prevent race conditions
+  return await withTransaction(async (tx) => {
+    // Check if profile exists
+    const existingRows = await tx
+      .select()
+      .from(customerProfiles)
+      .where(
+        and(
+          eq(customerProfiles.email, data.email),
+          eq(customerProfiles.userId, data.userId)
+        )
+      )
+      .limit(1);
 
-  if (existing) {
-    // Update existing profile
-    await db
-      .update(customerProfiles)
-      .set({
-        ...data,
-        updatedAt: new Date().toISOString(),
-      })
-      .where(eq(customerProfiles.id, existing.id));
-    return existing.id;
-  } else {
-    // Create new profile
-    const result = await db.insert(customerProfiles).values(data).returning();
-    return result[0].id;
-  }
+    const existing = existingRows[0];
+
+    if (existing) {
+      // Update existing profile
+      await tx
+        .update(customerProfiles)
+        .set({
+          ...data,
+          updatedAt: new Date().toISOString(),
+        })
+        .where(eq(customerProfiles.id, existing.id));
+      return existing.id;
+    } else {
+      // Create new profile
+      const result = await tx.insert(customerProfiles).values(data).returning();
+      return result[0].id;
+    }
+  }, "Create or Update Customer Profile");
 }
 
 export async function getCustomerInvoices(customerId: number, userId: number) {

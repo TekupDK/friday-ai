@@ -478,6 +478,7 @@ export const crmExtensionsRouter = router({
   deleteSegment: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
+      const { withTransaction } = await import("../db/transaction-utils");
       const db = await getDb();
       if (!db) {
         throw new TRPCError({
@@ -488,40 +489,44 @@ export const crmExtensionsRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify segment ownership
-      const [segment] = await db
-        .select()
-        .from(customerSegments)
-        .where(
-          and(
-            eq(customerSegments.id, input.id),
-            eq(customerSegments.userId, userId)
+      // Execute deletion in a transaction to ensure atomicity
+      return await withTransaction(async (tx) => {
+        // Verify segment ownership
+        const [segment] = await tx
+          .select()
+          .from(customerSegments)
+          .where(
+            and(
+              eq(customerSegments.id, input.id),
+              eq(customerSegments.userId, userId)
+            )
           )
-        )
-        .limit(1);
+          .limit(1);
 
-      if (!segment) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Segment not found",
-        });
-      }
+        if (!segment) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Segment not found or access denied",
+          });
+        }
 
-      // Delete segment members first (cascade)
-      await db
-        .delete(customerSegmentMembers)
-        .where(eq(customerSegmentMembers.segmentId, input.id));
+        // Delete segment members first (cascade)
+        await tx
+          .delete(customerSegmentMembers)
+          .where(eq(customerSegmentMembers.segmentId, input.id));
 
-      // Delete segment
-      await db
-        .delete(customerSegments)
-        .where(eq(customerSegments.id, input.id));
+        // Delete segment
+        await tx
+          .delete(customerSegments)
+          .where(eq(customerSegments.id, input.id));
 
-      return { success: true };
+        return { success: true };
+      }, "Delete Customer Segment");
     }),
 
   /**
    * List all segments for user
+   * ✅ PERFORMANCE: Single query with LEFT JOIN instead of N+1 queries
    */
   listSegments: protectedProcedure.query(async ({ ctx }) => {
     const db = await getDb();
@@ -534,28 +539,28 @@ export const crmExtensionsRouter = router({
 
     const userId = ctx.user.id;
 
-    const segments = await db
-      .select()
-      .from(customerSegments)
-      .where(eq(customerSegments.userId, userId))
-      .orderBy(desc(customerSegments.createdAt));
-
-    // Get member counts for each segment
-    const segmentsWithCounts = await Promise.all(
-      segments.map(async segment => {
-        const [countResult] = await db
-          .select({
-            count: sql<number>`cast(count(*) as integer)`,
-          })
-          .from(customerSegmentMembers)
-          .where(eq(customerSegmentMembers.segmentId, segment.id));
-
-        return {
-          ...segment,
-          memberCount: countResult?.count || 0,
-        };
+    // Single query with LEFT JOIN and GROUP BY to get member counts
+    // This replaces N+1 queries (1 for segments + N for each segment's count)
+    const segmentsWithCounts = await db
+      .select({
+        id: customerSegments.id,
+        userId: customerSegments.userId,
+        name: customerSegments.name,
+        type: customerSegments.type,
+        rules: customerSegments.rules,
+        color: customerSegments.color,
+        createdAt: customerSegments.createdAt,
+        updatedAt: customerSegments.updatedAt,
+        memberCount: sql<number>`cast(count(${customerSegmentMembers.customerId}) as integer)`,
       })
-    );
+      .from(customerSegments)
+      .leftJoin(
+        customerSegmentMembers,
+        eq(customerSegments.id, customerSegmentMembers.segmentId)
+      )
+      .where(eq(customerSegments.userId, userId))
+      .groupBy(customerSegments.id)
+      .orderBy(desc(customerSegments.createdAt));
 
     return segmentsWithCounts;
   }),

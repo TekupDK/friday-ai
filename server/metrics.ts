@@ -57,11 +57,6 @@ export function trackMetric(
     ...data,
   };
 
-  // Log to console for visibility
-  console.log(
-    `[METRICS] ${event} - user=${userId} ${data?.actionType ? `action=${data.actionType}` : ""} ${data?.timeToAction ? `time=${data.timeToAction}ms` : ""}`
-  );
-
   // Store in memory (with size limit)
   metricsStore.push(metric);
   if (metricsStore.length > MAX_METRICS_IN_MEMORY) {
@@ -70,22 +65,33 @@ export function trackMetric(
 
   // Best-effort export to external analytics (fire-and-forget)
   // Does nothing unless analytics are enabled and a provider is configured
-  import("./analytics").then(({ trackAnalytics }) =>
-    trackAnalytics({
-      name: event,
-      userId,
-      properties: {
-        feature: data?.feature,
-        actionType: data?.actionType,
-        suggestionId: data?.suggestionId,
-        conversationId: data?.conversationId,
-        timeToAction: data?.timeToAction,
-        errorMessage: data?.errorMessage,
-        ...(data?.metadata || {}),
-      },
-      timestamp: metric.timestamp,
-    }).catch(() => {})
-  );
+  // ✅ FIXED: Log analytics failures instead of swallowing them silently
+  import("./analytics")
+    .then(({ trackAnalytics }) =>
+      trackAnalytics({
+        name: event,
+        userId,
+        properties: {
+          feature: data?.feature,
+          actionType: data?.actionType,
+          suggestionId: data?.suggestionId,
+          conversationId: data?.conversationId,
+          timeToAction: data?.timeToAction,
+          errorMessage: data?.errorMessage,
+          ...(data?.metadata || {}),
+        },
+        timestamp: metric.timestamp,
+      })
+    )
+    .catch((error) => {
+      // Log analytics failures but don't throw - this is best-effort tracking
+      import("./_core/logger").then(({ logger }) => {
+        logger.warn({ err: error, event, userId }, "[Metrics] Analytics tracking failed");
+      }).catch(() => {
+        // Fallback if logger fails - use console as last resort
+        console.warn(`[Metrics] Analytics tracking failed for event ${event}:`, error);
+      });
+    });
 }
 
 /**
@@ -254,9 +260,13 @@ export function clearOldMetrics(olderThanHours: number = 24): number {
   metricsStore.push(...recentMetrics);
 
   const removed = initialLength - metricsStore.length;
-  console.log(
-    `[METRICS] Cleared ${removed} metrics older than ${olderThanHours}h`
-  );
+  // ✅ FIXED: Use logger instead of console.log
+  import("./_core/logger").then(({ logger }) => {
+    logger.info(
+      { removed, olderThanHours },
+      `[Metrics] Cleared ${removed} metrics older than ${olderThanHours}h`
+    );
+  }).catch(() => {});
 
   return removed;
 }

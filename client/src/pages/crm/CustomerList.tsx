@@ -24,6 +24,7 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { trpc } from "@/lib/trpc";
 import { exportCustomersToCSV } from "@/utils/csv-export";
+import { sanitizeText } from "@/utils/sanitize";
 
 /**
  * CustomerSubscriptionBadge Component
@@ -207,7 +208,7 @@ export default function CustomerList() {
                               <Users className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                              <h3 className="font-semibold">{customer.name}</h3>
+                              <h3 className="font-semibold">{sanitizeText(customer.name)}</h3>
                               <p className="text-sm text-muted-foreground">
                                 {customer.email}
                               </p>

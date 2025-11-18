@@ -34,6 +34,7 @@ import { SubscriptionList } from "@/components/crm/SubscriptionList";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { trpc } from "@/lib/trpc";
+import { sanitizeText } from "@/utils/sanitize";
 
 type Tab =
   | "overview"
@@ -308,7 +309,7 @@ export default function CustomerDetail() {
                 <header>
                   <div className="flex items-start justify-between">
                     <div>
-                      <h1 className="text-3xl font-bold">{customer.name}</h1>
+                      <h1 className="text-3xl font-bold">{sanitizeText(customer.name)}</h1>
                       <div className="flex items-center gap-4 mt-2 text-muted-foreground">
                         {customer.email && (
                           <div className="flex items-center gap-2">
@@ -392,7 +393,7 @@ export default function CustomerDetail() {
                                 Name
                               </dt>
                               <dd className="text-base font-medium">
-                                {customer.name}
+                                {sanitizeText(customer.name)}
                               </dd>
                             </div>
                             {customer.email && (
@@ -689,7 +690,7 @@ export default function CustomerDetail() {
                               </div>
                               {note.note && (
                                 <p className="text-sm text-muted-foreground whitespace-pre-wrap mt-2">
-                                  {note.note}
+                                  {sanitizeText(note.note)}
                                 </p>
                               )}
                             </div>
