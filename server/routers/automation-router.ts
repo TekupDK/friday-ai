@@ -8,10 +8,13 @@ import { z } from "zod";
 
 import { permissionProcedure, protectedProcedure, router } from "../_core/trpc";
 import { billyAutomation } from "../billy-automation";
+import * as db from "../db";
 import { emailAnalysisEngine } from "../email-analysis-engine";
 import { emailMonitor } from "../email-monitor";
 import { generateSourceAnalytics } from "../lead-source-analytics";
 import { workflowAutomation } from "../workflow-automation";
+
+const { trackEvent } = db;
 
 /**
  * Phase 9.8: Automation control router
@@ -268,9 +271,23 @@ export const automationRouter = router({
         sent: z.boolean().optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       try {
-        // TODO: Log to analytics database
+        // Log to analytics database
+        await trackEvent({
+          userId: ctx.user.id,
+          eventType: "email_assistant_suggestion_used",
+          eventData: {
+            suggestionId: input.suggestionId,
+            emailSubject: input.emailData.subject,
+            emailFrom: input.emailData.from,
+            threadId: input.emailData.threadId,
+            chosenContent: input.chosenContent,
+            sent: input.sent || false,
+            timestamp: new Date().toISOString(),
+          },
+        });
+        
         console.log(`[EmailAssistant] Suggestion used: ${input.suggestionId}`);
         console.log(`[EmailAssistant] Email: ${input.emailData.subject}`);
         console.log(`[EmailAssistant] Sent: ${input.sent || false}`);

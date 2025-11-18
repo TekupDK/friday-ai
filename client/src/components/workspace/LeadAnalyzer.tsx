@@ -228,8 +228,29 @@ export function LeadAnalyzer({ context }: LeadAnalyzerProps) {
           },
         ]);
       } catch (error) {
-        // TODO: Replace with proper logging service
-        // console.error("[LeadAnalyzer] Error analyzing lead:", error);
+        // Log error with Sentry error tracking service
+        console.error("[LeadAnalyzer] Error analyzing lead:", error);
+        import("@sentry/react")
+          .then(Sentry => {
+            Sentry.captureException(error, {
+              contexts: {
+                lead: {
+                  emailId: context?.emailId,
+                  subject: context?.subject,
+                  customerName: customerName,
+                  location: location
+                }
+              },
+              tags: {
+                component: "LeadAnalyzer",
+                operation: "analyze_lead"
+              }
+            });
+          })
+          .catch(sentryError => {
+            console.warn("[LeadAnalyzer] Failed to send error to Sentry:", sentryError);
+          });
+        
         // Fallback to basic estimate using real business logic
         const fallbackHours = BUSINESS_CONSTANTS.DEFAULT_HOURS;
         const fallbackMinPrice = fallbackHours * BUSINESS_CONSTANTS.HOURLY_RATE;
