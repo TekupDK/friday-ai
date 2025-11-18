@@ -5,6 +5,7 @@
  */
 
 import { expect } from "vitest";
+
 import type { HookResult, HookLog, HookStats } from "../types";
 
 /**

@@ -4,9 +4,10 @@
  * Tests for hook configuration loading
  */
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
 import { readFileSync } from "fs";
-import type { HookCategory } from "../types";
+
+import { describe, it, expect, beforeEach, vi } from "vitest";
+
 import {
   loadHookConfig,
   getHooksForCategory,
@@ -14,6 +15,7 @@ import {
   hookExists,
 } from "../loader";
 import { ConfigBuilder } from "../test-utils/config-builder";
+import type { HookCategory } from "../types";
 
 // Mock fs module
 vi.mock("fs", async () => {

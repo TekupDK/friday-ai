@@ -4,6 +4,8 @@
  * Executes hooks based on configuration
  */
 
+import { getHooksForCategory } from "./loader";
+import { hookLogger } from "./logger";
 import type {
   HookConfig,
   HookResult,
@@ -12,8 +14,6 @@ import type {
   HookExecutionOptions,
   HookFunction,
 } from "./types";
-import { getHooksForCategory } from "./loader";
-import { hookLogger } from "./logger";
 
 /**
  * Execute hooks for a category

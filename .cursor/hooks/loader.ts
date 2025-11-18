@@ -7,6 +7,7 @@
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+
 import type { HookConfig, HookCategory } from "./types";
 
 // Get current directory (works in both CommonJS and ESM)

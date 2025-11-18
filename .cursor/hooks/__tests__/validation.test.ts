@@ -5,13 +5,14 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { ConfigBuilder } from "../test-utils/config-builder";
-import type { HookResult } from "../types";
+
 import {
   expectHookSuccess,
   expectHookFailure,
   expectHookData,
 } from "../test-utils/assertions";
+import { ConfigBuilder } from "../test-utils/config-builder";
+import type { HookResult } from "../types";
 
 describe("Configuration Validation", () => {
   it("should validate valid configuration structure", () => {

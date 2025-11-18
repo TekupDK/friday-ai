@@ -5,11 +5,12 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import type { HookResult } from "../types";
+
 import { executePreExecutionHooks, executePostExecutionHooks } from "../executor";
+import { expectAllHooksSuccess } from "../test-utils/assertions";
 import { ConfigBuilder } from "../test-utils/config-builder";
 import { ContextBuilder } from "../test-utils/context-builder";
-import { expectAllHooksSuccess } from "../test-utils/assertions";
+import type { HookResult } from "../types";
 
 // Mock the loader
 vi.mock("../loader", () => ({

@@ -5,14 +5,15 @@
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
+
 import { hookLogger } from "../logger";
-import type { HookCategory } from "../types";
 import {
   expectLogEntry,
   expectStats,
   expectLogsContainHook,
   expectLogsContainStatus,
 } from "../test-utils/assertions";
+import type { HookCategory } from "../types";
 
 describe("Hook Logger", () => {
   beforeEach(() => {

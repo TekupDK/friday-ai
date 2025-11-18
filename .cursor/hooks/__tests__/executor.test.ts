@@ -5,8 +5,13 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import type { HookResult, HookCategory } from "../types";
+
 import { executeHooks, executePreExecutionHooks } from "../executor";
+import {
+  expectHookSuccess,
+  expectHookFailure,
+  expectAllHooksSuccess,
+} from "../test-utils/assertions";
 import { ConfigBuilder } from "../test-utils/config-builder";
 import { ContextBuilder } from "../test-utils/context-builder";
 import {
@@ -15,11 +20,7 @@ import {
   createTimeoutHook,
   createErrorHook,
 } from "../test-utils/mock-hook-factory";
-import {
-  expectHookSuccess,
-  expectHookFailure,
-  expectAllHooksSuccess,
-} from "../test-utils/assertions";
+import type { HookResult, HookCategory } from "../types";
 
 // Mock the loader to return our test hooks
 vi.mock("../loader", () => ({
