@@ -4,7 +4,17 @@
  * Tests for subscription business logic, helpers, and actions
  */
 
+import { eq, and } from "drizzle-orm";
 import { describe, it, expect, beforeEach, vi } from "vitest";
+
+import { subscriptions, customerProfiles } from "../../drizzle/schema";
+import { getDb } from "../db";
+import {
+  createSubscription,
+  processRenewal,
+  processCancellation,
+  calculateNextBillingDate,
+} from "../subscription-actions";
 import {
   calculateMonthlyRevenue,
   getARPU,
@@ -12,15 +22,6 @@ import {
   checkOverage,
   SUBSCRIPTION_PLANS,
 } from "../subscription-helpers";
-import {
-  createSubscription,
-  processRenewal,
-  processCancellation,
-  calculateNextBillingDate,
-} from "../subscription-actions";
-import { getDb } from "../db";
-import { subscriptions, customerProfiles } from "../../drizzle/schema";
-import { eq, and } from "drizzle-orm";
 
 // Mock database
 vi.mock("../db", () => ({

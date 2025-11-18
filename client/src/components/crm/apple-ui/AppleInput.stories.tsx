@@ -4,6 +4,7 @@
 
 import type { Meta, StoryObj } from "@storybook/react";
 import { Lock, Mail, User } from "lucide-react";
+
 import { AppleInput } from "./AppleInput";
 
 const meta = {

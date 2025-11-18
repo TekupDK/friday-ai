@@ -8,12 +8,6 @@
  * - Smooth animations and hover effects
  */
 
-import { useState, useMemo } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import type { EnhancedEmailMessage } from "@/types/enhanced-email";
-import type { EmailThread } from "@/types/email-thread";
-import EmailQuickActions from "./EmailQuickActions";
 import {
   Paperclip,
   MessageSquare,
@@ -25,6 +19,14 @@ import {
   Target,
   Circle,
 } from "lucide-react";
+import { useState, useMemo } from "react";
+
+import EmailQuickActions from "./EmailQuickActions";
+
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import type { EmailThread } from "@/types/email-thread";
+import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 
 // Lead score badge configuration (Phase 2.1: Simplified from 4 → 2 types)
 // Only show badges for important leads (score >= 70)

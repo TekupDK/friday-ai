@@ -3,8 +3,8 @@
  * Handles all customer search and information retrieval
  */
 
-import { FridayAIIntent, FridayAIResponse } from "../types/friday.types";
 import { Customer, CustomerSearchQuery } from "../types/customer.types";
+import { FridayAIIntent, FridayAIResponse } from "../types/friday.types";
 
 export class CustomerLookupIntent {
   /**

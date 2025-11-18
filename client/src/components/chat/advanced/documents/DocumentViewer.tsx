@@ -1,10 +1,3 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { sanitizeHtml } from "@/lib/sanitize";
 import {
   FileText,
   Image,
@@ -27,6 +20,14 @@ import {
   FileAudio,
   Archive,
 } from "lucide-react";
+import * as React from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { sanitizeHtml } from "@/lib/sanitize";
+import { cn } from "@/lib/utils";
 
 export interface DocumentViewerProps
   extends React.HTMLAttributes<HTMLDivElement> {

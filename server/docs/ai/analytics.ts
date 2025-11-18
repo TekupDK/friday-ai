@@ -9,10 +9,11 @@
  * - Usage patterns
  */
 
-import { getDb } from "../../db";
-import { documents } from "../../../drizzle/schema";
 import { and, eq, gte, sql, desc } from "drizzle-orm";
+
+import { documents } from "../../../drizzle/schema";
 import { logger } from "../../_core/logger";
+import { getDb } from "../../db";
 
 export interface AIDocMetrics {
   totalGenerated: number;

@@ -1,10 +1,11 @@
+import { Clock, Paperclip, MessageSquare, Eye } from "lucide-react";
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { Clock, Paperclip, MessageSquare, Eye } from "lucide-react";
 
 /**
  * DESIGN 3: Notion-Style Kanban Board

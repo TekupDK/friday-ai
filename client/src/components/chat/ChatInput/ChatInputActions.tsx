@@ -5,8 +5,9 @@
  * Can be used in different contexts
  */
 
-import { Button } from "@/components/ui/button";
 import { Send, Paperclip, Grid3X3, Mic, StopCircle } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 interface ActionButtonProps {
   icon: React.ComponentType<{ className?: string }>;

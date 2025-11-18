@@ -3,11 +3,12 @@
  * Moderne bubble design med avatars, reactions, og animations
  */
 
-import { cn } from "@/lib/utils";
 import { Bot, User, Copy, Check, ThumbsUp, ThumbsDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export interface ChatMessageProps {
   type: "user" | "ai" | "system";

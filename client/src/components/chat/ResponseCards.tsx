@@ -3,9 +3,6 @@
  * Viser lead info, tasks, meetings, invoices m.m. i pæne cards
  */
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Calendar,
   UserPlus,
@@ -19,6 +16,10 @@ import {
   ChevronRight,
   ExternalLink,
 } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 // Card data types specific til Friday AI

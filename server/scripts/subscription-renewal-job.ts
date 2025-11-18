@@ -4,8 +4,8 @@
  * Script to run subscription renewals (called by scheduled task)
  */
 
-import { processMonthlyRenewals } from "../subscription-jobs";
 import { logger } from "../_core/logger";
+import { processMonthlyRenewals } from "../subscription-jobs";
 
 async function runRenewalJob() {
   try {

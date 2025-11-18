@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Heart, Mail, Search, Settings, Star, User } from "lucide-react";
+
 import { AppleIcon } from "./AppleIcon";
 import { Icons } from "./icons";
 

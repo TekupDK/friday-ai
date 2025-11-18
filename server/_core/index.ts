@@ -28,7 +28,8 @@ if (ENV.sentryEnabled && ENV.sentryDsn) {
     environment: ENV.sentryEnvironment,
     tracesSampleRate: ENV.sentryTracesSampleRate,
     integrations: [
-      // Express integration is added via app.use() in startServer()
+      // Express integration is automatically enabled in v10
+      Sentry.expressIntegration(),
     ],
     // Note: captureUnhandledRejections and captureUncaughtExceptions are enabled by default in v10
   });
@@ -115,13 +116,9 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
-  // Sentry Express integration (must be first middleware)
-  if (ENV.sentryEnabled && ENV.sentryDsn) {
-    // In Sentry v10, Express integration is automatically enabled via Sentry.init()
-    // Request handler must be first middleware
-    // Note: setupExpressErrorHandler() doesn't take arguments - it returns middleware
-    app.use(Sentry.setupExpressErrorHandler());
-  }
+  // Sentry Express integration
+  // In Sentry v10, Express integration is automatically enabled via expressIntegration() in Sentry.init()
+  // No additional middleware needed - the integration handles request/response tracking automatically
 
   // Security headers via Helmet
   app.use(
@@ -289,12 +286,9 @@ async function startServer() {
     await serveStatic(app);
   }
 
-  // Sentry error handler (must be last middleware)
-  if (ENV.sentryEnabled && ENV.sentryDsn) {
-    // In Sentry v10, use setupExpressErrorHandler() for error handling
-    // Note: setupExpressErrorHandler() returns middleware, doesn't take arguments
-    app.use(Sentry.setupExpressErrorHandler());
-  }
+  // Sentry error handler
+  // In Sentry v10, error handling is automatically handled by expressIntegration()
+  // No additional error handler middleware needed - unhandled errors are captured automatically
 
   const preferredPort = parseInt(process.env.PORT || "3000");
   const port = await findAvailablePort(preferredPort);

@@ -8,27 +8,7 @@
  * - Phase 2 improvements: Thread conversations, expand/collapse
  */
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
-import { trpc } from "@/lib/trpc";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useCallback, useMemo, useState, useEffect, useRef } from "react";
-import type {
-  EnhancedEmailMessage,
-  SortOption,
-  FilterSource,
-  Density,
-} from "@/types/enhanced-email";
-import type { EmailThread } from "@/types/email-thread";
-import {
-  groupEmailsByThread,
-  searchThreads,
-  calculateThreadStats,
-} from "@/utils/thread-grouping";
-import EmailThreadGroup from "./EmailThreadGroup";
-import EmailStickyActionBar from "./EmailStickyActionBar";
 import {
   DollarSign,
   Target,
@@ -38,6 +18,30 @@ import {
   SortAsc,
   Search,
 } from "lucide-react";
+import { useCallback, useMemo, useState, useEffect, useRef } from "react";
+
+import EmailStickyActionBar from "./EmailStickyActionBar";
+import EmailThreadGroup from "./EmailThreadGroup";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
+import { trpc } from "@/lib/trpc";
+import type { EmailThread } from "@/types/email-thread";
+import type {
+  EnhancedEmailMessage,
+  SortOption,
+  FilterSource,
+  Density,
+} from "@/types/enhanced-email";
+import {
+  groupEmailsByThread,
+  searchThreads,
+  calculateThreadStats,
+} from "@/utils/thread-grouping";
+
+
 
 // Types imported from enhanced-email.ts
 

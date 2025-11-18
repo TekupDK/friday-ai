@@ -7,6 +7,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
+
 import { checkRateLimitUnified } from "../rate-limiter-redis";
 
 describe("Rate Limiter Fallback Bug - keySuffix Ignored", () => {

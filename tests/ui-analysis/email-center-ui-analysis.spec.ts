@@ -3,8 +3,9 @@
  * Purpose: Comprehensive UI/UX analysis with screenshots and metrics
  */
 
-import { test, expect } from "@playwright/test";
 import * as fs from "fs";
+
+import { test, expect } from "@playwright/test";
 
 test.describe("Email Center Visual Analysis", () => {
   test("Complete UI/UX Audit with Screenshots", async ({ page }) => {

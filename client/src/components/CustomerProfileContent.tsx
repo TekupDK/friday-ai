@@ -1,16 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { trpc } from "@/lib/trpc";
 import {
   AlertTriangle,
   Calendar,
@@ -28,11 +15,26 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
 import { ActivityTimeline } from "./ActivityTimeline";
 import { CaseAnalysisTab } from "./CaseAnalysisTab";
 import { CustomerNotesTab } from "./CustomerNotesTab";
 import { CustomerStatusTags } from "./CustomerStatusTags";
 import { SafeStreamdown } from "./SafeStreamdown";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { trpc } from "@/lib/trpc";
 
 interface CustomerProfileContentProps {
   leadId: number;
@@ -121,7 +123,7 @@ export default function CustomerProfileContent({
     } else {
       setAutoSyncDone(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [profile?.id, autoSyncDone]); // Auto-sync customer data with 5-minute cache
 
   // Auto-generate AI resume on first open if missing
@@ -141,7 +143,7 @@ export default function CustomerProfileContent({
       );
       generateResume.mutate({ customerId: profile.id });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [
     profile?.id,
     profile?.aiResume,

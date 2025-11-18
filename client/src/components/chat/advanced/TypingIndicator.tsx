@@ -3,8 +3,9 @@
  * Animeret typing indicator med varianter
  */
 
-import { cn } from "@/lib/utils";
 import { Bot, User } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 export type TypingVariant = "dots" | "ellipsis" | "pulse" | "wave";
 

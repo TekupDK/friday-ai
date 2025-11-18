@@ -3,6 +3,7 @@
  */
 
 import type { Meta, StoryObj } from "@storybook/react";
+
 import { AppleBadge } from "./AppleBadge";
 
 const meta = {

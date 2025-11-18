@@ -6,6 +6,7 @@
  */
 
 import { Langfuse } from "langfuse";
+
 import { ENV } from "../../_core/env";
 
 // Singleton client instance

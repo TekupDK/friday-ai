@@ -35,7 +35,7 @@ if (ENV.sentryEnabled && ENV.sentryDsn) {
     dsn: ENV.sentryDsn,
     environment: ENV.sentryEnvironment,
     tracesSampleRate: ENV.sentryTracesSampleRate,
-    // Note: captureUnhandledRejections and captureUncaughtExceptions 
+    // Note: captureUnhandledRejections and captureUncaughtExceptions
     // are enabled by default in v10
   });
   logger.info("[Sentry] Error tracking initialized");
@@ -66,6 +66,7 @@ if (ENV.sentryEnabled && ENV.sentryDsn) {
 ```
 
 **Key Changes in v10:**
+
 - ❌ Removed: `Sentry.Handlers.requestHandler()` and `Sentry.Handlers.tracingHandler()`
 - ✅ New: `Sentry.expressIntegration()` for automatic instrumentation
 - ✅ New: `Sentry.setupExpressErrorHandler(app)` for error handling
@@ -86,7 +87,7 @@ if (sentryEnabled && sentryDsn) {
       Sentry.browserTracingIntegration(),
       // Note: We use wouter (not react-router), so only browserTracingIntegration is needed
     ],
-    // Note: captureUnhandledRejections and captureUncaughtExceptions 
+    // Note: captureUnhandledRejections and captureUncaughtExceptions
     // are enabled by default in v10
   });
   console.log("[Sentry] Error tracking initialized");
@@ -94,6 +95,7 @@ if (sentryEnabled && sentryDsn) {
 ```
 
 **Key Changes in v10:**
+
 - ✅ New: `browserTracingIntegration()` replaces old performance integration
 - ❌ Removed: `reactRouterV6BrowserTracingIntegration()` (we use wouter, not react-router)
 - ✅ Automatic: Unhandled rejections/exceptions captured by default
@@ -274,6 +276,7 @@ VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
    - Changed: Integration APIs updated
 
 ### Files Modified for v10
+
 - `server/_core/index.ts` - Updated Sentry initialization and middleware
 - `client/src/main.tsx` - Updated React integration
 - `client/src/hooks/__tests__/useKeyboardShortcuts.test.tsx` - Fixed test mocks

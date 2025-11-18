@@ -2,9 +2,10 @@
  * Tool Execution Router - tRPC subscriptions for real-time tool tracking
  */
 
-import { z } from "zod";
-import { router, protectedProcedure } from "../_core/trpc";
 import { observable } from "@trpc/server/observable";
+import { z } from "zod";
+
+import { router, protectedProcedure } from "../_core/trpc";
 import {
   getUserExecutions,
   getToolExecution,

@@ -1,25 +1,3 @@
-import { useState, useEffect } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { CalendarEventCard } from "@/components/chat/CalendarEventCard";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import {
   Bot,
   User,
@@ -33,6 +11,29 @@ import {
   AlertCircle,
   TrendingUp,
 } from "lucide-react";
+import { useState, useEffect } from "react";
+
+import { CalendarEventCard } from "@/components/chat/CalendarEventCard";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 /**
  * COMPLETE CHAT DEMO - Realistic Friday AI Chat

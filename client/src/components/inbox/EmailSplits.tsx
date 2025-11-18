@@ -10,10 +10,6 @@
  * Integrates with Email Intelligence System (categories + priorities)
  */
 
-import { useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 import {
   Flame,
   Clock,
@@ -22,6 +18,11 @@ import {
   Mail,
   Inbox,
 } from "lucide-react";
+import { useMemo } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 
 // Split ID type
 export type SplitId = "all" | "hot-leads" | "waiting" | "finance" | "done";

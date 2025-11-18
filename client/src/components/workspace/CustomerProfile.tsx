@@ -1,7 +1,3 @@
-import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Calendar,
   DollarSign,
@@ -12,14 +8,21 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import { useState, useEffect } from "react";
+
+import SmartActionBar, { type CustomerData } from "./SmartActionBar";
 import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
-import { trpc } from "@/lib/trpc";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   parseCalendarEvent,
   formatTimeRange,
   calculateTotalRevenue,
 } from "@/lib/business-logic";
-import SmartActionBar, { type CustomerData } from "./SmartActionBar";
+import { trpc } from "@/lib/trpc";
+
 
 interface CustomerProfileProps {
   context: {

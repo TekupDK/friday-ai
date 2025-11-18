@@ -2,13 +2,15 @@
  * AUTO COMPLETE - Intelligent auto-fuldførelse
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { Zap, Type, Check, X, Clock, TrendingUp, Star } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
 
 export interface AutoCompleteSuggestion {
   id: string;

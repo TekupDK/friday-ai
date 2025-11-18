@@ -16,9 +16,10 @@
  * @see docs/V2-MIGRATION-COMPLETE-PLAN.md
  */
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, CheckSquare, FileText, Mail, Users } from "lucide-react";
 import { lazy, Suspense, memo } from "react";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Lazy load tabs for better initial performance
 const EmailTabV2 = lazy(() => import("@/components/inbox/EmailTabV2"));

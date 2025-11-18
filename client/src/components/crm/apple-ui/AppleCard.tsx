@@ -6,7 +6,9 @@
 
 import { motion, type HTMLMotionProps } from "framer-motion";
 import React from "react";
+
 import { animations } from "../../../styles/apple-design-system";
+
 import styles from "./AppleCard.module.css";
 
 export type CardVariant = "elevated" | "filled" | "glass" | "outlined";

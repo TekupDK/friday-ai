@@ -1,13 +1,17 @@
-import { router, publicProcedure } from "../_core/trpc";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
-import { sdk } from "../_core/sdk";
-import { COOKIE_NAME, ONE_YEAR_MS, SEVEN_DAYS_MS } from "@shared/const";
-import { getSessionCookieOptions } from "../_core/cookies";
-import { checkRateLimitUnified } from "../rate-limiter-redis";
-import { getDb } from "../db";
-import { users } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
+
+import { users } from "../../drizzle/schema";
+import { getSessionCookieOptions } from "../_core/cookies";
+import { sdk } from "../_core/sdk";
+import { router, publicProcedure } from "../_core/trpc";
+import { getDb } from "../db";
+import { checkRateLimitUnified } from "../rate-limiter-redis";
+
+import { COOKIE_NAME, ONE_YEAR_MS, SEVEN_DAYS_MS } from "@shared/const";
+
+
 
 const loginSchema = z.object({
   email: z.string().email().max(320), // RFC 5321 max email length

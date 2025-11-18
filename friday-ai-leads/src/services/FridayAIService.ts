@@ -4,15 +4,16 @@
  */
 
 import { ChromaClient, Collection } from "chromadb";
+
+import {
+  BookingPrediction,
+  RevenueOpportunity,
+} from "../types/analytics.types";
 import {
   Customer,
   CustomerSearchQuery,
   CustomerIntelligence,
 } from "../types/customer.types";
-import {
-  BookingPrediction,
-  RevenueOpportunity,
-} from "../types/analytics.types";
 import { FridayAIResponse, FridayAIIntent } from "../types/friday.types";
 
 export class FridayAIService {

@@ -7,14 +7,16 @@
 
 import { TRPCError } from "@trpc/server";
 import { and, eq, gte, lte } from "drizzle-orm";
-import { routeAI } from "./ai-router";
-import { getDb } from "./db";
+
 import {
   customerProfiles,
   customerProperties,
   bookings,
   subscriptionUsage,
 } from "../drizzle/schema";
+
+import { routeAI } from "./ai-router";
+import { getDb } from "./db";
 import {
   getSubscriptionByCustomerId,
   getSubscriptionById,

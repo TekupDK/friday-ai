@@ -1,3 +1,6 @@
+import { ChevronDown, RefreshCw, Sparkles } from "lucide-react";
+import { useState } from "react";
+
 import {
   ACTION_ICONS,
   ACTION_LABELS,
@@ -9,8 +12,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { ChevronDown, RefreshCw, Sparkles } from "lucide-react";
-import { useState } from "react";
 
 interface SuggestionsBarProps {
   suggestions: PendingAction[];

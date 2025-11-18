@@ -2,10 +2,12 @@
  * PHASE TRACKER - Pipeline stages og lead progression
  */
 
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { Check, Circle, ArrowRight } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 
 export interface Phase {
   id: string;

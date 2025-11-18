@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { sql } from "drizzle-orm";
+
 import * as db from "../db";
 
 // Simple cleanup for seedede CRM-data oprettet af crm-seed.ts

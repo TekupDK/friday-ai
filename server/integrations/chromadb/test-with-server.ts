@@ -9,8 +9,9 @@
  */
 
 // Load .env.dev before anything else
-import { config } from "dotenv";
 import { resolve } from "path";
+
+import { config } from "dotenv";
 
 // Force enable ChromaDB BEFORE loading anything
 process.env.CHROMA_ENABLED = "true";

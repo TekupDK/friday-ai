@@ -6,7 +6,9 @@
 
 import { motion, type HTMLMotionProps } from "framer-motion";
 import React from "react";
+
 import { materials } from "../../../styles/apple-design-system";
+
 import styles from "./BlurView.module.css";
 
 export type BlurIntensity = "light" | "medium" | "heavy" | "dark" | "tinted";

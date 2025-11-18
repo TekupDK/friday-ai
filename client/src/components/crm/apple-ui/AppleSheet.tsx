@@ -11,7 +11,9 @@ import {
   useDragControls,
 } from "framer-motion";
 import React, { useEffect } from "react";
+
 import { animations } from "../../../styles/apple-design-system";
+
 import styles from "./AppleSheet.module.css";
 
 export interface AppleSheetProps {

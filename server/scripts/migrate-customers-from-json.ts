@@ -7,12 +7,15 @@
  * Run with: pnpm run migrate:customers
  */
 
-import { config } from "dotenv";
-import { drizzle } from "drizzle-orm/postgres-js";
 import { readFileSync } from "fs";
 import { dirname, join } from "path";
-import postgres from "postgres";
 import { fileURLToPath } from "url";
+
+import { config } from "dotenv";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+
+
 import {
   customerProfilesInFridayAi,
   customerPropertiesInFridayAi,

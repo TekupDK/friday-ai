@@ -5,12 +5,12 @@
  * Optimized for Shortwave-style conversation view
  */
 
-import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 import type {
   EmailThread,
   ThreadGroupingOptions,
   ThreadStats,
 } from "@/types/email-thread";
+import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 
 /**
  * Groups emails by SENDER (from address) into conversation threads

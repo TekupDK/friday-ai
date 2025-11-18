@@ -9,11 +9,12 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 
 import { AppleButton, AppleCard, AppleModal } from "./apple-ui";
+import { CreateSubscriptionModal } from "./CreateSubscriptionModal";
 import { ErrorDisplay } from "./ErrorDisplay";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { SubscriptionCard } from "./SubscriptionCard";
 import { SubscriptionUsageDisplay } from "./SubscriptionUsageDisplay";
-import { CreateSubscriptionModal } from "./CreateSubscriptionModal";
+
 import { trpc } from "@/lib/trpc";
 
 interface SubscriptionListProps {

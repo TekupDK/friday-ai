@@ -14,9 +14,10 @@
  * Run with: npx tsx server/integrations/chromadb/scripts/collect-from-google-apis.ts
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync, existsSync, readFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import { JWT } from "google-auth-library";

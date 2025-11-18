@@ -3,8 +3,9 @@
  * Check what's in the event descriptions and if there are Gmail thread refs
  */
 
-import { config } from "dotenv";
 import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import { listCalendarEvents } from "../../../google-api";

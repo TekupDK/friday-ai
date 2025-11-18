@@ -5,6 +5,10 @@
  * Provides real-time financial integration.
  */
 
+import { eq, sql, and, gte, lte } from "drizzle-orm";
+
+import { leads, customerProfiles } from "../drizzle/schema";
+
 import {
   createInvoice,
   getInvoices,
@@ -12,8 +16,6 @@ import {
   createCustomer,
 } from "./billy";
 import { getDb } from "./db";
-import { leads, customerProfiles } from "../drizzle/schema";
-import { eq, sql, and, gte, lte } from "drizzle-orm";
 
 interface BillyCustomer {
   id: string;

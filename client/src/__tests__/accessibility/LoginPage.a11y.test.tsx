@@ -5,9 +5,11 @@
 
 import "@testing-library/jest-dom";
 import { screen } from "@testing-library/react";
-import LoginPage from "@/pages/LoginPage";
 import { beforeAll, vi } from "vitest";
+
 import { renderWithA11y, expectNoA11yViolations } from "./test-utils";
+
+import LoginPage from "@/pages/LoginPage";
 
 // Mock tRPC
 vi.mock("@/lib/trpc", () => ({

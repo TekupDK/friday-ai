@@ -3,29 +3,31 @@
  * Provides AI-powered email intelligence features
  */
 
-import { router, protectedProcedure } from "../_core/trpc";
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { eq, and, desc, inArray } from "drizzle-orm";
+import { z } from "zod";
+
+import {
+  emailCategoriesInFridayAi,
+  emailPrioritiesInFridayAi,
+  responseSuggestionsInFridayAi,
+} from "../../drizzle/schema";
+import { router, protectedProcedure } from "../_core/trpc";
+import { getDb } from "../db";
 import {
   categorizeEmail,
   getCategoryStats,
   type EmailMessage,
 } from "../email-intelligence/categorizer";
 import {
-  generateResponseSuggestions,
-  generateQuickReplies,
-} from "../email-intelligence/response-generator";
-import {
   scorePriority,
   createSenderProfile,
 } from "../email-intelligence/priority-scorer";
-import { getDb } from "../db";
 import {
-  emailCategoriesInFridayAi,
-  emailPrioritiesInFridayAi,
-  responseSuggestionsInFridayAi,
-} from "../../drizzle/schema";
-import { eq, and, desc, inArray } from "drizzle-orm";
+  generateResponseSuggestions,
+  generateQuickReplies,
+} from "../email-intelligence/response-generator";
+
 
 export const emailIntelligenceRouter = router({
   /**

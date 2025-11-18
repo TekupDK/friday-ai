@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 interface CategoryItem {
   id: string;

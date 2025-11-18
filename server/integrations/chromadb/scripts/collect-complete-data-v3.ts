@@ -11,17 +11,18 @@
  * 7. Better Gmail → Calendar → Billy linking
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
+import { getCustomers } from "../../../billy";
 import {
   listCalendarEvents,
   searchGmailThreads,
   getGmailThread,
 } from "../../../google-api";
-import { getCustomers } from "../../../billy";
 
 console.log("📊 COMPLETE DATA COLLECTION V3 - START FORFRA\n");
 console.log("=".repeat(70));

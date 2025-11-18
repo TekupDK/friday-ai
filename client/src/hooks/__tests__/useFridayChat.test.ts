@@ -5,8 +5,9 @@
 
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { useFridayChat } from "../useFridayChat";
+
 import { trpc } from "../../lib/trpc";
+import { useFridayChat } from "../useFridayChat";
 
 // Mock TRPC
 vi.mock("../../lib/trpc", () => ({

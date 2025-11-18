@@ -3,13 +3,17 @@
  * Replaces direct OpenRouter calls with server-side routeAI
  */
 
+import { EventEmitter } from "events";
+
+import { z } from "zod";
+
+import { getFeatureFlags } from "../_core/feature-flags";
+import { streamResponse } from "../_core/llm";
+import { logger } from "../_core/logger";
 import { protectedProcedure, router } from "../_core/trpc";
 import { routeAI, type AIRouterOptions, type PendingAction } from "../ai-router";
-import { streamResponse } from "../_core/llm";
-import { getFeatureFlags } from "../_core/feature-flags";
-import { logger } from "../_core/logger";
-import { z } from "zod";
-import { EventEmitter } from "events";
+
+
 
 export interface ChatMessage {
   role: "user" | "assistant" | "system";

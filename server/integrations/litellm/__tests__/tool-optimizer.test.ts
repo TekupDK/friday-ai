@@ -3,6 +3,7 @@
  */
 
 import { describe, it, expect, vi } from "vitest";
+
 import { ToolCallOptimizer } from "../tool-optimizer";
 
 describe("ToolCallOptimizer", () => {

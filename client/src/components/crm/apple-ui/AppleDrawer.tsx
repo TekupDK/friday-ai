@@ -7,7 +7,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import React, { useEffect } from "react";
+
 import { animations } from "../../../styles/apple-design-system";
+
 import styles from "./AppleDrawer.module.css";
 
 export interface AppleDrawerProps {

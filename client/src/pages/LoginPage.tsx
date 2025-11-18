@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
-import { usePageTitle } from "@/hooks/usePageTitle";
+
 
 import FuturisticAICanvas from "@/components/interactive/FuturisticAICanvas";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { APP_LOGO, APP_LOGO_FULL, APP_TITLE } from "@/const";
 import { useTheme } from "@/contexts/ThemeContext";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { supabase } from "@/lib/supabaseClient";
 import { trpc } from "@/lib/trpc";
 

@@ -1,24 +1,3 @@
-import { CustomerProfile } from "@/components/workspace/CustomerProfile";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { useEmailContext } from "@/contexts/EmailContext";
-import { useWorkflowContext } from "@/contexts/WorkflowContext";
-import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -51,6 +30,27 @@ import {
 } from "lucide-react";
 import { memo, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CustomerProfile } from "@/components/workspace/CustomerProfile";
+import { useEmailContext } from "@/contexts/EmailContext";
+import { useWorkflowContext } from "@/contexts/WorkflowContext";
+import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 
 type LeadStatus =
   | "new"

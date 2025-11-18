@@ -5,10 +5,11 @@
  * in the codebase before manual browser testing.
  */
 
-import { expect, test } from "@playwright/test";
 import * as fs from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+
+import { expect, test } from "@playwright/test";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

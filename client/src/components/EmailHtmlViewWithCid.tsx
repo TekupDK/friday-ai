@@ -1,6 +1,8 @@
-import { trpc } from "@/lib/trpc";
 import React from "react";
+
 import { sanitizeHtml } from "../lib/sanitize";
+
+import { trpc } from "@/lib/trpc";
 
 interface Props {
   html?: string | null;
@@ -64,7 +66,7 @@ export default function EmailHtmlViewWithCid({
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [safe, messageId]); // Resolve CID images and constrain image sizes
 
   if (!safe) return null;
@@ -73,7 +75,7 @@ export default function EmailHtmlViewWithCid({
     <div
       ref={containerRef}
       className={className}
-      // eslint-disable-next-line react/no-danger
+       
       dangerouslySetInnerHTML={{ __html: safe }}
     />
   );

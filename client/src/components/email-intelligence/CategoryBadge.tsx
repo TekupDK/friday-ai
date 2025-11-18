@@ -2,7 +2,6 @@
  * CategoryBadge - Display email category with color coding
  */
 
-import { Badge } from "@/components/ui/badge";
 import {
   Briefcase,
   User,
@@ -11,6 +10,8 @@ import {
   AlertCircle,
   Folder,
 } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
 
 interface CategoryBadgeProps {
   category:

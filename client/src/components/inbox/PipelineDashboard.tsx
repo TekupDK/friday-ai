@@ -1,7 +1,9 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { trpc } from "@/lib/trpc";
 import { Calendar, DollarSign, Mail, Send, TrendingUp } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { trpc } from "@/lib/trpc";
+
 
 export default function PipelineDashboard() {
   const { data: pipelineStates, isLoading } =

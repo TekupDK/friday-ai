@@ -9,12 +9,13 @@
  * - verifyResourceOwnership for lead endpoints
  */
 
-import { describe, it, expect, vi, beforeAll, afterEach } from "vitest";
 import { TRPCError } from "@trpc/server";
-import { appRouter } from "../routers";
+import { describe, it, expect, vi, beforeAll, afterEach } from "vitest";
+
 import type { TrpcContext } from "../_core/context";
-import * as db from "../db";
 import { ENV } from "../_core/env";
+import * as db from "../db";
+import { appRouter } from "../routers";
 
 // Ensure DATABASE_URL is unset for unit tests (fallback mode)
 beforeAll(() => {

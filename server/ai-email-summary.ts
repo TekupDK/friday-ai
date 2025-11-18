@@ -12,7 +12,9 @@
  */
 
 import { and, eq } from "drizzle-orm";
+
 import { emailsInFridayAi } from "../drizzle/schema";
+
 import { invokeLLM, type Message } from "./_core/llm";
 import { getDb } from "./db";
 import { logger } from "./logger";

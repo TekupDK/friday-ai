@@ -3,8 +3,8 @@
  * Viser email thread summary med AI analysis
  */
 
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 export interface EmailThreadData {

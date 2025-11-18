@@ -7,7 +7,9 @@
 import { ExternalLink, Trash2, TrendingUp } from "lucide-react";
 import React from "react";
 import { useLocation } from "wouter";
+
 import { AppleButton, AppleCard } from "./apple-ui";
+
 import { cn } from "@/lib/utils";
 
 export interface RelationshipData {

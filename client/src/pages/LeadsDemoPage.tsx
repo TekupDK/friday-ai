@@ -4,7 +4,18 @@
  * Demo page showcasing customer cards with live ChromaDB data
  */
 
+import {
+  Search,
+  TrendingUp,
+  DollarSign,
+  Users,
+  CheckCircle2,
+} from "lucide-react";
 import React, { useState, useEffect } from "react";
+
+import { CustomerCard } from "@/components/leads/CustomerCardClean";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,17 +24,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import {
-  Search,
-  TrendingUp,
-  DollarSign,
-  Users,
-  CheckCircle2,
-} from "lucide-react";
-import { CustomerCard } from "@/components/leads/CustomerCardClean";
 
 export function LeadsDemoPage() {
   const [leads, setLeads] = useState<any[]>([]);

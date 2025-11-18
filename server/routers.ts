@@ -1,6 +1,7 @@
 import { systemRouter } from "./_core/systemRouter";
 import { router } from "./_core/trpc";
 import { customerRouter } from "./customer-router";
+import { adminUserRouter } from "./routers/admin-user-router";
 import { aiMetricsRouter } from "./routers/ai-metrics-router";
 import { authRouter } from "./routers/auth-router";
 import { automationRouter } from "./routers/automation-router";
@@ -22,7 +23,6 @@ import { reportsRouter } from "./routers/reports-router";
 import { subscriptionRouter } from "./routers/subscription-router";
 import { uiAnalysisRouter } from "./routers/ui-analysis-router";
 import { workspaceRouter } from "./routers/workspace-router";
-import { adminUserRouter } from "./routers/admin-user-router";
 
 /**
  * Main Application Router

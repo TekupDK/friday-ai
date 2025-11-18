@@ -1,8 +1,10 @@
+import { beforeAll, describe, expect, it } from "vitest";
+
+import LeadsTab from "../LeadsTab";
+
 import { loginTestUser, verifyAuthentication } from "@/__tests__/auth-helper";
 import { render, screen, waitFor } from "@/__tests__/test-utils";
 import { WorkflowContextProvider } from "@/contexts/WorkflowContext";
-import { beforeAll, describe, expect, it } from "vitest";
-import LeadsTab from "../LeadsTab";
 
 /**
  * Integration test for LeadsTab

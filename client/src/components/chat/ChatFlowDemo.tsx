@@ -4,13 +4,15 @@
  */
 
 import { useState, useEffect } from "react";
+
 import { AIThinking } from "./AIThinking";
+import { CalendarEventCard, type CalendarEventData } from "./CalendarEventCard";
+import { EmailThreadCard, type EmailThreadData } from "./EmailThreadCard";
+import { InvoiceCards, type InvoiceCardData } from "./InvoiceCards";
+import { SearchResultsCard, type SearchResult } from "./SearchResultsCard";
 import { ToolExecutionBox } from "./ToolExecutionBox";
 import { WeatherCard } from "./WeatherCard";
-import { InvoiceCards, type InvoiceCardData } from "./InvoiceCards";
-import { EmailThreadCard, type EmailThreadData } from "./EmailThreadCard";
-import { CalendarEventCard, type CalendarEventData } from "./CalendarEventCard";
-import { SearchResultsCard, type SearchResult } from "./SearchResultsCard";
+
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

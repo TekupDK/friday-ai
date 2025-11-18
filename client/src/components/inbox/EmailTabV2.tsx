@@ -12,6 +12,17 @@
  * - EmailAIV2: AI features (future)
  */
 
+import { AlertCircle, RefreshCw } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { toast } from "sonner";
+
+import CreateLeadModal from "./CreateLeadModal";
+import EmailBulkActionsV2, { type BulkAction } from "./EmailBulkActionsV2";
+import EmailListAI from "./EmailListAI";
+import EmailListV2, { type EmailMessage } from "./EmailListV2";
+import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
+import EmailSplits, { type SplitId } from "./EmailSplits";
+
 import { Button } from "@/components/ui/button";
 import { UI_CONSTANTS } from "@/constants/business";
 import { useEmailContext } from "@/contexts/EmailContext";
@@ -19,15 +30,6 @@ import { useEmailKeyboardShortcuts } from "@/hooks/useEmailKeyboardShortcuts";
 import { useRateLimit } from "@/hooks/useRateLimit";
 import { trpc } from "@/lib/trpc";
 import type { EnhancedEmailMessage } from "@/types/enhanced-email";
-import { AlertCircle, RefreshCw } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
-import { toast } from "sonner";
-import CreateLeadModal from "./CreateLeadModal";
-import EmailBulkActionsV2, { type BulkAction } from "./EmailBulkActionsV2";
-import EmailListAI from "./EmailListAI";
-import EmailListV2, { type EmailMessage } from "./EmailListV2";
-import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
-import EmailSplits, { type SplitId } from "./EmailSplits";
 
 interface EmailTabV2Props {
   // Configuration

@@ -2,15 +2,17 @@
  * CHAT COMPONENTS SHOWCASE - Alle 78 komponenter vist
  */
 
-import { usePageTitle } from "@/hooks/usePageTitle";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, DollarSign, Target, Users } from "lucide-react";
 import { useState } from "react";
+
+import { ChatDialogType, DialogHost } from "./ChatDialogsHost";
+
+import { AdvancedComposer } from "@/components/chat/advanced/AdvancedComposer";
+import { CodeBlockHighlight } from "@/components/chat/advanced/CodeBlockHighlight";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Import all components
 // Basic Chat Cards (12)
-import { AnalyticsCard } from "@/components/chat/cards/AnalyticsCard";
 import { CalendarCard } from "@/components/chat/cards/CalendarCard";
 import { ContactCard } from "@/components/chat/cards/ContactCard";
 import { DocumentCard } from "@/components/chat/cards/DocumentCard";
@@ -48,7 +50,6 @@ import { RiskAssessmentCard } from "@/components/chat/cards/RiskAssessmentCard";
 import { SentimentAnalysisCard } from "@/components/chat/cards/SentimentAnalysisCard";
 
 // Advanced Chat (4)
-import { CodeBlockHighlight } from "@/components/chat/advanced/CodeBlockHighlight";
 import { MentionSystem } from "@/components/chat/advanced/MentionSystem";
 import { MessageHistory } from "@/components/chat/advanced/MessageHistory";
 import { RichTextEditor } from "@/components/chat/advanced/RichTextEditor";
@@ -85,7 +86,6 @@ import { ThemeCustomizerCard } from "@/components/chat/other/ThemeCustomizerCard
 import { UserProfile } from "@/components/chat/other/UserProfile";
 
 // Dialog host to power all modals
-import { Calendar, DollarSign, Target, Users } from "lucide-react";
 
 // Interactive components
 import { ActionButtonsGroup } from "@/components/chat/interactive/ActionButtonsGroup";
@@ -95,7 +95,6 @@ import { SyncStatusCard } from "@/components/chat/interactive/SyncStatusCard";
 import { ThinkingIndicator } from "@/components/chat/interactive/ThinkingIndicator";
 
 // ChatGPT-style Advanced components
-import { AdvancedComposer } from "@/components/chat/advanced/AdvancedComposer";
 import { MemoryManager } from "@/components/chat/advanced/MemoryManager";
 import { SourcesPanel } from "@/components/chat/advanced/SourcesPanel";
 import { StreamingMessage } from "@/components/chat/advanced/StreamingMessage";
@@ -115,12 +114,15 @@ import {
   SearchResultsSkeleton,
 } from "@/components/chat/advanced/loaders/ChatSkeleton";
 import { MessageThread } from "@/components/chat/advanced/messaging/MessageThread";
+import { AnalyticsCard } from "@/components/chat/cards/AnalyticsCard";
 
 // New Data Visualization components
 import { ChartComponent } from "@/components/chat/data-visualization/ChartComponent";
 import { DataTable } from "@/components/chat/data-visualization/DataTable";
 import { MetricsDashboard } from "@/components/chat/data-visualization/MetricsDashboard";
-import { ChatDialogType, DialogHost } from "./ChatDialogsHost";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export default function ChatComponentsShowcase() {
   usePageTitle("Chat Components Showcase");

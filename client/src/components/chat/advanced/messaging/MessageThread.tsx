@@ -1,8 +1,5 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { formatDistanceToNow } from "date-fns";
+import { da } from "date-fns/locale";
 import {
   ChevronDown,
   ChevronUp,
@@ -16,8 +13,12 @@ import {
   Flag,
   FileText,
 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { da } from "date-fns/locale";
+import * as React from "react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export interface ThreadMessage {
   id: string;

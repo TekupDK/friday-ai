@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/react";
-import React from "react";
+
 import { trpc } from "@/lib/trpc";
-import { UNAUTHED_ERR_MSG } from "@shared/const";
+
 import {
   QueryClient,
   QueryClientProvider,
@@ -14,14 +14,14 @@ import {
   splitLink,
   TRPCClientError,
 } from "@trpc/client";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import superjson from "superjson";
+
 import App from "./App";
 import { getLoginUrl } from "./const";
 import "./index.css";
-import { requestQueue } from "./lib/requestQueue";
 import { chatSendAbort } from "./lib/abortSignals";
-import { intelligentRetryDelay, shouldRetry } from "./lib/retryStrategy";
 import {
   createOptimizedQueryClient,
   invalidateAuthQueries,
@@ -29,6 +29,10 @@ import {
   getCacheConfig,
 } from "./lib/cacheStrategy";
 import { getCsrfHeaders } from "./lib/csrf";
+import { requestQueue } from "./lib/requestQueue";
+import { intelligentRetryDelay, shouldRetry } from "./lib/retryStrategy";
+
+import { UNAUTHED_ERR_MSG } from "@shared/const";
 
 // Initialize Sentry error tracking (before React app)
 const sentryDsn = import.meta.env.VITE_SENTRY_DSN;

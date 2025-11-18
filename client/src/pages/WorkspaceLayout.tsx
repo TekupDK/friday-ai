@@ -1,4 +1,17 @@
 import {
+  Bot,
+  LogOut,
+  Menu,
+  Settings,
+  User,
+  BookOpen,
+  BarChart3,
+  Users,
+  Target,
+  Calendar,
+  CreditCard,
+} from "lucide-react";
+import {
   lazy,
   memo,
   Suspense,
@@ -7,15 +20,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { useLocation } from "wouter";
+
 import { useAuth } from "@/_core/hooks/useAuth";
-import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
-import { usePageTitle } from "@/hooks/usePageTitle";
-import { useEmailContext } from "@/contexts/EmailContext";
-import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
-import { MobileUserMenuSheet } from "@/components/MobileUserMenuSheet";
-import { SettingsDialog } from "@/components/SettingsDialog";
-import { UserProfileDialog } from "@/components/UserProfileDialog";
 import { KeyboardShortcutsDialog } from "@/components/KeyboardShortcutsDialog";
+import { MobileUserMenuSheet } from "@/components/MobileUserMenuSheet";
+import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
+import { SettingsDialog } from "@/components/SettingsDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,22 +42,12 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { UserProfileDialog } from "@/components/UserProfileDialog";
 import { getLoginUrl } from "@/const";
 import { InvoiceProvider } from "@/context/InvoiceContext";
-import {
-  Bot,
-  LogOut,
-  Menu,
-  Settings,
-  User,
-  BookOpen,
-  BarChart3,
-  Users,
-  Target,
-  Calendar,
-  CreditCard,
-} from "lucide-react";
-import { useLocation } from "wouter";
+import { useEmailContext } from "@/contexts/EmailContext";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 // Lazy load panels for code splitting optimization
 const AIAssistantPanel = lazy(

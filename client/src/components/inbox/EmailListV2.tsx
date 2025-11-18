@@ -5,14 +5,7 @@
  * Handles virtual scrolling, email rendering, and selection logic.
  */
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Suspense, lazy } from "react";
-import { UI_CONSTANTS } from "@/constants/business";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useCallback, useMemo, useRef } from "react";
 import {
   Archive,
   CheckCircle2,
@@ -21,6 +14,15 @@ import {
   Star,
   Trash2,
 } from "lucide-react";
+import { Suspense, lazy } from "react";
+import { useCallback, useMemo, useRef } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
+import { UI_CONSTANTS } from "@/constants/business";
+
 
 // Lazy load AI components for performance
 const EmailAISummary = lazy(() => import("./EmailAISummary"));

@@ -2,12 +2,14 @@
  * APPROVAL CARD - Godkendelse af bookinger, fakturaer, tilbud
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { Check, X, Clock, User, Calendar, DollarSign } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 
 export interface ApprovalItem {
   id: string;

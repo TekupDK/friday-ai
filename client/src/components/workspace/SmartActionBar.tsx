@@ -12,16 +12,6 @@
  * - Performance optimized with memoization
  */
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { BUSINESS_CONSTANTS, UI_CONSTANTS } from "@/constants/business";
-import {
-  EmailContextData,
-  WorkspaceContext,
-} from "@/services/emailContextDetection";
-import { useCallback, useMemo } from "react";
 import {
   Calendar,
   DollarSign,
@@ -41,6 +31,17 @@ import {
   Plus,
   Settings,
 } from "lucide-react";
+import { useCallback, useMemo } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { BUSINESS_CONSTANTS, UI_CONSTANTS } from "@/constants/business";
+import {
+  EmailContextData,
+  WorkspaceContext,
+} from "@/services/emailContextDetection";
 
 // Base action interface
 export interface SmartAction {

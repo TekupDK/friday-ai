@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
 import { toast } from "sonner";
+
+import { useAuth } from "@/_core/hooks/useAuth";
 
 interface WSMessage {
   type: string;

@@ -3,8 +3,9 @@
  * AI-powered analysis of UI designs and user experience
  */
 
-import { router, protectedProcedure } from "../_core/trpc";
 import { z } from "zod";
+
+import { router, protectedProcedure } from "../_core/trpc";
 import { analyzeUIWithAI } from "../modules/ui-analysis";
 
 export const uiAnalysisRouter = router({

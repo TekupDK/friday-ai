@@ -3,8 +3,9 @@
  * See what's actually in the Gmail threads
  */
 
-import { config } from "dotenv";
 import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import { searchGmailThreads, getGmailThread } from "../../../google-api";

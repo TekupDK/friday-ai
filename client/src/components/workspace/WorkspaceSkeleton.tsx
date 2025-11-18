@@ -1,4 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Brain,
   Target,
@@ -7,6 +6,8 @@ import {
   Briefcase,
   BarChart3,
 } from "lucide-react";
+
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface WorkspaceSkeletonProps {
   type: "lead" | "booking" | "invoice" | "customer" | "dashboard";

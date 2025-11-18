@@ -1,6 +1,8 @@
 import { EventEmitter } from "events";
-import { WebSocketServer, WebSocket } from "ws";
 import { IncomingMessage } from "http";
+
+import { WebSocketServer, WebSocket } from "ws";
+
 import { logger } from "../../_core/logger";
 import type { WSClientEvent, WSServerEvent, Presence } from "../types";
 

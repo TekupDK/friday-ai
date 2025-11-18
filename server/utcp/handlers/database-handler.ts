@@ -4,12 +4,14 @@
  * Executes database operations via UTCP
  */
 
+import { eq, and } from "drizzle-orm";
+
+import { leads } from "../../../drizzle/schema";
+import { getDb } from "../../db";
+import { getUserLeads, createLead } from "../../lead-db";
 import type { UTCPTool, UTCPDatabaseHandler, UTCPToolResult } from "../types";
 import { interpolateTemplateObject } from "../utils/template";
-import { getUserLeads, createLead } from "../../lead-db";
-import { getDb } from "../../db";
-import { leads } from "../../../drizzle/schema";
-import { eq, and } from "drizzle-orm";
+
 
 /**
  * Execute database handler

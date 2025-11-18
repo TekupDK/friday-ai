@@ -1,12 +1,14 @@
-import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { createClient } from "@supabase/supabase-js";
+import { eq } from "drizzle-orm";
 import express, { Request, Response } from "express";
+
+import { users } from "../../drizzle/schema";
 import { getSessionCookieOptions } from "../_core/cookies";
 import { ENV } from "../_core/env";
 import { sdk } from "../_core/sdk";
 import * as db from "../db";
-import { users } from "../../drizzle/schema";
-import { eq } from "drizzle-orm";
+
+import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
 const router = express.Router();
 

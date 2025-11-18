@@ -7,7 +7,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import React, { useState } from "react";
+
 import { animations } from "../../../styles/apple-design-system";
+
 import styles from "./AppleSearchField.module.css";
 
 export interface AppleSearchFieldProps

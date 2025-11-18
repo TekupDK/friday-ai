@@ -4,10 +4,11 @@
  * Generates markdown documentation from analyzed data
  */
 
-import type { CollectedData } from "./data-collector";
-import type { Analysis } from "./analyzer";
 import { formatDistanceToNow } from "date-fns";
 import { da } from "date-fns/locale";
+
+import type { Analysis } from "./analyzer";
+import type { CollectedData } from "./data-collector";
 
 /**
  * Generate lead documentation

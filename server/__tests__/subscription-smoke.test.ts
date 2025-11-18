@@ -14,17 +14,18 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED =
 process.env.DOTENV_CONFIG_PATH = process.env.DOTENV_CONFIG_PATH || ".env.prod";
 import "dotenv/config";
 
+import { eq, and } from "drizzle-orm";
 import { describe, it, expect, beforeEach, afterEach, beforeAll, vi } from "vitest";
+
+import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "../../drizzle/schema";
+import { ENV } from "../_core/env";
 import { getDb } from "../db";
 import * as db from "../db";
-import { ENV } from "../_core/env";
-import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "../../drizzle/schema";
-import { eq, and } from "drizzle-orm";
 import { createSubscription, processRenewal, processCancellation } from "../subscription-actions";
-import { sendSubscriptionEmail } from "../subscription-email";
-import { trackBookingUsage, calculateBookingHours } from "../subscription-usage-tracker";
-import { processMonthlyRenewals } from "../subscription-jobs";
 import { getSubscriptionByCustomerId } from "../subscription-db";
+import { sendSubscriptionEmail } from "../subscription-email";
+import { processMonthlyRenewals } from "../subscription-jobs";
+import { trackBookingUsage, calculateBookingHours } from "../subscription-usage-tracker";
 
 // Normalize DATABASE_URL for postgres.js and Supabase
 function normalizeDatabaseUrl(url: string | undefined): string | undefined {

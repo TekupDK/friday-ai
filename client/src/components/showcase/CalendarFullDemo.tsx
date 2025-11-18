@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import {
   addMonths,
   subMonths,
@@ -13,21 +12,6 @@ import {
   parseISO,
 } from "date-fns";
 import { da } from "date-fns/locale";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
 import {
   Calendar as CalendarIcon,
   ChevronLeft,
@@ -37,6 +21,24 @@ import {
   Users,
   Briefcase,
 } from "lucide-react";
+import { useMemo, useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+
 
 interface CalendarEvent {
   id: string;

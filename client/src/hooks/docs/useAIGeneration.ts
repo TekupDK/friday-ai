@@ -8,9 +8,10 @@
  * - Bulk generate for all leads
  */
 
-import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
+
+import { trpc } from "@/lib/trpc";
 
 export function useAIGeneration() {
   const [, navigate] = useLocation();

@@ -1,3 +1,13 @@
+import {
+  Archive,
+  CheckCircle2,
+  Circle,
+  MoreVertical,
+  Star,
+  Trash2,
+} from "lucide-react";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,15 +18,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { trpc } from "@/lib/trpc";
-import {
-  Archive,
-  CheckCircle2,
-  Circle,
-  MoreVertical,
-  Star,
-  Trash2,
-} from "lucide-react";
-import { toast } from "sonner";
 
 interface EmailRowActionsProps {
   email: {

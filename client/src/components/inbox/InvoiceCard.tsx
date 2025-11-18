@@ -1,7 +1,3 @@
-import type { BillyInvoice } from "@/../../shared/types";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   CheckCircle2,
   Clock,
@@ -16,6 +12,11 @@ import {
 } from "lucide-react";
 import { memo } from "react";
 import { toast } from "sonner";
+
+import type { BillyInvoice } from "@/../../shared/types";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface InvoiceCardProps {
   invoice: BillyInvoice;

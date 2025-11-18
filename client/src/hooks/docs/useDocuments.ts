@@ -1,6 +1,7 @@
-import { trpc } from "@/lib/trpc";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+
+import { trpc } from "@/lib/trpc";
 
 /**
  * Hook for managing documents with tRPC

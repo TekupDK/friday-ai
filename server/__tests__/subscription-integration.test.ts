@@ -5,10 +5,11 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { createSubscription, processRenewal } from "../subscription-actions";
-import { getDb } from "../db";
+
 import { createInvoice } from "../billy";
+import { getDb } from "../db";
 import { createCalendarEvent } from "../google-api";
+import { createSubscription, processRenewal } from "../subscription-actions";
 import { sendSubscriptionEmail } from "../subscription-email";
 
 // Mock database

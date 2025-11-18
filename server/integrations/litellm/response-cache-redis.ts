@@ -5,8 +5,9 @@
  * ✅ NEW: Redis caching for AI responses
  */
 
-import { getRedisClient } from "../../rate-limiter-redis";
 import { logger } from "../../_core/logger";
+import { getRedisClient } from "../../rate-limiter-redis";
+
 import { responseCache } from "./response-cache";
 
 interface CacheEntry<T = unknown> {

@@ -13,13 +13,14 @@
  */
 
 import * as dotenv from "dotenv";
-import { getDb, getUserByOpenId } from "../db";
+import { eq, and, sql, desc } from "drizzle-orm";
+
 import {
   customerProfiles,
   customerInvoices,
   tasks,
 } from "../../drizzle/schema";
-import { eq, and, sql, desc } from "drizzle-orm";
+import { getDb, getUserByOpenId } from "../db";
 
 dotenv.config({ path: ".env.supabase" });
 dotenv.config();

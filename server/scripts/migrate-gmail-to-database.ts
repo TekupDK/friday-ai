@@ -6,8 +6,10 @@
  */
 
 import { createHash } from "crypto";
+
 import * as dotenv from "dotenv";
 import { eq } from "drizzle-orm";
+
 import { emails, emailThreads } from "../../drizzle/schema";
 import { getDb } from "../db";
 import { enrichEmailFromSources } from "../email-enrichment";

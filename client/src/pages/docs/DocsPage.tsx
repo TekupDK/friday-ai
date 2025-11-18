@@ -1,16 +1,3 @@
-import { useState, useRef } from "react";
-import { usePageTitle } from "@/hooks/usePageTitle";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   FileText,
   Search,
@@ -27,19 +14,35 @@ import {
   Zap,
   TrendingUp,
 } from "lucide-react";
+import { Keyboard } from "lucide-react";
+import { useState, useRef } from "react";
 import { useLocation } from "wouter";
+
+import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
+import { ConflictList } from "@/components/docs/ConflictList";
+import { DocumentEditor } from "@/components/docs/DocumentEditor";
 import { DocumentList } from "@/components/docs/DocumentList";
 import { DocumentViewer } from "@/components/docs/DocumentViewer";
-import { DocumentEditor } from "@/components/docs/DocumentEditor";
-import { ConflictList } from "@/components/docs/ConflictList";
-import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
-import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
-import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+
+import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 import {
   useDocsKeyboardShortcuts,
   DocsKeyboardShortcutsHint,
 } from "@/hooks/docs/useDocsKeyboardShortcuts";
-import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
+import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
+import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import {
   Dialog,
   DialogContent,
@@ -47,7 +50,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Keyboard } from "lucide-react";
+import { usePageTitle } from "@/hooks/usePageTitle";
+
 
 /**
  * Documentation Management Page

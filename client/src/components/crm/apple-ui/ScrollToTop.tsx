@@ -7,7 +7,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronUp } from "lucide-react";
 import React, { useEffect, useState } from "react";
+
 import { animations } from "../../../styles/apple-design-system";
+
 import styles from "./ScrollToTop.module.css";
 
 export interface ScrollToTopProps {

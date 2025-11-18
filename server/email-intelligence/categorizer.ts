@@ -3,8 +3,8 @@
  * Uses LLM to automatically categorize emails for better organization
  */
 
-import { routeAI } from "../ai-router";
 import { generateCorrelationId } from "../action-audit";
+import { routeAI } from "../ai-router";
 
 export interface EmailCategory {
   category:

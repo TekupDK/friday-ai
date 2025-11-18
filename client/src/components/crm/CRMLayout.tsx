@@ -7,9 +7,10 @@
 import { Home } from "lucide-react";
 import React, { useMemo } from "react";
 import { useLocation } from "wouter";
+
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { CRM_NAV_ITEMS } from "@/const/crm";
+import { cn } from "@/lib/utils";
 
 interface CRMLayoutProps {
   children: React.ReactNode;

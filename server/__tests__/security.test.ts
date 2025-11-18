@@ -3,8 +3,9 @@
  * Tests for authentication bypass, CSRF protection, input validation, XSS prevention
  */
 
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { TRPCError } from "@trpc/server";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+
 import { sanitizeError, createSafeTRPCError } from "../_core/errors";
 
 describe("Security Regression Tests", () => {

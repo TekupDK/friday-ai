@@ -1,3 +1,6 @@
+import { ChevronRight, Search, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -6,8 +9,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { ChevronRight, Search, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 
 interface SearchOperator {
   key: string;

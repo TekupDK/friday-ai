@@ -19,10 +19,10 @@ import {
 import { ErrorDisplay } from "@/components/crm/ErrorDisplay";
 import { LoadingSpinner } from "@/components/crm/LoadingSpinner";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
-import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { usePageTitle } from "@/hooks/usePageTitle";
-import { trpc } from "@/lib/trpc";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -30,9 +30,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { usePageTitle } from "@/hooks/usePageTitle";
+import { trpc } from "@/lib/trpc";
 
 type UserRole = "user" | "admin" | "owner";
 

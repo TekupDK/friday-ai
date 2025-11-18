@@ -28,7 +28,7 @@
 
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { V4_3_Lead, V4_3_Dataset } from "../v4_3-types";
+
 import {
   V4_3_CONFIG,
   normalizeLeadSource,
@@ -39,6 +39,7 @@ import {
   LeadSource,
 } from "../v4_3-config";
 import { deduplicateLeads, DEFAULT_FILTER_CONFIG } from "../v4_3-deduplication";
+import { V4_3_Lead, V4_3_Dataset } from "../v4_3-types";
 
 console.log("🧮 V4.3.2 Script 2: Calculate Metrics (Enhanced Calendar)\n");
 console.log("=".repeat(70));

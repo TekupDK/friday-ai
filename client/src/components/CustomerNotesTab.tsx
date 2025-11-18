@@ -1,14 +1,15 @@
+import { formatDistanceToNow } from "date-fns";
+import { da } from "date-fns/locale";
+import { Edit2, MessageSquare, Plus, Save, Trash2, X } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc";
-import { formatDistanceToNow } from "date-fns";
-import { da } from "date-fns/locale";
-import { Edit2, MessageSquare, Plus, Save, Trash2, X } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
 
 interface CustomerNotesTabProps {
   customerId: number;

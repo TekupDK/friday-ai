@@ -1,8 +1,9 @@
-import * as React from "react";
 import { X, Minus, Maximize2, MessageSquare } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import * as React from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export interface FloatingChatWindowProps {
   isOpen: boolean;

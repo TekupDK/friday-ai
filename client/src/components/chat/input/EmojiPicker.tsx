@@ -2,7 +2,9 @@
  * EMOJI PICKER - Full emoji selector
  */
 
+import { Smile, Search } from "lucide-react";
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,7 +14,6 @@ import {
 } from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { Smile, Search } from "lucide-react";
 
 const EMOJI_CATEGORIES = {
   smileys: [

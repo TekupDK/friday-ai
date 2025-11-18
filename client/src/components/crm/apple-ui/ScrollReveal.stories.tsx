@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+
 import { AppleCard } from "./AppleCard";
 import { ScrollReveal } from "./ScrollReveal";
 

@@ -4,9 +4,10 @@
  * Uses OpenRouter (FREE GLM-4.5-Air) to analyze collected data and extract insights
  */
 
-import type { CollectedData } from "./data-collector";
-import { logger } from "../../_core/logger";
 import { invokeLLM } from "../../_core/llm";
+import { logger } from "../../_core/logger";
+
+import type { CollectedData } from "./data-collector";
 
 export interface Analysis {
   summary: string;

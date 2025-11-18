@@ -3,6 +3,11 @@
  * Viser ALLE chat komponenter + fungerende chat til sidst
  */
 
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { Link } from "wouter";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -10,10 +15,6 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "wouter";
 
 // Placeholder - components will be added
 export default function ChatPanelComplete() {

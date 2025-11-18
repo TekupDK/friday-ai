@@ -1,10 +1,11 @@
-import { trpc } from "@/lib/trpc";
-import { InvoiceProvider } from "@/context/InvoiceContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, type RenderOptions } from "@testing-library/react";
 import { httpBatchLink } from "@trpc/client";
 import { ReactElement } from "react";
 import superjson from "superjson";
+
+import { InvoiceProvider } from "@/context/InvoiceContext";
+import { trpc } from "@/lib/trpc";
 
 /**
  * Custom test render function that wraps components with necessary providers

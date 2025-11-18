@@ -3,9 +3,6 @@
  * Moderne design med gradient cards og kategoriserede suggestions
  */
 
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import {
   Calendar,
   FileText,
@@ -20,6 +17,11 @@ import {
   Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
 
 interface Suggestion {
   text: string;

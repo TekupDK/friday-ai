@@ -2,7 +2,10 @@
  * ResponseSuggestions - Display AI-generated email response suggestions
  */
 
+import { Copy, Check, Sparkles } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,8 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Copy, Check, Sparkles } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
 interface ResponseSuggestionsProps {

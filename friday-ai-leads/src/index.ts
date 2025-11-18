@@ -3,9 +3,10 @@
  * Main Entry Point
  */
 
-import { FridayAIService } from "./services/FridayAIService";
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
+
+import { FridayAIService } from "./services/FridayAIService";
 
 // Load environment variables
 dotenv.config();

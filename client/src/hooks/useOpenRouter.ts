@@ -6,6 +6,7 @@
  */
 
 import { useState, useCallback } from "react";
+
 import { AI_CONFIG } from "@/config/ai-config";
 import { FRIDAY_PROMPTS, selectPrompt } from "@/config/friday-prompts";
 

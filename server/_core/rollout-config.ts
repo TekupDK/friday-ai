@@ -3,8 +3,8 @@
  * Controls gradual rollout and emergency rollback procedures
  */
 
-import { getFeatureFlags } from "./feature-flags";
 import { getABTestStatus } from "./ab-testing";
+import { getFeatureFlags } from "./feature-flags";
 
 export interface RolloutPhase {
   name: string;

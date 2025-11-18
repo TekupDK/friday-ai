@@ -9,10 +9,12 @@
  * - Basic insert/select works
  */
 
-import dotenv from "dotenv";
-import { sql } from "drizzle-orm";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+
+import dotenv from "dotenv";
+import { sql } from "drizzle-orm";
+
 import {
   auditLog,
   customerDocuments,

@@ -1,18 +1,20 @@
-import { Button } from "@/components/ui/button";
+import { formatDistanceToNow } from "date-fns";
+import { ArrowLeft, Edit, Calendar, Tag, User, GitBranch } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+import { CommentsSection } from "./CommentsSection";
+
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Edit, Calendar, Tag, User, GitBranch } from "lucide-react";
 import {
   useDocument,
   useDocumentComments,
   useDocuments,
 } from "@/hooks/docs/useDocuments";
-import { formatDistanceToNow } from "date-fns";
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { CommentsSection } from "./CommentsSection";
 
 interface DocumentViewerProps {
   documentId: string;

@@ -11,17 +11,18 @@
  * - Save consolidated dataset for downstream linking and customer cards
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
+import { getCustomers } from "../../../billy";
 import {
   searchGmailThreadsPaged,
   getGmailThread,
   listCalendarEvents,
 } from "../../../google-api";
-import { getCustomers } from "../../../billy";
 
 console.log("📊 COMPLETE DATA COLLECTION V4\n");
 console.log("=".repeat(70));

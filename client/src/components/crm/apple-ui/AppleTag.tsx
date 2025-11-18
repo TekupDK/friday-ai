@@ -7,7 +7,9 @@
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { X } from "lucide-react";
 import React from "react";
+
 import { animations, colors } from "../../../styles/apple-design-system";
+
 import styles from "./AppleTag.module.css";
 
 export interface AppleTagProps

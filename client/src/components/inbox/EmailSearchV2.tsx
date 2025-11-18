@@ -5,21 +5,6 @@
  * Handles search, folder selection, and label filtering.
  */
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { UI_CONSTANTS } from "@/constants/business";
-import { useCallback, useMemo, useState } from "react";
-import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import {
   Archive,
   ChevronDown,
@@ -30,6 +15,23 @@ import {
   Star,
   Tag,
 } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { UI_CONSTANTS } from "@/constants/business";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+
 
 export type FolderType = "inbox" | "sent" | "archive" | "starred";
 

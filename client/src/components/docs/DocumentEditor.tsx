@@ -1,16 +1,20 @@
+import { ArrowLeft, Save, X, Eye, Code } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
+import { toast } from "sonner";
+
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Save, X, Eye, Code } from "lucide-react";
-import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
-import ReactMarkdown from "react-markdown";
+import { Textarea } from "@/components/ui/textarea";
 import { useDocsKeyboardShortcuts } from "@/hooks/docs/useDocsKeyboardShortcuts";
-import { toast } from "sonner";
+import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
+
+
+
 
 interface DocumentEditorProps {
   documentId: string | null; // null = create new

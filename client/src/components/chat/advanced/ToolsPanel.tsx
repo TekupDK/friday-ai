@@ -2,11 +2,6 @@
  * TOOLS PANEL - ChatGPT-style tools: Search, Data Analysis, Browser, Code Interpreter
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
 import {
   Search,
   BarChart3,
@@ -19,6 +14,13 @@ import {
   Table,
   Image as ImageIcon,
 } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
+
 
 export interface ToolExecution {
   id: string;

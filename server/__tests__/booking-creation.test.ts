@@ -3,12 +3,13 @@
  * Tests critical business logic for booking creation in CRM
  */
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import { TRPCError } from "@trpc/server";
 import { eq, and } from "drizzle-orm";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { bookings, customerProfiles, customerProperties } from "../../drizzle/schema";
-import { getDb } from "../db";
 import { withDatabaseErrorHandling } from "../_core/error-handling";
+import { getDb } from "../db";
 
 // Note: These are unit tests that mock the database layer
 // For integration tests, see crm-booking-router integration tests

@@ -2,8 +2,9 @@
  * Quick UI Audit - Extract Visual Metrics
  */
 
-import { test } from "@playwright/test";
 import * as fs from "fs";
+
+import { test } from "@playwright/test";
 
 test("Complete UI Analysis - Email Center", async ({ page }) => {
   // Navigate

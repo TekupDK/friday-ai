@@ -3,15 +3,16 @@
  * API endpoints for monitoring OpenRouter models performance
  */
 
-import { router, protectedProcedure } from "../_core/trpc";
 import { z } from "zod";
+
+import { getFeatureFlags } from "../_core/feature-flags";
+import { router, protectedProcedure } from "../_core/trpc";
 import {
   getMetricsSummary,
   checkHealthThresholds,
   getRolloutRecommendation,
   logMetricsSummary,
 } from "../ai-metrics";
-import { getFeatureFlags } from "../_core/feature-flags";
 
 export const aiMetricsRouter = router({
   /**

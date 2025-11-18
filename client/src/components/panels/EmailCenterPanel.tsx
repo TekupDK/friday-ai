@@ -1,5 +1,5 @@
-import { lazy, Suspense } from "react";
 import { Mail } from "lucide-react";
+import { lazy, Suspense } from "react";
 
 /**
  * Email Center Panel - Dedicated Email Workspace

@@ -2,14 +2,16 @@
  * TASK CARD DETAILED - Task manager med subtasks
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { CheckCircle2, Circle, Calendar, User, Flag } from "lucide-react";
+import { useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, Circle, Calendar, User, Flag } from "lucide-react";
-import { useState } from "react";
+
 
 export interface SubTask {
   id: string;

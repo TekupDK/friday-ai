@@ -2,11 +2,6 @@
  * USER PROFILE - Bruger profil og konto information
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import {
   User,
   Mail,
@@ -24,6 +19,13 @@ import {
   Clock,
 } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
 
 export interface UserProfileData {
   id: string;

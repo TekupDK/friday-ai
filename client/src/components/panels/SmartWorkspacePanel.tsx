@@ -1,10 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, useRef, memo } from "react";
-import { useEmailContext } from "@/contexts/EmailContext";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   AlertTriangle,
   BarChart3,
@@ -14,13 +8,28 @@ import {
   DollarSign,
   Target,
 } from "lucide-react";
+import { useState, useEffect, useMemo, useCallback, useRef, memo } from "react";
+
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Direct imports to avoid lazy loading prop issues
-import { LeadAnalyzer } from "@/components/workspace/LeadAnalyzer";
 import { BookingManager } from "@/components/workspace/BookingManager";
-import { InvoiceTracker } from "@/components/workspace/InvoiceTracker";
-import { CustomerProfile } from "@/components/workspace/CustomerProfile";
 import { BusinessDashboard } from "@/components/workspace/BusinessDashboard";
+import { CustomerProfile } from "@/components/workspace/CustomerProfile";
+import { InvoiceTracker } from "@/components/workspace/InvoiceTracker";
+import { LeadAnalyzer } from "@/components/workspace/LeadAnalyzer";
+import { ERROR_MESSAGES } from "@/constants/business";
+import { useEmailContext } from "@/contexts/EmailContext";
+import {
+  createWorkspaceCacheKey,
+  getCacheConfig,
+  invalidateWorkspaceQueries,
+} from "@/lib/cacheStrategy";
+import { trpc } from "@/lib/trpc";
 import {
   detectEmailContext,
   getContextName,
@@ -28,15 +37,8 @@ import {
   type EmailContextData,
   type WorkspaceContext,
 } from "@/services/emailContextDetection";
-import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from "@shared/const";
-import {
-  createWorkspaceCacheKey,
-  getCacheConfig,
-  invalidateWorkspaceQueries,
-} from "@/lib/cacheStrategy";
-import { ERROR_MESSAGES } from "@/constants/business";
-import { useQueryClient } from "@tanstack/react-query";
+
 
 /**
  * Smart Workspace Panel - Context-Aware Right Panel v2.0

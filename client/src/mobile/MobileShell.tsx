@@ -1,8 +1,11 @@
-import { useState } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { AppleButton, AppleCard } from "../components/crm/apple-ui";
-import ChatTab from "./tabs/ChatTab";
 import { Bot, Mail, Grid, Settings } from "lucide-react";
+import { useState } from "react";
+
+import { AppleButton, AppleCard } from "../components/crm/apple-ui";
+
+import ChatTab from "./tabs/ChatTab";
+
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function MobileShell() {
   const { isAuthenticated, loading } = useAuth({

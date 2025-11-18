@@ -6,7 +6,9 @@
  */
 
 import { and, eq } from "drizzle-orm";
+
 import { emails, emailThreads } from "../drizzle/schema";
+
 import { createInvoice } from "./billy";
 import { getDb, getPipelineState } from "./db";
 import {

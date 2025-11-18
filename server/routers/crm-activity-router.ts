@@ -1,11 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
-import { validationSchemas } from "../_core/validation";
+
 import { customerActivities, customerProfiles } from "../../drizzle/schema";
-import { protectedProcedure, router } from "../_core/trpc";
-import { getDb } from "../db";
 import { withDatabaseErrorHandling } from "../_core/error-handling";
+import { protectedProcedure, router } from "../_core/trpc";
+import { validationSchemas } from "../_core/validation";
+import { getDb } from "../db";
 
 /**
  * CRM Activity Router

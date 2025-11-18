@@ -9,16 +9,8 @@
  * - Usage trends
  */
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { trpc } from "@/lib/trpc";
+import { format } from "date-fns";
+import { da } from "date-fns/locale";
 import {
   TrendingUp,
   FileText,
@@ -29,8 +21,18 @@ import {
   Zap,
   CheckCircle2,
 } from "lucide-react";
-import { format } from "date-fns";
-import { da } from "date-fns/locale";
+
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { trpc } from "@/lib/trpc";
+
 
 export function AIAnalyticsDashboard() {
   const { data: metrics, isLoading } = trpc.docs.getAIMetrics.useQuery();

@@ -3,6 +3,15 @@
  * Real-time monitoring and analysis of A/B tests
  */
 
+import {
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  TrendingUp,
+  Users,
+  Zap,
+} from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -13,14 +22,6 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
-import {
-  Activity,
-  AlertTriangle,
-  CheckCircle,
-  TrendingUp,
-  Users,
-  Zap,
-} from "lucide-react";
 
 export default function ABTestDashboard() {
   // Fetch active tests

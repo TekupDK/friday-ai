@@ -9,6 +9,9 @@
  */
 
 import { describe, it, expect } from "vitest";
+
+import type { EmailThread } from "../../client/src/types/email-thread";
+import type { EnhancedEmailMessage } from "../../client/src/types/enhanced-email";
 import {
   groupEmailsByThread,
   sortThreads,
@@ -17,8 +20,6 @@ import {
   getThreadSummary,
   threadMatchesSource,
 } from "../../client/src/utils/thread-grouping";
-import type { EnhancedEmailMessage } from "../../client/src/types/enhanced-email";
-import type { EmailThread } from "../../client/src/types/email-thread";
 
 // Helper to create mock emails
 const createMockEmail = (

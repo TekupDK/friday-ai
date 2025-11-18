@@ -5,10 +5,11 @@
  * Provides consistent error UI across the application.
  */
 
+import { AlertCircle } from "lucide-react";
 import React from "react";
+
 import { AppleCard } from "@/components/crm/apple-ui";
 import { Button } from "@/components/ui/button";
-import { AlertCircle } from "lucide-react";
 
 interface ErrorDisplayProps {
   message?: string;

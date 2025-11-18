@@ -3,8 +3,8 @@
  * Run with: tsx server/integrations/chromadb/test-lead-dedup.ts
  */
 
-import { createLead, getUserLeads } from "../../db";
 import type { InsertLead } from "../../../drizzle/schema";
+import { createLead, getUserLeads } from "../../db";
 
 async function testLeadDeduplication() {
   console.log("🧪 Testing Lead Deduplication with ChromaDB\n");

@@ -1,15 +1,17 @@
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, protectedProcedure } from "../_core/trpc";
-import { validationSchemas } from "../_core/validation";
-import { getDb } from "../db";
-import { withDatabaseErrorHandling } from "../_core/error-handling";
+import { and, desc, eq, gte, lte } from "drizzle-orm";
+import { z } from "zod";
+
 import {
   bookings,
   customerProfiles,
   customerProperties,
 } from "../../drizzle/schema";
-import { and, desc, eq, gte, lte } from "drizzle-orm";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
+import { router, protectedProcedure } from "../_core/trpc";
+import { validationSchemas } from "../_core/validation";
+import { getDb } from "../db";
+
 
 /**
  * CRM Booking Router

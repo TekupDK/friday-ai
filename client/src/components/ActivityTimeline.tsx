@@ -1,10 +1,11 @@
+import { Calendar, FileText, Loader2, Mail, MoreVertical } from "lucide-react";
+import { useMemo, useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { trpc } from "@/lib/trpc";
-import { Calendar, FileText, Loader2, Mail, MoreVertical } from "lucide-react";
-import { useMemo, useState } from "react";
 
 interface ActivityTimelineProps {
   customerId: number;

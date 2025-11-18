@@ -4,8 +4,9 @@
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
-import { parseIntent } from "../../server/intent-actions";
+
 import { applyMemoryRules } from "../../client/src/lib/ai-memory-rules";
+import { parseIntent } from "../../server/intent-actions";
 
 // Mock buildMemoryContext function logic
 function buildMemoryContext(intent: ReturnType<typeof parseIntent>): any {

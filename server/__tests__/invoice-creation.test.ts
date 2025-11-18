@@ -4,6 +4,7 @@
  */
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { createInvoice, type BillyInvoice } from "../billy";
 
 // Mock fetch for Billy API calls

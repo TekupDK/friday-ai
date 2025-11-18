@@ -3,10 +3,11 @@
  * Voice recording med waveform visualization og transcription
  */
 
+import { Mic, MicOff, StopCircle, Send, Loader2 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Mic, MicOff, StopCircle, Send, Loader2 } from "lucide-react";
 
 interface VoiceInputProps {
   onTranscript?: (text: string) => void;

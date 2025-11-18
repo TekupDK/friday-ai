@@ -1,3 +1,5 @@
+import { Keyboard } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -7,7 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { getAllKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
-import { Keyboard } from "lucide-react";
 
 interface KeyboardShortcutsHelpProps {
   open: boolean;

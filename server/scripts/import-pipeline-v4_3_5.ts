@@ -27,16 +27,15 @@ import {
   type InsertLead,
   type Lead,
 } from "../../drizzle/schema";
-import type {
-  V4_3_Dataset,
-  V4_3_Lead,
-} from "../integrations/chromadb/v4_3-types";
-
 import {
   addCustomerInvoice,
   createOrUpdateCustomerProfile,
 } from "../customer-db";
 import { getDb, getUserByOpenId, upsertUser } from "../db";
+import type {
+  V4_3_Dataset,
+  V4_3_Lead,
+} from "../integrations/chromadb/v4_3-types";
 import { createLead } from "../lead-db";
 
 dotenv.config({ path: ".env.supabase" });

@@ -5,9 +5,10 @@
  * and extract structured customer, service, and quality data
  */
 
-import OpenAI from "openai";
-import { config } from "dotenv";
 import { resolve } from "path";
+
+import { config } from "dotenv";
+import OpenAI from "openai";
 
 config({ path: resolve(process.cwd(), ".env.dev") });
 

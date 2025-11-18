@@ -1,26 +1,3 @@
-import { useMemo, useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
 import {
   Filter,
   Inbox,
@@ -42,9 +19,33 @@ import {
   Trash2,
   MoreVertical,
 } from "lucide-react";
-import { SmartSplitsDemo } from "@/components/showcase/SmartSplitsDemo";
-import { EmailListItem } from "@/components/showcase/EmailListItem";
+import { useMemo, useState, useEffect } from "react";
+
 import { BusinessMetricsCard } from "@/components/showcase/BusinessMetricsCard";
+import { EmailListItem } from "@/components/showcase/EmailListItem";
+import { SmartSplitsDemo } from "@/components/showcase/SmartSplitsDemo";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 interface FilterChip {
   id: string;

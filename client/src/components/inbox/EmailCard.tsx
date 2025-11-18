@@ -12,11 +12,13 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { Mail, Star } from "lucide-react";
+
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import { Card, CardContent } from "../ui/card";
+
 import { cn } from "@/lib/utils";
-import { Mail, Star } from "lucide-react";
 
 export interface EmailCardData {
   id: string;

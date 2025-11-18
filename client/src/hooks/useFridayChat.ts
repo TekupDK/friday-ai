@@ -3,8 +3,9 @@
  * Includes pagination, memory management, and connection pooling
  */
 
-import { trpc } from "@/lib/trpc";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import { trpc } from "@/lib/trpc";
 
 interface ChatContext {
   selectedEmails?: string[];

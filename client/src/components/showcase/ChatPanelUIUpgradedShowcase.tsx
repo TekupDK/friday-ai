@@ -4,35 +4,6 @@
  */
 
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { ActionCard } from "@/components/chat/upgraded/ActionCard";
-import { ThinkingIndicator } from "@/components/chat/upgraded/ThinkingIndicator";
-import { ChatMessage } from "@/components/chat/upgraded/ChatMessage";
-import { WelcomeScreenUpgraded } from "@/components/chat/upgraded/WelcomeScreen";
-import {
-  QuickActions,
-  presetActions,
-} from "@/components/chat/upgraded/QuickActions";
-import { EmailThreadCardUpgraded } from "@/components/chat/upgraded/EmailThreadCard";
-import { WeatherCardUpgraded } from "@/components/chat/upgraded/WeatherCard";
-import { InvoiceCardUpgraded } from "@/components/chat/upgraded/InvoiceCard";
-import { SearchResultsCardUpgraded } from "@/components/chat/upgraded/SearchResultsCard";
-import {
-  ToastProvider,
-  useToast,
-} from "@/components/chat/upgraded/ToastNotification";
-import { FileUpload } from "@/components/chat/upgraded/FileUpload";
-import { VoiceInput } from "@/components/chat/upgraded/VoiceInput";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import {
   UserPlus,
   CheckCircle2,
   Calendar,
@@ -43,6 +14,37 @@ import {
   DollarSign,
 } from "lucide-react";
 import { useState } from "react";
+
+import { ActionCard } from "@/components/chat/upgraded/ActionCard";
+import { ChatMessage } from "@/components/chat/upgraded/ChatMessage";
+import { EmailThreadCardUpgraded } from "@/components/chat/upgraded/EmailThreadCard";
+import { FileUpload } from "@/components/chat/upgraded/FileUpload";
+import { InvoiceCardUpgraded } from "@/components/chat/upgraded/InvoiceCard";
+import { SearchResultsCardUpgraded } from "@/components/chat/upgraded/SearchResultsCard";
+import {
+  ToastProvider,
+  useToast,
+} from "@/components/chat/upgraded/ToastNotification";
+import {
+  QuickActions,
+  presetActions,
+} from "@/components/chat/upgraded/QuickActions";
+import { ThinkingIndicator } from "@/components/chat/upgraded/ThinkingIndicator";
+import { VoiceInput } from "@/components/chat/upgraded/VoiceInput";
+import { WeatherCardUpgraded } from "@/components/chat/upgraded/WeatherCard";
+import { WelcomeScreenUpgraded } from "@/components/chat/upgraded/WelcomeScreen";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+
 
 export function ChatPanelUIUpgradedShowcase() {
   const [copiedAction, setCopiedAction] = useState(false);

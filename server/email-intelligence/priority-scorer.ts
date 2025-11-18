@@ -3,8 +3,9 @@
  * Analyzes emails to determine urgency and priority level
  */
 
-import { routeAI } from "../ai-router";
 import { generateCorrelationId } from "../action-audit";
+import { routeAI } from "../ai-router";
+
 import type { EmailMessage } from "./categorizer";
 
 export interface EmailPriority {

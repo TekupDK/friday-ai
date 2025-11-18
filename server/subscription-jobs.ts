@@ -5,8 +5,8 @@
  */
 
 import { logger } from "./_core/logger";
-import { getSubscriptionsDueForBilling } from "./subscription-db";
 import { processRenewal } from "./subscription-actions";
+import { getSubscriptionsDueForBilling } from "./subscription-db";
 import { sendSubscriptionEmail } from "./subscription-email";
 
 export interface JobResult {

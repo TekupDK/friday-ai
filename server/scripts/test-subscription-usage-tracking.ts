@@ -4,11 +4,12 @@
  * Tests usage tracking from booking completion
  */
 
-import { trackBookingUsage, calculateBookingHours } from "../subscription-usage-tracker";
-import { getDb } from "../db";
-import { bookings, subscriptions, customerProfiles } from "../../drizzle/schema";
 import { eq, and } from "drizzle-orm";
+
+import { bookings, subscriptions, customerProfiles } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
+import { getDb } from "../db";
+import { trackBookingUsage, calculateBookingHours } from "../subscription-usage-tracker";
 
 async function testUsageTracking() {
   const db = await getDb();

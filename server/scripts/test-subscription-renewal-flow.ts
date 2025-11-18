@@ -4,11 +4,12 @@
  * End-to-end test of subscription renewal process
  */
 
-import { processMonthlyRenewals } from "../subscription-jobs";
-import { getDb } from "../db";
-import { subscriptions } from "../../drizzle/schema";
 import { eq, and, gte } from "drizzle-orm";
+
+import { subscriptions } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
+import { getDb } from "../db";
+import { processMonthlyRenewals } from "../subscription-jobs";
 
 async function testRenewalFlow() {
   const db = await getDb();

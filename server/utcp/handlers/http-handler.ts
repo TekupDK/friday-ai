@@ -4,9 +4,9 @@
  * Executes HTTP-based UTCP tools (Google APIs, Billy API, etc.)
  */
 
+import { searchGmailThreads } from "../../google-api";
 import type { UTCPTool, UTCPHTTPHandler, UTCPToolResult } from "../types";
 import { interpolateTemplate, interpolateTemplateObject } from "../utils/template";
-import { searchGmailThreads } from "../../google-api";
 
 /**
  * Get authentication token for HTTP handler

@@ -2,11 +2,6 @@
  * LEAD CARD DETAILED - Full CRM lead card
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 import {
   User,
   Mail,
@@ -21,6 +16,13 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+
 
 export interface LeadData {
   id: string;

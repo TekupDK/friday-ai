@@ -1,7 +1,3 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Maximize,
   Minimize,
@@ -13,6 +9,11 @@ import {
   Settings,
   RotateCcw,
 } from "lucide-react";
+import * as React from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export type PanelSize = "compact" | "normal" | "expanded" | "fullscreen";
 export type DeviceType = "mobile" | "tablet" | "desktop" | "auto";

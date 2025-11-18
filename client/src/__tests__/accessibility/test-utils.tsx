@@ -3,11 +3,13 @@
  * Provides helpers for testing WCAG compliance with jest-axe
  */
 
+import { render, RenderOptions } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { ReactElement } from "react";
-import { render, RenderOptions } from "@testing-library/react";
-import { ThemeProvider } from "@/contexts/ThemeContext";
 import { expect } from "vitest";
+
+import { ThemeProvider } from "@/contexts/ThemeContext";
+
 
 // Extend Vitest's expect with jest-axe matchers
 expect.extend(toHaveNoViolations);

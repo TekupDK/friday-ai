@@ -1,26 +1,27 @@
+import { eq, like, and, or, desc, sql } from "drizzle-orm";
+import { nanoid } from "nanoid";
 import { z } from "zod";
-import { router, protectedProcedure } from "../_core/trpc";
-import { getDb } from "../db";
+
 import {
   documents,
   documentComments,
   documentChanges,
   documentConflicts,
 } from "../../drizzle/schema";
-import { eq, like, and, or, desc, sql } from "drizzle-orm";
 import { logger } from "../_core/logger";
-import { nanoid } from "nanoid";
+import { router, protectedProcedure } from "../_core/trpc";
+import { getDb } from "../db";
+import {
+  getAIDocMetrics,
+  getGenerationStats,
+  calculateSavings,
+} from "../docs/ai/analytics";
 import {
   autoCreateLeadDoc,
   updateLeadDoc,
   generateWeeklyDigest,
   bulkGenerateLeadDocs,
 } from "../docs/ai/auto-create";
-import {
-  getAIDocMetrics,
-  getGenerationStats,
-  calculateSavings,
-} from "../docs/ai/analytics";
 
 /**
  * Documentation System Router

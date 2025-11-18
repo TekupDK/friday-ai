@@ -5,11 +5,12 @@
  * Composition over inheritance
  */
 
+import type { ChatInputProps } from "./ChatInput.types";
+import ChatInputActions from "./ChatInputActions";
+import ChatInputField from "./ChatInputField";
+
 import { AI_CONFIG } from "@/config/ai-config";
 import { useChatInput } from "@/hooks/useChatInput";
-import ChatInputField from "./ChatInputField";
-import ChatInputActions from "./ChatInputActions";
-import type { ChatInputProps } from "./ChatInput.types";
 
 export default function ChatInput(props: ChatInputProps) {
   const { inputRef, handleKeyDown } = useChatInput({

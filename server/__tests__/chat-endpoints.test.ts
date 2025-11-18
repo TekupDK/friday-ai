@@ -3,8 +3,8 @@
  * Tests chat router endpoints including sendMessage, getMessages, and conversations
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { TRPCError } from "@trpc/server";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // Mock dependencies
 vi.mock("../db", () => ({
@@ -32,6 +32,7 @@ vi.mock("../action-audit", () => ({
   generateCorrelationId: vi.fn(() => "test-correlation-id"),
 }));
 
+import { routeAI } from "../ai-router";
 import {
   getUserConversations,
   getConversationMessages,
@@ -40,7 +41,6 @@ import {
   trackEvent,
 } from "../db";
 import { checkRateLimitUnified } from "../rate-limiter-redis";
-import { routeAI } from "../ai-router";
 
 describe("Chat TRPC Endpoints", () => {
   const mockUser = {

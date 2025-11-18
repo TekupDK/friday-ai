@@ -1,8 +1,10 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
 import { Mail, Calendar, DollarSign, Users, Sparkles, Zap } from "lucide-react";
+import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 
 const cards = [
   {

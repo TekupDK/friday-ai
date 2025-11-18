@@ -2,12 +2,14 @@
  * FREE BUSY CARD - Tjekke ledig tid
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { Calendar, Clock, Users, CheckCircle2, XCircle } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 
 export interface TimeSlot {
   id: string;

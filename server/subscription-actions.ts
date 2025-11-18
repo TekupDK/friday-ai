@@ -7,6 +7,7 @@
 
 import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
+
 import {
   subscriptions,
   customerProfiles,
@@ -14,9 +15,10 @@ import {
   InsertSubscriptionHistory,
   type Subscription,
 } from "../drizzle/schema";
+
 import { createInvoice } from "./billy";
-import { createCalendarEvent } from "./google-api";
 import { getDb } from "./db";
+import { createCalendarEvent } from "./google-api";
 import {
   getSubscriptionById,
   getSubscriptionByCustomerId,

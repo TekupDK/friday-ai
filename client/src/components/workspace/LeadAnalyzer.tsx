@@ -1,10 +1,3 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
-import SmartActionBar, { type LeadData } from "./SmartActionBar";
 import {
   Calculator,
   Calendar,
@@ -16,8 +9,17 @@ import {
   XCircle,
   AlertTriangle,
 } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+import { useState, useEffect } from "react";
+
+import SmartActionBar, { type LeadData } from "./SmartActionBar";
+import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { BUSINESS_CONSTANTS, ERROR_MESSAGES } from "@/constants/business";
+import { trpc } from "@/lib/trpc";
 
 // Lead source types based on Rendetalje workflow
 type LeadSource =

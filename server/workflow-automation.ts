@@ -6,6 +6,7 @@
  */
 
 import { eq } from "drizzle-orm";
+
 import { leads, tasks, users } from "../drizzle/schema";
 
 import { logger } from "./_core/logger";

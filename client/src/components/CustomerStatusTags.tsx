@@ -1,3 +1,7 @@
+import { Check, ChevronDown, Tag, X } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,9 +20,6 @@ import {
 } from "@/components/ui/popover";
 import { trpc } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
-import { Check, ChevronDown, Tag, X } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
 
 const STATUS_OPTIONS = [
   { value: "new", label: "Ny", color: "bg-gray-500" },

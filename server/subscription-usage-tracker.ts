@@ -4,11 +4,13 @@
  * Automatically tracks subscription usage from bookings
  */
 
-import { getDb } from "./db";
-import { bookings, subscriptions, subscriptionUsage } from "../drizzle/schema";
 import { eq, and, gte, lte } from "drizzle-orm";
-import { getSubscriptionByCustomerId, createSubscriptionUsage } from "./subscription-db";
+
+import { bookings, subscriptions, subscriptionUsage } from "../drizzle/schema";
+
 import { logger } from "./_core/logger";
+import { getDb } from "./db";
+import { getSubscriptionByCustomerId, createSubscriptionUsage } from "./subscription-db";
 
 /**
  * Track usage from a booking

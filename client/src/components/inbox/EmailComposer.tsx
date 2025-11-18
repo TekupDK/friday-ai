@@ -1,3 +1,7 @@
+import { FileText, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,9 +21,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc";
-import { FileText, Send } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 
 interface EmailComposerProps {
   open: boolean;

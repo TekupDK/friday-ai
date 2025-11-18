@@ -1,9 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { CheckCircle2, AlertCircle, Info, ExternalLink } from "lucide-react";
-import { usePageTitle } from "@/hooks/usePageTitle";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { APP_TITLE, SUPPORT_EMAIL } from "@/const";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 // Accessibility statement last updated date
 const LAST_UPDATED = "January 28, 2025";

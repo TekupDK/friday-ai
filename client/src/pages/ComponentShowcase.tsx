@@ -1,4 +1,28 @@
-import { usePageTitle } from "@/hooks/usePageTitle";
+import { format } from "date-fns";
+import { zhCN } from "date-fns/locale";
+import {
+  AlertCircle,
+  CalendarIcon,
+  Check,
+  CheckCircle2,
+  Clock,
+  Moon,
+  Sun,
+  X,
+} from "lucide-react";
+import { useState } from "react";
+import { toast as sonnerToast } from "sonner";
+
+import {
+  AIMemoryPanel,
+  type AIMemoryItem,
+} from "@/components/chat/AIMemoryPanel";
+import { AIThinking } from "@/components/chat/AIThinking";
+import {
+  InvoiceCards,
+  type InvoiceCardData,
+} from "@/components/chat/InvoiceCards";
+import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
 import {
   Accordion,
   AccordionContent,
@@ -159,35 +183,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTheme } from "@/contexts/ThemeContext";
-import { format } from "date-fns";
-import { zhCN } from "date-fns/locale";
-import {
-  AlertCircle,
-  CalendarIcon,
-  Check,
-  CheckCircle2,
-  Clock,
-  Moon,
-  Sun,
-  X,
-} from "lucide-react";
-import { useState } from "react";
-import { toast as sonnerToast } from "sonner";
-import { AIThinking } from "@/components/chat/AIThinking";
-import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
+
 import { WeatherCard } from "@/components/chat/WeatherCard";
-import {
-  InvoiceCards,
-  type InvoiceCardData,
-} from "@/components/chat/InvoiceCards";
 import {
   ResponseCard,
   type ResponseCardData,
 } from "@/components/chat/ResponseCards";
-import {
-  AIMemoryPanel,
-  type AIMemoryItem,
-} from "@/components/chat/AIMemoryPanel";
 import {
   EmailThreadCard,
   type EmailThreadData,
@@ -248,6 +249,7 @@ import { CalendarEventCardDemo } from "@/components/showcase/CalendarEventCardDe
 import { ChatDemoComplete } from "@/components/showcase/ChatDemoComplete";
 import { ChatPanelUIUpgradedShowcase } from "@/components/showcase/ChatPanelUIUpgradedShowcase";
 import { CustomerCard } from "@/components/leads/CustomerCardClean";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 export default function ComponentsShowcase() {
   usePageTitle("Component Showcase");

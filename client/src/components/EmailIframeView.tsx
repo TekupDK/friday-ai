@@ -1,6 +1,8 @@
-import { trpc } from "@/lib/trpc";
 import React from "react";
+
 import { sanitizeEmailHtml } from "../lib/sanitize";
+
+import { trpc } from "@/lib/trpc";
 
 interface Props {
   html?: string | null;
@@ -102,7 +104,7 @@ ${finalHtml}
       setDocHtml(srcDoc);
     };
     process();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [html, messageId, imagesEnabled]); // Process email HTML and resolve CID images
 
   // Auto-resize iframe height

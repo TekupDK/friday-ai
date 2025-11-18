@@ -8,9 +8,10 @@
  * 4. Saving to database
  */
 
-import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Loader2, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+
+import { Progress } from "@/components/ui/progress";
 
 interface AIGenerationProgressProps {
   isGenerating: boolean;

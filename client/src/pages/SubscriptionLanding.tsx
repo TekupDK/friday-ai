@@ -6,13 +6,13 @@
 
 import { Check, Sparkles } from "lucide-react";
 import React from "react";
+import { useLocation } from "wouter";
 
 import { AppleButton, AppleCard } from "@/components/crm/apple-ui";
 import CRMLayout from "@/components/crm/CRMLayout";
-import { SubscriptionPlanSelector } from "@/components/subscription";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
+import { SubscriptionPlanSelector } from "@/components/subscription";
 import { usePageTitle } from "@/hooks/usePageTitle";
-import { useLocation } from "wouter";
 
 export default function SubscriptionLandingPage() {
   usePageTitle("Subscription Plans");

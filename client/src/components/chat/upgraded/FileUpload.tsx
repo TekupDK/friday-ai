@@ -3,11 +3,6 @@
  * Drag & drop file upload med preview og progress
  */
 
-import { useState, useRef, DragEvent } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 import {
   Upload,
   X,
@@ -17,6 +12,12 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import { useState, useRef, DragEvent } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 export interface UploadedFile {
   id: string;

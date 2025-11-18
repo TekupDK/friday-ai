@@ -4,8 +4,9 @@
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
-import { checkRateLimitUnified, checkRateLimitInMemory } from "../rate-limiter-redis";
+
 import { createRateLimitMiddleware, INBOX_CRM_RATE_LIMIT } from "../rate-limit-middleware";
+import { checkRateLimitUnified, checkRateLimitInMemory } from "../rate-limiter-redis";
 
 describe("Edge Cases - Extreme Values", () => {
   beforeEach(() => {

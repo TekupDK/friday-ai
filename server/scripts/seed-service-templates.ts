@@ -7,6 +7,7 @@
 
 import "dotenv/config";
 import { eq } from "drizzle-orm";
+
 import { serviceTemplates } from "../../drizzle/schema";
 import { ENV } from "../_core/env";
 import { getDb, getUserByOpenId, upsertUser } from "../db";

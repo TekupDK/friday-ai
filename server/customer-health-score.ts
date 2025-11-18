@@ -1,4 +1,5 @@
 import { and, desc, eq, gte, sql } from "drizzle-orm";
+
 import {
   bookings,
   customerActivities,
@@ -7,6 +8,7 @@ import {
   customerProfiles,
   emailThreads,
 } from "../drizzle/schema";
+
 import { getDb } from "./db";
 
 /**

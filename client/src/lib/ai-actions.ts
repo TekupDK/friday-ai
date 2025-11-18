@@ -5,8 +5,9 @@
  * based on selected email, current view, and user context
  */
 
-import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 import { VerificationPresets } from "./ai-verification";
+
+import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 
 export interface AIAction {
   id: string;

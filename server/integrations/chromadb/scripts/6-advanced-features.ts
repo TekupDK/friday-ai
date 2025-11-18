@@ -11,9 +11,11 @@
  * Usage: npx tsx server/integrations/chromadb/scripts/6-advanced-features.ts
  */
 
-import { ChromaClient } from "chromadb";
 import { readFileSync } from "fs";
 import { resolve } from "path";
+
+import { ChromaClient } from "chromadb";
+
 import { V4_3_Dataset, V4_3_Lead } from "../v4_3-types";
 
 console.log("🧠 V4.3.3 Script 6: Advanced ChromaDB Features\n");

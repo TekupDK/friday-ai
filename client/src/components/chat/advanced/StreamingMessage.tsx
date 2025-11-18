@@ -2,10 +2,6 @@
  * STREAMING MESSAGE - ChatGPT-style streaming response med typing animation
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import {
   Copy,
   RotateCcw,
@@ -18,6 +14,12 @@ import {
   CheckCheck,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 
 export interface StreamingMessageProps {
   role: "user" | "assistant";

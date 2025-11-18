@@ -2,10 +2,6 @@
  * RICH TEXT EDITOR - WYSIWYG text editor
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import DOMPurify from "dompurify";
 import {
   Type,
@@ -28,6 +24,11 @@ import {
   Redo,
 } from "lucide-react";
 import { useState, useRef } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export interface RichTextContent {
   html: string;

@@ -1,10 +1,13 @@
-import { COOKIE_NAME, ONE_YEAR_MS, SEVEN_DAYS_MS } from "@shared/const";
 import type { Express, Request, Response } from "express";
+
 import * as db from "../db";
-import { ENV } from "./env";
-import { sdk } from "./sdk";
-import { logger } from "./logger";
+
 import { getSessionCookieOptions } from "./cookies";
+import { ENV } from "./env";
+import { logger } from "./logger";
+import { sdk } from "./sdk";
+
+import { COOKIE_NAME, ONE_YEAR_MS, SEVEN_DAYS_MS } from "@shared/const";
 
 // Phase 7.1: Rolling session refresh window (7 days)
 const ROLLING_WINDOW_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds

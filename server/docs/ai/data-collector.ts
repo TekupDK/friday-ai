@@ -8,12 +8,13 @@
  * - Chat conversations
  */
 
-import { getDb } from "../../db";
-import { leads, emailThreads, conversations } from "../../../drizzle/schema";
 import { eq, or, like, and, gte, sql } from "drizzle-orm";
+
+import { leads, emailThreads, conversations } from "../../../drizzle/schema";
 // Calendar integration will be added when getCalendarClient is available
 // import { getCalendarClient } from "../../google-api";
 import { logger } from "../../_core/logger";
+import { getDb } from "../../db";
 
 export interface LeadData {
   id: number;

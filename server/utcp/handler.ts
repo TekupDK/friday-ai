@@ -4,13 +4,15 @@
  * Main entry point for executing UTCP tools
  */
 
+import { trackEvent } from "../db";
+
+import { executeDatabaseHandler } from "./handlers/database-handler";
+import { executeHTTPHandler } from "./handlers/http-handler";
 import { getUTCPTool } from "./manifest";
 import type { UTCPTool } from "./types";
-import { validateUTCPInput } from "./validators";
-import { executeHTTPHandler } from "./handlers/http-handler";
-import { executeDatabaseHandler } from "./handlers/database-handler";
 import type { UTCPToolResult } from "./types";
-import { trackEvent } from "../db";
+import { validateUTCPInput } from "./validators";
+
 
 /**
  * Cache management (in-memory, can be upgraded to Redis)

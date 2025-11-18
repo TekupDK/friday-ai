@@ -11,13 +11,14 @@
  * Run with: npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
-import { getHistoricalCalendarEvents, getUserEmailThreads } from "../../../db";
 import { getCustomers } from "../../../billy";
+import { getHistoricalCalendarEvents, getUserEmailThreads } from "../../../db";
 
 console.log("📊 Collecting Real Data for ChromaDB Testing\n");
 console.log("=".repeat(60));

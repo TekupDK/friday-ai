@@ -9,8 +9,9 @@
  */
 
 import { logger } from "../../_core/logger";
-import { autoCreateLeadDoc } from "./auto-create";
+
 import { logAIGeneration } from "./analytics";
+import { autoCreateLeadDoc } from "./auto-create";
 
 export interface QueueJob {
   id: string;

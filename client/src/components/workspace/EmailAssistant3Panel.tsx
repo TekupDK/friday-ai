@@ -7,11 +7,6 @@
 
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { trpc } from "@/lib/trpc";
 import {
   ArrowRight,
   Bot,
@@ -30,6 +25,12 @@ import {
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { trpc } from "@/lib/trpc";
 
 interface EmailSuggestion {
   id: string;
@@ -94,7 +95,7 @@ export function EmailAssistant3Panel({
     if (!isCollapsed) {
       analyzeEmail();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [emailData, isCollapsed]); // Analyze email when data changes or panel expands
 
   const analyzeEmail = async () => {

@@ -4,8 +4,9 @@
  */
 
 import { TRPCError } from "@trpc/server";
-import { logger } from "./logger";
+
 import { sanitizeError, createSafeTRPCError } from "./errors";
+import { logger } from "./logger";
 
 /**
  * Retry configuration

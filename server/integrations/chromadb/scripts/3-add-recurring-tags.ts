@@ -12,8 +12,9 @@
 
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { V4_3_Dataset, V4_3_Lead } from "../v4_3-types";
+
 import { ACTIVE_PERIOD } from "../v4_3-config";
+import { V4_3_Dataset, V4_3_Lead } from "../v4_3-types";
 
 console.log("🏷️  V4.3.5 Script 3: Add Recurring & Active Tags (AI-Enhanced)\n");
 console.log("=".repeat(70));

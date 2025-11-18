@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { eq, sql } from "drizzle-orm";
+
 import { bookings, customerProfiles } from "../../drizzle/schema";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";

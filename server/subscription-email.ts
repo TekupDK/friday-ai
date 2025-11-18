@@ -4,13 +4,15 @@
  * Handles email notifications for subscription events
  */
 
-import { sendGmailMessage } from "./google-api";
-import { getDb } from "./db";
-import { customerProfiles, subscriptions } from "../drizzle/schema";
 import { eq, and } from "drizzle-orm";
+
+import { customerProfiles, subscriptions } from "../drizzle/schema";
+
+import { logger } from "./_core/logger";
+import { getDb } from "./db";
+import { sendGmailMessage } from "./google-api";
 import { getSubscriptionById } from "./subscription-db";
 import { getPlanConfig } from "./subscription-helpers";
-import { logger } from "./_core/logger";
 
 export type SubscriptionEmailType =
   | "welcome"

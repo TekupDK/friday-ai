@@ -8,7 +8,9 @@
  */
 
 import { ChromaClient, Collection, IEmbeddingFunction } from "chromadb";
+
 import { ENV } from "../../_core/env";
+
 import { generateEmbeddings } from "./embeddings";
 
 // Singleton client instance

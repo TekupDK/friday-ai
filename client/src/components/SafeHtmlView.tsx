@@ -1,4 +1,5 @@
 import React from "react";
+
 import { sanitizeHtml } from "../lib/sanitize";
 
 interface SafeHtmlViewProps {
@@ -19,7 +20,7 @@ export function SafeHtmlView({ html, className }: SafeHtmlViewProps) {
   return (
     <div
       className={className}
-      // eslint-disable-next-line react/no-danger
+       
       dangerouslySetInnerHTML={{ __html: safe }}
     />
   );

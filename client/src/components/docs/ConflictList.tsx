@@ -1,10 +1,12 @@
+import { formatDistanceToNow } from "date-fns";
+import { AlertCircle, CheckCircle2, FileText } from "lucide-react";
+
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle2, FileText } from "lucide-react";
 import { useConflicts } from "@/hooks/docs/useDocuments";
-import { formatDistanceToNow } from "date-fns";
+
 
 interface ConflictListProps {
   conflicts: any[];

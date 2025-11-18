@@ -4,9 +4,12 @@
  * Cache Gmail threads to database in background
  */
 
-import { eq } from "drizzle-orm";
 import { createHash } from "crypto";
+
+import { eq } from "drizzle-orm";
+
 import { emails, emailThreads } from "../drizzle/schema";
+
 import type { GmailThread } from "./google-api";
 
 /**

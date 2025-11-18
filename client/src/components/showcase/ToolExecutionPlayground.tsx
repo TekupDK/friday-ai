@@ -1,6 +1,7 @@
 import { useState } from "react";
+
+import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
 import {
   Select,
   SelectContent,
@@ -8,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
+import { Slider } from "@/components/ui/slider";
 
 export function ToolExecutionPlayground() {
   const [progress, setProgress] = useState(40);

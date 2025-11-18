@@ -2,11 +2,6 @@
  * MARKDOWN PREVIEW - Live markdown preview
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { sanitizeHtml } from "@/lib/sanitize";
 import {
   FileText,
   Eye,
@@ -20,6 +15,13 @@ import {
   Quote,
 } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { sanitizeHtml } from "@/lib/sanitize";
+import { cn } from "@/lib/utils";
+
 
 interface MarkdownPreviewProps {
   initialMarkdown?: string;

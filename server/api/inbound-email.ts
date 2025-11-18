@@ -6,11 +6,13 @@
  */
 
 import { createHash, createHmac, timingSafeEqual } from "crypto";
-import { eq } from "drizzle-orm";
-import { Request, Response } from "express";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
+
+import { eq } from "drizzle-orm";
+import { Request, Response } from "express";
+
 import { attachments, emails, emailThreads } from "../../drizzle/schema";
 import { getDb } from "../db";
 import { enrichEmailFromSources } from "../email-enrichment";

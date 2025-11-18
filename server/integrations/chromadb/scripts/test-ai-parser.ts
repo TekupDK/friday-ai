@@ -4,6 +4,7 @@
 
 import { readFileSync } from "fs";
 import { resolve } from "path";
+
 import { parseCalendarEventWithAI } from "./ai-calendar-parser";
 
 async function testParser() {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { APP_LOGO, APP_TITLE } from "@/const";
 import {
   Dialog,
   DialogContent,
@@ -9,6 +8,7 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { APP_LOGO, APP_TITLE } from "@/const";
 
 interface LoginDialogProps {
   title?: string;

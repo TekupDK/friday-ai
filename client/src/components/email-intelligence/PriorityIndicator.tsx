@@ -2,8 +2,9 @@
  * PriorityIndicator - Display email priority level
  */
 
-import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, ArrowUp, Minus, ArrowDown } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
 
 interface PriorityIndicatorProps {
   level: "urgent" | "high" | "normal" | "low";

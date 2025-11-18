@@ -13,6 +13,7 @@
 
 import "dotenv/config";
 import { appendFileSync } from "fs";
+
 const LOG_PATH = "server/scripts/email-smoke-test.log";
 const originalLog = console.log;
 const originalError = console.error;

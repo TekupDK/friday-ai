@@ -1,3 +1,10 @@
+import { format, parseISO } from "date-fns";
+import { da } from "date-fns/locale";
+import { Archive, ArrowRight, Clock, Mail, Reply, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
+import { SafeStreamdown } from "../SafeStreamdown";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,11 +15,6 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { trpc } from "@/lib/trpc";
-import { format, parseISO } from "date-fns";
-import { da } from "date-fns/locale";
-import { Archive, ArrowRight, Clock, Mail, Reply, Trash2 } from "lucide-react";
-import { toast } from "sonner";
-import { SafeStreamdown } from "../SafeStreamdown";
 
 interface EmailPreviewModalProps {
   open: boolean;

@@ -7,11 +7,6 @@
 
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { trpc } from "@/lib/trpc";
 import {
   Bot,
   Building,
@@ -28,6 +23,12 @@ import {
   User,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { trpc } from "@/lib/trpc";
 
 interface EmailSuggestion {
   id: string;
@@ -86,7 +87,7 @@ export function EmailAssistant({
   // Analyze email when data changes
   useEffect(() => {
     analyzeEmail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [emailData]); // Analyze email when data changes
 
   const analyzeEmail = async () => {

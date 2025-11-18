@@ -3,8 +3,9 @@
  * Flere varianter: dots, wave, pulse, progress
  */
 
-import { cn } from "@/lib/utils";
 import { Bot, Sparkles, Loader2 } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 export type ThinkingVariant =
   | "dots"

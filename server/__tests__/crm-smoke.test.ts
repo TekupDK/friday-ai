@@ -4,23 +4,23 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED =
 process.env.DOTENV_CONFIG_PATH = process.env.DOTENV_CONFIG_PATH || ".env.prod";
 import "dotenv/config";
 
-import { beforeAll, afterAll, describe, expect, it } from "vitest";
-import { nanoid } from "nanoid";
-
-import { ENV } from "../_core/env";
-import * as db from "../db";
-import * as leadDb from "../lead-db";
-import type { TrpcContext } from "../_core/context";
 import { eq } from "drizzle-orm";
+import { nanoid } from "nanoid";
+import { beforeAll, afterAll, describe, expect, it } from "vitest";
+
 import {
   leads,
   customerProfiles,
   customerProperties,
 } from "../../drizzle/schema";
+import type { TrpcContext } from "../_core/context";
+import { ENV } from "../_core/env";
 import { router } from "../_core/trpc";
+import * as db from "../db";
+import * as leadDb from "../lead-db";
+import { crmBookingRouter } from "../routers/crm-booking-router";
 import { crmCustomerRouter } from "../routers/crm-customer-router";
 import { crmLeadRouter } from "../routers/crm-lead-router";
-import { crmBookingRouter } from "../routers/crm-booking-router";
 
 // Normalize DATABASE_URL for postgres.js and Supabase (ensure sslmode=no-verify)
 function normalizeDatabaseUrl(url: string | undefined): string | undefined {

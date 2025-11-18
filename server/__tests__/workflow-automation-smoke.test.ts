@@ -3,8 +3,9 @@ process.env.DOTENV_CONFIG_PATH = process.env.DOTENV_CONFIG_PATH || ".env.staging
 import "dotenv/config";
 
 import { describe, expect, it } from "vitest";
-import { workflowAutomation } from "../workflow-automation";
+
 import * as db from "../db";
+import { workflowAutomation } from "../workflow-automation";
 
 describe("Workflow automation events", () => {
   it("tracks events on auto-actions (sales notify & geo tag)", async () => {

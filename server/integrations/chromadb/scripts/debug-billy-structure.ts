@@ -3,8 +3,9 @@
  * Check what fields are actually available
  */
 
-import { config } from "dotenv";
 import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import { getCustomers } from "../../../billy";

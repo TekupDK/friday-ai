@@ -5,14 +5,15 @@
  * Quality scoring, response analysis, optimization
  */
 
-import { useState, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useOpenRouter } from "@/hooks/useOpenRouter";
-import { FRIDAY_PROMPTS, createPromptTest } from "@/config/friday-prompts";
 import { Play, BarChart3, MessageSquare, Clock, Zap } from "lucide-react";
+import { useState, useCallback } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { FRIDAY_PROMPTS, createPromptTest } from "@/config/friday-prompts";
+import { useOpenRouter } from "@/hooks/useOpenRouter";
 
 interface TestResult {
   variation: string;

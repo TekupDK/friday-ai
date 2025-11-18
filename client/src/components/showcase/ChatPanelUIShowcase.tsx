@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AIThinking } from "@/components/chat/AIThinking";
-import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
-import { WeatherCard } from "@/components/chat/WeatherCard";
-import {
-  InvoiceCards,
-  type InvoiceCardData,
-} from "@/components/chat/InvoiceCards";
+
 import {
   AIMemoryPanel,
   type AIMemoryItem,
 } from "@/components/chat/AIMemoryPanel";
-import {
-  EmailThreadCard,
-  type EmailThreadData,
-} from "@/components/chat/EmailThreadCard";
+import { AIThinking } from "@/components/chat/AIThinking";
 import {
   CalendarEventCard,
   type CalendarEventData,
 } from "@/components/chat/CalendarEventCard";
 import {
+  EmailThreadCard,
+  type EmailThreadData,
+} from "@/components/chat/EmailThreadCard";
+import {
+  InvoiceCards,
+  type InvoiceCardData,
+} from "@/components/chat/InvoiceCards";
+import {
   SearchResultsCard,
   type SearchResult,
 } from "@/components/chat/SearchResultsCard";
+import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
+import { WeatherCard } from "@/components/chat/WeatherCard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function ChatPanelUIShowcase() {
   const [progress, setProgress] = useState(0);

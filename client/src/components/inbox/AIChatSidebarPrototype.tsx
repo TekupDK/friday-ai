@@ -5,12 +5,15 @@
  * See EmailThreadView.tsx for integration example.
  */
 
+import { Bot, Loader2, X } from "lucide-react";
+import { useState } from "react";
+
+import { SafeStreamdown } from "../SafeStreamdown";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
-import { Bot, Loader2, X } from "lucide-react";
-import { useState } from "react";
-import { SafeStreamdown } from "../SafeStreamdown";
+
 
 interface AIChatSidebarPrototypeProps {
   emailContext: {

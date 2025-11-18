@@ -9,11 +9,14 @@
  */
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
-import { useFridayChatSimple } from "@/hooks/useFridayChatSimple";
-import WelcomeScreen from "./WelcomeScreen";
+
 import ChatInput from "./ChatInput";
+import WelcomeScreen from "./WelcomeScreen";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useFridayChatSimple } from "@/hooks/useFridayChatSimple";
+
 
 interface Message {
   id: string;

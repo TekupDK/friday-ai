@@ -6,7 +6,9 @@
 
 import { motion, type HTMLMotionProps } from "framer-motion";
 import React from "react";
+
 import { animations, colors } from "../../../styles/apple-design-system";
+
 import styles from "./AppleBadge.module.css";
 
 export type BadgeStatus =

@@ -3,9 +3,6 @@
  * Vejr data med forecast og animation
  */
 
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import {
   Cloud,
   CloudRain,
@@ -19,6 +16,11 @@ import {
   Sunrise,
   Sunset,
 } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 
 export interface WeatherData {
   location: string;

@@ -5,12 +5,13 @@
  * Run with: pnpm exec dotenv -e .env.dev -- tsx server/scripts/test-subscription-email.ts
  */
 
-import { getDb } from "../db";
-import { customerProfiles, subscriptions } from "../../drizzle/schema";
 import { eq, and } from "drizzle-orm";
+
+import { customerProfiles, subscriptions } from "../../drizzle/schema";
+import { logger } from "../_core/logger";
+import { getDb } from "../db";
 import { createSubscription } from "../subscription-actions";
 import { sendSubscriptionEmail } from "../subscription-email";
-import { logger } from "../_core/logger";
 
 async function testSubscriptionEmails() {
   console.log("🧪 Starting Subscription Email Tests...\n");

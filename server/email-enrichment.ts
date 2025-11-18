@@ -7,12 +7,14 @@
 
 import { eq } from "drizzle-orm";
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
+
 import {
   customerProfiles,
   emailPipelineState,
   emails,
   emailThreads,
 } from "../drizzle/schema";
+
 import { searchCustomerByEmail } from "./billy";
 import { getDb } from "./db";
 import { addLabelToThread } from "./gmail-labels";

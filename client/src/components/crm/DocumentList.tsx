@@ -7,13 +7,15 @@
 import { FileText, Search, X } from "lucide-react";
 import React, { useState, useMemo } from "react";
 import { toast } from "sonner";
+
 import { AppleButton, AppleCard, AppleSearchField } from "./apple-ui";
 import { DocumentCard, type DocumentData } from "./DocumentCard";
 import { DocumentUploader } from "./DocumentUploader";
 import { ErrorDisplay } from "./ErrorDisplay";
 import { LoadingSpinner } from "./LoadingSpinner";
-import { trpc } from "@/lib/trpc";
+
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { trpc } from "@/lib/trpc";
 
 interface DocumentListProps {
   customerProfileId: number;

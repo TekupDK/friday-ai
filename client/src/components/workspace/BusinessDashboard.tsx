@@ -1,8 +1,3 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import {
   AlertTriangle,
   BarChart3,
@@ -14,15 +9,23 @@ import {
   Mail,
   Phone,
 } from "lucide-react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+
+import SmartActionBar, { type DashboardData } from "./SmartActionBar";
 import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
-import { trpc } from "@/lib/trpc";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { BUSINESS_CONSTANTS, ERROR_MESSAGES } from "@/constants/business";
 import {
   parseCalendarEvent,
   formatTimeRange,
   calculateTotalRevenue,
 } from "@/lib/business-logic";
-import { BUSINESS_CONSTANTS, ERROR_MESSAGES } from "@/constants/business";
-import SmartActionBar, { type DashboardData } from "./SmartActionBar";
+import { trpc } from "@/lib/trpc";
+
 
 /**
  * Business Dashboard - Default Workspace View

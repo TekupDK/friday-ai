@@ -22,10 +22,12 @@
 import { Upload, X, File } from "lucide-react";
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
+
 import { AppleButton, AppleModal } from "./apple-ui";
-import { trpc } from "@/lib/trpc";
-import { supabase } from "@/lib/supabaseClient";
+
 import { STORAGE, validateFile } from "@/constants/storage";
+import { supabase } from "@/lib/supabaseClient";
+import { trpc } from "@/lib/trpc";
 
 interface DocumentUploaderProps {
   isOpen: boolean;

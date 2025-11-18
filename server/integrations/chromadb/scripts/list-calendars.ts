@@ -1,5 +1,6 @@
-import { config } from "dotenv";
 import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import { JWT } from "google-auth-library";

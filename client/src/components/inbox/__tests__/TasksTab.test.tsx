@@ -1,7 +1,9 @@
+import { beforeAll, describe, expect, it } from "vitest";
+
+import TasksTab from "../TasksTab";
+
 import { loginTestUser, verifyAuthentication } from "@/__tests__/auth-helper";
 import { render, screen, waitFor } from "@/__tests__/test-utils";
-import { beforeAll, describe, expect, it } from "vitest";
-import TasksTab from "../TasksTab";
 
 /**
  * Integration test for TasksTab

@@ -2,13 +2,15 @@
  * MEMORY MANAGER - ChatGPT-style memory management og project scopes
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { cn } from "@/lib/utils";
 import { Brain, Trash2, Eye, EyeOff, Folder, Lock } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
+
 
 export interface MemoryItem {
   id: string;

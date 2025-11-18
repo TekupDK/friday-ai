@@ -3,11 +3,13 @@
  * Inline event preview med date badge og booking detaljer
  */
 
-import { Card } from "@/components/ui/card";
+import { Calendar, Clock, MapPin, Mail, Phone, Building2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { Calendar, Clock, MapPin, Mail, Phone, Building2 } from "lucide-react";
+
 
 export interface CalendarEventData {
   title: string;

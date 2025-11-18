@@ -5,18 +5,21 @@
  * Integrates ChromaDB semantic search with Supabase lead database.
  */
 
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, protectedProcedure } from "../_core/trpc";
-import { getDb } from "../db";
+import { eq, and, desc, sql, or, ilike, inArray } from "drizzle-orm";
+import { z } from "zod";
+
 import {
   leads,
   customerProfiles,
   customerInvoices,
   type CustomerInvoice,
 } from "../../drizzle/schema";
-import { eq, and, desc, sql, or, ilike, inArray } from "drizzle-orm";
 import { withDatabaseErrorHandling } from "../_core/error-handling";
+import { router, protectedProcedure } from "../_core/trpc";
+import { getDb } from "../db";
+
+
 
 /**
  * Customer lookup by name, email, or phone

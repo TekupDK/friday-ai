@@ -10,10 +10,12 @@
  * - Relationships: Create, query relationships
  */
 
-import dotenv from "dotenv";
-import { and, eq, sql } from "drizzle-orm";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+
+import dotenv from "dotenv";
+import { and, eq, sql } from "drizzle-orm";
+
 import {
   auditLog,
   customerDocuments,

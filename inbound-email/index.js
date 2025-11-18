@@ -7,12 +7,13 @@
   - Exposes a simple HTTP health endpoint on 8080
 */
 
-const { SMTPServer } = require("smtp-server");
-const { simpleParser } = require("mailparser");
-const fs = require("fs");
-const path = require("path");
 const crypto = require("crypto");
+const fs = require("fs");
 const http = require("http");
+const path = require("path");
+
+const { simpleParser } = require("mailparser");
+const { SMTPServer } = require("smtp-server");
 
 const WEBHOOK_URL =
   process.env.WEBHOOK_URL || "http://friday-ai:3000/api/inbound/email";

@@ -4,6 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
+
 import { rateLimiter } from "../rate-limiter";
 
 describe("Rate Limiter Count Bug", () => {

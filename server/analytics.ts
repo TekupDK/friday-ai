@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { ENV } from "./_core/env";
 
 export type AnalyticsEvent = {

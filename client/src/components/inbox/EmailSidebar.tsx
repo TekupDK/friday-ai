@@ -1,9 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
-import { trpc } from "@/lib/trpc";
 import {
   Archive,
   CheckCircle,
@@ -21,6 +15,13 @@ import {
   Star,
   Tag,
 } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
+import { trpc } from "@/lib/trpc";
 
 interface EmailSidebarProps {
   selectedFolder: string;

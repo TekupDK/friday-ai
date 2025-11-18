@@ -3,9 +3,10 @@
  * The calendar events were already fetched, just need to parse descriptions properly
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import { listCalendarEvents } from "../../../google-api";

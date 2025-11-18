@@ -1,7 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { trpc } from "@/lib/trpc";
 import {
   DndContext,
   DragEndEvent,
@@ -21,7 +17,13 @@ import { CSS } from "@dnd-kit/utilities";
 import { Calendar, CheckCircle2, DollarSign, Mail, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+
 import EmailPreviewModal from "./EmailPreviewModal";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { trpc } from "@/lib/trpc";
 
 type PipelineStage =
   | "needs_action"

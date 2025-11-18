@@ -1,4 +1,5 @@
 import { and, desc, eq } from "drizzle-orm";
+
 import {
   CalendarEvent,
   customerConversations,
@@ -12,6 +13,7 @@ import {
   InsertCustomerNote,
   InsertCustomerProfile,
 } from "../drizzle/schema";
+
 import { getDb } from "./db";
 
 /**

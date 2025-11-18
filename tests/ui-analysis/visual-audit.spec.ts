@@ -7,9 +7,10 @@
  * - Identify UI/UX problems with evidence
  */
 
-import { test, expect } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
+
+import { test, expect } from "@playwright/test";
 
 test.describe("Email Center - Visual UI/UX Analysis", () => {
   test.beforeEach(async ({ page }) => {

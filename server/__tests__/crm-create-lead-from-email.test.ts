@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+
 import { CreateLeadFromEmailInputSchema } from "../../shared/schemas/lead";
 
 describe("CreateLeadFromEmailInputSchema", () => {

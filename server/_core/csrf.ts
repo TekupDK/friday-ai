@@ -9,9 +9,11 @@
  */
 
 import { randomBytes } from "crypto";
+
 import type { Request, Response } from "express";
-import { logger } from "./logger";
+
 import { ENV } from "./env";
+import { logger } from "./logger";
 
 const CSRF_TOKEN_COOKIE_NAME = "__csrf_token";
 const CSRF_TOKEN_HEADER_NAME = "x-csrf-token";

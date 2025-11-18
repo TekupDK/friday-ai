@@ -19,10 +19,11 @@
  * ```
  */
 
-import { Router, Request, Response } from "express";
 import { sql } from "drizzle-orm";
-import { getDb } from "../db";
+import { Router, Request, Response } from "express";
+
 import { logger } from "../_core/logger";
+import { getDb } from "../db";
 
 const router = Router();
 

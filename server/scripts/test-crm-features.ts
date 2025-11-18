@@ -13,8 +13,11 @@ import { config } from "dotenv";
 import "dotenv/config";
 import { desc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
+
 import { join } from "path";
+
 import postgres from "postgres";
+
 import {
   customerActivities,
   customerHealthScores,

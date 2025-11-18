@@ -8,8 +8,6 @@
  * Phase 2.1 improvement based on ChatGPT feedback
  */
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Reply,
   Calendar,
@@ -20,6 +18,9 @@ import {
   Mail,
   Clock,
 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import type { EmailThread } from "@/types/email-thread";
 
 interface EmailStickyActionBarProps {

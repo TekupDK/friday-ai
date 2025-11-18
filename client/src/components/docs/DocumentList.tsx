@@ -1,5 +1,20 @@
-import { Button } from "@/components/ui/button";
+import { formatDistanceToNow } from "date-fns";
+import {
+  FileText,
+  Eye,
+  Edit,
+  Calendar,
+  Tag,
+  User,
+  MoreVertical,
+  Link2,
+  Archive,
+  AlertTriangle,
+} from "lucide-react";
+import { toast } from "sonner";
+
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,20 +29,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  FileText,
-  Eye,
-  Edit,
-  Calendar,
-  Tag,
-  User,
-  MoreVertical,
-  Link2,
-  Archive,
-  AlertTriangle,
-} from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { toast } from "sonner";
+
 
 interface Document {
   id: string;

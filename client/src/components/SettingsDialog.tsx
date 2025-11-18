@@ -1,3 +1,7 @@
+import { Bell, Globe, Moon, Palette, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
 import {
   Dialog,
   DialogContent,
@@ -17,9 +21,6 @@ import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getLanguage, setLanguage, useI18n, type Language } from "@/lib/i18n";
 import { trpc } from "@/lib/trpc";
-import { Bell, Globe, Moon, Palette, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface SettingsDialogProps {
   open: boolean;
@@ -69,7 +70,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         setLanguage(preferences.language as Language);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [preferences]); // Only re-run when preferences change, not theme/setThemeDirect
 
   const updatePreferencesMutation = (

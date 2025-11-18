@@ -1,8 +1,10 @@
-import path from "path";
-import fs from "fs/promises";
 import { EventEmitter } from "events";
-import { simpleGit, type SimpleGit } from "simple-git";
+import fs from "fs/promises";
+import path from "path";
+
 import chokidar, { type FSWatcher } from "chokidar";
+import { simpleGit, type SimpleGit } from "simple-git";
+
 import { logger } from "../../_core/logger";
 import type { SyncStatus, Conflict } from "../types";
 

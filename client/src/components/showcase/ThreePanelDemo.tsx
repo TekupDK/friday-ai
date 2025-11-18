@@ -3,9 +3,10 @@
  * Viser jeres WorkspaceLayout system i miniature
  */
 
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Bot, Mail, Briefcase } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import {
   ResizableHandle,
   ResizablePanel,

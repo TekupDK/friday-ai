@@ -3,8 +3,9 @@
  * Generates context-aware, tone-matched response drafts for emails
  */
 
-import { routeAI } from "../ai-router";
 import { generateCorrelationId } from "../action-audit";
+import { routeAI } from "../ai-router";
+
 import type { EmailMessage } from "./categorizer";
 
 export interface ResponseSuggestion {

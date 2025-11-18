@@ -6,6 +6,7 @@
 
 import { useEffect } from "react";
 import { useLocation } from "wouter";
+
 import { APP_TITLE } from "@/const";
 
 export function usePageTitle(title: string) {

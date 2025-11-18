@@ -4,6 +4,7 @@
  */
 
 import { useState, useCallback } from "react";
+
 import { trpc } from "@/lib/trpc";
 
 interface UseFridayChatSimpleOptions {

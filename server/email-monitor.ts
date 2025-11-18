@@ -5,16 +5,20 @@
  * and triggers immediate processing workflows.
  */
 
-import { google } from "googleapis";
+import { eq } from "drizzle-orm";
 import { JWT } from "google-auth-library";
+import { google } from "googleapis";
+
+import { emailThreads, users } from "../drizzle/schema";
+
+import { retryWithBackoff } from "./_core/error-handling";
+import { logger } from "./_core/logger";
+import { getDb } from "./db";
+import { enrichEmailFromSources } from "./email-enrichment";
 import { detectLeadSourceIntelligent } from "./lead-source-detector";
 import { getWorkflowFromDetection } from "./lead-source-workflows";
-import { enrichEmailFromSources } from "./email-enrichment";
-import { emailThreads, users } from "../drizzle/schema";
-import { getDb } from "./db";
-import { eq } from "drizzle-orm";
-import { logger } from "./_core/logger";
-import { retryWithBackoff } from "./_core/error-handling";
+
+
 
 interface EmailMonitorConfig {
   pollInterval: number; // milliseconds

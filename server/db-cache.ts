@@ -4,9 +4,10 @@
  * ✅ NEW: Redis caching for expensive queries
  */
 
-import { getRedisClient } from "./rate-limiter-redis";
-import { logger } from "./_core/logger";
 import { createHash } from "crypto";
+
+import { logger } from "./_core/logger";
+import { getRedisClient } from "./rate-limiter-redis";
 
 interface CacheOptions {
   ttl?: number; // Time to live in seconds (default: 5 minutes)

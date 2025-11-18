@@ -15,7 +15,6 @@ import {
   formatLeadForEmbedding,
   formatEmailForEmbedding,
 } from "./client";
-
 import { generateEmbedding, cosineSimilarity } from "./embeddings";
 
 console.log("🧪 ChromaDB Full Integration Test\n");

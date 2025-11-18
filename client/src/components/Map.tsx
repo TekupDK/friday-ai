@@ -127,7 +127,7 @@ export function MapView({
         onMapReady(map.current);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []); // Only initialize map once on mount
 
   useEffect(() => {

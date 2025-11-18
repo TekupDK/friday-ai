@@ -1,7 +1,8 @@
+import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 export function SkeletonDemo() {
   const [loading, setLoading] = useState(true);

@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+
+import type { GmailThread } from "../google-api";
 import {
   determineType,
   determineStatus,
@@ -8,7 +10,6 @@ import {
   extractFrequency,
 } from "../scripts/lead-analysis-cleaning";
 
-import type { GmailThread } from "../google-api";
 
 function makeThread(texts: string[], froms: string[]): GmailThread {
   const now = new Date();

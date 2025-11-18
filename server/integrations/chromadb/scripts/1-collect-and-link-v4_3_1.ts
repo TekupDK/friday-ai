@@ -15,15 +15,17 @@
  * Run: npx tsx server/integrations/chromadb/scripts/1-collect-and-link-v4_3_1.ts
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import { JWT } from "google-auth-library";
 import { google } from "googleapis";
-import { V4_3_Lead, GmailData, CalendarData, BillyData } from "../v4_3-types";
+
 import { V4_3_CONFIG, classifyLeadSource, isSpam } from "../v4_3-config";
+import { V4_3_Lead, GmailData, CalendarData, BillyData } from "../v4_3-types";
 
 console.log("📦 V4.3.1 Script 1: Collect & Link (Targeted)\n");
 console.log("=".repeat(70));

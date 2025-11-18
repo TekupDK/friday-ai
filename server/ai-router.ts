@@ -10,6 +10,7 @@ import { applyMemoryRules } from "../client/src/lib/ai-memory-rules";
 import { getFeatureFlags } from "./_core/feature-flags";
 import { invokeLLM, type Message } from "./_core/llm";
 import { getFridaySystemPrompt } from "./friday-prompts";
+import { FRIDAY_TOOLS } from "./friday-tools";
 import { responseCacheRedis } from "./integrations/litellm/response-cache-redis";
 import {
   executeAction,
@@ -22,15 +23,14 @@ import {
   type AIModel,
   type TaskType,
 } from "./model-router";
-import { executeUTCPTool } from "./utcp/handler";
-import { getAllUTCPTools, hasUTCPTool } from "./utcp/manifest";
-import { FRIDAY_TOOLS } from "./friday-tools";
 import {
   recommendSubscriptionPlan,
   predictChurnRisk,
   optimizeSubscriptionUsage,
   generateUpsellOpportunities,
 } from "./subscription-ai";
+import { executeUTCPTool } from "./utcp/handler";
+import { getAllUTCPTools, hasUTCPTool } from "./utcp/manifest";
 
 // Re-export types from model-router for backward compatibility
 export type { AIModel, TaskType } from "./model-router";

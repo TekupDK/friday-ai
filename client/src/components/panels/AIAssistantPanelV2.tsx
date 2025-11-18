@@ -6,6 +6,7 @@
  */
 
 import { memo, useState, useEffect } from "react";
+
 import ShortWaveChatPanel from "@/components/chat/ShortWaveChatPanel";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { trpc } from "@/lib/trpc";
@@ -28,7 +29,7 @@ const AIAssistantPanelV2 = memo(function AIAssistantPanelV2() {
   useEffect(() => {
     // Create conversation only once when component mounts
     createConversation.mutate({ title: "Friday AI Chat" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []); // Intentionally empty - run once on mount
 
   // TODO: Add real context when EmailContext is available

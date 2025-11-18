@@ -4,14 +4,6 @@
  */
 
 import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  ReactNode,
-} from "react";
-import { cn } from "@/lib/utils";
-import {
   CheckCircle2,
   XCircle,
   AlertCircle,
@@ -19,7 +11,16 @@ import {
   X,
   Loader2,
 } from "lucide-react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from "react";
+
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export type ToastType = "success" | "error" | "warning" | "info" | "loading";
 

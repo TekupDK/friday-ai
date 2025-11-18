@@ -1,5 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { useState, useEffect } from "react";
 import {
   TrendingUp,
   TrendingDown,
@@ -8,6 +6,9 @@ import {
   Target,
   Zap,
 } from "lucide-react";
+import { useState, useEffect } from "react";
+
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 interface StatData {

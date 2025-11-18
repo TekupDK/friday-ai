@@ -1,23 +1,28 @@
+import { format } from "date-fns";
+import { da } from "date-fns/locale";
+import { Bot } from "lucide-react";
+import { Suspense, lazy, useEffect, useMemo, useState } from "react";
+
+import ShortWaveChatPanel from "../chat/ShortWaveChatPanel";
+import {
+  CategoryBadge,
+  PriorityIndicator,
+  ResponseSuggestions,
+} from "../email-intelligence";
+import EmailIframeView from "../EmailIframeView";
+import { SafeStreamdown } from "../SafeStreamdown";
+
+import { EmailAssistant3Panel } from "../workspace/EmailAssistant3Panel";
+import EmailActions from "./EmailActions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/lib/trpc";
-import { format } from "date-fns";
-import { da } from "date-fns/locale";
-import { Bot } from "lucide-react";
-import { Suspense, lazy, useEffect, useMemo, useState } from "react";
-import EmailIframeView from "../EmailIframeView";
-import { SafeStreamdown } from "../SafeStreamdown";
-import ShortWaveChatPanel from "../chat/ShortWaveChatPanel";
-import EmailActions from "./EmailActions";
-import { EmailAssistant3Panel } from "../workspace/EmailAssistant3Panel";
-import {
-  CategoryBadge,
-  PriorityIndicator,
-  ResponseSuggestions,
-} from "../email-intelligence";
+
+
+
 const EmailAISummary = lazy(() => import("./EmailAISummary"));
 const EmailLabelSuggestions = lazy(() => import("./EmailLabelSuggestions"));
 

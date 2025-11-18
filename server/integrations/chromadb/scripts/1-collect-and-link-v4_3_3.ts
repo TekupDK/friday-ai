@@ -22,16 +22,19 @@
  * Run: npx tsx server/integrations/chromadb/scripts/1-collect-and-link-v4_3_3.ts
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
+import Fuse from "fuse.js";
 import { JWT } from "google-auth-library";
 import { google } from "googleapis";
-import Fuse from "fuse.js";
+
 import { TIME_WINDOW, classifyLeadSource, isSpam } from "../v4_3-config";
 import type { V4_3_Lead } from "../v4_3-types";
+
 import { parseCalendarEvent } from "./calendar-parser-v4_3_5";
 
 console.log("📦 V4.3.5 Script 1: Collect & Link (AI-Enhanced Parsing)\n");

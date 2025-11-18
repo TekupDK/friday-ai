@@ -5,8 +5,9 @@
  * Sanitizes markdown content before it's rendered to DOM
  */
 
-import { sanitizeText } from "@/lib/sanitize";
 import { Streamdown } from "streamdown";
+
+import { sanitizeText } from "@/lib/sanitize";
 
 interface SafeStreamdownProps {
   content: string;

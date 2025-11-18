@@ -2,11 +2,6 @@
  * SEARCH EVERYWHERE - Universal søgning på tværs af systemet
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import {
   Search,
   Filter,
@@ -20,6 +15,13 @@ import {
   Star,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
 
 export interface SearchResult {
   id: string;

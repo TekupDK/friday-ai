@@ -16,7 +16,6 @@
  * 5. Afsluttet (gray) - Completed/Archived
  */
 
-import { useState, useMemo } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -29,10 +28,14 @@ import {
   type DragStartEvent,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { PipelineColumn, type PipelineStage } from "./PipelineColumn";
-import { EmailCard, type EmailCardData } from "./EmailCard";
-import { trpc } from "@/lib/trpc";
+import { useState, useMemo } from "react";
 import { toast } from "sonner";
+
+import { EmailCard, type EmailCardData } from "./EmailCard";
+import { PipelineColumn, type PipelineStage } from "./PipelineColumn";
+
+import { trpc } from "@/lib/trpc";
+
 
 // Pipeline stage configuration
 const PIPELINE_STAGES: Array<{ stage: PipelineStage; title: string }> = [

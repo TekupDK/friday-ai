@@ -126,11 +126,11 @@
 
 ### Immediate (Næste Session)
 
-1. **Fix TypeScript Fejl** ⚠️
-   - **File:** `server/_core/index.ts:121`
-   - **Error:** `Expected 0 arguments, but got 1`
-   - **Priority:** High
-   - **Estimated:** 15 min
+1. ✅ **Fix TypeScript Fejl** - FÆRDIG
+   - **File:** `server/_core/index.ts`
+   - **Error:** Sentry v10 API mismatch - fjernet manuel middleware setup
+   - **Fix:** `expressIntegration()` i `Sentry.init()` håndterer alt automatisk
+   - **Status:** ✅ FIXET - TypeScript compilation passerer nu
 
 2. **Commit Subscription Work** 📝
    - **Files:** Alle subscription komponenter, pages, routes

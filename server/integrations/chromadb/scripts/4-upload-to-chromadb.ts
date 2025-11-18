@@ -18,7 +18,9 @@
 
 import { readFileSync } from "fs";
 import { resolve } from "path";
+
 import { ChromaClient, Collection } from "chromadb";
+
 import { V4_3_Dataset, V4_3_Lead } from "../v4_3-types";
 
 console.log("🔌 V4.3.3 Script 4: Upload to ChromaDB\n");

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Mail, MapPin, Phone } from "lucide-react";
+
 import { AppleListItem } from "./AppleListItem";
 
 const meta = {

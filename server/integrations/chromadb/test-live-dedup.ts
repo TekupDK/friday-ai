@@ -6,12 +6,13 @@
  */
 
 // Load environment first
-import { config } from "dotenv";
 import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
-import { createLead, getUserLeads } from "../../db";
 import type { InsertLead } from "../../../drizzle/schema";
+import { createLead, getUserLeads } from "../../db";
 
 console.log("🧪 Live ChromaDB Duplicate Detection Test\n");
 console.log("=".repeat(60));

@@ -74,24 +74,100 @@ export function SubscriptionManagement({
     });
   };
 
+  const pauseMutation = trpc.subscription.update.useMutation({
+    onSuccess: () => {
+      utils.subscription.list.invalidate();
+      toast.success("Subscription paused successfully");
+    },
+    onError: error => {
+      toast.error(error.message || "Failed to pause subscription");
+    },
+  });
+
+  const resumeMutation = trpc.subscription.update.useMutation({
+    onSuccess: () => {
+      utils.subscription.list.invalidate();
+      toast.success("Subscription resumed successfully");
+    },
+    onError: error => {
+      toast.error(error.message || "Failed to resume subscription");
+    },
+  });
+
+  const upgradeMutation = trpc.subscription.update.useMutation({
+    onSuccess: () => {
+      utils.subscription.list.invalidate();
+      toast.success("Subscription upgraded successfully");
+    },
+    onError: error => {
+      toast.error(error.message || "Failed to upgrade subscription");
+    },
+  });
+
+  const downgradeMutation = trpc.subscription.update.useMutation({
+    onSuccess: () => {
+      utils.subscription.list.invalidate();
+      toast.success("Subscription downgraded successfully");
+    },
+    onError: error => {
+      toast.error(error.message || "Failed to downgrade subscription");
+    },
+  });
+
   const handlePause = async (subscriptionId: number) => {
-    // TODO: Implement pause functionality when backend supports it
-    toast.info("Pause functionality coming soon");
+    await pauseMutation.mutateAsync({
+      subscriptionId,
+      status: "paused",
+    });
   };
 
   const handleResume = async (subscriptionId: number) => {
-    // TODO: Implement resume functionality when backend supports it
-    toast.info("Resume functionality coming soon");
+    await resumeMutation.mutateAsync({
+      subscriptionId,
+      status: "active",
+    });
   };
 
   const handleUpgrade = async (subscriptionId: number, currentPlan: string) => {
-    // TODO: Implement upgrade functionality
-    toast.info("Upgrade functionality coming soon");
+    // Plan upgrade path based on price (ascending): flex_basis(1,000) < tier1(1,200) < flex_plus(1,500) < tier2(1,800) < tier3(2,500)
+    const planUpgradeMap: Record<string, "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus"> = {
+      flex_basis: "tier1", // 1,000 -> 1,200
+      tier1: "flex_plus", // 1,200 -> 1,500 (or tier2 for tier plans)
+      flex_plus: "tier2", // 1,500 -> 1,800
+      tier2: "tier3", // 1,800 -> 2,500
+      tier3: "tier3", // Already highest
+    };
+
+    const nextPlan = planUpgradeMap[currentPlan];
+    if (nextPlan && nextPlan !== currentPlan) {
+      await upgradeMutation.mutateAsync({
+        subscriptionId,
+        planType: nextPlan,
+      });
+    } else {
+      toast.info("Subscription is already at the highest tier");
+    }
   };
 
   const handleDowngrade = async (subscriptionId: number, currentPlan: string) => {
-    // TODO: Implement downgrade functionality
-    toast.info("Downgrade functionality coming soon");
+    // Plan downgrade path based on price (descending)
+    const planDowngradeMap: Record<string, "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus"> = {
+      tier3: "tier2", // 2,500 -> 1,800
+      tier2: "flex_plus", // 1,800 -> 1,500
+      flex_plus: "tier1", // 1,500 -> 1,200
+      tier1: "flex_basis", // 1,200 -> 1,000
+      flex_basis: "flex_basis", // Already lowest
+    };
+
+    const prevPlan = planDowngradeMap[currentPlan];
+    if (prevPlan && prevPlan !== currentPlan) {
+      await downgradeMutation.mutateAsync({
+        subscriptionId,
+        planType: prevPlan,
+      });
+    } else {
+      toast.info("Subscription is already at the lowest tier");
+    }
   };
 
   if (isLoading) {
@@ -232,36 +308,40 @@ export function SubscriptionManagement({
                         variant="secondary"
                         size="sm"
                         onClick={() => handlePause(subscription.id)}
+                        disabled={pauseMutation.isPending}
                       >
                         <Pause className="w-4 h-4 mr-1" />
-                        Pause
+                        {pauseMutation.isPending ? "Pausing..." : "Pause"}
                       </AppleButton>
                       <AppleButton
                         type="button"
                         variant="secondary"
                         size="sm"
                         onClick={() => handleUpgrade(subscription.id, subscription.planType)}
+                        disabled={upgradeMutation.isPending}
                       >
                         <TrendingUp className="w-4 h-4 mr-1" />
-                        Upgrade
+                        {upgradeMutation.isPending ? "Upgrading..." : "Upgrade"}
                       </AppleButton>
                       <AppleButton
                         type="button"
                         variant="secondary"
                         size="sm"
                         onClick={() => handleDowngrade(subscription.id, subscription.planType)}
+                        disabled={downgradeMutation.isPending}
                       >
                         <TrendingDown className="w-4 h-4 mr-1" />
-                        Downgrade
+                        {downgradeMutation.isPending ? "Downgrading..." : "Downgrade"}
                       </AppleButton>
                       <AppleButton
                         type="button"
                         variant="tertiary"
                         size="sm"
                         onClick={() => handleCancel(subscription.id)}
+                        disabled={cancelMutation.isPending}
                       >
                         <X className="w-4 h-4 mr-1" />
-                        Cancel
+                        {cancelMutation.isPending ? "Cancelling..." : "Cancel"}
                       </AppleButton>
                     </>
                   )}
@@ -271,9 +351,10 @@ export function SubscriptionManagement({
                       variant="primary"
                       size="sm"
                       onClick={() => handleResume(subscription.id)}
+                      disabled={resumeMutation.isPending}
                     >
                       <Play className="w-4 h-4 mr-1" />
-                      Resume
+                      {resumeMutation.isPending ? "Resuming..." : "Resume"}
                     </AppleButton>
                   )}
                 </div>

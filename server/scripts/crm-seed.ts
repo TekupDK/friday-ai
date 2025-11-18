@@ -1,14 +1,15 @@
 import "dotenv/config";
+import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
+
+import { leads } from "../../drizzle/schema";
+import { ENV } from "../_core/env";
 import { router } from "../_core/trpc";
-import { crmCustomerRouter } from "../routers/crm-customer-router";
-import { crmLeadRouter } from "../routers/crm-lead-router";
-import { crmBookingRouter } from "../routers/crm-booking-router";
 import * as db from "../db";
 import * as leadDb from "../lead-db";
-import { ENV } from "../_core/env";
-import { leads } from "../../drizzle/schema";
-import { eq } from "drizzle-orm";
+import { crmBookingRouter } from "../routers/crm-booking-router";
+import { crmCustomerRouter } from "../routers/crm-customer-router";
+import { crmLeadRouter } from "../routers/crm-lead-router";
 
 // Normalize DATABASE_URL for local dev/staging if needed
 const normalizeDatabaseUrl = () => {

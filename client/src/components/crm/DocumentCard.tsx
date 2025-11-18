@@ -6,7 +6,9 @@
 
 import { Download, File, FileText, Image, Trash2, Tag } from "lucide-react";
 import React from "react";
+
 import { AppleButton, AppleCard } from "./apple-ui";
+
 import { cn } from "@/lib/utils";
 
 export interface DocumentData {

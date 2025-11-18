@@ -1,5 +1,6 @@
-import type { BillyInvoice } from "@/../../shared/types";
 import { createContext, ReactNode, useContext, useState } from "react";
+
+import type { BillyInvoice } from "@/../../shared/types";
 
 export interface InvoiceContextType {
   selectedInvoice: BillyInvoice | null;

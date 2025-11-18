@@ -10,6 +10,7 @@
 
 import * as dotenv from "dotenv";
 import { eq, sql } from "drizzle-orm";
+
 import {
   leads,
   customerProfiles,

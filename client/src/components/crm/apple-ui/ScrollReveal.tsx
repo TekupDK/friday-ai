@@ -6,6 +6,7 @@
 
 import { motion, type HTMLMotionProps } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
+
 import { animations } from "../../../styles/apple-design-system";
 
 export type RevealAnimation = "fade" | "slideUp" | "slideDown" | "scale";

@@ -3,10 +3,12 @@
  * Implements the actual execution logic for each tool
  */
 
+import { z } from "zod";
+
 import { createInvoice, getInvoices, searchCustomerByEmail } from "./billy";
 import { createTask, getUserTasks, trackEvent } from "./db";
-import { createLead, getUserLeads, updateLeadStatus } from "./lead-db";
 import { ToolName } from "./friday-tools";
+import { createLead, getUserLeads, updateLeadStatus } from "./lead-db";
 import {
   createCalendarEvent,
   createGmailDraft,
@@ -15,7 +17,6 @@ import {
   listCalendarEvents,
   searchGmail,
 } from "./mcp";
-import { z } from "zod";
 
 export interface ToolCallResult {
   success: boolean;

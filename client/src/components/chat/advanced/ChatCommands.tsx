@@ -2,10 +2,11 @@
  * CHAT COMMANDS - /commands system
  */
 
+import { Search, Calendar, FileText, Users, Zap } from "lucide-react";
 import { useState, useEffect } from "react";
+
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Search, Calendar, FileText, Users, Zap } from "lucide-react";
 
 export interface Command {
   name: string;

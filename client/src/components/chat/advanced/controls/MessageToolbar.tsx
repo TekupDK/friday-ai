@@ -1,8 +1,3 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Toggle } from "@/components/ui/toggle";
 import {
   Bold,
   Italic,
@@ -29,6 +24,9 @@ import {
   Heading2,
   Heading3,
 } from "lucide-react";
+import * as React from "react";
+
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,6 +39,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { Toggle } from "@/components/ui/toggle";
+import { cn } from "@/lib/utils";
 
 export interface MessageToolbarProps
   extends React.HTMLAttributes<HTMLDivElement> {

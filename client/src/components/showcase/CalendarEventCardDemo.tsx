@@ -1,4 +1,11 @@
+import { Bot, User, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
+
+import {
+  CalendarEventCard,
+  CalendarEventData,
+} from "@/components/chat/CalendarEventCard";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -6,13 +13,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  CalendarEventCard,
-  CalendarEventData,
-} from "@/components/chat/CalendarEventCard";
-import { Bot, User, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**

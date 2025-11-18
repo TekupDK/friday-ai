@@ -3,6 +3,8 @@
  * Viser jeres header med user menu og settings
  */
 
+import { Bot, User, Settings, LogOut, BookOpen, Bell } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bot, User, Settings, LogOut, BookOpen, Bell } from "lucide-react";
 
 export function HeaderDemo() {
   return (

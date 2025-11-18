@@ -7,9 +7,10 @@
  * Run with: npx tsx server/integrations/chromadb/scripts/collect-from-existing-apis.ts
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
 import {

@@ -1,7 +1,8 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { GripVertical, PanelLeft, PanelRight } from "lucide-react";
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
 
 const splitViewVariants = cva(
   "flex overflow-hidden h-full w-full bg-background",

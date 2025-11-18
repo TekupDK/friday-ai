@@ -5,13 +5,14 @@
  * Run with: pnpm exec dotenv -e .env.dev -- tsx server/scripts/test-subscription-usage.ts
  */
 
-import { getDb } from "../db";
-import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "../../drizzle/schema";
 import { eq, and } from "drizzle-orm";
-import { createSubscription } from "../subscription-actions";
-import { trackBookingUsage, calculateBookingHours, syncSubscriptionUsage } from "../subscription-usage-tracker";
-import { getSubscriptionUsageForMonth } from "../subscription-db";
+
+import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
+import { getDb } from "../db";
+import { createSubscription } from "../subscription-actions";
+import { getSubscriptionUsageForMonth } from "../subscription-db";
+import { trackBookingUsage, calculateBookingHours, syncSubscriptionUsage } from "../subscription-usage-tracker";
 
 async function testSubscriptionUsage() {
   console.log("🧪 Starting Subscription Usage Tracking Tests...\n");

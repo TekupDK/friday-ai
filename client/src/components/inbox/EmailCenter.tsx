@@ -10,19 +10,9 @@
  * - Context-aware: Dynamic tabs based on email context detection
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useEmailContext } from "@/contexts/EmailContext";
-import {
-  detectEmailContext,
-  type EmailContextData,
-} from "@/services/emailContextDetection";
-import { useCallback, useMemo, useState } from "react";
 import { PenSquare } from "lucide-react";
-import EmailListV2 from "./EmailListV2";
-import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
+import { useCallback, useMemo, useState } from "react";
+
 import SmartWorkspacePanel from "../panels/SmartWorkspacePanel";
 import SmartActionBar, {
   type LeadData,
@@ -30,6 +20,22 @@ import SmartActionBar, {
   type InvoiceData,
   type CustomerData,
 } from "../workspace/SmartActionBar";
+
+import EmailListV2 from "./EmailListV2";
+import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
+
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEmailContext } from "@/contexts/EmailContext";
+import {
+  detectEmailContext,
+  type EmailContextData,
+} from "@/services/emailContextDetection";
+
+
+
 
 // Contextual tab components (will be created in Phase 5.3.x)
 const LeadActionsTab = () => (

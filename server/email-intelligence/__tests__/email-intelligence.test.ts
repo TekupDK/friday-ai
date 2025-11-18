@@ -3,6 +3,7 @@
  */
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import type { EmailMessage } from "../categorizer";
 import { categorizeEmail, getCategoryStats } from "../categorizer";
 import { scorePriority } from "../priority-scorer";

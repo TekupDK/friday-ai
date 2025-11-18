@@ -7,6 +7,7 @@
 
 import { httpBatchLink, httpLink, splitLink } from "@trpc/client";
 import superjson from "superjson";
+
 import { trpc } from "./trpc";
 
 // Create tRPC client with same configuration as main app

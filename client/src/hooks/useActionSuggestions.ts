@@ -1,7 +1,8 @@
+import { useState } from "react";
+
 import type { PendingAction } from "@/components/ActionApprovalModal";
 import { isFeatureEnabled } from "@/lib/featureFlags";
 import { trpc } from "@/lib/trpc";
-import { useState } from "react";
 
 export type ActionSuggestion = PendingAction;
 

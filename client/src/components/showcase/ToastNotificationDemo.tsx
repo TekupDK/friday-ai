@@ -1,3 +1,6 @@
+import { CheckCircle, AlertCircle, Info, XCircle, X } from "lucide-react";
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,9 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { CheckCircle, AlertCircle, Info, XCircle, X } from "lucide-react";
+
 
 type ToastType = "success" | "error" | "warning" | "info";
 

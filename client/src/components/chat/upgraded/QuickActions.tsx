@@ -3,8 +3,6 @@
  * Vises under AI responses for hurtige handlinger
  */
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
 import {
   Calendar,
@@ -17,6 +15,9 @@ import {
   Download,
   Share2,
 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export interface QuickAction {
   label: string;

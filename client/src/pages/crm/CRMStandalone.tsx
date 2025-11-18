@@ -8,15 +8,16 @@
  * Access via: /crm-standalone or /crm/debug
  */
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { Route, Switch, useLocation } from "wouter";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { trpc } from "@/lib/trpc";
-import { trpcClient } from "@/lib/trpc-client";
+
 import CRMLayout from "@/components/crm/CRMLayout";
 import { LoadingSpinner } from "@/components/crm/LoadingSpinner";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { trpc } from "@/lib/trpc";
+import { trpcClient } from "@/lib/trpc-client";
 // Simple error boundary component (no external dependency needed)
 class ErrorBoundary extends React.Component<
   { 

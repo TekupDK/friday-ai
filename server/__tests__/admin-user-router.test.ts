@@ -6,14 +6,16 @@
  * Security: Role-based access control, owner protection, self-protection
  */
 
-import { describe, it, expect, vi, beforeAll, afterEach, beforeEach } from "vitest";
 import { TRPCError } from "@trpc/server";
-import { appRouter } from "../routers";
-import type { TrpcContext } from "../_core/context";
-import * as db from "../db";
-import { ENV } from "../_core/env";
-import { users } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
+import { describe, it, expect, vi, beforeAll, afterEach, beforeEach } from "vitest";
+
+import { users } from "../../drizzle/schema";
+import type { TrpcContext } from "../_core/context";
+import { ENV } from "../_core/env";
+import * as db from "../db";
+import { appRouter } from "../routers";
+
 
 // Ensure DATABASE_URL is unset for unit tests (fallback mode)
 beforeAll(() => {
@@ -76,21 +78,23 @@ describe("Admin User Router - Role-Based Access Control", () => {
       // Mock main query result - need to handle both with and without where clause
       // The chain is: select().from(users).orderBy().limit().offset()
       // When no whereClause: select().from(users).orderBy().limit().offset()
+      // Use the same pattern as subscription-integration.test.ts
       const mockUsers = [
         { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
         { id: 2, name: "User 2", email: "user2@example.com", role: "admin" },
       ];
       const mockOffset = vi.fn().mockResolvedValue(mockUsers);
       const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
+      // Create mock that matches Drizzle query builder chain exactly
+      // select().from(users) -> returns object with orderBy() method
+      // select().from(users).where(...) -> returns object with orderBy() method
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
       // from() must return an object with both where() and orderBy() methods
-      // This allows the code to call either .where() or .orderBy() directly after .from()
       const mockFromResult = {
         where: mockWhere,
         orderBy: mockOrderBy,
       };
-      // from() is a function that takes the table as argument and returns the query builder
       const mockFrom = vi.fn().mockReturnValue(mockFromResult);
       // select() returns an object with from() method
       const mockSelectResult = { from: mockFrom };

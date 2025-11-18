@@ -4,6 +4,7 @@
  */
 
 import { Redis } from "@upstash/redis";
+
 import { logger } from "./logger";
 
 // Initialize Redis client (will use env vars)

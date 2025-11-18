@@ -7,12 +7,15 @@
  * Run with: pnpm exec tsx server/scripts/test-customer-data.ts
  */
 
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+
 import { config } from "dotenv";
 import { count, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
-import { dirname, join } from "path";
 import postgres from "postgres";
-import { fileURLToPath } from "url";
+
+
 import {
   customerProfilesInFridayAi,
   customerPropertiesInFridayAi,

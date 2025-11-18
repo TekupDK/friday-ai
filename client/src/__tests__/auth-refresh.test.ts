@@ -21,6 +21,7 @@ vi.mock("@/const", () => ({
 
 // Import after mocks
 import { TRPCClientError } from "@trpc/client";
+
 import { UNAUTHED_ERR_MSG } from "@shared/const";
 
 // We need to test the redirectToLoginIfUnauthorized function

@@ -2,11 +2,6 @@
  * ADVANCED COMPOSER - ChatGPT-style input med uploads, slash commands, voice
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import {
   Send,
   Paperclip,
@@ -20,6 +15,13 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { useState, useRef, KeyboardEvent } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+
 
 export interface SlashCommand {
   id: string;

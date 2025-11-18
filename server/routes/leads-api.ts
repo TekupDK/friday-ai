@@ -12,10 +12,12 @@
  * - GET  /api/leads/stats
  */
 
-import { Router, Request, Response } from "express";
-import { ChromaClient } from "chromadb";
 import { readFileSync } from "fs";
 import { resolve } from "path";
+
+import { ChromaClient } from "chromadb";
+import { Router, Request, Response } from "express";
+
 import { V4_3_Dataset, V4_3_Lead } from "../integrations/chromadb/v4_3-types";
 
 const router = Router();

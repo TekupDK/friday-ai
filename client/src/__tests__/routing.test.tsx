@@ -5,9 +5,10 @@
  * Verifies that routes are properly registered in the route configuration.
  */
 
-import { describe, it, expect, vi } from "vitest";
 import { readFileSync } from "fs";
 import { join } from "path";
+
+import { describe, it, expect, vi } from "vitest";
 
 describe("Route Registration", () => {
   const appTsxPath = join(process.cwd(), "client/src/App.tsx");

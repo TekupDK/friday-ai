@@ -7,7 +7,9 @@
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import React from "react";
+
 import { animations } from "../../../styles/apple-design-system";
+
 import styles from "./AppleListItem.module.css";
 
 export interface AppleListItemProps

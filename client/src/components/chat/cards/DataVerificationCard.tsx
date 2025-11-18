@@ -2,11 +2,6 @@
  * DATA VERIFICATION CARD - Verificere data før booking
  */
 
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 import {
   CheckCircle2,
   AlertTriangle,
@@ -19,6 +14,13 @@ import {
   MapPin,
 } from "lucide-react";
 import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+
 
 export interface VerificationItem {
   id: string;

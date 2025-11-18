@@ -8,17 +8,18 @@
  * 4. Link calendar events to Gmail threads via email
  */
 
-import { config } from "dotenv";
-import { resolve } from "path";
 import { writeFileSync } from "fs";
+import { resolve } from "path";
+
+import { config } from "dotenv";
 config({ path: resolve(process.cwd(), ".env.dev") });
 
+import { getCustomers } from "../../../billy";
 import {
   listCalendarEvents,
   searchGmailThreads,
   getGmailThread,
 } from "../../../google-api";
-import { getCustomers } from "../../../billy";
 
 console.log("📊 ENRICHED DATA COLLECTION\n");
 console.log("=".repeat(70));

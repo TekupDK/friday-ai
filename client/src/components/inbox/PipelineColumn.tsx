@@ -14,12 +14,15 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { Inbox } from "lucide-react";
+
+import { Badge } from "../ui/badge";
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
-import { cn } from "@/lib/utils";
+
 import { EmailCard, type EmailCardData } from "./EmailCard";
-import { Badge } from "../ui/badge";
-import { Inbox } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 export type PipelineStage =
   | "needs_action"

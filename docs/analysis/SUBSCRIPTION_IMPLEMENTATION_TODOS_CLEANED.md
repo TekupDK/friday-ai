@@ -223,18 +223,18 @@
 
 ### 🧪 Testing Tasks (P1 - High Priority)
 
-- [ ] **Write subscription unit tests** (P1, M)
-  - Test subscription creation
-  - Test renewal logic
-  - Test cancellation flow
-  - Test usage tracking
-  - Location: `server/__tests__/subscription.test.ts`
+- [x] **Write subscription unit tests** (P1, M) - ✅ COMPLETE (2025-01-28)
+  - ✅ Test subscription creation
+  - ✅ Test renewal logic
+  - ✅ Test cancellation flow
+  - ✅ Test usage tracking
+  - ✅ Location: `server/__tests__/subscription.test.ts` (20 tests passing)
 
-- [ ] **Write integration tests** (P1, M)
-  - Test Billy.dk invoice generation
-  - Test calendar booking creation
-  - Test email sending
-  - Location: `server/__tests__/subscription-integration.test.ts`
+- [x] **Write integration tests** (P1, M) - ✅ COMPLETE (2025-01-28)
+  - ✅ Test Billy.dk invoice generation
+  - ✅ Test calendar booking creation
+  - ✅ Test email sending
+  - ✅ Location: `server/__tests__/subscription-integration.test.ts` (8 tests passing)
 
 - [ ] **Beta test with 5-10 customers** (P1, M)
   - Select test customers
