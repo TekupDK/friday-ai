@@ -11,7 +11,7 @@
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
-import { documents, documentChanges, leads } from "../../../drizzle/schema";
+import { documentChanges, documents, leads } from "../../../drizzle/schema";
 import { logger } from "../../_core/logger";
 import { getDb } from "../../db";
 

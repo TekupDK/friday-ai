@@ -108,3 +108,107 @@ export function exportCustomersToCSV(
   downloadCSV(csvContent, filename);
 }
 
+/**
+ * Export leads to CSV
+ */
+export function exportLeadsToCSV(
+  leads: Array<{
+    id: number;
+    name: string | null;
+    email: string | null;
+    phone: string | null;
+    company: string | null;
+    source: string | null;
+    status: string | null;
+    notes: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  }>
+): void {
+  const headers = [
+    "ID",
+    "Name",
+    "Email",
+    "Phone",
+    "Company",
+    "Source",
+    "Status",
+    "Notes",
+    "Created At",
+    "Updated At",
+  ];
+
+  const csvContent = arrayToCSV(leads, headers, (lead) => [
+    lead.id,
+    lead.name || "",
+    lead.email || "",
+    lead.phone || "",
+    lead.company || "",
+    lead.source || "",
+    lead.status || "",
+    lead.notes || "",
+    lead.createdAt
+      ? new Date(lead.createdAt).toLocaleDateString("da-DK")
+      : "",
+    lead.updatedAt
+      ? new Date(lead.updatedAt).toLocaleDateString("da-DK")
+      : "",
+  ]);
+
+  const filename = `leads-export-${new Date().toISOString().split("T")[0]}.csv`;
+  downloadCSV(csvContent, filename);
+}
+
+/**
+ * Export opportunities to CSV
+ */
+export function exportOpportunitiesToCSV(
+  opportunities: Array<{
+    id: number;
+    title: string | null;
+    customerName?: string;
+    stage: string | null;
+    value: number | null;
+    probability: number | null;
+    expectedCloseDate: string | null;
+    description: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  }>
+): void {
+  const headers = [
+    "ID",
+    "Title",
+    "Customer",
+    "Stage",
+    "Value (DKK)",
+    "Probability (%)",
+    "Expected Close Date",
+    "Description",
+    "Created At",
+    "Updated At",
+  ];
+
+  const csvContent = arrayToCSV(opportunities, headers, (opp) => [
+    opp.id,
+    opp.title || "",
+    opp.customerName || "",
+    opp.stage || "",
+    opp.value || 0,
+    opp.probability || 0,
+    opp.expectedCloseDate
+      ? new Date(opp.expectedCloseDate).toLocaleDateString("da-DK")
+      : "",
+    opp.description || "",
+    opp.createdAt
+      ? new Date(opp.createdAt).toLocaleDateString("da-DK")
+      : "",
+    opp.updatedAt
+      ? new Date(opp.updatedAt).toLocaleDateString("da-DK")
+      : "",
+  ]);
+
+  const filename = `opportunities-export-${new Date().toISOString().split("T")[0]}.csv`;
+  downloadCSV(csvContent, filename);
+}
+
