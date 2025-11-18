@@ -19,22 +19,49 @@ const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000";
 // Dev login helper - logs in as dev user
 async function devLogin(page: any) {
   // Use domcontentloaded instead of networkidle for faster, more reliable loading
-  try {
-    await page.goto(`${BASE_URL}/api/auth/login`, {
-      waitUntil: "domcontentloaded",
-      timeout: 15000,
-    });
-  } catch (error) {
-    // If connection fails, wait a bit and retry
-    console.log("Login endpoint not immediately available, retrying...");
-    await page.waitForTimeout(2000);
-    await page.goto(`${BASE_URL}/api/auth/login`, {
-      waitUntil: "domcontentloaded",
-      timeout: 15000,
-    });
+  let retries = 3;
+  while (retries > 0) {
+    try {
+      await page.goto(`${BASE_URL}/api/auth/login`, {
+        waitUntil: "domcontentloaded",
+        timeout: 15000,
+      });
+      break; // Success, exit retry loop
+    } catch (error) {
+      retries--;
+      if (retries === 0) {
+        throw error; // Re-throw if all retries failed
+      }
+      console.log(
+        `Login endpoint not available, retrying... (${retries} retries left)`
+      );
+      await page.waitForTimeout(3000);
+    }
   }
+
   await page.waitForTimeout(1000);
-  await page.goto(`${BASE_URL}/`, { waitUntil: "domcontentloaded" });
+
+  // Navigate to home page with retry
+  retries = 3;
+  while (retries > 0) {
+    try {
+      await page.goto(`${BASE_URL}/`, {
+        waitUntil: "domcontentloaded",
+        timeout: 15000,
+      });
+      break;
+    } catch (error) {
+      retries--;
+      if (retries === 0) {
+        throw error;
+      }
+      console.log(
+        `Home page not available, retrying... (${retries} retries left)`
+      );
+      await page.waitForTimeout(3000);
+    }
+  }
+
   await page.waitForTimeout(1000); // Give page time to load
 }
 
