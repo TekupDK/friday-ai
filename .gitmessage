@@ -1,0 +1,27 @@
+# <type>(<scope>): <subject>
+#
+# Types:
+#   feat:     A new feature
+#   fix:      A bug fix
+#   docs:     Documentation only changes
+#   style:    Changes that don't affect code meaning (formatting, etc)
+#   refactor: Code change that neither fixes a bug nor adds a feature
+#   perf:     Performance improvements
+#   test:     Adding or correcting tests
+#   chore:    Changes to build process or auxiliary tools
+#   security: Security improvements
+#
+# Scopes (examples):
+#   crm, ai, subscription, email, auth, api, ui, db, config
+#
+# Subject:
+#   - Use imperative, present tense: "add" not "added" nor "adds"
+#   - Don't capitalize first letter
+#   - No period (.) at the end
+#
+# Examples:
+#   feat(crm): add customer export to CSV
+#   fix(auth): resolve login redirect issue
+#   docs(api): update API endpoint documentation
+#   perf(db): optimize query performance with indexes
+#   security(crm): implement rate limiting for endpoints

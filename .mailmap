@@ -1,0 +1,6 @@
+# Consolidate contributor identities for better git statistics
+# Format: Proper Name <proper@email.com> Commit Name <commit@email.com>
+
+Jonas Abde <jonas@tekup.dk> JonasAbde
+Rendetalje Team <info@rendetalje.dk>
+Claude <assistant@anthropic.com>
