@@ -138,3 +138,5 @@ data/
 # Test data (should not be in repo - too large)
 server/integrations/chromadb/test-data/*.json
 server/integrations/chromadb/test-data/*.md
+# AI Model files - too large for Git
+models/
