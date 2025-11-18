@@ -478,6 +478,7 @@ export const crmExtensionsRouter = router({
   deleteSegment: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
+      const { withTransaction } = await import("../db/transaction-utils");
       const db = await getDb();
       if (!db) {
         throw new TRPCError({
@@ -488,36 +489,39 @@ export const crmExtensionsRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify segment ownership
-      const [segment] = await db
-        .select()
-        .from(customerSegments)
-        .where(
-          and(
-            eq(customerSegments.id, input.id),
-            eq(customerSegments.userId, userId)
+      // Execute deletion in a transaction to ensure atomicity
+      return await withTransaction(async (tx) => {
+        // Verify segment ownership
+        const [segment] = await tx
+          .select()
+          .from(customerSegments)
+          .where(
+            and(
+              eq(customerSegments.id, input.id),
+              eq(customerSegments.userId, userId)
+            )
           )
-        )
-        .limit(1);
+          .limit(1);
 
-      if (!segment) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Segment not found",
-        });
-      }
+        if (!segment) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Segment not found or access denied",
+          });
+        }
 
-      // Delete segment members first (cascade)
-      await db
-        .delete(customerSegmentMembers)
-        .where(eq(customerSegmentMembers.segmentId, input.id));
+        // Delete segment members first (cascade)
+        await tx
+          .delete(customerSegmentMembers)
+          .where(eq(customerSegmentMembers.segmentId, input.id));
 
-      // Delete segment
-      await db
-        .delete(customerSegments)
-        .where(eq(customerSegments.id, input.id));
+        // Delete segment
+        await tx
+          .delete(customerSegments)
+          .where(eq(customerSegments.id, input.id));
 
-      return { success: true };
+        return { success: true };
+      }, "Delete Customer Segment");
     }),
 
   /**

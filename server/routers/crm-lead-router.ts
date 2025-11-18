@@ -159,6 +159,7 @@ export const crmLeadRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      const { withTransaction } = await import("../db/transaction-utils");
       const db = await getDb();
       if (!db)
         throw new TRPCError({
@@ -167,24 +168,25 @@ export const crmLeadRouter = router({
         });
 
       const userId = ctx.user.id;
-      // ✅ RBAC: Verify lead ownership and get full lead data
-      const leadRows = await db
-        .select()
-        .from(leads)
-        .where(and(eq(leads.id, input.id), eq(leads.userId, userId)))
-        .limit(1);
 
-      if (leadRows.length === 0) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Lead not found",
-        });
-      }
+      // ✅ Execute conversion in a transaction to ensure atomicity
+      return await withTransaction(async (tx) => {
+        // ✅ RBAC: Verify lead ownership and get full lead data
+        const leadRows = await tx
+          .select()
+          .from(leads)
+          .where(and(eq(leads.id, input.id), eq(leads.userId, userId)))
+          .limit(1);
 
-      const lead = leadRows[0];
+        if (leadRows.length === 0) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Lead not found or access denied",
+          });
+        }
 
-      // ✅ ERROR HANDLING: Wrap all database operations with error handling
-      return await withDatabaseErrorHandling(async () => {
+        const lead = leadRows[0];
+
         if (!lead.email) {
           throw new TRPCError({
             code: "BAD_REQUEST",
@@ -193,7 +195,7 @@ export const crmLeadRouter = router({
         }
 
         // Check if profile already exists
-        const existing = await db
+        const existing = await tx
           .select()
           .from(customerProfiles)
           .where(
@@ -203,6 +205,7 @@ export const crmLeadRouter = router({
             )
           )
           .limit(1);
+
         if (existing[0]) {
           return {
             success: true,
@@ -211,7 +214,8 @@ export const crmLeadRouter = router({
           };
         }
 
-        const [created] = await db
+        // Create customer profile
+        const [created] = await tx
           .insert(customerProfiles)
           .values({
             userId,
@@ -232,7 +236,17 @@ export const crmLeadRouter = router({
           })
           .returning();
 
+        // Update lead status to converted
+        await tx
+          .update(leads)
+          .set({
+            status: "won",
+            convertedToCustomerId: created.id,
+            updatedAt: new Date().toISOString(),
+          })
+          .where(eq(leads.id, lead.id));
+
         return { success: true, customerProfileId: created.id, created: true };
-      }, "Failed to convert lead to customer");
+      }, "Convert Lead to Customer");
     }),
 });
