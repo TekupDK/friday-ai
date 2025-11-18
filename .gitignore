@@ -140,3 +140,5 @@ server/integrations/chromadb/test-data/*.json
 server/integrations/chromadb/test-data/*.md
 # AI Model files - too large for Git
 models/
+
+test-results/
