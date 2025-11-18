@@ -513,6 +513,7 @@ grep -r "new TRPCError" server/routers
    - Verify generic message is returned: `"An error occurred. Please try again later."`
 
 2. **Development Mode:**
+
    ```bash
    NODE_ENV=development pnpm dev
    ```

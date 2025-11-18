@@ -42,7 +42,7 @@ Formål: Find skjulte fejl, edgecases eller "gammel gæld" i eksisterende kode.
 
 ### ✅ Improved Version:
 
-````markdown
+`````markdown
 # Exploratory Debugging - Systematic Code Analysis
 
 ## ROLE
@@ -125,6 +125,8 @@ For each anomaly found:
   // Code snippet showing issue
   ```
   ````
+`````
+
 ````
 
 **Forklaring:**
@@ -156,13 +158,16 @@ For each anomaly found:
 ## OUTPUT FORMAT
 
 ### Deliverable 1: Test Files
+
 - `server/__tests__/[feature]-edge-cases.test.ts` (minimum 20 tests)
 - `server/__tests__/[feature]-exploit-attempts.test.ts` (minimum 10 tests)
 - All tests must pass or document expected failures
 
 ### Deliverable 2: Analysis Report
+
 - `docs/EXPLORATORY_DEBUGGING_REPORT.md`
 - Sections:
+
 1. Executive Summary (anomalies found, priority breakdown)
 2. Code Review Findings (files analyzed, known bugs)
 3. Anomalies Identified (detailed analysis per anomaly)
@@ -170,10 +175,12 @@ For each anomaly found:
 5. Test Coverage Recommendations (automated tests to add)
 
 ### Deliverable 3: Fixes Applied (if any)
+
 - `docs/EXPLORATORY_DEBUGGING_FIXES.md`
 - Summary of fixes implemented with verification
 
 ## VERIFICATION CRITERIA
+
 - ✅ All test files created and runnable
 - ✅ Minimum 5 anomalies identified and documented
 - ✅ Each anomaly has: problem description, root cause, impact, fix proposal
@@ -184,18 +191,21 @@ For each anomaly found:
 ## EXAMPLES
 
 **Good Anomaly Report:**
-```markdown
+
+````markdown
 ## ANOMALY #1: Negative secondsUntilReset 🔴 CRITICAL
 
 **Systemlag:** API Layer (Error Message)
 **Fil:** `server/rate-limit-middleware.ts:63-65`
 
 **Problem:**
+
 ```typescript
 const secondsUntilReset = Math.ceil(
-(rateLimit.reset * 1000 - Date.now()) / 1000
+  (rateLimit.reset * 1000 - Date.now()) / 1000
 );
 // ⚠️ Can be negative if reset time is in the past!
+```
 ````
 
 **Test Evidence:**

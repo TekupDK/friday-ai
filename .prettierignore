@@ -33,3 +33,6 @@ pnpm-lock.yaml
 # OS files
 .DS_Store
 Thumbs.db
+
+# Documentation snippets (incomplete code examples)
+docs/email-threadview-integration.ts

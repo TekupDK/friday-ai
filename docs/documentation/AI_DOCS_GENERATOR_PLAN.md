@@ -21,7 +21,7 @@
 
 **Output:**
 
-````markdown
+`````markdown
 # Lead: [Company Name]
 
 ## Overview
@@ -535,7 +535,9 @@ cron.schedule("0 20 * * 0", async () => {
   await generateWeeklyDigest();
 });
 ````
-````
+`````
+
+```
 
 ---
 
@@ -593,3 +595,4 @@ cron.schedule("0 20 * * 0", async () => {
 1. **Custom templates:** Per lead type
 
 1. **Export:** PDF med branding
+```

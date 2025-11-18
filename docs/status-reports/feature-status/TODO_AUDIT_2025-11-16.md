@@ -32,6 +32,7 @@
 ### Security & Critical Issues
 
 1. **`server/email-monitor.ts:383`** ✅ COMPLETED (November 16, 2025)
+
    ```typescript
    // Before: userId: emailData.userId ?? 1, // TODO: get from user context
    // After: ✅ Implemented getUserIdFromEmail() to resolve userId from Gmail email
@@ -86,6 +87,7 @@
    - **Dependencies:** Email service account setup
 
 2. **`server/notification-service.ts:235`**
+
    ```typescript
    // TODO: Integrate with SMS service (Twilio, AWS SNS, etc.)
    ```
@@ -117,6 +119,7 @@
    - **Dependencies:** Database schema design
 
 4. **`server/_core/ab-testing.ts:190`**
+
    ```typescript
    // TODO: Fetch actual metrics from database
    ```
@@ -131,6 +134,7 @@
 ### Performance & Optimization
 
 5. **`server/_core/streaming.ts:105`**
+
    ```typescript
    // TODO: Get actual usage from LLM response
    ```
@@ -145,6 +149,7 @@
 ### Code Quality
 
 6. **`server/email-monitor.ts:470`**
+
    ```typescript
    // TODO: Implement specific auto-actions
    ```
