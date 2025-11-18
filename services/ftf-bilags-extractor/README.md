@@ -4,7 +4,7 @@ Standalone CLI tool for matching bank transactions against Gmail invoices/receip
 
 ## Features
 
-1. **Parse bank statements** (XLS/CSV) into structured transactions
+1. **Parse bank statements** (XLS/CSV/PDF) into structured transactions
 2. **Search Gmail** (`ftfiestaa@gmail.com`) for relevant invoices/receipts
 3. **Match transactions** with email attachments using intelligent scoring
 4. **Download attachments** into organized folder structure
@@ -18,6 +18,8 @@ Standalone CLI tool for matching bank transactions against Gmail invoices/receip
 ```bash
 cd services/ftf-bilags-extractor
 pnpm start --input bank-statement.xls --output ./output/test
+# Or with PDF:
+pnpm start --input bank-statement.pdf --output ./output/test
 ```
 
 This will show you an authorization URL. Follow these steps:
@@ -38,7 +40,7 @@ After first authorization, tokens are saved to `~/.config/ftf-bilag-extractor/to
 ### 2. Normal Usage
 
 ```bash
-# Extract bilag for Q3 2025
+# Extract bilag for Q3 2025 (supports .xls, .xlsx, .csv, or .pdf)
 pnpm start \
   --input ./data/bank-2025-q3.xls \
   --output ./output/2025-q3

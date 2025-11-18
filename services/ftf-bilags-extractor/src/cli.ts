@@ -34,7 +34,7 @@ program
   .name("ftf-bilags-extractor")
   .description("Match bank transactions with Gmail invoices/receipts")
   .version("1.0.0")
-  .requiredOption("-i, --input <file>", "Bank statement file (XLS/CSV)")
+  .requiredOption("-i, --input <file>", "Bank statement file (XLS/CSV/PDF)")
   .requiredOption("-o, --output <dir>", "Output directory")
   .option(
     "--supplier-filter <suppliers>",
@@ -75,7 +75,7 @@ async function main() {
       throw new Error(`Bank statement file not found: ${options.input}`);
     }
 
-    const transactions = importBankStatement(options.input);
+    const transactions = await importBankStatement(options.input);
     console.log(`✅ Imported ${transactions.length} transactions\n`);
 
     // Filter by supplier if specified

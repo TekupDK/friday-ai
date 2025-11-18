@@ -1,13 +1,17 @@
 /**
  * Bank statement parser
- * Supports XLS/CSV formats
+ * Supports XLS/CSV/PDF formats
  */
 
 import { readFileSync } from "fs";
+import { createRequire } from "module";
 import * as XLSX from "xlsx";
 import { parse } from "csv-parse/sync";
 import type { Transaction } from "./types.js";
 import { guessSupplier } from "./supplierMapping.js";
+
+const require = createRequire(import.meta.url);
+const pdfParse = require("pdf-parse");
 
 export interface BankImportOptions {
   filePath: string;
@@ -181,9 +185,108 @@ function parseAmount(amountStr: string): number | null {
 }
 
 /**
+ * Parse PDF file
+ * Extracts text and attempts to parse transactions from Danish bank statement format
+ */
+async function parsePDF(filePath: string): Promise<Transaction[]> {
+  const buffer = readFileSync(filePath);
+  const data = await pdfParse(buffer);
+  const text = data.text;
+
+  const transactions: Transaction[] = [];
+  const lines = text.split("\n").map((line: string) => line.trim()).filter((line: string) => line.length > 0);
+
+  // Common patterns for Danish bank statements:
+  // - Date formats: DD-MM-YYYY, DD.MM.YYYY, DD/MM/YYYY
+  // - Amounts: 1.234,56 or -1.234,56 (Danish format)
+  // - Transaction text usually follows date
+
+  // Try to find transaction rows
+  // Pattern: Date (DD-MM-YYYY or DD.MM.YYYY) followed by text and amount
+  const datePattern = /(\d{1,2})[-\/\.](\d{1,2})[-\/\.](\d{4})/;
+  const amountPattern = /([-]?\d{1,3}(?:\.\d{3})*(?:,\d{2})?)/;
+
+  let currentDate: Date | null = null;
+  let transactionText = "";
+  let transactionAmount: number | null = null;
+  let lineIndex = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Check if line contains a date
+    const dateMatch = line.match(datePattern);
+    if (dateMatch) {
+      // If we have accumulated a transaction, save it
+      if (currentDate && transactionText && transactionAmount !== null) {
+        const transaction: Transaction = {
+          id: `tx-${transactions.length + 1}`,
+          date: currentDate.toISOString().split("T")[0],
+          text: transactionText.trim(),
+          amount: transactionAmount,
+          supplierGuess: undefined,
+        };
+        transaction.supplierGuess = guessSupplier(transaction);
+        transactions.push(transaction);
+      }
+
+      // Parse new date
+      const [, day, month, year] = dateMatch;
+      currentDate = new Date(
+        `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`
+      );
+
+      // Try to extract amount from same line
+      const amountMatch = line.match(amountPattern);
+      if (amountMatch && amountMatch.index !== undefined) {
+        transactionAmount = parseAmount(amountMatch[1]);
+        // Extract text (everything between date and amount)
+        const dateEnd = dateMatch.index! + dateMatch[0].length;
+        const amountStart = amountMatch.index;
+        if (amountStart > dateEnd) {
+          transactionText = line.substring(dateEnd, amountStart).trim();
+        } else {
+          transactionText = line.substring(dateEnd).trim();
+        }
+      } else {
+        transactionText = line.substring(dateMatch.index! + dateMatch[0].length).trim();
+        transactionAmount = null;
+      }
+    } else if (currentDate) {
+      // Continue accumulating text for current transaction
+      const amountMatch = line.match(amountPattern);
+      if (amountMatch && transactionAmount === null && amountMatch.index !== undefined) {
+        // Found amount on continuation line
+        transactionAmount = parseAmount(amountMatch[1]);
+        const amountStart = amountMatch.index;
+        transactionText += " " + line.substring(0, amountStart).trim();
+      } else if (!amountMatch) {
+        // Just text, no amount yet
+        transactionText += " " + line;
+      }
+    }
+  }
+
+  // Don't forget the last transaction
+  if (currentDate && transactionText && transactionAmount !== null) {
+    const transaction: Transaction = {
+      id: `tx-${transactions.length + 1}`,
+      date: currentDate.toISOString().split("T")[0],
+      text: transactionText.trim(),
+      amount: transactionAmount,
+      supplierGuess: undefined,
+    };
+    transaction.supplierGuess = guessSupplier(transaction);
+    transactions.push(transaction);
+  }
+
+  return transactions;
+}
+
+/**
  * Import bank statement from file
  */
-export function importBankStatement(filePath: string): Transaction[] {
+export async function importBankStatement(filePath: string): Promise<Transaction[]> {
   const ext = filePath.toLowerCase().split(".").pop();
 
   switch (ext) {
@@ -192,9 +295,11 @@ export function importBankStatement(filePath: string): Transaction[] {
       return parseXLS(filePath);
     case "csv":
       return parseCSV(filePath);
+    case "pdf":
+      return await parsePDF(filePath);
     default:
       throw new Error(
-        `Unsupported file format: ${ext}. Supported: xls, xlsx, csv`
+        `Unsupported file format: ${ext}. Supported: xls, xlsx, csv, pdf`
       );
   }
 }
