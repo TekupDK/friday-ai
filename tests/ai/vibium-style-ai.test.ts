@@ -10,7 +10,6 @@
  */
 
 import { expect, test } from "@playwright/test";
-
 import FridayAITestDataGenerator from "./test-data-generator";
 
 // Vibium-style test commands
