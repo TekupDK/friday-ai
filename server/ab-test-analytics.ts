@@ -4,6 +4,7 @@
  */
 
 import { z } from "zod";
+import { and, eq, gte, sql } from "drizzle-orm";
 
 import {
   recordTestMetrics,
@@ -13,6 +14,7 @@ import {
   type TestMetrics,
 } from "./_core/ab-testing";
 import { publicProcedure, router } from "./_core/trpc";
+import { abTestMetricsInFridayAi } from "../drizzle/schema";
 import { getDb } from "./db";
 
 export const abTestAnalyticsRouter = router({
@@ -117,7 +119,6 @@ export const abTestAnalyticsRouter = router({
 
   /**
    * Get metrics dashboard data
-   * TODO: Implement with Drizzle ORM once ab_test_metrics schema is added
    */
   getMetricsDashboard: publicProcedure
     .input(
@@ -127,17 +128,43 @@ export const abTestAnalyticsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      // TODO: Query from ab_test_metrics table using Drizzle
-      // For now, return empty data structure
+      const db = await getDb();
+      if (!db) {
+        throw new Error("Database not available");
+      }
+
+      // Calculate the cutoff date
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - input.days);
+
+      // Query metrics from the last N days
+      const metrics = await db
+        .select()
+        .from(abTestMetricsInFridayAi)
+        .where(
+          and(
+            eq(abTestMetricsInFridayAi.testName, input.testName),
+            gte(abTestMetricsInFridayAi.timestamp, cutoffDate.toISOString())
+          )
+        )
+        .orderBy(abTestMetricsInFridayAi.timestamp);
+
       return {
         testName: input.testName,
-        metrics: [],
+        metrics: metrics.map(m => ({
+          timestamp: m.timestamp,
+          testGroup: m.testGroup,
+          responseTime: m.responseTime,
+          errorCount: m.errorCount,
+          messageCount: m.messageCount,
+          completionRate: m.completionRate,
+          userSatisfaction: m.userSatisfaction,
+        })),
       };
     }),
 
   /**
    * Get hourly metrics for real-time monitoring
-   * TODO: Implement with Drizzle ORM once ab_test_metrics schema is added
    */
   getHourlyMetrics: publicProcedure
     .input(
@@ -147,11 +174,38 @@ export const abTestAnalyticsRouter = router({
       })
     )
     .query(async ({ input }) => {
-      // TODO: Query from ab_test_metrics table using Drizzle
-      // For now, return empty data structure
+      const db = await getDb();
+      if (!db) {
+        throw new Error("Database not available");
+      }
+
+      // Calculate the cutoff time
+      const cutoffTime = new Date();
+      cutoffTime.setHours(cutoffTime.getHours() - input.hours);
+
+      // Query metrics from the last N hours
+      const metrics = await db
+        .select()
+        .from(abTestMetricsInFridayAi)
+        .where(
+          and(
+            eq(abTestMetricsInFridayAi.testName, input.testName),
+            gte(abTestMetricsInFridayAi.timestamp, cutoffTime.toISOString())
+          )
+        )
+        .orderBy(abTestMetricsInFridayAi.timestamp);
+
       return {
         testName: input.testName,
-        metrics: [],
+        metrics: metrics.map(m => ({
+          timestamp: m.timestamp,
+          testGroup: m.testGroup,
+          responseTime: m.responseTime,
+          errorCount: m.errorCount,
+          messageCount: m.messageCount,
+          completionRate: m.completionRate,
+          userSatisfaction: m.userSatisfaction,
+        })),
       };
     }),
 });

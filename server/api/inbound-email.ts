@@ -13,7 +13,7 @@ import { join } from "path";
 import { eq } from "drizzle-orm";
 import { Request, Response } from "express";
 
-import { attachments, emails, emailThreads } from "../../drizzle/schema";
+import { attachments, emails, emailThreads, users } from "../../drizzle/schema";
 import { getDb } from "../db";
 import { enrichEmailFromSources } from "../email-enrichment";
 
@@ -28,14 +28,46 @@ const WEBHOOK_SECRET = ENV.INBOUND_EMAIL_WEBHOOK_SECRET;
 async function getUserIdFromEmailAccount(
   emailAddress: string
 ): Promise<number> {
-  // TODO: Implement proper email account to user mapping from database
-  // For now, use a simple mapping based on environment variables
-  const emailAccountMap: Record<string, number> = {
-    [ENV.PRIMARY_EMAIL_ACCOUNT || ""]: 1,
-    // Add more mappings as needed
-  };
+  const db = await getDb();
+  if (!db) {
+    console.warn("[InboundEmail] Database not available, defaulting to user 1");
+    return 1;
+  }
 
-  return emailAccountMap[emailAddress.toLowerCase()] || 1; // Default to user 1 if not found
+  try {
+    // Query the database for user with matching email
+    const [user] = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.email, emailAddress.toLowerCase()))
+      .limit(1);
+
+    if (user) {
+      return user.id;
+    }
+
+    // Fallback to environment variable mapping if no user found
+    const emailAccountMap: Record<string, number> = {
+      [ENV.PRIMARY_EMAIL_ACCOUNT || ""]: 1,
+    };
+
+    const fallbackUserId = emailAccountMap[emailAddress.toLowerCase()];
+    if (fallbackUserId) {
+      return fallbackUserId;
+    }
+
+    // Default to user 1 if no mapping found
+    console.warn(
+      `[InboundEmail] No user found for email ${emailAddress}, defaulting to user 1`
+    );
+    return 1;
+  } catch (error) {
+    console.error(
+      `[InboundEmail] Error looking up user for email ${emailAddress}:`,
+      error
+    );
+    return 1;
+  }
 }
 
 /**

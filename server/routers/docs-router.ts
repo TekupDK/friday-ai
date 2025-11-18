@@ -439,6 +439,15 @@ export const docsRouter = router({
         .from(documents)
         .groupBy(documents.author);
 
+      // Extract tag facets from JSONB array
+      const tagFacets = await db
+        .select({
+          tag: sql<string>`jsonb_array_elements_text(${documents.tags})`,
+          count: sql<number>`count(*)::int`,
+        })
+        .from(documents)
+        .groupBy(sql`jsonb_array_elements_text(${documents.tags})`);
+
       return {
         documents: results,
         total: total[0]?.count ?? 0,
@@ -446,7 +455,9 @@ export const docsRouter = router({
           categories: Object.fromEntries(
             categoryFacets.map(f => [f.category, f.count])
           ),
-          tags: {}, // TODO: Extract from JSONB
+          tags: Object.fromEntries(
+            tagFacets.map(f => [f.tag, f.count])
+          ),
           authors: Object.fromEntries(
             authorFacets.map(f => [f.author, f.count])
           ),
