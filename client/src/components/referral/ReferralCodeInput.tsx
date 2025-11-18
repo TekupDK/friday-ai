@@ -45,16 +45,21 @@ export function ReferralCodeInput({
     {
       enabled: debouncedValue.length > 0,
       retry: false,
-      onSuccess: (data) => {
-        setValidationStatus("valid");
-        onValidationChange?.(true, data.code?.discountAmount);
-      },
-      onError: () => {
-        setValidationStatus("invalid");
-        onValidationChange?.(false);
-      },
     }
   );
+
+  // Handle validation results using useEffect
+  useEffect(() => {
+    if (!isLoading && debouncedValue.length > 0) {
+      if (validation?.valid) {
+        setValidationStatus("valid");
+        onValidationChange?.(true, validation.code?.discountAmount);
+      } else if (validation?.valid === false) {
+        setValidationStatus("invalid");
+        onValidationChange?.(false);
+      }
+    }
+  }, [validation, isLoading, debouncedValue, onValidationChange]);
 
   useEffect(() => {
     if (isLoading) {

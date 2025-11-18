@@ -208,7 +208,7 @@ export default function CustomerList() {
                               <Users className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                              <h3 className="font-semibold">{sanitizeText(customer.name)}</h3>
+                              <h3 className="font-semibold">{sanitizeText(customer.name || '')}</h3>
                               <p className="text-sm text-muted-foreground">
                                 {customer.email}
                               </p>

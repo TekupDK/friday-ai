@@ -101,7 +101,8 @@
     "logo:generate:test": "powershell -Command \"(Invoke-WebRequest -Uri https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent -Method POST -Headers @{ 'x-goog-api-key'=$env:GEMINI_API_KEY; 'Content-Type'='application/json' } -Body '{\"contents\":[{\"parts\":[{\"text\":\"ping\"}]}]}' ).StatusCode\"",
     "logo:qwen:rendetalje": "python scripts/python/generate_logo.py --company Rendetalje --colors '#00897b,#00acc1' --industry cleaning --style minimalist",
     "logo:qwen:friday": "python scripts/python/generate_logo.py --company 'Friday AI' --colors '#3b82f6,#8b5cf6' --industry 'AI automation' --style futuristic",
-    "logo:qwen:tekup": "python scripts/python/generate_logo.py --company Tekup --colors '#8b5cf6,#ec4899' --industry tech --style bold"
+    "logo:qwen:tekup": "python scripts/python/generate_logo.py --company Tekup --colors '#8b5cf6,#ec4899' --industry tech --style bold",
+    "sync:prompts": "node scripts/sync-prompts.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.933.0",
@@ -296,6 +297,7 @@
       "wouter@3.7.1": "patches/wouter@3.7.1.patch"
     },
     "overrides": {
+      "csstype": "3.2.3",
       "tailwindcss>nanoid": "3.3.7",
       "esbuild": "^0.25.12",
       "debug": ">=4.4.0",

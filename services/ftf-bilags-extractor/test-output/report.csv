@@ -1,0 +1,17 @@
+date,text,amount,supplier,status,files,matchCount,bestMatchScore
+2025-06-03,LS 38393 DANFOODS APS,-9986.14,Danfoods,FOUND,test-output\Danfoods\20250603_danfoods_9986.14_msg-197216f7_att-ANGjdJ-M.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF,3,0.85
+2025-06-04,LS 38393 DANFOODS APS,-3497.84,Danfoods,FOUND,test-output\Danfoods\20250603_danfoods_9986.14_msg-197216f7_att-ANGjdJ-M.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF,3,0.84
+2025-06-10,LS 38393 DANFOODS APS,-1428.55,Danfoods,FOUND,test-output\Danfoods\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF,3,0.89
+2025-06-11,LS 38393 DANFOODS APS,-7647.12,Danfoods,FOUND,test-output\Danfoods\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF,3,0.88
+2025-06-12,LS 38393 DANFOODS APS,-2199,Danfoods,FOUND,test-output\Danfoods\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF,3,0.86
+2025-06-13,LS 38393 DANFOODS APS,-8874.07,Danfoods,FOUND,test-output\Danfoods\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF; test-output\Danfoods\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF,3,0.85
+2025-06-16,LS 38393 DANFOODS APS,-3396,Danfoods,FOUND,test-output\Danfoods\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF,1,0.81
+2025-06-18,LS 38393 DANFOODS APS,-2950.96,Danfoods,MISSING,,0,
+2025-06-18,Danfoods mcd 9088,-3469,Danfoods,MISSING,,0,
+2025-06-19,LS 38393 DANFOODS APS,-864.09,Danfoods,MISSING,,0,
+2025-06-23,Ls DANFOODS 677,-2458,Danfoods,MISSING,,0,
+2025-06-23,LS 38393 DANFOODS APS,-5312.76,Danfoods,MISSING,,0,
+2025-06-24,LS 38393 DANFOODS APS,-6643.1,Danfoods,MISSING,,0,
+2025-06-26,LS 38393 DANFOODS APS,-3690.95,Danfoods,FOUND,test-output\Danfoods\20250626_danfoods_3690.95_msg-197cd057_att-ANGjdJ_U.PDF,1,0.80
+2025-06-27,LS 38393 DANFOODS APS,-2141.16,Danfoods,FOUND,test-output\Danfoods\20250626_danfoods_3690.95_msg-197cd057_att-ANGjdJ_U.PDF,1,0.82
+2025-06-30,LS 38393 DANFOODS APS,-1855.69,Danfoods,FOUND,test-output\Danfoods\20250626_danfoods_3690.95_msg-197cd057_att-ANGjdJ_U.PDF,1,0.86

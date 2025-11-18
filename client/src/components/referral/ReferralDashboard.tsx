@@ -204,7 +204,7 @@ export function ReferralDashboard({ className = "" }: ReferralDashboardProps) {
                 Conversion Rate
               </p>
               <p className="text-2xl font-semibold text-gray-900 dark:text-white mt-1">
-                {conversionRateData?.toFixed(1) || 0}%
+                {conversionRateData?.conversionRate?.toFixed(1) || 0}%
               </p>
             </div>
             <Award className="w-8 h-8 text-orange-500" />

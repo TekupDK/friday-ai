@@ -16,13 +16,54 @@ export interface WSClient {
 
 export class WebSocketHub extends EventEmitter {
   private wss: WebSocketServer;
+  private port: number;
+  private maxRetries = 20;
+  private retries = 0;
   private clients: Map<string, WSClient> = new Map();
   private subscribers: Map<string, Set<string>> = new Map(); // docId -> clientIds
 
   constructor(port: number) {
     super();
-    this.wss = new WebSocketServer({ port });
+    this.port = port;
+    this.wss = this.createServer(this.port);
     this.bind();
+  }
+
+  private createServer(port: number): WebSocketServer {
+    const wss = new WebSocketServer({ port });
+
+    // Log once listening so address is available
+    wss.on("listening", () => {
+      const addr = wss.address();
+      logger.info({ addr, port }, "[WSHub] WebSocket server listening");
+    });
+
+    // Handle EADDRINUSE by retrying on next port
+    wss.on("error", (err: any) => {
+      if (err?.code === "EADDRINUSE" && this.retries < this.maxRetries) {
+        const next = this.port + 1;
+        logger.warn(
+          { attempted: this.port, next },
+          "[WSHub] Port in use, retrying on next"
+        );
+        this.retries += 1;
+        try {
+          wss.removeAllListeners();
+          // Close current server if partially opened
+          try {
+            wss.close();
+          } catch {}
+        } catch {}
+        this.port = next;
+        // Recreate server on next port
+        this.wss = this.createServer(this.port);
+        this.bind();
+        return;
+      }
+      logger.error({ err }, "[WSHub] Server error");
+    });
+
+    return wss;
   }
 
   private bind(): void {
@@ -30,12 +71,7 @@ export class WebSocketHub extends EventEmitter {
       this.onConnection(ws, req);
     });
 
-    this.wss.on("error", err => {
-      logger.error({ err }, "[WSHub] Server error");
-    });
-
-    const addr = this.wss.address();
-    logger.info({ addr }, "[WSHub] WebSocket server started");
+    // Other server-level errors handled in createServer
   }
 
   private onConnection(ws: WebSocket, req: IncomingMessage): void {

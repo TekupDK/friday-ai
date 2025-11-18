@@ -309,7 +309,7 @@ export default function CustomerDetail() {
                 <header>
                   <div className="flex items-start justify-between">
                     <div>
-                      <h1 className="text-3xl font-bold">{sanitizeText(customer.name)}</h1>
+                      <h1 className="text-3xl font-bold">{sanitizeText(customer.name || '')}</h1>
                       <div className="flex items-center gap-4 mt-2 text-muted-foreground">
                         {customer.email && (
                           <div className="flex items-center gap-2">
@@ -393,7 +393,7 @@ export default function CustomerDetail() {
                                 Name
                               </dt>
                               <dd className="text-base font-medium">
-                                {sanitizeText(customer.name)}
+                                {sanitizeText(customer.name || '')}
                               </dd>
                             </div>
                             {customer.email && (

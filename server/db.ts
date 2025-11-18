@@ -930,7 +930,7 @@ export async function updatePipelineStage(
   }
 
   try {
-    let fromStage: string | null = null;
+    let fromStage: typeof emailPipelineState.$inferSelect.stage | null = null;
 
     // Execute pipeline update in transaction
     await withTransaction(async (tx) => {

@@ -279,7 +279,7 @@ export const automationRouter = router({
 
         // Log to analytics database
         await db.insert(analyticsEvents).values({
-          userId: ctx.user?.userId || 1,
+          userId: ctx.user?.id || 1,
           eventType: "email_suggestion_used",
           eventData: {
             suggestionId: input.suggestionId,

@@ -546,12 +546,13 @@ export const crmExtensionsRouter = router({
         id: customerSegments.id,
         userId: customerSegments.userId,
         name: customerSegments.name,
+        description: customerSegments.description,
         type: customerSegments.type,
         rules: customerSegments.rules,
         color: customerSegments.color,
         createdAt: customerSegments.createdAt,
         updatedAt: customerSegments.updatedAt,
-        memberCount: sql<number>`cast(count(${customerSegmentMembers.customerId}) as integer)`,
+        memberCount: sql<number>`cast(count(${customerSegmentMembers.customerProfileId}) as integer)`,
       })
       .from(customerSegments)
       .leftJoin(

@@ -2747,7 +2747,7 @@ export default function InboxPage() {
               {/* PREMIUM POLISHED DESIGNS */}
               <div className="my-16">
                 <div className="text-center mb-12">
-                  <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                  <h2 className="text-4xl font-bold mb-4 bg-linear-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
                     💎 Premium Polished Designs
                   </h2>
                   <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -2763,7 +2763,7 @@ export default function InboxPage() {
                 id="email-unified-showcase"
                 className="scroll-mt-8 overflow-hidden border-4 border-purple-600 shadow-2xl mb-8"
               >
-                <CardHeader className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600">
+                <CardHeader className="bg-linear-to-r from-purple-600 via-blue-600 to-cyan-600">
                   <div className="flex items-center gap-3 mb-2">
                     <Badge className="text-xl px-5 py-2 bg-white text-purple-700 shadow-lg font-bold">
                       🌟 ULTIMATE
@@ -2789,7 +2789,7 @@ export default function InboxPage() {
                 <CardContent className="p-0">
                   <EmailCenterShowcase />
                 </CardContent>
-                <div className="p-6 bg-gradient-to-r from-purple-50 via-blue-50 to-cyan-50 border-t-2 border-purple-200">
+                <div className="p-6 bg-linear-to-r from-purple-50 via-blue-50 to-cyan-50 border-t-2 border-purple-200">
                   <h4 className="font-bold text-lg text-purple-900 mb-3">
                     ✨ Complete Features:
                   </h4>
@@ -2866,7 +2866,7 @@ export default function InboxPage() {
                 id="email-pro-v2"
                 className="scroll-mt-8 overflow-hidden border-4 border-blue-600 shadow-2xl"
               >
-                <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700">
+                <CardHeader className="bg-linear-to-r from-blue-600 to-blue-700">
                   <div className="flex items-center gap-3 mb-2">
                     <Badge className="text-xl px-5 py-2 bg-white text-blue-700 shadow-lg font-bold">
                       🚀 FLAGSHIP DESIGN
@@ -2892,7 +2892,7 @@ export default function InboxPage() {
                 <CardContent className="p-0">
                   <EmailCenterProV2 />
                 </CardContent>
-                <div className="p-6 bg-gradient-to-r from-blue-50 to-cyan-50 border-t-2 border-blue-200">
+                <div className="p-6 bg-linear-to-r from-blue-50 to-cyan-50 border-t-2 border-blue-200">
                   <h4 className="font-bold text-lg text-blue-900 mb-3">
                     ✨ Nøgle Features:
                   </h4>
@@ -2948,9 +2948,9 @@ export default function InboxPage() {
                 id="email-shortwave-premium"
                 className="scroll-mt-8 overflow-hidden border-2 mt-8"
               >
-                <CardHeader className="bg-gradient-to-r from-purple-50 via-blue-50 to-cyan-50">
+                <CardHeader className="bg-linear-to-r from-purple-50 via-blue-50 to-cyan-50">
                   <div className="flex items-center gap-3">
-                    <Badge className="text-lg px-4 py-1.5 bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg">
+                    <Badge className="text-lg px-4 py-1.5 bg-linear-to-r from-purple-500 to-blue-500 text-white shadow-lg">
                       Premium 1
                     </Badge>
                     <CardTitle className="text-2xl">
@@ -2974,9 +2974,9 @@ export default function InboxPage() {
                 id="email-jace-modern"
                 className="scroll-mt-8 overflow-hidden border-2 mt-8"
               >
-                <CardHeader className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
+                <CardHeader className="bg-linear-to-r from-indigo-50 via-purple-50 to-pink-50">
                   <div className="flex items-center gap-3">
-                    <Badge className="text-lg px-4 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg">
+                    <Badge className="text-lg px-4 py-1.5 bg-linear-to-r from-indigo-500 to-purple-500 text-white shadow-lg">
                       Premium 2
                     </Badge>
                     <CardTitle className="text-2xl">
@@ -3000,9 +3000,9 @@ export default function InboxPage() {
                 id="email-friday-pro"
                 className="scroll-mt-8 overflow-hidden border-2 mt-8"
               >
-                <CardHeader className="bg-gradient-to-r from-slate-50 via-blue-50 to-purple-50">
+                <CardHeader className="bg-linear-to-r from-slate-50 via-blue-50 to-purple-50">
                   <div className="flex items-center gap-3">
-                    <Badge className="text-lg px-4 py-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg">
+                    <Badge className="text-lg px-4 py-1.5 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg">
                       Premium 3
                     </Badge>
                     <CardTitle className="text-2xl">
@@ -3419,7 +3419,7 @@ Tlf: +45 12345678`,
             {/* Chat Panel UI - OPGRADERET */}
             <section id="chat-panel-upgraded" className="space-y-4 scroll-mt-8">
               <div className="text-center mb-6">
-                <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h3 className="text-3xl font-bold mb-2 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   ✨ Chat Panel UI - OPGRADERET
                 </h3>
                 <p className="text-muted-foreground">

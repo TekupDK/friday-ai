@@ -1,0 +1,8 @@
+
+> friday-ai@2.0.0 dev C:\Users\empir\Tekup\services\tekup-ai-v2
+> node check-env.js && dotenv -e .env.dev -- cross-env NODE_ENV=development NODE_OPTIONS='--max-old-space-size=4096' tsx watch server/_core/index.ts
+
+[dotenv@17.2.3] injecting env (51) from .env.dev -- tip: ­ƒöÉ prevent committing .env to code: https://dotenvx.com/precommit
+Ô£à [check-env] Loaded variables from .env.dev
+Ô£à [check-env] Environment looks good. Continuing...
+

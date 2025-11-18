@@ -108,7 +108,7 @@ export async function createSubscription(
     originalPrice?: number;
   } | null = null;
 
-  let finalMonthlyPrice = planConfig.monthlyPrice;
+  let finalMonthlyPrice: number = planConfig.monthlyPrice;
 
   if (options?.referralCode) {
     const { validateReferralCode, calculateReferralDiscount } = await import("./referral-helpers");

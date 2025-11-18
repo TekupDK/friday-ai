@@ -14,6 +14,8 @@ RUN apk add --no-cache git
 
 # Copy ONLY package files first (for better caching)
 COPY package.json ./
+COPY pnpm-lock.yaml ./
+COPY patches ./patches
 
 # Install dependencies (including dev dependencies)
 # This layer will be cached unless package files change

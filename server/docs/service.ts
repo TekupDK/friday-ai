@@ -1,4 +1,5 @@
 import { logger } from "../_core/logger";
+import net from "net";
 
 import { GitSyncEngine, type GitSyncConfig } from "./sync/git-sync-engine";
 import { WebSocketHub } from "./ws/websocket-hub";
@@ -16,7 +17,10 @@ export async function startDocsService(): Promise<void> {
     const repoPath = process.env.DOCS_REPO_PATH || process.cwd();
     const docsPath = process.env.DOCS_PATH || "docs";
     const branch = process.env.DOCS_GIT_BRANCH || "main";
-    const wsPort = parseInt(process.env.DOCS_WS_PORT || "3002", 10);
+    const requestedPort = parseInt(process.env.DOCS_WS_PORT || "3002", 10);
+
+    // Find an available port for the Docs WebSocket server to avoid EADDRINUSE
+    const wsPort = await findAvailablePort(requestedPort, 20);
 
     const config: GitSyncConfig = {
       repoPath,
@@ -64,6 +68,40 @@ export async function startDocsService(): Promise<void> {
     logger.error({ err }, "[Docs] Failed to start service");
     throw err;
   }
+}
+
+async function findAvailablePort(startPort: number, maxTries = 10): Promise<number> {
+  const tryPort = (port: number) =>
+    new Promise<boolean>(resolve => {
+      const server = net.createServer();
+      server.once("error", () => resolve(false));
+      server.once("listening", () => {
+        server.close(() => resolve(true));
+      });
+      server.listen(port, "0.0.0.0");
+    });
+
+  for (let i = 0; i < maxTries; i++) {
+    const port = startPort + i;
+    // eslint-disable-next-line no-await-in-loop
+    const ok = await tryPort(port);
+    if (ok) {
+      if (i > 0) {
+        logger.warn({ requested: startPort, selected: port }, "[Docs] WS port in use, switched");
+      }
+      return port;
+    }
+  }
+  // If none available, fallback to 0 (random free port)
+  logger.warn({ startPort, maxTries }, "[Docs] Could not find free WS port in range, using random");
+  return new Promise<number>(resolve => {
+    const server = net.createServer();
+    server.listen(0, "0.0.0.0", () => {
+      const addr = server.address();
+      const port = typeof addr === "object" && addr ? addr.port : startPort;
+      server.close(() => resolve(port));
+    });
+  });
 }
 
 export async function stopDocsService(): Promise<void> {

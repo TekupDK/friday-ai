@@ -141,6 +141,13 @@ export class GitSyncEngine extends EventEmitter {
 
   async pullChanges(): Promise<void> {
     try {
+      // Skip pulling if the working tree isn't clean to avoid rebase errors
+      const st = await this.git.status();
+      if (!st.isClean()) {
+        logger.warn("[GitSync] Working tree not clean - skipping pull");
+        return;
+      }
+
       await this.git.fetch();
       const status = await this.git.status();
       if (status.conflicted.length > 0) {
@@ -149,9 +156,14 @@ export class GitSyncEngine extends EventEmitter {
       }
       await this.git.pull("origin", this.config.branch, { "--rebase": "true" });
       logger.info("[GitSync] Pulled latest changes");
-    } catch (err) {
-      logger.error({ err }, "[GitSync] Pull failed");
-      throw err;
+    } catch (err: any) {
+      const msg = err?.message || "";
+      const isUnstaged = msg.includes("unstaged changes") || msg.includes("needs merge");
+      if (isUnstaged) {
+        logger.warn({ err }, "[GitSync] Skipping pull due to unstaged changes");
+        return;
+      }
+      logger.warn({ err }, "[GitSync] Pull failed - continuing without pull");
     }
   }
 

@@ -1,0 +1,30 @@
+{
+  "name": "ftf-bilags-extractor",
+  "version": "1.0.0",
+  "description": "BilagsExtractor tool for matching bank transactions against Gmail invoices/receipts",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": {
+    "ftf-bilags-extractor": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/cli.ts",
+    "start": "node dist/cli.js",
+    "view-pdf": "tsx src/view-pdf.ts"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "csv-parse": "^5.5.6",
+    "csv-stringify": "^6.5.0",
+    "google-auth-library": "^10.5.0",
+    "googleapis": "^165.0.0",
+    "pdf-parse": "^1.1.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.19.1",
+    "typescript": "5.9.3"
+  }
+}

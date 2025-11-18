@@ -11,10 +11,7 @@ services:
       - .env.prod
     environment:
       - NODE_ENV=${NODE_ENV:-production}
-      # Database URL - defaults to Supabase PostgreSQL if .env.supabase is used
-      # For Supabase PostgreSQL: use .env.supabase DATABASE_URL
-      # Legacy MySQL reference (deprecated - use Supabase PostgreSQL instead)
-      # For Supabase: use postgresql://postgres:PASSWORD@db.oaevagdgrasfppbrxbey.supabase.co:5432/postgres?schema=friday_ai&sslmode=require
+      # Database URL - Supabase PostgreSQL
       - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:Habibie12345%40@db.oaevagdgrasfppbrxbey.supabase.co:5432/postgres?schema=friday_ai&sslmode=require}
       # CRITICAL: Set a strong JWT_SECRET in .env file (minimum 32 characters)
       - JWT_SECRET=${JWT_SECRET:-change-this-in-production-minimum-32-chars}
@@ -30,17 +27,10 @@ services:
       - GOOGLE_SERVICE_ACCOUNT_KEY=${GOOGLE_SERVICE_ACCOUNT_KEY:-}
       - GOOGLE_IMPERSONATED_USER=info@rendetalje.dk
       - GOOGLE_CALENDAR_ID=c_39570a852bf141658572fa37bb229c7246564a6cca47560bc66a4f9e4fec67ff@group.calendar.google.com
-      # MCP Server URLs (CRITICAL for data source!)
-      - GOOGLE_MCP_URL=http://calendar-mcp:3001
-      - GMAIL_MCP_URL=http://gmail-mcp:3000
       # Frontend variables (Vite needs these at build time)
       - VITE_APP_ID=friday-ai
       - VITE_APP_TITLE=Friday AI Chat
       - VITE_APP_LOGO=/brandkit/logo-app-icon.png
-    # NOTE: When using Supabase, remove depends_on db service
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
     restart: unless-stopped
     networks:
       - tekup-network
@@ -89,40 +79,6 @@ services:
       start_period: 10s
       retries: 3
 
-  # MySQL Database (DEPRECATED - Use Supabase PostgreSQL instead)
-  # This service is kept for legacy support only - new deployments should use Supabase
-  db:
-    image: mysql:8.0
-    container_name: friday-ai-db
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
-      MYSQL_DATABASE: friday_ai
-      MYSQL_USER: friday_user
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-friday_password}
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - tekup-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "mysqladmin",
-          "ping",
-          "-h",
-          "localhost",
-          "-u",
-          "root",
-          "-p${MYSQL_ROOT_PASSWORD:-root_password}",
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-
   # PostgreSQL Database (for Inbox Orchestrator Metrics)
   postgres:
     image: postgres:15-alpine
@@ -153,18 +109,6 @@ services:
       - "6379:6379"
     networks:
       - tekup-network
-
-  # Database Admin (DEPRECATED - for legacy MySQL only, use Supabase dashboard for PostgreSQL)
-  adminer:
-    image: adminer
-    container_name: friday-adminer
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    networks:
-      - tekup-network
-    depends_on:
-      - db
 
   # Inbound Email SMTP Server (Phase 0)
   # NOTE: Requires inbound-email repository to be cloned or source files available
@@ -197,7 +141,6 @@ services:
     # Remove healthcheck or implement if inbound-email supports it
 
 volumes:
-  mysql_data:
   postgres_data:
   inbound_email_storage:
 

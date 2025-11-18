@@ -241,7 +241,6 @@ export const crmLeadRouter = router({
           .update(leads)
           .set({
             status: "won",
-            convertedToCustomerId: created.id,
             updatedAt: new Date().toISOString(),
           })
           .where(eq(leads.id, lead.id));

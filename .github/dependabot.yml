@@ -33,10 +33,4 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
-    # Reviewers (optional)
-    reviewers:
-      - "TekupDK"
-    # Assignees (optional)
-    assignees:
-      - "TekupDK"
 

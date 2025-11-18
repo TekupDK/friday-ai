@@ -125,6 +125,7 @@ function Calendar({
       components={{
         Root: ({ className, rootRef, ...props }) => {
           return (
+            // @ts-ignore - csstype version conflict
             <div
               data-slot="calendar"
               ref={rootRef as React.Ref<HTMLDivElement>}
@@ -156,6 +157,7 @@ function Calendar({
         DayButton: CalendarDayButton,
         WeekNumber: ({ children, ...props }) => {
           return (
+            // @ts-ignore - csstype version conflict
             <td {...props}>
               <div className="flex size-(--cell-size) items-center justify-center text-center">
                 {children}
@@ -184,6 +186,7 @@ function CalendarDayButton({
   }, [modifiers.focused]); // Focus calendar day when focused modifier changes
 
   return (
+    // @ts-ignore - csstype version conflict
     <Button
       ref={ref}
       variant="ghost"
