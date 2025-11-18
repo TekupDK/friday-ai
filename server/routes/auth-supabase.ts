@@ -54,7 +54,7 @@ router.post("/complete", async (req: Request, res: Response) => {
     if (normalizedEmail) {
       const pendingOpenId = `pending:${normalizedEmail}`;
       const existingUser = await db.getUserByOpenId(pendingOpenId);
-      
+
       if (existingUser) {
         // User was pre-created by admin - update with actual Google openId
         // Delete the pending user and create/update with real openId
@@ -63,7 +63,7 @@ router.post("/complete", async (req: Request, res: Response) => {
           // Delete pending user
           await dbInstance.delete(users).where(eq(users.openId, pendingOpenId));
         }
-        
+
         // Create user with actual Google openId, preserving role and other settings
         await db.upsertUser({
           openId,

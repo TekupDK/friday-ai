@@ -8,6 +8,7 @@
 ## 📊 EXECUTIVE SUMMARY
 
 **Nuværende Status:**
+
 - ✅ 294 commands organiseret i 8 mapper
 - ✅ COMMANDS_INDEX.md manuelt opdateret (bruger har opdateret paths)
 - ⚠️ Nogle commands mangler stadig paths i index
@@ -21,6 +22,7 @@
 ### 1. PATH OPDATERING STATUS
 
 **COMMANDS_INDEX.md:**
+
 - ✅ Most Used Commands: OPDATERET med paths
 - ✅ Session Engine Commands: OPDATERET med `core/`
 - ✅ Explain Commands: OPDATERET med `explain/`
@@ -33,6 +35,7 @@
 - ⚠️ Nogle commands mangler stadig paths (tjekker...)
 
 **COMMANDS_BY_CATEGORY.md:**
+
 - ✅ Most Used: OPDATERET
 - ⚠️ Resten af filen skal tjekkes
 
@@ -49,6 +52,7 @@ Tjekker hvilke commands der stadig er i root og skal flyttes...
 ### 3. PATH KONSISTENS
 
 **Tjekker om alle paths er korrekte:**
+
 - Core commands skal være i `core/`
 - Development commands skal være i `development/`
 - Testing commands skal være i `testing/`
@@ -63,6 +67,7 @@ Tjekker hvilke commands der stadig er i root og skal flyttes...
 ### 4. INDEX KOMPLETTED
 
 **Tjekker om alle commands i mapper er i index:**
+
 - Core: 62 commands → Tjekker index...
 - Development: 115 commands → Tjekker index...
 - Testing: 35 commands → Tjekker index...
@@ -77,6 +82,7 @@ Tjekker hvilke commands der stadig er i root og skal flyttes...
 ### 5. DUPLIKATIONER
 
 **Tjekker for duplikationer:**
+
 - Samme command i flere mapper?
 - Samme command i root og mapper?
 - Duplikater i index?
@@ -86,6 +92,7 @@ Tjekker hvilke commands der stadig er i root og skal flyttes...
 ### 6. NAMING KONSISTENS
 
 **Tjekker naming:**
+
 - Dansk vs engelsk konsistens
 - Naming patterns
 - File naming conventions
@@ -131,4 +138,3 @@ Tjekker hvilke commands der stadig er i root og skal flyttes...
 ---
 
 **Status:** 🔄 UNDER ANALYSE - Vent på resultater...
-

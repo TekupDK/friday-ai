@@ -15,7 +15,7 @@
 | **V4.3**   | 2,447 (100%) | 73 (3%)      | 93 (4%)       | 80k      | 46%          |
 | **V4.3.1** | 536 (78% ↓)  | 54 (10%)     | 70 (13%)      | -        | -            |
 | **V4.3.2** | 536 (same)   | 30 (6%)      | 70 (13%)      | 169k     | 52%          |
-| **V4.3.3**| 536 (same)   |**84 (16%)**|**100 (19%)**|**220k**|**62.5%**    |
+| **V4.3.3** | 536 (same)   | **84 (16%)** | **100 (19%)** | **220k** | **62.5%**    |
 
 ### Total Improvements (V4.3 → V4.3.3)
 
@@ -30,7 +30,7 @@
 
 ## 📊 Final V4.3.3 Dataset
 
-```text
+````text
 Total Leads: 180 (after deduplication & filtering)
 ├─ With Gmail: 180 (100%)
 ├─ With Calendar: 69 (38%)  ⭐ MAJOR IMPROVEMENT
@@ -303,7 +303,7 @@ Dropoff Analysis:
 ├─ Scheduled → Invoiced: 33.3% dropoff
 └─ Won = 37.3% overall conversion ✅
 
-```
+````
 
 ### **Key Recommendations**
 

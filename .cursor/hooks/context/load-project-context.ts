@@ -1,6 +1,6 @@
 /**
  * Context Hook: Load Project Context
- * 
+ *
  * Loads project-specific context for agent
  */
 
@@ -32,4 +32,3 @@ export async function loadProjectContext(): Promise<ProjectContext> {
     rules: [".cursorrules", "docs/CURSOR_RULES.md"],
   };
 }
-

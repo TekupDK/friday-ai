@@ -11,7 +11,7 @@
 
 Vi har opbygget en professionel, struktureret mappe til Friday AI integration:
 
-```text
+````text
 friday-ai-leads/                       ← HOVEDMAPPE
 │
 ├── 📚 Documentation
@@ -337,7 +337,7 @@ Implementation Cost:    0 kr (FREE tier)
 ROI:                   ∞
 Time to Value:         Immediate
 
-```
+````
 
 ---
 

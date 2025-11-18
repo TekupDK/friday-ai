@@ -12,6 +12,7 @@ Implementér direkte i filer. Læs HELE chat sessionen, forstå opgaven fra chat
 ## TASK
 
 Implementér direkte:
+
 1. **Læs HELE chat sessionen** - ALLE beskeder fra bruger OG agent
 2. **Forstå opgave** - Hvad skal implementeres baseret på chat diskussioner?
 3. **Implementér** - Direkte i filer baseret på chat
@@ -21,6 +22,7 @@ Implementér direkte:
 ## CHAT SESSION READING
 
 **Læs HELE chat sessionen:**
+
 - Hvad blev diskuteret?
 - Hvad skal implementeres ifølge chat?
 - Hvilke filer blev nævnt?
@@ -36,11 +38,13 @@ Implementér direkte:
 **Fra chat:** [Hvor i chatten blev dette diskuteret]
 
 **Files ændret:**
+
 - `[file path]` - [Ændring] - [Baseret på chat diskussion]
 
 **Status:** ✅ Complete / 🔄 In Progress
 
 ## Næste skridt (fra chat)
+
 [Hvis relevant fra chat diskussioner]
 ```
 

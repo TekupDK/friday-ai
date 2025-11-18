@@ -130,7 +130,10 @@ export function SubscriptionManagement({
 
   const handleUpgrade = async (subscriptionId: number, currentPlan: string) => {
     // Plan upgrade path based on price (ascending): flex_basis(1,000) < tier1(1,200) < flex_plus(1,500) < tier2(1,800) < tier3(2,500)
-    const planUpgradeMap: Record<string, "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus"> = {
+    const planUpgradeMap: Record<
+      string,
+      "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus"
+    > = {
       flex_basis: "tier1", // 1,000 -> 1,200
       tier1: "flex_plus", // 1,200 -> 1,500 (or tier2 for tier plans)
       flex_plus: "tier2", // 1,500 -> 1,800
@@ -149,9 +152,15 @@ export function SubscriptionManagement({
     }
   };
 
-  const handleDowngrade = async (subscriptionId: number, currentPlan: string) => {
+  const handleDowngrade = async (
+    subscriptionId: number,
+    currentPlan: string
+  ) => {
     // Plan downgrade path based on price (descending)
-    const planDowngradeMap: Record<string, "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus"> = {
+    const planDowngradeMap: Record<
+      string,
+      "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus"
+    > = {
       tier3: "tier2", // 2,500 -> 1,800
       tier2: "flex_plus", // 1,800 -> 1,500
       flex_plus: "tier1", // 1,500 -> 1,200
@@ -175,13 +184,19 @@ export function SubscriptionManagement({
   }
 
   if (isError) {
-    return <ErrorDisplay message="Failed to load subscriptions" error={error} />;
+    return (
+      <ErrorDisplay message="Failed to load subscriptions" error={error} />
+    );
   }
 
-  const activeSubscriptions = subscriptions?.filter(s => s.status === "active") || [];
-  const pausedSubscriptions = subscriptions?.filter(s => s.status === "paused") || [];
-  const cancelledSubscriptions = subscriptions?.filter(s => s.status === "cancelled") || [];
-  const expiredSubscriptions = subscriptions?.filter(s => s.status === "expired") || [];
+  const activeSubscriptions =
+    subscriptions?.filter(s => s.status === "active") || [];
+  const pausedSubscriptions =
+    subscriptions?.filter(s => s.status === "paused") || [];
+  const cancelledSubscriptions =
+    subscriptions?.filter(s => s.status === "cancelled") || [];
+  const expiredSubscriptions =
+    subscriptions?.filter(s => s.status === "expired") || [];
 
   const filteredSubscriptions =
     statusFilter === "all"
@@ -195,7 +210,8 @@ export function SubscriptionManagement({
         <div>
           <h2 className="text-2xl font-bold">Subscription Management</h2>
           <p className="text-muted-foreground mt-1">
-            {subscriptions?.length || 0} subscription{subscriptions?.length !== 1 ? "s" : ""} total
+            {subscriptions?.length || 0} subscription
+            {subscriptions?.length !== 1 ? "s" : ""} total
           </p>
         </div>
       </div>
@@ -205,36 +221,40 @@ export function SubscriptionManagement({
         <div className="flex items-center gap-2 flex-wrap">
           <Filter className="w-4 h-4 text-muted-foreground" />
           <span className="text-sm font-medium">Filter:</span>
-          {(["all", "active", "paused", "cancelled", "expired"] as SubscriptionStatus[]).map(
-            status => (
-              <AppleButton
-                key={status}
-                type="button"
-                variant={statusFilter === status ? "primary" : "tertiary"}
-                size="sm"
-                onClick={() => setStatusFilter(status)}
-              >
-                {status === "all"
-                  ? "All"
-                  : status.charAt(0).toUpperCase() + status.slice(1)}
-                {status !== "all" && (
-                  <span className="ml-2 text-xs">
-                    (
-                    {
-                      status === "active"
-                        ? activeSubscriptions.length
-                        : status === "paused"
-                          ? pausedSubscriptions.length
-                          : status === "cancelled"
-                            ? cancelledSubscriptions.length
-                            : expiredSubscriptions.length
-                    }
-                    )
-                  </span>
-                )}
-              </AppleButton>
-            )
-          )}
+          {(
+            [
+              "all",
+              "active",
+              "paused",
+              "cancelled",
+              "expired",
+            ] as SubscriptionStatus[]
+          ).map(status => (
+            <AppleButton
+              key={status}
+              type="button"
+              variant={statusFilter === status ? "primary" : "tertiary"}
+              size="sm"
+              onClick={() => setStatusFilter(status)}
+            >
+              {status === "all"
+                ? "All"
+                : status.charAt(0).toUpperCase() + status.slice(1)}
+              {status !== "all" && (
+                <span className="ml-2 text-xs">
+                  (
+                  {status === "active"
+                    ? activeSubscriptions.length
+                    : status === "paused"
+                      ? pausedSubscriptions.length
+                      : status === "cancelled"
+                        ? cancelledSubscriptions.length
+                        : expiredSubscriptions.length}
+                  )
+                </span>
+              )}
+            </AppleButton>
+          ))}
         </div>
       )}
 
@@ -317,7 +337,9 @@ export function SubscriptionManagement({
                         type="button"
                         variant="secondary"
                         size="sm"
-                        onClick={() => handleUpgrade(subscription.id, subscription.planType)}
+                        onClick={() =>
+                          handleUpgrade(subscription.id, subscription.planType)
+                        }
                         disabled={upgradeMutation.isPending}
                       >
                         <TrendingUp className="w-4 h-4 mr-1" />
@@ -327,11 +349,18 @@ export function SubscriptionManagement({
                         type="button"
                         variant="secondary"
                         size="sm"
-                        onClick={() => handleDowngrade(subscription.id, subscription.planType)}
+                        onClick={() =>
+                          handleDowngrade(
+                            subscription.id,
+                            subscription.planType
+                          )
+                        }
                         disabled={downgradeMutation.isPending}
                       >
                         <TrendingDown className="w-4 h-4 mr-1" />
-                        {downgradeMutation.isPending ? "Downgrading..." : "Downgrade"}
+                        {downgradeMutation.isPending
+                          ? "Downgrading..."
+                          : "Downgrade"}
                       </AppleButton>
                       <AppleButton
                         type="button"
@@ -366,4 +395,3 @@ export function SubscriptionManagement({
     </div>
   );
 }
-

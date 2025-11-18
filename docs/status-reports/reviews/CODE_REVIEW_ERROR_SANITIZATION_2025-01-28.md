@@ -106,6 +106,7 @@ This review covers security improvements including error sanitization, XSS prote
 #### Issues & Suggestions 🔍
 
 **Issue 1: Redundant sensitive pattern check**
+
 ```typescript
 // Lines 66-72: Pattern check is redundant
 if (hasSensitiveInfo) {
@@ -117,6 +118,7 @@ return "An error occurred. Please try again later.";
 ```
 
 **Suggestion:** Simplify the logic:
+
 ```typescript
 // In production, always return generic message
 if (ENV.isProduction) {
@@ -131,11 +133,13 @@ if (ENV.isProduction) {
 ---
 
 **Issue 2: Pattern `/key/i` is too broad**
+
 ```typescript
 /key/i,  // Line 50
 ```
 
 **Suggestion:** Make pattern more specific:
+
 ```typescript
 /api[_-]?key/i,  // Already exists, good
 /private[_-]?key/i,
@@ -150,9 +154,11 @@ if (ENV.isProduction) {
 ---
 
 **Issue 3: Missing test coverage**
+
 - No unit tests found for error sanitization functions
 
 **Suggestion:** Add unit tests:
+
 ```typescript
 // server/__tests__/error-sanitization.test.ts
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
@@ -192,12 +198,14 @@ describe("sanitizeError", () => {
 #### Issues & Suggestions 🔍
 
 **Issue 1: Double sanitization in `dangerouslySetInnerHTML`**
+
 ```typescript
 // Line 270, 279: Content is already sanitized in updateContent
 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
 ```
 
 **Analysis:** This is actually good defense-in-depth! Content is sanitized when stored, but also sanitized when rendered. This protects against:
+
 - Content modified outside of updateContent
 - State corruption
 - Direct content manipulation
@@ -207,14 +215,13 @@ dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
 ---
 
 **Issue 2: Performance consideration**
+
 - DOMPurify is called multiple times (on every update, undo, redo, render)
 
 **Suggestion:** Consider memoization for expensive operations:
+
 ```typescript
-const sanitizedContent = useMemo(
-  () => DOMPurify.sanitize(content),
-  [content]
-);
+const sanitizedContent = useMemo(() => DOMPurify.sanitize(content), [content]);
 ```
 
 **Priority:** 🟢 **LOW** - Performance impact is minimal, DOMPurify is fast
@@ -243,17 +250,20 @@ const sanitizedContent = useMemo(
 #### Issues & Suggestions 🔍
 
 **Issue 1: Potential breaking change with `sameSite: "strict"`**
+
 ```typescript
 // Line 60: strict blocks all cross-site requests
 const sameSite = isProduction && isSecure ? "strict" : "lax";
 ```
 
 **Analysis:** `sameSite: "strict"` blocks ALL cross-site requests, including:
+
 - OAuth redirects from external providers
 - Embedded iframes
 - Links from external sites
 
 **Suggestion:** Consider `"lax"` instead, which allows:
+
 - Top-level navigation (OAuth redirects work)
 - GET requests from external sites
 - Blocks POST requests from external sites (CSRF protection)
@@ -270,6 +280,7 @@ const sameSite = isProduction && isSecure ? "lax" : "lax";
 ---
 
 **Issue 2: HTTPS enforcement may be too strict**
+
 ```typescript
 // Line 53-55: Throws error if HTTPS not available
 if (isProduction && !isSecure) {
@@ -278,17 +289,22 @@ if (isProduction && !isSecure) {
 ```
 
 **Analysis:** This is good security practice, but may cause issues if:
+
 - Behind a proxy that doesn't set `x-forwarded-proto`
 - Load balancer configuration is incorrect
 
 **Suggestion:** Add better error message and logging:
+
 ```typescript
 if (isProduction && !isSecure) {
-  logger.error({
-    hostname: req.hostname,
-    protocol: req.protocol,
-    forwardedProto: req.headers["x-forwarded-proto"],
-  }, "HTTPS required in production for secure cookies");
+  logger.error(
+    {
+      hostname: req.hostname,
+      protocol: req.protocol,
+      forwardedProto: req.headers["x-forwarded-proto"],
+    },
+    "HTTPS required in production for secure cookies"
+  );
   throw new Error(
     "HTTPS required in production. Check proxy/load balancer configuration."
   );
@@ -335,12 +351,16 @@ The implementation is clean and correct.
 #### Issues & Suggestions 🔍
 
 **Issue 1: Repetitive error conversion**
+
 ```typescript
 // Repeated in multiple places
-{ err: error instanceof Error ? error : new Error(String(error)) }
+{
+  err: error instanceof Error ? error : new Error(String(error));
+}
 ```
 
 **Suggestion:** Extract to helper function:
+
 ```typescript
 // In rate-limiter-redis.ts or shared utility
 function toError(error: unknown): Error {
@@ -360,6 +380,7 @@ logger.error("Rate limit check failed", { err: toError(error) });
 ### Overall Assessment ✅
 
 The changes follow good architectural patterns:
+
 - Separation of concerns (error sanitization in dedicated module)
 - Security-first design
 - Environment-aware behavior
@@ -512,4 +533,3 @@ The changes significantly improve the security posture of the application. The c
 - [x] Sensitive data handled correctly
 
 **Status:** ✅ **APPROVED** (with action items)
-

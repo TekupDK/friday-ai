@@ -12,6 +12,7 @@ Forklar en fejl: hvad er problemet, hvorfor opstår det, og hvordan fixes det.
 ## TASK
 
 Forklar fejl:
+
 1. **Hvad er problemet?** - Fejlbeskrivelse
 2. **Hvorfor opstår det?** - Root cause
 3. **Hvordan fixes det?** - Løsning
@@ -49,4 +50,3 @@ Forklar fejl:
 ---
 
 **CRITICAL:** Forstå fejlen, identificér root cause, og forklar løsning på klar, actionable måde.
-

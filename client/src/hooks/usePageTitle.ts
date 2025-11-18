@@ -29,4 +29,3 @@ export function usePageTitle(title: string) {
     );
   }, [title, location]);
 }
-

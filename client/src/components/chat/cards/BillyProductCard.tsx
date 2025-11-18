@@ -20,7 +20,6 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-
 export interface ProductData {
   id: string;
   sku: string; // REN-001, REN-002, etc.

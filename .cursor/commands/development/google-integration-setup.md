@@ -19,4 +19,3 @@ Configure OAuth, set up service account, test Gmail/Calendar APIs, handle errors
 ## OUTPUT
 
 Google integration configured and tested.
-

@@ -13,6 +13,7 @@
 ## 🔥 Priority 1: Immediate (Do Now)
 
 ### Task 1.1: Remove Empty Directories
+
 **Impact**: Immediate visual cleanup  
 **Effort**: 5 minutes  
 **Risk**: Minimal
@@ -26,12 +27,14 @@ Get-ChildItem -Directory | Where-Object { (Get-ChildItem $_.FullName -Recurse -F
 ```
 
 **Checklist**:
+
 - [ ] Remove "AI Apps/" (empty)
 - [ ] Verify no other empty top-level directories
 
 ---
 
 ### Task 1.2: Gitignore Runtime Folders
+
 **Impact**: Prevent future clutter  
 **Effort**: 2 minutes  
 **Risk**: None
@@ -47,15 +50,17 @@ Add-Content .gitignore ".git/index.lock"
 ```
 
 **Checklist**:
+
 - [ ] Add tmp/ to .gitignore
 - [ ] Add logs/ to .gitignore
-- [ ] Add *.log to .gitignore
+- [ ] Add \*.log to .gitignore
 - [ ] Add .git/index.lock to .gitignore
 - [ ] Commit .gitignore changes
 
 ---
 
 ### Task 1.3: Archive Legacy Directories
+
 **Impact**: Clean up confusion  
 **Effort**: 5 minutes  
 **Risk**: Low
@@ -68,6 +73,7 @@ git mv development-notes archive/development-notes
 ```
 
 **Checklist**:
+
 - [ ] Move tasks/ → archive/tasks/
 - [ ] Move migration-check/ → archive/migrations/
 - [ ] Move development-notes/ → archive/development-notes/
@@ -78,6 +84,7 @@ git mv development-notes archive/development-notes
 ## 📦 Priority 2: Short-term (This Week)
 
 ### Task 2.1: Organize Root Scripts
+
 **Impact**: Major root cleanup (19 files → 0)  
 **Effort**: 30 minutes  
 **Risk**: Low (need to update package.json)
@@ -124,6 +131,7 @@ git mv analyze-figma.spec.ts scripts/setup/
 ```
 
 **Checklist**:
+
 - [ ] Create scripts/migrations/archive/
 - [ ] Create scripts/testing/
 - [ ] Create scripts/setup/
@@ -137,6 +145,7 @@ git mv analyze-figma.spec.ts scripts/setup/
 ---
 
 ### Task 2.2: Update package.json Scripts
+
 **Impact**: Ensure scripts still work  
 **Effort**: 10 minutes  
 **Risk**: Low
@@ -155,6 +164,7 @@ Update paths in package.json scripts section:
 ```
 
 **Checklist**:
+
 - [ ] Review all package.json scripts
 - [ ] Update paths to new locations
 - [ ] Test each affected script
@@ -163,6 +173,7 @@ Update paths in package.json scripts section:
 ---
 
 ### Task 2.3: Archive Figma Analysis
+
 **Impact**: Move design docs  
 **Effort**: 5 minutes  
 **Risk**: Minimal
@@ -176,6 +187,7 @@ git mv figma-design-scrolled.png docs/design/
 ```
 
 **Checklist**:
+
 - [ ] Create docs/design/
 - [ ] Move figma-analysis/ folder
 - [ ] Move figma PNG files
@@ -187,6 +199,7 @@ git mv figma-design-scrolled.png docs/design/
 ## 📊 Priority 3: Medium-term (This Month)
 
 ### Task 3.1: Consolidate Test Structure
+
 **Impact**: Unified test discovery  
 **Effort**: 1 hour  
 **Risk**: Medium (must update CI/CD)
@@ -213,11 +226,12 @@ Add-Content .gitignore "`ntests/results/"
 ```
 
 **Checklist**:
+
 - [ ] Backup current tests/
 - [ ] Create new test structure
 - [ ] Move E2E tests to tests/e2e/
-- [ ] Move component tests (client/src/__tests__/) to tests/unit/client/
-- [ ] Move server tests (server/__tests__/) to tests/unit/server/
+- [ ] Move component tests (client/src/**tests**/) to tests/unit/client/
+- [ ] Move server tests (server/**tests**/) to tests/unit/server/
 - [ ] Move test outputs to tests/results/
 - [ ] Update playwright.config.ts
 - [ ] Update vitest.config.ts
@@ -230,6 +244,7 @@ Add-Content .gitignore "`ntests/results/"
 ---
 
 ### Task 3.2: Consolidate Archive Folders
+
 **Impact**: Single archive location  
 **Effort**: 15 minutes  
 **Risk**: Low
@@ -248,8 +263,9 @@ Remove-Item docs/archive -Force
 ```
 
 **Checklist**:
+
 - [ ] Create archive/docs/
-- [ ] Move docs/archive/* to archive/docs/
+- [ ] Move docs/archive/\* to archive/docs/
 - [ ] Remove empty docs/archive/
 - [ ] Update documentation references
 - [ ] Commit archive consolidation
@@ -257,11 +273,13 @@ Remove-Item docs/archive -Force
 ---
 
 ### Task 3.3: Document Folder Conventions
+
 **Impact**: Team clarity  
 **Effort**: 30 minutes  
 **Risk**: None
 
 Create/update docs/CONTRIBUTING.md with:
+
 - Folder structure overview
 - Where to place new files
 - Archive policy
@@ -269,6 +287,7 @@ Create/update docs/CONTRIBUTING.md with:
 - Documentation standards
 
 **Checklist**:
+
 - [ ] Create docs/CONTRIBUTING.md
 - [ ] Document folder structure
 - [ ] Document file placement rules
@@ -282,22 +301,26 @@ Create/update docs/CONTRIBUTING.md with:
 ## 🔮 Priority 4: Long-term (Future)
 
 ### Task 4.1: Improve Docs Service Robustness
+
 **Impact**: Prevent git lock issues  
 **Effort**: 2-4 hours  
 **Risk**: Medium
 
 **Changes needed**:
+
 1. Add git lock detection and auto-cleanup
 2. Make git sync optional in development
 3. Better error handling and logging
 4. Graceful degradation if git fails
 
 **Files to modify**:
+
 - server/integrations/docs/ (or wherever GitSync lives)
 - Add environment variable DOCS_GIT_SYNC_ENABLED
 - Add recovery mechanisms
 
 **Checklist**:
+
 - [ ] Find GitSync implementation
 - [ ] Add git lock detection
 - [ ] Add auto-cleanup on stale locks
@@ -311,6 +334,7 @@ Create/update docs/CONTRIBUTING.md with:
 ---
 
 ### Task 4.2: Evaluate Server Domain Organization
+
 **Impact**: Better code organization  
 **Effort**: 8-16 hours  
 **Risk**: High
@@ -320,6 +344,7 @@ Create/update docs/CONTRIBUTING.md with:
 ---
 
 ### Task 4.3: Config File Consolidation
+
 **Impact**: Cleaner root  
 **Effort**: 4-8 hours  
 **Risk**: Medium-High
@@ -331,6 +356,7 @@ Create/update docs/CONTRIBUTING.md with:
 ## 📋 Execution Plan
 
 ### Today (2025-11-15)
+
 1. ✅ Task 1.1: Remove empty directories (5 min)
 2. ✅ Task 1.2: Update .gitignore (2 min)
 3. ✅ Task 1.3: Archive legacy folders (5 min)
@@ -339,6 +365,7 @@ Create/update docs/CONTRIBUTING.md with:
 **Total time: ~15 minutes**
 
 ### Tomorrow (2025-11-16)
+
 1. Task 2.1: Organize root scripts (30 min)
 2. Task 2.2: Update package.json (10 min)
 3. Task 2.3: Archive figma analysis (5 min)
@@ -347,6 +374,7 @@ Create/update docs/CONTRIBUTING.md with:
 **Total time: ~45 minutes**
 
 ### Next Week
+
 1. Task 3.1: Consolidate test structure (1 hour)
 2. Task 3.2: Consolidate archives (15 min)
 3. Task 3.3: Document conventions (30 min)
@@ -355,6 +383,7 @@ Create/update docs/CONTRIBUTING.md with:
 **Total time: ~2 hours**
 
 ### Next Month
+
 1. Task 4.1: Improve docs service (2-4 hours)
 2. Evaluate need for tasks 4.2 and 4.3
 

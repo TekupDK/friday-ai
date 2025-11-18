@@ -23,7 +23,6 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
-
 export interface LeadData {
   id: string;
   name: string;

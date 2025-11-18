@@ -23,7 +23,7 @@ Langfuse provides **complete observability** for Friday AI's LLM operations:
 
 ### 1. Start Langfuse
 
-```bash
+````bash
 # Navigate to docker folder
 cd server/integrations/langfuse/docker
 
@@ -364,7 +364,7 @@ Add to cron (Linux/Mac) or Task Scheduler (Windows):
 # Daily backup at 2 AM
 0 2 * * * docker exec friday-langfuse-db pg_dump -U langfuse langfuse > /backups/langfuse-$(date +\%Y\%m\%d).sql
 
-```
+````
 
 ---
 

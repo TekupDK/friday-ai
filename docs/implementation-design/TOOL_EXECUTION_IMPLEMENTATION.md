@@ -13,7 +13,6 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
 ### Frontend Components
 
 1. **`client/src/components/chat/ToolExecutionModal.tsx`** (243 linjer)
-
    - Modal dialog der viser tool execution i real-time
 
    - Progress bar animation (0-100%)
@@ -25,9 +24,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
    - Danish labels og icons for alle Friday AI tools
 
 1. **`client/src/components/chat/ResponseCards.tsx`** (455 linjer)
-
    - Structured response cards for:
-
      - ✅ Lead created cards
 
      - ✅ Task created cards
@@ -43,7 +40,6 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
    - Friday AI-specifik styling
 
 1. **`client/src/components/chat/AIMemoryPanel.tsx`** (252 linjer)
-
    - Timeline af seneste AI actions
 
    - Grouping by date (I dag, I går, osv.)
@@ -57,13 +53,11 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
 ### Backend Services
 
 1. **`server/tool-execution-tracker.ts`** (301 linjer)
-
    - In-memory tracking af tool executions
 
    - EventEmitter for real-time updates
 
    - Subtask definitions for alle 8 tool types:
-
      - `create_lead` (4 subtasks)
 
      - `create_task` (3 subtasks)
@@ -85,7 +79,6 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
    - Auto-cleanup efter 30 sekunder
 
 1. **`server/routers/tool-execution-router.ts`** (69 linjer)
-
    - tRPC subscription endpoint for real-time updates
 
    - `subscribe()` - WebSocket-style updates
@@ -104,7 +97,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
 
 **File:** `server/routers.ts`
 
-```typescript
+````typescript
 import { toolExecutionRouter } from "./routers/tool-execution-router";
 
 export const appRouter = router({
@@ -580,7 +573,7 @@ describe('ToolExecutionModal', () => {
      req.on("close", unsubscribe);
    }
 
-   ```
+````
 
 ---
 

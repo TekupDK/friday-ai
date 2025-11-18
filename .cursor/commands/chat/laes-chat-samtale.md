@@ -12,6 +12,7 @@ Læs ALT i chatten (ALLE beskeder fra bruger OG agent). Udtræk: kontekst, mål,
 ## TASK
 
 Læs HELE chat sessionen (alle beskeder fra bruger og agent) og ekstraher:
+
 - Kontekst: Hvad arbejdes der på?
 - Mål: Hvad skal opnås?
 - Kodefiler: Hvilke filer er nævnt/ændret?
@@ -21,6 +22,7 @@ Læs HELE chat sessionen (alle beskeder fra bruger og agent) og ekstraher:
 ## CHAT SESSION READING
 
 **KRITISK:** Læs HELE chat sessionen:
+
 - Start fra første besked
 - Læs ALLE beskeder fra brugeren
 - Læs ALLE svar fra agenten
@@ -31,19 +33,24 @@ Læs HELE chat sessionen (alle beskeder fra bruger og agent) og ekstraher:
 
 ```markdown
 ## Kontekst (fra chat session)
+
 [Kort beskrivelse af hvad der arbejdes på baseret på HELE chatten]
 
 ## Mål (fra chat)
+
 - [Mål 1] - [Fra chat besked X]
 - [Mål 2] - [Fra chat besked Y]
 
 ## Kodefiler (fra chat)
+
 - `[file path]` - [Status/Ændring] - [Nævnt i chat besked Z]
 
 ## Fejl (fra chat)
+
 - [Fejl 1] - [Status] - [Fra chat besked A]
 
 ## Plan (fra chat flow)
+
 1. [Næste skridt 1] - [Baseret på chat diskussion]
 2. [Næste skridt 2] - [Baseret på chat diskussion]
 ```

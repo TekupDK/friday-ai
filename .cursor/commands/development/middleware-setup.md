@@ -19,4 +19,3 @@ Configure middleware, set order, handle errors, add logging, test middleware.
 ## OUTPUT
 
 Middleware configured with proper order and error handling.
-

@@ -28,7 +28,7 @@ Mål: Rigtige vector embeddings for semantic search
 
 #### Option A: OpenAI Embeddings (Anbefalet)
 
-```typescript
+````typescript
 // Pros: Best quality, fast, reliable
 // Cons: Koster penge ($0.00002 per 1K tokens)
 // Model: text-embedding-3-small (1536 dimensions)
@@ -364,7 +364,7 @@ Total:                          90 min (~1.5 hours)
 ✅ Performance acceptable (<200ms per operation)
 ✅ Documentation updated
 
-```
+````
 
 ---
 

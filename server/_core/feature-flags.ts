@@ -58,8 +58,7 @@ export function getFeatureFlags(userId?: number): FeatureFlags {
       DEFAULT_FLAGS.enableModelRouting,
     enableOpenRouterModels: enableOpenRouterForUser,
     openRouterRolloutPercentage: rolloutPercentage,
-    enableUTCP:
-      process.env.FORCE_UTCP === "true" || DEFAULT_FLAGS.enableUTCP,
+    enableUTCP: process.env.FORCE_UTCP === "true" || DEFAULT_FLAGS.enableUTCP,
   };
 }
 

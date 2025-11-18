@@ -37,7 +37,7 @@
 
 **Backend Logs:**
 
-```text
+````text
 status: 429,
 statusText: 'Too Many Requests',
 code: 429,
@@ -132,7 +132,7 @@ message: 'User-rate limit exceeded. Retry after 2025-11-02T19:47:46.403Z'
      cacheTime: 10 *60* 1000, // 10 minutter
    });
 
-   ```
+````
 
 1. **Reducer Refetch Frequency:**
    - Email liste: 60 sek er ok, men overvej 120 sek

@@ -19,4 +19,3 @@ Find `any` types, replace with proper types, improve type inference, add type gu
 ## OUTPUT
 
 Type safety improved with `any` types eliminated.
-

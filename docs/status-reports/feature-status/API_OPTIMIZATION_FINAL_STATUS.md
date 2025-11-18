@@ -59,7 +59,7 @@ Alle planlagte optimeringer er implementeret, inkluderet virtual scrolling integ
 
 ### Combined Impact
 
-```text
+````text
 API Optimizations:    50-70% API call reduktion
 Virtual Scrolling:    70-80% DOM rendering reduktion
 Total Performance:    Signifikant forbedret UX
@@ -166,7 +166,7 @@ Average Polling (inaktiv):   _______
 DOM Nodes (50 emails):       _______
 Scroll Performance:          _______
 
-```
+````
 
 ## 🚀 Next Steps
 

@@ -56,7 +56,7 @@
 
 ### Step 1: Verify Production Environment
 
-```bash
+````bash
 # Check environment variables
 echo $OPENROUTER_API_KEY
 echo $OPENROUTER_MODEL
@@ -272,7 +272,7 @@ git push origin main
 # Redeploy
 ./deploy.sh
 
-```
+````
 
 ---
 

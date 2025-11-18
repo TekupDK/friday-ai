@@ -8,30 +8,30 @@ Review a TODO list, archive completed items, and organize what remains.
 
 ## STEPS
 
-1) Identify completed tasks:
+1. Identify completed tasks:
    - Find all tasks marked as done: `- [x]`, `✅`, etc.
    - Verify completion in codebase
    - Check for any follow-up needed
 
-2) Archive completed items:
+2. Archive completed items:
    - Move to "Completed" section
    - Add completion date if available
    - Keep brief notes if helpful
    - Remove if truly obsolete
 
-3) Review remaining tasks:
+3. Review remaining tasks:
    - Verify they're still relevant
    - Update priorities if needed
    - Check for duplicates
    - Merge similar tasks
 
-4) Organize active tasks:
+4. Organize active tasks:
    - Group by priority
    - Group by area
    - Show dependencies clearly
    - Highlight blockers
 
-5) Update list structure:
+5. Update list structure:
    - Clear sections (Active, Completed, Blocked)
    - Summary statistics
    - Next actions highlighted
@@ -39,9 +39,9 @@ Review a TODO list, archive completed items, and organize what remains.
 ## OUTPUT
 
 Provide:
+
 - Cleaned up TODO list
 - Completed items archived
 - Active tasks organized
 - Summary statistics
 - Next recommended actions
-

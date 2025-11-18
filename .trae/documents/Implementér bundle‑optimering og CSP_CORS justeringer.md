@@ -1,9 +1,9 @@
 ## Arbejde der udføres
 
-1) Opdatere `vite.config.ts` med `build.rollupOptions.manualChunks` for at splitte tunge vendor‑pakker og app‑moduler.
-1) Indføre `React.lazy` og `Suspense` for store klientmoduler (fx workspace‑ og email‑features) for lazy loading.
-1) Justere `server/_core/index.ts` CSP per miljø: strammere i prod (uden `unsafe-eval`), dev bevarer nødvendige undtagelser; bekræfte CORS whitelist og logging.
-1) Verificere ændringer: køre build, generere `stats.html`, sammenligne treemap og rapportere reduktion.
+1. Opdatere `vite.config.ts` med `build.rollupOptions.manualChunks` for at splitte tunge vendor‑pakker og app‑moduler.
+1. Indføre `React.lazy` og `Suspense` for store klientmoduler (fx workspace‑ og email‑features) for lazy loading.
+1. Justere `server/_core/index.ts` CSP per miljø: strammere i prod (uden `unsafe-eval`), dev bevarer nødvendige undtagelser; bekræfte CORS whitelist og logging.
+1. Verificere ændringer: køre build, generere `stats.html`, sammenligne treemap og rapportere reduktion.
 
 ## Sikring af stabilitet
 

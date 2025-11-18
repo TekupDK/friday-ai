@@ -78,10 +78,7 @@ const formatTimestamp = (timestamp: string) => {
   }
 };
 
-export function AuditTimeline({
-  entityType,
-  entityId,
-}: AuditTimelineProps) {
+export function AuditTimeline({ entityType, entityId }: AuditTimelineProps) {
   const {
     data: auditLogs,
     isLoading,
@@ -148,10 +145,7 @@ export function AuditTimeline({
               >
                 {/* Icon */}
                 <div
-                  className={cn(
-                    "p-2 rounded-full bg-muted/50",
-                    actionColor
-                  )}
+                  className={cn("p-2 rounded-full bg-muted/50", actionColor)}
                 >
                   <ActionIcon className="w-4 h-4" />
                 </div>
@@ -202,7 +196,9 @@ export function AuditTimeline({
                                 key={field}
                                 className="text-xs bg-muted/30 rounded px-2 py-1"
                               >
-                                <span className="font-medium capitalize">{field}:</span>{" "}
+                                <span className="font-medium capitalize">
+                                  {field}:
+                                </span>{" "}
                                 <span className="text-muted-foreground line-through">
                                   {String(oldValue)}
                                 </span>{" "}
@@ -237,4 +233,3 @@ export function AuditTimeline({
     </AppleCard>
   );
 }
-

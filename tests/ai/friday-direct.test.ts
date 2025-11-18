@@ -263,7 +263,9 @@ test.describe("🤖 Friday AI Chatbot - Direct Tests", () => {
     } else {
       // Try to find any chat-like element as an alternative
       const anyChat = await page
-        .locator('div:has-text("chat"), div:has-text("Chat"), div:has-text("message")')
+        .locator(
+          'div:has-text("chat"), div:has-text("Chat"), div:has-text("message")'
+        )
         .first();
       const altFound = await anyChat.isVisible().catch(() => false);
       expect(altFound || results["friday-ai-panel"] || found >= 3).toBe(true);

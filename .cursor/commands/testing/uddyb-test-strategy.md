@@ -13,6 +13,7 @@ Du er en senior QA engineer der uddyber test strategier med detaljerede test cas
 ## TASK
 
 Uddyb test strategy ved at:
+
 - Analysere test requirements og coverage goals
 - Gennemgå test types og levels
 - Dokumentere test cases og scenarios
@@ -36,6 +37,7 @@ Uddyb test strategy ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find test files
 - `read_file` - Læs test implementations
 - `grep` - Søg efter test patterns
@@ -43,6 +45,7 @@ Uddyb test strategy ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over test cases
 - Ignorere edge cases
 - Glem automation muligheder
@@ -116,11 +119,13 @@ Provide comprehensive test strategy:
 [Beskrivelse]
 
 **Test Scope:**
+
 - [Scope 1]
 - [Scope 2]
 - [Scope 3]
 
 **Coverage Goals:**
+
 - Unit tests: [X]%
 - Integration tests: [X]%
 - E2E tests: [X]%
@@ -134,14 +139,17 @@ Provide comprehensive test strategy:
 [Beskrivelse]
 
 **Tools:**
+
 - [Tool 1]
 - [Tool 2]
 
 **Coverage:**
+
 - [Component 1]: [X]%
 - [Component 2]: [X]%
 
 **Key Test Areas:**
+
 - [Area 1]
 - [Area 2]
 - [Area 3]
@@ -152,13 +160,16 @@ Provide comprehensive test strategy:
 [Beskrivelse]
 
 **Tools:**
+
 - [Tool 1]
 
 **Coverage:**
+
 - [Integration 1]: [X]%
 - [Integration 2]: [X]%
 
 **Key Test Areas:**
+
 - [Area 1]
 - [Area 2]
 
@@ -168,14 +179,17 @@ Provide comprehensive test strategy:
 [Beskrivelse]
 
 **Tools:**
+
 - Playwright
 - [Tool 2]
 
 **Coverage:**
+
 - [Flow 1]: [X]%
 - [Flow 2]: [X]%
 
 **Key Test Flows:**
+
 - [Flow 1]
 - [Flow 2]
 
@@ -184,10 +198,12 @@ Provide comprehensive test strategy:
 ### Happy Path Scenarios
 
 #### Test Case 1: [Scenario]
+
 **Description:**
 [Detaljeret beskrivelse]
 
 **Steps:**
+
 1. [Step 1]
 2. [Step 2]
 3. [Step 3]
@@ -198,15 +214,18 @@ Provide comprehensive test strategy:
 **Priority:** [High/Medium/Low]
 
 #### Test Case 2: [Scenario]
+
 [Samme struktur...]
 
 ### Edge Cases
 
 #### Test Case 1: [Edge Case]
+
 **Description:**
 [Beskrivelse]
 
 **Steps:**
+
 1. [Step 1]
 2. [Step 2]
 
@@ -218,10 +237,12 @@ Provide comprehensive test strategy:
 ### Error Cases
 
 #### Test Case 1: [Error Scenario]
+
 **Description:**
 [Beskrivelse]
 
 **Steps:**
+
 1. [Step 1]
 2. [Step 2]
 
@@ -233,10 +254,12 @@ Provide comprehensive test strategy:
 ### Boundary Conditions
 
 #### Test Case 1: [Boundary]
+
 **Description:**
 [Beskrivelse]
 
 **Test Values:**
+
 - Min: [Value]
 - Max: [Value]
 - Edge: [Value]
@@ -249,51 +272,61 @@ Provide comprehensive test strategy:
 ### Automation Strategy
 
 **Automated:**
+
 - ✅ Unit tests
 - ✅ Integration tests
 - ✅ E2E tests (critical flows)
 - ⏳ [Manual tests]
 
 **Tools:**
+
 - [Tool 1] - [Purpose]
 - [Tool 2] - [Purpose]
 
 ### CI/CD Integration
 
 **Pre-commit:**
+
 - [Check 1]
 - [Check 2]
 
 **Pre-merge:**
+
 - [Test suite 1]
 - [Test suite 2]
 
 **Post-deployment:**
+
 - [Smoke tests]
 - [Regression tests]
 
 ### Test Data Management
 
 **Test Data:**
+
 - [Data source 1]
 - [Data source 2]
 
 **Data Cleanup:**
+
 - [Cleanup strategy]
 
 ## Quality Metrics
 
 ### Coverage Metrics
+
 - **Line Coverage:** [X]%
 - **Branch Coverage:** [X]%
 - **Function Coverage:** [X]%
 
 ### Test Quality Metrics
+
 - **Test Pass Rate:** [X]%
 - **Test Execution Time:** [X] min
 - **Flaky Test Rate:** [X]%
 
 ### Defect Metrics
+
 - **Defects Found:** [X]
 - **Defects Fixed:** [X]
 - **Defect Density:** [X] per [unit]
@@ -301,21 +334,25 @@ Provide comprehensive test strategy:
 ## Test Execution Plan
 
 ### Phase 1: Unit Tests
+
 - **Duration:** [X] days
 - **Tests:** [X] tests
 - **Owner:** [Team/Person]
 
 ### Phase 2: Integration Tests
+
 - **Duration:** [X] days
 - **Tests:** [X] tests
 - **Owner:** [Team/Person]
 
 ### Phase 3: E2E Tests
+
 - **Duration:** [X] days
 - **Tests:** [X] tests
 - **Owner:** [Team/Person]
 
 ### Phase 4: Regression Tests
+
 - **Duration:** [X] days
 - **Tests:** [X] tests
 - **Owner:** [Team/Person]
@@ -323,6 +360,7 @@ Provide comprehensive test strategy:
 ## Risk Assessment
 
 ### Test Risks
+
 1. **[Risk 1]**
    - **Probability:** [High/Medium/Low]
    - **Impact:** [High/Medium/Low]
@@ -332,12 +370,14 @@ Provide comprehensive test strategy:
    - [Samme struktur...]
 
 ### Coverage Gaps
+
 - [Gap 1] - [Impact] - [Mitigation]
 - [Gap 2] - [Impact] - [Mitigation]
 
 ## Anbefalinger
 
 ### Test Improvements
+
 1. **[Improvement 1]**
    - [Beskrivelse]
    - Priority: [High/Medium/Low]
@@ -347,12 +387,14 @@ Provide comprehensive test strategy:
    - [Beskrivelse]
 
 ### Automation Opportunities
+
 1. **[Opportunity 1]**
    - [Beskrivelse]
    - Benefit: [Benefit]
    - Estimated: [X] hours
 
 ### Coverage Improvements
+
 1. **[Improvement 1]**
    - [Beskrivelse]
    - Target: [X]%
@@ -391,4 +433,3 @@ Efter uddybning, verificer:
 ---
 
 **CRITICAL:** Start med at analysere test requirements, derefter strukturér en omfattende test strategy med detaljerede test cases og automation plan.
-

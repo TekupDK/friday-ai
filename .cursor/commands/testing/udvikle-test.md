@@ -12,6 +12,7 @@ Udvikle test: skriv test kode, test funktionalitet, og valider at alt virker kor
 ## TASK
 
 Udvikle test:
+
 1. **Forstå funktionalitet** - Hvad skal testes?
 2. **Skriv test kode** - Unit tests, integration tests
 3. **Kør tests** - Verificer at de passer
@@ -21,6 +22,7 @@ Udvikle test:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Læs funktionalitet der skal testes
 - `codebase_search` - Find eksisterende tests
 - `grep` - Søg efter test patterns
@@ -61,7 +63,7 @@ Udvikle test:
 
 ## OUTPUT FORMAT
 
-```markdown
+````markdown
 # Test Udvikling: [Funktionalitet]
 
 **Dato:** 2025-11-16
@@ -77,15 +79,16 @@ Udvikle test:
 
 ```typescript
 // Test case 1
-test('should [description]', () => {
+test("should [description]", () => {
   // Test code
 });
 
 // Test case 2
-test('should [description]', () => {
+test("should [description]", () => {
   // Test code
 });
 ```
+````
 
 ## Test Resultater
 
@@ -108,6 +111,7 @@ test('should [description]', () => {
 
 - [Forbedring 1]
 - [Forbedring 2]
+
 ```
 
 ## GUIDELINES
@@ -121,3 +125,4 @@ test('should [description]', () => {
 
 **CRITICAL:** Forstå funktionalitet, skriv test kode, kør tests, valider coverage, og forbedre tests baseret på resultater.
 
+```

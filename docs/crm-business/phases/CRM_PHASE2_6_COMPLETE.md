@@ -142,7 +142,7 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 
 **Test Script:** `server/scripts/test-crm-phase2-6.ts`
 
-```text
+````text
 ✅ opportunities table: 0 rows
 ✅ customer_segments table: 0 rows
 ✅ customer_segment_members table: 0 rows
@@ -289,7 +289,7 @@ const createOpp = trpc.crm.extensions.createOpportunity.useMutation();
 const updateStage = trpc.crm.extensions.updateOpportunity.useMutation();
 const forecast = trpc.crm.extensions.getRevenueForecast.useQuery();
 
-```
+````
 
 ### Week 3: Segmentation UI
 

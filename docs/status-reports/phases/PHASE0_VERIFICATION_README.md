@@ -13,7 +13,6 @@
 ## Storybook Opsætning
 
 - Statisk build for stabil runtime:
-
   - `npm run build-storybook`
 
   - `pnpm dlx serve storybook-static -l 6006 --no-clipboard`
@@ -21,11 +20,9 @@
 ## Story IDs
 
 - Manager viser “kind” IDs (fx `apple-ui-applebutton`). Konkrete stories følger mønsteret:
-
   - `apple-ui-<component>--<storyname>`
 
   - Eksempler:
-
     - AppleBadge: `new`, `active`, `vip`, `at-risk`, `all-statuses`, `all-sizes`
 
     - AppleButton: `primary`, `secondary`, `tertiary`, `small`, `medium`, `large`, `with-left-icon`, `with-right-icon`, `loading`, `disabled`, `full-width`, `all-variants`
@@ -43,7 +40,6 @@
 - Fil: `scripts/verify-phase0-components.mjs`
 
 - Arkitektur:
-
   - Playwright (Chromium) per komponent (page isolation)
 
   - Discovery af IDs via manager + generering af kandidat‑stories
@@ -72,11 +68,9 @@
 ## Fejlfinding
 
 - Connection refused
-
   - Sørg for at statisk server kører på `<http://localhost:6006/`>
 
 - PASS/FAIL er ens (ingen forskel)
-
   - Vent efter tema‑toggle (`await page.waitForTimeout(500-1000ms)`)
 
   - Sample inline styles (`el.style.color`, `el.style.backgroundColor`)
@@ -84,7 +78,6 @@
   - Udvid selektorer til at matche selve komponentens DOM (fx `[class*='AppleBadge']`, `button`, `input`)
 
 - Story ikke fundet
-
   - Brug kendte storynavne (se ovenfor) sammen med `apple-ui-<component>--<storyname>`
 
 ## Acceptkriterier

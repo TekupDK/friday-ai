@@ -94,7 +94,7 @@
 
 ### 1. Database Setup
 
-```bash
+````bash
 # Generate migration
 pnpm db:generate
 
@@ -351,7 +351,7 @@ pnpm install
 pnpm add react-markdown react-syntax-highlighter date-fns
 pnpm add -D @types/react-syntax-highlighter
 
-```
+````
 
 ---
 

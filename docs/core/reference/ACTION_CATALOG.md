@@ -33,7 +33,6 @@ interface ActionDef<P extends z.ZodTypeAny, R = unknown> {
     ctx: Ctx & { idempotencyKey: string }
   ) => Promise<R>;
 }
-
 ```
 
 ## Startkatalog (MVP)

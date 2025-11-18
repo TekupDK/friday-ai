@@ -102,14 +102,20 @@ export function RelationshipForm({
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Related Customer */}
         <div>
-          <label htmlFor="relatedCustomer" className="block text-sm font-medium mb-2">
+          <label
+            htmlFor="relatedCustomer"
+            className="block text-sm font-medium mb-2"
+          >
             Related Customer *
           </label>
           <select
             id="relatedCustomer"
             value={formData.relatedCustomerProfileId}
             onChange={e =>
-              setFormData({ ...formData, relatedCustomerProfileId: e.target.value })
+              setFormData({
+                ...formData,
+                relatedCustomerProfileId: e.target.value,
+              })
             }
             className="w-full px-3 py-2 border border-border rounded-md bg-background"
             required
@@ -125,7 +131,10 @@ export function RelationshipForm({
 
         {/* Relationship Type */}
         <div>
-          <label htmlFor="relationshipType" className="block text-sm font-medium mb-2">
+          <label
+            htmlFor="relationshipType"
+            className="block text-sm font-medium mb-2"
+          >
             Relationship Type *
           </label>
           <select
@@ -134,7 +143,8 @@ export function RelationshipForm({
             onChange={e =>
               setFormData({
                 ...formData,
-                relationshipType: e.target.value as typeof formData.relationshipType,
+                relationshipType: e.target
+                  .value as typeof formData.relationshipType,
               })
             }
             className="w-full px-3 py-2 border border-border rounded-md bg-background"
@@ -160,7 +170,10 @@ export function RelationshipForm({
             max="10"
             value={formData.strength}
             onChange={e =>
-              setFormData({ ...formData, strength: parseInt(e.target.value, 10) })
+              setFormData({
+                ...formData,
+                strength: parseInt(e.target.value, 10),
+              })
             }
             className="w-full"
           />
@@ -172,7 +185,10 @@ export function RelationshipForm({
 
         {/* Description */}
         <div>
-          <label htmlFor="description" className="block text-sm font-medium mb-2">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium mb-2"
+          >
             Description
           </label>
           <textarea
@@ -209,4 +225,3 @@ export function RelationshipForm({
     </AppleModal>
   );
 }
-

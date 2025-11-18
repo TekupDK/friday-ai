@@ -1,6 +1,6 @@
 /**
  * Hook Executor
- * 
+ *
  * Executes hooks based on configuration
  */
 
@@ -35,8 +35,8 @@ export async function executeHooks(
 
   // Parallel execution
   if (executionOptions.parallel && hooks.length > 1) {
-    const promises = hooks.map((hook) =>
-      executeHook(hook, context, executionOptions).catch((error) => ({
+    const promises = hooks.map(hook =>
+      executeHook(hook, context, executionOptions).catch(error => ({
         success: false,
         error: error instanceof Error ? error.message : String(error),
       }))
@@ -47,7 +47,7 @@ export async function executeHooks(
 
     // Check for errors if stopOnError is enabled
     if (executionOptions.stopOnError) {
-      const firstError = parallelResults.find((r) => !r.success);
+      const firstError = parallelResults.find(r => !r.success);
       if (firstError) {
         return [firstError];
       }
@@ -96,9 +96,7 @@ async function executeHook(
   try {
     // Dynamic import with error handling
     // Convert relative path to absolute if needed
-    const hookPath = hook.file.startsWith(".")
-      ? hook.file
-      : `./${hook.file}`;
+    const hookPath = hook.file.startsWith(".") ? hook.file : `./${hook.file}`;
 
     let hookModule: Record<string, unknown>;
     try {
@@ -120,7 +118,7 @@ async function executeHook(
       (hookModule[hook.name] as HookFunction) ||
       (hookModule[`${hook.name}Hook`] as HookFunction) ||
       (Object.values(hookModule).find(
-        (fn) => typeof fn === "function"
+        fn => typeof fn === "function"
       ) as HookFunction);
 
     if (!hookFn) {
@@ -159,9 +157,14 @@ async function executeHook(
     return hookResult;
   } catch (error) {
     const duration = Date.now() - startTime;
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
-    hookLogger.log(hook.name, context.category, "failed", duration, errorMessage);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    hookLogger.log(
+      hook.name,
+      context.category,
+      "failed",
+      duration,
+      errorMessage
+    );
 
     return {
       success: false,
@@ -218,4 +221,3 @@ export async function executeContextHooks(
     category: "context",
   });
 }
-

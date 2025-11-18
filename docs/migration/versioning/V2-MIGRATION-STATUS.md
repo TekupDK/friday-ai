@@ -6,7 +6,7 @@
 
 ## 🎯 Overall Progress: 55% Complete
 
-```text
+````text
 ████████████████████░░░░░░░░░░░░░░░░ 55%
 
 ```bash
@@ -282,7 +282,7 @@ import ChatInterface from "./pages/ChatInterface";  // V1
 
 <Route path={"/"} component={ChatInterface} />
 
-```
+````
 
 ### If you get TypeScript errors
 

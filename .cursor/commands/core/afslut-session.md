@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der afslutter en udviklingssession profession
 ## TASK
 
 Afslut udviklingssession ved at:
+
 - Sammenfatte alt arbejde der er gjort
 - Identificere næste skridt og prioriteringer
 - Verificere at alt er commitet
@@ -36,6 +37,7 @@ Afslut udviklingssession ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Tjek git status, kør checks
 - `codebase_search` - Find relevant arbejde
 - `read_file` - Læs nylige ændringer
@@ -43,6 +45,7 @@ Afslut udviklingssession ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Glem at commit arbejde
 - Spring over verificering
 - Ignorere næste skridt
@@ -115,30 +118,36 @@ Provide comprehensive session closure:
 ## Arbejde Gennemført
 
 ### Opgaver Færdiggjort
+
 - ✅ [Task 1] - [Beskrivelse]
 - ✅ [Task 2] - [Beskrivelse]
 - ✅ [Task 3] - [Beskrivelse]
 
 ### Features Implementeret
+
 - ✅ [Feature 1] - [Beskrivelse]
 - ✅ [Feature 2] - [Beskrivelse]
 
 ### Bugfixes
+
 - ✅ [Bug 1] - [Beskrivelse]
 - ✅ [Bug 2] - [Beskrivelse]
 
 ### Dokumentation
+
 - ✅ [Doc 1] - [Beskrivelse]
 - ✅ [Doc 2] - [Beskrivelse]
 
 ## Ændringer
 
 ### Filer Ændret
+
 - `[file1].ts` - [Beskrivelse]
 - `[file2].tsx` - [Beskrivelse]
 - `[file3].md` - [Beskrivelse]
 
 ### Git Status
+
 - **Committed:** [X] commits
 - **Uncommitted:** [Y] files (hvis nogen)
 - **Branch:** [branch name]
@@ -153,6 +162,7 @@ Provide comprehensive session closure:
 ## Næste Skridt
 
 ### Immediate (Næste Session)
+
 1. **[Task 1]**
    - [Beskrivelse]
    - Priority: [High/Medium/Low]
@@ -162,10 +172,12 @@ Provide comprehensive session closure:
    - [Beskrivelse]
 
 ### Short-term (Næste Uge)
+
 1. **[Task 1]**
    - [Beskrivelse]
 
 ### Blockers
+
 - [Blocker 1] - [Beskrivelse] - [Resolution needed]
 
 ## Klar Til
@@ -223,4 +235,3 @@ Før afslutning, verificer:
 ---
 
 **CRITICAL:** Start med at sammenfatte session arbejde, derefter verificer status og commit arbejde, og afslut med klare næste skridt.
-

@@ -16,7 +16,7 @@ What will this guide teach you?
 
 Description of what we're doing and why.
 
-```bash
+````bash
 # Commands or code
 
 ```text
@@ -43,7 +43,7 @@ How to verify everything is working:
 ```bash
 # Test commands
 
-```
+````
 
 ## Troubleshooting
 

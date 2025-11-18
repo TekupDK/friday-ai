@@ -13,9 +13,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useDocsKeyboardShortcuts } from "@/hooks/docs/useDocsKeyboardShortcuts";
 import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
 
-
-
-
 interface DocumentEditorProps {
   documentId: string | null; // null = create new
   template?: string | null; // template id for new docs

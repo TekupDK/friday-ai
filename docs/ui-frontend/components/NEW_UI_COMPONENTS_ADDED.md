@@ -292,7 +292,7 @@ Alle komponenter er bygget med responsive i tankerne:
 
 ### **Smart Splits i Email Panel:**
 
-```tsx
+````tsx
 import { SmartSplitsDemo } from "@/components/showcase/SmartSplitsDemo";
 
 <aside className="w-64 border-r">
@@ -322,7 +322,7 @@ import { EmailListDemo } from "@/components/showcase/EmailListItem";
   <EmailListDemo />
 </main>;
 
-```
+````
 
 ---
 

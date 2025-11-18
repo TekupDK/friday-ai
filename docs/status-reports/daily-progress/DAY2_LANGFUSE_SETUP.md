@@ -43,7 +43,7 @@
 
 ## 📦 Files Created
 
-```bash
+````bash
 server/integrations/langfuse/
 ├── docker/
 │   └── docker-compose.langfuse.yml   (Self-hosted Langfuse)
@@ -192,7 +192,7 @@ docker compose -f server/integrations/langfuse/docker/docker-compose.langfuse.ym
 # 2. Database not ready → Wait 60 seconds
 # 3. Permission issues → Check Docker Desktop is running
 
-```
+````
 
 ### Can't access <http://localhost:3000>
 

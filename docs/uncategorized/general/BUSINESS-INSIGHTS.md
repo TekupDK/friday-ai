@@ -23,7 +23,7 @@ V4.3.5 uses **AI-enhanced parsing** to deliver unprecedented insights into custo
 
 ### **Revenue Metrics:**
 
-```text
+````text
 Total Revenue:    224,132 kr
 Total Profit:     215,622 kr
 Profit Margin:    96.2%
@@ -263,7 +263,7 @@ Premium Pricing:           10-15k kr/year
 
 Total Potential Impact:    65-85k kr annually
 
-```
+````
 
 ---
 

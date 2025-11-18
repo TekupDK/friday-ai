@@ -184,7 +184,8 @@ export function RelationshipGraph({
             <Network className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-2">No relationships yet</h3>
             <p className="text-muted-foreground mb-4">
-              Connect this customer with other customers to build a relationship network
+              Connect this customer with other customers to build a relationship
+              network
             </p>
             <AppleButton
               onClick={() => setShowForm(true)}
@@ -208,4 +209,3 @@ export function RelationshipGraph({
     </div>
   );
 }
-

@@ -6,7 +6,7 @@
 
 ## 🔍 Hvad Vi Ved
 
-```bash
+````bash
 ✅ .env.dev:  Langfuse config tilføjet korrekt
 ✅ Node processer: Starter men crashes/hænger
 ❌ Porte 3000/5173: Lytter IKKE
@@ -174,7 +174,7 @@ pnpm dev
 ```bash
 curl <http://localhost:3001/api/public/health>
 
-```
+````
 
 ---
 

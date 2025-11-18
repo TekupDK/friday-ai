@@ -20,9 +20,12 @@ import { trpc } from "@/lib/trpc";
 import { trpcClient } from "@/lib/trpc-client";
 // Simple error boundary component (no external dependency needed)
 class ErrorBoundary extends React.Component<
-  { 
-    children: React.ReactNode; 
-    FallbackComponent: React.ComponentType<{ error: Error; resetErrorBoundary: () => void }> 
+  {
+    children: React.ReactNode;
+    FallbackComponent: React.ComponentType<{
+      error: Error;
+      resetErrorBoundary: () => void;
+    }>;
   },
   { error: Error | null }
 > {
@@ -42,9 +45,9 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.error) {
       return (
-        <this.props.FallbackComponent 
-          error={this.state.error} 
-          resetErrorBoundary={() => this.setState({ error: null })} 
+        <this.props.FallbackComponent
+          error={this.state.error}
+          resetErrorBoundary={() => this.setState({ error: null })}
         />
       );
     }
@@ -64,12 +67,20 @@ const standaloneQueryClient = new QueryClient({
 });
 
 // Error fallback component
-function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+function ErrorFallback({
+  error,
+  resetErrorBoundary,
+}: {
+  error: Error;
+  resetErrorBoundary: () => void;
+}) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-6">
       <div className="max-w-md w-full space-y-4">
         <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-6">
-          <h2 className="text-lg font-semibold text-destructive mb-2">Error in CRM Module</h2>
+          <h2 className="text-lg font-semibold text-destructive mb-2">
+            Error in CRM Module
+          </h2>
           <p className="text-sm text-muted-foreground mb-4">{error.message}</p>
           <button
             onClick={resetErrorBoundary}
@@ -98,16 +109,46 @@ function StandaloneCRMRouter() {
       <CRMLayout>
         <Suspense fallback={<LoadingSpinner message="Loading CRM module..." />}>
           <Switch>
-            <Route path="/crm-standalone" component={() => <CRMDashboardStandalone />} />
-            <Route path="/crm-standalone/dashboard" component={() => <CRMDashboardStandalone />} />
-            <Route path="/crm-standalone/customers" component={() => <CustomerListStandalone />} />
-            <Route path="/crm-standalone/customers/:id" component={() => <CustomerDetailStandalone />} />
-            <Route path="/crm-standalone/leads" component={() => <LeadPipelineStandalone />} />
-            <Route path="/crm-standalone/leads/:id" component={() => <LeadDetailStandalone />} />
-            <Route path="/crm-standalone/opportunities" component={() => <OpportunityPipelineStandalone />} />
-            <Route path="/crm-standalone/segments" component={() => <SegmentListStandalone />} />
-            <Route path="/crm-standalone/segments/:id" component={() => <SegmentDetailStandalone />} />
-            <Route path="/crm-standalone/bookings" component={() => <BookingCalendarStandalone />} />
+            <Route
+              path="/crm-standalone"
+              component={() => <CRMDashboardStandalone />}
+            />
+            <Route
+              path="/crm-standalone/dashboard"
+              component={() => <CRMDashboardStandalone />}
+            />
+            <Route
+              path="/crm-standalone/customers"
+              component={() => <CustomerListStandalone />}
+            />
+            <Route
+              path="/crm-standalone/customers/:id"
+              component={() => <CustomerDetailStandalone />}
+            />
+            <Route
+              path="/crm-standalone/leads"
+              component={() => <LeadPipelineStandalone />}
+            />
+            <Route
+              path="/crm-standalone/leads/:id"
+              component={() => <LeadDetailStandalone />}
+            />
+            <Route
+              path="/crm-standalone/opportunities"
+              component={() => <OpportunityPipelineStandalone />}
+            />
+            <Route
+              path="/crm-standalone/segments"
+              component={() => <SegmentListStandalone />}
+            />
+            <Route
+              path="/crm-standalone/segments/:id"
+              component={() => <SegmentDetailStandalone />}
+            />
+            <Route
+              path="/crm-standalone/bookings"
+              component={() => <BookingCalendarStandalone />}
+            />
             <Route>
               <div className="p-6">
                 <div className="max-w-2xl mx-auto text-center space-y-4">
@@ -118,12 +159,26 @@ function StandaloneCRMRouter() {
                   <div className="mt-8 space-y-2 text-left">
                     <p className="font-semibold">Available Routes:</p>
                     <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                      <li><code>/crm-standalone/dashboard</code> - CRM Dashboard</li>
-                      <li><code>/crm-standalone/customers</code> - Customer List</li>
-                      <li><code>/crm-standalone/leads</code> - Lead Pipeline</li>
-                      <li><code>/crm-standalone/opportunities</code> - Opportunities</li>
-                      <li><code>/crm-standalone/segments</code> - Customer Segments</li>
-                      <li><code>/crm-standalone/bookings</code> - Booking Calendar</li>
+                      <li>
+                        <code>/crm-standalone/dashboard</code> - CRM Dashboard
+                      </li>
+                      <li>
+                        <code>/crm-standalone/customers</code> - Customer List
+                      </li>
+                      <li>
+                        <code>/crm-standalone/leads</code> - Lead Pipeline
+                      </li>
+                      <li>
+                        <code>/crm-standalone/opportunities</code> -
+                        Opportunities
+                      </li>
+                      <li>
+                        <code>/crm-standalone/segments</code> - Customer
+                        Segments
+                      </li>
+                      <li>
+                        <code>/crm-standalone/bookings</code> - Booking Calendar
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -137,45 +192,45 @@ function StandaloneCRMRouter() {
 }
 
 // Standalone wrapper components (lazy loaded)
-const CRMDashboardStandalone = React.lazy(() => 
+const CRMDashboardStandalone = React.lazy(() =>
   import("./CRMDashboard").then(m => ({ default: m.default }))
 );
 
-const CustomerListStandalone = React.lazy(() => 
+const CustomerListStandalone = React.lazy(() =>
   import("./CustomerList").then(m => ({ default: m.default }))
 );
 
-const CustomerDetailStandalone = React.lazy(() => 
+const CustomerDetailStandalone = React.lazy(() =>
   import("./CustomerDetail").then(m => ({ default: m.default }))
 );
 
-const LeadPipelineStandalone = React.lazy(() => 
+const LeadPipelineStandalone = React.lazy(() =>
   import("./LeadPipeline").then(m => ({ default: m.default }))
 );
 
-const LeadDetailStandalone = React.lazy(() => 
+const LeadDetailStandalone = React.lazy(() =>
   import("./LeadDetail").then(m => ({ default: m.default }))
 );
 
-const OpportunityPipelineStandalone = React.lazy(() => 
+const OpportunityPipelineStandalone = React.lazy(() =>
   import("./OpportunityPipeline").then(m => ({ default: m.default }))
 );
 
-const SegmentListStandalone = React.lazy(() => 
+const SegmentListStandalone = React.lazy(() =>
   import("./SegmentList").then(m => ({ default: m.default }))
 );
 
-const SegmentDetailStandalone = React.lazy(() => 
+const SegmentDetailStandalone = React.lazy(() =>
   import("./SegmentDetail").then(m => ({ default: m.default }))
 );
 
-const BookingCalendarStandalone = React.lazy(() => 
+const BookingCalendarStandalone = React.lazy(() =>
   import("./BookingCalendar").then(m => ({ default: m.default }))
 );
 
 /**
  * Main Standalone CRM Page
- * 
+ *
  * Provides isolated access to CRM module for debugging and development.
  * This page wraps all CRM routes in a standalone context with its own
  * query client and error boundaries.
@@ -197,7 +252,7 @@ export default function CRMStandalone() {
                 </span>
               </div>
             )}
-            
+
             <StandaloneCRMRouter />
             <Toaster />
           </div>
@@ -206,4 +261,3 @@ export default function CRMStandalone() {
     </trpc.Provider>
   );
 }
-

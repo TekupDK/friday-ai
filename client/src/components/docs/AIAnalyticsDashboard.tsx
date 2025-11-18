@@ -33,7 +33,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/lib/trpc";
 
-
 export function AIAnalyticsDashboard() {
   const { data: metrics, isLoading } = trpc.docs.getAIMetrics.useQuery();
 

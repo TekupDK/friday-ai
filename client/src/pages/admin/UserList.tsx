@@ -1,6 +1,6 @@
 /**
  * User List Page
- * 
+ *
  * Admin-only page for managing team members
  * Displays all users with search, filtering, and CRUD operations
  */
@@ -113,18 +113,14 @@ function CreateUserModal({
   if (!isOpen) return null;
 
   return (
-    <AppleModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Create New User"
-    >
+    <AppleModal isOpen={isOpen} onClose={onClose} title="Create New User">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Label htmlFor="create-name">Name</Label>
           <Input
             id="create-name"
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={e => setFormData({ ...formData, name: e.target.value })}
             placeholder="John Doe"
             required
           />
@@ -135,7 +131,7 @@ function CreateUserModal({
             id="create-email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
             placeholder="john@example.com"
             required
           />
@@ -243,7 +239,11 @@ function EditUserModal({
 
   const handleDelete = async () => {
     if (!user) return;
-    if (!confirm(`Are you sure you want to delete ${user.name || user.email}? This cannot be undone.`)) {
+    if (
+      !confirm(
+        `Are you sure you want to delete ${user.name || user.email}? This cannot be undone.`
+      )
+    ) {
       return;
     }
 
@@ -256,15 +256,12 @@ function EditUserModal({
   const isPending = user.openId.startsWith("pending:");
 
   return (
-    <AppleModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Edit User"
-    >
+    <AppleModal isOpen={isOpen} onClose={onClose} title="Edit User">
       <form onSubmit={handleSubmit} className="space-y-4">
         {isPending && (
           <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md p-3 text-sm text-yellow-800 dark:text-yellow-200">
-            This user hasn't logged in yet. They will be activated when they first sign in with Google.
+            This user hasn't logged in yet. They will be activated when they
+            first sign in with Google.
           </div>
         )}
 
@@ -273,7 +270,7 @@ function EditUserModal({
           <Input
             id="edit-name"
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={e => setFormData({ ...formData, name: e.target.value })}
             placeholder="John Doe"
             required
             disabled={isOwner}
@@ -285,7 +282,7 @@ function EditUserModal({
             id="edit-email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
             placeholder="john@example.com"
             required
             disabled={isOwner}
@@ -327,7 +324,10 @@ function EditUserModal({
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isOwner || updateMutation.isPending}>
+            <Button
+              type="submit"
+              disabled={isOwner || updateMutation.isPending}
+            >
               {updateMutation.isPending ? "Updating..." : "Update User"}
             </Button>
           </div>
@@ -340,7 +340,9 @@ function EditUserModal({
 export default function UserList() {
   usePageTitle("Team Members");
   const [search, setSearch] = useState("");
-  const [roleFilter, setRoleFilter] = useState<"user" | "admin" | "owner" | "all">("all");
+  const [roleFilter, setRoleFilter] = useState<
+    "user" | "admin" | "owner" | "all"
+  >("all");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const debouncedSearch = useDebouncedValue(search, 300);
@@ -354,7 +356,8 @@ export default function UserList() {
     isError,
   } = trpc.admin.users.list.useQuery({
     search: debouncedSearch || undefined,
-    role: roleFilter !== "all" && roleFilter !== "owner" ? roleFilter : undefined,
+    role:
+      roleFilter !== "all" && roleFilter !== "owner" ? roleFilter : undefined,
     limit: 50,
     offset: 0,
   });
@@ -395,7 +398,7 @@ export default function UserList() {
                 <AppleSearchField
                   id="user-search"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={e => setSearch(e.target.value)}
                   placeholder="Search by name or email..."
                   aria-label="Search users by name or email"
                 />
@@ -404,7 +407,9 @@ export default function UserList() {
                 <Label htmlFor="role-filter">Filter by Role</Label>
                 <Select
                   value={roleFilter}
-                  onValueChange={(value: UserRole | "all") => setRoleFilter(value)}
+                  onValueChange={(value: UserRole | "all") =>
+                    setRoleFilter(value)
+                  }
                 >
                   <SelectTrigger id="role-filter">
                     <SelectValue />
@@ -422,11 +427,7 @@ export default function UserList() {
 
           {/* User List */}
           {isLoading ? (
-            <div
-              role="status"
-              aria-live="polite"
-              aria-label="Loading users"
-            >
+            <div role="status" aria-live="polite" aria-label="Loading users">
               <LoadingSpinner message="Loading team members..." />
             </div>
           ) : isError ? (
@@ -434,7 +435,7 @@ export default function UserList() {
           ) : usersData && usersData.users.length > 0 ? (
             <section aria-label="User list">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {usersData.users.map((user: User) => (
+                {usersData.users.map((user: User) => (
                   <AppleCard key={user.id} className="p-4">
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
@@ -455,7 +456,9 @@ export default function UserList() {
                         <div className="mt-2 text-xs text-muted-foreground">
                           Last signed in:{" "}
                           {user.lastSignedIn
-                            ? new Date(user.lastSignedIn).toLocaleDateString("da-DK")
+                            ? new Date(user.lastSignedIn).toLocaleDateString(
+                                "da-DK"
+                              )
                             : "Never"}
                         </div>
                       </div>
@@ -520,4 +523,3 @@ export default function UserList() {
     </PanelErrorBoundary>
   );
 }
-

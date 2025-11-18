@@ -22,7 +22,7 @@ Dette er din komplette guide til at teste Friday AI med Playwright og AI-powered
 
 ### **2. 🎯 Test Coverage Areas**
 
-```typescript
+````typescript
 🤖 Conversation Flows: Danish business dialogues
 📧 Email Context: Real email scenarios
 📅 Calendar Integration: Booking and scheduling
@@ -548,7 +548,7 @@ try {
 ⚡ Performance: 95%
 ♿ Accessibility: 80%
 
-```
+````
 
 ---
 

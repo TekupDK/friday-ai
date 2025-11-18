@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 
-
 interface AIChatSidebarPrototypeProps {
   emailContext: {
     threadId: string;
@@ -65,7 +64,12 @@ export function AIChatSidebarPrototype({
           <Bot className="w-5 h-5 text-primary" />
           <h3 className="font-semibold">AI Assistant</h3>
         </div>
-        <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close AI chat sidebar">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onClose}
+          aria-label="Close AI chat sidebar"
+        >
           <X className="w-4 h-4" aria-hidden="true" />
         </Button>
       </div>

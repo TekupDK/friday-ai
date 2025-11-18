@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der fortsætter arbejde fra en tidligere samt
 ## TASK
 
 Fortsæt implementering af en feature, bugfix eller opgave der blev startet tidligere:
+
 1. **Læs chat historik** - HELE samtalen for at forstå hvad der blev startet
 2. **Tjek filer** - Hvilke filer blev modificeret?
 3. **Forstå status** - Hvad er færdigt? Hvad mangler?
@@ -22,6 +23,7 @@ Fortsæt implementering af en feature, bugfix eller opgave der blev startet tidl
 ## CHAT SESSION READING
 
 **KRITISK:** Læs HELE chat sessionen:
+
 - Start fra første besked
 - Læs ALLE beskeder fra brugeren
 - Læs ALLE svar fra agenten
@@ -32,6 +34,7 @@ Fortsæt implementering af en feature, bugfix eller opgave der blev startet tidl
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Læs relevante filer
 - `codebase_search` - Forstå kontekst
 - `grep` - Find relevante kode
@@ -39,6 +42,7 @@ Fortsæt implementering af en feature, bugfix eller opgave der blev startet tidl
 - `search_replace` - Fortsæt ændringer
 
 **DO NOT:**
+
 - Ignorere kontekst
 - Start forfra
 - Glem dependencies
@@ -105,24 +109,29 @@ Før fortsættelse, tænk igennem:
 
 **Dato:** 2025-11-16
 **Tidligere Arbejde Gennemgået:**
+
 - [Hvad der blev gjort før]
 - [Filer der blev modificeret]
 - [Nuværende tilstand]
 
 **Fortsætter Med:**
+
 - [Hvad jeg fortsætter]
 - [Resterende arbejde]
 
 ### Ændringer Lavet:
+
 - [Fil 1] - [hvad der ændredes]
 - [Fil 2] - [hvad der ændredes]
 
 **Verificering:**
+
 - ✅ Typecheck: PASSERET
 - ✅ Tests: PASSERET
 - ✅ Feature: VIRKER
 
 **Status:**
+
 - [Færdig/I Gang/Blokeret]
 - [Næste skridt hvis nødvendigt]
 ```

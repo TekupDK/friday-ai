@@ -16,6 +16,7 @@ Rapporten sammenligner fire typer tidsdata:
 ## Omkostningsberegning
 
 Alle omkostninger beregnes som:
+
 ```
 Omkostning = Timer × Antal personer × 90 DKK/time
 ```
@@ -62,18 +63,22 @@ Rapporten filtrerer for:
 ## Datakilder
 
 ### Kalendertid
+
 - Hentes fra `calendar_events` tabellen
 - Beregnet som `endTime - startTime`
 
 ### Aftalt tid
+
 - Ekstraheret fra Gmail tråde (`emails` tabellen)
 - Søger efter mønstre som "X timer", "X arbejdstimer", "X personer × Y timer"
 
 ### Faktureret tid
+
 - Hentes fra `customer_invoices` tabellen
 - Ekstraheret fra fakturabeskrivelse eller beregnet fra beløb ÷ 349 DKK/time
 
 ### Faktisk arbejdstid
+
 - Ekstraheret fra Gmail tråde
 - Søger efter mønstre som "vi brugte X timer", "arbejdede X timer", "faktisk X timer"
 
@@ -96,12 +101,12 @@ Rapporten genereres som Markdown og indeholder:
 
 ## Oversigt
 
-| Metrik | Timer | Omkostning (DKK) |
-|--------|-------|------------------|
-| Kalendertid | 48.00 | 8,640.00 |
-| Aftalt tid | 45.00 | 8,100.00 |
-| Faktureret tid | 46.50 | 8,370.00 |
-| Faktisk arbejdstid | 47.00 | 8,460.00 |
+| Metrik             | Timer | Omkostning (DKK) |
+| ------------------ | ----- | ---------------- |
+| Kalendertid        | 48.00 | 8,640.00         |
+| Aftalt tid         | 45.00 | 8,100.00         |
+| Faktureret tid     | 46.50 | 8,370.00         |
+| Faktisk arbejdstid | 47.00 | 8,460.00         |
 ```
 
 ## Fejlhåndtering
@@ -125,6 +130,3 @@ Fremtidige forbedringer kunne inkludere:
 - Sammenligning med andre teams
 - Automatisk email-rapportering
 - Integration med tidsregistreringssystem
-
-
-

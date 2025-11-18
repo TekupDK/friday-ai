@@ -34,9 +34,6 @@ import {
   type EmailContextData,
 } from "@/services/emailContextDetection";
 
-
-
-
 // Contextual tab components (will be created in Phase 5.3.x)
 const LeadActionsTab = () => (
   <div className="p-4">🎯 Lead Actions (Coming Soon)</div>

@@ -1,4 +1,5 @@
 # Comprehensive System Analysis
+
 **Generated:** 2025-11-16  
 **Project:** Friday AI Chat (TekupDK/Rendetalje.dk)
 
@@ -9,11 +10,13 @@
 ### Endpoints Created
 
 **GET `/api/health`** - Basic health check
+
 - Always returns 200 if server is running
 - Used for load balancer health checks
 - Returns: status, timestamp, uptime, version, environment
 
 **GET `/api/ready`** - Readiness check
+
 - Verifies all dependencies (Database, Redis)
 - Returns 200 if ready, 503 if not ready
 - Used for Kubernetes readiness probes
@@ -47,9 +50,11 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 ### Core Components
 
 #### 2.1 AI Router (`server/ai-router.ts`)
+
 **Purpose:** Main orchestration layer that routes requests to appropriate AI models
 
 **Flow:**
+
 1. Receives user message + context + conversation history
 2. Selects appropriate AI model based on task type
 3. Builds system prompt with business context
@@ -60,6 +65,7 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 8. Returns response to user
 
 **Key Features:**
+
 - Model selection based on task type
 - Context injection (email, calendar, invoices)
 - Tool integration (35+ functions)
@@ -68,34 +74,39 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 - Streaming support
 
 #### 2.2 Model Router (`server/model-router.ts`)
+
 **Purpose:** Intelligent model selection based on task type
 
 **Model Selection Strategy:**
 
-| Task Type | Primary Model | Fallback | Reasoning |
-|-----------|--------------|----------|-----------|
-| chat | glm-4.5-air-free | gpt-oss-20b-free | 100% accuracy, excellent Danish |
-| email-draft | glm-4.5-air-free | gpt-oss-20b-free | Professional writing, Danish quality |
-| email-analysis | gpt-oss-20b-free | glm-4.5-air-free | Fast analysis (2.6s avg) |
-| invoice-create | gpt-oss-20b-free | glm-4.5-air-free | Structured data generation |
-| calendar-check | glm-4.5-air-free | gpt-oss-20b-free | Quick lookups |
-| lead-analysis | glm-4.5-air-free | gpt-oss-20b-free | Data analysis |
-| code-generation | qwen3-coder-free | deepseek-chat-v3.1-free | Specialized for code |
+| Task Type       | Primary Model    | Fallback                | Reasoning                            |
+| --------------- | ---------------- | ----------------------- | ------------------------------------ |
+| chat            | glm-4.5-air-free | gpt-oss-20b-free        | 100% accuracy, excellent Danish      |
+| email-draft     | glm-4.5-air-free | gpt-oss-20b-free        | Professional writing, Danish quality |
+| email-analysis  | gpt-oss-20b-free | glm-4.5-air-free        | Fast analysis (2.6s avg)             |
+| invoice-create  | gpt-oss-20b-free | glm-4.5-air-free        | Structured data generation           |
+| calendar-check  | glm-4.5-air-free | gpt-oss-20b-free        | Quick lookups                        |
+| lead-analysis   | glm-4.5-air-free | gpt-oss-20b-free        | Data analysis                        |
+| code-generation | qwen3-coder-free | deepseek-chat-v3.1-free | Specialized for code                 |
 
 **Model Tiers:**
+
 - **Free Tier:** 100% accuracy models (glm-4.5-air-free, gpt-oss-20b-free, etc.)
 - **Paid Tier:** Fallbacks (gpt-4o-mini, claude-3-haiku, llama-3.1-70b)
 
 #### 2.3 LLM Client (`server/_core/llm.ts`)
+
 **Purpose:** Unified interface for multiple LLM providers
 
 **Supported Providers (Priority Order):**
+
 1. OpenRouter (primary)
 2. Ollama (local/self-hosted)
 3. Gemini (Google)
 4. OpenAI (fallback)
 
 **Features:**
+
 - Automatic provider selection
 - Tool/function calling support
 - Streaming responses
@@ -104,11 +115,13 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 - Token usage tracking
 
 #### 2.4 Friday Tools (`server/friday-tools.ts`)
+
 **Purpose:** Defines 35+ functions available to the AI
 
 **Tool Categories:**
 
 **Gmail Tools (15 tools):**
+
 - `search_gmail` - Search email threads
 - `get_gmail_thread` - Get full email thread
 - `create_gmail_draft` - Create email draft
@@ -124,6 +137,7 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 - And more...
 
 **Calendar Tools (8 tools):**
+
 - `get_calendar_events` - List events
 - `create_calendar_event` - Create event
 - `update_calendar_event` - Update event
@@ -134,6 +148,7 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 - `create_calendar` - Create calendar
 
 **Billy Tools (7 tools):**
+
 - `list_billy_invoices` - List invoices
 - `create_billy_invoice` - Create invoice
 - `approve_billy_invoice` - Approve invoice
@@ -143,6 +158,7 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 - `sync_billy_data` - Sync data
 
 **Database Tools (5 tools):**
+
 - `get_leads` - Get leads
 - `create_lead` - Create lead
 - `update_lead` - Update lead
@@ -150,18 +166,22 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 - `create_task` - Create task
 
 #### 2.5 Tool Handlers (`server/friday-tool-handlers.ts`)
+
 **Purpose:** Implements the actual execution of tool calls
 
 **Features:**
+
 - Validates tool parameters
 - Executes actions (Gmail, Calendar, Billy, Database)
 - Error handling
 - Returns results to AI for further processing
 
 #### 2.6 Intent Actions (`server/intent-actions.ts`)
+
 **Purpose:** Parses user intent and executes actions
 
 **Supported Intents:**
+
 1. `search_gmail` - Search email threads
 2. `book_meeting` - Schedule calendar events
 3. `create_invoice` - Generate Billy invoices
@@ -171,6 +191,7 @@ Friday AI Chat uses a **multi-model AI orchestration system** with intelligent r
 7. `job_completion` - Mark jobs as complete
 
 **Flow:**
+
 1. Parse user message for intent
 2. Extract parameters
 3. Execute action or create pending action
@@ -205,18 +226,21 @@ User
 ### Design Decisions & Trade-offs
 
 **Why Multi-Model?**
+
 - **Cost Optimization:** Free tier models for most tasks
 - **Quality:** Premium models for complex reasoning
 - **Reliability:** Fallback models if primary fails
 - **Speed:** Fast models for quick lookups
 
 **Why Tool Calling?**
+
 - **Extensibility:** Easy to add new tools
 - **Type Safety:** Zod validation for parameters
 - **Error Handling:** Structured error responses
 - **Approval System:** High-risk actions require approval
 
 **Why Context Injection?**
+
 - **Better Responses:** AI understands current state
 - **Efficiency:** Reduces need for multiple queries
 - **User Experience:** More relevant suggestions
@@ -245,12 +269,14 @@ User
 ### Critical Issues (P1)
 
 **1. TypeScript Error in Spinner Component**
+
 - **File:** `client/src/components/ui/spinner.tsx`
 - **Error:** Type incompatibility with React 19 ref types
 - **Impact:** Blocks production build
 - **Fix:** Update ref type handling for React 19 compatibility
 
 **2. Missing Health Check Endpoints** ✅ FIXED
+
 - **Status:** Implemented in `server/routes/health.ts`
 - **Impact:** No monitoring/deployment verification
 - **Fix:** Created `/api/health` and `/api/ready` endpoints
@@ -258,6 +284,7 @@ User
 ### Important Issues (P2)
 
 **1. TODO Comments (77 found)**
+
 - **Impact:** Technical debt, incomplete features
 - **Categories:**
   - Database schema additions (A/B testing metrics)
@@ -267,12 +294,14 @@ User
   - Error handling improvements
 
 **2. Large Files**
+
 - **Files to Review:**
   - `server/friday-prompts.ts` (~14.6KB system prompts)
   - `server/routers.ts` (~10KB, ~270 lines)
   - `server/db.ts` (~27KB, ~900+ lines)
 
 **3. Inconsistent Error Handling**
+
 - Some functions use `console.error` instead of logger
 - Missing error boundaries in some routes
 - Inconsistent error response formats
@@ -280,16 +309,19 @@ User
 ### Improvements (P3)
 
 **1. Test Coverage**
+
 - **Current:** Limited test coverage
 - **Recommendation:** Add unit tests for critical paths
 - **Priority:** AI router, tool handlers, database functions
 
 **2. Code Duplication**
+
 - Some database query patterns repeated
 - Tool validation logic duplicated
 - Consider extracting shared utilities
 
 **3. Documentation**
+
 - Some functions lack JSDoc comments
 - Complex logic needs inline comments
 - API documentation could be more comprehensive
@@ -305,15 +337,18 @@ User
 ### Recommendations
 
 **Immediate (P1):**
+
 1. Fix TypeScript error in spinner component
 2. ✅ Implement health check endpoints (DONE)
 
 **Short-term (P2):**
+
 1. Address high-priority TODOs
 2. Refactor large files (split routers.ts)
 3. Standardize error handling
 
 **Long-term (P3):**
+
 1. Increase test coverage to 80%+
 2. Extract shared utilities
 3. Improve documentation
@@ -331,11 +366,13 @@ User
 ### Key Patterns Identified
 
 **1. Server Startup**
+
 - Average startup time: ~400ms
 - Port conflicts: Occasional (falls back to 3001, 3002)
 - Auto-import: Consistently skipping (leads already exist)
 
 **2. Health Status**
+
 - Server running successfully
 - No critical errors in logs
 - Auto-import working as expected
@@ -343,14 +380,17 @@ User
 ### Recommendations
 
 **1. Log Rotation**
+
 - Implement log rotation to prevent large files
 - Archive old logs for analysis
 
 **2. Structured Logging**
+
 - Already using Pino (structured JSON)
 - Consider adding more context (user ID, request ID)
 
 **3. Monitoring**
+
 - Set up alerts for error spikes
 - Track response times
 - Monitor rate limiting
@@ -364,6 +404,7 @@ User
 **Main Router:** `server/routers.ts`
 
 **Key Routers:**
+
 - `system` - System operations
 - `customer` - Customer management
 - `auth` - Authentication
@@ -383,11 +424,13 @@ User
 ### Breaking Changes Analysis
 
 **Recent Changes:**
+
 1. ✅ Input validation added (security fix)
 2. ✅ Rate limiting implemented
 3. ✅ Ownership verification added
 
 **Backward Compatibility:**
+
 - Most changes are additive
 - Input validation may reject previously accepted inputs
 - Rate limiting may affect high-frequency clients
@@ -395,25 +438,30 @@ User
 ### API Stability
 
 **Stable Endpoints:**
+
 - `/api/trpc/chat.*` - Chat operations
 - `/api/trpc/inbox.*` - Email operations
 - `/api/trpc/crm.*` - CRM operations
 
 **Experimental Endpoints:**
+
 - `/api/trpc/aiMetrics.*` - AI metrics (may change)
 - `/api/trpc/uiAnalysis.*` - UI analysis (experimental)
 
 ### Recommendations
 
 **1. Versioning**
+
 - Consider API versioning for major changes
 - Use `/api/v1/trpc` for stable endpoints
 
 **2. Documentation**
+
 - Update API documentation with breaking changes
 - Add migration guides for clients
 
 **3. Deprecation Policy**
+
 - Announce deprecations 30 days in advance
 - Provide migration paths
 
@@ -426,6 +474,7 @@ User
 **File:** `vite.config.ts`
 
 **Current Optimizations:**
+
 - ✅ Manual chunk splitting (react-vendor, ui-vendor, trpc-vendor)
 - ✅ Workspace component splitting
 - ✅ esbuild minification
@@ -435,12 +484,14 @@ User
 ### Current Metrics
 
 **Build Configuration:**
+
 - Minify: esbuild (faster than terser)
 - Target: esnext
 - CSS code split: enabled
 - Chunk size warning: 500KB
 
 **Chunk Splitting:**
+
 ```typescript
 manualChunks: {
   "react-vendor": ["react", "react-dom"],
@@ -459,16 +510,19 @@ manualChunks: {
 ### Optimization Opportunities
 
 **1. Additional Chunk Splitting**
+
 - Split large dependencies (googleapis, chromadb)
 - Lazy load heavy components
 - Split by route/page
 
 **2. Code Splitting**
+
 - Lazy load routes
 - Dynamic imports for heavy components
 - Split vendor bundles further
 
 **3. Build Speed**
+
 - Already using esbuild (fast)
 - Consider parallel builds
 - Optimize dependencies
@@ -476,16 +530,19 @@ manualChunks: {
 ### Recommendations
 
 **1. Analyze Bundle Size**
+
 ```bash
 pnpm build
 # Check stats.html for bundle analysis
 ```
 
 **2. Lazy Loading**
+
 - Implement route-based code splitting
 - Lazy load heavy components (ChromaDB, Google APIs)
 
 **3. Dependency Optimization**
+
 - Review large dependencies
 - Consider alternatives for heavy libraries
 - Use dynamic imports for optional features
@@ -495,6 +552,7 @@ pnpm build
 ## Summary
 
 ### Completed ✅
+
 1. Health check endpoints implemented
 2. AI architecture documented
 3. Codebase health analyzed
@@ -503,6 +561,7 @@ pnpm build
 6. Build optimization reviewed
 
 ### Next Steps
+
 1. Fix TypeScript error in spinner component
 2. Address high-priority TODOs
 3. Implement lazy loading for routes
@@ -513,4 +572,3 @@ pnpm build
 
 **Generated by:** Cursor AI  
 **Date:** 2025-11-16
-

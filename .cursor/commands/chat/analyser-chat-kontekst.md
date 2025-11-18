@@ -12,6 +12,7 @@ Forklar hvad jeg prøver at bygge, hvor jeg er, og hvad næste skridt er. Læs H
 ## TASK
 
 Analysér chat kontekst (HELE sessionen) og forklar:
+
 - **Hvad bygges:** Hvad prøver brugeren at bygge baseret på chat?
 - **Hvor er vi:** Hvad er nuværende status baseret på chat diskussioner?
 - **Næste skridt:** Hvad skal gøres næst baseret på chat flow?
@@ -19,6 +20,7 @@ Analysér chat kontekst (HELE sessionen) og forklar:
 ## CHAT SESSION READING
 
 **KRITISK:** Læs HELE chat sessionen:
+
 - Start fra første besked
 - Læs ALLE beskeder fra brugeren
 - Læs ALLE svar fra agenten
@@ -30,18 +32,22 @@ Analysér chat kontekst (HELE sessionen) og forklar:
 
 ```markdown
 ## Hvad bygges (fra chat)
+
 [Kort beskrivelse af feature/opgave baseret på HELE chatten]
 
 ## Hvor er vi (fra chat diskussioner)
+
 - ✅ [Færdigt] - [Fra chat besked X]
 - 🔄 [I gang] - [Fra chat besked Y]
 - ⏳ [Mangler] - [Fra chat besked Z]
 
 ## Næste skridt (baseret på chat flow)
+
 1. [Action 1] - [Prioritet] - [Baseret på chat diskussion]
 2. [Action 2] - [Prioritet] - [Baseret på chat diskussion]
 
 ## Blockers (fra chat)
+
 - [Blocker 1] - [Løsning] - [Fra chat]
 ```
 

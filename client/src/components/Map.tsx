@@ -127,7 +127,6 @@ export function MapView({
         onMapReady(map.current);
       }
     }
-     
   }, []); // Only initialize map once on mount
 
   useEffect(() => {

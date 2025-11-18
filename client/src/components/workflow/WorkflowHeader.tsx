@@ -30,7 +30,12 @@ export default function WorkflowHeader() {
         {/* Quick Actions */}
         <div className="flex items-center gap-2">
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative" aria-label="View notifications">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative"
+            aria-label="View notifications"
+          >
             <Bell className="w-4 h-4" aria-hidden="true" />
             <Badge
               variant="destructive"

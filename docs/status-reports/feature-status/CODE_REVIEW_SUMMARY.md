@@ -23,11 +23,13 @@
 **Issue:** `operationName` parameter was not used in Redis key, causing all operations to share the same rate limit.
 
 **Fix Applied:**
+
 - Modified `checkRateLimitUnified` to accept optional `keySuffix` parameter
 - Updated `rate-limit-middleware.ts` to pass `operationName` as key suffix
 - Each operation now has separate rate limit: `ratelimit:user:1:archive`, `ratelimit:user:1:delete`, etc.
 
 **Files Changed:**
+
 - `server/rate-limiter-redis.ts` - Added `keySuffix` parameter
 - `server/rate-limit-middleware.ts` - Pass `operationName` to `checkRateLimitUnified`
 
@@ -38,11 +40,13 @@
 **Issue:** Cleanup was called on every request, causing O(n) overhead.
 
 **Fix Applied:**
+
 - Added debouncing: cleanup only runs every 5 seconds
 - Added `lastCleanupTime` tracking
 - Reduced overhead from O(n) per request to O(n) per 5 seconds
 
 **Files Changed:**
+
 - `server/rate-limiter.ts` - Added debounced cleanup
 
 ---
@@ -52,11 +56,13 @@
 **Issue:** Expensive sort operation on every emergency cleanup.
 
 **Fix Applied:**
+
 - Changed threshold from `MAX_ENTRIES` to `MAX_ENTRIES * 1.5`
 - Removed expensive sort, using simple array slice instead
 - More efficient cleanup strategy
 
 **Files Changed:**
+
 - `server/rate-limiter.ts` - Improved emergency cleanup
 
 ---
@@ -66,11 +72,13 @@
 **Issue:** No error handling in middleware - rate limiter failures could break the app.
 
 **Fix Applied:**
+
 - Added try-catch around rate limit check
 - Fail-open strategy: allow request if rate limiting fails
 - Added error logging
 
 **Files Changed:**
+
 - `server/rate-limit-middleware.ts` - Added error handling
 
 ---
@@ -80,11 +88,13 @@
 **Issue:** No validation of rate limit configuration.
 
 **Fix Applied:**
+
 - Added validation for `maxRequests >= 1`
 - Added validation for `windowMs >= 1000ms`
 - Throws error on invalid config
 
 **Files Changed:**
+
 - `server/rate-limit-middleware.ts` - Added config validation
 
 ---
@@ -94,9 +104,11 @@
 **Issue:** Unused `vi` import in test file.
 
 **Fix Applied:**
+
 - Removed unused import
 
 **Files Changed:**
+
 - `server/__tests__/rate-limiter-bug.test.ts` - Removed unused import
 
 ---
@@ -145,12 +157,14 @@
 ## 📊 Impact Assessment
 
 ### **Before Review:**
+
 - ❌ Critical regression: operations shared rate limits
 - ⚠️ Performance concerns: cleanup on every request
 - ⚠️ No error handling
 - ⚠️ No config validation
 
 ### **After Review:**
+
 - ✅ Operations have separate rate limits
 - ✅ Performance optimized: debounced cleanup
 - ✅ Error handling with fail-open strategy
@@ -185,4 +199,3 @@
 
 **Review Completed:** 28. januar 2025  
 **All Critical Issues Resolved** ✅
-

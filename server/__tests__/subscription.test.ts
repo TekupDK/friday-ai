@@ -1,6 +1,6 @@
 /**
  * Subscription Unit Tests
- * 
+ *
  * Tests for subscription business logic, helpers, and actions
  */
 
@@ -75,7 +75,9 @@ describe("Subscription Helpers", () => {
 
       // Mock getActiveSubscriptions directly
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue(mockSubscriptions);
+      vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue(
+        mockSubscriptions
+      );
 
       const result = await calculateMonthlyRevenue(1);
       expect(result).toBe(550000); // 5,500 kr in øre
@@ -101,7 +103,9 @@ describe("Subscription Helpers", () => {
 
       // Mock getActiveSubscriptions directly
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue(mockSubscriptions);
+      vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue(
+        mockSubscriptions
+      );
 
       const result = await getARPU(1);
       expect(result).toBe(183333); // ~1,833 kr average
@@ -167,9 +171,7 @@ describe("Subscription Helpers", () => {
       mockDb.select.mockReturnValueOnce({
         from: vi.fn().mockReturnValue({
           where: vi.fn().mockReturnValue({
-            limit: vi.fn().mockResolvedValue([
-              { id: 1, includedHours: "3.0" },
-            ]),
+            limit: vi.fn().mockResolvedValue([{ id: 1, includedHours: "3.0" }]),
           }),
         }),
       });
@@ -177,9 +179,7 @@ describe("Subscription Helpers", () => {
       // Mock usage query - returns { total: number }
       mockDb.select.mockReturnValueOnce({
         from: vi.fn().mockReturnValue({
-          where: vi.fn().mockResolvedValue([
-            { total: 2.5 },
-          ]),
+          where: vi.fn().mockResolvedValue([{ total: 2.5 }]),
         }),
       });
 
@@ -198,9 +198,7 @@ describe("Subscription Helpers", () => {
       mockDb.select.mockReturnValueOnce({
         from: vi.fn().mockReturnValue({
           where: vi.fn().mockReturnValue({
-            limit: vi.fn().mockResolvedValue([
-              { id: 1, includedHours: "3.0" },
-            ]),
+            limit: vi.fn().mockResolvedValue([{ id: 1, includedHours: "3.0" }]),
           }),
         }),
       });
@@ -229,9 +227,7 @@ describe("Subscription Helpers", () => {
       mockDb.select.mockReturnValueOnce({
         from: vi.fn().mockReturnValue({
           where: vi.fn().mockReturnValue({
-            limit: vi.fn().mockResolvedValue([
-              { includedHours: "3.0" },
-            ]),
+            limit: vi.fn().mockResolvedValue([{ includedHours: "3.0" }]),
           }),
         }),
       });
@@ -239,9 +235,7 @@ describe("Subscription Helpers", () => {
       // Mock usage query - returns { total: number }
       mockDb.select.mockReturnValueOnce({
         from: vi.fn().mockReturnValue({
-          where: vi.fn().mockResolvedValue([
-            { total: 3.0 },
-          ]),
+          where: vi.fn().mockResolvedValue([{ total: 3.0 }]),
         }),
       });
 
@@ -335,26 +329,32 @@ describe("Subscription Actions", () => {
 
       // Mock subscription check (no existing subscription) - via getSubscriptionByCustomerId
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(undefined);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        undefined
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock insert
       mockDb.insert = vi.fn().mockReturnValue({
         values: vi.fn().mockReturnValue({
-          returning: vi.fn().mockResolvedValue([{
-            id: 1,
-            userId: 1,
-            customerProfileId: 1,
-            planType: "tier1",
-            monthlyPrice: 120000,
-            includedHours: "3.0",
-            startDate: new Date().toISOString(),
-            status: "active",
-            autoRenew: true,
-            nextBillingDate: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }]),
+          returning: vi.fn().mockResolvedValue([
+            {
+              id: 1,
+              userId: 1,
+              customerProfileId: 1,
+              planType: "tier1",
+              monthlyPrice: 120000,
+              includedHours: "3.0",
+              startDate: new Date().toISOString(),
+              status: "active",
+              autoRenew: true,
+              nextBillingDate: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
         }),
       });
 
@@ -401,7 +401,9 @@ describe("Subscription Actions", () => {
 
       // Mock subscription check (existing subscription found)
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(mockExistingSubscription as any);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        mockExistingSubscription as any
+      );
 
       await expect(
         createSubscription(1, 1, "tier1", { autoRenew: true })
@@ -430,8 +432,12 @@ describe("Subscription Actions", () => {
 
       // Mock subscription lookup via getSubscriptionById
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(mockSubscription as any);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(
+        mockSubscription as any
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock customer lookup
       mockDb.select.mockReturnValueOnce({
@@ -465,7 +471,9 @@ describe("Subscription Actions", () => {
     it("should handle missing subscription", async () => {
       // Mock subscription lookup (not found)
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(
+        undefined
+      );
 
       // processRenewal returns { success: false } instead of throwing
       const result = await processRenewal(999, 1);
@@ -498,8 +506,12 @@ describe("Subscription Actions", () => {
 
       // Mock subscription lookup via getSubscriptionById
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(mockSubscription as any);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(
+        mockSubscription as any
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock customer lookup
       mockDb.select.mockReturnValueOnce({
@@ -527,4 +539,3 @@ describe("Subscription Actions", () => {
     });
   });
 });
-

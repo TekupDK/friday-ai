@@ -10,9 +10,11 @@
 ## Feature Overview
 
 ### Name
+
 CRM Module - Complete Customer Relationship Management System
 
 ### Description
+
 The CRM module provides comprehensive customer, lead, opportunity, segment, and booking management functionality for Rendetalje.dk. It includes features for managing customer profiles, tracking leads through pipelines, managing sales opportunities, organizing customers into segments, and scheduling service bookings.
 
 ### User Stories
@@ -126,6 +128,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Unit Tests
 
 **Functions to Test:**
+
 - Formatting utilities (currency, dates, numbers)
 - Validation functions
 - Data transformation functions
@@ -133,6 +136,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - State management hooks
 
 **Edge Cases:**
+
 - Empty data sets
 - Null/undefined values
 - Very long strings
@@ -140,6 +144,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - Boundary values (min/max)
 
 **Error Conditions:**
+
 - Network failures
 - Invalid API responses
 - Missing required fields
@@ -148,12 +153,14 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Integration Tests
 
 **Integration Points:**
+
 - tRPC client ↔ Backend API
 - Frontend components ↔ tRPC hooks
 - Form submissions ↔ API mutations
 - Cache invalidation ↔ Data refetching
 
 **APIs to Test:**
+
 - `trpc.crm.customer.*` (listProfiles, getProfile, createProfile, etc.)
 - `trpc.crm.lead.*` (listLeads, createLead, updateLeadStatus, etc.)
 - `trpc.crm.booking.*` (listBookings, createBooking, updateBookingStatus, etc.)
@@ -161,6 +168,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - `trpc.crm.stats.*` (getDashboardStats)
 
 **Database Operations:**
+
 - User scoping (users can only see own data)
 - Foreign key constraints
 - Unique constraints
@@ -189,12 +197,14 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
    - View dashboard → Verify KPIs → Check revenue chart → Navigate to other pages
 
 **Happy Paths:**
+
 - All CRUD operations succeed
 - Navigation works correctly
 - Data displays correctly
 - Forms submit successfully
 
 **Error Scenarios:**
+
 - Network errors (show error message)
 - Validation errors (show field errors)
 - Permission errors (show access denied)
@@ -203,17 +213,20 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Performance Tests
 
 **Load Testing:**
+
 - Page load times < 2 seconds
 - API response times < 500ms
 - Large data sets (1000+ customers)
 - Multiple concurrent users
 
 **Stress Testing:**
+
 - 100+ simultaneous requests
 - Large payloads
 - Memory usage monitoring
 
 **Response Time Targets:**
+
 - Initial page load: < 2s
 - API calls: < 500ms
 - Form submissions: < 1s
@@ -222,17 +235,20 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Security Tests
 
 **Authentication/Authorization:**
+
 - User can only access their own data
 - Unauthenticated users redirected
 - Session expiration handling
 
 **Input Validation:**
+
 - SQL injection prevention
 - XSS prevention
 - CSRF protection
 - File upload validation (if applicable)
 
 **Data Privacy:**
+
 - User data isolation
 - Sensitive data not exposed
 - Proper error messages (no data leakage)
@@ -244,6 +260,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Customer Management
 
 #### TC-CRM-001: View Customer List
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -257,6 +274,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Customer list displays all customers with correct count
 
 #### TC-CRM-002: Search Customers
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -271,6 +289,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Search filters customers correctly, clears properly
 
 #### TC-CRM-003: Create Customer
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -286,6 +305,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Customer created successfully, appears in list and detail view
 
 #### TC-CRM-004: Edit Customer
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -300,6 +320,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Customer data updated successfully
 
 #### TC-CRM-005: Add Customer Property
+
 - **Type:** Integration
 - **Priority:** P2
 - **Preconditions:**
@@ -315,6 +336,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Property added successfully, appears in list
 
 #### TC-CRM-006: Add Customer Note
+
 - **Type:** Integration
 - **Priority:** P2
 - **Preconditions:**
@@ -332,6 +354,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Lead Management
 
 #### TC-CRM-007: View Lead Pipeline
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -345,6 +368,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Lead pipeline displays correctly with leads in correct stages
 
 #### TC-CRM-008: Create Lead
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -358,6 +382,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Lead created successfully, appears in pipeline
 
 #### TC-CRM-009: Convert Lead to Customer
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -374,6 +399,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Opportunity Management
 
 #### TC-CRM-010: View Opportunity Pipeline
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -387,6 +413,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Opportunity pipeline displays correctly
 
 #### TC-CRM-011: Create Opportunity
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -402,6 +429,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Opportunity created successfully
 
 #### TC-CRM-012: Drag-and-Drop Opportunity
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -416,6 +444,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Drag-and-drop works, stage updates correctly
 
 #### TC-CRM-013: View Revenue Forecast
+
 - **Type:** Integration
 - **Priority:** P2
 - **Preconditions:**
@@ -432,6 +461,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Segment Management
 
 #### TC-CRM-014: View Segment List
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -445,6 +475,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Segment list displays correctly
 
 #### TC-CRM-015: Create Manual Segment
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -459,6 +490,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Manual segment created successfully
 
 #### TC-CRM-016: Create Automatic Segment
+
 - **Type:** E2E
 - **Priority:** P2
 - **Preconditions:**
@@ -474,6 +506,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Automatic segment created with rules
 
 #### TC-CRM-017: Add Customers to Segment (Bulk)
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -490,6 +523,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Customers added to segment successfully
 
 #### TC-CRM-018: Remove Customers from Segment (Bulk)
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -507,6 +541,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Booking Management
 
 #### TC-CRM-019: View Booking Calendar
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -521,6 +556,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Booking calendar displays correctly
 
 #### TC-CRM-020: Navigate Calendar Months
+
 - **Type:** E2E
 - **Priority:** P2
 - **Preconditions:**
@@ -538,6 +574,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Dashboard
 
 #### TC-CRM-021: View Dashboard KPIs
+
 - **Type:** Integration
 - **Priority:** P1
 - **Preconditions:**
@@ -551,6 +588,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Dashboard KPIs display correctly with accurate data
 
 #### TC-CRM-022: Dashboard Loading State
+
 - **Type:** Unit
 - **Priority:** P2
 - **Preconditions:**
@@ -566,6 +604,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Navigation & Layout
 
 #### TC-CRM-023: CRM Navigation
+
 - **Type:** E2E
 - **Priority:** P1
 - **Preconditions:**
@@ -579,6 +618,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Navigation works correctly, active route highlighted
 
 #### TC-CRM-024: Responsive Design - Mobile
+
 - **Type:** E2E
 - **Priority:** P2
 - **Preconditions:**
@@ -592,6 +632,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Mobile layout works correctly
 
 #### TC-CRM-025: Responsive Design - Tablet
+
 - **Type:** E2E
 - **Priority:** P2
 - **Preconditions:**
@@ -606,6 +647,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Error Handling
 
 #### TC-CRM-026: Network Error Handling
+
 - **Type:** Integration
 - **Priority:** P1
 - **Preconditions:**
@@ -619,6 +661,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Network errors handled gracefully
 
 #### TC-CRM-027: Validation Error Handling
+
 - **Type:** Unit
 - **Priority:** P1
 - **Preconditions:**
@@ -634,6 +677,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Security
 
 #### TC-CRM-028: User Data Isolation
+
 - **Type:** Security
 - **Priority:** P1
 - **Preconditions:**
@@ -649,6 +693,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Expected Result:** Users can only access their own data
 
 #### TC-CRM-029: Input Sanitization
+
 - **Type:** Security
 - **Priority:** P1
 - **Preconditions:**
@@ -668,31 +713,37 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Required Test Data
 
 **Users:**
+
 - `test-user-1` - Primary test user
 - `test-user-2` - Secondary test user (for isolation tests)
 
 **Customers:**
+
 - 10+ customers with various statuses
 - Mix of private and business customers
 - Customers with and without properties
 - Customers with and without notes
 
 **Leads:**
+
 - 15+ leads distributed across all stages
 - Leads with and without email
 - Leads from different sources
 
 **Opportunities:**
+
 - 20+ opportunities distributed across all stages
 - Opportunities with various values and probabilities
 - Opportunities linked to different customers
 
 **Segments:**
+
 - 5+ segments (mix of manual and automatic)
 - Segments with various member counts
 - Segments with different colors
 
 **Bookings:**
+
 - 30+ bookings distributed across multiple months
 - Bookings with various statuses
 - Bookings linked to different customers
@@ -718,12 +769,14 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Setup Requirements
 
 **Development Environment:**
+
 - Node.js 20+
 - PostgreSQL 15+
 - All dependencies installed (`pnpm install`)
 - Environment variables configured
 
 **Staging Environment:**
+
 - Deployed to staging server
 - Test database configured
 - Test users created
@@ -746,6 +799,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ### Tools Needed
 
 **Testing Tools:**
+
 - **E2E:** Playwright or Cypress
 - **Unit/Integration:** Vitest
 - **API Testing:** tRPC client or Postman
@@ -753,6 +807,7 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 - **Accessibility:** axe DevTools, WAVE
 
 **Development Tools:**
+
 - **IDE:** VS Code with extensions
 - **Browser DevTools:** For debugging
 - **Network Throttling:** Chrome DevTools
@@ -763,36 +818,42 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ## Test Execution Plan
 
 ### Phase 1: Unit Tests (Week 1)
+
 - Test all utility functions
 - Test component rendering
 - Test state management
 - **Target:** 80%+ code coverage
 
 ### Phase 2: Integration Tests (Week 1-2)
+
 - Test API integrations
 - Test database operations
 - Test cache invalidation
 - **Target:** All critical paths covered
 
 ### Phase 3: E2E Tests (Week 2)
+
 - Test all user workflows
 - Test happy paths
 - Test error scenarios
 - **Target:** All P1 test cases passing
 
 ### Phase 4: Performance Tests (Week 2)
+
 - Load testing
 - Response time verification
 - Memory usage monitoring
 - **Target:** All performance targets met
 
 ### Phase 5: Security Tests (Week 2)
+
 - Authentication tests
 - Authorization tests
 - Input validation tests
 - **Target:** All security requirements met
 
 ### Phase 6: Regression Tests (Week 3)
+
 - Full regression suite
 - Cross-browser testing
 - Mobile device testing
@@ -850,12 +911,13 @@ The CRM module provides comprehensive customer, lead, opportunity, segment, and 
 ## Sign-off
 
 **Test Plan Approved By:**
+
 - [ ] QA Lead
 - [ ] Product Owner
 - [ ] Tech Lead
 - [ ] Development Team
 
-**Date:** _______________
+**Date:** ******\_\_\_******
 
 ---
 
@@ -893,4 +955,3 @@ DEF-XXX: [Defect Title]
 - Screenshots: [Attach if applicable]
 - Browser/Device: [Browser version, device]
 ```
-

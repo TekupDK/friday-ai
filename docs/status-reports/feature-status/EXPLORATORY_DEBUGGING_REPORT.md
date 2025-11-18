@@ -11,17 +11,20 @@
 ### **Findings fra Code Review:**
 
 **Kendte Bugs (Allerede Fixet):**
+
 - ✅ Count increment bug (fixed)
 - ✅ Race condition (fixed med Lua script)
 - ✅ Memory leak (fixed med cleanup)
 - ✅ keySuffix regression (fixed)
 
 **Kendte Bugs fra BUGFINDINGS.md:**
+
 - Gmail arkivering fejler (ikke rate limiting relateret)
 - Logout rydder ikke session (ikke rate limiting relateret)
 - Encoding issues i UI (ikke rate limiting relateret)
 
 **Technical Debt Identificeret:**
+
 - 74 TODOs i codebase
 - 1,448 console.log statements
 - 16 @deprecated markers
@@ -35,6 +38,7 @@
 **Tests Oprettet:** `server/__tests__/rate-limiter-edge-cases.test.ts`
 
 **Edge Cases Testet:**
+
 1. ✅ userId = 0, negative, very large, decimal
 2. ✅ limit = 0, 1, very large, negative
 3. ✅ windowMs = 0, 1ms, very large, negative
@@ -53,6 +57,7 @@
 **Tests Oprettet:** `server/__tests__/rate-limiter-exploit-attempts.test.ts`
 
 **Exploits Testet:**
+
 1. ✅ Key injection attacks (Redis commands via userId)
 2. ✅ Key collision attacks (special chars manipulation)
 3. ✅ Rate limit bypass (case manipulation, whitespace, unicode)
@@ -72,6 +77,7 @@
 **Fil:** `server/rate-limit-middleware.ts:63-65`
 
 **Problem:**
+
 ```typescript
 const secondsUntilReset = Math.ceil(
   (rateLimit.reset * 1000 - Date.now()) / 1000
@@ -80,21 +86,25 @@ const secondsUntilReset = Math.ceil(
 ```
 
 **Forklaring:**
+
 1. Hvis `rateLimit.reset` er i fortiden (clock skew, stale data)
 2. `secondsUntilReset` bliver negativ
 3. Error message viser "Please retry after -5 seconds" ❌
 
 **Root Causes:**
+
 1. **Clock skew:** Server time kan være forkert
 2. **Stale data:** Redis data kan være gammel
 3. **No validation:** Ingen check for negative values
 
 **Impact:**
+
 - 🔴 **HIGH:** Confusing error messages
 - 🟡 **MEDIUM:** Poor user experience
 - 🟢 **LOW:** Doesn't break functionality
 
 **Evidence:**
+
 - Code review: Ingen validation
 - Test: Edge case test identificerer problemet
 
@@ -106,10 +116,11 @@ const secondsUntilReset = Math.ceil(
 **Fil:** `server/rate-limiter-redis.ts:284-289`
 
 **Problem:**
+
 ```typescript
 function sanitizeKeySuffix(keySuffix: string): string {
   return keySuffix
-    .replace(/[^a-zA-Z0-9_-]/g, '_') // "test:op" → "test_op"
+    .replace(/[^a-zA-Z0-9_-]/g, "_") // "test:op" → "test_op"
     .substring(0, 50);
 }
 
@@ -118,11 +129,13 @@ function sanitizeKeySuffix(keySuffix: string): string {
 ```
 
 **Forklaring:**
+
 1. `"test:operation"` → sanitizes → `"test_operation"`
 2. `"test_operation"` → sanitizes → `"test_operation"`
 3. Begge bliver samme key → delt rate limit ❌
 
 **Test Result:**
+
 ```
 FAIL: should handle keySuffix that causes key collision
 Expected: true (separate limits)
@@ -130,11 +143,13 @@ Actual: false (shared limit due to collision)
 ```
 
 **Impact:**
+
 - 🟡 **HIGH:** Operationer kan deles rate limit ved accident
 - 🟡 **MEDIUM:** Potential security issue (bypass via manipulation)
 - 🟢 **LOW:** Kun hvis operation names ligner
 
 **Evidence:**
+
 - Test failure bekræfter problemet
 - Code review: Sanitization kan forårsage collisions
 
@@ -146,6 +161,7 @@ Actual: false (shared limit due to collision)
 **Fil:** `server/rate-limiter-redis.ts:216-218`
 
 **Problem:**
+
 ```typescript
 const recentRequests = userRequests.filter(
   time => now - time < config.windowMs
@@ -154,12 +170,14 @@ const recentRequests = userRequests.filter(
 ```
 
 **Forklaring:**
+
 1. Request at time T
 2. Next request at time T + windowMs (exactly)
 3. Filter: `now - time < windowMs` → `windowMs < windowMs` → `false`
 4. Request fjernes selvom den er lige på grænsen
 
 **Test Result:**
+
 ```
 FAIL: should handle requests just before window expires
 Expected: false (still blocked)
@@ -167,10 +185,12 @@ Actual: true (allowed - window expired too early)
 ```
 
 **Impact:**
+
 - 🟡 **MEDIUM:** Rate limits kan være 1 request for korte
 - 🟢 **LOW:** Edge case ved exact timing
 
 **Evidence:**
+
 - Test failure bekræfter timing issue
 - Code review: Boundary condition ikke håndteret
 
@@ -182,6 +202,7 @@ Actual: true (allowed - window expired too early)
 **Fil:** `server/rate-limiter-redis.ts:178-200`
 
 **Problem:**
+
 ```typescript
 let cleanupInterval: NodeJS.Timeout | null = null;
 
@@ -193,15 +214,18 @@ function startInMemoryCleanup(): void {
 ```
 
 **Forklaring:**
+
 1. Cleanup interval startes ved første brug
 2. Ved server shutdown/r restart, interval fortsætter
 3. Memory leak i test environment (intervals ikke cleared)
 
 **Impact:**
+
 - 🟡 **MEDIUM:** Test environment memory leaks
 - 🟢 **LOW:** Production (process dies anyway)
 
 **Evidence:**
+
 - Code review: Ingen cleanup mechanism
 - Pattern: Global interval uden lifecycle management
 
@@ -213,26 +237,30 @@ function startInMemoryCleanup(): void {
 **Fil:** `server/rate-limiter-redis.ts:317-321`
 
 **Problem:**
+
 ```typescript
-const result = await client.eval(
+const result = (await client.eval(
   RATE_LIMIT_SCRIPT,
   [key],
   [config.windowMs, config.limit, now, requestId]
-) as [number, number, number, number];
+)) as [number, number, number, number];
 // ⚠️ No validation of result format!
 // ⚠️ What if Lua script returns error?
 ```
 
 **Forklaring:**
+
 1. Hvis Lua script fejler, kan result være forkert format
 2. Type assertion `as [number, number, number, number]` kan være forkert
 3. Ingen error handling for script failures
 
 **Impact:**
+
 - 🟡 **MEDIUM:** Runtime errors hvis script fejler
 - 🟢 **LOW:** Redis client skulle håndtere dette
 
 **Evidence:**
+
 - Code review: Ingen error handling for script result
 - Pattern: Type assertion uden validation
 
@@ -244,6 +272,7 @@ const result = await client.eval(
 **Fil:** `server/rate-limit-middleware.ts:24-30`
 
 **Problem:**
+
 ```typescript
 if (config.maxRequests < 1) {
   throw new Error("maxRequests must be >= 1");
@@ -252,15 +281,18 @@ if (config.maxRequests < 1) {
 ```
 
 **Forklaring:**
+
 1. Hvis `config.maxRequests = NaN`, check `NaN < 1` → `false`
 2. Validation passerer, men NaN forårsager problemer senere
 3. Samme for `Infinity`
 
 **Impact:**
+
 - 🟡 **MEDIUM:** Undefined behavior med NaN/Infinity
 - 🟢 **LOW:** TypeScript skulle forhindre dette
 
 **Evidence:**
+
 - Code review: Validation mangler NaN/Infinity checks
 - Pattern: Incomplete input validation
 
@@ -272,6 +304,7 @@ if (config.maxRequests < 1) {
 **Fil:** `server/rate-limit-middleware.ts:36`
 
 **Problem:**
+
 ```typescript
 const userId = ctx.user?.id;
 // ⚠️ What if userId is string? number? undefined?
@@ -279,15 +312,18 @@ const userId = ctx.user?.id;
 ```
 
 **Forklaring:**
+
 1. `ctx.user?.id` kan være `number | string | undefined`
 2. `checkRateLimitUnified` forventer `number`
 3. Type coercion kan forårsage uventet adfærd
 
 **Impact:**
+
 - 🟡 **MEDIUM:** Type errors ved runtime
 - 🟢 **LOW:** TypeScript skulle fange dette
 
 **Evidence:**
+
 - Code review: Ingen runtime type validation
 - Pattern: Assumption om type uden validation
 
@@ -299,26 +335,30 @@ const userId = ctx.user?.id;
 **Fil:** `server/rate-limiter-redis.ts:301`
 
 **Problem:**
+
 ```typescript
 export async function checkRateLimitUnified(
   userId: number,
   config: RateLimitConfig = { limit: 10, windowMs: 60000 },
   keySuffix?: string
-)
+);
 // ⚠️ Default only applies if config is undefined
 // ⚠️ Partial config (e.g., { limit: 5 }) uses default for windowMs
 ```
 
 **Forklaring:**
+
 1. Hvis `config = { limit: 5 }` (partial)
 2. `windowMs` er `undefined`, ikke default
 3. Kan forårsage `NaN` i beregninger
 
 **Impact:**
+
 - 🟡 **LOW:** Kun hvis config er malformed
 - 🟢 **VERY LOW:** TypeScript skulle forhindre dette
 
 **Evidence:**
+
 - Code review: Default values kun ved undefined
 - Pattern: Partial objects kan være problematiske
 
@@ -329,13 +369,14 @@ export async function checkRateLimitUnified(
 ### **Fix #1: Negative secondsUntilReset** 🔴 CRITICAL
 
 **Patch:**
+
 ```typescript
 // server/rate-limit-middleware.ts
 if (!rateLimit.success) {
   const resetTime = rateLimit.reset * 1000;
   const now = Date.now();
   const secondsUntilReset = Math.max(0, Math.ceil((resetTime - now) / 1000));
-  
+
   // If reset time is in past, allow immediate retry
   if (secondsUntilReset <= 0) {
     // Reset time is in past - allow request
@@ -351,6 +392,7 @@ if (!rateLimit.success) {
 ```
 
 **Regression Test:**
+
 ```typescript
 it("should handle negative secondsUntilReset gracefully", async () => {
   // Mock rateLimit with past reset time
@@ -364,31 +406,34 @@ it("should handle negative secondsUntilReset gracefully", async () => {
 ### **Fix #2: Key Collision Prevention** 🟡 HIGH
 
 **Patch:**
+
 ```typescript
 // server/rate-limiter-redis.ts
 function sanitizeKeySuffix(keySuffix: string): string {
   // More aggressive sanitization to prevent collisions
   return keySuffix
-    .replace(/[^a-zA-Z0-9_-]/g, '_') // Replace special chars
-    .replace(/_+/g, '_') // Collapse multiple underscores
-    .replace(/^_|_$/g, '') // Remove leading/trailing underscores
+    .replace(/[^a-zA-Z0-9_-]/g, "_") // Replace special chars
+    .replace(/_+/g, "_") // Collapse multiple underscores
+    .replace(/^_|_$/g, "") // Remove leading/trailing underscores
     .substring(0, 50)
     .toLowerCase(); // Case-insensitive to prevent case collisions
 }
 ```
 
 **Alternative:** Use hash instead of sanitization
+
 ```typescript
 import { createHash } from "crypto";
 
 function sanitizeKeySuffix(keySuffix: string): string {
   // Use hash to prevent collisions
-  const hash = createHash('sha256').update(keySuffix).digest('hex');
+  const hash = createHash("sha256").update(keySuffix).digest("hex");
   return hash.substring(0, 16); // 16 chars should be enough
 }
 ```
 
 **Regression Test:**
+
 ```typescript
 it("should prevent key collisions via sanitization", async () => {
   // Test that "test:op" and "test_op" have separate limits
@@ -400,6 +445,7 @@ it("should prevent key collisions via sanitization", async () => {
 ### **Fix #3: Window Boundary Fix** 🟡 MEDIUM
 
 **Patch:**
+
 ```typescript
 // server/rate-limiter-redis.ts
 const recentRequests = userRequests.filter(
@@ -408,6 +454,7 @@ const recentRequests = userRequests.filter(
 ```
 
 **Regression Test:**
+
 ```typescript
 it("should handle requests at exact window boundary", async () => {
   // Test exact timing
@@ -419,6 +466,7 @@ it("should handle requests at exact window boundary", async () => {
 ### **Fix #4: Cleanup Interval Management** 🟡 MEDIUM
 
 **Patch:**
+
 ```typescript
 // server/rate-limiter-redis.ts
 let cleanupInterval: NodeJS.Timeout | null = null;
@@ -432,8 +480,8 @@ export function stopInMemoryCleanup(): void {
 }
 
 // Call on process exit
-process.on('SIGTERM', stopInMemoryCleanup);
-process.on('SIGINT', stopInMemoryCleanup);
+process.on("SIGTERM", stopInMemoryCleanup);
+process.on("SIGINT", stopInMemoryCleanup);
 ```
 
 ---
@@ -441,21 +489,22 @@ process.on('SIGINT', stopInMemoryCleanup);
 ### **Fix #5: Lua Script Error Handling** 🟡 MEDIUM
 
 **Patch:**
+
 ```typescript
 // server/rate-limiter-redis.ts
 try {
   const result = await client.eval(...) as [number, number, number, number];
-  
+
   // Validate result format
   if (!Array.isArray(result) || result.length !== 4) {
     throw new Error("Invalid Lua script result format");
   }
-  
+
   // Validate result types
   if (result.some(v => typeof v !== 'number' || !isFinite(v))) {
     throw new Error("Invalid Lua script result values");
   }
-  
+
   return {
     success: result[0] === 1,
     limit: result[1],
@@ -474,6 +523,7 @@ try {
 ### **Fix #6: NaN/Infinity Validation** 🟡 MEDIUM
 
 **Patch:**
+
 ```typescript
 // server/rate-limit-middleware.ts
 export function createRateLimitMiddleware(...) {
@@ -497,6 +547,7 @@ export function createRateLimitMiddleware(...) {
 **Location:** `server/__tests__/rate-limiter-edge-cases.test.ts`
 
 **Coverage:**
+
 - ✅ Extreme values (userId, limit, windowMs, keySuffix)
 - ✅ Concurrent scenarios
 - ✅ Configuration errors
@@ -513,6 +564,7 @@ export function createRateLimitMiddleware(...) {
 **Location:** `server/__tests__/rate-limiter-exploit-attempts.test.ts`
 
 **Coverage:**
+
 - ✅ Key injection attacks
 - ✅ Key collision attacks
 - ✅ Rate limit bypass attempts
@@ -527,6 +579,7 @@ export function createRateLimitMiddleware(...) {
 ### **Foreslåede Yderligere Tests:**
 
 1. **Fuzzing Tests:**
+
    ```typescript
    // Generate random invalid inputs
    const fuzzInputs = generateFuzzInputs(1000);
@@ -536,6 +589,7 @@ export function createRateLimitMiddleware(...) {
    ```
 
 2. **Chaos Engineering Tests:**
+
    ```typescript
    // Simulate Redis failures, network issues, clock changes
    ```
@@ -549,32 +603,35 @@ export function createRateLimitMiddleware(...) {
 
 ## 6. 📊 Anomali Summary
 
-| Anomali | Prioritet | Impact | Status |
-|---------|-----------|--------|--------|
-| Negative secondsUntilReset | 🔴 CRITICAL | Confusing errors | ⏳ Pending Fix |
-| Key Collision | 🟡 HIGH | Shared limits | ⏳ Pending Fix |
-| Window Boundary | 🟡 MEDIUM | 1 request off | ⏳ Pending Fix |
-| Cleanup Memory Leak | 🟡 MEDIUM | Test leaks | ⏳ Pending Fix |
-| Lua Script Errors | 🟡 MEDIUM | Runtime errors | ⏳ Pending Fix |
-| NaN/Infinity | 🟡 MEDIUM | Undefined behavior | ⏳ Pending Fix |
-| Type Coercion | 🟡 MEDIUM | Type errors | ⏳ Pending Fix |
-| Partial Config | 🟡 LOW | Edge case | ⏳ Pending Fix |
+| Anomali                    | Prioritet   | Impact             | Status         |
+| -------------------------- | ----------- | ------------------ | -------------- |
+| Negative secondsUntilReset | 🔴 CRITICAL | Confusing errors   | ⏳ Pending Fix |
+| Key Collision              | 🟡 HIGH     | Shared limits      | ⏳ Pending Fix |
+| Window Boundary            | 🟡 MEDIUM   | 1 request off      | ⏳ Pending Fix |
+| Cleanup Memory Leak        | 🟡 MEDIUM   | Test leaks         | ⏳ Pending Fix |
+| Lua Script Errors          | 🟡 MEDIUM   | Runtime errors     | ⏳ Pending Fix |
+| NaN/Infinity               | 🟡 MEDIUM   | Undefined behavior | ⏳ Pending Fix |
+| Type Coercion              | 🟡 MEDIUM   | Type errors        | ⏳ Pending Fix |
+| Partial Config             | 🟡 LOW      | Edge case          | ⏳ Pending Fix |
 
 ---
 
 ## 7. 🎯 Anbefalinger
 
 ### **Immediate Actions:**
+
 1. ✅ Fix negative secondsUntilReset (CRITICAL)
 2. ✅ Fix key collision (HIGH)
 3. ✅ Add regression tests
 
 ### **Short-term:**
+
 4. ⚠️ Fix window boundary (MEDIUM)
 5. ⚠️ Add cleanup management (MEDIUM)
 6. ⚠️ Add Lua script error handling (MEDIUM)
 
 ### **Long-term:**
+
 7. 💡 Add fuzzing tests
 8. 💡 Add chaos engineering tests
 9. 💡 Add load tests
@@ -584,4 +641,3 @@ export function createRateLimitMiddleware(...) {
 **Rapport Genereret:** 28. januar 2025  
 **Tests Oprettet:** 2 test suites (70+ test cases)  
 **Anomalier:** 8 identificeret
-

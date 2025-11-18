@@ -33,7 +33,7 @@
 
 **Functions:**
 
-```typescript
+````typescript
 generateEmbedding(text: string): Promise<number[]>
 generateEmbeddings(texts: string[]): Promise<number[][]>
 cosineSimilarity(a: number[], b: number[]): number
@@ -427,7 +427,7 @@ pnpm add @xenova/transformers
 import { pipeline } from '@xenova/transformers';
 const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
 
-```
+````
 
 **Tradeoff:**
 

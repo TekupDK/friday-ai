@@ -29,7 +29,7 @@
 
 ## 🌐 Access URLs
 
-```text
+````text
 Langfuse Dashboard:     <http://localhost:3001>
 ClickHouse HTTP API:    <http://localhost:8123>
 PostgreSQL:             localhost:5433
@@ -307,7 +307,7 @@ Still very efficient! 🚀
 ║                                                       ║
 ╚═══════════════════════════════════════════════════════╝
 
-```
+````
 
 ---
 

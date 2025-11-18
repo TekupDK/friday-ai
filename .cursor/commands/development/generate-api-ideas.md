@@ -30,12 +30,14 @@ Based on the API router or tRPC procedure being edited, suggest missing procedur
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read API code
 - `codebase_search` - Find similar APIs
 - `grep` - Search for procedure patterns
 - `list_dir` - Check router structure
 
 **DO NOT:**
+
 - Miss missing procedures
 - Ignore schema improvements
 - Skip error handling
@@ -95,13 +97,14 @@ After generating, verify:
 
 Provide API ideas:
 
-```markdown
+````markdown
 # API Ideas: [ROUTER/PROCEDURE]
 
 **Date:** 2025-11-16
 **API:** [ROUTER/PROCEDURE NAME]
 
 ## Missing Procedures
+
 1. **[Procedure 1]** - [Description] - [Why needed]
    ```typescript
    // Suggested implementation
@@ -109,11 +112,14 @@ Provide API ideas:
      .input(z.object({ ... }))
      .query(async ({ ctx, input }) => { ... })
    ```
+````
 
 2. **[Procedure 2]** - [Description] - [Why needed]
 
 ## Improved Input Schemas
+
 1. **[Schema 1]** - [Current] → [Improved] - [Why]
+
    ```typescript
    // Current: [Current schema]
    // Improved: [Better schema]
@@ -122,11 +128,13 @@ Provide API ideas:
 2. **[Schema 2]** - [Current] → [Improved] - [Why]
 
 ## Unhandled Paths or States
+
 1. **[Path 1]** - [Description] - [How to handle]
 2. **[Path 2]** - [Description] - [How to handle]
 3. **[State 1]** - [Description] - [How to handle]
 
 ## New Endpoints for Feature
+
 1. **[Endpoint 1]** - [Description] - [Value]
    - Method: [GET/POST/PUT/DELETE]
    - Path: [PATH]
@@ -136,13 +144,16 @@ Provide API ideas:
 2. **[Endpoint 2]** - [Description] - [Value]
 
 ## Error Handling Improvements
+
 1. **[Improvement 1]** - [What to improve] - [How]
 2. **[Improvement 2]** - [What to improve] - [How]
 
 ## Priority Recommendations
+
 1. **[HIGH]** [Idea 1] - [Reason]
 2. **[MEDIUM]** [Idea 2] - [Reason]
 3. **[LOW]** [Idea 3] - [Reason]
+
 ```
 
 ## GUIDELINES
@@ -157,3 +168,4 @@ Provide API ideas:
 
 **CRITICAL:** Generate API ideas that complete and improve the API following Friday AI Chat patterns.
 
+```

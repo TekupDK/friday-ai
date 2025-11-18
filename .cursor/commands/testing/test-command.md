@@ -12,6 +12,7 @@ Test en specifik command: kør den, verificer output, test edge cases, og valide
 ## TASK
 
 Test command:
+
 1. **Læs command** - Læs command filen
 2. **Forstå purpose** - Hvad skal commanden gøre?
 3. **Kør command** - Test i praksis
@@ -74,12 +75,14 @@ Test command:
 ## Test Cases
 
 ### ✅ Test 1: [Test Case]
+
 - **Input:** [Input]
 - **Expected:** [Forventet]
 - **Actual:** [Faktisk]
 - **Status:** ✅ Pass / ❌ Fail
 
 ### ✅ Test 2: [Test Case]
+
 - **Input:** [Input]
 - **Expected:** [Forventet]
 - **Actual:** [Faktisk]
@@ -121,4 +124,3 @@ Test command:
 ---
 
 **CRITICAL:** Læs command, forstå purpose, kør i praksis, verificer output, test edge cases, og rapporter resultater med konkrete forbedringer.
-

@@ -32,6 +32,7 @@ Track and update status of all systems, features, and integrations in Friday AI 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing status reports
 - `codebase_search` - Find system implementations
 - `grep` - Search for status indicators
@@ -39,6 +40,7 @@ Track and update status of all systems, features, and integrations in Friday AI 
 - `run_terminal_cmd` - Check system health
 
 **DO NOT:**
+
 - Miss system status updates
 - Use unclear status indicators
 - Skip important systems
@@ -71,6 +73,7 @@ Before tracking status, think through:
 ## SYSTEMS TO TRACK
 
 ### Core Systems
+
 - **AI/LLM System:** Model routing, tool calling, streaming
 - **Email System:** Gmail sync, pipeline workflows, rate limiting
 - **CRM System:** Customer, Lead, Booking, Service Template management
@@ -79,6 +82,7 @@ Before tracking status, think through:
 - **Google Workspace:** Calendar, Gmail, OAuth
 
 ### Infrastructure
+
 - **Database:** PostgreSQL/Supabase connection, migrations
 - **Rate Limiting:** Redis, fallback mode
 - **Authentication:** OAuth, JWT, session management
@@ -87,6 +91,7 @@ Before tracking status, think through:
 ## STATUS INDICATORS
 
 ### System Status
+
 - ✅ **Operational** - Working correctly
 - 🟡 **Partial** - Working with limitations
 - 🔴 **Down** - Not working
@@ -95,6 +100,7 @@ Before tracking status, think through:
 - 📋 **Planned** - Planned but not started
 
 ### Feature Status
+
 - ✅ **Complete** - Fully implemented
 - 🚧 **In Development** - Currently being built
 - 📋 **Planned** - In roadmap
@@ -138,6 +144,7 @@ Before tracking status, think through:
 ## VERIFICATION
 
 After tracking status:
+
 - ✅ All systems tracked
 - ✅ Status indicators clear
 - ✅ Next steps documented
@@ -152,6 +159,7 @@ After tracking status:
 ## Core Systems
 
 ### AI/LLM System
+
 - **Status:** ✅ Operational
 - **Model Routing:** Working
 - **Tool Calling:** Working
@@ -160,6 +168,7 @@ After tracking status:
 - **Next Steps:** [if any]
 
 ### Email System
+
 - **Status:** 🟡 Partial
 - **Gmail Sync:** Working
 - **Pipeline Workflows:** Working
@@ -167,6 +176,7 @@ After tracking status:
 - **Next Steps:** Fix rate limiting fallback
 
 ### CRM System
+
 - **Status:** ✅ Operational
 - **Customer Management:** Complete
 - **Lead Management:** Complete
@@ -177,6 +187,7 @@ After tracking status:
 ## Infrastructure
 
 ### Database
+
 - **Status:** ✅ Operational
 - **Connection:** Stable
 - **Migrations:** Up to date
@@ -185,16 +196,20 @@ After tracking status:
 ## Development Status
 
 ### In Progress
+
 - [Feature 1] - [Progress %] - [ETA]
 - [Feature 2] - [Progress %] - [ETA]
 
 ### Blocked
+
 - [Feature 3] - [Blocker] - [Action needed]
 
 ### Ready to Start
+
 - [Feature 4] - [Dependencies met]
 
 ## Next Session Priorities
+
 1. [Priority 1]
 2. [Priority 2]
 3. [Priority 3]
@@ -207,4 +222,3 @@ After tracking status:
 - **Be actionable:** Include next steps
 - **Be current:** Update regularly
 - **Be comprehensive:** Track all systems
-

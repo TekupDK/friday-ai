@@ -19,4 +19,3 @@ Review naming, identify inconsistencies, refactor to standards, document convent
 ## OUTPUT
 
 Naming conventions standardized with documentation.
-

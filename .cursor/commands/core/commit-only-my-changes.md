@@ -16,11 +16,13 @@ Identify files you modified in this conversation and commit only those changes.
 ## TRACKING YOUR CHANGES
 
 **Files you modified:**
+
 - Keep track of files you changed using `search_replace`, `write`, `delete_file` tools
 - Note what was changed in each file
 - Be aware of files that were already modified before you started
 
 **Verification process:**
+
 1. List files you know you modified
 2. Check `git status` to see all modified files
 3. Compare lists - only commit files that match
@@ -59,14 +61,16 @@ Identify files you modified in this conversation and commit only those changes.
 **Format:** `type: description`
 
 **Types:**
+
 - `feat:` - New feature
-- `fix:` - Bug fix  
+- `fix:` - Bug fix
 - `refactor:` - Refactoring
 - `docs:` - Documentation
 - `chore:` - Maintenance
 - `test:` - Tests
 
 **Examples:**
+
 - `feat(crm): add opportunity creation endpoint`
 - `fix(email): resolve Gmail rate limiting`
 - `refactor(db): improve customer helper functions`
@@ -78,10 +82,12 @@ Identify files you modified in this conversation and commit only those changes.
 ## Committing My Changes
 
 **My Changes in This Session:**
+
 - `file1.ts` - [change description]
 - `file2.tsx` - [change description]
 
 **Staged for Commit:**
+
 - [list of files]
 
 **Commit:**
@@ -91,6 +97,7 @@ Identify files you modified in this conversation and commit only those changes.
 \`\`\`
 
 **Verification:**
+
 - ✅ Only my changes committed
 - ✅ No pre-existing changes included
 ```
@@ -102,4 +109,3 @@ Identify files you modified in this conversation and commit only those changes.
 - **Be conservative:** When in doubt, exclude
 - **One logical commit:** Group related changes
 - **Clear messages:** Describe what, not how
-

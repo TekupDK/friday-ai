@@ -12,6 +12,7 @@ Test denne samtale: verificer at commands virker korrekt, test chat flow, og val
 ## TASK
 
 Test denne samtale:
+
 1. **Læs chat historik** - HELE samtalen fra start
 2. **Test commands** - Kør commands og verificer de virker
 3. **Valider output** - Tjek at output er korrekt
@@ -21,6 +22,7 @@ Test denne samtale:
 ## CHAT SESSION READING
 
 **KRITISK:** Læs HELE samtalen:
+
 - Start fra første besked
 - Læs ALLE beskeder fra brugeren
 - Læs ALLE svar fra agenten
@@ -74,17 +76,20 @@ Test denne samtale:
 **Total beskeder:** [X]
 
 **Hovedemner:**
+
 - [Emne 1]
 - [Emne 2]
 
 ## Commands Testet
 
 ### ✅ Command 1: [Navn]
+
 - **Status:** ✅ Virker / ❌ Virker ikke
 - **Output:** [Beskrivelse]
 - **Issues:** [Hvis nogen]
 
 ### ✅ Command 2: [Navn]
+
 - **Status:** ✅ Virker / ❌ Virker ikke
 - **Output:** [Beskrivelse]
 - **Issues:** [Hvis nogen]
@@ -120,4 +125,3 @@ Test denne samtale:
 ---
 
 **CRITICAL:** Læs HELE samtalen, test commands i praksis, valider output, test edge cases, og rapporter resultater med konkrete forbedringer.
-

@@ -10,7 +10,7 @@
 
 # 🎯 **AI ANALYSE RESULTAT:**
 
-```typescript
+````typescript
 🤖 EMAIL ANALYSIS ENGINE OUTPUT:
 {
   customerName: "Jens Hansen",
@@ -314,7 +314,7 @@ Rendetalje.dk - Din lokale rengøringspartner i Aarhus"
 - Min version: Business-specific intelligence
 - Result: 10x mere værdi for jeres business
 
-```
+````
 
 **Dette er et konkret eksempel på hvordan jeres Email Assistant vil se ud og fungere i en rigtig email tråd!** 🎯
 

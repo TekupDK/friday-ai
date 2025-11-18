@@ -16,6 +16,7 @@ Fix database query issues including N+1 queries, missing indexes, and type error
 ## COMMON DATABASE ISSUES
 
 ### Issue 1: N+1 Queries
+
 ```typescript
 // ❌ Bad: N+1 queries
 const customers = await getCustomers();
@@ -33,6 +34,7 @@ const allInvoices = await db
 ```
 
 ### Issue 2: Missing Indexes
+
 ```typescript
 // ❌ Bad: Slow query without index
 const result = await db
@@ -53,6 +55,7 @@ export const customersInFridayAi = fridayAi.table(
 ```
 
 ### Issue 3: Type Errors
+
 ```typescript
 // ❌ Bad: Type mismatch
 const result = await db
@@ -68,6 +71,7 @@ const result = await db
 ```
 
 ### Issue 4: Missing User Ownership Check
+
 ```typescript
 // ❌ Bad: No ownership check
 const result = await db
@@ -126,20 +130,23 @@ const result = await db
 ### Database Query Fixes
 
 **Issues Fixed:**
+
 - N+1 queries: [count] fixed
 - Missing indexes: [count] added
 - Type errors: [count] fixed
 - Ownership checks: [count] added
 
 **Files Modified:**
+
 - [list]
 
 **Migrations Created:**
+
 - [list if any]
 
 **Verification:**
+
 - ✅ Queries: WORKING
 - ✅ Performance: IMPROVED
 - ✅ Typecheck: PASSED
 ```
-

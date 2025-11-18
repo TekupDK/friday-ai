@@ -66,7 +66,7 @@ Dette er **næste prioritet** efter AI features er færdige.
 
 **UI Components at oprette:**
 
-```bash
+````bash
 EmailPipelineBoard.tsx      (350-400 lines)
 ├── PipelineColumn.tsx      (150-200 lines)
 ├── EmailCard.tsx           (100-150 lines)
@@ -318,7 +318,7 @@ onPipelineStageChange(threadId, 'finance', async (email) => {
   showToast(`✅ Faktura-draft oprettet: ${invoice.invoiceNo}`);
 });
 
-```
+````
 
 **Estimated Time:** 1-2 timer
 

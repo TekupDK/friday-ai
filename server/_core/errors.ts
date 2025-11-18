@@ -9,19 +9,19 @@ import { ENV } from "./env";
 
 /**
  * ✅ SECURITY FIX: Sanitize error messages to prevent information leakage
- * 
+ *
  * In production, returns generic error messages to prevent exposing:
  * - Internal error details
  * - Stack traces
  * - Database errors
  * - File paths
  * - API keys or secrets
- * 
+ *
  * In development, returns full error messages for debugging.
- * 
+ *
  * @param error - The error to sanitize (can be Error, TRPCError, or unknown)
  * @returns Sanitized error message safe to return to clients
- * 
+ *
  * @example
  * ```ts
  * try {
@@ -91,14 +91,14 @@ export function sanitizeError(error: unknown): string {
 
 /**
  * ✅ SECURITY FIX: Create a safe TRPCError from any error
- * 
+ *
  * Convenience function that sanitizes the error and creates a TRPCError
  * with appropriate error code.
- * 
+ *
  * @param error - The error to convert
  * @param code - TRPC error code (defaults to INTERNAL_SERVER_ERROR)
  * @returns TRPCError with sanitized message
- * 
+ *
  * @example
  * ```ts
  * try {
@@ -118,4 +118,3 @@ export function createSafeTRPCError(
     cause: error instanceof Error ? error : undefined,
   });
 }
-

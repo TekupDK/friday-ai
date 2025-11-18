@@ -9,6 +9,7 @@
 The Constants System provides centralized configuration and helper functions for the CRM module. It eliminates magic numbers, improves maintainability, and ensures consistency across the codebase.
 
 **Key Benefits:**
+
 - ✅ Single source of truth for configuration
 - ✅ Type-safe constants
 - ✅ Reusable helper functions
@@ -33,10 +34,10 @@ client/src/constants/
 export const STORAGE = {
   /** Maximum file size in bytes (10MB) */
   MAX_FILE_SIZE: 10 * 1024 * 1024,
-  
+
   /** Supabase Storage bucket name */
   BUCKET_NAME: "customer-documents",
-  
+
   /** Allowed MIME types for upload */
   ALLOWED_TYPES: [
     "application/pdf",
@@ -44,7 +45,7 @@ export const STORAGE = {
     "image/png",
     // ... more types
   ],
-  
+
   /** Cache control header value */
   CACHE_CONTROL: "3600",
 } as const;
@@ -57,14 +58,17 @@ export const STORAGE = {
 Validates file size against maximum allowed size.
 
 **Parameters:**
+
 - `size` (number): File size in bytes
 
 **Returns:**
+
 ```typescript
 { valid: boolean; error?: string }
 ```
 
 **Example:**
+
 ```typescript
 import { validateFileSize } from "@/constants/storage";
 
@@ -79,14 +83,17 @@ if (!result.valid) {
 Validates MIME type against allowed types.
 
 **Parameters:**
+
 - `type` (string): MIME type (e.g., "application/pdf")
 
 **Returns:**
+
 ```typescript
 { valid: boolean; error?: string }
 ```
 
 **Example:**
+
 ```typescript
 import { validateFileType } from "@/constants/storage";
 
@@ -101,14 +108,17 @@ if (!result.valid) {
 Validates both file size and type.
 
 **Parameters:**
+
 - `file` (File): File object from input
 
 **Returns:**
+
 ```typescript
 { valid: boolean; error?: string }
 ```
 
 **Example:**
+
 ```typescript
 import { validateFile } from "@/constants/storage";
 
@@ -135,7 +145,7 @@ const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
 export const PRICING = {
   /** Hourly rate charged to customers (faktureret) */
   HOURLY_RATE: 349, // DKK per hour
-  
+
   /** Labor cost per hour (løn) */
   LABOR_COST: 90, // DKK per hour per person
 } as const;
@@ -148,11 +158,13 @@ export const PRICING = {
 Calculates revenue from billable hours.
 
 **Parameters:**
+
 - `billableHours` (number): Total billable hours
 
 **Returns:** `number` - Revenue in DKK
 
 **Example:**
+
 ```typescript
 import { calculateRevenue } from "@/constants/pricing";
 
@@ -165,11 +177,13 @@ console.log(revenue); // 1396 DKK (4 × 349)
 Calculates labor cost from billable hours.
 
 **Parameters:**
+
 - `billableHours` (number): Total billable hours
 
 **Returns:** `number` - Labor cost in DKK
 
 **Example:**
+
 ```typescript
 import { calculateLaborCost } from "@/constants/pricing";
 
@@ -182,11 +196,13 @@ console.log(cost); // 360 DKK (4 × 90)
 Calculates profit (revenue - labor cost).
 
 **Parameters:**
+
 - `billableHours` (number): Total billable hours
 
 **Returns:** `number` - Profit in DKK
 
 **Example:**
+
 ```typescript
 import { calculateProfit } from "@/constants/pricing";
 
@@ -199,11 +215,13 @@ console.log(profit); // 1036 DKK (1396 - 360)
 Calculates profit margin percentage.
 
 **Parameters:**
+
 - `billableHours` (number): Total billable hours
 
 **Returns:** `number` - Margin percentage (0-100)
 
 **Example:**
+
 ```typescript
 import { calculateProfitMargin } from "@/constants/pricing";
 
@@ -223,11 +241,11 @@ function MyComponent() {
   // Use storage constants
   const maxSize = STORAGE.MAX_FILE_SIZE;
   const bucketName = STORAGE.BUCKET_NAME;
-  
+
   // Use pricing constants
   const hourlyRate = PRICING.HOURLY_RATE;
   const laborCost = PRICING.LABOR_COST;
-  
+
   return (
     <div>
       <p>Max file size: {maxSize / 1024 / 1024}MB</p>
@@ -244,13 +262,13 @@ import { PRICING, calculateProfit } from "@/constants/pricing";
 
 function generateReport(tasks: Task[]) {
   const totalRevenue = tasks.reduce((sum, task) => {
-    return sum + (task.hours * PRICING.HOURLY_RATE);
+    return sum + task.hours * PRICING.HOURLY_RATE;
   }, 0);
-  
+
   const totalProfit = tasks.reduce((sum, task) => {
     return sum + calculateProfit(task.hours);
   }, 0);
-  
+
   return { totalRevenue, totalProfit };
 }
 ```
@@ -266,13 +284,11 @@ function handleUpload(file: File) {
   if (!validation.valid) {
     throw new Error(validation.error);
   }
-  
+
   // Upload to Supabase
-  await supabase.storage
-    .from(STORAGE.BUCKET_NAME)
-    .upload(filePath, file, {
-      cacheControl: STORAGE.CACHE_CONTROL,
-    });
+  await supabase.storage.from(STORAGE.BUCKET_NAME).upload(filePath, file, {
+    cacheControl: STORAGE.CACHE_CONTROL,
+  });
 }
 ```
 
@@ -289,6 +305,7 @@ function handleUpload(file: File) {
 ### Replacing Magic Numbers
 
 **Before:**
+
 ```typescript
 // ❌ Bad: Magic numbers
 if (file.size > 10 * 1024 * 1024) {
@@ -298,6 +315,7 @@ const revenue = hours * 349;
 ```
 
 **After:**
+
 ```typescript
 // ✅ Good: Use constants
 import { STORAGE, PRICING } from "@/constants";
@@ -311,6 +329,7 @@ const revenue = hours * PRICING.HOURLY_RATE;
 ### Using Helper Functions
 
 **Before:**
+
 ```typescript
 // ❌ Bad: Duplicated logic
 const revenue = hours * 349;
@@ -320,9 +339,14 @@ const margin = (profit / revenue) * 100;
 ```
 
 **After:**
+
 ```typescript
 // ✅ Good: Use helper functions
-import { calculateRevenue, calculateProfit, calculateProfitMargin } from "@/constants/pricing";
+import {
+  calculateRevenue,
+  calculateProfit,
+  calculateProfitMargin,
+} from "@/constants/pricing";
 
 const revenue = calculateRevenue(hours);
 const profit = calculateProfit(hours);
@@ -336,6 +360,7 @@ const margin = calculateProfitMargin(hours);
 **Problem:** Type error when checking if type is in `ALLOWED_TYPES`
 
 **Solution:**
+
 ```typescript
 // Use type assertion
 if (!(STORAGE.ALLOWED_TYPES as readonly string[]).includes(type)) {
@@ -348,6 +373,7 @@ if (!(STORAGE.ALLOWED_TYPES as readonly string[]).includes(type)) {
 **Problem:** Changes to constants don't reflect in app
 
 **Solution:**
+
 - Restart dev server
 - Clear browser cache
 - Check that constants are imported correctly
@@ -357,4 +383,3 @@ if (!(STORAGE.ALLOWED_TYPES as readonly string[]).includes(type)) {
 - [Document Management](../DOCUMENT_MANAGEMENT.md)
 - [API Reference](../../../API_REFERENCE.md)
 - [Development Guide](../../../DEVELOPMENT_GUIDE.md)
-

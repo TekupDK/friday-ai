@@ -19,4 +19,3 @@ Use React Query for server state, local state for UI, implement optimistic updat
 ## OUTPUT
 
 State management implemented following patterns.
-

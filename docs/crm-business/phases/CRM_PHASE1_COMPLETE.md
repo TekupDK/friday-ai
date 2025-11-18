@@ -18,7 +18,7 @@
 
 **TRPC Endpoints (crm.activity):**
 
-```typescript
+````typescript
 ✅ logActivity({ customerProfileId, activityType, subject, ... })
 ✅ listActivities({ customerProfileId, activityType?, limit?, offset? })
 ✅ getActivityStats({ customerProfileId })
@@ -196,7 +196,7 @@ await logActivity.mutateAsync({
   nextSteps: "Send kalender",
 });
 
-```
+````
 
 ---
 

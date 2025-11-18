@@ -14,10 +14,7 @@
     "types": ["node"],
     "paths": {}
   },
-  "include": [
-    "server/_core/**/*",
-    "shared/**/*"
-  ],
+  "include": ["server/_core/**/*", "shared/**/*"],
   "exclude": [
     "node_modules",
     "dist",

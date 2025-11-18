@@ -29,6 +29,7 @@ Parse the entire user prompt, understand all requirements, break down into tasks
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find all relevant code
 - `read_file` - Read all needed files
 - `grep` - Search comprehensively
@@ -36,6 +37,7 @@ Parse the entire user prompt, understand all requirements, break down into tasks
 - `run_terminal_cmd` - Execute all commands
 
 **DO NOT:**
+
 - Miss any requirements
 - Skip any tasks
 - Ask for clarification
@@ -78,12 +80,14 @@ Before executing, think through:
 ## CRITICAL: EXECUTE COMPLETELY
 
 **DO NOT:**
+
 - Execute only part of prompt
 - Skip any requirements
 - Ask "Did you mean X?"
 - Wait for confirmation
 
 **DO:**
+
 - Parse entire prompt
 - Understand all requirements
 - Execute all tasks
@@ -137,33 +141,40 @@ Provide complete execution report:
 **Status:** [COMPLETE/IN PROGRESS]
 
 ## Prompt Parsed
+
 - **Requirements:** [ALL REQUIREMENTS]
 - **Tasks Identified:** [NUMBER]
 - **Scope:** [SCOPE]
 
 ## Execution Plan
+
 1. [Task 1] - [Status]
 2. [Task 2] - [Status]
 3. [Task 3] - [Status]
 
 ## Work Completed
+
 - ✅ [Task 1] - [Result]
 - ✅ [Task 2] - [Result]
 - ✅ [Task 3] - [Result]
 
 ## Files Modified
+
 - `[file1].ts` - [Changes]
 - `[file2].ts` - [Changes]
 
 ## Results
+
 [All results and outcomes]
 
 ## Verification
+
 - ✅ All requirements met
 - ✅ All tasks completed
 - ✅ All changes verified
 
 ## Next Steps
+
 [If any remaining work]
 ```
 
@@ -178,4 +189,3 @@ Provide complete execution report:
 ---
 
 **CRITICAL:** Parse the entire prompt and execute all requirements completely. Don't ask questions, just do the work.
-

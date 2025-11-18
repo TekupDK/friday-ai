@@ -10,7 +10,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 
 ### Struktur
 
-```text
+````text
 ┌─────────┬──────────────────┬─────────────┐
 │   AI    │   Email Center   │  Business   │
 │  20%    │      60%         │   Center    │
@@ -237,7 +237,7 @@ Nuværende setup: Midterpanel har 5 tabs (Emails, Fakturaer, Kalender, Leads, Op
 │         │  (collapsed)     │   → Quick stats │
 └─────────┴──────────────────┴─────────────────┘
 
-```
+````
 
 ### Hvorfor denne løsning
 

@@ -10,7 +10,7 @@
 
 ### Flowet
 
-```text
+````text
 LeadsTab → Klik lead → CustomerProfile åbner (Timeline-tab)
                                     ↓
                       Klik email i Timeline
@@ -295,7 +295,7 @@ useEffect(() => {
   }
 }, [emailContext.state.pendingThreadToOpen]);
 
-```
+````
 
 ---
 

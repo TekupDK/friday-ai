@@ -65,7 +65,7 @@
 
 ### Pipeline Stages
 
-```typescript
+````typescript
 type PipelineStage =
   | "needs_action" // Nye leads
   | "venter_pa_svar" // Tilbud sendt
@@ -95,7 +95,7 @@ type TaskType =
   | "hovedrengoring" // Deep clean
   | "engangsopgaver"; // One-time
 
-```
+````
 
 ---
 

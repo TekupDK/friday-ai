@@ -19,4 +19,3 @@ Create health endpoints, check dependencies, return status, add to monitoring.
 ## OUTPUT
 
 Health check endpoints implemented with dependency checks.
-

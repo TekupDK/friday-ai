@@ -149,6 +149,7 @@ This changelog tracks all changes to the Friday AI Chat commands system.
 #### Chat Context Commands (13 commands - optimeret)
 
 **Alle 13 commands omskrevet til operationsklare, kortfattede prompts:**
+
 - Kortfattet format (maks 8-25 linjer)
 - Fokus på praktisk brug i aktiv udvikling
 - Ingen lange rapporter, kun facts og actions
@@ -157,6 +158,7 @@ This changelog tracks all changes to the Friday AI Chat commands system.
 #### Session Engine Commands (7 commands - opdateret til pair-programming)
 
 **Alle Session Engine commands opdateret til at læse HELE chat sessionen:**
+
 - Læser ALLE beskeder fra bruger OG agent fra start til nu
 - Bruger chat historikken til at forstå fuld kontekst
 - Fungerer som pair-programmer der arbejder MED dig
@@ -164,9 +166,11 @@ This changelog tracks all changes to the Friday AI Chat commands system.
 - Implementerer baseret på chat diskussioner
 
 **Master command:**
+
 - `session-engine.md` - Autonom udviklingsassistent der arbejder med dig i realtime
 
 **5 konsoliderede session commands:**
+
 - `session-init.md` - Forstå projekt + kontekst
 - `session-progress.md` - Analysér hvad der er gjort + hvad der mangler
 - `session-next-step.md` - Beregn næste skridt
@@ -174,11 +178,13 @@ This changelog tracks all changes to the Friday AI Chat commands system.
 - `session-implement.md` - Implementér direkte i filer
 
 **Developer Mode:**
+
 - `developer-mode.md` - Cursor-Style Autonomous Mode: Pair-programmer der arbejder løbende
 
 #### Explain Commands (8 new commands)
 
 **Forklar commands til klar, forståelig forklaring:**
+
 - `forklar-kode.md` - Forklar kode: hvad den gør, hvordan den virker, hvorfor
 - `forklar-arkitektur.md` - Forklar systemarkitektur, komponenter, og design decisions
 - `forklar-beslutning.md` - Forklar beslutning: kontekst, rationale, alternativer, og impact
@@ -191,12 +197,14 @@ This changelog tracks all changes to the Friday AI Chat commands system.
 #### Chat Analysis Commands (2 new commands)
 
 **Commands til at analysere faktiske chat sessioner:**
+
 - `analyser-chat-sessioner.md` - Analysér faktiske chat sessioner fra databasen for at forstå praksis
 - `laes-chat-fra-database.md` - Læs faktiske chat samtaler fra databasen via `getConversationMessages`
 
 #### Testing & Improvement Commands (5 new commands)
 
 **Commands til at teste og forbedre commands baseret på faktisk brug:**
+
 - `test-chat-funktion.md` - Test chat funktionalitet end-to-end: send besked, verificer response, test conversation flow
 - `test-command.md` - Test en specifik command i praksis: kør den, verificer output, test edge cases
 - `test-samtale.md` - Test denne samtale: verificer at commands virker korrekt, test chat flow
@@ -204,12 +212,14 @@ This changelog tracks all changes to the Friday AI Chat commands system.
 - `forbedre-command.md` - Forbedre command baseret på faktisk brug: læs chat historik, identificér problemer, forbedre
 
 **Initial 4 commands:**
+
 - `laes-chat-samtale.md` - Læs chat samtale igennem systematisk og ekstraher informationer
 - `analyser-chat-kontekst.md` - Analyser chat kontekst for nuværende arbejde, status, og næste skridt
 - `brug-chat-informationer.md` - Brug informationer fra chat samtalen til at udføre opgaver med kontekst
 - `ekstraher-chat-data.md` - Ekstraher struktureret data fra chat samtalen (file paths, code snippets, requirements, etc.)
 
 **Additional 9 commands:**
+
 - `sammenfat-chat-samtale.md` - Sammenfat chat samtale til struktureret, omfattende summary
 - `opdater-chat-summary.md` - Opdater eksisterende chat summary med nye informationer
 - `konverter-chat-til-todos.md` - Konverter action items fra chat til struktureret TODO liste

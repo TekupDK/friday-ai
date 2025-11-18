@@ -29,12 +29,14 @@ Take a TODO list and reorganize it by priority, dependencies, and execution orde
 ## TOOL USAGE
 
 **Use these tools:**
+
 - Review TODO list - Understand tasks
 - `codebase_search` - Understand dependencies
 - `grep` - Find related code
 - `read_file` - Check related files
 
 **DO NOT:**
+
 - Skip dependency analysis
 - Ignore priorities
 - Miss blockers
@@ -66,13 +68,13 @@ Before prioritizing, think through:
 
 ## STEPS
 
-1) Read all TODO items:
+1. Read all TODO items:
    - Parse all tasks from the list
    - Note current priorities if any
    - Identify dependencies
    - Check for duplicates
 
-2) Assess each task:
+2. Assess each task:
    - Determine true priority (P1/P2/P3):
      - P1: Critical, security, blocking production
      - P2: Important, affects users, should be done soon
@@ -81,19 +83,19 @@ Before prioritizing, think through:
    - Identify dependencies
    - Note any blockers
 
-3) Organize by execution order:
+3. Organize by execution order:
    - Group by priority
    - Order by dependencies (no deps first)
    - Consider size (quick wins first)
    - Note parallel work opportunities
 
-4) Create organized list:
+4. Create organized list:
    - Separate by priority sections
    - Show dependencies clearly
    - Mark blockers
    - Suggest execution order
 
-5) Identify gaps:
+5. Identify gaps:
    - Missing critical tasks?
    - Unclear tasks that need clarification?
    - Tasks that should be split?
@@ -102,9 +104,9 @@ Before prioritizing, think through:
 ## OUTPUT
 
 Provide:
+
 - Reorganized TODO list with clear sections
 - Priority assignments with rationale
 - Dependency graph or notes
 - Recommended execution order
 - Gaps or issues identified
-

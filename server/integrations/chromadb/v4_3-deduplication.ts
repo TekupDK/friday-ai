@@ -164,10 +164,7 @@ export function mergeCustomerLeads(leads: V4_3_Lead[]): V4_3_Lead {
     daysBetweenBookings: calculateAvgDaysBetweenBookings(calendarEvents),
     isActive: false, // TODO: compute based on Oct-Nov period
     isRecurring: isRec,
-    recurringFrequency:
-      totalBookingsCount > 1
-        ? ("irregular" as const)
-        : null,
+    recurringFrequency: totalBookingsCount > 1 ? ("irregular" as const) : null,
   };
 
   return merged;

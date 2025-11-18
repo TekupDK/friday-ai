@@ -28,11 +28,13 @@ This guide provides comprehensive procedures for testing accessibility in the Fr
 **Status:** ✅ Example test created at `client/src/__tests__/accessibility/LoginPage.a11y.test.tsx`
 
 **Installation:**
+
 ```bash
 pnpm add -D jest-axe @axe-core/react
 ```
 
 **Test Structure:**
+
 ```typescript
 import { render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
@@ -65,17 +67,20 @@ pnpm test --coverage -- a11y
 ### 1.3 Components to Test
 
 **Priority 1 (Critical User Flows):**
+
 - ✅ `LoginPage.tsx` - Authentication flow
 - `WorkspaceLayout.tsx` - Main application interface
 - `EmailListV2.tsx` - Email browsing
 - `SettingsDialog.tsx` - Settings configuration
 
 **Priority 2 (Secondary Features):**
+
 - `DashboardLayout.tsx` - Dashboard navigation
 - `ChatInput.tsx` - Message composition
 - `UserProfileDialog.tsx` - User profile management
 
 **Priority 3 (Supporting Components):**
+
 - All dialog components
 - All form components
 - All navigation components
@@ -83,6 +88,7 @@ pnpm test --coverage -- a11y
 ### 1.4 Continuous Integration
 
 Add to CI/CD pipeline:
+
 ```yaml
 # .github/workflows/accessibility.yml
 - name: Run accessibility tests
@@ -96,6 +102,7 @@ Add to CI/CD pipeline:
 ### 2.1 NVDA (Windows)
 
 **Setup:**
+
 1. Download NVDA from https://www.nvaccess.org/
 2. Install and start NVDA
 3. Use `Insert + Q` to quit, `Insert + S` to toggle speech
@@ -127,6 +134,7 @@ Add to CI/CD pipeline:
    - Verify state changes are announced
 
 **Test Checklist:**
+
 - [ ] All headings are properly announced
 - [ ] Skip links are functional
 - [ ] Form labels are associated correctly
@@ -139,6 +147,7 @@ Add to CI/CD pipeline:
 ### 2.2 VoiceOver (macOS/iOS)
 
 **Setup:**
+
 1. Enable VoiceOver: `Cmd + F5` (macOS) or Settings > Accessibility > VoiceOver (iOS)
 2. Use `Ctrl + Option` as the VoiceOver modifier key
 
@@ -163,6 +172,7 @@ Add to CI/CD pipeline:
    - Verify required fields are indicated
 
 **Test Checklist:**
+
 - [ ] All headings are properly announced
 - [ ] Skip links are functional
 - [ ] Form labels are associated correctly
@@ -265,6 +275,7 @@ Add to CI/CD pipeline:
 ### 4.1 Color Contrast
 
 **Tools:**
+
 - Browser DevTools (Chrome/Firefox)
 - WebAIM Contrast Checker: https://webaim.org/resources/contrastchecker/
 - axe DevTools browser extension
@@ -284,6 +295,7 @@ Add to CI/CD pipeline:
    - Test disabled state contrast
 
 **Test Checklist:**
+
 - [ ] All text meets 4.5:1 contrast ratio
 - [ ] Large text (18pt+) meets 3:1 contrast ratio
 - [ ] Focus indicators meet 3:1 contrast ratio
@@ -292,6 +304,7 @@ Add to CI/CD pipeline:
 ### 4.2 Touch Target Sizes
 
 **Requirements:**
+
 - Minimum 44x44px for touch targets (iOS/Android guidelines)
 - Minimum 24x24px for desktop (WCAG 2.1)
 
@@ -309,6 +322,7 @@ Add to CI/CD pipeline:
    - Test with mouse and keyboard
 
 **Test Checklist:**
+
 - [ ] All touch targets meet minimum size requirements
 - [ ] Spacing between targets is adequate
 - [ ] Targets are not overlapping
@@ -331,6 +345,7 @@ Add to CI/CD pipeline:
    - Verify focus offset is visible
 
 **Test Checklist:**
+
 - [ ] All interactive elements have visible focus indicators
 - [ ] Focus indicators meet contrast requirements
 - [ ] Focus indicators are not obscured
@@ -343,11 +358,13 @@ Add to CI/CD pipeline:
 ### 5.1 Pre-Release Checklist
 
 **Automated Testing:**
+
 - [ ] All accessibility tests pass
 - [ ] No axe violations in critical flows
 - [ ] Lighthouse accessibility score > 90
 
 **Manual Testing:**
+
 - [ ] NVDA testing completed on Windows
 - [ ] VoiceOver testing completed on macOS
 - [ ] Keyboard navigation tested
@@ -355,6 +372,7 @@ Add to CI/CD pipeline:
 - [ ] Touch targets verified
 
 **Documentation:**
+
 - [ ] Accessibility statement updated
 - [ ] Known issues documented
 - [ ] Testing results documented
@@ -493,4 +511,3 @@ For accessibility questions or issues:
 
 **Last Updated:** January 28, 2025  
 **Next Review:** After next major release
-

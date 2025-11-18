@@ -31,6 +31,7 @@ Troubleshoot an issue using systematic approach and Friday-specific knowledge.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code to understand issue
 - `codebase_search` - Find related code
 - `grep` - Search for error patterns
@@ -38,6 +39,7 @@ Troubleshoot an issue using systematic approach and Friday-specific knowledge.
 - `search_replace` - Fix code
 
 **DO NOT:**
+
 - Skip systematic approach
 - Ignore Friday-specific knowledge
 - Miss common issues
@@ -72,6 +74,7 @@ Before troubleshooting, think through:
 ## TROUBLESHOOTING METHODOLOGY
 
 ### Step 1: Understand the Issue
+
 1. **What is the problem?**
    - Error message?
    - Unexpected behavior?
@@ -90,6 +93,7 @@ Before troubleshooting, think through:
    - Frontend?
 
 ### Step 2: Check Common Issues
+
 1. **Rate limiting:**
    - Redis available?
    - Fallback mode?
@@ -116,6 +120,7 @@ Before troubleshooting, think through:
    - Config issues?
 
 ### Step 3: Debug Systematically
+
 1. **Add logging:**
    - Use logger (not console.log)
    - Log at decision points
@@ -132,6 +137,7 @@ Before troubleshooting, think through:
    - Identify divergence
 
 ### Step 4: Fix and Verify
+
 1. **Fix root cause:**
    - Don't patch symptoms
    - Fix underlying issue
@@ -179,18 +185,21 @@ Before troubleshooting, think through:
 **Root Cause:** [explanation]
 
 **Debugging Steps:**
+
 1. [Step 1]
 2. [Step 2]
 3. [Step 3]
 
 **Fix Applied:**
+
 - [what was fixed]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Issue resolved: PASSED
 - ✅ Regression test: ADDED
 ```
-

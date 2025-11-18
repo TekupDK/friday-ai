@@ -14,7 +14,7 @@
 
 ### **💬 **TERMINOLOGI MISFORSTÅELSE:\*\*
 
-```typescript
+````typescript
 🤔 MIN ANTAGELSE:
 
 - "Venstre panel" = Email list med AI features
@@ -214,7 +214,7 @@ read_file: EmailTabV2.tsx
 - Bekræft bruger oplevelse
 - Undgå kun kode analyse
 
-```
+````
 
 **Jeg fejlede fordi jeg antog "venstre panel" = email list, men i virkeligheden er det AI Assistant (chat).** 🚨
 

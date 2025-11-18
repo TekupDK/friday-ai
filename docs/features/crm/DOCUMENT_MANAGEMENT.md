@@ -9,6 +9,7 @@
 The Document Management feature provides comprehensive file upload, storage, and management capabilities for customer documents in the CRM module. It integrates with Supabase Storage for reliable file storage and includes features like upload progress tracking, file validation, and automatic cleanup.
 
 **Key Features:**
+
 - ✅ File upload to Supabase Storage
 - ✅ Upload progress indicator
 - ✅ File validation (size and type)
@@ -69,6 +70,7 @@ The Document Management feature provides comprehensive file upload, storage, and
 ### Data Flow
 
 **Upload Flow:**
+
 1. User selects file in `DocumentUploader`
 2. File validated using `STORAGE` constants
 3. File uploaded to Supabase Storage bucket
@@ -78,6 +80,7 @@ The Document Management feature provides comprehensive file upload, storage, and
 7. Cache invalidated, UI updated
 
 **Delete Flow:**
+
 1. User clicks delete in `DocumentList`
 2. tRPC `deleteDocument` mutation called
 3. Metadata deleted from database
@@ -92,6 +95,7 @@ The Document Management feature provides comprehensive file upload, storage, and
 Centralized configuration for file uploads and storage operations.
 
 **Configuration:**
+
 ```typescript
 export const STORAGE = {
   MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
@@ -107,11 +111,13 @@ export const STORAGE = {
 ```
 
 **Validation Functions:**
+
 - `validateFileSize(size: number)` - Validates file size
 - `validateFileType(type: string)` - Validates MIME type
 - `validateFile(file: File)` - Validates both size and type
 
 **Usage:**
+
 ```typescript
 import { STORAGE, validateFile } from "@/constants/storage";
 
@@ -132,20 +138,23 @@ const maxSize = STORAGE.MAX_FILE_SIZE;
 Centralized pricing configuration for reports and calculations.
 
 **Configuration:**
+
 ```typescript
 export const PRICING = {
   HOURLY_RATE: 349, // DKK per hour (faktureret)
-  LABOR_COST: 90,   // DKK per hour (løn)
+  LABOR_COST: 90, // DKK per hour (løn)
 } as const;
 ```
 
 **Helper Functions:**
+
 - `calculateRevenue(billableHours: number)` - Calculate revenue
 - `calculateLaborCost(billableHours: number)` - Calculate labor cost
 - `calculateProfit(billableHours: number)` - Calculate profit
 - `calculateProfitMargin(billableHours: number)` - Calculate margin %
 
 **Usage:**
+
 ```typescript
 import { PRICING, calculateProfit } from "@/constants/pricing";
 
@@ -160,6 +169,7 @@ const profit = calculateProfit(billableHours);
 **Purpose:** Create document metadata record after file upload
 
 **Input:**
+
 ```typescript
 {
   customerProfileId: number;
@@ -174,6 +184,7 @@ const profit = calculateProfit(billableHours);
 ```
 
 **Output:**
+
 ```typescript
 CustomerDocument {
   id: number;
@@ -192,6 +203,7 @@ CustomerDocument {
 ```
 
 **Example:**
+
 ```typescript
 const createMutation = trpc.crm.extensions.createDocument.useMutation({
   onSuccess: () => {
@@ -216,6 +228,7 @@ await createMutation.mutateAsync({
 **Purpose:** List documents for a customer
 
 **Input:**
+
 ```typescript
 {
   customerProfileId: number;
@@ -226,11 +239,13 @@ await createMutation.mutateAsync({
 ```
 
 **Output:**
+
 ```typescript
 CustomerDocument[]
 ```
 
 **Example:**
+
 ```typescript
 const { data: documents } = trpc.crm.extensions.listDocuments.useQuery({
   customerProfileId: 123,
@@ -244,6 +259,7 @@ const { data: documents } = trpc.crm.extensions.listDocuments.useQuery({
 **Purpose:** Delete document metadata and file from storage
 
 **Input:**
+
 ```typescript
 {
   id: number;
@@ -251,6 +267,7 @@ const { data: documents } = trpc.crm.extensions.listDocuments.useQuery({
 ```
 
 **Output:**
+
 ```typescript
 {
   success: boolean;
@@ -259,15 +276,14 @@ const { data: documents } = trpc.crm.extensions.listDocuments.useQuery({
 ```
 
 **Example:**
+
 ```typescript
 const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation({
-  onSuccess: async (result) => {
+  onSuccess: async result => {
     // Also delete from Supabase Storage
     if (result.storageUrl && supabase) {
       const filePath = extractPathFromUrl(result.storageUrl);
-      await supabase.storage
-        .from("customer-documents")
-        .remove([filePath]);
+      await supabase.storage.from("customer-documents").remove([filePath]);
     }
     toast.success("Document deleted");
   },
@@ -288,6 +304,7 @@ The upload progress is simulated since Supabase Storage SDK doesn't provide nati
 - **100%** - Metadata saved
 
 **Implementation:**
+
 ```typescript
 const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -302,6 +319,7 @@ setUploadProgress(100);
 ```
 
 **UI Component:**
+
 ```typescript
 {uploading && uploadProgress > 0 && (
   <div className="space-y-2">
@@ -328,21 +346,20 @@ setUploadProgress(100);
 When a document is deleted, both the metadata and the actual file are removed:
 
 **Implementation:**
+
 ```typescript
 const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation({
-  onSuccess: async (result) => {
+  onSuccess: async result => {
     if (result.storageUrl && supabase) {
       // Extract file path from URL
       // Format: https://[project].supabase.co/storage/v1/object/public/customer-documents/documents/[path]
       const url = new URL(result.storageUrl);
       const pathParts = url.pathname.split("/");
       const bucketIndex = pathParts.indexOf("customer-documents");
-      
+
       if (bucketIndex !== -1 && bucketIndex < pathParts.length - 1) {
         const filePath = pathParts.slice(bucketIndex + 1).join("/");
-        await supabase.storage
-          .from("customer-documents")
-          .remove([filePath]);
+        await supabase.storage.from("customer-documents").remove([filePath]);
       }
     }
   },
@@ -350,6 +367,7 @@ const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation({
 ```
 
 **Error Handling:**
+
 - If storage deletion fails, metadata is still deleted
 - Warning logged to console
 - User notified via toast
@@ -375,6 +393,7 @@ const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
 ```
 
 **Validation Rules:**
+
 - **Size:** Maximum 10MB (configurable via `STORAGE.MAX_FILE_SIZE`)
 - **Type:** Must be in `STORAGE.ALLOWED_TYPES` list
 - **Error Messages:** Clear, user-friendly messages
@@ -417,7 +436,11 @@ function CustomerDocuments({ customerId }: { customerId: number }) {
 ### Custom Validation
 
 ```typescript
-import { STORAGE, validateFileSize, validateFileType } from "@/constants/storage";
+import {
+  STORAGE,
+  validateFileSize,
+  validateFileType,
+} from "@/constants/storage";
 
 function customValidation(file: File): string | null {
   const sizeCheck = validateFileSize(file.size);
@@ -441,6 +464,7 @@ function customValidation(file: File): string | null {
 **Problem:** Supabase Storage bucket doesn't exist
 
 **Solution:**
+
 1. Create bucket in Supabase Dashboard:
    - Go to Storage → Create bucket
    - Name: `customer-documents`
@@ -454,6 +478,7 @@ function customValidation(file: File): string | null {
 **Problem:** Upload progress indicator doesn't appear
 
 **Solution:**
+
 - Check that `uploading` state is `true`
 - Verify `uploadProgress > 0`
 - Check browser console for errors
@@ -464,6 +489,7 @@ function customValidation(file: File): string | null {
 **Problem:** Metadata deleted but file remains in Supabase
 
 **Solution:**
+
 - Check that `storageUrl` is valid
 - Verify file path extraction logic
 - Check Supabase Storage permissions
@@ -474,6 +500,7 @@ function customValidation(file: File): string | null {
 **Problem:** Valid files are rejected
 
 **Solution:**
+
 - Check `STORAGE.ALLOWED_TYPES` includes your file type
 - Verify file size is under `STORAGE.MAX_FILE_SIZE`
 - Check MIME type detection (browser-dependent)
@@ -484,6 +511,7 @@ function customValidation(file: File): string | null {
 **Problem:** Type errors with constants
 
 **Solution:**
+
 - Ensure constants are imported correctly
 - Use type assertions if needed: `(STORAGE.ALLOWED_TYPES as readonly string[])`
 - Check that `as const` is used in constant definitions
@@ -503,4 +531,3 @@ function customValidation(file: File): string | null {
 - [Constants System](../constants/README.md)
 - [Supabase Integration](../../integrations/Supabase.md)
 - [API Reference](../../../API_REFERENCE.md)
-

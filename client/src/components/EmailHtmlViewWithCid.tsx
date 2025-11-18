@@ -66,7 +66,6 @@ export default function EmailHtmlViewWithCid({
     return () => {
       cancelled = true;
     };
-     
   }, [safe, messageId]); // Resolve CID images and constrain image sizes
 
   if (!safe) return null;
@@ -75,7 +74,6 @@ export default function EmailHtmlViewWithCid({
     <div
       ref={containerRef}
       className={className}
-       
       dangerouslySetInnerHTML={{ __html: safe }}
     />
   );

@@ -31,6 +31,7 @@ Improve the performance of a slow or inefficient tRPC query by identifying bottl
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read query implementation
 - `codebase_search` - Find similar queries
 - `grep` - Search for query patterns
@@ -38,6 +39,7 @@ Improve the performance of a slow or inefficient tRPC query by identifying bottl
 - `search_replace` - Apply optimizations
 
 **DO NOT:**
+
 - Optimize without measuring
 - Skip database analysis
 - Ignore caching opportunities
@@ -71,6 +73,7 @@ Before optimizing, think through:
 ## PERFORMANCE ANALYSIS
 
 ### Common Issues:
+
 1. **N+1 queries:** Multiple queries in loop
 2. **Missing indexes:** Slow WHERE/ORDER BY clauses
 3. **Over-fetching:** Selecting all columns when only few needed
@@ -79,6 +82,7 @@ Before optimizing, think through:
 6. **Inefficient joins:** Multiple separate queries instead of joins
 
 ### Analysis Steps:
+
 1. **Measure current performance:**
    - Check query execution time
    - Review database query logs
@@ -96,6 +100,7 @@ Before optimizing, think through:
 ### 1. Database Query Optimization
 
 **Select only needed fields:**
+
 ```typescript
 // Before: Selects all columns
 const results = await db.select().from(customers);
@@ -111,6 +116,7 @@ const results = await db
 ```
 
 **Add database indexes:**
+
 ```typescript
 // In drizzle/schema.ts
 export const customersInFridayAi = fridayAi.table(
@@ -129,6 +135,7 @@ export const customersInFridayAi = fridayAi.table(
 ```
 
 **Use pagination:**
+
 ```typescript
 // Before: Loads all records
 const results = await db.select().from(customers);
@@ -144,6 +151,7 @@ const results = await db
 ```
 
 **Batch queries instead of N+1:**
+
 ```typescript
 // Before: N+1 queries
 for (const customer of customers) {
@@ -161,6 +169,7 @@ const allInvoices = await db
 ### 2. Caching Strategy
 
 **React Query caching (automatic):**
+
 ```typescript
 // tRPC hooks automatically cache
 const { data } = trpc.customers.list.useQuery(
@@ -173,6 +182,7 @@ const { data } = trpc.customers.list.useQuery(
 ```
 
 **Redis caching for expensive queries:**
+
 ```typescript
 // In database helper
 export async function getExpensiveData(userId: number) {
@@ -189,6 +199,7 @@ export async function getExpensiveData(userId: number) {
 ### 3. Frontend Optimization
 
 **Use useMemo for expensive computations:**
+
 ```typescript
 const expensiveValue = useMemo(() => {
   return data?.map(item => expensiveComputation(item));
@@ -196,6 +207,7 @@ const expensiveValue = useMemo(() => {
 ```
 
 **Virtual scrolling for large lists:**
+
 ```typescript
 import { useVirtualizer } from "@tanstack/react-virtual";
 
@@ -247,6 +259,7 @@ const virtualizer = useVirtualizer({
 ## VERIFICATION
 
 After optimization:
+
 - ✅ Query execution time improved
 - ✅ No N+1 queries
 - ✅ Indexes added if needed
@@ -261,32 +274,38 @@ After optimization:
 ### Optimization: [Query Name]
 
 **Performance Analysis:**
+
 - Issue: [what was slow]
 - Root cause: [why it was slow]
 - Current metrics: [execution time, etc.]
 
 **Optimizations Applied:**
+
 1. [Optimization 1]
 2. [Optimization 2]
 
 **Database Changes:**
+
 - Indexes added: [list]
 - Query optimized: [what changed]
 
 **Caching Strategy:**
+
 - [React Query / Redis / None]
 - TTL: [if applicable]
 
 **Results:**
+
 - Before: [metrics]
 - After: [metrics]
 - Improvement: [percentage]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Performance improved: PASSED
 - ✅ No regressions: PASSED
 ```
-

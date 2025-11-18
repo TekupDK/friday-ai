@@ -1,6 +1,6 @@
 /**
  * UTCP Tool Execution Handler
- * 
+ *
  * Main entry point for executing UTCP tools
  */
 
@@ -12,7 +12,6 @@ import { getUTCPTool } from "./manifest";
 import type { UTCPTool } from "./types";
 import type { UTCPToolResult } from "./types";
 import { validateUTCPInput } from "./validators";
-
 
 /**
  * Cache management (in-memory, can be upgraded to Redis)
@@ -51,7 +50,7 @@ function cacheResult(
 
 /**
  * Execute UTCP tool
- * 
+ *
  * @param toolName - Name of tool to execute
  * @param args - Tool arguments
  * @param userId - User ID for authentication
@@ -150,10 +149,20 @@ export async function executeUTCPTool(
   try {
     switch (tool.handler.type) {
       case "http":
-        result = await executeHTTPHandler(tool, validation.data!, userId, correlationId);
+        result = await executeHTTPHandler(
+          tool,
+          validation.data!,
+          userId,
+          correlationId
+        );
         break;
       case "database":
-        result = await executeDatabaseHandler(tool, validation.data!, userId, correlationId);
+        result = await executeDatabaseHandler(
+          tool,
+          validation.data!,
+          userId,
+          correlationId
+        );
         break;
       default:
         result = {
@@ -203,4 +212,3 @@ export async function executeUTCPTool(
     };
   }
 }
-

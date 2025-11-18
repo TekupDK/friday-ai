@@ -30,12 +30,14 @@ Perform systematic root cause analysis to identify the true cause of an issue.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code and logs
 - `codebase_search` - Find related issues
 - `grep` - Search for patterns
 - `run_terminal_cmd` - Check logs and run tests
 
 **DO NOT:**
+
 - Jump to conclusions
 - Ignore evidence
 - Skip hypothesis testing

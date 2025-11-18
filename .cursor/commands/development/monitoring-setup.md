@@ -19,4 +19,3 @@ Configure metrics collection, set up dashboards, create alerts, monitor key metr
 ## OUTPUT
 
 Monitoring configured with dashboards and alerts.
-

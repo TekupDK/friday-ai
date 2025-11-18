@@ -19,4 +19,3 @@ Set up test environment, write integration tests, use real dependencies, test wo
 ## OUTPUT
 
 Integration tests written with proper setup.
-

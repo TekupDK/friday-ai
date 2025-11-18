@@ -8,11 +8,13 @@
 ## 📊 RESULTAT
 
 ### Før Organisering:
+
 - **Total:** 371 commands i én flad mappe
 - **Struktur:** Ingen organisering
 - **Problem:** Overvældende, svært at finde commands
 
 ### Efter Organisering:
+
 - **Total:** ~300 commands organiseret i 8 mapper
 - **Struktur:** Klar hierarki med logisk gruppering
 - **Resultat:** Nemt at finde og browse commands
@@ -22,7 +24,9 @@
 ## 📁 MAPPER STRUKTUR
 
 ### `core/` - ~50 commands
+
 **Session Management:**
+
 - `session-engine.md`
 - `session-init.md`
 - `session-progress.md`
@@ -51,18 +55,21 @@
 - `parse-and-execute.md`
 
 **Status & Tracking:**
+
 - `get-project-status.md`
 - `track-development-progress.md`
 - `track-system-status.md`
 - `update-feature-status.md`
 
 **Task Management:**
+
 - `task-faerdig.md` (dansk)
 - `hvad-nu.md` (dansk)
 - `identificer-manglende.md` (dansk)
 - `fortael-naermere.md` (dansk)
 
 **TODO Management:**
+
 - `complete-todo-task.md`
 - `batch-complete-todos.md`
 - `cleanup-completed-todos.md`
@@ -82,6 +89,7 @@
 - `fortsaet-todo.md` (dansk)
 
 **Commit:**
+
 - `commit-arbejde.md` (dansk)
 - `commit-chat-session-changes.md`
 - `commit-only-my-changes.md`
@@ -91,6 +99,7 @@
 - `auto-commit.md`
 
 **Sprint Management:**
+
 - `create-sprint-plan.md`
 - `sprint-retrospective.md`
 - `sprint-burndown.md`
@@ -102,6 +111,7 @@
 ### `development/` - ~120 commands
 
 **Create:**
+
 - `create-trpc-procedure.md`
 - `create-react-component.md`
 - `create-react-page.md`
@@ -121,6 +131,7 @@
 - `component-library.md`
 
 **Implement:**
+
 - `implement-feature.md`
 - `implement-feature-fullstack.md`
 - `implement-from-chat-summary.md`
@@ -139,6 +150,7 @@
 - `validate-implementation.md`
 
 **Refactor & Improve:**
+
 - `refactor-code.md`
 - `refactor-large-files.md`
 - `refactor-legacy-code.md`
@@ -152,6 +164,7 @@
 - `architecture-refactor.md`
 
 **Fix:**
+
 - `fix-bug.md`
 - `fix-code-quality-issues.md`
 - `fix-compile-errors.md`
@@ -166,6 +179,7 @@
 - `safe-refactor.md`
 
 **Add & Setup:**
+
 - `add-accessibility-features.md`
 - `add-ai-tool-handler.md`
 - `add-documentation.md`
@@ -185,6 +199,7 @@
 - `suggest-improvements.md`
 
 **Review & Audit:**
+
 - `review-code-under-development.md`
 - `code-review.md`
 - `senior-code-review.md`
@@ -207,6 +222,7 @@
 - `quality-gates.md`
 
 **Ideation:**
+
 - `generate-ideas-from-file.md`
 - `generate-next-steps.md`
 - `generate-ideas-from-diff.md`
@@ -219,6 +235,7 @@
 - `generate-ai-ideas-for-code.md`
 
 **Analysis:**
+
 - `analyze-changes.md`
 - `analyze-api-performance.md`
 - `analyze-codebase-health.md`
@@ -231,6 +248,7 @@
 - `uddyb-chat-kontekst.md` (dansk)
 
 **Documentation:**
+
 - `add-documentation.md`
 - `documentation-update.md`
 - `sync-docs-with-code.md`
@@ -365,6 +383,7 @@
 ### `chat/` - ~27 commands
 
 **Dansk:**
+
 - `laes-chat-samtale.md`
 - `analyser-chat-kontekst.md`
 - `brug-chat-informationer.md`
@@ -383,6 +402,7 @@
 - `uddyb-chat-kontekst.md`
 
 **Engelsk:**
+
 - `analyze-chat-prompt.md`
 - `commit-chat-session-changes.md`
 - `convert-chat-to-docs.md`
@@ -425,4 +445,3 @@
 ---
 
 **Status:** ✅ FASE 2 COMPLETE - Alle commands organiseret i mapper!
-

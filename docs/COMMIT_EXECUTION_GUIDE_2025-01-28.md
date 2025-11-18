@@ -8,13 +8,16 @@
 ## 📋 Commit Groups (Based on Current Staged Files)
 
 ### Commit 1: Documentation Organization
+
 **Type:** `chore(docs)`
 
 **Files:**
+
 - Documentation files moved to proper locations (R = Renamed)
 - New documentation files added
 
 **Command:**
+
 ```bash
 git commit -m "chore(docs): organize and move documentation to proper locations
 
@@ -30,9 +33,11 @@ git commit -m "chore(docs): organize and move documentation to proper locations
 ---
 
 ### Commit 2: Commands System Updates
+
 **Type:** `refactor(commands)`
 
 **Files:**
+
 - `.cursor/commands/README.md` (new)
 - `.cursor/commands/_meta/ANALYSIS_COMPLETE.md` (new)
 - `.cursor/commands/_meta/COMMANDS_BY_CATEGORY.md` (modified)
@@ -40,6 +45,7 @@ git commit -m "chore(docs): organize and move documentation to proper locations
 - `docs/commands/TODOS_IMPLEMENTATION_COMPLETE.md` (new)
 
 **Command:**
+
 ```bash
 git commit -m "refactor(commands): update commands system documentation and metadata
 
@@ -52,9 +58,11 @@ git commit -m "refactor(commands): update commands system documentation and meta
 ---
 
 ### Commit 3: Code Updates and Fixes
+
 **Type:** `chore` / `fix`
 
 **Files:**
+
 - `client/src/App.tsx` (modified)
 - `client/src/main.tsx` (modified)
 - `client/src/pages/WorkspaceLayout.tsx` (modified)
@@ -68,6 +76,7 @@ git commit -m "refactor(commands): update commands system documentation and meta
 - `package.json` (modified)
 
 **Command:**
+
 ```bash
 git commit -m "chore: update code and fix various issues
 
@@ -81,14 +90,17 @@ git commit -m "chore: update code and fix various issues
 ---
 
 ### Commit 4: DevOps and Infrastructure
+
 **Type:** `docs(devops)`
 
 **Files:**
+
 - `docs/devops-deploy/IMPLEMENTATION_SUMMARY.md` (modified)
 - `docs/devops-deploy/SENTRY_QUICK_START.md` (new)
 - `docs/devops-deploy/SENTRY_SETUP.md` (modified)
 
 **Command:**
+
 ```bash
 git commit -m "docs(devops): update Sentry setup and implementation docs
 
@@ -100,12 +112,15 @@ git commit -m "docs(devops): update Sentry setup and implementation docs
 ---
 
 ### Commit 5: Scripts and Tools
+
 **Type:** `chore(scripts)`
 
 **Files:**
+
 - `scripts/organize-commits.ps1` (new)
 
 **Command:**
+
 ```bash
 git commit -m "chore(scripts): add commit organization script
 
@@ -119,6 +134,7 @@ git commit -m "chore(scripts): add commit organization script
 ## 🚀 Execution Steps
 
 ### Step 1: Review Current Status
+
 ```bash
 git status
 ```
@@ -126,6 +142,7 @@ git status
 ### Step 2: Execute Commits (in order)
 
 **Commit 1: Documentation Organization**
+
 ```bash
 git commit -m "chore(docs): organize and move documentation to proper locations
 
@@ -139,6 +156,7 @@ git commit -m "chore(docs): organize and move documentation to proper locations
 ```
 
 **Commit 2: Commands System**
+
 ```bash
 git commit -m "refactor(commands): update commands system documentation and metadata
 
@@ -149,6 +167,7 @@ git commit -m "refactor(commands): update commands system documentation and meta
 ```
 
 **Commit 3: Code Updates**
+
 ```bash
 git commit -m "chore: update code and fix various issues
 
@@ -160,6 +179,7 @@ git commit -m "chore: update code and fix various issues
 ```
 
 **Commit 4: DevOps**
+
 ```bash
 git commit -m "docs(devops): update Sentry setup and implementation docs
 
@@ -169,6 +189,7 @@ git commit -m "docs(devops): update Sentry setup and implementation docs
 ```
 
 **Commit 5: Scripts**
+
 ```bash
 git commit -m "chore(scripts): add commit organization script
 
@@ -180,10 +201,12 @@ git commit -m "chore(scripts): add commit organization script
 ### Step 3: Handle Untracked Files
 
 **Untracked files to consider:**
+
 - `client/src/utils/__tests__/` - Test files (add if needed)
 - `docs/SESSION_SUMMARY_2025-01-28.md` - Session summary (add to docs commit)
 
 **Add untracked files:**
+
 ```bash
 # Add session summary
 git add docs/SESSION_SUMMARY_2025-01-28.md
@@ -200,6 +223,7 @@ git commit --amend -m "chore(docs): organize and move documentation to proper lo
 ```
 
 ### Step 4: Verify Commits
+
 ```bash
 # See commit history
 git log --oneline -5
@@ -209,6 +233,7 @@ git status
 ```
 
 ### Step 5: Push to Origin
+
 ```bash
 # Push all commits
 git push origin main
@@ -231,6 +256,7 @@ After commits, verify:
 ## 📊 Expected Results
 
 After execution:
+
 - **5 commits** created
 - **~50 files** committed
 - **Clean git status** (only intentional untracked files)
@@ -241,4 +267,3 @@ After execution:
 **Status:** ✅ Ready to execute  
 **Estimated time:** 10-15 minutter  
 **Last Updated:** 2025-01-28
-

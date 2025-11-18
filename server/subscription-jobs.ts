@@ -1,6 +1,6 @@
 /**
  * Subscription Background Jobs
- * 
+ *
  * Handles automated subscription tasks like monthly renewals
  */
 
@@ -81,7 +81,10 @@ export async function processMonthlyRenewals(
             logger.error(
               {
                 subscriptionId: subscription.id,
-                error: emailError instanceof Error ? emailError.message : String(emailError),
+                error:
+                  emailError instanceof Error
+                    ? emailError.message
+                    : String(emailError),
               },
               "[Subscription Jobs] Failed to send renewal email"
             );
@@ -149,4 +152,3 @@ export async function processMonthlyRenewals(
 export async function processUserRenewals(userId: number): Promise<JobResult> {
   return await processMonthlyRenewals(userId);
 }
-

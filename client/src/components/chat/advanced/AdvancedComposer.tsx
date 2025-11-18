@@ -22,7 +22,6 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-
 export interface SlashCommand {
   id: string;
   label: string;

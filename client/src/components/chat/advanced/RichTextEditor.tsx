@@ -243,9 +243,9 @@ export function RichTextEditor({
                       button.custom
                         ? button.custom()
                         : button.command
-                          ? (button.value !== undefined
-                              ? execCommand(button.command, button.value)
-                              : execCommand(button.command))
+                          ? button.value !== undefined
+                            ? execCommand(button.command, button.value)
+                            : execCommand(button.command)
                           : undefined
                     }
                     title={button.title}

@@ -30,11 +30,13 @@ Create a complete Product Requirements Document (PRD) for a feature or product w
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review existing PRDs
 - `codebase_search` - Find similar features
 - `grep` - Search for patterns
 
 **DO NOT:**
+
 - Create PRD without understanding requirements
 - Skip acceptance criteria
 - Ignore technical considerations
@@ -71,28 +73,35 @@ Before creating PRD, think through:
 ## CODEBASE PATTERNS
 
 ### Example: PRD Structure
+
 ```markdown
 # PRD: [Feature Name]
 
 ## Overview
+
 [Brief description]
 
 ## Problem Statement
+
 [What problem this solves]
 
 ## Goals
+
 - [Goal 1]
 - [Goal 2]
 
 ## User Stories
+
 - As a [user], I want [action] so that [benefit]
 - As a [user], I want [action] so that [benefit]
 
 ## Acceptance Criteria
+
 - [ ] [Criterion 1]
 - [ ] [Criterion 2]
 
 ## Technical Considerations
+
 - [Consideration 1]
 - [Consideration 2]
 ```
@@ -129,6 +138,7 @@ Before creating PRD, think through:
 ## VERIFICATION
 
 After creating PRD:
+
 - ✅ Problem clearly defined
 - ✅ User stories complete
 - ✅ Acceptance criteria defined
@@ -145,31 +155,38 @@ After creating PRD:
 **Status:** [Draft / Review / Approved]
 
 ## Problem Statement
+
 [What problem this solves]
 
 ## Goals
+
 - [Goal 1]
 - [Goal 2]
 
 ## User Personas
+
 - [Persona 1] - [Description]
 - [Persona 2] - [Description]
 
 ## User Stories
+
 1. **As a [user], I want [action] so that [benefit]**
    - Acceptance Criteria:
      - [ ] [Criterion 1]
      - [ ] [Criterion 2]
 
 ## Technical Considerations
+
 - [Consideration 1]
 - [Consideration 2]
 
 ## Implementation Phases
+
 **Phase 1:** [Description]
 **Phase 2:** [Description]
 
 ## Success Metrics
+
 - [Metric 1]
 - [Metric 2]
 ```
@@ -181,4 +198,3 @@ After creating PRD:
 - **Be specific:** Define exact requirements
 - **Be actionable:** Provide implementation guidance
 - **Be measurable:** Define success metrics
-

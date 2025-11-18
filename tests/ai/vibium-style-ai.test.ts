@@ -89,9 +89,7 @@ class VibiumAIHelper {
     // Wait for response
     await this.page.waitForTimeout(5000);
 
-    const aiMessage = this.page
-      .locator('[data-testid="ai-message"]')
-      .last();
+    const aiMessage = this.page.locator('[data-testid="ai-message"]').last();
     const response = await aiMessage.textContent();
 
     const responseTime = Date.now() - startTime;
@@ -149,9 +147,7 @@ class VibiumAIHelper {
 
     await this.page.waitForTimeout(5000);
 
-    const aiMessage = this.page
-      .locator('[data-testid="ai-message"]')
-      .last();
+    const aiMessage = this.page.locator('[data-testid="ai-message"]').last();
     const response = await aiMessage.textContent();
 
     // Validate email context usage
@@ -191,9 +187,7 @@ class VibiumAIHelper {
 
     await this.page.waitForTimeout(5000);
 
-    const aiMessage = this.page
-      .locator('[data-testid="ai-message"]')
-      .last();
+    const aiMessage = this.page.locator('[data-testid="ai-message"]').last();
     const response = await aiMessage.textContent();
 
     const validatesTime = /(14|14:00|klokken 14|to)/i.test(response || "");
@@ -388,9 +382,7 @@ class VibiumAIHelper {
       await sendButton.click();
       await this.page.waitForTimeout(3000);
 
-      const aiMessage = this.page
-        .locator('[data-testid="ai-message"]')
-        .last();
+      const aiMessage = this.page.locator('[data-testid="ai-message"]').last();
       const response = await aiMessage.textContent();
 
       const quality = {

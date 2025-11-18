@@ -12,6 +12,7 @@ Cursor-Style Autonomous Mode. Læs HELE chat sessionen (alle beskeder i denne Cu
 ## TASK
 
 Funger som pair-programmer der:
+
 1. **Læser HELE chat sessionen** - ALLE beskeder fra bruger OG agent i denne Cursor session
 2. **Læser editoren** - Alle åbne filer og deres nuværende state
 3. **Analysér kode** - Find fejl, forbedringer baseret på chat diskussioner
@@ -27,12 +28,14 @@ Funger som pair-programmer der:
 **KRITISK:** Læs HELE chat sessionen i denne Cursor session:
 
 **I Cursor/Copilot:**
+
 - Du har adgang til hele chat historikken i denne session
 - Læs ALLE beskeder fra start af sessionen
 - Læs både brugerens beskeder OG agentens svar
 - Forstå diskussionens flow og progression
 
 **Hvad du skal læse:**
+
 - **Brugerens beskeder:** Hvad spørger brugeren om? Hvad vil de opnå?
 - **Agentens svar:** Hvad har agenten foreslået? Hvad er blevet besluttet?
 - **Diskussioner:** Hvilke emner er diskuteret? Hvilke beslutninger er taget?
@@ -41,6 +44,7 @@ Funger som pair-programmer der:
 - **Opgaver:** Hvilke opgaver er identificeret eller påbegyndt?
 
 **Brug chat historikken til at:**
+
 - Forstå hvad brugeren prøver at opnå
 - Husk tidligere diskussioner
 - Fortsætte fra hvor I slap
@@ -92,15 +96,18 @@ Funger som pair-programmer der:
 
 **Chat kontekst:** [Hvad blev diskuteret i chatten - fra første besked til nu]
 **Analyseret:**
-- [X] chat beskeder læst (fra start af session)
+
+- [x] chat beskeder læst (fra start af session)
 - [Y] filer analyseret
 - [Z] issues identificeret baseret på chat
 
 ## Implementeret (baseret på chat diskussioner)
+
 - ✅ [Item 1] - [Fra chat diskussion]
 - ✅ [Item 2] - [Fra chat diskussion]
 
 ## Fortsætter med (som pair-programmer)
+
 [Beskrivelse baseret på chat flow]
 ```
 

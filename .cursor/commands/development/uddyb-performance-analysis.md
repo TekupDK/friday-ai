@@ -13,6 +13,7 @@ Du er en senior performance engineer der uddyber performance analyser med detalj
 ## TASK
 
 Uddyb performance analysis ved at:
+
 - Analysere performance metrics og bottlenecks
 - Gennemgå response times og throughput
 - Identificere optimization muligheder
@@ -36,6 +37,7 @@ Uddyb performance analysis ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find performance-critical code
 - `read_file` - Læs relevant kode
 - `grep` - Søg efter performance patterns
@@ -43,6 +45,7 @@ Uddyb performance analysis ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over metrics
 - Ignorere bottlenecks
 - Glem optimization muligheder
@@ -115,11 +118,13 @@ Provide comprehensive performance analysis:
 [Beskrivelse]
 
 **Analysis Period:**
+
 - From: [Date]
 - To: [Date]
 - Duration: [X] days
 
 **Key Metrics:**
+
 - Average Response Time: [X]ms
 - P95 Response Time: [X]ms
 - P99 Response Time: [X]ms
@@ -131,16 +136,19 @@ Provide comprehensive performance analysis:
 ### API Performance
 
 **Endpoints Analyzed:**
+
 - `[endpoint 1]`: [X]ms avg, [Y]ms p95
 - `[endpoint 2]`: [X]ms avg, [Y]ms p95
 
 **Performance Breakdown:**
 ```
+
 Request → [X]ms
-  ├─ Authentication: [Y]ms
-  ├─ Business Logic: [Z]ms
-  ├─ Database Query: [W]ms
-  └─ Response Serialization: [V]ms
+├─ Authentication: [Y]ms
+├─ Business Logic: [Z]ms
+├─ Database Query: [W]ms
+└─ Response Serialization: [V]ms
+
 ```
 
 ### Database Performance
@@ -368,4 +376,3 @@ Efter uddybning, verificer:
 ---
 
 **CRITICAL:** Start med at analysere performance data, derefter identificer bottlenecks og strukturér en omfattende performance analysis med konkrete optimizations.
-

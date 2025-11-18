@@ -11,6 +11,7 @@ Strategic debug logging has been added to critical flows in Friday AI Chat to he
 ## Purpose
 
 Strategic logging helps developers:
+
 - **Trace request flow** through the system with correlation IDs
 - **Identify decision points** where logic branches
 - **Debug data transformations** before and after operations
@@ -36,6 +37,7 @@ console.error("[ERROR] [Component] [Action]:", { error, context });
 ```
 
 **Format Components:**
+
 - `[LEVEL]` - Log level (DEBUG, INFO, WARN, ERROR)
 - `[Component]` - Component name (Chat, AI Router, Tool)
 - `[Action]` - Action being performed (sendMessage, routeAI, executeToolCall)
@@ -60,6 +62,7 @@ Strategic logging is added at:
 **Main Function:** `sendMessage`
 
 **Logging Points:**
+
 - Entry: Logs userId, conversationId, message length, context info, correlationId
 - Conversation ownership check: Logs verification process
 - Rate limit check: Logs rate limit status
@@ -70,6 +73,7 @@ Strategic logging is added at:
 - Completion: Logs duration and correlationId
 
 **Example Logs:**
+
 ```typescript
 [DEBUG] [Chat] [sendMessage]: Entry { userId, conversationId, messageLength, correlationId }
 [DEBUG] [Chat] [sendMessage]: Checking conversation ownership { conversationId, userId }
@@ -84,6 +88,7 @@ Strategic logging is added at:
 **Main Function:** `routeAI`
 
 **Logging Points:**
+
 - Entry: Logs task type, userId, message count, model selection inputs
 - Model selection: Logs selection process and chosen model
 - Intent parsing: Logs user message analysis and intent detection
@@ -95,6 +100,7 @@ Strategic logging is added at:
 - Completion: Logs model, response length, usage stats
 
 **Example Logs:**
+
 ```typescript
 [DEBUG] [AI Router] [routeAI]: Entry { taskType, userId, messageCount, correlationId }
 [INFO] [AI Router] [routeAI]: Model selected { selectedModel, taskType }
@@ -110,6 +116,7 @@ Strategic logging is added at:
 **Main Function:** `executeToolCall`
 
 **Logging Points:**
+
 - Entry: Logs tool name, userId, arguments, correlationId
 - Validation: Logs validation checks and failures
 - Registry lookup: Logs tool registry entry found
@@ -124,7 +131,7 @@ All tool handlers now accept `correlationId?: string` parameter and include it i
 async function handleToolName(
   args: ToolArgs,
   correlationId?: string
-): Promise<ToolCallResult>
+): Promise<ToolCallResult>;
 ```
 
 For handlers that require `userId`, the signature is:
@@ -134,7 +141,7 @@ async function handleToolName(
   userId: number,
   args: ToolArgs,
   correlationId?: string
-): Promise<ToolCallResult>
+): Promise<ToolCallResult>;
 ```
 
 - **Gmail Tools:**
@@ -166,6 +173,7 @@ async function handleToolName(
   - `handleCreateTask`: Logs userId, title, taskId, correlationId
 
 **Example Logs:**
+
 ```typescript
 [DEBUG] [Tool] [executeToolCall]: Entry { toolName, userId, argKeys, correlationId }
 [DEBUG] [Tool] [executeToolCall]: Tool registry entry found { toolName, requiresApproval }
@@ -185,6 +193,7 @@ All strategic logs include correlation IDs for request tracing:
 - **Format:** `action_${Date.now()}_${randomUUID().slice(0, 8)}`
 
 **Propagation Flow:**
+
 ```typescript
 // 1. Generated in chat router
 const correlationId = generateCorrelationId();
@@ -204,6 +213,7 @@ async function handleSearchGmail(args, correlationId) {
 ```
 
 **All Tool Handlers Support Correlation IDs:**
+
 - ✅ All 18 tool handlers accept `correlationId?: string` parameter
 - ✅ CorrelationId included in all handler logs (entry, success, error)
 - ✅ CorrelationId propagated through entire tool execution chain
@@ -214,6 +224,7 @@ async function handleSearchGmail(args, correlationId) {
 ### During Development
 
 Strategic logs help developers:
+
 - Understand request flow through the system
 - Identify where issues occur
 - Debug data transformations
@@ -222,6 +233,7 @@ Strategic logs help developers:
 ### During Debugging
 
 When debugging an issue:
+
 1. **Find the correlation ID** in the error or first log entry
 2. **Search logs** for that correlation ID
 3. **Trace the flow** through all components
@@ -317,4 +329,3 @@ grep "\[WARN\].*rate limit" logs/dev-server.log
 - [ ] Add performance metrics to logs
 - [ ] Implement log sampling for high-volume operations
 - [ ] Add log rotation and retention policies
-

@@ -36,8 +36,8 @@ test.describe("🧠 Memory Optimized Performance", () => {
     );
 
     // Check main bundle size reduction
-    const mainBundle = loadedChunks.find(chunk =>
-      chunk.size.includes("index-") || chunk.size.includes("main.tsx")
+    const mainBundle = loadedChunks.find(
+      chunk => chunk.size.includes("index-") || chunk.size.includes("main.tsx")
     );
 
     console.log(`📦 Main bundle: ${mainBundle?.size}`);

@@ -12,6 +12,7 @@ Læs faktiske chat samtaler fra databasen for at forstå hvordan chatten bruges.
 ## TASK
 
 Læs chat fra database:
+
 1. **Forstå database struktur** - `conversations` og `messages` tabeller
 2. **Hent conversations** - Via `getUserConversations` eller direkte SQL
 3. **Hent messages** - Via `getConversationMessages` eller direkte SQL
@@ -20,6 +21,7 @@ Læs chat fra database:
 ## DATABASE STRUKTUR
 
 **Conversations tabel:**
+
 - `id` - Conversation ID
 - `userId` - User ID
 - `title` - Conversation title
@@ -27,6 +29,7 @@ Læs chat fra database:
 - `updatedAt` - Last update
 
 **Messages tabel:**
+
 - `id` - Message ID
 - `conversationId` - Parent conversation
 - `role` - "user" | "assistant" | "system"
@@ -36,6 +39,7 @@ Læs chat fra database:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Læs `server/db.ts` for database funktioner
 - `codebase_search` - Find SQL queries eller database helpers
 - `grep` - Søg efter `getConversationMessages`, `getUserConversations`
@@ -112,4 +116,3 @@ Læs chat fra database:
 ---
 
 **CRITICAL:** Forstå database struktur, hent conversations og messages, læs ALLE messages i rækkefølge, og analysér hvordan chatten faktisk bruges i praksis.
-

@@ -272,7 +272,8 @@ describe("Log Redaction", () => {
           },
         },
         response: {
-          error: "Database connection failed: postgres://user:pass@localhost/db",
+          error:
+            "Database connection failed: postgres://user:pass@localhost/db",
         },
       };
       const result = redactObject(complexObject);

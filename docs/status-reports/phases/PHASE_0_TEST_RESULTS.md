@@ -89,7 +89,7 @@
 
 ### Test Run 1 (2025-11-02 22:36)
 
-```text
+````text
 Status Code: 400
 Response: (empty)
 
@@ -102,7 +102,7 @@ Status Code: 400
 Response: (empty)
 Handler logs: Checking...
 
-```
+````
 
 ## Known Issues
 

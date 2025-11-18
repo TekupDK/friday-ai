@@ -1,6 +1,6 @@
 /**
  * CRMLayout Navigation Tests
- * 
+ *
  * Tests for CRM Layout navigation behavior, including standalone mode detection
  * and path adjustment.
  */
@@ -20,12 +20,32 @@ vi.mock("wouter", () => ({
 // Mock CRM navigation items
 vi.mock("@/const/crm", () => ({
   CRM_NAV_ITEMS: [
-    { path: "/crm/dashboard", label: "Dashboard", icon: () => <div>DashboardIcon</div> },
-    { path: "/crm/customers", label: "Customers", icon: () => <div>CustomersIcon</div> },
+    {
+      path: "/crm/dashboard",
+      label: "Dashboard",
+      icon: () => <div>DashboardIcon</div>,
+    },
+    {
+      path: "/crm/customers",
+      label: "Customers",
+      icon: () => <div>CustomersIcon</div>,
+    },
     { path: "/crm/leads", label: "Leads", icon: () => <div>LeadsIcon</div> },
-    { path: "/crm/opportunities", label: "Opportunities", icon: () => <div>OpportunitiesIcon</div> },
-    { path: "/crm/segments", label: "Segments", icon: () => <div>SegmentsIcon</div> },
-    { path: "/crm/bookings", label: "Bookings", icon: () => <div>BookingsIcon</div> },
+    {
+      path: "/crm/opportunities",
+      label: "Opportunities",
+      icon: () => <div>OpportunitiesIcon</div>,
+    },
+    {
+      path: "/crm/segments",
+      label: "Segments",
+      icon: () => <div>SegmentsIcon</div>,
+    },
+    {
+      path: "/crm/bookings",
+      label: "Bookings",
+      icon: () => <div>BookingsIcon</div>,
+    },
   ],
 }));
 
@@ -58,9 +78,16 @@ describe("CRMLayout Navigation", () => {
         writable: true,
       });
 
-      vi.mocked(useLocation).mockReturnValue(["/crm-standalone/dashboard", mockNavigate]);
+      vi.mocked(useLocation).mockReturnValue([
+        "/crm-standalone/dashboard",
+        mockNavigate,
+      ]);
 
-      render(<CRMLayout><div>Test Content</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test Content</div>
+        </CRMLayout>
+      );
 
       // Verify component renders
       expect(screen.getByText("Test Content")).toBeInTheDocument();
@@ -74,7 +101,11 @@ describe("CRMLayout Navigation", () => {
 
       vi.mocked(useLocation).mockReturnValue(["/crm/debug", mockNavigate]);
 
-      render(<CRMLayout><div>Test Content</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test Content</div>
+        </CRMLayout>
+      );
 
       expect(screen.getByText("Test Content")).toBeInTheDocument();
     });
@@ -87,7 +118,11 @@ describe("CRMLayout Navigation", () => {
 
       vi.mocked(useLocation).mockReturnValue(["/crm/dashboard", mockNavigate]);
 
-      render(<CRMLayout><div>Test Content</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test Content</div>
+        </CRMLayout>
+      );
 
       expect(screen.getByText("Test Content")).toBeInTheDocument();
     });
@@ -100,9 +135,16 @@ describe("CRMLayout Navigation", () => {
         writable: true,
       });
 
-      vi.mocked(useLocation).mockReturnValue(["/crm-standalone/dashboard", mockNavigate]);
+      vi.mocked(useLocation).mockReturnValue([
+        "/crm-standalone/dashboard",
+        mockNavigate,
+      ]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const homeButton = screen.getByText(/CRM Home/i);
       expect(homeButton).toBeInTheDocument();
@@ -116,7 +158,11 @@ describe("CRMLayout Navigation", () => {
 
       vi.mocked(useLocation).mockReturnValue(["/crm/dashboard", mockNavigate]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const workspaceButton = screen.getByText(/Workspace/i);
       expect(workspaceButton).toBeInTheDocument();
@@ -128,9 +174,16 @@ describe("CRMLayout Navigation", () => {
         writable: true,
       });
 
-      vi.mocked(useLocation).mockReturnValue(["/crm-standalone/customers", mockNavigate]);
+      vi.mocked(useLocation).mockReturnValue([
+        "/crm-standalone/customers",
+        mockNavigate,
+      ]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const homeButton = screen.getByText(/CRM Home/i);
       fireEvent.click(homeButton);
@@ -146,7 +199,11 @@ describe("CRMLayout Navigation", () => {
 
       vi.mocked(useLocation).mockReturnValue(["/crm/customers", mockNavigate]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const workspaceButton = screen.getByText(/Workspace/i);
       fireEvent.click(workspaceButton);
@@ -159,7 +216,11 @@ describe("CRMLayout Navigation", () => {
     it("should render all navigation items", () => {
       vi.mocked(useLocation).mockReturnValue(["/crm/dashboard", mockNavigate]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       expect(screen.getByText("Dashboard")).toBeInTheDocument();
       expect(screen.getByText("Customers")).toBeInTheDocument();
@@ -175,9 +236,16 @@ describe("CRMLayout Navigation", () => {
         writable: true,
       });
 
-      vi.mocked(useLocation).mockReturnValue(["/crm-standalone/dashboard", mockNavigate]);
+      vi.mocked(useLocation).mockReturnValue([
+        "/crm-standalone/dashboard",
+        mockNavigate,
+      ]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const customersButton = screen.getByText("Customers");
       fireEvent.click(customersButton);
@@ -194,7 +262,11 @@ describe("CRMLayout Navigation", () => {
 
       vi.mocked(useLocation).mockReturnValue(["/crm/dashboard", mockNavigate]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const customersButton = screen.getByText("Customers");
       fireEvent.click(customersButton);
@@ -208,7 +280,11 @@ describe("CRMLayout Navigation", () => {
     it("should highlight active route", () => {
       vi.mocked(useLocation).mockReturnValue(["/crm/dashboard", mockNavigate]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const dashboardButton = screen.getByText("Dashboard").closest("button");
       expect(dashboardButton).toHaveClass("bg-primary/10");
@@ -220,9 +296,16 @@ describe("CRMLayout Navigation", () => {
         writable: true,
       });
 
-      vi.mocked(useLocation).mockReturnValue(["/crm-standalone/dashboard", mockNavigate]);
+      vi.mocked(useLocation).mockReturnValue([
+        "/crm-standalone/dashboard",
+        mockNavigate,
+      ]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       const dashboardButton = screen.getByText("Dashboard").closest("button");
       expect(dashboardButton).toHaveClass("bg-primary/10");
@@ -246,11 +329,14 @@ describe("CRMLayout Navigation", () => {
     it("should render navigation bar", () => {
       vi.mocked(useLocation).mockReturnValue(["/crm/dashboard", mockNavigate]);
 
-      render(<CRMLayout><div>Test</div></CRMLayout>);
+      render(
+        <CRMLayout>
+          <div>Test</div>
+        </CRMLayout>
+      );
 
       // Navigation should be present
       expect(screen.getByText("Dashboard")).toBeInTheDocument();
     });
   });
 });
-

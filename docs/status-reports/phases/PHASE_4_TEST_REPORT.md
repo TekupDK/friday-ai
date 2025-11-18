@@ -66,7 +66,7 @@
 
 **Events Tracked:**
 
-```typescript
+````typescript
 // Message sent
 {
   eventType: 'chat_message_sent',
@@ -316,7 +316,7 @@ npx playwright test tests/phase-4-analytics-security-mocked.spec.ts
 ```bash
 npx playwright test tests/phase-4-*.spec.ts
 
-```
+````
 
 ---
 

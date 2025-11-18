@@ -19,4 +19,3 @@ Create Zod schemas, validate JSON, provide errors, use type inference.
 ## OUTPUT
 
 JSON schema validation implemented with Zod.
-

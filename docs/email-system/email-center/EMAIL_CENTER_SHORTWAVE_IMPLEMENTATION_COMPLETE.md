@@ -15,7 +15,7 @@
 
 **Features:**
 
-```typescript
+````typescript
 ✅ 5 Smart Splits:
 
    - Alle Emails (all)
@@ -688,7 +688,7 @@ Keyboard: e=archive, s=star, l=lead, d=delete, a=select all
 3. Usage examples:             In code
 4. This document:              You're reading it! 🎉
 
-```
+````
 
 ---
 

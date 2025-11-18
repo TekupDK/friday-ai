@@ -29,11 +29,13 @@ Create detailed troubleshooting guides for specific issues, errors, or problems 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find related code
 - `grep` - Search for error patterns
 - `read_file` - Review relevant files
 
 **DO NOT:**
+
 - Create guide without understanding issue
 - Skip common solutions
 - Ignore prevention steps
@@ -65,18 +67,22 @@ Before creating guide, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Troubleshooting Guide Structure
+
 ```markdown
 ## Troubleshooting: [Issue Name]
 
 ### Symptoms
+
 - [Symptom 1]
 - [Symptom 2]
 
 ### Common Causes
+
 1. [Cause 1]
 2. [Cause 2]
 
 ### Step-by-Step Resolution
+
 1. **Check [thing]:**
    - Action: [What to do]
    - Expected: [What to see]
@@ -86,10 +92,12 @@ Before creating guide, think through:
    - Expected: [What to see]
 
 ### Common Solutions
+
 - [Solution 1]
 - [Solution 2]
 
 ### Prevention
+
 - [Prevention 1]
 - [Prevention 2]
 ```
@@ -124,6 +132,7 @@ Before creating guide, think through:
 ## VERIFICATION
 
 After creating guide:
+
 - ✅ Issue clearly defined
 - ✅ Causes identified
 - ✅ Steps provided
@@ -139,29 +148,35 @@ After creating guide:
 [What is the problem]
 
 **Symptoms:**
+
 - [Symptom 1]
 - [Symptom 2]
 
 **Common Causes:**
+
 1. [Cause 1] - [Explanation]
 2. [Cause 2] - [Explanation]
 
 **Step-by-Step Resolution:**
 
 **Step 1: [Action]**
+
 - Action: [What to do]
 - Verification: [How to verify]
 - Expected: [What to see]
 
 **Common Solutions:**
+
 - [Solution 1] - [When to use]
 - [Solution 2] - [When to use]
 
 **Prevention:**
+
 - [Prevention 1]
 - [Prevention 2]
 
 **Related Issues:**
+
 - [Related issue 1]
 - [Related issue 2]
 ```
@@ -173,4 +188,3 @@ After creating guide:
 - **Be comprehensive:** Cover all common causes
 - **Be actionable:** Provide specific solutions
 - **Be preventive:** Include prevention steps
-

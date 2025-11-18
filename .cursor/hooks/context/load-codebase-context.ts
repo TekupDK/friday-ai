@@ -1,6 +1,6 @@
 /**
  * Context Hook: Load Codebase Context
- * 
+ *
  * Loads relevant codebase context based on task
  */
 
@@ -25,4 +25,3 @@ export async function loadCodebaseContext(
     dependencies: [],
   };
 }
-

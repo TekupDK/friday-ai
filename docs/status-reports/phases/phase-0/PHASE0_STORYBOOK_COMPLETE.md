@@ -55,36 +55,36 @@ Alle Storybook stories for Phase 0 komponenter er nu færdige og TypeScript-fejl
    - CustomWidth (600px demo)
 
 1. **AppleSheet.stories.tsx** ✅
-    - Default bottom sheet
-    - TallContent med snap points
-    - NoHandle variant
+   - Default bottom sheet
+   - TallContent med snap points
+   - NoHandle variant
 
 ### Effects & Animations
 
 1. **BlurView.stories.tsx** ✅
-    - Default frosted glass
-    - WithContent over gradient
-    - Heavy blur intensity
+   - Default frosted glass
+   - WithContent over gradient
+   - Heavy blur intensity
 
 1. **SpringTransition.stories.tsx** ✅
-    - Default gentle spring
-    - BouncySpring variant
-    - Interactive toggle demo
+   - Default gentle spring
+   - BouncySpring variant
+   - Interactive toggle demo
 
 1. **ScrollReveal.stories.tsx** ✅
-    - Default scroll reveal
-    - MultipleCards med staggered delays
+   - Default scroll reveal
+   - MultipleCards med staggered delays
 
 1. **ScrollToTop.stories.tsx** ✅
-    - Default (300px threshold)
-    - CustomThreshold (100px demo)
+   - Default (300px threshold)
+   - CustomThreshold (100px demo)
 
 ### Icon System
 
 1. **AppleIcon.stories.tsx** ✅
-    - User, Mail, Search, Settings icons
-    - LargeIcon (2xl), SmallIcon (xs)
-    - AllIcons showcase (60+ icons fra Icons export)
+   - User, Mail, Search, Settings icons
+   - LargeIcon (2xl), SmallIcon (xs)
+   - AllIcons showcase (60+ icons fra Icons export)
 
 ## 🔧 Fixes Applied
 
@@ -101,7 +101,7 @@ Alle Storybook stories for Phase 0 komponenter er nu færdige og TypeScript-fejl
 
 Alle stories med custom `render()` skal have:
 
-```typescript
+````typescript
 args: {
   // Required props her
   children: null, // eller relevant value
@@ -164,7 +164,7 @@ Alle disse kan nu bygges med de solide Apple UI komponenter vi har lavet! 🎉
 ```bash
 npm run storybook
 
-```
+````
 
 Navigate til "CRM/Apple UI" for at se alle komponenter med:
 

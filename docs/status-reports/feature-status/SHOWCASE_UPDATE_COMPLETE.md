@@ -18,7 +18,7 @@
 
 **Usage:**
 
-```tsx
+````tsx
 <CodeBlock code={`your code here`} language="tsx" showLineNumbers={true} />
 
 ```bash
@@ -193,7 +193,7 @@ client/src/components/showcase/
 client/src/pages/
 └── ComponentShowcase.tsx      ✅ Updated (+ 600 lines)
 
-```
+````
 
 ---
 

@@ -39,7 +39,6 @@ import {
 } from "@/services/emailContextDetection";
 import { UNAUTHED_ERR_MSG } from "@shared/const";
 
-
 /**
  * Smart Workspace Panel - Context-Aware Right Panel v2.0
  *

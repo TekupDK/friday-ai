@@ -11,7 +11,7 @@
 
 ### 2. Update .env.dev
 
-```bash
+````bash
 # Copy template
 cp .env.dev.template .env.dev
 
@@ -103,7 +103,7 @@ echo $NEXT_PUBLIC_OPENROUTER_API_KEY
 localStorage.setItem("friday-debug", "true");
 // Reload to see detailed logs
 
-```
+````
 
 ## 🚀 NEXT STEPS
 

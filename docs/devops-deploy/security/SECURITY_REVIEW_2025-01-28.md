@@ -36,6 +36,7 @@ This security review identified **12 critical issues**, **8 high-priority issues
 **Location:** `server/routers/auth-router.ts:17-40`
 
 **Issue:**
+
 ```typescript
 login: publicProcedure.input(loginSchema).mutation(async ({ input, ctx }) => {
   // For demo purposes - accept any email/password
@@ -45,12 +46,14 @@ login: publicProcedure.input(loginSchema).mutation(async ({ input, ctx }) => {
 ```
 
 **Risk:** 🔴 **CRITICAL**
+
 - Anyone can login with any credentials
 - No password verification
 - No rate limiting on login attempts
 - No account lockout mechanism
 
 **Impact:**
+
 - Complete authentication bypass
 - Unauthorized access to all user data
 - GDPR violation risk
@@ -69,76 +72,81 @@ const loginSchema = z.object({
 });
 
 export const authRouter = router({
-  login: publicProcedure
-    .input(loginSchema)
-    .mutation(async ({ input, ctx }) => {
-      // Rate limit login attempts
-      const rateLimit = await checkRateLimitUnified(
-        ctx.req.ip || "unknown",
-        { limit: 5, windowMs: 15 * 60 * 1000 }, // 5 attempts per 15 minutes
-        "login"
+  login: publicProcedure.input(loginSchema).mutation(async ({ input, ctx }) => {
+    // Rate limit login attempts
+    const rateLimit = await checkRateLimitUnified(
+      ctx.req.ip || "unknown",
+      { limit: 5, windowMs: 15 * 60 * 1000 }, // 5 attempts per 15 minutes
+      "login"
+    );
+
+    if (!rateLimit.success) {
+      throw new TRPCError({
+        code: "TOO_MANY_REQUESTS",
+        message: "Too many login attempts. Please try again later.",
+      });
+    }
+
+    // Get user from database
+    const db = await getDb();
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, input.email.toLowerCase()))
+      .limit(1);
+
+    if (!user || user.length === 0) {
+      // Don't reveal if email exists (prevent enumeration)
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Invalid email or password",
+      });
+    }
+
+    // Verify password (if using password auth)
+    // For OAuth-only systems, remove password field entirely
+    if (user[0].passwordHash) {
+      const isValid = await bcrypt.compare(
+        input.password,
+        user[0].passwordHash
       );
-
-      if (!rateLimit.success) {
-        throw new TRPCError({
-          code: "TOO_MANY_REQUESTS",
-          message: "Too many login attempts. Please try again later.",
-        });
-      }
-
-      // Get user from database
-      const db = await getDb();
-      const user = await db
-        .select()
-        .from(users)
-        .where(eq(users.email, input.email.toLowerCase()))
-        .limit(1);
-
-      if (!user || user.length === 0) {
-        // Don't reveal if email exists (prevent enumeration)
+      if (!isValid) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Invalid email or password",
         });
       }
-
-      // Verify password (if using password auth)
-      // For OAuth-only systems, remove password field entirely
-      if (user[0].passwordHash) {
-        const isValid = await bcrypt.compare(input.password, user[0].passwordHash);
-        if (!isValid) {
-          throw new TRPCError({
-            code: "UNAUTHORIZED",
-            message: "Invalid email or password",
-          });
-        }
-      } else {
-        // OAuth-only user - redirect to OAuth
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Please sign in with Google",
-        });
-      }
-
-      // Create session
-      const sessionToken = await sdk.createSessionToken(user[0].openId, {
-        name: user[0].name || input.email.split("@")[0],
-        expiresInMs: ONE_YEAR_MS,
+    } else {
+      // OAuth-only user - redirect to OAuth
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Please sign in with Google",
       });
+    }
 
-      const cookieOpts = getSessionCookieOptions(ctx.req);
-      ctx.res?.cookie(COOKIE_NAME, sessionToken, { ...cookieOpts, maxAge: ONE_YEAR_MS });
+    // Create session
+    const sessionToken = await sdk.createSessionToken(user[0].openId, {
+      name: user[0].name || input.email.split("@")[0],
+      expiresInMs: ONE_YEAR_MS,
+    });
 
-      return {
-        id: user[0].openId,
-        email: user[0].email,
-        name: user[0].name,
-      };
-    }),
+    const cookieOpts = getSessionCookieOptions(ctx.req);
+    ctx.res?.cookie(COOKIE_NAME, sessionToken, {
+      ...cookieOpts,
+      maxAge: ONE_YEAR_MS,
+    });
+
+    return {
+      id: user[0].openId,
+      email: user[0].email,
+      name: user[0].name,
+    };
+  }),
 });
 ```
 
 **Additional Steps:**
+
 1. Add password hashing to user creation
 2. Implement account lockout after failed attempts
 3. Add 2FA support for sensitive operations
@@ -151,6 +159,7 @@ export const authRouter = router({
 **Location:** `server/_core/context.ts:19-42`
 
 **Issue:**
+
 ```typescript
 // Dev/Test bypass: Check for test header
 if (
@@ -161,6 +170,7 @@ if (
 ```
 
 **Risk:** 🔴 **CRITICAL**
+
 - Test bypass could be enabled in production if NODE_ENV is misconfigured
 - Header-based authentication bypass
 - No validation of test user ID
@@ -177,21 +187,20 @@ export async function createContext(
 
   try {
     // ✅ FIX: Only allow test bypass in explicit test mode
-    const isTestMode = 
-      process.env.NODE_ENV === "test" || 
-      process.env.TEST_MODE === "true";
-    
+    const isTestMode =
+      process.env.NODE_ENV === "test" || process.env.TEST_MODE === "true";
+
     // ✅ FIX: Require additional test secret
     const testSecret = opts.req.headers["x-test-secret"];
     const validTestSecret = process.env.TEST_SECRET;
-    
+
     if (
       isTestMode &&
       opts.req.headers["x-test-user-id"] &&
       testSecret === validTestSecret
     ) {
       const testUserId = opts.req.headers["x-test-user-id"] as string;
-      
+
       // ✅ FIX: Validate test user ID format
       if (!/^\d+$/.test(testUserId)) {
         throw new Error("Invalid test user ID format");
@@ -245,11 +254,13 @@ export async function createContext(
 **Location:** `server/_core/cookies.ts:58`
 
 **Issue:**
+
 ```typescript
 sameSite: isProduction && isSecure ? "none" : "lax",
 ```
 
 **Risk:** 🟠 **HIGH**
+
 - `sameSite: "none"` requires `secure: true` (HTTPS)
 - If HTTPS detection fails, cookie could be vulnerable to CSRF
 - 1-year session expiry is too long
@@ -295,6 +306,7 @@ export function getSessionCookieOptions(
 **Issue:** Some endpoints check authentication but not authorization (user can access other users' data).
 
 **Example:**
+
 ```typescript
 // server/routers/crm-lead-router.ts
 getLead: protectedProcedure
@@ -309,6 +321,7 @@ getLead: protectedProcedure
 ```
 
 **Risk:** 🟠 **HIGH**
+
 - Some endpoints may not check `userId` ownership
 - Admin endpoints may not check admin role
 
@@ -365,6 +378,7 @@ getLead: protectedProcedure
 **Location:** `server/routers.ts:104-107`
 
 **Issue:**
+
 ```typescript
 content: z
   .string()
@@ -373,6 +387,7 @@ content: z
 ```
 
 **Risk:** 🔴 **CRITICAL**
+
 - 10,000 characters is still very large
 - Could cause DoS attacks via large payloads
 - No validation on other string inputs
@@ -382,29 +397,28 @@ content: z
 ```typescript
 // server/routers.ts
 
-sendMessage: protectedProcedure
-  .input(
-    z.object({
-      conversationId: z.number().int().positive(),
-      content: z
-        .string()
-        .min(1, "Message cannot be empty")
-        .max(5000, "Message too long (max 5,000 characters)") // ✅ Reduced
-        .refine(
-          (val) => val.trim().length > 0,
-          "Message cannot be only whitespace"
-        ),
-      model: z.string().max(100).optional(),
-      context: z
-        .object({
-          selectedEmails: z.array(z.string().max(100)).max(50).optional(),
-          calendarEvents: z.array(z.any()).max(100).optional(),
-          searchQuery: z.string().max(500).optional(),
-          // ...
-        })
-        .optional(),
-    })
-  )
+sendMessage: protectedProcedure.input(
+  z.object({
+    conversationId: z.number().int().positive(),
+    content: z
+      .string()
+      .min(1, "Message cannot be empty")
+      .max(5000, "Message too long (max 5,000 characters)") // ✅ Reduced
+      .refine(
+        val => val.trim().length > 0,
+        "Message cannot be only whitespace"
+      ),
+    model: z.string().max(100).optional(),
+    context: z
+      .object({
+        selectedEmails: z.array(z.string().max(100)).max(50).optional(),
+        calendarEvents: z.array(z.any()).max(100).optional(),
+        searchQuery: z.string().max(500).optional(),
+        // ...
+      })
+      .optional(),
+  })
+);
 ```
 
 **Additional Validation:**
@@ -415,8 +429,15 @@ sendMessage: protectedProcedure
 
 export const validationSchemas = {
   email: z.string().email().max(255),
-  name: z.string().min(1).max(255).regex(/^[a-zA-Z0-9\s\-_]+$/),
-  phone: z.string().max(20).regex(/^[\d\s\-\+\(\)]+$/),
+  name: z
+    .string()
+    .min(1)
+    .max(255)
+    .regex(/^[a-zA-Z0-9\s\-_]+$/),
+  phone: z
+    .string()
+    .max(20)
+    .regex(/^[\d\s\-\+\(\)]+$/),
   url: z.string().url().max(2048),
   text: z.string().max(10000),
   shortText: z.string().max(500),
@@ -430,12 +451,14 @@ export const validationSchemas = {
 **Location:** `server/routers/crm-extensions-router.ts:280-282`
 
 **Issue:**
+
 ```typescript
 count: sql<number>`cast(count(*) as integer)`,
 totalValue: sql<number>`cast(sum(coalesce(${opportunities.value}, 0)) as integer)`,
 ```
 
 **Risk:** 🔴 **CRITICAL**
+
 - Using `sql` template literals with user input could be dangerous
 - Need to verify all SQL queries use parameterized queries
 
@@ -465,7 +488,7 @@ getFilteredStats: protectedProcedure
   }))
   .query(async ({ ctx, input }) => {
     const conditions = [eq(opportunities.userId, ctx.user.id)];
-    
+
     // ✅ Safe: Use Drizzle's eq() instead of raw SQL
     if (input.stage) {
       conditions.push(eq(opportunities.stage, input.stage));
@@ -488,11 +511,13 @@ getFilteredStats: protectedProcedure
 **Location:** `client/src/components/chat/advanced/RichTextEditor.tsx:260,268`
 
 **Issue:**
+
 ```typescript
 dangerouslySetInnerHTML={{ __html: content }}
 ```
 
 **Risk:** 🟠 **HIGH**
+
 - User-generated content rendered without sanitization
 - Could allow XSS attacks
 
@@ -521,6 +546,7 @@ const sanitizedContent = useMemo(() => {
 ```
 
 **Package:**
+
 ```bash
 npm install dompurify
 npm install --save-dev @types/dompurify
@@ -533,6 +559,7 @@ npm install --save-dev @types/dompurify
 **Issue:** No CSRF tokens for state-changing operations.
 
 **Risk:** 🟡 **MEDIUM**
+
 - tRPC uses POST requests which are vulnerable to CSRF
 - SameSite cookies help but not sufficient
 
@@ -558,10 +585,14 @@ export function validateCSRFToken(token: string, sessionId: string): boolean {
 
 // Middleware
 export const csrfMiddleware = t.middleware(async ({ ctx, next }) => {
-  if (ctx.req.method === "POST" || ctx.req.method === "PUT" || ctx.req.method === "DELETE") {
+  if (
+    ctx.req.method === "POST" ||
+    ctx.req.method === "PUT" ||
+    ctx.req.method === "DELETE"
+  ) {
     const token = ctx.req.headers["x-csrf-token"] as string;
     const sessionId = ctx.req.cookies?.[COOKIE_NAME];
-    
+
     if (!token || !validateCSRFToken(token, sessionId)) {
       throw new TRPCError({
         code: "FORBIDDEN",
@@ -582,6 +613,7 @@ export const csrfMiddleware = t.middleware(async ({ ctx, next }) => {
 **Location:** `server/_core/env.ts`
 
 **Issue:**
+
 ```typescript
 cookieSecret: process.env.JWT_SECRET ?? "",
 openRouterApiKey: process.env.OPENROUTER_API_KEY ?? "",
@@ -589,6 +621,7 @@ billyApiKey: process.env.BILLY_API_KEY ?? "",
 ```
 
 **Risk:** 🔴 **CRITICAL**
+
 - No secret rotation mechanism
 - Secrets stored in plaintext .env files
 - No secret management service integration
@@ -614,7 +647,7 @@ class SecretManager {
 
     // Fetch from secret manager (or fallback to env)
     let value: string;
-    
+
     if (ENV.isProduction && process.env.AWS_REGION) {
       const client = new SecretsManager({ region: process.env.AWS_REGION });
       const secret = await client.getSecretValue({ SecretId: name });
@@ -657,12 +690,16 @@ export const ENV = {
 **Location:** Multiple files
 
 **Issue:**
+
 ```typescript
 console.log("[Context] Cookies received:", opts.req.headers.cookie);
-console.log("[AUTH] Session cookie set successfully:", { cookieValue: sessionToken });
+console.log("[AUTH] Session cookie set successfully:", {
+  cookieValue: sessionToken,
+});
 ```
 
 **Risk:** 🔴 **CRITICAL**
+
 - Session tokens logged in plaintext
 - Cookies logged in plaintext
 - API keys may be logged
@@ -737,6 +774,7 @@ logger.log("[Context] Cookies received:", { cookie: "[REDACTED]" }); // ✅
 **Issue:** Database stores sensitive data (emails, phone numbers) without encryption.
 
 **Risk:** 🟠 **HIGH**
+
 - PII stored in plaintext
 - GDPR compliance risk
 - Database breach would expose all data
@@ -753,13 +791,17 @@ const ALGORITHM = "aes-256-gcm";
 
 export function encrypt(text: string): string {
   const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv(ALGORITHM, Buffer.from(ENCRYPTION_KEY, "hex"), iv);
-  
+  const cipher = crypto.createCipheriv(
+    ALGORITHM,
+    Buffer.from(ENCRYPTION_KEY, "hex"),
+    iv
+  );
+
   let encrypted = cipher.update(text, "utf8", "hex");
   encrypted += cipher.final("hex");
-  
+
   const authTag = cipher.getAuthTag();
-  
+
   return `${iv.toString("hex")}:${authTag.toString("hex")}:${encrypted}`;
 }
 
@@ -767,17 +809,17 @@ export function decrypt(encrypted: string): string {
   const [ivHex, authTagHex, encryptedText] = encrypted.split(":");
   const iv = Buffer.from(ivHex, "hex");
   const authTag = Buffer.from(authTagHex, "hex");
-  
+
   const decipher = crypto.createDecipheriv(
     ALGORITHM,
     Buffer.from(ENCRYPTION_KEY, "hex"),
     iv
   );
   decipher.setAuthTag(authTag);
-  
+
   let decrypted = decipher.update(encryptedText, "hex", "utf8");
   decrypted += decipher.final("utf8");
-  
+
   return decrypted;
 }
 
@@ -802,6 +844,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 **Location:** Multiple routers
 
 **Issue:**
+
 ```typescript
 throw new TRPCError({
   code: "NOT_FOUND",
@@ -856,6 +899,7 @@ try {
 **Location:** `server/_core/index.ts:133-135`
 
 **Issue:**
+
 ```typescript
 origin: (origin, callback) => {
   // Allow requests with no origin (mobile apps, Postman, curl, etc.)
@@ -866,6 +910,7 @@ origin: (origin, callback) => {
 ```
 
 **Risk:** 🔴 **CRITICAL**
+
 - Allows CSRF attacks from no-origin requests
 - Browsers can send no-origin requests in certain scenarios
 
@@ -878,10 +923,10 @@ app.use(
   cors({
     origin: (origin, callback) => {
       // ✅ FIX: Only allow no-origin for specific endpoints
-      const isPublicEndpoint = 
+      const isPublicEndpoint =
         ctx.req.path?.startsWith("/api/auth/") ||
         ctx.req.path?.startsWith("/api/health");
-      
+
       if (!origin) {
         // ✅ FIX: Only allow in development or for public endpoints
         if (!ENV.isProduction || isPublicEndpoint) {
@@ -920,11 +965,13 @@ app.use(
 **Location:** `server/_core/index.ts:106`
 
 **Issue:**
+
 ```typescript
 scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Vite dev needs unsafe-eval
 ```
 
 **Risk:** 🟠 **HIGH**
+
 - `unsafe-eval` allows code injection
 - Should only be enabled in development
 
@@ -964,8 +1011,12 @@ app.use(
 app.use(
   helmet({
     // ... existing config ...
-    contentSecurityPolicy: { /* ... */ },
-    hsts: { /* ... */ },
+    contentSecurityPolicy: {
+      /* ... */
+    },
+    hsts: {
+      /* ... */
+    },
     // ✅ ADD: Additional headers
     xFrameOptions: { action: "deny" },
     xContentTypeOptions: true,
@@ -987,7 +1038,10 @@ app.use((req, res, next) => {
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("X-XSS-Protection", "1; mode=block");
   res.setHeader("Referrer-Policy", "no-referrer");
-  res.setHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
+  res.setHeader(
+    "Permissions-Policy",
+    "geolocation=(), microphone=(), camera=()"
+  );
   next();
 });
 ```
@@ -1015,6 +1069,7 @@ app.use((req, res, next) => {
 ```
 
 **CI/CD Integration:**
+
 ```yaml
 # .github/workflows/security.yml
 name: Security Scan
@@ -1081,4 +1136,3 @@ jobs:
 **Review Completed:** 2025-01-28  
 **Next Review:** 2025-02-28  
 **Reviewed By:** Auto-generated security review
-

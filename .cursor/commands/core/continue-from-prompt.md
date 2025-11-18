@@ -30,6 +30,7 @@ Continue work based on the user's prompt by understanding the context, identifyi
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review current state
 - `codebase_search` - Understand context
 - `run_terminal_cmd` - Check status
@@ -37,6 +38,7 @@ Continue work based on the user's prompt by understanding the context, identifyi
 - `search_replace` - Continue changes
 
 **DO NOT:**
+
 - Ignore context
 - Start over
 - Miss dependencies
@@ -111,24 +113,29 @@ Provide continuation report:
 **Status:** [CONTINUING/COMPLETE]
 
 ## Context Understood
+
 - **Current Task:** [TASK]
 - **Progress:** [PERCENTAGE]%
 - **Approach:** [APPROACH]
 
 ## Continuation Identified
+
 - **Next Steps:** [STEPS]
 - **Dependencies:** [DEPENDENCIES]
 - **Priority:** [PRIORITY]
 
 ## Work Continued
+
 - ✅ [Step 1] - [Status]
 - ✅ [Step 2] - [Status]
 - 🚧 [Step 3] - [In progress]
 
 ## Progress
+
 [What has been continued]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 ```
@@ -144,4 +151,3 @@ Provide continuation report:
 ---
 
 **CRITICAL:** Continue work based on prompt and context. Don't start over, continue naturally.
-

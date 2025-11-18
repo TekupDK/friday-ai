@@ -61,7 +61,7 @@
 
 **Issue:** In-memory rate limiting
 
-```typescript
+````typescript
 const rateLimitMap = new Map<number, number[]>();
 
 function checkRateLimit(userId: number, limit = 10, windowMs = 60000): boolean {
@@ -439,11 +439,11 @@ const loggingMiddleware = t.middleware(async ({ ctx, next, path }) => {
    "react": "^19.1.1",
    "react-dom": "^19.1.1"
 
-   ```
+````
 
-   - ⚠️ React 19 is still in RC
-   - ⚠️ Potential breaking changes
-   - ✅ But seems stable
+- ⚠️ React 19 is still in RC
+- ⚠️ Potential breaking changes
+- ✅ But seems stable
 
 1. **Large Bundle Size**
    - 30+ Radix UI components

@@ -29,6 +29,7 @@ Start work immediately from the user's prompt by parsing it, understanding the i
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Check system status FIRST (ports, processes)
 - `codebase_search` - Find relevant code immediately
 - `read_file` - Read files needed
@@ -38,6 +39,7 @@ Start work immediately from the user's prompt by parsing it, understanding the i
 - `todo_write` - Track progress
 
 **DO NOT:**
+
 - Ask for clarification
 - Wait for approval
 - Just plan without doing
@@ -84,12 +86,14 @@ Before starting, think through:
 ## CRITICAL: START NOW
 
 **DO NOT:**
+
 - Ask "What do you mean?"
 - Ask "Can you clarify?"
 - Just provide a plan
 - Wait for confirmation
 
 **DO:**
+
 - Parse the prompt
 - Understand the intent
 - Start working immediately
@@ -155,28 +159,33 @@ Provide immediate work start with system status:
 **Status:** [IN PROGRESS]
 
 ## System Status Check
+
 - ✅ Database: [Running/Stopped] - Port [PORT]
 - ✅ Backend: [Running/Stopped] - Port [PORT]
 - ✅ Frontend: [Running/Stopped] - Port [PORT]
 - ✅ Services: [All running/Some stopped]
 
 ## Context Review
+
 - **Previous Work:** [What was done before]
 - **Current State:** [Current state]
 - **Dependencies:** [Any dependencies]
 
 ## Prompt Parsed
+
 - **Intent:** [INTENT]
 - **Goal:** [GOAL]
 - **Scope:** [SCOPE]
 - **Tasks Identified:** [NUMBER]
 
 ## Work Started
+
 - ✅ [Action 1] - [Status] - [Result/Error]
 - ✅ [Action 2] - [Status] - [Result/Error]
 - 🚧 [Action 3] - [In progress]
 
 ## Progress
+
 **Completed:** [N] tasks
 **In Progress:** [N] tasks
 **Remaining:** [N] tasks
@@ -185,11 +194,13 @@ Provide immediate work start with system status:
 [What has been done so far]
 
 ## Results
+
 - ✅ [Result 1]
 - ⚠️ [Warning/Issue 1]
 - ❌ [Error 1] - [Recovery action]
 
 ## Next Actions
+
 1. [Next action 1]
 2. [Next action 2]
 ```
@@ -209,4 +220,3 @@ Provide immediate work start with system status:
 ---
 
 **CRITICAL:** Start working immediately. Don't ask questions. Parse the prompt and begin.
-

@@ -31,6 +31,7 @@ Create or improve job completion checklist automation that handles completion qu
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find job completion code
 - `read_file` - Read completion workflow files
 - `grep` - Search for completion patterns
@@ -38,6 +39,7 @@ Create or improve job completion checklist automation that handles completion qu
 - `run_terminal_cmd` - Test completion workflow
 
 **DO NOT:**
+
 - Skip verification steps
 - Auto-update without user confirmation
 - Add attendees to calendar events
@@ -152,7 +154,7 @@ Profit: [beregnet]
 ```typescript
 // From server/friday-prompts.ts JOB_COMPLETION_PROMPT
 // Profit calculation for Jonas+FB:
-const profit = (hours * 349) - (hours * 90); // Revenue - Cost
+const profit = hours * 349 - hours * 90; // Revenue - Cost
 // For Jonas+Rawan: No profit calculation (different cost structure)
 ```
 
@@ -206,20 +208,24 @@ Provide checklist implementation:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Checklist Analysis
+
 - **Current Steps:** [List of steps]
 - **Improvements Made:** [List of improvements]
 
 ## Implementation
+
 - ✅ Completion questions
 - ✅ Calendar event updates
 - ✅ Email label updates
 - ✅ Profit calculation
 
 ## Testing
+
 - ✅ [Test 1] - [Result]
 - ✅ [Test 2] - [Result]
 
 ## Next Steps
+
 1. [Next action 1]
 2. [Next action 2]
 ```
@@ -236,4 +242,3 @@ Provide checklist implementation:
 ---
 
 **CRITICAL:** Start by reading existing completion code, then create or improve the checklist based on requirements. Remember: NEVER add attendees to calendar events!
-

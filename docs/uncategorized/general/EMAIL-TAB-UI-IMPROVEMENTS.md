@@ -69,7 +69,7 @@ Comprehensive UI/UX improvements for the EmailTab component to achieve a modern,
 
 ### Files Modified
 
-```bash
+````bash
 client/src/
 ├── components/inbox/
 │   ├── EmailTab.tsx ✅ (Major refactor)
@@ -116,7 +116,7 @@ const cleanSnippet = (text: string) => {
   // Full implementation in EmailTab.tsx lines 550-567
 };
 
-```
+````
 
 ## Testing Checklist
 

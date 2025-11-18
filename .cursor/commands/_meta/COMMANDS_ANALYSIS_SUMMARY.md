@@ -19,6 +19,7 @@
 ### 1. STRUKTUR PROBLEM (KRITISK)
 
 **Nuværende:**
+
 ```
 .cursor/commands/
 ├── _meta/
@@ -26,11 +27,13 @@
 ```
 
 **Problem:**
+
 - Umuligt at finde commands
 - Ingen logisk gruppering
 - Overvældende at browse
 
 **Løsning:**
+
 ```
 .cursor/commands/
 ├── _meta/
@@ -51,6 +54,7 @@
 #### A. TODO Management Duplikater
 
 **Identificeret:**
+
 - `opdater-todo-status.md` (Dansk) - 5.2KB
 - `update-todo-status.md` (Engelsk) - 5.2KB
 
@@ -59,13 +63,15 @@
 #### B. Session Management Duplikater
 
 **Identificeret:**
+
 - `forsaet-arbejde.md` (Dansk) - "Fortsæt arbejde"
 - `continue-from-prompt.md` (Engelsk) - "Continue from prompt"
 - `continue-where-left-off.md` (Engelsk)
 - `resume-development.md` (Engelsk)
 - `resume-from-session-point.md` (Engelsk)
 
-**Anbefaling:** 
+**Anbefaling:**
+
 - Behold `continue-from-prompt.md` (master)
 - Merge `forsaet-arbejde.md` ind i `continue-from-prompt.md`
 - Vurder om `continue-where-left-off.md` og `resume-*` skal merges
@@ -73,6 +79,7 @@
 #### C. Commit Duplikater
 
 **Identificeret:**
+
 - `commit-arbejde.md` (Dansk) - "Commit arbejde"
 - `git-commit-my-work.md` (Engelsk)
 - `git-commit-session.md` (Engelsk)
@@ -80,12 +87,14 @@
 - `commit-chat-session-changes.md` (Engelsk)
 
 **Anbefaling:**
+
 - Merge alle til `commit-work.md` (generisk)
 - Eller beholde `commit-session-work.md` som master
 
 #### D. Chat Context Duplikater
 
 **Identificeret:**
+
 - `konverter-chat-til-todos.md` (Dansk)
 - `generate-todos-from-chat.md` (Engelsk)
 - `convert-chat-to-todos.md` (Engelsk)
@@ -97,6 +106,7 @@
 ### 3. TOM FIL (KRITISK)
 
 **Identificeret:**
+
 - `fors.md` - 0 bytes (TOM FIL)
 
 **Anbefaling:** SLET MED DET SAMME
@@ -116,6 +126,7 @@
 7. `sammenfat-chat-samtale.md` - 963 bytes
 
 **Anbefaling:**
+
 - Korte commands er OK hvis de er "operationsklare" (kortfattede prompts)
 - Men de skal have minimum struktur: ROLE, TASK, GUIDELINES
 - Udvid kun hvis de mangler essentiel information
@@ -127,17 +138,20 @@
 **Problem:** Blandet dansk/engelsk
 
 **Eksempler:**
+
 - `afslut-session.md` (Dansk) vs `session-summary.md` (Engelsk)
 - `opdater-todo-status.md` (Dansk) vs `update-todo-status.md` (Engelsk)
 - `forsaet-arbejde.md` (Dansk) vs `continue-from-prompt.md` (Engelsk)
 - `commit-arbejde.md` (Dansk) vs `git-commit-my-work.md` (Engelsk)
 
 **Anbefaling:**
+
 - **Standardiser til ENGELSK** (anbefalet)
 - Eller standardiser til DANSK (hvis det er projektets standard)
 - **IKKE begge!**
 
 **Rationale for engelsk:**
+
 - International standard
 - Bedre søgbarhed
 - Konsistent med resten af codebase (TypeScript, React, etc.)
@@ -147,6 +161,7 @@
 ### 6. KATEGORISERING (MEDIUM PRIORITET)
 
 **Nuværende kategorier:**
+
 - AI & LLM (15+)
 - Development (30+)
 - Testing (15+)
@@ -162,6 +177,7 @@
 **Problem:** Nogle commands er i flere kategorier
 
 **Løsning:** Klar hierarki:
+
 1. **Core** - Session, status, context
 2. **Development** - Create, implement, refactor
 3. **Testing** - All test commands
@@ -229,12 +245,14 @@
 ## 📊 FORVENTET RESULTAT
 
 ### Før Cleanup:
+
 - **Total:** 371 commands
 - **Duplikater:** ~15-20
 - **Tomme filer:** 1
 - **Struktur:** FLAT (ingen organisering)
 
 ### Efter Cleanup:
+
 - **Total:** ~350 commands (efter merge)
 - **Duplikater:** 0
 - **Tomme filer:** 0
@@ -246,15 +264,18 @@
 ## ✅ ANBEFALING
 
 **Start med FASE 1 (Quick Wins):**
+
 1. Slet `fors.md`
 2. Merge åbenlyse duplikater
 3. Opret mapper struktur
 
 **Derefter FASE 2 (Organisering):**
+
 - Flyt commands til mapper
 - Opdater index filer
 
 **Til sidst FASE 3 (Standardisering):**
+
 - Vælg engelsk ELLER dansk
 - Standardiser alle commands
 
@@ -263,7 +284,7 @@
 **Status:** ✅ KLAR TIL IMPLEMENTATION
 
 **Spørgsmål til dig:**
+
 1. Skal vi standardisere til engelsk eller dansk?
 2. Skal jeg starte med FASE 1 nu?
 3. Er der nogle commands du vil beholde som de er?
-

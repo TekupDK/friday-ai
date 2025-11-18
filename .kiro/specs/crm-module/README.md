@@ -154,7 +154,7 @@ The CRM module follows Apple's three core design principles:
 
 ### Frontend Stack
 
-```typescript
+````typescript
 {
   "core": {
     "react": "^19.0.0",
@@ -465,7 +465,7 @@ npm run dev
 # Start Storybook
 npm run storybook
 
-```
+````
 
 ---
 

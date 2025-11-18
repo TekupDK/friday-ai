@@ -30,12 +30,14 @@ Perform a comprehensive security audit to identify and fix vulnerabilities in th
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review code for vulnerabilities
 - `codebase_search` - Find security patterns
 - `grep` - Search for security issues
 - `run_terminal_cmd` - Run security scans
 
 **DO NOT:**
+
 - Skip dependency audit
 - Ignore input validation
 - Miss authentication checks
@@ -69,17 +71,17 @@ Before auditing, think through:
 ## Steps
 
 1. **Dependency audit**
-    - Check for known vulnerabilities
-    - Update outdated packages
-    - Review third-party dependencies
+   - Check for known vulnerabilities
+   - Update outdated packages
+   - Review third-party dependencies
 2. **Code security review**
-    - Check for common vulnerabilities
-    - Review authentication/authorization
-    - Audit data handling practices
+   - Check for common vulnerabilities
+   - Review authentication/authorization
+   - Audit data handling practices
 3. **Infrastructure security**
-    - Review environment variables
-    - Check access controls
-    - Audit network security
+   - Review environment variables
+   - Check access controls
+   - Audit network security
 
 ## Security Checklist
 

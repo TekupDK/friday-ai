@@ -10,7 +10,7 @@
 
 ### **1. Redis Package Installation** ✅
 
-```bash
+````bash
 pnpm add @upstash/redis
 
 ```text
@@ -92,7 +92,7 @@ If you want to test Redis rate limiting:
 UPSTASH_REDIS_REST_URL=<https://your-url.upstash.io>
 UPSTASH_REDIS_REST_TOKEN=your-token
 
-```
+````
 
 **Note:** Not required immediately - fallback to in-memory works!
 

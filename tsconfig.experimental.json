@@ -16,9 +16,5 @@
     "client/src/components/inbox/**/*",
     "client/src/components/chat/**/*"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build"
-  ]
+  "exclude": ["node_modules", "dist", "build"]
 }

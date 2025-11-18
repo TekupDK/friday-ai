@@ -30,7 +30,9 @@ type AITestFixtures = {
 // Extend base test with AI fixtures
 export const test = base.extend<AITestFixtures>({
   aiPage: async ({ browser }, use) => {
-    const isTestMode = process.env.AI_TEST_MODE === "true" || process.env.FRIDAY_TEST_ENV === "playwright";
+    const isTestMode =
+      process.env.AI_TEST_MODE === "true" ||
+      process.env.FRIDAY_TEST_ENV === "playwright";
     const extraHeaders: Record<string, string> = isTestMode
       ? { "x-test-user-id": "test-user-123" }
       : {};
@@ -75,7 +77,9 @@ export const test = base.extend<AITestFixtures>({
   },
 
   aiContext: async ({ browser }, use) => {
-    const isTestMode = process.env.AI_TEST_MODE === "true" || process.env.FRIDAY_TEST_ENV === "playwright";
+    const isTestMode =
+      process.env.AI_TEST_MODE === "true" ||
+      process.env.FRIDAY_TEST_ENV === "playwright";
     const extraHeaders: Record<string, string> = isTestMode
       ? { "x-test-user-id": "test-user-123" }
       : {};

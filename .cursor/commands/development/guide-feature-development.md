@@ -31,6 +31,7 @@ Guide feature development by providing step-by-step instructions, ensuring best 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find similar features
 - `read_file` - Review existing patterns
 - `grep` - Search for patterns
@@ -38,6 +39,7 @@ Guide feature development by providing step-by-step instructions, ensuring best 
 - `run_terminal_cmd` - Run tests and typecheck
 
 **DO NOT:**
+
 - Skip steps
 - Miss best practices
 - Ignore patterns
@@ -74,36 +76,42 @@ Before guiding, think through:
 ## FEATURE DEVELOPMENT STEPS
 
 ### 1. Planning
+
 - Understand requirements
 - Identify components needed
 - Plan database changes
 - Plan API endpoints
 
 ### 2. Database Layer
+
 - Create/update schema
 - Create database helpers
 - Add types
 - Test queries
 
 ### 3. Backend Layer
+
 - Create tRPC procedures
 - Add validation
 - Add error handling
 - Add business logic
 
 ### 4. Frontend Layer
+
 - Create components
 - Wire to API
 - Add state management
 - Add error handling
 
 ### 5. Testing
+
 - Write unit tests
 - Write integration tests
 - Test edge cases
 - Verify functionality
 
 ### 6. Documentation
+
 - Update API docs
 - Add component docs
 - Update architecture docs
@@ -149,7 +157,7 @@ After guidance, verify:
 
 Provide feature development guide:
 
-```markdown
+````markdown
 # Feature Development Guide
 
 **Date:** 2025-11-16
@@ -157,6 +165,7 @@ Provide feature development guide:
 **Status:** [PLANNING/IN PROGRESS/COMPLETE]
 
 ## Feature Overview
+
 - **Goal:** [GOAL]
 - **Scope:** [SCOPE]
 - **Dependencies:** [DEPENDENCIES]
@@ -164,82 +173,102 @@ Provide feature development guide:
 ## Development Plan
 
 ### Step 1: Database Layer
+
 **Tasks:**
+
 - [ ] Create schema changes
 - [ ] Create database helpers
 - [ ] Add types
 - [ ] Test queries
 
 **Code Example:**
+
 ```typescript
 // Example code
 ```
+````
 
 **Verification:**
+
 - ✅ Schema created
 - ✅ Helpers working
 - ✅ Types correct
 
 ### Step 2: Backend Layer
+
 **Tasks:**
+
 - [ ] Create tRPC procedures
 - [ ] Add validation
 - [ ] Add error handling
 - [ ] Test endpoints
 
 **Code Example:**
+
 ```typescript
 // Example code
 ```
 
 **Verification:**
+
 - ✅ Procedures created
 - ✅ Validation working
 - ✅ Error handling correct
 
 ### Step 3: Frontend Layer
+
 **Tasks:**
+
 - [ ] Create components
 - [ ] Wire to API
 - [ ] Add state management
 - [ ] Add error handling
 
 **Code Example:**
+
 ```typescript
 // Example code
 ```
 
 **Verification:**
+
 - ✅ Components created
 - ✅ API wired correctly
 - ✅ State management working
 
 ### Step 4: Testing
+
 **Tasks:**
+
 - [ ] Write unit tests
 - [ ] Write integration tests
 - [ ] Test edge cases
 - [ ] Verify functionality
 
 **Verification:**
+
 - ✅ All tests passing
 - ✅ Edge cases covered
 - ✅ Functionality verified
 
 ## Current Progress
+
 - ✅ [Completed step]
 - 🚧 [In progress step]
 - 📋 [Pending step]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 
 ## Best Practices Applied
+
 - ✅ Type safety
 - ✅ Error handling
 - ✅ Testing
 - ✅ Documentation
+
 ```
 
 ## GUIDELINES
@@ -254,3 +283,4 @@ Provide feature development guide:
 
 **CRITICAL:** Guide feature development step-by-step. Ensure correct implementation following Friday AI Chat patterns.
 
+```

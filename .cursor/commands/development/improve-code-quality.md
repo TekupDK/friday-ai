@@ -31,6 +31,7 @@ Help improve code quality during development by reviewing code, identifying impr
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code being developed
 - `codebase_search` - Find similar patterns
 - `grep` - Search for patterns
@@ -38,6 +39,7 @@ Help improve code quality during development by reviewing code, identifying impr
 - `run_terminal_cmd` - Run typecheck and tests
 
 **DO NOT:**
+
 - Be overly critical
 - Suggest breaking changes
 - Ignore context
@@ -74,30 +76,35 @@ Before improving, think through:
 ## CODE QUALITY AREAS
 
 ### 1. Type Safety
+
 - Proper TypeScript types
 - No `any` types
 - Proper null checks
 - Type inference optimization
 
 ### 2. Code Structure
+
 - Clear function responsibilities
 - Proper separation of concerns
 - DRY principles
 - Clean code patterns
 
 ### 3. Performance
+
 - Efficient algorithms
 - Proper memoization
 - Optimized queries
 - Bundle size considerations
 
 ### 4. Best Practices
+
 - Error handling
 - Logging
 - Testing
 - Documentation
 
 ### 5. Friday AI Chat Patterns
+
 - tRPC procedure patterns
 - React component patterns
 - Database helper patterns
@@ -143,7 +150,7 @@ After improvement, verify:
 
 Provide code quality improvement suggestions:
 
-```markdown
+````markdown
 # Code Quality Improvements
 
 **Date:** 2025-11-16
@@ -151,6 +158,7 @@ Provide code quality improvement suggestions:
 **Status:** [REVIEWED/IMPROVED]
 
 ## Current Code Assessment
+
 - **Type Safety:** [RATING]
 - **Structure:** [RATING]
 - **Performance:** [RATING]
@@ -159,39 +167,49 @@ Provide code quality improvement suggestions:
 ## Improvements Identified
 
 ### 1. [Improvement Category]
+
 **Issue:** [Description]
 **Impact:** [HIGH/MEDIUM/LOW]
 **Current Code:**
+
 ```typescript
 // Current code
 ```
+````
 
 **Improved Code:**
+
 ```typescript
 // Improved code
 ```
 
 **Benefits:**
+
 - [Benefit 1]
 - [Benefit 2]
 
 ### 2. [Improvement Category]
+
 [Similar structure]
 
 ## Priority Recommendations
+
 1. **[HIGH]** [Improvement 1] - [Reason]
 2. **[MEDIUM]** [Improvement 2] - [Reason]
 3. **[LOW]** [Improvement 3] - [Reason]
 
 ## Implementation Guide
+
 1. [Step 1]
 2. [Step 2]
 3. [Step 3]
 
 ## Verification
+
 - ✅ Type safety maintained
 - ✅ Performance improved
 - ✅ Best practices followed
+
 ```
 
 ## GUIDELINES
@@ -206,3 +224,4 @@ Provide code quality improvement suggestions:
 
 **CRITICAL:** Help improve code quality proactively. Guide developers toward better practices during development.
 
+```

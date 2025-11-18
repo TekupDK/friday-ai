@@ -120,7 +120,7 @@ Located in: `server/integrations/chromadb/package.json`
 
 ### **Customer Intelligence**
 
-```text
+````text
 Premium Customers:        28 (18% of leads)
 Problematic Customers:    4 (3% of leads)
 Recurring Customers:      24 (10.4% of leads)
@@ -412,7 +412,7 @@ Nov 10: v4.3.4 - Recurring detection
 Nov 10: v4.3.5 - AI enhancement (FINAL)
 Nov 10: Complete documentation package
 
-```
+````
 
 **Total Development Time:** 5 days
 **Quality:** Production-ready

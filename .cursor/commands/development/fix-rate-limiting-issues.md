@@ -16,11 +16,13 @@ Fix rate limiting issues including race conditions, memory leaks, and fallback b
 ## CRITICAL: START FIXING IMMEDIATELY
 
 **DO NOT:**
+
 - Just describe the problem
 - Wait for approval
 - Show a plan without fixing
 
 **DO:**
+
 - Start investigating immediately
 - Fix race conditions
 - Fix memory leaks
@@ -30,8 +32,10 @@ Fix rate limiting issues including race conditions, memory leaks, and fallback b
 ## KNOWN ISSUES IN THIS REPO
 
 ### Issue 1: Race Condition in Redis Operations
+
 **File:** `server/rate-limiter-redis.ts`
 **Problem:** Non-atomic check-then-act pattern
+
 ```typescript
 // ❌ Current: Race condition
 const count = await client.zcard(key);
@@ -62,8 +66,10 @@ const script = `
 ```
 
 ### Issue 2: Memory Leak in Fallback
+
 **File:** `server/rate-limiter.ts`
 **Problem:** No cleanup of old entries
+
 ```typescript
 // ❌ Current: Memory leak
 const requests = rateLimitMap.get(userId) || [];
@@ -81,8 +87,10 @@ rateLimitMap.set(userId, filtered);
 ```
 
 ### Issue 3: Fallback Bug
+
 **File:** `server/rate-limiter-redis.ts`
 **Problem:** Different limits for different operations
+
 ```typescript
 // ❌ Current: "delete" operation blocked by "create" limit
 // ✅ Fix: Separate limits per operation type
@@ -125,6 +133,7 @@ const key = `rate-limit:${userId}:${operationType}`;
 ## VERIFICATION
 
 After fixes:
+
 - ✅ Race condition fixed (Lua script)
 - ✅ Memory leak fixed (cleanup)
 - ✅ Fallback bug fixed (separate limits)
@@ -137,21 +146,24 @@ After fixes:
 ### Rate Limiting Fixes
 
 **Issues Fixed:**
+
 1. Race condition: [fix applied]
 2. Memory leak: [fix applied]
 3. Fallback bug: [fix applied]
 
 **Files Modified:**
+
 - `server/rate-limiter-redis.ts` - [changes]
 - `server/rate-limiter.ts` - [changes]
 
 **Tests Added:**
+
 - [test file] - [what it tests]
 
 **Verification:**
+
 - ✅ Race condition: FIXED
 - ✅ Memory leak: FIXED
 - ✅ Fallback bug: FIXED
 - ✅ Tests: PASSING
 ```
-

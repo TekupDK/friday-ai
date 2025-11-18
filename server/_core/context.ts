@@ -19,10 +19,9 @@ export async function createContext(
 
   try {
     // ✅ SECURITY FIX: Only allow test bypass in explicit test mode
-    const isTestMode = 
-      process.env.NODE_ENV === "test" || 
-      process.env.TEST_MODE === "true";
-    
+    const isTestMode =
+      process.env.NODE_ENV === "test" || process.env.TEST_MODE === "true";
+
     // ✅ SECURITY FIX: Require test secret for additional security
     const testSecret = opts.req.headers["x-test-secret"] as string | undefined;
     const validTestSecret = process.env.TEST_SECRET;
@@ -32,11 +31,13 @@ export async function createContext(
     if (isTestMode && hasTestHeader) {
       // Require test secret if configured
       if (validTestSecret && testSecret !== validTestSecret) {
-        throw new Error("Invalid test secret. Test bypass requires TEST_SECRET environment variable.");
+        throw new Error(
+          "Invalid test secret. Test bypass requires TEST_SECRET environment variable."
+        );
       }
 
       const testUserId = opts.req.headers["x-test-user-id"] as string;
-      
+
       // ✅ SECURITY FIX: Validate test user ID format (must be numeric)
       if (!/^\d+$/.test(testUserId)) {
         throw new Error("Invalid test user ID format. Must be numeric.");

@@ -3,6 +3,7 @@
 ## Deployment Oversigt
 
 **Hvad Deployes:**
+
 - UTCP manifest system
 - UTCP tool handler
 - Migration af 18 tools til UTCP format
@@ -10,25 +11,30 @@
 - Performance monitoring
 
 **Target Environment:**
+
 - Staging (først)
 - Production (efter validation)
 
 **Estimated Downtime:**
+
 - 0 minutter (gradual migration, no downtime)
 
 **Deployment Window:**
+
 - Staging: Anytime
 - Production: Business hours (9-17 CET), low traffic period
 
 ## Pre-Deployment Checklist
 
 ### Code Quality
+
 - [ ] TypeScript check: `pnpm check` - ⏳ TODO
 - [ ] Linter: `pnpm lint` - ⏳ TODO
 - [ ] Tests: `pnpm test` - ⏳ TODO
 - [ ] Code review: ⏳ TODO
 
 ### Environment Verification
+
 - [ ] Environment variabler verificeret
   - `GOOGLE_OAUTH_CLIENT_ID` - ✅ Eksisterer
   - `GOOGLE_OAUTH_CLIENT_SECRET` - ✅ Eksisterer
@@ -41,12 +47,14 @@
   - Billy.dk API - ✅ Tilgængelig
 
 ### Infrastructure
+
 - [ ] Server resources tilgængelige - ✅ Nuværende server OK
 - [ ] Database backup oprettet - ⏳ TODO (before production)
 - [ ] Monitoring konfigureret - ⏳ TODO
 - [ ] Rollback plan klar - ✅ Se nedenfor
 
 ### Communication
+
 - [ ] Team notificeret - ⏳ TODO
 - [ ] Stakeholders informeret - ⏳ TODO
 - [ ] Maintenance window planlagt - ✅ Ikke nødvendig (no downtime)
@@ -65,6 +73,7 @@ git push origin backup-pre-utcp-$(date +%Y%m%d)
 ```
 
 **Verificering:**
+
 - [ ] Backup successful
 - [ ] Backup verified (test restore)
 
@@ -85,6 +94,7 @@ pnpm test
 ```
 
 **Verificering:**
+
 - [ ] All checks passing
 - [ ] No blocking issues
 
@@ -104,6 +114,7 @@ docker-compose up -d --build
 ```
 
 **Verificering:**
+
 - [ ] Build successful
 - [ ] Deployment successful
 - [ ] Services running
@@ -124,6 +135,7 @@ curl -X POST https://api.staging.tekup.dk/trpc/chat.sendMessage \
 ```
 
 **Verificering:**
+
 - [ ] Health checks passing
 - [ ] Smoke tests passing
 - [ ] No errors in logs
@@ -155,6 +167,7 @@ curl -X POST https://api.staging.tekup.dk/trpc/chat.sendMessage \
 ```
 
 **Verificering:**
+
 - [ ] All staging checks passed
 - [ ] No critical issues in staging
 - [ ] Team approval received
@@ -193,6 +206,7 @@ curl https://api.tekup.dk/health
 ```
 
 **Verificering:**
+
 - [ ] Rollback successful
 - [ ] Services running
 - [ ] No data loss
@@ -238,7 +252,7 @@ curl https://api.tekup.dk/health
 1. **Tool Execution Failures**
    - **Probability:** Medium
    - **Impact:** High
-   - **Mitigation:** 
+   - **Mitigation:**
      - Gradual migration (2-3 tools at a time)
      - Keep MCP fallback during migration
      - Comprehensive testing before production
@@ -339,4 +353,3 @@ curl https://api.tekup.dk/health
    - UTCP tool registry with versioning
    - Automated tool testing
    - Performance benchmarking dashboard
-

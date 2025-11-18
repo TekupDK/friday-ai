@@ -24,7 +24,7 @@ The V4.3.5 lead data pipeline provides **231 enriched leads**with AI-parsed inte
 
 ### **1. Customer Profile Data**
 
-```typescript
+````typescript
 interface CustomerIntelligence {
   // Basic Info
   name: string;
@@ -539,7 +539,7 @@ interface FridayAIMetrics {
   accuracyRate: number; // Target: 95%
 }
 
-```
+````
 
 ---
 

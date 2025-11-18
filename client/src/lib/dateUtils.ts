@@ -1,6 +1,6 @@
 /**
  * Date formatting utilities with caching
- * 
+ *
  * Reduces repeated date parsing operations for better performance.
  * Caches formatted dates to avoid re-parsing the same date strings.
  */
@@ -10,14 +10,14 @@ const MAX_CACHE_SIZE = 100;
 
 /**
  * Format date string to locale date string
- * 
+ *
  * Caches results to avoid repeated parsing operations.
  * Automatically manages cache size to prevent memory leaks.
- * 
+ *
  * @param dateString - ISO date string or null/undefined
  * @param fallback - Fallback text if date is invalid (default: "No date")
  * @returns Formatted date string
- * 
+ *
  * @example
  * ```tsx
  * formatDate("2025-01-28T10:00:00Z") // "1/28/2025"
@@ -38,7 +38,7 @@ export function formatDate(
 
   try {
     const date = new Date(dateString);
-    
+
     // Validate date
     if (isNaN(date.getTime())) {
       return fallback;
@@ -66,7 +66,7 @@ export function formatDate(
 
 /**
  * Clear date cache
- * 
+ *
  * Useful for testing or memory management.
  * Generally not needed in production as cache is self-managing.
  */
@@ -76,10 +76,9 @@ export function clearDateCache(): void {
 
 /**
  * Get current cache size
- * 
+ *
  * Useful for monitoring and debugging.
  */
 export function getDateCacheSize(): number {
   return dateCache.size;
 }
-

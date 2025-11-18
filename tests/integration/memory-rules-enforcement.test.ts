@@ -13,7 +13,10 @@ function buildMemoryContext(intent: ReturnType<typeof parseIntent>): any {
   const context: any = {};
 
   if (intent.intent === "book_meeting") {
-    if (intent.params.startHour !== undefined && intent.params.startMinute !== undefined) {
+    if (
+      intent.params.startHour !== undefined &&
+      intent.params.startMinute !== undefined
+    ) {
       const hours = intent.params.startHour.toString().padStart(2, "0");
       const minutes = intent.params.startMinute.toString().padStart(2, "0");
       context.proposedTime = `${hours}:${minutes}`;
@@ -69,9 +72,10 @@ describe("Memory Rules Enforcement Integration", () => {
       const result = await applyMemoryRules(context);
       // MEMORY_15 should detect violation (HIGH priority, not CRITICAL, so may be warning)
       // Check that rule was applied (time was rounded or violation detected)
-      const hasMemory15Issue = result.violations.some(v => v.includes("MEMORY_15")) ||
-                               result.warnings.some(w => w.includes("MEMORY_15")) ||
-                               context.proposedTime === "09:00";
+      const hasMemory15Issue =
+        result.violations.some(v => v.includes("MEMORY_15")) ||
+        result.warnings.some(w => w.includes("MEMORY_15")) ||
+        context.proposedTime === "09:00";
       expect(hasMemory15Issue).toBe(true);
     });
 
@@ -191,4 +195,3 @@ describe("Memory Rules Enforcement Integration", () => {
     });
   });
 });
-

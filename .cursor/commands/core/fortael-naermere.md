@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der fortæller nærmere om hvad der er udfør
 ## TASK
 
 Fortæl nærmere om arbejde ved at:
+
 - Gennemgå hvad der er udført i detaljer
 - Forklare tekniske implementationer
 - Give konkrete eksempler
@@ -36,6 +37,7 @@ Fortæl nærmere om arbejde ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find implementeringer
 - `read_file` - Læs relevante filer
 - `grep` - Søg efter patterns
@@ -43,6 +45,7 @@ Fortæl nærmere om arbejde ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over vigtige detaljer
 - Ignorere tekniske aspekter
 - Glem eksempler
@@ -106,7 +109,7 @@ Før detaljering, tænk igennem:
 
 Provide detailed explanation:
 
-```markdown
+````markdown
 # Detaljeret Forklaring: [Hvad Er Udført]
 
 **Dato:** 2025-11-16
@@ -137,22 +140,27 @@ Provide detailed explanation:
 [Teknisk forklaring af implementation]
 
 **Tekniske Detaljer:**
+
 ```typescript
 // Eksempel kode
 export async function example() {
   // Implementation detaljer
 }
 ```
+````
 
 **Design Beslutninger:**
+
 - [Beslutning 1] - [Rationale]
 - [Beslutning 2] - [Rationale]
 
 **Patterns Brugt:**
+
 - [Pattern 1] - [Hvor brugt]
 - [Pattern 2] - [Hvor brugt]
 
 **Impact:**
+
 - [Impact 1]
 - [Impact 2]
 - [Impact 3]
@@ -164,18 +172,21 @@ export async function example() {
 ## Filer Ændret
 
 ### Backend
+
 - `server/[file].ts`
   - **Ændring:** [Beskrivelse]
   - **Hvorfor:** [Rationale]
   - **Impact:** [Impact]
 
 ### Frontend
+
 - `client/src/[file].tsx`
   - **Ændring:** [Beskrivelse]
   - **Hvorfor:** [Rationale]
   - **Impact:** [Impact]
 
 ### Dokumentation
+
 - `docs/[file].md`
   - **Ændring:** [Beskrivelse]
   - **Hvorfor:** [Rationale]
@@ -183,59 +194,70 @@ export async function example() {
 ## Tekniske Detaljer
 
 ### Arkitektur
+
 [Beskrivelse af arkitektur ændringer]
 
 ### Data Flow
+
 [Beskrivelse af data flow]
 
 ### Integration Points
+
 - [Integration 1] - [Beskrivelse]
 - [Integration 2] - [Beskrivelse]
 
 ### Dependencies
+
 - [Dependency 1] - [Version] - [Purpose]
 - [Dependency 2] - [Version] - [Purpose]
 
 ## Kode Eksempler
 
 ### Eksempel 1: [Beskrivelse]
+
 ```typescript
 // Detaljeret kode eksempel med forklaring
 export async function example() {
   // Step 1: [Forklaring]
   const result = await step1();
-  
+
   // Step 2: [Forklaring]
   const processed = await step2(result);
-  
+
   return processed;
 }
 ```
 
 ### Eksempel 2: [Beskrivelse]
+
 [Yderligere eksempler...]
 
 ## Business Impact
 
 ### User Impact
+
 - [Impact 1] - [Beskrivelse]
 - [Impact 2] - [Beskrivelse]
 
 ### Business Value
+
 - [Value 1] - [Beskrivelse]
 - [Value 2] - [Beskrivelse]
 
 ### Technical Value
+
 - [Value 1] - [Beskrivelse]
 - [Value 2] - [Beskrivelse]
 
 ## Næste Muligheder
 
 ### Baseret på Dette Arbejde
+
 - [Mulighed 1] - [Beskrivelse]
 - [Mulighed 2] - [Beskrivelse]
 
 ### Forbedringer
+
 - [Forbedring 1] - [Beskrivelse]
 - [Forbedring 2] - [Beskrivelse]
 
@@ -248,6 +270,7 @@ export async function example() {
 [Hvordan det passer ind i større billede]
 
 **Relateret Arbejde:**
+
 - [Related work 1]
 - [Related work 2]
 
@@ -260,6 +283,7 @@ export async function example() {
 2. **Forbedringer:**
    - [Anbefaling 1]
    - [Anbefaling 2]
+
 ```
 
 ## GUIDELINES
@@ -287,3 +311,4 @@ Efter detaljering, verificer:
 
 **CRITICAL:** Start med at analysere alt arbejde, derefter forklar i detaljer med tekniske eksempler, og sæt det i kontekst med impact og næste muligheder.
 
+```

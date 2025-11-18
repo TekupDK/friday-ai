@@ -71,6 +71,7 @@ Fortsæt samtalen naturligt, bevarer kontekst fra tidligere beskeder. Forstå hv
 ## Fortsætter Samtale
 
 **Kontekst fra tidligere diskussion:**
+
 - [Hvad der blev diskuteret]
 - [Beslutninger taget]
 - [Arbejde i gang]
@@ -79,6 +80,7 @@ Fortsæt samtalen naturligt, bevarer kontekst fra tidligere beskeder. Forstå hv
 [Dit svar her, bevarer kontekst]
 
 **Nuværende Status:**
+
 - [Eventuelt igangværende arbejde]
 - [Næste skridt]
 ```
@@ -90,4 +92,3 @@ Fortsæt samtalen naturligt, bevarer kontekst fra tidligere beskeder. Forstå hv
 - **Vær hjælpsom:** Giv specifikke, actionale svar
 - **Referer til tidligere arbejde:** Når relevant, nævn hvad der blev gjort før
 - **Hold fokus:** Adresser nuværende spørgsmål mens du bevarer kontekst
-

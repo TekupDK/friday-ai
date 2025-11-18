@@ -710,7 +710,7 @@ async function executeCreateInvoice(
     };
   }
 
-  const customers = allCustomers.filter((c) =>
+  const customers = allCustomers.filter(c =>
     c.name.toLowerCase().includes(customerName.toLowerCase())
   );
 

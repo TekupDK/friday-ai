@@ -11,7 +11,9 @@ export default function MobileShell() {
   const { isAuthenticated, loading } = useAuth({
     redirectOnUnauthenticated: false,
   });
-  const [tab, setTab] = useState<"chat" | "email" | "workspace" | "settings" | "home">("chat");
+  const [tab, setTab] = useState<
+    "chat" | "email" | "workspace" | "settings" | "home"
+  >("chat");
 
   if (loading) {
     return (
@@ -40,12 +42,16 @@ export default function MobileShell() {
         {tab === "chat" && <ChatTab />}
         {tab === "email" && (
           <div className="p-4">
-            <AppleCard variant="elevated">Email kommer snart på mobil</AppleCard>
+            <AppleCard variant="elevated">
+              Email kommer snart på mobil
+            </AppleCard>
           </div>
         )}
         {tab === "workspace" && (
           <div className="p-4">
-            <AppleCard variant="elevated">Workspace kommer snart på mobil</AppleCard>
+            <AppleCard variant="elevated">
+              Workspace kommer snart på mobil
+            </AppleCard>
           </div>
         )}
         {tab === "settings" && (
@@ -55,25 +61,39 @@ export default function MobileShell() {
         )}
         {tab === "home" && (
           <div className="p-4">
-            <AppleCard variant="elevated">Velkommen til Friday AI mobil</AppleCard>
+            <AppleCard variant="elevated">
+              Velkommen til Friday AI mobil
+            </AppleCard>
           </div>
         )}
       </div>
 
       <nav className="h-16 border-t border-border bg-background flex items-center justify-around">
-        <button className={`flex flex-col items-center text-xs ${tab === "chat" ? "text-primary" : "text-muted-foreground"}`} onClick={() => setTab("chat")}>
+        <button
+          className={`flex flex-col items-center text-xs ${tab === "chat" ? "text-primary" : "text-muted-foreground"}`}
+          onClick={() => setTab("chat")}
+        >
           <Bot className="w-5 h-5" />
           Chat
         </button>
-        <button className={`flex flex-col items-center text-xs ${tab === "email" ? "text-primary" : "text-muted-foreground"}`} onClick={() => setTab("email")}>
+        <button
+          className={`flex flex-col items-center text-xs ${tab === "email" ? "text-primary" : "text-muted-foreground"}`}
+          onClick={() => setTab("email")}
+        >
           <Mail className="w-5 h-5" />
           Email
         </button>
-        <button className={`flex flex-col items-center text-xs ${tab === "workspace" ? "text-primary" : "text-muted-foreground"}`} onClick={() => setTab("workspace")}>
+        <button
+          className={`flex flex-col items-center text-xs ${tab === "workspace" ? "text-primary" : "text-muted-foreground"}`}
+          onClick={() => setTab("workspace")}
+        >
           <Grid className="w-5 h-5" />
           Workspace
         </button>
-        <button className={`flex flex-col items-center text-xs ${tab === "settings" ? "text-primary" : "text-muted-foreground"}`} onClick={() => setTab("settings")}>
+        <button
+          className={`flex flex-col items-center text-xs ${tab === "settings" ? "text-primary" : "text-muted-foreground"}`}
+          onClick={() => setTab("settings")}
+        >
           <Settings className="w-5 h-5" />
           Settings
         </button>
@@ -81,4 +101,3 @@ export default function MobileShell() {
     </div>
   );
 }
-

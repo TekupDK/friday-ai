@@ -68,7 +68,7 @@
 **Status:** Ready to run
 **Command:**
 
-```bash
+````bash
 pnpm db:push
 
 ```text
@@ -83,7 +83,7 @@ cd inbound-email
 git clone <https://github.com/sendbetter/inbound-email.git> .
 npm install
 
-```
+````
 
 ### 3. Google Workspace Configuration
 

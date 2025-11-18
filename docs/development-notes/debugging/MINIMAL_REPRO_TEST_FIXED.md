@@ -10,6 +10,7 @@
 ### **Test Fil:** `server/__tests__/rate-limiter-fallback-bug.test.ts`
 
 **Test Case:**
+
 ```typescript
 it("should maintain separate rate limits per operation when Redis unavailable", async () => {
   const userId = 1;
@@ -32,6 +33,7 @@ it("should maintain separate rate limits per operation when Redis unavailable", 
 ```
 
 **Test Result:**
+
 - **Før Fix:** ❌ FAIL - `deleteResult.success` var `false` (delt limit)
 - **Efter Fix:** ✅ PASS - `deleteResult.success` er `true` (separat limit)
 
@@ -40,6 +42,7 @@ it("should maintain separate rate limits per operation when Redis unavailable", 
 ## 2. Trin-for-Trin Gennemgang af Fejlen
 
 ### **Trin 1: Redis Unavailable**
+
 ```typescript
 // checkRateLimitUnified tries Redis first
 try {
@@ -53,6 +56,7 @@ try {
 **Problem:** `keySuffix` parameter blev ikke sendt videre til `checkRateLimitInMemory`.
 
 ### **Trin 2: In-Memory Fallback (FØR FIX)**
+
 ```typescript
 // FØR FIX - server/rate-limiter-redis.ts:169
 export function checkRateLimitInMemory(
@@ -68,6 +72,7 @@ export function checkRateLimitInMemory(
 **Problem:** Funktionen accepterede ikke `keySuffix`, så alle operationer delte samme Map entry.
 
 ### **Trin 3: Key Generation (FØR FIX)**
+
 ```typescript
 // FØR FIX
 const userRequests = inMemoryLimits.get(userId); // Key: userId only
@@ -77,6 +82,7 @@ const userRequests = inMemoryLimits.get(userId); // Key: userId only
 **Problem:** Map key var kun `userId`, ikke `userId:operationName`.
 
 ### **Trin 4: Rate Limit Check (FØR FIX)**
+
 ```typescript
 // Scenario:
 // 1. User makes 5 "archive" requests → stored in inMemoryLimits.get(1)
@@ -97,6 +103,7 @@ const userRequests = inMemoryLimits.get(userId); // Key: userId only
 ### **✅ Løsning 1: Tilføj keySuffix til checkRateLimitInMemory** (IMPLEMENTERET)
 
 **Implementering:**
+
 ```typescript
 // EFTER FIX
 export function checkRateLimitInMemory(
@@ -112,15 +119,18 @@ export function checkRateLimitInMemory(
 ```
 
 **Fordele:**
+
 - ✅ Konsistent med Redis implementation
 - ✅ Operation-specifikke limits virker i fallback
 - ✅ Minimal code change
 - ✅ Backward compatible (keySuffix optional)
 
 **Ulemper:**
+
 - ⚠️ Kræver ændring af Map key type (number → string)
 
 **Risici:**
+
 - 🟢 **VERY LOW:** Type change er safe (TypeScript compiler catches issues)
 
 **Kompleksitet:** 🟢 LOW
@@ -134,21 +144,24 @@ export function checkRateLimitInMemory(
 ### **Ændringer:**
 
 1. **Tilføjet `keySuffix` parameter til `checkRateLimitInMemory`:**
+
    ```typescript
    export function checkRateLimitInMemory(
      userId: number,
      config: RateLimitConfig = { limit: 10, windowMs: 60000 },
      keySuffix?: string // ✅ NEW
-   )
+   );
    ```
 
 2. **Ændret Map key type fra `number` til `string`:**
+
    ```typescript
    // FØR: const inMemoryLimits = new Map<number, number[]>();
    // EFTER: const inMemoryLimits = new Map<string, number[]>();
    ```
 
 3. **Oprettet composite key:**
+
    ```typescript
    const key = keySuffix ? `${userId}:${keySuffix}` : userId.toString();
    ```
@@ -188,11 +201,13 @@ Tests: 7 passed (7)
 ## 6. Verificering
 
 ### **Før Fix:**
+
 - ❌ Operation-specifikke limits virkede ikke i fallback
 - ❌ Alle operationer delte samme rate limit
 - ❌ Test fejlede
 
 ### **Efter Fix:**
+
 - ✅ Operation-specifikke limits virker i fallback
 - ✅ Hver operation har sin egen rate limit
 - ✅ Alle tests består
@@ -213,4 +228,3 @@ Tests: 7 passed (7)
 
 **Fix Implementeret:** 28. januar 2025  
 **Status:** ✅ **COMPLETE**
-

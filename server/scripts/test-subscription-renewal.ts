@@ -1,6 +1,6 @@
 /**
  * Subscription Renewal Test Script
- * 
+ *
  * Tests the renewal flow end-to-end
  * Run with: pnpm exec dotenv -e .env.dev -- tsx server/scripts/test-subscription-renewal.ts
  */
@@ -59,9 +59,14 @@ async function testSubscriptionRenewal() {
 
     // Create test subscription
     console.log("📝 Creating test subscription...");
-    const subscription = await createSubscription(userId, customer.id, "tier1", {
-      autoRenew: true,
-    });
+    const subscription = await createSubscription(
+      userId,
+      customer.id,
+      "tier1",
+      {
+        autoRenew: true,
+      }
+    );
     console.log(`✅ Created subscription: ${subscription.id}\n`);
 
     // Set nextBillingDate to past (1 day ago)
@@ -79,7 +84,9 @@ async function testSubscriptionRenewal() {
     console.log("🔄 Test 1: Manual Renewal");
     const renewalResult = await processRenewal(subscription.id, userId);
     if (renewalResult.success) {
-      console.log(`✅ Renewal successful! Invoice ID: ${renewalResult.invoiceId}\n`);
+      console.log(
+        `✅ Renewal successful! Invoice ID: ${renewalResult.invoiceId}\n`
+      );
 
       // Verify nextBillingDate was updated
       const updated = await db
@@ -95,7 +102,7 @@ async function testSubscriptionRenewal() {
 
     // Test 2: Background Job Renewal
     console.log("🔄 Test 2: Background Job Renewal");
-    
+
     // Set nextBillingDate to past again
     const pastDate2 = new Date();
     pastDate2.setDate(pastDate2.getDate() - 1);
@@ -124,7 +131,9 @@ async function testSubscriptionRenewal() {
     // Cleanup
     console.log("🧹 Cleaning up test data...");
     await db.delete(subscriptions).where(eq(subscriptions.id, subscription.id));
-    await db.delete(customerProfiles).where(eq(customerProfiles.id, customer.id));
+    await db
+      .delete(customerProfiles)
+      .where(eq(customerProfiles.id, customer.id));
     console.log("✅ Cleanup complete\n");
 
     console.log("✅ All renewal tests completed!");
@@ -141,4 +150,3 @@ async function testSubscriptionRenewal() {
 }
 
 testSubscriptionRenewal();
-

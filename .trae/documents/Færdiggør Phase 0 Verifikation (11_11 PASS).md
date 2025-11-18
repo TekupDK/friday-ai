@@ -5,15 +5,12 @@
 ## Ændringer (uden kodekørsel før godkendelse)
 
 - Ensret alle story titles til formatet "Apple UI/<Komponent>" og bekræft at de matcher:
-
   - AppleButton, AppleInput, AppleModal, AppleBadge, AppleCard, ScrollToTop, AppleSearchField, AppleListItem, AppleDrawer, AppleSheet, AppleTag.
 
 - Udbyg verifikationsscriptet med robust discovery af story IDs:
-
   - Brug manager‑DOM eller `window.__STORYBOOK_CLIENT_API__.getStories()` til at hente faktiske `id`s.
 
   - Hvis kun "kind" findes (fx `apple-ui-applebutton`), generér kandidater med kendte storynavne:
-
     - AppleButton: `primary`, `secondary`, `tertiary`, `small`, `medium`, `large`, `with-left-icon`, `with-right-icon`, `loading`, `disabled`, `full-width`, `all-variants`
 
     - AppleInput: `default`, `with-left-icon`, `with-helper-text`, `with-error`, `all-states`
@@ -37,7 +34,6 @@
     - AppleTag: `new`, `all-variants`
 
 - Forbedr målelogik og selektorer pr. komponent:
-
   - Vent på `#storybook-root` og indhold, tilføj korte timeouts.
 
   - Selektorer: `button`, `input`, `[class*="Card"]`, `[class*="Modal"]`, `[class*="Drawer"]`, `[class*="Sheet"]`, `[class*="badge|Badge|tag|Tag"]`, mm.
@@ -45,11 +41,9 @@
   - Saml `backgroundColor`, `color`, `borderColor`, `boxShadow` for 1‑3 synlige elementer.
 
 - Theme toggling:
-
   - Sæt `data-theme` på `documentElement` og `#storybook-root` for `light` og `dark`.
 
 - Rapportering:
-
   - Gem `stories.json` (discovery) og `report.json` (PASS/FAIL + style samples) under `test-results/phase0-verification/`.
 
 ## Kørsel efter godkendelse

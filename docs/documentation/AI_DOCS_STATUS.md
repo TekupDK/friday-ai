@@ -98,7 +98,6 @@ Lav en super simpel version der virker 100%:
 **Output eksempel:**
 
 ```markdown
-
 # Lead: Acme Corp
 
 ## Info
@@ -117,7 +116,6 @@ Lav en super simpel version der virker 100%:
 
 This lead has been active for 7 days.
 Recommended next action: Follow up meeting.
-
 ```
 
 Simpelt, men functional! Kan udvides senere.
@@ -127,7 +125,6 @@ Simpelt, men functional! Kan udvides senere.
 ## 🚀 NÆSTE STEP
 
 1. **FIX & TEST** (30 min)
-
    - Fix schema issues
 
    - Test med 1 lead
@@ -135,7 +132,6 @@ Simpelt, men functional! Kan udvides senere.
    - Verify output
 
 1. **SIMPLIFY** (10 min)
-
    - Minimal version
 
    - Test immediately

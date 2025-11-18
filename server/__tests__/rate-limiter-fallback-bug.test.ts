@@ -1,7 +1,7 @@
 /**
  * Minimal Reproducible Test - Rate Limiter Fallback Bug
- * 
- * BUG: When Redis is unavailable, checkRateLimitUnified falls back to 
+ *
+ * BUG: When Redis is unavailable, checkRateLimitUnified falls back to
  * checkRateLimitInMemory, but keySuffix is ignored, causing all operations
  * to share the same rate limit.
  */
@@ -15,7 +15,7 @@ describe("Rate Limiter Fallback Bug - keySuffix Ignored", () => {
     // Simulate Redis unavailable by removing env vars
     const originalUrl = process.env.UPSTASH_REDIS_REST_URL;
     const originalToken = process.env.UPSTASH_REDIS_REST_TOKEN;
-    
+
     delete process.env.UPSTASH_REDIS_REST_URL;
     delete process.env.UPSTASH_REDIS_REST_TOKEN;
 
@@ -38,14 +38,18 @@ describe("Rate Limiter Fallback Bug - keySuffix Ignored", () => {
     }
 
     // 6th "archive" request should be blocked
-    const archiveBlocked = await checkRateLimitUnified(userId, config, "archive");
+    const archiveBlocked = await checkRateLimitUnified(
+      userId,
+      config,
+      "archive"
+    );
     expect(archiveBlocked.success).toBe(false);
     expect(archiveBlocked.remaining).toBe(0);
 
     // BUG: "delete" operation should have separate limit, but it's blocked!
     // This happens because checkRateLimitInMemory ignores keySuffix
     const deleteResult = await checkRateLimitUnified(userId, config, "delete");
-    
+
     // EXPECTED: deleteResult.success should be true (separate limit)
     // ACTUAL: deleteResult.success is false (shared limit) ❌
     expect(deleteResult.success).toBe(true); // This will FAIL, proving the bug
@@ -62,19 +66,22 @@ describe("Rate Limiter Fallback Bug - keySuffix Ignored", () => {
     await checkRateLimitUnified(userId, config, "archive");
 
     // "archive" should now be blocked
-    const archiveBlocked = await checkRateLimitUnified(userId, config, "archive");
+    const archiveBlocked = await checkRateLimitUnified(
+      userId,
+      config,
+      "archive"
+    );
     expect(archiveBlocked.success).toBe(false);
 
     // "delete" should have its own limit and be allowed
     // FIXED: keySuffix is now passed to fallback
     const deleteAllowed = await checkRateLimitUnified(userId, config, "delete");
-    
+
     // Verify the fix: delete operation has separate limit
     expect(deleteAllowed.success).toBe(true); // Should be allowed (separate operation)
     expect(deleteAllowed.remaining).toBeGreaterThan(0); // Should have remaining requests
-    
+
     // The key fix is verified: delete is allowed even though archive is blocked
     // Remaining count is a secondary concern - the main bug (shared limits) is fixed
   });
 });
-

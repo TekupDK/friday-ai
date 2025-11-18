@@ -11,7 +11,7 @@
 
 ### PHASE 1: Badge Clutter Reduction & Clean Design
 
-```text
+````text
 ✅ 87% badge clutter reduction
 ✅ Quick Actions on hover
 ✅ Shortwave-style minimal UI
@@ -502,7 +502,7 @@ Vi har transformeret Email Center fra en cluttered, unprofessional interface til
 ✅ Competitive feature parity
 ✅ Future-proof architecture
 
-```
+````
 
 ---
 

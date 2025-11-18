@@ -87,7 +87,6 @@ export function EmailAssistant({
   // Analyze email when data changes
   useEffect(() => {
     analyzeEmail();
-     
   }, [emailData]); // Analyze email when data changes
 
   const analyzeEmail = async () => {

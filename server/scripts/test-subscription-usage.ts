@@ -1,18 +1,27 @@
 /**
  * Subscription Usage Tracking Test Script
- * 
+ *
  * Tests usage tracking from bookings
  * Run with: pnpm exec dotenv -e .env.dev -- tsx server/scripts/test-subscription-usage.ts
  */
 
 import { eq, and } from "drizzle-orm";
 
-import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "../../drizzle/schema";
+import {
+  customerProfiles,
+  subscriptions,
+  bookings,
+  subscriptionUsage,
+} from "../../drizzle/schema";
 import { logger } from "../_core/logger";
 import { getDb } from "../db";
 import { createSubscription } from "../subscription-actions";
 import { getSubscriptionUsageForMonth } from "../subscription-db";
-import { trackBookingUsage, calculateBookingHours, syncSubscriptionUsage } from "../subscription-usage-tracker";
+import {
+  trackBookingUsage,
+  calculateBookingHours,
+  syncSubscriptionUsage,
+} from "../subscription-usage-tracker";
 
 async function testSubscriptionUsage() {
   console.log("🧪 Starting Subscription Usage Tracking Tests...\n");
@@ -60,9 +69,14 @@ async function testSubscriptionUsage() {
 
     // Create test subscription
     console.log("📝 Creating test subscription...");
-    const subscription = await createSubscription(userId, customer.id, "tier1", {
-      autoRenew: true,
-    });
+    const subscription = await createSubscription(
+      userId,
+      customer.id,
+      "tier1",
+      {
+        autoRenew: true,
+      }
+    );
     console.log(`✅ Created subscription: ${subscription.id}\n`);
 
     // Test 1: Calculate Booking Hours
@@ -100,7 +114,11 @@ async function testSubscriptionUsage() {
     console.log(`✅ Created booking: ${booking.id}\n`);
 
     const hoursWorked = calculateBookingHours(booking);
-    const trackResult = await trackBookingUsage(booking.id, userId, hoursWorked);
+    const trackResult = await trackBookingUsage(
+      booking.id,
+      userId,
+      hoursWorked
+    );
 
     if (trackResult.success) {
       console.log(`✅ Usage tracked successfully: ${hoursWorked} hours\n`);
@@ -148,15 +166,21 @@ async function testSubscriptionUsage() {
     if (syncResult.errors.length === 0) {
       console.log("✅ Historical sync successful!\n");
     } else {
-      console.error(`❌ Sync errors: ${JSON.stringify(syncResult.errors, null, 2)}\n`);
+      console.error(
+        `❌ Sync errors: ${JSON.stringify(syncResult.errors, null, 2)}\n`
+      );
     }
 
     // Cleanup
     console.log("🧹 Cleaning up test data...");
-    await db.delete(subscriptionUsage).where(eq(subscriptionUsage.subscriptionId, subscription.id));
+    await db
+      .delete(subscriptionUsage)
+      .where(eq(subscriptionUsage.subscriptionId, subscription.id));
     await db.delete(bookings).where(eq(bookings.id, booking.id));
     await db.delete(subscriptions).where(eq(subscriptions.id, subscription.id));
-    await db.delete(customerProfiles).where(eq(customerProfiles.id, customer.id));
+    await db
+      .delete(customerProfiles)
+      .where(eq(customerProfiles.id, customer.id));
     console.log("✅ Cleanup complete\n");
 
     console.log("✅ All usage tracking tests completed!");
@@ -173,4 +197,3 @@ async function testSubscriptionUsage() {
 }
 
 testSubscriptionUsage();
-

@@ -13,6 +13,7 @@ Du er en senior technical writer der opdaterer API reference documentation for F
 ## TASK
 
 Opdater API reference ved at:
+
 - Analysere tRPC routers
 - Dokumentere alle procedures
 - Dokumentere input/output schemas
@@ -38,6 +39,7 @@ Opdater API reference ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find tRPC routers
 - `read_file` - Læs router files
 - `grep` - Søg efter procedures
@@ -45,6 +47,7 @@ Opdater API reference ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Ignorere procedures
 - Glem schemas
 - Undlad at dokumentere errors
@@ -132,6 +135,7 @@ Provide API reference update:
 ## Procedures Documented
 
 ### Leads Router
+
 - ✅ `leads.list` - List all leads
 - ✅ `leads.get` - Get lead by ID
 - ✅ `leads.create` - Create new lead
@@ -139,6 +143,7 @@ Provide API reference update:
 - ✅ `leads.delete` - Delete lead
 
 ### Invoices Router
+
 - ✅ `invoices.list` - List invoices
 - ✅ `invoices.get` - Get invoice
 - ✅ `invoices.create` - Create invoice
@@ -185,4 +190,3 @@ Efter opdatering, verificer:
 ---
 
 **CRITICAL:** Start med at analysere alle tRPC routers, derefter dokumenter procedures, generer API reference, tilføj eksempler, og verificer accuracy.
-

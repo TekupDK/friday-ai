@@ -32,6 +32,7 @@ Analyze API performance, identify bottlenecks, and recommend optimizations.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read API implementations
 - `codebase_search` - Find performance patterns
 - `grep` - Search for query patterns
@@ -39,6 +40,7 @@ Analyze API performance, identify bottlenecks, and recommend optimizations.
 - `read_file` - Review monitoring data
 
 **DO NOT:**
+
 - Analyze without measuring
 - Skip database analysis
 - Ignore caching opportunities
@@ -72,6 +74,7 @@ Before analyzing, think through:
 ## PERFORMANCE ANALYSIS METHODOLOGY
 
 ### Step 1: Measure Performance
+
 1. **Response times:**
    - Measure endpoint response times
    - Identify slow endpoints (> 500ms)
@@ -88,6 +91,7 @@ Before analyzing, think through:
    - Database errors
 
 ### Step 2: Identify Bottlenecks
+
 1. **Database queries:**
    - N+1 queries
    - Missing indexes
@@ -105,6 +109,7 @@ Before analyzing, think through:
    - Memory leaks
 
 ### Step 3: Recommend Optimizations
+
 1. **Database:**
    - Add indexes
    - Fix N+1 queries
@@ -149,20 +154,23 @@ Before analyzing, think through:
 ### API Performance Analysis
 
 **Endpoints Analyzed:**
+
 - [Endpoint 1]: [response time]ms
 - [Endpoint 2]: [response time]ms
 
 **Bottlenecks Identified:**
+
 1. [Bottleneck 1] - [Impact] - [Fix]
 2. [Bottleneck 2] - [Impact] - [Fix]
 
 **Optimizations Recommended:**
+
 - [Optimization 1]
 - [Optimization 2]
 
 **Results:**
+
 - Before: [metrics]
 - After: [metrics]
 - Improvement: [percentage]
 ```
-

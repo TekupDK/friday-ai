@@ -12,6 +12,7 @@ Master command der læser HELE chat sessionen (alle beskeder fra bruger OG agent
 ## TASK
 
 Funger som senior pair-programmer der:
+
 1. **Læser HELE chat sessionen** - ALLE beskeder fra bruger OG agent fra start til nu (via chat historik)
 2. **Forstår fuld kontekst** - Hvad er diskuteret? Hvad er besluttet? Hvad er implementeret?
 3. **Analysér filer** - Hvilke filer arbejdes der på? Hvad er nuværende status?
@@ -27,12 +28,14 @@ Funger som senior pair-programmer der:
 **KRITISK:** Læs HELE chat sessionen systematisk:
 
 **I Cursor/Copilot:**
+
 - Du har adgang til hele chat historikken i denne session
 - Læs ALLE beskeder fra start af sessionen
 - Læs både brugerens beskeder OG agentens svar
 - Forstå diskussionens flow og progression
 
 **Hvad du skal læse:**
+
 - **Brugerens beskeder:** Hvad spørger brugeren om? Hvad vil de opnå?
 - **Agentens svar:** Hvad har agenten foreslået? Hvad er blevet besluttet?
 - **Diskussioner:** Hvilke emner er diskuteret? Hvilke beslutninger er taget?
@@ -41,6 +44,7 @@ Funger som senior pair-programmer der:
 - **Opgaver:** Hvilke opgaver er identificeret eller påbegyndt?
 
 **Brug chat historikken til at:**
+
 - Forstå hvad brugeren prøver at opnå
 - Husk tidligere beslutninger og diskussioner
 - Fortsætte fra hvor I slap
@@ -91,14 +95,17 @@ Funger som senior pair-programmer der:
 **Status:** [Færdigt/I gang/Mangler - baseret på chat]
 
 ## Næste Skridt (baseret på chat flow)
+
 1. [Action 1] - [Hvorfor baseret på chat] - [Status]
 2. [Action 2] - [Hvorfor baseret på chat] - [Status]
 
 ## Implementeret (baseret på chat diskussioner)
+
 - ✅ [Item 1] - [Fra chat diskussion]
 - ✅ [Item 2] - [Fra chat diskussion]
 
 ## Fortsætter med (som pair-programmer)
+
 [Beskrivelse baseret på chat flow]
 ```
 

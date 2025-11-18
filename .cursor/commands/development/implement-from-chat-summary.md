@@ -23,6 +23,7 @@ Read a chat summary and implement exactly what was discussed and agreed upon. ST
 ## TOOL USAGE
 
 **Use these tools:**
+
 - Review chat summary - Understand requirements
 - `read_file` - Read existing code
 - `codebase_search` - Find patterns
@@ -31,6 +32,7 @@ Read a chat summary and implement exactly what was discussed and agreed upon. ST
 - `run_terminal_cmd` - Run tests
 
 **DO NOT:**
+
 - Wait for approval
 - Just plan without implementing
 - Skip requirements
@@ -64,11 +66,13 @@ Before implementing, think through:
 ## CRITICAL: START IMPLEMENTING IMMEDIATELY
 
 **DO NOT:**
+
 - Show a plan and wait for approval
 - Ask "should I start?"
 - Just summarize without implementing
 
 **DO:**
+
 - Start implementing the first requirement immediately
 - Make actual code changes using tools
 - Complete the full implementation
@@ -76,27 +80,27 @@ Before implementing, think through:
 
 ## STEPS
 
-1) Read the chat summary carefully:
+1. Read the chat summary carefully:
    - Understand the full context of the conversation
    - Identify the main goal or feature requested
    - Note any specific requirements or constraints
    - Extract technical decisions made
    - Identify any design choices discussed
 
-2) Parse requirements:
+2. Parse requirements:
    - List all features to implement
    - Note acceptance criteria
    - Identify file locations mentioned
    - Understand dependencies
    - Note any "do not" constraints
 
-3) Review existing code:
+3. Review existing code:
    - Check files mentioned in summary
    - Understand current implementation
    - Identify integration points
    - Review related code patterns
 
-4) **START IMPLEMENTING IMMEDIATELY:**
+4. **START IMPLEMENTING IMMEDIATELY:**
    - Begin with foundational changes (DB schema, types)
    - **MAKE CODE CHANGES NOW** using tools
    - Implement backend logic
@@ -106,13 +110,13 @@ Before implementing, think through:
    - Add tests
    - Run typecheck/tests as you go
 
-5) Verify against summary:
+5. Verify against summary:
    - Check each requirement is met
    - Verify constraints are respected
    - Ensure design decisions are followed
    - Confirm nothing was missed
 
-6) Test the implementation:
+6. Test the implementation:
    - Run typecheck
    - Run relevant tests
    - Test manually if needed
@@ -121,6 +125,7 @@ Before implementing, think through:
 ## OUTPUT
 
 Provide:
+
 - Summary of what was implemented
 - Files created/modified
 - How each requirement was addressed
@@ -138,4 +143,3 @@ Provide:
 - **Make reasonable assumptions** - If unclear, proceed with best judgment
 - **Complete the full scope** - Don't leave partial implementations
 - **SHOW PROGRESS:** Report as you complete each part
-

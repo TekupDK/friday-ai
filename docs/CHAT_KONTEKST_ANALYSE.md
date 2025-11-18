@@ -143,11 +143,13 @@
 ### Immediate Actions
 
 1. **Start med System Health Check (30 min):**
+
    ```powershell
    pnpm check    # TypeScript errors
    pnpm test     # Test failures
    pnpm dev      # Dev server crashes
    ```
+
    - Identificer 5-10 CRITICAL bugs der blokerer produktion
    - Prioriter dem baseret på impact
 
@@ -246,4 +248,3 @@
 
 **Sidst Opdateret:** 2025-01-28  
 **Vedligeholdt af:** TekupDK Development Team
-

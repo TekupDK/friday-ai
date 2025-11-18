@@ -84,7 +84,7 @@ We need provider diversity but cannot increase costs beyond $0.00/month.
 
 ### Provider Cascade (All FREE!)
 
-```yaml
+````yaml
 
 1. glm-4.5-air:free          ($0.00) - Primary (current)
 2. deepseek-chat-v3.1:free   ($0.00) - Fallback 1 (coding)
@@ -525,7 +525,7 @@ git revert <commit-hash>
 git push
 # Redeploy
 
-```
+````
 
 ### Rollback Decision Criteria
 

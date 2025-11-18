@@ -41,7 +41,7 @@
 
 ### Step 1: Add Langfuse Tracing to Embeddings
 
-```typescript
+````typescript
 // server/integrations/chromadb/embeddings.ts
 
 import { getLangfuseClient } from "../langfuse/client";
@@ -488,7 +488,7 @@ for (const threshold of thresholds) {
   });
 }
 
-```
+````
 
 ---
 

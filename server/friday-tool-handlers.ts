@@ -36,7 +36,11 @@ type ToolRegistryEntry = {
   schema: z.ZodTypeAny;
   requiresApproval: boolean;
   requiresUser?: boolean;
-  handler: (args: any, userId: number, correlationId?: string) => Promise<ToolCallResult>;
+  handler: (
+    args: any,
+    userId: number,
+    correlationId?: string
+  ) => Promise<ToolCallResult>;
 };
 
 const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
@@ -47,12 +51,14 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       maxResults: z.number().int().positive().max(100).optional(),
     }),
     requiresApproval: false,
-    handler: async (args: any, userId: number, correlationId?: string) => handleSearchGmail(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleSearchGmail(args, correlationId),
   },
   get_gmail_thread: {
     schema: z.object({ threadId: z.string().min(1) }),
     requiresApproval: false,
-    handler: async (args: any, userId: number, correlationId?: string) => handleGetGmailThread(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleGetGmailThread(args, correlationId),
   },
   create_gmail_draft: {
     schema: z.object({
@@ -79,7 +85,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
   search_billy_customer: {
     schema: z.object({ email: z.string().email() }),
     requiresApproval: false,
-    handler: async (args: any, userId: number, correlationId?: string) => handleSearchBillyCustomer(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleSearchBillyCustomer(args, correlationId),
   },
   create_billy_invoice: {
     schema: z.object({
@@ -98,7 +105,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
         .min(1),
     }),
     requiresApproval: true,
-    handler: async (args: any, userId: number, correlationId?: string) => handleCreateBillyInvoice(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleCreateBillyInvoice(args, correlationId),
   },
 
   // Calendar
@@ -121,7 +129,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       })
       .strict(),
     requiresApproval: false,
-    handler: async (args: any, userId: number, correlationId?: string) => handleListCalendarEvents(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleListCalendarEvents(args, correlationId),
   },
   find_free_calendar_slots: {
     schema: z.object({
@@ -135,7 +144,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
         .optional(),
     }),
     requiresApproval: false,
-    handler: async (args: any, userId: number, correlationId?: string) => handleFindFreeCalendarSlots(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleFindFreeCalendarSlots(args, correlationId),
   },
   create_calendar_event: {
     schema: z.object({
@@ -154,7 +164,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       location: z.string().optional(),
     }),
     requiresApproval: true,
-    handler: async (args: any, userId: number, correlationId?: string) => handleCreateCalendarEvent(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleCreateCalendarEvent(args, correlationId),
   },
   search_customer_calendar_history: {
     schema: z.object({
@@ -163,7 +174,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       monthsBack: z.number().int().min(1).max(24).optional(),
     }),
     requiresApproval: false,
-    handler: async (args: any, userId: number, correlationId?: string) => handleSearchCustomerCalendarHistory(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleSearchCustomerCalendarHistory(args, correlationId),
   },
   update_calendar_event: {
     schema: z.object({
@@ -185,7 +197,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       location: z.string().optional(),
     }),
     requiresApproval: true,
-    handler: async (args: any, userId: number, correlationId?: string) => handleUpdateCalendarEvent(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleUpdateCalendarEvent(args, correlationId),
   },
   delete_calendar_event: {
     schema: z.object({
@@ -193,7 +206,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       reason: z.string().optional(),
     }),
     requiresApproval: true,
-    handler: async (args: any, userId: number, correlationId?: string) => handleDeleteCalendarEvent(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleDeleteCalendarEvent(args, correlationId),
   },
   check_calendar_conflicts: {
     schema: z.object({
@@ -210,7 +224,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       ignoreEventId: z.string().optional(),
     }),
     requiresApproval: false,
-    handler: async (args: any, userId: number, correlationId?: string) => handleCheckCalendarConflicts(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleCheckCalendarConflicts(args, correlationId),
   },
 
   // Leads
@@ -258,7 +273,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
     }),
     requiresApproval: false,
     requiresUser: true,
-    handler: async (args: any, userId: number, correlationId?: string) => handleUpdateLeadStatus(args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleUpdateLeadStatus(args, correlationId),
   },
 
   // Tasks
@@ -270,7 +286,8 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       .strict(),
     requiresApproval: false,
     requiresUser: true,
-    handler: async (args: any, userId: number, correlationId?: string) => handleListTasks(userId, args, correlationId),
+    handler: async (args: any, userId: number, correlationId?: string) =>
+      handleListTasks(userId, args, correlationId),
   },
   create_task: {
     schema: z.object({
@@ -320,7 +337,10 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
   optimize_subscription_usage: {
     schema: z.object({
       subscriptionId: z.number().int().positive(),
-      optimizeFor: z.enum(["value", "convenience", "efficiency"]).optional().default("value"),
+      optimizeFor: z
+        .enum(["value", "convenience", "efficiency"])
+        .optional()
+        .default("value"),
     }),
     requiresApproval: false,
     requiresUser: true,
@@ -382,17 +402,17 @@ async function callWithRetry<T>(
 
 /**
  * Execute a tool call with the given arguments
- * 
+ *
  * This is the main entry point for executing Friday AI tools. It validates
  * the tool name and arguments, checks permissions, and calls the appropriate
  * handler function.
- * 
+ *
  * @param toolName - Name of the tool to execute (must be in TOOL_REGISTRY)
  * @param args - Arguments for the tool (validated against tool schema)
  * @param userId - User ID for authentication and ownership checks
  * @param options - Optional configuration including correlationId for request tracing
  * @returns ToolCallResult with success status, data, or error information
- * 
+ *
  * @example
  * ```typescript
  * const result = await executeToolCall(
@@ -401,7 +421,7 @@ async function callWithRetry<T>(
  *   userId,
  *   { correlationId: "action_1234567890_abc12345" }
  * );
- * 
+ *
  * if (result.success) {
  *   console.log("Found emails:", result.data);
  * } else {
@@ -469,10 +489,13 @@ export async function executeToolCall(
   });
 
   if (entry.requiresUser && !userId) {
-    console.warn("[WARN] [Tool] [executeToolCall]: User authentication required", {
-      toolName,
-      correlationId,
-    });
+    console.warn(
+      "[WARN] [Tool] [executeToolCall]: User authentication required",
+      {
+        toolName,
+        correlationId,
+      }
+    );
     return {
       success: false,
       error: "User authentication required",
@@ -688,7 +711,9 @@ async function handleCreateGmailDraft(
 }
 
 // Billy Tool Handlers
-async function handleListBillyInvoices(correlationId?: string): Promise<ToolCallResult> {
+async function handleListBillyInvoices(
+  correlationId?: string
+): Promise<ToolCallResult> {
   console.log("[DEBUG] [Tool] [handleListBillyInvoices]: Entry", {
     correlationId,
   });
@@ -766,11 +791,16 @@ async function handleCreateBillyInvoice(
     contactId: args.contactId,
     entryDate: args.entryDate,
     lineCount: args.lines.length,
-    totalAmount: args.lines.reduce((sum, line) => sum + line.quantity * line.unitPrice, 0),
+    totalAmount: args.lines.reduce(
+      (sum, line) => sum + line.quantity * line.unitPrice,
+      0
+    ),
     correlationId,
   });
   try {
-    const invoice = await callWithRetry(() => createInvoice(args, { correlationId }));
+    const invoice = await callWithRetry(() =>
+      createInvoice(args, { correlationId })
+    );
     console.log("[INFO] [Tool] [handleCreateBillyInvoice]: Success", {
       invoiceId: invoice.id,
       contactId: args.contactId,
@@ -965,11 +995,14 @@ async function handleSearchCustomerCalendarHistory(
       return new Date(bTime).getTime() - new Date(aTime).getTime();
     });
 
-    console.log("[INFO] [Tool] [handleSearchCustomerCalendarHistory]: Success", {
-      customerName: args.customerName,
-      totalEvents: matchedEvents.length,
-      correlationId,
-    });
+    console.log(
+      "[INFO] [Tool] [handleSearchCustomerCalendarHistory]: Success",
+      {
+        customerName: args.customerName,
+        totalEvents: matchedEvents.length,
+        correlationId,
+      }
+    );
 
     return {
       success: true,
@@ -988,12 +1021,15 @@ async function handleSearchCustomerCalendarHistory(
       },
     };
   } catch (error) {
-    console.error("[ERROR] [Tool] [handleSearchCustomerCalendarHistory]: Failed", {
-      customerName: args.customerName,
-      error: error instanceof Error ? error.message : "Unknown error",
-      stack: error instanceof Error ? error.stack : undefined,
-      correlationId,
-    });
+    console.error(
+      "[ERROR] [Tool] [handleSearchCustomerCalendarHistory]: Failed",
+      {
+        customerName: args.customerName,
+        error: error instanceof Error ? error.message : "Unknown error",
+        stack: error instanceof Error ? error.stack : undefined,
+        correlationId,
+      }
+    );
     return {
       success: false,
       error: `Kunne ikke hente historik: ${error instanceof Error ? error.message : "Ukendt fejl"}`,

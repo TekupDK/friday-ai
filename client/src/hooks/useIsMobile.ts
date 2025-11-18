@@ -4,9 +4,9 @@ const MOBILE_BREAKPOINT = 768;
 
 /**
  * Detects if the current viewport is mobile-sized
- * 
+ *
  * @returns `true` if viewport width < 768px, `false` otherwise
- * 
+ *
  * @example
  * ```tsx
  * const isMobile = useIsMobile();
@@ -28,4 +28,3 @@ export function useIsMobile() {
 
   return !!isMobile;
 }
-

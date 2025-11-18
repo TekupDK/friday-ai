@@ -38,7 +38,10 @@ const STATUS_CONFIG: Record<TaskStatus, { label: string; color: string }> = {
 
 const PRIORITY_CONFIG: Record<
   TaskPriority,
-  { label: string; variant: "default" | "secondary" | "destructive" | "outline" }
+  {
+    label: string;
+    variant: "default" | "secondary" | "destructive" | "outline";
+  }
 > = {
   low: { label: "Lav", variant: "outline" },
   medium: { label: "Medium", variant: "default" },
@@ -216,4 +219,3 @@ export function SortableTaskCard({
     </Card>
   );
 }
-

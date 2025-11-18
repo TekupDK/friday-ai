@@ -24,7 +24,11 @@ const SUBSCRIPTION_PLANS = [
     price: 1200,
     hours: 3,
     description: "1x månedlig rengøring (3 timer)",
-    features: ["Månedlig rengøring", "3 timer inkluderet", "Grundlæggende support"],
+    features: [
+      "Månedlig rengøring",
+      "3 timer inkluderet",
+      "Grundlæggende support",
+    ],
     popular: false,
   },
   {
@@ -33,7 +37,12 @@ const SUBSCRIPTION_PLANS = [
     price: 1800,
     hours: 4,
     description: "1x månedlig rengøring (4 timer) + Hovedrengøring",
-    features: ["Månedlig rengøring", "4 timer inkluderet", "Hovedrengøring", "Prioriteret support"],
+    features: [
+      "Månedlig rengøring",
+      "4 timer inkluderet",
+      "Hovedrengøring",
+      "Prioriteret support",
+    ],
     popular: true,
   },
   {
@@ -57,7 +66,12 @@ const SUBSCRIPTION_PLANS = [
     price: 1000,
     hours: 2.5,
     description: "2.5 timer rengøring/måned (akkumuleres)",
-    features: ["Fleksibel booking", "2.5 timer/måned", "Timer akkumuleres", "Grundlæggende support"],
+    features: [
+      "Fleksibel booking",
+      "2.5 timer/måned",
+      "Timer akkumuleres",
+      "Grundlæggende support",
+    ],
     popular: false,
   },
   {
@@ -85,19 +99,17 @@ export function SubscriptionPlanSelector({
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   // Get AI recommendation if customerProfileId provided
-  const {
-    data: recommendation,
-    isLoading: isLoadingRecommendation,
-  } = trpc.subscription.getRecommendation.useQuery(
-    {
-      customerProfileId: customerProfileId!,
-      includeReasoning: true,
-    },
-    {
-      enabled: showRecommendation && !!customerProfileId,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: recommendation, isLoading: isLoadingRecommendation } =
+    trpc.subscription.getRecommendation.useQuery(
+      {
+        customerProfileId: customerProfileId!,
+        includeReasoning: true,
+      },
+      {
+        enabled: showRecommendation && !!customerProfileId,
+        refetchOnWindowFocus: false,
+      }
+    );
 
   const handleSelectPlan = (planType: string) => {
     setSelectedPlan(planType);
@@ -136,7 +148,8 @@ export function SubscriptionPlanSelector({
         {SUBSCRIPTION_PLANS.map(plan => {
           const isSelected = selectedPlan === plan.value;
           const isRecommended =
-            recommendation?.recommendedPlan === plan.value && showRecommendation;
+            recommendation?.recommendedPlan === plan.value &&
+            showRecommendation;
 
           return (
             <AppleCard
@@ -166,7 +179,9 @@ export function SubscriptionPlanSelector({
                 {/* Header */}
                 <div>
                   <h3 className="font-bold text-xl mb-1">{plan.label}</h3>
-                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {plan.description}
+                  </p>
                 </div>
 
                 {/* Price */}
@@ -213,4 +228,3 @@ export function SubscriptionPlanSelector({
     </div>
   );
 }
-

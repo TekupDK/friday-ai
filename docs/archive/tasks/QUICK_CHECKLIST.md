@@ -50,7 +50,7 @@
 - **Files:** `hooks/useDebouncedValue.ts`, `InvoicesTab.tsx`
 
 **Phase 1 Done?** ✅ / ❌
-**Review:** **********\_**********
+**Review:** \***\*\*\*\*\***\_\***\*\*\*\*\***
 
 ---
 
@@ -86,7 +86,7 @@
 - **Files:** `InvoicesTab.tsx`
 
 **Phase 2 Done?** ✅ / ❌
-**Review:** **********\_**********
+**Review:** \***\*\*\*\*\***\_\***\*\*\*\*\***
 
 ---
 
@@ -126,7 +126,7 @@
 - **Files:** `scripts/backfill-invoices.ts`
 
 **Phase 3 Done?** ✅ / ❌
-**Review:** **********\_**********
+**Review:** \***\*\*\*\*\***\_\***\*\*\*\*\***
 
 ---
 
@@ -165,7 +165,7 @@
 - **ROI:** High (innovative)
 
 **Phase 4 Done?** ✅ / ❌
-**Review:** **********\_**********
+**Review:** \***\*\*\*\*\***\_\***\*\*\*\*\***
 
 ---
 

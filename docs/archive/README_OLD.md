@@ -184,4 +184,4 @@ When adding new documentation:
 ---
 
 **Maintained by:** TekupDK Development Team
-**Repository:** [tekup-ai-v2](<https://github.com/TekupDK/tekup-friday>)
+**Repository:** [tekup-ai-v2](https://github.com/TekupDK/tekup-friday)

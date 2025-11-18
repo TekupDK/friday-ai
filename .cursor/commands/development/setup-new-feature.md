@@ -30,12 +30,14 @@ Systematically set up a new feature from initial planning through to implementat
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review similar features
 - `codebase_search` - Find feature patterns
 - `grep` - Search for patterns
 - `run_terminal_cmd` - Check git status
 
 **DO NOT:**
+
 - Skip planning phase
 - Ignore architecture
 - Miss dependencies
@@ -68,17 +70,17 @@ Before setting up, think through:
 ## Steps
 
 1. **Define requirements**
-    - Clarify feature scope and goals
-    - Identify user stories and acceptance criteria
-    - Plan technical approach
+   - Clarify feature scope and goals
+   - Identify user stories and acceptance criteria
+   - Plan technical approach
 2. **Create feature branch**
-    - Branch from main/develop
-    - Set up local development environment
-    - Configure any new dependencies
+   - Branch from main/develop
+   - Set up local development environment
+   - Configure any new dependencies
 3. **Plan architecture**
-    - Design data models and APIs
-    - Plan UI components and flow
-    - Consider testing strategy
+   - Design data models and APIs
+   - Plan UI components and flow
+   - Consider testing strategy
 
 ## Setup New Feature Checklist
 

@@ -11,6 +11,7 @@
 **Overall Assessment:** ✅ **GOOD** with minor improvements needed
 
 The implementation is solid and follows project patterns. However, there are several issues that should be addressed:
+
 - Missing error handling in tRPC queries
 - Inconsistent indentation
 - Missing accessibility attributes
@@ -24,21 +25,27 @@ The implementation is solid and follows project patterns. However, there are sev
 ### `client/src/pages/crm/CRMDashboard.tsx`
 
 **Line 18:** ❌ **Indentation Issue**
+
 ```typescript
         <div className="flex items-center justify-between">
 ```
+
 Should be indented 2 more spaces to align with parent div.
 
 **Line 35, 46, 57, 68:** ⚠️ **Hardcoded Placeholder Values**
+
 ```typescript
 <div className="text-3xl font-bold">-</div>
 ```
+
 Should use a loading skeleton or connect to actual stats endpoint. Consider using `trpc.crm.stats.getDashboardStats.useQuery()`.
 
 **Line 79:** ⚠️ **Comment in Production Code**
+
 ```typescript
 Chart will be implemented using trpc.crm.extensions.getRevenueForecast
 ```
+
 This is fine for now, but should be removed when implemented.
 
 ---
@@ -46,33 +53,43 @@ This is fine for now, but should be removed when implemented.
 ### `client/src/pages/crm/CustomerList.tsx`
 
 **Line 15-18:** ⚠️ **Missing Error Handling**
+
 ```typescript
 const { data: customers, isLoading } = trpc.crm.customer.listProfiles.useQuery({
   search: search || undefined,
   limit: 50,
 });
 ```
+
 Missing `error` and `isError` from destructuring. Should handle error states.
 
 **Line 16:** ✅ **Good Pattern**
+
 ```typescript
 search: search || undefined,
 ```
+
 Correctly converts empty string to undefined to avoid sending empty search.
 
 **Line 25:** ❌ **Indentation Issue**
 Same as CRMDashboard - should be indented 2 more spaces.
 
 **Line 49:** ⚠️ **Missing Error State**
+
 ```typescript
 ) : customers && customers.length > 0 ? (
 ```
+
 Should check for error state before checking data.
 
 **Line 74:** ⚠️ **Unsafe Status Display**
+
 ```typescript
-{customer.status}
+{
+  customer.status;
+}
 ```
+
 Status is displayed directly without validation. Should use a Badge component with proper styling based on status value.
 
 ---
@@ -80,24 +97,31 @@ Status is displayed directly without validation. Should use a Badge component wi
 ### `client/src/pages/crm/LeadPipeline.tsx`
 
 **Line 18:** ⚠️ **Hardcoded Status Array**
+
 ```typescript
 const stages = ["new", "contacted", "qualified", "proposal", "won", "lost"];
 ```
+
 Should use a constant or enum from schema. If schema changes, this will break.
 
 **Line 14-16:** ⚠️ **Missing Error Handling**
 Same issue as CustomerList - no error handling.
 
 **Line 43:** ✅ **Good Null Safety**
+
 ```typescript
-const stageLeads = leads?.filter((lead) => lead.status === stage) || [];
+const stageLeads = leads?.filter(lead => lead.status === stage) || [];
 ```
+
 Proper null safety with optional chaining.
 
 **Line 58:** ⚠️ **Missing onClick Handler**
+
 ```typescript
-className="p-3 bg-muted/50 rounded-lg cursor-pointer hover:bg-muted transition-colors"
+className =
+  "p-3 bg-muted/50 rounded-lg cursor-pointer hover:bg-muted transition-colors";
 ```
+
 Has `cursor-pointer` but no `onClick`. Should either add handler or remove cursor style.
 
 **Line 81-89:** ⚠️ **Placeholder Card in Production**
@@ -111,17 +135,23 @@ The drag-drop placeholder card should be removed or hidden behind a feature flag
 Same pattern - missing error handling.
 
 **Line 57-59:** ⚠️ **Date Parsing Without Error Handling**
+
 ```typescript
-{booking.scheduledStart
-  ? new Date(booking.scheduledStart).toLocaleDateString()
-  : "No date"}
+{
+  booking.scheduledStart
+    ? new Date(booking.scheduledStart).toLocaleDateString()
+    : "No date";
+}
 ```
+
 Should handle invalid date strings. Consider using a date utility function.
 
 **Line 48:** ✅ **Good Pluralization**
+
 ```typescript
 {bookings.length} booking{bookings.length !== 1 ? "s" : ""} found
 ```
+
 Proper pluralization handling.
 
 ---
@@ -129,33 +159,42 @@ Proper pluralization handling.
 ### `client/src/components/crm/CRMLayout.tsx`
 
 **Line 18:** ✅ **Good Hook Usage**
+
 ```typescript
 const [path, navigate] = useLocation();
 ```
+
 Proper use of wouter hooks.
 
 **Line 20-25:** ⚠️ **Hardcoded Navigation Items**
+
 ```typescript
 const navItems = [
   { path: "/crm/dashboard", label: "Dashboard", icon: BarChart3 },
   ...
 ];
 ```
+
 Should be moved to a constant file or config for easier maintenance.
 
 **Line 46:** ✅ **Good Active State Logic**
+
 ```typescript
 const isActive = path === item.path;
 ```
+
 Simple and correct active state detection.
 
 **Line 30:** ✅ **Good Sticky Navigation**
+
 ```typescript
 <nav className="border-b border-border bg-background sticky top-0 z-50">
 ```
+
 Proper sticky positioning with z-index.
 
 **Line 34-42:** ⚠️ **Missing Accessibility**
+
 ```typescript
 <Button
   variant="ghost"
@@ -164,6 +203,7 @@ Proper sticky positioning with z-index.
   className="text-sm"
 >
 ```
+
 Missing `aria-label` for screen readers. Should add `aria-label="Navigate to workspace"`.
 
 ---
@@ -174,9 +214,13 @@ Missing `aria-label` for screen readers. Should add `aria-label="Navigate to wor
 Routes are well-organized and use lazy loading correctly.
 
 **Line 57:** ✅ **Good Comment**
+
 ```typescript
-{/* CRM Routes */}
+{
+  /* CRM Routes */
+}
 ```
+
 Clear section comment.
 
 ---
@@ -190,9 +234,11 @@ Desktop navigation is properly hidden on mobile.
 Mobile users get CRM links in dropdown menu.
 
 **Line 180:** ⚠️ **Potential Layout Issue**
+
 ```typescript
 <div className="hidden md:flex items-center gap-1 ml-4 border-l border-border pl-4">
 ```
+
 If CRM navigation grows, this could overflow on smaller desktop screens. Consider responsive breakpoints.
 
 ---
@@ -341,12 +387,14 @@ If CRM navigation grows, this could overflow on smaller desktop screens. Conside
 ### ⚠️ Testing Gaps Identified
 
 **Missing Tests:**
+
 1. No unit tests for CRM pages
 2. No integration tests for navigation
 3. No error state tests
 4. No loading state tests
 
 **Recommended Test Coverage:**
+
 - [ ] Navigation between CRM pages
 - [ ] Error handling in CustomerList
 - [ ] Error handling in LeadPipeline
@@ -360,32 +408,35 @@ If CRM navigation grows, this could overflow on smaller desktop screens. Conside
 
 ## 8. Code Quality Metrics
 
-| Metric | Score | Notes |
-|--------|-------|-------|
-| TypeScript Coverage | ✅ 100% | All files properly typed |
-| Error Handling | ⚠️ 40% | Missing error states |
-| Accessibility | ⚠️ 60% | Missing ARIA labels |
-| Consistency | ✅ 90% | Minor indentation issues |
-| Maintainability | ✅ 85% | Good structure, could extract constants |
-| Performance | ✅ 95% | Lazy loading, good practices |
+| Metric              | Score   | Notes                                   |
+| ------------------- | ------- | --------------------------------------- |
+| TypeScript Coverage | ✅ 100% | All files properly typed                |
+| Error Handling      | ⚠️ 40%  | Missing error states                    |
+| Accessibility       | ⚠️ 60%  | Missing ARIA labels                     |
+| Consistency         | ✅ 90%  | Minor indentation issues                |
+| Maintainability     | ✅ 85%  | Good structure, could extract constants |
+| Performance         | ✅ 95%  | Lazy loading, good practices            |
 
 ---
 
 ## 9. Recommended Action Plan
 
 ### Immediate (Before Merge)
+
 1. ✅ Fix indentation issues
 2. ✅ Add error handling to all tRPC queries
 3. ✅ Extract lead status array to constant
 4. ✅ Add accessibility attributes
 
 ### Short-term (Next Sprint)
+
 5. Add error boundaries
 6. Remove placeholder cards
 7. Add loading skeletons
 8. Extract navigation config
 
 ### Long-term (Future)
+
 9. Add comprehensive tests
 10. Add keyboard navigation
 11. Add pagination
@@ -400,6 +451,7 @@ If CRM navigation grows, this could overflow on smaller desktop screens. Conside
 The implementation is solid and follows project patterns well. The code is readable, maintainable, and architecturally sound. The identified issues are minor and can be addressed quickly.
 
 **Priority Fixes Required:**
+
 1. Error handling (critical)
 2. Indentation (critical)
 3. Accessibility (high)
@@ -411,4 +463,3 @@ The implementation is solid and follows project patterns well. The code is reada
 
 **Reviewed by:** Senior Code Review  
 **Date:** January 28, 2025
-

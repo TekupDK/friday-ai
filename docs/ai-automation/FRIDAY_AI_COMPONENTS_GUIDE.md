@@ -6,18 +6,18 @@ Komplet guide til alle Friday AI chat komponenter baseret på Figma design og je
 
 ### **Core Componenter**
 
-| Component           | Purpose                   | Integration     |
-| ------------------- | ------------------------- | --------------- |
+| Component | Purpose | Integration |
+| --------- | ------- | ----------- |
 
-| `AIThinking`        | Pulserende dots indicator | Core            |
-| `ToolExecutionBox`  | Inline tool progress      | Core            |
-| `WeatherCard`       | Vejr data display         | Weather API     |
-| `InvoiceCards`      | Faktura oversigt          | Billy           |
-| `EmailThreadCard`   | Email med AI summary      | Gmail           |
-| `CalendarEventCard` | Møde booking              | Google Calendar |
-| `SearchResultsCard` | Web search results        | Web Search      |
-| `AIMemoryPanel`     | Action timeline           | Core            |
-| `ChatFlowDemo`      | Interactive demos         | Demo            |
+| `AIThinking` | Pulserende dots indicator | Core |
+| `ToolExecutionBox` | Inline tool progress | Core |
+| `WeatherCard` | Vejr data display | Weather API |
+| `InvoiceCards` | Faktura oversigt | Billy |
+| `EmailThreadCard` | Email med AI summary | Gmail |
+| `CalendarEventCard` | Møde booking | Google Calendar |
+| `SearchResultsCard` | Web search results | Web Search |
+| `AIMemoryPanel` | Action timeline | Core |
+| `ChatFlowDemo` | Interactive demos | Demo |
 
 ---
 
@@ -25,7 +25,7 @@ Komplet guide til alle Friday AI chat komponenter baseret på Figma design og je
 
 ### **1. AIThinking**
 
-```tsx
+````tsx
 import { AIThinking } from "@/components/chat/AIThinking";
 
 <AIThinking message="AI Thinking..." />;
@@ -448,7 +448,7 @@ server/
 ├── routers.ts                  # Message creation
 └── tool-execution-tracker.ts   # Tool tracking
 
-```
+````
 
 ---
 

@@ -41,7 +41,7 @@
 
 **Setup (5 minutes):**
 
-```bash
+````bash
 npm install -D promptfoo
 
 ```text
@@ -213,7 +213,7 @@ jobs:
 
         run: pip install deepeval && npm run test:ai:deep
 
-```
+````
 
 ---
 

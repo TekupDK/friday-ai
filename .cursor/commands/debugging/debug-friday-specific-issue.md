@@ -102,14 +102,16 @@ Debug a specific issue in Friday AI Chat using knowledge of the codebase archite
 **Root Cause:** [explanation]
 
 **Fix Applied:**
+
 - [what was fixed]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Issue resolved: PASSED
 - ✅ Regression test: ADDED
 - ✅ No side effects: VERIFIED
 ```
-

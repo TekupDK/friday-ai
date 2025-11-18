@@ -12,7 +12,7 @@ This document describes the architecture for the Tekup AI real-time documentatio
 
 ## 🏗️ System Architecture
 
-```bash
+````bash
 ┌─────────────────────────────────────────────────────────────┐
 │                     Documentation Portal                      │
 │                    (React + WebSocket)                        │
@@ -448,7 +448,7 @@ Focus on:
    │ (Source of Truth)  │
    └────────────────────┘
 
-```
+````
 
 ## 🔄 Migration Plan
 

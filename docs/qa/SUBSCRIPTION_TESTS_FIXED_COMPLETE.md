@@ -57,22 +57,24 @@
 ## Test Results
 
 ### Unit Tests (`subscription.test.ts`)
+
 **Status:** ✅ ALL PASSING (20/20)
 
-| Test Suite | Tests | Status |
-|------------|-------|--------|
-| Subscription Helpers | 8 | ✅ All pass |
-| Subscription Plans | 3 | ✅ All pass |
-| Subscription Actions | 9 | ✅ All pass |
+| Test Suite           | Tests | Status      |
+| -------------------- | ----- | ----------- |
+| Subscription Helpers | 8     | ✅ All pass |
+| Subscription Plans   | 3     | ✅ All pass |
+| Subscription Actions | 9     | ✅ All pass |
 
 ### Integration Tests (`subscription-integration.test.ts`)
+
 **Status:** ✅ ALL PASSING (8/8)
 
-| Test Suite | Tests | Status |
-|------------|-------|--------|
-| Billy.dk Integration | 3 | ✅ All pass |
-| Google Calendar | 2 | ✅ All pass |
-| Email Integration | 3 | ✅ All pass |
+| Test Suite           | Tests | Status      |
+| -------------------- | ----- | ----------- |
+| Billy.dk Integration | 3     | ✅ All pass |
+| Google Calendar      | 2     | ✅ All pass |
+| Email Integration    | 3     | ✅ All pass |
 
 **Total:** 28/28 tests passing (100%) ✅
 
@@ -83,6 +85,7 @@
 ### Mock Pattern (Drizzle ORM)
 
 **Before (Broken):**
+
 ```typescript
 mockDb.select.mockReturnValue({
   from: vi.fn().mockReturnValue({
@@ -92,6 +95,7 @@ mockDb.select.mockReturnValue({
 ```
 
 **After (Fixed):**
+
 ```typescript
 mockDb.select.mockReturnValue({
   from: vi.fn().mockReturnValue({
@@ -105,6 +109,7 @@ mockDb.select.mockReturnValue({
 ### Function Mocking Pattern
 
 **Before (Broken):**
+
 ```typescript
 vi.doMock("../subscription-db", () => ({
   getActiveSubscriptions: vi.fn().mockResolvedValue([]),
@@ -112,6 +117,7 @@ vi.doMock("../subscription-db", () => ({
 ```
 
 **After (Fixed):**
+
 ```typescript
 const subscriptionDb = await import("../subscription-db");
 vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue([]);
@@ -120,13 +126,19 @@ vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue([]);
 ### Usage Query Mock
 
 **Before (Broken):**
+
 ```typescript
-{ hoursUsed: "2.5" } // Wrong structure
+{
+  hoursUsed: "2.5";
+} // Wrong structure
 ```
 
 **After (Fixed):**
+
 ```typescript
-{ total: 2.5 } // Matches SQL COALESCE(SUM(...)) result
+{
+  total: 2.5;
+} // Matches SQL COALESCE(SUM(...)) result
 ```
 
 ---
@@ -151,12 +163,14 @@ vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue([]);
 ## Test Coverage
 
 **Unit Tests:**
+
 - ✅ Subscription Helpers (calculateMonthlyRevenue, getARPU, getChurnRate, checkOverage)
 - ✅ Subscription Plans (SUBSCRIPTION_PLANS validation)
 - ✅ Subscription Actions (createSubscription, processRenewal, processCancellation)
 - ✅ Date Calculations (calculateNextBillingDate)
 
 **Integration Tests:**
+
 - ✅ Billy.dk Invoice Integration
 - ✅ Google Calendar Integration
 - ✅ Email Integration
@@ -175,4 +189,3 @@ vi.spyOn(subscriptionDb, "getActiveSubscriptions").mockResolvedValue([]);
 
 **Last Updated:** 2025-01-28  
 **Status:** ✅ COMPLETE - All Tests Passing
-

@@ -18,11 +18,7 @@ export function SafeHtmlView({ html, className }: SafeHtmlViewProps) {
   if (!safe) return null;
 
   return (
-    <div
-      className={className}
-       
-      dangerouslySetInnerHTML={{ __html: safe }}
-    />
+    <div className={className} dangerouslySetInnerHTML={{ __html: safe }} />
   );
 }
 

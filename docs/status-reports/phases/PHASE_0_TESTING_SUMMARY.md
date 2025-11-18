@@ -39,7 +39,6 @@
   "messageId": "unique-message-id",
   "receivedAt": "2025-01-15T10:00:00Z"
 }
-
 ```
 
 ## ✅ Implementation Complete

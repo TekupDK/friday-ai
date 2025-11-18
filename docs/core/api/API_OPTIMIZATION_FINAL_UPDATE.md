@@ -71,7 +71,6 @@
 window.__apiMonitor?.getSummary();
 window.__apiMonitor?.getCacheHitRate();
 window.__apiMonitor?.getRecentMetrics(20);
-
 ```
 
 **Documentation:** See `API_OPTIMIZATION_MONITORING.md`

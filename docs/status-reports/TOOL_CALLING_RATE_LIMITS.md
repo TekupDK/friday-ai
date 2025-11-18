@@ -8,7 +8,7 @@
 
 ### Normal Request (UDEN tools)
 
-```text
+````text
 User: "Hvad koster rengøring?"
   ↓
 1 API Call → LiteLLM → OpenRouter
@@ -264,7 +264,7 @@ for (const lead of leads) {
   // Queue handles waiting automatically! ✅
 }
 
-```
+````
 
 ---
 

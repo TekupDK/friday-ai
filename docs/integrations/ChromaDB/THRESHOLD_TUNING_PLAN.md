@@ -46,7 +46,7 @@ Brug **rigtige data fra RenDetalje** (Juli-December 2025) til at:
 
 **Script:** `server/integrations/chromadb/scripts/collect-real-data.ts`
 
-```bash
+````bash
 npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
 
 ```text
@@ -292,7 +292,7 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
 # Step 4: Test in production
 npm run dev
 
-```
+````
 
 ---
 

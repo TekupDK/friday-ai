@@ -33,6 +33,7 @@ This audit evaluates the accessibility of the Friday AI Chat application against
 ### ❌ Critical Issues
 
 #### 1.1 Missing Page Titles and Landmarks
+
 **WCAG 2.4.2 (Level A) - Page Titled**
 
 **Issue:** No consistent page title management or skip links.
@@ -42,6 +43,7 @@ This audit evaluates the accessibility of the Friday AI Chat application against
 **Impact:** Screen reader users cannot identify page context or skip repetitive navigation.
 
 **Remediation:**
+
 ```typescript
 // Add to App.tsx or create a PageTitle component
 import { useEffect } from "react";
@@ -49,7 +51,7 @@ import { useLocation } from "wouter";
 
 export function usePageTitle(title: string) {
   const [location] = useLocation();
-  
+
   useEffect(() => {
     document.title = `${title} - ${APP_TITLE}`;
   }, [title, location]);
@@ -63,11 +65,13 @@ function WorkspaceLayout() {
 ```
 
 #### 1.2 Missing Skip Links
+
 **WCAG 2.4.1 (Level A) - Bypass Blocks**
 
 **Issue:** No skip navigation links to bypass repetitive content.
 
 **Remediation:**
+
 ```typescript
 // Create client/src/components/SkipLinks.tsx
 export function SkipLinks() {
@@ -91,16 +95,19 @@ export function SkipLinks() {
 ```
 
 #### 1.3 Heading Hierarchy Issues
+
 **WCAG 1.3.1 (Level A) - Info and Relationships**
 
 **Issue:** Inconsistent heading hierarchy. Many components use `<h3>`, `<h4>`, `<h5>` without proper `<h1>` and `<h2>` structure.
 
 **Locations:**
+
 - `SettingsDialog.tsx` - Uses `<h3>` without parent `<h2>`
 - `ContextAwareness.tsx` - Multiple `<h4>` and `<h5>` without hierarchy
 - `LoginPage.tsx` - Uses `<h1>` inside `CardTitle` (good), but inconsistent elsewhere
 
 **Remediation:**
+
 ```typescript
 // SettingsDialog.tsx - Fix heading hierarchy
 <div className="space-y-4">
@@ -113,16 +120,19 @@ export function SkipLinks() {
 ```
 
 #### 1.4 Color Contrast Issues
+
 **WCAG 1.4.3 (Level AA) - Contrast (Minimum)**
 
 **Issue:** Several color combinations may not meet 4.5:1 contrast ratio for text.
 
 **Locations:**
+
 - `LoginPage.tsx` - Text on dark backgrounds (`text-slate-300`, `text-slate-400`)
 - `EmailListV2.tsx` - Muted text colors (`text-muted-foreground/70`, `text-muted-foreground/80`)
 - Button variants with low opacity
 
 **Remediation:**
+
 ```typescript
 // Add contrast checker utility
 // client/src/lib/contrast-checker.ts
@@ -138,11 +148,11 @@ export default {
     extend: {
       colors: {
         // Ensure all color variants meet WCAG AA standards
-        'muted-foreground': '#6b7280', // 4.5:1 contrast on white
-      }
-    }
-  }
-}
+        "muted-foreground": "#6b7280", // 4.5:1 contrast on white
+      },
+    },
+  },
+};
 ```
 
 ---
@@ -163,6 +173,7 @@ export default {
 ### ❌ Critical Issues
 
 #### 2.1 Missing Form Field Associations
+
 **WCAG 1.3.1 (Level A) - Info and Relationships**
 
 **Issue:** Some form fields may not be properly associated with labels.
@@ -172,16 +183,19 @@ export default {
 **Status:** ✅ **Already Good** - LoginPage properly uses `Label` component with `htmlFor` attributes.
 
 #### 2.2 Missing ARIA Descriptions for Complex Controls
+
 **WCAG 4.1.2 (Level A) - Name, Role, Value**
 
 **Issue:** Complex interactive elements lack descriptive text.
 
 **Locations:**
+
 - `EmailListV2.tsx` - Email items need better descriptions
 - `SettingsDialog.tsx` - Switch controls need `aria-describedby`
 - Virtual scrolling list needs `aria-label` on container
 
 **Remediation:**
+
 ```typescript
 // EmailListV2.tsx
 <div
@@ -227,6 +241,7 @@ export default {
 ```
 
 #### 2.3 Missing Loading State Announcements
+
 **WCAG 4.1.3 (Level AA) - Status Messages**
 
 **Issue:** Loading states not announced to screen readers.
@@ -234,6 +249,7 @@ export default {
 **Location:** `LoginPage.tsx` - Loading overlay exists but needs better announcements.
 
 **Remediation:**
+
 ```typescript
 // LoginPage.tsx - Already has role="status" and aria-live="polite", but improve:
 {authStage !== "idle" && (
@@ -263,16 +279,19 @@ export default {
 ```
 
 #### 2.4 Image Alt Text Issues
+
 **WCAG 1.1.1 (Level A) - Non-text Content**
 
 **Issue:** Some images have generic or missing alt text.
 
 **Locations:**
+
 - `LoginPage.tsx` - Logo has `alt="App icon"` (generic)
 - `DashboardLayout.tsx` - Logo has `alt="Logo"` (generic)
 - `LoginDialog.tsx` - Logo has `alt="App icon"` (generic)
 
 **Remediation:**
+
 ```typescript
 // Use descriptive alt text or mark decorative images
 <img
@@ -309,16 +328,19 @@ export default {
 ### ❌ Critical Issues
 
 #### 3.1 Missing Focus Indicators
+
 **WCAG 2.4.7 (Level AA) - Focus Visible**
 
 **Issue:** Some interactive elements lack visible focus indicators.
 
 **Locations:**
+
 - `EmailListV2.tsx` - Email items with `tabIndex={0}` but no visible focus style
 - `DashboardLayout.tsx` - Sidebar toggle buttons need better focus styles
 - Custom buttons in various components
 
 **Remediation:**
+
 ```typescript
 // EmailListV2.tsx
 <div
@@ -341,15 +363,18 @@ export default {
 ```
 
 #### 3.2 Inaccessible Custom Buttons
+
 **WCAG 4.1.2 (Level A) - Name, Role, Value**
 
 **Issue:** Some buttons are implemented as `<div>` or `<span>` without proper roles.
 
 **Locations:**
+
 - `EmailListV2.tsx` - Sender name buttons need proper button semantics
 - Various showcase components
 
 **Remediation:**
+
 ```typescript
 // EmailListV2.tsx - Change div/span buttons to actual buttons
 <button
@@ -366,11 +391,13 @@ export default {
 ```
 
 #### 3.3 Missing Keyboard Shortcuts Documentation
+
 **WCAG 2.1.1 (Level A) - Keyboard**
 
 **Issue:** Keyboard shortcuts exist but are not documented or discoverable.
 
 **Remediation:**
+
 ```typescript
 // Create client/src/components/KeyboardShortcutsDialog.tsx
 export function KeyboardShortcutsDialog({ open, onOpenChange }: DialogProps) {
@@ -404,6 +431,7 @@ export function KeyboardShortcutsDialog({ open, onOpenChange }: DialogProps) {
 ```
 
 #### 3.4 Modal Focus Management
+
 **WCAG 2.4.3 (Level A) - Focus Order**
 
 **Issue:** Need to verify focus is properly trapped and returned in modals.
@@ -411,34 +439,38 @@ export function KeyboardShortcutsDialog({ open, onOpenChange }: DialogProps) {
 **Status:** ✅ **Already Good** - Radix Dialog handles focus trapping, but verify focus return.
 
 **Remediation:**
+
 ```typescript
 // Ensure focus returns to trigger after dialog closes
 // Dialog component already handles this via Radix, but verify:
 function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
   const triggerRef = useRef<HTMLButtonElement>(null);
-  
+
   useEffect(() => {
     if (!open && triggerRef.current) {
       // Focus should return automatically via Radix, but ensure it does
       triggerRef.current.focus();
     }
   }, [open]);
-  
+
   // ... rest of component
 }
 ```
 
 #### 3.5 Touch Target Size
+
 **WCAG 2.5.5 (Level AAA) - Target Size**
 
 **Issue:** Some interactive elements may be smaller than 44x44px touch target.
 
 **Locations:**
+
 - Checkbox in EmailListV2 (16x16px)
 - Small icon buttons
 - Close button in dialogs
 
 **Remediation:**
+
 ```typescript
 // Ensure minimum touch target size
 // Add padding to small interactive elements
@@ -483,17 +515,19 @@ function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
    - Free version available
 
 4. **Pa11y** (Command Line)
+
    ```bash
    npm install -g pa11y
    pa11y http://localhost:5173
    ```
 
 5. **@axe-core/react** (Automated Testing)
+
    ```typescript
    // Add to test setup
    import { axe, toHaveNoViolations } from 'jest-axe';
    expect.extend(toHaveNoViolations);
-   
+
    test('should not have accessibility violations', async () => {
      const { container } = render(<MyComponent />);
      const results = await axe(container);
@@ -536,6 +570,7 @@ function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 ### Test Cases
 
 #### Test Case 1: Login Form Accessibility
+
 ```typescript
 // __tests__/LoginPage.a11y.test.tsx
 import { render } from '@testing-library/react';
@@ -567,6 +602,7 @@ describe('LoginPage Accessibility', () => {
 ```
 
 #### Test Case 2: Email List Keyboard Navigation
+
 ```typescript
 // __tests__/EmailListV2.a11y.test.tsx
 describe('EmailListV2 Keyboard Navigation', () => {
@@ -591,6 +627,7 @@ describe('EmailListV2 Keyboard Navigation', () => {
 ## 5. Remediation Priority
 
 ### Priority 1 (Critical - Must Fix)
+
 1. ✅ Add skip links to main navigation
 2. ✅ Fix heading hierarchy (h1 → h2 → h3)
 3. ✅ Add proper ARIA labels to complex controls
@@ -598,6 +635,7 @@ describe('EmailListV2 Keyboard Navigation', () => {
 5. ✅ Add visible focus indicators to all interactive elements
 
 ### Priority 2 (High - Should Fix)
+
 1. ✅ Improve color contrast ratios
 2. ✅ Add keyboard shortcuts documentation
 3. ✅ Enhance loading state announcements
@@ -605,6 +643,7 @@ describe('EmailListV2 Keyboard Navigation', () => {
 5. ✅ Add form field error associations
 
 ### Priority 3 (Medium - Nice to Have)
+
 1. ✅ Add automated accessibility testing
 2. ✅ Create accessibility testing documentation
 3. ✅ Add keyboard shortcuts dialog
@@ -650,6 +689,7 @@ describe('EmailListV2 Keyboard Navigation', () => {
 ## 7. Code Examples
 
 ### Accessible Button Component
+
 ```typescript
 // Already good, but ensure all buttons follow this pattern
 <Button
@@ -664,6 +704,7 @@ describe('EmailListV2 Keyboard Navigation', () => {
 ```
 
 ### Accessible Form
+
 ```typescript
 <form onSubmit={handleSubmit} aria-describedby={error ? "form-error" : undefined}>
   <div className="space-y-2">
@@ -686,6 +727,7 @@ describe('EmailListV2 Keyboard Navigation', () => {
 ```
 
 ### Accessible Modal
+
 ```typescript
 <Dialog open={open} onOpenChange={onOpenChange}>
   <DialogContent aria-describedby="dialog-description">
@@ -699,6 +741,7 @@ describe('EmailListV2 Keyboard Navigation', () => {
 ```
 
 ### Accessible List
+
 ```typescript
 <div
   role="listbox"
@@ -726,18 +769,21 @@ describe('EmailListV2 Keyboard Navigation', () => {
 ## 8. Resources
 
 ### Documentation
+
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/)
 - [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
 - [A11y Project Checklist](https://www.a11yproject.com/checklist/)
 
 ### Tools
+
 - [axe DevTools](https://www.deque.com/axe/devtools/)
 - [WAVE](https://wave.webaim.org/)
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 - [Pa11y](https://pa11y.org/)
 
 ### Testing
+
 - [NVDA Screen Reader](https://www.nvaccess.org/)
 - [VoiceOver Guide](https://webaim.org/articles/voiceover/)
 - [Screen Reader Testing Guide](https://www.a11yproject.com/posts/how-to-test-with-a-screen-reader/)
@@ -757,6 +803,7 @@ The Friday AI Chat application has a solid foundation with good use of accessibl
 By addressing these issues systematically using the remediation code provided, the application can achieve WCAG 2.1 AA compliance and provide an inclusive experience for all users.
 
 **Next Steps:**
+
 1. Review and prioritize issues based on user impact
 2. Implement Priority 1 fixes immediately
 3. Set up automated accessibility testing
@@ -767,4 +814,3 @@ By addressing these issues systematically using the remediation code provided, t
 
 **Report Generated:** January 28, 2025  
 **Next Review Date:** February 28, 2025
-

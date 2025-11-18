@@ -16,23 +16,27 @@ Perform comprehensive accessibility audit of UI code, identify issues, and provi
 ## ACCESSIBILITY AUDIT METHODOLOGY
 
 ### 1. WCAG Compliance Check
+
 - **Level A:** Basic accessibility (semantic HTML, labels)
 - **Level AA:** Enhanced accessibility (contrast, keyboard, ARIA)
 - **Level AAA:** Advanced accessibility (optional)
 
 ### 2. Automated Testing
+
 - Use axe DevTools
 - Use Lighthouse accessibility audit
 - Use WAVE browser extension
 - Check for common issues
 
 ### 3. Manual Testing
+
 - Test with screen reader (NVDA/JAWS/VoiceOver)
 - Test keyboard-only navigation
 - Test color contrast manually
 - Test focus management
 
 ### 4. Code Review
+
 - Check semantic HTML
 - Check ARIA attributes
 - Check keyboard handlers
@@ -41,12 +45,14 @@ Perform comprehensive accessibility audit of UI code, identify issues, and provi
 ## AUDIT CHECKLIST
 
 ### Semantic HTML
+
 - [ ] Proper HTML elements used
 - [ ] Heading hierarchy correct (h1 → h2 → h3)
 - [ ] Landmarks present (`<nav>`, `<main>`, etc.)
 - [ ] Form labels associated
 
 ### ARIA Attributes
+
 - [ ] `aria-label` for icon-only buttons
 - [ ] `aria-describedby` for help text
 - [ ] `aria-live` for dynamic content
@@ -54,6 +60,7 @@ Perform comprehensive accessibility audit of UI code, identify issues, and provi
 - [ ] `aria-hidden` for decorative
 
 ### Keyboard Navigation
+
 - [ ] All interactive elements keyboard accessible
 - [ ] Visible focus indicators
 - [ ] Logical tab order
@@ -61,12 +68,14 @@ Perform comprehensive accessibility audit of UI code, identify issues, and provi
 - [ ] Arrow keys work in lists
 
 ### Color & Contrast
+
 - [ ] Text contrast: 4.5:1 minimum
 - [ ] UI components: 3:1 minimum
 - [ ] Don't rely on color alone
 - [ ] Dark mode supported
 
 ### Screen Reader Support
+
 - [ ] Descriptive labels
 - [ ] Status announcements
 - [ ] Form error messages
@@ -110,6 +119,7 @@ Perform comprehensive accessibility audit of UI code, identify issues, and provi
 ### Accessibility Audit: [Component/Page]
 
 **WCAG Compliance:**
+
 - Level A: [pass/fail]
 - Level AA: [pass/fail]
 - Issues: [count]
@@ -117,12 +127,15 @@ Perform comprehensive accessibility audit of UI code, identify issues, and provi
 **Issues Found:**
 
 **P1 (Critical):**
+
 1. [Issue] - [Location] - [Fix]
 
 **P2 (Important):**
+
 1. [Issue] - [Location] - [Fix]
 
 **P3 (Nice to have):**
+
 1. [Issue] - [Location] - [Fix]
 
 **Remediation Code:**
@@ -135,11 +148,13 @@ Perform comprehensive accessibility audit of UI code, identify issues, and provi
 \`\`\`
 
 **Testing:**
+
 - ✅ Screen reader: TESTED
 - ✅ Keyboard navigation: TESTED
 - ✅ Color contrast: VERIFIED
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```

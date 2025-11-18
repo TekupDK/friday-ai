@@ -19,4 +19,3 @@ Analyze bundles, identify large dependencies, implement code splitting, lazy loa
 ## OUTPUT
 
 Bundle size optimized with before/after metrics.
-

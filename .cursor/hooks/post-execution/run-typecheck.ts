@@ -1,6 +1,6 @@
 /**
  * Post-execution Hook: Run TypeCheck
- * 
+ *
  * Runs TypeScript type checking after code changes
  */
 
@@ -28,4 +28,3 @@ export async function runTypeCheck(): Promise<TypeCheckResult> {
 
 // Default export for hook executor
 export default runTypeCheck;
-

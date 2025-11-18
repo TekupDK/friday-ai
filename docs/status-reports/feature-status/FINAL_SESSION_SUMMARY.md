@@ -59,20 +59,20 @@
    - Next steps
 
 1. **SESSION_SUMMARY_2025-11-08.md** (500 lines)
-    - Complete session recap
-    - Achievements
-    - Next steps
+   - Complete session recap
+   - Achievements
+   - Next steps
 
 1. **CLEANUP_SUMMARY.md** (240 lines)
-    - What cleanup scripts do
-    - Safety information
-    - Expected results
+   - What cleanup scripts do
+   - Safety information
+   - Expected results
 
 1. **DEPRECATED_CODE_AUDIT.md** (530 lines)
-    - 74 TODOs catalogued
-    - 16 @deprecated markers
-    - 1,448 console.logs found
-    - Complete action plan
+   - 74 TODOs catalogued
+   - 16 @deprecated markers
+   - 1,448 console.logs found
+   - Complete action plan
 
 **Total Documentation:** 4,000+ lines
 
@@ -222,7 +222,7 @@
 
 ### **1. Run Cleanup Scripts** (Pending user confirmation)
 
-```powershell
+````powershell
 .\scripts\cleanup-phase1.ps1  # Delete 19 files
 .\scripts\organize-test-files.ps1  # Move 18 tests
 
@@ -234,7 +234,7 @@
 pnpm build
 pnpm test
 
-```
+````
 
 ### **3. Setup Redis (Optional)**
 

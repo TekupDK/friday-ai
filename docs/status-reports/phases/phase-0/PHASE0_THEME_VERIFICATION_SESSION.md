@@ -18,7 +18,7 @@ Færdiggørelse af automatiseret tema-verifikation for Apple UI Phase 0 komponen
 
 #### 2. Story ID Format Opdatering
 
-- **Problem**: 5 komponenter kunne ikke findes (crm-apple-ui-* prefix fejlede)
+- **Problem**: 5 komponenter kunne ikke findes (crm-apple-ui-\* prefix fejlede)
 - **Løsning**: Opdaterede alle story IDs til `apple-ui-*` format som primary
   - Behold fallback til `crm-apple-ui-*` for bagudkompatibilitet
   - Verificerede mod Storybook's faktiske exports
@@ -66,7 +66,7 @@ Færdiggørelse af automatiseret tema-verifikation for Apple UI Phase 0 komponen
 - AppleModal
 - AppleBadge
 - AppleCard
-- Fejl: "Failed to load story" for både crm-* og non-crm story IDs
+- Fejl: "Failed to load story" for både crm-\* og non-crm story IDs
 
 **CSS Theme Not Working (1 komponent):**
 
@@ -79,7 +79,7 @@ Færdiggørelse af automatiseret tema-verifikation for Apple UI Phase 0 komponen
 
 #### Verification Harness Architecture
 
-```javascript
+````javascript
 // Per-component page isolation
 for (const component of components) {
   const page = await context.newPage()  // Isolated page
@@ -163,7 +163,7 @@ client/src/components/crm/apple-ui/ScrollToTop.module.css
 node scripts/verify-phase0-components.mjs
 # Target: 11/11 PASS
 
-```
+````
 
 ### Læringer
 

@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 
-
 export default function PipelineDashboard() {
   const { data: pipelineStates, isLoading } =
     trpc.inbox.email.getPipelineStates.useQuery({});

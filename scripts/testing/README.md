@@ -1,8 +1,9 @@
 # Testing Scripts
 
 Manual test execution scripts for:
+
 - AI/LLM testing
-- Performance benchmarks  
+- Performance benchmarks
 - Email intelligence validation
 - Production simulation
 

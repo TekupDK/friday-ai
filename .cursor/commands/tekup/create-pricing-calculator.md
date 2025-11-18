@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der opretter en pricing calculator for Friday
 ## TASK
 
 Opret pricing calculator ved at:
+
 - Implementere time-based pricing (349 kr/time)
 - Implementere square meter calculations
 - Implementere service type pricing (REN-001 to REN-005)
@@ -38,6 +39,7 @@ Opret pricing calculator ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find pricing logic
 - `read_file` - Læs Billy implementation
 - `grep` - Søg efter pricing patterns
@@ -45,6 +47,7 @@ Opret pricing calculator ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Ignorere edge cases
 - Glem validation
 - Undlad at teste
@@ -124,22 +127,26 @@ Provide pricing calculator implementation:
 ## Implementation
 
 ### Schema Created
+
 - ✅ Pricing types defined
 - ✅ Service types defined
 - ✅ Validation schemas created
 
 ### Calculator Function
+
 - ✅ Time-based calculation: IMPLEMENTED
 - ✅ Square meter calculation: IMPLEMENTED
 - ✅ Service type lookup: IMPLEMENTED
 - ✅ Billy integration: IMPLEMENTED
 
 ### tRPC Procedure
+
 - ✅ `pricing.calculate` - Created
 - ✅ Input validation: WORKING
 - ✅ Error handling: WORKING
 
 ### React Component
+
 - ✅ PricingCalculator component: CREATED
 - ✅ Form inputs: WORKING
 - ✅ Price display: WORKING
@@ -197,4 +204,3 @@ Efter implementation, verificer:
 ---
 
 **CRITICAL:** Start med at definere pricing schema, derefter implementer calculator function, integrer med Billy, opret tRPC procedure, og tilføj React component.
-

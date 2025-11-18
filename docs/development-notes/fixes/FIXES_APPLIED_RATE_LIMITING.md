@@ -11,9 +11,11 @@
 ### **1. Count Increment Bug** ✅ FIXED
 
 **Problem:**
+
 - Count incrementeres FØR check, hvilket tillader `count > maxRequests`
 
 **Fix Anvendt:**
+
 ```typescript
 // FØR (BUG):
 entry.count++;
@@ -31,6 +33,7 @@ entry.count++; // Increment kun hvis limit ikke overskredet
 **Fil:** `server/rate-limiter.ts` (linje 44-52)
 
 **Test Coverage:**
+
 - ✅ Test: "should not allow count to exceed maxRequests"
 - ✅ Test: "should block requests when limit is exactly reached"
 - ✅ Alle 7 tests passing
@@ -40,11 +43,13 @@ entry.count++; // Increment kun hvis limit ikke overskredet
 ### **2. Inconsistent Rate Limiting** ✅ FIXED
 
 **Problem:**
+
 - `inbox-router.ts` brugte in-memory rate limiting
 - `routers.ts` brugte Redis-based rate limiting
 - Forskellige opførsler ved restart/scaling
 
 **Fix Anvendt:**
+
 ```typescript
 // FØR (INCONSISTENT):
 import { rateLimiter } from "./rate-limiter";
@@ -61,6 +66,7 @@ const rateLimit = await checkRateLimitUnified(userId, {
 **Fil:** `server/rate-limit-middleware.ts` (linje 3, 34-39)
 
 **Fordele:**
+
 - ✅ Konsistent rate limiting på tværs af alle endpoints
 - ✅ Distributed support (virker med flere server instances)
 - ✅ Persistent across server restarts (hvis Redis konfigureret)
@@ -71,10 +77,12 @@ const rateLimit = await checkRateLimitUnified(userId, {
 ### **3. Memory Leak Potential** ✅ IMPROVED
 
 **Problem:**
+
 - Cleanup kører kun hvert 60. sekund
 - Potentiel ubegrænset vækst hvis cleanup fejler
 
 **Fix Anvendt:**
+
 ```typescript
 // TILFØJET: Defensive cleanup
 private ensureCleanup(): void {
@@ -101,11 +109,13 @@ isRateLimited(key: string, config: RateLimitConfig): boolean {
 **Fil:** `server/rate-limiter.ts` (linje 92-110, 33)
 
 **Fordele:**
+
 - ✅ Cleanup på hver request (defensive)
 - ✅ Max entries limit (10,000) for at forhindre ubegrænset vækst
 - ✅ Emergency cleanup hvis limit overskrides
 
 **Test Coverage:**
+
 - ✅ Test: "should cleanup expired entries"
 - ✅ Test: "should handle rapid requests without memory leak"
 
@@ -140,23 +150,23 @@ Duration: 3.19s
 
 ### **Før Fixes:**
 
-| Problem | Impact | Status |
-|---------|--------|--------|
-| Count > maxRequests | 🔴 CRITICAL | ❌ Bug eksisterer |
-| Inconsistent implementation | 🔴 HIGH | ❌ Forskellige opførsler |
-| Memory leak potential | 🟡 MEDIUM | ⚠️ Potentiel risiko |
-| Lost on restart | 🟡 MEDIUM | ❌ Rate limits nulstilles |
-| Not distributed | 🔴 HIGH | ❌ Virker ikke med flere servere |
+| Problem                     | Impact      | Status                           |
+| --------------------------- | ----------- | -------------------------------- |
+| Count > maxRequests         | 🔴 CRITICAL | ❌ Bug eksisterer                |
+| Inconsistent implementation | 🔴 HIGH     | ❌ Forskellige opførsler         |
+| Memory leak potential       | 🟡 MEDIUM   | ⚠️ Potentiel risiko              |
+| Lost on restart             | 🟡 MEDIUM   | ❌ Rate limits nulstilles        |
+| Not distributed             | 🔴 HIGH     | ❌ Virker ikke med flere servere |
 
 ### **Efter Fixes:**
 
-| Problem | Impact | Status |
-|---------|--------|--------|
-| Count > maxRequests | 🔴 CRITICAL | ✅ FIXED |
-| Inconsistent implementation | 🔴 HIGH | ✅ FIXED |
-| Memory leak potential | 🟡 MEDIUM | ✅ IMPROVED |
-| Lost on restart | 🟡 MEDIUM | ✅ FIXED (Redis) |
-| Not distributed | 🔴 HIGH | ✅ FIXED (Redis) |
+| Problem                     | Impact      | Status           |
+| --------------------------- | ----------- | ---------------- |
+| Count > maxRequests         | 🔴 CRITICAL | ✅ FIXED         |
+| Inconsistent implementation | 🔴 HIGH     | ✅ FIXED         |
+| Memory leak potential       | 🟡 MEDIUM   | ✅ IMPROVED      |
+| Lost on restart             | 🟡 MEDIUM   | ✅ FIXED (Redis) |
+| Not distributed             | 🔴 HIGH     | ✅ FIXED (Redis) |
 
 ---
 
@@ -182,7 +192,7 @@ Duration: 3.19s
 ### **Anbefalet:**
 
 1. **✅ Immediate:** Fixes er implementeret og testet
-2. **📋 Short-term:** 
+2. **📋 Short-term:**
    - Overvej at konfigurere Redis for production (Upstash free tier)
    - Monitor rate limiting metrics
 3. **📋 Medium-term:**
@@ -209,7 +219,7 @@ Hvis Redis ikke er konfigureret, falder systemet automatisk tilbage til in-memor
 
 ### **Performance Impact:**
 
-- **Cleanup på hver request:
+- \*\*Cleanup på hver request:
   - **Pros:** Forhindrer memory leaks
   - **Cons:** Lille performance overhead
   - **Mitigation:** Cleanup er O(n) hvor n = antal aktive keys (typisk < 1000)
@@ -225,4 +235,3 @@ Hvis Redis ikke er konfigureret, falder systemet automatisk tilbage til in-memor
 **Fixes Anvendt:** 28. januar 2025  
 **Test Status:** ✅ Alle tests passing  
 **Production Ready:** ✅ Ja (med Redis konfiguration anbefalet)
-

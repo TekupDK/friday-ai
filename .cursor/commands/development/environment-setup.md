@@ -17,6 +17,7 @@ Set up or verify environment configuration for development.
 ## ENVIRONMENT VARIABLES
 
 ### Required Variables
+
 - `DATABASE_URL` - PostgreSQL connection
 - `REDIS_URL` - Redis connection
 - `OPENROUTER_API_KEY` - AI API key
@@ -25,6 +26,7 @@ Set up or verify environment configuration for development.
 - `JWT_SECRET` - JWT signing secret
 
 ### Optional Variables
+
 - `NODE_ENV` - Environment (development/production)
 - `PORT` - Server port
 - `CORS_ORIGINS` - Allowed origins
@@ -59,17 +61,19 @@ Set up or verify environment configuration for development.
 **Environment:** [dev/staging/prod]
 
 **Variables Checked:**
+
 - ✅ [Variable 1]: Present
 - ❌ [Variable 2]: Missing
 - ⚠️ [Variable 3]: Invalid format
 
 **Setup Status:**
+
 - ✅ Database: Connected
 - ✅ Redis: Connected
 - ❌ [Service]: Not configured
 
 **Next Steps:**
+
 - [Step 1]
 - [Step 2]
 ```
-

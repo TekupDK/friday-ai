@@ -47,7 +47,6 @@
 **Features:**
 
 - 6 metric cards i 2x3 grid:
-
   - 📅 I Dag (0)
 
   - 👥 Bookings (0)
@@ -63,7 +62,6 @@
 - 100% status indicator (green dot)
 
 - Action alerts:
-
   - ⚠️ Kræver Handling
 
   - 📅 Ingen bookings i dag
@@ -97,7 +95,6 @@
 - Badges (🔥 HOT, etc.)
 
 - Metrics row:
-
   - 🔥 3 Hot Leads
 
   - 💰 40,000 kr. Est. Value
@@ -147,7 +144,6 @@
 - Active count badge
 
 - Priority indicators (color dots)
-
   - 🔴 High
 
   - 🟠 Medium
@@ -199,7 +195,6 @@
 - "Hvad kan jeg hjælpe med?" title
 
 - 5 suggestion buttons:
-
   - ✨ Hvad kan jeg hjælpe med?
 
   - 📅 Tjek min kalender i dag
@@ -215,7 +210,6 @@
 - Hover states
 
 - Status indicators:
-
   - 🟢 Modellen: Gemini 2.2.0 Free
 
   - 🔵 100% Accuracy
@@ -236,14 +230,14 @@
 
 ## 📊 Statistik
 
-| Komponent            | Lines | Purpose                |
-| -------------------- | ----- | ---------------------- |
+| Komponent | Lines | Purpose |
+| --------- | ----- | ------- |
 
-| SmartSplitsDemo      | 110   | Email kategorisering   |
-| BusinessMetricsCard  | 130   | Metrics dashboard      |
-| EmailListItem        | 150   | Email list med metrics |
-| TaskListCompact      | 130   | Task management        |
-| ChatSuggestionsPanel | 120   | Chat suggestions       |
+| SmartSplitsDemo | 110 | Email kategorisering |
+| BusinessMetricsCard | 130 | Metrics dashboard |
+| EmailListItem | 150 | Email list med metrics |
+| TaskListCompact | 130 | Task management |
+| ChatSuggestionsPanel | 120 | Chat suggestions |
 
 **Total:** 640+ lines ny UI kode! 🎉
 
@@ -396,7 +390,7 @@ Alle komponenter er bygget med responsive i tankerne:
 
 ### **Smart Splits i Email Panel:**
 
-```tsx
+````tsx
 import { SmartSplitsDemo } from "@/components/showcase/SmartSplitsDemo";
 
 <aside className="w-64 border-r">
@@ -427,7 +421,7 @@ import { EmailListDemo } from "@/components/showcase/EmailListItem";
   <EmailListDemo />
 </main>;
 
-```
+````
 
 ---
 

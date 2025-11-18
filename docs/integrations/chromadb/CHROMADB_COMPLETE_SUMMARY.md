@@ -20,7 +20,7 @@
 
 ### Performance Metrics ✅
 
-```text
+````text
 Embedding Generation:    ~600ms avg
 Duplicate Detection:     93.2% accuracy
 API Success Rate:        100%
@@ -303,7 +303,7 @@ docs/integrations/ChromaDB/
 ├── DAY6-8_COMPLETE.md     → Completion report
 └── FINAL_STATUS.md        → Detailed final status
 
-```
+````
 
 ---
 

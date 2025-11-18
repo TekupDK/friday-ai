@@ -12,6 +12,7 @@ Forklar en integration: hvordan den virker, endpoints, data flow, og hvorfor den
 ## TASK
 
 Forklar integration:
+
 1. **Hvordan virker den?** - Flow og endpoints
 2. **Data flow** - Hvordan flyder data?
 3. **Hvorfor er den vigtig?** - Business value
@@ -54,4 +55,3 @@ Forklar integration:
 ---
 
 **CRITICAL:** Forstå integrationen, identificér endpoints og data flow, og forklar på klar, struktureret måde.
-

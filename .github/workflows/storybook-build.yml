@@ -2,12 +2,12 @@ name: Storybook Build
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - 'client/**'
-      - '.storybook/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
+      - "client/**"
+      - ".storybook/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
   workflow_dispatch: {}
 
 jobs:

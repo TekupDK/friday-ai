@@ -65,7 +65,7 @@
 
 - 🚫 **Port Konflikter:** Port 5173 er optaget, server starter på 5174
   - **Årsag:** Anden process bruger port 5173
-  - **Løsning:** 
+  - **Løsning:**
     - Find og stop process på port 5173, ELLER
     - Brug Docker til isoleret port management
   - **Prioritet:** Medium
@@ -74,7 +74,7 @@
 
 - ⚠️ **Inconsistent Port Usage:** Server kan starte på forskellige porte
   - **Impact:** URL'er skal opdateres hver gang
-  - **Løsning:** 
+  - **Løsning:**
     - Docker med fast port mapping, ELLER
     - Find og stop konflikt process
   - **Prioritet:** Medium
@@ -89,12 +89,14 @@
 ### Nuværende Docker Setup
 
 **Eksisterende Konfiguration:**
+
 - ✅ `Dockerfile` - Production build setup
 - ✅ `docker-compose.yml` - Production services (friday-ai, db, postgres, redis, etc.)
 - ✅ `docker-compose.supabase.yml` - Supabase variant
 - ✅ Integration Docker setups (LiteLLM, Langfuse, ChromaDB)
 
 **Mangler:**
+
 - ❌ Development Docker Compose setup
 - ❌ Hot-reload development container
 - ❌ Development environment variables
@@ -103,27 +105,32 @@
 ### Fordele ved Docker Development Setup
 
 **1. Port Isolation:**
+
 - ✅ Fast port mapping (5173, 3000)
 - ✅ Ingen port-konflikter
 - ✅ Konsistent URL'er
 
 **2. Environment Consistency:**
+
 - ✅ Samme miljø for alle udviklere
 - ✅ Isolerede dependencies
 - ✅ Konsistente environment variables
 
 **3. Database Isolation:**
+
 - ✅ Lokal database i container
 - ✅ Nem reset og migration
 - ✅ Ingen konflikter med eksisterende databases
 
 **4. Debugging Benefits:**
+
 - ✅ Isoleret CRM debugging environment
 - ✅ Nem container restart
 - ✅ Logs i ét sted
 - ✅ Network isolation
 
 **5. Team Collaboration:**
+
 - ✅ Samme setup for alle
 - ✅ Nem onboarding
 - ✅ Reproducible bugs
@@ -131,16 +138,19 @@
 ### Ulemper ved Docker Development Setup
 
 **1. Performance:**
+
 - ⚠️ Slower file watching (volume mounts)
 - ⚠️ Higher memory usage
 - ⚠️ Slower initial startup
 
 **2. Complexity:**
+
 - ⚠️ Yderligere lag af kompleksitet
 - ⚠️ Docker knowledge påkrævet
 - ⚠️ Troubleshooting Docker issues
 
 **3. Development Workflow:**
+
 - ⚠️ Hot-reload kan være langsommere
 - ⚠️ TypeScript checking kan være langsommere
 - ⚠️ Debugging kan være mere komplekst
@@ -150,6 +160,7 @@
 **Bedste Løsning:** Docker for backend + database, native for frontend
 
 **Setup:**
+
 1. **Backend + Database i Docker:**
    - Backend server (port 3000)
    - MySQL/PostgreSQL database
@@ -163,6 +174,7 @@
    - Nemmere debugging
 
 **Fordele:**
+
 - ✅ Backend isolation (database, dependencies)
 - ✅ Frontend performance (native Vite)
 - ✅ Port consistency (Docker backend, native frontend)
@@ -197,6 +209,7 @@
 ### Quick Wins
 
 1. **Stop Port 5173 Process** - 5 min
+
    ```powershell
    netstat -ano | findstr :5173
    taskkill /PID <process_id> /F
@@ -211,6 +224,7 @@
 ### Immediate Actions
 
 1. **Opret Docker Development Setup:**
+
    ```yaml
    # docker-compose.dev.yml
    services:
@@ -224,7 +238,7 @@
          - "3000:3000"
        environment:
          - NODE_ENV=development
-     
+
      db:
        image: mysql:8.0
        ports:
@@ -276,9 +290,9 @@
 ## Konklusion
 
 **Anbefaling:** Implementer hybrid Docker setup
+
 - ✅ Backend + database i Docker (isolation, consistency)
 - ✅ Frontend native (performance, debugging)
 - ✅ Bedste af begge verdener
 
 **Alternativ:** Hvis Docker er for komplekst, fix port-konflikter og fortsæt native development.
-

@@ -30,6 +30,7 @@ Maintain context throughout the development session by tracking decisions, patte
 ## TOOL USAGE
 
 **Use these tools:**
+
 - Review chat history - Track context
 - `read_file` - Reference code
 - `codebase_search` - Find related work
@@ -38,12 +39,14 @@ Maintain context throughout the development session by tracking decisions, patte
 **CRITICAL - Chat Session Reading:**
 
 **In Cursor Context (THIS SESSION):**
+
 - **You have direct access to the ENTIRE Cursor chat session** in this conversation
 - Read ALL messages from the start of this Cursor session
 - Read BOTH user messages AND agent responses in chronological order
 - Use this full context to track decisions, patterns, and maintain continuity
 
 **DO NOT:**
+
 - Lose context
 - Repeat decisions
 - Ignore patterns
@@ -55,12 +58,14 @@ Maintain context throughout the development session by tracking decisions, patte
 **KRITISK:** Læs HELE chat sessionen i denne Cursor session:
 
 **I Cursor/Copilot:**
+
 - Du har adgang til hele chat historikken i denne session
 - Læs ALLE beskeder fra start af sessionen
 - Læs både brugerens beskeder OG agentens svar
 - Forstå diskussionens flow og progression
 
 **Hvad du skal læse:**
+
 - **Brugerens beskeder:** Hvad spørger brugeren om? Hvad vil de opnå?
 - **Agentens svar:** Hvad har agenten foreslået? Hvad er blevet besluttet?
 - **Diskussioner:** Hvilke emner er diskuteret? Hvilke beslutninger er taget?
@@ -68,6 +73,7 @@ Maintain context throughout the development session by tracking decisions, patte
 - **Patterns:** Hvilke patterns er diskuteret eller brugt?
 
 **Brug chat historikken til at:**
+
 - Track beslutninger fra chatten
 - Track patterns fra chatten
 - Track progress fra chatten
@@ -128,6 +134,7 @@ To maintain context, think through:
 ## VERIFICATION
 
 Context maintained:
+
 - ✅ Decisions tracked
 - ✅ Patterns documented
 - ✅ Progress clear
@@ -140,23 +147,28 @@ Context maintained:
 ### Session Context
 
 **Key Decisions:**
+
 - [Decision 1] - [Rationale] - [Impact]
 - [Decision 2] - [Rationale] - [Impact]
 
 **Patterns Used:**
+
 - [Pattern 1] - [Where used]
 - [Pattern 2] - [Where used]
 
 **Current State:**
+
 - [What exists]
 - [What was changed]
 - [What is working]
 
 **Important Information:**
+
 - [Info 1]
 - [Info 2]
 
 **Next Steps:**
+
 - [Step 1]
 - [Step 2]
 ```
@@ -168,4 +180,3 @@ Context maintained:
 - **Be accessible:** Easy to reference
 - **Be consistent:** Maintain same format
 - **Be updated:** Keep context current
-

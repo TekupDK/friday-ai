@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der opdaterer sprint med nye tasks baseret p�
 ## TASK
 
 Opdater sprint ved at:
+
 - Analysere fuldførte opgaver
 - Identificere nye tasks baseret på completed work
 - Prioriterer nye tasks
@@ -36,6 +37,7 @@ Opdater sprint ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find completed work
 - `read_file` - Læs sprint docs
 - `grep` - Søg efter patterns
@@ -43,6 +45,7 @@ Opdater sprint ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Glem at analysere completed work
 - Ignorere dependencies
 - Glem prioritering
@@ -116,6 +119,7 @@ Provide sprint update:
 ## Completed Work Analyse
 
 ### Opgaver Fuldført
+
 - ✅ **[Task 1]** - [Beskrivelse]
   - **Completed:** [Dato]
   - **Impact:** [Impact beskrivelse]
@@ -127,6 +131,7 @@ Provide sprint update:
   - **Næste Steps:** [Næste steps]
 
 ### Features Implementeret
+
 - ✅ **[Feature 1]** - [Beskrivelse]
   - **Status:** Færdig
   - **Nye Muligheder:** [Muligheder]
@@ -140,6 +145,7 @@ Provide sprint update:
 ### Baseret på Completed Work
 
 #### High Priority
+
 1. **[New Task 1]**
    - **Baseret på:** [Completed task]
    - **Beskrivelse:** [Detaljeret beskrivelse]
@@ -152,22 +158,26 @@ Provide sprint update:
    - [Samme struktur...]
 
 #### Medium Priority
+
 1. **[New Task 1]**
    - **Baseret på:** [Completed task]
    - **Beskrivelse:** [Beskrivelse]
    - **Estimated:** [X] hours
 
 #### Low Priority
+
 1. **[New Task 1]**
    - **Baseret på:** [Completed task]
    - **Beskrivelse:** [Beskrivelse]
    - **Estimated:** [X] hours
 
 ### Baseret på Nye Requirements
+
 - [Task 1] - [Beskrivelse]
 - [Task 2] - [Beskrivelse]
 
 ### Baseret på Improvements
+
 - [Task 1] - [Beskrivelse]
 - [Task 2] - [Beskrivelse]
 
@@ -183,27 +193,32 @@ Provide sprint update:
 ### Backlog Items
 
 #### Sprint Backlog (Nuværende Sprint)
+
 1. **[Task 1]** - [Priority] - [Estimated] hours
 2. **[Task 2]** - [Priority] - [Estimated] hours
 3. **[Task 3]** - [Priority] - [Estimated] hours
 
 #### Product Backlog (Fremtidige Sprints)
+
 1. **[Task 1]** - [Priority] - [Estimated] hours
 2. **[Task 2]** - [Priority] - [Estimated] hours
 
 ## Sprint Metrics
 
 ### Velocity
+
 - **Completed This Sprint:** [X] story points
 - **Average Velocity:** [Y] story points
 - **Projected Completion:** [Z] sprints
 
 ### Burndown
+
 - **Remaining Work:** [X] story points
 - **Days Remaining:** [Y] days
 - **On Track:** [Yes/No]
 
 ### Quality Metrics
+
 - **Bugs Found:** [X]
 - **Bugs Fixed:** [Y]
 - **Test Coverage:** [Z]%
@@ -211,11 +226,13 @@ Provide sprint update:
 ## Næste Sprint Foreslag
 
 ### Foreslåede Tasks
+
 1. **[Task 1]** - [Beskrivelse] - [Priority]
 2. **[Task 2]** - [Beskrivelse] - [Priority]
 3. **[Task 3]** - [Beskrivelse] - [Priority]
 
 ### Sprint Goals
+
 - [Goal 1]
 - [Goal 2]
 - [Goal 3]
@@ -259,4 +276,3 @@ Efter opdatering, verificer:
 ---
 
 **CRITICAL:** Start med at analysere completed work, derefter identificer nye tasks baseret på det, prioriter dem, og opdater sprint backlog systematisk.
-

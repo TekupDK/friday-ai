@@ -11,22 +11,22 @@
 
 ### ✅ Alle 11 CRM Router Endpoints er LIVE
 
-| Router                  | Endpoints    | Status  | Dokumentation                 |
-| ----------------------- | ------------ | ------- | ----------------------------- |
+| Router | Endpoints | Status | Dokumentation |
+| ------ | --------- | ------ | ------------- |
 
-| **crm.customer**        | 11 endpoints | ✅ Done | Se API_REFERENCE.md §1        |
+| **crm.customer** | 11 endpoints | ✅ Done | Se API_REFERENCE.md §1 |
 
-| **crm.lead**            | 4 endpoints  | ✅ Done | Se API_REFERENCE.md §2        |
+| **crm.lead** | 4 endpoints | ✅ Done | Se API_REFERENCE.md §2 |
 
-| **crm.booking**         | 4 endpoints  | ✅ Done | Se API_REFERENCE.md §3        |
+| **crm.booking** | 4 endpoints | ✅ Done | Se API_REFERENCE.md §3 |
 
-| **crm.serviceTemplate** | 5 endpoints  | ✅ Done | Se API_REFERENCE.md §4        |
+| **crm.serviceTemplate** | 5 endpoints | ✅ Done | Se API_REFERENCE.md §4 |
 
-| **crm.stats**           | 1 endpoint   | ✅ Done | Se API_REFERENCE.md §5        |
+| **crm.stats** | 1 endpoint | ✅ Done | Se API_REFERENCE.md §5 |
 
-| **crm.activity**        | 5 endpoints  | ✅ Done | Phase 1 - Activity Tracking   |
+| **crm.activity** | 5 endpoints | ✅ Done | Phase 1 - Activity Tracking |
 
-| **crm.extensions**      | 20 endpoints | ✅ Done | Phase 2-6 - Advanced Features |
+| **crm.extensions** | 20 endpoints | ✅ Done | Phase 2-6 - Advanced Features |
 
 **Total:** 51 TRPC endpoints klar til brug (Phase 1-6 Complete!)
 
@@ -36,7 +36,7 @@
 
 ### 6️⃣ Opportunities/Deals Pipeline (`crm.extensions`)
 
-```typescript
+````typescript
 ✅ createOpportunity({ customerProfileId, title, value, probability, stage, ... })
 ✅ listOpportunities({ customerProfileId?, stage?, minValue?, maxValue?, ... })
 ✅ updateOpportunity({ id, stage?, value?, probability?, wonReason?, lostReason?, ... })
@@ -464,7 +464,7 @@ const customers = await db
   .from(customerProfiles)
   .where(eq(customerProfiles.userId, ctx.user.id));
 
-```
+````
 
 **Note:** Users can only access their own data. No cross-user data leakage.
 

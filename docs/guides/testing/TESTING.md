@@ -9,7 +9,7 @@
 
 **Script:** `server/integrations/chromadb/test-embeddings.ts`
 
-```bash
+````bash
 npx tsx server/integrations/chromadb/test-embeddings.ts
 
 ```text
@@ -231,7 +231,7 @@ curl <http://localhost:8000/api/v2/collections/friday_leads>
 ```bash
 docker logs friday-chromadb -f
 
-```
+````
 
 ---
 

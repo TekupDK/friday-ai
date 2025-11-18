@@ -30,12 +30,14 @@ Evaluate frontend changes for usability, consistency, and accessibility. Provide
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review UI components
 - `codebase_search` - Find similar components
 - `grep` - Search for design patterns
 - `run_terminal_cmd` - Run accessibility tests
 
 **DO NOT:**
+
 - Review without understanding design system
 - Skip accessibility checks
 - Ignore consistency
@@ -73,6 +75,7 @@ Before reviewing, think through:
 ## UI/UX REVIEW CHECKLIST
 
 ### 1. Visual Consistency
+
 - **Spacing:** Consistent use of spacing scale (gap-2, gap-4, p-4, etc.)
 - **Typography:** Consistent font sizes, weights, line heights
 - **Colors:** Use design tokens (bg-background, text-foreground, etc.)
@@ -80,12 +83,14 @@ Before reviewing, think through:
 - **Shadows:** Consistent shadow usage
 
 ### 2. Component Patterns
+
 - **Loading states:** Skeleton loaders, spinners, progress indicators
 - **Error states:** Clear error messages, retry actions
 - **Empty states:** Helpful messages, call-to-action
 - **Success states:** Confirmation messages, visual feedback
 
 ### 3. Accessibility (WCAG 2.1 AA)
+
 - **Semantic HTML:** Proper heading hierarchy, landmarks
 - **ARIA labels:** Descriptive labels for interactive elements
 - **Keyboard navigation:** Tab order, focus indicators, shortcuts
@@ -93,6 +98,7 @@ Before reviewing, think through:
 - **Screen readers:** Proper announcements, live regions
 
 ### 4. User Experience
+
 - **Feedback:** Visual feedback for actions (hover, active, loading)
 - **Error handling:** Clear error messages, recovery paths
 - **Form validation:** Inline validation, clear error messages
@@ -100,6 +106,7 @@ Before reviewing, think through:
 - **Performance:** Fast loading, smooth animations
 
 ### 5. Design System Compliance
+
 - **shadcn/ui components:** Use existing components when possible
 - **Tailwind utilities:** Use design tokens, not hardcoded values
 - **Dark mode:** Support dark mode if applicable
@@ -108,6 +115,7 @@ Before reviewing, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Consistent Spacing
+
 ```typescript
 // ✅ Good: Consistent spacing scale
 <div className="flex flex-col gap-4 p-6">
@@ -123,6 +131,7 @@ Before reviewing, think through:
 ```
 
 ### Example: Loading States
+
 ```typescript
 // ✅ Good: Proper loading state
 if (isLoading) {
@@ -138,6 +147,7 @@ if (isLoading) {
 ```
 
 ### Example: Error States
+
 ```typescript
 // ✅ Good: Clear error state with retry
 if (error) {
@@ -153,6 +163,7 @@ if (error) {
 ```
 
 ### Example: Accessibility
+
 ```typescript
 // ✅ Good: Proper ARIA labels and semantic HTML
 <button
@@ -207,34 +218,39 @@ if (error) {
 ### UI/UX Review: [Component/Page]
 
 **Visual Consistency:**
+
 - ✅ Spacing: Consistent
 - ⚠️ Typography: [issue found]
 - ✅ Colors: Using design tokens
 
 **Component Patterns:**
+
 - ✅ Loading state: Present
 - ⚠️ Error state: [improvement needed]
 - ❌ Empty state: Missing
 
 **Accessibility:**
+
 - ✅ Semantic HTML: Correct
 - ⚠️ ARIA labels: [missing on button]
 - ✅ Keyboard navigation: Working
 - ⚠️ Color contrast: [needs improvement]
 
 **User Experience:**
+
 - ✅ Feedback: Visual feedback present
 - ⚠️ Error handling: [could be clearer]
 - ✅ Responsive: Mobile-friendly
 
 **Issues Found:**
+
 1. **P1:** [Critical issue] - [fix]
 2. **P2:** [Important issue] - [fix]
 3. **P3:** [Nice to have] - [suggestion]
 
 **Recommendations:**
+
 - [Specific improvement 1]
 - [Specific improvement 2]
 - [Specific improvement 3]
 ```
-

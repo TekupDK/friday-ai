@@ -32,6 +32,7 @@ Review project status, identify what to continue, and resume development work se
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read status files
 - `codebase_search` - Find work in progress
 - `grep` - Search for TODO comments
@@ -39,6 +40,7 @@ Review project status, identify what to continue, and resume development work se
 - `run_terminal_cmd` - Check git status
 
 **DO NOT:**
+
 - Miss active work
 - Skip context review
 - Ignore blockers
@@ -103,6 +105,7 @@ Before resuming, think through:
 ## VERIFICATION
 
 After resuming:
+
 - ✅ Status reviewed
 - ✅ Context understood
 - ✅ Work identified
@@ -118,22 +121,27 @@ After resuming:
 **Current Status:** [Overall status]
 
 **Active Work:**
+
 - [Feature/Task 1] - [Status] - [Progress %]
 - [Feature/Task 2] - [Status] - [Progress %]
 
 **What Was Done:**
+
 - [Accomplishment 1]
 - [Accomplishment 2]
 
 **Current State:**
+
 - [State 1]
 - [State 2]
 
 **Ready to Continue:**
+
 1. [Item 1] - [What to do]
 2. [Item 2] - [What to do]
 
 **Blockers:**
+
 - [Blocker 1] - [Action needed]
 
 **Resuming With:**
@@ -147,4 +155,3 @@ After resuming:
 - **Identify work:** Find what to continue
 - **Plan clearly:** Clear next steps
 - **Maintain continuity:** Pick up seamlessly
-

@@ -212,6 +212,7 @@ Quick reference to commands organized by category for easy discovery.
 ## 🔄 Session Management & Chat Context (29)
 
 ### Core Session Commands
+
 - `core/session-engine.md` - Master command: Autonom udviklingsassistent der arbejder med dig i realtime
 - `core/session-init.md` - Forstå projekt + kontekst, initialiser session
 - `core/session-progress.md` - Analysér hvad der er gjort + hvad der mangler
@@ -249,12 +250,14 @@ Quick reference to commands organized by category for easy discovery.
 - `testing/forbedre-command.md` - Forbedre command baseret på faktisk brug
 
 ---
+
 - `explain/forklar-fejl.md` - Forklar fejl: problem, root cause, og løsning
 - `explain/forklar-workflow.md` - Forklar workflow: steps, flow, og rationale
 - `explain/forklar-integration.md` - Forklar integration: endpoints, data flow, og business value
 - `explain/forklar-database.md` - Forklar database struktur: tabeller, relationer, queries
 
 ---
+
 - `core/session-next-step.md` - Beregn næste skridt i session
 - `core/session-todos.md` - Generér TODOs + tasks fra chatten
 - `core/session-implement.md` - Implementér direkte i filer baseret på chat kontekst
@@ -478,12 +481,3 @@ Quick reference to commands organized by category for easy discovery.
 ---
 
 **Total Commands:** 200+ covering all aspects of Friday AI Chat development
-
-
-
-
-
-
-
-
-

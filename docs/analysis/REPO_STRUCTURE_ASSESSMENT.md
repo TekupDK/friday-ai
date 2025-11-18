@@ -358,7 +358,7 @@ scripts/
 
 #### 1.1 Remove Empty/Unused Directories
 
-```bash
+````bash
 # Remove completely empty
 rmdir "AI Apps"
 
@@ -436,7 +436,8 @@ echo "tests/results/" >> .gitignore
 
 #### 3.1 Server Domain Organization
 
-```
+````
+
 Current: 60+ files in server/
 Proposed: server/domains/{email,crm,ai,billing}/
 
@@ -459,6 +460,7 @@ Challenges:
 #### 3.2 Config Consolidation
 
 ```
+
 Current: 13 config files in root
 Proposed: config/ subfolder
 
@@ -512,6 +514,7 @@ Challenges:
 ### Root Directory
 
 ```
+
 Before docs cleanup:
 
 - 83 markdown files
@@ -535,8 +538,9 @@ After full cleanup (proposed):
 ### Test Organization
 
 ```
+
 Before:
-tests/, test-results/, playwright-report/, *.spec.ts
+tests/, test-results/, playwright-report/, \*.spec.ts
 
 After (proposed):
 tests/
@@ -554,10 +558,11 @@ tests/
 **Problem**: Docs service fejler ved startup med git index.lock error
 
 ```
+
 ERROR: [GitSync] Initialization failed
 fatal: Unable to create '.git/index.lock': File exists.
 
-```bash
+````bash
 
 **Root Cause**:
 
@@ -578,7 +583,7 @@ rm .git/index.lock
 # Restart dev server
 npm run dev
 
-```
+````
 
 **Prevention**:
 

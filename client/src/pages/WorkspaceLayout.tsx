@@ -189,7 +189,10 @@ function WorkspaceLayout() {
     <InvoiceProvider>
       <div className="h-screen flex flex-col bg-background">
         {/* Header */}
-        <header id="navigation" className="h-14 border-b border-border flex items-center justify-between px-4 bg-background shrink-0">
+        <header
+          id="navigation"
+          className="h-14 border-b border-border flex items-center justify-between px-4 bg-background shrink-0"
+        >
           <div className="flex items-center gap-3">
             <Bot className="w-6 h-6 text-primary" />
             <h1 className="font-semibold text-lg">Friday AI</h1>
@@ -249,7 +252,12 @@ function WorkspaceLayout() {
           {/* Mobile Menu */}
           <Sheet open={showMobileInbox} onOpenChange={setShowMobileInbox}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open email center menu">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
+                aria-label="Open email center menu"
+              >
                 <Menu className="w-5 h-5" aria-hidden="true" />
               </Button>
             </SheetTrigger>
@@ -267,7 +275,12 @@ function WorkspaceLayout() {
           {/* Desktop User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hidden md:flex" aria-label="Open user menu">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hidden md:flex"
+                aria-label="Open user menu"
+              >
                 <User className="w-5 h-5" aria-hidden="true" />
               </Button>
             </DropdownMenuTrigger>
@@ -306,15 +319,17 @@ function WorkspaceLayout() {
                 <CreditCard className="w-4 h-4 mr-2" />
                 Subscriptions
               </DropdownMenuItem>
-              {user && (user.role === "admin" || user.openId === import.meta.env.VITE_OWNER_OPEN_ID) && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => navigate("/admin/users")}>
-                    <Users className="w-4 h-4 mr-2" />
-                    Team Members
-                  </DropdownMenuItem>
-                </>
-              )}
+              {user &&
+                (user.role === "admin" ||
+                  user.openId === import.meta.env.VITE_OWNER_OPEN_ID) && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/admin/users")}>
+                      <Users className="w-4 h-4 mr-2" />
+                      Team Members
+                    </DropdownMenuItem>
+                  </>
+                )}
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />
@@ -328,68 +343,70 @@ function WorkspaceLayout() {
         <main id="main-content" className="flex-1 overflow-hidden min-h-0">
           {/* Desktop: 3-Panel Layout */}
           <div className="hidden md:flex h-full">
-          <ResizablePanelGroup direction="horizontal" className="flex-1">
-            {/* AI Assistant Panel (Left - 20%) */}
-            <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
-              <div
-                ref={aiPanelRef}
-                data-testid="ai-assistant-panel"
-                tabIndex={0}
-                className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
-              >
-                <PanelErrorBoundary name="AI Assistant">
-                  <Suspense fallback={<PanelSkeleton name="AI Assistant" />}>
-                    {AIAssistantPanelMemo}
-                  </Suspense>
-                </PanelErrorBoundary>
-              </div>
-            </ResizablePanel>
+            <ResizablePanelGroup direction="horizontal" className="flex-1">
+              {/* AI Assistant Panel (Left - 20%) */}
+              <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
+                <div
+                  ref={aiPanelRef}
+                  data-testid="ai-assistant-panel"
+                  tabIndex={0}
+                  className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
+                >
+                  <PanelErrorBoundary name="AI Assistant">
+                    <Suspense fallback={<PanelSkeleton name="AI Assistant" />}>
+                      {AIAssistantPanelMemo}
+                    </Suspense>
+                  </PanelErrorBoundary>
+                </div>
+              </ResizablePanel>
 
-            <ResizableHandle withHandle />
+              <ResizableHandle withHandle />
 
-            {/* Email Center Panel (Middle - 60%) */}
-            <ResizablePanel defaultSize={60} minSize={40}>
-              <div
-                ref={emailPanelRef}
-                data-testid="email-center-panel"
-                tabIndex={0}
-                className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
-              >
-                <PanelErrorBoundary name="Email Center">
-                  <Suspense fallback={<PanelSkeleton name="Email Center" />}>
-                    {EmailCenterPanelMemo}
-                  </Suspense>
-                </PanelErrorBoundary>
-              </div>
-            </ResizablePanel>
+              {/* Email Center Panel (Middle - 60%) */}
+              <ResizablePanel defaultSize={60} minSize={40}>
+                <div
+                  ref={emailPanelRef}
+                  data-testid="email-center-panel"
+                  tabIndex={0}
+                  className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
+                >
+                  <PanelErrorBoundary name="Email Center">
+                    <Suspense fallback={<PanelSkeleton name="Email Center" />}>
+                      {EmailCenterPanelMemo}
+                    </Suspense>
+                  </PanelErrorBoundary>
+                </div>
+              </ResizablePanel>
 
-            <ResizableHandle withHandle />
+              <ResizableHandle withHandle />
 
-            {/* Smart Workspace Panel (Right - 20%) */}
-            <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
-              <div
-                ref={workflowPanelRef}
-                data-testid="workspace-panel"
-                tabIndex={0}
-                className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
-              >
-                <PanelErrorBoundary name="Smart Workspace">
-                  <Suspense fallback={<PanelSkeleton name="Smart Workspace" />}>
-                    {WorkflowPanelMemo}
-                  </Suspense>
-                </PanelErrorBoundary>
-              </div>
-            </ResizablePanel>
-          </ResizablePanelGroup>
+              {/* Smart Workspace Panel (Right - 20%) */}
+              <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
+                <div
+                  ref={workflowPanelRef}
+                  data-testid="workspace-panel"
+                  tabIndex={0}
+                  className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
+                >
+                  <PanelErrorBoundary name="Smart Workspace">
+                    <Suspense
+                      fallback={<PanelSkeleton name="Smart Workspace" />}
+                    >
+                      {WorkflowPanelMemo}
+                    </Suspense>
+                  </PanelErrorBoundary>
+                </div>
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </div>
 
           {/* Mobile: Single column */}
           <div className="md:hidden h-full">
-          <PanelErrorBoundary name="AI Assistant">
-            <Suspense fallback={<PanelSkeleton name="AI Assistant" />}>
-              {AIAssistantPanelMemo}
-            </Suspense>
-          </PanelErrorBoundary>
+            <PanelErrorBoundary name="AI Assistant">
+              <Suspense fallback={<PanelSkeleton name="AI Assistant" />}>
+                {AIAssistantPanelMemo}
+              </Suspense>
+            </PanelErrorBoundary>
           </div>
         </main>
 

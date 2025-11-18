@@ -41,7 +41,7 @@ All autonomous operations for Friday AI lead intelligence have been successfully
 
 **Results:**
 
-```text
+````text
 ✅ 231 leads imported
 ✅ 231 customer profiles linked
 ✅ 95 invoices upserted
@@ -335,7 +335,7 @@ AUTONOMOUS-COMPLETION-SUMMARY.md                      ✅ This document
 server/routers.ts                                     ✅ Added fridayLeadsRouter
 friday-ai-leads/tsconfig.json                         ✅ Removed jest type
 
-```
+````
 
 ---
 

@@ -19,4 +19,3 @@ Define roles, create permission checks, add ownership verification, test permiss
 ## OUTPUT
 
 Permissions system implemented with role-based access control.
-

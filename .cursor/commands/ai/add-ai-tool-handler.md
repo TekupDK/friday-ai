@@ -30,12 +30,14 @@ Create a new tool handler that Friday AI can use to perform actions, following e
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing tool definitions and handlers
 - `codebase_search` - Find similar tools
 - `grep` - Search for tool patterns
 - `search_replace` - Add new tool
 
 **DO NOT:**
+
 - Create tool without reviewing patterns
 - Skip Zod validation
 - Ignore error handling
@@ -68,6 +70,7 @@ Before creating, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Tool Definition
+
 ```typescript
 // In server/friday-tools.ts
 export const FRIDAY_TOOLS = [
@@ -97,6 +100,7 @@ export const FRIDAY_TOOLS = [
 ```
 
 ### Example: Tool Handler with Registry
+
 ```typescript
 // In server/friday-tool-handlers.ts
 import { z } from "zod";
@@ -105,7 +109,12 @@ export interface ToolCallResult {
   success: boolean;
   data?: any;
   error?: string;
-  code?: "UNKNOWN_TOOL" | "VALIDATION_ERROR" | "APPROVAL_REQUIRED" | "API_ERROR" | "INTERNAL_ERROR";
+  code?:
+    | "UNKNOWN_TOOL"
+    | "VALIDATION_ERROR"
+    | "APPROVAL_REQUIRED"
+    | "API_ERROR"
+    | "INTERNAL_ERROR";
 }
 
 type ToolRegistryEntry = {
@@ -128,11 +137,15 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
     schema: z.object({
       contactId: z.string().min(1),
       entryDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-      lines: z.array(z.object({
-        description: z.string().min(1),
-        quantity: z.number().positive(),
-        unitPrice: z.number().nonnegative(),
-      })).min(1),
+      lines: z
+        .array(
+          z.object({
+            description: z.string().min(1),
+            quantity: z.number().positive(),
+            unitPrice: z.number().nonnegative(),
+          })
+        )
+        .min(1),
     }),
     requiresApproval: true, // ✅ Requires user approval
     handler: async (args: any) => handleCreateBillyInvoice(args),
@@ -141,6 +154,7 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
 ```
 
 ### Example: Handler Implementation
+
 ```typescript
 async function handleSearchGmail(args: {
   query: string;
@@ -205,6 +219,7 @@ async function handleSearchGmail(args: {
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Tool definition added to `FRIDAY_TOOLS`
 - ✅ Handler function implemented
 - ✅ Registered in `TOOL_REGISTRY`
@@ -222,12 +237,12 @@ After implementation:
 \`\`\`typescript
 // In server/friday-tools.ts
 {
-  type: "function" as const,
-  function: {
-    name: "[tool_name]",
-    description: "...",
-    parameters: { ... },
-  },
+type: "function" as const,
+function: {
+name: "[tool_name]",
+description: "...",
+parameters: { ... },
+},
 }
 \`\`\`
 
@@ -235,26 +250,27 @@ After implementation:
 \`\`\`typescript
 // In server/friday-tool-handlers.ts
 async function handle[ToolName](args: {...}): Promise<ToolCallResult> {
-  // implementation
+// implementation
 }
 \`\`\`
 
 **Registry Entry:**
 \`\`\`typescript
 [tool_name]: {
-  schema: z.object({ ... }),
-  requiresApproval: true/false,
-  handler: async (args) => handle[ToolName](args),
+schema: z.object({ ... }),
+requiresApproval: true/false,
+handler: async (args) => handle[ToolName](args),
 }
 \`\`\`
 
 **Files Modified:**
+
 - `server/friday-tools.ts` - Added tool definition
 - `server/friday-tool-handlers.ts` - Added handler and registry entry
 
 **Verification:**
+
 - ✅ Tool definition: PASSED
 - ✅ Handler implementation: PASSED
 - ✅ Registry entry: PASSED
 ```
-

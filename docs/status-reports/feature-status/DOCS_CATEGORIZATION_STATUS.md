@@ -76,6 +76,7 @@ The script organizes files into 10+ main categories:
    - Get approval to proceed
 
 2. **Execute Categorization**
+
    ```bash
    npm run docs:categorize
    ```
@@ -101,11 +102,13 @@ The script organizes files into 10+ main categories:
 ## Remaining Uncategorized Files
 
 57 files remain uncategorized. These may need:
+
 - Manual review
 - Additional pattern rules
 - Special handling
 
 Common patterns in uncategorized:
+
 - Files with unique naming conventions
 - Files in subdirectories with special characters
 - Legacy files with non-standard names
@@ -113,16 +116,19 @@ Common patterns in uncategorized:
 ## Usage
 
 ### Preview Changes
+
 ```bash
 npm run docs:categorize:dry-run
 ```
 
 ### Execute
+
 ```bash
 npm run docs:categorize
 ```
 
 ### Verbose Output
+
 ```bash
 npm run docs:categorize:verbose
 ```
@@ -136,4 +142,3 @@ npm run docs:categorize:verbose
 ---
 
 **Last Updated:** 2025-01-28
-

@@ -78,7 +78,7 @@
 
 ### Step 1: Verify Production Environment
 
-```bash
+````bash
 
 # Check environment variables
 
@@ -349,7 +349,7 @@ git push origin main
 
 ./deploy.sh
 
-```
+````
 
 ---
 

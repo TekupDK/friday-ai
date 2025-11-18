@@ -1,6 +1,6 @@
 /**
  * Post-execution Hook: Run Linter
- * 
+ *
  * Runs ESLint after code changes
  */
 
@@ -25,4 +25,3 @@ export async function runLinter(): Promise<LinterResult> {
     output: "",
   };
 }
-

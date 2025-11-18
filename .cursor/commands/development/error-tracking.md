@@ -19,4 +19,3 @@ Configure error tracking, capture errors with context, set up alerts, create das
 ## OUTPUT
 
 Error tracking configured with alerts and dashboards.
-

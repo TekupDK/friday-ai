@@ -114,7 +114,10 @@ export async function notifyOwner(
   } catch (error) {
     // ✅ SECURITY FIX: Use logger instead of console.warn
     const { logger } = await import("./logger");
-    logger.warn({ err: error }, "[Notification] Error calling notification service");
+    logger.warn(
+      { err: error },
+      "[Notification] Error calling notification service"
+    );
     return false;
   }
 }

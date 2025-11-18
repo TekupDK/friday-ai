@@ -406,7 +406,9 @@ export class BillyAutomationService {
         0
       );
       const paidInvoices = periodInvoices.filter(inv => inv.isPaid).length;
-      const outstandingInvoices = periodInvoices.filter(inv => !inv.isPaid).length;
+      const outstandingInvoices = periodInvoices.filter(
+        inv => !inv.isPaid
+      ).length;
       const averageInvoiceAmount =
         periodInvoices.length > 0 ? totalRevenue / periodInvoices.length : 0;
 

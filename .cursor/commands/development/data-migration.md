@@ -19,4 +19,3 @@ Backup data, create migration script, test on dev, run on production, verify res
 ## OUTPUT
 
 Data migration completed with verification.
-

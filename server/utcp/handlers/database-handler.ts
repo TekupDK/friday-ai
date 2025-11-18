@@ -1,6 +1,6 @@
 /**
  * Database Handler for UTCP Tools
- * 
+ *
  * Executes database operations via UTCP
  */
 
@@ -11,7 +11,6 @@ import { getDb } from "../../db";
 import { getUserLeads, createLead } from "../../lead-db";
 import type { UTCPTool, UTCPDatabaseHandler, UTCPToolResult } from "../types";
 import { interpolateTemplateObject } from "../utils/template";
-
 
 /**
  * Execute database handler
@@ -29,11 +28,26 @@ export async function executeDatabaseHandler(
       case "query":
         return await executeDatabaseQuery(handler, args, userId, correlationId);
       case "insert":
-        return await executeDatabaseInsert(handler, args, userId, correlationId);
+        return await executeDatabaseInsert(
+          handler,
+          args,
+          userId,
+          correlationId
+        );
       case "update":
-        return await executeDatabaseUpdate(handler, args, userId, correlationId);
+        return await executeDatabaseUpdate(
+          handler,
+          args,
+          userId,
+          correlationId
+        );
       case "delete":
-        return await executeDatabaseDelete(handler, args, userId, correlationId);
+        return await executeDatabaseDelete(
+          handler,
+          args,
+          userId,
+          correlationId
+        );
       default:
         return {
           success: false,
@@ -44,7 +58,8 @@ export async function executeDatabaseHandler(
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Database operation failed",
+      error:
+        error instanceof Error ? error.message : "Database operation failed",
       code: "INTERNAL_ERROR",
     };
   }
@@ -200,4 +215,3 @@ async function executeDatabaseDelete(
     code: "INTERNAL_ERROR",
   };
 }
-

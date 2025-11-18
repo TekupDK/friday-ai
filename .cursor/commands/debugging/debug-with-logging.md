@@ -16,18 +16,21 @@ Add strategic logging to debug an issue. Focus on key decision points and data f
 ## LOGGING STRATEGY
 
 ### Log Levels:
+
 - **DEBUG:** Detailed information for debugging
 - **INFO:** General information about flow
 - **WARN:** Warning conditions
 - **ERROR:** Error conditions
 
 ### Log Format:
+
 ```typescript
 console.log("[DEBUG] [Component] [Action]:", { key: value });
 console.error("[ERROR] [Component] [Action]:", { error, context });
 ```
 
 ### When to Log:
+
 1. **Entry points:** Function entry with inputs
 2. **Decision points:** Before if/switch statements
 3. **Data transformations:** Before/after transformations
@@ -38,6 +41,7 @@ console.error("[ERROR] [Component] [Action]:", { error, context });
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Function Entry/Exit Logging
+
 ```typescript
 export async function getCustomerProfileById(
   customerId: number,
@@ -75,6 +79,7 @@ export async function getCustomerProfileById(
 ```
 
 ### Example: API Call Logging
+
 ```typescript
 async function handleSearchGmail(args: { query: string }) {
   console.log("[DEBUG] handleSearchGmail: Starting", {
@@ -113,6 +118,7 @@ async function handleSearchGmail(args: { query: string }) {
 ```
 
 ### Example: Decision Point Logging
+
 ```typescript
 async function handlePipelineTransition(
   userId: number,
@@ -126,7 +132,7 @@ async function handlePipelineTransition(
   });
 
   const pipelineState = await getPipelineState(userId, threadId);
-  
+
   console.log("[DEBUG] handlePipelineTransition: Pipeline state", {
     found: !!pipelineState,
     threadId,
@@ -210,6 +216,7 @@ async function handlePipelineTransition(
 ### Debug Logging: [Component/Function]
 
 **Logging Points Added:**
+
 - Entry: [what's logged]
 - Decision: [what's logged]
 - Transformation: [what's logged]
@@ -223,11 +230,12 @@ async function handlePipelineTransition(
 \`\`\`
 
 **Files Modified:**
+
 - `path/to/file.ts` - Added logging
 
 **Verification:**
+
 - ✅ Logs appear correctly
 - ✅ Format is consistent
 - ✅ Helpful for debugging
 ```
-

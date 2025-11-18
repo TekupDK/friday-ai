@@ -24,7 +24,6 @@ import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
 
 // API endpoints bruger "docs"
 trpc.docs.generateLeadDoc.mutate({ leadId });
-
 ```
 
 ### I URLs

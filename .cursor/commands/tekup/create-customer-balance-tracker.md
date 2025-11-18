@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der opretter en customer balance tracker for 
 ## TASK
 
 Opret customer balance tracker ved at:
+
 - Track customer balances fra Billy.dk
 - Track payments og outstanding invoices
 - Calculate total balance
@@ -38,6 +39,7 @@ Opret customer balance tracker ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find invoice logic
 - `read_file` - Læs Billy implementation
 - `grep` - Søg efter balance patterns
@@ -45,6 +47,7 @@ Opret customer balance tracker ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Ignorere edge cases
 - Glem validation
 - Undlad at teste
@@ -131,29 +134,34 @@ Provide balance tracker implementation:
 ## Implementation
 
 ### Schema Created
+
 - ✅ Balance structure defined
 - ✅ Payment structure defined
 - ✅ Invoice structure defined
 - ✅ Validation schemas created
 
 ### Balance Tracker Function
+
 - ✅ Fetch invoices from Billy: IMPLEMENTED
 - ✅ Calculate total balance: IMPLEMENTED
 - ✅ Track payments: IMPLEMENTED
 - ✅ Calculate outstanding: IMPLEMENTED
 
 ### Billy Integration
+
 - ✅ Invoice fetching: WORKING
 - ✅ Payment tracking: WORKING
 - ✅ Balance sync: WORKING
 
 ### Database Schema
+
 - ✅ Customer balance table: CREATED
 - ✅ Payment history table: CREATED
 - ✅ Invoice tracking table: CREATED
 - ✅ Balance updates table: CREATED
 
 ### tRPC Procedures
+
 - ✅ `balance.get` - Created
 - ✅ `balance.getHistory` - Created
 - ✅ `balance.getOutstanding` - Created
@@ -161,6 +169,7 @@ Provide balance tracker implementation:
 - ✅ `balance.update` - Created
 
 ### React Components
+
 - ✅ BalanceDisplay: CREATED
 - ✅ BalanceHistory: CREATED
 - ✅ OutstandingInvoices: CREATED
@@ -213,4 +222,3 @@ Efter implementation, verificer:
 ---
 
 **CRITICAL:** Start med at definere balance schema, derefter implementer tracker function, integrer med Billy, opret database schema, opret tRPC procedures, og tilføj React components.
-

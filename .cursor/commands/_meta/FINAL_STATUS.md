@@ -48,7 +48,7 @@
 
 - **development/:** 115 commands
   - Create (create-trpc-procedure, create-react-component, etc.)
-  - Implement (implement-feature, implement-scenario-*, etc.)
+  - Implement (implement-feature, implement-scenario-\*, etc.)
   - Refactor & Improve (refactor-code, improve-code-quality, etc.)
   - Fix (fix-bug, fix-typescript-errors, etc.)
   - Review & Audit (code-review, security-audit, etc.)
@@ -112,6 +112,7 @@
 ## 📊 STATISTIK
 
 ### Før Cleanup:
+
 - **Total:** 371 commands
 - **Struktur:** FLAT (ingen organisering)
 - **Duplikater:** ~15-20 commands
@@ -119,6 +120,7 @@
 - **Problem:** Overvældende, svært at finde commands
 
 ### Efter Cleanup:
+
 - **Total:** 294 commands (efter cleanup)
 - **Struktur:** 8 mapper (klar hierarki)
 - **Duplikater:** 0 (beholdt både dansk og engelsk)
@@ -126,6 +128,7 @@
 - **Resultat:** Nemt at finde og browse commands
 
 ### Fordeling:
+
 - **core/:** 62 commands (21%)
 - **development/:** 115 commands (39%)
 - **testing/:** 35 commands (12%)
@@ -180,11 +183,10 @@
 ✅ **Dokumenteret:** README, index filer, oversigter  
 ✅ **Nemt at finde:** Klar struktur, alfabetisk index  
 ✅ **Beholdt sprog:** Både dansk og engelsk bevares  
-✅ **Forbedret:** Commands forbedret med bedre struktur  
+✅ **Forbedret:** Commands forbedret med bedre struktur
 
 **Status:** ✅ 100% COMPLETE - Klar til brug!
 
 ---
 
 **Tak for din tålmodighed! Commands systemet er nu organiseret og klar til brug.** 🎉
-

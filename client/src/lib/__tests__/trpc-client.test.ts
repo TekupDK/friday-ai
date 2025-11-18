@@ -1,6 +1,6 @@
 /**
  * tRPC Client Export Tests
- * 
+ *
  * Tests for the tRPC client export used in standalone mode.
  * Verifies client configuration and export.
  */
@@ -47,4 +47,3 @@ describe("tRPC Client Export", () => {
     expect(trpcClient.links.length).toBeGreaterThan(0);
   });
 });
-

@@ -9,7 +9,7 @@ import { getDb, upsertUser } from "../db";
 
 /**
  * Admin User Management Router
- * 
+ *
  * Allows admins to create, list, update, and delete team members.
  * All endpoints require admin or owner role.
  */
@@ -25,7 +25,9 @@ export const adminUserRouter = router({
         role: z.enum(["user", "admin"]).optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        orderBy: z.enum(["name", "email", "createdAt", "lastSignedIn"]).default("createdAt"),
+        orderBy: z
+          .enum(["name", "email", "createdAt", "lastSignedIn"])
+          .default("createdAt"),
         orderDirection: z.enum(["asc", "desc"]).default("desc"),
       })
     )
@@ -58,11 +60,12 @@ export const adminUserRouter = router({
       }
 
       // Build where clause using and() if we have conditions
-      const whereClause = conditions.length > 0 
-        ? conditions.length === 1 
-          ? conditions[0] 
-          : and(...conditions)!
-        : undefined;
+      const whereClause =
+        conditions.length > 0
+          ? conditions.length === 1
+            ? conditions[0]
+            : and(...conditions)!
+          : undefined;
 
       // Get total count
       const countResult = whereClause
@@ -70,17 +73,18 @@ export const adminUserRouter = router({
             .select({ count: sql<number>`count(*)` })
             .from(users)
             .where(whereClause)
-        : await db
-            .select({ count: sql<number>`count(*)` })
-            .from(users);
+        : await db.select({ count: sql<number>`count(*)` }).from(users);
       const total = Number(countResult[0]?.count || 0);
 
       // Order by
-      const orderColumn = 
-        input.orderBy === "name" ? users.name :
-        input.orderBy === "email" ? users.email :
-        input.orderBy === "lastSignedIn" ? users.lastSignedIn :
-        users.createdAt;
+      const orderColumn =
+        input.orderBy === "name"
+          ? users.name
+          : input.orderBy === "email"
+            ? users.email
+            : input.orderBy === "lastSignedIn"
+              ? users.lastSignedIn
+              : users.createdAt;
 
       const orderFn = input.orderDirection === "asc" ? asc : desc;
 
@@ -142,7 +146,7 @@ export const adminUserRouter = router({
   /**
    * Create new user
    * Admin/Owner only
-   * 
+   *
    * Creates a user account that will be activated when they first log in with Google.
    * For Google OAuth, the openId will be updated to the actual Google user ID on first login.
    */
@@ -315,7 +319,11 @@ Friday AI Team - TekupDK`,
       }
 
       // Prevent self-demotion (check before other demotion checks)
-      if (ctx.user.id === userId && updates.role === "user" && user.role === "admin") {
+      if (
+        ctx.user.id === userId &&
+        updates.role === "user" &&
+        user.role === "admin"
+      ) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Cannot remove your own admin role",
@@ -323,7 +331,11 @@ Friday AI Team - TekupDK`,
       }
 
       // Prevent non-owner from demoting admin
-      if (user.role === "admin" && updates.role === "user" && ctx.userRole !== "owner") {
+      if (
+        user.role === "admin" &&
+        updates.role === "user" &&
+        ctx.userRole !== "owner"
+      ) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Only owner can demote admin users",
@@ -364,7 +376,7 @@ Friday AI Team - TekupDK`,
   /**
    * Delete user
    * Admin/Owner only
-   * 
+   *
    * Permanently deletes user from database.
    * Use with caution - this cannot be undone.
    */
@@ -431,4 +443,3 @@ Friday AI Team - TekupDK`,
       };
     }),
 });
-

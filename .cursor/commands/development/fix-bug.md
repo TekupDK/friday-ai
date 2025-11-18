@@ -30,6 +30,7 @@ Fix a bug with minimal changes. START NOW - investigate and fix immediately.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code files to understand bug
 - `codebase_search` - Find similar patterns and fixes
 - `grep` - Search for error patterns
@@ -37,6 +38,7 @@ Fix a bug with minimal changes. START NOW - investigate and fix immediately.
 - `search_replace` - Fix code directly
 
 **DO NOT:**
+
 - Guess the root cause without investigation
 - Skip reading related code
 - Fix without understanding the problem

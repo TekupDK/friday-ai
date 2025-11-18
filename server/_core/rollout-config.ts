@@ -272,14 +272,16 @@ export function shouldTriggerRollback(
   if (emergencyRollback) {
     // ✅ SECURITY FIX: Use logger instead of console.warn
     // Use dynamic import synchronously (logger is already available)
-    import("./logger").then(({ logger }) => {
-      logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
-    }).catch(() => {
-      // Fallback if logger import fails - use logger import again as last resort
-      import("./logger").then(({ logger }) => {
+    import("./logger")
+      .then(({ logger }) => {
         logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
+      })
+      .catch(() => {
+        // Fallback if logger import fails - use logger import again as last resort
+        import("./logger").then(({ logger }) => {
+          logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
+        });
       });
-    });
     return true;
   }
 

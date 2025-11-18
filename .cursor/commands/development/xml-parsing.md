@@ -19,4 +19,3 @@ Choose parser, implement parsing, handle errors, validate XML, test parsing.
 ## OUTPUT
 
 XML parsing implemented with error handling.
-

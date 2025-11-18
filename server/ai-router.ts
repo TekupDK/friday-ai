@@ -890,7 +890,11 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
         );
 
         const flags = getFeatureFlags(userId);
-        const toolResults: Array<{ role: "tool"; content: string; tool_call_id: string }> = [];
+        const toolResults: Array<{
+          role: "tool";
+          content: string;
+          tool_call_id: string;
+        }> = [];
 
         for (const toolCall of toolCalls) {
           const toolName = toolCall.function?.name;
@@ -948,7 +952,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
               toolResults.push({
                 role: "tool",
                 content: JSON.stringify({
-                  error: error instanceof Error ? error.message : "Unknown error",
+                  error:
+                    error instanceof Error ? error.message : "Unknown error",
                 }),
                 tool_call_id: toolCall.id,
               });
@@ -980,7 +985,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 logger.error(
                   {
                     toolName,
-                    error: error instanceof Error ? error.message : String(error),
+                    error:
+                      error instanceof Error ? error.message : String(error),
                     correlationId,
                   },
                   "[AI Router] [routeAI]: Subscription recommendation failed"
@@ -988,7 +994,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 toolResults.push({
                   role: "tool",
                   content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
+                    error:
+                      error instanceof Error ? error.message : "Unknown error",
                   }),
                   tool_call_id: toolCall.id,
                 });
@@ -1009,7 +1016,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 logger.error(
                   {
                     toolName,
-                    error: error instanceof Error ? error.message : String(error),
+                    error:
+                      error instanceof Error ? error.message : String(error),
                     correlationId,
                   },
                   "[AI Router] [routeAI]: Churn prediction failed"
@@ -1017,7 +1025,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 toolResults.push({
                   role: "tool",
                   content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
+                    error:
+                      error instanceof Error ? error.message : "Unknown error",
                   }),
                   tool_call_id: toolCall.id,
                 });
@@ -1038,7 +1047,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 logger.error(
                   {
                     toolName,
-                    error: error instanceof Error ? error.message : String(error),
+                    error:
+                      error instanceof Error ? error.message : String(error),
                     correlationId,
                   },
                   "[AI Router] [routeAI]: Usage optimization failed"
@@ -1046,7 +1056,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 toolResults.push({
                   role: "tool",
                   content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
+                    error:
+                      error instanceof Error ? error.message : "Unknown error",
                   }),
                   tool_call_id: toolCall.id,
                 });
@@ -1067,7 +1078,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 logger.error(
                   {
                     toolName,
-                    error: error instanceof Error ? error.message : String(error),
+                    error:
+                      error instanceof Error ? error.message : String(error),
                     correlationId,
                   },
                   "[AI Router] [routeAI]: Upsell opportunities failed"
@@ -1075,7 +1087,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
                 toolResults.push({
                   role: "tool",
                   content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
+                    error:
+                      error instanceof Error ? error.message : "Unknown error",
                   }),
                   tool_call_id: toolCall.id,
                 });

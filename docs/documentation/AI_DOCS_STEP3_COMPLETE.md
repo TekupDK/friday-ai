@@ -123,7 +123,6 @@
 **Components:**
 
 - **Metric Cards:**
-
   - Total Generated
 
   - Success Rate
@@ -133,7 +132,6 @@
   - Cost Saved
 
 - **Time Period Chart:**
-
   - Today's generation
 
   - This week's generation
@@ -141,7 +139,6 @@
   - This month's generation
 
 - **Savings Summary:**
-
   - Manual time saved
 
   - Cost savings (DKK)
@@ -149,13 +146,11 @@
   - AI costs (FREE!)
 
 - **Top Leads:**
-
   - Most documented leads
 
   - Doc count per lead
 
 - **Recent Generations:**
-
   - Latest 10 docs
 
   - Timestamps
@@ -168,7 +163,7 @@
 
 **New Endpoints:**
 
-```typescript
+````typescript
 // Get comprehensive metrics
 docs.getAIMetrics();
 
@@ -506,7 +501,7 @@ AI omkostninger:      0 kr
 ────────────────────
 Net savings:          10,300 kr 💰
 
-```
+````
 
 ---
 

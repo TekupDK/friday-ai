@@ -12,6 +12,7 @@ Forklar en workflow: steps, flow, og hvorfor den er designet sådan.
 ## TASK
 
 Forklar workflow:
+
 1. **Steps** - Hvad er workflow steps?
 2. **Flow** - Hvordan flyder processen?
 3. **Rationale** - Hvorfor er den designet sådan?
@@ -49,4 +50,3 @@ Forklar workflow:
 ---
 
 **CRITICAL:** Forstå workflowen, identificér steps og flow, og forklar på klar, struktureret måde.
-

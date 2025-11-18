@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 
-
 interface InvoiceTrackerProps {
   context: {
     emailId?: string;

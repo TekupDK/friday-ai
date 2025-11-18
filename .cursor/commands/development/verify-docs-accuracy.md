@@ -31,6 +31,7 @@ Verify that all documentation is accurate, examples work, API docs match code, a
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read documentation files
 - `codebase_search` - Find code to verify against
 - `grep` - Search for API references
@@ -39,6 +40,7 @@ Verify that all documentation is accurate, examples work, API docs match code, a
 - `grep` - Find links in docs
 
 **DO NOT:**
+
 - Skip verification steps
 - Miss inaccuracies
 - Ignore broken examples
@@ -116,6 +118,7 @@ Before verifying, think through:
 ## VERIFICATION
 
 After verification:
+
 - ✅ API docs verified
 - ✅ Examples verified
 - ✅ Links verified
@@ -128,24 +131,29 @@ After verification:
 ### Documentation Accuracy Verification
 
 **API Documentation:**
+
 - ✅ Procedures: [X/Y] documented correctly
 - ❌ Missing: [List missing procedures]
 - ❌ Incorrect: [List incorrect docs]
 
 **Code Examples:**
+
 - ✅ Working: [X] examples
 - ❌ Broken: [List broken examples]
 - ❌ Outdated: [List outdated examples]
 
 **Links:**
+
 - ✅ Valid: [X] links
 - ❌ Broken: [List broken links]
 
 **Content Accuracy:**
+
 - ✅ Accurate: [X] sections
 - ❌ Inaccurate: [List inaccurate sections]
 
 **Overall:**
+
 - Accuracy: [X]%
 - Issues Found: [count]
 - Priority Fixes: [List]
@@ -158,4 +166,3 @@ After verification:
 - **Prioritize:** Focus on critical issues
 - **Be specific:** Note exact problems
 - **Suggest fixes:** Provide clear solutions
-

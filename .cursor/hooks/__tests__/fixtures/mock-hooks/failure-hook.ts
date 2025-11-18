@@ -1,6 +1,6 @@
 /**
  * Mock Failure Hook
- * 
+ *
  * Always fails - used for testing error handling
  */
 
@@ -14,4 +14,3 @@ export default async function failureHook(
     error: "Mock hook intentionally failed",
   };
 }
-

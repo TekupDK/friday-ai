@@ -31,6 +31,7 @@ When code changes, automatically update relevant documentation to keep it synchr
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Check git diff for changed files
 - `read_file` - Read changed code and related docs
 - `codebase_search` - Find docs that reference changed code
@@ -39,6 +40,7 @@ When code changes, automatically update relevant documentation to keep it synchr
 - `write` - Create new documentation if needed
 
 **DO NOT:**
+
 - Skip updating docs when code changes
 - Miss related documentation
 - Ignore broken examples
@@ -102,6 +104,7 @@ Before syncing, think through:
 ## VERIFICATION
 
 After syncing:
+
 - ✅ All related docs updated
 - ✅ Examples match current code
 - ✅ Links still valid
@@ -114,18 +117,22 @@ After syncing:
 ### Documentation Sync Report
 
 **Code Changes:**
+
 - [File 1] - [What changed]
 - [File 2] - [What changed]
 
 **Documentation Updated:**
+
 - `docs/[doc1].md` - [What was updated]
 - `docs/[doc2].md` - [What was updated]
 
 **Examples Updated:**
+
 - [Example 1] - [What changed]
 - [Example 2] - [What changed]
 
 **Verification:**
+
 - ✅ Examples: VERIFIED
 - ✅ Links: VALID
 - ✅ Dates: UPDATED
@@ -138,4 +145,3 @@ After syncing:
 - **Verify examples:** Ensure examples still work
 - **Update dates:** Keep "Last Updated" current
 - **Note changes:** Document what changed
-

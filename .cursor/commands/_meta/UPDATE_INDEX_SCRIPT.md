@@ -10,6 +10,7 @@
 ### Path Mapping
 
 **Core Commands:**
+
 - `session-*.md` → `core/session-*.md`
 - `developer-mode.md` → `core/developer-mode.md`
 - `get-session-*.md` → `core/get-session-*.md`
@@ -30,6 +31,7 @@
 - `start-work-immediately.md` → `core/start-work-immediately.md`
 
 **Development Commands:**
+
 - `create-*.md` → `development/create-*.md`
 - `implement-*.md` → `development/implement-*.md`
 - `refactor-*.md` → `development/refactor-*.md`
@@ -45,6 +47,7 @@
 - `*documentation*.md` → `development/*documentation*.md`
 
 **Testing Commands:**
+
 - `test-*.md` → `testing/test-*.md`
 - `write-unit-tests.md` → `testing/write-unit-tests.md`
 - `create-*-test.md` → `testing/create-*-test.md`
@@ -54,6 +57,7 @@
 - `forbedre-command.md` → `testing/forbedre-command.md`
 
 **Debugging Commands:**
+
 - `debug-*.md` → `debugging/debug-*.md`
 - `troubleshoot-*.md` → `debugging/troubleshoot-*.md`
 - `find-root-cause.md` → `debugging/find-root-cause.md`
@@ -61,6 +65,7 @@
 - `chain-of-thought-debugging.md` → `debugging/chain-of-thought-debugging.md`
 
 **AI Commands:**
+
 - `test-ai-*.md` → `ai/test-ai-*.md`
 - `analyze-ai-*.md` → `ai/analyze-ai-*.md`
 - `debug-ai-*.md` → `ai/debug-ai-*.md`
@@ -68,6 +73,7 @@
 - `*ai*.md` → `ai/*ai*.md` (hvis ikke allerede i anden kategori)
 
 **Tekup Commands:**
+
 - `create-*-workflow.md` → `tekup/create-*-workflow.md`
 - `test-billy-*.md` → `tekup/test-billy-*.md`
 - `debug-billy-*.md` → `tekup/debug-billy-*.md`
@@ -77,6 +83,7 @@
 - `optimize-friday-*.md` → `tekup/optimize-friday-*.md`
 
 **Chat Commands:**
+
 - `*chat*.md` → `chat/*chat*.md`
 - `laes-chat-*.md` → `chat/laes-chat-*.md`
 - `analyser-chat-*.md` → `chat/analyser-chat-*.md`
@@ -84,17 +91,17 @@
 - `generate-todos-from-chat.md` → `chat/generate-todos-from-chat.md`
 
 **Explain Commands:**
+
 - `forklar-*.md` → `explain/forklar-*.md`
 
 ---
 
 ## ⚠️ MANUEL OPDATERING NØDVENDIG
 
-Dette er en stor opgave der kræver manuel opdatering af hver reference. 
+Dette er en stor opgave der kræver manuel opdatering af hver reference.
 
 **Anbefaling:** Brug search & replace i editor til at opdatere paths systematisk.
 
 ---
 
 **Status:** 📋 PLAN KLAR - Klar til manuel opdatering
-

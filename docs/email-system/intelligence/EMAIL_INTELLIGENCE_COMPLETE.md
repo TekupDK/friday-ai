@@ -37,7 +37,7 @@ Email Intelligence is a comprehensive AI-powered system that automatically:
 
 **Key Functions:**
 
-```typescript
+````typescript
 categorizeEmail(email, userId) → EmailCategory
 categorizeEmailBatch(emails, userId) → Map<string, EmailCategory>
 getCategoryStats(categories) → statistics
@@ -674,7 +674,7 @@ See `EMAIL_INTELLIGENCE_DESIGN.md` for:
 │                                                      │
 └──────────────────────────────────────────────────────┘
 
-```
+````
 
 ---
 

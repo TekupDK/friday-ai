@@ -18,6 +18,7 @@ pnpm dev:docker
 ```
 
 This starts:
+
 - ✅ Backend server (port 3000)
 - ✅ MySQL database (port 3307)
 - ✅ Redis cache (port 6380)
@@ -59,11 +60,13 @@ pnpm dev:docker:down && pnpm dev:docker
 ## Troubleshooting
 
 **Port conflicts?**
+
 - Backend: Check port 3000
 - Database: Uses port 3307 (avoids conflicts)
 - Frontend: Uses port 5173 (or next available)
 
 **Database connection failed?**
+
 ```bash
 # Check database is running
 docker-compose -f docker-compose.dev.yml ps db-dev
@@ -75,4 +78,3 @@ docker-compose -f docker-compose.dev.yml restart db-dev
 ## Full Documentation
 
 See [Docker Development Setup](./devops-deploy/DOCKER_DEV_SETUP.md) for complete guide.
-

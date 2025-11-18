@@ -25,7 +25,7 @@ ChatGPT har analyseret vores Email Center design og identificeret vigtige UX-pro
 
 #### 1. **Sender-Based Grouping** ✅
 
-```typescript
+````typescript
 // ✅ DONE in Phase 2: client/src/utils/thread-grouping.ts
 export function groupEmailsByThread(emails: EnhancedEmailMessage[]) {
   const threadsMap = new Map<string, EmailThread>();
@@ -776,7 +776,7 @@ User feedback:
 ✅ AI Panel Kommandoer (/triage, /book, /draft)
 ✅ Advanced keyboard navigation
 
-```
+````
 
 ---
 

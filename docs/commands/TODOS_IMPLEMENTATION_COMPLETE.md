@@ -6,11 +6,13 @@
 ## Implementeret
 
 ### ✅ 1. Tilføj Flere data-testid Attributes
+
 **Status:** ✅ COMPLETED
 
 **Tilføjet:**
+
 - `export-csv-button` - CustomerList
-- `create-customer-button` - CustomerList  
+- `create-customer-button` - CustomerList
 - `create-customer-modal` - CustomerList
 - `customer-search-input` - CustomerList
 - `export-leads-csv-button` - LeadPipeline
@@ -20,20 +22,25 @@
 - `create-opportunity-button` - OpportunityPipeline
 
 **Files Modified:**
+
 - `client/src/pages/crm/CustomerList.tsx`
 - `client/src/pages/crm/LeadPipeline.tsx`
 - `client/src/pages/crm/OpportunityPipeline.tsx`
 
 ### ✅ 2. Opdater Test Dokumentation
+
 **Status:** ✅ COMPLETED
 
 **Updated:**
+
 - `docs/qa/CRM_TEST_STATUS.md` - Tilføjet liste over alle nye data-testid attributes
 
 ### ✅ 3. Opdater E2E Tests
+
 **Status:** ✅ COMPLETED
 
 **Updated Tests:**
+
 - Dashboard load test - bruger nu `data-testid="crm-dashboard-title"`
 - Dashboard stats test - bruger nu `data-testid="crm-dashboard-stats"`
 - Customer list load test - bruger nu `data-testid="customers-page-title"`
@@ -48,18 +55,22 @@
 - Create opportunity button test - bruger nu `data-testid="create-opportunity-button"`
 
 **Files Modified:**
+
 - `tests/e2e/crm-comprehensive.spec.ts`
 
 ### ✅ 4. Commit CRM-Forbedringer
+
 **Status:** ✅ COMPLETED
 
 **Committed:**
+
 - CSV exports for all CRM entities
 - data-testid attributes
 - Test updates
 - Documentation updates
 
 **Commit Message:**
+
 ```
 feat(crm): Add CSV exports, data-testid attributes, and improve E2E tests
 
@@ -73,16 +84,19 @@ feat(crm): Add CSV exports, data-testid attributes, and improve E2E tests
 ## Pending (Kræver Test Execution eller Manual Testing)
 
 ### ⏳ 1. Verificer Test-Forbedringer
+
 **Status:** ⏳ Pending
 **Action:** Kør E2E tests for at bekræfte data-testid selectors virker
 **Note:** Tests er opdateret, men kræver execution for verificering
 
 ### ⏳ 2. Fix Test Authentication
+
 **Status:** ⏳ Pending
 **Action:** Forbedre login helper i tests
 **Note:** Kræver test execution først for at identificere problemer
 
 ### ⏳ 3. Verificer CSV Exports
+
 **Status:** ⏳ Pending (manual test)
 **Action:** Manuelt test CSV export i UI
 **Note:** Kan testes manuelt i browser
@@ -99,4 +113,3 @@ feat(crm): Add CSV exports, data-testid attributes, and improve E2E tests
 1. **Kør Tests** - Verificer at alle forbedringer virker
 2. **Fix Authentication** - Hvis tests stadig fejler på auth
 3. **Manual CSV Test** - Test CSV exports i browser
-

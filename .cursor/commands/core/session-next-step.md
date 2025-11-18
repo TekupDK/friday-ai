@@ -12,6 +12,7 @@ Beregn næste skridt. Læs chat sessionen, analysér kontekst, identificér næs
 ## TASK
 
 Beregn næste skridt:
+
 1. **Læs chat sessionen** - Hvad blev diskuteret? Hvor er I i diskussionen?
 2. **Analysér kontekst** - Hvor er vi baseret på chat flow?
 3. **Identificér næste action** - Hvad er logisk næste skridt baseret på chat?
@@ -21,6 +22,7 @@ Beregn næste skridt:
 ## CHAT SESSION READING
 
 **Læs chat sessionen:**
+
 - Hvad blev diskuteret?
 - Hvor er I i diskussionen?
 - Hvad er nuværende status ifølge chat?

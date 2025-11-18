@@ -1,19 +1,19 @@
 /**
  * Health Check Routes
- * 
+ *
  * Provides monitoring and deployment verification endpoints for Friday AI Chat.
- * 
+ *
  * Endpoints:
  * - GET /api/health - Basic health check (always returns 200 if server is running)
  * - GET /api/ready - Readiness check (verifies all dependencies are available)
- * 
+ *
  * @see {@link https://github.com/TekupDK/friday-ai/blob/main/docs/HEALTH_CHECK_ENDPOINTS.md Health Check Documentation}
- * 
+ *
  * @example
  * ```bash
  * # Basic health check
  * curl http://localhost:3000/api/health
- * 
+ *
  * # Readiness check
  * curl http://localhost:3000/api/ready
  * ```
@@ -54,12 +54,12 @@ interface ReadyStatus {
 
 /**
  * GET /api/health
- * 
+ *
  * Basic health check endpoint that always returns 200 if the server is running.
  * Used by load balancers and basic monitoring to verify the server process is alive.
- * 
+ *
  * @returns HTTP 200 with health status including uptime, version, and environment
- * 
+ *
  * @example
  * ```bash
  * curl http://localhost:3000/api/health
@@ -87,17 +87,17 @@ router.get("/health", (_req: Request, res: Response) => {
 
 /**
  * GET /api/ready
- * 
+ *
  * Readiness check endpoint that verifies all critical dependencies are available.
  * Used by Kubernetes readiness probes to determine if the pod should receive traffic.
- * 
+ *
  * Checks the following dependencies:
  * - Database: Verifies connection with `SELECT 1` query
  * - Redis: Optional check (falls back to in-memory if not configured)
- * 
+ *
  * @returns HTTP 200 if ready, HTTP 503 if not ready
  * @returns Detailed status for each dependency check
- * 
+ *
  * @example
  * ```bash
  * curl http://localhost:3000/api/ready
@@ -143,11 +143,11 @@ router.get("/ready", async (_req: Request, res: Response) => {
     // Dynamically import to avoid errors if Redis is not configured
     const { getRedisClient } = await import("../rate-limiter-redis");
     const redis = getRedisClient();
-    
+
     // Try a simple ping
     await redis.ping();
     const redisResponseTime = Date.now() - redisStartTime;
-    
+
     checks.redis = {
       status: "ok",
       responseTime: redisResponseTime,
@@ -183,4 +183,3 @@ router.get("/ready", async (_req: Request, res: Response) => {
 });
 
 export default router;
-

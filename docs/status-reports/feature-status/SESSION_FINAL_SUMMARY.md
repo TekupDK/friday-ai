@@ -8,7 +8,7 @@
 
 ## 📊 ACHIEVEMENTS OVERVIEW
 
-```text
+````text
 ┌──────────────────────────────────────────────────────┐
 │                                                      │
 │  🎯 Tests Created:        38 comprehensive tests    │
@@ -526,7 +526,7 @@ npx playwright test         # E2E tests
 npm run dev                 # Start server
 # Navigate to <http://localhost:3000>
 
-```
+````
 
 ### Documentation
 

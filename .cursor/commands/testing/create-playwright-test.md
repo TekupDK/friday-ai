@@ -31,6 +31,7 @@ Create a new Playwright test for a feature or page, following best practices and
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing Playwright tests
 - `codebase_search` - Find similar tests
 - `grep` - Search for test patterns
@@ -38,6 +39,7 @@ Create a new Playwright test for a feature or page, following best practices and
 - `run_terminal_cmd` - Run Playwright tests
 
 **DO NOT:**
+
 - Create tests without reviewing patterns
 - Use unstable selectors
 - Skip proper waits
@@ -70,6 +72,7 @@ Before writing tests, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Basic Test Structure
+
 ```typescript
 import { test, expect } from "@playwright/test";
 
@@ -91,6 +94,7 @@ test.describe("Feature Name", () => {
 ```
 
 ### Example: Test with Authentication
+
 ```typescript
 import { test, expect } from "@playwright/test";
 
@@ -111,6 +115,7 @@ test.describe("Protected Feature", () => {
 ```
 
 ### Example: Test with API Mocking
+
 ```typescript
 import { test, expect } from "@playwright/test";
 
@@ -168,22 +173,27 @@ test("should handle API errors", async ({ page }) => {
 ## PLAYWRIGHT BEST PRACTICES
 
 ### Selectors (Priority Order):
+
 1. **`getByRole()`** - Most accessible, preferred
+
    ```typescript
    await page.getByRole("button", { name: "Submit" }).click();
    ```
 
 2. **`getByLabel()`** - For form inputs
+
    ```typescript
    await page.getByLabel("Email").fill("test@example.com");
    ```
 
 3. **`getByText()`** - For text content
+
    ```typescript
    await expect(page.getByText("Welcome")).toBeVisible();
    ```
 
 4. **`getByTestId()`** - For stable test-specific selectors
+
    ```typescript
    await page.getByTestId("submit-button").click();
    ```
@@ -194,6 +204,7 @@ test("should handle API errors", async ({ page }) => {
    ```
 
 ### Waits:
+
 ```typescript
 // Wait for element
 await page.waitForSelector('[data-testid="element"]');
@@ -202,14 +213,13 @@ await page.waitForSelector('[data-testid="element"]');
 await page.waitForURL("/dashboard");
 
 // Wait for network
-await page.waitForResponse(response => 
-  response.url().includes("/api/trpc/")
-);
+await page.waitForResponse(response => response.url().includes("/api/trpc/"));
 ```
 
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Test file created in correct location
 - ✅ Tests use accessibility-first selectors
 - ✅ Proper waits implemented
@@ -226,6 +236,7 @@ After implementation:
 **Test File:** `tests/[feature].test.ts`
 
 **Test Cases:**
+
 - `should [test case 1]`
 - `should [test case 2]`
 - `should handle [error case]`
@@ -236,15 +247,17 @@ After implementation:
 \`\`\`
 
 **Selectors Used:**
+
 - `getByRole()` - [where used]
 - `getByTestId()` - [where used]
 - `locator()` - [where used]
 
 **Test Execution:**
+
 - ✅ All tests passing
 - ✅ No flakiness observed
 
 **Files Created:**
+
 - `tests/[feature].test.ts`
 ```
-

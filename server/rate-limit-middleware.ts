@@ -66,7 +66,10 @@ export function createRateLimitMiddleware(
       const resetTime = rateLimit.reset * 1000;
       const now = Date.now();
       // FIXED: Prevent negative seconds (clock skew, stale data)
-      const secondsUntilReset = Math.max(0, Math.ceil((resetTime - now) / 1000));
+      const secondsUntilReset = Math.max(
+        0,
+        Math.ceil((resetTime - now) / 1000)
+      );
 
       // If reset time is in past (clock skew), allow immediate retry
       if (secondsUntilReset <= 0) {

@@ -33,7 +33,7 @@ Alle CSS filer opdateret til at bruge **dual dark mode support:**
 
 **Pattern brugt:**
 
-```css
+````css
 /*Primary: data-theme attribute*/
 [data-theme="dark"] .element {
   background: #1c1c1e;
@@ -165,7 +165,7 @@ Secondary Label: rgba(235, 235, 245, 0.6)
 ✅ AppleTag.tsx - Zero errors
 ✅ All CSS modules - Zero errors
 
-```
+````
 
 ### Storybook Dark Mode
 

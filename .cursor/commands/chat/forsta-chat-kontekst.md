@@ -12,6 +12,7 @@ Giv en dybere forklaring: hvad betyder alt dette for arkitektur og flow?
 ## TASK
 
 Giv dyb forklaring:
+
 - Hvad betyder dette for arkitektur?
 - Hvad er flow impact?
 - Hvad er dependencies?

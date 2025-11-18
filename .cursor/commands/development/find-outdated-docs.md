@@ -30,6 +30,7 @@ Find documentation that is outdated, hasn't been updated recently, or references
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read documentation files
 - `grep` - Search for "Last Updated" dates
 - `codebase_search` - Find code references in docs
@@ -37,6 +38,7 @@ Find documentation that is outdated, hasn't been updated recently, or references
 - `grep` - Find references to deleted code
 
 **DO NOT:**
+
 - Miss outdated docs
 - Ignore broken references
 - Skip date checking
@@ -101,6 +103,7 @@ Before finding outdated docs, think through:
 ## VERIFICATION
 
 After finding outdated docs:
+
 - ✅ All outdated docs identified
 - ✅ Priorities assigned
 - ✅ Update actions suggested
@@ -112,22 +115,27 @@ After finding outdated docs:
 ### Outdated Documentation Report
 
 **Critical (Update Immediately):**
+
 - `docs/[doc1].md` - [Issue] - [Last Updated: date] - [Action needed]
 - `docs/[doc2].md` - [Issue] - [Last Updated: date] - [Action needed]
 
 **High Priority (Update Soon):**
+
 - `docs/[doc3].md` - [Issue] - [Last Updated: date] - [Action needed]
 
 **Medium Priority:**
+
 - `docs/[doc4].md` - [Issue] - [Last Updated: date] - [Action needed]
 
 **Issues Found:**
+
 - Missing "Last Updated" dates: [count]
 - References to deleted code: [count]
 - Broken examples: [count]
 - Broken links: [count]
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -139,4 +147,3 @@ After finding outdated docs:
 - **Be specific:** Note exact issues
 - **Suggest actions:** Provide clear next steps
 - **Update regularly:** Run this periodically
-

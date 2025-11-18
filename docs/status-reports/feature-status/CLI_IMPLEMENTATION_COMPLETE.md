@@ -129,7 +129,7 @@
 
 ### Nye filer (11)
 
-```text
+````text
 cli/tekup-docs/
 ├── src/
 │   ├── index.ts ✅ (opdateret)
@@ -439,7 +439,7 @@ Conflicts: 0
    tekup-docs list
    tekup-docs create "Test Doc"
 
-   ```
+````
 
 ---
 

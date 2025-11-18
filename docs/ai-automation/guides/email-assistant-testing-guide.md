@@ -14,7 +14,7 @@
 
 ### **1. START DEVELOPMENT SERVER:**
 
-```bash
+````bash
 npm run dev
 
 ```text
@@ -127,7 +127,7 @@ F12 → Console tab
 # Network requests
 F12 → Network tab → tpc requests
 
-```
+````
 
 ## 🎯 **SUCCESS KRITERIER:**
 

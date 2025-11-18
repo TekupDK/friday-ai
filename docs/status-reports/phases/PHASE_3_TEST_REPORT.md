@@ -301,7 +301,7 @@
 
 **E2E Tests:**
 
-```bash
+````bash
 npx playwright test tests/phase-3-error-handling-ux.spec.ts
 
 ```text
@@ -318,7 +318,7 @@ npx playwright test tests/phase-3-error-handling-ux-mocked.spec.ts
 ```bash
 npx playwright test tests/phase-3-*.spec.ts
 
-```
+````
 
 ---
 

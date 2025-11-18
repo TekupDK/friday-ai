@@ -1,7 +1,8 @@
 # Sentry Environment Variables Setup
 
 **Date:** January 28, 2025  
-**Projects:** 
+**Projects:**
+
 - `friday-ai-server` (Node.js)
 - `friday-ai-client` (React)
 
@@ -67,11 +68,13 @@ EOF
 Efter du har tilføjet variablerne:
 
 1. **Start serveren:**
+
    ```bash
    pnpm dev
    ```
 
 2. **Check logs** - du skal se:
+
    ```
    [Sentry] Error tracking initialized
    ```
@@ -118,4 +121,3 @@ VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 - **Server Project:** https://sentry.io/organizations/tekup-r5/projects/friday-ai-server/
 - **Client Project:** https://sentry.io/organizations/tekup-r5/projects/friday-ai-client/
 - **Organization:** https://sentry.io/organizations/tekup-r5/
-

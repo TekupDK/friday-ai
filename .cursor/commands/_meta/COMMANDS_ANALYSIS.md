@@ -10,6 +10,7 @@
 ### ✅ **WELL COVERED AREAS**
 
 #### **TODO Management (12 commands)**
+
 - ✅ `start-todos-from-list.md`
 - ✅ `start-working-on-todos.md`
 - ✅ `complete-todo-task.md`
@@ -28,6 +29,7 @@
 **Status:** ✅ Excellent coverage
 
 #### **Implementation Scenarios (12 commands)**
+
 - ✅ `implement-from-chat-summary.md`
 - ✅ `implement-scenario-backend-only.md`
 - ✅ `implement-scenario-frontend-only.md`
@@ -44,6 +46,7 @@
 **Status:** ✅ Excellent coverage
 
 #### **Testing (15 commands)**
+
 - ✅ `create-playwright-test.md`
 - ✅ `create-regression-test.md`
 - ✅ `generate-test-suite.md`
@@ -63,6 +66,7 @@
 **Status:** ✅ Excellent coverage
 
 #### **Code Review & Quality (10 commands)**
+
 - ✅ `senior-code-review.md`
 - ✅ `light-review.md`
 - ✅ `code-review.md`
@@ -77,6 +81,7 @@
 **Status:** ✅ Good coverage
 
 #### **Database & ORM (5 commands)**
+
 - ✅ `create-drizzle-migration.md`
 - ✅ `create-database-helper.md`
 - ✅ `migrate-database-schema.md`
@@ -86,6 +91,7 @@
 **Status:** ✅ Good coverage
 
 #### **tRPC & API (6 commands)**
+
 - ✅ `create-trpc-procedure.md`
 - ✅ `implement-trpc-router.md`
 - ✅ `create-api-route.md`
@@ -96,6 +102,7 @@
 **Status:** ✅ Good coverage
 
 #### **Frontend (6 commands)**
+
 - ✅ `create-react-component.md`
 - ✅ `create-react-page.md`
 - ✅ `create-shadcn-component.md`
@@ -110,10 +117,11 @@
 ### ⚠️ **AREAS NEEDING MORE COVERAGE**
 
 #### **AI & LLM Integration (3 commands - NEED MORE)**
+
 - ✅ `add-ai-tool-handler.md`
 - ✅ `review-ai-prompt.md`
 - ✅ `ai-architecture-explain.md`
-- ❌ **MISSING:** 
+- ❌ **MISSING:**
   - Test AI tool handlers
   - Debug AI responses
   - Optimize AI prompts for performance
@@ -125,6 +133,7 @@
 **Status:** ⚠️ Needs expansion (3/10)
 
 #### **Email System (1 command - NEED MORE)**
+
 - ✅ `create-email-workflow.md`
 - ❌ **MISSING:**
   - Debug Gmail rate limiting
@@ -138,6 +147,7 @@
 **Status:** ⚠️ Needs expansion (1/8)
 
 #### **CRM Module (0 commands - NEED MORE)**
+
 - ❌ **MISSING:**
   - Create CRM feature
   - Test CRM workflows
@@ -150,6 +160,7 @@
 **Status:** ⚠️ Missing (0/7)
 
 #### **ChromaDB / Vector DB (0 commands - NEED MORE)**
+
 - ❌ **MISSING:**
   - Setup ChromaDB collection
   - Query embeddings
@@ -161,6 +172,7 @@
 **Status:** ⚠️ Missing (0/6)
 
 #### **Billy.dk Integration (1 command - NEED MORE)**
+
 - ✅ `setup-billy-integration.md`
 - ❌ **MISSING:**
   - Debug Billy sync issues
@@ -172,6 +184,7 @@
 **Status:** ⚠️ Needs expansion (1/5)
 
 #### **Google Workspace (1 command - NEED MORE)**
+
 - ✅ `setup-google-integration.md`
 - ❌ **MISSING:**
   - Debug Gmail API issues
@@ -183,6 +196,7 @@
 **Status:** ⚠️ Needs expansion (1/6)
 
 #### **Real-time / WebSockets (0 commands - NEED MORE)**
+
 - ❌ **MISSING:**
   - Debug WebSocket connections
   - Test real-time updates
@@ -193,6 +207,7 @@
 **Status:** ⚠️ Missing (0/5)
 
 #### **Deployment & DevOps (2 commands - NEED MORE)**
+
 - ✅ `database-migration.md`
 - ✅ `auto-commit.md`
 - ❌ **MISSING:**
@@ -207,6 +222,7 @@
 **Status:** ⚠️ Needs expansion (2/8)
 
 #### **Performance Monitoring (1 command - NEED MORE)**
+
 - ✅ `optimize-performance.md`
 - ❌ **MISSING:**
   - Monitor API performance
@@ -219,6 +235,7 @@
 **Status:** ⚠️ Needs expansion (1/7)
 
 #### **Documentation (4 commands - NEED MORE)**
+
 - ✅ `add-documentation.md`
 - ✅ `generate-api-docs.md`
 - ✅ `convert-chat-to-docs.md`
@@ -295,6 +312,7 @@
 ## 📈 **OVERALL ASSESSMENT**
 
 ### **Strengths:**
+
 - ✅ Excellent TODO management coverage
 - ✅ Great implementation scenario coverage
 - ✅ Strong testing command suite
@@ -302,6 +320,7 @@
 - ✅ Solid database/tRPC/frontend basics
 
 ### **Weaknesses:**
+
 - ⚠️ Missing AI/LLM specific commands (core feature!)
 - ⚠️ Missing Email system commands (core feature!)
 - ⚠️ Missing CRM module commands (major feature!)
@@ -310,6 +329,7 @@
 - ⚠️ Limited monitoring/observability commands
 
 ### **Recommendation:**
+
 Focus on creating commands for your **core business features** (AI, Email, CRM) as these are what make your product unique. The generic commands are good, but domain-specific commands will be most valuable.
 
 ---
@@ -324,4 +344,3 @@ Focus on creating commands for your **core business features** (AI, Email, CRM) 
 6. Add monitoring commands (3-4 commands)
 
 **Total recommended:** ~25-30 new commands focused on your core features.
-

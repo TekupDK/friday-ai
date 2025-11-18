@@ -99,16 +99,19 @@ Abonnementsløsningen er en omfattende subscription management system til Rendet
 
 **Rationale:**  
 Koden er opdelt i 4 klare lag:
+
 - **Router Layer** (`subscription-router.ts`) - API endpoints og input validation
 - **Action Layer** (`subscription-actions.ts`) - Business logic og orchestration
 - **Helper Layer** (`subscription-helpers.ts`) - Calculations og analytics
 - **Database Layer** (`subscription-db.ts`) - Data access med RBAC
 
 **Alternativer overvejet:**
+
 - Monolithic router med alt logic (afvist - for svært at teste og vedligeholde)
 - Service layer pattern (overvejet - valgt actions i stedet for bedre navngivning)
 
 **Trade-offs:**
+
 - ✅ Bedre testbarhed og vedligeholdelse
 - ✅ Klar separation mellem concerns
 - ⚠️ Flere filer at navigere (men bedre organisation)
@@ -123,10 +126,12 @@ monthlyPrice: integer().notNull(), // Price in øre (e.g., 120000 = 1,200 kr)
 ```
 
 **Alternativer overvejet:**
+
 - Decimal/Numeric type (afvist - kan give rounding errors)
 - Float/Double (afvist - præcisionsproblemer)
 
 **Trade-offs:**
+
 - ✅ Præcis finansiel beregning
 - ✅ Ingen rounding errors
 - ⚠️ Konvertering nødvendig ved display (120000 / 100 = 1,200 kr)
@@ -145,10 +150,12 @@ createRecurringBookings(...).catch((error) => {
 ```
 
 **Alternativer overvejet:**
+
 - Synkron creation (afvist - langsomt, kan fejle)
 - Queue system (overvejet - for komplekst for MVP)
 
 **Trade-offs:**
+
 - ✅ Hurtigere subscription creation
 - ✅ Subscription oprettes selv hvis calendar fejler
 - ⚠️ Calendar events kan mangle hvis API fejler (men kan rettes manuelt)
@@ -167,10 +174,12 @@ index("idx_subscription_usage_subscription_month_year"), // Monthly usage
 ```
 
 **Alternativer overvejet:**
+
 - Minimal indexing (afvist - dårlig performance)
 - Over-indexing (overvejet - valgt balanced approach)
 
 **Trade-offs:**
+
 - ✅ Optimal query performance
 - ✅ Hurtigere billing jobs
 - ⚠️ Lidt langsommere writes (men minimal impact)
@@ -192,10 +201,12 @@ await addSubscriptionHistory({
 ```
 
 **Alternativer overvejet:**
+
 - Event sourcing (overvejet - for komplekst for MVP)
 - No audit trail (afvist - compliance krav)
 
 **Trade-offs:**
+
 - ✅ Fuld traceability
 - ✅ Compliance ready
 - ⚠️ Ekstra storage (men minimal)
@@ -289,6 +300,7 @@ export const subscriptionsInFridayAi = fridayAi.table("subscriptions", {
 ```
 
 **Design Notes:**
+
 - `userId` for multi-tenancy og RBAC
 - `metadata` JSONB for fleksibel extensibility
 - `endDate` nullable for ongoing subscriptions
@@ -322,6 +334,7 @@ export async function getSubscriptionByCustomerId(
 ```
 
 **Pattern:** User-scoped queries med RBAC
+
 - Alle queries inkluderer `userId` check
 - Returnerer `undefined` hvis ikke fundet (ikke `null`)
 - Sorteret efter `createdAt DESC` for seneste først
@@ -339,9 +352,7 @@ export const SUBSCRIPTION_PLANS = {
   // ... other plans
 } as const;
 
-export async function calculateMonthlyRevenue(
-  userId: number
-): Promise<number> {
+export async function calculateMonthlyRevenue(userId: number): Promise<number> {
   const activeSubscriptions = await getActiveSubscriptions(userId);
   return activeSubscriptions.reduce((total, sub) => {
     return total + Number(sub.monthlyPrice);
@@ -350,6 +361,7 @@ export async function calculateMonthlyRevenue(
 ```
 
 **Pattern:** Configuration as Code
+
 - Plans defineret som const object for type safety
 - Helper functions for alle calculations
 - Async functions for database operations
@@ -378,6 +390,7 @@ export async function createSubscription(
 ```
 
 **Pattern:** Transaction-like operations
+
 - Alle validations først
 - Database operation
 - History logging
@@ -391,7 +404,13 @@ export const subscriptionRouter = router({
     .input(
       z.object({
         customerProfileId: z.number().int().positive(),
-        planType: z.enum(["tier1", "tier2", "tier3", "flex_basis", "flex_plus"]),
+        planType: z.enum([
+          "tier1",
+          "tier2",
+          "tier3",
+          "flex_basis",
+          "flex_plus",
+        ]),
         startDate: z.string().optional(),
         autoRenew: z.boolean().default(true),
         metadata: z.record(z.string(), z.any()).optional(),
@@ -414,28 +433,29 @@ export const subscriptionRouter = router({
 ```
 
 **Pattern:** Thin Router Layer
+
 - Router håndterer kun input validation og authentication
 - Business logic i actions layer
 - Konsistent error handling via TRPCError
 
 #### tRPC Endpoints
 
-| Endpoint | Type | Description |
-|----------|------|-------------|
-| `create` | Mutation | Create new subscription |
-| `list` | Query | List subscriptions with filters |
-| `get` | Query | Get single subscription by ID |
-| `getByCustomer` | Query | Get subscription by customer ID |
-| `update` | Mutation | Update subscription (plan, status, etc.) |
-| `cancel` | Mutation | Cancel subscription |
-| `getUsage` | Query | Get usage statistics for month |
-| `getHistory` | Query | Get audit trail |
-| `stats` | Query | Get subscription statistics |
-| `getMRR` | Query | Calculate Monthly Recurring Revenue |
-| `getChurnRate` | Query | Calculate churn rate for period |
-| `getARPU` | Query | Calculate Average Revenue Per User |
-| `applyDiscount` | Mutation | Apply discount to subscription |
-| `renew` | Mutation | Manually trigger renewal (admin) |
+| Endpoint        | Type     | Description                              |
+| --------------- | -------- | ---------------------------------------- |
+| `create`        | Mutation | Create new subscription                  |
+| `list`          | Query    | List subscriptions with filters          |
+| `get`           | Query    | Get single subscription by ID            |
+| `getByCustomer` | Query    | Get subscription by customer ID          |
+| `update`        | Mutation | Update subscription (plan, status, etc.) |
+| `cancel`        | Mutation | Cancel subscription                      |
+| `getUsage`      | Query    | Get usage statistics for month           |
+| `getHistory`    | Query    | Get audit trail                          |
+| `stats`         | Query    | Get subscription statistics              |
+| `getMRR`        | Query    | Calculate Monthly Recurring Revenue      |
+| `getChurnRate`  | Query    | Calculate churn rate for period          |
+| `getARPU`       | Query    | Calculate Average Revenue Per User       |
+| `applyDiscount` | Mutation | Apply discount to subscription           |
+| `renew`         | Mutation | Manually trigger renewal (admin)         |
 
 ### Frontend Implementation
 
@@ -461,6 +481,7 @@ export function SubscriptionsPage() {
 ```
 
 **State Management:**
+
 - tRPC hooks for data fetching
 - React Query for caching og invalidation
 - Local state for UI interactions
@@ -476,6 +497,7 @@ export function SubscriptionsPage() {
 **Purpose:** Automatisk månedlig fakturering
 
 **Implementation:**
+
 ```typescript
 // server/subscription-actions.ts
 const invoice = await createInvoice({
@@ -494,11 +516,13 @@ const invoice = await createInvoice({
 ```
 
 **Error Handling:**
+
 - Returns `{ success: boolean, error?: string }` pattern
 - Logs errors but doesn't throw (for background jobs)
 - Invoice ID stored in history for tracking
 
 **Dependencies:**
+
 - `server/billy.ts` - Billy.dk API client
 - Requires `billyCustomerId` or `billyOrganizationId` on customer profile
 
@@ -507,6 +531,7 @@ const invoice = await createInvoice({
 **Purpose:** Automatisk oprettelse af recurring bookings
 
 **Implementation:**
+
 ```typescript
 // server/subscription-actions.ts
 async function createRecurringBookings(
@@ -526,11 +551,13 @@ async function createRecurringBookings(
 ```
 
 **Error Handling:**
+
 - Async execution (doesn't block subscription creation)
 - Errors logged but don't fail subscription
 - Can be retried manually if needed
 
 **Dependencies:**
+
 - `server/google-api.ts` - Google Calendar API client
 - Requires Google OAuth authentication
 
@@ -541,6 +568,7 @@ async function createRecurringBookings(
 **Integration:** Subscriptions linked via `customerProfileId`
 
 **Validation:**
+
 ```typescript
 // Check customer exists and belongs to user
 const [customer] = await db
@@ -560,17 +588,18 @@ const [customer] = await db
 **Integration:** Usage tracking linked via `bookingId` in `subscription_usage`
 
 **Future Enhancement:**
+
 - Auto-create bookings from subscription calendar events
 - Link bookings to subscription for usage tracking
 
 ### Dependencies
 
-| Dependency | Version | Purpose |
-|------------|---------|---------|
-| `@trpc/server` | ^11.0.0 | tRPC framework |
-| `drizzle-orm` | Latest | ORM for database |
-| `zod` | Latest | Input validation |
-| `postgres` | Latest | PostgreSQL driver |
+| Dependency     | Version | Purpose           |
+| -------------- | ------- | ----------------- |
+| `@trpc/server` | ^11.0.0 | tRPC framework    |
+| `drizzle-orm`  | Latest  | ORM for database  |
+| `zod`          | Latest  | Input validation  |
+| `postgres`     | Latest  | PostgreSQL driver |
 
 ---
 
@@ -766,7 +795,12 @@ export async function checkOverage(
   year: number,
   month: number,
   userId: number
-): Promise<{ hasOverage: boolean; hoursUsed: number; includedHours: number; overageHours: number }> {
+): Promise<{
+  hasOverage: boolean;
+  hoursUsed: number;
+  includedHours: number;
+  overageHours: number;
+}> {
   // Get subscription
   const subscription = await getSubscriptionById(subscriptionId, userId);
   const includedHours = Number(subscription.includedHours);
@@ -811,7 +845,8 @@ export async function processRenewal(
   }
 
   const customer = await getCustomer(subscription.customerProfileId);
-  const billyContactId = customer.billyCustomerId || customer.billyOrganizationId;
+  const billyContactId =
+    customer.billyCustomerId || customer.billyOrganizationId;
   if (!billyContactId) {
     return { success: false, error: "Customer has no Billy contact ID" };
   }
@@ -876,7 +911,7 @@ describe("createSubscription", () => {
   it("should create subscription with all required fields", async () => {
     // Test implementation
   });
-  
+
   it("should reject if customer already has active subscription", async () => {
     // Test implementation
   });
@@ -938,6 +973,7 @@ describe("Subscription E2E Flow", () => {
 **Status:** ⏳ Ikke implementeret endnu
 
 **Anbefalinger:**
+
 - Cache subscription stats (MRR, ARPU) for 5 minutes
 - Cache plan configurations (static data)
 - Invalidate cache on subscription changes
@@ -947,6 +983,7 @@ describe("Subscription E2E Flow", () => {
 **Status:** ⏳ Ikke implementeret endnu
 
 **Anbefalinger:**
+
 - Monthly billing job: Run 1st of month at 00:00
 - Batch processing for multiple subscriptions
 - Retry logic for failed renewals
@@ -1009,6 +1046,7 @@ Implementer cron jobs for månedlig billing og renewal reminders.
 **Estimated:** 8-12 hours
 
 **Implementation:**
+
 ```typescript
 // server/jobs/subscription-billing.ts
 export async function processMonthlyBilling() {
@@ -1029,6 +1067,7 @@ Integrer med bookings system for automatisk usage tracking.
 **Estimated:** 6-8 hours
 
 **Implementation:**
+
 ```typescript
 // When booking completed
 await createSubscriptionUsage({
@@ -1049,6 +1088,7 @@ Implementer email templates for welcome, invoice, renewal, cancellation.
 **Estimated:** 4-6 hours
 
 **Templates needed:**
+
 - Welcome email (subscription created)
 - Invoice email (monthly billing)
 - Renewal reminder (7 days, 1 day before)
@@ -1062,6 +1102,7 @@ Opret React components for subscription management.
 **Estimated:** 16-24 hours
 
 **Components:**
+
 - Subscription plan selector
 - Subscription dashboard
 - Usage tracking display
@@ -1076,6 +1117,7 @@ Implementer unit, integration, og E2E tests.
 **Estimated:** 12-16 hours
 
 **Coverage:**
+
 - Unit tests for helpers og actions
 - Integration tests for router
 - E2E tests for full flow
@@ -1090,11 +1132,16 @@ Implementer caching for stats og plan configurations.
 **Expected impact:** 50-70% reduction in database queries for stats
 
 **Implementation:**
+
 ```typescript
 // Cache MRR, ARPU for 5 minutes
-const cachedStats = await getCachedQuery("subscription-stats", async () => {
-  return await getSubscriptionStats(userId);
-}, { ttl: 300 });
+const cachedStats = await getCachedQuery(
+  "subscription-stats",
+  async () => {
+    return await getSubscriptionStats(userId);
+  },
+  { ttl: 300 }
+);
 ```
 
 #### 2. **Batch Processing** (Priority: LOW)
@@ -1105,6 +1152,7 @@ Optimize renewal processing med batch operations.
 **Expected impact:** 30-40% faster renewal processing
 
 **Implementation:**
+
 ```typescript
 // Process renewals in batches of 10
 const batches = chunk(subscriptions, 10);
@@ -1130,6 +1178,7 @@ Opret separate service for calendar operations.
 **Benefit:** Bedre separation of concerns, easier testing
 
 **Implementation:**
+
 ```typescript
 // server/services/calendar-service.ts
 export class CalendarService {
@@ -1147,6 +1196,7 @@ Opret separate service for billing operations.
 **Benefit:** Bedre organization, easier to test
 
 **Implementation:**
+
 ```typescript
 // server/services/billing-service.ts
 export class BillingService {
@@ -1186,6 +1236,7 @@ export class BillingService {
 Abonnementsløsningen er implementeret med solid arkitektur, klare separation of concerns, og comprehensive features. Backend core er komplet og klar til frontend integration. Systemet følger best practices for security, performance, og maintainability.
 
 **Key Strengths:**
+
 - ✅ Clean architecture med separation of concerns
 - ✅ Comprehensive database schema med performance indexes
 - ✅ Type-safe implementation med TypeScript
@@ -1193,6 +1244,7 @@ Abonnementsløsningen er implementeret med solid arkitektur, klare separation of
 - ✅ Integration ready (Billy.dk, Google Calendar)
 
 **Areas for Improvement:**
+
 - ⏳ Frontend implementation
 - ⏳ Background jobs for automation
 - ⏳ Testing suite
@@ -1205,5 +1257,3 @@ Abonnementsløsningen er implementeret med solid arkitektur, klare separation of
 
 **Last Updated:** 2025-01-28  
 **Maintained by:** TekupDK Development Team
-
-

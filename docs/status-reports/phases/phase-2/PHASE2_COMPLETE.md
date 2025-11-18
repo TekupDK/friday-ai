@@ -11,7 +11,7 @@
 
 ### Thread Conversations (Shortwave-style)
 
-```text
+````text
 BEFORE Phase 2:
 100 emails = 100 items in list (cluttered!)
 
@@ -403,7 +403,7 @@ User satisfaction: Expected to be HIGH! 📈
 ✅ 70% fewer items
 ✅ Shortwave-level professional
 
-```
+````
 
 **Result: MASSIVE UX IMPROVEMENT! 🚀**
 

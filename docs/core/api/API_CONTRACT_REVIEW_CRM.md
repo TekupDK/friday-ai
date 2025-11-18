@@ -40,7 +40,9 @@ crm
 ### 2.1 Customer Router (`crm.customer.*`)
 
 #### `listProfiles`
+
 **Request:**
+
 ```typescript
 {
   search?: string;
@@ -51,6 +53,7 @@ crm
 ```
 
 **Response:**
+
 ```typescript
 Array<{
   id: number;
@@ -61,10 +64,11 @@ Array<{
   status: string;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 **Validation:**
+
 - ✅ `limit` min: 1, max: 100
 - ✅ `offset` min: 0
 - ✅ `search` optional string
@@ -76,7 +80,9 @@ Array<{
 ---
 
 #### `getProfile`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -84,6 +90,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -98,6 +105,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 
 **Breaking Changes:** None  
@@ -106,7 +114,9 @@ Array<{
 ---
 
 #### `listProperties`
+
 **Request:**
+
 ```typescript
 {
   customerProfileId: number;
@@ -114,6 +124,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 Array<{
   id: number;
@@ -122,10 +133,11 @@ Array<{
   value: string;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 **Validation:**
+
 - ✅ `customerProfileId` required number
 
 **Breaking Changes:** None  
@@ -134,7 +146,9 @@ Array<{
 ---
 
 #### `createProperty`
+
 **Request:**
+
 ```typescript
 {
   customerProfileId: number;
@@ -144,6 +158,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -156,6 +171,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `key` min: 1, max: 255
 - ✅ `value` min: 1, max: 1000
 - ✅ `customerProfileId` required number
@@ -166,7 +182,9 @@ Array<{
 ---
 
 #### `updateProperty`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -176,6 +194,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -188,6 +207,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 - ✅ `key` optional, min: 1, max: 255
 - ✅ `value` optional, min: 1, max: 1000
@@ -198,7 +218,9 @@ Array<{
 ---
 
 #### `deleteProperty`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -206,6 +228,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   success: boolean;
@@ -213,6 +236,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 
 **Breaking Changes:** None  
@@ -221,7 +245,9 @@ Array<{
 ---
 
 #### `addNote`
+
 **Request:**
+
 ```typescript
 {
   customerProfileId: number;
@@ -230,6 +256,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -241,6 +268,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `content` min: 1, max: 5000
 - ✅ `customerProfileId` required number
 
@@ -250,7 +278,9 @@ Array<{
 ---
 
 #### `listNotes`
+
 **Request:**
+
 ```typescript
 {
   customerProfileId: number;
@@ -260,6 +290,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 Array<{
   id: number;
@@ -267,10 +298,11 @@ Array<{
   content: string;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 **Validation:**
+
 - ✅ `customerProfileId` required number
 - ✅ `limit` optional, min: 1, max: 100
 - ✅ `offset` optional, min: 0
@@ -281,7 +313,9 @@ Array<{
 ---
 
 #### `updateNote`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -290,6 +324,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -301,6 +336,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 - ✅ `content` min: 1, max: 5000
 
@@ -310,7 +346,9 @@ Array<{
 ---
 
 #### `deleteNote`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -318,6 +356,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   success: boolean;
@@ -325,6 +364,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 
 **Breaking Changes:** None  
@@ -335,7 +375,9 @@ Array<{
 ### 2.2 Lead Router (`crm.lead.*`)
 
 #### `listLeads`
+
 **Request:**
+
 ```typescript
 {
   status?: "new" | "contacted" | "qualified" | "proposal" | "won" | "lost";
@@ -345,6 +387,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 Array<{
   id: number;
@@ -357,10 +400,11 @@ Array<{
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 **Validation:**
+
 - ✅ `status` optional enum (6 values)
 - ✅ `limit` min: 1, max: 100
 - ✅ `offset` min: 0
@@ -371,7 +415,9 @@ Array<{
 ---
 
 #### `getLead`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -379,6 +425,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -395,6 +442,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 
 **Breaking Changes:** None  
@@ -403,7 +451,9 @@ Array<{
 ---
 
 #### `updateLeadStatus`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -412,6 +462,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -428,6 +479,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 - ✅ `status` required enum (6 values)
 
@@ -437,7 +489,9 @@ Array<{
 ---
 
 #### `convertLeadToCustomer`
+
 **Request:**
+
 ```typescript
 {
   leadId: number;
@@ -448,6 +502,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   customer: {
@@ -459,16 +514,17 @@ Array<{
     status: string;
     createdAt: Date;
     updatedAt: Date;
-  };
+  }
   lead: {
     id: number;
     status: "won";
     // ... other lead fields
-  };
+  }
 }
 ```
 
 **Validation:**
+
 - ✅ `leadId` required number
 - ✅ `name` optional string
 - ✅ `email` optional string (email format)
@@ -482,7 +538,9 @@ Array<{
 ### 2.3 Booking Router (`crm.booking.*`)
 
 #### `listBookings`
+
 **Request:**
+
 ```typescript
 {
   customerProfileId?: number;
@@ -495,6 +553,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 Array<{
   id: number;
@@ -507,10 +566,11 @@ Array<{
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 **Validation:**
+
 - ✅ `customerProfileId` optional number
 - ✅ `status` optional string
 - ✅ `startDate` optional ISO datetime string
@@ -524,7 +584,9 @@ Array<{
 ---
 
 #### `createBooking`
+
 **Request:**
+
 ```typescript
 {
   customerProfileId: number;
@@ -537,6 +599,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -553,6 +616,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `customerProfileId` required number
 - ✅ `scheduledStart` required ISO datetime
 - ✅ `scheduledEnd` required ISO datetime
@@ -566,7 +630,9 @@ Array<{
 ---
 
 #### `updateBookingStatus`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -575,6 +641,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   id: number;
@@ -591,6 +658,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 - ✅ `status` required string
 
@@ -600,7 +668,9 @@ Array<{
 ---
 
 #### `deleteBooking`
+
 **Request:**
+
 ```typescript
 {
   id: number;
@@ -608,6 +678,7 @@ Array<{
 ```
 
 **Response:**
+
 ```typescript
 {
   success: boolean;
@@ -615,6 +686,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ `id` required number
 
 **Breaking Changes:** None  
@@ -625,6 +697,7 @@ Array<{
 ### 2.4 Extensions Router (`crm.extensions.*`) - Phase 2-6
 
 #### Opportunities (6 endpoints)
+
 - `createOpportunity`
 - `listOpportunities`
 - `getOpportunity`
@@ -633,6 +706,7 @@ Array<{
 - `getPipelineStats`
 
 **Request/Response Patterns:**
+
 - Consistent with other routers
 - Proper Zod validation
 - Type-safe responses
@@ -643,6 +717,7 @@ Array<{
 ---
 
 #### Segments (5 endpoints)
+
 - `createSegment`
 - `listSegments`
 - `getSegment`
@@ -650,6 +725,7 @@ Array<{
 - `removeFromSegment`
 
 **Request/Response Patterns:**
+
 - Consistent validation
 - Type-safe
 
@@ -659,11 +735,13 @@ Array<{
 ---
 
 #### Documents (3 endpoints)
+
 - `createDocument`
 - `listDocuments`
 - `deleteDocument`
 
 **Request/Response Patterns:**
+
 - File upload support
 - Tag-based filtering
 
@@ -673,10 +751,12 @@ Array<{
 ---
 
 #### Audit Log (2 endpoints)
+
 - `logAudit`
 - `getAuditLog`
 
 **Request/Response Patterns:**
+
 - GDPR-compliant
 - Entity-based filtering
 
@@ -686,11 +766,13 @@ Array<{
 ---
 
 #### Relationships (3 endpoints)
+
 - `createRelationship`
 - `getRelationships`
 - `deleteRelationship`
 
 **Request/Response Patterns:**
+
 - Customer relationship mapping
 - Type-safe
 
@@ -704,6 +786,7 @@ Array<{
 ### 3.1 Input Validation
 
 **All endpoints use Zod schemas:**
+
 - ✅ Required fields validated
 - ✅ Optional fields properly marked
 - ✅ Type validation (string, number, enum)
@@ -714,6 +797,7 @@ Array<{
 ### 3.2 Error Responses
 
 **Standard tRPC Error Codes:**
+
 - `BAD_REQUEST` (400) - Invalid input
 - `UNAUTHORIZED` (401) - Not authenticated
 - `FORBIDDEN` (403) - Not authorized
@@ -721,6 +805,7 @@ Array<{
 - `INTERNAL_SERVER_ERROR` (500) - Server error
 
 **Error Response Shape:**
+
 ```typescript
 {
   message: string;
@@ -735,6 +820,7 @@ Array<{
 ```
 
 **Validation:**
+
 - ✅ Consistent error format
 - ✅ Descriptive error messages
 - ✅ Proper HTTP status codes
@@ -747,6 +833,7 @@ Array<{
 ### ✅ No Breaking Changes Detected
 
 **Analysis:**
+
 1. All existing endpoints maintain same request/response shapes
 2. New endpoints (extensions) are additive only
 3. Optional fields remain optional
@@ -757,6 +844,7 @@ Array<{
 ### Non-Breaking Changes
 
 **Additive Changes (Safe):**
+
 - ✅ New endpoints in `crm.extensions.*` (20 endpoints)
 - ✅ New optional query parameters (none added)
 - ✅ New response fields (none added)
@@ -768,12 +856,14 @@ Array<{
 ### ✅ No Required Updates
 
 **Current Client Implementation:**
+
 - ✅ Uses correct endpoint paths
 - ✅ Sends correct request shapes
 - ✅ Handles response types correctly
 - ✅ Error handling implemented
 
 **Optional Improvements:**
+
 - Consider using new `crm.extensions.*` endpoints for Phase 2-6 features
 - Add caching for frequently accessed data
 - Implement optimistic updates where appropriate
@@ -785,6 +875,7 @@ Array<{
 ### ✅ 100% Type Safe
 
 **Type Safety Features:**
+
 - ✅ All endpoints use TypeScript types
 - ✅ Zod schemas provide runtime validation
 - ✅ tRPC provides end-to-end type safety
@@ -792,6 +883,7 @@ Array<{
 - ✅ No `any` types in API contracts
 
 **Type Coverage:**
+
 - ✅ Request types: 100%
 - ✅ Response types: 100%
 - ✅ Error types: 100%
@@ -804,12 +896,14 @@ Array<{
 ### ✅ Documentation Complete
 
 **Available Documentation:**
+
 - ✅ `docs/documentation/HANDOFF_TO_KIRO.md` - API reference
 - ✅ `docs/STATUSRAPPORT_CRM_2025-01-28.md` - Status report
 - ✅ `docs/CRM_ROUTES_IMPLEMENTATION.md` - Implementation guide
 - ✅ Inline JSDoc comments in router files
 
 **Documentation Quality:**
+
 - ✅ Endpoint descriptions
 - ✅ Request/response examples
 - ✅ Error handling guidance
@@ -822,6 +916,7 @@ Array<{
 ### ✅ High Stability
 
 **Stability Indicators:**
+
 - ✅ Consistent naming conventions
 - ✅ Consistent request/response patterns
 - ✅ Consistent error handling
@@ -830,6 +925,7 @@ Array<{
 - ✅ No breaking changes planned
 
 **Versioning:**
+
 - ✅ No versioning needed (tRPC provides type safety)
 - ✅ Backward compatible changes only
 - ✅ Additive changes only
@@ -841,6 +937,7 @@ Array<{
 ### ✅ Secure
 
 **Security Features:**
+
 - ✅ All endpoints use `protectedProcedure` (authentication required)
 - ✅ User ID validation (users can only access their own data)
 - ✅ Input sanitization via Zod
@@ -849,6 +946,7 @@ Array<{
 - ✅ Rate limiting (handled at infrastructure level)
 
 **Security Concerns:**
+
 - ⚠️ None identified
 
 ---
@@ -858,12 +956,14 @@ Array<{
 ### ✅ Optimized
 
 **Performance Features:**
+
 - ✅ Pagination support (limit/offset)
 - ✅ Efficient queries (indexed fields)
 - ✅ Proper database indexes
 - ✅ Query optimization (Drizzle ORM)
 
 **Performance Concerns:**
+
 - ⚠️ Large limit values (100) may impact performance
 - 💡 Recommendation: Add pagination UI in frontend
 
@@ -872,14 +972,17 @@ Array<{
 ## 11. Recommendations
 
 ### Immediate (None Required)
+
 - ✅ All API contracts are safe and well-defined
 
 ### Short-term (Optional)
+
 1. **Add API versioning documentation** (if needed in future)
 2. **Add rate limiting documentation**
 3. **Add pagination best practices**
 
 ### Long-term (Future)
+
 1. **Consider GraphQL** (if query complexity grows)
 2. **Add API analytics** (track endpoint usage)
 3. **Add API deprecation policy**
@@ -891,6 +994,7 @@ Array<{
 ### API Contract Health: ✅ EXCELLENT
 
 **Strengths:**
+
 - ✅ 100% type-safe
 - ✅ Comprehensive validation
 - ✅ Consistent patterns
@@ -899,6 +1003,7 @@ Array<{
 - ✅ No breaking changes
 
 **Weaknesses:**
+
 - ⚠️ None identified
 
 **Overall Assessment:**
@@ -917,4 +1022,3 @@ The CRM API contracts are well-designed, type-safe, and production-ready. No bre
 ---
 
 **Review Complete** ✅
-

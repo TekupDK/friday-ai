@@ -44,7 +44,7 @@ Fix all useEffect dependency issues to:
 
 **Current Code:**
 
-```typescript
+````typescript
 const [isInitialized, setIsInitialized] = useState(false);
 
 useEffect(() => {
@@ -300,7 +300,7 @@ initOnce();
 }, []); // Intentionally run once
 \`\`\`
 
-```
+````
 
 ---
 

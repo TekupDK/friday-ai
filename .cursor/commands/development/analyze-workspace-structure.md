@@ -31,6 +31,7 @@ Analyze workspace structure and provide actionable insights for organization and
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `list_dir` - Explore directory structure
 - `glob_file_search` - Find files by pattern
 - `read_file` - Read key files (package.json, configs)
@@ -39,6 +40,7 @@ Analyze workspace structure and provide actionable insights for organization and
 - `run_terminal_cmd` - Run analysis commands
 
 **DO NOT:**
+
 - Skip comprehensive analysis
 - Miss important directories
 - Ignore file organization issues
@@ -71,6 +73,7 @@ Before analyzing, think through:
 ## ANALYSIS AREAS
 
 ### 1. Repository Structure
+
 - Root directory organization
 - Monorepo structure (if applicable)
 - Package/workspace boundaries
@@ -78,6 +81,7 @@ Before analyzing, think through:
 - Script organization
 
 ### 2. Directory Organization
+
 - Frontend structure (`client/`)
 - Backend structure (`server/`)
 - Shared code (`shared/`)
@@ -86,6 +90,7 @@ Before analyzing, think through:
 - Script locations
 
 ### 3. File Organization
+
 - File naming conventions
 - File size distribution
 - Large files (>500 lines)
@@ -93,6 +98,7 @@ Before analyzing, think through:
 - Duplicate patterns
 
 ### 4. Code Distribution
+
 - TypeScript vs JavaScript ratio
 - Component organization
 - Router/module structure
@@ -100,6 +106,7 @@ Before analyzing, think through:
 - Integration patterns
 
 ### 5. Documentation Structure
+
 - Documentation organization
 - README files
 - API documentation
@@ -109,6 +116,7 @@ Before analyzing, think through:
 ## CODEBASE PATTERNS (Friday AI Chat)
 
 ### Expected Structure
+
 ```text
 tekup-ai-v2/
 ├── client/              # React 19 frontend
@@ -133,6 +141,7 @@ tekup-ai-v2/
 ```
 
 ### Key Patterns
+
 - **Monorepo:** Client, server, shared in same repo
 - **TypeScript-first:** 87%+ TypeScript coverage
 - **Feature-based:** Components organized by feature
@@ -186,6 +195,7 @@ tekup-ai-v2/
 ## VERIFICATION
 
 After analysis:
+
 - ✅ Complete structure mapped
 - ✅ Issues identified
 - ✅ Recommendations provided
@@ -205,29 +215,35 @@ After analysis:
 \`\`\`
 
 **File Distribution:**
+
 - TypeScript: [count] files
 - JavaScript: [count] files
 - Markdown: [count] files
 - Config: [count] files
 
 **Code Organization:**
+
 - Frontend: [structure summary]
 - Backend: [structure summary]
 - Shared: [structure summary]
 
 **Issues Identified:**
+
 1. [Issue] - [Impact] - [Recommendation]
 2. [Issue] - [Impact] - [Recommendation]
 
 **Strengths:**
+
 - [Strength 1]
 - [Strength 2]
 
 **Recommendations:**
+
 1. [Recommendation] - [Priority: P1/P2/P3]
 2. [Recommendation] - [Priority: P1/P2/P3]
 
 **Action Items:**
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 ```
@@ -239,4 +255,3 @@ After analysis:
 - **Be actionable:** Give clear recommendations
 - **Prioritize:** Mark issues by severity
 - **Reference patterns:** Use Friday AI Chat patterns
-

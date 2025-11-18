@@ -12,6 +12,7 @@ Lav et ultra-kort summary over hele chatten (maks 8 linjer).
 ## TASK
 
 Lav ultra-kort summary (maks 8 linjer):
+
 - Hvad blev diskuteret?
 - Hvad blev besluttet?
 - Hvad blev implementeret?

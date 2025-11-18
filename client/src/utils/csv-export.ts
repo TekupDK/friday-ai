@@ -1,6 +1,6 @@
 /**
  * CSV Export Utilities
- * 
+ *
  * Reusable functions for exporting data to CSV format
  */
 
@@ -26,20 +26,15 @@ export function arrayToCSV<T extends Record<string, unknown>>(
   getRow: (item: T) => unknown[]
 ): string {
   const headerRow = headers.map(csvEscape).join(",");
-  const dataRows = data.map(item => 
-    getRow(item).map(csvEscape).join(",")
-  );
-  
+  const dataRows = data.map(item => getRow(item).map(csvEscape).join(","));
+
   return [headerRow, ...dataRows].join("\n");
 }
 
 /**
  * Download CSV file
  */
-export function downloadCSV(
-  csvContent: string,
-  filename: string
-): void {
+export function downloadCSV(csvContent: string, filename: string): void {
   const blob = new Blob([csvContent], {
     type: "text/csv;charset=utf-8;",
   });
@@ -86,7 +81,7 @@ export function exportCustomersToCSV(
     "Updated At",
   ];
 
-  const csvContent = arrayToCSV(customers, headers, (customer) => [
+  const csvContent = arrayToCSV(customers, headers, customer => [
     customer.id,
     customer.name || "",
     customer.email || "",
@@ -138,7 +133,7 @@ export function exportLeadsToCSV(
     "Updated At",
   ];
 
-  const csvContent = arrayToCSV(leads, headers, (lead) => [
+  const csvContent = arrayToCSV(leads, headers, lead => [
     lead.id,
     lead.name || "",
     lead.email || "",
@@ -147,12 +142,8 @@ export function exportLeadsToCSV(
     lead.source || "",
     lead.status || "",
     lead.notes || "",
-    lead.createdAt
-      ? new Date(lead.createdAt).toLocaleDateString("da-DK")
-      : "",
-    lead.updatedAt
-      ? new Date(lead.updatedAt).toLocaleDateString("da-DK")
-      : "",
+    lead.createdAt ? new Date(lead.createdAt).toLocaleDateString("da-DK") : "",
+    lead.updatedAt ? new Date(lead.updatedAt).toLocaleDateString("da-DK") : "",
   ]);
 
   const filename = `leads-export-${new Date().toISOString().split("T")[0]}.csv`;
@@ -189,7 +180,7 @@ export function exportOpportunitiesToCSV(
     "Updated At",
   ];
 
-  const csvContent = arrayToCSV(opportunities, headers, (opp) => [
+  const csvContent = arrayToCSV(opportunities, headers, opp => [
     opp.id,
     opp.title || "",
     opp.customerName || "",
@@ -200,15 +191,10 @@ export function exportOpportunitiesToCSV(
       ? new Date(opp.expectedCloseDate).toLocaleDateString("da-DK")
       : "",
     opp.description || "",
-    opp.createdAt
-      ? new Date(opp.createdAt).toLocaleDateString("da-DK")
-      : "",
-    opp.updatedAt
-      ? new Date(opp.updatedAt).toLocaleDateString("da-DK")
-      : "",
+    opp.createdAt ? new Date(opp.createdAt).toLocaleDateString("da-DK") : "",
+    opp.updatedAt ? new Date(opp.updatedAt).toLocaleDateString("da-DK") : "",
   ]);
 
   const filename = `opportunities-export-${new Date().toISOString().split("T")[0]}.csv`;
   downloadCSV(csvContent, filename);
 }
-

@@ -8,32 +8,32 @@ Implement UI changes, components, and pages without modifying backend code.
 
 ## STEPS
 
-1) Understand the frontend requirements:
+1. Understand the frontend requirements:
    - Components to create/modify
    - Pages to add/update
    - UI/UX changes needed
    - State management required
 
-2) Use existing APIs:
+2. Use existing APIs:
    - Check available tRPC procedures
    - Use existing data fetching hooks
    - Work with current data structures
    - Don't request new backend endpoints
 
-3) Create/modify components:
+3. Create/modify components:
    - Follow React 19 patterns
    - Use TypeScript strictly
    - Use Tailwind CSS 4 for styling
    - Use shadcn/ui components
    - Handle loading/error/empty states
 
-4) Update pages/routes:
+4. Update pages/routes:
    - Add routes if new pages
    - Update existing pages
    - Wire components together
    - Handle navigation
 
-5) Testing:
+5. Testing:
    - Run typecheck
    - Test component rendering
    - Add Playwright tests if needed
@@ -42,9 +42,9 @@ Implement UI changes, components, and pages without modifying backend code.
 ## OUTPUT
 
 Provide:
+
 - Components created/modified
 - Pages updated
 - Routes added/changed
 - UI changes summary
 - No backend changes made
-

@@ -1,6 +1,6 @@
 /**
  * UTCP Manifest - Tool Definitions
- * 
+ *
  * Follows UTCP specification for tool definitions
  * Phase 1 Prototype: 3 tools (search_gmail, list_leads, create_lead)
  */
@@ -9,22 +9,24 @@ import type { UTCPTool } from "./types";
 
 /**
  * UTCP Tool Manifest
- * 
+ *
  * Defines all available tools with their schemas and handlers
  * Phase 1: Prototype with 3 tools for validation
  */
 export const UTCP_MANIFEST: Record<string, UTCPTool> = {
   // ============= Gmail Tools =============
-  
+
   search_gmail: {
     name: "search_gmail",
-    description: "Søg i Gmail efter emails baseret på søgekriterier. Brug dette til at finde leads, kunde emails, eller tidligere kommunikation.",
+    description:
+      "Søg i Gmail efter emails baseret på søgekriterier. Brug dette til at finde leads, kunde emails, eller tidligere kommunikation.",
     inputSchema: {
       type: "object",
       properties: {
         query: {
           type: "string",
-          description: "Gmail søgequery. VIGTIG: after: operatoren betyder 'efter denne dato ER SLUT', så after:YYYY-MM-DD viser kun emails fra næste dag.",
+          description:
+            "Gmail søgequery. VIGTIG: after: operatoren betyder 'efter denne dato ER SLUT', så after:YYYY-MM-DD viser kun emails fra næste dag.",
           minLength: 1,
           maxLength: 500,
         },
@@ -63,7 +65,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   list_leads: {
     name: "list_leads",
-    description: "Hent liste over leads. Brug dette til at se nye leads eller søge efter specifikke leads.",
+    description:
+      "Hent liste over leads. Brug dette til at se nye leads eller søge efter specifikke leads.",
     inputSchema: {
       type: "object",
       properties: {
@@ -74,7 +77,13 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
         },
         source: {
           type: "string",
-          enum: ["rengoring_nu", "rengoring_aarhus", "adhelp", "website", "referral"],
+          enum: [
+            "rengoring_nu",
+            "rengoring_aarhus",
+            "adhelp",
+            "website",
+            "referral",
+          ],
           description: "Filter på kilde",
         },
       },
@@ -97,13 +106,20 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   create_lead: {
     name: "create_lead",
-    description: "Opret nyt lead fra email eller anden kilde. Brug dette når du finder et nyt lead i Gmail.",
+    description:
+      "Opret nyt lead fra email eller anden kilde. Brug dette når du finder et nyt lead i Gmail.",
     inputSchema: {
       type: "object",
       properties: {
         source: {
           type: "string",
-          enum: ["rengoring_nu", "rengoring_aarhus", "adhelp", "website", "referral"],
+          enum: [
+            "rengoring_nu",
+            "rengoring_aarhus",
+            "adhelp",
+            "website",
+            "referral",
+          ],
           description: "Lead kilde",
         },
         name: {
@@ -175,4 +191,3 @@ export function getAllUTCPTools(): UTCPTool[] {
 export function hasUTCPTool(toolName: string): boolean {
   return toolName in UTCP_MANIFEST;
 }
-

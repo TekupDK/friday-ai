@@ -1,14 +1,14 @@
 /**
  * Pricing Constants
- * 
+ *
  * Centralized pricing configuration for reports and calculations.
- * 
+ *
  * @module constants/pricing
- * 
+ *
  * @example
  * ```typescript
  * import { PRICING, calculateProfit } from "@/constants/pricing";
- * 
+ *
  * const revenue = calculateProfit(4); // 4 billable hours
  * console.log(revenue); // 1036 DKK
  * ```
@@ -17,17 +17,17 @@
 export const PRICING = {
   /** Hourly rate charged to customers (faktureret) */
   HOURLY_RATE: 349, // DKK per hour
-  
+
   /** Labor cost per hour (løn) */
   LABOR_COST: 90, // DKK per hour per person
 } as const;
 
 /**
  * Calculate revenue from billable hours
- * 
+ *
  * @param billableHours - Total billable hours
  * @returns Revenue in DKK (billableHours × HOURLY_RATE)
- * 
+ *
  * @example
  * ```typescript
  * const revenue = calculateRevenue(4); // 4 hours
@@ -40,10 +40,10 @@ export function calculateRevenue(billableHours: number): number {
 
 /**
  * Calculate labor cost from billable hours
- * 
+ *
  * @param billableHours - Total billable hours
  * @returns Labor cost in DKK (billableHours × LABOR_COST)
- * 
+ *
  * @example
  * ```typescript
  * const cost = calculateLaborCost(4); // 4 hours
@@ -56,10 +56,10 @@ export function calculateLaborCost(billableHours: number): number {
 
 /**
  * Calculate profit (revenue - labor cost)
- * 
+ *
  * @param billableHours - Total billable hours
  * @returns Profit in DKK (revenue - labor cost)
- * 
+ *
  * @example
  * ```typescript
  * const profit = calculateProfit(4); // 4 hours
@@ -72,10 +72,10 @@ export function calculateProfit(billableHours: number): number {
 
 /**
  * Calculate profit margin percentage
- * 
+ *
  * @param billableHours - Total billable hours
  * @returns Profit margin as percentage (0-100)
- * 
+ *
  * @example
  * ```typescript
  * const margin = calculateProfitMargin(4); // 4 hours
@@ -87,4 +87,3 @@ export function calculateProfitMargin(billableHours: number): number {
   if (revenue === 0) return 0;
   return (calculateProfit(billableHours) / revenue) * 100;
 }
-

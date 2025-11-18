@@ -11,4 +11,3 @@ export const postExecutionContext: HookExecutionContext = {
   timestamp: new Date().toISOString(),
   category: "post-execution",
 };
-

@@ -30,6 +30,7 @@ Ensure best practices are followed during development by verifying code follows 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code being developed
 - `grep` - Search for patterns
 - `codebase_search` - Find examples
@@ -37,6 +38,7 @@ Ensure best practices are followed during development by verifying code follows 
 - `run_terminal_cmd` - Run checks
 
 **DO NOT:**
+
 - Miss violations
 - Ignore standards
 - Skip checks
@@ -75,42 +77,49 @@ Before verifying, think through:
 ## BEST PRACTICE AREAS
 
 ### 1. Code Style
+
 - Naming conventions
 - File structure
 - Import order
 - Formatting
 
 ### 2. TypeScript
+
 - Type safety
 - No `any` types
 - Proper null checks
 - Type inference
 
 ### 3. React Patterns
+
 - Component structure
 - Hooks usage
 - State management
 - Props patterns
 
 ### 4. tRPC Patterns
+
 - Procedure structure
 - Input validation
 - Error handling
 - Response patterns
 
 ### 5. Database Patterns
+
 - Helper functions
 - Query patterns
 - Type exports
 - Error handling
 
 ### 6. Error Handling
+
 - Try-catch blocks
 - Error types
 - Logging
 - User feedback
 
 ### 7. Testing
+
 - Test structure
 - Coverage
 - Edge cases
@@ -155,7 +164,7 @@ After verification, verify:
 
 Provide best practice verification:
 
-```markdown
+````markdown
 # Best Practices Verification
 
 **Date:** 2025-11-16
@@ -163,6 +172,7 @@ Provide best practice verification:
 **Status:** [VERIFIED/VIOLATIONS FOUND]
 
 ## Practice Checklist
+
 - ✅ Code style
 - ✅ TypeScript types
 - ✅ React patterns
@@ -173,16 +183,20 @@ Provide best practice verification:
 ## Violations Found
 
 ### 🔴 Critical: [Violation Title]
+
 **Location:** [LINE NUMBERS]
 **Standard:** [STANDARD]
 **Issue:** [Description]
 
 **Current Code:**
+
 ```typescript
 // Violation
 ```
+````
 
 **Correct Code:**
+
 ```typescript
 // Following best practice
 ```
@@ -191,24 +205,30 @@ Provide best practice verification:
 [Why this matters and how to fix]
 
 ### 🟡 Warning: [Violation Title]
+
 [Similar structure]
 
 ## Practices Followed
+
 - ✅ [Practice 1]
 - ✅ [Practice 2]
 - ✅ [Practice 3]
 
 ## Missing Practices
+
 - ⚠️ [Missing practice 1] - [Impact]
 - ⚠️ [Missing practice 2] - [Impact]
 
 ## Recommendations
+
 1. **[Priority]** [Recommendation 1]
 2. **[Priority]** [Recommendation 2]
 
 ## Standards Reference
+
 - `.cursorrules` - [Relevant rule]
 - `docs/DEVELOPMENT_GUIDE.md` - [Relevant pattern]
+
 ```
 
 ## GUIDELINES
@@ -223,3 +243,4 @@ Provide best practice verification:
 
 **CRITICAL:** Ensure best practices are followed. Verify code meets Friday AI Chat standards and patterns.
 
+```

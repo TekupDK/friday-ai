@@ -44,7 +44,7 @@
 
 **Files to Create:**
 
-```text
+````text
 docs/integrations/litellm/
 ├── ARCHITECTURE.md          (architecture overview)
 ├── DECISIONS.md            (technical decisions)
@@ -1048,7 +1048,7 @@ docs/integrations/firecrawl/
 ├── PRIVACY.md
 └── TROUBLESHOOTING.md
 
-```
+````
 
 **Acceptance Criteria:**
 

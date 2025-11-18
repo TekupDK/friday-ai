@@ -8,6 +8,7 @@
 ## ✅ Implementeret
 
 ### Database Schema
+
 - ✅ `subscriptions` table med alle nødvendige felter
 - ✅ `subscription_usage` table for usage tracking
 - ✅ `subscription_history` table for audit trail
@@ -19,7 +20,9 @@
 ### Backend Files
 
 #### 1. Database Helpers
+
 **File:** `server/subscription-db.ts`
+
 - ✅ `getSubscriptionByCustomerId()` - Find active subscription for customer
 - ✅ `getSubscriptionById()` - Get subscription by ID
 - ✅ `getActiveSubscriptions()` - List all active subscriptions
@@ -33,7 +36,9 @@
 - ✅ `addSubscriptionHistory()` - Add history entry
 
 #### 2. Business Logic Helpers
+
 **File:** `server/subscription-helpers.ts`
+
 - ✅ `SUBSCRIPTION_PLANS` - Plan configurations (tier1, tier2, tier3, flex_basis, flex_plus)
 - ✅ `getPlanConfig()` - Get plan details
 - ✅ `calculateMonthlyRevenue()` - MRR calculation
@@ -45,7 +50,9 @@
 - ✅ `getSubscriptionStats()` - Comprehensive statistics
 
 #### 3. Business Actions
+
 **File:** `server/subscription-actions.ts`
+
 - ✅ `createSubscription()` - Create subscription with calendar events
 - ✅ `processRenewal()` - Monthly renewal with Billy.dk invoice
 - ✅ `processCancellation()` - Cancel subscription
@@ -55,7 +62,9 @@
 - ✅ `createRecurringBookings()` - Create Google Calendar events
 
 #### 4. tRPC Router
+
 **File:** `server/routers/subscription-router.ts`
+
 - ✅ `create` - Create new subscription
 - ✅ `list` - List subscriptions with filters
 - ✅ `get` - Get single subscription
@@ -72,7 +81,9 @@
 - ✅ `renew` - Manually trigger renewal (admin/testing)
 
 #### 5. Router Integration
+
 **File:** `server/routers.ts`
+
 - ✅ Added `subscriptionRouter` to main router
 - ✅ Available at `trpc.subscription.*`
 
@@ -81,6 +92,7 @@
 ## ⏳ Næste Skridt
 
 ### 1. Database Migration
+
 ```bash
 # Generate migration (hvis tabeller ikke eksisterer endnu)
 npx drizzle-kit generate
@@ -90,6 +102,7 @@ npx drizzle-kit push
 ```
 
 ### 2. Frontend Implementation
+
 - [ ] Subscription plan selector component
 - [ ] Subscription management dashboard
 - [ ] Usage tracking display
@@ -97,17 +110,20 @@ npx drizzle-kit push
 - [ ] Customer subscription page
 
 ### 3. Background Jobs
+
 - [ ] Monthly billing job (cron: 1st of month)
 - [ ] Renewal reminders (7 days, 1 day before)
 - [ ] Usage tracking job (daily)
 - [ ] Expiration handling
 
 ### 4. Integration
+
 - [ ] Billy.dk product IDs for subscription plans
 - [ ] Email templates (welcome, invoice, renewal, cancellation)
 - [ ] Google Calendar recurring events (already implemented in actions)
 
 ### 5. Testing
+
 - [ ] Unit tests for subscription helpers
 - [ ] Integration tests for subscription router
 - [ ] E2E tests for subscription flow
@@ -186,7 +202,7 @@ SUBSCRIPTION_PLANS = {
     monthlyPrice: 150000, // 1,500 kr
     includedHours: 4.0,
   },
-}
+};
 ```
 
 ---
@@ -194,6 +210,7 @@ SUBSCRIPTION_PLANS = {
 ## 📊 Features
 
 ### ✅ Implementeret
+
 - Subscription CRUD operations
 - Usage tracking
 - Audit trail (history)
@@ -203,6 +220,7 @@ SUBSCRIPTION_PLANS = {
 - Statistics and analytics (MRR, ARR, ARPU, Churn)
 
 ### ⏳ Mangler
+
 - Frontend UI components
 - Background jobs (billing, reminders)
 - Email templates
@@ -238,5 +256,3 @@ await trpc.subscription.cancel.mutate({
 ---
 
 **Status:** Backend core er komplet og klar til frontend integration! 🎉
-
-

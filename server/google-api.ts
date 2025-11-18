@@ -380,7 +380,13 @@ export async function searchGmailThreads(params: {
         maxAttempts: 3,
         initialDelayMs: 2000, // Start with 2s delay for rate limits
         maxDelayMs: 30000, // Max 30s delay
-        retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+        retryableErrors: [
+          "429",
+          "rate limit",
+          "RESOURCE_EXHAUSTED",
+          "503",
+          "502",
+        ],
       }
     );
 
@@ -409,12 +415,19 @@ export async function searchGmailThreads(params: {
           maxAttempts: 3,
           initialDelayMs: 1000,
           maxDelayMs: 10000,
-          retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+          retryableErrors: [
+            "429",
+            "rate limit",
+            "RESOURCE_EXHAUSTED",
+            "503",
+            "502",
+          ],
         }
       );
 
       // Type assertion: Gmail API response has data property
-      const threadDetail = (threadDetailResponse as any).data || threadDetailResponse;
+      const threadDetail =
+        (threadDetailResponse as any).data || threadDetailResponse;
       const messages: GmailMessage[] = [];
       let threadHasAttachments = false;
       if (threadDetail?.messages) {
@@ -423,7 +436,9 @@ export async function searchGmailThreads(params: {
           const fromHeader = headers.find(
             (h: any) => h.name?.toLowerCase() === "from"
           );
-          const toHeader = headers.find((h: any) => h.name?.toLowerCase() === "to");
+          const toHeader = headers.find(
+            (h: any) => h.name?.toLowerCase() === "to"
+          );
           const subjectHeader = headers.find(
             (h: any) => h.name?.toLowerCase() === "subject"
           );
@@ -492,7 +507,7 @@ export async function searchGmailThreads(params: {
       error?.message?.includes("429") ||
       error?.message?.includes("rate limit") ||
       error?.message?.includes("RESOURCE_EXHAUSTED");
-    
+
     if (isRateLimit) {
       const retryAfterHeader =
         error?.response?.headers?.["retry-after"] ||
@@ -586,7 +601,7 @@ export async function searchGmailThreadsPaged(params: {
     // Type guard: ensure thread.id is a string
     if (!thread.id || typeof thread.id !== "string") continue;
     const threadId: string = thread.id;
-    
+
     const threadDetail = await gmail.users.threads.get({
       userId: "me",
       id: threadId,

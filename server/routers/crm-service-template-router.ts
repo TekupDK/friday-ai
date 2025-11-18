@@ -52,18 +52,15 @@ export const crmServiceTemplateRouter = router({
       }
 
       // ✅ ERROR HANDLING: Wrap database query with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          return await db
-            .select()
-            .from(serviceTemplates)
-            .where(where)
-            .orderBy(desc(serviceTemplates.createdAt))
-            .limit(input.limit)
-            .offset(input.offset);
-        },
-        "Failed to list service templates"
-      );
+      return await withDatabaseErrorHandling(async () => {
+        return await db
+          .select()
+          .from(serviceTemplates)
+          .where(where)
+          .orderBy(desc(serviceTemplates.createdAt))
+          .limit(input.limit)
+          .offset(input.offset);
+      }, "Failed to list service templates");
     }),
 
   // Get a single service template by id
@@ -79,21 +76,18 @@ export const crmServiceTemplateRouter = router({
 
       const userId = ctx.user.id;
       // ✅ ERROR HANDLING: Wrap database query with error handling
-      const rows = await withDatabaseErrorHandling(
-        async () => {
-          return await db
-            .select()
-            .from(serviceTemplates)
-            .where(
-              and(
-                eq(serviceTemplates.userId, userId),
-                eq(serviceTemplates.id, input.id)
-              )
+      const rows = await withDatabaseErrorHandling(async () => {
+        return await db
+          .select()
+          .from(serviceTemplates)
+          .where(
+            and(
+              eq(serviceTemplates.userId, userId),
+              eq(serviceTemplates.id, input.id)
             )
-            .limit(1);
-        },
-        "Failed to get service template"
-      );
+          )
+          .limit(1);
+      }, "Failed to get service template");
       if (rows.length === 0) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -134,27 +128,24 @@ export const crmServiceTemplateRouter = router({
         });
 
       // ✅ ERROR HANDLING: Wrap database operation with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          const [created] = await db
-            .insert(serviceTemplates)
-            .values({
-              userId: ctx.user.id,
-              title: input.title,
-              description: input.description,
-              category: input.category,
-              durationMinutes: input.durationMinutes,
-              priceDkk: input.priceDkk,
-              isActive: input.isActive ?? true,
-              metadata: input.metadata ?? {},
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            })
-            .returning();
-          return created;
-        },
-        "Failed to create service template"
-      );
+      return await withDatabaseErrorHandling(async () => {
+        const [created] = await db
+          .insert(serviceTemplates)
+          .values({
+            userId: ctx.user.id,
+            title: input.title,
+            description: input.description,
+            category: input.category,
+            durationMinutes: input.durationMinutes,
+            priceDkk: input.priceDkk,
+            isActive: input.isActive ?? true,
+            metadata: input.metadata ?? {},
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          })
+          .returning();
+        return created;
+      }, "Failed to create service template");
     }),
 
   // Update an existing service template
@@ -191,58 +182,64 @@ export const crmServiceTemplateRouter = router({
       const userId = ctx.user.id;
 
       // ✅ ERROR HANDLING: Wrap database operations with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          // Verify ownership
-          const rows = await db
-            .select()
-            .from(serviceTemplates)
-            .where(
-              and(
-                eq(serviceTemplates.userId, userId),
-                eq(serviceTemplates.id, input.id)
-              )
+      return await withDatabaseErrorHandling(async () => {
+        // Verify ownership
+        const rows = await db
+          .select()
+          .from(serviceTemplates)
+          .where(
+            and(
+              eq(serviceTemplates.userId, userId),
+              eq(serviceTemplates.id, input.id)
             )
-            .limit(1);
-          if (rows.length === 0)
-            throw new TRPCError({
-              code: "NOT_FOUND",
-              message: "Service template not found",
-            });
+          )
+          .limit(1);
+        if (rows.length === 0)
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Service template not found",
+          });
 
-          const updates: {
-            updatedAt: string;
-            title?: string;
-            description?: string | null;
-            category?: "general" | "vinduespolering" | "facaderens" | "tagrens" | "graffiti" | "other";
-            durationMinutes?: number;
-            priceDkk?: number;
-            isActive?: boolean;
-            metadata?: Record<string, unknown>;
-          } = {
-            updatedAt: new Date().toISOString(),
-          };
-          if (input.title !== undefined) updates.title = input.title;
-          if (input.description !== undefined)
-            updates.description = input.description;
-          if (input.category !== undefined) updates.category = input.category;
-          // Only include if not null/undefined (Drizzle doesn't accept null for optional fields)
-          if (input.durationMinutes !== undefined && input.durationMinutes !== null)
-            updates.durationMinutes = input.durationMinutes;
-          if (input.priceDkk !== undefined && input.priceDkk !== null)
-            updates.priceDkk = input.priceDkk;
-          if (input.isActive !== undefined) updates.isActive = input.isActive;
-          if (input.metadata !== undefined) updates.metadata = input.metadata;
+        const updates: {
+          updatedAt: string;
+          title?: string;
+          description?: string | null;
+          category?:
+            | "general"
+            | "vinduespolering"
+            | "facaderens"
+            | "tagrens"
+            | "graffiti"
+            | "other";
+          durationMinutes?: number;
+          priceDkk?: number;
+          isActive?: boolean;
+          metadata?: Record<string, unknown>;
+        } = {
+          updatedAt: new Date().toISOString(),
+        };
+        if (input.title !== undefined) updates.title = input.title;
+        if (input.description !== undefined)
+          updates.description = input.description;
+        if (input.category !== undefined) updates.category = input.category;
+        // Only include if not null/undefined (Drizzle doesn't accept null for optional fields)
+        if (
+          input.durationMinutes !== undefined &&
+          input.durationMinutes !== null
+        )
+          updates.durationMinutes = input.durationMinutes;
+        if (input.priceDkk !== undefined && input.priceDkk !== null)
+          updates.priceDkk = input.priceDkk;
+        if (input.isActive !== undefined) updates.isActive = input.isActive;
+        if (input.metadata !== undefined) updates.metadata = input.metadata;
 
-          const updated = await db
-            .update(serviceTemplates)
-            .set(updates)
-            .where(eq(serviceTemplates.id, input.id))
-            .returning();
-          return updated[0];
-        },
-        "Failed to update service template"
-      );
+        const updated = await db
+          .update(serviceTemplates)
+          .set(updates)
+          .where(eq(serviceTemplates.id, input.id))
+          .returning();
+        return updated[0];
+      }, "Failed to update service template");
     }),
 
   // Soft delete (set isActive to false)
@@ -258,28 +255,25 @@ export const crmServiceTemplateRouter = router({
 
       const userId = ctx.user.id;
       // ✅ ERROR HANDLING: Wrap database operations with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          const rows = await db
-            .select()
-            .from(serviceTemplates)
-            .where(
-              and(
-                eq(serviceTemplates.userId, userId),
-                eq(serviceTemplates.id, input.id)
-              )
+      return await withDatabaseErrorHandling(async () => {
+        const rows = await db
+          .select()
+          .from(serviceTemplates)
+          .where(
+            and(
+              eq(serviceTemplates.userId, userId),
+              eq(serviceTemplates.id, input.id)
             )
-            .limit(1);
-          if (rows.length === 0) return { success: true };
+          )
+          .limit(1);
+        if (rows.length === 0) return { success: true };
 
-          // Soft delete - set isActive to false instead of deleting
-          await db
-            .update(serviceTemplates)
-            .set({ isActive: false, updatedAt: new Date().toISOString() })
-            .where(eq(serviceTemplates.id, input.id));
-          return { success: true };
-        },
-        "Failed to delete service template"
-      );
+        // Soft delete - set isActive to false instead of deleting
+        await db
+          .update(serviceTemplates)
+          .set({ isActive: false, updatedAt: new Date().toISOString() })
+          .where(eq(serviceTemplates.id, input.id));
+        return { success: true };
+      }, "Failed to delete service template");
     }),
 });

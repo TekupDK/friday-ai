@@ -15,7 +15,7 @@
 
 **CURRENT STATE:**
 
-```typescript
+````typescript
 // EmailThreadGroup.tsx lines 30-35
 const getLeadScoreConfig = (score: number) => {
   if (score >= 80)
@@ -715,7 +715,7 @@ EXPECTED IMPACT:
 - Action efficiency: +50% (bulk actions)
 - User satisfaction: +HIGH
 
-```
+````
 
 ---
 

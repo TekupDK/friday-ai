@@ -16,26 +16,31 @@ Optimize UI component performance by identifying bottlenecks and applying React 
 ## PERFORMANCE OPTIMIZATION STRATEGIES
 
 ### 1. Component Memoization
+
 - Use `memo()` for expensive components
 - Use `useMemo()` for expensive computations
 - Use `useCallback()` for stable function references
 
 ### 2. Code Splitting
+
 - Lazy load routes
 - Lazy load heavy components
 - Split vendor bundles
 
 ### 3. List Rendering
+
 - Virtual scrolling for long lists
 - Key optimization
 - Pagination/infinite scroll
 
 ### 4. Image Optimization
+
 - Lazy loading images
 - Responsive images
 - WebP format
 
 ### 5. Bundle Size
+
 - Tree shaking
 - Remove unused dependencies
 - Code splitting
@@ -43,6 +48,7 @@ Optimize UI component performance by identifying bottlenecks and applying React 
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Component Memoization
+
 ```typescript
 import { memo, useMemo } from "react";
 
@@ -63,6 +69,7 @@ function ExpensiveComponent({ data }: Props) {
 ```
 
 ### Example: Callback Memoization
+
 ```typescript
 import { memo, useCallback, useState } from "react";
 
@@ -82,6 +89,7 @@ const ListComponent = memo(function ListComponent({ items, onItemClick }: Props)
 ```
 
 ### Example: Virtual Scrolling
+
 ```typescript
 import { useVirtualizer } from "@tanstack/react-virtual";
 
@@ -126,6 +134,7 @@ function LongList({ items }: { items: Item[] }) {
 ```
 
 ### Example: Lazy Loading
+
 ```typescript
 import { lazy, Suspense } from "react";
 
@@ -169,6 +178,7 @@ function App() {
 ## VERIFICATION
 
 After optimization:
+
 - ✅ Render times improved
 - ✅ Bundle size reduced
 - ✅ No unnecessary re-renders
@@ -181,22 +191,27 @@ After optimization:
 ### Performance Optimization: [Component]
 
 **Issues Identified:**
+
 - [Issue 1]: [impact]
 - [Issue 2]: [impact]
 
 **Optimizations Applied:**
+
 1. [Optimization 1] - [improvement]
 2. [Optimization 2] - [improvement]
 
 **Results:**
+
 - Before: [metrics]
 - After: [metrics]
 - Improvement: [percentage]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Performance improved: PASSED
 - ✅ No regressions: VERIFIED
 ```

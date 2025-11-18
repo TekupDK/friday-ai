@@ -70,7 +70,7 @@ Secure Retrieval Augmented Generation (RAG) APIs for developers.
 
 ### Implementation Plan
 
-```typescript
+````typescript
 // 1. Install SDK
 npm install @ragieai/ragie-ts
 
@@ -474,7 +474,7 @@ Industry-standard API development and testing platform.
 // 5. Share with team
 // Publish collection
 
-```
+````
 
 ---
 

@@ -20,7 +20,7 @@ Komplet oversigt over ALLE komponenter og features i jeres ComponentShowcase.
 
 ### **1. 3-Panel Workspace Layout**
 
-```tsx
+````tsx
 <ThreePanelDemo />
 
 ```bash
@@ -306,7 +306,7 @@ Når bruger åbner en email i Email Center, vises denne AI assistant below email
 <ChatFlowDemo scenario="weather" />
 // Scenarios: 'weather' | 'email' | 'calendar' | 'invoices' | 'search'
 
-```
+````
 
 **5 Interactive Demos:**
 

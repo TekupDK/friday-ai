@@ -68,7 +68,7 @@ Dette dokument beskriver implementeringen af **Tool Execution Visibility** i Fri
 
 **File:** `server/routers.ts`
 
-```typescript
+````typescript
 import { toolExecutionRouter } from "./routers/tool-execution-router";
 
 export const appRouter = router({
@@ -515,7 +515,7 @@ describe('ToolExecutionModal', () => {
      req.on("close", unsubscribe);
    }
 
-   ```
+````
 
 ---
 

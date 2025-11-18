@@ -38,7 +38,7 @@ Complete testing suite for Friday AI with OpenRouter + Gemma 3 27B Free. Ensures
 
 ### **1. Environment Setup**
 
-```bash
+````bash
 # Copy template and add your API key
 cp .env.dev.template .env.dev
 
@@ -202,7 +202,7 @@ console.log("Quality Score:", lastQualityScore?.overallScore);
 console.log("Response Time:", responseTime);
 console.log("Token Usage:", tokenCount);
 
-```
+````
 
 ## 📋 TESTING CHECKLIST
 

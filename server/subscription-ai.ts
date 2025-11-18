@@ -1,6 +1,6 @@
 /**
  * Subscription AI Features
- * 
+ *
  * AI-powered features for subscription management including recommendations,
  * churn prediction, and usage optimization.
  */
@@ -21,7 +21,10 @@ import {
   getSubscriptionByCustomerId,
   getSubscriptionById,
 } from "./subscription-db";
-import { SUBSCRIPTION_PLANS, type SubscriptionPlanType } from "./subscription-helpers";
+import {
+  SUBSCRIPTION_PLANS,
+  type SubscriptionPlanType,
+} from "./subscription-helpers";
 
 export interface SubscriptionRecommendation {
   recommendedPlan: SubscriptionPlanType;
@@ -70,7 +73,10 @@ export async function recommendSubscriptionPlan(
   }
 
   // Check if customer already has subscription
-  const existingSubscription = await getSubscriptionByCustomerId(customerId, userId);
+  const existingSubscription = await getSubscriptionByCustomerId(
+    customerId,
+    userId
+  );
 
   // Build customer context for AI
   const customerContext = {
@@ -100,9 +106,12 @@ Customer Data:
 ${customerContext.hasExistingSubscription ? `- Current Plan: ${customerContext.existingPlan}` : "- No current subscription"}
 
 Available Plans:
-${Object.entries(SUBSCRIPTION_PLANS).map(([key, plan]) => 
-  `- ${key}: ${plan.name} - ${plan.monthlyPrice / 100} kr/måned, ${plan.includedHours} timer - ${plan.description}`
-).join("\n")}
+${Object.entries(SUBSCRIPTION_PLANS)
+  .map(
+    ([key, plan]) =>
+      `- ${key}: ${plan.name} - ${plan.monthlyPrice / 100} kr/måned, ${plan.includedHours} timer - ${plan.description}`
+  )
+  .join("\n")}
 
 Based on this customer's profile, recommend the best subscription plan. Consider:
 1. Customer type (private vs erhverv)
@@ -140,10 +149,10 @@ Return a JSON object with:
 
     // Parse AI response
     const content = aiResponse.content.trim();
-    
+
     // Try to extract JSON from response
     let recommendation: SubscriptionRecommendation;
-    
+
     // Look for JSON in code blocks or plain text
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
@@ -158,22 +167,26 @@ Return a JSON object with:
     }
 
     // Validate recommendation
-    if (!Object.keys(SUBSCRIPTION_PLANS).includes(recommendation.recommendedPlan)) {
+    if (
+      !Object.keys(SUBSCRIPTION_PLANS).includes(recommendation.recommendedPlan)
+    ) {
       // Fallback to tier1 if invalid
       recommendation.recommendedPlan = "tier1";
       recommendation.confidence = 50;
-      recommendation.reasoning = "Kunne ikke analysere kundeprofil - anbefaler Basis Abonnement som standard.";
+      recommendation.reasoning =
+        "Kunne ikke analysere kundeprofil - anbefaler Basis Abonnement som standard.";
     }
 
     return recommendation;
   } catch (error) {
     console.error("Error getting AI recommendation:", error);
-    
+
     // Fallback recommendation
     return {
       recommendedPlan: "tier1",
       confidence: 50,
-      reasoning: "Kunne ikke generere AI-anbefaling. Anbefaler Basis Abonnement som standard.",
+      reasoning:
+        "Kunne ikke generere AI-anbefaling. Anbefaler Basis Abonnement som standard.",
       alternatives: [
         {
           plan: "tier2",
@@ -190,21 +203,27 @@ Return a JSON object with:
  */
 function parseRecommendationFromText(text: string): SubscriptionRecommendation {
   const lowerText = text.toLowerCase();
-  
+
   // Try to detect plan from text
   let recommendedPlan: SubscriptionPlanType = "tier1";
   let confidence = 50;
-  
+
   if (lowerText.includes("tier3") || lowerText.includes("vip")) {
     recommendedPlan = "tier3";
     confidence = 70;
   } else if (lowerText.includes("tier2") || lowerText.includes("premium")) {
     recommendedPlan = "tier2";
     confidence = 70;
-  } else if (lowerText.includes("flex_plus") || lowerText.includes("flex plus")) {
+  } else if (
+    lowerText.includes("flex_plus") ||
+    lowerText.includes("flex plus")
+  ) {
     recommendedPlan = "flex_plus";
     confidence = 70;
-  } else if (lowerText.includes("flex_basis") || lowerText.includes("flex basis")) {
+  } else if (
+    lowerText.includes("flex_basis") ||
+    lowerText.includes("flex basis")
+  ) {
     recommendedPlan = "flex_basis";
     confidence = 70;
   }
@@ -288,7 +307,10 @@ export async function predictChurnRisk(
 
   // 1. Payment delays (balance > 0)
   if (customer.balance && customer.balance > 0) {
-    const balanceRisk = Math.min(100, (customer.balance / (subscription.monthlyPrice / 100)) * 50);
+    const balanceRisk = Math.min(
+      100,
+      (customer.balance / (subscription.monthlyPrice / 100)) * 50
+    );
     riskFactors.push({
       factor: `Ubetalt balance: ${customer.balance} kr`,
       impact: balanceRisk,
@@ -311,7 +333,8 @@ export async function predictChurnRisk(
 
   // 3. Subscription age (new subscriptions more likely to churn)
   const subscriptionAge = Math.floor(
-    (Date.now() - new Date(subscription.startDate).getTime()) / (1000 * 60 * 60 * 24)
+    (Date.now() - new Date(subscription.startDate).getTime()) /
+      (1000 * 60 * 60 * 24)
   );
   if (subscriptionAge < 30) {
     riskFactors.push({
@@ -351,7 +374,10 @@ export async function predictChurnRisk(
   }
 
   // Generate recommended actions
-  const recommendedActions: Array<{ action: string; priority: "high" | "medium" | "low" }> = [];
+  const recommendedActions: Array<{
+    action: string;
+    priority: "high" | "medium" | "low";
+  }> = [];
 
   if (customer.balance && customer.balance > 0) {
     recommendedActions.push({
@@ -374,9 +400,10 @@ export async function predictChurnRisk(
     });
   }
 
-  const paymentRatio = customer.totalInvoiced && customer.totalInvoiced > 0
-    ? (customer.totalPaid || 0) / customer.totalInvoiced
-    : 1;
+  const paymentRatio =
+    customer.totalInvoiced && customer.totalInvoiced > 0
+      ? (customer.totalPaid || 0) / customer.totalInvoiced
+      : 1;
   if (paymentRatio < 0.8) {
     recommendedActions.push({
       action: "Gennemgå betalingshistorik",
@@ -442,7 +469,8 @@ Calculate churn risk (0-100) and provide specific retention actions. Return JSON
           return {
             churnRisk: Math.max(churnRisk, aiPrediction.churnRisk || churnRisk),
             riskFactors: [...riskFactors, ...(aiPrediction.riskFactors || [])],
-            recommendedActions: aiPrediction.recommendedActions || recommendedActions,
+            recommendedActions:
+              aiPrediction.recommendedActions || recommendedActions,
             timeline: aiPrediction.timeline || timeline,
           };
         } catch (e) {
@@ -549,12 +577,12 @@ export async function optimizeSubscriptionUsage(
   );
   const includedHours = Number(subscription.includedHours || 0);
   const hoursRemaining = Math.max(0, includedHours - hoursUsed);
-  const utilizationRate = includedHours > 0 
-    ? (hoursUsed / includedHours) * 100 
-    : 0;
+  const utilizationRate =
+    includedHours > 0 ? (hoursUsed / includedHours) * 100 : 0;
 
   // Get plan details
-  const plan = SUBSCRIPTION_PLANS[subscription.planType as SubscriptionPlanType];
+  const plan =
+    SUBSCRIPTION_PLANS[subscription.planType as SubscriptionPlanType];
   if (!plan) {
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
@@ -574,9 +602,15 @@ Subscription Data:
 - Monthly Price: ${subscription.monthlyPrice / 100} kr
 
 Current Month Bookings:
-${customerBookings.length > 0 
-  ? customerBookings.map((b: any) => `- ${new Date(b.scheduledStart).toLocaleDateString("da-DK")}: ${b.title || "Booking"}`).join("\n")
-  : "- No bookings yet this month"
+${
+  customerBookings.length > 0
+    ? customerBookings
+        .map(
+          (b: any) =>
+            `- ${new Date(b.scheduledStart).toLocaleDateString("da-DK")}: ${b.title || "Booking"}`
+        )
+        .join("\n")
+    : "- No bookings yet this month"
 }
 
 Optimization Goal: ${optimizeFor === "value" ? "Maximize value within included hours" : optimizeFor === "convenience" ? "Optimize for customer convenience" : "Maximize efficiency"}
@@ -623,7 +657,7 @@ Return JSON:
 
     const content = aiResponse.content.trim();
     const jsonMatch = content.match(/\{[\s\S]*\}/);
-    
+
     if (jsonMatch) {
       try {
         const optimization = JSON.parse(jsonMatch[0]);
@@ -644,28 +678,35 @@ Return JSON:
   }
 
   // Fallback: Simple recommendation
-  const daysRemaining = Math.ceil((monthEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-  const recommendedHoursPerWeek = hoursRemaining > 0 && daysRemaining > 0
-    ? Math.min(4, hoursRemaining / Math.ceil(daysRemaining / 7))
-    : 0;
+  const daysRemaining = Math.ceil(
+    (monthEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  const recommendedHoursPerWeek =
+    hoursRemaining > 0 && daysRemaining > 0
+      ? Math.min(4, hoursRemaining / Math.ceil(daysRemaining / 7))
+      : 0;
 
   return {
-    recommendedSchedule: hoursRemaining > 0 && daysRemaining > 0
-      ? [
-          {
-            date: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-            hours: Math.min(recommendedHoursPerWeek, hoursRemaining),
-            serviceType: "Hovedrengøring",
-            reasoning: `Anbefaler ${recommendedHoursPerWeek.toFixed(1)} timer om ugen for at bruge resterende ${hoursRemaining.toFixed(1)} timer effektivt.`,
-          },
-        ]
-      : [],
+    recommendedSchedule:
+      hoursRemaining > 0 && daysRemaining > 0
+        ? [
+            {
+              date: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+                .toISOString()
+                .split("T")[0],
+              hours: Math.min(recommendedHoursPerWeek, hoursRemaining),
+              serviceType: "Hovedrengøring",
+              reasoning: `Anbefaler ${recommendedHoursPerWeek.toFixed(1)} timer om ugen for at bruge resterende ${hoursRemaining.toFixed(1)} timer effektivt.`,
+            },
+          ]
+        : [],
     expectedValue: (subscription.monthlyPrice / 100) * (utilizationRate / 100),
-    reasoning: utilizationRate < 50
-      ? `Lav udnyttelse (${utilizationRate.toFixed(1)}%). Overvej at planlægge flere bookinger for at maksimere værdi.`
-      : utilizationRate > 90
-      ? `Høj udnyttelse (${utilizationRate.toFixed(1)}%). Vær opmærksom på overage costs.`
-      : `God udnyttelse (${utilizationRate.toFixed(1)}%).`,
+    reasoning:
+      utilizationRate < 50
+        ? `Lav udnyttelse (${utilizationRate.toFixed(1)}%). Overvej at planlægge flere bookinger for at maksimere værdi.`
+        : utilizationRate > 90
+          ? `Høj udnyttelse (${utilizationRate.toFixed(1)}%). Vær opmærksom på overage costs.`
+          : `God udnyttelse (${utilizationRate.toFixed(1)}%).`,
     alternatives: [],
     currentUsage: {
       hoursUsed,
@@ -747,13 +788,22 @@ export async function generateUpsellOpportunities(
   let totalPotentialValue = 0;
 
   // Get current plan
-  const currentPlan = SUBSCRIPTION_PLANS[subscription.planType as SubscriptionPlanType];
+  const currentPlan =
+    SUBSCRIPTION_PLANS[subscription.planType as SubscriptionPlanType];
   const currentValue = subscription.monthlyPrice / 100;
 
   // Check for upgrade opportunities
-  const planOrder: SubscriptionPlanType[] = ["flex_basis", "tier1", "flex_plus", "tier2", "tier3"];
-  const currentIndex = planOrder.indexOf(subscription.planType as SubscriptionPlanType);
-  
+  const planOrder: SubscriptionPlanType[] = [
+    "flex_basis",
+    "tier1",
+    "flex_plus",
+    "tier2",
+    "tier3",
+  ];
+  const currentIndex = planOrder.indexOf(
+    subscription.planType as SubscriptionPlanType
+  );
+
   if (currentIndex < planOrder.length - 1) {
     const nextPlan = planOrder[currentIndex + 1];
     const nextPlanDetails = SUBSCRIPTION_PLANS[nextPlan];
@@ -777,12 +827,14 @@ export async function generateUpsellOpportunities(
       (sum, record) => sum + Number(record.hoursUsed || 0),
       0
     );
-    const utilizationRate = Number(subscription.includedHours) > 0
-      ? (hoursUsed / Number(subscription.includedHours)) * 100
-      : 0;
+    const utilizationRate =
+      Number(subscription.includedHours) > 0
+        ? (hoursUsed / Number(subscription.includedHours)) * 100
+        : 0;
 
     // High utilization = good upgrade candidate
-    const upgradeConfidence = utilizationRate > 80 ? 85 : utilizationRate > 60 ? 70 : 50;
+    const upgradeConfidence =
+      utilizationRate > 80 ? 85 : utilizationRate > 60 ? 70 : 50;
 
     if (upgradeConfidence >= 50) {
       opportunities.push({
@@ -798,7 +850,10 @@ export async function generateUpsellOpportunities(
   }
 
   // Check for frequency increase (if on flex plan)
-  if (subscription.planType === "flex_basis" || subscription.planType === "flex_plus") {
+  if (
+    subscription.planType === "flex_basis" ||
+    subscription.planType === "flex_plus"
+  ) {
     const flexPlusValue = SUBSCRIPTION_PLANS.flex_plus.monthlyPrice / 100;
     if (currentValue < flexPlusValue) {
       opportunities.push({
@@ -820,9 +875,7 @@ export async function generateUpsellOpportunities(
     const properties = await db
       .select()
       .from(customerProperties)
-      .where(
-        eq(customerProperties.customerProfileId, customerId)
-      );
+      .where(eq(customerProperties.customerProfileId, customerId));
 
     if (properties.length > 1) {
       const additionalServiceValue = currentValue * 0.5; // 50% of current plan for additional property
@@ -850,9 +903,12 @@ Customer Data:
 - Total Invoiced: ${customer.totalInvoiced || 0} kr
 
 Opportunities:
-${opportunities.map((opp, i) => 
-  `${i + 1}. ${opp.type}: ${opp.recommendedAction} (Confidence: ${opp.confidence}%)`
-).join("\n")}
+${opportunities
+  .map(
+    (opp, i) =>
+      `${i + 1}. ${opp.type}: ${opp.recommendedAction} (Confidence: ${opp.confidence}%)`
+  )
+  .join("\n")}
 
 Enhance these opportunities with:
 1. More specific recommendations
@@ -889,7 +945,7 @@ Return JSON:
 
       const content = aiResponse.content.trim();
       const jsonMatch = content.match(/\{[\s\S]*\}/);
-      
+
       if (jsonMatch) {
         try {
           const aiOpportunities = JSON.parse(jsonMatch[0]);
@@ -909,4 +965,3 @@ Return JSON:
     totalPotentialValue,
   };
 }
-

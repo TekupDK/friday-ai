@@ -13,5 +13,6 @@ Reason: <short explanation>
 Alternatively, place the file here if disabling at-file scope is preferred.
 
 Notes:
+
 - Keep this list small and review periodically.
 - Prefer fixing the source content or amending rules if many files require exceptions.

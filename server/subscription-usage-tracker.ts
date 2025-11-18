@@ -1,6 +1,6 @@
 /**
  * Subscription Usage Tracker
- * 
+ *
  * Automatically tracks subscription usage from bookings
  */
 
@@ -10,7 +10,10 @@ import { bookings, subscriptions, subscriptionUsage } from "../drizzle/schema";
 
 import { logger } from "./_core/logger";
 import { getDb } from "./db";
-import { getSubscriptionByCustomerId, createSubscriptionUsage } from "./subscription-db";
+import {
+  getSubscriptionByCustomerId,
+  createSubscriptionUsage,
+} from "./subscription-db";
 
 /**
  * Track usage from a booking
@@ -31,12 +34,7 @@ export async function trackBookingUsage(
     const [booking] = await db
       .select()
       .from(bookings)
-      .where(
-        and(
-          eq(bookings.id, bookingId),
-          eq(bookings.userId, userId)
-        )
-      )
+      .where(and(eq(bookings.id, bookingId), eq(bookings.userId, userId)))
       .limit(1);
 
     if (!booking) {
@@ -254,4 +252,3 @@ export async function syncSubscriptionUsage(
     return { ...result, success: false };
   }
 }
-

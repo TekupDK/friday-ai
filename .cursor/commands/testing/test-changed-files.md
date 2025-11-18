@@ -31,12 +31,14 @@ Run only the most relevant tests for the current set of changed files, focusing 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Run git diff and tests
 - `read_file` - Read test files
 - `grep` - Find related tests
 - `codebase_search` - Find test patterns
 
 **DO NOT:**
+
 - Run all tests unnecessarily
 - Miss related tests
 - Skip typecheck
@@ -68,19 +70,19 @@ Before testing, think through:
 
 ## STEPS
 
-1) Use git diff --name-only HEAD to determine which files changed.
-2) Group files by area: backend, frontend, shared, config, tests.
-3) Map each group to test commands:
+1. Use git diff --name-only HEAD to determine which files changed.
+2. Group files by area: backend, frontend, shared, config, tests.
+3. Map each group to test commands:
    - Backend → unit/integration tests for that package
    - Frontend → component/unit + Playwright scope
    - Shared → tests for packages depending on them
-4) Use the terminal tool to run the chosen commands.
-5) Fix failing tests if possible, then rerun.
+4. Use the terminal tool to run the chosen commands.
+5. Fix failing tests if possible, then rerun.
 
 ## OUTPUT
 
 Provide:
+
 - The mapping from changed files → test commands
 - Commands executed and their status
 - Any remaining failing tests and suggested fixes.
-

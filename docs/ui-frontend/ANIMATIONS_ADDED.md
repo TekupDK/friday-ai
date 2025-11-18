@@ -52,7 +52,6 @@
 - ✅ **Reload Button** - Toggle between loading/loaded
 
 - ✅ **3 Layout Types:**
-
   - Email card skeleton
 
   - Metric card skeleton
@@ -133,7 +132,7 @@
 
 **CSS Transitions:**
 
-```css
+````css
 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 ```text
@@ -220,7 +219,7 @@ className={cn(
   ⏳ Skeleton Loading
   🎨 Interactive Hover
 
-```
+````
 
 **Sidebar Navigation:**
 
@@ -338,20 +337,20 @@ className={cn(
 
 ## 📊 Statistics
 
-| Metric               | Value          |
-| -------------------- | -------------- |
+| Metric | Value |
+| ------ | ----- |
 
-| **Nye Komponenter**  | 3              |
+| **Nye Komponenter** | 3 |
 
-| **Animations Types** | 15+            |
+| **Animations Types** | 15+ |
 
-| **Lines of Code**    | 500+           |
+| **Lines of Code** | 500+ |
 
-| **Duration Range**   | 300ms - 2000ms |
+| **Duration Range** | 300ms - 2000ms |
 
-| **Hover Effects**    | 6 per card     |
+| **Hover Effects** | 6 per card |
 
-| **Card Examples**    | 10+            |
+| **Card Examples** | 10+ |
 
 ---
 

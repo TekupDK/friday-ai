@@ -226,13 +226,10 @@ index("idx_customer_profiles_user_updated").using(
   "btree",
   customerProfiles.userId.asc(),
   customerProfiles.updatedAt.desc()
-)
+);
 
 // Emails - optimized for thread lookups
-index("idx_emails_thread_id").using(
-  "btree",
-  emails.emailThreadId.asc()
-)
+index("idx_emails_thread_id").using("btree", emails.emailThreadId.asc());
 ```
 
 ## Type Exports
@@ -247,6 +244,6 @@ export type InsertCustomerProfile = typeof customerProfiles.$inferInsert;
 ---
 
 For detailed table documentation, see:
+
 - [Tables Detail](./tables.md)
 - [Enums Detail](./enums.md)
-

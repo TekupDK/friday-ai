@@ -12,7 +12,6 @@ import { router, protectedProcedure } from "../_core/trpc";
 import { validationSchemas } from "../_core/validation";
 import { getDb } from "../db";
 
-
 /**
  * CRM Booking Router
  * - List bookings by profile/date range
@@ -43,7 +42,9 @@ export const crmBookingRouter = router({
 
       const conditions = [eq(bookings.userId, userId)];
       if (input.customerProfileId !== undefined) {
-        conditions.push(eq(bookings.customerProfileId, input.customerProfileId));
+        conditions.push(
+          eq(bookings.customerProfileId, input.customerProfileId)
+        );
       }
       if (input.start) {
         conditions.push(gte(bookings.scheduledStart, input.start));
@@ -53,18 +54,15 @@ export const crmBookingRouter = router({
       }
 
       // ✅ ERROR HANDLING: Wrap database query with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          return await db
-            .select()
-            .from(bookings)
-            .where(and(...conditions))
-            .orderBy(desc(bookings.scheduledStart))
-            .limit(input.limit)
-            .offset(input.offset);
-        },
-        "Failed to list bookings"
-      );
+      return await withDatabaseErrorHandling(async () => {
+        return await db
+          .select()
+          .from(bookings)
+          .where(and(...conditions))
+          .orderBy(desc(bookings.scheduledStart))
+          .limit(input.limit)
+          .offset(input.offset);
+      }, "Failed to list bookings");
     }),
 
   createBooking: protectedProcedure
@@ -91,80 +89,83 @@ export const crmBookingRouter = router({
       const userId = ctx.user.id;
 
       // ✅ ERROR HANDLING: Wrap all database operations with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          // Verify profile ownership
-          const profileRows = await db
+      return await withDatabaseErrorHandling(async () => {
+        // Verify profile ownership
+        const profileRows = await db
+          .select()
+          .from(customerProfiles)
+          .where(
+            and(
+              eq(customerProfiles.userId, userId),
+              eq(customerProfiles.id, input.customerProfileId)
+            )
+          )
+          .limit(1);
+        if (profileRows.length === 0)
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "Profile not accessible",
+          });
+
+        // If propertyId provided, ensure it belongs to the same profile
+        if (input.propertyId) {
+          const propRows = await db
             .select()
-            .from(customerProfiles)
+            .from(customerProperties)
             .where(
               and(
-                eq(customerProfiles.userId, userId),
-                eq(customerProfiles.id, input.customerProfileId)
+                eq(customerProperties.id, input.propertyId),
+                eq(
+                  customerProperties.customerProfileId,
+                  input.customerProfileId
+                )
               )
             )
             .limit(1);
-          if (profileRows.length === 0)
+          if (propRows.length === 0)
             throw new TRPCError({
-              code: "FORBIDDEN",
-              message: "Profile not accessible",
+              code: "BAD_REQUEST",
+              message: "Property does not belong to profile",
             });
+        }
 
-          // If propertyId provided, ensure it belongs to the same profile
-          if (input.propertyId) {
-            const propRows = await db
-              .select()
-              .from(customerProperties)
-              .where(
-                and(
-                  eq(customerProperties.id, input.propertyId),
-                  eq(customerProperties.customerProfileId, input.customerProfileId)
-                )
-              )
-              .limit(1);
-            if (propRows.length === 0)
-              throw new TRPCError({
-                code: "BAD_REQUEST",
-                message: "Property does not belong to profile",
-              });
-          }
+        const [created] = await db
+          .insert(bookings)
+          .values({
+            userId,
+            customerProfileId: input.customerProfileId,
+            propertyId: input.propertyId,
+            serviceTemplateId: input.serviceTemplateId,
+            title: input.title,
+            notes: input.notes,
+            scheduledStart: input.scheduledStart,
+            scheduledEnd: input.scheduledEnd,
+            status: "planned",
+            assigneeUserId: input.assigneeUserId,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            metadata: {},
+          })
+          .returning();
 
-          const [created] = await db
-            .insert(bookings)
-            .values({
-              userId,
-              customerProfileId: input.customerProfileId,
-              propertyId: input.propertyId,
-              serviceTemplateId: input.serviceTemplateId,
-              title: input.title,
-              notes: input.notes,
-              scheduledStart: input.scheduledStart,
-              scheduledEnd: input.scheduledEnd,
-              status: "planned",
-              assigneeUserId: input.assigneeUserId,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-              metadata: {},
+        // Track subscription usage if booking is for subscription customer (async)
+        if (
+          created.status === "completed" ||
+          created.status === "in_progress"
+        ) {
+          import("../subscription-usage-tracker")
+            .then(({ trackBookingUsage, calculateBookingHours }) => {
+              const hoursWorked = calculateBookingHours(created);
+              return trackBookingUsage(created.id, userId, hoursWorked);
             })
-            .returning();
+            .catch(error => {
+              console.error("Error tracking subscription usage:", error);
+              // Don't fail booking creation if usage tracking fails
+            });
+        }
 
-          // Track subscription usage if booking is for subscription customer (async)
-          if (created.status === "completed" || created.status === "in_progress") {
-            import("../subscription-usage-tracker")
-              .then(({ trackBookingUsage, calculateBookingHours }) => {
-                const hoursWorked = calculateBookingHours(created);
-                return trackBookingUsage(created.id, userId, hoursWorked);
-              })
-              .catch((error) => {
-                console.error("Error tracking subscription usage:", error);
-                // Don't fail booking creation if usage tracking fails
-              });
-          }
-
-          return created;
-        },
-        "Failed to create booking"
-      );
+        return created;
+      }, "Failed to create booking");
     }),
 
   updateBookingStatus: protectedProcedure
@@ -189,12 +190,7 @@ export const crmBookingRouter = router({
         const [booking] = await db
           .select()
           .from(bookings)
-          .where(
-            and(
-              eq(bookings.id, input.id),
-              eq(bookings.userId, userId)
-            )
-          )
+          .where(and(eq(bookings.id, input.id), eq(bookings.userId, userId)))
           .limit(1);
 
         if (booking && booking.customerProfileId) {
@@ -204,7 +200,7 @@ export const crmBookingRouter = router({
               const hoursWorked = calculateBookingHours(booking);
               return trackBookingUsage(booking.id, userId, hoursWorked);
             })
-            .catch((error) => {
+            .catch(error => {
               console.error("Error tracking subscription usage:", error);
               // Don't fail status update if usage tracking fails
             });
@@ -212,34 +208,31 @@ export const crmBookingRouter = router({
       }
 
       // ✅ ERROR HANDLING: Wrap database operations with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          const rows = await db
-            .select()
-            .from(bookings)
-            .where(eq(bookings.id, input.id))
-            .limit(1);
-          const booking = rows[0];
-          if (!booking)
-            throw new TRPCError({
-              code: "NOT_FOUND",
-              message: "Booking not found",
-            });
-          if (booking.userId !== userId)
-            throw new TRPCError({
-              code: "FORBIDDEN",
-              message: "Booking not accessible",
-            });
+      return await withDatabaseErrorHandling(async () => {
+        const rows = await db
+          .select()
+          .from(bookings)
+          .where(eq(bookings.id, input.id))
+          .limit(1);
+        const booking = rows[0];
+        if (!booking)
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Booking not found",
+          });
+        if (booking.userId !== userId)
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "Booking not accessible",
+          });
 
-          const updated = await db
-            .update(bookings)
-            .set({ status: input.status, updatedAt: new Date().toISOString() })
-            .where(eq(bookings.id, input.id))
-            .returning();
-          return updated[0];
-        },
-        "Failed to update booking status"
-      );
+        const updated = await db
+          .update(bookings)
+          .set({ status: input.status, updatedAt: new Date().toISOString() })
+          .where(eq(bookings.id, input.id))
+          .returning();
+        return updated[0];
+      }, "Failed to update booking status");
     }),
 
   deleteBooking: protectedProcedure
@@ -254,25 +247,22 @@ export const crmBookingRouter = router({
 
       const userId = ctx.user.id;
       // ✅ ERROR HANDLING: Wrap database operations with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          const rows = await db
-            .select()
-            .from(bookings)
-            .where(eq(bookings.id, input.id))
-            .limit(1);
-          const booking = rows[0];
-          if (!booking) return { success: true };
-          if (booking.userId !== userId)
-            throw new TRPCError({
-              code: "FORBIDDEN",
-              message: "Booking not accessible",
-            });
+      return await withDatabaseErrorHandling(async () => {
+        const rows = await db
+          .select()
+          .from(bookings)
+          .where(eq(bookings.id, input.id))
+          .limit(1);
+        const booking = rows[0];
+        if (!booking) return { success: true };
+        if (booking.userId !== userId)
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "Booking not accessible",
+          });
 
-          await db.delete(bookings).where(eq(bookings.id, input.id));
-          return { success: true };
-        },
-        "Failed to delete booking"
-      );
+        await db.delete(bookings).where(eq(bookings.id, input.id));
+        return { success: true };
+      }, "Failed to delete booking");
     }),
 });

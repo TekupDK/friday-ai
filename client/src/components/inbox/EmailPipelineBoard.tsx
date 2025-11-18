@@ -36,7 +36,6 @@ import { PipelineColumn, type PipelineStage } from "./PipelineColumn";
 
 import { trpc } from "@/lib/trpc";
 
-
 // Pipeline stage configuration
 const PIPELINE_STAGES: Array<{ stage: PipelineStage; title: string }> = [
   { stage: "needs_action", title: "Needs Action" },

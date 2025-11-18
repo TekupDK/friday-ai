@@ -32,12 +32,14 @@ Create a new page component following Friday AI Chat patterns exactly.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing page components
 - `codebase_search` - Find similar pages
 - `grep` - Search for routing patterns
 - `search_replace` - Create new page
 
 **DO NOT:**
+
 - Create page without reviewing patterns
 - Skip routing setup
 - Ignore error boundaries
@@ -70,6 +72,7 @@ Before creating, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Simple Page Pattern
+
 ```typescript
 import { memo } from "react";
 import { trpc } from "@/lib/trpc";
@@ -110,6 +113,7 @@ export default FeaturePage;
 ```
 
 ### Example: Page with Routing
+
 ```typescript
 // In client/src/_core/routes.tsx or similar
 import { Route } from "wouter";
@@ -120,6 +124,7 @@ import FeaturePage from "@/pages/FeaturePage";
 ```
 
 ### Example: Page with tRPC Mutation
+
 ```typescript
 import { memo, useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -215,6 +220,7 @@ export default CreatePage;
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Page renders correctly
 - ✅ Routing works
 - ✅ Data fetching works
@@ -241,16 +247,18 @@ After implementation:
 \`\`\`
 
 **tRPC Hooks Used:**
+
 - `trpc.[router].list.useQuery()` - Data fetching
 - `trpc.[router].create.useMutation()` - Create action
 
 **Files Created/Modified:**
+
 - `client/src/pages/[FeaturePage].tsx` - Page component
 - `client/src/_core/routes.tsx` - Route added
 
 **Verification:**
+
 - ✅ Typecheck: PASSED
 - ✅ Routing: WORKING
 - ✅ Pattern match: PASSED
 ```
-

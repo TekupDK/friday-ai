@@ -109,8 +109,7 @@ export function SegmentForm({ isOpen, onClose, segmentId }: SegmentFormProps) {
     }
   };
 
-  const isSubmitting =
-    createMutation.isPending || updateMutation.isPending;
+  const isSubmitting = createMutation.isPending || updateMutation.isPending;
 
   return (
     <AppleModal

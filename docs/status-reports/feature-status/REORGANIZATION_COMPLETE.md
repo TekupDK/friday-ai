@@ -91,7 +91,7 @@ Created README.md in each category folder with:
 
 ## 📂 New Structure Overview
 
-```text
+````text
 docs/
 ├── README.md                           # Main comprehensive index (updated)
 ├── DOCS_STRATEGY.md                    # Documentation strategy (existing)
@@ -482,7 +482,7 @@ Get-ChildItem -Path "c:\Users\empir\Tekup\services\tekup-ai-v2\docs" -Filter "*.
 
 # Result: 150+ files (81 moved + existing + 11 new READMEs)
 
-```
+````
 
 ---
 

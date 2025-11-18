@@ -401,16 +401,19 @@
 ### Hvad Vi Har Opnået
 
 ✅ **Complete Subscription System:**
+
 - Backend: Database, API, business logic
 - Frontend: UI components, AI integration
 - AI: Recommendations, churn prediction, usage tracking
 
 ✅ **Business Value:**
+
 - Potential revenue: 253,000-541,000 kr/år
 - ROI: 270% i år 1
 - Churn reduction: 15% → <5%
 
 ✅ **Technical Excellence:**
+
 - Type-safe APIs (tRPC)
 - Performance optimized (indexes)
 - AI-powered features
@@ -419,16 +422,19 @@
 ### Hvad Mangler
 
 ⏳ **Critical:**
+
 - Background jobs (monthly renewals)
 - Usage tracking integration (auto-track fra bookings)
 - Email templates (welcome, renewal, cancellation)
 
 ⏳ **Important:**
+
 - Testing (unit, integration, E2E)
 - Monitoring & alerts
 - Error handling improvements
 
 ⏳ **Nice to Have:**
+
 - A/B testing framework
 - Customer feedback loop
 - Marketing integration
@@ -454,4 +460,3 @@
 
 **Last Updated:** 2025-01-28  
 **Maintained by:** TekupDK Development Team
-

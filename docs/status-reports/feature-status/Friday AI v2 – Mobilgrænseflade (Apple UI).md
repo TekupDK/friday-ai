@@ -31,33 +31,27 @@
 ## Skærme (Mobil)
 
 - `client/src/mobile/tabs/HomeTab.tsx`
-
   - Kondenseret “3‑panel” oversigt: mini‑kort for AI, Email, Workspace.
 
   - Check‑in status, system badges (DB, Billy, Google) som i headeren `WorkspaceLayout.tsx:181-253`.
 
 - `client/src/mobile/tabs/ChatTab.tsx`
-
   - Wrapper der renderer `AIAssistantPanelV2` fuldskærm, med mobile header og hurtige handlinger.
 
   - Voice input (Web Speech API) via `client/src/hooks/useVoiceInput.ts`.
 
 - `client/src/mobile/tabs/EmailTab.tsx`
-
   - Renderer `EmailCenterPanel` med swipe‑gestures (listet UI‑adfærd), quick‑reply chips og trådvisning tilpasset mobil.
 
 - `client/src/mobile/tabs/WorkspaceTab.tsx`
-
   - Renderer `SmartWorkspacePanel` til team‑kontekst, mål og næste skridt.
 
 - `client/src/mobile/tabs/SettingsTab.tsx`
-
   - Integrations (Gmail/Calendar/Billy), tema (lys/mørk/system), notifikationer.
 
 ## Friday Check‑in (Mobil Wizard)
 
 - `client/src/mobile/checkin/CheckInWizard.tsx`
-
   - Trin: Wins → Blockers → Mood (emoji) → Goals → Review.
 
   - Brug `AppleCard` for hvert trin, progressindikator og `AppleButton` CTA’er.

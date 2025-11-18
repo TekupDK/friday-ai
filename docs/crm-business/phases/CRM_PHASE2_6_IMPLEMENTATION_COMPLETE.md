@@ -37,7 +37,7 @@
 
 ### Phase 2: Opportunities (7 endpoints)
 
-```typescript
+````typescript
 crm.extensions.createOpportunity; // Create new deal
 crm.extensions.listOpportunities; // List with filtering
 crm.extensions.updateOpportunity; // Update deal, auto-close date
@@ -249,7 +249,7 @@ await trpc.crm.extensions.logAudit.mutate({
   userAgent: req.headers["user-agent"],
 });
 
-```
+````
 
 ---
 

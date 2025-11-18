@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der markerer tasks som færdige, verificerer 
 ## TASK
 
 Marker task som færdig ved at:
+
 - Verificere at task er komplet
 - Gennemgå implementation
 - Opdatere dokumentation
@@ -36,6 +37,7 @@ Marker task som færdig ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find task implementation
 - `read_file` - Læs relevante filer
 - `run_terminal_cmd` - Verificer completion
@@ -43,6 +45,7 @@ Marker task som færdig ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Marker ufærdige tasks som færdige
 - Spring over verificering
 - Ignorere edge cases
@@ -117,6 +120,7 @@ Provide task completion summary:
 [Beskrivelse af original task]
 
 **Requirements:**
+
 - [Requirement 1] - ✅ Opfyldt
 - [Requirement 2] - ✅ Opfyldt
 - [Requirement 3] - ✅ Opfyldt
@@ -124,16 +128,19 @@ Provide task completion summary:
 ## Implementation
 
 ### Hvad Er Implementeret
+
 - ✅ [Feature 1] - [Beskrivelse]
 - ✅ [Feature 2] - [Beskrivelse]
 - ✅ [Feature 3] - [Beskrivelse]
 
 ### Filer Ændret
+
 - `[file1].ts` - [Beskrivelse]
 - `[file2].tsx` - [Beskrivelse]
 - `[file3].md` - [Beskrivelse]
 
 ### Tekniske Detaljer
+
 - [Detail 1]
 - [Detail 2]
 - [Detail 3]
@@ -141,21 +148,25 @@ Provide task completion summary:
 ## Verificering
 
 ### Functionality
+
 - ✅ [Check 1] - PASSER
 - ✅ [Check 2] - PASSER
 - ✅ [Check 3] - PASSER
 
 ### Code Quality
+
 - ✅ TypeScript check: PASSER
 - ✅ Tests: PASSER
 - ✅ Linter: PASSER
 - ✅ Code review: GENNEMFØRT
 
 ### Edge Cases
+
 - ✅ [Edge case 1] - Håndteret
 - ✅ [Edge case 2] - Håndteret
 
 ### Documentation
+
 - ✅ Code dokumenteret
 - ✅ API dokumenteret
 - ✅ README opdateret
@@ -174,6 +185,7 @@ Provide task completion summary:
 ## Næste Steps
 
 ### Immediate
+
 1. **[Next Task 1]**
    - [Beskrivelse]
    - Priority: [High/Medium/Low]
@@ -183,6 +195,7 @@ Provide task completion summary:
    - [Beskrivelse]
 
 ### Dependencies
+
 - [Dependency 1] - [Status]
 - [Dependency 2] - [Status]
 
@@ -229,4 +242,3 @@ Før completion, verificer:
 ---
 
 **CRITICAL:** Start med at verificere task completion, derefter gennemgå kvalitet og dokumentation, og marker task som færdig med klar summary.
-

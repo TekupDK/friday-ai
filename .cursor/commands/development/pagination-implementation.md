@@ -19,4 +19,3 @@ Add pagination to queries, implement UI pagination, handle loading states, optim
 ## OUTPUT
 
 Pagination implemented with UI and backend support.
-

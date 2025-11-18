@@ -12,6 +12,7 @@ Skab struktureret data: filnavne, endpoints, krav, fejl, variabler.
 ## TASK
 
 Ekstraher struktureret data fra chatten:
+
 - **Filnavne:** Alle filer nævnt eller ændret
 - **Endpoints:** API endpoints diskuteret
 - **Krav:** Requirements specificeret
@@ -22,19 +23,24 @@ Ekstraher struktureret data fra chatten:
 
 ```markdown
 ## Filnavne
+
 - `[file path]` - [Kontekst]
 
 ## Endpoints
+
 - `[method] [path]` - [Beskrivelse]
 
 ## Krav
+
 - [Requirement 1]
 - [Requirement 2]
 
 ## Fejl
+
 - [Error 1] - [Status]
 
 ## Variabler
+
 - `[variable]` - [Værdi/Beskrivelse]
 ```
 

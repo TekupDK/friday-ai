@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der uddyber feature implementeringer med tekn
 ## TASK
 
 Uddyb feature implementering ved at:
+
 - Analysere implementation design og arkitektur
 - Gennemgå tekniske detaljer og patterns
 - Dokumentere kode eksempler og best practices
@@ -36,6 +37,7 @@ Uddyb feature implementering ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find feature implementeringer
 - `read_file` - Læs relevante filer
 - `grep` - Søg efter patterns
@@ -43,6 +45,7 @@ Uddyb feature implementering ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over tekniske detaljer
 - Ignorere design beslutninger
 - Glem dependencies
@@ -109,7 +112,7 @@ Før uddybning, tænk igennem:
 
 Provide comprehensive feature elaboration:
 
-```markdown
+````markdown
 # Detaljeret Feature Implementation: [Feature Navn]
 
 ## Feature Oversigt
@@ -118,12 +121,14 @@ Provide comprehensive feature elaboration:
 [Detaljeret beskrivelse af featuren]
 
 **Status:**
+
 - ✅ Implementeret
 - ✅ Testet
 - ✅ Dokumenteret
 - ⏳ [Manglende del]
 
 **Business Value:**
+
 - [Value 1]
 - [Value 2]
 - [Value 3]
@@ -131,9 +136,11 @@ Provide comprehensive feature elaboration:
 ## Arkitektur og Design
 
 ### System Design
+
 [Diagram eller beskrivelse af system design]
 
 ### Design Beslutninger
+
 1. **[Beslutning 1]**
    - **Rationale:** [Hvorfor]
    - **Alternativer:** [Hvad blev overvejet]
@@ -143,6 +150,7 @@ Provide comprehensive feature elaboration:
    - [Samme struktur...]
 
 ### Data Flow
+
 [Beskrivelse af data flow gennem systemet]
 
 ## Implementation Detaljer
@@ -150,22 +158,27 @@ Provide comprehensive feature elaboration:
 ### Backend Implementation
 
 **Files:**
+
 - `server/[file].ts` - [Beskrivelse]
 - `server/[file].ts` - [Beskrivelse]
 
 **Key Components:**
+
 ```typescript
 // Eksempel kode
 export async function featureFunction() {
   // Implementation
 }
 ```
+````
 
 **tRPC Endpoints:**
+
 - `feature.action` - [Beskrivelse]
 - `feature.query` - [Beskrivelse]
 
 **Database Schema:**
+
 ```typescript
 // Schema eksempel
 export const featureTable = mysqlTable("feature", {
@@ -176,10 +189,12 @@ export const featureTable = mysqlTable("feature", {
 ### Frontend Implementation
 
 **Files:**
+
 - `client/src/components/[component].tsx` - [Beskrivelse]
 - `client/src/pages/[page].tsx` - [Beskrivelse]
 
 **Key Components:**
+
 ```typescript
 // React component eksempel
 export function FeatureComponent() {
@@ -188,54 +203,63 @@ export function FeatureComponent() {
 ```
 
 **State Management:**
+
 - [Hvordan state håndteres]
 
 **UI/UX:**
+
 - [UI/UX overvejelser]
 
 ## Integration Points
 
 ### External APIs
+
 - [API 1] - [Beskrivelse]
 - [API 2] - [Beskrivelse]
 
 ### Internal Services
+
 - [Service 1] - [Beskrivelse]
 - [Service 2] - [Beskrivelse]
 
 ### Dependencies
+
 - [Dependency 1] - [Version] - [Purpose]
 - [Dependency 2] - [Version] - [Purpose]
 
 ## Code Patterns
 
 ### Design Patterns
+
 - [Pattern 1] - [Hvor brugt]
 - [Pattern 2] - [Hvor brugt]
 
 ### Best Practices
+
 - ✅ [Practice 1] - [Hvordan anvendt]
 - ✅ [Practice 2] - [Hvordan anvendt]
 
 ### Code Examples
+
 ```typescript
 // Eksempel 1: [Beskrivelse]
-[Kode]
-
 // Eksempel 2: [Beskrivelse]
-[Kode]
+[Kode][Kode];
 ```
 
 ## Testing
 
 **Unit Tests:**
+
 - [Test 1] - [Status]
 - [Test 2] - [Status]
 
 **Integration Tests:**
+
 - [Test 1] - [Status]
 
 **E2E Tests:**
+
 - [Test 1] - [Status]
 
 ## Performance Considerations
@@ -253,6 +277,7 @@ export function FeatureComponent() {
 ## Anbefalinger
 
 ### Forbedringer
+
 1. **[Forbedring 1]**
    - [Beskrivelse]
    - Estimated: [X] hours
@@ -262,11 +287,13 @@ export function FeatureComponent() {
    - [Beskrivelse]
 
 ### Optimizations
+
 1. **[Optimization 1]**
    - [Beskrivelse]
    - Expected impact: [Impact]
 
 ### Refactoring Muligheder
+
 1. **[Refactoring 1]**
    - [Beskrivelse]
    - Benefit: [Benefit]
@@ -276,6 +303,7 @@ export function FeatureComponent() {
 1. [Næste skridt 1]
 2. [Næste skridt 2]
 3. [Næste skridt 3]
+
 ```
 
 ## GUIDELINES
@@ -303,3 +331,4 @@ Efter uddybning, verificer:
 
 **CRITICAL:** Start med at analysere feature kode, derefter gennemgå implementation og strukturér en omfattende tekniske gennemgang med kode eksempler.
 
+```

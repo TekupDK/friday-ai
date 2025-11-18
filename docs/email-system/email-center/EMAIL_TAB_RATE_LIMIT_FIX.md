@@ -26,11 +26,10 @@
 ```typescript
 const { data: labels, isLoading: labelsLoading } =
   trpc.inbox.email.getLabels.useQuery(undefined, {
-    staleTime: 5 *60* 1000, // Cache for 5 minutter
-    cacheTime: 10 *60* 1000, // Keep in cache for 10 minutter
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutter
+    cacheTime: 10 * 60 * 1000, // Keep in cache for 10 minutter
     retry: false, // Don't retry on error - labels change rarely
   });
-
 ```
 
 ---

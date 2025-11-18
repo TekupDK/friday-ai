@@ -47,7 +47,10 @@ export class LiteLLMCacheRedis {
   /**
    * Get cached response if available and fresh
    */
-  async get<T = unknown>(messages: unknown[], model: string): Promise<T | null> {
+  async get<T = unknown>(
+    messages: unknown[],
+    model: string
+  ): Promise<T | null> {
     try {
       const client = getRedisClient();
       const key = this.getCacheKey(messages, model);
@@ -71,9 +74,11 @@ export class LiteLLMCacheRedis {
 
       // Update hits count
       cached.hits++;
-      await client.set(key, cached, { ex: Math.ceil(this.maxAge / 1000) }).catch(() => {
-        // Ignore update errors
-      });
+      await client
+        .set(key, cached, { ex: Math.ceil(this.maxAge / 1000) })
+        .catch(() => {
+          // Ignore update errors
+        });
 
       logger.info(
         { model, hits: cached.hits, age },
@@ -91,7 +96,11 @@ export class LiteLLMCacheRedis {
   /**
    * Store response in cache
    */
-  async set<T = unknown>(messages: unknown[], model: string, response: T): Promise<void> {
+  async set<T = unknown>(
+    messages: unknown[],
+    model: string,
+    response: T
+  ): Promise<void> {
     try {
       const client = getRedisClient();
       const key = this.getCacheKey(messages, model);
@@ -152,7 +161,9 @@ export class LiteLLMCacheRedis {
           })
         );
 
-        const validEntries = entries.filter((e): e is CacheEntry<unknown> => e !== null);
+        const validEntries = entries.filter(
+          (e): e is CacheEntry<unknown> => e !== null
+        );
         totalHits = validEntries.reduce((sum, e) => sum + e.hits, 0);
         totalAge = validEntries.reduce(
           (sum, e) => sum + (Date.now() - e.timestamp),

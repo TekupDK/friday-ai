@@ -1,6 +1,6 @@
 /**
  * Mock Error Hook
- * 
+ *
  * Throws error - used for testing error handling
  */
 
@@ -11,4 +11,3 @@ export default async function errorHook(
 ): Promise<HookResult> {
   throw new Error("Mock hook threw an error");
 }
-

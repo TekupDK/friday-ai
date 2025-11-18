@@ -30,12 +30,14 @@ Suggest improvements to code during development by identifying opportunities for
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read current code
 - `codebase_search` - Find better patterns
 - `grep` - Search for patterns
 - `run_terminal_cmd` - Check performance
 
 **DO NOT:**
+
 - Suggest breaking changes
 - Ignore context
 - Miss opportunities
@@ -73,30 +75,35 @@ Before suggesting, think through:
 ## IMPROVEMENT CATEGORIES
 
 ### 1. Code Structure
+
 - Better organization
 - Clearer naming
 - Better abstractions
 - Improved readability
 
 ### 2. Performance
+
 - Algorithm optimization
 - Memoization opportunities
 - Query optimization
 - Bundle size reduction
 
 ### 3. Type Safety
+
 - Better types
 - Type inference
 - Null safety
 - Generic improvements
 
 ### 4. Best Practices
+
 - Error handling
 - Logging
 - Testing
 - Documentation
 
 ### 5. Maintainability
+
 - Code reusability
 - Clear dependencies
 - Better separation
@@ -141,7 +148,7 @@ After suggestions, verify:
 
 Provide improvement suggestions:
 
-```markdown
+````markdown
 # Improvement Suggestions
 
 **Date:** 2025-11-16
@@ -149,6 +156,7 @@ Provide improvement suggestions:
 **Status:** [REVIEWED/SUGGESTIONS PROVIDED]
 
 ## Current Code Assessment
+
 - **Quality:** [RATING]
 - **Performance:** [RATING]
 - **Maintainability:** [RATING]
@@ -156,47 +164,59 @@ Provide improvement suggestions:
 ## Improvement Opportunities
 
 ### 🚀 High Impact: [Improvement Title]
+
 **Category:** [CATEGORY]
 **Effort:** [LOW/MEDIUM/HIGH]
 **Benefit:** [BENEFIT]
 
 **Current:**
+
 ```typescript
 // Current code
 ```
+````
 
 **Improved:**
+
 ```typescript
 // Improved code
 ```
 
 **Benefits:**
+
 - [Benefit 1]
 - [Benefit 2]
 - [Benefit 3]
 
 **Implementation:**
+
 1. [Step 1]
 2. [Step 2]
 
 ### ⚡ Performance: [Improvement Title]
+
 [Similar structure]
 
 ### 🎯 Best Practice: [Improvement Title]
+
 [Similar structure]
 
 ## Quick Wins
+
 1. [Easy improvement 1]
 2. [Easy improvement 2]
 
 ## Long-term Improvements
+
 1. [Long-term improvement 1]
 2. [Long-term improvement 2]
 
 ## Priority Recommendations
+
 1. **[HIGH]** [Improvement 1] - [Reason]
 2. **[MEDIUM]** [Improvement 2] - [Reason]
 3. **[LOW]** [Improvement 3] - [Reason]
+
 ```
 
 ## GUIDELINES
@@ -211,3 +231,4 @@ Provide improvement suggestions:
 
 **CRITICAL:** Suggest improvements proactively. Help developers write better code during development.
 
+```

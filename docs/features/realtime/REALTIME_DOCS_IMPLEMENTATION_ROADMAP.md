@@ -49,8 +49,9 @@ This roadmap outlines the complete implementation of a real-time documentation s
 
   ```bash
   pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter
+  ```
 
-```text
+````text
 
 - [ ] Complete database schema
 
@@ -477,4 +478,4 @@ pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-ma
 ```bash
 tekup-docs status  # (after CLI is functional)
 
-```
+````

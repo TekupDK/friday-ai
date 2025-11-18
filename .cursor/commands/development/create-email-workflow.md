@@ -30,12 +30,14 @@ Create a new email automation workflow following Friday AI Chat patterns exactly
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing workflow files
 - `codebase_search` - Find similar workflows
 - `grep` - Search for workflow patterns
 - `search_replace` - Create new workflow
 
 **DO NOT:**
+
 - Create workflow without reviewing patterns
 - Skip error handling
 - Ignore stage transitions
@@ -68,6 +70,7 @@ Before creating, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Pipeline Stage Handler
+
 ```typescript
 /**
  * Handle pipeline stage transition
@@ -76,15 +79,24 @@ Before creating, think through:
 export async function handlePipelineTransition(
   userId: number,
   threadId: string,
-  newStage: "needs_action" | "venter_pa_svar" | "i_kalender" | "finance" | "afsluttet"
+  newStage:
+    | "needs_action"
+    | "venter_pa_svar"
+    | "i_kalender"
+    | "finance"
+    | "afsluttet"
 ): Promise<void> {
   const pipelineState = await getPipelineState(userId, threadId);
   if (!pipelineState) {
-    console.warn(`[PipelineWorkflow] No pipeline state found for thread ${threadId}`);
+    console.warn(
+      `[PipelineWorkflow] No pipeline state found for thread ${threadId}`
+    );
     return;
   }
 
-  console.log(`[PipelineWorkflow] Handling transition to ${newStage} for thread ${threadId}`);
+  console.log(
+    `[PipelineWorkflow] Handling transition to ${newStage} for thread ${threadId}`
+  );
 
   switch (newStage) {
     case "i_kalender":
@@ -98,6 +110,7 @@ export async function handlePipelineTransition(
 ```
 
 ### Example: Stage Handler Implementation
+
 ```typescript
 /**
  * Auto-Calendar: Create calendar event when "I kalender" stage is reached
@@ -142,7 +155,9 @@ async function handleCalendarStage(
       // ... more details
     });
 
-    console.log(`[PipelineWorkflow] Calendar event created for thread ${threadId}`);
+    console.log(
+      `[PipelineWorkflow] Calendar event created for thread ${threadId}`
+    );
   } catch (error) {
     console.error(`[PipelineWorkflow] Failed to handle calendar stage:`, error);
   }
@@ -191,6 +206,7 @@ async function handleCalendarStage(
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Workflow handler follows existing patterns
 - ✅ Error handling implemented
 - ✅ Logging added for debugging
@@ -213,15 +229,17 @@ After implementation:
 \`\`\`
 
 **Actions Performed:**
+
 - [Action 1]
 - [Action 2]
 
 **Files Modified:**
+
 - `server/pipeline-workflows.ts` - Added handler
 
 **Verification:**
+
 - ✅ Pattern match: PASSED
 - ✅ Error handling: PASSED
 - ✅ Tested: PASSED
 ```
-

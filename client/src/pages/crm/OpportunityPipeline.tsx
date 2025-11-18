@@ -214,25 +214,31 @@ export default function OpportunityPipeline() {
             <header>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold" data-testid="opportunities-page-title">Opportunities</h1>
+                  <h1
+                    className="text-3xl font-bold"
+                    data-testid="opportunities-page-title"
+                  >
+                    Opportunities
+                  </h1>
                   <p className="text-muted-foreground mt-1">
                     Manage deals through the sales pipeline
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  {enrichedOpportunities && enrichedOpportunities.length > 0 && (
-                    <AppleButton
-                      variant="secondary"
-                      data-testid="export-opportunities-csv-button"
-                      onClick={() => {
-                        if (!enrichedOpportunities) return;
-                        exportOpportunitiesToCSV(enrichedOpportunities);
-                        toast.success("Opportunities exported to CSV");
-                      }}
-                    >
-                      Export CSV
-                    </AppleButton>
-                  )}
+                  {enrichedOpportunities &&
+                    enrichedOpportunities.length > 0 && (
+                      <AppleButton
+                        variant="secondary"
+                        data-testid="export-opportunities-csv-button"
+                        onClick={() => {
+                          if (!enrichedOpportunities) return;
+                          exportOpportunitiesToCSV(enrichedOpportunities);
+                          toast.success("Opportunities exported to CSV");
+                        }}
+                      >
+                        Export CSV
+                      </AppleButton>
+                    )}
                   <AppleButton
                     onClick={() => {
                       setEditingOpportunity(null);
@@ -271,7 +277,8 @@ export default function OpportunityPipeline() {
                 <section aria-label="Opportunity pipeline kanban board">
                   <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 h-[calc(100vh-12rem)]">
                     {OPPORTUNITY_STAGES.map(({ stage, title }) => {
-                      const stageOpportunities = opportunitiesByStage[stage] || [];
+                      const stageOpportunities =
+                        opportunitiesByStage[stage] || [];
                       return (
                         <OpportunityColumn
                           key={stage}

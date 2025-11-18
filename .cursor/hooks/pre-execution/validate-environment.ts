@@ -1,6 +1,6 @@
 /**
  * Pre-execution Hook: Validate Environment
- * 
+ *
  * Validates environment variables and configuration before agent execution
  */
 
@@ -60,4 +60,3 @@ export async function validateEnvironment(): Promise<EnvironmentValidation> {
 
 // Default export for hook executor
 export default validateEnvironment;
-

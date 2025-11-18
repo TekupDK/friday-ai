@@ -54,7 +54,7 @@
 
 ### Frontend UI
 
-```typescript
+````typescript
 // AI Generation Buttons
 <Button onClick={generateWeeklyDigest}>Weekly Digest</Button>
 <Button onClick={bulkGenerateLeadDocs}>Bulk Generate</Button>
@@ -193,7 +193,7 @@ npx playwright test tests/ai/ai-docs-generator.test.ts --ui
 
 11 passed (30s)
 
-```
+````
 
 ---
 

@@ -9,6 +9,7 @@
 ## 🎯 Principper
 
 **VIKKE version bump før:**
+
 1. ✅ Alle tomme/backup/temp filer er slettet
 2. ✅ Test filer er organiseret
 3. ✅ Dokumentation er på plads
@@ -24,10 +25,12 @@
 #### **1. Empty Files (0 bytes) - SKAL SLETTES**
 
 **✅ VERIFICERET:**
+
 - `check-env.js` - **BEHOLDES** (103 linjer, bruges i package.json scripts)
 - `.gitkeep` - **BEHOLDES** (intentional empty file)
 
 **Filer at tjekke/slette (hvis de eksisterer og er tomme):**
+
 - `DEBUG_AKTUEL_STATUS.md` (tjek om eksisterer)
 - `FIX_500_ERROR.md` (tjek om eksisterer)
 - `LOGIN_FIXES_COMPLETE.md` (tjek om eksisterer)
@@ -44,6 +47,7 @@
 #### **2. Temporary Files - SKAL SLETTES**
 
 **✅ VERIFICERET:**
+
 - `stats.html` - **EKSISTERER** (i root)
 - `data/stats.html` - **EKSISTERER** (i data/)
 - `analysis-emil-laerke.json` (tjek om eksisterer)
@@ -56,6 +60,7 @@
 #### **3. Backup Files - SKAL SLETTES**
 
 **✅ VERIFICERET:**
+
 - `drizzle/schema.backup.ts` - **EKSISTERER IKKE** ✅
 
 **Status:** Ingen backup files at slette.
@@ -63,6 +68,7 @@
 #### **4. Test Files i Root - SKAL FLYTTES**
 
 **Flyt til `tests/manual/`:**
+
 - `test-all-email-functions.mjs`
 - `test-billy-api.ts`
 - `test-billy-invoice-response.mjs`
@@ -87,6 +93,7 @@
 Se `DOCS_CLEANUP_PLAN.md` for detaljeret liste.
 
 **Hurtig oversigt:**
+
 - Status & Progress docs → `docs/status-reports/`
 - AI & Automation docs → `docs/ai-automation/`
 - Email & CRM docs → `docs/email-system/` eller `docs/crm-business/`
@@ -107,6 +114,7 @@ Get-ChildItem -Path . -File | Where-Object { $_.Length -eq 0 } | Select-Object N
 ```
 
 **Action:**
+
 - [ ] Liste alle tomme filer
 - [ ] Verificer `check-env.js` - er den tom eller har den indhold?
 - [ ] Slet kun filer der ER tomme (0 bytes)
@@ -123,6 +131,7 @@ Test-Path "env.template.txt"
 ```
 
 **Action:**
+
 - [ ] Verificer filerne eksisterer
 - [ ] Slet temporary files
 - [ ] Tjek `data/stats.html` også
@@ -135,6 +144,7 @@ Test-Path "drizzle/schema.backup.ts"
 ```
 
 **Action:**
+
 - [ ] Verificer backup file eksisterer
 - [ ] Slet hvis migrations er complete
 
@@ -164,6 +174,7 @@ Move-Item "test-all-email-functions.mjs" -Destination "tests/manual/" -ErrorActi
 ```
 
 **Action:**
+
 - [ ] Flyt alle 18 test files til `tests/manual/`
 - [ ] Verificer filerne er flyttet korrekt
 - [ ] Opdater eventuelle referencer i scripts
@@ -190,21 +201,25 @@ git commit -m "chore: organize test files to tests/manual/"
 #### **Step 3.2: Flyt Documentation i Batches**
 
 **Batch 1: Status Reports**
+
 - [ ] Flyt `PHASE*_*.md` til `docs/status-reports/phases/`
 - [ ] Flyt `DAY*_*.md` til `docs/status-reports/daily-progress/`
 - [ ] Flyt `*_STATUS.md` til `docs/status-reports/feature-status/`
 
 **Batch 2: AI & Automation**
+
 - [ ] Flyt `AI_*.md` til `docs/ai-automation/`
 - [ ] Flyt `FRIDAY_*.md` til `docs/ai-automation/friday-ai/`
 - [ ] Flyt `AUTONOMOUS-*.md` til `docs/ai-automation/agentic-rag/`
 
 **Batch 3: Integration Docs**
+
 - [ ] Flyt `LANGFUSE_*.md` til `docs/integrations/langfuse/`
 - [ ] Flyt `LITELLM_*.md` til `docs/integrations/litellm/`
 - [ ] Flyt `CHROMADB_*.md` til `docs/integrations/ChromaDB/`
 
 **Batch 4: Guides & Misc**
+
 - [ ] Flyt guides til `docs/guides/`
 - [ ] Flyt component docs til `docs/ui-frontend/`
 - [ ] Flyt email docs til `docs/email-system/`
@@ -235,6 +250,7 @@ Select-String -Path "*.md","*.json","*.ts","*.tsx" -Pattern "2\.0\.0|1\.8\.0|ver
 ```
 
 **Action:**
+
 - [ ] Find alle version referencer
 - [ ] Opdater til konsistent version
 - [ ] Verificer alle badges og links
@@ -259,6 +275,7 @@ pnpm build    # Production build
 ```
 
 **Action:**
+
 - [ ] Verificer ingen TypeScript errors
 - [ ] Verificer alle tests passerer
 - [ ] Verificer build er successful
@@ -270,6 +287,7 @@ git status
 ```
 
 **Action:**
+
 - [ ] Review alle ændringer
 - [ ] Verificer ingen kritiske filer er slettet
 - [ ] Verificer alle commits er logiske
@@ -279,20 +297,24 @@ git status
 ## 🎯 Næste Skridt
 
 **Start med Phase 1 - Safe Cleanup:**
+
 1. Tjek empty files
 2. Slet temporary files
 3. Slet backup files
 4. Commit
 
 **Derefter Phase 2:**
+
 1. Organize test files
 2. Commit
 
 **Derefter Phase 3 (større opgave):**
+
 1. Organize documentation i batches
 2. Commit hver batch
 
 **Til sidst Phase 4 & 5:**
+
 1. Version sync
 2. Final verification
 3. **FØRST NU** - Version bump til 2.0.1
@@ -309,4 +331,3 @@ git status
 ---
 
 **Status:** 🔄 Klar til at starte Phase 1
-

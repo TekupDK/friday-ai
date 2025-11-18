@@ -31,6 +31,7 @@ Analyze the current changes in this repo and explain their impact, assess risks,
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Run git diff commands
 - `read_file` - Read changed files
 - `codebase_search` - Find related code
@@ -38,6 +39,7 @@ Analyze the current changes in this repo and explain their impact, assess risks,
 - `read_file` - Read test files
 
 **DO NOT:**
+
 - Miss important changes
 - Underestimate risks
 - Skip test identification
@@ -69,18 +71,18 @@ Before analyzing, think through:
 
 ## STEPS
 
-1) Use git diff --name-only HEAD (or equivalent) to list changed files.
-2) Group files by type: backend, frontend, shared, config, tests, infra.
-3) For each group, summarize:
+1. Use git diff --name-only HEAD (or equivalent) to list changed files.
+2. Group files by type: backend, frontend, shared, config, tests, infra.
+3. For each group, summarize:
    - What changed
    - Potential impact and risk level (low/medium/high)
    - Which parts of the system might be affected
-4) Identify missing tests or validations that should exist for these changes.
+4. Identify missing tests or validations that should exist for these changes.
 
 ## OUTPUT
 
 Respond in Markdown with:
+
 - A table of changed files grouped by type
 - A short risk assessment per group
 - A checklist of tests that should be run.
-

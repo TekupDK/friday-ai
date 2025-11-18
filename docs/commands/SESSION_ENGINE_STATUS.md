@@ -5,7 +5,8 @@
 
 ## Session Status (baseret på chat)
 
-**Chat kontekst:** 
+**Chat kontekst:**
+
 - Brugeren arbejdede med CRM system setup og testing
 - Implementerede CRM Standalone Debug Mode
 - Implementerede CSV export for customers
@@ -16,7 +17,8 @@
 
 **Hvad arbejdes der på:** CRM system forbedringer og testing
 
-**Status:** 
+**Status:**
+
 - ✅ CSV Export for Customers - Færdigt
 - ✅ CSV Export for Leads - Færdigt (netop implementeret)
 - ✅ CSV Export for Opportunities - Færdigt (netop implementeret)
@@ -37,7 +39,6 @@
   - Eksporterer: ID, Name, Email, Phone, Company, Source, Status, Notes, Created At, Updated At
   - Date-stamped filename: `leads-export-YYYY-MM-DD.csv`
   - Proper CSV escaping for special characters
-  
 - ✅ **CSV Export for Opportunities** - Tilføjet "Export CSV" knap i OpportunityPipeline
   - Eksporterer: ID, Title, Customer, Stage, Value, Probability, Expected Close Date, Notes, Created At, Updated At
   - Date-stamped filename: `opportunities-export-YYYY-MM-DD.csv`
@@ -59,4 +60,3 @@
    - UX improvements
 
 **Status:** ✅ CSV exports implementeret - Klar til næste skridt
-

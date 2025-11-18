@@ -12,7 +12,7 @@
 
 ## 📐 **LAYOUT STRUKTUR:**
 
-```text
+````text
 ┌─────────────────┬─────────────────────────────────┬─────────────────┐
 │   VENSTRE PANEL │         MIDTERSTE PANEL          │   HØJRE PANEL   │
 │                 │                                 │                 │
@@ -283,6 +283,6 @@
 - 50% højere konvertering
 - Perfekt AI/human balance
 
-```
+````
 
 **Email Assistant integrerer perfekt i jeres 3-panel system med minimal disruption og maximum value!** 🎯

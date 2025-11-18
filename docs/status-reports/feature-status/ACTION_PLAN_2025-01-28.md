@@ -8,63 +8,63 @@
 
 ## Task Execution Plan
 
-| Area | Task | Priority | Size | Dependencies | Status | Notes |
-|------|------|----------|------|--------------|--------|-------|
-| **Backend - Security** |
-| backend | Fix weak authentication (demo mode) | P1 | M | None | ✅ **COMPLETED** | Rate limiting, DB validation, production blocking added |
-| backend | Remove test bypass from production | P1 | S | None | ✅ **COMPLETED** | Test mode only, requires TEST_SECRET |
-| backend | Fix CORS no-origin allowance | P1 | S | None | ✅ **COMPLETED** | Blocked in production |
-| backend | Add input length limits | P1 | M | None | ✅ **COMPLETED** | Validation helper created, message max reduced |
-| backend | Implement log redaction for sensitive data | P1 | M | None | 🔄 **IN PROGRESS** | Create redact.ts, update logger.ts, replace console.log |
-| backend | Fix CSP unsafe-eval in production | P1 | S | None | ⏳ **PENDING** | Remove unsafe-eval from CSP in production |
-| backend | Implement CSRF protection | P2 | L | sec-log-redaction | ⏳ **PENDING** | Create csrf.ts, add middleware, frontend integration |
-| backend | Fix session cookie security | P2 | S | None | ⏳ **PENDING** | Reduce expiry, use strict sameSite, enforce HTTPS |
-| backend | Add authorization ownership checks | P2 | M | None | ⏳ **PENDING** | Create requireOwnership helper, apply to all endpoints |
-| backend | Implement secret rotation mechanism | P2 | XL | None | ⏳ **PENDING** | Integrate AWS Secrets Manager, add rotation logic |
-| backend | Add data encryption at rest | P3 | XL | sec-secret-rotation | ⏳ **PENDING** | Encrypt PII fields before DB storage |
-| backend | Improve error message sanitization | P3 | S | sec-log-redaction | ⏳ **PENDING** | Create sanitizeError utility |
-| backend | Verify SQL queries use parameterized queries | P2 | M | None | ⏳ **PENDING** | Audit all sql template literals |
-| backend | Verify rate limiter fallback fix | P3 | S | None | ⏳ **PENDING** | Run regression tests |
-| **Frontend - Security** |
-| frontend | Sanitize HTML output (XSS prevention) | P2 | M | None | ⏳ **PENDING** | Install DOMPurify, sanitize RichTextEditor |
-| frontend | Add CSRF token to mutation requests | P2 | M | backend:sec-csrf | ⏳ **PENDING** | Update trpc client, add token to headers |
+| Area                         | Task                                         | Priority | Size | Dependencies                                        | Status             | Notes                                                   |
+| ---------------------------- | -------------------------------------------- | -------- | ---- | --------------------------------------------------- | ------------------ | ------------------------------------------------------- |
+| **Backend - Security**       |
+| backend                      | Fix weak authentication (demo mode)          | P1       | M    | None                                                | ✅ **COMPLETED**   | Rate limiting, DB validation, production blocking added |
+| backend                      | Remove test bypass from production           | P1       | S    | None                                                | ✅ **COMPLETED**   | Test mode only, requires TEST_SECRET                    |
+| backend                      | Fix CORS no-origin allowance                 | P1       | S    | None                                                | ✅ **COMPLETED**   | Blocked in production                                   |
+| backend                      | Add input length limits                      | P1       | M    | None                                                | ✅ **COMPLETED**   | Validation helper created, message max reduced          |
+| backend                      | Implement log redaction for sensitive data   | P1       | M    | None                                                | 🔄 **IN PROGRESS** | Create redact.ts, update logger.ts, replace console.log |
+| backend                      | Fix CSP unsafe-eval in production            | P1       | S    | None                                                | ⏳ **PENDING**     | Remove unsafe-eval from CSP in production               |
+| backend                      | Implement CSRF protection                    | P2       | L    | sec-log-redaction                                   | ⏳ **PENDING**     | Create csrf.ts, add middleware, frontend integration    |
+| backend                      | Fix session cookie security                  | P2       | S    | None                                                | ⏳ **PENDING**     | Reduce expiry, use strict sameSite, enforce HTTPS       |
+| backend                      | Add authorization ownership checks           | P2       | M    | None                                                | ⏳ **PENDING**     | Create requireOwnership helper, apply to all endpoints  |
+| backend                      | Implement secret rotation mechanism          | P2       | XL   | None                                                | ⏳ **PENDING**     | Integrate AWS Secrets Manager, add rotation logic       |
+| backend                      | Add data encryption at rest                  | P3       | XL   | sec-secret-rotation                                 | ⏳ **PENDING**     | Encrypt PII fields before DB storage                    |
+| backend                      | Improve error message sanitization           | P3       | S    | sec-log-redaction                                   | ⏳ **PENDING**     | Create sanitizeError utility                            |
+| backend                      | Verify SQL queries use parameterized queries | P2       | M    | None                                                | ⏳ **PENDING**     | Audit all sql template literals                         |
+| backend                      | Verify rate limiter fallback fix             | P3       | S    | None                                                | ⏳ **PENDING**     | Run regression tests                                    |
+| **Frontend - Security**      |
+| frontend                     | Sanitize HTML output (XSS prevention)        | P2       | M    | None                                                | ⏳ **PENDING**     | Install DOMPurify, sanitize RichTextEditor              |
+| frontend                     | Add CSRF token to mutation requests          | P2       | M    | backend:sec-csrf                                    | ⏳ **PENDING**     | Update trpc client, add token to headers                |
 | **Frontend - Accessibility** |
-| frontend | Add skip links to main layout | P1 | S | None | ⏳ **PENDING** | Integrate SkipLinks component |
-| frontend | Implement page title management | P1 | M | None | ⏳ **PENDING** | Add usePageTitle to all pages |
-| frontend | Fix heading hierarchy (SettingsDialog) | P1 | S | None | ⏳ **PENDING** | Replace h3 with h2 |
-| frontend | Fix heading hierarchy (ContextAwareness) | P1 | S | None | ⏳ **PENDING** | Fix h1→h2→h3 structure |
-| frontend | Add ARIA labels to icon-only buttons | P1 | M | None | ⏳ **PENDING** | Add aria-label, sr-only spans |
-| frontend | Add visible focus indicators (EmailListV2) | P1 | S | None | ⏳ **PENDING** | Add focus:ring classes |
-| frontend | Improve image alt text | P1 | S | None | ⏳ **PENDING** | Replace generic alt text |
-| frontend | Add ARIA descriptions to form controls | P2 | S | None | ⏳ **PENDING** | Add aria-labelledby/describedby |
-| frontend | Enhance EmailListV2 with listbox ARIA | P2 | M | None | ⏳ **PENDING** | Add role="listbox", aria-label |
-| frontend | Improve loading state announcements | P2 | S | None | ⏳ **PENDING** | Add aria-atomic, status messages |
-| frontend | Fix color contrast issues | P2 | M | None | ⏳ **PENDING** | Review contrast ratios |
-| frontend | Add focus indicators (DashboardLayout) | P2 | S | None | ⏳ **PENDING** | Add focus styles to sidebar |
-| frontend | Fix touch target sizes (44x44px) | P2 | S | None | ⏳ **PENDING** | Add padding to small elements |
-| frontend | Convert div/span buttons to semantic buttons | P2 | S | None | ⏳ **PENDING** | Replace with <button> elements |
-| frontend | Add reduced motion support | P3 | S | None | ⏳ **PENDING** | Add prefers-reduced-motion queries |
-| **Infrastructure** |
-| infra | Add missing security headers | P3 | S | None | ⏳ **PENDING** | Configure via Helmet |
-| infra | Set up dependency vulnerability scanning | P2 | M | None | ⏳ **PENDING** | Add npm audit, Snyk to CI/CD |
-| infra | Migrate secrets to secret management | P2 | XL | None | ⏳ **PENDING** | Integrate AWS Secrets Manager |
-| **Testing** |
-| tests | Add security regression tests | P2 | L | sec-log-redaction, sec-csrf | ⏳ **PENDING** | Test auth bypass, CSRF, input validation |
-| tests | Add rate limiter fallback regression tests | P3 | S | None | ⏳ **PENDING** | Verify operation-specific limits |
-| tests | Test CORS in production-like environment | P3 | M | backend:sec-cors-fix | ⏳ **PENDING** | Verify origin blocking |
-| tests | Set up automated accessibility testing | P2 | M | None | ⏳ **PENDING** | Install jest-axe, create test utilities |
-| tests | Manual screen reader testing | P3 | L | frontend:a11y-skip-links, frontend:a11y-aria-labels | ⏳ **PENDING** | Test with NVDA, VoiceOver |
-| tests | Run Lighthouse accessibility audit | P3 | M | frontend:a11y-fixes | ⏳ **PENDING** | Audit all pages, document scores |
-| **Documentation** |
-| docs | Review auto-generated API documentation | P3 | S | None | ⏳ **PENDING** | Review API_REFERENCE_AUTO.md |
-| docs | Create security remediation plan | P2 | M | None | ⏳ **PENDING** | Break down into sprint tasks |
-| docs | Schedule regular status report updates | P3 | S | None | ⏳ **PENDING** | Set up monthly updates |
-| docs | Review documentation organization plan | P3 | S | None | ⏳ **PENDING** | Review DOCS_CLEANUP_PLAN.md |
-| docs | Organize root-level documentation files | P3 | L | docs:review-org-plan | ⏳ **PENDING** | Move 83 files to docs/ |
-| docs | Create accessibility testing guide | P2 | M | tests:a11y-automated | ⏳ **PENDING** | Document testing procedures |
-| docs | Create accessibility statement page | P3 | M | frontend:a11y-fixes | ⏳ **PENDING** | Public-facing compliance page |
-| **Version Management** |
-| version | Prepare for version bump to 2.0.1 | P3 | S | docs:org-files, backend:sec-p1-all | ⏳ **PENDING** | Complete cleanup before bump |
+| frontend                     | Add skip links to main layout                | P1       | S    | None                                                | ⏳ **PENDING**     | Integrate SkipLinks component                           |
+| frontend                     | Implement page title management              | P1       | M    | None                                                | ⏳ **PENDING**     | Add usePageTitle to all pages                           |
+| frontend                     | Fix heading hierarchy (SettingsDialog)       | P1       | S    | None                                                | ⏳ **PENDING**     | Replace h3 with h2                                      |
+| frontend                     | Fix heading hierarchy (ContextAwareness)     | P1       | S    | None                                                | ⏳ **PENDING**     | Fix h1→h2→h3 structure                                  |
+| frontend                     | Add ARIA labels to icon-only buttons         | P1       | M    | None                                                | ⏳ **PENDING**     | Add aria-label, sr-only spans                           |
+| frontend                     | Add visible focus indicators (EmailListV2)   | P1       | S    | None                                                | ⏳ **PENDING**     | Add focus:ring classes                                  |
+| frontend                     | Improve image alt text                       | P1       | S    | None                                                | ⏳ **PENDING**     | Replace generic alt text                                |
+| frontend                     | Add ARIA descriptions to form controls       | P2       | S    | None                                                | ⏳ **PENDING**     | Add aria-labelledby/describedby                         |
+| frontend                     | Enhance EmailListV2 with listbox ARIA        | P2       | M    | None                                                | ⏳ **PENDING**     | Add role="listbox", aria-label                          |
+| frontend                     | Improve loading state announcements          | P2       | S    | None                                                | ⏳ **PENDING**     | Add aria-atomic, status messages                        |
+| frontend                     | Fix color contrast issues                    | P2       | M    | None                                                | ⏳ **PENDING**     | Review contrast ratios                                  |
+| frontend                     | Add focus indicators (DashboardLayout)       | P2       | S    | None                                                | ⏳ **PENDING**     | Add focus styles to sidebar                             |
+| frontend                     | Fix touch target sizes (44x44px)             | P2       | S    | None                                                | ⏳ **PENDING**     | Add padding to small elements                           |
+| frontend                     | Convert div/span buttons to semantic buttons | P2       | S    | None                                                | ⏳ **PENDING**     | Replace with <button> elements                          |
+| frontend                     | Add reduced motion support                   | P3       | S    | None                                                | ⏳ **PENDING**     | Add prefers-reduced-motion queries                      |
+| **Infrastructure**           |
+| infra                        | Add missing security headers                 | P3       | S    | None                                                | ⏳ **PENDING**     | Configure via Helmet                                    |
+| infra                        | Set up dependency vulnerability scanning     | P2       | M    | None                                                | ⏳ **PENDING**     | Add npm audit, Snyk to CI/CD                            |
+| infra                        | Migrate secrets to secret management         | P2       | XL   | None                                                | ⏳ **PENDING**     | Integrate AWS Secrets Manager                           |
+| **Testing**                  |
+| tests                        | Add security regression tests                | P2       | L    | sec-log-redaction, sec-csrf                         | ⏳ **PENDING**     | Test auth bypass, CSRF, input validation                |
+| tests                        | Add rate limiter fallback regression tests   | P3       | S    | None                                                | ⏳ **PENDING**     | Verify operation-specific limits                        |
+| tests                        | Test CORS in production-like environment     | P3       | M    | backend:sec-cors-fix                                | ⏳ **PENDING**     | Verify origin blocking                                  |
+| tests                        | Set up automated accessibility testing       | P2       | M    | None                                                | ⏳ **PENDING**     | Install jest-axe, create test utilities                 |
+| tests                        | Manual screen reader testing                 | P3       | L    | frontend:a11y-skip-links, frontend:a11y-aria-labels | ⏳ **PENDING**     | Test with NVDA, VoiceOver                               |
+| tests                        | Run Lighthouse accessibility audit           | P3       | M    | frontend:a11y-fixes                                 | ⏳ **PENDING**     | Audit all pages, document scores                        |
+| **Documentation**            |
+| docs                         | Review auto-generated API documentation      | P3       | S    | None                                                | ⏳ **PENDING**     | Review API_REFERENCE_AUTO.md                            |
+| docs                         | Create security remediation plan             | P2       | M    | None                                                | ⏳ **PENDING**     | Break down into sprint tasks                            |
+| docs                         | Schedule regular status report updates       | P3       | S    | None                                                | ⏳ **PENDING**     | Set up monthly updates                                  |
+| docs                         | Review documentation organization plan       | P3       | S    | None                                                | ⏳ **PENDING**     | Review DOCS_CLEANUP_PLAN.md                             |
+| docs                         | Organize root-level documentation files      | P3       | L    | docs:review-org-plan                                | ⏳ **PENDING**     | Move 83 files to docs/                                  |
+| docs                         | Create accessibility testing guide           | P2       | M    | tests:a11y-automated                                | ⏳ **PENDING**     | Document testing procedures                             |
+| docs                         | Create accessibility statement page          | P3       | M    | frontend:a11y-fixes                                 | ⏳ **PENDING**     | Public-facing compliance page                           |
+| **Version Management**       |
+| version                      | Prepare for version bump to 2.0.1            | P3       | S    | docs:org-files, backend:sec-p1-all                  | ⏳ **PENDING**     | Complete cleanup before bump                            |
 
 ---
 
@@ -82,6 +82,7 @@
 ### Week 1: Critical Security Fixes (P1)
 
 **Day 1-2:**
+
 1. ✅ Fix weak authentication (COMPLETED)
 2. ✅ Remove test bypass (COMPLETED)
 3. ✅ Fix CORS no-origin (COMPLETED)
@@ -89,44 +90,25 @@
 5. 🔄 Implement log redaction (IN PROGRESS)
 6. ⏳ Fix CSP unsafe-eval
 
-**Day 3-4:**
-7. ⏳ Fix session cookie security
-8. ⏳ Add authorization ownership checks
-9. ⏳ Verify SQL queries
+**Day 3-4:** 7. ⏳ Fix session cookie security 8. ⏳ Add authorization ownership checks 9. ⏳ Verify SQL queries
 
 ### Week 2: High Priority Security (P2)
 
-**Day 1-2:**
-10. ⏳ Implement CSRF protection (backend + frontend)
-11. ⏳ Sanitize HTML output (XSS prevention)
+**Day 1-2:** 10. ⏳ Implement CSRF protection (backend + frontend) 11. ⏳ Sanitize HTML output (XSS prevention)
 
-**Day 3-4:**
-12. ⏳ Set up dependency scanning
-13. ⏳ Add security regression tests
+**Day 3-4:** 12. ⏳ Set up dependency scanning 13. ⏳ Add security regression tests
 
 ### Week 3: Accessibility Critical (P1)
 
-**Day 1-2:**
-14. ⏳ Add skip links
-15. ⏳ Implement page title management
-16. ⏳ Fix heading hierarchies (2 tasks)
+**Day 1-2:** 14. ⏳ Add skip links 15. ⏳ Implement page title management 16. ⏳ Fix heading hierarchies (2 tasks)
 
-**Day 3-4:**
-17. ⏳ Add ARIA labels to icon buttons
-18. ⏳ Add focus indicators (2 tasks)
-19. ⏳ Improve image alt text
+**Day 3-4:** 17. ⏳ Add ARIA labels to icon buttons 18. ⏳ Add focus indicators (2 tasks) 19. ⏳ Improve image alt text
 
 ### Week 4: Accessibility High Priority (P2)
 
-**Day 1-2:**
-20. ⏳ Add ARIA descriptions
-21. ⏳ Enhance EmailListV2 ARIA
-22. ⏳ Improve loading announcements
+**Day 1-2:** 20. ⏳ Add ARIA descriptions 21. ⏳ Enhance EmailListV2 ARIA 22. ⏳ Improve loading announcements
 
-**Day 3-4:**
-23. ⏳ Fix color contrast
-24. ⏳ Fix touch targets
-25. ⏳ Convert div buttons to semantic
+**Day 3-4:** 23. ⏳ Fix color contrast 24. ⏳ Fix touch targets 25. ⏳ Convert div buttons to semantic
 
 ### Week 5+: Medium Priority & Infrastructure
 
@@ -267,11 +249,13 @@ backend:sec-p1-all (P1)
 ### Parallel Execution Opportunities
 
 **Can run in parallel:**
+
 - Frontend accessibility fixes (multiple developers)
 - Documentation tasks (non-blocking)
 - Testing setup (independent)
 
 **Must be sequential:**
+
 - Security fixes (P1 → P2 → P3)
 - CSRF (backend → frontend)
 - Version bump (after cleanup)
@@ -279,14 +263,17 @@ backend:sec-p1-all (P1)
 ### Sprint Planning
 
 **Sprint 1 (Week 1-2):** P1 Security + P1 Accessibility
+
 - 12 P1 tasks
 - Focus: Critical security and accessibility
 
 **Sprint 2 (Week 3-4):** P2 Security + P2 Accessibility
+
 - 16 P2 tasks
 - Focus: High priority improvements
 
 **Sprint 3 (Week 5-6):** P3 + Infrastructure
+
 - 12 P3 tasks + infrastructure
 - Focus: Polish and optimization
 
@@ -295,4 +282,3 @@ backend:sec-p1-all (P1)
 **Plan Generated:** 2025-01-28  
 **Next Review:** After Sprint 1 completion  
 **Owner:** Engineering Team Lead
-

@@ -12,6 +12,7 @@ Forklar systemarkitektur, komponenter, flow, og design decisions.
 ## TASK
 
 Forklar arkitektur:
+
 1. **System struktur** - Hvordan er systemet opbygget?
 2. **Komponenter** - Hvad er hovedkomponenterne?
 3. **Flow** - Hvordan flyder data?
@@ -51,4 +52,3 @@ Forklar arkitektur:
 ---
 
 **CRITICAL:** Analysér arkitektur, identificér komponenter og flow, og forklar på klar, struktureret måde.
-

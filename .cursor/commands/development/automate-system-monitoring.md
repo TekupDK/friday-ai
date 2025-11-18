@@ -30,11 +30,13 @@ Create automated monitoring scripts for systems, services, or infrastructure wit
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review existing monitoring
 - `codebase_search` - Find monitoring patterns
 - `grep` - Search for health checks
 
 **DO NOT:**
+
 - Create monitoring without understanding system
 - Skip alerting
 - Ignore logging
@@ -66,20 +68,21 @@ Before creating monitoring, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Monitoring Script Structure
+
 ```typescript
 // Monitor [Service Name]
 async function monitorService() {
   try {
     const health = await checkHealth();
     const metrics = await collectMetrics();
-    
+
     if (!health.ok) {
-      await sendAlert('Service unhealthy', health);
+      await sendAlert("Service unhealthy", health);
     }
-    
+
     await logMetrics(metrics);
   } catch (error) {
-    await sendAlert('Monitoring error', error);
+    await sendAlert("Monitoring error", error);
   }
 }
 ```
@@ -114,6 +117,7 @@ async function monitorService() {
 ## VERIFICATION
 
 After creating monitoring:
+
 - ✅ Monitoring script created
 - ✅ Alerts configured
 - ✅ Logging implemented
@@ -127,10 +131,12 @@ After creating monitoring:
 
 **Purpose:** [What this monitors]
 **Metrics Tracked:**
+
 - [Metric 1]
 - [Metric 2]
 
 **Alert Thresholds:**
+
 - [Metric]: [Threshold] → [Alert]
 
 **Script:**
@@ -139,6 +145,7 @@ After creating monitoring:
 \`\`\`
 
 **Configuration:**
+
 - [Config 1]
 - [Config 2]
 
@@ -153,4 +160,3 @@ After creating monitoring:
 - **Be logging:** Log all relevant information
 - **Be tested:** Verify monitoring works
 - **Be documented:** Document configuration
-

@@ -24,7 +24,7 @@ This guide will help you clean up the workspace by:
 
 Delete files that are definitely not needed:
 
-```powershell
+````powershell
 # Run from project root
 .\scripts\cleanup-phase1.ps1
 
@@ -279,7 +279,7 @@ Run the first cleanup script:
 ```powershell
 .\scripts\cleanup-phase1.ps1
 
-```
+````
 
 **It will:**
 

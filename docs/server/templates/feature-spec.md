@@ -18,7 +18,7 @@ As a [user type], I want [goal] so that [benefit].
 
 ### Architecture
 
-```text
+````text
 [Diagram or description]
 
 ```text
@@ -30,7 +30,7 @@ interface FeatureData {
   // Define data structure
 }
 
-```
+````
 
 ### API Endpoints
 

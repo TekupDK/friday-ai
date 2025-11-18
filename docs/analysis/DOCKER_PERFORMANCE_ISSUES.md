@@ -26,11 +26,13 @@
 ### ✅ Løsning 1: Optimerede Docker Files (Implementeret)
 
 **Ændringer:**
+
 - ✅ `.dockerignore` - Ekskluderer unødvendige filer
 - ✅ `Dockerfile.dev` - Kun kopierer nødvendige filer
 - ✅ Layer caching - Bedre cache strategi
 
 **Resultat:**
+
 - Hurtigere builds (kun nødvendige filer)
 - Mindre disk usage
 - Bedre cache hit rate
@@ -43,7 +45,7 @@
 # Backend (native)
 pnpm dev
 
-# Frontend (native)  
+# Frontend (native)
 pnpm dev:vite
 
 # Database (Docker - kun database)
@@ -51,12 +53,14 @@ docker-compose -f docker-compose.db-only.yml up
 ```
 
 **Fordele:**
+
 - ✅ Hurtigere startup
 - ✅ Mindre resource usage
 - ✅ Bedre debugging
 - ✅ Hurtigere hot-reload
 
 **Ulemper:**
+
 - ⚠️ Kræver lokal MySQL/PostgreSQL (eller Docker kun for DB)
 
 ### 🔧 Løsning 3: Database Only Docker
@@ -73,6 +77,7 @@ services:
 ```
 
 **Brug:**
+
 ```bash
 # Start kun database i Docker
 docker-compose -f docker-compose.db-only.yml up -d
@@ -85,17 +90,20 @@ pnpm dev:vite
 ## Anbefaling
 
 **For CRM Development:**
+
 1. **Brug native development** (backend + frontend)
 2. **Kun database i Docker** (hvis ikke lokal MySQL)
 3. **Docker kun når nødvendigt** (team consistency, CI/CD)
 
 **Docker er bedst til:**
+
 - ✅ Production deployment
 - ✅ Team consistency (når alle skal have samme setup)
 - ✅ CI/CD pipelines
 - ✅ Isolerede dependencies
 
 **Native er bedst til:**
+
 - ✅ Development speed
 - ✅ Debugging
 - ✅ Resource usage
@@ -103,12 +111,12 @@ pnpm dev:vite
 
 ## Performance Sammenligning
 
-| Approach | Build Time | Startup | Resource | Debug |
-|----------|-----------|---------|----------|-------|
-| Full Docker | 5-10 min | 30-60s | Høj | Svært |
-| Optimized Docker | 2-3 min | 20-30s | Medium | OK |
-| Native + DB Docker | 0 min | 5-10s | Lav | Let |
-| Full Native | 0 min | 3-5s | Lavest | Letest |
+| Approach           | Build Time | Startup | Resource | Debug  |
+| ------------------ | ---------- | ------- | -------- | ------ |
+| Full Docker        | 5-10 min   | 30-60s  | Høj      | Svært  |
+| Optimized Docker   | 2-3 min    | 20-30s  | Medium   | OK     |
+| Native + DB Docker | 0 min      | 5-10s   | Lav      | Let    |
+| Full Native        | 0 min      | 3-5s    | Lavest   | Letest |
 
 ## Næste Skridt
 
@@ -116,4 +124,3 @@ pnpm dev:vite
 2. **Overvej native development** for daglig brug
 3. **Brug Docker kun for database** hvis nødvendigt
 4. **Reserver full Docker** til production/CI
-

@@ -23,7 +23,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UI_CONSTANTS } from "@/constants/business";
 
-
 // Lazy load AI components for performance
 const EmailAISummary = lazy(() => import("./EmailAISummary"));
 const EmailLabelSuggestions = lazy(() => import("./EmailLabelSuggestions"));
@@ -205,7 +204,7 @@ export default function EmailListV2({
                 role="option"
                 tabIndex={0}
                 aria-selected={isSelected}
-                aria-label={`Email from ${getDisplayName(email.from || email.sender)}, ${email.subject}, ${email.unread ? 'unread' : 'read'}`}
+                aria-label={`Email from ${getDisplayName(email.from || email.sender)}, ${email.subject}, ${email.unread ? "unread" : "read"}`}
               >
                 <div className="flex items-start gap-3">
                   {/* Checkbox for multi-select */}

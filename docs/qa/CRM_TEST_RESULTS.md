@@ -13,24 +13,28 @@
 ## Issues Found
 
 ### Issue #1: URL Configuration
+
 **Severity:** High  
 **Description:** Tests use hardcoded URLs instead of BASE_URL from config  
 **Status:** ✅ FIXED  
 **Fix:** Updated all URLs to use BASE_URL constant
 
 ### Issue #2: Login Helper
+
 **Severity:** Medium  
 **Description:** Login helper may not work correctly with current auth setup  
 **Status:** ⚠️ NEEDS VERIFICATION  
 **Action Required:** Test login flow and update if needed
 
 ### Issue #3: Selector Specificity
+
 **Severity:** Medium  
 **Description:** Some selectors may be too specific and fail if UI changes  
 **Status:** ⚠️ MONITOR  
 **Action Required:** Use more robust selectors (data-testid, role-based)
 
 ### Issue #4: Test Timeouts
+
 **Severity:** Low  
 **Description:** Some tests may need longer timeouts for slow operations  
 **Status:** ⚠️ MONITOR  
@@ -39,6 +43,7 @@
 ## Test Coverage
 
 ### ✅ Covered Areas
+
 - CRM Dashboard
 - Customer List (search, create, export)
 - Lead Pipeline (kanban, create)
@@ -52,6 +57,7 @@
 - Accessibility
 
 ### ⏳ Pending Tests
+
 - Detailed customer form validation
 - Lead drag-and-drop functionality
 - Opportunity stage updates
@@ -63,6 +69,7 @@
 ## Next Steps
 
 1. **Run Tests:**
+
    ```bash
    PLAYWRIGHT_BASE_URL=http://localhost:5174 pnpm test:playwright tests/e2e/crm-comprehensive.spec.ts
    ```
@@ -91,4 +98,3 @@
 3. **Add test data setup** for consistent test environment
 4. **Create test utilities** for common operations (create customer, create lead, etc.)
 5. **Add visual regression tests** for UI consistency
-

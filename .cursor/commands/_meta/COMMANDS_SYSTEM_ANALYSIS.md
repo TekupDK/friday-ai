@@ -19,17 +19,20 @@
 ### 1. CHAT SESSION ACCESS - KRITISK ISSUE
 
 **Problem:**
+
 - Nogle commands refererer til `getConversationMessages(conversationId)` fra `server/db.ts`
 - Dette virker IKKE i Cursor commands context
 - Commands har direkte adgang til Cursor chat session, ikke Friday AI Chat database
 
 **Affected Commands:**
+
 - `ai/analyze-chat-prompt.md` - ✅ FIXET
 - `chat/laes-chat-fra-database.md` - OK (specifikt for database)
 - `chat/analyser-chat-sessioner.md` - OK (specifikt for database)
 - Andre commands der refererer til chat session?
 
 **Fix:**
+
 - Klarificer at Cursor commands har direkte adgang til chat session
 - Fjern misvisende referencer til server funktioner
 - Tilføj klar instruktion om Cursor chat session access
@@ -39,17 +42,20 @@
 ### 2. INKONSISTENS I CHAT SESSION READING
 
 **Problem:**
+
 - Nogle commands siger "læs hele chat sessionen"
 - Men specificerer ikke HVORDAN eller HVAD de mener
 - Forvirring mellem Cursor chat og Friday AI Chat database
 
 **Affected Commands:**
+
 - `core/session-engine.md` - Har CHAT SESSION READING section ✅
 - `core/developer-mode.md` - Har CHAT SESSION READING section ✅
 - `chat/laes-chat-samtale.md` - Har CHAT SESSION READING section ✅
 - Andre commands?
 
 **Fix:**
+
 - Standardiser CHAT SESSION READING section
 - Klarificer at det er Cursor chat session (direkte adgang)
 - Tilføj til alle relevante commands
@@ -59,13 +65,16 @@
 ### 3. MISVISENDE CODE EKSEMPLER
 
 **Problem:**
+
 - Nogle commands viser TypeScript imports der ikke virker i Cursor
 - Eksempler på `getConversationMessages(conversationId)` som ikke kan kaldes direkte
 
 **Affected Commands:**
+
 - `ai/analyze-chat-prompt.md` - ✅ FIXET (fjernet misvisende eksempel)
 
 **Fix:**
+
 - Fjern alle misvisende code eksempler
 - Tilføj kun eksempler der faktisk virker i Cursor context
 
@@ -74,10 +83,12 @@
 ### 4. MANGELENDE KLARHED OM CURSOR VS FRIDAY AI CHAT
 
 **Problem:**
+
 - Commands forvirrer Cursor chat session med Friday AI Chat database
 - Ikke klar om hvornår man bruger hvad
 
 **Fix:**
+
 - Klarificer forskel i alle relevante commands
 - PRIMARY: Cursor chat session (direkte adgang)
 - SECONDARY: Friday AI Chat database (kun hvis specifikt nødvendigt)
@@ -87,10 +98,12 @@
 ### 5. INKONSISTENTE INSTRUKTIONER
 
 **Problem:**
+
 - Nogle commands siger "læs chat sessionen" uden at specificere HVORDAN
 - Nogle commands mangler instruktioner om chat session reading
 
 **Fix:**
+
 - Tilføj standardiseret CHAT SESSION READING section
 - Klar instruktion om direkte adgang til Cursor chat session
 
@@ -151,17 +164,20 @@
 ## ✅ FASE 1: CHAT SESSION ACCESS FIXES
 
 ### Fixed Commands:
+
 - ✅ `ai/analyze-chat-prompt.md` - Fixet med eksplicit Cursor chat session access
 - ✅ `core/continue-conversation.md` - Tilføjet CHAT SESSION READING section
 - ✅ `core/maintain-context.md` - Tilføjet CHAT SESSION READING section
 
 ### Commands Der Mangler Fix:
+
 - ⏳ `chat/brug-chat-informationer.md` - Har CHAT SESSION READING, men skal verificeres
 - ⏳ `chat/analyser-chat-kontekst.md` - Har CHAT SESSION READING, men skal verificeres
 - ⏳ `chat/laes-chat-samtale.md` - Har CHAT SESSION READING, men skal verificeres
 - ⏳ Andre commands der refererer til chat session?
 
 ### Commands OK (Database-specific):
+
 - ✅ `chat/laes-chat-fra-database.md` - OK (specifikt for database)
 - ✅ `chat/analyser-chat-sessioner.md` - OK (specifikt for database)
 
@@ -172,6 +188,7 @@
 Fra analyse: **~70 commands i root** der skal flyttes til mapper:
 
 **Development commands:**
+
 - `api-versioning.md` → `development/`
 - `backup-database.md` → `development/`
 - `cache-strategy.md` → `development/`
@@ -223,6 +240,7 @@ Fra analyse: **~70 commands i root** der skal flyttes til mapper:
 - `zod-validation-patterns.md` → `development/`
 
 **Core commands:**
+
 - `start-work-immediately.md` → `core/` (hvis ikke allerede der)
 - `forsaet-arbejde.md` → `core/` (hvis ikke allerede der)
 - `forbedre-command.md` → `core/` eller `testing/`
@@ -231,13 +249,16 @@ Fra analyse: **~70 commands i root** der skal flyttes til mapper:
 - `update-todo-status.md` → `core/` (hvis ikke allerede der)
 
 **Testing commands:**
+
 - `test-google-integration.md` → `testing/`
 
 **Debugging commands:**
+
 - `check-auth-flows.md` → `debugging/`
 - `cleanup-dead-code.md` → `debugging/`
 
 **Other:**
+
 - `address-github-pr-comments.md` → `development/`
 - `assert-invariants.md` → `development/`
 - `automate-system-monitoring.md` → `development/`
@@ -267,4 +288,3 @@ Fra analyse: **~70 commands i root** der skal flyttes til mapper:
 ---
 
 **Næste skridt:** Fortsæt med at fixe chat session access issues, derefter flyt commands fra root.
-

@@ -12,6 +12,7 @@ Analysér hvad der er gjort + hvad der mangler. Læs chat sessionen, tjek filer,
 ## TASK
 
 Analysér progress:
+
 1. **Læs chat sessionen** - Hvad blev diskuteret? Hvad blev besluttet?
 2. **Tjek filer** - Hvad er faktisk ændret? Matcher det chat diskussioner?
 3. **Identificér færdigt** - Hvad er gjort baseret på chat + filer?
@@ -21,6 +22,7 @@ Analysér progress:
 ## CHAT SESSION READING
 
 **Læs chat sessionen:**
+
 - Hvad blev diskuteret?
 - Hvad blev besluttet?
 - Hvad blev implementeret ifølge chat?
@@ -34,17 +36,21 @@ Analysér progress:
 **Chat kontekst:** [Hvad blev diskuteret]
 
 **Færdigt (fra chat + filer):**
+
 - ✅ [Item 1] - [Fra chat diskussion]
 - ✅ [Item 2] - [Fra chat diskussion]
 
 **I gang (fra chat):**
+
 - 🔄 [Item 1] - [Fra chat diskussion]
 
 **Mangler (fra chat diskussioner):**
+
 - ⏳ [Item 1] - [Fra chat]
 - ⏳ [Item 2] - [Fra chat]
 
 ## Files ændret (matcher chat?)
+
 - `[file path]` - [Status] - [Nævnt i chat?]
 ```
 

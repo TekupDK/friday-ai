@@ -14,10 +14,12 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 **Coverage:** 26 attributes across CRM pages
 
 **Dashboard:**
+
 - `crm-dashboard-title`
 - `crm-dashboard-stats`
 
 **Customer List:**
+
 - `customers-page-title`
 - `export-csv-button`
 - `create-customer-button`
@@ -25,12 +27,14 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 - `create-customer-modal`
 
 **Lead Pipeline:**
+
 - `lead-pipeline-title`
 - `export-leads-csv-button`
 - `create-lead-button`
 - `create-lead-modal`
 
 **Opportunity Pipeline:**
+
 - `opportunities-page-title`
 - `export-opportunities-csv-button`
 - `create-opportunity-button`
@@ -40,6 +44,7 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 **Updated:** 32 selectors in `tests/e2e/crm-comprehensive.spec.ts`
 
 **Changes:**
+
 - Replaced text-based selectors with `data-testid`
 - Using `page.getByTestId()` for robust selection
 - Added fallback strategies for critical elements
@@ -48,6 +53,7 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 ### ✅ 3. Login Helper Enhanced
 
 **Improvements:**
+
 - Multiple fallback strategies
 - Better wait strategies for async content
 - Improved error handling
@@ -56,6 +62,7 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 ### ✅ 4. CSV Export Tests
 
 **Status:** ✅ Complete
+
 - Unit tests: 10 tests, all passing
 - Utility functions tested
 - CSV generation verified
@@ -63,6 +70,7 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 ## Test Coverage
 
 **E2E Tests:** 60 comprehensive tests
+
 - Dashboard tests
 - Customer List tests
 - Lead Pipeline tests
@@ -71,6 +79,7 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 - Error handling tests
 
 **Unit Tests:**
+
 - CSV export utilities: 10 tests ✅
 - Auth refresh: 18 tests ✅
 - CRM Standalone: 10 tests ✅
@@ -103,4 +112,3 @@ CRM test suite er nu opdateret med alle forbedringer og klar til execution.
 ---
 
 **Status:** ✅ Ready for Test Execution
-

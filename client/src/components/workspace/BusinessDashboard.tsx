@@ -26,7 +26,6 @@ import {
 } from "@/lib/business-logic";
 import { trpc } from "@/lib/trpc";
 
-
 /**
  * Business Dashboard - Default Workspace View
  *

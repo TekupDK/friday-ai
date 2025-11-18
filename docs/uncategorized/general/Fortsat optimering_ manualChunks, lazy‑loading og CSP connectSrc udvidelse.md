@@ -6,7 +6,7 @@
 
 ## Ændringer (ingen breaking)
 
-1) Vite manualChunks
+1. Vite manualChunks
 
 - Split `date-fns`/`date-fns/locale` i egen chunk.
 
@@ -14,13 +14,13 @@
 
 - Overvej `superjson` separat chunk.
 
-1) Lazy loading på klient
+1. Lazy loading på klient
 
 - Lazy‑load Google Maps komponent (`client/src/components/Map.tsx`) og ruten/tab der bruger den.
 
 - Lazify formatteringshjælpere (fx `formatDistanceToNow`) pr. feature.
 
-1) CSP connectSrc (prod)
+1. CSP connectSrc (prod)
 
 - Dynamisk tilføje: `openrouter.ai`, `api.openai.com`, `generativelanguage.googleapis.com`, `www.googleapis.com`, `${FORGE_API_URL}`, `${LITELLM_BASE_URL}`, `${LANGFUSE_BASE_URL}`, `${CHROMA_URL}` og relevante `localhost` endpoints afhængigt af ENV‑flags.
 

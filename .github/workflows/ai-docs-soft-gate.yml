@@ -2,7 +2,7 @@ name: AI Docs Soft Gate
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   ai-docs:

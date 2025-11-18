@@ -8,9 +8,11 @@
 ## 📋 Commit Strategy
 
 ### Commit 1: Subscription System (Frontend + Backend)
+
 **Type:** `feat(subscription)`
 
 **Files to include:**
+
 - `client/src/components/subscription/` (alle nye filer)
 - `client/src/pages/SubscriptionManagement.tsx`
 - `client/src/constants/pricing.ts`
@@ -21,6 +23,7 @@
 - `server/__tests__/subscription*.test.ts`
 
 **Message:**
+
 ```
 feat(subscription): add complete subscription management system
 
@@ -37,15 +40,18 @@ feat(subscription): add complete subscription management system
 ---
 
 ### Commit 2: Cursor Hooks System
+
 **Type:** `feat(cursor)`
 
 **Files to include:**
+
 - `.cursor/hooks/` (alle nye filer)
 - `.cursor/hooks.json`
 - `.cursor/hooks/README.md`
 - `.cursor/hooks/__tests__/` (alle test filer)
 
 **Message:**
+
 ```
 feat(cursor): add hooks system for command execution
 
@@ -62,9 +68,11 @@ feat(cursor): add hooks system for command execution
 ---
 
 ### Commit 3: Documentation Updates
+
 **Type:** `docs`
 
 **Files to include:**
+
 - `docs/DEVELOPMENT_STATUS_OVERVIEW_2025-01-28.md`
 - `docs/COMMIT_PLAN_2025-01-28.md`
 - `docs/qa/SUBSCRIPTION_*.md` (alle subscription docs)
@@ -76,6 +84,7 @@ feat(cursor): add hooks system for command execution
 - Andre nye dokumentation filer
 
 **Message:**
+
 ```
 docs: add comprehensive documentation for recent features
 
@@ -91,14 +100,17 @@ docs: add comprehensive documentation for recent features
 ---
 
 ### Commit 4: Commands System Refactoring
+
 **Type:** `refactor(commands)`
 
 **Files to include:**
+
 - `.cursor/commands/` (alle nye commands i kategorier)
 - `.cursor/commands/_meta/` (opdaterede metadata filer)
 - Slettede commands (100+ filer)
 
 **Message:**
+
 ```
 refactor(commands): reorganize commands into categories
 
@@ -113,9 +125,11 @@ refactor(commands): reorganize commands into categories
 ---
 
 ### Commit 5: Code Cleanup and Fixes
+
 **Type:** `chore` / `fix`
 
 **Files to include:**
+
 - Modificerede filer (client/src/App.tsx, client/src/main.tsx, etc.)
 - Test data cleanup (staged deletions)
 - Code improvements
@@ -123,6 +137,7 @@ refactor(commands): reorganize commands into categories
 - Dependency updates
 
 **Message:**
+
 ```
 chore: cleanup and fix various issues
 
@@ -137,14 +152,17 @@ chore: cleanup and fix various issues
 ---
 
 ### Commit 6: Documentation Cleanup
+
 **Type:** `chore(docs)`
 
 **Files to include:**
+
 - Flyttede dokumentation filer (fra root til docs/)
 - Slettede duplicate dokumentation
 - Organiserede dokumentation struktur
 
 **Message:**
+
 ```
 chore(docs): organize and cleanup documentation
 
@@ -159,6 +177,7 @@ chore(docs): organize and cleanup documentation
 ## 🚀 Execution Plan
 
 ### Step 1: Review Changes
+
 ```bash
 # Se alle ændringer
 git status
@@ -170,6 +189,7 @@ git diff --stat
 ### Step 2: Stage og Commit (en ad gangen)
 
 **Commit 1: Subscription System**
+
 ```bash
 git add client/src/components/subscription/
 git add client/src/pages/SubscriptionManagement.tsx
@@ -192,6 +212,7 @@ git commit -m "feat(subscription): add complete subscription management system
 ```
 
 **Commit 2: Cursor Hooks**
+
 ```bash
 git add .cursor/hooks/
 git add .cursor/hooks.json
@@ -208,6 +229,7 @@ git commit -m "feat(cursor): add hooks system for command execution
 ```
 
 **Commit 3: Documentation**
+
 ```bash
 git add docs/DEVELOPMENT_STATUS_OVERVIEW_2025-01-28.md
 git add docs/COMMIT_PLAN_2025-01-28.md
@@ -230,6 +252,7 @@ git commit -m "docs: add comprehensive documentation for recent features
 ```
 
 **Commit 4: Commands Refactoring**
+
 ```bash
 git add .cursor/commands/
 git add .cursor/commands/_meta/
@@ -244,6 +267,7 @@ git commit -m "refactor(commands): reorganize commands into categories
 ```
 
 **Commit 5: Code Cleanup**
+
 ```bash
 # Test data cleanup (allerede staged)
 git commit -m "chore: remove old test-data files"
@@ -268,6 +292,7 @@ git commit -m "chore: cleanup and fix various issues
 ```
 
 **Commit 6: Documentation Cleanup**
+
 ```bash
 # Flyttede dokumentation filer
 git add docs/development-notes/CONTINUATION_SUMMARY.md
@@ -284,6 +309,7 @@ git commit -m "chore(docs): organize and cleanup documentation
 ```
 
 ### Step 3: Push to Origin
+
 ```bash
 git push origin main
 ```
@@ -320,4 +346,3 @@ git status -sb
 **Status:** ✅ Plan oprettet  
 **Næste skridt:** Review plan og execute commits  
 **Last Updated:** 2025-01-28
-

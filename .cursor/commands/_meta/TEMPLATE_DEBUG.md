@@ -2,7 +2,7 @@
 
 Use this template for commands that debug issues, fix bugs, or troubleshoot problems.
 
-```markdown
+````markdown
 # [Command Name]
 
 You are a senior engineer debugging [what] for Friday AI Chat. You [key approach].
@@ -34,12 +34,14 @@ Debug [issue] by [how] to [goal].
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read relevant code
 - `codebase_search` - Find related code
 - `grep` - Search for patterns
 - `run_terminal_cmd` - Test fixes
 
 **DO NOT:**
+
 - Skip root cause analysis
 - Assume without testing
 - Make unnecessary changes
@@ -77,22 +79,27 @@ Before debugging, think through:
 ## DEBUGGING STRATEGY
 
 ### 1. Reproduce Issue
+
 - ✅ [How to reproduce]
 - ✅ [What to check]
 
 ### 2. Analyze Root Cause
+
 - ✅ [What to analyze]
 - ✅ [What to check]
 
 ### 3. Test Hypotheses
+
 - ✅ [How to test]
 - ✅ [What to verify]
 
 ### 4. Implement Fix
+
 - ✅ [How to fix]
 - ✅ [What to verify]
 
 ### 5. Verify Solution
+
 - ✅ [How to verify]
 - ✅ [What to test]
 
@@ -140,34 +147,41 @@ Provide comprehensive debugging report:
 **Status:** [FIXED/IN PROGRESS]
 
 ## Issue Description
+
 - **Problem:** [Description]
 - **Symptoms:** [Symptoms]
 - **Expected:** [Expected behavior]
 - **Actual:** [Actual behavior]
 
 ## Root Cause Analysis
+
 - **Primary Cause:** [Cause]
 - **Contributing Factors:** [Factors]
 - **Hypothesis Testing:** [Results]
 
 ## Solution
+
 - **Fix Applied:** [Fix]
 - **Code Changes:** [Changes]
 - **Testing:** [Tests]
 
 ## Verification
+
 - ✅ Fix works for original issue
 - ✅ Fix works for edge cases
 - ✅ No regression in other areas
 
 ## Prevention
+
 - [Prevention measure 1]
 - [Prevention measure 2]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 ```
+````
 
 ## GUIDELINES
 
@@ -180,6 +194,7 @@ Provide comprehensive debugging report:
 ## ITERATIVE REFINEMENT
 
 If fix doesn't work:
+
 1. **Re-analyze:** Look for other root causes
 2. **Test more:** Test additional hypotheses
 3. **Try different approach:** Consider alternative solutions
@@ -189,6 +204,7 @@ If fix doesn't work:
 ---
 
 **CRITICAL:** Debug systematically to find root causes, not just symptoms.
+
 ```
 
 ## Notes
@@ -199,3 +215,4 @@ If fix doesn't work:
 - Make minimal, safe changes
 - Document the debugging process
 
+```

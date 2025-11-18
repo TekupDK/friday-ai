@@ -34,8 +34,8 @@ export default function SubscriptionLandingPage() {
                 Choose Your Cleaning Subscription
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Flexible monthly subscriptions for regular cleaning services. Choose the plan that
-                fits your needs.
+                Flexible monthly subscriptions for regular cleaning services.
+                Choose the plan that fits your needs.
               </p>
             </section>
 
@@ -84,34 +84,43 @@ export default function SubscriptionLandingPage() {
 
             {/* FAQ Section */}
             <section>
-              <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+              <h2 className="text-2xl font-bold mb-6">
+                Frequently Asked Questions
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <AppleCard variant="elevated" padding="md">
-                  <h3 className="font-semibold mb-2">Can I change my plan later?</h3>
+                  <h3 className="font-semibold mb-2">
+                    Can I change my plan later?
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Yes, you can upgrade or downgrade your plan at any time. Changes take effect
-                    on your next billing cycle.
+                    Yes, you can upgrade or downgrade your plan at any time.
+                    Changes take effect on your next billing cycle.
                   </p>
                 </AppleCard>
                 <AppleCard variant="elevated" padding="md">
-                  <h3 className="font-semibold mb-2">What happens if I use more hours?</h3>
+                  <h3 className="font-semibold mb-2">
+                    What happens if I use more hours?
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Additional hours are billed at 349 kr/hour. We'll notify you if you're
-                    approaching your limit.
+                    Additional hours are billed at 349 kr/hour. We'll notify you
+                    if you're approaching your limit.
                   </p>
                 </AppleCard>
                 <AppleCard variant="elevated" padding="md">
-                  <h3 className="font-semibold mb-2">Can I pause my subscription?</h3>
+                  <h3 className="font-semibold mb-2">
+                    Can I pause my subscription?
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Yes, you can pause your subscription for up to 3 months. Your unused hours will
-                    be preserved.
+                    Yes, you can pause your subscription for up to 3 months.
+                    Your unused hours will be preserved.
                   </p>
                 </AppleCard>
                 <AppleCard variant="elevated" padding="md">
                   <h3 className="font-semibold mb-2">How do I cancel?</h3>
                   <p className="text-sm text-muted-foreground">
-                    You can cancel anytime from your subscription management page. Cancellation takes
-                    effect at the end of your current billing period.
+                    You can cancel anytime from your subscription management
+                    page. Cancellation takes effect at the end of your current
+                    billing period.
                   </p>
                 </AppleCard>
               </div>
@@ -119,11 +128,17 @@ export default function SubscriptionLandingPage() {
 
             {/* CTA Section */}
             <section className="text-center">
-              <AppleCard variant="elevated" padding="lg" className="bg-primary/5">
+              <AppleCard
+                variant="elevated"
+                padding="lg"
+                className="bg-primary/5"
+              >
                 <div className="space-y-4">
                   <div className="flex items-center justify-center gap-2">
                     <Sparkles className="w-6 h-6 text-primary" />
-                    <h2 className="text-2xl font-bold">Ready to Get Started?</h2>
+                    <h2 className="text-2xl font-bold">
+                      Ready to Get Started?
+                    </h2>
                   </div>
                   <p className="text-muted-foreground">
                     Select a plan above or contact us for a custom solution
@@ -151,4 +166,3 @@ export default function SubscriptionLandingPage() {
     </CRMLayout>
   );
 }
-

@@ -26,7 +26,7 @@
 
 ### Props
 
-```typescript
+````typescript
 interface EmailConfirmationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -107,7 +107,7 @@ interface EmailPreviewModalProps {
   }}
 />
 
-```
+````
 
 ### Trigger
 

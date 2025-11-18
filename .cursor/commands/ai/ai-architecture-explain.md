@@ -8,9 +8,9 @@ Explain the current AI/LLM/agent setup in a way that engineers and non-engineers
 
 ## STEPS
 
-1) Identify components (models, tools, orchestrators, memory, etc.).
-2) Describe how data flows between them.
-3) Explain:
+1. Identify components (models, tools, orchestrators, memory, etc.).
+2. Describe how data flows between them.
+3. Explain:
    - Why this design was chosen
    - Trade-offs
    - Limitations
@@ -18,7 +18,7 @@ Explain the current AI/LLM/agent setup in a way that engineers and non-engineers
 ## OUTPUT
 
 Return:
+
 - A high-level explanation
 - A more technical deep dive
 - A list of potential improvements.
-

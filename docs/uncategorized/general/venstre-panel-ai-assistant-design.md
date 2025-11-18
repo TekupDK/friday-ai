@@ -14,7 +14,7 @@
 
 ### **🔍 **TOP SECTION - SMART CONTROLS:\*\*
 
-```typescript
+````typescript
 ┌─────────────────────────────────┐
 │ 🔍 [Search emails...] [⚙️] [📊] │
 │ [🔥Hot] [💰Rengøring.nu] [📍Aarhus] │
@@ -345,7 +345,7 @@ interface EnhancedEmailItem {
 - Value estimation accuracy
 - User adoption rate
 
-```
+````
 
 **Dette er complete design specification for jeres Venstre Panel AI Assistant!** 🎯
 

@@ -68,7 +68,7 @@ describe("arrayToCSV", () => {
       { id: 2, name: "Value" },
     ];
     const headers = ["ID", "Name"];
-    const getRow = (item: typeof data[0]) => [item.id, item.name];
+    const getRow = (item: (typeof data)[0]) => [item.id, item.name];
 
     const result = arrayToCSV(data, headers, getRow);
     expect(result).toBe("ID,Name\n1,Test\n2,Value");
@@ -161,4 +161,3 @@ describe("exportOpportunitiesToCSV", () => {
     expect(global.document.body.removeChild).toHaveBeenCalled();
   });
 });
-

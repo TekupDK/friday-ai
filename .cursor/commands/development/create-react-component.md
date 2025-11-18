@@ -31,12 +31,14 @@ Create a new reusable React component following Friday AI Chat patterns exactly.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing components for patterns
 - `codebase_search` - Find similar components
 - `grep` - Search for component patterns
 - `search_replace` - Create new component
 
 **DO NOT:**
+
 - Create component without reviewing patterns
 - Skip TypeScript types
 - Ignore accessibility
@@ -69,6 +71,7 @@ Before creating, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Simple Component Pattern
+
 ```typescript
 import { memo } from "react";
 
@@ -78,10 +81,10 @@ interface Props {
   isLoading?: boolean;
 }
 
-const MyComponent = memo(function MyComponent({ 
-  title, 
-  onAction, 
-  isLoading = false 
+const MyComponent = memo(function MyComponent({
+  title,
+  onAction,
+  isLoading = false
 }: Props) {
   if (isLoading) {
     return (
@@ -110,6 +113,7 @@ export default MyComponent;
 ```
 
 ### Example: Component with tRPC Hook
+
 ```typescript
 import { memo } from "react";
 import { trpc } from "@/lib/trpc";
@@ -156,6 +160,7 @@ export default ChatComponent;
 ```
 
 ### Example: Component with Mutation
+
 ```typescript
 import { memo, useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -251,6 +256,7 @@ export default CreateForm;
 ## VERIFICATION
 
 After implementation:
+
 - ✅ TypeScript strict mode passes
 - ✅ No `any` types
 - ✅ Proper error/loading/empty states
@@ -268,7 +274,7 @@ After implementation:
 **Props Interface:**
 \`\`\`typescript
 interface Props {
-  // props definition
+// props definition
 }
 \`\`\`
 
@@ -283,11 +289,12 @@ interface Props {
 \`\`\`
 
 **Files Created:**
+
 - `client/src/components/[path]/[ComponentName].tsx`
 - `stories/[ComponentName].stories.tsx` (if applicable)
 
 **Verification:**
+
 - ✅ Typecheck: PASSED
 - ✅ Pattern match: PASSED
 ```
-

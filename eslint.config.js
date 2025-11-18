@@ -51,7 +51,10 @@ export default [
       "react/prop-types": "off", // using TypeScript
       "import/order": [
         "warn",
-        { alphabetize: { order: "asc", caseInsensitive: true }, "newlines-between": "always" }
+        {
+          alphabetize: { order: "asc", caseInsensitive: true },
+          "newlines-between": "always",
+        },
       ],
       "import/no-restricted-paths": [
         "error",
@@ -59,9 +62,9 @@ export default [
           basePath: process.cwd(),
           zones: [
             { target: "client", from: "server", except: ["server/routers"] },
-            { target: "server", from: "client" }
-          ]
-        }
+            { target: "server", from: "client" },
+          ],
+        },
       ],
     },
   },
@@ -69,7 +72,7 @@ export default [
   {
     files: ["client/src/lib/trpc.ts"],
     rules: {
-      "import/no-restricted-paths": "off"
-    }
-  }
+      "import/no-restricted-paths": "off",
+    },
+  },
 ];

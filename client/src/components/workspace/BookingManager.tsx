@@ -11,7 +11,6 @@ import { BUSINESS_CONSTANTS } from "@/constants/business";
 import { parseCalendarEvent, formatTimeRange } from "@/lib/business-logic";
 import { trpc } from "@/lib/trpc";
 
-
 interface BookingManagerProps {
   context: {
     emailId?: string;

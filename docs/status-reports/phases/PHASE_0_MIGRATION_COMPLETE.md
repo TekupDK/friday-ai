@@ -24,7 +24,7 @@
 
 ### 1. Run Email Migration (Manual)
 
-```bash
+````bash
 cd c:\Users\empir\Tekup\services\tekup-ai-v2
 $env:DATABASE_URL='mysql://friday_user:friday_password@localhost:3306/friday_ai'
 pnpm migrate:emails 1 50
@@ -43,7 +43,7 @@ pnpm migrate:emails 1 50
 ```bash
 docker exec friday-ai-db mysql -ufriday_user -pfriday_password friday_ai -e "SELECT COUNT(*) FROM emails; SELECT COUNT(*) FROM email_threads;"
 
-```
+````
 
 ### 3. Test Frontend Integration
 

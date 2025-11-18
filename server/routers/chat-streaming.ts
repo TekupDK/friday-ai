@@ -11,9 +11,11 @@ import { getFeatureFlags } from "../_core/feature-flags";
 import { streamResponse } from "../_core/llm";
 import { logger } from "../_core/logger";
 import { protectedProcedure, router } from "../_core/trpc";
-import { routeAI, type AIRouterOptions, type PendingAction } from "../ai-router";
-
-
+import {
+  routeAI,
+  type AIRouterOptions,
+  type PendingAction,
+} from "../ai-router";
 
 export interface ChatMessage {
   role: "user" | "assistant" | "system";
@@ -24,7 +26,13 @@ export interface ChatMessage {
 
 export interface StreamingChatResponse {
   type: "start" | "chunk" | "complete" | "error" | "action";
-  data: string | { content?: string; pendingAction?: PendingAction; [key: string]: unknown };
+  data:
+    | string
+    | {
+        content?: string;
+        pendingAction?: PendingAction;
+        [key: string]: unknown;
+      };
 }
 
 export const chatStreamingRouter = router({

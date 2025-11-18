@@ -6,17 +6,20 @@
 ## Oversigt
 
 **Hvad Er Udført:**
+
 1. Supabase Storage integration i DocumentUploader component
 2. Update Segment endpoint i backend og frontend
 3. Team 2 FB Rengøring rapport forbedringer (tid/omkostning beregninger, indtjening/profit)
 4. Reports router forbedringer (date range support)
 
 **Hvorfor:**
+
 - Supabase Storage integration var kritisk for at dokument management fungerer i production
 - Update Segment endpoint manglede, hvilket gjorde segment redigering umulig
 - Team 2 rapport havde brug for korrekte beregninger og økonomi tracking
 
 **Impact:**
+
 - Document management er nu production-ready
 - Segment management er komplet (CRUD operations)
 - Team 2 rapport giver nu præcis økonomi tracking og profit beregninger
@@ -66,16 +69,18 @@ const handleUpload = async () => {
   // 5. Handle errors
   if (uploadError) {
     if (uploadError.message.includes("Bucket not found")) {
-      toast.error("Storage bucket not found. Please create 'customer-documents' bucket in Supabase Storage.");
+      toast.error(
+        "Storage bucket not found. Please create 'customer-documents' bucket in Supabase Storage."
+      );
       return;
     }
     throw uploadError;
   }
 
   // 6. Get public URL
-  const { data: { publicUrl } } = supabase.storage
-    .from(bucketName)
-    .getPublicUrl(filePath);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from(bucketName).getPublicUrl(filePath);
 
   // 7. Save metadata to database
   await createMutation.mutateAsync({
@@ -92,18 +97,20 @@ const handleUpload = async () => {
 ```
 
 **Tekniske Detaljer:**
+
 - **File Path Structure:** `documents/{customerProfileId}/{timestamp}_{random}.{ext}`
   - Organiserer filer per kunde
   - Unikke filnavne forhindrer konflikter
   - Timestamp + random string sikrer unikhed
 - **Bucket Name:** `customer-documents` (hardcoded, kan konfigureres senere)
-- **Error Handling:** 
+- **Error Handling:**
   - Tjekker om Supabase er konfigureret
   - Håndterer "Bucket not found" specifikt
   - Generisk error handling for andre fejl
 - **Public URL:** Bruger Supabase's `getPublicUrl()` for at få direkte download link
 
 **Design Beslutninger:**
+
 - **Client-side upload:** Upload sker direkte fra browser til Supabase Storage (ikke gennem backend)
   - **Rationale:** Reducerer server load, bedre performance, direkte upload
   - **Trade-off:** Kræver Supabase client credentials i frontend
@@ -113,17 +120,20 @@ const handleUpload = async () => {
   - **Rationale:** Supabase Storage SDK understøtter progress callbacks, kan tilføjes senere
 
 **Patterns Brugt:**
+
 - **Error Boundary Pattern:** Try-catch med specifik error handling
 - **Toast Notifications:** User feedback via `sonner` toast library
 - **Optimistic Updates:** Mutation invalidates cache for immediate UI update
 
 **Impact:**
+
 - ✅ Document upload fungerer end-to-end
 - ✅ Filer gemmes permanent i Supabase Storage
 - ✅ Public URLs kan bruges til download
 - ⚠️ Kræver Supabase Storage bucket setup (ekstern dependency)
 
 **Manglende Features:**
+
 - Upload progress indicator
 - File preview før upload
 - Multiple file upload
@@ -227,7 +237,7 @@ const updateMutation = trpc.crm.extensions.updateSegment.useMutation({
 // Submit handler
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-  
+
   const data = {
     name: formData.name,
     description: formData.description || undefined,
@@ -250,6 +260,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 ```
 
 **Tekniske Detaljer:**
+
 - **Partial Update:** Kun angivne felter opdateres (ikke hele objektet)
   - **Rationale:** Giver fleksibilitet, reducerer unødvendige database writes
 - **Ownership Verification:** Tjekker at segment tilhører brugeren før update
@@ -258,17 +269,20 @@ const handleSubmit = async (e: React.FormEvent) => {
   - **Rationale:** Gør partial updates mulige
 
 **Design Beslutninger:**
+
 - **Same form for create/update:** Samme `SegmentForm` component bruges til både create og update
   - **Rationale:** DRY principle, konsistent UX
 - **Cache invalidation:** Invalidates `listSegments` query efter update
   - **Rationale:** Sikrer UI opdateres med ny data
 
 **Patterns Brugt:**
+
 - **Resource Ownership Pattern:** Verificerer ownership før mutation
 - **Partial Update Pattern:** Kun angivne felter opdateres
 - **Optimistic Updates:** Cache invalidation for immediate UI refresh
 
 **Impact:**
+
 - ✅ Segment redigering fungerer end-to-end
 - ✅ CRUD operations er komplet for segments
 - ✅ Type-safe implementation
@@ -338,6 +352,7 @@ task.profit = task.invoicedRevenue - task.invoicedCost; // 1.396 - 360 = 1.036 k
    - Økonomi med indtjening, løn og profit
 
 **Tekniske Detaljer:**
+
 - **Time Calculation Logic:**
   - `timePerPerson` = fysisk tid på stedet (fra kalender)
   - `totalTime` = fakturerbar tid (timer × personer)
@@ -349,12 +364,14 @@ task.profit = task.invoicedRevenue - task.invoicedCost; // 1.396 - 360 = 1.036 k
   - Profit = indtjening - løn
 
 **Design Beslutninger:**
+
 - **Dual Time Display:** Viser både fysisk tid og fakturerbar tid
   - **Rationale:** Klarhed - brugeren kan se både hvor længe de var på stedet og hvad der faktureres
 - **Profit Tracking:** Automatisk profit beregning per opgave og totalt
   - **Rationale:** Giver indsigt i rentabilitet per opgave
 
 **Impact:**
+
 - ✅ Korrekte timeestimater og fordeling
 - ✅ Klar visning af fysisk vs. fakturerbar tid
 - ✅ Økonomi tracking (indtjening, løn, profit)
@@ -407,11 +424,13 @@ team2FbRengoring: protectedProcedure
 ```
 
 **Tekniske Detaljer:**
+
 - **Date Validation:** Regex pattern `/^\d{4}-\d{2}-\d{2}$/` sikrer korrekt format
 - **Priority Logic:** Date range > start date > daysBack
 - **Backward Compatible:** Eksisterende kald med `daysBack` virker stadig
 
 **Impact:**
+
 - ✅ Kan generere rapport for specifikke perioder
 - ✅ Backward compatible med eksisterende kald
 - ✅ Fleksibel API
@@ -423,17 +442,20 @@ team2FbRengoring: protectedProcedure
 ### Backend
 
 **`server/routers/crm-extensions-router.ts`**
+
 - **Ændring:** Tilføjet `updateSegment` procedure
 - **Hvorfor:** Segment redigering manglede
 - **Impact:** Komplet CRUD for segments
 
 **`server/routers/reports-router.ts`**
+
 - **Ændring:** Tilføjet `startDate` og `endDate` input options
 - **Hvorfor:** Support for specifikke datoer i rapporter
 - **Impact:** Fleksibel rapport generering
 
 **`server/scripts/team2-fb-rengoring-report.ts`**
-- **Ændring:** 
+
+- **Ændring:**
   - Rettet time/omkostning beregninger
   - Tilføjet indtjening og profit tracking
   - Forbedret rapport struktur
@@ -443,11 +465,13 @@ team2FbRengoring: protectedProcedure
 ### Frontend
 
 **`client/src/components/crm/DocumentUploader.tsx`**
+
 - **Ændring:** Implementeret Supabase Storage upload
 - **Hvorfor:** Faktisk file upload manglede
 - **Impact:** Production-ready document upload
 
 **`client/src/components/crm/SegmentForm.tsx`**
+
 - **Ændring:** Integreret `updateSegment` mutation
 - **Hvorfor:** Segment redigering manglede
 - **Impact:** Komplet segment management
@@ -455,11 +479,13 @@ team2FbRengoring: protectedProcedure
 ### Dokumentation
 
 **`docs/sprints/SPRINT_PLAN_2025-11-17.md`**
+
 - **Ændring:** Oprettet sprint plan
 - **Hvorfor:** Planlægning og tracking
 - **Impact:** Struktureret sprint arbejde
 
 **`docs/sprints/SPRINT_TODOS_2025-11-17.md`**
+
 - **Ændring:** Oprettet sprint TODOs
 - **Hvorfor:** Task tracking
 - **Impact:** Klar oversigt over opgaver
@@ -471,16 +497,19 @@ team2FbRengoring: protectedProcedure
 ### Arkitektur
 
 **Supabase Storage Integration:**
+
 - **Client-side Upload:** Upload sker direkte fra browser til Supabase Storage
 - **Security:** Bruger Supabase client credentials (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)
 - **File Organization:** Hierarkisk struktur per kunde
 
 **Update Segment:**
+
 - **Partial Updates:** Kun angivne felter opdateres
 - **Ownership Verification:** Security check før update
 - **Cache Invalidation:** Automatic UI refresh
 
 **Team 2 Rapport:**
+
 - **Dual Time Tracking:** Fysisk tid vs. fakturerbar tid
 - **Profit Calculation:** Automatisk profit tracking
 - **Flexible Date Range:** Support for specifikke perioder
@@ -488,6 +517,7 @@ team2FbRengoring: protectedProcedure
 ### Data Flow
 
 **Document Upload Flow:**
+
 ```
 User selects file
   → Validate file (size, type)
@@ -499,6 +529,7 @@ User selects file
 ```
 
 **Segment Update Flow:**
+
 ```
 User edits segment
   → Validate input
@@ -510,6 +541,7 @@ User edits segment
 ```
 
 **Report Generation Flow:**
+
 ```
 User requests report (with date range)
   → Fetch calendar events
@@ -562,16 +594,18 @@ const handleUpload = async () => {
 
   if (error) {
     if (error.message.includes("Bucket not found")) {
-      toast.error("Storage bucket not found. Please create 'customer-documents' bucket.");
+      toast.error(
+        "Storage bucket not found. Please create 'customer-documents' bucket."
+      );
       return;
     }
     throw error;
   }
 
   // Get public URL
-  const { data: { publicUrl } } = supabase.storage
-    .from(bucketName)
-    .getPublicUrl(filePath);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from(bucketName).getPublicUrl(filePath);
 
   // Save metadata
   await createMutation.mutateAsync({
@@ -638,16 +672,19 @@ const margin = (profit / revenue) * 100; // 74.2%
 ### User Impact
 
 **Document Management:**
+
 - ✅ Brugere kan nu uploade dokumenter der faktisk gemmes
 - ✅ Dokumenter er tilgængelige via public URLs
 - ⚠️ Kræver Supabase Storage bucket setup (ekstern dependency)
 
 **Segment Management:**
+
 - ✅ Brugere kan redigere eksisterende segments
 - ✅ Komplet CRUD operations
 - ✅ Bedre UX med fejlhåndtering
 
 **Team 2 Rapport:**
+
 - ✅ Korrekte timeestimater og fordeling
 - ✅ Klar visning af fysisk vs. fakturerbar tid
 - ✅ Økonomi tracking (indtjening, løn, profit)
@@ -656,31 +693,37 @@ const margin = (profit / revenue) * 100; // 74.2%
 ### Business Value
 
 **Document Management:**
+
 - **Value:** Centraliseret dokument storage, nem adgang til kunde dokumenter
 - **ROI:** Reducerer tid brugt på at finde dokumenter, bedre kunde service
 
 **Segment Management:**
+
 - **Value:** Komplet segment management gør det muligt at opdatere segments dynamisk
 - **ROI:** Bedre kunde segmentering, mere præcis marketing
 
 **Team 2 Rapport:**
+
 - **Value:** Præcis profit tracking giver indsigt i rentabilitet
 - **ROI:** Bedre beslutninger baseret på data, identificere profitable opgaver
 
 ### Technical Value
 
 **Code Quality:**
+
 - Type-safe implementations
 - Error handling
 - Cache management
 - Security (ownership verification)
 
 **Maintainability:**
+
 - Klar struktur
 - Dokumenteret kode
 - Konsistente patterns
 
 **Scalability:**
+
 - Supabase Storage kan håndtere store filer
 - Partial updates reducerer database load
 - Fleksibel rapport API
@@ -738,16 +781,19 @@ const margin = (profit / revenue) * 100; // 74.2%
 ## Kontekst
 
 **Hvorfor Dette Arbejde:**
+
 - Sprint Week 5 fokus på polish og integrations
 - Kritisk for production readiness
 - Baseret på bruger feedback
 
 **Hvordan Det Passer Ind:**
+
 - Bygger på eksisterende CRM infrastructure
 - Færdiggør manglende features
 - Forbedrer eksisterende funktionalitet
 
 **Relateret Arbejde:**
+
 - Week 1-4: CRM UI implementation (Opportunities, Segments, Documents, Audit, Relationships)
 - Backend: Allerede implementeret (51 tRPC endpoints)
 - Frontend: Nu komplet med Supabase Storage integration
@@ -770,4 +816,3 @@ const margin = (profit / revenue) * 100; // 74.2%
    - Setup Supabase Storage bucket
    - Konfigurer bucket permissions
    - Test med production data
-

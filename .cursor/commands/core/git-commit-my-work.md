@@ -16,11 +16,13 @@ Identify files you modified in this conversation and create a commit with only t
 ## HOW TO IDENTIFY YOUR CHANGES
 
 **During conversation:**
+
 - Note each file you modify using tools
 - Keep mental list: "I modified file1.ts, file2.tsx, ..."
 - Remember what you changed in each
 
 **Before committing:**
+
 - Review your list of modified files
 - Check `git status` to see all modified files
 - Match your list with git status
@@ -61,11 +63,13 @@ Identify files you modified in this conversation and create a commit with only t
 ## COMMIT MESSAGE EXAMPLES
 
 **Single feature:**
+
 ```
 feat: add customer profile enrichment endpoint
 ```
 
 **Multiple related changes:**
+
 ```
 feat: implement email workflow automation
 
@@ -75,6 +79,7 @@ feat: implement email workflow automation
 ```
 
 **Bug fix:**
+
 ```
 fix: resolve null pointer in customer helper function
 ```
@@ -85,9 +90,11 @@ fix: resolve null pointer in customer helper function
 ## Committing My Work
 
 **My Changes:**
+
 - [What I did in this session]
 
 **Files I Modified:**
+
 - `file1.ts` - [change]
 - `file2.tsx` - [change]
 
@@ -98,6 +105,7 @@ fix: resolve null pointer in customer helper function
 \`\`\`
 
 **Verification:**
+
 - ✅ Only my changes
 - ✅ Message clear
 - ✅ Ready to push
@@ -110,4 +118,3 @@ fix: resolve null pointer in customer helper function
 - **Exclude others:** Don't commit files you didn't modify
 - **Clear messages:** Future you should understand
 - **One commit:** Group related work together
-

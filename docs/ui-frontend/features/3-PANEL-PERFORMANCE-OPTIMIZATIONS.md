@@ -22,7 +22,7 @@ Dokumentation af performance optimeringer implementeret for EmailTab i 3-panel l
 - `InboxPanel.tsx`: `TabsContent` bruger `overflow-hidden`
 - Hver tab styrer sin egen scroller (`overflow-y-auto`)
 
-```tsx
+````tsx
 // Før: Nested scroll
 <TabsContent className="... overflow-auto">
 
@@ -126,7 +126,7 @@ Følgende logs er tilgængelige for debugging:
   placeholderData: (prev) => prev || initialEmailsFromCache
 }
 
-```
+````
 
 ## 🧪 Validation Checklist
 

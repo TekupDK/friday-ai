@@ -1,6 +1,6 @@
 /**
  * Hook Executor Tests
- * 
+ *
  * Tests for hook execution functionality
  */
 
@@ -26,7 +26,7 @@ import type { HookResult, HookCategory } from "../types";
 vi.mock("../loader", () => ({
   getHooksForCategory: vi.fn((category: HookCategory) => {
     const hooks = testConfig.hooks[category] || [];
-    return hooks.filter((h) => h.enabled).sort((a, b) => a.priority - b.priority);
+    return hooks.filter(h => h.enabled).sort((a, b) => a.priority - b.priority);
   }),
 }));
 
@@ -129,4 +129,3 @@ describe("Hook Executor", () => {
     });
   });
 });
-

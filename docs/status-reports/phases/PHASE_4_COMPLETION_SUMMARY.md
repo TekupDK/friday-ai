@@ -52,7 +52,7 @@
 
 ### **If You Need Geographic Tagging:**
 
-```typescript
+````typescript
 // Add to lead-source-detector.ts (10 lines)
 export function detectCity(text: string): string | null {
   const cities = ["københavn", "aarhus", "odense", "aalborg"];
@@ -85,7 +85,7 @@ async function triggerWebhook(url: string, data: any) {
   });
 }
 
-```
+````
 
 ---
 

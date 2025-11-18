@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der uddyber og ekspanderer chat kontekst fra 
 ## TASK
 
 Uddyb chat kontekst fra samtalen ved at:
+
 - Analysere nuværende status og opnåelser
 - Gennemgå tekniske detaljer og implementeringer
 - Identificere næste skridt og forbedringer
@@ -36,6 +37,7 @@ Uddyb chat kontekst fra samtalen ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find relevante implementeringer
 - `read_file` - Læs relevante filer
 - `grep` - Søg efter patterns
@@ -43,6 +45,7 @@ Uddyb chat kontekst fra samtalen ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over vigtige detaljer
 - Ignorere tekniske aspekter
 - Glem næste skridt
@@ -114,6 +117,7 @@ Provide comprehensive elaboration:
 [Oversigt over hvad der er diskuteret og opnået]
 
 **Status:**
+
 - [Status 1]
 - [Status 2]
 - [Status 3]
@@ -121,12 +125,14 @@ Provide comprehensive elaboration:
 ## Nuværende Status
 
 **Code Quality:**
+
 - ✅ TypeScript check: [STATUS]
 - ✅ Code review: [STATUS]
 - ✅ Dokumentation: [STATUS]
 - ✅ Tests: [STATUS]
 
 **Klar til:**
+
 - [Deployment / Testing / Review]
 
 ## Detaljeret Gennemgang
@@ -139,15 +145,18 @@ Provide comprehensive elaboration:
 [Detaljeret beskrivelse]
 
 **Tekniske Detaljer:**
+
 - [Teknisk detalje 1]
 - [Teknisk detalje 2]
 - [Teknisk detalje 3]
 
 **Implementation:**
+
 - [Implementationsdetalje 1]
 - [Implementationsdetalje 2]
 
 **Features:**
+
 - [Feature 1]
 - [Feature 2]
 - [Feature 3]
@@ -159,16 +168,19 @@ Provide comprehensive elaboration:
 ### Code Quality Metrics
 
 **TypeScript:**
+
 - ✅ All checks passing
 - ✅ No type errors
 - ✅ Proper type safety
 
 **Code Review:**
+
 - ✅ All implementations reviewed
 - ✅ Security checks passed
 - ✅ Performance considerations
 
 **Documentation:**
+
 - ✅ [X] nye dokumentationsfiler
 - ✅ [Y] eksisterende filer opdateret
 
@@ -201,25 +213,30 @@ Provide comprehensive elaboration:
 ## Technical Debt Status
 
 **Før:**
-- [X] TODOs i codebase
+
+- [x] TODOs i codebase
 - [Y] TODOs i [file]
 
 **Efter:**
+
 - ✅ [X] TODOs løst
 - ⏳ [Y] TODOs tilbage
 
 **Remaining High-Priority TODOs:**
+
 - [TODO 1] - [Beskrivelse]
 - [TODO 2] - [Beskrivelse]
 
 ## Business Impact
 
 **[Feature 1]:**
+
 - ✅ [Impact 1]
 - ✅ [Impact 2]
 - ✅ [Impact 3]
 
 **[Feature 2]:**
+
 - ✅ [Impact 1]
 - ✅ [Impact 2]
 
@@ -232,6 +249,7 @@ Provide comprehensive elaboration:
 ## Hvad Vil Du Gerne Dykke Ned I?
 
 Jeg kan gå i dybden med:
+
 - Implementationsdetaljer for en specifik feature
 - Deployment guide
 - Testing strategy
@@ -263,4 +281,3 @@ Efter uddybning, verificer:
 ---
 
 **CRITICAL:** Start med at analysere chat kontekst, derefter gennemgå codebase og strukturér en omfattende uddybning med alle relevante detaljer.
-

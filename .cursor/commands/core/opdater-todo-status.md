@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der opdaterer TODO status systematisk. Du gen
 ## TASK
 
 Opdater TODO status ved at:
+
 - Finde alle TODO items
 - Gennemgå deres nuværende status
 - Opdatere status baseret på arbejde
@@ -36,6 +37,7 @@ Opdater TODO status ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `grep` - Find TODO kommentarer
 - `codebase_search` - Find TODO items
 - `read_file` - Læs relevante filer
@@ -43,6 +45,7 @@ Opdater TODO status ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over TODOs
 - Ignorere status
 - Glem dokumentation
@@ -115,6 +118,7 @@ Provide TODO status update:
 ## TODO Status Overview
 
 ### Færdige TODOs
+
 - ✅ **[TODO 1]** - [Beskrivelse]
   - **Location:** `[file]:[line]`
   - **Completed:** [Dato]
@@ -126,6 +130,7 @@ Provide TODO status update:
   - **Status:** FÆRDIG
 
 ### In Progress TODOs
+
 - 🚧 **[TODO 1]** - [Beskrivelse]
   - **Location:** `[file]:[line]`
   - **Status:** IN PROGRESS
@@ -137,12 +142,14 @@ Provide TODO status update:
   - **Progress:** [X]%
 
 ### Blokerede TODOs
+
 - ⏸️ **[TODO 1]** - [Beskrivelse]
   - **Location:** `[file]:[line]`
   - **Status:** BLOCKED
   - **Blocker:** [Blocker beskrivelse]
 
 ### Pending TODOs
+
 - ⏳ **[TODO 1]** - [Beskrivelse]
   - **Location:** `[file]:[line]`
   - **Priority:** [High/Medium/Low]
@@ -152,18 +159,21 @@ Provide TODO status update:
 ## Status Opdateringer
 
 ### Opdateret til Færdig
+
 - ✅ **[TODO 1]** - [Beskrivelse]
   - **Fra:** [Gammel status]
   - **Til:** FÆRDIG
   - **Dato:** [Dato]
 
 ### Opdateret til In Progress
+
 - 🚧 **[TODO 1]** - [Beskrivelse]
   - **Fra:** [Gammel status]
   - **Til:** IN PROGRESS
   - **Dato:** [Dato]
 
 ### Opdateret til Blokeret
+
 - ⏸️ **[TODO 1]** - [Beskrivelse]
   - **Fra:** [Gammel status]
   - **Til:** BLOCKED
@@ -172,14 +182,17 @@ Provide TODO status update:
 ## TODO Prioritering
 
 ### High Priority
+
 1. **[TODO 1]** - [Beskrivelse]
 2. **[TODO 2]** - [Beskrivelse]
 
 ### Medium Priority
+
 1. **[TODO 1]** - [Beskrivelse]
 2. **[TODO 2]** - [Beskrivelse]
 
 ### Low Priority
+
 1. **[TODO 1]** - [Beskrivelse]
 2. **[TODO 2]** - [Beskrivelse]
 
@@ -230,4 +243,3 @@ Efter opdatering, verificer:
 ---
 
 **CRITICAL:** Start med at finde alle TODOs, derefter gennemgå deres status, opdater dem systematisk, og prioriter dem.
-

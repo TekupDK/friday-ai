@@ -12,6 +12,7 @@ Forklar en feature: hvad den gør, hvordan den virker, og hvorfor den er vigtig.
 ## TASK
 
 Forklar feature:
+
 1. **Hvad gør den?** - Funktionen
 2. **Hvordan virker den?** - Flow og interaktioner
 3. **Hvorfor er den vigtig?** - Business value og use cases
@@ -54,4 +55,3 @@ Forklar feature:
 ---
 
 **CRITICAL:** Forstå featuren, identificér funktionalitet og use cases, og forklar på klar, forståelig måde.
-

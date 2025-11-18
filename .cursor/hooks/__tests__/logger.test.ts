@@ -1,6 +1,6 @@
 /**
  * Hook Logger Tests
- * 
+ *
  * Tests for logging system
  */
 
@@ -56,7 +56,7 @@ describe("Hook Logger", () => {
     it("should filter logs by hook name", () => {
       const logs = hookLogger.getLogsForHook("hook-1");
       expect(logs.length).toBe(2);
-      logs.forEach((log) => {
+      logs.forEach(log => {
         expect(log.hook).toBe("hook-1");
       });
     });
@@ -64,7 +64,7 @@ describe("Hook Logger", () => {
     it("should filter logs by category", () => {
       const logs = hookLogger.getLogsForCategory("pre-execution");
       expect(logs.length).toBe(2);
-      logs.forEach((log) => {
+      logs.forEach(log => {
         expect(log.category).toBe("pre-execution");
       });
     });
@@ -121,4 +121,3 @@ describe("Hook Logger", () => {
     });
   });
 });
-

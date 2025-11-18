@@ -8,18 +8,18 @@ Add new behavior or options to a feature while maintaining backward compatibilit
 
 ## STEPS
 
-1) Understand current behavior and consumers.
-2) Identify exactly what needs to change or be added.
-3) Prefer additive changes over breaking ones:
+1. Understand current behavior and consumers.
+2. Identify exactly what needs to change or be added.
+3. Prefer additive changes over breaking ones:
    - New optional fields
    - New flags
    - New routes/procedures instead of changing old ones
-4) Update docs and tests to reflect the new behavior.
+4. Update docs and tests to reflect the new behavior.
 
 ## OUTPUT
 
 Return:
+
 - Description of changes
 - Compatibility notes
 - Tests and docs updated.
-

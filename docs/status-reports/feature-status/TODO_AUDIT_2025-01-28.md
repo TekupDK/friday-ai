@@ -15,18 +15,22 @@
 ### By Priority
 
 **🔴 High Priority (Action Required):**
+
 - 15 comments requiring immediate attention
 - Security-related, critical bugs, or blocking issues
 
 **🟡 Medium Priority (Should Fix):**
+
 - 35 comments for improvements or technical debt
 - Performance optimizations, code quality
 
 **🟢 Low Priority (Nice to Have):**
+
 - 40 comments for future enhancements
 - Feature requests, documentation improvements
 
 **⚪ Obsolete/Remove:**
+
 - 15 comments that are outdated or no longer relevant
 
 ---
@@ -36,18 +40,22 @@
 ### Security & Critical Issues
 
 1. **`server/email-monitor.ts:383`** ✅ FIXED
+
    ```typescript
    userId: emailData.userId ?? 1, // TODO: get from user context
    ```
+
    - **Issue:** Hardcoded fallback userId could cause data leakage
    - **Action:** ✅ Implemented `getUserIdFromEmail()` to resolve userId from Gmail email
    - **Status:** Fixed - Now resolves userId from email address instead of hardcoded fallback
    - **Priority:** 🔴 High (RESOLVED)
 
 2. **`server/notification-service.ts:70`**
+
    ```typescript
    // TODO: Integrate with email service (SendGrid, AWS SES, etc.)
    ```
+
    - **Issue:** Email notifications not implemented
    - **Action:** Integrate email service provider
    - **Priority:** 🔴 High
@@ -56,6 +64,7 @@
    ```typescript
    // TODO: Integrate with SMS service (Twilio, AWS SNS, etc.)
    ```
+
    - **Issue:** SMS notifications not implemented
    - **Action:** Integrate SMS service provider
    - **Priority:** 🟡 Medium (if SMS is required)
@@ -63,9 +72,11 @@
 ### Database & Data Integrity
 
 4. **`server/_core/ab-testing.ts:156`**
+
    ```typescript
    // TODO: Store metrics in database for analysis
    ```
+
    - **Issue:** A/B test metrics not persisted
    - **Action:** Implement database storage for metrics
    - **Priority:** 🟡 Medium
@@ -74,6 +85,7 @@
    ```typescript
    // TODO: Fetch actual metrics from database
    ```
+
    - **Issue:** Metrics analysis incomplete
    - **Action:** Implement database queries for metrics
    - **Priority:** 🟡 Medium
@@ -88,6 +100,7 @@
    ```typescript
    // TODO: Get actual usage from LLM response
    ```
+
    - **Issue:** Token usage not tracked accurately
    - **Action:** Extract usage from LLM response
    - **Priority:** 🟡 Medium
@@ -98,6 +111,7 @@
    ```typescript
    // TODO: Implement specific auto-actions
    ```
+
    - **Issue:** Auto-actions incomplete
    - **Action:** Complete auto-action implementation
    - **Priority:** 🟡 Medium
@@ -161,16 +175,19 @@
 ## Action Plan
 
 ### Phase 1: Critical (This Week)
+
 - [ ] Fix hardcoded userId in email-monitor
 - [ ] Integrate email notification service
 - [ ] Remove obsolete TODOs from test data
 
 ### Phase 2: Important (Next 2 Weeks)
+
 - [ ] Implement A/B test metrics storage
 - [ ] Complete auto-actions implementation
 - [ ] Fix token usage tracking
 
 ### Phase 3: Cleanup (Next Month)
+
 - [ ] Convert remaining TODOs to GitHub issues
 - [ ] Remove outdated comments
 - [ ] Document TODO management process
@@ -179,4 +196,3 @@
 
 **Last Updated:** January 28, 2025  
 **Next Audit:** February 28, 2025
-

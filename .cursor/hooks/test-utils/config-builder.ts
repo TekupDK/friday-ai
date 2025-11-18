@@ -1,6 +1,6 @@
 /**
  * Configuration Builder
- * 
+ *
  * Builder pattern for creating test hook configurations
  */
 
@@ -54,8 +54,11 @@ export class ConfigBuilder {
   /**
    * Add multiple hooks to a category
    */
-  addHooks(category: HookCategory, hooks: Omit<HookConfig, "enabled" | "priority">[]): this {
-    hooks.forEach((hook) => this.addHook(category, hook));
+  addHooks(
+    category: HookCategory,
+    hooks: Omit<HookConfig, "enabled" | "priority">[]
+  ): this {
+    hooks.forEach(hook => this.addHook(category, hook));
     return this;
   }
 
@@ -147,4 +150,3 @@ export class ConfigBuilder {
     } as Partial<HooksConfig>;
   }
 }
-

@@ -8,7 +8,7 @@
 
 ### Komponenter
 
-```bash
+````bash
 client/src/
 ├── lib/
 │   ├── retryStrategy.ts       # Exponential backoff + jitter
@@ -357,7 +357,7 @@ console.log('Polling:', { currentInterval, isActive, isVisible });
 // Global rate limit state
 console.log("Rate limit:", globalRateLimitState);
 
-```
+````
 
 ### Common Issues
 

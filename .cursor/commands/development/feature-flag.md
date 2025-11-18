@@ -19,4 +19,3 @@ Create feature flags, implement checks, set up rollouts, monitor usage, remove f
 ## OUTPUT
 
 Feature flags implemented with rollout strategy.
-

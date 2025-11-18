@@ -67,6 +67,7 @@ export function requireOwnership(
 ```
 
 **Applied to:**
+
 - `chat.getMessages` - Verify conversation ownership before retrieving messages
 - `chat.sendMessage` - Verify conversation ownership before sending messages
 - `chat.deleteConversation` - Verify conversation ownership before deletion
@@ -112,6 +113,7 @@ CSRF protection was already implemented using the double-submit cookie pattern. 
 **File:** `server/_core/csrf.ts`
 
 **Pattern:** Double-submit cookie
+
 1. Token stored in cookie (`__csrf_token`)
 2. Token sent in header (`X-CSRF-Token`)
 3. Both must match for validation
@@ -163,7 +165,7 @@ export function validateCsrfToken(req: Request): void {
   // Validate tokens match (double-submit pattern)
   const cookieToken = req.cookies?.[CSRF_TOKEN_COOKIE_NAME];
   const headerToken = req.headers[CSRF_TOKEN_HEADER_NAME];
-  
+
   if (cookieToken !== headerToken) {
     throw new Error("CSRF token validation failed");
   }
@@ -209,28 +211,37 @@ export function validateCsrfToken(req: Request): void {
 **Location:** `server/rbac.ts`
 
 **Signature:**
+
 ```typescript
 function requireOwnership(
   userId: number,
   resourceUserId: number | null | undefined,
   resourceType: string,
   resourceId?: number | string
-): void
+): void;
 ```
 
 **Parameters:**
+
 - `userId` - The ID of the user making the request
 - `resourceUserId` - The userId field from the resource
 - `resourceType` - Human-readable resource type for error messages
 - `resourceId` - Optional resource ID for error messages
 
 **Throws:**
+
 - `TRPCError` with code `FORBIDDEN` if user doesn't own the resource
 
 **Example:**
+
 ```typescript
 const conversation = await getConversation(conversationId);
-requireOwnership(ctx.user.id, conversation.userId, "conversation", conversationId);
+requireOwnership(
+  ctx.user.id,
+  conversation.userId,
+  "conversation",
+  conversationId
+);
 ```
 
 ### `requireOwnershipBatch`
@@ -238,25 +249,31 @@ requireOwnership(ctx.user.id, conversation.userId, "conversation", conversationI
 **Location:** `server/rbac.ts`
 
 **Signature:**
+
 ```typescript
 function requireOwnershipBatch<T extends { userId: number | null | undefined }>(
   userId: number,
   resources: T[],
   resourceType: string
-): void
+): void;
 ```
 
 **Parameters:**
+
 - `userId` - The ID of the user making the request
 - `resources` - Array of resources with userId fields
 - `resourceType` - Human-readable resource type for error messages
 
 **Throws:**
+
 - `TRPCError` with code `FORBIDDEN` if user doesn't own any resource
 
 **Example:**
+
 ```typescript
-const conversations = await db.select().from(conversations)
+const conversations = await db
+  .select()
+  .from(conversations)
   .where(inArray(conversations.id, conversationIds));
 requireOwnershipBatch(ctx.user.id, conversations, "conversation");
 ```
@@ -266,15 +283,18 @@ requireOwnershipBatch(ctx.user.id, conversations, "conversation");
 **Location:** `client/src/lib/csrf.ts`
 
 **Signature:**
+
 ```typescript
-function getCsrfHeaders(): Record<string, string>
+function getCsrfHeaders(): Record<string, string>;
 ```
 
 **Returns:**
+
 - Object with `X-CSRF-Token` header if token is available
 - Empty object if token is not available
 
 **Example:**
+
 ```typescript
 const headers = {
   ...getCsrfHeaders(),
@@ -291,6 +311,7 @@ const headers = {
 **File:** `server/__tests__/security.test.ts`
 
 **Coverage:**
+
 - ✅ Error message sanitization (5 tests)
 - ✅ Input validation (1 test)
 - ✅ SQL injection prevention (2 tests)
@@ -307,6 +328,7 @@ const headers = {
 **File:** `server/__tests__/rbac.test.ts`
 
 **Coverage:**
+
 - ✅ Role hierarchy
 - ✅ Permission checks
 - ✅ Ownership verification
@@ -318,6 +340,7 @@ const headers = {
 **File:** `client/src/__tests__/accessibility/LoginPage.a11y.test.tsx`
 
 **Coverage:**
+
 - ✅ Form labels
 - ✅ Page title
 - ✅ Submit button accessibility

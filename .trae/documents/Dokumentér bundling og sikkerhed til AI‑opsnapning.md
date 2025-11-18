@@ -4,7 +4,7 @@
 
 ## Leverancer
 
-1) Opdatere `SECURITY_IMPLEMENTATION.md` med:
+1. Opdatere `SECURITY_IMPLEMENTATION.md` med:
 
 - Prod/dev‑CSP forskelle og dynamisk `connectSrc` ud fra ENV.
 
@@ -12,7 +12,7 @@
 
 - Henvisning til bundledokument.
 
-1) Oprette `BUNDLE_OPTIMIZATION.md` med:
+1. Oprette `BUNDLE_OPTIMIZATION.md` med:
 
 - Rationale og retningslinjer for `manualChunks` (vendor‑grupper + feature‑chunks).
 

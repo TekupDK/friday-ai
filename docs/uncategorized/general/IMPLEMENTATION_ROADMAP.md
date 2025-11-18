@@ -29,7 +29,7 @@
 
 **Morning (2h): Docker Setup**
 
-```bash
+````bash
 # 1. Create Docker Compose for Langfuse
 mkdir -p server/integrations/langfuse/docker
 cd server/integrations/langfuse/docker
@@ -970,7 +970,7 @@ Development cost: $3,500
 ROI: 257% in year 1
 Break-even: 5 months
 
-```
+````
 
 ---
 

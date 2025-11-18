@@ -61,7 +61,7 @@ pnpm dev
 1. **Åbn browser console** (F12)
 2. **Kør test error:**
    ```javascript
-   throw new Error("Test Sentry integration")
+   throw new Error("Test Sentry integration");
    ```
 3. **Check Sentry dashboard:**
    - Gå til https://sentry.io/organizations/tekup-r5/projects/
@@ -118,4 +118,3 @@ VITE_SENTRY_ENABLED=true
 ## ✨ Alt er klar!
 
 Sentry error tracking er nu fuldt konfigureret og klar til brug. Start serveren og test det! 🎉
-

@@ -10,7 +10,7 @@
 
 ### Label Pipeline (Fra Analysis)
 
-```text
+````text
 INBOX → Needs Action → Needs Reply → Venter på svar → I kalender → Finance → Afsluttet
 
 ```text
@@ -286,7 +286,7 @@ inbox.email: {
   SmartLabelSuggestions.tsx - // AI-powered label suggestions
   EmailSourceDetector.tsx; // Auto-detect lead source
 
-```
+````
 
 ---
 

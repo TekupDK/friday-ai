@@ -30,6 +30,7 @@ Fix TypeScript errors that are blocking the build. START FIXING immediately.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Run typecheck and see errors
 - `read_file` - Read files with errors
 - `grep` - Search for error patterns
@@ -37,6 +38,7 @@ Fix TypeScript errors that are blocking the build. START FIXING immediately.
 - `search_replace` - Fix errors directly
 
 **DO NOT:**
+
 - Wait for approval
 - Just list errors
 - Skip fixing
@@ -70,11 +72,13 @@ Before fixing, think through:
 ## CRITICAL: START FIXING IMMEDIATELY
 
 **DO NOT:**
+
 - Just list errors
 - Wait for approval
 - Show a plan without fixing
 
 **DO:**
+
 - Run typecheck: `pnpm check`
 - Identify error categories
 - Fix errors systematically
@@ -83,6 +87,7 @@ Before fixing, think through:
 ## COMMON ERROR PATTERNS IN THIS REPO
 
 ### 1. Missing Router Exports
+
 ```typescript
 // ❌ Error: Property 'abTestAnalytics' does not exist
 // Fix: Add to server/routers.ts
@@ -95,6 +100,7 @@ export const appRouter = router({
 ```
 
 ### 2. Missing Icon Imports
+
 ```typescript
 // ❌ Error: 'Shield' is not defined
 // Fix: Import from lucide-react
@@ -102,6 +108,7 @@ import { Shield, Download, MessageCircle } from "lucide-react"; // ✅ Add impor
 ```
 
 ### 3. Type Mismatches
+
 ```typescript
 // ❌ Error: Type 'string' is not assignable to type 'number'
 // Fix: Convert or fix type
@@ -109,6 +116,7 @@ const id: number = parseInt(input.id, 10); // ✅ Convert string to number
 ```
 
 ### 4. SQL Type Errors
+
 ```typescript
 // ❌ Error: Type mismatch in where clause
 // Fix: Use proper Drizzle types
@@ -121,6 +129,7 @@ const id: number = parseInt(input.id, 10); // ✅ Convert string to number
 ```
 
 ### 5. Undefined Variables
+
 ```typescript
 // ❌ Error: 'variable' is not defined
 // Fix: Import or define
@@ -154,6 +163,7 @@ import { variable } from "./module"; // ✅ Add import
 ## VERIFICATION
 
 After fixes:
+
 - ✅ `pnpm check` passes (0 errors)
 - ✅ `pnpm build` succeeds
 - ✅ No `any` types introduced
@@ -168,6 +178,7 @@ After fixes:
 **Errors Fixed:** [count]
 
 **Categories Fixed:**
+
 1. Missing router exports: [count]
 2. Missing imports: [count]
 3. Type mismatches: [count]
@@ -175,10 +186,11 @@ After fixes:
 5. Undefined variables: [count]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Typecheck: PASSED (0 errors)
 - ✅ Build: SUCCESS
 ```
-

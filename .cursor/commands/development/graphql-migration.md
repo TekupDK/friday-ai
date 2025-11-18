@@ -19,4 +19,3 @@ Evaluate use case, compare tRPC vs GraphQL, recommend approach.
 ## OUTPUT
 
 Evaluation and recommendation for API approach.
-

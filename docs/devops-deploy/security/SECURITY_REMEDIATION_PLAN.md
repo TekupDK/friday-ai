@@ -25,14 +25,14 @@ This plan breaks down the security remediation tasks from the security review in
 **Status:** All critical issues addressed  
 **Completed:** 2025-01-28
 
-| Task | Status | Effort | Files |
-|------|--------|--------|-------|
-| Remove test bypass from production | ✅ | 1 SP | `server/_core/context.ts` |
-| Fix CORS no-origin allowance | ✅ | 1 SP | `server/_core/index.ts` |
-| Add input length limits | ✅ | 2 SP | `server/routers.ts`, `server/_core/validation.ts` |
-| Implement log redaction | ✅ | 2 SP | `server/_core/logger.ts`, `server/_core/redact.ts` |
-| Fix CSP unsafe-eval | ✅ | 1 SP | `server/_core/index.ts` |
-| Verify SQL queries parameterized | ✅ | 2 SP | `server/routers/crm-extensions-router.ts`, `server/routers/friday-leads-router.ts` |
+| Task                               | Status | Effort | Files                                                                              |
+| ---------------------------------- | ------ | ------ | ---------------------------------------------------------------------------------- |
+| Remove test bypass from production | ✅     | 1 SP   | `server/_core/context.ts`                                                          |
+| Fix CORS no-origin allowance       | ✅     | 1 SP   | `server/_core/index.ts`                                                            |
+| Add input length limits            | ✅     | 2 SP   | `server/routers.ts`, `server/_core/validation.ts`                                  |
+| Implement log redaction            | ✅     | 2 SP   | `server/_core/logger.ts`, `server/_core/redact.ts`                                 |
+| Fix CSP unsafe-eval                | ✅     | 1 SP   | `server/_core/index.ts`                                                            |
+| Verify SQL queries parameterized   | ✅     | 2 SP   | `server/routers/crm-extensions-router.ts`, `server/routers/friday-leads-router.ts` |
 
 **Total:** 9 story points completed
 
@@ -45,23 +45,23 @@ This plan breaks down the security remediation tasks from the security review in
 
 #### Completed Tasks ✅
 
-| Task | Status | Effort | Files | Completion Date |
-|------|--------|--------|-------|-----------------|
-| Implement CSRF protection | ✅ | 3 SP | `server/_core/csrf.ts`, `client/src/lib/csrf.ts` | 2025-01-28 |
-| Add CSRF token to mutations | ✅ | 1 SP | `client/src/lib/trpc.ts`, `client/src/main.tsx` | 2025-01-28 |
-| Fix session cookie security | ✅ | 2 SP | `server/_core/cookies.ts`, `server/_core/oauth.ts` | 2025-01-28 |
-| Add authorization ownership checks | ✅ | 2 SP | `server/rbac.ts`, `server/routers.ts` | 2025-01-28 |
-| Sanitize HTML output (XSS) | ✅ | 2 SP | `client/src/components/chat/advanced/RichTextEditor.tsx` | 2025-01-28 |
-| Add security regression tests | ✅ | 3 SP | `server/__tests__/security.test.ts` | 2025-01-28 |
+| Task                               | Status | Effort | Files                                                    | Completion Date |
+| ---------------------------------- | ------ | ------ | -------------------------------------------------------- | --------------- |
+| Implement CSRF protection          | ✅     | 3 SP   | `server/_core/csrf.ts`, `client/src/lib/csrf.ts`         | 2025-01-28      |
+| Add CSRF token to mutations        | ✅     | 1 SP   | `client/src/lib/trpc.ts`, `client/src/main.tsx`          | 2025-01-28      |
+| Fix session cookie security        | ✅     | 2 SP   | `server/_core/cookies.ts`, `server/_core/oauth.ts`       | 2025-01-28      |
+| Add authorization ownership checks | ✅     | 2 SP   | `server/rbac.ts`, `server/routers.ts`                    | 2025-01-28      |
+| Sanitize HTML output (XSS)         | ✅     | 2 SP   | `client/src/components/chat/advanced/RichTextEditor.tsx` | 2025-01-28      |
+| Add security regression tests      | ✅     | 3 SP   | `server/__tests__/security.test.ts`                      | 2025-01-28      |
 
 **Subtotal:** 13 story points completed
 
 #### Remaining Tasks
 
-| Task | Priority | Effort | Dependencies | Acceptance Criteria |
-|------|----------|--------|--------------|---------------------|
-| **Implement secret rotation mechanism** | P2 | 5 SP | Infrastructure setup | - AWS Secrets Manager or similar integrated<br>- Secret rotation API implemented<br>- Migration plan documented |
-| **Set up automated dependency scanning** | P2 | 3 SP | None | - npm audit in CI/CD<br>- Snyk integration<br>- Security workflow created |
+| Task                                     | Priority | Effort | Dependencies         | Acceptance Criteria                                                                                             |
+| ---------------------------------------- | -------- | ------ | -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Implement secret rotation mechanism**  | P2       | 5 SP   | Infrastructure setup | - AWS Secrets Manager or similar integrated<br>- Secret rotation API implemented<br>- Migration plan documented |
+| **Set up automated dependency scanning** | P2       | 3 SP   | None                 | - npm audit in CI/CD<br>- Snyk integration<br>- Security workflow created                                       |
 
 **Remaining Effort:** 8 story points
 
@@ -74,19 +74,19 @@ This plan breaks down the security remediation tasks from the security review in
 
 #### Completed Tasks ✅
 
-| Task | Status | Effort | Files | Completion Date |
-|------|--------|--------|-------|-----------------|
-| Add missing security headers | ✅ | 1 SP | `server/_core/index.ts` | 2025-01-28 |
+| Task                         | Status | Effort | Files                   | Completion Date |
+| ---------------------------- | ------ | ------ | ----------------------- | --------------- |
+| Add missing security headers | ✅     | 1 SP   | `server/_core/index.ts` | 2025-01-28      |
 
 #### Remaining Tasks
 
-| Task | Priority | Effort | Dependencies | Acceptance Criteria |
-|------|----------|--------|--------------|---------------------|
-| **Add data encryption at rest** | P3 | 8 SP | None | - Encryption utility created<br>- PII fields encrypted<br>- Migration script documented |
-| **Verify rate limiter fallback** | P3 | 1 SP | None | - Regression tests pass<br>- Fallback mode verified |
-| **Add rate limiter regression tests** | P3 | 2 SP | None | - Tests in `rate-limiter-fallback-bug.test.ts` pass |
-| **Test CORS in production-like env** | P3 | 2 SP | None | - Integration tests created<br>- CORS behavior verified |
-| **Improve error message sanitization** | P3 | 1 SP | None | - `sanitizeError()` utility created<br>- Production errors generic |
+| Task                                   | Priority | Effort | Dependencies | Acceptance Criteria                                                                     |
+| -------------------------------------- | -------- | ------ | ------------ | --------------------------------------------------------------------------------------- |
+| **Add data encryption at rest**        | P3       | 8 SP   | None         | - Encryption utility created<br>- PII fields encrypted<br>- Migration script documented |
+| **Verify rate limiter fallback**       | P3       | 1 SP   | None         | - Regression tests pass<br>- Fallback mode verified                                     |
+| **Add rate limiter regression tests**  | P3       | 2 SP   | None         | - Tests in `rate-limiter-fallback-bug.test.ts` pass                                     |
+| **Test CORS in production-like env**   | P3       | 2 SP   | None         | - Integration tests created<br>- CORS behavior verified                                 |
+| **Improve error message sanitization** | P3       | 1 SP   | None         | - `sanitizeError()` utility created<br>- Production errors generic                      |
 
 **Remaining Effort:** 14 story points
 
@@ -97,11 +97,13 @@ This plan breaks down the security remediation tasks from the security review in
 ### Authentication & Authorization
 
 #### ✅ Completed
+
 - Remove test bypass from production
 - Add authorization ownership checks
 - Fix session cookie security
 
 #### ⏳ Remaining
+
 - **P1: Fix weak authentication** (Decision needed)
   - **Option A:** Keep OAuth-only in production (current approach - secure)
   - **Option B:** Implement bcrypt password hashing (requires DB migration)
@@ -111,6 +113,7 @@ This plan breaks down the security remediation tasks from the security review in
 ### Input Validation & Sanitization
 
 #### ✅ Completed
+
 - Add input length limits and validation
 - Sanitize HTML output (XSS prevention)
 - Verify SQL queries use parameterized queries
@@ -119,9 +122,11 @@ This plan breaks down the security remediation tasks from the security review in
 ### Data Protection
 
 #### ✅ Completed
+
 - Implement log redaction for sensitive data
 
 #### ⏳ Remaining
+
 - **P3: Add data encryption at rest** (8 SP)
   - Encrypt PII fields (email, phone) before database storage
   - Create encryption utility
@@ -130,11 +135,13 @@ This plan breaks down the security remediation tasks from the security review in
 ### Infrastructure Security
 
 #### ✅ Completed
+
 - Fix CORS no-origin allowance
 - Fix CSP unsafe-eval in production
 - Add missing security headers
 
 #### ⏳ Remaining
+
 - **P2: Set up automated dependency scanning** (3 SP)
   - Add npm audit to CI/CD
   - Integrate Snyk
@@ -154,16 +161,19 @@ This plan breaks down the security remediation tasks from the security review in
 ### Cross-Site Request Forgery (CSRF)
 
 #### ✅ Completed
+
 - Implement CSRF protection (backend)
 - Add CSRF token to mutation requests (frontend)
 
 ### Testing & Verification
 
 #### ✅ Completed
+
 - Add security regression tests
 - Verify rate limiter fallback fix
 
 #### ⏳ Remaining
+
 - **P3: Add rate limiter fallback regression tests** (2 SP)
   - Tests already exist and passing
   - Mark as complete after verification
@@ -183,6 +193,7 @@ This plan breaks down the security remediation tasks from the security review in
 Integrate AWS Secrets Manager, Azure Key Vault, or HashiCorp Vault for production secrets. Add secret rotation support.
 
 **Acceptance Criteria:**
+
 - [ ] Secret management service integrated
 - [ ] Secret rotation API implemented
 - [ ] Migration plan documented
@@ -190,6 +201,7 @@ Integrate AWS Secrets Manager, Azure Key Vault, or HashiCorp Vault for productio
 - [ ] Monitoring/alerting configured
 
 **Implementation Steps:**
+
 1. Evaluate secret management service options
 2. Choose service (recommend AWS Secrets Manager for AWS deployments)
 3. Create `server/_core/secrets.ts` utility
@@ -200,6 +212,7 @@ Integrate AWS Secrets Manager, Azure Key Vault, or HashiCorp Vault for productio
 8. Add monitoring/alerting
 
 **Files to Modify:**
+
 - `server/_core/secrets.ts` (new)
 - `server/_core/env.ts` (update to use secret service)
 - `server/routers.ts` (add rotation endpoints)
@@ -220,6 +233,7 @@ Integrate AWS Secrets Manager, Azure Key Vault, or HashiCorp Vault for productio
 Add npm audit and Snyk to CI/CD pipeline. Create security workflow.
 
 **Acceptance Criteria:**
+
 - [ ] npm audit script added to package.json
 - [ ] Snyk integration configured
 - [ ] GitHub Actions workflow created
@@ -227,6 +241,7 @@ Add npm audit and Snyk to CI/CD pipeline. Create security workflow.
 - [ ] Documentation updated
 
 **Implementation Steps:**
+
 1. Add npm audit scripts to `package.json`
 2. Install Snyk CLI
 3. Configure Snyk project
@@ -235,6 +250,7 @@ Add npm audit and Snyk to CI/CD pipeline. Create security workflow.
 6. Document process
 
 **Files to Modify:**
+
 - `package.json` (add scripts)
 - `.github/workflows/security.yml` (new)
 - `docs/SECURITY_SCANNING_GUIDE.md` (new)
@@ -254,6 +270,7 @@ Add npm audit and Snyk to CI/CD pipeline. Create security workflow.
 Implement encryption for PII fields (email, phone) before database storage.
 
 **Acceptance Criteria:**
+
 - [ ] Encryption utility created
 - [ ] PII fields encrypted before storage
 - [ ] Decryption on retrieval implemented
@@ -261,6 +278,7 @@ Implement encryption for PII fields (email, phone) before database storage.
 - [ ] Key management documented
 
 **Implementation Steps:**
+
 1. Choose encryption library (recommend `crypto` built-in or `node-forge`)
 2. Create `server/_core/encryption.ts` utility
 3. Implement encrypt/decrypt functions
@@ -270,6 +288,7 @@ Implement encryption for PII fields (email, phone) before database storage.
 7. Add tests
 
 **Files to Modify:**
+
 - `server/_core/encryption.ts` (new)
 - `server/db.ts` (update user creation/retrieval)
 - `server/lead-db.ts` (update lead creation/retrieval)
@@ -291,12 +310,14 @@ Implement encryption for PII fields (email, phone) before database storage.
 Verify CORS blocks unauthorized origins and allows only whitelisted ones.
 
 **Acceptance Criteria:**
+
 - [ ] Integration tests created
 - [ ] Tests verify unauthorized origins blocked
 - [ ] Tests verify whitelisted origins allowed
 - [ ] Tests run in CI/CD
 
 **Implementation Steps:**
+
 1. Create `tests/integration/cors.test.ts`
 2. Write tests for unauthorized origin rejection
 3. Write tests for whitelisted origin acceptance
@@ -304,6 +325,7 @@ Verify CORS blocks unauthorized origins and allows only whitelisted ones.
 5. Add to CI/CD pipeline
 
 **Files to Modify:**
+
 - `tests/integration/cors.test.ts` (new)
 - `.github/workflows/test.yml` (add integration tests)
 
@@ -398,4 +420,3 @@ None - All tasks can proceed independently
 
 **Last Updated:** 2025-01-28  
 **Next Review:** After Sprint 2 completion
-

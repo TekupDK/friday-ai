@@ -22,7 +22,6 @@ import { Card } from "@/components/ui/card";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { cn } from "@/lib/utils";
 
-
 interface MarkdownPreviewProps {
   initialMarkdown?: string;
   onSave?: (markdown: string) => void;

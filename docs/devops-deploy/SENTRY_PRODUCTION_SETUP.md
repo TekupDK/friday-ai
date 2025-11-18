@@ -42,6 +42,7 @@ VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 ```
 
 **Quick Setup Script:**
+
 ```powershell
 .\scripts\add-sentry-env-prod.ps1
 ```
@@ -49,6 +50,7 @@ VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 ### Option B: Create Separate Production Projects (Recommended)
 
 **Benefits:**
+
 - ✅ Separate error tracking for dev vs prod
 - ✅ Better organization
 - ✅ Independent alert rules
@@ -120,10 +122,12 @@ VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 ### Sample Rate
 
 **Recommended:**
+
 - **Development:** 0.1 (10% of transactions)
 - **Production:** 0.1 (10% of transactions) or 0.05 (5% for high traffic)
 
 **Update in .env.prod:**
+
 ```bash
 SENTRY_TRACES_SAMPLE_RATE=0.1  # 10% sampling
 # or
@@ -141,6 +145,7 @@ Sentry automatically tags errors with environment. Ensure `NODE_ENV=production` 
 ### After Deployment
 
 1. **Check Server Logs:**
+
    ```
    [Sentry] Error tracking initialized
    ```
@@ -185,6 +190,7 @@ Sentry automatically tags errors with environment. Ensure `NODE_ENV=production` 
 ### Sentry Not Initializing in Production
 
 **Check:**
+
 - ✅ `SENTRY_ENABLED=true` (string, not boolean)
 - ✅ DSN is correct (no extra spaces)
 - ✅ Environment variables are loaded correctly
@@ -193,6 +199,7 @@ Sentry automatically tags errors with environment. Ensure `NODE_ENV=production` 
 ### Errors Not Appearing
 
 **Check:**
+
 - ✅ DSN is correct
 - ✅ Network connectivity to Sentry
 - ✅ Environment matches (production)
@@ -202,6 +209,7 @@ Sentry automatically tags errors with environment. Ensure `NODE_ENV=production` 
 ### Alerts Not Firing
 
 **Check:**
+
 - ✅ Alert rules are configured correctly
 - ✅ Notification channels are set up
 - ✅ Email addresses are verified
@@ -246,4 +254,3 @@ Sentry automatically tags errors with environment. Ensure `NODE_ENV=production` 
 ---
 
 **Last Updated:** January 28, 2025
-

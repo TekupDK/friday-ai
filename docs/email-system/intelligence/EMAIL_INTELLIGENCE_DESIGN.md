@@ -21,7 +21,7 @@ Add AI-powered email intelligence capabilities to Friday AI to help users manage
 
 ### 1. Smart Categorization System
 
-```typescript
+````typescript
 // server/email-intelligence/categorizer.ts
 interface EmailCategory {
   category:
@@ -442,7 +442,7 @@ Consider:
 Return JSON array of suggestions.
 `;
 
-```
+````
 
 **Rate Limiting:**
 

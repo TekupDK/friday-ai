@@ -13,6 +13,7 @@ Du er en senior DevOps engineer der uddyber deployment planer med detaljerede st
 ## TASK
 
 Uddyb deployment plan ved at:
+
 - Analysere deployment requirements
 - Gennemgå deployment steps i detaljer
 - Dokumentere verificering procedures
@@ -36,6 +37,7 @@ Uddyb deployment plan ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find deployment scripts
 - `read_file` - Læs deployment configs
 - `grep` - Søg efter deployment patterns
@@ -43,6 +45,7 @@ Uddyb deployment plan ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over verificering steps
 - Ignorere rollback strategier
 - Glem monitoring setup
@@ -108,48 +111,56 @@ Før uddybning, tænk igennem:
 
 Provide comprehensive deployment plan:
 
-```markdown
+````markdown
 # Detaljeret Deployment Plan: [Feature/Version]
 
 ## Deployment Oversigt
 
 **Hvad Deployes:**
+
 - [Feature 1]
 - [Feature 2]
 - [Bugfix 1]
 
 **Target Environment:**
+
 - [Staging/Production]
 - [Server/Region]
 
 **Estimated Downtime:**
-- [X] minutter (hvis relevant)
+
+- [x] minutter (hvis relevant)
 
 **Deployment Window:**
+
 - [Dato/Tid]
 - [Timezone]
 
 ## Pre-Deployment Checklist
 
 ### Code Quality
+
 - [ ] TypeScript check: `pnpm check` - ✅ PASSER
 - [ ] Linter: `pnpm lint` - ✅ PASSER
 - [ ] Tests: `pnpm test` - ✅ PASSER
 - [ ] Code review: ✅ GENNEMFØRT
 
 ### Environment Verification
+
 - [ ] Environment variabler verificeret
 - [ ] Database migrations klar
 - [ ] API keys verificeret
 - [ ] External services tilgængelige
 
 ### Infrastructure
+
 - [ ] Server resources tilgængelige
 - [ ] Database backup oprettet
 - [ ] Monitoring konfigureret
 - [ ] Rollback plan klar
 
 ### Communication
+
 - [ ] Team notificeret
 - [ ] Stakeholders informeret
 - [ ] Maintenance window planlagt (hvis nødvendigt)
@@ -157,6 +168,7 @@ Provide comprehensive deployment plan:
 ## Deployment Steps
 
 ### Step 1: Backup
+
 ```bash
 # Database backup
 [Backup command]
@@ -164,12 +176,15 @@ Provide comprehensive deployment plan:
 # File backup
 [Backup command]
 ```
+````
 
 **Verificering:**
+
 - [ ] Backup successful
 - [ ] Backup verified
 
 ### Step 2: Pre-Deployment Checks
+
 ```bash
 # Health check
 [Health check command]
@@ -179,10 +194,12 @@ Provide comprehensive deployment plan:
 ```
 
 **Verificering:**
+
 - [ ] All checks passing
 - [ ] No blocking issues
 
 ### Step 3: Deployment
+
 ```bash
 # Build
 [Build command]
@@ -195,11 +212,13 @@ Provide comprehensive deployment plan:
 ```
 
 **Verificering:**
+
 - [ ] Build successful
 - [ ] Deployment successful
 - [ ] Services running
 
 ### Step 4: Post-Deployment Verification
+
 ```bash
 # Health check
 [Health check command]
@@ -209,11 +228,13 @@ Provide comprehensive deployment plan:
 ```
 
 **Verificering:**
+
 - [ ] Health checks passing
 - [ ] Smoke tests passing
 - [ ] No errors in logs
 
 ### Step 5: Monitoring
+
 - [ ] Monitor error rates
 - [ ] Monitor performance metrics
 - [ ] Monitor user activity
@@ -222,12 +243,14 @@ Provide comprehensive deployment plan:
 ## Rollback Plan
 
 ### Rollback Triggers
+
 - [ ] Error rate > [X]%
 - [ ] Performance degradation
 - [ ] Critical bug discovered
 - [ ] User complaints
 
 ### Rollback Steps
+
 ```bash
 # Step 1: Stop new traffic
 [Command]
@@ -246,6 +269,7 @@ Provide comprehensive deployment plan:
 ```
 
 **Verificering:**
+
 - [ ] Rollback successful
 - [ ] Services running
 - [ ] No data loss
@@ -253,22 +277,26 @@ Provide comprehensive deployment plan:
 ## Monitoring og Alerting
 
 ### Key Metrics
+
 - **Error Rate:** [Target] < [X]%
 - **Response Time:** [Target] < [X]ms
 - **Throughput:** [Target] > [X] req/s
 - **Uptime:** [Target] > [X]%
 
 ### Alerting Rules
+
 - [Alert 1]: [Condition] → [Action]
 - [Alert 2]: [Condition] → [Action]
 
 ### Monitoring Dashboard
+
 - [Dashboard URL]
 - [Key metrics to watch]
 
 ## Risk Assessment
 
 ### Identified Risks
+
 1. **[Risk 1]**
    - **Probability:** [High/Medium/Low]
    - **Impact:** [High/Medium/Low]
@@ -278,6 +306,7 @@ Provide comprehensive deployment plan:
    - [Samme struktur...]
 
 ### Mitigation Strategies
+
 - [Strategy 1]
 - [Strategy 2]
 - [Strategy 3]
@@ -285,18 +314,21 @@ Provide comprehensive deployment plan:
 ## Post-Deployment Tasks
 
 ### Immediate (First Hour)
+
 - [ ] Monitor error rates
 - [ ] Check performance metrics
 - [ ] Verify critical features
 - [ ] Review logs
 
 ### Short-term (First Day)
+
 - [ ] User feedback review
 - [ ] Performance analysis
 - [ ] Error analysis
 - [ ] Documentation update
 
 ### Long-term (First Week)
+
 - [ ] Performance optimization
 - [ ] Bug fixes
 - [ ] Feature improvements
@@ -322,6 +354,7 @@ Provide comprehensive deployment plan:
 3. **Future Improvements:**
    - [Improvement 1]
    - [Improvement 2]
+
 ```
 
 ## GUIDELINES
@@ -349,3 +382,4 @@ Efter uddybning, verificer:
 
 **CRITICAL:** Start med at analysere deployment requirements, derefter strukturér en omfattende deployment plan med alle safety checks og verificering steps.
 
+```

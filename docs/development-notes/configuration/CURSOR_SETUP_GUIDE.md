@@ -8,6 +8,7 @@
 ## Overview
 
 This guide covers the complete Cursor IDE configuration for the Friday AI Chat project, including:
+
 - Agent Hooks
 - Terminal Integration
 - Context Rules
@@ -20,6 +21,7 @@ This guide covers the complete Cursor IDE configuration for the Friday AI Chat p
 ### What Are Agent Hooks?
 
 Agent hooks allow you to customize agent behavior at specific lifecycle points:
+
 - **Pre-execution:** Before agent runs commands
 - **Post-execution:** After agent completes tasks
 - **Error:** When agent encounters errors
@@ -107,11 +109,13 @@ Common commands are defined in `.cursor/terminal/templates.json`:
 ### Command Validation
 
 Commands are validated before execution to prevent:
+
 - Destructive operations
 - Unauthorized commands
 - Security risks
 
 **Validation Rules:**
+
 - Blacklisted commands are blocked
 - Risky commands require confirmation
 - Only whitelisted commands are allowed
@@ -119,14 +123,17 @@ Commands are validated before execution to prevent:
 ### Using Terminal Commands
 
 **In Commands:**
+
 ```markdown
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Execute terminal commands
 ```
 
 **In Code:**
+
 ```typescript
 // Commands are validated automatically
 await run_terminal_cmd("pnpm tsc --noEmit");
@@ -174,6 +181,7 @@ Rules are automatically applied by the Cursor agent. You can reference specific 
 ### Rule Priority
 
 Rules are organized by priority:
+
 - **P0** - Critical (must follow)
 - **P1** - High (should follow)
 - **P2** - Medium (recommended)
@@ -193,12 +201,15 @@ Commands are defined in `.cursor/commands/[name].md`:
 You are a [role] doing [task]. START WORKING immediately.
 
 ## TASK
+
 [What the command does]
 
 ## TOOL USAGE
+
 [What tools to use]
 
 ## OUTPUT
+
 [What to provide]
 ```
 
@@ -207,6 +218,7 @@ You are a [role] doing [task]. START WORKING immediately.
 See `.cursor/commands/COMMANDS_INDEX.md` for complete list.
 
 **Popular Commands:**
+
 - `analyze-user-intent.md` - Analyze user requirements
 - `debug-issue.md` - Debug issues systematically
 - `implement-from-chat-summary.md` - Implement from chat
@@ -245,6 +257,7 @@ Configured in `tekup-ai-v2.code-workspace`:
 ### MCP Servers
 
 **Available Servers:**
+
 - **playwright** - Browser automation
 - **postgres** - Database access
 - **filesystem** - File operations
@@ -328,4 +341,3 @@ Configured in `tekup-ai-v2.code-workspace`:
 
 **Last Updated:** January 28, 2025  
 **Maintained by:** TekupDK Development Team
-

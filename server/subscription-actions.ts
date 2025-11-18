@@ -1,6 +1,6 @@
 /**
  * Subscription Actions
- * 
+ *
  * Business logic for subscription operations including creation, renewal, cancellation,
  * and integration with Billy.dk and Google Calendar.
  */
@@ -24,7 +24,10 @@ import {
   getSubscriptionByCustomerId,
   addSubscriptionHistory,
 } from "./subscription-db";
-import { getPlanConfig, type SubscriptionPlanType } from "./subscription-helpers";
+import {
+  getPlanConfig,
+  type SubscriptionPlanType,
+} from "./subscription-helpers";
 
 /**
  * Calculate next billing date (1 month from start date or last billing)
@@ -129,12 +132,14 @@ export async function createSubscription(
   });
 
   // Create recurring calendar events (async, don't wait)
-  createRecurringBookings(subscription.id, planConfig, customer.name || customer.email).catch(
-    (error) => {
-      console.error("Error creating recurring bookings:", error);
-      // Don't fail subscription creation if calendar fails
-    }
-  );
+  createRecurringBookings(
+    subscription.id,
+    planConfig,
+    customer.name || customer.email
+  ).catch(error => {
+    console.error("Error creating recurring bookings:", error);
+    // Don't fail subscription creation if calendar fails
+  });
 
   // Send welcome email (async, don't wait)
   import("./subscription-email")
@@ -145,7 +150,7 @@ export async function createSubscription(
         userId,
       })
     )
-    .catch((error) => {
+    .catch(error => {
       console.error("Error sending welcome email:", error);
       // Don't fail subscription creation if email fails
     });
@@ -164,11 +169,12 @@ async function createRecurringBookings(
   // Calculate booking dates for next 12 months
   const dates: Date[] = [];
   const startDate = new Date();
-  
+
   // Determine frequency based on plan
-  const isBiweekly = planConfig.name.includes("VIP") || planConfig.includedHours >= 6;
+  const isBiweekly =
+    planConfig.name.includes("VIP") || planConfig.includedHours >= 6;
   const frequency = isBiweekly ? "biweekly" : "monthly";
-  
+
   for (let i = 0; i < 12; i++) {
     const date = new Date(startDate);
     if (frequency === "biweekly") {
@@ -183,10 +189,11 @@ async function createRecurringBookings(
   for (const date of dates) {
     const startTime = new Date(date);
     startTime.setHours(9, 0, 0, 0); // Default: 9:00 AM
-    
+
     const endTime = new Date(startTime);
     endTime.setHours(
-      startTime.getHours() + Math.ceil(planConfig.includedHours / (isBiweekly ? 2 : 1))
+      startTime.getHours() +
+        Math.ceil(planConfig.includedHours / (isBiweekly ? 2 : 1))
     );
 
     try {
@@ -197,7 +204,10 @@ async function createRecurringBookings(
         end: endTime.toISOString(),
       });
     } catch (error) {
-      console.error(`Error creating calendar event for ${date.toISOString()}:`, error);
+      console.error(
+        `Error creating calendar event for ${date.toISOString()}:`,
+        error
+      );
       // Continue with next date
     }
   }
@@ -238,12 +248,15 @@ export async function processRenewal(
 
   // Create invoice via Billy.dk
   try {
-    const billyContactId = customer.billyCustomerId || customer.billyOrganizationId;
+    const billyContactId =
+      customer.billyCustomerId || customer.billyOrganizationId;
     if (!billyContactId) {
       return { success: false, error: "Customer has no Billy contact ID" };
     }
 
-    const planConfig = getPlanConfig(subscription.planType as SubscriptionPlanType);
+    const planConfig = getPlanConfig(
+      subscription.planType as SubscriptionPlanType
+    );
     const monthName = new Date().toLocaleDateString("da-DK", {
       month: "long",
       year: "numeric",
@@ -358,7 +371,7 @@ export async function processCancellation(
         userId,
       })
     )
-    .catch((error) => {
+    .catch(error => {
       console.error("Error sending cancellation email:", error);
       // Don't fail cancellation if email fails
     });
@@ -429,4 +442,3 @@ export async function applyDiscount(
 
   return { success: true };
 }
-

@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-
 type ToastType = "success" | "error" | "warning" | "info";
 
 interface Toast {

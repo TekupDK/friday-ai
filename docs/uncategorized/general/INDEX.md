@@ -195,7 +195,7 @@
 
 ## 📁 File Structure
 
-```text
+````text
 docs/integrations/ChromaDB/leads-v4.3.5/
 ├── INDEX.md                      ← You are here
 ├── README.md                     ← Start here for overview
@@ -245,7 +245,7 @@ Revenue Impact:         65-85k kr/year
 Cost:                   $0 (FREE tier)
 Status:                 ✅ Production Ready
 
-```
+````
 
 ---
 

@@ -57,7 +57,7 @@
   Foreslået e-mail:
   -----------------------------------------
 
-  ```
+```
 
 - Selve review‑mailen kan oprettes som intern draft til senere afsendelse.
 

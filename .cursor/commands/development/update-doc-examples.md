@@ -30,6 +30,7 @@ Find and update code examples in documentation to match current code patterns an
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read documentation with examples
 - `grep` - Find code blocks in docs
 - `codebase_search` - Find current code patterns
@@ -38,6 +39,7 @@ Find and update code examples in documentation to match current code patterns an
 - `run_terminal_cmd` - Test examples if possible
 
 **DO NOT:**
+
 - Use outdated patterns
 - Miss examples
 - Skip verification
@@ -71,7 +73,7 @@ Before updating examples, think through:
 ## IMPLEMENTATION STEPS
 
 1. **Find code examples:**
-   - Search for code blocks in docs (```typescript, ```tsx, etc.)
+   - Search for code blocks in docs (`typescript, `tsx, etc.)
    - List all examples found
    - Note which docs have examples
 
@@ -102,6 +104,7 @@ Before updating examples, think through:
 ## VERIFICATION
 
 After updating examples:
+
 - ✅ All examples match current code
 - ✅ Examples use current patterns
 - ✅ Examples compile/run
@@ -113,14 +116,17 @@ After updating examples:
 ### Documentation Examples Update
 
 **Examples Updated:**
+
 - `docs/[doc1].md` - [Example 1] - [What changed]
 - `docs/[doc2].md` - [Example 2] - [What changed]
 
 **Patterns Updated:**
+
 - [Old pattern] → [New pattern]
 - [Old API] → [New API]
 
 **Verification:**
+
 - ✅ Examples: MATCH CURRENT CODE
 - ✅ Patterns: CORRECT
 - ✅ Compilation: SUCCESS
@@ -133,4 +139,3 @@ After updating examples:
 - **Verify examples:** Ensure examples work
 - **Be complete:** Include full working examples
 - **Update regularly:** Keep examples current
-

@@ -15,7 +15,7 @@ The embeddings service generates vector representations of text for semantic sea
 
 ### Model Used
 
-```text
+````text
 openai/text-embedding-3-small
 
 - Dimensions: 1536
@@ -337,7 +337,7 @@ const output = await extractor("Hello World", {
 
 const embedding = Array.from(output.data); // 384 dimensions
 
-```
+````
 
 **Pros:**
 

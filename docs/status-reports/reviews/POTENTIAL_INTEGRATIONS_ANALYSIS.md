@@ -52,7 +52,6 @@ Secure Retrieval Augmented Generation (RAG) APIs for developers.
 ### Potential Use Cases i Friday AI
 
 1. **Friday Docs Enhancement** ⭐⭐⭐⭐⭐
-
    - Intelligent document search
 
    - Context-aware retrieval
@@ -93,7 +92,7 @@ Secure Retrieval Augmented Generation (RAG) APIs for developers.
 
 ### Implementation Plan
 
-```typescript
+````typescript
 // 1. Install SDK
 npm install @ragieai/ragie-ts
 
@@ -589,7 +588,7 @@ Industry-standard API development and testing platform.
 // 5. Share with team
 // Publish collection
 
-```
+````
 
 ---
 
@@ -598,7 +597,6 @@ Industry-standard API development and testing platform.
 ### Tier 1: Must Have ⭐⭐⭐⭐⭐
 
 1. **LiteLLM** - Unified LLM gateway
-
    - **Why:** Better reliability, easy model switching, FREE!
 
    - **Impact:** HIGH
@@ -608,7 +606,6 @@ Industry-standard API development and testing platform.
    - **Action:** Implement ASAP
 
 1. **Ragie.ai** - RAG platform
-
    - **Why:** Perfect for Friday Docs semantic search
 
    - **Impact:** HIGH
@@ -620,7 +617,6 @@ Industry-standard API development and testing platform.
 ### Tier 2: Should Have ⭐⭐⭐⭐
 
 1. **Firecrawl** - Web scraping
-
    - **Why:** Lead enrichment, competitive intelligence
 
    - **Impact:** HIGH
@@ -630,7 +626,6 @@ Industry-standard API development and testing platform.
    - **Action:** Implement for lead features
 
 1. **Kusho.ai** - API testing
-
    - **Why:** Better test coverage, automation
 
    - **Impact:** HIGH
@@ -640,7 +635,6 @@ Industry-standard API development and testing platform.
    - **Action:** Implement in CI/CD
 
 1. **Postman** - API docs
-
    - **Why:** Team collaboration, documentation
 
    - **Impact:** MEDIUM
@@ -652,7 +646,6 @@ Industry-standard API development and testing platform.
 ### Tier 3: Nice to Have ⭐⭐⭐
 
 1. **Browserbase** - Browser automation
-
    - **Why:** Advanced testing, better debugging
 
    - **Impact:** MEDIUM
@@ -704,7 +697,6 @@ Industry-standard API development and testing platform.
 ### Phase 1: Foundation (Week 1-2)
 
 1. **LiteLLM Setup** (Day 1-2)
-
    - Install and configure
 
    - Migrate existing AI calls
@@ -712,7 +704,6 @@ Industry-standard API development and testing platform.
    - Test failover logic
 
 1. **Postman Documentation** (Day 3-4)
-
    - Create workspace
 
    - Generate collections
@@ -722,7 +713,6 @@ Industry-standard API development and testing platform.
 ### Phase 2: Enhancement (Week 3-4)
 
 1. **Ragie.ai Integration** (Week 3)
-
    - Friday Docs semantic search
 
    - Document indexing
@@ -730,7 +720,6 @@ Industry-standard API development and testing platform.
    - Query optimization
 
 1. **Firecrawl Integration** (Week 4)
-
    - Lead enrichment pipeline
 
    - Website scraping
@@ -740,7 +729,6 @@ Industry-standard API development and testing platform.
 ### Phase 3: Automation (Week 5-6)
 
 1. **Kusho.ai Testing** (Week 5)
-
    - Generate API tests
 
    - CI/CD integration
@@ -748,7 +736,6 @@ Industry-standard API development and testing platform.
    - Regression setup
 
 1. **Browserbase** (Week 6 - Optional)
-
    - Migrate E2E tests
 
    - Session debugging

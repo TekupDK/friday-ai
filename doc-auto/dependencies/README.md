@@ -41,7 +41,7 @@ The project uses **pnpm** as the package manager and follows a modern TypeScript
 
 ### UI Components
 
-- **@radix-ui/react-*** - Headless UI components (20+ packages)
+- **@radix-ui/react-\*** - Headless UI components (20+ packages)
 - **tailwindcss:** `^4.1.14` - Utility-first CSS
 - **lucide-react:** `^0.453.0` - Icon library
 - **framer-motion:** `^12.23.22` - Animation library
@@ -136,7 +136,7 @@ The project uses **pnpm** as the package manager and follows a modern TypeScript
 ### UI Stack
 
 - **react, react-dom:** UI framework
-- **@radix-ui/react-***:** Accessible component primitives
+- **@radix-ui/react-\***:\*\* Accessible component primitives
 - **tailwindcss:** Styling
 - **framer-motion:** Animations
 
@@ -158,4 +158,3 @@ For version updates, check `package.json` or run:
 ```bash
 pnpm outdated
 ```
-

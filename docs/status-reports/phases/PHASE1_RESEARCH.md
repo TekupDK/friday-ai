@@ -88,7 +88,7 @@ Based on code search, Friday AI has AI integrated in these areas:
 
 #### 1. Core LLM Layer (`_core/llm.ts`)
 
-```typescript
+````typescript
 // Primary functions:
 
 - invokeLLM() - Main AI call function
@@ -659,7 +659,7 @@ Annual savings:          $9,000
 ROI:                     450% in year 1
 Break-even:              3 months
 
-```
+````
 
 ---
 

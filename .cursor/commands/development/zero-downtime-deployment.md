@@ -19,4 +19,3 @@ Set up deployment strategy, add health checks, implement rollback, test deployme
 ## OUTPUT
 
 Zero-downtime deployment configured with rollback capability.
-

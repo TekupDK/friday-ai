@@ -30,11 +30,13 @@ Review a system design document for clarity, architectural soundness, completene
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read design document and related code
 - `codebase_search` - Find similar patterns
 - `grep` - Search for related implementations
 
 **DO NOT:**
+
 - Review without reading the document
 - Skip architectural considerations
 - Ignore existing patterns
@@ -66,26 +68,32 @@ Before reviewing, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Design Review Structure
+
 ```markdown
 ## Design Review: [Feature Name]
 
 ### Strengths
+
 - [Strength 1]
 - [Strength 2]
 
 ### Architectural Concerns
+
 - [Concern 1] - [Explanation]
 - [Concern 2] - [Explanation]
 
 ### Missing Considerations
+
 - [Consideration 1]
 - [Consideration 2]
 
 ### Questions
+
 - [Question 1]
 - [Question 2]
 
 ### Recommendations
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -123,6 +131,7 @@ Before reviewing, think through:
 ## VERIFICATION
 
 After review:
+
 - ✅ Document fully read
 - ✅ Architecture evaluated
 - ✅ Completeness checked
@@ -137,26 +146,32 @@ After review:
 **Overall Assessment:** [Good / Needs Work / Incomplete]
 
 **Strengths:**
+
 - [Strength 1]
 - [Strength 2]
 
 **Architectural Concerns:**
+
 1. [Concern] - [Explanation] - [Recommendation]
 2. [Concern] - [Explanation] - [Recommendation]
 
 **Missing Considerations:**
+
 - [Consideration 1]
 - [Consideration 2]
 
 **Questions for Reviewers:**
+
 - [Question 1]
 - [Question 2]
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 
 **Alignment with Friday AI Chat:**
+
 - ✅ [Aligned aspect]
 - ⚠️ [Needs adjustment]
 ```
@@ -168,4 +183,3 @@ After review:
 - **Be specific:** Reference exact sections
 - **Consider patterns:** Align with Friday AI Chat patterns
 - **Ask questions:** Identify unclear areas
-

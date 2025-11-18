@@ -20,7 +20,7 @@
 
 **TRPC Endpoints (crm.activity):**
 
-```typescript
+````typescript
 ✅ logActivity({ customerProfileId, activityType, subject, ... })
 ✅ listActivities({ customerProfileId, activityType?, limit?, offset? })
 ✅ getActivityStats({ customerProfileId })
@@ -229,7 +229,7 @@ await logActivity.mutateAsync({
   nextSteps: "Send kalender",
 });
 
-```
+````
 
 ---
 
@@ -238,7 +238,6 @@ await logActivity.mutateAsync({
 ### **Phase 2 (Hvis tid):**
 
 1. **Opportunities/Deals Pipeline** 🟡
-
    - Sales tracking separate fra leads
 
    - Deal value forecasting
@@ -246,7 +245,6 @@ await logActivity.mutateAsync({
    - Win/loss reasons
 
 1. **Customer Segmentation** 🟡
-
    - Saved filters/smart lists
 
    - Bulk actions på segments
@@ -254,19 +252,16 @@ await logActivity.mutateAsync({
    - Auto-tag suggestions
 
 1. **Documents & Files** 🟠
-
    - Upload photos, contracts, receipts
 
    - Link documents to customers
 
 1. **Audit Log** 🟢
-
    - Change tracking for GDPR
 
    - "Who changed customer status?"
 
 1. **Relationship Mapping** 🟢
-
    - Track referrals
 
    - B2B company hierarchies

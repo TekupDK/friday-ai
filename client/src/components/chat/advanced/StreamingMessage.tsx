@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-
 export interface StreamingMessageProps {
   role: "user" | "assistant";
   content: string;

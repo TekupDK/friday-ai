@@ -21,7 +21,6 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
-
 export interface ToolExecution {
   id: string;
   tool: "search" | "analyze" | "browse" | "code";

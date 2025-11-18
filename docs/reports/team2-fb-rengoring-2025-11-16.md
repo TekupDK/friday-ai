@@ -6,12 +6,12 @@
 
 ## Oversigt
 
-| Metrik | Timer | Omkostning (DKK) |
-|--------|-------|------------------|
-| Kalendertid | 0.00 | 0.00 |
-| Aftalt tid | 0.00 | Ikke fundet |
-| Faktureret tid | 0.00 | Ikke fundet |
-| Faktisk arbejdstid | 0.00 | Ikke fundet |
+| Metrik             | Timer | Omkostning (DKK) |
+| ------------------ | ----- | ---------------- |
+| Kalendertid        | 0.00  | 0.00             |
+| Aftalt tid         | 0.00  | Ikke fundet      |
+| Faktureret tid     | 0.00  | Ikke fundet      |
+| Faktisk arbejdstid | 0.00  | Ikke fundet      |
 
 ## Detaljeret opgaveliste
 

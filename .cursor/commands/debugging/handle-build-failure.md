@@ -30,6 +30,7 @@ Diagnose and fix build failures. START INVESTIGATING immediately.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Run build and check errors
 - `read_file` - Read error files
 - `grep` - Search for error patterns
@@ -37,6 +38,7 @@ Diagnose and fix build failures. START INVESTIGATING immediately.
 - `search_replace` - Fix errors
 
 **DO NOT:**
+
 - Wait for approval
 - Just describe errors
 - Skip fixing
@@ -71,11 +73,13 @@ Before fixing, think through:
 ## CRITICAL: START FIXING IMMEDIATELY
 
 **DO NOT:**
+
 - Just describe the error
 - Wait for approval
 - Show a plan without fixing
 
 **DO:**
+
 - Run build: `pnpm build`
 - Read error messages
 - Fix issues systematically
@@ -84,6 +88,7 @@ Before fixing, think through:
 ## COMMON BUILD FAILURES
 
 ### 1. TypeScript Errors
+
 ```bash
 # Error: Type errors blocking build
 # Fix: Run pnpm check first, fix errors
@@ -93,6 +98,7 @@ pnpm build
 ```
 
 ### 2. Missing Dependencies
+
 ```bash
 # Error: Cannot find module 'xxx'
 # Fix: Install missing dependency
@@ -100,6 +106,7 @@ pnpm add [package]
 ```
 
 ### 3. Config Issues
+
 ```bash
 # Error: vite.config.ts error
 # Fix: Check vite.config.ts
@@ -107,6 +114,7 @@ pnpm add [package]
 ```
 
 ### 4. Environment Variables
+
 ```bash
 # Error: Missing env variable
 # Fix: Check .env files
@@ -146,14 +154,16 @@ pnpm check:env
 **Root Cause:** [explanation]
 
 **Fixes Applied:**
+
 1. [Fix 1]
 2. [Fix 2]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Build: SUCCESS
 - ✅ Typecheck: PASSED
 ```
-

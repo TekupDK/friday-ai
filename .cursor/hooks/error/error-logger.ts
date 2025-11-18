@@ -1,6 +1,6 @@
 /**
  * Error Hook: Error Logger
- * 
+ *
  * Logs errors with context for debugging
  */
 
@@ -25,4 +25,3 @@ export function logError(error: Error, context: ErrorContext): void {
   // In a real implementation, this would write to a log file or service
   console.error("[Cursor Agent Error]", errorLog);
 }
-

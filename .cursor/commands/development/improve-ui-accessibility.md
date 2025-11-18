@@ -16,12 +16,14 @@ Improve accessibility of UI components to meet WCAG 2.1 AA standards.
 ## ACCESSIBILITY CHECKLIST
 
 ### 1. Semantic HTML
+
 - ✅ Use proper HTML elements (`<button>`, `<nav>`, `<main>`, etc.)
 - ✅ Proper heading hierarchy (h1 → h2 → h3)
 - ✅ Landmarks (`<nav>`, `<main>`, `<aside>`, `<footer>`)
 - ✅ Form labels associated with inputs
 
 ### 2. ARIA Attributes
+
 - ✅ `aria-label` for icon-only buttons
 - ✅ `aria-describedby` for help text
 - ✅ `aria-live` for dynamic content
@@ -29,18 +31,21 @@ Improve accessibility of UI components to meet WCAG 2.1 AA standards.
 - ✅ `aria-hidden` for decorative elements
 
 ### 3. Keyboard Navigation
+
 - ✅ All interactive elements keyboard accessible
 - ✅ Visible focus indicators
 - ✅ Logical tab order
 - ✅ Keyboard shortcuts documented
 
 ### 4. Color & Contrast
+
 - ✅ Text contrast: 4.5:1 minimum
 - ✅ UI components: 3:1 minimum
 - ✅ Don't rely on color alone
 - ✅ Support dark mode
 
 ### 5. Screen Reader Support
+
 - ✅ Descriptive labels
 - ✅ Status announcements
 - ✅ Form error messages
@@ -49,6 +54,7 @@ Improve accessibility of UI components to meet WCAG 2.1 AA standards.
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Accessible Button
+
 ```typescript
 // ✅ Good: Accessible button
 <button
@@ -67,6 +73,7 @@ Improve accessibility of UI components to meet WCAG 2.1 AA standards.
 ```
 
 ### Example: Accessible Form
+
 ```typescript
 // ✅ Good: Proper form labels
 <form onSubmit={handleSubmit}>
@@ -92,6 +99,7 @@ Improve accessibility of UI components to meet WCAG 2.1 AA standards.
 ```
 
 ### Example: Accessible Dialog
+
 ```typescript
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -114,6 +122,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 ```
 
 ### Example: Accessible Loading State
+
 ```typescript
 // ✅ Good: Accessible loading
 <div role="status" aria-live="polite" aria-label="Loading">
@@ -161,6 +170,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 ## VERIFICATION
 
 After improvement:
+
 - ✅ WCAG 2.1 AA compliant
 - ✅ Semantic HTML used
 - ✅ ARIA attributes added
@@ -174,10 +184,12 @@ After improvement:
 ### Accessibility Improvements: [Component]
 
 **Issues Found:**
+
 1. [Issue 1] - [Fix applied]
 2. [Issue 2] - [Fix applied]
 
 **Improvements Made:**
+
 - Semantic HTML: [changes]
 - ARIA attributes: [added]
 - Keyboard navigation: [improvements]
@@ -194,6 +206,7 @@ After improvement:
 \`\`\`
 
 **Verification:**
+
 - ✅ WCAG 2.1 AA: PASSED
 - ✅ Screen reader: TESTED
 - ✅ Keyboard navigation: WORKING

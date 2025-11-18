@@ -115,7 +115,7 @@ Tested LiteLLM integration with **5 realistic lead scenarios** from actual sourc
 
 ### Response Times
 
-```text
+````text
 Task Type              | Avg Time | Min    | Max
 -----------------------|----------|--------|--------
 Lead Analysis          | 9.3s     | 5.8s   | 11.7s
@@ -193,7 +193,7 @@ Total cost: $0.00 (all FREE!)
 Test #12: Task Planning for Lead #5
 Error: Rate limit exceeded (16 requests/minute)
 
-```
+````
 
 **Why This Is Actually GOOD:**
 

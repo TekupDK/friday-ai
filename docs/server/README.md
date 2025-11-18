@@ -32,4 +32,3 @@ Use these templates when creating new documentation to ensure consistency across
 - Main documentation: `docs/`
 - API reference: `docs/API_REFERENCE.md`
 - Architecture: `docs/ARCHITECTURE.md`
-

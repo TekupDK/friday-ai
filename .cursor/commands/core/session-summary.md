@@ -30,12 +30,14 @@ Create a comprehensive summary of the current chat session including accomplishm
 ## TOOL USAGE
 
 **Use these tools:**
+
 - Review chat history - Understand full context
 - `run_terminal_cmd` - Check git status and commits
 - `read_file` - Review key files changed
 - `codebase_search` - Understand impact
 
 **DO NOT:**
+
 - Skip important details
 - Ignore decisions made
 - Forget next steps
@@ -95,6 +97,7 @@ Before summarizing, think through:
 ## VERIFICATION
 
 After summary:
+
 - ✅ All key points covered
 - ✅ Decisions documented
 - ✅ Next steps clear
@@ -107,34 +110,42 @@ After summary:
 # Session Summary - 2025-11-16
 
 ## Session Goals
+
 - [Goal 1]
 - [Goal 2]
 
 ## Accomplishments
+
 - ✅ [What was completed]
 - ✅ [What was completed]
 
 ## Key Decisions
+
 - [Decision 1] - [Rationale]
 - [Decision 2] - [Rationale]
 
 ## Changes Made
+
 - `file1.ts` - [What changed]
 - `file2.tsx` - [What changed]
 
 ## Context & Learnings
+
 - [Important context]
 - [Key learnings]
 
 ## Next Steps
+
 - [ ] [Next task 1]
 - [ ] [Next task 2]
 
 ## Blockers
+
 - [Blocker 1] - [Impact]
 - [Blocker 2] - [Impact]
 
 ## Questions for Next Session
+
 - [Question 1]
 - [Question 2]
 ```
@@ -146,4 +157,3 @@ After summary:
 - **Be actionable:** Include specific next steps
 - **Be contextual:** Preserve important context
 - **Be useful:** Make it valuable for future sessions
-

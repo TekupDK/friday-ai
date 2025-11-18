@@ -31,6 +31,7 @@ When a problem occurs, START INVESTIGATING and FIXING immediately. Use Friday-sp
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code to understand issue
 - `codebase_search` - Find related code
 - `grep` - Search for error patterns
@@ -38,6 +39,7 @@ When a problem occurs, START INVESTIGATING and FIXING immediately. Use Friday-sp
 - `search_replace` - Fix code directly
 
 **DO NOT:**
+
 - Wait for approval
 - Just describe without fixing
 - Skip Friday-specific knowledge
@@ -72,12 +74,14 @@ Before fixing, think through:
 ## CRITICAL: START FIXING IMMEDIATELY
 
 **DO NOT:**
+
 - Just describe the problem
 - Wait for approval
 - Show a plan without fixing
 - Ask "should I start?"
 
 **DO:**
+
 - Start investigating immediately
 - Use Friday-specific knowledge
 - Fix the issue using tools
@@ -173,14 +177,16 @@ Before fixing, think through:
 **System:** [AI/Email/CRM/Database/etc.]
 
 **Fix Applied:**
+
 - [what was fixed]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Issue resolved: PASSED
 - ✅ Regression test: ADDED
 - ✅ No side effects: VERIFIED
 ```
-

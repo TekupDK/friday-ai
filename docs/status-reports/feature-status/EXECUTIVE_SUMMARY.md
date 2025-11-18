@@ -30,7 +30,7 @@ Integrer LiteLLM som unified LLM gateway i Friday AI for:
 
 ### Current State
 
-```text
+````text
 Friday AI → Direct API → OpenRouter (GLM-4.5 Air FREE)
                           └─ Fallback: Ollama (local)
                           └─ Fallback: Gemini
@@ -360,7 +360,7 @@ pip install 'litellm[proxy]'
 # Task 1.3: Create config files (90 min)
 # 5 FREE OpenRouter models
 
-```
+````
 
 ---
 

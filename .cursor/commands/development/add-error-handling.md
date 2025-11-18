@@ -32,12 +32,14 @@ Implement comprehensive error handling for the current code to make it robust an
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find existing error handling patterns
 - `read_file` - Read current code and error handling utilities
 - `grep` - Search for error patterns
 - `search_replace` - Implement error handling
 
 **DO NOT:**
+
 - Ignore edge cases
 - Skip validation
 - Forget user experience
@@ -70,6 +72,7 @@ Before implementing, think through:
 ### 1. Error Detection
 
 **Identify potential failure points:**
+
 - Unhandled exceptions
 - Missing validation
 - Boundary checks
@@ -80,6 +83,7 @@ Before implementing, think through:
 - External API calls
 
 **Analyze:**
+
 - Current error handling (if any)
 - Error propagation paths
 - Error types and sources
@@ -88,6 +92,7 @@ Before implementing, think through:
 ### 2. Error Handling Strategy
 
 **Implement try-catch blocks:**
+
 ```typescript
 try {
   // Operation
@@ -99,6 +104,7 @@ try {
 ```
 
 **Add input validation:**
+
 ```typescript
 const schema = z.object({
   // Validation rules
@@ -108,12 +114,14 @@ const validated = schema.parse(input);
 ```
 
 **Create meaningful error messages:**
+
 - User-friendly messages
 - Technical details for logging
 - Context information
 - Recovery suggestions
 
 **Design graceful degradation:**
+
 - Fallback behavior
 - Default values
 - Cached data
@@ -122,11 +130,9 @@ const validated = schema.parse(input);
 ### 3. Recovery Mechanisms
 
 **Retry logic for transient failures:**
+
 ```typescript
-async function withRetry<T>(
-  fn: () => Promise<T>,
-  maxRetries = 3
-): Promise<T> {
+async function withRetry<T>(fn: () => Promise<T>, maxRetries = 3): Promise<T> {
   for (let i = 0; i < maxRetries; i++) {
     try {
       return await fn();
@@ -140,12 +146,14 @@ async function withRetry<T>(
 ```
 
 **Circuit breakers for external dependencies:**
+
 - Track failure rates
 - Open circuit on high failure rate
 - Close circuit after recovery period
 - Fallback to cached data
 
 **Proper error propagation:**
+
 - Type-safe error types
 - Error boundaries in React
 - tRPC error codes
@@ -154,12 +162,14 @@ async function withRetry<T>(
 ### 4. User Experience
 
 **Clear error messages:**
+
 - What went wrong (user-friendly)
 - Why it happened (if helpful)
 - What user can do (actionable)
 - When to retry (if applicable)
 
 **Error status codes:**
+
 - 400: Bad Request (validation errors)
 - 401: Unauthorized (auth errors)
 - 403: Forbidden (permission errors)
@@ -168,12 +178,14 @@ async function withRetry<T>(
 - 503: Service Unavailable (temporary errors)
 
 **Loading states and error boundaries:**
+
 - Show loading during operations
 - Catch React component errors
 - Display fallback UI
 - Prevent full app crashes
 
 **Helpful suggestions:**
+
 - Retry button
 - Contact support link
 - Alternative actions
@@ -187,19 +199,23 @@ async function withRetry<T>(
 ## Errors Identified
 
 ### High Priority
+
 - [Error 1] - [Impact] - [Fix]
 - [Error 2] - [Impact] - [Fix]
 
 ### Medium Priority
+
 - [Error 3] - [Impact] - [Fix]
 
 ## Implementation
 
 ### Changes Made
+
 - `file1.ts` - Added try-catch, validation, logging
 - `file2.tsx` - Added error boundary, user feedback
 
 ### Code Examples
+
 [Code snippets showing error handling]
 
 ## Testing
@@ -230,6 +246,7 @@ async function withRetry<T>(
 ## VERIFICATION CHECKLIST
 
 After implementation:
+
 - ✅ All potential errors identified
 - ✅ Try-catch blocks implemented
 - ✅ Input validation added

@@ -12,6 +12,7 @@ Forklar hvad koden gør, hvordan den virker, og hvorfor den er skrevet sådan.
 ## TASK
 
 Forklar kode:
+
 1. **Hvad gør den?** - Funktionen
 2. **Hvordan virker den?** - Flow og logik
 3. **Hvorfor er den skrevet sådan?** - Rationale og design decisions
@@ -45,4 +46,3 @@ Forklar kode:
 ---
 
 **CRITICAL:** Læs koden, forstå hvad den gør, og forklar på klar, forståelig måde.
-

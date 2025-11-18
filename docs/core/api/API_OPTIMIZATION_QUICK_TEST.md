@@ -6,7 +6,7 @@
 
 ### 1. Åbn DevTools
 
-```bash
+````bash
 # Browser DevTools (F12)
 
 - Network tab: Monitor API calls
@@ -149,7 +149,7 @@ window.__apiMonitor?.getRecentMetrics(20);
 // Eller observer Network tab for cache headers
 // Eller brug: window.__apiMonitor?.getCacheHitRate()
 
-```
+````
 
 **Full Monitoring Guide:** Se `API_OPTIMIZATION_MONITORING.md`
 

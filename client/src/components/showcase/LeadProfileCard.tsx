@@ -22,7 +22,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
-
 interface LeadProfile {
   name: string;
   company?: string;

@@ -1,6 +1,6 @@
 /**
  * Mock Hook Factory
- * 
+ *
  * Factory for creating mock hooks with different behaviors for testing
  */
 
@@ -57,7 +57,7 @@ export function createTimeoutHook<T extends HookResult = HookResult>(
   timeout = 100
 ): HookFunction<T> {
   return async (context: HookExecutionContext): Promise<T> => {
-    await new Promise((resolve) => setTimeout(resolve, timeout));
+    await new Promise(resolve => setTimeout(resolve, timeout));
     return {
       success: true,
     } as T;
@@ -92,12 +92,12 @@ export function createMockHook<T extends HookResult = HookResult>(
   return async (context: HookExecutionContext): Promise<T> => {
     // Simulate delay
     if (delay > 0) {
-      await new Promise((resolve) => setTimeout(resolve, delay));
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
 
     // Simulate timeout
     if (timeout) {
-      await new Promise((resolve) => setTimeout(resolve, 10000));
+      await new Promise(resolve => setTimeout(resolve, 10000));
     }
 
     // Simulate failure
@@ -126,7 +126,9 @@ export function createMockPreExecutionHook(
   return createMockHook<PreExecutionHookResult>({
     returnValue: {
       isValid: !options.shouldFail,
-      errors: options.shouldFail ? [options.errorMessage || "Validation failed"] : [],
+      errors: options.shouldFail
+        ? [options.errorMessage || "Validation failed"]
+        : [],
       warnings: [],
       ...options.returnValue,
     },
@@ -173,7 +175,9 @@ export function createMockErrorHook(
 export function createMockContextHook(
   contextData: Record<string, unknown> = {}
 ): HookFunction<ContextHookResult> {
-  return async (executionContext: HookExecutionContext): Promise<ContextHookResult> => {
+  return async (
+    executionContext: HookExecutionContext
+  ): Promise<ContextHookResult> => {
     return {
       success: true,
       context: {
@@ -183,4 +187,3 @@ export function createMockContextHook(
     };
   };
 }
-

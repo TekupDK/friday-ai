@@ -28,13 +28,16 @@ function generateCacheKey(
     params: JSON.stringify(params),
   };
   const keyString = JSON.stringify(keyData);
-  const hash = createHash("sha256").update(keyString).digest("hex").substring(0, 16);
+  const hash = createHash("sha256")
+    .update(keyString)
+    .digest("hex")
+    .substring(0, 16);
   return `${prefix}${queryName}:${hash}`;
 }
 
 /**
  * Get cached query result or execute query and cache it
- * 
+ *
  * @param queryName - Name of the query (for cache key)
  * @param queryFn - Function that executes the database query
  * @param params - Query parameters (for cache key generation)
@@ -88,7 +91,7 @@ export async function getCachedQuery<T>(
 
 /**
  * Invalidate cache for a specific query pattern
- * 
+ *
  * @param queryName - Name of the query to invalidate
  * @param params - Optional parameters to match (if not provided, invalidates all for queryName)
  */
@@ -98,7 +101,7 @@ export async function invalidateCache(
 ): Promise<void> {
   try {
     const redis = getRedisClient();
-    
+
     if (params) {
       // Invalidate specific cache entry
       const cacheKey = generateCacheKey(queryName, params);
@@ -109,7 +112,7 @@ export async function invalidateCache(
       // Note: This requires SCAN which is expensive, use sparingly
       const pattern = `db:query:${queryName}:*`;
       const keys = await redis.keys(pattern);
-      
+
       if (keys.length > 0) {
         await redis.del(...keys);
         logger.info(
@@ -135,7 +138,7 @@ export async function clearAllQueryCache(): Promise<void> {
     const redis = getRedisClient();
     const pattern = "db:query:*";
     const keys = await redis.keys(pattern);
-    
+
     if (keys.length > 0) {
       await redis.del(...keys);
       logger.info(
@@ -147,4 +150,3 @@ export async function clearAllQueryCache(): Promise<void> {
     logger.warn({ err: error }, "[DB Cache] Failed to clear all caches");
   }
 }
-

@@ -43,7 +43,7 @@ export function DocumentList({ customerProfileId }: DocumentListProps) {
 
   // Delete mutation with Supabase Storage cleanup
   const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation({
-    onSuccess: async (result) => {
+    onSuccess: async result => {
       // Also delete file from Supabase Storage if storageUrl is provided
       if (result.storageUrl) {
         try {
@@ -125,9 +125,7 @@ export function DocumentList({ customerProfileId }: DocumentListProps) {
           {categories.length > 0 && (
             <select
               value={selectedCategory || ""}
-              onChange={e =>
-                setSelectedCategory(e.target.value || null)
-              }
+              onChange={e => setSelectedCategory(e.target.value || null)}
               className="px-3 py-2 border border-border rounded-md bg-background text-sm"
             >
               <option value="">All Categories</option>
@@ -190,4 +188,3 @@ export function DocumentList({ customerProfileId }: DocumentListProps) {
     </div>
   );
 }
-

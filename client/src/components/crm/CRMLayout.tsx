@@ -34,8 +34,9 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
                 size="sm"
                 onClick={() => {
                   // In standalone mode, navigate to standalone dashboard
-                  const isStandalone = window.location.pathname.startsWith("/crm-standalone") || 
-                                      window.location.pathname.startsWith("/crm/debug");
+                  const isStandalone =
+                    window.location.pathname.startsWith("/crm-standalone") ||
+                    window.location.pathname.startsWith("/crm/debug");
                   if (isStandalone) {
                     navigate("/crm-standalone/dashboard");
                   } else {
@@ -46,26 +47,28 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
                 aria-label="Navigate to workspace"
               >
                 <Home className="w-4 h-4 mr-1" />
-                {window.location.pathname.startsWith("/crm-standalone") || 
-                 window.location.pathname.startsWith("/crm/debug") 
-                  ? "CRM Home" 
+                {window.location.pathname.startsWith("/crm-standalone") ||
+                window.location.pathname.startsWith("/crm/debug")
+                  ? "CRM Home"
                   : "Workspace"}
               </Button>
               <div className="h-6 w-px bg-border mx-2" />
-              {CRM_NAV_ITEMS.map((item) => {
+              {CRM_NAV_ITEMS.map(item => {
                 const Icon = item.icon;
                 // Check if we're in standalone mode
-                const isStandalone = typeof window !== "undefined" && 
-                  (window.location.pathname.startsWith("/crm-standalone") || 
-                   window.location.pathname.startsWith("/crm/debug"));
-                
+                const isStandalone =
+                  typeof window !== "undefined" &&
+                  (window.location.pathname.startsWith("/crm-standalone") ||
+                    window.location.pathname.startsWith("/crm/debug"));
+
                 // Adjust path for standalone mode
-                const targetPath = isStandalone 
+                const targetPath = isStandalone
                   ? `/crm-standalone${item.path.replace("/crm", "")}`
                   : item.path;
-                
-                const isActive = activePath === item.path || activePath === targetPath;
-                
+
+                const isActive =
+                  activePath === item.path || activePath === targetPath;
+
                 return (
                   <Button
                     key={item.path}
@@ -94,4 +97,3 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
     </div>
   );
 }
-

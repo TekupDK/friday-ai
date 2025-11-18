@@ -93,7 +93,8 @@ export function UsageChart({
 
       const hoursUsed = usageData.totalUsage || 0;
       const includedHours = Number(usageData.includedHours || 0);
-      const percentage = includedHours > 0 ? (hoursUsed / includedHours) * 100 : 0;
+      const percentage =
+        includedHours > 0 ? (hoursUsed / includedHours) * 100 : 0;
       const hasOverage = usageData.overage?.hasOverage || false;
       const overageHours = usageData.overage?.overageHours || 0;
 
@@ -116,8 +117,12 @@ export function UsageChart({
   // Calculate statistics
   const stats = useMemo(() => {
     const totalUsed = chartData.reduce((sum, d) => sum + d.hoursUsed, 0);
-    const totalIncluded = chartData.reduce((sum, d) => sum + d.includedHours, 0);
-    const averageUsage = chartData.length > 0 ? totalUsed / chartData.length : 0;
+    const totalIncluded = chartData.reduce(
+      (sum, d) => sum + d.includedHours,
+      0
+    );
+    const averageUsage =
+      chartData.length > 0 ? totalUsed / chartData.length : 0;
     const monthsWithOverage = chartData.filter(d => d.hasOverage).length;
     const maxUsage = Math.max(...chartData.map(d => d.hoursUsed), 0);
 
@@ -127,7 +132,8 @@ export function UsageChart({
       averageUsage,
       monthsWithOverage,
       maxUsage,
-      utilizationRate: totalIncluded > 0 ? (totalUsed / totalIncluded) * 100 : 0,
+      utilizationRate:
+        totalIncluded > 0 ? (totalUsed / totalIncluded) * 100 : 0,
     };
   }, [chartData]);
 
@@ -170,7 +176,10 @@ export function UsageChart({
           {showOverageWarnings && stats.monthsWithOverage > 0 && (
             <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
               <AlertTriangle className="w-4 h-4" />
-              <span>{stats.monthsWithOverage} month{stats.monthsWithOverage !== 1 ? "s" : ""} with overage</span>
+              <span>
+                {stats.monthsWithOverage} month
+                {stats.monthsWithOverage !== 1 ? "s" : ""} with overage
+              </span>
             </div>
           )}
         </div>
@@ -267,7 +276,8 @@ export function UsageChart({
                 <span>{Math.round(data.percentage)}% used</span>
                 {data.hasOverage && (
                   <span className="text-red-600 dark:text-red-400 font-medium">
-                    Overage: {(data.overageHours * 349).toLocaleString("da-DK")} kr
+                    Overage: {(data.overageHours * 349).toLocaleString("da-DK")}{" "}
+                    kr
                   </span>
                 )}
               </div>
@@ -300,4 +310,3 @@ export function UsageChart({
     </AppleCard>
   );
 }
-

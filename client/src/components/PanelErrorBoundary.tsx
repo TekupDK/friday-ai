@@ -61,18 +61,21 @@ export class PanelErrorBoundary extends Component<Props, State> {
             panel: {
               name: this.props.name,
               errorInfo,
-              timestamp: logData.timestamp
-            }
+              timestamp: logData.timestamp,
+            },
           },
           tags: {
             component: "panel",
-            panel_name: this.props.name
-          }
+            panel_name: this.props.name,
+          },
         });
       })
       .catch(sentryError => {
         // Sentry not available or failed to import - ignore
-        console.warn("[PanelErrorBoundary] Failed to send error to Sentry:", sentryError);
+        console.warn(
+          "[PanelErrorBoundary] Failed to send error to Sentry:",
+          sentryError
+        );
       });
   }
 

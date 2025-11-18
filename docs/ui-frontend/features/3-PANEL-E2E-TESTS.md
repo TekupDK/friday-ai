@@ -270,7 +270,7 @@ Comprehensive E2E test suite for the Friday AI 3-panel workspace layout system. 
 
 ### Run All E2E Tests
 
-```bash
+````bash
 npm run test:e2e
 
 ```text
@@ -303,7 +303,7 @@ npx playwright test -g "Mobile Responsive"
 ```bash
 npx playwright test 3-panel-layout --debug
 
-```
+````
 
 ---
 

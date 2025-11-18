@@ -1,12 +1,15 @@
 /**
  * HTTP Handler for UTCP Tools
- * 
+ *
  * Executes HTTP-based UTCP tools (Google APIs, Billy API, etc.)
  */
 
 import { searchGmailThreads } from "../../google-api";
 import type { UTCPTool, UTCPHTTPHandler, UTCPToolResult } from "../types";
-import { interpolateTemplate, interpolateTemplateObject } from "../utils/template";
+import {
+  interpolateTemplate,
+  interpolateTemplateObject,
+} from "../utils/template";
 
 /**
  * Get authentication token for HTTP handler
@@ -48,7 +51,13 @@ export async function executeHTTPHandler(
   try {
     // Special handling for Google APIs - use existing functions
     if (handler.endpoint.includes("gmail.googleapis.com")) {
-      return await handleGoogleGmailAPI(tool, handler, args, userId, correlationId);
+      return await handleGoogleGmailAPI(
+        tool,
+        handler,
+        args,
+        userId,
+        correlationId
+      );
     }
 
     // For other HTTP endpoints, use direct fetch
@@ -76,14 +85,23 @@ export async function executeHTTPHandler(
       const token = await getAuthToken(handler.auth, userId);
       if (handler.auth.type === "oauth2" && token) {
         headers.Authorization = `Bearer ${token}`;
-      } else if (handler.auth.type === "api_key" && handler.auth.header && token) {
+      } else if (
+        handler.auth.type === "api_key" &&
+        handler.auth.header &&
+        token
+      ) {
         headers[handler.auth.header] = token;
       }
     }
 
     // 4. Build request body
     let body: string | undefined;
-    if (handler.body && (handler.method === "POST" || handler.method === "PUT" || handler.method === "PATCH")) {
+    if (
+      handler.body &&
+      (handler.method === "POST" ||
+        handler.method === "PUT" ||
+        handler.method === "PATCH")
+    ) {
       if (typeof handler.body === "string") {
         body = interpolateTemplate(handler.body, args);
       } else {
@@ -155,9 +173,9 @@ async function handleGoogleGmailAPI(
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Gmail API request failed",
+      error:
+        error instanceof Error ? error.message : "Gmail API request failed",
       code: "API_ERROR",
     };
   }
 }
-

@@ -67,7 +67,7 @@
 
 **Variants:**
 
-```tsx
+````tsx
 // Standard button
 <GenerateLeadDocButton
   leadId={lead.id}
@@ -243,7 +243,7 @@ Root:
 
    <GenerateLeadDocButton leadId={leadId} variant="default" />;
 
-   ```
+````
 
 ### Senere (optional)
 

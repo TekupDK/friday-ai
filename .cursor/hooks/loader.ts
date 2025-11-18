@@ -1,6 +1,6 @@
 /**
  * Hook Loader
- * 
+ *
  * Loads hook files and configurations with error handling
  */
 
@@ -112,15 +112,13 @@ export function loadHookConfig(): HooksConfig {
 /**
  * Get hooks for a specific category
  */
-export function getHooksForCategory(
-  category: HookCategory
-): HookConfig[] {
+export function getHooksForCategory(category: HookCategory): HookConfig[] {
   const config = loadHookConfig();
   const hooks = config.hooks[category] || [];
-  
+
   // Filter enabled hooks and sort by priority
   return hooks
-    .filter((hook) => hook.enabled)
+    .filter(hook => hook.enabled)
     .sort((a, b) => a.priority - b.priority);
 }
 
@@ -137,7 +135,7 @@ export function getAllEnabledHooks(): HookConfig[] {
   ];
 
   const allHooks: HookConfig[] = [];
-  
+
   for (const category of categories) {
     const hooks = getHooksForCategory(category);
     allHooks.push(...hooks);
@@ -158,6 +156,5 @@ export function getHookFilePath(hook: HookConfig): string {
  */
 export function hookExists(hookName: string, category: HookCategory): boolean {
   const hooks = getHooksForCategory(category);
-  return hooks.some((hook) => hook.name === hookName);
+  return hooks.some(hook => hook.name === hookName);
 }
-

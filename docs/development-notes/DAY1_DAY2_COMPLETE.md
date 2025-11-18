@@ -30,7 +30,7 @@ Successfully completed Day 1 (Setup) and Day 2 (TypeScript Client) of LiteLLM in
 
 ### Files Created
 
-```bash
+````bash
 server/integrations/litellm/
 ├── docker/
 │   └── docker-compose.litellm.yml    ✅ 48 lines
@@ -318,7 +318,7 @@ model: "glm-4.5-air";
 // ✅ Correct
 model: "openrouter/z-ai/glm-4.5-air:free";
 
-```
+````
 
 ### 4. All FREE Models Work Great
 

@@ -8,7 +8,7 @@
 
 ## 🔍 Data Flow Oversigt
 
-```text
+````text
 Customer Profile Åbning
           ↓
     Auto-Sync (5 min cache)
@@ -440,7 +440,7 @@ console.log(
   `[Calendar] Found ${matchedEvents.length}/${googleEvents.length} matches`
 );
 
-```
+````
 
 ---
 

@@ -55,8 +55,8 @@ export function KeyboardShortcutsDialog({
         <DialogTitle>Keyboard Shortcuts</DialogTitle>
         <DialogDescription>
           Available keyboard shortcuts for navigation and actions. Press{" "}
-          <kbd className="px-2 py-1 bg-muted rounded text-sm">Esc</kbd> to
-          close this dialog.
+          <kbd className="px-2 py-1 bg-muted rounded text-sm">Esc</kbd> to close
+          this dialog.
         </DialogDescription>
 
         <div className="space-y-6 py-4">
@@ -103,4 +103,3 @@ export function KeyboardShortcutsDialog({
     </Dialog>
   );
 }
-

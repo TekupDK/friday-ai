@@ -18,8 +18,6 @@ import { enrichEmailFromSources } from "./email-enrichment";
 import { detectLeadSourceIntelligent } from "./lead-source-detector";
 import { getWorkflowFromDetection } from "./lead-source-workflows";
 
-
-
 interface EmailMonitorConfig {
   pollInterval: number; // milliseconds
   maxEmailsPerPoll: number;
@@ -70,7 +68,10 @@ export class EmailMonitorService {
 
       return google.gmail({ version: "v1", auth });
     } catch (error) {
-      logger.error({ err: error }, "[EmailMonitor] Failed to initialize Gmail client");
+      logger.error(
+        { err: error },
+        "[EmailMonitor] Failed to initialize Gmail client"
+      );
       throw error;
     }
   }
@@ -146,14 +147,23 @@ export class EmailMonitorService {
           maxAttempts: 3,
           initialDelayMs: 2000,
           maxDelayMs: 30000,
-          retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+          retryableErrors: [
+            "429",
+            "rate limit",
+            "RESOURCE_EXHAUSTED",
+            "503",
+            "502",
+          ],
         }
       );
 
       const messages = response.data.messages || [];
       const newEmails: NewEmailNotification[] = [];
 
-      logger.debug({ count: messages.length }, `[EmailMonitor] Found ${messages.length} unread emails`);
+      logger.debug(
+        { count: messages.length },
+        `[EmailMonitor] Found ${messages.length} unread emails`
+      );
 
       for (const message of messages) {
         const emailId = message.id;
@@ -201,7 +211,7 @@ export class EmailMonitorService {
         error?.message?.includes("429") ||
         error?.message?.includes("rate limit") ||
         error?.message?.includes("RESOURCE_EXHAUSTED");
-      
+
       if (isRateLimit) {
         logger.warn(
           { err: error },
@@ -237,7 +247,13 @@ export class EmailMonitorService {
           maxAttempts: 3,
           initialDelayMs: 1000,
           maxDelayMs: 10000,
-          retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+          retryableErrors: [
+            "429",
+            "rate limit",
+            "RESOURCE_EXHAUSTED",
+            "503",
+            "502",
+          ],
         }
       );
 
@@ -266,7 +282,10 @@ export class EmailMonitorService {
       const isLead = this.isLeadEmail(subject, from);
 
       if (!isLead) {
-        logger.debug({ subject }, `[EmailMonitor] Skipping non-lead email: ${subject}`);
+        logger.debug(
+          { subject },
+          `[EmailMonitor] Skipping non-lead email: ${subject}`
+        );
         return null;
       }
 
@@ -317,7 +336,7 @@ export class EmailMonitorService {
         error?.message?.includes("429") ||
         error?.message?.includes("rate limit") ||
         error?.message?.includes("RESOURCE_EXHAUSTED");
-      
+
       if (isRateLimit) {
         logger.warn(
           { err: error, messageId: message.id },
@@ -390,7 +409,10 @@ export class EmailMonitorService {
 
       return userRows.length > 0 ? userRows[0].id : null;
     } catch (error) {
-      logger.error({ err: error, email: gmailEmail }, "[EmailMonitor] Failed to resolve userId from email");
+      logger.error(
+        { err: error, email: gmailEmail },
+        "[EmailMonitor] Failed to resolve userId from email"
+      );
       return null;
     }
   }
@@ -408,7 +430,9 @@ export class EmailMonitorService {
 
       // ✅ SECURITY FIX: Resolve userId from Gmail email address
       // Get the "to" email address (our Gmail account)
-      const gmailEmail = emailData.to?.split(",")[0]?.trim() || process.env.GOOGLE_IMPERSONATED_USER;
+      const gmailEmail =
+        emailData.to?.split(",")[0]?.trim() ||
+        process.env.GOOGLE_IMPERSONATED_USER;
       const userId = await this.getUserIdFromEmail(gmailEmail || "");
 
       if (!userId) {
@@ -479,7 +503,10 @@ export class EmailMonitorService {
         }
       }
     } catch (error) {
-      logger.error({ err: error, emailId }, "[EmailMonitor] Error in auto-processing");
+      logger.error(
+        { err: error, emailId },
+        "[EmailMonitor] Error in auto-processing"
+      );
     }
   }
 

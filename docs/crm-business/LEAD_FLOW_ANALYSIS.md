@@ -33,7 +33,7 @@ Friday AI har et sofistikeret lead management system med:
 
 #### 1.1 Email Monitoring (Auto)
 
-```text
+````text
 Email arrives in inbox
   ↓
 EmailMonitorService detects new email (every 30s)
@@ -820,7 +820,7 @@ Rate Limit Hits:    0 per day
 
 - Source detection accuracy
 
-```
+````
 
 ---
 

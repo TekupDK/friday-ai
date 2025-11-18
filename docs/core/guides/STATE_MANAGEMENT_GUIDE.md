@@ -8,6 +8,7 @@
 ## Overview
 
 Friday AI Chat uses a hybrid state management approach:
+
 - **React Query (TanStack Query)** for server state
 - **useState/useReducer** for local UI state
 - **Context API** for shared UI state (when needed)
@@ -53,11 +54,12 @@ This guide documents the patterns and best practices used throughout the applica
 ### Query Pattern
 
 **Basic Query:**
+
 ```typescript
 import { trpc } from "@/lib/trpc";
 
 export default function CustomerList() {
-  const { data, isLoading, error, isError } = 
+  const { data, isLoading, error, isError } =
     trpc.crm.customer.listProfiles.useQuery({
       search: debouncedSearch || undefined,
       limit: 50,
@@ -71,6 +73,7 @@ export default function CustomerList() {
 ```
 
 **Query with Options:**
+
 ```typescript
 const { data } = trpc.crm.customer.listProfiles.useQuery(
   { limit: 50 },
@@ -86,6 +89,7 @@ const { data } = trpc.crm.customer.listProfiles.useQuery(
 ### Mutation Pattern
 
 **Basic Mutation:**
+
 ```typescript
 const utils = trpc.useUtils();
 
@@ -95,7 +99,7 @@ const createMutation = trpc.crm.customer.createProfile.useMutation({
     utils.crm.customer.listProfiles.invalidate();
     toast.success("Customer created");
   },
-  onError: (error) => {
+  onError: error => {
     toast.error(error.message);
   },
 });
@@ -108,22 +112,25 @@ await createMutation.mutateAsync({
 ```
 
 **Optimistic Updates:**
+
 ```typescript
 const updateMutation = trpc.crm.lead.updateLead.useMutation({
-  onMutate: async (newLead) => {
+  onMutate: async newLead => {
     // Cancel outgoing refetches
     await utils.crm.lead.listLeads.cancel();
-    
+
     // Snapshot previous value
     const previous = utils.crm.lead.listLeads.getData();
-    
+
     // Optimistically update
-    utils.crm.lead.listLeads.setData(undefined, (old) => {
-      return old?.map((lead) => 
-        lead.id === newLead.id ? { ...lead, ...newLead } : lead
-      ) ?? [];
+    utils.crm.lead.listLeads.setData(undefined, old => {
+      return (
+        old?.map(lead =>
+          lead.id === newLead.id ? { ...lead, ...newLead } : lead
+        ) ?? []
+      );
     });
-    
+
     return { previous };
   },
   onError: (err, newLead, context) => {
@@ -146,12 +153,14 @@ const updateMutation = trpc.crm.lead.updateLead.useMutation({
 ### UI State Pattern
 
 **Simple UI State:**
+
 ```typescript
 const [search, setSearch] = useState("");
 const [isOpen, setIsOpen] = useState(false);
 ```
 
 **Debounced Input:**
+
 ```typescript
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
@@ -165,6 +174,7 @@ const { data } = trpc.crm.customer.listProfiles.useQuery({
 ```
 
 **Complex UI State (useReducer):**
+
 ```typescript
 type State = {
   selectedItems: string[];
@@ -252,13 +262,13 @@ export const CACHE_CONFIGS = {
 
 ```typescript
 // Automatic cache config based on data type
-getCacheConfig("emails")      // → interactive (2 min)
-getCacheConfig("leads")       // → interactive (2 min)
-getCacheConfig("bookings")    // → reference (15 min)
-getCacheConfig("invoices")    // → reference (15 min)
-getCacheConfig("customers")   // → static (1 hour)
-getCacheConfig("dashboard")   // → interactive (2 min)
-getCacheConfig("auth")        // → realtime (30 sec)
+getCacheConfig("emails"); // → interactive (2 min)
+getCacheConfig("leads"); // → interactive (2 min)
+getCacheConfig("bookings"); // → reference (15 min)
+getCacheConfig("invoices"); // → reference (15 min)
+getCacheConfig("customers"); // → static (1 hour)
+getCacheConfig("dashboard"); // → interactive (2 min)
+getCacheConfig("auth"); // → realtime (30 sec)
 ```
 
 ---
@@ -271,7 +281,7 @@ All components must handle four states: **Loading**, **Error**, **Empty**, and *
 
 ```typescript
 export default function CustomerList() {
-  const { data, isLoading, error, isError } = 
+  const { data, isLoading, error, isError } =
     trpc.crm.customer.listProfiles.useQuery({ limit: 50 });
 
   // Loading state
@@ -411,12 +421,12 @@ import { ErrorDisplay } from "@/components/crm/ErrorDisplay";
 export default function CustomerList() {
   // Local state for search input
   const [search, setSearch] = useState("");
-  
+
   // Debounce search to reduce API calls
   const debouncedSearch = useDebouncedValue(search, 300);
 
   // Server state with React Query
-  const { data: customers, isLoading, error, isError } = 
+  const { data: customers, isLoading, error, isError } =
     trpc.crm.customer.listProfiles.useQuery({
       search: debouncedSearch || undefined,
       limit: 50,
@@ -472,17 +482,17 @@ export default function LeadCard({ lead }: { lead: Lead }) {
     onMutate: async (newLead) => {
       // Cancel outgoing refetches
       await utils.crm.lead.listLeads.cancel();
-      
+
       // Snapshot previous value
       const previous = utils.crm.lead.listLeads.getData();
-      
+
       // Optimistically update
       utils.crm.lead.listLeads.setData(undefined, (old) => {
-        return old?.map((l) => 
+        return old?.map((l) =>
           l.id === newLead.id ? { ...l, ...newLead } : l
         ) ?? [];
       });
-      
+
       return { previous };
     },
     onError: (err, newLead, context) => {
@@ -532,4 +542,3 @@ export default function LeadCard({ lead }: { lead: Lead }) {
 
 **Last Updated:** January 28, 2025  
 **Status:** ✅ Well-Implemented - No improvements needed
-

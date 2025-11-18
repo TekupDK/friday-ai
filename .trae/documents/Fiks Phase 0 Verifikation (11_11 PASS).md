@@ -6,7 +6,7 @@
 
 ## Root Cause Opsummering
 
-- Story-ID format: stories bruger "Apple UI/*", mens verifikationsscriptet forventer "crm-apple-ui-*"
+- Story-ID format: stories bruger "Apple UI/_", mens verifikationsscriptet forventer "crm-apple-ui-_"
 
 - ScrollToTop har afvigende story title (CRM/Apple UI/ScrollToTop)
 
@@ -15,7 +15,6 @@
 ## Trin 1: Normalisér Storybook Stories
 
 - Ensret alle story titles til `"Apple UI/<Component>"` for:
-
   - `AppleButton.stories.tsx`
 
   - `AppleInput.stories.tsx`
@@ -33,7 +32,6 @@
 ## Trin 2: Story-ID Discovery (robust)
 
 - Implementér en enkel discovery rutine der læser faktiske story IDs fra kørende Storybook manager:
-
   - Besøg `<http://localhost:6006/`>
 
   - Brug DOM‑scraping af sidebar eller `window.__STORYBOOK_CLIENT_API__.getStories()` til at liste `id`
@@ -45,7 +43,6 @@
 - Fil: `scripts/verify-phase0-components.mjs`
 
 - Arkitektur (som i notaterne):
-
   - Per‑component page isolation (`context.newPage()` i loop, `page.close()` efter hver)
 
   - Story-ID fallback: primært `apple-ui-*`, fallback `crm-apple-ui-*`

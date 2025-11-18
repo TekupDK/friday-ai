@@ -30,6 +30,7 @@
 ```
 
 **Status:**
+
 - ✅ **Direkte API calls** allerede implementeret (google-api.ts)
 - ⚠️ **MCP kode** eksisterer stadig (deprecated, backward compatibility)
 - ✅ **Fallback mechanism** fra MCP til direkte API
@@ -54,6 +55,7 @@
 ```
 
 **Status:**
+
 - ⏳ **Ikke implementeret**
 - ✅ **Standardiseret protocol** (åben standard)
 - ✅ **Simplified architecture** (ingen MCP servers)
@@ -89,6 +91,7 @@ export const FRIDAY_TOOLS = [
 ```
 
 **Karakteristika:**
+
 - ✅ TypeScript definitions
 - ✅ Zod validation (i handlers)
 - ⚠️ Custom format (ikke standardiseret)
@@ -121,6 +124,7 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 ```
 
 **Karakteristika:**
+
 - ✅ TypeScript definitions
 - ✅ Standardiseret format (UTCP spec)
 - ✅ Handler konfiguration inkluderet
@@ -143,21 +147,23 @@ export async function executeToolCall(
 ): Promise<ToolCallResult> {
   // 1. Valider mod Zod schema
   const parsed = entry.schema.safeParse(args);
-  
+
   // 2. Kald handler (kan være MCP eller direkte API)
   const result = await entry.handler(parsed.data, userId);
-  
+
   return result;
 }
 ```
 
 **Flow:**
+
 1. Valider input (Zod)
 2. Kald handler
 3. Handler vælger: MCP (deprecated) eller direkte API
 4. Returner resultat
 
 **Problemer:**
+
 - ⚠️ Handler logik er spredt (MCP vs direkte API)
 - ⚠️ Ingen standardiseret måde at definere handlers
 - ⚠️ MCP kode eksisterer stadig (selvom deprecated)
@@ -173,10 +179,10 @@ export async function executeUTCPTool(
 ): Promise<ToolCallResult> {
   // 1. Hent tool fra manifest
   const tool = UTCP_MANIFEST[toolName];
-  
+
   // 2. Valider mod UTCP schema
   const validation = validateUTCPInput(tool.inputSchema, args);
-  
+
   // 3. Kald direkte API baseret på handler type
   switch (tool.handler.type) {
     case "http":
@@ -188,12 +194,14 @@ export async function executeUTCPTool(
 ```
 
 **Flow:**
+
 1. Hent tool fra manifest
 2. Valider input (UTCP schema)
 3. Kald direkte API (ingen MCP)
 4. Returner resultat
 
 **Fordele:**
+
 - ✅ Standardiseret execution flow
 - ✅ Handler konfiguration i manifest
 - ✅ Ingen MCP dependency
@@ -206,6 +214,7 @@ export async function executeUTCPTool(
 #### Nuværende System
 
 **Performance Breakdown:**
+
 ```
 Tool Execution: ~800ms (average)
   ├─ Validation: ~50ms
@@ -217,11 +226,13 @@ Tool Execution: ~800ms (average)
 ```
 
 **Problemer:**
+
 - ⚠️ MCP overhead hvis MCP bruges (200-500ms)
 - ✅ Direkte API allerede implementeret (32% hurtigere)
 - ⚠️ Hybrid approach (både MCP og direkte API kode)
 
 **Kommentar fra kode:**
+
 ```typescript
 // server/mcp.ts:359
 // MCP server adds 200-500ms overhead, direct API is 32% faster
@@ -230,6 +241,7 @@ Tool Execution: ~800ms (average)
 #### UTCP System
 
 **Performance Breakdown:**
+
 ```
 Tool Execution: ~550ms (projected average)
   ├─ Validation: ~50ms
@@ -239,6 +251,7 @@ Tool Execution: ~550ms (projected average)
 ```
 
 **Fordele:**
+
 - ✅ Ingen MCP overhead
 - ✅ Direkte API calls (allerede bevist 32% hurtigere)
 - ✅ Manifest caching muligt
@@ -253,6 +266,7 @@ Tool Execution: ~550ms (projected average)
 #### Nuværende System
 
 **Filer:**
+
 - `server/friday-tools.ts` - Tool definitions
 - `server/friday-tool-handlers.ts` - Tool execution
 - `server/mcp.ts` - MCP client (DEPRECATED, 800+ linjer)
@@ -260,12 +274,14 @@ Tool Execution: ~550ms (projected average)
 - `server/billy.ts` - Billy API integration
 
 **Kompleksitet:**
+
 - ⚠️ **5 filer** til tool system
 - ⚠️ **MCP kode** eksisterer stadig (selvom deprecated)
 - ⚠️ **Hybrid approach** (MCP + direkte API)
 - ⚠️ **Fallback logic** spredt i kode
 
 **Lines of Code:**
+
 - MCP client: ~800 linjer (deprecated)
 - Tool handlers: ~1300 linjer
 - Tool definitions: ~540 linjer
@@ -274,6 +290,7 @@ Tool Execution: ~550ms (projected average)
 #### UTCP System
 
 **Filer:**
+
 - `server/utcp-manifest.ts` - UTCP manifest (NEW)
 - `server/utcp-handler.ts` - UTCP execution (NEW)
 - `server/friday-tool-handlers.ts` - Keep for backward compatibility
@@ -281,12 +298,14 @@ Tool Execution: ~550ms (projected average)
 - `server/billy.ts` - Billy API integration (keep)
 
 **Kompleksitet:**
+
 - ✅ **Standardiseret manifest** (let at forstå)
 - ✅ **Ingen MCP dependency** (kan fjernes)
 - ✅ **Klar separation** (manifest vs execution)
 - ✅ **Let at vedligeholde**
 
 **Lines of Code (projected):**
+
 - UTCP manifest: ~400 linjer
 - UTCP handler: ~300 linjer
 - Tool handlers: ~800 linjer (reduceret)
@@ -299,12 +318,14 @@ Tool Execution: ~550ms (projected average)
 #### Nuværende System
 
 **Problemer:**
+
 - ⚠️ **MCP kode** skal vedligeholdes (selvom deprecated)
 - ⚠️ **Hybrid approach** gør det svært at forstå flow
 - ⚠️ **Fallback logic** spredt i kode
 - ⚠️ **Custom format** (ikke standardiseret)
 
 **Tilføj ny tool:**
+
 1. Definer i `friday-tools.ts`
 2. Opret handler i `friday-tool-handlers.ts`
 3. Hvis MCP: Tilføj MCP kode (deprecated)
@@ -314,12 +335,14 @@ Tool Execution: ~550ms (projected average)
 #### UTCP System
 
 **Fordele:**
+
 - ✅ **Standardiseret format** (let at forstå)
 - ✅ **Manifest-based** (konfiguration, ikke kode)
 - ✅ **Ingen MCP dependency** (simpler)
 - ✅ **Klar separation** (manifest vs execution)
 
 **Tilføj ny tool:**
+
 1. Tilføj til UTCP manifest (JSON-like)
 2. Handler konfiguration inkluderet
 3. Test direkte API integration
@@ -334,6 +357,7 @@ Tool Execution: ~550ms (projected average)
 #### Nuværende System
 
 **Challenges:**
+
 - ⚠️ Test både MCP og direkte API paths
 - ⚠️ Mock MCP server (selvom deprecated)
 - ⚠️ Test fallback logic
@@ -342,6 +366,7 @@ Tool Execution: ~550ms (projected average)
 #### UTCP System
 
 **Fordele:**
+
 - ✅ Test kun direkte API (ingen MCP)
 - ✅ Standardiseret format = lettere at mock
 - ✅ Klar separation = lettere unit tests
@@ -415,18 +440,18 @@ async function executeUTCPTool("search_gmail", args) {
 
 ## Sammenligning Tabel
 
-| Aspekt | Nuværende System | UTCP System | Vinder |
-|--------|------------------|-------------|--------|
-| **Performance** | ~800ms (med MCP overhead) | ~550ms (direkte API) | ✅ UTCP (31% hurtigere) |
-| **Kompleksitet** | ~2640 LOC, 5 filer | ~1500 LOC, 4 filer | ✅ UTCP (43% simplere) |
-| **Standardisering** | Custom format | UTCP standard | ✅ UTCP |
-| **Vedligeholdelse** | Hybrid, MCP deprecated | Standardiseret | ✅ UTCP |
-| **Testing** | Test både MCP + direkte API | Test kun direkte API | ✅ UTCP |
-| **Tilføj ny tool** | 5 steps, hybrid | 2 steps, standardiseret | ✅ UTCP |
-| **MCP Dependency** | Ja (deprecated) | Nej | ✅ UTCP |
-| **Fallback Logic** | Kompleks, spredt | Simpel, centraliseret | ✅ UTCP |
-| **Documentation** | Custom, spredt | Standardiseret | ✅ UTCP |
-| **Community Support** | Ingen | UTCP community | ✅ UTCP |
+| Aspekt                | Nuværende System            | UTCP System             | Vinder                  |
+| --------------------- | --------------------------- | ----------------------- | ----------------------- |
+| **Performance**       | ~800ms (med MCP overhead)   | ~550ms (direkte API)    | ✅ UTCP (31% hurtigere) |
+| **Kompleksitet**      | ~2640 LOC, 5 filer          | ~1500 LOC, 4 filer      | ✅ UTCP (43% simplere)  |
+| **Standardisering**   | Custom format               | UTCP standard           | ✅ UTCP                 |
+| **Vedligeholdelse**   | Hybrid, MCP deprecated      | Standardiseret          | ✅ UTCP                 |
+| **Testing**           | Test både MCP + direkte API | Test kun direkte API    | ✅ UTCP                 |
+| **Tilføj ny tool**    | 5 steps, hybrid             | 2 steps, standardiseret | ✅ UTCP                 |
+| **MCP Dependency**    | Ja (deprecated)             | Nej                     | ✅ UTCP                 |
+| **Fallback Logic**    | Kompleks, spredt            | Simpel, centraliseret   | ✅ UTCP                 |
+| **Documentation**     | Custom, spredt              | Standardiseret          | ✅ UTCP                 |
+| **Community Support** | Ingen                       | UTCP community          | ✅ UTCP                 |
 
 ---
 
@@ -435,11 +460,13 @@ async function executeUTCPTool("search_gmail", args) {
 ### Nuværende System Status
 
 ✅ **Godt:**
+
 - Direkte API allerede implementeret
 - Fallback mechanism virker
 - Performance er OK (når direkte API bruges)
 
 ⚠️ **Problemer:**
+
 - MCP kode eksisterer stadig (deprecated)
 - Hybrid approach gør det komplekst
 - Custom format (ikke standardiseret)
@@ -474,4 +501,3 @@ async function executeUTCPTool("search_gmail", args) {
 2. **Beslut:** Fortsæt med nuværende system eller migrer til UTCP?
 3. **Hvis UTCP:** Start Phase 1 prototype (2-3 tools)
 4. **Hvis nuværende:** Fjern MCP kode helt (cleanup)
-

@@ -6,6 +6,7 @@
 UTCP (Universal Tool Calling Protocol) integration i Friday AI Chat erstatter den nuværende hybrid MCP/direkte API approach med en standardiseret, manifest-baseret tool calling system. Dette giver bedre performance, simplere arkitektur, og lettere vedligeholdelse.
 
 **Status:**
+
 - ⏳ Ikke implementeret
 - ✅ Design fase (komplet)
 - ⏳ Prototype fase
@@ -13,6 +14,7 @@ UTCP (Universal Tool Calling Protocol) integration i Friday AI Chat erstatter de
 - ⏳ Production deployment
 
 **Business Value:**
+
 - **Performance:** 31% hurtigere tool execution (550ms vs 800ms average)
 - **Simplified Architecture:** 43% mindre kode (1500 vs 2640 LOC)
 - **Cost Reduction:** Ingen MCP server infrastructure nødvendig
@@ -64,16 +66,16 @@ UTCP (Universal Tool Calling Protocol) integration i Friday AI Chat erstatter de
 ### Design Beslutninger
 
 1. **UTCP Manifest Format**
-   - **Rationale:** 
+   - **Rationale:**
      - Standardiseret JSON format følger UTCP spec
      - Let at vedligeholde (konfiguration, ikke kode)
      - Type-safe med TypeScript types
      - Kan caches i memory for performance
-   - **Alternativer:** 
+   - **Alternativer:**
      - Custom format (nuværende approach)
      - OpenAPI extensions
      - GraphQL schema
-   - **Trade-offs:** 
+   - **Trade-offs:**
      - Standard vs custom flexibility
      - JSON vs TypeScript definitions
      - Manifest vs code-based
@@ -174,7 +176,7 @@ server/
 ```typescript
 /**
  * UTCP Manifest - Tool Definitions
- * 
+ *
  * Follows UTCP specification for tool definitions
  * https://utcp.io/spec
  */
@@ -183,21 +185,23 @@ import type { UTCPTool, UTCPHandler } from "./types";
 
 /**
  * UTCP Tool Manifest
- * 
+ *
  * Defines all available tools with their schemas and handlers
  */
 export const UTCP_MANIFEST: Record<string, UTCPTool> = {
   // ============= Gmail Tools =============
-  
+
   search_gmail: {
     name: "search_gmail",
-    description: "Søg i Gmail efter emails baseret på søgekriterier. Brug dette til at finde leads, kunde emails, eller tidligere kommunikation.",
+    description:
+      "Søg i Gmail efter emails baseret på søgekriterier. Brug dette til at finde leads, kunde emails, eller tidligere kommunikation.",
     inputSchema: {
       type: "object",
       properties: {
         query: {
           type: "string",
-          description: "Gmail søgequery. VIGTIG: after: operatoren betyder 'efter denne dato ER SLUT', så after:YYYY-MM-DD viser kun emails fra næste dag.",
+          description:
+            "Gmail søgequery. VIGTIG: after: operatoren betyder 'efter denne dato ER SLUT', så after:YYYY-MM-DD viser kun emails fra næste dag.",
           minLength: 1,
           maxLength: 500,
         },
@@ -234,7 +238,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   get_gmail_thread: {
     name: "get_gmail_thread",
-    description: "Hent fuld email tråd med alle beskeder. Brug dette til at læse email indhold før du svarer eller opretter faktura.",
+    description:
+      "Hent fuld email tråd med alle beskeder. Brug dette til at læse email indhold før du svarer eller opretter faktura.",
     inputSchema: {
       type: "object",
       properties: {
@@ -250,7 +255,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
     handler: {
       type: "http",
       method: "GET",
-      endpoint: "https://gmail.googleapis.com/gmail/v1/users/me/threads/{{threadId}}",
+      endpoint:
+        "https://gmail.googleapis.com/gmail/v1/users/me/threads/{{threadId}}",
       auth: {
         type: "oauth2",
         provider: "google",
@@ -265,7 +271,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   create_gmail_draft: {
     name: "create_gmail_draft",
-    description: "Opret et email udkast i Gmail. Brug dette til at forberede svar til kunder. ALDRIG send direkte - opret altid udkast først.",
+    description:
+      "Opret et email udkast i Gmail. Brug dette til at forberede svar til kunder. ALDRIG send direkte - opret altid udkast først.",
     inputSchema: {
       type: "object",
       properties: {
@@ -323,7 +330,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   list_calendar_events: {
     name: "list_calendar_events",
-    description: "Hent kalender events. Brug dette til at tjekke ledige tider før du foreslår booking.",
+    description:
+      "Hent kalender events. Brug dette til at tjekke ledige tider før du foreslår booking.",
     inputSchema: {
       type: "object",
       properties: {
@@ -350,7 +358,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
     handler: {
       type: "http",
       method: "GET",
-      endpoint: "https://www.googleapis.com/calendar/v3/calendars/{{calendarId}}/events",
+      endpoint:
+        "https://www.googleapis.com/calendar/v3/calendars/{{calendarId}}/events",
       auth: {
         type: "oauth2",
         provider: "google",
@@ -372,13 +381,15 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   create_calendar_event: {
     name: "create_calendar_event",
-    description: "Opret kalender event. KRITISK: ALDRIG brug 'attendees' parameter - det sender Google invitationer!",
+    description:
+      "Opret kalender event. KRITISK: ALDRIG brug 'attendees' parameter - det sender Google invitationer!",
     inputSchema: {
       type: "object",
       properties: {
         summary: {
           type: "string",
-          description: "Event titel (format: '🏠 Fast Rengøring #3 - Mette Nielsen')",
+          description:
+            "Event titel (format: '🏠 Fast Rengøring #3 - Mette Nielsen')",
           minLength: 1,
           maxLength: 255,
         },
@@ -407,7 +418,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
     handler: {
       type: "http",
       method: "POST",
-      endpoint: "https://www.googleapis.com/calendar/v3/calendars/{{calendarId}}/events",
+      endpoint:
+        "https://www.googleapis.com/calendar/v3/calendars/{{calendarId}}/events",
       auth: {
         type: "oauth2",
         provider: "google",
@@ -436,7 +448,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   search_billy_customer: {
     name: "search_billy_customer",
-    description: "Søg efter kunde i Billy baseret på email adresse. Brug dette før du opretter ny faktura for at finde customer ID.",
+    description:
+      "Søg efter kunde i Billy baseret på email adresse. Brug dette før du opretter ny faktura for at finde customer ID.",
     inputSchema: {
       type: "object",
       properties: {
@@ -470,7 +483,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   create_billy_invoice: {
     name: "create_billy_invoice",
-    description: "Opret ny faktura i Billy. VIGTIGT: Tjek altid om kunde eksisterer først med search_billy_customer.",
+    description:
+      "Opret ny faktura i Billy. VIGTIGT: Tjek altid om kunde eksisterer først med search_billy_customer.",
     inputSchema: {
       type: "object",
       properties: {
@@ -486,7 +500,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
         },
         paymentTermsDays: {
           type: "number",
-          description: "Betalingsfrist i dage (1 for engangsopgaver, 30 for faste kunder)",
+          description:
+            "Betalingsfrist i dage (1 for engangsopgaver, 30 for faste kunder)",
           minimum: 0,
           maximum: 60,
           default: 14,
@@ -551,7 +566,8 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   list_leads: {
     name: "list_leads",
-    description: "Hent liste over leads. Brug dette til at se nye leads eller søge efter specifikke leads.",
+    description:
+      "Hent liste over leads. Brug dette til at se nye leads eller søge efter specifikke leads.",
     inputSchema: {
       type: "object",
       properties: {
@@ -562,7 +578,13 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
         },
         source: {
           type: "string",
-          enum: ["rengoring_nu", "rengoring_aarhus", "adhelp", "website", "referral"],
+          enum: [
+            "rengoring_nu",
+            "rengoring_aarhus",
+            "adhelp",
+            "website",
+            "referral",
+          ],
           description: "Filter på kilde",
         },
       },
@@ -585,13 +607,20 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
 
   create_lead: {
     name: "create_lead",
-    description: "Opret nyt lead fra email eller anden kilde. Brug dette når du finder et nyt lead i Gmail.",
+    description:
+      "Opret nyt lead fra email eller anden kilde. Brug dette når du finder et nyt lead i Gmail.",
     inputSchema: {
       type: "object",
       properties: {
         source: {
           type: "string",
-          enum: ["rengoring_nu", "rengoring_aarhus", "adhelp", "website", "referral"],
+          enum: [
+            "rengoring_nu",
+            "rengoring_aarhus",
+            "adhelp",
+            "website",
+            "referral",
+          ],
           description: "Lead kilde",
         },
         name: {
@@ -671,7 +700,7 @@ export function hasUTCPTool(toolName: string): boolean {
 ```typescript
 /**
  * UTCP Type Definitions
- * 
+ *
  * TypeScript types for UTCP protocol
  */
 
@@ -718,7 +747,10 @@ export interface UTCPDatabaseHandler {
   orderBy?: string;
 }
 
-export type UTCPHandler = UTCPHTTPHandler | UTCPCLIHandler | UTCPDatabaseHandler;
+export type UTCPHandler =
+  | UTCPHTTPHandler
+  | UTCPCLIHandler
+  | UTCPDatabaseHandler;
 
 /**
  * UTCP Tool Definition
@@ -771,7 +803,7 @@ export interface UTCPToolResult {
 ```typescript
 /**
  * UTCP Tool Execution Handler
- * 
+ *
  * Main entry point for executing UTCP tools
  */
 
@@ -786,7 +818,7 @@ import { trackEvent } from "../db";
 
 /**
  * Execute UTCP tool
- * 
+ *
  * @param toolName - Name of tool to execute
  * @param args - Tool arguments
  * @param userId - User ID for authentication
@@ -881,13 +913,28 @@ export async function executeUTCPTool(
   try {
     switch (tool.handler.type) {
       case "http":
-        result = await executeHTTPHandler(tool, validation.data, userId, correlationId);
+        result = await executeHTTPHandler(
+          tool,
+          validation.data,
+          userId,
+          correlationId
+        );
         break;
       case "cli":
-        result = await executeCLIHandler(tool, validation.data, userId, correlationId);
+        result = await executeCLIHandler(
+          tool,
+          validation.data,
+          userId,
+          correlationId
+        );
         break;
       case "database":
-        result = await executeDatabaseHandler(tool, validation.data, userId, correlationId);
+        result = await executeDatabaseHandler(
+          tool,
+          validation.data,
+          userId,
+          correlationId
+        );
         break;
       default:
         result = {
@@ -899,7 +946,13 @@ export async function executeUTCPTool(
 
     // 7. Cache result if cacheable
     if (tool.cacheable && result.success && result.data) {
-      await cacheResult(toolName, args, userId, result.data, tool.cacheTTL || 300);
+      await cacheResult(
+        toolName,
+        args,
+        userId,
+        result.data,
+        tool.cacheTTL || 300
+      );
     }
 
     // 8. Track event
@@ -978,7 +1031,7 @@ async function cacheResult(
 ```typescript
 /**
  * HTTP Handler for UTCP Tools
- * 
+ *
  * Executes HTTP-based UTCP tools (Google APIs, Billy API, etc.)
  */
 
@@ -1027,7 +1080,12 @@ export async function executeHTTPHandler(
 
     // 4. Build request body
     let body: string | undefined;
-    if (handler.body && (handler.method === "POST" || handler.method === "PUT" || handler.method === "PATCH")) {
+    if (
+      handler.body &&
+      (handler.method === "POST" ||
+        handler.method === "PUT" ||
+        handler.method === "PATCH")
+    ) {
       if (typeof handler.body === "string") {
         body = interpolateTemplate(handler.body, args);
       } else {
@@ -1073,7 +1131,7 @@ export async function executeHTTPHandler(
 ```typescript
 /**
  * UTCP Schema Validation
- * 
+ *
  * Validates tool inputs against JSON Schema
  */
 
@@ -1101,10 +1159,12 @@ export function validateUTCPInput(
     const valid = validate(data);
 
     if (!valid) {
-      const errors = validate.errors?.map(e => {
-        const path = e.instancePath || e.schemaPath;
-        return `${path}: ${e.message}`;
-      }).join(", ");
+      const errors = validate.errors
+        ?.map(e => {
+          const path = e.instancePath || e.schemaPath;
+          return `${path}: ${e.message}`;
+        })
+        .join(", ");
 
       return {
         valid: false,
@@ -1152,7 +1212,7 @@ export async function routeAI(options: AIRouterOptions): Promise<AIResponse> {
 
   // Use UTCP tools instead of FRIDAY_TOOLS
   const tools = convertUTCPToolsToLLMFormat();
-  
+
   // When LLM returns tool calls, execute via UTCP
   if (response.choices[0]?.message?.tool_calls) {
     for (const toolCall of response.choices[0].message.tool_calls) {
@@ -1162,7 +1222,7 @@ export async function routeAI(options: AIRouterOptions): Promise<AIResponse> {
         userId,
         { correlationId }
       );
-      
+
       // Add tool result to messages for next LLM call
       messages.push({
         role: "tool",
@@ -1179,11 +1239,13 @@ export async function routeAI(options: AIRouterOptions): Promise<AIResponse> {
 ### Frontend Implementation
 
 **Files:**
+
 - No frontend changes required initially
 - Tool execution is backend-only
 - Future: Tool selection UI could show UTCP tools
 
 **Key Components:**
+
 - Tool execution handled by backend
 - Frontend continues to use existing chat interface
 - No user-facing changes
@@ -1278,16 +1340,13 @@ export interface UTCPCustomHandler {
 }
 
 // Example 4: Database handler usage
-const result = await executeUTCPTool(
-  "list_leads",
-  { status: "new" },
-  userId
-);
+const result = await executeUTCPTool("list_leads", { status: "new" }, userId);
 ```
 
 ## Testing
 
 **Unit Tests:**
+
 - UTCP manifest validation - ⏳ TODO
 - Schema validation - ⏳ TODO
 - HTTP handler execution - ⏳ TODO
@@ -1296,12 +1355,14 @@ const result = await executeUTCPTool(
 - Error handling - ⏳ TODO
 
 **Integration Tests:**
+
 - Tool execution via UTCP - ⏳ TODO
 - Authentication flow - ⏳ TODO
 - Caching behavior - ⏳ TODO
 - Fallback to legacy system - ⏳ TODO
 
 **E2E Tests:**
+
 - Full conversation with UTCP tools - ⏳ TODO
 - Performance comparison - ⏳ TODO
 - Error scenarios - ⏳ TODO
@@ -1332,13 +1393,17 @@ const result = await executeUTCPTool(
    - Estimated: 8 hours
    - Priority: High
    - **Implementation:**
+
      ```typescript
      // scripts/generate-utcp-manifest.ts
      import { FRIDAY_TOOLS } from "../server/friday-tools";
      import { convertToUTCP } from "./utcp-converter";
-     
+
      const utcpManifest = FRIDAY_TOOLS.map(convertToUTCP);
-     fs.writeFileSync("utcp-manifest.json", JSON.stringify(utcpManifest, null, 2));
+     fs.writeFileSync(
+       "utcp-manifest.json",
+       JSON.stringify(utcpManifest, null, 2)
+     );
      ```
 
 2. **UTCP Tool Registry with Versioning**
@@ -1367,10 +1432,11 @@ const result = await executeUTCPTool(
    - Expected impact: Better cache sharing across instances
    - Estimated: 4 hours
    - **Implementation:**
+
      ```typescript
      import { Redis } from "ioredis";
      const redis = new Redis(process.env.REDIS_URL);
-     
+
      async function getCachedResult(key: string) {
        const cached = await redis.get(key);
        return cached ? JSON.parse(cached) : null;
@@ -1400,11 +1466,15 @@ const result = await executeUTCPTool(
    - Benefit: Easier migration, cleaner code
    - Estimated: 10 hours
    - **Implementation:**
+
      ```typescript
      interface UnifiedTool {
-       execute(args: Record<string, any>, userId: number): Promise<ToolCallResult>;
+       execute(
+         args: Record<string, any>,
+         userId: number
+       ): Promise<ToolCallResult>;
      }
-     
+
      class UTCPToolAdapter implements UnifiedTool {
        constructor(private utcpTool: UTCPTool) {}
        async execute(args, userId) {
@@ -1450,4 +1520,3 @@ const result = await executeUTCPTool(
    - Implement caching
    - Parallel execution
    - Performance monitoring
-

@@ -12,6 +12,7 @@ Generér en opdateret "Current Status" til fortsat udvikling.
 ## TASK
 
 Generér opdateret "Current Status":
+
 - Hvad er nuværende status?
 - Hvad er ændret siden sidst?
 - Hvad er næste skridt?
@@ -23,17 +24,21 @@ Generér opdateret "Current Status":
 ## Current Status
 
 **Hvad er færdigt:**
+
 - ✅ [Item 1]
 - ✅ [Item 2]
 
 **Hvad er i gang:**
+
 - 🔄 [Item 1]
 
 **Næste skridt:**
+
 1. [Action 1]
 2. [Action 2]
 
 **Vigtigt at huske:**
+
 - [Note 1]
 - [Note 2]
 ```

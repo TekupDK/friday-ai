@@ -17,7 +17,9 @@ export function getRedisClient(): Redis {
 
     if (!redisUrl || !redisToken) {
       // ✅ SECURITY FIX: Use logger instead of console.warn
-      logger.warn("Redis not configured, falling back to in-memory rate limiting");
+      logger.warn(
+        "Redis not configured, falling back to in-memory rate limiting"
+      );
       throw new Error("Redis not configured");
     }
 
@@ -96,7 +98,9 @@ export async function checkRateLimit(
     };
   } catch (error) {
     // ✅ SECURITY FIX: Use logger instead of console.error
-    logger.error("Rate limit check failed", { err: error instanceof Error ? error : new Error(String(error)) });
+    logger.error("Rate limit check failed", {
+      err: error instanceof Error ? error : new Error(String(error)),
+    });
     // Fail open - allow request if Redis is down
     return {
       success: true,
@@ -117,7 +121,9 @@ export async function resetRateLimit(userId: number): Promise<void> {
     await client.del(key);
   } catch (error) {
     // ✅ SECURITY FIX: Use logger instead of console.error
-    logger.error("Failed to reset rate limit", { err: error instanceof Error ? error : new Error(String(error)) });
+    logger.error("Failed to reset rate limit", {
+      err: error instanceof Error ? error : new Error(String(error)),
+    });
   }
 }
 
@@ -155,7 +161,9 @@ export async function getRateLimitStatus(
     };
   } catch (error) {
     // ✅ SECURITY FIX: Use logger instead of console.error
-    logger.error("Failed to get rate limit status", { err: error instanceof Error ? error : new Error(String(error)) });
+    logger.error("Failed to get rate limit status", {
+      err: error instanceof Error ? error : new Error(String(error)),
+    });
     return {
       success: true,
       limit: config.limit,
@@ -187,9 +195,9 @@ export function stopInMemoryCleanup(): void {
 }
 
 // Cleanup on process exit
-if (typeof process !== 'undefined') {
-  process.on('SIGTERM', stopInMemoryCleanup);
-  process.on('SIGINT', stopInMemoryCleanup);
+if (typeof process !== "undefined") {
+  process.on("SIGTERM", stopInMemoryCleanup);
+  process.on("SIGINT", stopInMemoryCleanup);
 }
 
 /**
@@ -198,24 +206,24 @@ if (typeof process !== 'undefined') {
  */
 function startInMemoryCleanup(): void {
   if (cleanupInterval) return; // Already started
-  
+
   cleanupInterval = setInterval(() => {
     const now = Date.now();
     const keysToDelete: string[] = [];
-    
+
     inMemoryLimits.forEach((requests, key) => {
       // Remove entries older than 2 minutes (safety margin for 60s windows)
       const recentRequests = requests.filter(
         time => now - time < 120000 // 2 minutes
       );
-      
+
       if (recentRequests.length === 0) {
         keysToDelete.push(key);
       } else {
         inMemoryLimits.set(key, recentRequests);
       }
     });
-    
+
     keysToDelete.forEach(key => inMemoryLimits.delete(key));
   }, 60000); // Every minute
 }
@@ -227,7 +235,7 @@ export function checkRateLimitInMemory(
 ): RateLimitResult {
   // Ensure cleanup is running
   startInMemoryCleanup();
-  
+
   const now = Date.now();
   // Create composite key: userId:operationName or just userId
   const key = keySuffix ? `${userId}:${keySuffix}` : userId.toString();
@@ -306,9 +314,9 @@ const RATE_LIMIT_SCRIPT = `
 function sanitizeKeySuffix(keySuffix: string): string {
   // Remove special characters, limit length, prevent collisions
   return keySuffix
-    .replace(/[^a-zA-Z0-9_-]/g, '_') // Replace special chars with _
-    .replace(/_+/g, '_') // Collapse multiple underscores to single
-    .replace(/^_|_$/g, '') // Remove leading/trailing underscores
+    .replace(/[^a-zA-Z0-9_-]/g, "_") // Replace special chars with _
+    .replace(/_+/g, "_") // Collapse multiple underscores to single
+    .replace(/^_|_$/g, "") // Remove leading/trailing underscores
     .toLowerCase() // Case-insensitive to prevent case collisions
     .substring(0, 50); // Max 50 chars
 }
@@ -329,21 +337,23 @@ export async function checkRateLimitUnified(
   try {
     const client = getRedisClient();
     // Sanitize keySuffix if provided
-    const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
-    
+    const sanitizedSuffix = keySuffix
+      ? sanitizeKeySuffix(keySuffix)
+      : undefined;
+
     // Use operation-specific key if suffix provided
-    const key = sanitizedSuffix 
+    const key = sanitizedSuffix
       ? `ratelimit:user:${userId}:${sanitizedSuffix}`
       : `ratelimit:user:${userId}`;
     const now = Date.now();
     const requestId = `${now}:${Math.random()}`;
 
     // Use Lua script for atomic operations (prevents race conditions)
-    const result = await client.eval(
+    const result = (await client.eval(
       RATE_LIMIT_SCRIPT,
       [key],
       [config.windowMs, config.limit, now, requestId]
-    ) as [number, number, number, number];
+    )) as [number, number, number, number];
 
     // FIXED: Validate Lua script result format
     if (!Array.isArray(result) || result.length !== 4) {
@@ -351,8 +361,10 @@ export async function checkRateLimitUnified(
     }
 
     // Validate result types (prevent NaN/Infinity)
-    if (result.some(v => typeof v !== 'number' || !isFinite(v))) {
-      throw new Error("Invalid Lua script result values (NaN/Infinity detected)");
+    if (result.some(v => typeof v !== "number" || !isFinite(v))) {
+      throw new Error(
+        "Invalid Lua script result values (NaN/Infinity detected)"
+      );
     }
 
     return {
@@ -365,7 +377,9 @@ export async function checkRateLimitUnified(
     // ✅ SECURITY FIX: Use logger instead of console.warn
     logger.warn("Redis rate limiting unavailable, using in-memory fallback");
     // Pass sanitized keySuffix to in-memory fallback
-    const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
+    const sanitizedSuffix = keySuffix
+      ? sanitizeKeySuffix(keySuffix)
+      : undefined;
     return checkRateLimitInMemory(userId, config, sanitizedSuffix);
   }
 }

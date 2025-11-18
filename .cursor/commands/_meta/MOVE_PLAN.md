@@ -10,6 +10,7 @@
 ### Core Commands → `core/`
 
 **Session Management:**
+
 - `session-engine.md`
 - `session-init.md`
 - `session-progress.md`
@@ -36,12 +37,14 @@
 - `plan-next-steps.md`
 
 **Status & Tracking:**
+
 - `get-project-status.md`
 - `track-development-progress.md`
 - `track-system-status.md`
 - `update-feature-status.md`
 
 **Task Management:**
+
 - `task-faerdig.md` (dansk)
 - `hvad-nu.md` (dansk)
 - `identificer-manglende.md` (dansk)
@@ -52,6 +55,7 @@
 ### Development Commands → `development/`
 
 **Create:**
+
 - `create-trpc-procedure.md`
 - `create-react-component.md`
 - `create-react-page.md`
@@ -71,6 +75,7 @@
 - `component-library.md`
 
 **Implement:**
+
 - `implement-feature.md`
 - `implement-feature-fullstack.md`
 - `implement-from-chat-summary.md`
@@ -89,6 +94,7 @@
 - `validate-implementation.md`
 
 **Refactor & Improve:**
+
 - `refactor-code.md`
 - `refactor-large-files.md`
 - `refactor-legacy-code.md`
@@ -102,6 +108,7 @@
 - `architecture-refactor.md`
 
 **Fix:**
+
 - `fix-bug.md`
 - `fix-code-quality-issues.md`
 - `fix-compile-errors.md`
@@ -116,6 +123,7 @@
 - `safe-refactor.md`
 
 **Add & Setup:**
+
 - `add-accessibility-features.md`
 - `add-ai-tool-handler.md`
 - `add-documentation.md`
@@ -128,6 +136,7 @@
 - `environment-setup.md`
 
 **Other Development:**
+
 - `wire-ui-to-api.md`
 - `guide-feature-development.md`
 - `ensure-best-practices.md`
@@ -330,6 +339,7 @@
 **Total Commands at flytte:** ~250 commands
 
 **Fordeling:**
+
 - Core: ~30 commands
 - Development: ~100 commands
 - Testing: ~40 commands
@@ -342,4 +352,3 @@
 ---
 
 **Status:** ✅ PLAN KLAR - Klar til at flytte commands
-

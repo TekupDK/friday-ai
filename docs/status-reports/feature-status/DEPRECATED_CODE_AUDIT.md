@@ -32,7 +32,7 @@
 
 **File:** `server/api/inbound-email.ts:175`
 
-```typescript
+````typescript
 // TODO: Get userId from context or email account mapping
 const userId = 1; // This should be determined from email account
 
@@ -435,7 +435,7 @@ export function OldChatInput() { ... }
 ❌ setup-enums-via-cli.ts
 ... (16 total)
 
-```
+````
 
 ---
 
@@ -451,7 +451,7 @@ export function OldChatInput() { ... }
 | Error Tracking   | 5      | 🟡 MEDIUM |
 | Enhancements     | 12     | 🟢 LOW    |
 | Documentation    | 18     | 🟢 LOW    |
-| **Total**|**74** | -         |
+| **Total**        | **74** | -         |
 
 ### **@deprecated Distribution:**
 
@@ -460,7 +460,7 @@ export function OldChatInput() { ... }
 | Billy API  | 5      |
 | Types      | 5      |
 | Components | 6      |
-| **Total**|**16** |
+| **Total**  | **16** |
 
 ### **Console.log Distribution:**
 
@@ -470,7 +470,7 @@ export function OldChatInput() { ... }
 | Client    | 320       |
 | Tests     | 380       |
 | Scripts   | 98        |
-| **Total**|**1,448** |
+| **Total** | **1,448** |
 
 ---
 
@@ -571,7 +571,7 @@ export function OldChatInput() { ... }
 1. `server/api/inbound-email.ts:91` - Consider raw() middleware
 1. `server/api/inbound-email.ts:174` - Get userId from context
 
-    ... (15 more)
+   ... (15 more)
 
 ### **Client TODOs (37 found):**
 
@@ -591,7 +591,7 @@ export function OldChatInput() { ... }
 1. `client/src/components/inbox/EmailListAI.tsx:102` - Re-enable AI analysis
 1. `client/src/components/inbox/EmailCenter.tsx:139` - Action routing
 
-    ... (22 more)
+   ... (22 more)
 
 ---
 

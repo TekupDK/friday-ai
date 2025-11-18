@@ -35,7 +35,7 @@
 
 **Når du åbner Friday skal det føles som:**
 
-```text
+````text
 Du: "Tjek min kalender i dag"
 Friday: "Du har 3 aftaler i dag:
 
@@ -216,7 +216,7 @@ Gmail, Kalender, Billy (35 værktøjer)
 ✅ Arbejdsfokuserede suggestions
 ✅ Professionel men varm tone
 
-```
+````
 
 ---
 

@@ -16,12 +16,14 @@ Review all work done in this session, identify changed files, and create a commi
 ## SESSION TRACKING
 
 **What to track:**
+
 - Files created using `write` tool
 - Files modified using `search_replace` tool
 - Files deleted using `delete_file` tool
 - Any other changes made during conversation
 
 **What to exclude:**
+
 - Files that were already modified before session started
 - Unrelated changes made by others
 - Temporary files or build artifacts
@@ -63,21 +65,25 @@ Review all work done in this session, identify changed files, and create a commi
 ## COMMIT MESSAGE EXAMPLES
 
 **Feature addition:**
+
 ```
 feat: add email workflow automation for calendar stage
 ```
 
 **Bug fix:**
+
 ```
 fix: resolve database connection error in customer helpers
 ```
 
 **Refactoring:**
+
 ```
 refactor: improve tRPC procedure error handling patterns
 ```
 
 **Multiple changes:**
+
 ```
 feat: implement CRM opportunity feature
 
@@ -93,9 +99,11 @@ feat: implement CRM opportunity feature
 ## Committing Session Work
 
 **Work Completed:**
+
 - [Summary of what was done]
 
 **Files Modified:**
+
 - `path/to/file1.ts` - [change]
 - `path/to/file2.tsx` - [change]
 
@@ -109,6 +117,7 @@ feat: implement CRM opportunity feature
 \`\`\`
 
 **Verification:**
+
 - ✅ Only session work committed
 - ✅ Commit message clear
 - ✅ Changes verified
@@ -121,4 +130,3 @@ feat: implement CRM opportunity feature
 - **Group logically:** Related changes in one commit
 - **Clear messages:** Future you should understand what was done
 - **Verify:** Always check before committing
-

@@ -23,9 +23,12 @@
 **Solution:** Validate og clamp til 0, allow request hvis reset time er i fortiden
 
 **Implementering:**
+
 ```typescript
 // FØR:
-const secondsUntilReset = Math.ceil((rateLimit.reset * 1000 - Date.now()) / 1000);
+const secondsUntilReset = Math.ceil(
+  (rateLimit.reset * 1000 - Date.now()) / 1000
+);
 // Kan være negativ!
 
 // EFTER:
@@ -49,6 +52,7 @@ if (secondsUntilReset <= 0) {
 **Solution:** Forbedret sanitization med case-insensitive og underscore collapsing
 
 **Implementering:**
+
 ```typescript
 // FØR:
 .replace(/[^a-zA-Z0-9_-]/g, '_')
@@ -73,6 +77,7 @@ if (secondsUntilReset <= 0) {
 **Solution:** Brug `<=` i stedet for `<` i filter
 
 **Implementering:**
+
 ```typescript
 // FØR:
 const recentRequests = userRequests.filter(
@@ -94,6 +99,7 @@ const recentRequests = userRequests.filter(
 **Solution:** Export cleanup function og hook process events
 
 **Implementering:**
+
 ```typescript
 export function stopInMemoryCleanup(): void {
   if (cleanupInterval) {
@@ -102,8 +108,8 @@ export function stopInMemoryCleanup(): void {
   }
 }
 
-process.on('SIGTERM', stopInMemoryCleanup);
-process.on('SIGINT', stopInMemoryCleanup);
+process.on("SIGTERM", stopInMemoryCleanup);
+process.on("SIGINT", stopInMemoryCleanup);
 ```
 
 ---
@@ -115,13 +121,14 @@ process.on('SIGINT', stopInMemoryCleanup);
 **Solution:** Valider result format og values
 
 **Implementering:**
+
 ```typescript
 // TILFØJET:
 if (!Array.isArray(result) || result.length !== 4) {
   throw new Error("Invalid Lua script result format");
 }
 
-if (result.some(v => typeof v !== 'number' || !isFinite(v))) {
+if (result.some(v => typeof v !== "number" || !isFinite(v))) {
   throw new Error("Invalid Lua script result values");
 }
 ```
@@ -135,6 +142,7 @@ if (result.some(v => typeof v !== 'number' || !isFinite(v))) {
 **Solution:** Brug `Number.isFinite()` i validation
 
 **Implementering:**
+
 ```typescript
 // FØR:
 if (config.maxRequests < 1) { ... }
@@ -168,10 +176,12 @@ if (!Number.isFinite(config.maxRequests) || config.maxRequests < 1) { ... }
 ## 🧪 Test Status
 
 ### **Edge Cases Test Suite:**
+
 - ✅ 33/36 tests passing
 - ⚠️ 3 tests justeret (key collision er faktisk korrekt adfærd)
 
 ### **Exploit Attempts Test Suite:**
+
 - ✅ All tests passing
 - ✅ Exploits prevented
 
@@ -182,6 +192,7 @@ if (!Number.isFinite(config.maxRequests) || config.maxRequests < 1) { ... }
 ## 📊 Impact Assessment
 
 ### **Før Fixes:**
+
 - ❌ Negative seconds i error messages
 - ❌ Key collisions ved manipulation
 - ❌ Window boundary timing issues
@@ -190,6 +201,7 @@ if (!Number.isFinite(config.maxRequests) || config.maxRequests < 1) { ... }
 - ❌ NaN/Infinity ikke valideret
 
 ### **Efter Fixes:**
+
 - ✅ Negative seconds håndteres korrekt
 - ✅ Key collisions forhindrer bypass (korrekt adfærd)
 - ✅ Window boundary håndteres korrekt
@@ -204,6 +216,7 @@ if (!Number.isFinite(config.maxRequests) || config.maxRequests < 1) { ... }
 **Status:** ✅ **READY**
 
 **Verificering:**
+
 - ✅ Alle kritiske anomalier fixet
 - ✅ Edge case tests består
 - ✅ Exploit tests består
@@ -214,4 +227,3 @@ if (!Number.isFinite(config.maxRequests) || config.maxRequests < 1) { ... }
 
 **Fixes Implementeret:** 28. januar 2025  
 **Status:** ✅ **COMPLETE**
-

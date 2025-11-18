@@ -25,6 +25,7 @@ This report identifies outdated, stale, or potentially incorrect documentation i
 These documents are significantly outdated and may contain incorrect information:
 
 **Security & Implementation Docs:**
+
 - `docs/SECURITY_REVIEW_2025-01-28.md` - Security review (10 months old)
 - `docs/SECURITY_IMPLEMENTATION_2025-01-28.md` - Security implementation guide
 - `docs/CSRF_IMPLEMENTATION_2025-01-28.md` - CSRF implementation details
@@ -33,12 +34,14 @@ These documents are significantly outdated and may contain incorrect information
 **Status:** These may reference outdated security practices or implementations that have changed.
 
 **Action Required:**
+
 - Review for current security practices
 - Update code examples
 - Verify all security measures are still in place
 - Check if any recommendations were implemented
 
 **Code References to Verify:**
+
 - `server/_core/csrf.ts` - CSRF implementation
 - `server/_core/errors.ts` - Error sanitization
 - `server/routers.ts` - Input validation
@@ -48,6 +51,7 @@ These documents are significantly outdated and may contain incorrect information
 ### 2. Accessibility Documentation (January 28, 2025)
 
 **Files:**
+
 - `docs/ACCESSIBILITY_AUDIT.md` - Last Updated: January 28, 2025
 - `docs/ACCESSIBILITY_TESTING_GUIDE.md` - Last Updated: January 28, 2025
 - `docs/accessibility-audits/summary.md` - Last Updated: January 28, 2025
@@ -56,6 +60,7 @@ These documents are significantly outdated and may contain incorrect information
 **Status:** Accessibility standards and testing may have changed. Next review date was February 28, 2025 (overdue by 9 months).
 
 **Action Required:**
+
 - Run new accessibility audit
 - Update testing procedures
 - Verify compliance with current standards
@@ -68,11 +73,13 @@ These documents are significantly outdated and may contain incorrect information
 **File:** `docs/API_REFERENCE.md` (Line 1702)
 
 **Issue:** References old repository URL
+
 ```markdown
 This API reference is based on the codebase at https://github.com/TekupDK/tekup-friday
 ```
 
 **Action Required:**
+
 - Verify correct repository URL
 - Update all repository references
 - Check for other outdated URLs
@@ -84,6 +91,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 4. Engineering TODOs and Action Plans (January 28, 2025)
 
 **Files:**
+
 - `docs/ENGINEERING_TODOS_2025-01-28.md` - Task list (10 months old)
 - `docs/ACTION_PLAN_2025-01-28.md` - Action plan
 - `docs/EXECUTION_PLAN_2025-01-28.md` - Execution plan
@@ -92,6 +100,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 **Status:** These are historical documents but may still contain relevant TODOs that haven't been completed.
 
 **Action Required:**
+
 - Review TODOs for completion status
 - Archive completed items
 - Create new TODO list if needed
@@ -106,6 +115,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 **Status:** Health analysis is 10 months old. Codebase has likely changed significantly.
 
 **Action Required:**
+
 - Run new health analysis
 - Compare with current state
 - Update metrics and recommendations
@@ -116,6 +126,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 6. CRM Status Reports (January 28, 2025)
 
 **Files:**
+
 - `docs/STATUSRAPPORT_CRM_2025-01-28.md` - CRM status report
 - `docs/STATUSRAPPORT_2025-01-28.md` - General status report
 - `docs/API_CONTRACT_REVIEW_CRM.md` - API contract review
@@ -123,6 +134,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 **Status:** Status reports are historical but may contain important context.
 
 **Action Required:**
+
 - Create new status reports
 - Archive old reports
 - Update API contract documentation
@@ -132,12 +144,14 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 7. Session Summaries (January 28, 2025)
 
 **Files:**
+
 - `docs/SESSION_SUMMARY_2025-01-28.md` - Session summary
 - `docs/SESSION_CSRF_IMPLEMENTATION_2025-01-28.md` - CSRF session summary
 
 **Status:** Historical session documentation.
 
 **Action Required:**
+
 - Archive to `docs/archive/` if not already
 - Keep for historical reference
 - No urgent updates needed
@@ -147,12 +161,14 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 8. AI Automation Documentation (November 2024)
 
 **Files:**
+
 - `docs/ai-automation/agentic-rag/AUTONOMOUS-QUICK-START.md` - Last Updated: November 10, 2024 (1 year old)
 - `docs/ai-automation/AUTONOMOUS-QUICK-START.md` - Last Updated: November 10, 2024
 
 **Status:** Over 1 year old. AI automation features may have changed significantly.
 
 **Action Required:**
+
 - Review current AI automation implementation
 - Update quick start guides
 - Verify all code examples work
@@ -165,11 +181,13 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 9. Documentation with Missing "Last Updated" Dates
 
 **Files without clear dates:**
+
 - `docs/API_OPTIMIZATION_COMPLETE.md` - Uses template date: `${new Date().toISOString()}`
 - `docs/API_OPTIMIZATION_READY_FOR_TEST.md` - Date: `**\*\***\_\_\_**\*\***`
 - `docs/API_OPTIMIZATION_WORKFLOW.md` - Uses template: `${new Date().toISOString().split('T')[0]}`
 
 **Action Required:**
+
 - Add proper "Last Updated" dates
 - Replace template strings with actual dates
 - Standardize date format across all docs
@@ -179,16 +197,19 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 10. Code Examples Using Old Patterns
 
 **Issue:** Some documentation may still reference:
+
 - `console.log/error/warn` instead of structured logger
 - Old error handling patterns
 - Deprecated API usage
 
 **Files to Check:**
+
 - All files in `docs/` that contain code examples
 - Development guides
 - API reference examples
 
 **Action Required:**
+
 - Review all code examples
 - Update to use current patterns (structured logger, error handling)
 - Verify examples are runnable
@@ -198,15 +219,18 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 11. References to Large Files
 
 **Issue:** Documentation mentions files that may have been refactored:
+
 - `server/routers.ts` - Mentioned as "approaching limit" (268 lines)
 - `server/db.ts` - Mentioned as 967+ lines
 - `server/friday-prompts.ts` - 12KB system prompts
 
 **Files:**
+
 - `docs/COMPREHENSIVE_SYSTEM_ANALYSIS.md`
 - `docs/ARCHITECTURE.md`
 
 **Action Required:**
+
 - Verify current file sizes
 - Update documentation if files were refactored
 - Remove outdated warnings if no longer relevant
@@ -218,6 +242,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 12. Historical Session Documents
 
 **Files:**
+
 - All `*_2025-01-28.md` files (18 files)
 - Session summaries
 - Work summaries
@@ -226,6 +251,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 **Status:** These are historical documents that should be archived.
 
 **Action Required:**
+
 - Move to `docs/archive/sessions/` directory
 - Keep for historical reference
 - Update cross-references if needed
@@ -235,6 +261,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### 13. Cleanup and Migration Documents
 
 **Files:**
+
 - `docs/CLEANUP_SUMMARY.md` - Cleanup plan (November 8, 2025)
 - `docs/CLEANUP_ANALYSIS.md` - Cleanup analysis
 - `docs/FILER_RYDDEPLAN.md` - File cleanup plan (January 28, 2025)
@@ -243,6 +270,7 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 **Status:** These are planning documents that may be outdated if cleanup was completed.
 
 **Action Required:**
+
 - Verify if cleanup was completed
 - Archive if no longer relevant
 - Update if cleanup is still pending
@@ -254,21 +282,25 @@ This API reference is based on the codebase at https://github.com/TekupDK/tekup-
 ### By Category
 
 **Missing/Outdated Dates:**
+
 - Documents without "Last Updated": ~20
 - Documents with template dates: 3
 - Documents older than 6 months: 50+
 
 **Code References:**
+
 - References to potentially outdated code: 8
 - Broken code examples: Unknown (needs review)
 - References to deleted files: 0 (verified)
 
 **Links:**
+
 - Outdated repository URLs: 1
 - Broken internal links: Unknown (needs verification)
 - External links: Unknown (needs verification)
 
 **Content:**
+
 - Outdated security practices: 4 documents
 - Outdated API examples: Unknown (needs review)
 - Outdated architecture descriptions: 2 documents
@@ -352,4 +384,3 @@ After updating documentation:
 **Report Generated:** November 16, 2025  
 **Next Review:** February 16, 2026 (3 months)  
 **Maintained by:** TekupDK Development Team
-

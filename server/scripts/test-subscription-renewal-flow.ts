@@ -1,6 +1,6 @@
 /**
  * Test Subscription Renewal Flow
- * 
+ *
  * End-to-end test of subscription renewal process
  */
 
@@ -22,7 +22,7 @@ async function testRenewalFlow() {
 
   // Step 1: Check for subscriptions due for renewal
   console.log("1️⃣  Checking for subscriptions due for renewal...");
-  
+
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -33,33 +33,39 @@ async function testRenewalFlow() {
     .where(
       and(
         eq(subscriptions.status, "active"),
-        gte(subscriptions.nextBillingDate, today.toISOString().split("T")[0]),
+        gte(subscriptions.nextBillingDate, today.toISOString().split("T")[0])
         // Due today or tomorrow
       )
     )
     .limit(5);
 
-  console.log(`   Found ${dueSubscriptions.length} subscriptions due for renewal`);
+  console.log(
+    `   Found ${dueSubscriptions.length} subscriptions due for renewal`
+  );
 
   if (dueSubscriptions.length === 0) {
     console.log("   ⚠️  No subscriptions due for renewal");
-    console.log("   💡 Create a subscription with nextBillingDate = today to test");
+    console.log(
+      "   💡 Create a subscription with nextBillingDate = today to test"
+    );
     console.log("\n   Testing with mock data (dry run)...\n");
   }
 
   // Step 2: Process renewals
   console.log("2️⃣  Processing renewals...");
-  
+
   try {
     const result = await processMonthlyRenewals();
-    
+
     console.log(`   ✅ Processed: ${result.processed}`);
     console.log(`   ❌ Failed: ${result.failed}`);
-    
+
     if (result.errors.length > 0) {
       console.log("\n   Errors:");
       result.errors.forEach((err, idx) => {
-        console.log(`   ${idx + 1}. Subscription ${err.subscriptionId}: ${err.error}`);
+        console.log(
+          `   ${idx + 1}. Subscription ${err.subscriptionId}: ${err.error}`
+        );
       });
     }
 
@@ -70,13 +76,15 @@ async function testRenewalFlow() {
       console.log("   💡 This is normal if no subscriptions are due");
     }
   } catch (error) {
-    console.log(`   ❌ Renewal processing failed: ${error instanceof Error ? error.message : String(error)}`);
+    console.log(
+      `   ❌ Renewal processing failed: ${error instanceof Error ? error.message : String(error)}`
+    );
     throw error;
   }
 
   // Step 3: Verify results
   console.log("\n3️⃣  Verifying results...");
-  
+
   // Check if invoices were created (would need Billy.dk integration check)
   console.log("   💡 Check Billy.dk for created invoices");
   console.log("   💡 Check customer emails for renewal notifications");
@@ -90,9 +98,8 @@ async function testRenewalFlow() {
   console.log("   • Check calendar events created\n");
 }
 
-testRenewalFlow().catch(async (error) => {
+testRenewalFlow().catch(async error => {
   logger.error({ err: error }, "[Test] Subscription renewal flow test failed");
   console.error("❌ Test failed:", error);
   process.exit(1);
 });
-

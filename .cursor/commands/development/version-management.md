@@ -19,4 +19,3 @@ Bump version, update changelog, tag release, document changes.
 ## OUTPUT
 
 Version managed with changelog and release notes.
-

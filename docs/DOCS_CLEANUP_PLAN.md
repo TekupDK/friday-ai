@@ -146,7 +146,7 @@ docs/
 
 **Destination**: `docs/status-reports/`
 
-```bash
+````bash
 # Phase reports
 docs/status-reports/phases/phase-0/
 
@@ -473,7 +473,7 @@ Get-ChildItem -Recurse -Include *.md | Select-String -Pattern "\[.*\]\(.*\.md\)"
 ```powershell
 Get-ChildItem -Recurse -Include *.ts,*.tsx,*.js | Select-String -Pattern "\.md"
 
-```
+````
 
 ### Risiko 3: Git history
 

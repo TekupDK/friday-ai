@@ -8,12 +8,12 @@ Convert the current chat conversation into a clear, implementable feature specif
 
 ## STEPS
 
-1) Extract goals, constraints, and examples from the conversation.
-2) Define:
+1. Extract goals, constraints, and examples from the conversation.
+2. Define:
    - Problem statement
    - User stories
    - Non-functional requirements
-3) Outline the technical approach:
+3. Outline the technical approach:
    - Backend
    - Frontend
    - AI/LLM logic if relevant
@@ -21,9 +21,9 @@ Convert the current chat conversation into a clear, implementable feature specif
 ## OUTPUT
 
 Return a feature spec in Markdown with sections:
+
 - Overview
 - User stories
 - Requirements
 - Technical notes
 - Open questions.
-

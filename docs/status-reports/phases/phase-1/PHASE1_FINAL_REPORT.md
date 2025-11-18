@@ -22,7 +22,7 @@
 
 **Simplified Layout:**
 
-```text
+````text
 BEFORE (Information Overload):
 [🔥75][●] Navn  12:45  [🟢Source] [⏰Urgent]
     Emne
@@ -365,7 +365,7 @@ Til:
 ✅ 2000+ lines of documentation
 ✅ 10 visual regression screenshots
 
-```
+````
 
 **Total tid brugt:** 3 timer
 **ROI:** MASSIV (66% time savings for users!)

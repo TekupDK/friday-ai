@@ -12,6 +12,7 @@ Find alle krav (funktionelle, tekniske, API, edge-cases).
 ## TASK
 
 Find alle krav i chatten:
+
 - Funktionelle requirements
 - Tekniske requirements
 - API requirements

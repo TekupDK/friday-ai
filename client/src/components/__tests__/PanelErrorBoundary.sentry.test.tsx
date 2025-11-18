@@ -56,8 +56,11 @@ describe("PanelErrorBoundary Sentry Integration", () => {
     };
 
     // Create error boundary instance
-    const boundary = new PanelErrorBoundary({ name: "TestPanel", children: null });
-    
+    const boundary = new PanelErrorBoundary({
+      name: "TestPanel",
+      children: null,
+    });
+
     // Manually trigger componentDidCatch
     boundary.componentDidCatch(testError, errorInfo);
 
@@ -68,22 +71,28 @@ describe("PanelErrorBoundary Sentry Integration", () => {
     // Note: The actual implementation uses dynamic import, so we verify the mock was set up correctly
     expect(mockCaptureException).toBeDefined();
     expect(mockSentry).toBeDefined();
-    
+
     // Verify the error boundary logged the error (we can see this in console output)
     // The actual Sentry call happens asynchronously via dynamic import
   });
 
   it("should handle Sentry import failure gracefully", async () => {
     // Mock import failure
-    vi.stubGlobal("import", vi.fn(() => Promise.reject(new Error("Import failed"))));
+    vi.stubGlobal(
+      "import",
+      vi.fn(() => Promise.reject(new Error("Import failed")))
+    );
 
     const testError = new Error("Test error");
     const errorInfo = {
       componentStack: "TestComponent stack",
     };
 
-    const boundary = new PanelErrorBoundary({ name: "TestPanel", children: null });
-    
+    const boundary = new PanelErrorBoundary({
+      name: "TestPanel",
+      children: null,
+    });
+
     // Should not throw even if Sentry import fails
     expect(() => {
       boundary.componentDidCatch(testError, errorInfo);
@@ -99,7 +108,10 @@ describe("PanelErrorBoundary Sentry Integration", () => {
       componentStack: "Component stack trace",
     };
 
-    const boundary = new PanelErrorBoundary({ name: "TestPanel", children: null });
+    const boundary = new PanelErrorBoundary({
+      name: "TestPanel",
+      children: null,
+    });
     boundary.componentDidCatch(testError, errorInfo);
 
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -118,4 +130,3 @@ describe("PanelErrorBoundary Sentry Integration", () => {
     );
   });
 });
-

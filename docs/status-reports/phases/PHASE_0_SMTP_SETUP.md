@@ -58,7 +58,7 @@ This guide documents the setup for Phase 0 email infrastructure using self-hoste
 
 Run Drizzle migration to create new tables:
 
-```bash
+````bash
 # From project root
 pnpm db:push
 
@@ -340,7 +340,7 @@ node test-inbound-email.js
    ```bash
    docker exec inbound-email-container ls -la /app/storage/attachments
 
-   ```
+````
 
 1. Verify `INBOUND_STORAGE_PATH` in environment
 

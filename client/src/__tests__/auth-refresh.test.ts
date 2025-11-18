@@ -1,6 +1,6 @@
 /**
  * Auth Refresh Tests
- * 
+ *
  * Tests for the redirectToLoginIfUnauthorized function's JSON parsing fix.
  * This ensures the auth refresh endpoint handles various response types gracefully.
  */
@@ -365,9 +365,9 @@ describe("Auth Refresh JSON Parsing", () => {
     });
 
     it("should handle timeout errors", async () => {
-      globalThis.fetch = vi.fn().mockRejectedValue(
-        new Error("Request timeout")
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockRejectedValue(new Error("Request timeout"));
 
       const error = new TRPCClientError(UNAUTHED_ERR_MSG);
       await redirectToLoginIfUnauthorized(error);
@@ -377,9 +377,9 @@ describe("Auth Refresh JSON Parsing", () => {
     });
 
     it("should handle fetch rejection", async () => {
-      globalThis.fetch = vi.fn().mockRejectedValue(
-        new TypeError("Failed to fetch")
-      );
+      globalThis.fetch = vi
+        .fn()
+        .mockRejectedValue(new TypeError("Failed to fetch"));
 
       const error = new TRPCClientError(UNAUTHED_ERR_MSG);
       await redirectToLoginIfUnauthorized(error);
@@ -463,4 +463,3 @@ describe("Auth Refresh JSON Parsing", () => {
     });
   });
 });
-

@@ -32,6 +32,7 @@ Debug Billy.dk synchronization issues including customer sync, invoice sync, dat
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find Billy sync code
 - `read_file` - Read Billy integration files
 - `grep` - Search for Billy sync patterns
@@ -39,6 +40,7 @@ Debug Billy.dk synchronization issues including customer sync, invoice sync, dat
 - `read_lints` - Check for errors
 
 **DO NOT:**
+
 - Skip error handling checks
 - Ignore API rate limits
 - Miss data consistency issues
@@ -172,23 +174,28 @@ Provide debugging results:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Issues Found
+
 1. [Issue 1] - [Description] - [Severity]
 2. [Issue 2] - [Description] - [Severity]
 
 ## Root Cause Analysis
+
 - **Issue 1:** [Root cause] - [Fix applied]
 - **Issue 2:** [Root cause] - [Fix applied]
 
 ## Fixes Applied
+
 - ✅ [Fix 1] - [Description]
 - ✅ [Fix 2] - [Description]
 
 ## Testing
+
 - ✅ Customer sync - [Result]
 - ✅ Invoice sync - [Result]
 - ✅ Error handling - [Result]
 
 ## Recommendations
+
 1. [Recommendation 1]
 2. [Recommendation 2]
 ```
@@ -205,4 +212,3 @@ Provide debugging results:
 ---
 
 **CRITICAL:** Start by checking API connectivity and authentication, then systematically debug sync issues.
-

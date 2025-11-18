@@ -19,4 +19,3 @@ Identify slow queries, add indexes, fix N+1 queries, optimize joins, test perfor
 ## OUTPUT
 
 Queries optimized with performance improvements.
-

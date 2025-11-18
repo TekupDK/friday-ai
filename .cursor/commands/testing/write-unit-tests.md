@@ -31,6 +31,7 @@ Create comprehensive unit tests for the current code following Friday AI Chat te
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing test files
 - `codebase_search` - Find similar tests
 - `grep` - Search for test patterns
@@ -38,6 +39,7 @@ Create comprehensive unit tests for the current code following Friday AI Chat te
 - `run_terminal_cmd` - Run tests
 
 **DO NOT:**
+
 - Create tests without reviewing patterns
 - Skip mocking
 - Ignore edge cases
@@ -70,6 +72,7 @@ Before writing tests, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Backend Function Test
+
 ```typescript
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { getCustomerProfileById } from "../customer-db";
@@ -132,6 +135,7 @@ describe("getCustomerProfileById", () => {
 ```
 
 ### Example: React Component Test
+
 ```typescript
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -229,11 +233,13 @@ describe("MyComponent", () => {
 ## TEST COVERAGE CHECKLIST
 
 ### Happy Path:
+
 - ✅ Normal inputs produce expected outputs
 - ✅ All public methods tested
 - ✅ Integration between functions works
 
 ### Edge Cases:
+
 - ✅ Null/undefined inputs
 - ✅ Empty arrays/strings
 - ✅ Boundary values (0, -1, max, min)
@@ -241,12 +247,14 @@ describe("MyComponent", () => {
 - ✅ Special characters/unicode
 
 ### Error Conditions:
+
 - ✅ Invalid inputs handled
 - ✅ API failures handled
 - ✅ Database errors handled
 - ✅ Network errors handled
 
 ### State Management:
+
 - ✅ Initial state correct
 - ✅ State transitions work
 - ✅ State cleanup works
@@ -254,6 +262,7 @@ describe("MyComponent", () => {
 ## VERIFICATION
 
 After implementation:
+
 - ✅ All tests pass
 - ✅ High code coverage
 - ✅ Tests are fast (< 100ms each)
@@ -270,11 +279,13 @@ After implementation:
 **Test File:** `[path]/[feature].test.ts`
 
 **Test Cases:**
+
 - `should [test case 1]` - [description]
 - `should [test case 2]` - [description]
 - `should handle [error case]` - [description]
 
 **Coverage:**
+
 - Happy path: ✅ Covered
 - Edge cases: ✅ Covered
 - Error handling: ✅ Covered
@@ -285,9 +296,11 @@ After implementation:
 \`\`\`
 
 **Test Execution:**
+
 - ✅ All tests passing
 - ✅ Coverage: [percentage]%
 
 **Files Created:**
+
 - `[path]/[feature].test.ts`
 ```

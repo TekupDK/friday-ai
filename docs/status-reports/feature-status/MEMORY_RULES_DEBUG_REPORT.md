@@ -71,10 +71,12 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 ### 🔴 CRITICAL Issues
 
 #### 1. Missing CRITICAL Rule: MEMORY_17
+
 **Severity:** CRITICAL  
 **Impact:** Invoices could be auto-approved, violating business rules
 
 **Expected Behavior:**
+
 - All invoices must be created as DRAFT
 - Never auto-approve invoices
 - Price must be 349 kr/time/person
@@ -82,6 +84,7 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 **Current Status:** Rule not implemented
 
 **Fix Required:**
+
 ```typescript
 {
   id: "MEMORY_17",
@@ -91,13 +94,13 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
   description: "Alle fakturaer skal være draft, 349 kr/time/person",
   enforcement: async context => {
     if (!context.invoice) return true;
-    
+
     if (context.invoice.state !== "draft") {
       console.error("[MEMORY_17] ❌ KRITISK: Faktura skal være draft!");
       context.invoice.state = "draft";
       return false;
     }
-    
+
     // Verify price
     const hasCorrectPrice = context.invoice.lines?.some(
       (line: any) => line.unitPrice === 349
@@ -106,13 +109,14 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
       console.warn("[MEMORY_17] ⚠️ Pris skal være 349 kr/time");
       return false;
     }
-    
+
     return true;
   },
 }
 ```
 
 #### 2. Incorrect Implementation: MEMORY_16
+
 **Severity:** CRITICAL  
 **Impact:** Flytterengøring leads won't trigger photo requests
 
@@ -120,6 +124,7 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 **Expected Implementation:** Check if flytterengøring lead, block quote until photos received
 
 **Fix Required:**
+
 ```typescript
 {
   id: "MEMORY_16",
@@ -129,20 +134,21 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
   description: "BLOCK quote sending until photos received",
   enforcement: async context => {
     if (!context.lead || !context.isFlytterengøring) return true;
-    
+
     if (!context.hasPhotos) {
       console.error("[MEMORY_16] ❌ KRITISK: Må IKKE sende tilbud uden billeder!");
       context.blockQuoteSending = true;
       context.requiresPhotos = true;
       return false; // Block quote
     }
-    
+
     return true;
   },
 }
 ```
 
 #### 3. Incorrect Implementation: MEMORY_24
+
 **Severity:** HIGH  
 **Impact:** Job completion checklist not enforced
 
@@ -150,6 +156,7 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 **Expected Implementation:** Verify 6-step job completion checklist
 
 **Fix Required:**
+
 ```typescript
 {
   id: "MEMORY_24",
@@ -159,7 +166,7 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
   description: "Faktura, team, betaling, tid, kalender, labels",
   enforcement: async context => {
     if (!context.jobCompletion) return true;
-    
+
     const checklist = {
       invoice: !!context.jobCompletion.invoiceId,
       team: !!context.jobCompletion.team,
@@ -168,27 +175,30 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
       calendar: !!context.jobCompletion.calendarUpdated,
       labels: !!context.jobCompletion.labelsRemoved,
     };
-    
+
     const allComplete = Object.values(checklist).every(v => v === true);
     if (!allComplete) {
       console.error("[MEMORY_24] ❌ Job completion mangler steps:", checklist);
       return false;
     }
-    
+
     return true;
   },
 }
 ```
 
 #### 4. Missing Rule: MEMORY_2
+
 **Severity:** HIGH  
 **Impact:** Duplicate emails could be sent
 
 **Expected Behavior:**
+
 - Check Gmail for existing communication before sending quotes
 - Prevent duplicate offers
 
 **Fix Required:**
+
 ```typescript
 {
   id: "MEMORY_2",
@@ -198,7 +208,7 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
   description: "Søg i Gmail før nye tilbud sendes",
   enforcement: async context => {
     if (!context.customerEmail || !context.isOffer) return true;
-    
+
     console.log("[MEMORY_2] Checking Gmail for duplicates...");
     context.requiresGmailCheck = true;
     return true;
@@ -207,14 +217,17 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 ```
 
 #### 5. Missing Rule: MEMORY_25
+
 **Severity:** MEDIUM  
 **Impact:** Wrong customer names in communications
 
 **Expected Behavior:**
+
 - Verify lead name matches actual email signature
 - Use customer's preferred name
 
 **Fix Required:**
+
 ```typescript
 {
   id: "MEMORY_25",
@@ -224,16 +237,16 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
   description: "Brug navn fra email signatur, ikke lead system",
   enforcement: async context => {
     if (!context.lead || !context.email) return true;
-    
+
     const leadName = context.lead.name?.toLowerCase();
     const emailName = context.email.signatureName?.toLowerCase();
-    
+
     if (leadName && emailName && leadName !== emailName) {
       console.warn("[MEMORY_25] ⚠️ Navn mismatch - brug email signatur navn");
       context.useEmailName = true;
       return false;
     }
-    
+
     return true;
   },
 }
@@ -242,24 +255,29 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 ### 🟡 HIGH Priority Issues
 
 #### 6. No Enforcement Integration
+
 **Severity:** HIGH  
 **Impact:** Rules are defined but never executed
 
 **Current Status:**
+
 - `applyMemoryRules()` function exists but is **never called**
 - Rules only enforced via prompts (not programmatically)
 - No validation before actions execute
 
 **Fix Required:**
+
 - Integrate `applyMemoryRules()` in `server/ai-router.ts` before action execution
 - Add rule validation in `server/intent-actions.ts` for each action type
 - Add rule checks in email sending, calendar booking, invoice creation
 
 #### 7. Incomplete Rule Coverage
+
 **Severity:** MEDIUM  
 **Impact:** 14 rules missing (56% of expected rules)
 
 **Missing Rules:**
+
 - MEMORY_2, MEMORY_3, MEMORY_6, MEMORY_8-14, MEMORY_17, MEMORY_20, MEMORY_21, MEMORY_25
 
 **Note:** Some rule IDs (3, 6, 8-14, 20, 21) are not documented. Need to verify if they should exist or if numbering is non-sequential.
@@ -267,18 +285,22 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 ### 🟢 MEDIUM Priority Issues
 
 #### 8. Rule Priority Mismatches
+
 **Severity:** MEDIUM  
 **Impact:** Critical rules marked as lower priority
 
 **Issues:**
+
 - MEMORY_16: Should be CRITICAL (currently HIGH)
 - MEMORY_24: Should be CRITICAL (currently LOW)
 
 #### 9. Enforcement Function Quality
+
 **Severity:** LOW  
 **Impact:** Some enforcement functions are too permissive
 
 **Issues:**
+
 - MEMORY_1: Always returns `true` (no actual validation)
 - MEMORY_5: Sets flag but doesn't block action
 - MEMORY_7: Sets flag but doesn't block action
@@ -288,23 +310,28 @@ Friday AI's memory rules system has **critical issues** that prevent proper enfo
 ## Fixes Applied
 
 ### ✅ Fix 1: Correct MEMORY_16 Implementation
+
 - Changed from email length check to flytterengøring photo requirement
 - Updated priority to CRITICAL
 - Added block logic for quote sending
 
 ### ✅ Fix 2: Correct MEMORY_24 Implementation
+
 - Changed from emoji check to job completion checklist
 - Updated priority to CRITICAL
 - Added 6-step verification
 
 ### ✅ Fix 3: Add MEMORY_17 (Invoice Draft-Only)
+
 - Added CRITICAL rule for invoice draft enforcement
 - Added price verification (349 kr/time)
 
 ### ✅ Fix 4: Add MEMORY_2 (Gmail Duplicate Check)
+
 - Added HIGH priority rule for email duplicate prevention
 
 ### ✅ Fix 5: Add MEMORY_25 (Lead Name Verification)
+
 - Added MEDIUM priority rule for name matching
 
 ---
@@ -409,4 +436,3 @@ After fixes, verify:
 
 **Report Generated:** 2025-01-28  
 **Next Review:** After fixes applied and tested
-

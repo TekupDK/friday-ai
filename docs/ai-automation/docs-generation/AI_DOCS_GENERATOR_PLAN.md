@@ -18,7 +18,7 @@
 
 **Output:**
 
-```markdown
+`````markdown
 # Lead: [Company Name]
 
 ## Overview
@@ -80,7 +80,7 @@
 - Consider upsell opportunities
 - Schedule regular check-ins
 
-```text
+````text
 
 ### 2. Project Documentation
 
@@ -479,6 +479,8 @@ cron.schedule("0 0 * * *", async () => {
 cron.schedule("0 20 * * 0", async () => {
   await generateWeeklyDigest();
 });
+````
+`````
 
 ```
 
@@ -525,3 +527,4 @@ cron.schedule("0 20 * * 0", async () => {
 1. **Multi-language:** Support dansk/english
 1. **Custom templates:** Per lead type
 1. **Export:** PDF med branding
+```

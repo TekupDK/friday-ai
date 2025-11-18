@@ -41,7 +41,7 @@
 
 **Test nødvendig:**
 
-```text
+````text
 
 1. Hover over en email i listen
 2. Se efter icons: 📂 (archive), ⭐ (star), 🗑️ (delete), ⋯ (more)
@@ -374,7 +374,7 @@ npm run type-check
 # 5. Check for build errors
 npm run build
 
-```
+````
 
 ---
 

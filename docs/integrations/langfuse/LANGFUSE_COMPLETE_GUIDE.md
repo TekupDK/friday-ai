@@ -9,7 +9,7 @@
 
 ## 📊 Quick Status
 
-```bash
+````bash
 ✅ Docker Deployment:     Running on port 3001
 ✅ Database:              PostgreSQL (port 5433)
 ✅ Dashboard Access:      <http://localhost:3001>
@@ -661,7 +661,7 @@ await flushLangfuse();
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝
 
-```
+````
 
 ---
 

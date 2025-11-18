@@ -17,6 +17,7 @@ Create comprehensive end-to-end tests that verify complete user workflows work c
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Complete User Workflow Test
+
 ```typescript
 import { test, expect } from "@playwright/test";
 
@@ -32,21 +33,21 @@ test.describe("Customer Management E2E", () => {
   test("should create customer and view in list", async ({ page }) => {
     // Navigate to CRM
     await page.goto("/crm/customers");
-    
+
     // Click create button
     await page.getByRole("button", { name: "Create Customer" }).click();
-    
+
     // Fill form
     await page.getByLabel("Name").fill("E2E Test Customer");
     await page.getByLabel("Email").fill("e2e@example.com");
     await page.getByLabel("Phone").fill("12345678");
-    
+
     // Submit
     await page.getByRole("button", { name: "Save" }).click();
-    
+
     // Wait for success message
     await expect(page.getByText("Customer created successfully")).toBeVisible();
-    
+
     // Verify in list
     await page.goto("/crm/customers");
     await expect(page.getByText("E2E Test Customer")).toBeVisible();
@@ -56,10 +57,10 @@ test.describe("Customer Management E2E", () => {
   test("should handle form validation errors", async ({ page }) => {
     await page.goto("/crm/customers");
     await page.getByRole("button", { name: "Create Customer" }).click();
-    
+
     // Try to submit empty form
     await page.getByRole("button", { name: "Save" }).click();
-    
+
     // Verify validation errors
     await expect(page.getByText("Name is required")).toBeVisible();
     await expect(page.getByText("Email is required")).toBeVisible();
@@ -68,6 +69,7 @@ test.describe("Customer Management E2E", () => {
 ```
 
 ### Example: API + UI Integration Test
+
 ```typescript
 import { test, expect } from "@playwright/test";
 
@@ -85,14 +87,16 @@ test("should sync data between API and UI", async ({ page, request }) => {
   // Verify in UI
   await page.goto("/crm/customers");
   await expect(page.getByText("API Customer")).toBeVisible();
-  
+
   // Update via UI
   await page.getByRole("button", { name: "Edit" }).first().click();
   await page.getByLabel("Name").fill("Updated Customer");
   await page.getByRole("button", { name: "Save" }).click();
-  
+
   // Verify via API
-  const getResponse = await request.get(`/api/trpc/crm.customer.getById?id=${id}`);
+  const getResponse = await request.get(
+    `/api/trpc/crm.customer.getById?id=${id}`
+  );
   const customer = await getResponse.json();
   expect(customer.name).toBe("Updated Customer");
 });
@@ -138,30 +142,32 @@ test("should sync data between API and UI", async ({ page, request }) => {
 ## E2E TEST PATTERNS
 
 ### Pattern 1: Complete Workflow
+
 ```typescript
 test("should complete [workflow name]", async ({ page }) => {
   // Step 1: Navigate
   await page.goto("/feature");
-  
+
   // Step 2: Interact
   await page.getByRole("button", { name: "Action" }).click();
-  
+
   // Step 3: Verify
   await expect(page.getByText("Success")).toBeVisible();
 });
 ```
 
 ### Pattern 2: Multi-Page Workflow
+
 ```typescript
 test("should navigate through multiple pages", async ({ page }) => {
   // Page 1
   await page.goto("/page1");
   await page.getByRole("button", { name: "Next" }).click();
-  
+
   // Page 2
   await page.waitForURL("/page2");
   await page.getByRole("button", { name: "Submit" }).click();
-  
+
   // Page 3
   await page.waitForURL("/page3");
   await expect(page.getByText("Complete")).toBeVisible();
@@ -169,11 +175,12 @@ test("should navigate through multiple pages", async ({ page }) => {
 ```
 
 ### Pattern 3: API + UI Verification
+
 ```typescript
 test("should sync API and UI", async ({ page, request }) => {
   // Create via API
   await request.post("/api/endpoint", { data });
-  
+
   // Verify in UI
   await page.goto("/feature");
   await expect(page.getByText("Created")).toBeVisible();
@@ -183,6 +190,7 @@ test("should sync API and UI", async ({ page, request }) => {
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Tests cover complete workflows
 - ✅ Tests use accessibility-first selectors
 - ✅ Tests wait properly (no flakiness)
@@ -197,18 +205,21 @@ After implementation:
 **Test File:** `tests/e2e/[feature].test.ts`
 
 **Workflows Tested:**
+
 - [Workflow 1] - [description]
 - [Workflow 2] - [description]
 
 **Test Cases:**
+
 - `should [workflow description]` - [what it tests]
 - `should handle [error case]` - [error scenario]
 
 **Test Execution:**
+
 - ✅ All tests passing
 - ✅ No flakiness
 
 **Files Created:**
+
 - `tests/e2e/[feature].test.ts`
 ```
-

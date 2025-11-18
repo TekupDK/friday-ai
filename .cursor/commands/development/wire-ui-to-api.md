@@ -30,12 +30,14 @@ Connect a UI component to a backend API/tRPC procedure, handling all states prop
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing components with tRPC
 - `codebase_search` - Find similar integrations
 - `grep` - Search for tRPC hook patterns
 - `search_replace` - Wire UI to API
 
 **DO NOT:**
+
 - Skip loading states
 - Ignore error handling
 - Forget empty states
@@ -68,6 +70,7 @@ Before wiring, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Query Hook with All States
+
 ```typescript
 import { memo } from "react";
 import { trpc } from "@/lib/trpc";
@@ -129,6 +132,7 @@ const CustomerList = memo(function CustomerList() {
 ```
 
 ### Example: Mutation Hook with Optimistic Updates
+
 ```typescript
 import { memo, useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -152,15 +156,15 @@ const CreateCustomer = memo(function CreateCustomer() {
     onMutate: async (newCustomer) => {
       // Cancel outgoing refetches
       await utils.crm.customer.list.cancel();
-      
+
       // Snapshot previous value
       const previous = utils.crm.customer.list.getData();
-      
+
       // Optimistically update
       utils.crm.customer.list.setData(undefined, (old) => {
         return old ? [...old, { ...newCustomer, id: Date.now() }] : [newCustomer];
       });
-      
+
       return { previous };
     },
     onError: (err, newCustomer, context) => {
@@ -227,6 +231,7 @@ const CreateCustomer = memo(function CreateCustomer() {
 ## VERIFICATION
 
 After implementation:
+
 - ✅ All states handled (loading, error, empty, success)
 - ✅ Proper caching configured
 - ✅ Mutations invalidate queries
@@ -245,21 +250,24 @@ const { data, isLoading, error } = trpc.[router].[procedure].useQuery(...);
 \`\`\`
 
 **States Handled:**
+
 - ✅ Loading: [how handled]
 - ✅ Error: [how handled]
 - ✅ Empty: [how handled]
 - ✅ Success: [how handled]
 
 **Caching:**
+
 - staleTime: [value]
 - cacheTime: [value]
 
 **Files Modified:**
+
 - `client/src/components/[Component].tsx`
 
 **Verification:**
+
 - ✅ All states: PASSED
 - ✅ Caching: CONFIGURED
 - ✅ TypeScript: PASSED
 ```
-

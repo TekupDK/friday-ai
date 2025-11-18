@@ -13,6 +13,7 @@ Du er en senior engineer der håndhæver code standards og conventions for Frida
 ## TASK
 
 Håndhæv code standards ved at:
+
 - Analysere codebase for violations
 - Identificere standard violations
 - Fixe violations automatisk hvor muligt
@@ -37,6 +38,7 @@ Håndhæv code standards ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_lints` - Check linting errors
 - `run_terminal_cmd` - Run linting/formatting
 - `grep` - Find violations
@@ -44,6 +46,7 @@ Håndhæv code standards ved at:
 - `read_file` - Read config files
 
 **DO NOT:**
+
 - Ignorere violations
 - Glem automation
 - Undlad at fixe
@@ -130,6 +133,7 @@ Provide standards enforcement report:
 ## Violations Found
 
 ### Critical Violations (Must Fix)
+
 1. **[Violation 1]**
    - **File:** [file path]
    - **Line:** [line number]
@@ -140,10 +144,12 @@ Provide standards enforcement report:
    [Samme struktur...]
 
 ### High Priority Violations
+
 1. **[Violation 1]**
    [Samme struktur...]
 
 ### Medium Priority Violations
+
 1. **[Violation 1]**
    [Samme struktur...]
 
@@ -191,4 +197,3 @@ Efter enforcement, verificer:
 ---
 
 **CRITICAL:** Start med at identificere code standards, derefter kør automated checks, analyser violations, fix violations, og rapporter compliance status.
-

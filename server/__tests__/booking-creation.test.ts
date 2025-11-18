@@ -7,7 +7,11 @@ import { TRPCError } from "@trpc/server";
 import { eq, and } from "drizzle-orm";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { bookings, customerProfiles, customerProperties } from "../../drizzle/schema";
+import {
+  bookings,
+  customerProfiles,
+  customerProperties,
+} from "../../drizzle/schema";
 import { withDatabaseErrorHandling } from "../_core/error-handling";
 import { getDb } from "../db";
 
@@ -134,7 +138,7 @@ describe("Booking Creation - CRM Integration", () => {
 
   it("should verify property belongs to profile when provided", async () => {
     let callCount = 0;
-    
+
     // Mock: First call returns profile, second call returns empty (property not found)
     const selectChain = {
       from: vi.fn().mockReturnValue({
@@ -219,16 +223,12 @@ describe("Booking Creation - CRM Integration", () => {
 
   it("should handle database errors gracefully", async () => {
     const dbError = new Error("Database connection failed");
-    
+
     // Test error handling wrapper
     await expect(
-      withDatabaseErrorHandling(
-        async () => {
-          throw dbError;
-        },
-        "Failed to create booking"
-      )
+      withDatabaseErrorHandling(async () => {
+        throw dbError;
+      }, "Failed to create booking")
     ).rejects.toThrow();
   });
 });
-

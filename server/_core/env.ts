@@ -108,7 +108,9 @@ export const ENV = {
   sentryDsn: process.env.SENTRY_DSN ?? "",
   sentryEnabled: process.env.SENTRY_ENABLED === "true",
   sentryEnvironment: process.env.NODE_ENV ?? "development",
-  sentryTracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || "0.1"),
+  sentryTracesSampleRate: parseFloat(
+    process.env.SENTRY_TRACES_SAMPLE_RATE || "0.1"
+  ),
 };
 
 // Validate required environment variables

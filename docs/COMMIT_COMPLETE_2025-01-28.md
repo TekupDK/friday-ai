@@ -48,11 +48,13 @@ Alle ændringer er nu organiseret i logiske commits og klar til at blive pushet 
 ## 🚀 Next Steps
 
 ### Push to Origin
+
 ```bash
 git push origin main
 ```
 
 ### Verify
+
 ```bash
 git status -sb
 git log --oneline -16
@@ -75,4 +77,3 @@ git log --oneline -16
 **Working tree:** Clean  
 **Ready to push:** Yes  
 **Last Updated:** 2025-01-28
-

@@ -550,7 +550,8 @@ export const FRIDAY_TOOLS = [
           },
           includeReasoning: {
             type: "boolean",
-            description: "Include detailed reasoning for recommendation (default: true)",
+            description:
+              "Include detailed reasoning for recommendation (default: true)",
           },
         },
         required: ["customerId"],
@@ -572,7 +573,8 @@ export const FRIDAY_TOOLS = [
           },
           lookbackDays: {
             type: "number",
-            description: "Number of days to look back for analysis (default: 90)",
+            description:
+              "Number of days to look back for analysis (default: 90)",
           },
         },
         required: ["customerId"],

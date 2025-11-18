@@ -26,7 +26,7 @@ Detailed step-by-step migration plan for integrating LiteLLM into Friday AI with
 
 1. Install LiteLLM
 
-```bash
+````bash
 pip install 'litellm[proxy]'
 litellm --version
 
@@ -266,7 +266,7 @@ docker-compose stop litellm
 git revert <commit>
 git push
 
-```
+````
 
 ---
 

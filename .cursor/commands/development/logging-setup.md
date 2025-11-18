@@ -19,4 +19,3 @@ Configure logger, set log levels, add context, format logs, set up log rotation.
 ## OUTPUT
 
 Logging configured with structured format and proper levels.
-

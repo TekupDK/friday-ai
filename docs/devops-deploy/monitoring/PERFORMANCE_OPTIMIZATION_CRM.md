@@ -61,22 +61,27 @@
 ## 2. Optimization Strategies
 
 ### Strategy 1: Search Debouncing
+
 **Impact:** 40% reduction in API calls  
 **Implementation:** Custom hook with 300ms delay
 
 ### Strategy 2: Server-Side Filtering
+
 **Impact:** 60% reduction in data transfer  
 **Implementation:** Use tRPC query filters
 
 ### Strategy 3: Memoization
+
 **Impact:** 30% faster re-renders  
 **Implementation:** useMemo for computed values
 
 ### Strategy 4: Date Formatting Utility
+
 **Impact:** 50% faster date rendering  
 **Implementation:** Cached date formatter
 
 ### Strategy 5: Pagination
+
 **Impact:** 70% faster initial load  
 **Implementation:** Infinite scroll or pagination
 
@@ -94,7 +99,7 @@ import { useEffect, useState } from "react";
 /**
  * Debounce hook for search inputs
  * Delays value updates to reduce API calls
- * 
+ *
  * @param value - The value to debounce
  * @param delay - Delay in milliseconds (default: 300ms)
  * @returns Debounced value
@@ -117,6 +122,7 @@ export function useDebouncedValue<T>(value: T, delay: number = 300): T {
 ```
 
 **Performance Impact:**
+
 - Reduces API calls by 85% (from ~20 to ~3 per search)
 - Improves typing responsiveness
 - Reduces server load
@@ -193,6 +199,7 @@ export default function CRMLayout({ children }: CRMLayoutProps) {
 ```
 
 **Performance Impact:**
+
 - Eliminates object recreation on every render
 - Reduces memory allocations
 - Faster re-renders
@@ -214,12 +221,15 @@ const dateCache = new Map<string, string>();
 /**
  * Format date string to locale date string
  * Caches results to avoid repeated parsing
- * 
+ *
  * @param dateString - ISO date string
  * @param fallback - Fallback text if date is invalid
  * @returns Formatted date string
  */
-export function formatDate(dateString: string | null | undefined, fallback: string = "No date"): string {
+export function formatDate(
+  dateString: string | null | undefined,
+  fallback: string = "No date"
+): string {
   if (!dateString) return fallback;
 
   // Check cache first
@@ -234,7 +244,7 @@ export function formatDate(dateString: string | null | undefined, fallback: stri
     }
 
     const formatted = date.toLocaleDateString();
-    
+
     // Cache result (limit cache size to prevent memory leaks)
     if (dateCache.size > 100) {
       const firstKey = dateCache.keys().next().value;
@@ -257,6 +267,7 @@ export function clearDateCache(): void {
 ```
 
 **Performance Impact:**
+
 - 50% faster date rendering on repeated renders
 - Reduces CPU usage
 - Prevents memory leaks with cache size limit
@@ -280,7 +291,7 @@ export default function LeadPipeline() {
   // Memoize lead filtering to avoid recalculation on every render
   const leadsByStage = useMemo(() => {
     if (!leads) return {};
-    
+
     const grouped: Record<string, typeof leads> = {};
     stages.forEach((stage) => {
       grouped[stage] = leads.filter((lead) => lead.status === stage);
@@ -289,7 +300,7 @@ export default function LeadPipeline() {
   }, [leads, stages]);
 
   // Rest of component...
-  
+
   return (
     <CRMLayout>
       <div className="p-6">
@@ -315,6 +326,7 @@ export default function LeadPipeline() {
 ```
 
 **Performance Impact:**
+
 - 40% faster filtering on re-renders
 - Reduces CPU usage
 - Better performance with large datasets
@@ -364,6 +376,7 @@ export default function CustomerList() {
 ```
 
 **Performance Impact:**
+
 - 85% reduction in API calls
 - Better typing experience
 - Reduced server load
@@ -417,6 +430,7 @@ export function ErrorDisplay({ message = "Failed to load", error }: ErrorDisplay
 ```
 
 **Performance Impact:**
+
 - Smaller bundle size (code reuse)
 - Faster renders (optimized components)
 - Better tree-shaking
@@ -428,7 +442,12 @@ export function ErrorDisplay({ message = "Failed to load", error }: ErrorDisplay
 **File:** `client/src/pages/crm/CustomerList.tsx`
 
 ```typescript
-const { data: customers, isLoading, error, isError } = trpc.crm.customer.listProfiles.useQuery(
+const {
+  data: customers,
+  isLoading,
+  error,
+  isError,
+} = trpc.crm.customer.listProfiles.useQuery(
   {
     search: debouncedSearch || undefined,
     limit: 50,
@@ -444,6 +463,7 @@ const { data: customers, isLoading, error, isError } = trpc.crm.customer.listPro
 ```
 
 **Performance Impact:**
+
 - Reduces unnecessary refetches
 - Better caching
 - Improved user experience
@@ -454,23 +474,23 @@ const { data: customers, isLoading, error, isError } = trpc.crm.customer.listPro
 
 ### Before Optimizations
 
-| Metric | Value |
-|--------|-------|
-| API Calls per Search | ~20 calls |
-| Initial Load Time | ~1.5s |
-| Re-render Time | ~50ms |
-| Memory Usage | ~15MB |
-| Date Parsing | ~2ms per render |
+| Metric               | Value           |
+| -------------------- | --------------- |
+| API Calls per Search | ~20 calls       |
+| Initial Load Time    | ~1.5s           |
+| Re-render Time       | ~50ms           |
+| Memory Usage         | ~15MB           |
+| Date Parsing         | ~2ms per render |
 
 ### After Optimizations
 
-| Metric | Value | Improvement |
-|--------|-------|-------------|
-| API Calls per Search | ~3 calls | **85% reduction** |
-| Initial Load Time | ~0.8s | **47% faster** |
-| Re-render Time | ~15ms | **70% faster** |
-| Memory Usage | ~10MB | **33% reduction** |
-| Date Parsing | ~0.1ms (cached) | **95% faster** |
+| Metric               | Value           | Improvement       |
+| -------------------- | --------------- | ----------------- |
+| API Calls per Search | ~3 calls        | **85% reduction** |
+| Initial Load Time    | ~0.8s           | **47% faster**    |
+| Re-render Time       | ~15ms           | **70% faster**    |
+| Memory Usage         | ~10MB           | **33% reduction** |
+| Date Parsing         | ~0.1ms (cached) | **95% faster**    |
 
 ---
 
@@ -530,11 +550,13 @@ const { data: customers, isLoading, error, isError } = trpc.crm.customer.listPro
 ### Performance vs. Maintainability
 
 ✅ **Good Trade-offs:**
+
 - Memoization (minimal complexity, big gains)
 - Debouncing (standard pattern, well-understood)
 - Date utility (reusable, maintainable)
 
 ⚠️ **Consider Carefully:**
+
 - Aggressive caching (may show stale data)
 - Complex memoization (harder to debug)
 - Premature optimization (YAGNI principle)
@@ -550,14 +572,17 @@ const { data: customers, isLoading, error, isError } = trpc.crm.customer.listPro
 describe("CustomerList Performance", () => {
   it("should debounce search input", async () => {
     const { result } = renderHook(() => useDebouncedValue("test", 300));
-    
+
     // Should not update immediately
     expect(result.current).toBe("test");
-    
+
     // Wait for debounce
-    await waitFor(() => {
-      expect(result.current).toBe("test");
-    }, { timeout: 400 });
+    await waitFor(
+      () => {
+        expect(result.current).toBe("test");
+      },
+      { timeout: 400 }
+    );
   });
 });
 ```
@@ -594,4 +619,3 @@ describe("CustomerList Performance", () => {
 ---
 
 **Optimization Complete** ✅
-

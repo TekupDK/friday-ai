@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useConflicts } from "@/hooks/docs/useDocuments";
 
-
 interface ConflictListProps {
   conflicts: any[];
 }

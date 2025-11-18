@@ -12,6 +12,7 @@ Forklar database struktur: tabeller, relationer, queries, og design decisions.
 ## TASK
 
 Forklar database:
+
 1. **Struktur** - Tabeller og relationer
 2. **Queries** - Hvordan queries virker?
 3. **Design decisions** - Hvorfor er det designet sådan?
@@ -50,4 +51,3 @@ Forklar database:
 ---
 
 **CRITICAL:** Analysér database struktur, identificér tabeller og relationer, og forklar på klar, struktureret måde.
-

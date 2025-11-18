@@ -1,6 +1,6 @@
 /**
  * Custom Assertions
- * 
+ *
  * Custom assertion helpers for hook testing
  */
 
@@ -19,7 +19,10 @@ export function expectHookSuccess(result: HookResult): void {
 /**
  * Assert that a hook result failed
  */
-export function expectHookFailure(result: HookResult, errorMessage?: string): void {
+export function expectHookFailure(
+  result: HookResult,
+  errorMessage?: string
+): void {
   expect(result.success).toBe(false);
   expect(result.error).toBeDefined();
   if (errorMessage) {
@@ -52,14 +55,14 @@ export function expectHookData(result: HookResult, data?: unknown): void {
  * Assert that multiple hook results are all successful
  */
 export function expectAllHooksSuccess(results: HookResult[]): void {
-  results.forEach((result) => expectHookSuccess(result));
+  results.forEach(result => expectHookSuccess(result));
 }
 
 /**
  * Assert that at least one hook result failed
  */
 export function expectSomeHooksFailed(results: HookResult[]): void {
-  const hasFailure = results.some((result) => !result.success);
+  const hasFailure = results.some(result => !result.success);
   expect(hasFailure).toBe(true);
 }
 
@@ -95,7 +98,7 @@ export function expectStats(stats: HookStats): void {
  * Assert that logs contain a specific hook
  */
 export function expectLogsContainHook(logs: HookLog[], hookName: string): void {
-  const hasHook = logs.some((log) => log.hook === hookName);
+  const hasHook = logs.some(log => log.hook === hookName);
   expect(hasHook).toBe(true);
 }
 
@@ -106,7 +109,6 @@ export function expectLogsContainStatus(
   logs: HookLog[],
   status: HookLog["status"]
 ): void {
-  const hasStatus = logs.some((log) => log.status === status);
+  const hasStatus = logs.some(log => log.status === status);
   expect(hasStatus).toBe(true);
 }
-

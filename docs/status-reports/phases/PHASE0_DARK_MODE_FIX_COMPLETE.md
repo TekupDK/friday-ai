@@ -41,7 +41,7 @@ Alle CSS filer opdateret til at bruge **dual dark mode support:**
 
 **Pattern brugt:**
 
-```css
+````css
 /*Primary: data-theme attribute*/
 
 [data-theme="dark"] .element {
@@ -195,7 +195,7 @@ Secondary Label: rgba(235, 235, 245, 0.6)
 
 ✅ All CSS modules - Zero errors
 
-```
+````
 
 ### Storybook Dark Mode
 

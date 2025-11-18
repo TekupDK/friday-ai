@@ -31,12 +31,14 @@ Create a new shadcn/ui component or variant following Friday AI Chat patterns ex
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing shadcn/ui components
 - `codebase_search` - Find similar components
 - `grep` - Search for component patterns
 - `search_replace` - Create new component
 
 **DO NOT:**
+
 - Create component without reviewing patterns
 - Skip Radix UI primitives
 - Ignore accessibility
@@ -69,6 +71,7 @@ Before creating, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: shadcn/ui Component Structure
+
 ```typescript
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -119,6 +122,7 @@ export { Button, buttonVariants };
 ```
 
 ### Example: Using Radix UI Primitives
+
 ```typescript
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
@@ -146,6 +150,7 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 ```
 
 ### Example: Component with Variants
+
 ```typescript
 import { cva } from "class-variance-authority";
 
@@ -213,6 +218,7 @@ const cardVariants = cva(
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Follows shadcn/ui patterns
 - ✅ Uses `cn()` utility
 - ✅ Uses `cva` for variants
@@ -234,30 +240,32 @@ After implementation:
 \`\`\`
 
 **Variants:**
+
 - [variant 1]: [description]
 - [variant 2]: [description]
 
 **Props Interface:**
 \`\`\`typescript
 interface [ComponentName]Props {
-  // props
+// props
 }
 \`\`\`
 
 **Usage:**
 \`\`\`typescript
 <[ComponentName] variant="default" size="md">
-  Content
+Content
 </[ComponentName]>
 \`\`\`
 
 **Files Created/Modified:**
+
 - `client/src/components/ui/[component].tsx`
 - `stories/[Component].stories.tsx`
 
 **Verification:**
+
 - ✅ Pattern match: PASSED
 - ✅ TypeScript: PASSED
 - ✅ Storybook: ADDED
 ```
-

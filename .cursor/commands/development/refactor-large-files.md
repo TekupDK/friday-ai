@@ -16,6 +16,7 @@ Refactor large files by splitting them into smaller, focused modules following F
 ## REFACTORING STRATEGY
 
 ### Step 1: Analyze File
+
 1. **Identify responsibilities:**
    - What does the file do?
    - What are the main functions?
@@ -27,6 +28,7 @@ Refactor large files by splitting them into smaller, focused modules following F
    - Plan module structure
 
 ### Step 2: Split Strategy
+
 1. **Feature-based:**
    - One module per feature
    - Related functions together
@@ -38,6 +40,7 @@ Refactor large files by splitting them into smaller, focused modules following F
    - Gradual migration
 
 ### Step 3: Implementation
+
 1. **Create new modules:**
    - Extract functions to new files
    - Update imports
@@ -51,6 +54,7 @@ Refactor large files by splitting them into smaller, focused modules following F
 ## EXAMPLE: Refactoring db.ts
 
 ### Current Structure
+
 ```typescript
 // server/db.ts (900+ lines)
 export async function getConversations() { ... }
@@ -61,6 +65,7 @@ export async function createCustomer() { ... }
 ```
 
 ### Refactored Structure
+
 ```typescript
 // server/conversation-db.ts
 export async function getConversations() { ... }
@@ -113,19 +118,22 @@ export * from "./customer-db";
 
 **Original:** [file] - [lines] lines
 **Split Into:**
+
 - [module1] - [responsibility]
 - [module2] - [responsibility]
 - [module3] - [responsibility]
 
 **Files Created:**
+
 - [list]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Typecheck: PASSED
 - ✅ Tests: PASSED
 - ✅ No regressions: VERIFIED
 ```
-

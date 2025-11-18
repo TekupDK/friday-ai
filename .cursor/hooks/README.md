@@ -35,12 +35,14 @@ Commands can call hooks by instructing the agent:
 ## HOOK EXECUTION
 
 Before starting work:
+
 1. Execute pre-execution hooks:
    - Run `validate-environment` hook
    - Run `check-dependencies` hook
    - Run `validate-code-style` hook
 
 After completing work:
+
 1. Execute post-execution hooks:
    - Run `run-typecheck` hook
    - Run `run-linter` hook
@@ -66,24 +68,32 @@ for (const result of results) {
 ## Hook Categories
 
 ### Pre-execution
+
 Runs before agent starts work:
+
 - `validate-environment` - Validates environment
 - `check-dependencies` - Checks dependencies
 - `validate-code-style` - Validates code style
 
 ### Post-execution
+
 Runs after agent completes work:
+
 - `run-typecheck` - TypeScript type checking
 - `run-linter` - ESLint
 - `update-documentation` - Updates docs
 
 ### Error
+
 Runs when errors occur:
+
 - `error-logger` - Logs errors
 - `error-recovery` - Attempts recovery
 
 ### Context
+
 Runs to load context:
+
 - `load-project-context` - Loads project context
 - `load-codebase-context` - Loads codebase context
 
@@ -109,6 +119,7 @@ Hooks are configured in `.cursor/hooks.json`:
 ## Execution Order
 
 Hooks execute in priority order (1 = first):
+
 1. Priority 1 hooks
 2. Priority 2 hooks
 3. Priority 3 hooks
@@ -161,4 +172,3 @@ See `.cursor/commands/` for examples of commands using hooks.
 5. **Execute Hook** - Runs hook function with timeout protection
 6. **Log Results** - Logs execution status and duration
 7. **Return Results** - Returns success/failure with data/errors
-

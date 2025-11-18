@@ -123,7 +123,6 @@ export default function CustomerProfileContent({
     } else {
       setAutoSyncDone(true);
     }
-     
   }, [profile?.id, autoSyncDone]); // Auto-sync customer data with 5-minute cache
 
   // Auto-generate AI resume on first open if missing
@@ -143,7 +142,6 @@ export default function CustomerProfileContent({
       );
       generateResume.mutate({ customerId: profile.id });
     }
-     
   }, [
     profile?.id,
     profile?.aiResume,

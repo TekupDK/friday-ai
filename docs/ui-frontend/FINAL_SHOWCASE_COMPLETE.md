@@ -6,24 +6,24 @@
 
 ## 📊 TOTALE STATISTIKKER
 
-| Metric                      | Count   |
-| --------------------------- | ------- |
+| Metric | Count |
+| ------ | ----- |
 
 | **Total Komponenter**|**70+** |
 
-| **Animation Komponenter**|**7**   |
+| **Animation Komponenter**|**7** |
 
-| **Business UI Komponenter**|**8**   |
+| **Business UI Komponenter**|**8** |
 
-| **Email Center UI**|**3**   |
+| **Email Center UI**|**3** |
 
-| **Chat & Tasks**|**2**   |
+| **Chat & Tasks**|**2** |
 
 | **Shadcn/ui Basis**|**40+** |
 
-| **Showcase Features**|**3**   |
+| **Showcase Features**|**3** |
 
-| **App Architecture**|**3**   |
+| **App Architecture**|**3** |
 
 **Total Lines:** 3000+ ny kode tilføjet! 🚀
 

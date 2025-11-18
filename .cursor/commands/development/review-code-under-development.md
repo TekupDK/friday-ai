@@ -30,6 +30,7 @@ Review code while it's being developed by providing real-time feedback, catching
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code being developed
 - `codebase_search` - Find similar patterns
 - `grep` - Search for patterns
@@ -37,6 +38,7 @@ Review code while it's being developed by providing real-time feedback, catching
 - `run_terminal_cmd` - Run typecheck
 
 **DO NOT:**
+
 - Be overly critical
 - Miss important issues
 - Ignore context
@@ -74,30 +76,35 @@ Before reviewing, think through:
 ## REVIEW AREAS
 
 ### 1. Type Safety
+
 - Proper TypeScript usage
 - No `any` types
 - Proper null checks
 - Type inference
 
 ### 2. Code Structure
+
 - Function responsibilities
 - Separation of concerns
 - DRY principles
 - Code organization
 
 ### 3. Best Practices
+
 - Error handling
 - Logging
 - Testing
 - Documentation
 
 ### 4. Performance
+
 - Efficient algorithms
 - Proper memoization
 - Optimized queries
 - Bundle considerations
 
 ### 5. Friday AI Chat Patterns
+
 - tRPC patterns
 - React patterns
 - Database patterns
@@ -142,7 +149,7 @@ After review, verify:
 
 Provide code review feedback:
 
-```markdown
+````markdown
 # Code Review - Under Development
 
 **Date:** 2025-11-16
@@ -150,6 +157,7 @@ Provide code review feedback:
 **Status:** [REVIEWED/ISSUES FOUND]
 
 ## Review Summary
+
 - **Issues Found:** [NUMBER]
 - **Critical:** [NUMBER]
 - **High:** [NUMBER]
@@ -159,16 +167,20 @@ Provide code review feedback:
 ## Issues Found
 
 ### 🔴 Critical: [Issue Title]
+
 **Location:** [LINE NUMBERS]
 **Issue:** [Description]
 **Impact:** [IMPACT]
 
 **Current Code:**
+
 ```typescript
 // Problematic code
 ```
+````
 
 **Suggested Fix:**
+
 ```typescript
 // Fixed code
 ```
@@ -177,24 +189,30 @@ Provide code review feedback:
 [Why this is an issue and how to fix it]
 
 ### 🟡 High: [Issue Title]
+
 [Similar structure]
 
 ### 🟢 Medium: [Issue Title]
+
 [Similar structure]
 
 ## Positive Feedback
+
 - ✅ [Good practice 1]
 - ✅ [Good practice 2]
 - ✅ [Good practice 3]
 
 ## Suggestions for Improvement
+
 1. **[Priority]** [Suggestion 1]
 2. **[Priority]** [Suggestion 2]
 
 ## Next Steps
+
 1. [Fix critical issues]
 2. [Address high priority]
 3. [Consider improvements]
+
 ```
 
 ## GUIDELINES
@@ -209,3 +227,4 @@ Provide code review feedback:
 
 **CRITICAL:** Review code while it's being developed. Catch issues early and guide toward better code.
 
+```

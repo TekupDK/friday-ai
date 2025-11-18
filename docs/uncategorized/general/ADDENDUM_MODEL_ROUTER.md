@@ -19,7 +19,7 @@ Under dyb analyse af kodebasen blev der opdaget et **avanceret model routing sys
 
 Friday AI har ALLEREDE et intelligent routing system:
 
-```typescript
+````typescript
 // server/model-router.ts (271 linjer)
 
 export type AIModel =
@@ -486,7 +486,7 @@ export async function invokeLLM(params: InvokeParams) {
 9. server/docs/ai/analyzer.ts          - Via routing
 10. server/ai-email-summary.ts         - Via routing
 
-```
+````
 
 ---
 

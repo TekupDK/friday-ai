@@ -256,12 +256,22 @@ function collectComponents(
             const calleeName = ts.isIdentifier(call.expression)
               ? call.expression.text
               : ts.isPropertyAccessExpression(call.expression)
-              ? call.expression.name.text
-              : undefined;
-            if (calleeName && /(memo|forwardRef)$/.test(calleeName) && call.arguments.length > 0) {
+                ? call.expression.name.text
+                : undefined;
+            if (
+              calleeName &&
+              /(memo|forwardRef)$/.test(calleeName) &&
+              call.arguments.length > 0
+            ) {
               const firstArg = call.arguments[0];
-              if (ts.isArrowFunction(firstArg) || ts.isFunctionExpression(firstArg)) {
-                const { type: propsType } = resolvePropsFromFunction(checker, firstArg);
+              if (
+                ts.isArrowFunction(firstArg) ||
+                ts.isFunctionExpression(firstArg)
+              ) {
+                const { type: propsType } = resolvePropsFromFunction(
+                  checker,
+                  firstArg
+                );
                 const name = (decl.name as ts.Identifier).text;
                 pushComponent(name, propsType, firstArg);
               }
@@ -283,13 +293,26 @@ function collectComponents(
         const calleeName = ts.isIdentifier(call.expression)
           ? call.expression.text
           : ts.isPropertyAccessExpression(call.expression)
-          ? call.expression.name.text
-          : undefined;
-        if (calleeName && /(memo|forwardRef)$/.test(calleeName) && call.arguments.length > 0) {
+            ? call.expression.name.text
+            : undefined;
+        if (
+          calleeName &&
+          /(memo|forwardRef)$/.test(calleeName) &&
+          call.arguments.length > 0
+        ) {
           const firstArg = call.arguments[0];
-          if (ts.isArrowFunction(firstArg) || ts.isFunctionExpression(firstArg)) {
-            const { type: propsType } = resolvePropsFromFunction(checker, firstArg);
-            const inferredName = path.basename(fileName, path.extname(fileName));
+          if (
+            ts.isArrowFunction(firstArg) ||
+            ts.isFunctionExpression(firstArg)
+          ) {
+            const { type: propsType } = resolvePropsFromFunction(
+              checker,
+              firstArg
+            );
+            const inferredName = path.basename(
+              fileName,
+              path.extname(fileName)
+            );
             pushComponent(inferredName, propsType, firstArg);
           }
         }
@@ -332,11 +355,18 @@ function collectComponents(
                 const calleeName = ts.isIdentifier(call.expression)
                   ? call.expression.text
                   : ts.isPropertyAccessExpression(call.expression)
-                  ? call.expression.name.text
-                  : undefined;
-                if (calleeName && /(memo|forwardRef)$/.test(calleeName) && call.arguments.length > 0) {
+                    ? call.expression.name.text
+                    : undefined;
+                if (
+                  calleeName &&
+                  /(memo|forwardRef)$/.test(calleeName) &&
+                  call.arguments.length > 0
+                ) {
                   const firstArg = call.arguments[0];
-                  if (ts.isArrowFunction(firstArg) || ts.isFunctionExpression(firstArg)) {
+                  if (
+                    ts.isArrowFunction(firstArg) ||
+                    ts.isFunctionExpression(firstArg)
+                  ) {
                     const { type: propsType } = resolvePropsFromFunction(
                       program.getTypeChecker(),
                       firstArg
@@ -474,8 +504,12 @@ function main() {
       `[warn] Directory not found: ${path.relative(repoRoot, DEFAULT_TARGET)}. Using heuristic fallback (${files.length} files).`
     );
     const chatCount = files.filter(f => /[\\/]chat[\\/]/i.test(f)).length;
-    const aiDirCount = files.filter(f => /[\\/]components[\\/]ai[\\/]/i.test(f)).length;
-    console.log(`[info] Heuristic breakdown: chat=${chatCount}, aiDir=${aiDirCount}`);
+    const aiDirCount = files.filter(f =>
+      /[\\/]components[\\/]ai[\\/]/i.test(f)
+    ).length;
+    console.log(
+      `[info] Heuristic breakdown: chat=${chatCount}, aiDir=${aiDirCount}`
+    );
   }
 
   // If AI folder exists but contains no components, try structured fallback then heuristic

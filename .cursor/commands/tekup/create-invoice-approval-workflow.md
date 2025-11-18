@@ -32,6 +32,7 @@ Create or improve invoice approval workflow that handles invoice creation from e
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find invoice-related code
 - `read_file` - Read Billy integration files
 - `grep` - Search for invoice patterns
@@ -39,6 +40,7 @@ Create or improve invoice approval workflow that handles invoice creation from e
 - `run_terminal_cmd` - Test invoice creation
 
 **DO NOT:**
+
 - Auto-approve invoices (requires user approval)
 - Skip customer verification
 - Ignore product ID validation
@@ -131,10 +133,10 @@ async function handleFinanceStage(
 // From server/friday-prompts.ts BILLY_INVOICE_PROMPT
 const PRODUCT_MAP = {
   fast_rengoring: "REN-001", // Fast Rengøring (recurring)
-  hovedrengoring: "REN-002",  // Hovedrengøring (deep cleaning)
+  hovedrengoring: "REN-002", // Hovedrengøring (deep cleaning)
   flytterengoring: "REN-003", // Flytterengøring (moving cleaning)
   erhvervsrengoring: "REN-004", // Erhvervsrengøring (commercial)
-  specialopgaver: "REN-005",   // Specialopgaver (special tasks)
+  specialopgaver: "REN-005", // Specialopgaver (special tasks)
 };
 
 const UNIT_PRICE = 349; // DKK per hour per person (incl. moms)
@@ -190,20 +192,24 @@ Provide workflow implementation:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Workflow Analysis
+
 - **Current Flow:** [List of steps]
 - **Improvements Made:** [List of improvements]
 
 ## Implementation
+
 - ✅ Invoice creation from email thread
 - ✅ Customer lookup/creation
 - ✅ Approval process (manual)
 - ✅ Invoice sending
 
 ## Testing
+
 - ✅ [Test 1] - [Result]
 - ✅ [Test 2] - [Result]
 
 ## Next Steps
+
 1. [Next action 1]
 2. [Next action 2]
 ```
@@ -221,4 +227,3 @@ Provide workflow implementation:
 ---
 
 **CRITICAL:** Start by reading existing invoice code, then create or improve the workflow based on requirements. Remember: NEVER auto-approve invoices!
-

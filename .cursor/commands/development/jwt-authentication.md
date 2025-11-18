@@ -19,4 +19,3 @@ Generate tokens, verify tokens, handle refresh, set expiration, secure storage.
 ## OUTPUT
 
 JWT authentication implemented with security best practices.
-

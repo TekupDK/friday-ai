@@ -5,6 +5,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 ## 🚀 Getting Started
 
 ### Session Management
+
 - `continue-session.md` - Continue work from previous session
 - `session-summary.md` - Create session summary
 - `plan-next-steps.md` - Plan next steps
@@ -13,6 +14,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 ## 🛠️ Most Used Commands
 
 ### Development
+
 - `create-trpc-procedure.md` - Create new tRPC procedure
 - `create-react-component.md` - Create React component
 - `create-react-page.md` - Create React page
@@ -20,6 +22,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - `wire-ui-to-api.md` - Wire UI to API
 
 ### Debugging & Fixing
+
 - `debug-issue.md` - Debug issues systematically
 - `fix-bug.md` - Fix bugs
 - `help-me-fix-this.md` - Quick fix helper
@@ -27,6 +30,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - `handle-build-failure.md` - Fix build failures
 
 ### Testing
+
 - `write-unit-tests.md` - Write unit tests
 - `create-playwright-test.md` - Create E2E tests
 - `test-changed-files.md` - Test changed files
@@ -34,6 +38,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - `test-from-chat-summary.md` - Test from chat summary
 
 ### Code Quality
+
 - `code-review.md` - Code review
 - `light-review.md` - Quick review
 - `refactor-code.md` - Refactor code
@@ -49,6 +54,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 ## 🔧 Common Tasks
 
 ### Feature Development
+
 1. `setup-new-feature.md` - Setup feature
 2. `create-trpc-procedure.md` - Create API
 3. `create-react-component.md` - Create UI
@@ -56,12 +62,14 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 5. `write-unit-tests.md` - Add tests
 
 ### Bug Fixing
+
 1. `debug-issue.md` - Debug issue
 2. `fix-bug.md` - Fix bug
 3. `write-unit-tests.md` - Add regression test
 4. `run-tests.md` - Verify fix
 
 ### Code Review
+
 1. `light-review.md` - Quick review
 2. `code-review.md` - Full review
 3. `security-audit.md` - Security check
@@ -70,6 +78,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 ## 🎯 By Category
 
 ### Creation Commands
+
 - `create-trpc-procedure.md`
 - `create-react-component.md`
 - `create-react-page.md`
@@ -80,6 +89,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - `create-crm-feature.md`
 
 ### Debug Commands
+
 - `debug-issue.md`
 - `chain-of-thought-debugging.md`
 - `root-cause-analysis.md`
@@ -87,6 +97,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - `help-me-fix-this.md`
 
 ### Test Commands
+
 - `write-unit-tests.md`
 - `create-playwright-test.md`
 - `test-changed-files.md`
@@ -94,6 +105,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - `test-from-chat-summary.md`
 
 ### Review Commands
+
 - `code-review.md`
 - `light-review.md`
 - `ui-ux-review.md`
@@ -101,6 +113,7 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - `performance-audit.md`
 
 ### Optimization Commands
+
 - `optimize-trpc-query.md`
 - `refactor-code.md`
 - `fix-code-quality-issues.md`
@@ -118,4 +131,3 @@ Quick reference guide to the most commonly used commands in Friday AI Chat.
 - Use `test-from-chat-summary.md` to test precisely
 - Use `sync-docs-with-code.md` to keep docs current
 - Check `COMMANDS_INDEX.md` for full list
-

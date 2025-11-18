@@ -86,7 +86,8 @@ Add focus styles to interactive elements:
 
 ```typescript
 // Add to component className
-className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+className =
+  "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2";
 ```
 
 ### 7. Improve Image Alt Text
@@ -105,6 +106,7 @@ className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-
 ## Priority Implementation Order
 
 ### Week 1: Critical Fixes
+
 1. ✅ Add SkipLinks component
 2. ✅ Implement usePageTitle hook
 3. ✅ Fix heading hierarchy in SettingsDialog
@@ -112,6 +114,7 @@ className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-
 5. ✅ Add focus indicators to EmailListV2
 
 ### Week 2: High Priority
+
 1. ✅ Improve color contrast
 2. ✅ Add keyboard shortcuts dialog
 3. ✅ Enhance form error announcements
@@ -119,6 +122,7 @@ className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-
 5. ✅ Add aria-describedby to complex controls
 
 ### Week 3: Testing & Documentation
+
 1. ✅ Set up automated accessibility testing
 2. ✅ Manual testing with screen readers
 3. ✅ Create accessibility documentation
@@ -140,4 +144,3 @@ className="focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-
 - [Full Accessibility Audit](../../status-reports/feature-status/ACCESSIBILITY_AUDIT.md)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)
-

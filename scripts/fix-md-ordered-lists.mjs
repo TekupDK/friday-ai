@@ -5,16 +5,28 @@
   - Skips code blocks (fenced with ``` or ~~~) and inline code blocks
   - Ignores excluded folders matching common patterns and our .markdownlintignore baseline
 */
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 const workspaceRoot = process.cwd();
 
 const EXCLUDED_DIRS = new Set([
-  'node_modules', 'dist', 'storybook-static', '.out', '.storybook-out',
-  'coverage', '.nyc_output', 'playwright-report', 'test-results',
-  path.join('tests','results'), 'archive', path.join('docs','archive'),
-  'tmp', 'temp', 'logs', path.join('docs','lint-exceptions')
+  "node_modules",
+  "dist",
+  "storybook-static",
+  ".out",
+  ".storybook-out",
+  "coverage",
+  ".nyc_output",
+  "playwright-report",
+  "test-results",
+  path.join("tests", "results"),
+  "archive",
+  path.join("docs", "archive"),
+  "tmp",
+  "temp",
+  "logs",
+  path.join("docs", "lint-exceptions"),
 ]);
 
 /**
@@ -28,15 +40,24 @@ function walk(dir) {
     if (entry.isDirectory()) {
       const rel = path.relative(workspaceRoot, full);
       const parts = rel.split(path.sep);
-      if (parts.some(p => EXCLUDED_DIRS.has(p) || EXCLUDED_DIRS.has(parts.slice(0, parts.indexOf(p)+1).join(path.sep)))) {
+      if (
+        parts.some(
+          p =>
+            EXCLUDED_DIRS.has(p) ||
+            EXCLUDED_DIRS.has(
+              parts.slice(0, parts.indexOf(p) + 1).join(path.sep)
+            )
+        )
+      ) {
         continue;
       }
       if ([...EXCLUDED_DIRS].some(ex => rel === ex)) continue;
       out.push(...walk(full));
-    } else if (entry.isFile() && entry.name.toLowerCase().endsWith('.md')) {
+    } else if (entry.isFile() && entry.name.toLowerCase().endsWith(".md")) {
       const rel = path.relative(workspaceRoot, full);
       // Skip files inside excluded dirs by prefix match just in case
-      if ([...EXCLUDED_DIRS].some(ex => rel.startsWith(ex + path.sep))) continue;
+      if ([...EXCLUDED_DIRS].some(ex => rel.startsWith(ex + path.sep)))
+        continue;
       out.push(full);
     }
   }
@@ -59,9 +80,11 @@ function normalizeOrderedLists(content) {
     if (fenceMatch) {
       const fence = fenceMatch[2];
       if (!inFence) {
-        inFence = true; fenceChar = fence[0];
+        inFence = true;
+        fenceChar = fence[0];
       } else if (fence[0] === fenceChar) {
-        inFence = false; fenceChar = null;
+        inFence = false;
+        fenceChar = null;
       }
       continue;
     }
@@ -73,12 +96,12 @@ function normalizeOrderedLists(content) {
     const m = line.match(olRegex);
     if (!m) continue;
 
-    const indent = m[1] ?? '';
+    const indent = m[1] ?? "";
     const number = m[2];
     const delimiter = m[3]; // '.' or ')'
-    const space = m[4] ?? ' ';
-    const checkbox = m[5] ?? '';
-    const rest = (m[6] ?? '').trimEnd();
+    const space = m[4] ?? " ";
+    const checkbox = m[5] ?? "";
+    const rest = (m[6] ?? "").trimEnd();
 
     // Keep delimiter style but normalize number to 1
     const newPrefix = `${indent}1${delimiter}${space}${checkbox}`;
@@ -88,15 +111,15 @@ function normalizeOrderedLists(content) {
     }
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 function processFile(file) {
   try {
-    const original = fs.readFileSync(file, 'utf8');
+    const original = fs.readFileSync(file, "utf8");
     const updated = normalizeOrderedLists(original);
     if (updated !== original) {
-      fs.writeFileSync(file, updated, 'utf8');
+      fs.writeFileSync(file, updated, "utf8");
       return true;
     }
     return false;

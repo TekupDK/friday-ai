@@ -2,13 +2,13 @@
  * DocumentUploader Component
  *
  * File upload component with Supabase Storage integration.
- * 
+ *
  * Features:
  * - File validation (size and type)
  * - Upload progress indicator
  * - Supabase Storage integration
  * - Document metadata management
- * 
+ *
  * @example
  * ```typescript
  * <DocumentUploader
@@ -101,14 +101,14 @@ export function DocumentUploader({
       // Note: Supabase Storage SDK doesn't support progress callbacks directly
       // We'll simulate progress for better UX
       setUploadProgress(10);
-      
+
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from(STORAGE.BUCKET_NAME)
         .upload(filePath, selectedFile, {
           cacheControl: STORAGE.CACHE_CONTROL,
           upsert: false,
         });
-      
+
       setUploadProgress(90);
 
       if (uploadError) {
@@ -196,7 +196,8 @@ export function DocumentUploader({
                   {selectedFile.name}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {formatFileSize(selectedFile.size)} • {selectedFile.type || "Unknown type"}
+                  {formatFileSize(selectedFile.size)} •{" "}
+                  {selectedFile.type || "Unknown type"}
                 </p>
               </div>
               <AppleButton
@@ -336,4 +337,3 @@ export function DocumentUploader({
     </AppleModal>
   );
 }
-

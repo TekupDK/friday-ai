@@ -9,7 +9,7 @@
 
 ### 1. Database Migration
 
-```bash
+````bash
 # Generate migration fra schema
 pnpm db:generate
 
@@ -311,7 +311,7 @@ pnpm build
 # Eller kør i dev mode
 pnpm dev
 
-```
+````
 
 ---
 

@@ -8,19 +8,16 @@
 
 ## Explicit Intent
 
-- **Direct Request:** 
+- **Direct Request:**
   - Analysér brugerens intent
   - Uddyb feature implementation (subscription system)
-  
 - **Stated Goals:**
   - Forstå hvad brugeren vil have
   - Dokumenter subscription feature implementation
-  
 - **Mentioned Requirements:**
   - Ingen eksplicitte requirements, men context clues:
     - Åbnet `CustomerList.tsx` fil
     - Lige modtaget omfattende subscription backend dokumentation
-    
 - **Clear Constraints:**
   - Ingen eksplicitte constraints
 
@@ -28,12 +25,11 @@
 
 ## Implicit Intent
 
-- **Underlying Goal:** 
+- **Underlying Goal:**
   - Integrere subscription funktionalitet i frontend
   - Vise subscription status på customer cards i CustomerList
   - Tilføje subscription management i CustomerDetail page
   - Gøre det muligt at oprette/håndtere subscriptions fra UI
-  
 - **Unstated Requirements:**
   - Subscription status badge på customer cards
   - Subscription tab i CustomerDetail page
@@ -41,13 +37,11 @@
   - Subscription list/overview component
   - Usage tracking display
   - Billing history
-  
 - **Assumed Context:**
   - Backend subscription system er komplet (✅ dokumenteret)
   - Frontend mangler subscription UI (⏳ ikke implementeret)
   - CustomerList.tsx er åben - sandsynligvis vil brugeren se subscription integration her
   - CustomerDetail.tsx har tabs - subscription kunne være en ny tab
-  
 - **Hidden Constraints:**
   - Skal følge eksisterende UI patterns (Apple UI components)
   - Skal bruge tRPC hooks for data fetching
@@ -58,6 +52,7 @@
 ## Context Understanding
 
 ### Conversation History
+
 - **Previous Work:**
   - ✅ Subscription backend implementation (komplet)
   - ✅ Database schema med 3 tabeller
@@ -65,13 +60,11 @@
   - ✅ Business logic (create, renew, cancel, discount)
   - ✅ Integration med Billy.dk og Google Calendar
   - ✅ Omfattende dokumentation oprettet
-  
 - **Current State:**
   - Backend: ✅ Komplet
   - Frontend: ⏳ Ikke implementeret
   - CustomerList.tsx: Viser customer cards med basic info (name, email, phone, status)
   - CustomerDetail.tsx: Har tabs (overview, properties, notes, relationships, audit, activities)
-  
 - **Related Topics:**
   - CRM system (customer management)
   - Subscription management
@@ -82,45 +75,39 @@
 
 ## Intent Classification
 
-- **Primary Intent:** 
+- **Primary Intent:**
   **Implementer subscription UI integration i CustomerList og CustomerDetail pages**
-  
 - **Secondary Intents:**
   - Vise subscription status på customer cards
   - Tilføje subscription management i customer detail view
   - Gøre det muligt at oprette subscriptions fra UI
   - Vise subscription usage og billing information
-  
-- **Task Type:** 
+- **Task Type:**
   **Frontend Development - Feature Integration**
-  
-- **Priority:** 
+- **Priority:**
   **HIGH** (Backend er klar, frontend mangler)
 
 ---
 
 ## Recommended Action
 
-- **Approach:** 
+- **Approach:**
   Implementer subscription UI integration i eksisterende CRM pages:
   1. Tilføj subscription status badge til CustomerList cards
   2. Tilføj subscription tab i CustomerDetail page
   3. Opret subscription management components
   4. Integrer med tRPC subscription endpoints
-  
 - **Tools Needed:**
   - React components (TypeScript)
   - tRPC hooks
   - Apple UI components (eksisterende design system)
   - Tailwind CSS (styling)
-  
 - **Commands to Use:**
   - `read_file` - Læs eksisterende components
   - `codebase_search` - Find patterns og eksempler
   - `write` - Opret nye components
   - `search_replace` - Opdater eksisterende filer
-  
-- **Estimated Effort:** 
+- **Estimated Effort:**
   8-12 hours (inkl. testing og polish)
 
 ---
@@ -131,23 +118,19 @@
    - CustomerList.tsx struktur
    - CustomerDetail.tsx tabs pattern
    - Apple UI components usage
-   
 2. **Opret subscription UI components** ⏳
    - SubscriptionStatusBadge component
    - SubscriptionCard component
    - SubscriptionList component
    - CreateSubscriptionModal component
    - SubscriptionUsageDisplay component
-   
 3. **Integrer i CustomerList** ⏳
    - Tilføj subscription status badge til customer cards
    - Query subscription data for hver customer
-   
 4. **Integrer i CustomerDetail** ⏳
    - Tilføj "Subscriptions" tab
    - Vise subscription overview
    - Create/edit/cancel subscription funktionalitet
-   
 5. **Test og polish** ⏳
    - Test alle flows
    - Ensure error handling
@@ -160,17 +143,20 @@
 ### Current State Analysis
 
 **CustomerList.tsx:**
+
 - Viser customer cards i grid layout
 - Hver card viser: name, email, phone, status badge
 - Ingen subscription information
 - Click navigerer til CustomerDetail page
 
 **CustomerDetail.tsx:**
+
 - Har tabs: overview, properties, notes, relationships, audit, activities
 - Ingen subscription tab
 - Ingen subscription information
 
 **Subscription Backend:**
+
 - ✅ Komplet tRPC router (`subscription.*`)
 - ✅ Endpoints: create, list, get, update, cancel, getUsage, stats, etc.
 - ✅ Ready for frontend integration
@@ -187,11 +173,13 @@
 ### Integration Points
 
 **CustomerList Integration:**
+
 - Query `trpc.subscription.getByCustomer.useQuery()` for hver customer
 - Vis subscription status badge på customer card
 - Optional: Vis subscription plan type
 
 **CustomerDetail Integration:**
+
 - Tilføj "Subscriptions" tab
 - Query `trpc.subscription.list.useQuery()` med customerProfileId filter
 - Vise subscription overview med usage stats
@@ -248,4 +236,3 @@
 
 **Last Updated:** 2025-01-28  
 **Next Action:** Start implementation af subscription UI components
-

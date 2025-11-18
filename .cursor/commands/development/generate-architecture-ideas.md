@@ -30,12 +30,14 @@ Look at current directory structure and propose better file separation, missing 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `list_dir` - Check directory structure
 - `codebase_search` - Find patterns
 - `grep` - Search for file patterns
 - `read_file` - Review key files
 
 **DO NOT:**
+
 - Miss separation opportunities
 - Ignore missing layers
 - Skip reuse opportunities
@@ -102,19 +104,24 @@ Provide architecture ideas:
 **Directory:** [PATH]
 
 ## Better File Separation
+
 1. **[Separation 1]** - [What to separate] - [Benefit]
-   ```
-   Current: [Current structure]
-   Proposed: [Better structure]
-   ```
+```
+
+Current: [Current structure]
+Proposed: [Better structure]
+
+```
 2. **[Separation 2]** - [What to separate] - [Benefit]
 
 ## Missing Layers
 1. **[Layer 1: Hooks]** - [What hooks needed] - [Why]
-   ```
-   Create: [HOOK_FILE]
-   Purpose: [Purpose]
-   ```
+```
+
+Create: [HOOK_FILE]
+Purpose: [Purpose]
+
+```
 2. **[Layer 2: Utils]** - [What utils needed] - [Why]
 3. **[Layer 3: Adapters]** - [What adapters needed] - [Why]
 4. **[Layer 4: Schemas]** - [What schemas needed] - [Why]
@@ -130,7 +137,9 @@ Provide architecture ideas:
 
 ## Recommended Structure
 ```
+
 [PROPOSED STRUCTURE]
+
 ```
 
 ## Migration Path
@@ -155,4 +164,3 @@ Provide architecture ideas:
 ---
 
 **CRITICAL:** Generate architecture ideas that improve structure, maintainability, and scalability.
-

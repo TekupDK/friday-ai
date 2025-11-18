@@ -18,18 +18,21 @@
 Baseret på fil patterns, foreslås følgende commit grupper:
 
 ### Group 1: Commands System (2 files)
+
 - `.cursor/commands/ai/analyze-chat-prompt.md`
 - `.cursor/commands/development/add-error-handling.md`
 - `.cursor/commands/development/add-feature-flags.md`
 - `.cursor/commands/forbedre-command.md`
 
 ### Group 2: Cursor Hooks (6 files)
+
 - `.cursor/hooks/__tests__/*.test.ts` (5 files)
 - `.cursor/hooks/executor.ts`
 - `.cursor/hooks/loader.ts`
 - `.cursor/hooks/test-utils/assertions.ts`
 
 ### Group 3: Documentation (10+ files)
+
 - `docs/SESSION_SUMMARY_2025-01-28.md`
 - `docs/analysis/SUBSCRIPTION_IMPLEMENTATION_TODOS_CLEANED.md`
 - `docs/devops-deploy/SENTRY_SETUP.md`
@@ -37,14 +40,17 @@ Baseret på fil patterns, foreslås følgende commit grupper:
 - `docs/qa/*.md` (new files)
 
 ### Group 4: Client Components (400+ files)
+
 - `client/src/components/**/*.tsx` - Mange component opdateringer
 - Primært line ending fixes (LF → CRLF warnings)
 
 ### Group 5: Server Code (100+ files)
+
 - `server/**/*.ts` - Server code opdateringer
 - `server/__tests__/*.test.ts` - Test opdateringer
 
 ### Group 6: Scripts Cleanup (deleted files)
+
 - `scripts/analyze-system-logs.ps1` (deleted)
 - `scripts/deploy-chat-flow.ts` (deleted)
 - `scripts/dev-with-tunnel.mjs` (deleted)
@@ -52,6 +58,7 @@ Baseret på fil patterns, foreslås følgende commit grupper:
 - `scripts/tunnel-*.mjs` (deleted)
 
 ### Group 7: Configuration (5 files)
+
 - `drizzle.config.ts`
 - `eslint.config.js`
 - `vite.config.ts`
@@ -63,6 +70,7 @@ Baseret på fil patterns, foreslås følgende commit grupper:
 ## 📋 Proposed Commits
 
 ### Commit 1: Commands System Improvements
+
 **Type:** `refactor(commands)`  
 **Files:** 4 files
 
@@ -79,6 +87,7 @@ git commit -m "refactor(commands): improve commands with git integration
 ```
 
 ### Commit 2: Cursor Hooks Updates
+
 **Type:** `chore(cursor)`  
 **Files:** 8 files
 
@@ -92,6 +101,7 @@ git commit -m "chore(cursor): update hooks system tests and utilities
 ```
 
 ### Commit 3: Documentation Updates
+
 **Type:** `docs`  
 **Files:** 10+ files
 
@@ -110,6 +120,7 @@ git commit -m "docs: add session summary and command improvement documentation
 ```
 
 ### Commit 4: Scripts Cleanup
+
 **Type:** `chore(scripts)`  
 **Files:** 6 deleted files
 
@@ -129,6 +140,7 @@ git commit -m "chore(scripts): remove unused scripts
 ```
 
 ### Commit 5: Configuration Updates
+
 **Type:** `chore(config)`  
 **Files:** 5 files
 
@@ -147,6 +159,7 @@ git commit -m "chore(config): update configuration files
 ```
 
 ### Commit 6: Client Components (Line Endings)
+
 **Type:** `chore(client)`  
 **Files:** 400+ files
 
@@ -161,6 +174,7 @@ git commit -m "chore(client): fix line endings in components
 ```
 
 ### Commit 7: Server Code Updates
+
 **Type:** `chore(server)`  
 **Files:** 100+ files
 
@@ -180,11 +194,13 @@ git commit -m "chore(server): update server code and tests
 
 **Problem:** 604 filer er for mange til at committe i én gang
 
-**Løsning:** 
+**Løsning:**
+
 1. Committe i logiske grupper (som foreslået ovenfor)
 2. Eller committe alle på én gang hvis de er relaterede (f.eks. line ending fixes)
 
-**Anbefaling:** 
+**Anbefaling:**
+
 - Start med små commits (Commands, Hooks, Docs)
 - Derefter større commits (Client, Server)
 - Til sidst cleanup (Scripts)
@@ -206,4 +222,3 @@ git commit -m "chore(server): update server code and tests
 **Status:** ✅ Auto-generated  
 **Næste skridt:** Review og execute commits  
 **Last Updated:** 2025-01-28
-

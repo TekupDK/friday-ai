@@ -10,7 +10,7 @@
 
 ### 1. Langfuse Deployed ✅
 
-```bash
+````bash
 ✅ Docker containers running
 ✅ PostgreSQL database healthy
 ✅ Langfuse app started
@@ -372,7 +372,7 @@ Cost: $0/month (self-hosted) 🎉
 ✅ Real-time dashboard
 ✅ Zero cost, full control
 
-```
+````
 
 ---
 

@@ -1,6 +1,6 @@
 /**
  * Hook Logger
- * 
+ *
  * Logs hook execution for debugging and monitoring
  */
 
@@ -56,15 +56,9 @@ class HookLogger {
     // Console output for development
     if (process.env.NODE_ENV !== "production") {
       const emoji =
-        status === "completed"
-          ? "✅"
-          : status === "failed"
-            ? "❌"
-            : "🔄";
+        status === "completed" ? "✅" : status === "failed" ? "❌" : "🔄";
       const durationStr = duration ? ` (${duration}ms)` : "";
-      console.log(
-        `${emoji} [${category}] ${hook}: ${status}${durationStr}`
-      );
+      console.log(`${emoji} [${category}] ${hook}: ${status}${durationStr}`);
       if (error) {
         console.error(`   Error: ${error}`);
       }
@@ -82,26 +76,26 @@ class HookLogger {
    * Get logs for a specific hook
    */
   getLogsForHook(hookName: string): HookLog[] {
-    return this.logs.filter((log) => log.hook === hookName);
+    return this.logs.filter(log => log.hook === hookName);
   }
 
   /**
    * Get logs for a specific category
    */
   getLogsForCategory(category: HookCategory): HookLog[] {
-    return this.logs.filter((log) => log.category === category);
+    return this.logs.filter(log => log.category === category);
   }
 
   /**
    * Get execution statistics
    */
   getStats(): HookStats {
-    const completed = this.logs.filter((l) => l.status === "completed").length;
-    const failed = this.logs.filter((l) => l.status === "failed").length;
+    const completed = this.logs.filter(l => l.status === "completed").length;
+    const failed = this.logs.filter(l => l.status === "failed").length;
     const total = this.logs.length;
     const durations = this.logs
-      .filter((l) => l.duration !== undefined)
-      .map((l) => l.duration as number);
+      .filter(l => l.duration !== undefined)
+      .map(l => l.duration as number);
     const totalDuration = durations.reduce((sum, d) => sum + d, 0);
     const avgDuration =
       durations.length > 0 ? totalDuration / durations.length : 0;
@@ -131,4 +125,3 @@ class HookLogger {
 }
 
 export const hookLogger = new HookLogger();
-

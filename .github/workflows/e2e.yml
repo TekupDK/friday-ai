@@ -2,9 +2,9 @@ name: E2E Tests
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
-    - cron: '0 2 * * *' # nightly at 02:00 UTC
+    - cron: "0 2 * * *" # nightly at 02:00 UTC
 
 jobs:
   smoke:

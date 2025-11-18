@@ -25,7 +25,6 @@
 - Server-only focus (if needed): `pnpm exec vitest run server/__tests__ --reporter=verbose`
 
 - Key references:
-
   - `server/__tests__/crm-smoke.test.ts` (tRPC caller over CRM routers)
 
   - `server/__tests__/chat-endpoints.test.ts` (chat router behaviors)
@@ -39,7 +38,6 @@
 - UI runner (debug): `pnpm test:playwright:ui`
 
 - Config: `playwright.config.ts`
-
   - Reporters write HTML to `playwright-report`, JSON to `test-results/results.json`, JUnit to `test-results/junit.xml`
 
   - Projects: Chromium, Firefox, WebKit, Mobile Chrome/Safari, `ai-tests`
@@ -51,11 +49,9 @@
 - With dev server running at `<http://localhost:3000`:>
 
 - Simple CLI run and artifacts:
-
   - `pnpm dlx lighthouse <http://localhost:3000> --output html --output json --output-path ./test-results/lighthouse-3000.html --save-assets`
 
 - Alternative LHCI (filesystem upload):
-
   - `pnpm dlx @lhci/cli@latest autorun --collect.url=<http://localhost:3000> --upload.target=filesystem --upload.outputDir=./test-results/lhci`
 
 - Outputs: HTML/JSON in `test-results/`
@@ -63,11 +59,9 @@
 ## Step 5: Security Audit (npm audit + Trivy)
 
 - NPM audit JSON:
-
   - `npm audit --json > test-results/npm-audit.json`
 
 - Trivy filesystem scan (Docker):
-
   - PowerShell: `docker run --rm -v ${PWD}:/workspace aquasec/trivy:latest fs --exit-code 1 --severity HIGH,CRITICAL /workspace > test-results/trivy-fs.txt`
 
 - Optional image scan if building a container: `docker run --rm aquasec/trivy:latest image --exit-code 1 --severity HIGH,CRITICAL <image>`
@@ -75,7 +69,6 @@
 ## Step 6: Accessibility Tests (axe-core)
 
 - CLI against `<http://localhost:3000`:>
-
   - `pnpm dlx @axe-core/cli <http://localhost:3000> --tags wcag2a,wcag2aa --timeout 60000 --json > test-results/axe-results.json`
 
 - Alternative: integrate `@axe-core/playwright` in E2E tests later for per-page scans
@@ -83,7 +76,6 @@
 ## Step 7: Results Aggregation & Summary
 
 - Collect outputs:
-
   - Build/Typecheck/Lint: exit codes and console logs
 
   - Vitest: pass/fail counts; coverage `%` from `pnpm test:coverage`
@@ -97,7 +89,6 @@
   - Accessibility: violations count and categories from `axe-results.json`
 
 - Compute pass/fail indicators per step and (if a previous baseline exists) percentage improvements for:
-
   - Lighthouse scores vs last run (store `lighthouse-*.json` for baseline)
 
   - Playwright failures reduced vs previous `results.json`
@@ -107,7 +98,6 @@
   - Axe violations reduced vs previous `axe-results.json`
 
 - Produce a concise summary artifact (Markdown or JSON) embedding:
-
   - Overall status ✅/❌ per step
 
   - Key metrics (e.g., Lighthouse Performance 85 → 88 (+3.5%))
@@ -117,7 +107,6 @@
 ## Optional: CI Orchestration (GitHub Actions)
 
 - Single workflow job steps in `ci-e2e.yml`:
-
   - Checkout, setup Node, `pnpm i`
 
   - Step 1–2 (build/typecheck/lint/Vitest)

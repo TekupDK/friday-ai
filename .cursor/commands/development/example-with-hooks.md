@@ -18,6 +18,7 @@ Example task that demonstrates hook integration.
 **Before starting work:**
 
 1. **Execute pre-execution hooks:**
+
    ```typescript
    // Agent should call these hooks before starting:
    - validate-environment hook → Check environment variables
@@ -33,6 +34,7 @@ Example task that demonstrates hook integration.
 **After completing work:**
 
 1. **Execute post-execution hooks:**
+
    ```typescript
    // Agent should call these hooks after completing:
    - run-typecheck hook → Run `pnpm tsc --noEmit`
@@ -89,19 +91,22 @@ After completion:
 **Status:** COMPLETE
 
 **Pre-execution Hooks:**
+
 - ✅ validate-environment: PASSED
 - ✅ check-dependencies: PASSED
 - ✅ validate-code-style: PASSED
 
 **Work Completed:**
+
 - [What was done]
 
 **Post-execution Hooks:**
+
 - ✅ run-typecheck: PASSED (0 errors)
 - ✅ run-linter: PASSED (0 errors)
 
 **Verification:**
+
 - ✅ All hooks passed
 - ✅ No errors found
 ```
-

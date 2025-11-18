@@ -32,12 +32,14 @@ Discover and run the most relevant test and typecheck commands for the current r
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read config files
 - `run_terminal_cmd` - Run tests
 - `grep` - Find test scripts
 - `codebase_search` - Find test patterns
 
 **DO NOT:**
+
 - Skip typecheck
 - Miss relevant tests
 - Ignore failures
@@ -69,14 +71,14 @@ Before running tests, think through:
 
 ## STEPS
 
-1) Inspect package.json files and turbo config to find:
+1. Inspect package.json files and turbo config to find:
    - typecheck scripts
    - unit/integration test scripts
    - e2e/Playwright scripts
-2) Decide on a minimal but meaningful test suite:
+2. Decide on a minimal but meaningful test suite:
    - Always include at least one typecheck and one test command.
-3) Use the terminal tool to run the chosen commands.
-4) If a command fails:
+3. Use the terminal tool to run the chosen commands.
+4. If a command fails:
    - Read the error carefully
    - Identify the root cause
    - Apply a minimal safe fix to the code
@@ -86,7 +88,7 @@ Before running tests, think through:
 ## OUTPUT
 
 Summarize:
+
 - Commands actually run + status (PASSED/FAILED)
 - Key failures and fixes
 - Remaining issues and suggested next steps.
-

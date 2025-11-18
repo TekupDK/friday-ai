@@ -6,11 +6,13 @@
 Tool calling system migration from MCP to UTCP protocol
 
 **Analysis Period:**
+
 - From: Current state (MCP-based)
 - To: Proposed state (UTCP-based)
 - Duration: Baseline analysis + projected improvements
 
 **Key Metrics:**
+
 - Current Average Response Time: ~800ms (with MCP overhead)
 - Projected Average Response Time: ~550ms (direct UTCP)
 - Current P95 Response Time: ~1200ms
@@ -24,10 +26,12 @@ Tool calling system migration from MCP to UTCP protocol
 ### API Performance
 
 **Endpoints Analyzed:**
+
 - `chat.sendMessage` (with tool calling): ~800ms avg, ~1200ms p95
 - Tool execution overhead: ~200-500ms (MCP server)
 
 **Performance Breakdown:**
+
 ```
 Request → ~800ms
   ├─ Authentication: ~50ms
@@ -44,6 +48,7 @@ Request → ~800ms
 ### Database Performance
 
 **Query Performance:**
+
 - Average Query Time: ~50ms
 - Slow Queries (>100ms): < 1%
 - Most Expensive Queries:
@@ -51,6 +56,7 @@ Request → ~800ms
   2. Task queries: ~25ms avg, ~500 calls/day
 
 **Database Metrics:**
+
 - Connection Pool Usage: ~30%
 - Query Cache Hit Rate: ~60%
 - Index Usage: ~95%
@@ -58,11 +64,13 @@ Request → ~800ms
 ### Frontend Performance
 
 **Rendering Performance:**
+
 - First Contentful Paint: ~800ms
 - Time to Interactive: ~1200ms
 - Largest Contentful Paint: ~1000ms
 
 **Bundle Size:**
+
 - Main Bundle: ~450 KB
 - Vendor Bundle: ~320 KB
 - Total: ~770 KB
@@ -70,11 +78,13 @@ Request → ~800ms
 ### Network Performance
 
 **Latency:**
+
 - Average: ~150ms (to OpenRouter)
 - P95: ~250ms
 - P99: ~400ms
 
 **Bandwidth:**
+
 - Average: ~50 KB/request
 - Peak: ~200 KB/request
 
@@ -175,15 +185,18 @@ Request → ~800ms
 ### Caching Strategy
 
 **Current:**
+
 - No tool result caching
 - MCP server adds latency
 
 **Recommended:**
+
 - Cache read-only tool results (TTL: 5 minutes)
 - Cache UTCP manifest in memory
 - Cache frequently accessed data
 
 **Expected Impact:**
+
 - Response time: 20% improvement (cached requests)
 - Database load: 30% reduction
 - API calls: 50% reduction (read-only tools)
@@ -191,37 +204,44 @@ Request → ~800ms
 ### Database Optimizations
 
 **Query Optimizations:**
+
 - Add indexes for tool execution tracking
 - Optimize lead/task queries
 - Use connection pooling
 
 **Index Recommendations:**
+
 - `tool_executions(user_id, created_at)`: Faster analytics
 - `tool_executions(tool_name, success)`: Performance monitoring
 
 **Expected Impact:**
+
 - Query time: 15% improvement
 
 ### Code Optimizations
 
 **Optimizations:**
+
 - Remove MCP server dependency
 - Direct API calls via UTCP
 - Parallel tool execution
 - Connection reuse
 
 **Expected Impact:**
+
 - Processing time: 32% improvement (MCP removal)
 - Multi-tool requests: 40% improvement (parallelization)
 
 ### Infrastructure Improvements
 
 **Recommendations:**
+
 - Remove MCP server infrastructure
 - Use direct API connections
 - Implement connection pooling
 
 **Expected Impact:**
+
 - Overall performance: 32% improvement
 - Infrastructure cost: 20% reduction (no MCP servers)
 
@@ -230,22 +250,26 @@ Request → ~800ms
 ### Key Metrics to Monitor
 
 **API Metrics:**
+
 - Response time (avg, p95, p99)
 - Throughput
 - Error rate
 - Tool execution time
 
 **Database Metrics:**
+
 - Query time
 - Connection pool usage
 - Slow query count
 
 **Tool Metrics:**
+
 - Tool execution time per tool
 - Tool success rate
 - Tool cache hit rate
 
 **Frontend Metrics:**
+
 - Page load time
 - Time to interactive
 - Bundle size
@@ -267,13 +291,13 @@ Request → ~800ms
 
 ### Current vs Target
 
-| Metric | Current | Target | Gap | Improvement |
-|--------|---------|--------|-----|-------------|
-| API Response Time (avg) | 800ms | 550ms | 250ms | 31% |
-| API Response Time (p95) | 1200ms | 800ms | 400ms | 33% |
-| Tool Execution Time | 200-500ms | 50-200ms | 150-300ms | 40-60% |
-| Throughput | 12 req/min | 16 req/min | 4 req/min | 33% |
-| Error Rate | < 1% | < 0.5% | 0.5% | 50% |
+| Metric                  | Current    | Target     | Gap       | Improvement |
+| ----------------------- | ---------- | ---------- | --------- | ----------- |
+| API Response Time (avg) | 800ms      | 550ms      | 250ms     | 31%         |
+| API Response Time (p95) | 1200ms     | 800ms      | 400ms     | 33%         |
+| Tool Execution Time     | 200-500ms  | 50-200ms   | 150-300ms | 40-60%      |
+| Throughput              | 12 req/min | 16 req/min | 4 req/min | 33%         |
+| Error Rate              | < 1%       | < 0.5%     | 0.5%      | 50%         |
 
 ### Priority Actions
 
@@ -336,4 +360,3 @@ Request → ~800ms
    - CI/CD performance tests
    - Regression detection
    - Performance budgets
-

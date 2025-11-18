@@ -11,6 +11,7 @@
 Analysis completed on Friday AI Chat (tekup-ai-v2). Identified 5 critical categories of issues across security, testing, configuration, code quality, and performance.
 
 **Quick Stats:**
+
 - ✅ **Security:** 5 vulnerabilities → 0 (ALL FIXED)
 - 🔄 **Tests:** 13 failures identified, fixing in progress
 - ⚠️ **Configuration:** 3 critical missing configs
@@ -26,6 +27,7 @@ Analysis completed on Friday AI Chat (tekup-ai-v2). Identified 5 critical catego
 #### High Severity (2 → 0) ✅
 
 **glob - Command Injection (GHSA-5j98-mcp5-4vw2)**
+
 ```yaml
 Status: ✅ FIXED
 Package: glob
@@ -39,6 +41,7 @@ Verification: pnpm audit shows 0 high vulnerabilities
 #### Moderate Severity (3 → 0) ✅
 
 **js-yaml - Prototype Pollution (GHSA-mh29-5h37-fv8m)**
+
 ```yaml
 Status: ✅ FIXED (2 instances)
 Package: js-yaml
@@ -50,6 +53,7 @@ Verification: pnpm audit shows 0 moderate vulnerabilities
 ```
 
 **esbuild - CORS Bypass**
+
 ```yaml
 Status: ✅ Already patched
 Package: esbuild
@@ -63,9 +67,11 @@ Override: Already in place
 Monorepo structure required overrides in root `package.json`, not in service-level `package.json`.
 
 **Files Modified:**
+
 - `../../package.json` (root) - Added pnpm.overrides section
 
 **Verification Commands:**
+
 ```bash
 cd C:/Users/empir/Tekup
 pnpm audit --audit-level moderate
@@ -79,7 +85,8 @@ pnpm audit --audit-level moderate
 ### 2.1 Admin User Router Tests (4 failures)
 
 #### Issue A: Mock Timeout (2 tests) 🔍
-```yaml
+
+````yaml
 Tests:
   - "should allow admin to list users"
   - "should allow owner to list users"
@@ -89,7 +96,7 @@ Error: Test timed out in 5000ms
 Root Cause: Complex mock chain with async resolution timing issues
 
 Location: server/__tests__/admin-user-router.test.ts:57, :135
-Problem: 
+Problem:
   - Mock db.select() chain doesn't properly resolve
   - Async mock functions not awaited in chain
   - Vitest 4.0 changed mock resolution behavior
@@ -112,10 +119,11 @@ it("should allow admin to list users", async () => {
     }),
   };
 });
-```
+````
 
 #### Issue B: Drizzle ORM Method Missing (2 tests) ❌
-```yaml
+
+````yaml
 Tests:
   - "should handle search with empty string"
   - "should handle pagination correctly"
@@ -148,7 +156,7 @@ const mockFromResult = {
   orderBy: mockOrderBy,  // Direct access ✅
   limit: mockLimit,      // Also add direct access to limit
 };
-```
+````
 
 ### 2.2 Sentry Integration Tests (6 failures) 🔧
 
@@ -193,7 +201,7 @@ Fix: Update test assertion to match current error message
 
 ### 2.4 Email-to-Lead Name Extraction (1 failure) 🚧
 
-```yaml
+````yaml
 Test: "should extract name from email when name not provided"
 Status: 🚧 FEATURE NOT IMPLEMENTED
 
@@ -222,8 +230,9 @@ function extractNameFromEmail(email: string): string {
 }
 
 // extractNameFromEmail('john.doe@example.com') → 'John Doe'
-```
-```
+````
+
+````
 
 ### 2.5 CORS OAuth Callback Test (1 failure) 🔍
 
@@ -242,11 +251,11 @@ Fix Strategy:
 2. Check Express app.use() order
 3. Ensure OAuth middleware is before 404 handler
 4. Add explicit route for OAuth callback
-```
+````
 
 ### 2.6 Hook Loader Test Suite (Full suite fails) ⚙️
 
-```yaml
+````yaml
 Test Suite: .cursor/hooks/__tests__/loader.test.ts
 Status: ⚙️ VITEST 4.0 MOCK SYNTAX ERROR
 
@@ -260,11 +269,12 @@ vi.mock('fs', () => ({
   readFileSync: vi.fn(),
   existsSync: vi.fn(),
 }));
-```
+````
 
 Vitest 4 syntax (NEW):
+
 ```typescript
-vi.mock('fs', () => ({
+vi.mock("fs", () => ({
   default: {
     readFileSync: vi.fn(),
     existsSync: vi.fn(),
@@ -273,10 +283,12 @@ vi.mock('fs', () => ({
 ```
 
 Fix Strategy:
+
 1. Update all vi.mock() calls to include default export
 2. Update import statements if needed
 3. Check for other mock libraries (fs, path, etc.)
-```
+
+````
 
 ---
 
@@ -314,11 +326,11 @@ Security Note:
 - Add to .gitignore if separate file
 - Use environment variable in production
 - Rotate key periodically
-```
+````
 
 ### 3.2 Redis Configuration (HIGH) 🟡
 
-```yaml
+````yaml
 Status: ⚠️ MISSING (100+ warnings in logs)
 Variable: REDIS_URL
 Currently: Using in-memory fallback
@@ -343,9 +355,10 @@ docker run -d -p 6379:6379 redis:alpine
 
 # .env.dev
 REDIS_URL=redis://localhost:6379
-```
+````
 
 Option B: Cloud Redis (Production)
+
 ```bash
 # Use Upstash, Redis Cloud, or AWS ElastiCache
 # .env.production
@@ -353,6 +366,7 @@ REDIS_URL=redis://:<password>@<host>:<port>
 ```
 
 Option C: Disable Redis (Quick Fix)
+
 ```typescript
 // server/_core/env.ts
 // Set redisEnabled: false by default
@@ -360,7 +374,8 @@ redisEnabled: process.env.REDIS_ENABLED === "true", // Changed from !== "false"
 ```
 
 Recommendation: Option A for dev, Option B for prod
-```
+
+````
 
 ### 3.3 Billy API Test Data (MEDIUM) 🟠
 
@@ -383,7 +398,7 @@ Fix Required:
 4. Document test data setup in README
 
 Recommendation: Mock Billy API for unit tests
-```
+````
 
 ---
 
@@ -392,9 +407,10 @@ Recommendation: Mock Billy API for unit tests
 ### 4.1 TODO/FIXME Comments (139 total)
 
 **Distribution:**
+
 ```yaml
-Backend:  112 TODOs
-Frontend:  27 TODOs
+Backend: 112 TODOs
+Frontend: 27 TODOs
 
 High Priority: 24 items (marked with !!!, CRITICAL, FIXME)
 Medium Priority: 58 items (marked with TODO, ENHANCEMENT)
@@ -423,6 +439,7 @@ Low Priority: 57 items (notes, minor improvements)
 ```
 
 **Recommendation:**
+
 1. Create GitHub issues for all high-priority TODOs
 2. Assign owners and deadlines
 3. Address critical items in next sprint
@@ -435,6 +452,7 @@ Low Priority: 57 items (notes, minor improvements)
 ### 5.1 Bundle Size Issues
 
 **Client Bundle Analysis:**
+
 ```yaml
 Status: ⚠️ LARGE BUNDLE SIZE
 
@@ -458,7 +476,8 @@ Recommended Tools:
 ### 5.2 Database Query Optimization
 
 **Identified Issues:**
-```yaml
+
+````yaml
 Location: server/routers/crm-customer-router.ts:145-167
 
 Issue: N+1 Query Problem
@@ -481,10 +500,11 @@ const customers = await db
   .from(customers)
   .leftJoin(leads, eq(leads.customerId, customers.id))
   .groupBy(customers.id);
-```
+````
 
 Impact: 100x faster for 100 customers (100 queries → 1 query)
-```
+
+````
 
 ### 5.3 Cache Invalidation Issues
 
@@ -500,17 +520,19 @@ Current:
 ```typescript
 // Invalidates ALL customers
 await invalidateCache('customers:*');
-```
+````
 
 Improved:
+
 ```typescript
 // Invalidate only specific customer
 await invalidateCache(`customers:${customerId}`);
-await invalidateCache('customers:list'); // Only list cache
+await invalidateCache("customers:list"); // Only list cache
 ```
 
 Impact: Reduced cache misses by ~80%
-```
+
+````
 
 ---
 
@@ -536,11 +558,12 @@ Recommendations:
 2. Add cost tracking middleware
 3. Create prompt versioning system
 4. Improve intent classifier training data
-```
+````
 
 ### 6.2 Database Schema Evolution
 
 **Concerns:**
+
 ```yaml
 Current: Drizzle ORM with manual migrations
 Risk: Schema drift between environments
@@ -633,6 +656,7 @@ Recommendations:
 ## 8. TESTING SUMMARY
 
 ### Current State
+
 ```yaml
 Total Tests: ~150
 Passing: 137 (91.3%)
@@ -640,22 +664,23 @@ Failing: 13 (8.7%)
 Skipped: 0
 
 Categories:
-- Unit Tests: 120 (94% passing)
-- Integration Tests: 25 (80% passing)
-- E2E Tests: 5 (60% passing)
+  - Unit Tests: 120 (94% passing)
+  - Integration Tests: 25 (80% passing)
+  - E2E Tests: 5 (60% passing)
 
 Coverage:
-- Backend: ~75%
-- Frontend: ~45%
-- Overall: ~60%
+  - Backend: ~75%
+  - Frontend: ~45%
+  - Overall: ~60%
 
 Issues:
-- 13 failing tests need fixing
-- Low frontend coverage
-- Missing E2E tests for critical flows
+  - 13 failing tests need fixing
+  - Low frontend coverage
+  - Missing E2E tests for critical flows
 ```
 
 ### Test Execution Time
+
 ```yaml
 Total: ~22s
 Transform: 2.3s
@@ -665,14 +690,14 @@ Tests: 10.1s
 Environment: 1.4s
 
 Bottlenecks:
-- Slow mock setup (9.9s collect time)
-- Database connection overhead
-- AI service mocks timeout
+  - Slow mock setup (9.9s collect time)
+  - Database connection overhead
+  - AI service mocks timeout
 
 Recommendations:
-- Use test database with seed data
-- Simplify mock structures
-- Parallel test execution
+  - Use test database with seed data
+  - Simplify mock structures
+  - Parallel test execution
 ```
 
 ---
@@ -746,6 +771,7 @@ Recommendations:
 ## APPENDIX A: Command Reference
 
 ### Security Audit
+
 ```bash
 # Check for vulnerabilities
 cd C:/Users/empir/Tekup
@@ -759,6 +785,7 @@ pnpm update --latest --recursive
 ```
 
 ### Test Execution
+
 ```bash
 # Run all tests
 pnpm test
@@ -774,6 +801,7 @@ pnpm test --coverage
 ```
 
 ### Database Commands
+
 ```bash
 # Generate migration
 pnpm drizzle-kit generate
@@ -786,6 +814,7 @@ pnpm drizzle-kit studio
 ```
 
 ### Development
+
 ```bash
 # Start development servers
 pnpm dev
@@ -805,12 +834,14 @@ pnpm type-check
 ## APPENDIX B: File References
 
 ### Configuration Files
+
 - `../../package.json` - Root package.json with pnpm overrides
 - `services/tekup-ai-v2/package.json` - Service package.json
 - `.env.dev` - Development environment variables
 - `.env.production` - Production environment variables
 
 ### Key Source Files
+
 - `server/routers/admin-user-router.ts` - Admin user management
 - `server/routers/subscription-router.ts` - Subscription logic
 - `server/_core/index.ts` - Server initialization, Sentry setup
@@ -818,11 +849,13 @@ pnpm type-check
 - `drizzle/schema.ts` - Database schema
 
 ### Test Files
+
 - `server/__tests__/admin-user-router.test.ts` - Admin router tests
 - `server/__tests__/sentry-integration.test.ts` - Sentry tests
 - `.cursor/hooks/__tests__/loader.test.ts` - Hook loader tests
 
 ### Documentation
+
 - `docs/ARCHITECTURE.md` - System architecture
 - `docs/API_REFERENCE.md` - API documentation
 - `docs/DEVELOPMENT_GUIDE.md` - Development workflow
@@ -836,6 +869,7 @@ pnpm type-check
 **Next Review:** 2025-02-04
 
 **Status Legend:**
+
 - ✅ Complete / Fixed
 - 🔄 In Progress
 - ⏳ Pending
@@ -847,4 +881,3 @@ pnpm type-check
 - 🔴 Critical Risk
 - 🟡 High Risk
 - 🟢 Medium Risk
-

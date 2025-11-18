@@ -1,6 +1,6 @@
 /**
  * Subscription Renewal Job
- * 
+ *
  * Script to run subscription renewals (called by scheduled task)
  */
 
@@ -34,7 +34,7 @@ async function runRenewalJob() {
 
     if (result.errors.length > 0) {
       console.log("\nErrors:");
-      result.errors.forEach((err) => {
+      result.errors.forEach(err => {
         console.log(`  - Subscription ${err.subscriptionId}: ${err.error}`);
       });
     }
@@ -51,4 +51,3 @@ async function runRenewalJob() {
 }
 
 runRenewalJob();
-

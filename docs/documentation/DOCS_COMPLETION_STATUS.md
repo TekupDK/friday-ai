@@ -357,7 +357,7 @@
 
 **Status:** KLAR TIL BRUG!
 
-```text
+````text
 
 1. Login til Friday AI
 2. Gå til /docs
@@ -452,7 +452,7 @@ DOCS_NEXT_STEPS.md        -- Implementation guide
 
 DOCS_COMPLETION_STATUS.md -- This file
 
-```
+````
 
 ---
 

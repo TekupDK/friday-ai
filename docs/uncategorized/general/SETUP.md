@@ -10,7 +10,7 @@
 
 ### ✅ Docker Deployment
 
-```text
+````text
 ChromaDB:        Running on port 8000
 Health API:      ✅ {"nanosecond heartbeat":...}
 Data Volume:     friday-chromadb-data (persistent)
@@ -457,7 +457,7 @@ Port:            8000 (HTTP API)
 ║                                                          ║
 ╚══════════════════════════════════════════════════════════╝
 
-```
+````
 
 ---
 

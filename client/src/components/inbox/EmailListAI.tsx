@@ -41,8 +41,6 @@ import {
   calculateThreadStats,
 } from "@/utils/thread-grouping";
 
-
-
 // Types imported from enhanced-email.ts
 
 interface EmailListAIProps {

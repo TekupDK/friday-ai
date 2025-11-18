@@ -25,18 +25,21 @@ In Sentry v10, `Sentry.setupExpressErrorHandler(app)` returns `void`, not a midd
 ## Fix Applied
 
 **Before:**
+
 ```typescript
 // ❌ WRONG - setupExpressErrorHandler returns void
 app.use(Sentry.setupExpressErrorHandler(app));
 ```
 
 **After:**
+
 ```typescript
 // ✅ CORRECT - setupExpressErrorHandler is called directly
 Sentry.setupExpressErrorHandler(app);
 ```
 
 **Express Integration:**
+
 - In Sentry v10, `expressIntegration()` added in `Sentry.init()` handles request tracking automatically
 - No need to add request handler middleware manually
 - Error handler is set up by calling `setupExpressErrorHandler(app)` directly (not in `app.use()`)
@@ -54,7 +57,7 @@ Sentry.setupExpressErrorHandler(app);
 ## Notes
 
 Sentry v10 API changes:
+
 - `expressIntegration()` is added in `Sentry.init()` integrations array
 - Request tracking is automatic when integration is enabled
 - `setupExpressErrorHandler(app)` must be called directly, not in `app.use()`
-

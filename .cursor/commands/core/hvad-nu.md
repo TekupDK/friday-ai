@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der identificerer næste skridt, prioriterer 
 ## TASK
 
 Identificer næste skridt ved at:
+
 - Analysere nuværende status og kontekst
 - Identificere mulige næste actions
 - Prioritere opgaver efter impact og urgency
@@ -36,6 +37,7 @@ Identificer næste skridt ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Tjek git status, kør checks
 - `codebase_search` - Find relevant kontekst
 - `read_file` - Læs relevante filer
@@ -43,6 +45,7 @@ Identificer næste skridt ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Giv vage anbefalinger
 - Ignorere kontekst
 - Glem prioritering
@@ -113,13 +116,16 @@ Provide clear next steps:
 ## Nuværende Status
 
 **Færdigt:**
+
 - ✅ [Item 1]
 - ✅ [Item 2]
 
 **I Gang:**
+
 - 🚧 [Item 1] - [Status]
 
 **Blokkeret:**
+
 - ⏸️ [Item 1] - [Blocker beskrivelse]
 
 ## Næste Skridt - Prioriteret
@@ -160,12 +166,14 @@ Provide clear next steps:
 ## Mulige Næste Actions
 
 ### Option 1: [Beskrivelse]
+
 - **Pros:** [Fordele]
 - **Cons:** [Ulemper]
 - **Estimated:** [X] timer
 - **Recommendation:** [Yes/No/Maybe]
 
 ### Option 2: [Beskrivelse]
+
 - **Pros:** [Fordele]
 - **Cons:** [Ulemper]
 - **Estimated:** [X] timer
@@ -174,21 +182,26 @@ Provide clear next steps:
 ## Anbefalinger
 
 ### Top Anbefaling
+
 **[Action]** - [Beskrivelse]
+
 - **Hvorfor:** [Rationale]
 - **Hvornår:** [Tidsramme]
 - **Impact:** [Expected impact]
 
 ### Alternative Anbefalinger
+
 1. **[Action 1]** - [Beskrivelse]
 2. **[Action 2]** - [Beskrivelse]
 
 ## Blockers og Dependencies
 
 ### Blockers
+
 - [Blocker 1] - [Hvad blokerer] - [Resolution needed]
 
 ### Dependencies
+
 - [Dependency 1] - [Hvad kræves] - [Status]
 
 ## Kontekstuelle Overvejelser
@@ -200,6 +213,7 @@ Provide clear next steps:
 ## Hvad Vil Du Gerne Fokusere På?
 
 Jeg kan hjælpe med:
+
 - [Option 1]
 - [Option 2]
 - [Option 3]
@@ -230,4 +244,3 @@ Efter identificering, verificer:
 ---
 
 **CRITICAL:** Start med at analysere nuværende kontekst, derefter identificer mulige actions og prioriter dem, og giv klare anbefalinger for hvad der skal gøres nu.
-

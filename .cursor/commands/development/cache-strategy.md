@@ -16,6 +16,7 @@ Design and implement caching strategy for improved performance.
 ## CACHING STRATEGY
 
 ### 1. React Query Caching (Frontend)
+
 ```typescript
 // Configure caching per query
 const { data } = trpc.customers.list.useQuery(
@@ -36,6 +37,7 @@ createMutation.mutate(data, {
 ```
 
 ### 2. Redis Caching (Backend)
+
 ```typescript
 // Cache expensive queries
 const cacheKey = `expensive:${userId}`;
@@ -48,6 +50,7 @@ return data;
 ```
 
 ### 3. Cache Invalidation
+
 - On mutations: Invalidate related queries
 - On updates: Update cache or invalidate
 - Time-based: TTL expiration
@@ -86,24 +89,28 @@ return data;
 ### Caching Strategy
 
 **Cacheable Data:**
+
 - [Data type 1]: TTL [time], Invalidation: [strategy]
 - [Data type 2]: TTL [time], Invalidation: [strategy]
 
 **Implementation:**
+
 - React Query: [configuration]
 - Redis: [configuration]
 
 **Cache Keys:**
+
 - [Pattern 1]: [description]
 - [Pattern 2]: [description]
 
 **Invalidation:**
+
 - [Strategy 1]
 - [Strategy 2]
 
 **Performance:**
+
 - Before: [metrics]
 - After: [metrics]
 - Improvement: [percentage]
 ```
-

@@ -94,7 +94,12 @@ export default function LeadPipeline() {
             <header>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold" data-testid="lead-pipeline-title">Lead Pipeline</h1>
+                  <h1
+                    className="text-3xl font-bold"
+                    data-testid="lead-pipeline-title"
+                  >
+                    Lead Pipeline
+                  </h1>
                   <p className="text-muted-foreground mt-1">
                     Manage leads through the sales pipeline
                   </p>
@@ -113,13 +118,13 @@ export default function LeadPipeline() {
                       Export CSV
                     </AppleButton>
                   )}
-                <AppleButton
-                  onClick={() => setShowCreateModal(true)}
-                  leftIcon={<Plus className="w-4 h-4" />}
-                  data-testid="create-lead-button"
-                >
-                  Create Lead
-                </AppleButton>
+                  <AppleButton
+                    onClick={() => setShowCreateModal(true)}
+                    leftIcon={<Plus className="w-4 h-4" />}
+                    data-testid="create-lead-button"
+                  >
+                    Create Lead
+                  </AppleButton>
                 </div>
               </div>
             </header>

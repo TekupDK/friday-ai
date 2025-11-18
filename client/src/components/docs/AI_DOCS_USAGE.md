@@ -6,7 +6,7 @@
 
 **Location:** `client/src/hooks/docs/useAIGeneration.ts`
 
-```typescript
+````typescript
 import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 
 function MyComponent() {
@@ -344,7 +344,7 @@ export function MyLeadComponent({ leadId }) {
   );
 }
 
-```
+````
 
 ---
 

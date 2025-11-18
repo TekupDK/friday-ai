@@ -14,12 +14,14 @@ Automated security scanning has been set up to detect vulnerabilities in depende
 **Location:** `.github/dependabot.yml`
 
 Automatically creates PRs for dependency updates:
+
 - **Schedule:** Weekly on Mondays at 9 AM
 - **Scope:** npm packages (pnpm)
 - **Updates:** Minor and patch versions only
 - **Major versions:** Require manual review
 
 **Features:**
+
 - Groups updates to reduce PR noise
 - Labels PRs with `dependencies` and `automated`
 - Limits to 10 open PRs at a time
@@ -29,11 +31,13 @@ Automatically creates PRs for dependency updates:
 **Location:** `.github/workflows/security.yml`
 
 Runs security scans on:
+
 - Every push to `main`/`master`
 - Every pull request
 - Weekly schedule (Mondays at 9 AM UTC)
 
 **Scans:**
+
 1. **npm audit** - Checks for known vulnerabilities
 2. **Snyk** - Advanced vulnerability scanning (optional, requires token)
 3. **License check** - Validates license compliance
@@ -92,6 +96,7 @@ pnpm audit fix
 ### Security Alerts
 
 GitHub will automatically:
+
 - Create security alerts for vulnerabilities
 - Send notifications to repository admins
 - Create Dependabot PRs for fixes
@@ -101,6 +106,7 @@ GitHub will automatically:
 ### Dependabot Settings
 
 Edit `.github/dependabot.yml` to:
+
 - Change schedule (interval, day, time)
 - Adjust PR limits
 - Add/remove reviewers
@@ -109,6 +115,7 @@ Edit `.github/dependabot.yml` to:
 ### Security Workflow
 
 Edit `.github/workflows/security.yml` to:
+
 - Change audit level threshold
 - Add custom security checks
 - Modify schedule
@@ -157,4 +164,3 @@ Edit `.github/workflows/security.yml` to:
 - [Dependabot Documentation](https://docs.github.com/en/code-security/dependabot)
 - [Snyk Documentation](https://docs.snyk.io/)
 - [npm audit Documentation](https://docs.npmjs.com/cli/v8/commands/npm-audit)
-

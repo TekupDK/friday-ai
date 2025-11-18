@@ -23,7 +23,7 @@
 
 **Results:**
 
-```text
+````text
 Gmail threads collected:    537
 Calendar events:           218
 Billy invoices:            100
@@ -672,7 +672,7 @@ Cost of Implementation:   $0 (FREE tier AI)
 ROI:                      ∞
 Time to Value:            Immediate
 
-```
+````
 
 ### **Technical Achievements:**
 

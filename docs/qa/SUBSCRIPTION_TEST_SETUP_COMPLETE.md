@@ -8,9 +8,11 @@
 ## Test Scripts Oprettet
 
 ### ✅ 1. Unit/Integration Tests (Vitest)
+
 **Fil:** `server/__tests__/subscription-smoke.test.ts`
 
 **Tests:**
+
 - ✅ Subscription creation
 - ✅ Email delivery (mocked)
 - ✅ Usage tracking
@@ -20,6 +22,7 @@
 - ✅ Helper functions
 
 **Kør:**
+
 ```bash
 pnpm test:subscription
 ```
@@ -27,20 +30,24 @@ pnpm test:subscription
 ---
 
 ### ✅ 2. Email Delivery Test Script
+
 **Fil:** `server/scripts/test-subscription-email.ts`
 
 **Tests:**
+
 - Welcome email
 - Renewal email
 - Cancellation email
 - Overage warning email
 
 **Kør:**
+
 ```bash
 pnpm test:subscription:email
 ```
 
 **Forudsætninger:**
+
 - Gmail API credentials i `.env.dev`
 - `GOOGLE_SERVICE_ACCOUNT_KEY` sat
 - `GOOGLE_IMPERSONATED_USER` sat
@@ -48,20 +55,24 @@ pnpm test:subscription:email
 ---
 
 ### ✅ 3. Renewal Flow Test Script
+
 **Fil:** `server/scripts/test-subscription-renewal.ts`
 
 **Tests:**
+
 - Manual renewal
 - Background job renewal
 - Invoice creation
 - Next billing date update
 
 **Kør:**
+
 ```bash
 pnpm test:subscription:renewal
 ```
 
 **Forudsætninger:**
+
 - Database connection
 - Billy.dk integration konfigureret
 - `TEST_USER_ID` env var (default: 1)
@@ -69,20 +80,24 @@ pnpm test:subscription:renewal
 ---
 
 ### ✅ 4. Usage Tracking Test Script
+
 **Fil:** `server/scripts/test-subscription-usage.ts`
 
 **Tests:**
+
 - Calculate booking hours
 - Track booking usage
 - Verify usage recorded
 - Sync historical usage
 
 **Kør:**
+
 ```bash
 pnpm test:subscription:usage
 ```
 
 **Forudsætninger:**
+
 - Database connection
 - Test subscription oprettet
 
@@ -91,6 +106,7 @@ pnpm test:subscription:usage
 ## Package.json Scripts
 
 **Tilføjet:**
+
 ```json
 {
   "test:subscription": "vitest run server/__tests__/subscription-smoke.test.ts",
@@ -105,9 +121,11 @@ pnpm test:subscription:usage
 ## Documentation
 
 ### ✅ Manual Testing Guide
+
 **Fil:** `docs/qa/SUBSCRIPTION_MANUAL_TESTING_GUIDE.md`
 
 **Indhold:**
+
 - Test scripts oversigt
 - Manual UI testing steps
 - Integration testing guide
@@ -120,6 +138,7 @@ pnpm test:subscription:usage
 ## Next Steps
 
 ### 1. Kør Automated Tests
+
 ```bash
 # Unit/Integration tests
 pnpm test:subscription
@@ -135,17 +154,20 @@ pnpm test:subscription:usage
 ```
 
 ### 2. Manual UI Testing
+
 - Test subscription creation
 - Test subscription list
 - Test usage display
 - Test cancellation
 
 ### 3. Integration Testing
+
 - Test Billy.dk integration
 - Test Google Calendar integration
 - Test booking usage tracking
 
 ### 4. Background Jobs
+
 - Configure cron job
 - Test renewal processing
 - Monitor logs
@@ -155,6 +177,7 @@ pnpm test:subscription:usage
 ## Test Coverage
 
 ### ✅ Backend Tests
+
 - [x] Subscription creation
 - [x] Email delivery
 - [x] Usage tracking
@@ -163,6 +186,7 @@ pnpm test:subscription:usage
 - [x] Background jobs
 
 ### ⏳ Frontend Tests
+
 - [ ] Subscription creation UI
 - [ ] Subscription list UI
 - [ ] Usage display UI
@@ -170,6 +194,7 @@ pnpm test:subscription:usage
 - [ ] Cancellation UI
 
 ### ⏳ Integration Tests
+
 - [ ] Billy.dk invoice creation
 - [ ] Google Calendar events
 - [ ] Booking usage tracking
@@ -199,4 +224,3 @@ pnpm test:subscription:usage
 
 **Last Updated:** 2025-01-28  
 **Status:** ✅ READY FOR TESTING
-

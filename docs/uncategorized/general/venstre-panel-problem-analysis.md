@@ -12,7 +12,7 @@
 
 ## 🔍 **HVAD JER TRORTE I HAVDE:**
 
-```typescript
+````typescript
 🤔 JERES FORVENTNING:
 ┌─────────────────────────────────┐
 │ VENSTRE PANEL (20%)              │
@@ -231,7 +231,7 @@ EmailListAI.tsx ← HER ER AI EMAIL LIST!
 - AI features er hvor de skal være
 - Complete workflow functional
 
-```
+````
 
 **I har et complete AI-powered email system der virker perfekt!** 🎯
 

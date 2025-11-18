@@ -24,7 +24,7 @@
 
 **Flow:**
 
-```typescript
+````typescript
 
 1. Tjek database connection
 2. Hvis database IKKE tilgængelig → Fallback til Gmail API
@@ -190,7 +190,7 @@ Frontend → Backend → Database → Emails ✅
                          ↓ (hvis database fejler)
                     Gmail API (fallback)
 
-```
+````
 
 ### Benefits
 

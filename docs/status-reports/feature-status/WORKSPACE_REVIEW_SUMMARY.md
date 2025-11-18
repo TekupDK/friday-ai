@@ -198,7 +198,7 @@
 
 ### **Prioritet 1: Cleanup (10 min)**
 
-```powershell
+````powershell
 # Kør cleanup scripts
 .\scripts\cleanup-phase1.ps1
 .\scripts\organize-test-files.ps1
@@ -293,7 +293,7 @@ Workspace Review Progress: 25% (2/8)
 ⏳ Område 7: Tasks
 ⏳ Område 8: Dev Tools
 
-```
+````
 
 ---
 

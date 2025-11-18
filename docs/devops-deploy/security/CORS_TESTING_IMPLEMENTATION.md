@@ -11,6 +11,7 @@ This document describes the implementation of CORS (Cross-Origin Resource Sharin
 ## Context
 
 The CORS configuration in `server/_core/index.ts` implements strict security rules:
+
 - Blocks unauthorized origins in production
 - Allows whitelisted origins from environment variables
 - Handles no-origin requests differently for public vs protected endpoints
@@ -20,6 +21,7 @@ The CORS configuration in `server/_core/index.ts` implements strict security rul
 ## Problem
 
 We need integration tests to verify:
+
 1. Whitelisted origins are allowed
 2. Unauthorized origins are blocked
 3. Public endpoints allow no-origin in production
@@ -30,6 +32,7 @@ We need integration tests to verify:
 ## Solution
 
 Created `tests/integration/cors.test.ts` with comprehensive test coverage using:
+
 - `supertest` for HTTP testing
 - `express` to simulate the server setup
 - `cors` middleware matching production configuration
@@ -39,6 +42,7 @@ Created `tests/integration/cors.test.ts` with comprehensive test coverage using:
 ### Test Structure
 
 The test file includes:
+
 - **Production-like environment tests**: Verify strict CORS rules
 - **Development environment tests**: Verify permissive rules
 - **Public endpoints tests**: Verify special handling for auth/health endpoints
@@ -95,4 +99,3 @@ The test file has been created with the correct structure, but the CORS middlewa
 - **P3 Test CORS configuration in production-like environment** - `docs/ENGINEERING_TODOS_2025-01-28.md`
 - **P3 Add missing security headers** - Already completed
 - **P2 Set up automated dependency vulnerability scanning** - Related security testing
-

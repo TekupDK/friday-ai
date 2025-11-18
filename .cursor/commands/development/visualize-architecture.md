@@ -30,11 +30,13 @@ Create visual architecture diagrams showing system components, data flows, third
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review architecture documentation
 - `codebase_search` - Understand system structure
 - `list_dir` - Map directory structure
 
 **DO NOT:**
+
 - Create diagrams without understanding system
 - Skip important components
 - Ignore data flows
@@ -66,6 +68,7 @@ Before creating diagram, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Architecture Diagram Structure
+
 ```mermaid
 graph TB
     Client[React Client] --> tRPC[tRPC Router]
@@ -75,6 +78,7 @@ graph TB
 ```
 
 ### Example: Component Diagram
+
 ```text
 ┌─────────────────────────────────────┐
 │         Frontend (React)            │
@@ -131,6 +135,7 @@ graph TB
 ## VERIFICATION
 
 After creating diagram:
+
 - ✅ All components included
 - ✅ Data flows shown
 - ✅ Labels clear
@@ -150,18 +155,22 @@ After creating diagram:
 [ASCII/Mermaid diagram or image description]
 
 **Components:**
+
 - [Component 1] - [Description]
 - [Component 2] - [Description]
 
 **Data Flows:**
+
 - [Flow 1] - [Description]
 - [Flow 2] - [Description]
 
 **Third-Party Integrations:**
+
 - [Integration 1]
 - [Integration 2]
 
 **Legend:**
+
 - [Symbol] = [Meaning]
 ```
 
@@ -172,4 +181,3 @@ After creating diagram:
 - **Be logical:** Group related components
 - **Be accurate:** Reflect actual architecture
 - **Be appropriate:** Match audience needs
-

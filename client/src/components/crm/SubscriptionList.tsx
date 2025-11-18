@@ -66,11 +66,15 @@ export function SubscriptionList({ customerProfileId }: SubscriptionListProps) {
   }
 
   if (isError) {
-    return <ErrorDisplay message="Failed to load subscriptions" error={error} />;
+    return (
+      <ErrorDisplay message="Failed to load subscriptions" error={error} />
+    );
   }
 
-  const activeSubscriptions = subscriptions?.filter(s => s.status === "active") || [];
-  const otherSubscriptions = subscriptions?.filter(s => s.status !== "active") || [];
+  const activeSubscriptions =
+    subscriptions?.filter(s => s.status === "active") || [];
+  const otherSubscriptions =
+    subscriptions?.filter(s => s.status !== "active") || [];
 
   return (
     <div className="space-y-6">
@@ -133,7 +137,8 @@ export function SubscriptionList({ customerProfileId }: SubscriptionListProps) {
             <Repeat className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-2">No subscriptions yet</h3>
             <p className="text-muted-foreground mb-4">
-              Create a subscription to set up recurring billing for this customer
+              Create a subscription to set up recurring billing for this
+              customer
             </p>
             <AppleButton
               onClick={() => setShowCreateModal(true)}
@@ -158,4 +163,3 @@ export function SubscriptionList({ customerProfileId }: SubscriptionListProps) {
     </div>
   );
 }
-

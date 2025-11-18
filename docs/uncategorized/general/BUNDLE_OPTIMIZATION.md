@@ -11,7 +11,6 @@
 - Fil: `vite.config.ts:37-56`
 
 - Rationale:
-
   - `react-vendor`, `react-query-vendor`, `icons-vendor` for populære lib‑grupper.
 
   - `ui-vendor` samler Radix‑baserede UI‑komponenter.
@@ -22,7 +21,7 @@
 
   - Feature‑chunks for workspace‑paneler og store UI‑områder.
 
-```ts
+````ts
 // Eksempler (vite.config.ts)
 manualChunks: {
   "react-vendor": ["react", "react-dom"],
@@ -137,3 +136,4 @@ pnpm exec vite build
 
 **Sidst opdateret**: 2025‑11‑12
 **Forfatter**: Friday AI Engineering
+````

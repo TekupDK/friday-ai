@@ -19,4 +19,3 @@ Create components, add variants, document props, add Storybook stories, test com
 ## OUTPUT
 
 Component library built with documentation and tests.
-

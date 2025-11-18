@@ -27,6 +27,7 @@ COMMANDS_INDEX.md er **meget omfattende** med 200+ commands, men der er **forbed
 ### ✅ Godt Dækket
 
 #### AI System (15+ commands)
+
 - ✅ `test-ai-prompts.md`
 - ✅ `optimize-ai-model-selection.md`
 - ✅ `debug-ai-responses.md`
@@ -39,6 +40,7 @@ COMMANDS_INDEX.md er **meget omfattende** med 200+ commands, men der er **forbed
 - ✅ `handle-ai-rate-limits.md`
 
 #### Development Workflow (20+ commands)
+
 - ✅ `create-trpc-procedure.md`
 - ✅ `create-react-component.md`
 - ✅ `create-react-page.md`
@@ -47,12 +49,14 @@ COMMANDS_INDEX.md er **meget omfattende** med 200+ commands, men der er **forbed
 - ✅ `implement-scenario-fullstack.md`
 
 #### Testing (15+ commands)
+
 - ✅ `write-unit-tests.md`
 - ✅ `create-playwright-test.md`
 - ✅ `test-changed-files.md`
 - ✅ `test-from-chat-summary.md`
 
 #### Code Quality (10+ commands)
+
 - ✅ `improve-code-quality.md`
 - ✅ `code-review.md`
 - ✅ `refactor-code.md`
@@ -61,6 +65,7 @@ COMMANDS_INDEX.md er **meget omfattende** med 200+ commands, men der er **forbed
 ### ⚠️ Delvist Dækket
 
 #### Tekup-Specifikke Features
+
 - ✅ `create-crm-feature.md` - CRM features
 - ✅ `create-email-workflow.md` - Email workflows
 - ✅ `setup-billy-integration.md` - Billy integration
@@ -73,10 +78,11 @@ COMMANDS_INDEX.md er **meget omfattende** med 200+ commands, men der er **forbed
   - Flytterengøring workflows
 
 #### Integration-Specifikke
+
 - ✅ `debug-email-sync.md` - Gmail sync
 - ✅ `test-email-workflow.md` - Email testing
 - ✅ `fix-email-rate-limits.md` - Rate limits
-- ⚠️ **Mangler:** 
+- ⚠️ **Mangler:**
   - Billy.dk sync debugging
   - Calendar sync issues
   - ChromaDB optimization
@@ -85,6 +91,7 @@ COMMANDS_INDEX.md er **meget omfattende** med 200+ commands, men der er **forbed
 ### ❌ Mangler
 
 #### Tekup Business Logic
+
 - ❌ `create-lead-workflow.md` - Lead processing automation
 - ❌ `create-invoice-approval-workflow.md` - Invoice approval flow
 - ❌ `create-job-completion-checklist.md` - Job completion automation
@@ -92,12 +99,14 @@ COMMANDS_INDEX.md er **meget omfattende** med 200+ commands, men der er **forbed
 - ❌ `create-customer-onboarding.md` - Customer onboarding flow
 
 #### Friday AI Specific
+
 - ❌ `test-friday-intent-actions.md` - Test 7 intent actions
 - ❌ `debug-friday-memory-rules.md` - Debug MEMORY rules
 - ❌ `optimize-friday-prompt.md` - Optimize Friday prompts
 - ❌ `test-friday-tool-calling.md` - Test tool calling
 
 #### Integration Deep-Dive
+
 - ❌ `debug-billy-sync.md` - Billy.dk sync debugging
 - ❌ `optimize-billy-queries.md` - Billy API optimization
 - ❌ `debug-calendar-sync.md` - Calendar sync issues
@@ -111,19 +120,22 @@ Opret en ny fil `COMMANDS_BY_CATEGORY.md` med commands grupperet efter kategori:
 
 ```markdown
 ## AI & LLM (15 commands)
+
 - test-ai-prompts.md
 - optimize-ai-model-selection.md
-...
+  ...
 
 ## Tekup-Specific (10 commands)
+
 - create-lead-workflow.md
 - create-invoice-approval-workflow.md
-...
+  ...
 
 ## Development (30 commands)
+
 - create-trpc-procedure.md
 - create-react-component.md
-...
+  ...
 ```
 
 ### 2. Tilføj "Most Used" Sektion
@@ -134,17 +146,20 @@ Tilføj en sektion i COMMANDS_INDEX.md med de mest brugte commands:
 ## 🚀 Most Used Commands
 
 ### Daily Development
+
 - `create-trpc-procedure.md` - Create API endpoints
 - `create-react-component.md` - Create UI components
 - `fix-bug.md` - Fix bugs quickly
 - `improve-code-quality.md` - Improve code during development
 
 ### AI & Friday
+
 - `test-all-ai-tools.md` - Test AI tools
 - `optimize-ai-model-selection.md` - Optimize AI costs
 - `debug-ai-responses.md` - Debug AI issues
 
 ### Session Management
+
 - `get-session-status.md` - Quick status check
 - `analyze-session-work.md` - See what's done
 - `start-work-immediately.md` - Start working now
@@ -181,6 +196,7 @@ Tilføj en "Quick Links" sektion øverst:
 # Commands Index - A to Z
 
 ## Quick Links
+
 - [Most Used Commands](#most-used-commands)
 - [By Category](#commands-by-category)
 - [Tekup-Specific](#tekup-specific-commands)
@@ -188,12 +204,15 @@ Tilføj en "Quick Links" sektion øverst:
 - [Development](#development-commands)
 
 ## Most Used Commands
+
 [Top 20 most used commands]
 
 ## Commands By Category
+
 [Grouped by category]
 
 ## A-Z Index
+
 [Full alphabetical list]
 ```
 
@@ -205,6 +224,7 @@ Grupper commands efter workflow:
 ## Common Workflows
 
 ### Building a Feature
+
 1. `plan-feature.md` - Plan the feature
 2. `create-database-helper.md` - Create database layer
 3. `create-trpc-procedure.md` - Create API
@@ -213,12 +233,14 @@ Grupper commands efter workflow:
 6. `validate-implementation.md` - Validate
 
 ### Fixing a Bug
+
 1. `debug-issue.md` - Debug the issue
 2. `fix-bug.md` - Fix the bug
 3. `write-unit-tests.md` - Add tests
 4. `verify-implementation.md` - Verify fix
 
 ### Improving Code
+
 1. `improve-code-quality.md` - Improve quality
 2. `suggest-improvements.md` - Get suggestions
 3. `refactor-code.md` - Refactor
@@ -228,6 +250,7 @@ Grupper commands efter workflow:
 ## 📈 Statistics
 
 ### Current Coverage
+
 - **Total Commands:** 200+
 - **AI-Focused:** 15+ commands ✅
 - **Development Assistance:** 6 commands ✅
@@ -237,6 +260,7 @@ Grupper commands efter workflow:
 - **Tekup-Specific:** 5 commands ⚠️ (kunne være flere)
 
 ### Recommended Additions
+
 - **Tekup Workflows:** 8-10 nye commands
 - **Friday AI Deep-Dive:** 5-7 nye commands
 - **Integration Debugging:** 4-6 nye commands
@@ -244,17 +268,20 @@ Grupper commands efter workflow:
 ## 🎯 Priority Actions
 
 ### High Priority
+
 1. ✅ Tilføj kategoriseret visning
 2. ✅ Tilføj "Most Used" sektion
 3. ⚠️ Opret Tekup workflow commands
 4. ⚠️ Opret Friday AI deep-dive commands
 
 ### Medium Priority
+
 1. ⚠️ Tilføj workflow-based gruppering
 2. ⚠️ Forbedr integration debugging commands
 3. ⚠️ Tilføj business logic commands
 
 ### Low Priority
+
 1. ⚠️ Tilføj eksempler i index
 2. ⚠️ Tilføj search funktionalitet
 3. ⚠️ Tilføj command aliases
@@ -269,6 +296,7 @@ COMMANDS_INDEX.md er **meget stærk** med omfattende dækning, men kan forbedres
 4. **Workflow-based:** Grupper commands efter workflow
 
 **Overall Rating:** 8.5/10
+
 - **Coverage:** 9/10 (meget omfattende)
 - **Organization:** 7/10 (kunne være bedre)
 - **Tekup-Specific:** 6/10 (kunne være flere)
@@ -277,8 +305,8 @@ COMMANDS_INDEX.md er **meget stærk** med omfattende dækning, men kan forbedres
 ---
 
 **Next Steps:**
+
 1. Opret `COMMANDS_BY_CATEGORY.md`
 2. Tilføj "Most Used" sektion
 3. Opret Tekup workflow commands
 4. Forbedr organisering
-

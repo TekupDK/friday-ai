@@ -67,7 +67,6 @@ These tasks reflect the UI work required to consume the Phase 2-6 backend we've 
 Create reusable Apple-inspired UI primitives before building CRM features.
 
 - [x] 0.1 Setup design system foundation ✅
-
   - Install dependencies: `framer-motion@^11.0.0`, `gsap@^3.12.0`, `lenis@^1.0.0`
 
   - Create `client/src/styles/apple-design-system/` folder
@@ -81,7 +80,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (foundation)_
 
 - [x] 0.2 Build Apple Button components ✅
-
   - Create `AppleButton.tsx` with base button logic
 
   - Implement variants: primary (filled), secondary (outline), tertiary (text)
@@ -99,7 +97,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (buttons used everywhere)_
 
 - [x] 0.3 Build Apple Card components ✅
-
   - Create `AppleCard.tsx` with base card logic
 
   - Implement variants: elevated (shadow), filled (solid), glass (frosted), outlined
@@ -113,7 +110,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: 1.1, 2.1, 4.1_
 
 - [x] 0.4 Build Apple Input components ✅
-
   - Create `AppleInput.tsx` with iOS-style input
 
   - Add focus ring animation
@@ -129,7 +125,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: 7.1, 2.5_
 
 - [x] 0.5 Build Apple Modal/Drawer components ✅
-
   - Create `AppleModal.tsx` with center modal
 
   - Create `AppleSheet.tsx` with bottom sheet (iOS style)
@@ -147,7 +142,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: 2.5, 3.1, 5.5_
 
 - [x] 0.6 Build Apple Effects components ✅
-
   - Create `BlurView.tsx` for frosted glass effect
 
   - Create `SpringTransition.tsx` wrapper for spring animations
@@ -157,7 +151,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (visual effects)_
 
 - [x] 0.7 Build Apple List components ✅
-
   - Create `AppleListItem.tsx` with iOS list item style
 
   - Add chevron indicator
@@ -167,7 +160,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: 2.2, 3.2_
 
 - [x] 0.8 Build Apple Badge/Tag components ✅
-
   - Create `AppleBadge.tsx` with system colors
 
   - Add variants for each status (new, active, vip, at_risk)
@@ -181,7 +173,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: 1.1, 2.1_
 
 - [x] 0.9 Setup smooth scrolling ✅
-
   - Install and configure Lenis for smooth scrolling
 
   - Add scroll-to-top button (iOS style)
@@ -193,7 +184,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (smooth scrolling everywhere)_
 
 - [x] 0.10 Create Apple icon system ✅
-
   - Configure Lucide icons with SF Symbols styling (strokeWidth: 2.5)
 
   - Create `AppleIcon.tsx` wrapper component
@@ -205,7 +195,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (icons everywhere)_
 
 - [x] 0.11 Setup Storybook for component documentation ✅
-
   - Install Storybook with Vite
 
   - Configure Storybook with Apple design system theme
@@ -219,7 +208,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (component documentation)_
 
 - [x] 0.12 Create Storybook stories for Apple UI primitives ✅
-
   - Create `AppleButton.stories.tsx` with all variants
 
   - Add interactive controls for all props
@@ -227,7 +215,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (component showcase)_
 
 - [x] 0.13 Setup browser compatibility testing ✅
-
   - Create feature detection utilities (`useFeatureDetection`)
 
   - Implement backdrop-filter fallbacks (in materials.ts)
@@ -239,7 +226,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
   - _Requirements: All (cross-browser support)_
 
 - [x] 0.14 Implement reduced motion support ✅
-
   - Create `useReducedMotion` hook
 
   - Add global CSS for reduced motion
@@ -259,7 +245,6 @@ Create reusable Apple-inspired UI primitives before building CRM features.
 Create the foundational structure for CRM module with Apple-inspired design system.
 
 - [ ] 1.1 Create CRM folder structure
-
   - Create `client/src/pages/crm/` directory
 
   - Create `client/src/components/crm/apple-ui/` directory (Apple primitives)
@@ -273,7 +258,6 @@ Create the foundational structure for CRM module with Apple-inspired design syst
   - _Requirements: 15.1, 15.2_
 
 - [ ] 1.2 Setup Apple Design System
-
   - Create `apple-design-system/tokens.ts` with design tokens (colors, typography, spacing)
 
   - Create `apple-design-system/animations.ts` with spring configurations
@@ -287,7 +271,6 @@ Create the foundational structure for CRM module with Apple-inspired design syst
   - _Requirements: All (design foundation)_
 
 - [ ] 1.3 Setup TRPC client for CRM
-
   - Create `client/src/lib/trpc-crm.ts` with CRM router types
 
   - Configure TanStack Query for CRM endpoints
@@ -297,7 +280,6 @@ Create the foundational structure for CRM module with Apple-inspired design syst
   - _Requirements: 1.5, 7.1_
 
 - [ ] 1.3 Add CRM navigation to WorkspaceLayout
-
   - Update `client/src/pages/WorkspaceLayout.tsx` with CRM nav items
 
   - Add routes: `/crm/dashboard`, `/crm/customers`, `/crm/leads`, `/crm/bookings`
@@ -309,7 +291,6 @@ Create the foundational structure for CRM module with Apple-inspired design syst
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
 - [ ] 1.4 Create Apple UI Primitives
-
   - Create `AppleButton` component with variants (primary, secondary, tertiary)
 
   - Create `AppleCard` component with variants (elevated, filled, glass, outlined)
@@ -323,7 +304,6 @@ Create the foundational structure for CRM module with Apple-inspired design syst
   - _Requirements: 1.1, 4.1_
 
 - [ ] 1.5 Create Apple Effects Components
-
   - Create `BlurView` component for frosted glass effect
 
   - Create `VibrancyView` component for vibrancy effect
@@ -341,7 +321,6 @@ Create the foundational structure for CRM module with Apple-inspired design syst
 Build the customer list and profile interfaces with Apple-inspired design.
 
 - [ ] 2.1 Create CustomerCard component (Apple style)
-
   - Use `AppleCard` with glass variant for frosted glass effect
 
   - Display customer avatar with gradient background (SF Symbols style)
@@ -363,7 +342,6 @@ Build the customer list and profile interfaces with Apple-inspired design.
   - _Requirements: 1.1, 1.2, 7.2_
 
 - [ ] 2.2 Create CustomerList page (Apple style)
-
   - Implement responsive grid layout with Apple spacing (8pt grid)
 
   - Add page transition animation (fade + slide)
@@ -383,7 +361,6 @@ Build the customer list and profile interfaces with Apple-inspired design.
   - _Requirements: 1.1, 7.1, 7.5_
 
 - [ ] 2.3 Implement customer search and filters (Apple style)
-
   - Create `AppleSearchField` with iOS-style search bar
 
   - Add search icon with SF Symbols styling
@@ -405,7 +382,6 @@ Build the customer list and profile interfaces with Apple-inspired design.
   - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
 - [ ] 2.4 Add pagination to customer list
-
   - Implement pagination component (50 records per page)
 
   - Add page navigation controls
@@ -417,7 +393,6 @@ Build the customer list and profile interfaces with Apple-inspired design.
   - _Requirements: 7.5_
 
 - [ ] 2.5 Create CustomerFormModal component
-
   - Build form with React Hook Form + Zod validation
 
   - Add fields: name, email, phone, status, tags, customer type
@@ -437,7 +412,6 @@ Build the customer list and profile interfaces with Apple-inspired design.
 Build detailed customer profile view with Apple-inspired drawer.
 
 - [ ] 3.1 Create CustomerProfileDrawer component (Apple style)
-
   - Implement slide-in drawer (840px width) with spring animation
 
   - Add frosted glass backdrop with blur effect
@@ -459,7 +433,6 @@ Build detailed customer profile view with Apple-inspired drawer.
   - _Requirements: 1.1, 1.2, 1.3_
 
 - [ ] 3.2 Implement Overview tab (Apple style)
-
   - Create iOS-style segmented control for tabs
 
   - Display financial summary in Apple Card style cards
@@ -479,7 +452,6 @@ Build detailed customer profile view with Apple-inspired drawer.
   - _Requirements: 1.2, 1.3, 1.4_
 
 - [ ] 3.3 Implement Properties tab
-
   - Fetch properties using `trpc.crm.customer.listProperties`
 
   - Display PropertyCard for each property
@@ -491,7 +463,6 @@ Build detailed customer profile view with Apple-inspired drawer.
   - _Requirements: 2.2, 2.3_
 
 - [ ] 3.4 Implement Bookings tab
-
   - Fetch bookings using `trpc.crm.booking.listBookings`
 
   - Display BookingCard for each booking
@@ -503,7 +474,6 @@ Build detailed customer profile view with Apple-inspired drawer.
   - _Requirements: 4.1, 4.3_
 
 - [ ] 3.5 Implement Notes tab
-
   - Display customer notes in chronological order
 
   - Add "Add Note" button with textarea
@@ -521,7 +491,6 @@ Build detailed customer profile view with Apple-inspired drawer.
 Build property CRUD interfaces.
 
 - [ ] 4.1 Create PropertyCard component
-
   - Display address, city, postal code
 
   - Show property type icon (villa, lejlighed, kontor, sommerhus)
@@ -535,7 +504,6 @@ Build property CRUD interfaces.
   - _Requirements: 2.2, 2.3_
 
 - [ ] 4.2 Create PropertyFormModal component
-
   - Build form with address, city, postal code fields
 
   - Add PropertyTypeSelect dropdown
@@ -553,7 +521,6 @@ Build property CRUD interfaces.
   - _Requirements: 2.1, 2.3, 2.5_
 
 - [ ] 4.3 Implement property delete confirmation
-
   - Create DeleteConfirmModal component
 
   - Show warning message
@@ -565,7 +532,6 @@ Build property CRUD interfaces.
   - _Requirements: 2.1_
 
 - [ ] 4.4 Implement primary property toggle
-
   - Add radio button to select primary property
 
   - Ensure only one property is primary per customer
@@ -581,7 +547,6 @@ Build property CRUD interfaces.
 Build lead pipeline and conversion interfaces.
 
 - [ ] 5.1 Create LeadCard component
-
   - Display lead name, email, phone
 
   - Show lead status badge
@@ -595,7 +560,6 @@ Build lead pipeline and conversion interfaces.
   - _Requirements: 5.1, 5.2, 14.1_
 
 - [ ] 5.2 Create LeadList page
-
   - Fetch leads using `trpc.crm.lead.listLeads`
 
   - Display LeadCard for each lead
@@ -607,7 +571,6 @@ Build lead pipeline and conversion interfaces.
   - _Requirements: 5.2, 15.3_
 
 - [ ] 5.3 Create LeadPipelineBoard component
-
   - Implement Kanban board with drag-and-drop
 
   - Create columns for each lead status
@@ -621,7 +584,6 @@ Build lead pipeline and conversion interfaces.
   - _Requirements: 5.1, 5.5_
 
 - [ ] 5.4 Create AssignLeadModal component
-
   - Build form to assign lead to user
 
   - Add user selection dropdown
@@ -633,7 +595,6 @@ Build lead pipeline and conversion interfaces.
   - _Requirements: 5.1, 5.2_
 
 - [ ] 5.5 Create LeadConversionModal component
-
   - Show lead details for confirmation
 
   - Add "Convert to Customer" button
@@ -655,7 +616,6 @@ Build lead pipeline and conversion interfaces.
 Build service template library and configuration.
 
 - [ ] 6.1 Create ServiceTemplateCard component
-
   - Display template title and description
 
   - Show category badge
@@ -669,7 +629,6 @@ Build service template library and configuration.
   - _Requirements: 3.1, 3.2, 3.4_
 
 - [ ] 6.2 Create ServiceTemplates page
-
   - Fetch service templates (extend backend with router)
 
   - Display templates grouped by category
@@ -681,7 +640,6 @@ Build service template library and configuration.
   - _Requirements: 3.2, 3.5_
 
 - [ ] 6.3 Create ServiceTemplateFormModal component
-
   - Build form with title, description, category fields
 
   - Add ServiceCategorySelect dropdown
@@ -695,7 +653,6 @@ Build service template library and configuration.
   - _Requirements: 3.1, 3.3_
 
 - [ ] 6.4 Implement template activation toggle
-
   - Add switch component to ServiceTemplateCard
 
   - Update isActive field using mutation
@@ -711,7 +668,6 @@ Build service template library and configuration.
 Build booking creation and calendar interfaces.
 
 - [ ] 7.1 Create BookingCard component
-
   - Display booking date and time
 
   - Show customer name and property address
@@ -725,7 +681,6 @@ Build booking creation and calendar interfaces.
   - _Requirements: 4.1, 4.3, 4.4_
 
 - [ ] 7.2 Create BookingFormModal component
-
   - Build wizard-style form (4 steps)
 
   - Step 1: Select customer (CustomerSelect dropdown)
@@ -743,7 +698,6 @@ Build booking creation and calendar interfaces.
   - _Requirements: 4.1, 4.2, 4.3_
 
 - [ ] 7.3 Create BookingCalendar page
-
   - Implement calendar grid view
 
   - Use `react-big-calendar` or similar library
@@ -759,7 +713,6 @@ Build booking creation and calendar interfaces.
   - _Requirements: 4.1, 12.1, 15.4_
 
 - [ ] 7.4 Implement booking status updates
-
   - Add status dropdown to BookingCard
 
   - Update status using `trpc.crm.booking.updateBookingStatus`
@@ -771,7 +724,6 @@ Build booking creation and calendar interfaces.
   - _Requirements: 4.5, 10.1_
 
 - [ ] 7.5 Implement booking assignment
-
   - Add field worker selection dropdown
 
   - Update booking with assigneeUserId
@@ -787,7 +739,6 @@ Build booking creation and calendar interfaces.
 Build dashboard with KPI widgets and charts.
 
 - [ ] 8.1 Create CRMDashboard page
-
   - Implement dashboard grid layout (2x3 widgets)
 
   - Add loading skeleton for widgets
@@ -797,7 +748,6 @@ Build dashboard with KPI widgets and charts.
   - _Requirements: 6.1, 15.1_
 
 - [ ] 8.2 Create dashboard KPI widgets
-
   - TotalCustomersWidget (total, active, vip, at_risk counts)
 
   - RevenueWidget (total revenue, paid, outstanding balance)
@@ -811,7 +761,6 @@ Build dashboard with KPI widgets and charts.
   - _Requirements: 6.1, 6.2, 6.3, 6.4_
 
 - [ ] 8.3 Implement revenue chart
-
   - Create RevenueChart component using Recharts
 
   - Display line chart for last 6 months
@@ -823,7 +772,6 @@ Build dashboard with KPI widgets and charts.
   - _Requirements: 6.2_
 
 - [ ] 8.4 Implement recent activity feed
-
   - Create ActivityList component
 
   - Display recent bookings, conversions, completions
@@ -835,7 +783,6 @@ Build dashboard with KPI widgets and charts.
   - _Requirements: 6.1, 17.2_
 
 - [ ] 8.5 Add dashboard metric click navigation
-
   - Make widgets clickable
 
   - Navigate to filtered views (e.g., VIP customers, at-risk customers)
@@ -851,7 +798,6 @@ Build dashboard with KPI widgets and charts.
 Build mobile-optimized booking interface.
 
 - [ ] 9.1 Create MobileFieldWorker page
-
   - Implement mobile-first layout
 
   - Display today's bookings in chronological order
@@ -863,7 +809,6 @@ Build mobile-optimized booking interface.
   - _Requirements: 11.1, 11.2_
 
 - [ ] 9.2 Implement booking detail view
-
   - Display customer name and contact info
 
   - Show property address and access codes
@@ -875,7 +820,6 @@ Build mobile-optimized booking interface.
   - _Requirements: 11.2_
 
 - [ ] 9.3 Implement booking start/complete flow
-
   - Add "Start" button to update status to "in_progress"
 
   - Record start time in metadata
@@ -887,7 +831,6 @@ Build mobile-optimized booking interface.
   - _Requirements: 11.3, 11.5_
 
 - [ ] 9.4 Implement photo upload
-
   - Add photo upload button with camera access
 
   - Allow multiple photos with labels (before, during, after)
@@ -899,7 +842,6 @@ Build mobile-optimized booking interface.
   - _Requirements: 11.4_
 
 - [ ] 9.5 Implement offline support
-
   - Cache today's bookings using service worker
 
   - Queue mutations when offline
@@ -919,7 +861,6 @@ Build mobile-optimized booking interface.
 Integrate invoice creation and sync with Billy.
 
 - [ ] 10.1 Implement invoice creation trigger
-
   - Hook into booking completion event
 
   - Call Billy API to create invoice draft (extend backend)
@@ -931,7 +872,6 @@ Integrate invoice creation and sync with Billy.
   - _Requirements: 10.1, 10.2_
 
 - [ ] 10.2 Display invoices in customer profile
-
   - Add Invoices tab to CustomerProfileDrawer
 
   - Fetch invoices using existing endpoint
@@ -943,7 +883,6 @@ Integrate invoice creation and sync with Billy.
   - _Requirements: 10.3_
 
 - [ ] 10.3 Implement invoice sync
-
   - Poll Billy API for invoice updates (extend backend)
 
   - Update invoice status and paid amount
@@ -959,7 +898,6 @@ Integrate invoice creation and sync with Billy.
 Link emails to customer profiles automatically.
 
 - [ ] 11.1 Implement email auto-linking
-
   - Hook into email receive event (extend backend)
 
   - Match email address to customer profile
@@ -971,7 +909,6 @@ Link emails to customer profiles automatically.
   - _Requirements: 9.1, 9.5_
 
 - [ ] 11.2 Display emails in customer profile
-
   - Add Emails tab to CustomerProfileDrawer
 
   - Fetch customer emails
@@ -983,7 +920,6 @@ Link emails to customer profiles automatically.
   - _Requirements: 9.2_
 
 - [ ] 11.3 Implement email click navigation
-
   - Navigate to Email Center panel on email click
 
   - Open specific email thread
@@ -993,7 +929,6 @@ Link emails to customer profiles automatically.
   - _Requirements: 9.3_
 
 - [ ] 11.4 Handle multiple customer matches
-
   - Show disambiguation modal when email matches multiple customers
 
   - Allow user to select correct customer
@@ -1009,7 +944,6 @@ Link emails to customer profiles automatically.
 Add AI-powered insights and suggestions.
 
 - [ ]\* 12.1 Display AI customer resume
-
   - Show AI-generated customer summary in Overview tab
 
   - Add "Regenerate" button
@@ -1019,7 +953,6 @@ Add AI-powered insights and suggestions.
   - _Requirements: 1.4, 14.3_
 
 - [ ]\* 12.2 Display AI lead score
-
   - Show lead score badge on LeadCard
 
   - Add tooltip explaining score factors
@@ -1029,7 +962,6 @@ Add AI-powered insights and suggestions.
   - _Requirements: 14.1_
 
 - [ ]\* 12.3 Implement AI suggested actions
-
   - Display suggested next actions in lead detail view
 
   - Show action buttons (Call, Email, Schedule Meeting)
@@ -1039,7 +971,6 @@ Add AI-powered insights and suggestions.
   - _Requirements: 14.2_
 
 - [ ]\* 12.4 Implement actionable insights dashboard
-
   - Create InsightsWidget for dashboard
 
   - Display prioritized opportunities (missing bookings, at-risk, upsell)
@@ -1055,7 +986,6 @@ Add AI-powered insights and suggestions.
 Build scheduling and capacity views.
 
 - [ ] 13.1 Implement capacity calendar view
-
   - Add "Capacity" view toggle to BookingCalendar
 
   - Group bookings by assigned field worker
@@ -1067,7 +997,6 @@ Build scheduling and capacity views.
   - _Requirements: 12.1, 12.4_
 
 - [ ] 13.2 Implement scheduling conflict detection
-
   - Check for overlapping bookings on create/update
 
   - Show warning modal if conflict detected
@@ -1077,7 +1006,6 @@ Build scheduling and capacity views.
   - _Requirements: 12.2, 12.3_
 
 - [ ] 13.3 Implement capacity warnings
-
   - Calculate capacity percentage per worker
 
   - Show warning when exceeding 80% capacity
@@ -1093,7 +1021,6 @@ Build scheduling and capacity views.
 Implement automatic status updates based on activity.
 
 - [ ] 14.1 Implement status automation rules (backend)
-
   - Create background job to check customer activity
 
   - Update status to "at_risk" if no bookings for 90 days
@@ -1107,7 +1034,6 @@ Implement automatic status updates based on activity.
   - _Requirements: 13.1, 13.2, 13.4, 13.5_
 
 - [ ] 14.2 Display status change notifications
-
   - Show toast notification when status changes
 
   - Add status change to activity timeline
@@ -1125,7 +1051,6 @@ Implement automatic status updates based on activity.
 Optimize loading times and user experience.
 
 - [ ] 15.1 Implement code splitting
-
   - Lazy load CRM pages
 
   - Dynamic import for heavy components
@@ -1135,7 +1060,6 @@ Optimize loading times and user experience.
   - _Requirements: All_
 
 - [ ] 15.2 Implement virtual scrolling
-
   - Add virtual scrolling to customer list (>100 items)
 
   - Add virtual scrolling to booking list
@@ -1145,7 +1069,6 @@ Optimize loading times and user experience.
   - _Requirements: 7.5_
 
 - [ ] 15.3 Implement optimistic updates
-
   - Update UI immediately on mutations
 
   - Rollback on error
@@ -1155,7 +1078,6 @@ Optimize loading times and user experience.
   - _Requirements: 1.5, 4.5_
 
 - [ ] 15.4 Add caching strategy
-
   - Configure TanStack Query stale time (5 minutes)
 
   - Implement cache invalidation on mutations
@@ -1171,7 +1093,6 @@ Optimize loading times and user experience.
 Build export functionality for customers and bookings.
 
 - [ ] 16.1 Implement customer export
-
   - Add "Export" button to CustomerList
 
   - Generate CSV with all customer fields
@@ -1183,7 +1104,6 @@ Build export functionality for customers and bookings.
   - _Requirements: 16.1, 16.2, 16.3_
 
 - [ ] 16.2 Implement booking export
-
   - Add "Export" button to BookingCalendar
 
   - Generate CSV with booking details
@@ -1195,7 +1115,6 @@ Build export functionality for customers and bookings.
   - _Requirements: 16.1, 16.3_
 
 - [ ] 16.3 Implement background export for large datasets
-
   - Show progress indicator for exports >1000 records
 
   - Process export in background (extend backend)
@@ -1205,7 +1124,6 @@ Build export functionality for customers and bookings.
   - _Requirements: 16.5_
 
 - [ ] 16.4 Add timestamp to export filenames
-
   - Format: `customers_export_2025-11-11_14-30.csv`
 
   - Auto-download file
@@ -1219,7 +1137,6 @@ Build export functionality for customers and bookings.
 Implement Rendetalje-specific seasonal features.
 
 - [ ] 17.1 Display seasonal indicators
-
   - Show "Flytterengøring Peak Season" banner (May-September)
 
   - Add seasonal icon to dashboard
@@ -1227,7 +1144,6 @@ Implement Rendetalje-specific seasonal features.
   - _Requirements: 19.1_
 
 - [ ] 17.2 Implement capacity warnings for peak season
-
   - Highlight weeks exceeding 80% capacity
 
   - Show warning when creating bookings in peak season
@@ -1235,7 +1151,6 @@ Implement Rendetalje-specific seasonal features.
   - _Requirements: 19.2, 19.3_
 
 - [ ] 17.3 Implement seasonal trends chart
-
   - Add seasonal trends chart to dashboard
 
   - Display historical booking patterns
@@ -1245,7 +1160,6 @@ Implement Rendetalje-specific seasonal features.
   - _Requirements: 19.5_
 
 - [ ] 17.4 Send capacity alerts
-
   - Notify admin users when capacity increases
 
   - Send email alerts for peak season planning
@@ -1259,7 +1173,6 @@ Implement Rendetalje-specific seasonal features.
 Comprehensive testing before production launch.
 
 - [ ]\* 18.1 Write unit tests for components
-
   - Test CustomerCard, BookingCard, LeadCard
 
   - Test form validation logic
@@ -1269,7 +1182,6 @@ Comprehensive testing before production launch.
   - _Requirements: All_
 
 - [ ]\* 18.2 Write integration tests
-
   - Test customer CRUD flow
 
   - Test booking creation flow
@@ -1279,7 +1191,6 @@ Comprehensive testing before production launch.
   - _Requirements: 1, 4, 5_
 
 - [ ]\* 18.3 Write E2E tests
-
   - Test complete booking workflow
 
   - Test customer profile navigation
@@ -1289,7 +1200,6 @@ Comprehensive testing before production launch.
   - _Requirements: All_
 
 - [ ]\* 18.4 Perform accessibility audit
-
   - Test keyboard navigation
 
   - Test screen reader compatibility
@@ -1301,7 +1211,6 @@ Comprehensive testing before production launch.
   - _Requirements: All_
 
 - [ ]\* 18.5 Perform performance testing
-
   - Test with 1000+ customers
 
   - Test with 500+ bookings
@@ -1319,7 +1228,6 @@ Comprehensive testing before production launch.
 Prepare documentation and training materials.
 
 - [ ]\* 19.1 Write user documentation
-
   - Create user guide for CRM features
 
   - Document common workflows
@@ -1329,7 +1237,6 @@ Prepare documentation and training materials.
   - _Requirements: All_
 
 - [ ]\* 19.2 Create video tutorials
-
   - Record tutorial for customer management
 
   - Record tutorial for booking creation
@@ -1339,7 +1246,6 @@ Prepare documentation and training materials.
   - _Requirements: 1, 4, 11_
 
 - [ ]\* 19.3 Conduct user training sessions
-
   - Train Rendetalje employees on CRM features
 
   - Gather feedback and questions
@@ -1355,7 +1261,6 @@ Prepare documentation and training materials.
 Deploy CRM module to production.
 
 - [ ] 20.1 Deploy to staging environment
-
   - Test all features in staging
 
   - Verify integrations (Billy, Google Calendar)
@@ -1365,7 +1270,6 @@ Deploy CRM module to production.
   - _Requirements: All_
 
 - [ ] 20.2 Setup monitoring and alerts
-
   - Configure error tracking (Sentry)
 
   - Setup performance monitoring
@@ -1375,7 +1279,6 @@ Deploy CRM module to production.
   - _Requirements: All_
 
 - [ ] 20.3 Deploy to production
-
   - Deploy CRM module with feature flag
 
   - Enable for beta users first
@@ -1385,7 +1288,6 @@ Deploy CRM module to production.
   - _Requirements: All_
 
 - [ ] 20.4 Gradual rollout
-
   - Enable CRM for all users
 
   - Monitor adoption metrics

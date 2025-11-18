@@ -19,4 +19,3 @@ Create webhook endpoint, verify signatures, handle idempotency, process async, a
 ## OUTPUT
 
 Webhook handler implemented with security and idempotency.
-

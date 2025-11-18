@@ -17,6 +17,7 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 ### Phase 1: Hook Execution Utilities (P1 - High Priority)
 
 #### Tasks
+
 - [ ] Create `.cursor/hooks/executor.ts` - Hook execution engine
 - [ ] Create `.cursor/hooks/types.ts` - Type definitions
 - [ ] Create `.cursor/hooks/loader.ts` - Hook file loader
@@ -31,6 +32,7 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 ### Phase 2: Command Integration (P1 - High Priority)
 
 #### Tasks
+
 - [ ] Update command template to include hook calls
 - [ ] Create hook execution instructions in commands
 - [ ] Add pre-execution hook calls to commands
@@ -45,6 +47,7 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 ### Phase 3: Testing & Examples (P2 - Medium Priority)
 
 #### Tasks
+
 - [ ] Create test command with hooks
 - [ ] Test pre-execution hooks
 - [ ] Test post-execution hooks
@@ -59,6 +62,7 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 ### Phase 4: Documentation (P2 - Medium Priority)
 
 #### Tasks
+
 - [ ] Update CURSOR_SETUP_GUIDE.md with integration examples
 - [ ] Create hook-command integration guide
 - [ ] Add troubleshooting section
@@ -104,16 +108,19 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 ## Daily Breakdown
 
 ### Day 1: Hook Execution Engine
+
 - Morning: Create hook executor and types
 - Afternoon: Create hook loader and logging
 - **Deliverable:** Working hook execution system
 
 ### Day 2: Command Integration
+
 - Morning: Update command template
 - Afternoon: Add hook calls to example commands
 - **Deliverable:** Commands can call hooks
 
 ### Day 3: Testing & Documentation
+
 - Morning: Test integration
 - Afternoon: Update documentation
 - **Deliverable:** Complete integration with docs
@@ -123,6 +130,7 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 ## Success Criteria
 
 ### Must Have (MVP)
+
 - ✅ Hook executor can load and run hooks
 - ✅ Commands can call hooks via instructions
 - ✅ Pre-execution hooks work
@@ -130,11 +138,13 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 - ✅ Error hooks work
 
 ### Should Have
+
 - Hook logging and monitoring
 - Error handling and recovery
 - Integration examples
 
 ### Nice to Have
+
 - Hook performance monitoring
 - Hook testing utilities
 - Advanced hook patterns
@@ -175,4 +185,3 @@ This sprint focuses on integrating the hook system with commands so hooks execut
 
 **Last Updated:** January 28, 2025  
 **Sprint Owner:** TekupDK Development Team
-

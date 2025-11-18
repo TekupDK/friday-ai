@@ -315,5 +315,5 @@ Check Redis Cache
 ---
 
 For detailed diagrams, see:
-- [Diagrams Detail](./diagrams.md)
 
+- [Diagrams Detail](./diagrams.md)

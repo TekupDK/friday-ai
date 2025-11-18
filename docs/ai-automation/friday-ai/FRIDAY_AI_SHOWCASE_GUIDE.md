@@ -6,7 +6,7 @@ Komponenterne er nu tilføjet til `/showcase` siden hvor du kan teste dem isoler
 
 ### Start Dev Server
 
-```bash
+````bash
 pnpm dev
 
 ```text
@@ -133,7 +133,7 @@ I går
   💰 Oprettet faktura:  1 dag siden
      Ole Olsen - 5000 kr
 
-```
+````
 
 ---
 

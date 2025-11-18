@@ -19,4 +19,3 @@ Configure pre-commit hooks, set up CI checks, define quality thresholds, enforce
 ## OUTPUT
 
 Quality gates configured with thresholds and enforcement.
-

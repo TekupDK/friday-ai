@@ -19,4 +19,3 @@ Find zombie processes, kill processes, free ports, clean up resources.
 ## OUTPUT
 
 Zombie processes killed, environment cleaned.
-

@@ -10,7 +10,7 @@
 
 ### Backend: Batch Intelligence Endpoint ✅
 
-```typescript
+````typescript
 trpc.emailIntelligence.getBatchIntelligence
 
 Input: { threadIds: string[] } (max 50)
@@ -471,7 +471,7 @@ Scroll FPS:                       60fps maintained
 ⏸️ client/src/components/inbox/FilterChip.tsx
 ⏸️ client/src/components/inbox/EmailQuickActions.tsx
 
-```
+````
 
 ---
 

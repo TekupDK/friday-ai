@@ -18,4 +18,3 @@ This directory contains archived documentation files that are no longer actively
 ## Note
 
 These files are archived but still tracked in git for historical purposes. If you need to reduce repository size significantly, consider moving these to external storage or a separate archive repository.
-

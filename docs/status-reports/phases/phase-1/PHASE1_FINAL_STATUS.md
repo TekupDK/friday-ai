@@ -53,7 +53,7 @@
 
 ### Performance Improvements
 
-```text
+````text
 Badge Clutter:      87% reduction (8+ → 0-1 badges)
 Email Scan Time:    66% faster (~45s → ~15s)
 Visual Elements:    66% fewer (8+ → 3-4 elements)
@@ -343,7 +343,7 @@ Requirements:
 Benefit: 100% test pass rate
 Priority: Low (not blocking)
 
-```
+````
 
 ---
 

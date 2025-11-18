@@ -17,6 +17,7 @@ Create comprehensive integration tests that verify multiple components work toge
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: tRPC + Database Integration Test
+
 ```typescript
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
 import { appRouter } from "../routers";
@@ -73,14 +74,15 @@ describe("CRM Customer Integration", () => {
     await caller.crm.customer.create(customerData);
 
     // Act & Assert: Try to create duplicate
-    await expect(
-      caller.crm.customer.create(customerData)
-    ).rejects.toThrow("Email already exists");
+    await expect(caller.crm.customer.create(customerData)).rejects.toThrow(
+      "Email already exists"
+    );
   });
 });
 ```
 
 ### Example: Frontend + Backend Integration Test
+
 ```typescript
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -169,26 +171,31 @@ describe("CustomerList Integration", () => {
 ## INTEGRATION TEST PATTERNS
 
 ### Pattern 1: API + Database
+
 ```typescript
 it("should create and retrieve entity", async () => {
   // Create via API
   const created = await api.create(data);
-  
+
   // Verify in database
-  const dbRecord = await db.select().from(table).where(eq(table.id, created.id));
+  const dbRecord = await db
+    .select()
+    .from(table)
+    .where(eq(table.id, created.id));
   expect(dbRecord).toMatchObject(data);
 });
 ```
 
 ### Pattern 2: Multi-Step Workflow
+
 ```typescript
 it("should complete full workflow", async () => {
   // Step 1: Create
   const customer = await createCustomer(data);
-  
+
   // Step 2: Update
   const updated = await updateCustomer(customer.id, newData);
-  
+
   // Step 3: Verify
   const retrieved = await getCustomer(customer.id);
   expect(retrieved).toMatchObject(newData);
@@ -196,11 +203,12 @@ it("should complete full workflow", async () => {
 ```
 
 ### Pattern 3: Error Propagation
+
 ```typescript
 it("should handle database errors correctly", async () => {
   // Simulate database error
   vi.spyOn(db, "insert").mockRejectedValue(new Error("DB Error"));
-  
+
   // Verify error is handled
   await expect(api.create(data)).rejects.toThrow("Failed to create");
 });
@@ -209,6 +217,7 @@ it("should handle database errors correctly", async () => {
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Tests cover complete workflows
 - ✅ Tests use real dependencies where appropriate
 - ✅ Tests are isolated (no shared state)
@@ -224,20 +233,23 @@ After implementation:
 **Test File:** `tests/integration/[feature].test.ts`
 
 **Integration Points Tested:**
+
 - [Component A] + [Component B]
 - [API] + [Database]
 - [Frontend] + [Backend]
 
 **Test Cases:**
+
 - `should [workflow description]` - [what it tests]
 - `should handle [error case]` - [error scenario]
 
 **Test Execution:**
+
 - ✅ All tests passing
 - ✅ No flakiness
 
 **Files Created:**
+
 - `tests/integration/[feature].test.ts`
 - `tests/helpers/test-helpers.ts` (if created)
 ```
-

@@ -14,7 +14,7 @@
 
 ### **🏗️ **COMPONENT HIERARCHY:\*\*
 
-```typescript
+````typescript
 
 1. EmailCenterPanel.tsx
 
@@ -202,7 +202,7 @@ Gmail API → EmailTabV2 → EmailListAI → AI Analysis → UI Display
 5. Test filtering and sorting
 6. Experience AI-powered workflow
 
-```
+````
 
 ## 🏆 **SUMMARY:**
 

@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der identificerer manglende dele, gaps, og uf
 ## TASK
 
 Identificer manglende dele ved at:
+
 - Analysere nuværende implementation
 - Sammenligne med requirements
 - Identificere gaps og missing features
@@ -36,6 +37,7 @@ Identificer manglende dele ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find implementation status
 - `read_file` - Læs relevante filer
 - `grep` - Søg efter patterns
@@ -43,6 +45,7 @@ Identificer manglende dele ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over vigtige gaps
 - Ignorere dependencies
 - Glem prioritering
@@ -114,15 +117,18 @@ Provide comprehensive gap analysis:
 ## Nuværende Status
 
 **Implementeret:**
+
 - ✅ [Feature 1]
 - ✅ [Feature 2]
 - ✅ [Feature 3]
 
 **Delvist Implementeret:**
+
 - 🚧 [Feature 1] - [Hvad mangler]
 - 🚧 [Feature 2] - [Hvad mangler]
 
 **Ikke Implementeret:**
+
 - ❌ [Feature 1]
 - ❌ [Feature 2]
 
@@ -160,38 +166,46 @@ Provide comprehensive gap analysis:
 ## Gaps Identificeret
 
 ### Feature Gaps
+
 - [Gap 1] - [Beskrivelse] - [Priority]
 - [Gap 2] - [Beskrivelse] - [Priority]
 
 ### Test Gaps
+
 - [Gap 1] - [Beskrivelse] - [Priority]
 - [Gap 2] - [Beskrivelse] - [Priority]
 
 ### Documentation Gaps
+
 - [Gap 1] - [Beskrivelse] - [Priority]
 - [Gap 2] - [Beskrivelse] - [Priority]
 
 ### Error Handling Gaps
+
 - [Gap 1] - [Beskrivelse] - [Priority]
 - [Gap 2] - [Beskrivelse] - [Priority]
 
 ### Edge Case Gaps
+
 - [Gap 1] - [Beskrivelse] - [Priority]
 - [Gap 2] - [Beskrivelse] - [Priority]
 
 ## Dependencies
 
 ### Blocking Dependencies
+
 - [Dependency 1] - [Hvad bliver blokeret]
 - [Dependency 2] - [Hvad bliver blokeret]
 
 ### Required Dependencies
+
 - [Dependency 1] - [Hvad kræves]
 - [Dependency 2] - [Hvad kræves]
 
 ## Anbefalinger
 
 ### Immediate Actions
+
 1. **[Action 1]**
    - [Beskrivelse]
    - Priority: Critical
@@ -201,12 +215,14 @@ Provide comprehensive gap analysis:
    - [Beskrivelse]
 
 ### Short-term Actions
+
 1. **[Action 1]**
    - [Beskrivelse]
    - Priority: Important
    - Estimated: [X] hours
 
 ### Long-term Actions
+
 1. **[Action 1]**
    - [Beskrivelse]
    - Priority: Nice-to-have
@@ -215,13 +231,16 @@ Provide comprehensive gap analysis:
 ## Impact Assessment
 
 ### High Impact Missing
+
 - [Item 1] - [Impact beskrivelse]
 - [Item 2] - [Impact beskrivelse]
 
 ### Medium Impact Missing
+
 - [Item 1] - [Impact beskrivelse]
 
 ### Low Impact Missing
+
 - [Item 1] - [Impact beskrivelse]
 
 ## Next Steps
@@ -255,4 +274,3 @@ Efter identificering, verificer:
 ---
 
 **CRITICAL:** Start med at analysere nuværende status, derefter sammenlign med requirements og identificer systematisk alle manglende dele med prioritering.
-

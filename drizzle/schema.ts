@@ -108,20 +108,21 @@ export const activityTypeInFridayAi = fridayAi.enum("activity_type", [
 // =============================================================================
 // SUBSCRIPTION: Enums for subscription system
 // =============================================================================
-export const subscriptionStatusInFridayAi = fridayAi.enum("subscription_status", [
-  "active",
-  "paused",
-  "cancelled",
-  "expired",
-]);
+export const subscriptionStatusInFridayAi = fridayAi.enum(
+  "subscription_status",
+  ["active", "paused", "cancelled", "expired"]
+);
 
-export const subscriptionPlanTypeInFridayAi = fridayAi.enum("subscription_plan_type", [
-  "tier1",      // Basis Abonnement (1,200 kr/måned)
-  "tier2",      // Premium Abonnement (1,800 kr/måned)
-  "tier3",      // VIP Abonnement (2,500 kr/måned)
-  "flex_basis", // Flex Basis (1,000 kr/måned)
-  "flex_plus",  // Flex Plus (1,500 kr/måned)
-]);
+export const subscriptionPlanTypeInFridayAi = fridayAi.enum(
+  "subscription_plan_type",
+  [
+    "tier1", // Basis Abonnement (1,200 kr/måned)
+    "tier2", // Premium Abonnement (1,800 kr/måned)
+    "tier3", // VIP Abonnement (2,500 kr/måned)
+    "flex_basis", // Flex Basis (1,000 kr/måned)
+    "flex_plus", // Flex Plus (1,500 kr/måned)
+  ]
+);
 
 export const riskLevelInFridayAi = fridayAi.enum("risk_level", [
   "low",

@@ -10,7 +10,6 @@ import { expect } from "vitest";
 
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
-
 // Extend Vitest's expect with jest-axe matchers
 expect.extend(toHaveNoViolations);
 
@@ -53,4 +52,3 @@ export async function expectNoA11yViolations(container: HTMLElement) {
   const results = await testA11y(container);
   expect(results).toHaveNoViolations();
 }
-

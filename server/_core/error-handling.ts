@@ -65,12 +65,12 @@ function isRetryableError(error: unknown, retryableErrors: string[]): boolean {
 
 /**
  * Retry a function with exponential backoff
- * 
+ *
  * @param fn - Function to retry
  * @param config - Retry configuration
  * @returns Result of the function
  * @throws Last error if all retries fail
- * 
+ *
  * @example
  * ```ts
  * const result = await retryWithBackoff(
@@ -164,7 +164,7 @@ interface CircuitBreakerState {
 /**
  * Circuit breaker for external service calls
  * Prevents cascading failures by opening circuit after too many failures
- * 
+ *
  * @example
  * ```ts
  * const breaker = createCircuitBreaker({ failureThreshold: 5 });
@@ -270,12 +270,12 @@ export function createCircuitBreaker(config: CircuitBreakerConfig = {}) {
 
 /**
  * Wrap database operation with error handling
- * 
+ *
  * @param operation - Database operation to execute
  * @param errorMessage - Custom error message
  * @returns Result of the operation
  * @throws TRPCError with appropriate code
- * 
+ *
  * @example
  * ```ts
  * const result = await withDatabaseErrorHandling(
@@ -336,12 +336,12 @@ export async function withDatabaseErrorHandling<T>(
 
 /**
  * Wrap external API call with error handling and retry
- * 
+ *
  * @param operation - API call to execute
  * @param config - Retry configuration
  * @returns Result of the operation
  * @throws TRPCError with appropriate code
- * 
+ *
  * @example
  * ```ts
  * const result = await withApiErrorHandling(
@@ -361,7 +361,10 @@ export async function withApiErrorHandling<T>(
 
     if (error instanceof Error) {
       // Rate limiting
-      if (error.message.includes("429") || error.message.includes("rate limit")) {
+      if (
+        error.message.includes("429") ||
+        error.message.includes("rate limit")
+      ) {
         throw new TRPCError({
           code: "TOO_MANY_REQUESTS",
           message: "Rate limit exceeded. Please try again later.",
@@ -376,7 +379,8 @@ export async function withApiErrorHandling<T>(
       ) {
         throw new TRPCError({
           code: "SERVICE_UNAVAILABLE",
-          message: "External service is temporarily unavailable. Please try again later.",
+          message:
+            "External service is temporarily unavailable. Please try again later.",
         });
       }
 
@@ -400,7 +404,7 @@ export async function withApiErrorHandling<T>(
 /**
  * Safe async operation wrapper
  * Catches all errors and converts to TRPCError
- * 
+ *
  * @param operation - Operation to execute
  * @param defaultCode - Default TRPC error code
  * @returns Result of the operation
@@ -419,4 +423,3 @@ export async function safeAsync<T>(
     throw createSafeTRPCError(error, defaultCode);
   }
 }
-

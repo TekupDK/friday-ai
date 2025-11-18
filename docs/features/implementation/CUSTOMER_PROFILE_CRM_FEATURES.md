@@ -69,7 +69,7 @@
 
 ### Auto-sync Logic
 
-```typescript
+````typescript
 // Tjekker om data er ældre end 5 minutter
 const isStale = now - lastSync > 5 *60* 1000;
 
@@ -110,7 +110,7 @@ Klik på afsender → Resolve/Create Lead → Prefetch profil
                                 ↓
                           Opdater UI
 
-```
+````
 
 ## 🎯 Sammenligning: Før vs. Nu
 

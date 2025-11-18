@@ -30,6 +30,7 @@ Analyze codebase health and provide actionable insights for improvement.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find patterns and issues
 - `grep` - Search for specific issues
 - `read_file` - Review key files
@@ -37,6 +38,7 @@ Analyze codebase health and provide actionable insights for improvement.
 - `list_dir` - Explore structure
 
 **DO NOT:**
+
 - Skip comprehensive analysis
 - Ignore technical debt
 - Miss improvement opportunities
@@ -70,30 +72,35 @@ Before analyzing, think through:
 ## ANALYSIS AREAS
 
 ### 1. Code Quality
+
 - TypeScript errors
 - `any` types usage
 - Code duplication
 - Complexity metrics
 
 ### 2. Technical Debt
+
 - TODO comments
 - Deprecated code
 - Large files
 - Inconsistent patterns
 
 ### 3. Architecture
+
 - File organization
 - Module boundaries
 - Dependencies
 - Circular dependencies
 
 ### 4. Testing
+
 - Test coverage
 - Test quality
 - Missing tests
 - Broken tests
 
 ### 5. Performance
+
 - Bundle size
 - Query performance
 - Memory usage
@@ -132,22 +139,26 @@ Before analyzing, think through:
 **Overall Health:** [Good/Fair/Poor]
 
 **Critical Issues (P1):**
+
 1. [Issue] - [Impact] - [Fix]
 
 **Important Issues (P2):**
+
 1. [Issue] - [Impact] - [Fix]
 
 **Improvements (P3):**
+
 1. [Improvement] - [Benefit]
 
 **Metrics:**
+
 - TypeScript errors: [count]
 - TODO comments: [count]
 - Large files: [count]
 - Test coverage: [percentage]
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
-

@@ -13,10 +13,12 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ## Screen Readers to Test
 
 ### Priority 1: Most Common
+
 - **NVDA** (Windows) - Free, open-source
 - **VoiceOver** (macOS/iOS) - Built-in
 
 ### Priority 2: Additional Coverage
+
 - **JAWS** (Windows) - Commercial
 - **TalkBack** (Android) - Built-in
 
@@ -75,6 +77,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ### 1. Login Flow
 
 **Steps:**
+
 1. Navigate to login page
 2. Tab through form fields
 3. Enter credentials
@@ -82,6 +85,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 5. Verify success/error messages
 
 **What to Check:**
+
 - [ ] Page title is announced
 - [ ] Form labels are announced correctly
 - [ ] Required fields are indicated
@@ -91,6 +95,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Focus management is correct
 
 **Expected Announcements:**
+
 - "Login page"
 - "Email, edit text"
 - "Password, edit text, password"
@@ -102,6 +107,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ### 2. Email Browsing Flow
 
 **Steps:**
+
 1. Navigate to email list
 2. Use arrow keys to navigate emails
 3. Select an email
@@ -109,6 +115,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 5. Use email actions
 
 **What to Check:**
+
 - [ ] Email list is announced as listbox
 - [ ] Email items are announced with sender, subject, read status
 - [ ] Selected email is indicated
@@ -117,6 +124,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Keyboard shortcuts work
 
 **Expected Announcements:**
+
 - "Email list, listbox"
 - "Email from [sender], [subject], [read/unread], option 1 of 10"
 - "Selected, email from [sender]"
@@ -126,6 +134,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ### 3. Settings Configuration Flow
 
 **Steps:**
+
 1. Open settings dialog
 2. Navigate through sections
 3. Change settings
@@ -133,6 +142,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 5. Close dialog
 
 **What to Check:**
+
 - [ ] Dialog title is announced
 - [ ] Section headings are announced
 - [ ] Switch controls have labels and descriptions
@@ -142,6 +152,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Focus is trapped in dialog
 
 **Expected Announcements:**
+
 - "Settings, dialog"
 - "Appearance, heading level 2"
 - "Email notifications, switch, off"
@@ -151,6 +162,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ### 4. Chat Interface Flow
 
 **Steps:**
+
 1. Navigate to chat input
 2. Type message
 3. Send message
@@ -158,6 +170,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 5. Use chat actions
 
 **What to Check:**
+
 - [ ] Chat input is announced
 - [ ] Messages are announced in order
 - [ ] Loading states are announced
@@ -165,6 +178,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Actions are accessible
 
 **Expected Announcements:**
+
 - "Message input, edit text"
 - "Message from user: [content]"
 - "Message from AI: [content]"
@@ -174,12 +188,14 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ### 5. Navigation Flow
 
 **Steps:**
+
 1. Use skip links
 2. Navigate main navigation
 3. Navigate between pages
 4. Use keyboard shortcuts
 
 **What to Check:**
+
 - [ ] Skip links are functional
 - [ ] Navigation landmarks are announced
 - [ ] Page titles change
@@ -187,6 +203,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Keyboard shortcuts work
 
 **Expected Announcements:**
+
 - "Skip to main content, link"
 - "Navigation, region"
 - "Main content, region"
@@ -205,6 +222,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 **Version:** [Version]
 
 #### Navigation
+
 - [ ] Can navigate to page
 - [ ] Page title is announced
 - [ ] Skip links work
@@ -212,6 +230,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Heading hierarchy is logical
 
 #### Forms
+
 - [ ] All form fields have labels
 - [ ] Labels are announced correctly
 - [ ] Required fields are indicated
@@ -220,6 +239,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Success messages are announced
 
 #### Interactive Elements
+
 - [ ] Buttons have clear labels
 - [ ] Links have descriptive text
 - [ ] Icons have ARIA labels
@@ -227,6 +247,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Disabled elements are indicated
 
 #### Content
+
 - [ ] Text is readable
 - [ ] Images have alt text
 - [ ] Lists are announced correctly
@@ -234,6 +255,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Dynamic content is announced
 
 #### Keyboard Navigation
+
 - [ ] All elements are keyboard accessible
 - [ ] Focus order is logical
 - [ ] Focus indicators are visible
@@ -241,6 +263,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Keyboard shortcuts work
 
 #### Dialog/Modal
+
 - [ ] Dialog title is announced
 - [ ] Dialog description is announced
 - [ ] Focus is trapped in dialog
@@ -248,6 +271,7 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 - [ ] Focus returns to trigger
 
 #### Issues Found
+
 1. [Issue description]
    - **Location:** [Where]
    - **Impact:** [Who is affected]
@@ -260,22 +284,27 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ## Common Issues to Look For
 
 ### Missing Labels
+
 - **Symptom:** Screen reader says "edit text" without context
 - **Fix:** Add `aria-label` or associate with `Label` component
 
 ### Unclear Button Purpose
+
 - **Symptom:** Screen reader says "button" without purpose
 - **Fix:** Add descriptive `aria-label`
 
 ### Missing State Announcements
+
 - **Symptom:** State changes not announced
 - **Fix:** Add `aria-live` regions or `aria-atomic`
 
 ### Focus Management
+
 - **Symptom:** Focus jumps unexpectedly
 - **Fix:** Review focus management in dialogs/modals
 
 ### Missing Error Associations
+
 - **Symptom:** Error messages not associated with fields
 - **Fix:** Use `aria-describedby` to link errors
 
@@ -284,9 +313,11 @@ This guide provides detailed procedures for testing the Friday AI Chat applicati
 ## Documenting Results
 
 ### Location
+
 Create test results in: `docs/accessibility-audits/screen-reader-tests/`
 
 ### Naming Convention
+
 - Format: `YYYY-MM-DD-[flow-name]-screen-reader.md`
 - Example: `2025-01-28-login-flow-nvda.md`
 
@@ -308,12 +339,15 @@ Create test results in: `docs/accessibility-audits/screen-reader-tests/`
 ## Results
 
 ### Navigation
+
 - ✅/❌ [Result]
 
 ### Forms
+
 - ✅/❌ [Result]
 
 ### Interactive Elements
+
 - ✅/❌ [Result]
 
 ### Issues Found
@@ -353,6 +387,7 @@ Create test results in: `docs/accessibility-audits/screen-reader-tests/`
 ## Contact
 
 For questions about screen reader testing:
+
 - **Development Team:** See project README
 - **Accessibility Lead:** [To be assigned]
 
@@ -360,4 +395,3 @@ For questions about screen reader testing:
 
 **Last Updated:** January 28, 2025  
 **Next Review:** After first test cycle
-

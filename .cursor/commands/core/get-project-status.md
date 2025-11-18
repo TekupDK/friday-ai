@@ -33,6 +33,7 @@ Provide comprehensive project status overview combining system status, developme
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read status files
 - `codebase_search` - Find implementations
 - `grep` - Search for status indicators
@@ -40,6 +41,7 @@ Provide comprehensive project status overview combining system status, developme
 - `read_file` - Read TODO files
 
 **DO NOT:**
+
 - Miss important systems
 - Skip active work
 - Ignore blockers
@@ -75,24 +77,28 @@ Before providing status, think through:
 ## STATUS AGGREGATION
 
 ### Systems Health
+
 - Aggregate all system statuses
 - Overall health indicator
 - Critical issues
 - Operational systems
 
 ### Development Status
+
 - Features in progress
 - Tasks active
 - Plans ongoing
 - Overall progress
 
 ### Active Work
+
 - What is being worked on
 - What is ready to continue
 - What is blocked
 - What are priorities
 
 ### Recent Activity
+
 - Recent commits
 - Recent changes
 - Recent progress
@@ -128,6 +134,7 @@ Before providing status, think through:
 ## VERIFICATION
 
 After providing status:
+
 - ✅ All systems included
 - ✅ All active work tracked
 - ✅ Blockers identified
@@ -149,30 +156,34 @@ After providing status:
 
 ## System Health
 
-| System | Status | Notes |
-|--------|--------|-------|
-| AI/LLM | ✅ Operational | All systems working |
-| Email | 🟡 Partial | Rate limiting issues |
-| CRM | ✅ Operational | All features working |
-| Database | ✅ Operational | Stable |
+| System   | Status         | Notes                |
+| -------- | -------------- | -------------------- |
+| AI/LLM   | ✅ Operational | All systems working  |
+| Email    | 🟡 Partial     | Rate limiting issues |
+| CRM      | ✅ Operational | All features working |
+| Database | ✅ Operational | Stable               |
 
 ## Development Progress
 
 ### Features in Progress
+
 - [Feature 1] - 🚧 60% - [Next step]
 - [Feature 2] - 🚧 30% - [Next step]
 
 ### Tasks Active
+
 - [Task 1] - 🚧 In Progress
 - [Task 2] - 📋 Planned
 
 ## Recent Activity
 
 **Last 24 Hours:**
+
 - [Activity 1]
 - [Activity 2]
 
 **Last Week:**
+
 - [Activity 3]
 - [Activity 4]
 
@@ -200,4 +211,3 @@ After providing status:
 - **Be actionable:** Include next steps
 - **Be current:** Use latest information
 - **Be organized:** Easy to scan and understand
-

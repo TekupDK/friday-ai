@@ -25,7 +25,7 @@ Friday AI now supports **6 new free OpenRouter models**with**100% accuracy ratin
 
 #### 1. GLM-4.5 Air Free ⭐ **DEFAULT**
 
-```typescript
+````typescript
 modelId: "z-ai/glm-4.5-air:free";
 
 ```text
@@ -427,7 +427,7 @@ await invokeLLMWithRouting("complex-reasoning", messages, {
   forceModel: "deepseek-chat-v3.1-free",
 });
 
-```
+````
 
 ---
 

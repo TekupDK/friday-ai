@@ -12,6 +12,7 @@ Vis mønstre: gentagne fejl, mangler, inkonsistente filer, navngivning.
 ## TASK
 
 Identificer patterns i chatten:
+
 - Gentagne fejl
 - Mangler/inkonsistenser
 - Inkonsistente filer
@@ -24,18 +25,23 @@ Identificer patterns i chatten:
 ## Patterns Identificeret
 
 ### Gentagne Fejl
+
 - [Fejl 1] - [Frequency] - [Fix]
 
 ### Mangler/Inkonsistenser
+
 - [Issue 1] - [Beskrivelse] - [Løsning]
 
 ### Inkonsistente Filer
+
 - `[file 1]` vs `[file 2]` - [Forskel]
 
 ### Navngivning
+
 - [Problem 1] - [Fix]
 
 ### Best Practices
+
 - [Violation 1] - [Fix]
 ```
 

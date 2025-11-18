@@ -105,9 +105,7 @@ test.describe("🤖 Friday AI - Real Conversation Tests", () => {
 
         // If loading appears, wait for actual response
         if (
-          await aiPanel
-            .locator('[data-testid="loading-indicator"]')
-            .isVisible()
+          await aiPanel.locator('[data-testid="loading-indicator"]').isVisible()
         ) {
           await aiPanel
             .locator('[data-testid="ai-message"]')

@@ -34,7 +34,7 @@
 
 **Architecture Pattern:** Provider Wrapper Pattern
 
-```typescript
+````typescript
 <ErrorBoundary>
   <ThemeProvider>
     <EmailContextProvider>
@@ -807,7 +807,7 @@ trackMetric("ai_response_time", duration, {
   tokens: result.usage.totalTokens,
 });
 
-```
+````
 
 ---
 

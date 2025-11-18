@@ -13,6 +13,7 @@ You are a senior AI engineer testing and optimizing prompts for Friday AI Chat. 
 ## TASK
 
 Test AI prompts systematically to verify:
+
 - Prompts produce accurate responses
 - Prompts follow business rules (MEMORY rules)
 - Prompts handle edge cases correctly
@@ -37,12 +38,14 @@ Test AI prompts systematically to verify:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read prompt definitions
 - `codebase_search` - Find prompt usage
 - `grep` - Search for prompt patterns
 - `run_terminal_cmd` - Run prompt tests
 
 **DO NOT:**
+
 - Skip edge cases
 - Test only one model
 - Miss business rule violations
@@ -79,23 +82,27 @@ Before testing, think through:
 ## PROMPTS TO TEST
 
 ### Main System Prompt
+
 - Friday personality
 - Business rules (MEMORY rules)
 - Tool usage instructions
 - Language preferences
 
 ### Email Handling Prompt
+
 - Lead processing workflow
 - Duplicate detection
 - Lead qualification
 - Quote generation
 
 ### Calendar Prompt
+
 - Event creation rules
 - Round hour validation (MEMORY_15)
 - No attendees rule (MEMORY_19)
 
 ### Invoice Prompt
+
 - Draft-only rule (MEMORY_17)
 - 349 kr/time pricing
 - Approval requirements
@@ -103,12 +110,14 @@ Before testing, think through:
 ## TEST STRATEGY
 
 ### 1. Accuracy Tests
+
 - ✅ Responses are factually correct
 - ✅ Responses follow business rules
 - ✅ Responses are relevant to input
 - ✅ Responses are complete
 
 ### 2. Business Rule Tests
+
 - ✅ MEMORY_15: Round hours only
 - ✅ MEMORY_16: Request photos for flytterengøring
 - ✅ MEMORY_17: Draft-only invoices
@@ -116,6 +125,7 @@ Before testing, think through:
 - ✅ MEMORY_24: Job completion checklist
 
 ### 3. Model Comparison Tests
+
 - ✅ Test with GLM-4.5 Air Free
 - ✅ Test with Claude 3.5 Sonnet
 - ✅ Test with GPT-4o
@@ -123,12 +133,14 @@ Before testing, think through:
 - ✅ Compare costs
 
 ### 4. Edge Case Tests
+
 - ✅ Invalid inputs
 - ✅ Missing context
 - ✅ Ambiguous requests
 - ✅ Conflicting requirements
 
 ### 5. Cost Optimization Tests
+
 - ✅ Prompt length optimization
 - ✅ Token usage minimization
 - ✅ Model selection optimization
@@ -190,6 +202,7 @@ Provide a comprehensive test report:
 **Status:** [PASS/FAIL/PARTIAL]
 
 ## Summary
+
 - Prompts Tested: [NUMBER]
 - Models Tested: [NUMBER]
 - Test Cases: [NUMBER]
@@ -197,15 +210,18 @@ Provide a comprehensive test report:
 - Failed: [NUMBER]
 
 ## Main System Prompt
+
 - ✅ GLM-4.5 Air Free - PASS
 - ✅ Claude 3.5 Sonnet - PASS
 - ❌ GPT-4o - FAIL: [ISSUE]
 
 ## Email Handling Prompt
+
 - ✅ Lead processing - PASS
 - ❌ Duplicate detection - FAIL: [ISSUE]
 
 ## Business Rules Verification
+
 - ✅ MEMORY_15 (Round hours) - PASS
 - ✅ MEMORY_16 (Request photos) - PASS
 - ✅ MEMORY_17 (Draft-only) - PASS
@@ -213,13 +229,15 @@ Provide a comprehensive test report:
 - ✅ MEMORY_24 (Job completion) - PASS
 
 ## Model Comparison
-| Model | Accuracy | Cost/Request | Best For |
-|-------|----------|--------------|----------|
-| GLM-4.5 Air Free | 95% | $0.00 | General chat |
-| Claude 3.5 Sonnet | 98% | $0.003 | Email drafts |
-| GPT-4o | 99% | $0.01 | Complex reasoning |
+
+| Model             | Accuracy | Cost/Request | Best For          |
+| ----------------- | -------- | ------------ | ----------------- |
+| GLM-4.5 Air Free  | 95%      | $0.00        | General chat      |
+| Claude 3.5 Sonnet | 98%      | $0.003       | Email drafts      |
+| GPT-4o            | 99%      | $0.01        | Complex reasoning |
 
 ## Issues Found
+
 1. [ISSUE DESCRIPTION]
    - Prompt: [PROMPT NAME]
    - Model: [MODEL]
@@ -227,10 +245,12 @@ Provide a comprehensive test report:
    - Fix: [RECOMMENDATION]
 
 ## Recommendations
+
 1. [RECOMMENDATION]
 2. [RECOMMENDATION]
 
 ## Next Steps
+
 1. [NEXT STEP]
 2. [NEXT STEP]
 ```
@@ -247,6 +267,7 @@ Provide a comprehensive test report:
 ## ITERATIVE REFINEMENT
 
 If tests fail:
+
 1. **Identify root cause:** Why did it fail?
 2. **Fix the prompt:** Update prompt to fix issue
 3. **Re-test:** Verify fix works
@@ -256,4 +277,3 @@ If tests fail:
 ---
 
 **CRITICAL:** Test all prompts before marking as complete. Missing a prompt could cause production issues.
-

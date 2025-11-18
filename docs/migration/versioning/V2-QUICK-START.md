@@ -19,7 +19,7 @@ V2 er den nye **Shortwave-inspirerede workspace** med:
 
 ### 1. Start Development Server
 
-```bash
+````bash
 npm run dev
 
 ```text
@@ -254,7 +254,7 @@ npm test
 ```bash
 npm run build
 
-```
+````
 
 ---
 

@@ -4,7 +4,7 @@
 
 ### Option 1: Fuld Test (Anbefalet)
 
-```bash
+````bash
 node scripts/test-ai-docs.mjs
 
 ```text
@@ -225,7 +225,7 @@ node scripts/test-ai-docs.mjs
 # 4. Check output
 # Navigate to: <http://localhost:3000/docs>
 
-```
+````
 
 ---
 

@@ -34,7 +34,7 @@ En moderne Shortwave-inspireret Kanban board til håndtering af email workflow g
 
 **Props:**
 
-```typescript
+````typescript
 interface EmailCardData {
   id: string;
   threadId: string;
@@ -229,7 +229,7 @@ import { EmailPipelineBoard } from "./EmailPipelineBoard";
 ```bash
 pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 
-```
+````
 
 **Versions:**
 

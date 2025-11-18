@@ -9,10 +9,12 @@
 ## 📋 Proposed Commits
 
 ### Commit 1: Commands System Updates
+
 **Type:** `refactor(commands)`  
 **Files:** 2 files
 
 **Message:**
+
 ```
 refactor(commands): update commands index and categorization
 
@@ -21,6 +23,7 @@ refactor(commands): update commands index and categorization
 ```
 
 **Files included:**
+
 - `.cursor/commands/_meta/COMMANDS_INDEX.md` (modified)
 - `.cursor/commands/_meta/COMMANDS_BY_CATEGORY.md` (modified)
 
@@ -29,10 +32,12 @@ refactor(commands): update commands index and categorization
 ---
 
 ### Commit 2: Server Core and Tests
+
 **Type:** `chore` / `fix`  
 **Files:** 3 files
 
 **Message:**
+
 ```
 chore: update server core and test files
 
@@ -42,6 +47,7 @@ chore: update server core and test files
 ```
 
 **Files included:**
+
 - `server/_core/index.ts` (modified)
 - `server/__tests__/admin-user-router.test.ts` (modified)
 - `server/__tests__/subscription-integration.test.ts` (modified)
@@ -51,10 +57,12 @@ chore: update server core and test files
 ---
 
 ### Commit 3: Documentation (Review File)
+
 **Type:** `docs`  
 **Files:** 1 file
 
 **Message:**
+
 ```
 docs: add commit review documentation
 
@@ -62,6 +70,7 @@ docs: add commit review documentation
 ```
 
 **Files included:**
+
 - `docs/COMMIT_REVIEW_2025-01-28.md` (new)
 
 **Impact:** ✅ Low risk - Only documentation
@@ -71,10 +80,12 @@ docs: add commit review documentation
 ## 📊 Change Summary
 
 **Total changes:**
+
 - 4 files modified
 - 245 insertions, 124 deletions
 
 **Files:**
+
 - `.cursor/commands/_meta/COMMANDS_BY_CATEGORY.md` - 16 lines changed
 - `.cursor/commands/_meta/COMMANDS_INDEX.md` - 130 lines changed (mostly path updates)
 - `server/__tests__/admin-user-router.test.ts` - 38 lines changed
@@ -83,6 +94,7 @@ docs: add commit review documentation
 ## 🔍 Review Commands
 
 ### See detailed diffs:
+
 ```bash
 # Commands changes
 git diff .cursor/commands/_meta/COMMANDS_INDEX.md
@@ -97,6 +109,7 @@ git diff server/_core/index.ts
 ```
 
 ### See summary:
+
 ```bash
 git diff --stat
 ```
@@ -130,4 +143,3 @@ Then push to origin (if you want).
 **Status:** ⏳ Awaiting Approval  
 **Ready to execute:** Yes  
 **Last Updated:** 2025-01-28
-

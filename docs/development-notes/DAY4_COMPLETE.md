@@ -30,7 +30,7 @@ Successfully created comprehensive unit tests for all LiteLLM optimization compo
 
 **Priority Queue (2 tests)**
 
-```typescript
+````typescript
 ✅ should process high priority requests first
 ✅ should handle multiple high priority requests in order
 
@@ -594,7 +594,7 @@ Week 1 Progress:
 
 On track for 2-3 week delivery! 🎯
 
-```
+````
 
 ---
 

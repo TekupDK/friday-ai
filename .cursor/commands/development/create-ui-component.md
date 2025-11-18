@@ -17,6 +17,7 @@ Create a new reusable UI component following Friday AI Chat patterns exactly.
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Reusable UI Component
+
 ```typescript
 import { memo, forwardRef } from "react";
 import { cn } from "@/lib/utils";
@@ -47,9 +48,9 @@ const Card = memo(forwardRef<HTMLDivElement, CardProps>(
             <p className="text-sm text-muted-foreground">{description}</p>
           )}
         </div>
-        
+
         {children && <div className="flex-1">{children}</div>}
-        
+
         {onAction && (
           <Button onClick={onAction} variant="outline" size="sm">
             {actionLabel || "Action"}
@@ -66,6 +67,7 @@ export default Card;
 ```
 
 ### Example: Component with Loading/Error States
+
 ```typescript
 import { memo } from "react";
 import { AlertCircle, Loader2 } from "lucide-react";
@@ -163,6 +165,7 @@ export default DataCard;
 ## VERIFICATION
 
 After implementation:
+
 - ✅ TypeScript strict mode passes
 - ✅ All states handled
 - ✅ Accessibility attributes added
@@ -180,7 +183,7 @@ After implementation:
 **Props Interface:**
 \`\`\`typescript
 interface [ComponentName]Props {
-  // props
+// props
 }
 \`\`\`
 
@@ -195,10 +198,12 @@ interface [ComponentName]Props {
 \`\`\`
 
 **Files Created:**
+
 - `client/src/components/[ComponentName].tsx`
 - `stories/[ComponentName].stories.tsx`
 
 **Verification:**
+
 - ✅ Typecheck: PASSED
 - ✅ Pattern match: PASSED
 - ✅ Storybook: ADDED

@@ -19,4 +19,3 @@ Configure WebSocket server, handle connections, implement reconnection, add erro
 ## OUTPUT
 
 WebSocket configured with connection management.
-

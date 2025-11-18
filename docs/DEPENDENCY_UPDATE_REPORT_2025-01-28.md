@@ -23,6 +23,7 @@ Updated dependencies with focus on security patches and minor version updates. M
 ### Minor/Patch Updates Applied
 
 #### UI Components (Radix UI)
+
 - `@radix-ui/react-aspect-ratio`: `1.1.7` → `1.1.8`
 - `@radix-ui/react-avatar`: `1.1.10` → `1.1.11`
 - `@radix-ui/react-label`: `2.1.7` → `2.1.8`
@@ -31,6 +32,7 @@ Updated dependencies with focus on security patches and minor version updates. M
 - `@radix-ui/react-slot`: `1.2.3` → `1.2.4`
 
 #### Testing & Development
+
 - `@tanstack/react-query`: `5.90.2` → `5.90.10`
 - `@types/react`: `19.1.16` → `19.2.5`
 - `@types/react-dom`: `19.1.9` → `19.2.3`
@@ -44,6 +46,7 @@ Updated dependencies with focus on security patches and minor version updates. M
 - `jsdom`: `27.1.0` → `27.2.0`
 
 #### Storybook
+
 - `@storybook/addon-a11y`: `10.0.7` → `10.0.8`
 - `@storybook/addon-docs`: `10.0.7` → `10.0.8`
 - `@storybook/addon-onboarding`: `10.0.7` → `10.0.8`
@@ -53,11 +56,13 @@ Updated dependencies with focus on security patches and minor version updates. M
 - `@chromatic-com/storybook`: `4.1.2` → `4.1.3`
 
 #### AI & Integrations
+
 - `@ai-sdk/anthropic`: `2.0.42` → `2.0.44`
 - `chromadb`: `3.1.1` → `3.1.4`
 - `jose`: `6.1.0` → `6.1.2`
 
 #### Infrastructure
+
 - `@aws-sdk/client-s3`: `3.693.0` → `3.933.0`
 - `@aws-sdk/s3-request-presigner`: `3.693.0` → `3.933.0`
 - `@supabase/supabase-js`: `2.47.10` → `2.81.1`
@@ -188,6 +193,7 @@ The following peer dependency warnings remain but are **non-critical**:
 **Status:** ✅ Fixed
 
 **Changes Made:**
+
 - Removed `Sentry.Handlers.requestHandler()` and `Sentry.Handlers.tracingHandler()`
 - Replaced with `Sentry.expressIntegration()` and `Sentry.addIntegration()`
 - Removed `captureUnhandledRejections` and `captureUncaughtExceptions` (enabled by default in v10)
@@ -195,6 +201,7 @@ The following peer dependency warnings remain but are **non-critical**:
 - Fixed React integration (removed reactRouterV6BrowserTracingIntegration - we use wouter)
 
 **Files Modified:**
+
 - `server/_core/index.ts` - Updated Sentry initialization and middleware
 - `client/src/main.tsx` - Updated Sentry React integration
 
@@ -203,10 +210,12 @@ The following peer dependency warnings remain but are **non-critical**:
 **Status:** ✅ Updated to 4.0.10
 
 **Breaking Changes Fixed:**
+
 - Updated test mock types in `useKeyboardShortcuts.test.tsx`
 - Fixed mock function type annotations
 
 **Files Modified:**
+
 - `client/src/hooks/__tests__/useKeyboardShortcuts.test.tsx` - Fixed mock types
 
 ## Testing Status
@@ -224,11 +233,13 @@ The following peer dependency warnings remain but are **non-critical**:
 **Status:** ✅ Updated to 4.0.10
 
 **Breaking Changes:**
+
 - Configuration format may have changed
 - Some APIs may have changed
 - Mock types updated
 
 **Action Required:**
+
 - Review vitest.config.ts for compatibility
 - Run test suite to verify all tests pass
 
@@ -264,4 +275,3 @@ The following peer dependency warnings remain but are **non-critical**:
 
 **Report Generated:** 2025-01-28  
 **Updated By:** Dependency Update Script
-

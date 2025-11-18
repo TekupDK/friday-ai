@@ -30,12 +30,14 @@ Analyze the diff and generate ideas for improving the new code, tests to add, pe
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Get git diff
 - `read_file` - Read changed files
 - `codebase_search` - Find similar patterns
 - `grep` - Search for patterns
 
 **DO NOT:**
+
 - Miss improvement opportunities
 - Skip test needs
 - Ignore performance
@@ -109,29 +111,35 @@ Provide diff-based ideas:
 **Lines Removed:** [NUMBER]
 
 ## Ideas for Improving New Code
+
 1. **[Improvement 1]** - [Description] - [Impact]
 2. **[Improvement 2]** - [Description] - [Impact]
 3. **[Improvement 3]** - [Description] - [Impact]
 
 ## Tests We Must Add
+
 1. **[Test 1]** - [What to test] - [Why important]
 2. **[Test 2]** - [What to test] - [Why important]
 3. **[Test 3]** - [What to test] - [Why important]
 
 ## Performance Checks
+
 1. **[Check 1]** - [What to check] - [Why]
 2. **[Check 2]** - [What to check] - [Why]
 
 ## Security Checks
+
 1. **[Check 1]** - [What to check] - [Why]
 2. **[Check 2]** - [What to check] - [Why]
 
 ## Opportunities for Reuse
+
 1. **[Opportunity 1]** - [What to extract] - [Benefit]
 2. **[Opportunity 2]** - [What to extract] - [Benefit]
 3. **[Opportunity 3]** - [What to extract] - [Benefit]
 
 ## Priority Actions
+
 1. **[HIGH]** [Action 1] - [Reason]
 2. **[MEDIUM]** [Action 2] - [Reason]
 3. **[LOW]** [Action 3] - [Reason]
@@ -148,4 +156,3 @@ Provide diff-based ideas:
 ---
 
 **CRITICAL:** Generate actionable ideas from diff that improve code quality and completeness.
-

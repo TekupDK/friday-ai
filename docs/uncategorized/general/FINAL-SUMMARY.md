@@ -47,7 +47,7 @@ Placering: `server/integrations/chromadb/test-data/`
 
 ### **Business Impact**
 
-```text
+````text
 ✅ 24 recurring customers identificeret (+26% forbedring)
 ✅ 65-85k kr årlig revenue opportunities
 ✅ 100% AI parsing success (218/218 events)
@@ -511,7 +511,7 @@ npx tsx server/integrations/chromadb/scripts/2-calculate-metrics-v4_3_3.ts
 npx tsx server/integrations/chromadb/scripts/3-add-recurring-tags.ts
 npx tsx server/integrations/chromadb/scripts/4-upload-to-chromadb.ts
 
-```
+````
 
 ### **ChromaDB:**
 

@@ -8,7 +8,7 @@
 
 #### Request Queue Status
 
-```javascript
+````javascript
 // Check queue status
 window.__requestQueue?.getQueueSize();
 window.__requestQueue?.isRateLimited();
@@ -197,7 +197,7 @@ if (isLimited) {
   // window.__requestQueue?.clearRateLimit();
 }
 
-```
+````
 
 ## 💡 Best Practices
 

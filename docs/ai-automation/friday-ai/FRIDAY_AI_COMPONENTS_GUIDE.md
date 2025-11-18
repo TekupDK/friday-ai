@@ -24,7 +24,7 @@ Komplet guide til alle Friday AI chat komponenter baseret på Figma design og je
 
 ### **1. AIThinking**
 
-```tsx
+````tsx
 import { AIThinking } from "@/components/chat/AIThinking";
 
 <AIThinking message="AI Thinking..." />;
@@ -392,7 +392,7 @@ server/
 ├── routers.ts                  # Message creation
 └── tool-execution-tracker.ts   # Tool tracking
 
-```
+````
 
 ---
 

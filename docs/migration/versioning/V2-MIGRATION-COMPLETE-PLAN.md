@@ -15,7 +15,7 @@ Vi migrerer fra **gammel tab-baseret arkitektur**til**moderne Shortwave-inspirer
 
 ### ✅ COMPLETED (Allerede lavet)
 
-```bash
+````bash
 ✓ client/src/pages/WorkspaceLayout.tsx          (NY - erstatter ChatInterface)
 ✓ client/src/components/panels/EmailCenterPanel.tsx  (REFACTORED - kun emails)
 ✓ client/src/components/panels/WorkflowPanelV2.tsx   (NY - wrapper)
@@ -615,7 +615,7 @@ Week 2:
 
 Total: 8-12 arbejdsdage
 
-```
+````
 
 ---
 

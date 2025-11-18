@@ -29,11 +29,13 @@ Analyze competitors' products, features, user flows, and strategies to provide i
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `web_search` - Research competitors
 - `codebase_search` - Understand our features
 - `read_file` - Review product docs
 
 **DO NOT:**
+
 - Analyze without research
 - Skip user experience analysis
 - Ignore our strengths
@@ -65,33 +67,41 @@ Before analyzing, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Competitive Analysis Structure
+
 ```markdown
 ## Competitive Analysis: [Competitor Name]
 
 ### Product Overview
+
 [Brief description]
 
 ### Key Features
+
 - [Feature 1]
 - [Feature 2]
 
 ### User Experience
+
 - [UX aspect 1]
 - [UX aspect 2]
 
 ### Strengths
+
 - [Strength 1]
 - [Strength 2]
 
 ### Weaknesses
+
 - [Weakness 1]
 - [Weakness 2]
 
 ### Comparison with Friday AI Chat
+
 - [Comparison point 1]
 - [Comparison point 2]
 
 ### Recommendations
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -129,6 +139,7 @@ Before analyzing, think through:
 ## VERIFICATION
 
 After analysis:
+
 - ✅ Competitors identified
 - ✅ Products researched
 - ✅ User flows analyzed
@@ -144,28 +155,34 @@ After analysis:
 [Description]
 
 **Key Features:**
+
 - [Feature 1] - [Description]
 - [Feature 2] - [Description]
 
 **User Experience Analysis:**
 
 **Onboarding Flow:**
+
 - [Step 1] - [Analysis]
 - [Step 2] - [Analysis]
 
 **Points of Friction:**
+
 - [Friction 1]
 - [Friction 2]
 
 **Points of Delight:**
+
 - [Delight 1]
 - [Delight 2]
 
 **Comparison with Friday AI Chat:**
+
 - [Aspect]: [Competitor] vs [Friday AI Chat]
 - [Aspect]: [Competitor] vs [Friday AI Chat]
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -177,4 +194,3 @@ After analysis:
 - **Be comparative:** Compare with Friday AI Chat
 - **Be actionable:** Provide clear recommendations
 - **Be strategic:** Focus on business value
-

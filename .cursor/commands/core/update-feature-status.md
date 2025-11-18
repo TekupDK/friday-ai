@@ -31,6 +31,7 @@ Update status of a specific feature or multiple features. Maintain clear status 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read feature status files
 - `codebase_search` - Find feature implementations
 - `grep` - Search for feature code
@@ -39,6 +40,7 @@ Update status of a specific feature or multiple features. Maintain clear status 
 - `run_terminal_cmd` - Check git changes
 
 **DO NOT:**
+
 - Miss status updates
 - Use unclear indicators
 - Skip important details
@@ -72,6 +74,7 @@ Before updating status, think through:
 ## FEATURE STATUS OPTIONS
 
 ### Status
+
 - 📋 **Planned** - Planned but not started
 - 🚧 **In Development** - Currently being built
 - 🧪 **Testing** - In testing phase
@@ -81,6 +84,7 @@ Before updating status, think through:
 - 🐛 **Bug Fix** - Fixing bugs
 
 ### Progress Indicators
+
 - 0-25%: Planning/Early development
 - 26-50%: Mid development
 - 51-75%: Near completion
@@ -126,6 +130,7 @@ Before updating status, think through:
 ## VERIFICATION
 
 After updating status:
+
 - ✅ Status accurate
 - ✅ Progress updated
 - ✅ Next steps clear
@@ -142,10 +147,12 @@ After updating status:
 **Progress:** [Old %] → [New %]
 
 **What Changed:**
+
 - [Change 1]
 - [Change 2]
 
 **Current Milestones:**
+
 - ✅ [Milestone 1] - Complete
 - ✅ [Milestone 2] - Complete
 - 🚧 [Milestone 3] - In progress
@@ -154,6 +161,7 @@ After updating status:
 **Blockers:** [if any]
 
 **Next Steps:**
+
 1. [Step 1]
 2. [Step 2]
 
@@ -167,4 +175,3 @@ After updating status:
 - **Be detailed:** Include milestones and progress
 - **Be actionable:** Clear next steps
 - **Be consistent:** Use same status indicators
-

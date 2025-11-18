@@ -1,6 +1,6 @@
 /**
  * Subscription Smoke Tests
- * 
+ *
  * Tests critical subscription functionality:
  * - Email delivery
  * - Renewal flow
@@ -15,17 +15,37 @@ process.env.DOTENV_CONFIG_PATH = process.env.DOTENV_CONFIG_PATH || ".env.prod";
 import "dotenv/config";
 
 import { eq, and } from "drizzle-orm";
-import { describe, it, expect, beforeEach, afterEach, beforeAll, vi } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  beforeAll,
+  vi,
+} from "vitest";
 
-import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "../../drizzle/schema";
+import {
+  customerProfiles,
+  subscriptions,
+  bookings,
+  subscriptionUsage,
+} from "../../drizzle/schema";
 import { ENV } from "../_core/env";
 import { getDb } from "../db";
 import * as db from "../db";
-import { createSubscription, processRenewal, processCancellation } from "../subscription-actions";
+import {
+  createSubscription,
+  processRenewal,
+  processCancellation,
+} from "../subscription-actions";
 import { getSubscriptionByCustomerId } from "../subscription-db";
 import { sendSubscriptionEmail } from "../subscription-email";
 import { processMonthlyRenewals } from "../subscription-jobs";
-import { trackBookingUsage, calculateBookingHours } from "../subscription-usage-tracker";
+import {
+  trackBookingUsage,
+  calculateBookingHours,
+} from "../subscription-usage-tracker";
 
 // Normalize DATABASE_URL for postgres.js and Supabase
 function normalizeDatabaseUrl(url: string | undefined): string | undefined {
@@ -184,7 +204,9 @@ describeSkippable("Subscription Smoke Tests", () => {
       // If email sending fails (Gmail API not configured), that's expected in test environment
       // We just verify the function doesn't crash and returns a proper error
       if (!result.success) {
-        console.log(`⚠️  Email test - Gmail API not configured: ${result.error || "Unknown error"}`);
+        console.log(
+          `⚠️  Email test - Gmail API not configured: ${result.error || "Unknown error"}`
+        );
         // Test passes if error is defined (function handled error gracefully)
         expect(result.error).toBeDefined();
       } else {
@@ -226,7 +248,11 @@ describeSkippable("Subscription Smoke Tests", () => {
 
       // Track usage
       const hoursWorked = calculateBookingHours(booking);
-      const result = await trackBookingUsage(booking.id, testUserId, hoursWorked);
+      const result = await trackBookingUsage(
+        booking.id,
+        testUserId,
+        hoursWorked
+      );
 
       expect(result.success).toBe(true);
 
@@ -369,7 +395,9 @@ describeSkippable("Subscription Smoke Tests", () => {
       // If Billy API is not configured, renewals will fail - that's expected in test environment
       // We just verify the function doesn't crash and handles errors gracefully
       if (!result.success && result.errors.length > 0) {
-        console.log("⚠️  Background job test - Some renewals failed (expected if Billy API not configured)");
+        console.log(
+          "⚠️  Background job test - Some renewals failed (expected if Billy API not configured)"
+        );
         expect(result.errors.length).toBeGreaterThan(0);
       } else {
         expect(result.success).toBe(true);
@@ -390,7 +418,10 @@ describeSkippable("Subscription Smoke Tests", () => {
       testSubscriptionId = subscription.id;
 
       // Get by customer ID
-      const found = await getSubscriptionByCustomerId(testCustomerId, testUserId);
+      const found = await getSubscriptionByCustomerId(
+        testCustomerId,
+        testUserId
+      );
 
       expect(found).toBeDefined();
       expect(found?.id).toBe(subscription.id);
@@ -398,4 +429,3 @@ describeSkippable("Subscription Smoke Tests", () => {
     });
   });
 });
-

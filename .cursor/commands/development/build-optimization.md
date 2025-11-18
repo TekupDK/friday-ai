@@ -17,6 +17,7 @@ Optimize build process for faster builds and smaller bundles.
 ## BUILD OPTIMIZATION STRATEGIES
 
 ### 1. Chunk Splitting
+
 ```typescript
 // vite.config.ts
 build: {
@@ -33,16 +34,19 @@ build: {
 ```
 
 ### 2. Code Splitting
+
 - Lazy load routes
 - Lazy load heavy components
 - Split vendor bundles
 
 ### 3. Tree Shaking
+
 - Remove unused code
 - Use ES modules
 - Configure sideEffects
 
 ### 4. Build Speed
+
 - Optimize dependencies
 - Use esbuild for faster builds
 - Parallel builds
@@ -80,20 +84,23 @@ build: {
 ### Build Optimization
 
 **Current Metrics:**
+
 - Build time: [time]
 - Bundle size: [size]
 - Chunks: [count]
 
 **Optimizations Applied:**
+
 - [Optimization 1]
 - [Optimization 2]
 
 **Results:**
+
 - Build time: [before] → [after] ([improvement]%)
 - Bundle size: [before] → [after] ([improvement]%)
 - Chunks: [before] → [after]
 
 **Files Modified:**
+
 - `vite.config.ts` - [changes]
 ```
-

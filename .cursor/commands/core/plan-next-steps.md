@@ -30,12 +30,14 @@ Plan the next development steps based on current progress, priorities, and depen
 ## TOOL USAGE
 
 **Use these tools:**
+
 - Review chat history - Understand current state
 - `read_file` - Review TODO files
 - `codebase_search` - Understand dependencies
 - `run_terminal_cmd` - Check git status
 
 **DO NOT:**
+
 - Plan without understanding current state
 - Ignore dependencies
 - Skip prioritization
@@ -95,6 +97,7 @@ Before planning, think through:
 ## VERIFICATION
 
 After planning:
+
 - ✅ Current state understood
 - ✅ Priorities identified
 - ✅ Dependencies mapped
@@ -107,31 +110,38 @@ After planning:
 ### Next Steps Plan - 2025-11-16
 
 **Current State:**
+
 - [What was accomplished]
 - [What is incomplete]
 - [What are blockers]
 
 **Immediate Next Steps (This Session):**
+
 1. [Task 1] - [Priority: High/Medium/Low] - [Estimate]
 2. [Task 2] - [Priority: High/Medium/Low] - [Estimate]
 
 **Short-Term Goals (Next Few Sessions):**
+
 - [ ] [Goal 1] - [Dependencies]
 - [ ] [Goal 2] - [Dependencies]
 
 **Long-Term Goals:**
+
 - [ ] [Goal 1]
 - [ ] [Goal 2]
 
 **Dependencies:**
+
 - [Task A] → [Task B]
 - [Task C] → [Task D]
 
 **Risks & Blockers:**
+
 - [Risk 1] - [Mitigation]
 - [Blocker 1] - [Impact]
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -143,4 +153,3 @@ After planning:
 - **Be specific:** Concrete tasks
 - **Be flexible:** Allow for changes
 - **Be actionable:** Clear next steps
-

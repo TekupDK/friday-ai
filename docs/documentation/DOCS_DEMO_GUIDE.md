@@ -9,7 +9,7 @@
 
 ### Step 1: Navigate til Docs (30 sek)
 
-```text
+````text
 
 1. Login til Friday AI (<http://localhost:3000>)
 2. Klik dit user menu (top right)
@@ -306,7 +306,7 @@
 │ └─────────────────────────────────────┘│
 └─────────────────────────────────────────┘
 
-```
+````
 
 ---
 

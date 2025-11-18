@@ -40,7 +40,7 @@
 ## Task Classification
 
 - **Category:** Integration Analysis & Planning
-- **Related Commands:** 
+- **Related Commands:**
   - `/analyze-chat-prompt` - Understanding requirements
   - `/uddyb-feature-implementation` - Technical deep dive
   - `/uddyb-deployment-plan` - Deployment strategy
@@ -72,6 +72,7 @@
 ### UTCP Overview
 
 **UTCP (Universal Tool Calling Protocol)** is an open standard that:
+
 - Enables AI agents to call tools directly using native protocols
 - Eliminates need for intermediary servers (like current MCP setup)
 - Uses simple JSON manifest to connect to native APIs
@@ -81,6 +82,7 @@
 ### Current System State
 
 **Friday AI Chat Tool System:**
+
 - **18 tools** across Gmail, Calendar, Billy, Leads, Tasks
 - **MCP Integration:** HTTP servers for Gmail/Calendar (200-500ms overhead)
 - **Direct API Fallback:** Already implemented for performance
@@ -90,6 +92,7 @@
 ### Integration Opportunity
 
 **Benefits of UTCP:**
+
 1. **Reduced Latency:** Direct tool calling (no MCP server overhead)
 2. **Simplified Architecture:** JSON manifest vs HTTP servers
 3. **Better Performance:** 32% faster than MCP (based on current direct API vs MCP comparison)
@@ -97,6 +100,7 @@
 5. **Protocol Flexibility:** Supports multiple communication methods
 
 **Challenges:**
+
 1. **Migration Effort:** Need to convert 18 tools to UTCP manifest format
 2. **Testing:** Comprehensive testing of all tool integrations
 3. **Backward Compatibility:** Maintain MCP fallback during transition
@@ -131,4 +135,3 @@
 3. Review performance analysis
 4. Make go/no-go decision on UTCP integration
 5. If approved, start Phase 1 prototype
-

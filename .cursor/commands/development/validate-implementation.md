@@ -30,6 +30,7 @@ Validate implementation during development by verifying correctness, completenes
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read implementation
 - `codebase_search` - Find similar implementations
 - `grep` - Search for patterns
@@ -37,6 +38,7 @@ Validate implementation during development by verifying correctness, completenes
 - `run_terminal_cmd` - Run tests and typecheck
 
 **DO NOT:**
+
 - Miss validation areas
 - Skip checks
 - Ignore errors
@@ -73,30 +75,35 @@ Before validating, think through:
 ## VALIDATION AREAS
 
 ### 1. Correctness
+
 - Logic is correct
 - Types are correct
 - Edge cases handled
 - Error cases handled
 
 ### 2. Completeness
+
 - All requirements met
 - All cases covered
 - All tests written
 - All docs updated
 
 ### 3. Quality
+
 - Code quality high
 - Performance good
 - Maintainable
 - Follows patterns
 
 ### 4. Testing
+
 - Unit tests written
 - Integration tests written
 - Edge cases tested
 - Error cases tested
 
 ### 5. Documentation
+
 - Code documented
 - API documented
 - Examples provided
@@ -141,7 +148,7 @@ After validation, verify:
 
 Provide validation results:
 
-```markdown
+````markdown
 # Implementation Validation
 
 **Date:** 2025-11-16
@@ -149,6 +156,7 @@ Provide validation results:
 **Status:** [VALIDATED/ISSUES FOUND]
 
 ## Validation Summary
+
 - **Correctness:** ✅ PASS / ⚠️ ISSUES
 - **Completeness:** ✅ PASS / ⚠️ ISSUES
 - **Quality:** ✅ PASS / ⚠️ ISSUES
@@ -157,46 +165,57 @@ Provide validation results:
 ## Correctness Validation
 
 ### ✅ Passed
+
 - [Check 1]
 - [Check 2]
 
 ### ⚠️ Issues Found
+
 **Issue 1:** [Description]
 **Location:** [LOCATION]
 **Fix:**
+
 ```typescript
 // Fixed code
 ```
+````
 
 ## Completeness Validation
 
 ### ✅ Requirements Met
+
 - [Requirement 1]
 - [Requirement 2]
 
 ### ⚠️ Missing
+
 - [Missing item 1] - [Impact]
 - [Missing item 2] - [Impact]
 
 ## Quality Validation
+
 - **Code Quality:** [RATING]
 - **Performance:** [RATING]
 - **Maintainability:** [RATING]
 
 ## Testing Validation
+
 - **Unit Tests:** [STATUS]
 - **Integration Tests:** [STATUS]
 - **Edge Cases:** [STATUS]
 - **Coverage:** [PERCENTAGE]%
 
 ## Issues to Fix
+
 1. **[Priority]** [Issue 1]
 2. **[Priority]** [Issue 2]
 
 ## Next Steps
+
 1. [Fix issue 1]
 2. [Fix issue 2]
 3. [Complete missing items]
+
 ```
 
 ## GUIDELINES
@@ -211,3 +230,4 @@ Provide validation results:
 
 **CRITICAL:** Validate implementation continuously. Ensure correctness, completeness, and quality during development.
 
+```

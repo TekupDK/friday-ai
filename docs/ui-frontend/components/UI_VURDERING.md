@@ -26,7 +26,7 @@
 
 ### 📦 **KOMPONENTER:**
 
-```bash
+````bash
 client/src/components/chat/
 ├── ShortWaveChatPanel.tsx    ✅ Hovedkomponent (125 lines)
 ├── ChatInput.tsx             ✅ Input med tools (123 lines)
@@ -196,7 +196,7 @@ export const AI_CONFIG = {
   ],
 };
 
-```
+````
 
 ---
 

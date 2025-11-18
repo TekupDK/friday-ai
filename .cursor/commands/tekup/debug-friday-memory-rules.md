@@ -31,6 +31,7 @@ Debug Friday AI's 25 MEMORY business rules to ensure they are correctly enforced
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find memory rules code
 - `read_file` - Read memory rules implementation
 - `grep` - Search for rule enforcement patterns
@@ -38,6 +39,7 @@ Debug Friday AI's 25 MEMORY business rules to ensure they are correctly enforced
 - `read_lints` - Check for errors
 
 **DO NOT:**
+
 - Skip any memory rules
 - Ignore enforcement checks
 - Miss rule violations
@@ -164,6 +166,7 @@ Provide debugging results:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Rules Analysis
+
 - **Total Rules:** 25
 - **CRITICAL:** [X] rules
 - **HIGH:** [X] rules
@@ -173,6 +176,7 @@ Provide debugging results:
 ## Rule Verification
 
 ### CRITICAL Rules
+
 - ✅ MEMORY_1: Time verification - [Status]
 - ✅ MEMORY_4: Lead source handling - [Status]
 - ✅ MEMORY_5: Calendar check - [Status]
@@ -184,23 +188,28 @@ Provide debugging results:
 - ✅ MEMORY_24: Job completion - [Status]
 
 ### HIGH Priority Rules
+
 - ✅ [Rule ID] - [Status]
 - ✅ [Rule ID] - [Status]
 
 ## Issues Found
+
 1. [Issue 1] - [Description] - [Severity]
 2. [Issue 2] - [Description] - [Severity]
 
 ## Fixes Applied
+
 - ✅ [Fix 1] - [Description]
 - ✅ [Fix 2] - [Description]
 
 ## Testing
+
 - ✅ Rule enforcement - [Result]
 - ✅ Violation detection - [Result]
 - ✅ Priority handling - [Result]
 
 ## Recommendations
+
 1. [Recommendation 1]
 2. [Recommendation 2]
 ```
@@ -217,4 +226,3 @@ Provide debugging results:
 ---
 
 **CRITICAL:** Start by reading all memory rules, then systematically test each rule's enforcement.
-

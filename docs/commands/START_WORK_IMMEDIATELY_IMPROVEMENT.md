@@ -6,7 +6,8 @@
 
 ## Chat Historik Analyse
 
-**Samtale kontekst:** 
+**Samtale kontekst:**
+
 - Brugeren arbejdede med CRM system setup og testing
 - Flere commands blev brugt sammen: `/start-work-immediately`, `/create-e2e-test`, `/qa-test-plan`, `/fix-bug`, `/review-change`
 - System setup (Docker, database, backend, frontend)
@@ -14,12 +15,14 @@
 - Bug fixes og improvements
 
 **Brugt i:**
+
 1. "start den test med docker steup" - Starte Docker setup
 2. "start" - Starte CRM systemet
 3. "forsæt" - Fortsætte arbejde
 4. Kombineret med andre commands for komplekse opgaver
 
 **Problemer identificeret i chat:**
+
 1. Command mangler kontekst awareness - starter ikke altid korrekt baseret på tidligere arbejde
 2. Mangler system status check - starter ikke altid med at tjekke om systemer kører
 3. Mangler error recovery - stopper ved første fejl i stedet for at fortsætte
@@ -56,17 +59,20 @@
 ## Brug Analyse
 
 **Typiske Use Cases (fra chat):**
+
 - Starte systemer (Docker, database, backend, frontend) - Fra "start den test med docker steup"
 - Fortsætte arbejde efter pause - Fra "forsæt" beskeder
 - Kombinere med andre commands - Fra komplekse prompts med flere commands
 - Quick actions - Fra "start" beskeder
 
 **Edge Cases (fra chat):**
+
 - Systemer kører allerede - Port conflicts, process conflicts
 - Fejl under execution - Tests fejler, men skal fortsætte
 - Multi-step tasks - Flere opgaver i samme prompt
 
 **Forventninger (fra chat):**
+
 - Skal tjekke status først - "se om den er online"
 - Skal rapportere tydeligt - "hvad sagde testene"
 - Skal fortsætte ved fejl - Tests fejlede men arbejde fortsatte
@@ -74,11 +80,13 @@
 ## Sammenligning med Lignende Commands
 
 **Lignende commands analyseret:**
+
 - `parse-and-execute.md` - Bedre task breakdown, mere struktureret
 - `continue-from-prompt.md` - Bedre kontekst awareness, bedre continuation logic
 - `fix-bug.md` - Bedre error handling, bedre investigation steps
 
 **Best Practices identificeret:**
+
 - System status check først (fra `continue-from-prompt.md`)
 - Task breakdown (fra `parse-and-execute.md`)
 - Error recovery (fra `fix-bug.md`)
@@ -87,26 +95,31 @@
 ## Forbedringer Implementeret
 
 ### ✅ Forbedring 1: System Status Check
+
 - **Problem:** Starter ikke med at tjekke om systemer kører
 - **Løsning:** Tilføj system status check sektion
 - **Status:** ✅ Implementeret
 
 ### ✅ Forbedring 2: Kontekst Awareness
+
 - **Problem:** Mangler forståelse af tidligere arbejde
 - **Løsning:** Tilføj kontekst review sektion
 - **Status:** ✅ Implementeret
 
 ### ✅ Forbedring 3: Error Recovery
+
 - **Problem:** Stopper ved fejl
 - **Løsning:** Tilføj error recovery og continuation logic
 - **Status:** ✅ Implementeret
 
 ### ✅ Forbedring 4: Bedre Output Format
+
 - **Problem:** Output ikke altid klart
 - **Løsning:** Forbedret output format med klar struktur
 - **Status:** ✅ Implementeret
 
 ### ✅ Forbedring 5: Progress Tracking
+
 - **Problem:** Svært at se progress
 - **Løsning:** Tilføj progress tracking sektion
 - **Status:** ✅ Implementeret
@@ -124,4 +137,3 @@
 - [Forbedring 1] - Medium - Tilføj automatic retry logic
 - [Forbedring 2] - Low - Tilføj estimated time for tasks
 - [Forbedring 3] - Low - Tilføj success metrics
-

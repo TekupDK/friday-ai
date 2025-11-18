@@ -82,12 +82,14 @@ import { upsertUser } from "../db";
 export const adminUserRouter = router({
   // Liste alle brugere (admin/owner only)
   list: roleProcedure("admin")
-    .input(z.object({
-      search: z.string().optional(),
-      role: z.enum(["user", "admin"]).optional(),
-      limit: z.number().min(1).max(100).default(50),
-      offset: z.number().min(0).default(0),
-    }))
+    .input(
+      z.object({
+        search: z.string().optional(),
+        role: z.enum(["user", "admin"]).optional(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+      })
+    )
     .query(async ({ input, ctx }) => {
       const db = await getDb();
       if (!db) throw new Error("Database unavailable");
@@ -96,9 +98,10 @@ export const adminUserRouter = router({
 
       // Search filter
       if (input.search) {
-        query = query.where(
+        query = query
+          .where
           // Add search logic for name/email
-        );
+          ();
       }
 
       // Role filter
@@ -121,12 +124,14 @@ export const adminUserRouter = router({
 
   // Opret ny bruger (admin/owner only)
   create: roleProcedure("admin")
-    .input(z.object({
-      email: z.string().email(),
-      name: z.string().min(1).max(255),
-      role: z.enum(["user", "admin"]).default("user"),
-      loginMethod: z.enum(["google"]).default("google"), // Kun Google for nu
-    }))
+    .input(
+      z.object({
+        email: z.string().email(),
+        name: z.string().min(1).max(255),
+        role: z.enum(["user", "admin"]).default("user"),
+        loginMethod: z.enum(["google"]).default("google"), // Kun Google for nu
+      })
+    )
     .mutation(async ({ input, ctx }) => {
       const db = await getDb();
       if (!db) throw new Error("Database unavailable");
@@ -164,12 +169,14 @@ export const adminUserRouter = router({
 
   // Opdater bruger (admin/owner only)
   update: roleProcedure("admin")
-    .input(z.object({
-      userId: z.number(),
-      name: z.string().min(1).max(255).optional(),
-      email: z.string().email().optional(),
-      role: z.enum(["user", "admin"]).optional(),
-    }))
+    .input(
+      z.object({
+        userId: z.number(),
+        name: z.string().min(1).max(255).optional(),
+        email: z.string().email().optional(),
+        role: z.enum(["user", "admin"]).optional(),
+      })
+    )
     .mutation(async ({ input, ctx }) => {
       const db = await getDb();
       if (!db) throw new Error("Database unavailable");
@@ -205,9 +212,11 @@ export const adminUserRouter = router({
 
   // Deaktiver/slet bruger (admin/owner only)
   delete: roleProcedure("admin")
-    .input(z.object({
-      userId: z.number(),
-    }))
+    .input(
+      z.object({
+        userId: z.number(),
+      })
+    )
     .mutation(async ({ input, ctx }) => {
       const db = await getDb();
       if (!db) throw new Error("Database unavailable");
@@ -313,6 +322,7 @@ export function CreateUserModal({ open, onClose }) {
 #### 3.1 Invitation Email
 
 Når admin opretter bruger, send invitation email med:
+
 - Link til login page
 - Information om at de skal bruge Google login
 - Welcome message
@@ -335,6 +345,7 @@ Når admin opretter bruger, send invitation email med:
 4. System opretter automatisk user hvis ikke eksisterer
 
 **Problemer:**
+
 - Ingen UI til at administrere brugere
 - Ingen invitation system
 - Ingen kontrol over hvem der kan logge ind
@@ -351,6 +362,7 @@ Når admin opretter bruger, send invitation email med:
 7. System matcher Google account med pre-created user
 
 **Fordele:**
+
 - Kontrol over hvem der kan logge ind
 - Automatisk invitation
 - Nem administration via UI
@@ -436,6 +448,7 @@ export const usersInFridayAi = fridayAi.table("users", {
 ```
 
 **Observations:**
+
 - ✅ Alle nødvendige felter eksisterer
 - ⚠️ Mangler `invitedBy` (optional - track hvem oprettede brugeren)
 - ⚠️ Mangler `invitedAt` (optional - track invitation date)
@@ -600,4 +613,3 @@ Login-systemet er **production-ready** for team/medarbejdere, men mangler **admi
 
 **Sidst Opdateret:** 2025-01-28  
 **Vedligeholdt af:** TekupDK Development Team
-

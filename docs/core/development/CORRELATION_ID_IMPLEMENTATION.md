@@ -35,6 +35,7 @@ const correlationId = `action_${Date.now()}_${randomUUID().slice(0, 8)}`;
 ```
 
 **Format Components:**
+
 - `action_` - Prefix indicating action/request
 - `${Date.now()}` - Timestamp in milliseconds
 - `${randomUUID().slice(0, 8)}` - First 8 characters of UUID for uniqueness
@@ -63,16 +64,19 @@ const correlationId = `action_${Date.now()}_${randomUUID().slice(0, 8)}`;
 ## Tool Handlers with Correlation ID Support
 
 ### Gmail Tools (3 handlers)
+
 - ✅ `handleSearchGmail` - Search Gmail emails
 - ✅ `handleGetGmailThread` - Get Gmail thread details
 - ✅ `handleCreateGmailDraft` - Create Gmail draft
 
 ### Billy Tools (3 handlers)
+
 - ✅ `handleListBillyInvoices` - List Billy invoices
 - ✅ `handleSearchBillyCustomer` - Search Billy customers
 - ✅ `handleCreateBillyInvoice` - Create Billy invoice
 
 ### Calendar Tools (7 handlers)
+
 - ✅ `handleListCalendarEvents` - List calendar events
 - ✅ `handleFindFreeCalendarSlots` - Find free time slots
 - ✅ `handleCreateCalendarEvent` - Create calendar event
@@ -82,11 +86,13 @@ const correlationId = `action_${Date.now()}_${randomUUID().slice(0, 8)}`;
 - ✅ `handleCheckCalendarConflicts` - Check calendar conflicts
 
 ### Lead Tools (3 handlers)
+
 - ✅ `handleListLeads` - List leads
 - ✅ `handleCreateLead` - Create lead
 - ✅ `handleUpdateLeadStatus` - Update lead status
 
 ### Task Tools (2 handlers)
+
 - ✅ `handleListTasks` - List tasks
 - ✅ `handleCreateTask` - Create task
 
@@ -250,4 +256,3 @@ grep "action_1706456789123_a1b2c3d4" logs/dev-server.log
 
 **Last Updated:** January 28, 2025  
 **Status:** ✅ Complete - All 18 tool handlers support correlation IDs
-

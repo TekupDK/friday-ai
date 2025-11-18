@@ -30,12 +30,14 @@ Based on the feature being edited, propose small enhancements, medium-sized exte
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find feature code
 - `read_file` - Read feature files
 - `grep` - Search for feature patterns
 - `list_dir` - Check feature structure
 
 **DO NOT:**
+
 - Suggest breaking changes
 - Ignore patterns
 - Be unrealistic
@@ -99,6 +101,7 @@ Provide feature-based ideas:
 **Feature:** [FEATURE NAME]
 
 ## Small Enhancements (5)
+
 1. **[Enhancement 1]** - [Description] - [Value] - [Effort: LOW]
 2. **[Enhancement 2]** - [Description] - [Value] - [Effort: LOW]
 3. **[Enhancement 3]** - [Description] - [Value] - [Effort: LOW]
@@ -106,6 +109,7 @@ Provide feature-based ideas:
 5. **[Enhancement 5]** - [Description] - [Value] - [Effort: LOW]
 
 ## Medium-Sized Extensions (2)
+
 1. **[Extension 1]** - [Description] - [Value] - [Effort: MEDIUM]
    - [Sub-feature 1]
    - [Sub-feature 2]
@@ -114,17 +118,21 @@ Provide feature-based ideas:
    - [Sub-feature 2]
 
 ## Major Future Direction (1)
+
 **[Major Direction]** - [Description] - [Vision] - [Effort: HIGH]
+
 - [Component 1]
 - [Component 2]
 - [Component 3]
 
 ## Pattern Alignment
+
 - ✅ Follows [Pattern 1]
 - ✅ Uses [Pattern 2]
 - ✅ Consistent with [Pattern 3]
 
 ## Priority Recommendations
+
 1. **[QUICK WIN]** [Enhancement] - [Why first]
 2. **[VALUE]** [Extension] - [Why valuable]
 3. **[FUTURE]** [Major direction] - [Why strategic]
@@ -141,4 +149,3 @@ Provide feature-based ideas:
 ---
 
 **CRITICAL:** Generate feature ideas aligned with Tekup codebase patterns and Friday AI Chat architecture.
-

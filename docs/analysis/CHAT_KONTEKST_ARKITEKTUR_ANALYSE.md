@@ -10,12 +10,14 @@
 **Arkitektur Pattern:** Module Isolation med dedikeret QueryClient
 
 **Impact:**
+
 - **State Isolation:** Dedicated `QueryClient` isolerer CRM cache fra main app cache
 - **Error Boundaries:** Fejl i CRM påvirker ikke main app (graceful degradation)
 - **Lazy Loading:** Code splitting reducerer initial bundle size
 - **Development Experience:** Isoleret debugging uden main app kontekst
 
 **Arkitektur Flow:**
+
 ```
 Main App (QueryClient A)
   └── /crm-standalone
@@ -26,6 +28,7 @@ Main App (QueryClient A)
 ```
 
 **Konsekvenser:**
+
 - ✅ **Positiv:** CRM fejl isoleres, bedre debugging
 - ⚠️ **Trade-off:** To separate cache states (kan give inkonsistens)
 - ⚠️ **Trade-off:** Yderligere QueryClient overhead (~50KB memory)
@@ -35,12 +38,14 @@ Main App (QueryClient A)
 **Arkitektur Pattern:** Hybrid Development Environment
 
 **Impact:**
+
 - **Database Isolation:** MySQL i Docker giver konsistent database state
 - **Backend Native:** Backend kører native for optimal performance
 - **Frontend Native:** Frontend kører native for hurtig hot-reload
 - **Port Management:** Docker håndterer port conflicts automatisk
 
 **Arkitektur Flow:**
+
 ```
 Development Environment
 ├── Docker Network (tekup-dev-network)
@@ -58,6 +63,7 @@ Development Environment
 ```
 
 **Konsekvenser:**
+
 - ✅ **Positiv:** Konsistent database state, nem reset
 - ✅ **Positiv:** Optimal performance (native backend/frontend)
 - ⚠️ **Trade-off:** Database connection via localhost (ikke container network)
@@ -68,6 +74,7 @@ Development Environment
 ### 1. Development Workflow
 
 **Før (Full Docker):**
+
 ```
 1. Build Docker image (5-10 min) ❌
 2. Start containers (30-60s)
@@ -77,6 +84,7 @@ Total: 6-12 minutter
 ```
 
 **Efter (Hybrid):**
+
 ```
 1. Start database (30s) ✅
 2. Start backend (5s)
@@ -85,6 +93,7 @@ Total: ~40 sekunder
 ```
 
 **Flow Impact:**
+
 - **Development Speed:** 10-15x hurtigere iteration
 - **Resource Usage:** 80% reduktion (450MB vs 2-3GB)
 - **Debugging:** Native tools, bedre performance profiling
@@ -92,6 +101,7 @@ Total: ~40 sekunder
 ### 2. Data Flow Isolation
 
 **CRM Standalone Flow:**
+
 ```
 User → /crm-standalone
   → Standalone Router
@@ -102,6 +112,7 @@ User → /crm-standalone
 ```
 
 **Main App Flow:**
+
 ```
 User → /crm/dashboard
   → Main Router
@@ -112,6 +123,7 @@ User → /crm/dashboard
 ```
 
 **Flow Impact:**
+
 - **Cache Isolation:** CRM standalone har egen cache state
 - **Error Isolation:** Fejl i standalone påvirker ikke main app
 - **Development:** Nem at teste CRM features isoleret
@@ -126,6 +138,7 @@ User → /crm/dashboard
 - **tRPC Client** - Afhænger af dedikeret trpcClient instance
 
 **Impact:**
+
 - ✅ **Low Risk:** Standard React patterns, vel-testet
 - ⚠️ **Medium Risk:** Cache sync mellem standalone og main app kan give inkonsistens
 
@@ -137,6 +150,7 @@ User → /crm/dashboard
 - **Port Availability** - Port 3307 skal være ledig
 
 **Impact:**
+
 - ✅ **Low Risk:** Database-only setup er simpel og stabil
 - ⚠️ **Medium Risk:** Port conflicts hvis port 3307 allerede i brug
 - ⚠️ **Medium Risk:** Docker Desktop resource usage (~200MB RAM)
@@ -148,6 +162,7 @@ User → /crm/dashboard
 - **CSV Escaping** - Afhænger af korrekt CSV formatting
 
 **Impact:**
+
 - ✅ **Low Risk:** Standard browser APIs
 - ⚠️ **Low Risk:** CSV escaping kan have edge cases med special characters
 
@@ -158,6 +173,7 @@ User → /crm/dashboard
 **Risk:** CRM standalone og main app har separate caches, kan give inkonsistente data
 
 **Mitigation:**
+
 - ✅ Error boundaries isolerer fejl
 - ✅ Dedicated QueryClient giver klar separation
 - ⚠️ **Anbefaling:** Overvej cache sync mechanism hvis nødvendigt
@@ -167,6 +183,7 @@ User → /crm/dashboard
 **Risk:** Port 3307 kan være optaget af anden service
 
 **Mitigation:**
+
 - ✅ Docker automatisk port mapping
 - ✅ Alternative port konfiguration i docker-compose
 - ✅ Clear documentation om port usage
@@ -176,6 +193,7 @@ User → /crm/dashboard
 **Risk:** Docker Desktop bruger meget RAM og CPU
 
 **Mitigation:**
+
 - ✅ Database-only setup minimerer resource usage
 - ✅ Native backend/frontend reducerer Docker overhead
 - ✅ Clear documentation om resource requirements
@@ -185,6 +203,7 @@ User → /crm/dashboard
 **Risk:** Team members kan have forskellige setups (native vs Docker)
 
 **Mitigation:**
+
 - ✅ Clear documentation (QUICK_START_NATIVE_CRM.md)
 - ✅ Database-only Docker giver konsistent database
 - ✅ Environment variables standardiseret (.env.dev)
@@ -192,17 +211,19 @@ User → /crm/dashboard
 ## Konklusion
 
 **Arkitektur Styrker:**
+
 - ✅ Isolation patterns giver bedre debugging
 - ✅ Hybrid approach giver optimal performance
 - ✅ Clear separation of concerns
 
 **Arkitektur Trade-offs:**
+
 - ⚠️ Cache isolation kan give inkonsistens
 - ⚠️ Docker resource overhead (men minimeret med database-only)
 - ⚠️ Yderligere kompleksitet (men dokumenteret)
 
 **Anbefaling:**
+
 - ✅ Brug hybrid approach (database-only Docker + native backend/frontend)
 - ✅ Brug CRM Standalone for debugging og development
 - ✅ Monitor cache consistency hvis issues opstår
-

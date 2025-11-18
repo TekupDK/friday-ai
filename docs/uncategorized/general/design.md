@@ -21,7 +21,7 @@ The CRM module provides Friday AI with the necessary customer data and workflows
 
 ### System Architecture Diagram
 
-```text
+````text
 ┌─────────────────────────────────────────────────────────────┐
 │              FRIDAY AI WORKSPACE (Single Platform)           │
 │                                                               │
@@ -4520,19 +4520,19 @@ export function AdaptiveButton({ children, onClick }: ButtonProps) {
   );
 }
 
-```
+````
 
 ### Platform Testing Matrix
 
-| Feature            | iOS Safari | Android Chrome | Windows Chrome | macOS Safari | Linux Firefox |
-| ------------------ | ---------- | -------------- | -------------- | ------------ | ------------- |
+| Feature | iOS Safari | Android Chrome | Windows Chrome | macOS Safari | Linux Firefox |
+| ------- | ---------- | -------------- | -------------- | ------------ | ------------- |
 
-| Frosted Glass      | ✅ Perfect | ⚠️ Fallback    | ⚠️ Fallback    | ✅ Perfect   | ⚠️ Fallback   |
-| Spring Animations  | ✅ Smooth  | ✅ Smooth      | ✅ Smooth      | ✅ Smooth    | ✅ Smooth     |
-| Touch Gestures     | ✅ Native  | ✅ Native      | ✅ Touchscreen | ✅ Trackpad  | ⚠️ Limited    |
-| Keyboard Shortcuts | ⚠️ Limited | ⚠️ Limited     | ✅ Full        | ✅ Full      | ✅ Full       |
-| Safe Area Insets   | ✅ Yes     | ⚠️ Partial     | ❌ No          | ❌ No        | ❌ No         |
-| Momentum Scrolling | ✅ Native  | ✅ Native      | ✅ Smooth      | ✅ Native    | ✅ Smooth     |
+| Frosted Glass | ✅ Perfect | ⚠️ Fallback | ⚠️ Fallback | ✅ Perfect | ⚠️ Fallback |
+| Spring Animations | ✅ Smooth | ✅ Smooth | ✅ Smooth | ✅ Smooth | ✅ Smooth |
+| Touch Gestures | ✅ Native | ✅ Native | ✅ Touchscreen | ✅ Trackpad | ⚠️ Limited |
+| Keyboard Shortcuts | ⚠️ Limited | ⚠️ Limited | ✅ Full | ✅ Full | ✅ Full |
+| Safe Area Insets | ✅ Yes | ⚠️ Partial | ❌ No | ❌ No | ❌ No |
+| Momentum Scrolling | ✅ Native | ✅ Native | ✅ Smooth | ✅ Native | ✅ Smooth |
 
 ### Summary
 

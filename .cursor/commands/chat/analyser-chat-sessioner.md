@@ -12,6 +12,7 @@ Analysér faktiske chat sessioner fra databasen for at forstå hvordan chatten b
 ## TASK
 
 Analysér chat sessioner:
+
 1. **Hent conversations** - Fra databasen via `getUserConversations`
 2. **Læs messages** - Via `getConversationMessages` for hver conversation
 3. **Analysér patterns** - Hvordan bruges chatten? Hvad er typiske workflows?
@@ -21,12 +22,14 @@ Analysér chat sessioner:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find chat router og database funktioner
 - `read_file` - Læs `server/db.ts` og `server/routers/chat-router.ts`
 - `grep` - Søg efter `getConversationMessages`, `getUserConversations`
 - `run_terminal_cmd` - Kør script til at hente chat data (hvis muligt)
 
 **DO NOT:**
+
 - Ignorere faktiske data
 - Glem patterns
 - Undlad at analysere workflow
@@ -71,11 +74,13 @@ Analysér chat sessioner:
 ## Chat System Forståelse
 
 **Struktur:**
+
 - Conversations: `conversations` tabel med `userId`, `title`, `createdAt`
 - Messages: `messages` tabel med `conversationId`, `role`, `content`, `createdAt`
 - Hentning: `getConversationMessages(conversationId)` returnerer alle messages sorteret efter `createdAt`
 
 **Flow:**
+
 1. Bruger sender besked → `createMessage` med `role: "user"`
 2. System henter conversation history → `getConversationMessages`
 3. System sender til AI → `routeAI` med fuld conversation history
@@ -84,14 +89,17 @@ Analysér chat sessioner:
 ## Patterns Identificeret
 
 ### Typiske Workflows
+
 - [Workflow 1] - [Beskrivelse] - [Frequency]
 - [Workflow 2] - [Beskrivelse] - [Frequency]
 
 ### Typiske Spørgsmål
+
 - [Type 1] - [Eksempel] - [Frequency]
 - [Type 2] - [Eksempel] - [Frequency]
 
 ### Typiske Svar
+
 - [Type 1] - [Eksempel] - [Frequency]
 
 ## Best Practices
@@ -102,10 +110,12 @@ Analysér chat sessioner:
 ## Workflow Forståelse
 
 **Hvordan bruges chatten:**
+
 - [Observation 1]
 - [Observation 2]
 
 **Typiske Use Cases:**
+
 - [Use Case 1]
 - [Use Case 2]
 
@@ -125,4 +135,3 @@ Analysér chat sessioner:
 ---
 
 **CRITICAL:** Forstå chat system, hent faktiske chat data hvis muligt, analysér patterns og workflows, og giv recommendations baseret på faktisk brug.
-

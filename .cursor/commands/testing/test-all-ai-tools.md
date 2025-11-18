@@ -13,6 +13,7 @@ You are a senior QA engineer testing all AI tools in Friday AI Chat. You systema
 ## TASK
 
 Test all AI tools systematically to verify:
+
 - Tool definitions match implementations
 - Happy path works correctly
 - Error handling is robust
@@ -41,6 +42,7 @@ Test all AI tools systematically to verify:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read tool definitions and handlers
 - `codebase_search` - Find test patterns and examples
 - `grep` - Search for tool usage
@@ -48,6 +50,7 @@ Test all AI tools systematically to verify:
 - `read_file` - Read integration code
 
 **DO NOT:**
+
 - Skip any tools
 - Assume tools work without testing
 - Miss error cases
@@ -85,6 +88,7 @@ Before testing, think through:
 ## AI TOOLS TO TEST
 
 ### Gmail Tools (15 tools)
+
 1. `search_gmail` - Search emails
 2. `get_gmail_thread` - Get email thread
 3. `create_gmail_draft` - Create draft
@@ -102,6 +106,7 @@ Before testing, think through:
 15. `star_gmail` - Star email (if exists)
 
 ### Calendar Tools (8 tools)
+
 1. `get_calendar_events` - Get events
 2. `create_calendar_event` - Create event
 3. `update_calendar_event` - Update event
@@ -112,6 +117,7 @@ Before testing, think through:
 8. `create_calendar` - Create calendar
 
 ### Billy.dk Tools (7 tools)
+
 1. `list_billy_invoices` - List invoices
 2. `search_billy_customer` - Search customer
 3. `create_billy_invoice` - Create invoice
@@ -121,6 +127,7 @@ Before testing, think through:
 7. `create_billy_customer` - Create customer (if exists)
 
 ### Database Tools (5 tools)
+
 1. `get_leads` - Get leads
 2. `create_lead` - Create lead
 3. `update_lead_status` - Update lead status
@@ -130,18 +137,21 @@ Before testing, think through:
 ## TEST STRATEGY
 
 ### 1. Tool Definition Verification
+
 - ✅ Tool exists in `friday-tools.ts`
 - ✅ Handler exists in `friday-tool-handlers.ts`
 - ✅ Schema matches handler validation
 - ✅ Description is clear and accurate
 
 ### 2. Happy Path Tests
+
 - ✅ Valid inputs produce expected outputs
 - ✅ Response format is correct
 - ✅ Data is returned as expected
 - ✅ No errors thrown
 
 ### 3. Error Handling Tests
+
 - ✅ Invalid inputs are rejected
 - ✅ Missing required fields return errors
 - ✅ Type mismatches are caught
@@ -149,6 +159,7 @@ Before testing, think through:
 - ✅ Authentication errors are clear
 
 ### 4. Integration Tests
+
 - ✅ Gmail API calls work
 - ✅ Calendar API calls work
 - ✅ Billy API calls work
@@ -156,6 +167,7 @@ Before testing, think through:
 - ✅ MCP integration works
 
 ### 5. Security Tests
+
 - ✅ User authentication is verified
 - ✅ Permissions are checked
 - ✅ Data validation is strict
@@ -205,6 +217,7 @@ Before testing, think through:
 ### Test Each Tool Category
 
 #### Gmail Tools
+
 ```typescript
 // Test search_gmail
 ✅ Valid query returns results
@@ -224,6 +237,7 @@ Before testing, think through:
 ```
 
 #### Calendar Tools
+
 ```typescript
 // Test get_calendar_events
 ✅ Valid date range returns events
@@ -238,6 +252,7 @@ Before testing, think through:
 ```
 
 #### Billy.dk Tools
+
 ```typescript
 // Test list_billy_invoices
 ✅ Returns invoice list
@@ -251,6 +266,7 @@ Before testing, think through:
 ```
 
 #### Database Tools
+
 ```typescript
 // Test get_leads
 ✅ Returns user's leads
@@ -290,6 +306,7 @@ Provide a comprehensive test report:
 **Status:** [PASS/FAIL/PARTIAL]
 
 ## Summary
+
 - Total Tools: [NUMBER]
 - Tested: [NUMBER]
 - Passed: [NUMBER]
@@ -297,37 +314,44 @@ Provide a comprehensive test report:
 - Skipped: [NUMBER]
 
 ## Gmail Tools (15)
+
 - ✅ search_gmail - PASS
 - ✅ get_gmail_thread - PASS
 - ❌ create_gmail_draft - FAIL: [ISSUE]
 - ...
 
 ## Calendar Tools (8)
+
 - ✅ get_calendar_events - PASS
 - ❌ create_calendar_event - FAIL: [ISSUE]
 - ...
 
 ## Billy.dk Tools (7)
+
 - ✅ list_billy_invoices - PASS
 - ✅ create_billy_invoice - PASS
 - ...
 
 ## Database Tools (5)
+
 - ✅ get_leads - PASS
 - ✅ create_lead - PASS
 - ...
 
 ## Issues Found
+
 1. [ISSUE DESCRIPTION]
    - Tool: [TOOL NAME]
    - Severity: [HIGH/MEDIUM/LOW]
    - Fix: [RECOMMENDATION]
 
 ## Recommendations
+
 1. [RECOMMENDATION]
 2. [RECOMMENDATION]
 
 ## Next Steps
+
 1. [NEXT STEP]
 2. [NEXT STEP]
 ```
@@ -344,6 +368,7 @@ Provide a comprehensive test report:
 ## ITERATIVE REFINEMENT
 
 If tests fail:
+
 1. **Identify root cause:** Why did it fail?
 2. **Fix the issue:** Update handler, validation, or integration
 3. **Re-test:** Verify fix works
@@ -353,4 +378,3 @@ If tests fail:
 ---
 
 **CRITICAL:** Test all tools before marking as complete. Missing a tool could cause production issues.
-

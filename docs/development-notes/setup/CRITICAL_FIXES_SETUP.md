@@ -56,7 +56,7 @@
 
 ### **Step 1: Install Redis Package**
 
-```bash
+````bash
 pnpm add @upstash/redis
 
 ```text
@@ -329,7 +329,7 @@ pnpm dev
 pnpm build
 pnpm start
 
-```
+````
 
 ---
 

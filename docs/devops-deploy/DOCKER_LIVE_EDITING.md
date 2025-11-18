@@ -11,16 +11,19 @@ Docker development setup er nu opdateret til at understøtte **live editing** - 
 ## 🚀 Live Editing Features
 
 ### ✅ Backend Hot-Reload
+
 - **Volume Mounts:** Alle server filer er mounted (read-write)
 - **Watch Mode:** `tsx watch` genstarter automatisk ved filændringer
 - **Live Fixes:** Rediger kode i `server/` og se ændringer med det samme
 
 ### ✅ Frontend Hot-Reload (Optional)
+
 - **Volume Mounts:** Alle client filer er mounted (read-write)
 - **Vite HMR:** Vite hot module replacement virker i container
 - **Live Fixes:** Rediger kode i `client/` og se ændringer med det samme
 
 ### ✅ Database Persistence
+
 - **Volume:** Database data persisteres i Docker volume
 - **Migrations:** Kør migrations direkte i container
 
@@ -37,6 +40,7 @@ docker-compose -f docker-compose.dev.yml up -d
 ```
 
 **Services:**
+
 - Backend: http://localhost:3000
 - Frontend: http://localhost:5173
 - Database: localhost:3307
@@ -53,6 +57,7 @@ pnpm dev:vite
 ```
 
 **Fordele:**
+
 - Hurtigere frontend hot-reload (native Vite)
 - Backend isolation i Docker
 - Bedre debugging for frontend
@@ -68,12 +73,14 @@ docker-compose -f docker-compose.dev.yml up
 ### 2. Rediger Kode
 
 **Backend:**
+
 - Rediger filer i `server/` directory
 - `tsx watch` detekterer ændringer automatisk
 - Backend genstarter automatisk
 - Se logs: `docker-compose -f docker-compose.dev.yml logs -f backend-dev`
 
 **Frontend:**
+
 - Rediger filer i `client/` directory
 - Vite HMR opdaterer browseren automatisk
 - Se logs: `docker-compose -f docker-compose.dev.yml logs -f frontend-dev`
@@ -90,28 +97,28 @@ docker-compose -f docker-compose.dev.yml up
 
 ```yaml
 volumes:
-  - ./server:/app/server          # Backend source (read-write)
-  - ./shared:/app/shared          # Shared code
-  - ./drizzle:/app/drizzle         # Database schema
+  - ./server:/app/server # Backend source (read-write)
+  - ./shared:/app/shared # Shared code
+  - ./drizzle:/app/drizzle # Database schema
   - ./package.json:/app/package.json
   - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
   - ./check-env.js:/app/check-env.js
   - ./tsconfig.json:/app/tsconfig.json
-  - /app/node_modules             # Exclude (use container's)
-  - /app/dist                     # Exclude
+  - /app/node_modules # Exclude (use container's)
+  - /app/dist # Exclude
 ```
 
 ### Frontend Volumes
 
 ```yaml
 volumes:
-  - ./client:/app/client          # Frontend source (read-write)
-  - ./shared:/app/shared          # Shared code
+  - ./client:/app/client # Frontend source (read-write)
+  - ./shared:/app/shared # Shared code
   - ./package.json:/app/package.json
   - ./vite.config.ts:/app/vite.config.ts
   - ./tsconfig.json:/app/tsconfig.json
-  - /app/node_modules             # Exclude (use container's)
-  - /app/client/dist             # Exclude
+  - /app/node_modules # Exclude (use container's)
+  - /app/client/dist # Exclude
 ```
 
 ## Live Fixing Examples
@@ -144,6 +151,7 @@ volumes:
 ### 1. Exclude Unnecessary Files
 
 `.dockerignore` ekskluderer allerede:
+
 - `node_modules`
 - `dist`
 - `.git`
@@ -154,7 +162,7 @@ volumes:
 
 ```yaml
 volumes:
-  - /app/node_modules  # Use container's node_modules (faster)
+  - /app/node_modules # Use container's node_modules (faster)
 ```
 
 ### 3. Monitor Resource Usage
@@ -174,6 +182,7 @@ docker system df
 **Problem:** Ændringer i `server/` genstarter ikke backend
 
 **Solutions:**
+
 1. Check logs: `docker-compose -f docker-compose.dev.yml logs backend-dev`
 2. Verify volume mounts: `docker-compose -f docker-compose.dev.yml config`
 3. Restart backend: `docker-compose -f docker-compose.dev.yml restart backend-dev`
@@ -184,6 +193,7 @@ docker system df
 **Problem:** Ændringer i `client/` opdaterer ikke browseren
 
 **Solutions:**
+
 1. Check logs: `docker-compose -f docker-compose.dev.yml logs frontend-dev`
 2. Verify Vite HMR connection (check browser console)
 3. Restart frontend: `docker-compose -f docker-compose.dev.yml restart frontend-dev`
@@ -194,13 +204,14 @@ docker system df
 **Problem:** Docker detekterer ikke filændringer (Windows)
 
 **Solutions:**
+
 1. **Use WSL2:** Mount volumes via WSL2 for bedre performance
 2. **Docker Desktop Settings:** Enable file sharing for projekt directory
 3. **Polling Mode:** Add to `vite.config.ts`:
    ```typescript
    server: {
      watch: {
-       usePolling: true
+       usePolling: true;
      }
    }
    ```
@@ -210,6 +221,7 @@ docker system df
 **Problem:** File watching er langsomt i Docker
 
 **Solutions:**
+
 1. **Use native frontend:** `pnpm dev:vite` (ikke i Docker)
 2. **Exclude more files:** Update `.dockerignore`
 3. **Use WSL2:** Bedre performance end Windows volumes
@@ -219,10 +231,12 @@ docker system df
 ### 1. Development Workflow
 
 **Anbefalet:**
+
 - Backend + Database i Docker (isolation)
 - Frontend native (performance)
 
 **Alternativ:**
+
 - Alt i Docker (hvis du vil have fuld isolation)
 
 ### 2. File Editing
@@ -269,11 +283,11 @@ docker-compose -f docker-compose.dev.yml exec backend-dev sh
 
 ## Performance Comparison
 
-| Setup | Startup | Hot-Reload | Resource |
-|-------|---------|------------|----------|
-| **Full Docker** | ~2 min | Medium | ~2GB |
-| **Hybrid (Backend Docker)** | ~40s | Fast | ~450MB |
-| **Native** | ~8s | Fastest | ~300MB |
+| Setup                       | Startup | Hot-Reload | Resource |
+| --------------------------- | ------- | ---------- | -------- |
+| **Full Docker**             | ~2 min  | Medium     | ~2GB     |
+| **Hybrid (Backend Docker)** | ~40s    | Fast       | ~450MB   |
+| **Native**                  | ~8s     | Fastest    | ~300MB   |
 
 **Anbefaling:** Hybrid approach for bedste balance mellem isolation og performance.
 
@@ -286,4 +300,3 @@ docker-compose -f docker-compose.dev.yml exec backend-dev sh
 ---
 
 **Nu kan du live fixe direkte i Docker! 🚀**
-

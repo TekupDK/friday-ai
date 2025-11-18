@@ -87,7 +87,7 @@ Komplet API optimering implementation med **50-70% forventet reduktion i API cal
 
 ### Browser Console
 
-```javascript
+````javascript
 // Request Queue
 window.__requestQueue?.getQueueSize();
 window.__requestQueue?.isRateLimited();
@@ -152,7 +152,7 @@ docs/
 ├── API_OPTIMIZATION_DOCUMENTATION_INDEX.md
 └── VIRTUAL_SCROLLING_INTEGRATION.md
 
-```
+````
 
 ---
 

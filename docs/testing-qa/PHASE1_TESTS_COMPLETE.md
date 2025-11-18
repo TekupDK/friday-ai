@@ -12,7 +12,7 @@
 
 **File:** `tests/unit/phase1-email-list.test.tsx`
 
-```text
+````text
 ✓ Phase 1: Code Structure Verification (13 tests)
   ✓ should have EmailQuickActions imported in EmailListAI
   ✓ should have conditional badge rendering (score >= 70)
@@ -390,7 +390,7 @@ They just need full app authentication & data to run.
 = VISUAL REGRESSION BASELINES CREATED!
 = READY FOR PHASE 2! 🚀
 
-```
+````
 
 **Total tid investeret i tests:** 3 timer
 **ROI:** Automated verification af alle Phase 1 forbedringer

@@ -29,11 +29,13 @@ Benchmark technologies, tools, or frameworks and provide a comprehensive compari
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `web_search` - Research current technology information
 - `read_file` - Review current architecture and stack
 - `codebase_search` - Understand current technology usage
 
 **DO NOT:**
+
 - Guess technology details
 - Skip citation requirements
 - Ignore current stack constraints
@@ -67,30 +69,38 @@ Before benchmarking, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Technology Evaluation Structure
+
 ```markdown
 ## Technology Comparison: [Technology Name]
 
 ### Overview
+
 [Brief description]
 
 ### Features Comparison
-| Feature | Option A | Option B | Option C |
-|---------|----------|----------|----------|
+
+| Feature   | Option A  | Option B  | Option C  |
+| --------- | --------- | --------- | --------- |
 | [Feature] | [Details] | [Details] | [Details] |
 
 ### Pros & Cons
+
 **Option A:**
+
 - ✅ Pros
 - ❌ Cons
 
 ### Use Cases
+
 - [Use case 1]
 - [Use case 2]
 
 ### Recommendations
+
 [Specific recommendation with rationale]
 
 ### Citations
+
 - [Source 1]
 - [Source 2]
 ```
@@ -128,6 +138,7 @@ Before benchmarking, think through:
 ## VERIFICATION
 
 After benchmarking:
+
 - ✅ All options researched
 - ✅ Comparison table complete
 - ✅ Citations included
@@ -140,10 +151,12 @@ After benchmarking:
 ### Technology Benchmark: [Technology Category]
 
 **Evaluation Criteria:**
+
 - [Criterion 1]
 - [Criterion 2]
 
 **Options Evaluated:**
+
 1. [Option A]
 2. [Option B]
 3. [Option C]
@@ -160,6 +173,7 @@ After benchmarking:
 [Best option with rationale]
 
 **Citations:**
+
 - [Source 1]
 - [Source 2]
 ```
@@ -171,4 +185,3 @@ After benchmarking:
 - **Be objective:** Present pros and cons fairly
 - **Consider context:** Evaluate for Friday AI Chat specifically
 - **Provide actionable:** Give clear recommendations
-

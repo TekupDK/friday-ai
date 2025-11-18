@@ -7,6 +7,7 @@ All notable changes to this project related to the PostgreSQL migration from MyS
 ### 🚀 Major Version Release
 
 #### Summary
+
 - Complete migration to Supabase PostgreSQL
 - 84+ UI components fully implemented
 - Production-ready status achieved
@@ -605,8 +606,9 @@ None - all changes are additive and backward-compatible.
 
    ```bash
    mysqldump -u user -p database_name > backup.sql
+   ```
 
-```text
+````text
 
 1. **Update Dependencies**
 
@@ -655,7 +657,7 @@ git checkout feature/email-tab-enhancements
 # Update .env to MySQL connection string
 DATABASE_URL=mysql://user:password@host:3306/database
 
-```
+````
 
 ---
 

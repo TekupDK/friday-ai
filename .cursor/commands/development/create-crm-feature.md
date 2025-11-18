@@ -31,12 +31,14 @@ Build a CRM feature that integrates seamlessly with the existing CRM module.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing CRM code
 - `codebase_search` - Find similar CRM features
 - `grep` - Search for CRM patterns
 - `search_replace` - Implement CRM feature
 
 **DO NOT:**
+
 - Create feature without reviewing CRM patterns
 - Skip user scoping
 - Ignore permissions
@@ -69,6 +71,7 @@ Before creating, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: CRM Router Structure
+
 ```typescript
 // In server/routers.ts
 export const appRouter = router({
@@ -85,6 +88,7 @@ export const appRouter = router({
 ```
 
 ### Example: CRM Procedure Pattern
+
 ```typescript
 // In server/routers/crm-[feature]-router.ts
 import { protectedProcedure, router } from "../_core/trpc";
@@ -94,7 +98,10 @@ export const crmFeatureRouter = router({
   getFeature: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .query(async ({ ctx, input }) => {
-      const profile = await getCustomerProfileById(input.customerId, ctx.user.id);
+      const profile = await getCustomerProfileById(
+        input.customerId,
+        ctx.user.id
+      );
       if (!profile) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -102,12 +109,15 @@ export const crmFeatureRouter = router({
         });
       }
       // Return feature data
-      return { /* ... */ };
+      return {
+        /* ... */
+      };
     }),
 });
 ```
 
 ### Example: CRM Database Helper
+
 ```typescript
 // In server/customer-db.ts
 export async function getCustomerProfileById(
@@ -190,6 +200,7 @@ export async function getCustomerProfileById(
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Follows CRM router patterns
 - ✅ User ownership verified
 - ✅ Database helpers created
@@ -204,24 +215,28 @@ After implementation:
 ### CRM Feature: [Feature Name]
 
 **Database Changes:**
+
 - Tables: [list]
 - Migration: [file path]
 
 **Backend:**
+
 - Router: `server/routers/crm-[feature]-router.ts`
 - Procedures: [list]
 - Helpers: [list]
 
 **Frontend:**
+
 - Components: [list]
 - Pages: [list]
 
 **Files Created/Modified:**
+
 - [list of files]
 
 **Verification:**
+
 - ✅ Typecheck: PASSED
 - ✅ Pattern match: PASSED
 - ✅ Integration: PASSED
 ```
-

@@ -56,7 +56,7 @@ Rebuild V4.1 dataset with improved linking, enrichment, and data quality.
 | **Total Leads** | 749           | 662           | -87 (spam removed) |
 | **Email**       | 72.6%         | 73.0%         | +0.4%              |
 | **Phone**       | 82.0%         | 81.9%         | -0.1%              |
-| **Address**| 61.5%         | 64.4%         |**+2.9%** ✓        |
+| **Address**     | 61.5%         | 64.4%         | **+2.9%** ✓        |
 | **Time**        | 60.6%         | 60.6%         | 0.0%               |
 | **Price**       | 55.9%         | 52.7%         | -3.2%              |
 | **m²**          | 49.1%         | 46.5%         | -2.6%              |

@@ -16,7 +16,7 @@
    - ✅ Documentation matches: "Sentry v10.25.0"
 
 2. **Server Implementation**
-   - ✅ Sentry.init() called before other imports (Verified in server/_core/index.ts:23-39)
+   - ✅ Sentry.init() called before other imports (Verified in server/\_core/index.ts:23-39)
    - ✅ Conditional initialization: `ENV.sentryEnabled && ENV.sentryDsn` (Correct)
    - ✅ Express integration: `Sentry.expressIntegration()` (Correct)
    - ✅ No additional middleware in startServer() (Correct for v10)
@@ -63,6 +63,7 @@
    - **Problem:** Viser `Sentry.addIntegration()` og `Sentry.setupExpressErrorHandler()` som "After (v10)"
    - **Faktisk Implementation:** Kun `Sentry.expressIntegration()` i `Sentry.init()` - ingen ekstra middleware
    - **Fix:** Opdater dokumentationen til at matche faktisk implementation:
+
    ```typescript
    // After (v10) - Faktisk implementation
    Sentry.init({
@@ -114,6 +115,7 @@
 ### 1. Sentry Version Consistency
 
 **✅ ALLE KORREKTE:**
+
 - package.json: `"@sentry/node": "^10.25.0"` ✅
 - package.json: `"@sentry/react": "^10.25.0"` ✅
 - SENTRY_SETUP.md: "Version: @sentry/node 10.25.0, @sentry/react 10.25.0" ✅
@@ -122,6 +124,7 @@
 ### 2. Server Implementation
 
 **✅ KORREKT:**
+
 ```typescript
 // server/_core/index.ts:25-33
 if (ENV.sentryEnabled && ENV.sentryDsn) {
@@ -137,12 +140,14 @@ if (ENV.sentryEnabled && ENV.sentryDsn) {
 ```
 
 **✅ KORREKT:**
+
 - Ingen ekstra middleware i startServer() ✅
 - Kommentarer forklarer at expressIntegration() håndterer alt ✅
 
 ### 3. Client Implementation
 
 **✅ KORREKT:**
+
 ```typescript
 // client/src/main.tsx:45-57
 if (sentryEnabled && sentryDsn) {
@@ -160,6 +165,7 @@ if (sentryEnabled && sentryDsn) {
 ### 4. Environment Variables
 
 **✅ ALLE KORREKTE:**
+
 - Server variables: `SENTRY_DSN`, `SENTRY_ENABLED`, `SENTRY_TRACES_SAMPLE_RATE` ✅
 - Client variables: `VITE_SENTRY_DSN`, `VITE_SENTRY_ENABLED`, `VITE_SENTRY_TRACES_SAMPLE_RATE` ✅
 - Default values korrekte ✅
@@ -168,6 +174,7 @@ if (sentryEnabled && sentryDsn) {
 ### 5. Test Status
 
 **✅ VERIFICERET:**
+
 - Server tests: 18 tests, alle passerer ✅
 - Client tests: 4 tests, alle passerer ✅
 - Total: 22 tests, 100% passing ✅
@@ -175,6 +182,7 @@ if (sentryEnabled && sentryDsn) {
 ### 6. Documentation Consistency
 
 **⚠️ MINOR ISSUE:**
+
 - WORK_COMPLETED_2025-01-28.md viser outdated migration kode
 - Alle andre dokumenter er korrekte ✅
 
@@ -220,10 +228,12 @@ if (sentryEnabled && sentryDsn) {
 - **Environment Setup:** 100% komplet ✅
 
 **Hovedproblemer:**
+
 - 1 outdated dokumentationsfil (WORK_COMPLETED_2025-01-28.md)
 - TODO list skal opdateres
 
 **Anbefaling:**
+
 - Fix dokumentationen først
 - Derefter konfigurer alerts
 - Til sidst test integration
@@ -232,4 +242,3 @@ if (sentryEnabled && sentryDsn) {
 
 **Valideret af:** AI Assistant  
 **Dato:** January 28, 2025
-

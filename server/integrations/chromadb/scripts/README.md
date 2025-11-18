@@ -27,7 +27,7 @@ Use **real production data** from RenDetalje (July-December 2025) to:
 
 ### Step 1: Collect Real Data (30 min)
 
-```bash
+````bash
 npx tsx server/integrations/chromadb/scripts/collect-real-data.ts
 
 ```text
@@ -316,7 +316,7 @@ npx tsx server/integrations/chromadb/scripts/tune-threshold.ts
 npm run dev
 # Create test leads and observe duplicate detection
 
-```
+````
 
 ---
 

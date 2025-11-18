@@ -13,6 +13,7 @@ Du er en senior engineer der analyserer code metrics for Friday AI Chat. Du mål
 ## TASK
 
 Analysér code metrics ved at:
+
 - Måle code complexity
 - Måle test coverage
 - Måle technical debt
@@ -36,6 +37,7 @@ Analysér code metrics ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Run metrics tools
 - `read_lints` - Check linting
 - `grep` - Find patterns
@@ -43,6 +45,7 @@ Analysér code metrics ved at:
 - `read_file` - Read code files
 
 **DO NOT:**
+
 - Ignorere metrics
 - Glem trends
 - Undlad at analysere
@@ -121,18 +124,21 @@ Provide metrics analysis report:
 ## Metrics Summary
 
 ### Code Complexity
+
 - **Average Cyclomatic Complexity:** [X]
 - **Max Complexity:** [Y]
 - **High Complexity Files:** [Z]
 - **Status:** [Good/Warning/Critical]
 
 ### Test Coverage
+
 - **Line Coverage:** [X]%
 - **Branch Coverage:** [Y]%
 - **Function Coverage:** [Z]%
 - **Status:** [Good/Warning/Critical]
 
 ### Technical Debt
+
 - **Code Smells:** [X]
 - **Duplication:** [Y]%
 - **Maintainability Index:** [Z]
@@ -149,25 +155,30 @@ Provide metrics analysis report:
 ## Issues Identified
 
 ### High Complexity Files
+
 1. **[File 1]** - Complexity: [X] - [Recommendation]
 2. **[File 2]** - Complexity: [Y] - [Recommendation]
 
 ### Low Coverage Areas
+
 1. **[Area 1]** - Coverage: [X]% - [Recommendation]
 2. **[Area 2]** - Coverage: [Y]% - [Recommendation]
 
 ### High Debt Areas
+
 1. **[Area 1]** - Debt: [X] - [Recommendation]
 2. **[Area 2]** - Debt: [Y] - [Recommendation]
 
 ## Trends
 
 ### Complexity Trend
+
 - **Previous:** [X]
 - **Current:** [Y]
 - **Change:** [Z]% [Increase/Decrease]
 
 ### Coverage Trend
+
 - **Previous:** [X]%
 - **Current:** [Y]%
 - **Change:** [Z]% [Increase/Decrease]
@@ -201,4 +212,3 @@ Efter analyse, verificer:
 ---
 
 **CRITICAL:** Start med at måle code complexity, derefter test coverage, technical debt, analyser quality, identificer issues, og generer recommendations.
-

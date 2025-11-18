@@ -30,12 +30,14 @@ Based on the current file, suggest ways AI could automate or improve this flow, 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read current code
 - `codebase_search` - Find AI integrations
 - `grep` - Search for AI patterns
 - `read_file` - Check AI tools
 
 **DO NOT:**
+
 - Miss automation opportunities
 - Ignore vector search potential
 - Skip data embedding
@@ -95,44 +97,53 @@ After generating, verify:
 
 Provide AI augmentation ideas:
 
-```markdown
+````markdown
 # AI-Augmented Coding Ideas: [CODE/FEATURE]
 
 **Date:** 2025-11-16
 **Code:** [DESCRIPTION]
 
 ## Ways AI Could Automate or Improve This Flow
+
 1. **[Automation 1]** - [Description] - [Benefit] - [How to implement]
 2. **[Automation 2]** - [Description] - [Benefit] - [How to implement]
 3. **[Automation 3]** - [Description] - [Benefit] - [How to implement]
 
 ## Data That Could Be Embedded
+
 1. **[Data 1]** - [What data] - [Why embed] - [Where to store]
 2. **[Data 2]** - [What data] - [Why embed] - [Where to store]
 3. **[Data 3]** - [What data] - [Why embed] - [Where to store]
 
 ## Where Vector Search Could Help
+
 1. **[Use Case 1]** - [Description] - [Why vector search] - [Implementation]
 2. **[Use Case 2]** - [Description] - [Why vector search] - [Implementation]
 3. **[Use Case 3]** - [Description] - [Why vector search] - [Implementation]
 
 ## Assistant Actions for Friday AI
+
 1. **[Action 1]** - [Description] - [Tool needed] - [Value]
    ```typescript
    // Suggested tool definition
    ```
+````
+
 2. **[Action 2]** - [Description] - [Tool needed] - [Value]
 3. **[Action 3]** - [Description] - [Tool needed] - [Value]
 
 ## Integration Approach
+
 - **AI Model:** [Which model] - [Why]
 - **Vector DB:** [ChromaDB/other] - [Why]
 - **Tools:** [Which tools] - [Why]
 
 ## Priority Recommendations
+
 1. **[HIGH]** [Idea 1] - [Value] - [Effort]
 2. **[MEDIUM]** [Idea 2] - [Value] - [Effort]
 3. **[LOW]** [Idea 3] - [Value] - [Effort]
+
 ```
 
 ## GUIDELINES
@@ -147,3 +158,4 @@ Provide AI augmentation ideas:
 
 **CRITICAL:** Generate AI augmentation ideas that leverage Friday AI Chat's AI capabilities effectively.
 
+```

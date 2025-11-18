@@ -11,6 +11,7 @@
 The Memory Rules System enforces 25 critical business rules that govern Friday AI's behavior. These rules ensure compliance with business requirements, prevent costly mistakes, and maintain consistency across all AI interactions.
 
 **Key Features:**
+
 - ✅ 14 rules implemented (56% of target 25)
 - ✅ Programmatic enforcement in server code
 - ✅ CRITICAL rules block actions on violations
@@ -64,9 +65,11 @@ Execute Action
 **Description:** Applies all memory rules to a context and returns validation results.
 
 **Parameters:**
+
 - `context` (any): Context object with relevant data (proposedTime, invoice, lead, etc.)
 
 **Returns:**
+
 ```typescript
 {
   passed: boolean;        // true if no CRITICAL violations
@@ -76,10 +79,11 @@ Execute Action
 ```
 
 **Example:**
+
 ```typescript
 const context = {
   proposedTime: "09:15",
-  calendarEvent: { attendees: ["test@example.com"] }
+  calendarEvent: { attendees: ["test@example.com"] },
 };
 
 const result = await applyMemoryRules(context);
@@ -92,12 +96,14 @@ const result = await applyMemoryRules(context);
 **Description:** Builds memory rules context from intent and email context.
 
 **Parameters:**
+
 - `intent` (ParsedIntent): Parsed user intent
 - `emailContext` (EmailContext, optional): Email context if available
 
 **Returns:** Context object for rule validation
 
 **Example:**
+
 ```typescript
 const intent = parseIntent("Book møde med Mette kl 9:15");
 const context = buildMemoryContext(intent);
@@ -111,46 +117,55 @@ const context = buildMemoryContext(intent);
 ### CRITICAL Rules (7/9)
 
 #### MEMORY_1: ALTID tjek dato/tid først
+
 - **Category:** TIME
 - **Enforcement:** Verifies current date/time before operations
 - **Impact:** Prevents date-related business errors
 
 #### MEMORY_4: Lead source specific handling
+
 - **Category:** LEAD
 - **Enforcement:** Blocks direct replies to lead emails (Rengøring.nu, Leadmail.no)
 - **Impact:** Prevents sending replies to wrong addresses
 
 #### MEMORY_5: ALTID tjek kalender før datoforslag
+
 - **Category:** CALENDAR
 - **Enforcement:** Requires calendar check before proposing dates
 - **Impact:** Prevents double-booking
 
 #### MEMORY_7: ALTID søg efter eksisterende først
+
 - **Category:** EMAIL
 - **Enforcement:** Requires email history check before sending quotes
 - **Impact:** Prevents duplicate offers
 
 #### MEMORY_16: Altid anmod om billeder for flytterengøring
+
 - **Category:** LEAD
 - **Enforcement:** Blocks quote sending until photos received
 - **Impact:** Ensures accurate quotes for moving cleaning
 
 #### MEMORY_17: Faktura-udkast kun, aldrig auto-godkend
+
 - **Category:** LEAD
 - **Enforcement:** Enforces draft state, verifies 349 kr/time price
 - **Impact:** Prevents unauthorized invoice approvals
 
 #### MEMORY_18: Tjek ALTID for overlaps først
+
 - **Category:** CALENDAR
 - **Enforcement:** Requires conflict check before calendar events
 - **Impact:** Prevents double-booking
 
 #### MEMORY_19: ALDRIG brug attendees parameter
+
 - **Category:** CALENDAR
 - **Enforcement:** Removes attendees from calendar events
 - **Impact:** Prevents unwanted Google invitations
 
 #### MEMORY_24: Job completion kræver 6-step checklist
+
 - **Category:** LEAD
 - **Enforcement:** Verifies all 6 steps completed (invoice, team, payment, time, calendar, labels)
 - **Impact:** Ensures complete job documentation
@@ -158,16 +173,19 @@ const context = buildMemoryContext(intent);
 ### HIGH Priority Rules (3/3)
 
 #### MEMORY_2: Gmail duplicate check før tilbud
+
 - **Category:** EMAIL
 - **Enforcement:** Sets flag for Gmail duplicate check
 - **Impact:** Prevents duplicate offers
 
 #### MEMORY_15: Runde tider only
+
 - **Category:** CALENDAR
 - **Enforcement:** Rounds times to nearest half hour (9:00, 9:30)
 - **Impact:** Maintains consistent booking times
 
 #### MEMORY_22: Fast timepris 349 kr. inkl. moms
+
 - **Category:** LEAD
 - **Enforcement:** Verifies price includes "349 kr" and "inkl. moms"
 - **Impact:** Ensures correct pricing in offers
@@ -175,11 +193,13 @@ const context = buildMemoryContext(intent);
 ### MEDIUM Priority Rules (2/2)
 
 #### MEMORY_23: Miljøvenlig profil
+
 - **Category:** STYLE
 - **Enforcement:** Suggests environmental references in offers
 - **Impact:** Maintains brand messaging
 
 #### MEMORY_25: Verify lead name against actual email
+
 - **Category:** LEAD
 - **Enforcement:** Verifies lead name matches email signature
 - **Impact:** Uses correct customer names
@@ -255,6 +275,7 @@ The `buildMemoryContext()` function extracts relevant data from intents:
 ### Error Messages
 
 User-friendly Danish error messages:
+
 - Lists all CRITICAL violations
 - Includes warnings if present
 - Explains why action was blocked
@@ -269,6 +290,7 @@ User-friendly Danish error messages:
 **Symptoms:** Actions execute even when rules should block them
 
 **Solutions:**
+
 1. Verify `applyMemoryRules()` is called in `server/ai-router.ts`
 2. Check context building extracts correct data
 3. Verify rule enforcement functions return `false` on violations
@@ -279,6 +301,7 @@ User-friendly Danish error messages:
 **Symptoms:** Rules block valid actions
 
 **Solutions:**
+
 1. Review context building logic
 2. Check rule enforcement conditions
 3. Verify intent parsing extracts correct data
@@ -289,6 +312,7 @@ User-friendly Danish error messages:
 **Symptoms:** Rules don't trigger when they should
 
 **Solutions:**
+
 1. Verify `buildMemoryContext()` extracts all needed data
 2. Check intent params contain required fields
 3. Review rule enforcement early returns
@@ -303,11 +327,13 @@ User-friendly Danish error messages:
 Location: `tests/unit/memory-rules.test.ts`
 
 **Coverage:**
+
 - ✅ MEMORY_15 time rounding (8 test cases)
 - ✅ applyMemoryRules integration (2 test cases)
 - ✅ All tests passing (10/10)
 
 **Run Tests:**
+
 ```bash
 pnpm test tests/unit/memory-rules.test.ts
 ```
@@ -315,6 +341,7 @@ pnpm test tests/unit/memory-rules.test.ts
 ### Integration Tests (TODO)
 
 **Needed:**
+
 - Test rule enforcement in actual workflows
 - Test action blocking on violations
 - Test warning logging
@@ -325,11 +352,13 @@ pnpm test tests/unit/memory-rules.test.ts
 ## Future Enhancements
 
 ### Short-term
+
 1. Add tests for MEMORY_2, MEMORY_17, MEMORY_25
 2. Improve type safety (replace `any` with interfaces)
 3. Add integration tests
 
 ### Long-term
+
 1. Add rule violation logging/monitoring
 2. Create rule compliance dashboard
 3. Add rule versioning
@@ -347,4 +376,3 @@ pnpm test tests/unit/memory-rules.test.ts
 ---
 
 **Last Updated:** 2025-11-16
-

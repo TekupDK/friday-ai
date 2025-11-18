@@ -24,7 +24,7 @@ Dette dokument viser de konkrete faser og features vi vil implementere for email
 
 **Implementering:**
 
-```typescript
+````typescript
 // Backend: server/email-ai-service.ts
 interface EmailSummary {
   threadId: string;
@@ -400,7 +400,7 @@ CREATE TABLE label_patterns (
   last_updated TIMESTAMP
 );
 
-```
+````
 
 ### AI/ML Services
 

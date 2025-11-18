@@ -6,7 +6,10 @@ test("LoginPage Canvas visuel verifikation", async ({ page }) => {
   const canvas = page.locator("canvas");
   await expect(canvas).toBeVisible();
 
-  await page.screenshot({ path: "test-results/login-page-canvas.png", fullPage: true });
+  await page.screenshot({
+    path: "test-results/login-page-canvas.png",
+    fullPage: true,
+  });
 
   const box = await canvas.boundingBox();
   expect(Boolean(box && box.width > 0 && box.height > 0)).toBe(true);
@@ -45,7 +48,17 @@ test("LoginPage Canvas visuel verifikation", async ({ page }) => {
     }
     const edgeDark = corners.every(d => d.r + d.g + d.b < 120);
     const baseBlueish = corners.some(d => d.b > d.g && d.b > d.r);
-    return { exists: true, center, corners, cyanCount, whiteParticleCount, edgeDark, baseBlueish, w, h };
+    return {
+      exists: true,
+      center,
+      corners,
+      cyanCount,
+      whiteParticleCount,
+      edgeDark,
+      baseBlueish,
+      w,
+      h,
+    };
   });
 
   expect(metrics.exists).toBe(true);
@@ -62,14 +75,19 @@ test("LoginPage Canvas visuel verifikation", async ({ page }) => {
     return { r: d[0], g: d[1], b: d[2] };
   });
 
-  const delta = Math.abs(metrics.center.r - metrics2.r) + Math.abs(metrics.center.g - metrics2.g) + Math.abs(metrics.center.b - metrics2.b);
+  const delta =
+    Math.abs(metrics.center.r - metrics2.r) +
+    Math.abs(metrics.center.g - metrics2.g) +
+    Math.abs(metrics.center.b - metrics2.b);
   console.log("AnimDelta", delta);
   // More lenient assertion for CI environments
   expect(delta).toBeLessThan(20);
 });
 
 test("LoginPage Canvas detaljeret verifikation (3000)", async ({ browser }) => {
-  const context = await browser.newContext({ viewport: { width: 2560, height: 1440 } });
+  const context = await browser.newContext({
+    viewport: { width: 2560, height: 1440 },
+  });
   const page = await context.newPage();
   const errors: string[] = [];
   page.on("pageerror", e => errors.push(String(e)));
@@ -82,7 +100,10 @@ test("LoginPage Canvas detaljeret verifikation (3000)", async ({ browser }) => {
 
   await page.waitForSelector("canvas", { timeout: 10000 });
 
-  await page.screenshot({ path: "test-results/login-3000-full.png", fullPage: true });
+  await page.screenshot({
+    path: "test-results/login-3000-full.png",
+    fullPage: true,
+  });
 
   const canvas = page.locator("canvas");
   const count = await canvas.count();
@@ -112,7 +133,10 @@ test("LoginPage Canvas detaljeret verifikation (3000)", async ({ browser }) => {
       width: box.width / 2,
       height: box.height / 2,
     };
-    await page.screenshot({ path: "test-results/login-5173-canvas-closeup.png", clip });
+    await page.screenshot({
+      path: "test-results/login-5173-canvas-closeup.png",
+      clip,
+    });
   }
 
   const p1 = await page.evaluate(() => {
@@ -136,7 +160,8 @@ test("LoginPage Canvas detaljeret verifikation (3000)", async ({ browser }) => {
   });
 
   if (p1 && p2) {
-    const delta = Math.abs(p1.r - p2.r) + Math.abs(p1.g - p2.g) + Math.abs(p1.b - p2.b);
+    const delta =
+      Math.abs(p1.r - p2.r) + Math.abs(p1.g - p2.g) + Math.abs(p1.b - p2.b);
     console.log("AnimDelta", delta);
   }
 
@@ -146,14 +171,22 @@ test("LoginPage Canvas detaljeret verifikation (3000)", async ({ browser }) => {
   await context.close();
 });
 
-test("LoginPage Canvas runtime verifikation (3000, animation)", async ({ page }) => {
+test("LoginPage Canvas runtime verifikation (3000, animation)", async ({
+  page,
+}) => {
   page.on("console", () => {});
   await page.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
   await page.waitForSelector("canvas", { timeout: 10000 });
 
-  await page.screenshot({ path: "test-results/login-3000-window-1.png", fullPage: true });
+  await page.screenshot({
+    path: "test-results/login-3000-window-1.png",
+    fullPage: true,
+  });
   await page.waitForTimeout(2000);
-  await page.screenshot({ path: "test-results/login-3000-window-2.png", fullPage: true });
+  await page.screenshot({
+    path: "test-results/login-3000-window-2.png",
+    fullPage: true,
+  });
 
   await page.waitForTimeout(500);
 
@@ -161,7 +194,14 @@ test("LoginPage Canvas runtime verifikation (3000, animation)", async ({ page })
     const c = document.querySelector("canvas") as HTMLCanvasElement | null;
     if (!c) return null as any;
     const r = c.getBoundingClientRect();
-    return { width: c.width, height: c.height, clientWidth: c.clientWidth, clientHeight: c.clientHeight, rectWidth: r.width, rectHeight: r.height };
+    return {
+      width: c.width,
+      height: c.height,
+      clientWidth: c.clientWidth,
+      clientHeight: c.clientHeight,
+      rectWidth: r.width,
+      rectHeight: r.height,
+    };
   });
 
   const positions = await page.evaluate(() => {
@@ -174,7 +214,7 @@ test("LoginPage Canvas runtime verifikation (3000, animation)", async ({ page })
     return pos;
   });
 
-  const initial = await page.evaluate((pos) => {
+  const initial = await page.evaluate(pos => {
     const c = document.querySelector("canvas") as HTMLCanvasElement | null;
     if (!c) return [] as any;
     const ctx = c.getContext("2d")!;
@@ -186,18 +226,27 @@ test("LoginPage Canvas runtime verifikation (3000, animation)", async ({ page })
 
   await page.waitForTimeout(2000);
 
-  const changed = await page.evaluate(({ pos, initial }) => {
-    const c = document.querySelector("canvas") as HTMLCanvasElement | null;
-    if (!c) return 0 as any;
-    const ctx = c.getContext("2d")!;
-    let changes = 0;
-    for (let i = 0; i < pos.length; i++) {
-      const p = pos[i];
-      const d = ctx.getImageData(Math.floor(p.x), Math.floor(p.y), 1, 1).data;
-      if (Math.abs(d[0] - initial[i][0]) + Math.abs(d[1] - initial[i][1]) + Math.abs(d[2] - initial[i][2]) > 2) changes++;
-    }
-    return changes;
-  }, { pos: positions, initial });
+  const changed = await page.evaluate(
+    ({ pos, initial }) => {
+      const c = document.querySelector("canvas") as HTMLCanvasElement | null;
+      if (!c) return 0 as any;
+      const ctx = c.getContext("2d")!;
+      let changes = 0;
+      for (let i = 0; i < pos.length; i++) {
+        const p = pos[i];
+        const d = ctx.getImageData(Math.floor(p.x), Math.floor(p.y), 1, 1).data;
+        if (
+          Math.abs(d[0] - initial[i][0]) +
+            Math.abs(d[1] - initial[i][1]) +
+            Math.abs(d[2] - initial[i][2]) >
+          2
+        )
+          changes++;
+      }
+      return changes;
+    },
+    { pos: positions, initial }
+  );
 
   console.log("RuntimeCanvasDims", dims);
   console.log("AnimationChangedPixels", changed);
@@ -218,10 +267,18 @@ test("LoginPage Canvas high-res verifikation (3000)", async ({ page }) => {
   const dims = await page.evaluate(() => {
     const c = document.querySelector("canvas") as HTMLCanvasElement | null;
     if (!c) return null as any;
-    return { width: c.width, height: c.height, clientWidth: c.clientWidth, clientHeight: c.clientHeight };
+    return {
+      width: c.width,
+      height: c.height,
+      clientWidth: c.clientWidth,
+      clientHeight: c.clientHeight,
+    };
   });
 
-  await page.screenshot({ path: "test-results/login-3000-full-highres.png", fullPage: true });
+  await page.screenshot({
+    path: "test-results/login-3000-full-highres.png",
+    fullPage: true,
+  });
 
   const box = await canvas.first().boundingBox();
   if (box) {
@@ -232,7 +289,10 @@ test("LoginPage Canvas high-res verifikation (3000)", async ({ page }) => {
       width: size,
       height: size,
     };
-    await page.screenshot({ path: "test-results/login-3000-canvas-ultra.png", clip });
+    await page.screenshot({
+      path: "test-results/login-3000-canvas-ultra.png",
+      clip,
+    });
   }
 
   const p1 = await page.evaluate(() => {
@@ -254,7 +314,8 @@ test("LoginPage Canvas high-res verifikation (3000)", async ({ page }) => {
     const d = ctx.getImageData(x, y, 1, 1).data;
     return [d[0], d[1], d[2]];
   });
-  const delta = Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]) + Math.abs(p1[2] - p2[2]);
+  const delta =
+    Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]) + Math.abs(p1[2] - p2[2]);
 
   console.log("HighResDims", dims);
   console.log("HighResDelta", delta);

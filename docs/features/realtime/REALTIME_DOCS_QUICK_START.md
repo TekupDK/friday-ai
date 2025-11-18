@@ -12,7 +12,7 @@ Get the real-time documentation system up and running in 5 minutes.
 
 ### Step 1: Install Dependencies
 
-```bash
+````bash
 # Install all required packages
 pnpm add simple-git@^3.20.0 chokidar@^3.5.3 ws@^8.14.2 commander@^11.1.0 inquirer@^9.2.12 chalk@^5.3.0 ora@^7.0.1 markdown-it@^14.0.0 gray-matter@^4.0.3
 
@@ -434,4 +434,4 @@ For questions or issues:
 ```bash
 pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-matter @types/ws @types/markdown-it @types/inquirer -D
 
-```
+````

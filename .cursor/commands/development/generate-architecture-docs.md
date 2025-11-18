@@ -13,6 +13,7 @@ Du er en senior technical writer der genererer architecture documentation for Fr
 ## TASK
 
 Generer architecture docs ved at:
+
 - Analysere codebase struktur
 - Identificere architecture patterns
 - Dokumentere system architecture
@@ -37,6 +38,7 @@ Generer architecture docs ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find architecture patterns
 - `read_file` - Læs codebase files
 - `grep` - Søg efter patterns
@@ -44,6 +46,7 @@ Generer architecture docs ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Ignorere patterns
 - Glem dependencies
 - Undlad at visualisere
@@ -128,15 +131,18 @@ Provide architecture documentation:
 ## System Architecture
 
 ### Overview
+
 [System overview description]
 
 ### Layers
+
 - **Frontend:** React 19 + TypeScript
 - **Backend:** Express 4 + tRPC 11
 - **Database:** MySQL/TiDB + Drizzle ORM
 - **Integrations:** Google Workspace, Billy.dk, ChromaDB
 
 ### Architecture Patterns
+
 - **Frontend:** Component-based architecture
 - **Backend:** tRPC-based API architecture
 - **Database:** ORM-based data access
@@ -145,12 +151,14 @@ Provide architecture documentation:
 ## Component Architecture
 
 ### Frontend Components
+
 - **Pages:** Top-level page components
 - **Components:** Reusable UI components
 - **Hooks:** Custom React hooks
 - **Utils:** Utility functions
 
 ### Backend Components
+
 - **Routers:** tRPC routers
 - **Actions:** Business logic
 - **Database:** Database helpers
@@ -159,11 +167,13 @@ Provide architecture documentation:
 ## API Architecture
 
 ### tRPC Procedures
+
 - **Queries:** Data fetching
 - **Mutations:** Data modification
 - **Subscriptions:** Real-time updates
 
 ### API Endpoints
+
 - **REST:** Legacy endpoints
 - **tRPC:** Main API layer
 - **Webhooks:** External webhooks
@@ -171,12 +181,14 @@ Provide architecture documentation:
 ## Data Flow
 
 ### Request Flow
+
 1. Client → tRPC → Router
 2. Router → Action → Database
 3. Database → Action → Router
 4. Router → tRPC → Client
 
 ### Integration Flow
+
 1. Friday AI → Intent → Action
 2. Action → Integration → External API
 3. External API → Integration → Action
@@ -185,12 +197,15 @@ Provide architecture documentation:
 ## Diagrams
 
 ### System Architecture
+
 [Diagram description]
 
 ### Component Hierarchy
+
 [Diagram description]
 
 ### API Flow
+
 [Diagram description]
 
 ## Files Generated
@@ -225,4 +240,3 @@ Efter generation, verificer:
 ---
 
 **CRITICAL:** Start med at analysere codebase struktur, derefter identificer architecture patterns, dokumenter system architecture, generer diagrams, og opdater dokumentation.
-

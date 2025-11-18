@@ -26,6 +26,7 @@ Higher roles inherit permissions from lower roles. For example, an `admin` can p
 Permissions are granular actions that can be performed in the system. Each permission is assigned to a minimum role level:
 
 **User-level permissions:**
+
 - `create_task` - Create tasks
 - `create_lead` - Create sales leads
 - `send_email` - Send emails
@@ -38,10 +39,12 @@ Permissions are granular actions that can be performed in the system. Each permi
 - `mark_email_done` - Mark emails as done
 
 **Admin-level permissions:**
+
 - `book_meeting` - Schedule meetings
 - `delete_email` - Delete emails
 
 **Owner-level permissions:**
+
 - `create_invoice` - Create invoices (critical financial action)
 
 ## Usage
@@ -98,7 +101,9 @@ requireRoleOrHigher(userRole, "admin", "delete user"); // Throws FORBIDDEN if no
 import { requireOwnership } from "../rbac";
 
 // After fetching resource from database
-const lead = await db.select().from(leads)
+const lead = await db
+  .select()
+  .from(leads)
   .where(eq(leads.id, input.leadId))
   .limit(1);
 
@@ -115,7 +120,9 @@ requireOwnership(ctx.user.id, lead[0].userId, "lead", input.leadId);
 ```typescript
 import { requireOwnershipBatch } from "../rbac";
 
-const customers = await db.select().from(customerProfiles)
+const customers = await db
+  .select()
+  .from(customerProfiles)
   .where(inArray(customerProfiles.id, input.customerIds));
 
 requireOwnershipBatch(ctx.user.id, customers, "customer profile");
@@ -212,11 +219,11 @@ getLead: protectedProcedure
     const lead = await db.select().from(leads)
       .where(eq(leads.id, input.id))
       .limit(1);
-    
+
     if (!lead[0]) {
       throw new TRPCError({ code: "NOT_FOUND", message: "Lead not found" });
     }
-    
+
     requireOwnership(ctx.user.id, lead[0].userId, "lead", input.id);
     return lead[0];
   }),
@@ -311,7 +318,7 @@ updateLead: protectedProcedure
       ctx.user.id,
       "lead"
     );
-    
+
     // lead is guaranteed to exist and be owned by user
     return await updateLead(input.id, input.name);
   }),
@@ -323,11 +330,11 @@ updateLead: protectedProcedure
     const lead = await db.select().from(leads)
       .where(eq(leads.id, input.id))
       .limit(1);
-    
+
     if (!lead[0]) {
       throw new TRPCError({ code: "NOT_FOUND", message: "Lead not found" });
     }
-    
+
     requireOwnership(ctx.user.id, lead[0].userId, "lead", input.id);
     return await updateLead(input.id, input.name);
   }),
@@ -518,7 +525,7 @@ email: router({
 listTasks: protectedProcedure.query(async ({ ctx }) => {
   const db = await getDb();
   if (!db) return [];
-  
+
   return await db.select().from(tasks)
     .where(eq(tasks.userId, ctx.user.id))
     .orderBy(desc(tasks.createdAt));
@@ -551,18 +558,21 @@ pnpm test server/__tests__/rbac.test.ts
 #### Issue: "FORBIDDEN" error when accessing endpoint
 
 **Symptoms:**
+
 - Getting `FORBIDDEN` error on endpoints that should be accessible
 - Error message: "This action requires [Role] role" or "You need permission: [permission]"
 
 **Solutions:**
 
 1. **Check user role:**
+
    ```typescript
    const userRole = await getUserRole(ctx.user.id);
    console.log("User role:", userRole);
    ```
 
 2. **Verify permission:**
+
    ```typescript
    const hasPerm = hasPermission(userRole, "create_invoice");
    console.log("Has permission:", hasPerm);
@@ -575,18 +585,22 @@ pnpm test server/__tests__/rbac.test.ts
 #### Issue: "Resource not found" when resource exists
 
 **Symptoms:**
+
 - Getting `NOT_FOUND` error even though resource exists
 - May indicate ownership verification is failing
 
 **Solutions:**
 
 1. **Verify resource ownership:**
+
    ```typescript
    // Check if resource exists and get userId
-   const resource = await db.select().from(table)
+   const resource = await db
+     .select()
+     .from(table)
      .where(eq(table.id, resourceId))
      .limit(1);
-   
+
    console.log("Resource userId:", resource[0]?.userId);
    console.log("Current userId:", ctx.user.id);
    ```
@@ -598,12 +612,14 @@ pnpm test server/__tests__/rbac.test.ts
 #### Issue: Permission check always returns false
 
 **Symptoms:**
+
 - `hasPermission()` always returns `false`
 - Unknown action type warnings in logs
 
 **Solutions:**
 
 1. **Verify permission name:**
+
    ```typescript
    // Check if permission exists in ACTION_PERMISSIONS
    const permission: ActionPermission = "create_invoice";
@@ -617,15 +633,18 @@ pnpm test server/__tests__/rbac.test.ts
 #### Issue: Role always returns "user" even for admin
 
 **Symptoms:**
+
 - `getUserRole()` returns "user" for admin users
 - Admin endpoints not accessible
 
 **Solutions:**
 
 1. **Check database role:**
+
    ```sql
    SELECT id, openId, role FROM users WHERE id = [userId];
    ```
+
    - Verify `role` column is set to `'admin'`
 
 2. **Check owner configuration:**
@@ -639,12 +658,14 @@ pnpm test server/__tests__/rbac.test.ts
 ### Debugging Tips
 
 1. **Enable debug logging:**
+
    ```typescript
    const userRole = await getUserRole(ctx.user.id);
    logger.debug({ userId: ctx.user.id, userRole }, "[RBAC] User role resolved");
    ```
 
 2. **Check context:**
+
    ```typescript
    // In tRPC procedure
    console.log("User ID:", ctx.user.id);
@@ -657,18 +678,19 @@ pnpm test server/__tests__/rbac.test.ts
 
 ### Error Codes Reference
 
-| Error Code | Meaning | Solution |
-|------------|---------|----------|
-| `UNAUTHORIZED` | User not authenticated | Ensure user is logged in |
-| `FORBIDDEN` | User lacks required role/permission | Check user role and permissions |
-| `NOT_FOUND` | Resource doesn't exist or not owned | Verify resource exists and ownership |
-| `INTERNAL_SERVER_ERROR` | Database or system error | Check logs for details |
+| Error Code              | Meaning                             | Solution                             |
+| ----------------------- | ----------------------------------- | ------------------------------------ |
+| `UNAUTHORIZED`          | User not authenticated              | Ensure user is logged in             |
+| `FORBIDDEN`             | User lacks required role/permission | Check user role and permissions      |
+| `NOT_FOUND`             | Resource doesn't exist or not owned | Verify resource exists and ownership |
+| `INTERNAL_SERVER_ERROR` | Database or system error            | Check logs for details               |
 
 ## Migration Guide
 
 ### Migrating from manual checks to middleware
 
 **Before:**
+
 ```typescript
 deleteUser: protectedProcedure
   .input(z.object({ userId: z.number() }))
@@ -682,6 +704,7 @@ deleteUser: protectedProcedure
 ```
 
 **After:**
+
 ```typescript
 deleteUser: roleProcedure("admin")
   .input(z.object({ userId: z.number() }))
@@ -696,13 +719,16 @@ deleteUser: roleProcedure("admin")
 ### Currently Protected Endpoints
 
 **Invoice Creation (Owner-only):**
+
 - ✅ `inbox.invoices.create` - Uses `permissionProcedure("create_invoice")`
 - ✅ `automation.createInvoiceFromJob` - Uses `permissionProcedure("create_invoice")`
 
 **Email Management (Admin-only):**
+
 - ✅ `inbox.email.bulkDelete` - Uses `permissionProcedure("delete_email")`
 
 **Customer Operations (Ownership Verified):**
+
 - ✅ `customer.getInvoices` - Uses `verifyResourceOwnership()`
 - ✅ `customer.getEmails` - Uses `verifyResourceOwnership()`
 - ✅ `customer.syncBillyInvoices` - Uses `verifyResourceOwnership()`
@@ -713,6 +739,7 @@ deleteUser: roleProcedure("admin")
 - ✅ `customer.addNote` - Uses `verifyResourceOwnership()`
 
 **Lead Operations (Ownership Verified):**
+
 - ✅ `crm.lead.getLead` - Uses `verifyResourceOwnership()`
 - ✅ `crm.lead.updateLeadStatus` - Uses `verifyResourceOwnership()`
 - ✅ `crm.lead.convertLeadToCustomer` - Uses `verifyResourceOwnership()`
@@ -731,4 +758,3 @@ deleteUser: roleProcedure("admin")
 **Document Version:** 1.0.0  
 **Last Updated:** January 28, 2025  
 **Maintained by:** TekupDK Development Team
-

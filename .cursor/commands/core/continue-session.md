@@ -31,12 +31,14 @@ Continue development work from a previous chat session by reviewing context, und
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review recent changes
 - `run_terminal_cmd` - Check git history and status
 - `codebase_search` - Understand current state
 - `grep` - Find related code
 
 **DO NOT:**
+
 - Start fresh without reviewing context
 - Ignore previous work
 - Duplicate existing work
@@ -96,6 +98,7 @@ Before continuing, think through:
 ## VERIFICATION
 
 After continuing:
+
 - ✅ Context reviewed
 - ✅ Current state understood
 - ✅ Next steps identified
@@ -108,16 +111,19 @@ After continuing:
 ### Session Continuation
 
 **Previous Session Summary:**
+
 - [What was discussed]
 - [What was implemented]
 - [What was the goal]
 
 **Current State:**
+
 - [What code exists]
 - [What was changed]
 - [What is working]
 
 **Next Steps:**
+
 - [Task 1]
 - [Task 2]
 
@@ -132,4 +138,3 @@ After continuing:
 - **Be consistent:** Follow same patterns and style
 - **Stay focused:** Continue with same goals
 - **Document progress:** Note what's been done
-

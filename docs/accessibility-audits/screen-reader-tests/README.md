@@ -42,6 +42,7 @@ screen-reader-tests/
 ## Summary Report
 
 See `summary.md` for:
+
 - Overall test results
 - Common issues across flows
 - Trends over time
@@ -50,4 +51,3 @@ See `summary.md` for:
 ---
 
 **Last Updated:** January 28, 2025
-

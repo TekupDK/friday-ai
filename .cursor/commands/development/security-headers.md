@@ -19,4 +19,3 @@ Configure Helmet, set CSP, add security headers, test headers, document configur
 ## OUTPUT
 
 Security headers configured with proper settings.
-

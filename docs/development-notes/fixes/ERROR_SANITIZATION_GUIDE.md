@@ -45,11 +45,13 @@ Sanitizes error messages to prevent information leakage in production.
 #### Behavior
 
 **Production Mode:**
+
 - Returns generic message: `"An error occurred. Please try again later."`
 - Detects sensitive patterns (passwords, secrets, keys, database errors, etc.)
 - Never exposes internal implementation details
 
 **Development Mode:**
+
 - Returns full error message for debugging
 - Preserves all error details for troubleshooting
 
@@ -117,6 +119,7 @@ try {
 #### Error Codes
 
 Common TRPC error codes:
+
 - `"INTERNAL_SERVER_ERROR"`: Generic server error (default)
 - `"BAD_REQUEST"`: Invalid input
 - `"UNAUTHORIZED"`: Authentication required
@@ -131,6 +134,7 @@ Common TRPC error codes:
 ### Architecture
 
 The error sanitization utility is a lightweight, pure function module with no external dependencies beyond:
+
 - `@trpc/server`: For TRPCError type
 - `./env`: For environment detection (ENV.isProduction)
 
@@ -188,8 +192,8 @@ The utility detects the following sensitive patterns in error messages:
 import { sanitizeError } from "../_core/errors";
 import { TRPCError } from "@trpc/server";
 
-export const myProcedure = protectedProcedure
-  .mutation(async ({ ctx, input }) => {
+export const myProcedure = protectedProcedure.mutation(
+  async ({ ctx, input }) => {
     try {
       const result = await performOperation(input);
       return result;
@@ -200,7 +204,8 @@ export const myProcedure = protectedProcedure
         message: sanitizeError(error),
       });
     }
-  });
+  }
+);
 ```
 
 ### Example 2: Using Convenience Function
@@ -208,8 +213,8 @@ export const myProcedure = protectedProcedure
 ```typescript
 import { createSafeTRPCError } from "../_core/errors";
 
-export const myProcedure = protectedProcedure
-  .mutation(async ({ ctx, input }) => {
+export const myProcedure = protectedProcedure.mutation(
+  async ({ ctx, input }) => {
     try {
       const result = await performOperation(input);
       return result;
@@ -217,7 +222,8 @@ export const myProcedure = protectedProcedure
       // ✅ One-liner: sanitizes and creates TRPCError
       throw createSafeTRPCError(error, "INTERNAL_SERVER_ERROR");
     }
-  });
+  }
+);
 ```
 
 ### Example 3: Custom Error Code
@@ -225,8 +231,8 @@ export const myProcedure = protectedProcedure
 ```typescript
 import { createSafeTRPCError } from "../_core/errors";
 
-export const myProcedure = protectedProcedure
-  .mutation(async ({ ctx, input }) => {
+export const myProcedure = protectedProcedure.mutation(
+  async ({ ctx, input }) => {
     try {
       const result = await databaseQuery(input.id);
       if (!result) {
@@ -240,7 +246,8 @@ export const myProcedure = protectedProcedure
       }
       throw createSafeTRPCError(error, "INTERNAL_SERVER_ERROR");
     }
-  });
+  }
+);
 ```
 
 ### Example 4: Database Error Handling
@@ -250,8 +257,8 @@ import { sanitizeError } from "../_core/errors";
 import { TRPCError } from "@trpc/server";
 import { getDb } from "../db";
 
-export const createRecord = protectedProcedure
-  .mutation(async ({ ctx, input }) => {
+export const createRecord = protectedProcedure.mutation(
+  async ({ ctx, input }) => {
     const db = await getDb();
     if (!db) {
       throw new TRPCError({
@@ -272,7 +279,8 @@ export const createRecord = protectedProcedure
         message: sanitizeError(error),
       });
     }
-  });
+  }
+);
 ```
 
 ### Example 5: Error with Logging
@@ -281,8 +289,8 @@ export const createRecord = protectedProcedure
 import { createSafeTRPCError } from "../_core/errors";
 import { logger } from "./logger";
 
-export const myProcedure = protectedProcedure
-  .mutation(async ({ ctx, input }) => {
+export const myProcedure = protectedProcedure.mutation(
+  async ({ ctx, input }) => {
     try {
       const result = await performOperation(input);
       return result;
@@ -293,7 +301,8 @@ export const myProcedure = protectedProcedure
       // ✅ Return sanitized error to client
       throw createSafeTRPCError(error, "INTERNAL_SERVER_ERROR");
     }
-  });
+  }
+);
 ```
 
 ---
@@ -303,6 +312,7 @@ export const myProcedure = protectedProcedure
 ### ✅ DO
 
 1. **Always sanitize errors before returning to clients**
+
    ```typescript
    catch (error) {
      throw new TRPCError({
@@ -313,6 +323,7 @@ export const myProcedure = protectedProcedure
    ```
 
 2. **Use `createSafeTRPCError` for convenience**
+
    ```typescript
    catch (error) {
      throw createSafeTRPCError(error); // ✅
@@ -320,6 +331,7 @@ export const myProcedure = protectedProcedure
    ```
 
 3. **Log full error details for server-side debugging**
+
    ```typescript
    catch (error) {
      logger.error({ err: error }, "Operation failed"); // ✅ Log full details
@@ -340,6 +352,7 @@ export const myProcedure = protectedProcedure
 ### ❌ DON'T
 
 1. **Don't expose raw error messages in production**
+
    ```typescript
    catch (error) {
      throw new TRPCError({
@@ -350,6 +363,7 @@ export const myProcedure = protectedProcedure
    ```
 
 2. **Don't return error objects directly**
+
    ```typescript
    catch (error) {
      return { error }; // ❌ Exposes full error object
@@ -357,6 +371,7 @@ export const myProcedure = protectedProcedure
    ```
 
 3. **Don't include stack traces in client responses**
+
    ```typescript
    catch (error) {
      throw new TRPCError({
@@ -380,6 +395,7 @@ export const myProcedure = protectedProcedure
 ### Pitfall 1: Forgetting to Sanitize
 
 **Problem:**
+
 ```typescript
 catch (error) {
   throw new TRPCError({
@@ -390,6 +406,7 @@ catch (error) {
 ```
 
 **Solution:**
+
 ```typescript
 catch (error) {
   throw new TRPCError({
@@ -432,6 +449,7 @@ Always sanitize, even if you think the error is safe. The sanitization function 
 To migrate existing error handling to use sanitization:
 
 1. **Find all catch blocks that throw TRPCError**
+
    ```typescript
    // Before
    catch (error) {
@@ -443,6 +461,7 @@ To migrate existing error handling to use sanitization:
    ```
 
 2. **Import sanitizeError or createSafeTRPCError**
+
    ```typescript
    import { sanitizeError } from "../_core/errors";
    // or
@@ -450,6 +469,7 @@ To migrate existing error handling to use sanitization:
    ```
 
 3. **Update error handling**
+
    ```typescript
    // After (Option 1)
    catch (error) {
@@ -484,9 +504,11 @@ grep -r "new TRPCError" server/routers
 ### Manual Testing
 
 1. **Production Mode:**
+
    ```bash
    NODE_ENV=production pnpm dev
    ```
+
    - Trigger an error
    - Verify generic message is returned: `"An error occurred. Please try again later."`
 
@@ -494,6 +516,7 @@ grep -r "new TRPCError" server/routers
    ```bash
    NODE_ENV=development pnpm dev
    ```
+
    - Trigger an error
    - Verify full error message is returned for debugging
 
@@ -518,7 +541,9 @@ describe("sanitizeError", () => {
   it("should sanitize Error in production", () => {
     process.env.NODE_ENV = "production";
     const error = new Error("Database connection failed");
-    expect(sanitizeError(error)).toBe("An error occurred. Please try again later.");
+    expect(sanitizeError(error)).toBe(
+      "An error occurred. Please try again later."
+    );
   });
 
   it("should return full Error message in development", () => {
@@ -530,7 +555,9 @@ describe("sanitizeError", () => {
   it("should detect sensitive patterns", () => {
     process.env.NODE_ENV = "production";
     const error = new Error("Invalid API key: abc123");
-    expect(sanitizeError(error)).toBe("An error occurred. Please try again later.");
+    expect(sanitizeError(error)).toBe(
+      "An error occurred. Please try again later."
+    );
   });
 });
 ```
@@ -549,6 +576,7 @@ describe("sanitizeError", () => {
 ## Changelog
 
 ### v1.0.0 (2025-01-28)
+
 - Initial implementation
 - Added `sanitizeError()` function
 - Added `createSafeTRPCError()` convenience function
@@ -560,7 +588,7 @@ describe("sanitizeError", () => {
 ## Support
 
 For questions or issues related to error sanitization:
+
 - Check this guide first
 - Review [Security Review](../../devops-deploy/security/SECURITY_REVIEW_2025-01-28.md)
 - Contact the backend team
-

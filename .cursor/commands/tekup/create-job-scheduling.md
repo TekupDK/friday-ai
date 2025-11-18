@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der opretter et job scheduling system for Fri
 ## TASK
 
 Opret job scheduling ved at:
+
 - Integrere med Google Calendar
 - Implementere conflict detection
 - Implementere resource allocation
@@ -38,6 +39,7 @@ Opret job scheduling ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find calendar code
 - `read_file` - Læs calendar implementation
 - `grep` - Søg efter scheduling patterns
@@ -45,6 +47,7 @@ Opret job scheduling ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Ignorere conflicts
 - Glem MEMORY compliance
 - Undlad at teste
@@ -132,22 +135,26 @@ Provide scheduling implementation:
 ## Implementation
 
 ### Schema Created
+
 - ✅ Job types defined
 - ✅ Resource types defined
 - ✅ Scheduling rules defined
 - ✅ Validation schemas created
 
 ### Conflict Detection
+
 - ✅ Calendar availability check (MEMORY_5): IMPLEMENTED
 - ✅ Time conflict detection: IMPLEMENTED
 - ✅ Resource conflict detection: IMPLEMENTED
 
 ### Resource Allocation
+
 - ✅ Cleaner allocation: IMPLEMENTED
 - ✅ Equipment allocation: IMPLEMENTED
 - ✅ Vehicle allocation: IMPLEMENTED
 
 ### Scheduling Function
+
 - ✅ Round hours (MEMORY_15): IMPLEMENTED
 - ✅ Calendar check (MEMORY_5): IMPLEMENTED
 - ✅ Conflict detection: IMPLEMENTED
@@ -155,6 +162,7 @@ Provide scheduling implementation:
 - ✅ Calendar event creation (MEMORY_19): IMPLEMENTED
 
 ### tRPC Procedures
+
 - ✅ `scheduling.create` - Created
 - ✅ `scheduling.checkAvailability` - Created
 - ✅ `scheduling.findConflicts` - Created
@@ -162,6 +170,7 @@ Provide scheduling implementation:
 - ✅ `scheduling.cancel` - Created
 
 ### React Components
+
 - ✅ SchedulingForm: CREATED
 - ✅ AvailabilityCalendar: CREATED
 - ✅ ConflictList: CREATED
@@ -215,4 +224,3 @@ Efter implementation, verificer:
 ---
 
 **CRITICAL:** Start med at definere scheduling schema, derefter implementer conflict detection, resource allocation, scheduling function med MEMORY compliance, opret tRPC procedures, og tilføj React components.
-

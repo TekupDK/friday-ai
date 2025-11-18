@@ -13,6 +13,7 @@ Du er en senior engineer der analyserer technical debt for Friday AI Chat. Du id
 ## TASK
 
 Analysér technical debt ved at:
+
 - Identificere debt areas
 - Kategorisere debt types
 - Prioritere debt items
@@ -36,6 +37,7 @@ Analysér technical debt ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `grep` - Find TODO comments
 - `read_lints` - Check code smells
 - `codebase_search` - Find debt patterns
@@ -43,6 +45,7 @@ Analysér technical debt ved at:
 - `run_terminal_cmd` - Run analysis tools
 
 **DO NOT:**
+
 - Ignorere debt
 - Glem prioritization
 - Undlad at estimere
@@ -131,16 +134,19 @@ Provide debt analysis report:
 ## Debt by Category
 
 ### Code Quality Debt
+
 - **Items:** [X]
 - **Cost:** [Y] hours
 - **Impact:** [High/Medium/Low]
 
 ### Architecture Debt
+
 - **Items:** [X]
 - **Cost:** [Y] hours
 - **Impact:** [High/Medium/Low]
 
 ### Test Coverage Debt
+
 - **Items:** [X]
 - **Cost:** [Y] hours
 - **Impact:** [High/Medium/Low]
@@ -175,11 +181,13 @@ Provide debt analysis report:
 ## Refactoring Roadmap
 
 ### Sprint 1 (Next Sprint)
+
 - [Debt Item 1] - [X] hours
 - [Debt Item 2] - [Y] hours
 - **Total:** [Z] hours
 
 ### Sprint 2
+
 - [Debt Item 3] - [X] hours
 - [Debt Item 4] - [Y] hours
 - **Total:** [Z] hours
@@ -213,4 +221,3 @@ Efter analyse, verificer:
 ---
 
 **CRITICAL:** Start med at identificere debt areas, derefter kategoriser debt, assess impact, estimer cost, prioriter debt, og opret action plan.
-

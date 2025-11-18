@@ -1,6 +1,6 @@
 /**
  * Hooks - Central Export
- * 
+ *
  * Central export file for all React hooks in Friday AI Chat.
  * Import hooks from here for cleaner imports.
  */
@@ -11,7 +11,11 @@ export { useAuth } from "@/_core/hooks/useAuth";
 // UI & Layout hooks
 export { usePageTitle } from "./usePageTitle";
 export { useIsMobile } from "./useIsMobile";
-export { useKeyboardShortcuts, getAllKeyboardShortcuts, shouldIgnoreKeyboardEvent } from "./useKeyboardShortcuts";
+export {
+  useKeyboardShortcuts,
+  getAllKeyboardShortcuts,
+  shouldIgnoreKeyboardEvent,
+} from "./useKeyboardShortcuts";
 export type { KeyboardShortcut } from "./useKeyboardShortcuts";
 
 // Performance & Optimization hooks
@@ -44,5 +48,7 @@ export * from "./crm";
 export * from "./docs/useDocuments";
 export * from "./docs/useDocsWebSocket";
 export * from "./docs/useAIGeneration";
-export { useDocsKeyboardShortcuts, DocsKeyboardShortcutsHint } from "./docs/useDocsKeyboardShortcuts";
-
+export {
+  useDocsKeyboardShortcuts,
+  DocsKeyboardShortcutsHint,
+} from "./docs/useDocsKeyboardShortcuts";

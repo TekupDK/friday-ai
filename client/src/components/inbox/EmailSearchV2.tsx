@@ -32,7 +32,6 @@ import { Separator } from "@/components/ui/separator";
 import { UI_CONSTANTS } from "@/constants/business";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
-
 export type FolderType = "inbox" | "sent" | "archive" | "starred";
 
 interface EmailSearchV2Props {

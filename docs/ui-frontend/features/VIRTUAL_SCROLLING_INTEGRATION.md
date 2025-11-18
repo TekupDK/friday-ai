@@ -43,7 +43,7 @@ Virtual scrolling er **fuldt kompatibel** med alle API optimeringer:
 
 ### Kombineret Med API Optimeringer
 
-```text
+````text
 API Optimeringer: 50-70% reduktion i API calls
 Virtual Scrolling: 80-90% reduktion i DOM nodes
 Kombineret: Signifikant forbedret overall performance
@@ -135,7 +135,7 @@ Total Performance Gain:
 - Memory: 50-70% reduktion
 - Overall: Signifikant forbedret UX
 
-```
+````
 
 ## ✅ Status
 

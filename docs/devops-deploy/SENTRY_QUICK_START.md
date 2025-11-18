@@ -6,21 +6,25 @@
 ## 🎯 Hvad skal du gøre?
 
 Du har allerede:
+
 - ✅ Oprettet Sentry organization (`tekup-r5`)
 - ✅ Oprettet organization token (til CLI/API)
 
 Du mangler:
+
 - ⚠️ **DSN (Data Source Name)** - Dette er det vigtigste!
 
 ## 📝 Forskellen mellem Token og DSN
 
 ### Organization Token
+
 - **Bruges til:** CLI, API, source map uploads
 - **Format:** `sntrys_xxxxx...`
 - **Hvor:** Settings → Organization → Tokens
 - **Brug:** `sentry-cli`, CI/CD scripts
 
 ### DSN (Data Source Name)
+
 - **Bruges til:** SDK integration (din applikation)
 - **Format:** `https://xxxxx@xxxxx.ingest.sentry.io/xxxxx`
 - **Hvor:** Project Settings → Client Keys (DSN)
@@ -36,12 +40,14 @@ Du mangler:
 2. Klik "Create Project" (eller Projects → Create Project)
 
 **Server Project:**
+
 - Platform: **Node.js**
 - Name: `friday-ai-server`
 - Klik "Create Project"
 - **Kopier DSN** fra "Configure SDK" side
 
 **Client Project:**
+
 - Platform: **React**
 - Name: `friday-ai-client`
 - Klik "Create Project"
@@ -86,16 +92,19 @@ throw new Error("Test Sentry")
 ## 🔍 Hvor finder jeg DSN?
 
 ### Metode 1: Project Settings
+
 1. Projects → Vælg projekt
 2. Settings → Client Keys (DSN)
 3. Kopier DSN
 
 ### Metode 2: Project Onboarding
+
 1. Projects → Vælg projekt
 2. Hvis du ser "Configure SDK" side
 3. DSN er vist øverst
 
 ### Metode 3: API
+
 ```bash
 # Brug organization token til at hente DSN
 curl -H "Authorization: Bearer YOUR_ORG_TOKEN" \
@@ -119,10 +128,10 @@ A: Minimum 1 (kan bruges til både server og client), men anbefales 2 (ét til s
 ## 📚 Næste Skridt
 
 Efter du har DSN:
+
 1. ✅ Tilføj til `.env.dev` og `.env.prod`
 2. ✅ Test integration
 3. ✅ Setup alerts i Sentry
 4. ✅ Configure notifications (email/Slack)
 
 Se `SENTRY_SETUP.md` for komplet dokumentation.
-

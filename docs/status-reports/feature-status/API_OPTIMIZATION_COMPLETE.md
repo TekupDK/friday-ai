@@ -48,7 +48,7 @@ Alle planlagte features er implementeret og dokumenteret. Systemet er klar til t
 
 ### Created (4 files)
 
-```text
+````text
 client/src/lib/retryStrategy.ts          (114 lines)
 client/src/lib/requestQueue.ts          (170 lines)
 client/src/lib/queryOptimization.ts     (67 lines)
@@ -139,7 +139,7 @@ Tab Skjult:           24 → 0 calls     (100% ↓)
 Cache Hit Rate:       40% → >80%       (100% ↑)
 Unnecessary Refetches: Høj → Lav      (Signifikant ↓)
 
-```
+````
 
 ## ✅ Pre-Test Checklist
 

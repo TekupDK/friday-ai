@@ -105,7 +105,7 @@ Create en komplet dokumentationsløsning hvor hele teamet – inklusiv AI copilo
 
 ## 🏗️ Architecture Overview
 
-```bash
+````bash
 ┌─────────────────────────────────────────────────────────────┐
 │                     Documentation Portal                      │
 │                    (React + WebSocket)                        │
@@ -392,7 +392,7 @@ pnpm add simple-git chokidar ws commander inquirer chalk ora markdown-it gray-ma
 # Start implementation
 pnpm dev
 
-```
+````
 
 **For questions or support:** See documentation or reach out to the team!
 

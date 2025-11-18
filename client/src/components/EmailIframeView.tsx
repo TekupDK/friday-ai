@@ -104,7 +104,6 @@ ${finalHtml}
       setDocHtml(srcDoc);
     };
     process();
-     
   }, [html, messageId, imagesEnabled]); // Process email HTML and resolve CID images
 
   // Auto-resize iframe height

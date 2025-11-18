@@ -76,7 +76,7 @@ Use when: Documenting meetings or discussions
 
 ### Via CLI
 
-```bash
+````bash
 cd cli/tekup-docs
 pnpm run dev create --template feature-spec --title "My Feature"
 
@@ -162,7 +162,7 @@ Edit `server/docs/service.ts` to include your template.
 # Create doc from template
 pnpm run dev create --template my-template
 
-```
+````
 
 ---
 

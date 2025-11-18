@@ -19,4 +19,3 @@ Add Zod validation, sanitize HTML input, use parameterized queries, validate all
 ## OUTPUT
 
 Input sanitization implemented with validation and sanitization.
-

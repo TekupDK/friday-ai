@@ -81,7 +81,7 @@
 | Rate Limiting    | ✅ Done        | 100%      |
 | Input Validation | ✅ Done        | 100%      |
 | useEffect Fixes  | ⏳ In Progress | 3% (2/79) |
-| **Overall**| ⏳ In Progress |**40%**   |
+| **Overall**      | ⏳ In Progress | **40%**   |
 
 ---
 

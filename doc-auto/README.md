@@ -40,6 +40,7 @@ doc-auto/
 ## Update Frequency
 
 This documentation is automatically updated when:
+
 - New routers or endpoints are added
 - Database schema changes
 - Component interfaces change
@@ -60,4 +61,3 @@ npm run docs:auto-generate
 - Examples are extracted from actual code
 - Type definitions match the TypeScript interfaces exactly
 - Endpoint documentation includes input/output schemas
-

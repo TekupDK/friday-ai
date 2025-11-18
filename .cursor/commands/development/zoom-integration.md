@@ -19,4 +19,3 @@ Set up OAuth, configure webhooks, sync calendar, handle events.
 ## OUTPUT
 
 Zoom integration implemented with OAuth and webhooks.
-

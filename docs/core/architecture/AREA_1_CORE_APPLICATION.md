@@ -22,7 +22,7 @@ Core Application består af:
 
 ### **Root Level (`client/src/`)**
 
-```bash
+````bash
 client/src/
 ├── App.tsx              # Main app component (routing, layout)
 ├── main.tsx             # Entry point (React.render)
@@ -918,7 +918,7 @@ export async function callLLM({ model, messages, tools, stream = false }) {
 
 22. Auto-scroll to bottom
 
-```
+````
 
 ---
 

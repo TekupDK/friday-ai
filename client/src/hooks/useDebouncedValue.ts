@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 
 /**
  * Debounce hook for search inputs and other values
- * 
+ *
  * Delays value updates to reduce API calls and improve performance.
  * Useful for search inputs where you don't want to trigger an API call
  * on every keystroke.
- * 
+ *
  * @param value - The value to debounce
  * @param delay - Delay in milliseconds (default: 300ms)
  * @returns Debounced value
- * 
+ *
  * @example
  * ```tsx
  * const [search, setSearch] = useState("");
  * const debouncedSearch = useDebouncedValue(search, 300);
- * 
+ *
  * // Use debouncedSearch in API calls
  * const { data } = trpc.search.useQuery({ query: debouncedSearch });
  * ```

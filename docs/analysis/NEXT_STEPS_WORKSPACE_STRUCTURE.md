@@ -21,6 +21,7 @@
 **Mål:** Flyt spredte filer fra roden til relevante mapper
 
 **Actions:**
+
 ```bash
 # Flyt PowerShell scripts til scripts/
 mv *.ps1 scripts/utils/  # (hvis nogen i roden)
@@ -34,6 +35,7 @@ mv *.yml config/   # (hvis nogen i roden)
 ```
 
 **Files to check:**
+
 - `fix-llama-server.ps1` → `scripts/utils/`
 - `fix-markdown-lint.ps1` → `scripts/utils/`
 - `reorganize-docs.ps1` → `scripts/utils/`
@@ -50,6 +52,7 @@ mv *.yml config/   # (hvis nogen i roden)
 **Mål:** Flyt flere scripts til relevante undermapper
 
 **Actions:**
+
 ```bash
 # Docs scripts → scripts/docs/
 mkdir -p scripts/docs
@@ -81,22 +84,27 @@ mv scripts/organize-*.ps1 scripts/maintenance/
 **Mål:** Dokumenter mappens formål
 
 **Actions:**
+
 - Opret `scripts/README.md` - Forklar script-organisation
 - Opret `config/README.md` - Forklar config-filer
 - Opret `docs/server/README.md` - Forklar server dokumentation
 - Opdater eksisterende README filer hvis nødvendigt
 
 **Template:**
+
 ```markdown
 # [Mappe Navn]
 
 ## Formål
+
 [Beskrivelse af hvad mappen indeholder]
 
 ## Struktur
+
 [Oversigt over undermapper]
 
 ## Usage
+
 [Hvordan man bruger indholdet]
 ```
 
@@ -111,6 +119,7 @@ mv scripts/organize-*.ps1 scripts/maintenance/
 **Mål:** Flyt `archive/` til `docs/archive/` for konsistens
 
 **Actions:**
+
 ```bash
 # Flyt archive/ til docs/archive/
 mv archive/* docs/archive/
@@ -126,6 +135,7 @@ rmdir archive
 **Mål:** Flyt `test-results/` til skjult mappe eller `tests/results/`
 
 **Actions:**
+
 ```bash
 # Option 1: Skjul mappen
 mv test-results .test-results
@@ -143,6 +153,7 @@ mv test-results tests/results
 **Mål:** Overvej yderligere opdeling af `client/src/components/` (411 filer)
 
 **Actions:**
+
 - Review component struktur
 - Overvej `components/common/` for shared components
 - Overvej yderligere feature-opdeling hvis nødvendigt
@@ -165,12 +176,14 @@ mv test-results tests/results
 ## 📊 Expected Impact
 
 ### After Priority 2:
+
 - ✅ Root directory: Meget renere
 - ✅ Scripts: Bedre organiseret
 - ✅ Documentation: Bedre struktur
 - ✅ Overall Score: 8.5/10 → 9.0/10
 
 ### After Priority 3:
+
 - ✅ Complete organisation
 - ✅ Industry-standard structure
 - ✅ Overall Score: 9.0/10 → 9.5/10
@@ -204,4 +217,3 @@ mkdir -p scripts/docs scripts/maintenance
 ---
 
 **Næste Action:** Start med at konsolidere root files og organisere flere scripts.
-

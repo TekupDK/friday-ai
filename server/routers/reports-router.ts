@@ -6,21 +6,21 @@ import { analyzeTeam2FbRengoring } from "../scripts/team2-fb-rengoring-report";
 
 /**
  * Reports Router
- * 
+ *
  * Provides endpoints for generating various business reports
  */
 export const reportsRouter = router({
   /**
    * Generate Team 2 FB Rengøring report
-   * 
+   *
    * Analyzes Team 2's "fb rengøring" tasks and compares:
    * - Calendar time (from calendar events)
    * - Agreed time (from Gmail threads)
    * - Invoiced time (from invoices)
    * - Actual work time (from Gmail threads)
-   * 
+   *
    * Cost calculation: hours × number of people × 90 DKK/hour
-   * 
+   *
    * Supports both:
    * - daysBack: Number of days back from today (default: 14)
    * - dateRange: Specific date range (startDate and endDate in YYYY-MM-DD format)
@@ -29,8 +29,14 @@ export const reportsRouter = router({
     .input(
       z.object({
         daysBack: z.number().min(1).max(365).optional(),
-        startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-        endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+        startDate: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional(),
+        endDate: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -59,5 +65,3 @@ export const reportsRouter = router({
       }
     }),
 });
-
-

@@ -27,6 +27,7 @@ Login-systemet er **production-ready** med Google OAuth som primær metode. Emai
 ### 1. Google OAuth (via Supabase) ✅ PRODUCTION READY
 
 **Flow:**
+
 1. User klikker "Log ind med Google" i `LoginPage.tsx`
 2. Supabase OAuth redirect til Google
 3. Google authentication
@@ -38,10 +39,12 @@ Login-systemet er **production-ready** med Google OAuth som primær metode. Emai
 9. Redirect til `/`
 
 **Filer:**
+
 - `client/src/pages/LoginPage.tsx` (lines 126-140, 142-205)
 - `server/routes/auth-supabase.ts` (lines 11-80)
 
 **Security:**
+
 - ✅ OAuth flow er sikker (håndteret af Supabase/Google)
 - ✅ Token verificering med Supabase admin client
 - ✅ Session cookie med httpOnly, secure, sameSite
@@ -54,6 +57,7 @@ Login-systemet er **production-ready** med Google OAuth som primær metode. Emai
 ### 2. Email/Password Login (Development Only) ⚠️ DEV ONLY
 
 **Flow:**
+
 1. User indtaster email/password i `LoginPage.tsx`
 2. tRPC mutation `auth.login` kaldes
 3. Rate limiting check (5 forsøg per 15 min)
@@ -65,10 +69,12 @@ Login-systemet er **production-ready** med Google OAuth som primær metode. Emai
 9. Returnerer user info
 
 **Filer:**
+
 - `client/src/pages/LoginPage.tsx` (lines 70-101)
 - `server/routers/auth-router.ts` (lines 21-115)
 
 **Security:**
+
 - ✅ Rate limiting (5 attempts per 15 min)
 - ✅ Email enumeration prevention (samme fejlbesked)
 - ✅ Timing attack prevention (random delay)
@@ -79,6 +85,7 @@ Login-systemet er **production-ready** med Google OAuth som primær metode. Emai
 **Status:** ⚠️ **KORREKT IMPLEMENTERET** - Blokeret i production som det skal være
 
 **Kode Eksempel:**
+
 ```typescript:server/routers/auth-router.ts
 // Lines 79-88
 if (process.env.NODE_ENV === "production") {
@@ -96,6 +103,7 @@ if (process.env.NODE_ENV === "production") {
 ### 3. Dev Login Endpoint (`/api/auth/login`) ⚠️ BØR REVIEWES
 
 **Flow:**
+
 1. GET request til `/api/auth/login`
 2. Auto-login som OWNER (jonas@rendetalje.dk)
 3. Opretter/opdaterer user med `loginMethod: "dev"`
@@ -103,9 +111,11 @@ if (process.env.NODE_ENV === "production") {
 5. Redirect til `/` eller returnerer JSON (test mode)
 
 **Filer:**
+
 - `server/_core/oauth.ts` (lines 20-147)
 
 **Security:**
+
 - ⚠️ **Fungerer i både dev og production** (kommentar siger "Allow in development AND production for now")
 - ⚠️ Ingen authentication check
 - ⚠️ Kan være security risk hvis eksponeret
@@ -113,6 +123,7 @@ if (process.env.NODE_ENV === "production") {
 **Status:** ⚠️ **BØR DEAKTIVERES I PRODUCTION** - Eller kræve secret token
 
 **Anbefaling:**
+
 ```typescript
 // Før production deployment:
 if (ENV.isProduction) {
@@ -196,11 +207,13 @@ export const usersInFridayAi = fridayAi.table("users", {
 ```
 
 **Observations:**
+
 - ✅ `loginMethod` field eksisterer
 - ✅ `openId` er unique (constraint)
 - ⚠️ **INGEN `passwordHash` field** (men OK da OAuth-only i production)
 
 **Hvis email/password skal tilføjes i production:**
+
 1. Tilføj `passwordHash` column til schema
 2. Implementer bcrypt hashing
 3. Implementer password reset flow
@@ -213,6 +226,7 @@ export const usersInFridayAi = fridayAi.table("users", {
 ### LoginPage.tsx
 
 **Features:**
+
 - ✅ Email/password form
 - ✅ Google OAuth button
 - ✅ Forgot password link (kun Supabase flow)
@@ -222,6 +236,7 @@ export const usersInFridayAi = fridayAi.table("users", {
 - ✅ Preview mode (deaktiverer auth i preview)
 
 **Observations:**
+
 - ✅ God UX med loading states
 - ✅ Error messages er brugervenlige
 - ⚠️ Forgot password bruger kun Supabase (kun for OAuth users)
@@ -233,18 +248,21 @@ export const usersInFridayAi = fridayAi.table("users", {
 ### Session Creation
 
 **Flow:**
+
 1. User authenticates (OAuth eller dev login)
 2. Backend kalder `sdk.createSessionToken(openId, { name, expiresInMs })`
 3. Token gemmes i cookie med sikre indstillinger
 4. Token verificeres ved hver request i `sdk.authenticateRequest()`
 
 **Security:**
+
 - ✅ JWT tokens (signeret med secret)
 - ✅ Expiry: 7 dage i production, 1 år i dev
 - ✅ Rolling refresh window (7 dage)
 - ✅ Cookie security: httpOnly, secure, sameSite
 
 **Files:**
+
 - `server/_core/sdk.ts` (session creation/verification)
 - `server/_core/cookies.ts` (cookie options)
 - `server/_core/oauth.ts` (refresh endpoint)
@@ -365,11 +383,13 @@ Ingen kritiske issues identificeret. Systemet er production-ready.
 ### 🎯 Anbefaling
 
 **For Production:**
+
 - ✅ **Brug Google OAuth som primær metode** (allerede implementeret)
 - ✅ **Behold email/password blokeret i production** (sikkerhedsmæssigt korrekt)
 - ⚠️ **Deaktiver dev login endpoint i production** (5 min fix)
 
 **Hvis Email/Password Skal Tilføjes:**
+
 - Implementer password hashing (bcrypt)
 - Implementer password reset flow
 - Tilføj password strength validation
@@ -380,6 +400,7 @@ Ingen kritiske issues identificeret. Systemet er production-ready.
 ## Code References
 
 ### Login Router
+
 ```12:127:server/routers/auth-router.ts
 const loginSchema = z.object({
   email: z.string().email().max(320), // RFC 5321 max email length
@@ -478,7 +499,7 @@ export const authRouter = router({
     });
     const cookieOpts = getSessionCookieOptions(ctx.req);
     ctx.res?.cookie(COOKIE_NAME, sessionToken, { ...cookieOpts, maxAge: sessionExpiry });
-    
+
     return {
       id: openId,
       email: user.email || input.email,
@@ -500,6 +521,7 @@ export const authRouter = router({
 ```
 
 ### Cookie Security
+
 ```24:69:server/_core/cookies.ts
 export function getSessionCookieOptions(
   req: Request
@@ -553,4 +575,3 @@ export function getSessionCookieOptions(
 
 **Sidst Opdateret:** 2025-01-28  
 **Vedligeholdt af:** TekupDK Development Team
-

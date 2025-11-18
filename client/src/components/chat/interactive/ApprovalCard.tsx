@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-
 export interface ApprovalItem {
   id: string;
   type: "booking" | "invoice" | "quote" | "lead";

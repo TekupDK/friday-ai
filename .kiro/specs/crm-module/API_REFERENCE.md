@@ -14,7 +14,7 @@
 
 **Purpose:** Hent liste af customer profiles med søgning og pagination
 
-```typescript
+`````typescript
 // Input
 {
   search?: string;       // Søg i name, email, phone
@@ -1086,11 +1086,11 @@ CustomerRelationship[]
 
 export const trpc = createTRPCReact<AppRouter>();
 
-````
+`````
 
 ### 2. TanStack Query Provider
 
-```typescript
+````typescript
 // client/src/main.tsx
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
@@ -1191,7 +1191,7 @@ pnpm run crm:test:staging:chroma
 # Watch mode til iteration
 pnpm run crm:test:staging:watch
 
-```
+````
 
 ---
 

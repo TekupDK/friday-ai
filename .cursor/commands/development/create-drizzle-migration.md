@@ -32,6 +32,7 @@ Create a new database migration for schema changes, following Friday AI Chat pat
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing schema and migrations
 - `codebase_search` - Find similar schema patterns
 - `grep` - Search for schema patterns
@@ -39,6 +40,7 @@ Create a new database migration for schema changes, following Friday AI Chat pat
 - `search_replace` - Create schema changes
 
 **DO NOT:**
+
 - Create migration without reviewing schema
 - Skip type exports
 - Ignore constraints
@@ -71,8 +73,17 @@ Before creating migration, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Table Definition Pattern
+
 ```typescript
-import { pgSchema, serial, integer, varchar, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import {
+  pgSchema,
+  serial,
+  integer,
+  varchar,
+  text,
+  timestamp,
+  boolean,
+} from "drizzle-orm/pg-core";
 
 export const fridayAi = pgSchema("friday_ai");
 
@@ -89,6 +100,7 @@ export const myTableInFridayAi = fridayAi.table("my_table", {
 ```
 
 ### Example: Table with Unique Constraint
+
 ```typescript
 export const emailsInFridayAi = fridayAi.table(
   "emails",
@@ -107,6 +119,7 @@ export const emailsInFridayAi = fridayAi.table(
 ```
 
 ### Example: Table with Enum
+
 ```typescript
 export const leadStatusInFridayAi = fridayAi.enum("lead_status", [
   "new",
@@ -126,6 +139,7 @@ export const leadsInFridayAi = fridayAi.table("leads", {
 ```
 
 ### Example: Type Exports
+
 ```typescript
 // At end of schema file
 export type Lead = typeof leadsInFridayAi.$inferSelect;
@@ -177,6 +191,7 @@ export type InsertLead = typeof leadsInFridayAi.$inferInsert;
 ## VERIFICATION
 
 After migration:
+
 - ✅ Schema changes applied correctly
 - ✅ Types exported and working
 - ✅ Migration SQL is correct
@@ -189,12 +204,14 @@ After migration:
 ### Migration: [Migration Name]
 
 **Schema Changes:**
+
 - Added table: `[tableName]`
 - Added columns: `[column1]`, `[column2]`
 - Added indexes: `[indexName]`
 - Added constraints: `[constraintName]`
 
 **Migration File:**
+
 - `drizzle/migrations/[timestamp]_[name].sql`
 
 **Type Exports Added:**
@@ -204,12 +221,13 @@ export type Insert[TableName] = typeof [tableName].$inferInsert;
 \`\`\`
 
 **Files Modified:**
+
 - `drizzle/schema.ts` - Added table definition
 - `server/[feature]-db.ts` - Added helpers (if created)
 
 **Verification:**
+
 - ✅ Migration generated: PASSED
 - ✅ Types exported: PASSED
 - ✅ Schema applied: PASSED
 ```
-

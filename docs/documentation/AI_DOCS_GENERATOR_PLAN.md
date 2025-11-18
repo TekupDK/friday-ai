@@ -21,8 +21,7 @@
 
 **Output:**
 
-```markdown
-
+````markdown
 # Lead: [Company Name]
 
 ## Overview
@@ -95,7 +94,7 @@
 
 - Schedule regular check-ins
 
-```text
+````text
 
 ### 2. Project Documentation
 
@@ -535,8 +534,8 @@ cron.schedule("0 20 * * 0", async () => {
 
   await generateWeeklyDigest();
 });
-
-```
+````
+````
 
 ---
 

@@ -4,7 +4,13 @@
  * Main page for managing all subscriptions with dashboard metrics
  */
 
-import { BarChart3, Calendar, CreditCard, TrendingUp, Users } from "lucide-react";
+import {
+  BarChart3,
+  Calendar,
+  CreditCard,
+  TrendingUp,
+  Users,
+} from "lucide-react";
 import React from "react";
 
 import { AppleCard } from "@/components/crm/apple-ui";
@@ -26,10 +32,8 @@ export default function SubscriptionManagementPage() {
     isError: isStatsError,
   } = trpc.subscription.stats.useQuery();
 
-  const {
-    data: subscriptions,
-    isLoading: isLoadingSubscriptions,
-  } = trpc.subscription.list.useQuery({});
+  const { data: subscriptions, isLoading: isLoadingSubscriptions } =
+    trpc.subscription.list.useQuery({});
 
   const isLoading = isLoadingStats || isLoadingSubscriptions;
 
@@ -56,7 +60,9 @@ export default function SubscriptionManagementPage() {
             <header>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold">Subscription Management</h1>
+                  <h1 className="text-3xl font-bold">
+                    Subscription Management
+                  </h1>
                   <p className="text-muted-foreground mt-1">
                     Manage all subscriptions, track usage, and monitor revenue
                   </p>
@@ -73,7 +79,10 @@ export default function SubscriptionManagementPage() {
 
             {/* Error state */}
             {isStatsError && statsError && (
-              <ErrorDisplay message="Failed to load subscription statistics" error={statsError} />
+              <ErrorDisplay
+                message="Failed to load subscription statistics"
+                error={statsError}
+              />
             )}
 
             {/* Dashboard Stats */}
@@ -83,10 +92,14 @@ export default function SubscriptionManagementPage() {
                 <AppleCard variant="elevated" padding="md">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm text-muted-foreground">Monthly Recurring Revenue</p>
+                      <p className="text-sm text-muted-foreground">
+                        Monthly Recurring Revenue
+                      </p>
                       <CreditCard className="w-5 h-5 text-muted-foreground" />
                     </div>
-                    <p className="text-2xl font-bold">{formatCurrency(stats.mrr || 0)}</p>
+                    <p className="text-2xl font-bold">
+                      {formatCurrency(stats.mrr || 0)}
+                    </p>
                     <p className="text-xs text-muted-foreground">
                       ARR: {formatCurrency(stats.arr || 0)}
                     </p>
@@ -97,10 +110,14 @@ export default function SubscriptionManagementPage() {
                 <AppleCard variant="elevated" padding="md">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm text-muted-foreground">Active Subscriptions</p>
+                      <p className="text-sm text-muted-foreground">
+                        Active Subscriptions
+                      </p>
                       <Users className="w-5 h-5 text-muted-foreground" />
                     </div>
-                    <p className="text-2xl font-bold">{formatNumber(stats.active || 0)}</p>
+                    <p className="text-2xl font-bold">
+                      {formatNumber(stats.active || 0)}
+                    </p>
                     <p className="text-xs text-muted-foreground">
                       {formatNumber(stats.total || 0)} total
                     </p>
@@ -111,10 +128,14 @@ export default function SubscriptionManagementPage() {
                 <AppleCard variant="elevated" padding="md">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm text-muted-foreground">Average Revenue Per User</p>
+                      <p className="text-sm text-muted-foreground">
+                        Average Revenue Per User
+                      </p>
                       <TrendingUp className="w-5 h-5 text-muted-foreground" />
                     </div>
-                    <p className="text-2xl font-bold">{formatCurrency(stats.arpu || 0)}</p>
+                    <p className="text-2xl font-bold">
+                      {formatCurrency(stats.arpu || 0)}
+                    </p>
                     <p className="text-xs text-muted-foreground">Per month</p>
                   </div>
                 </AppleCard>
@@ -123,7 +144,9 @@ export default function SubscriptionManagementPage() {
                 <AppleCard variant="elevated" padding="md">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm text-muted-foreground">Churn Rate</p>
+                      <p className="text-sm text-muted-foreground">
+                        Churn Rate
+                      </p>
                       <BarChart3 className="w-5 h-5 text-muted-foreground" />
                     </div>
                     <p className="text-2xl font-bold">
@@ -171,4 +194,3 @@ export default function SubscriptionManagementPage() {
     </CRMLayout>
   );
 }
-

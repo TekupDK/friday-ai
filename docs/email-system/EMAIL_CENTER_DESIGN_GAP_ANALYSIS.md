@@ -10,7 +10,7 @@
 
 ### ✅ Implementerede Features
 
-```text
+````text
 
 1. SPLITS System ✅
    - Smart inbox organization
@@ -759,7 +759,7 @@
 
 - Label mutations
 
-```
+````
 
 ---
 

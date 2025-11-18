@@ -96,13 +96,17 @@ export function SubscriptionCard({
           <div className="flex items-center gap-2 text-sm">
             <CreditCard className="w-4 h-4 text-muted-foreground" />
             <span className="text-muted-foreground">Price:</span>
-            <span className="font-medium">{priceInDkk.toLocaleString("da-DK")} kr/måned</span>
+            <span className="font-medium">
+              {priceInDkk.toLocaleString("da-DK")} kr/måned
+            </span>
           </div>
 
           <div className="flex items-center gap-2 text-sm">
             <Clock className="w-4 h-4 text-muted-foreground" />
             <span className="text-muted-foreground">Included hours:</span>
-            <span className="font-medium">{subscription.includedHours} timer/måned</span>
+            <span className="font-medium">
+              {subscription.includedHours} timer/måned
+            </span>
           </div>
 
           {subscription.nextBillingDate && (
@@ -110,14 +114,18 @@ export function SubscriptionCard({
               <Calendar className="w-4 h-4 text-muted-foreground" />
               <span className="text-muted-foreground">Next billing:</span>
               <span className="font-medium">
-                {new Date(subscription.nextBillingDate).toLocaleDateString("da-DK")}
+                {new Date(subscription.nextBillingDate).toLocaleDateString(
+                  "da-DK"
+                )}
               </span>
             </div>
           )}
 
           <div className="flex items-center gap-2 text-sm">
             <span className="text-muted-foreground">Auto-renew:</span>
-            <span className={`font-medium ${subscription.autoRenew ? "text-green-600" : "text-gray-500"}`}>
+            <span
+              className={`font-medium ${subscription.autoRenew ? "text-green-600" : "text-gray-500"}`}
+            >
               {subscription.autoRenew ? "Yes" : "No"}
             </span>
           </div>
@@ -141,4 +149,3 @@ export function SubscriptionCard({
     </AppleCard>
   );
 }
-

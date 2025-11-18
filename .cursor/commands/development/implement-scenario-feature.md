@@ -9,11 +9,13 @@ Build a new feature following Friday AI Chat patterns and best practices. START 
 ## CRITICAL: START IMPLEMENTING IMMEDIATELY
 
 **DO NOT:**
+
 - Show a design and wait
 - Ask for approval to start
 - Just plan without implementing
 
 **DO:**
+
 - Start implementing immediately
 - Make actual code changes using tools
 - Follow project patterns
@@ -71,9 +73,9 @@ Build a new feature following Friday AI Chat patterns and best practices. START 
 ## OUTPUT
 
 Provide:
+
 - Feature implementation summary
 - All layers implemented
 - Test coverage
 - Documentation updates
 - Usage examples
-

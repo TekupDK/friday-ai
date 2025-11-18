@@ -9,7 +9,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 **Database Table:** `opportunities`
 
 - **Fields:**
-
   - Basic: id, userId, customerProfileId, title, description
 
   - Pipeline: stage (lead→qualified→proposal→negotiation→won/lost)
@@ -23,7 +22,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
   - Metadata: jsonb for custom fields
 
 - **Indexes:**
-
   - `idx_opportunities_customer` (customerProfileId)
 
   - `idx_opportunities_stage` (stage)
@@ -33,7 +31,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 - **Enum:** `deal_stage` with 6 values
 
 - **Use Cases:**
-
   - Sales pipeline tracking
 
   - Revenue forecasting (weighted by probability)
@@ -47,7 +44,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 **Database Tables:** `customer_segments` + `customer_segment_members`
 
 - **customer_segments:**
-
   - Fields: id, userId, name, description, type (manual/automatic)
 
   - Smart Rules: jsonb for auto-segmentation criteria
@@ -57,11 +53,9 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
   - Indexes: `idx_segments_user`
 
 - **customer_segment_members:**
-
   - Fields: id, segmentId, customerProfileId, addedAt
 
   - Indexes:
-
     - `idx_segment_members_segment`
 
     - `idx_segment_members_customer`
@@ -69,7 +63,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 - **Enum:** `segment_type` (manual, automatic)
 
 - **Use Cases:**
-
   - Smart customer lists
 
   - Auto-tagging based on health score, revenue, activity
@@ -83,7 +76,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 **Database Table:** `customer_documents`
 
 - **Fields:**
-
   - Core: id, userId, customerProfileId, filename
 
   - Storage: storageUrl (Supabase Storage), mimeType, filesize
@@ -95,13 +87,11 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
   - Timestamp: uploadedAt
 
 - **Indexes:**
-
   - `idx_documents_customer` (customerProfileId)
 
   - `idx_documents_user` (userId)
 
 - **Use Cases:**
-
   - Contract uploads
 
   - Invoice attachments
@@ -117,7 +107,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 **Database Table:** `audit_log`
 
 - **Fields:**
-
   - Core: id, userId, entityType, entityId
 
   - Action: action (created, updated, deleted, exported, consent_given, consent_revoked)
@@ -127,7 +116,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
   - Timestamp: timestamp (indexed DESC)
 
 - **Indexes:**
-
   - `idx_audit_log_entity` (entityType + entityId)
 
   - `idx_audit_log_user` (userId)
@@ -135,7 +123,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
   - `idx_audit_log_timestamp` (DESC)
 
 - **Use Cases:**
-
   - GDPR compliance
 
   - Data export tracking
@@ -151,7 +138,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 **Database Table:** `customer_relationships`
 
 - **Fields:**
-
   - Core: id, userId, customerProfileId, relatedCustomerProfileId
 
   - Type: relationshipType (parent_company, subsidiary, referrer, referred_by, partner, competitor)
@@ -161,7 +147,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
   - Timestamps: createdAt, updatedAt
 
 - **Indexes:**
-
   - `idx_relationships_customer` (customerProfileId)
 
   - `idx_relationships_related` (relatedCustomerProfileId)
@@ -169,7 +154,6 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
   - `idx_relationships_type` (relationshipType)
 
 - **Use Cases:**
-
   - Company hierarchies
 
   - Referral tracking
@@ -224,7 +208,7 @@ All backend database tables and schema for CRM Phase 2-6 are now **production-re
 
 **Test Script:** `server/scripts/test-crm-phase2-6.ts`
 
-```text
+````text
 ✅ opportunities table: 0 rows
 ✅ customer_segments table: 0 rows
 ✅ customer_segment_members table: 0 rows
@@ -406,7 +390,7 @@ const createOpp = trpc.crm.extensions.createOpportunity.useMutation();
 const updateStage = trpc.crm.extensions.updateOpportunity.useMutation();
 const forecast = trpc.crm.extensions.getRevenueForecast.useQuery();
 
-```
+````
 
 ### Week 3: Segmentation UI
 

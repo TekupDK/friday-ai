@@ -136,7 +136,7 @@ Fuld dokumentation suite til API optimeringer - alt hvad du skal bruge.
 
 ### Debugging Commands
 
-```javascript
+````javascript
 // Browser Console
 window.__requestQueue?.getQueueSize();
 window.__requestQueue?.isRateLimited();
@@ -151,7 +151,7 @@ window.__requestQueue?.isRateLimited();
 [API Query Error] - General errors
 [API Mutation Error] - Mutation errors
 
-```
+````
 
 ### Key Files to Monitor
 

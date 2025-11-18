@@ -104,16 +104,19 @@
 ## Test Execution Commands
 
 ### Run Auth Refresh Tests
+
 ```bash
 pnpm test client/src/__tests__/auth-refresh.test.ts
 ```
 
 ### Run All Tests
+
 ```bash
 pnpm test
 ```
 
 ### Run Tests in Watch Mode
+
 ```bash
 pnpm test --watch
 ```
@@ -152,4 +155,3 @@ pnpm test --watch
 **Total: 36/36 tests passing (100%)**
 
 The implementation is production-ready. Remaining tests (navigation, tRPC client) are optional and can be implemented incrementally as needed.
-

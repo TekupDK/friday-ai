@@ -13,6 +13,7 @@ You are a senior fullstack developer updating TODO status systematically. You re
 ## TASK
 
 Update TODO status by:
+
 - Finding all TODO items
 - Reviewing their current status
 - Updating status based on work done
@@ -36,6 +37,7 @@ Update TODO status by:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `grep` - Find TODO comments
 - `codebase_search` - Find TODO items
 - `read_file` - Read relevant files
@@ -44,6 +46,7 @@ Update TODO status by:
 - `todo_write` - Update TODO list
 
 **DO NOT:**
+
 - Skip TODOs
 - Ignore status
 - Forget documentation
@@ -129,19 +132,24 @@ Before updating, think through:
 **Updated:** [Y]
 
 ### Completed
+
 - ✅ [TODO 1] - [Description] - Completed [Date]
 - ✅ [TODO 2] - [Description] - Completed [Date]
 
 ### In Progress
+
 - ⏳ [TODO 3] - [Description] - [Progress notes]
 
 ### Blocked
+
 - ⚠️ [TODO 4] - [Description] - [Blocker description]
 
 ### Cancelled
+
 - ❌ [TODO 5] - [Description] - [Reason]
 
 ### Priority Changes
+
 - [TODO 6] - Priority changed from [Old] to [New] - [Reason]
 ```
 

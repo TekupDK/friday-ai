@@ -1,6 +1,6 @@
 /**
  * Error Hook: Error Recovery
- * 
+ *
  * Attempts automatic error recovery
  */
 
@@ -30,4 +30,3 @@ export async function attemptRecovery(
     error: "Recovery not implemented",
   };
 }
-

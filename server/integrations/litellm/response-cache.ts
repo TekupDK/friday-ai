@@ -116,9 +116,12 @@ export class LiteLLMCache {
   startCleanup(): void {
     if (this.cleanupInterval) return; // Already started
 
-    this.cleanupInterval = setInterval(() => {
-      this.cleanup();
-    }, 5 * 60 * 1000); // Every 5 minutes
+    this.cleanupInterval = setInterval(
+      () => {
+        this.cleanup();
+      },
+      5 * 60 * 1000
+    ); // Every 5 minutes
   }
 
   /**
@@ -149,7 +152,7 @@ export const responseCache = new LiteLLMCache();
 responseCache.startCleanup();
 
 // ✅ FIXED: Cleanup on process exit to prevent memory leaks
-if (typeof process !== 'undefined') {
-  process.on('SIGTERM', () => responseCache.stopCleanup());
-  process.on('SIGINT', () => responseCache.stopCleanup());
+if (typeof process !== "undefined") {
+  process.on("SIGTERM", () => responseCache.stopCleanup());
+  process.on("SIGINT", () => responseCache.stopCleanup());
 }

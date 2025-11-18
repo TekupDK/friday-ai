@@ -30,12 +30,14 @@ Debug an issue using chain-of-thought methodology. Break the problem into logica
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code to understand flow
 - `codebase_search` - Find related code
 - `grep` - Search for patterns
 - `run_terminal_cmd` - Run tests and check logs
 
 **DO NOT:**
+
 - Skip logical steps
 - Jump to conclusions
 - Ignore evidence

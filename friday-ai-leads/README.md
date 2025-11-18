@@ -9,7 +9,7 @@
 
 ## 📁 Project Structure
 
-```text
+````text
 friday-ai-leads/
 ├── 📖 README.md                     # This file - overview & guide
 ├── 📦 package.json                  # Dependencies & scripts
@@ -195,7 +195,7 @@ Revenue Impact:
 - Year 1: 95-125k kr
 - ROI: ∞ (zero cost)
 
-```
+````
 
 ---
 

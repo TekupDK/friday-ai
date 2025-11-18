@@ -6,12 +6,14 @@
 Integration af UTCP (Universal Tool Calling Protocol) i Friday AI Chat for at erstatte den nuværende MCP-baserede tool calling arkitektur. UTCP giver direkte tool calling uden intermediary servers, hvilket reducerer latency og kompleksitet.
 
 **Status:**
+
 - ⏳ Ikke implementeret
 - ⏳ Design fase
 - ⏳ Prototype fase
 - ⏳ Testing fase
 
 **Business Value:**
+
 - **Performance:** 32% hurtigere tool execution (baseret på direkte API vs MCP sammenligning)
 - **Simplified Architecture:** Færre dependencies, mindre kompleksitet
 - **Cost Reduction:** Ingen MCP server infrastructure nødvendig
@@ -98,6 +100,7 @@ Proposed Architecture (UTCP):
 ### Backend Implementation
 
 **Files:**
+
 - `server/utcp-manifest.ts` - UTCP manifest definitions (NEW)
 - `server/utcp-handler.ts` - UTCP tool execution handler (NEW)
 - `server/friday-tools.ts` - Update to support UTCP format
@@ -134,7 +137,10 @@ export const UTCP_MANIFEST: Record<string, UTCPTool> = {
       type: "object",
       properties: {
         query: { type: "string", description: "Gmail søgequery" },
-        maxResults: { type: "number", description: "Maksimalt antal resultater" },
+        maxResults: {
+          type: "number",
+          description: "Maksimalt antal resultater",
+        },
       },
       required: ["query"],
     },
@@ -218,7 +224,9 @@ async function executeHTTPTool(
     return {
       success: response.ok,
       data: response.ok ? data : undefined,
-      error: response.ok ? undefined : data.error?.message || "HTTP request failed",
+      error: response.ok
+        ? undefined
+        : data.error?.message || "HTTP request failed",
       code: response.ok ? undefined : "API_ERROR",
     };
   } catch (error) {
@@ -232,28 +240,34 @@ async function executeHTTPTool(
 ```
 
 **tRPC Endpoints:**
+
 - No new endpoints needed (uses existing tool execution flow)
 - Update `chat.sendMessage` to use UTCP manifest
 
 **Database Schema:**
+
 - No schema changes required
 - Existing tool execution tracking remains
 
 ### Frontend Implementation
 
 **Files:**
+
 - No frontend changes required initially
 - Future: Tool selection UI could show UTCP tools
 
 **Key Components:**
+
 - Tool execution is backend-only
 - Frontend continues to use existing chat interface
 
 **State Management:**
+
 - No changes needed
 - Tool execution state handled by backend
 
 **UI/UX:**
+
 - No user-facing changes
 - Performance improvements will be transparent
 
@@ -337,17 +351,20 @@ async function migrateToolToUTCP(toolName: ToolName): Promise<void> {
 ## Testing
 
 **Unit Tests:**
+
 - UTCP manifest validation - ⏳ TODO
 - UTCP handler execution - ⏳ TODO
 - Schema validation - ⏳ TODO
 - Error handling - ⏳ TODO
 
 **Integration Tests:**
+
 - Tool execution via UTCP - ⏳ TODO
 - Fallback to MCP - ⏳ TODO
 - API integration - ⏳ TODO
 
 **E2E Tests:**
+
 - Full conversation with UTCP tools - ⏳ TODO
 - Performance comparison - ⏳ TODO
 
@@ -410,4 +427,3 @@ async function migrateToolToUTCP(toolName: ToolName): Promise<void> {
 3. Benchmark performance vs MCP
 4. Create migration plan
 5. Start gradual migration
-

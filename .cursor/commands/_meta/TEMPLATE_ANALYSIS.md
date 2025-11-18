@@ -2,7 +2,7 @@
 
 Use this template for commands that analyze code, systems, performance, or data.
 
-```markdown
+````markdown
 # [Command Name]
 
 You are a senior [engineer/analyst] analyzing [what] for Friday AI Chat. You [key approach].
@@ -34,12 +34,14 @@ Analyze [what] by [how] to [goal].
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find relevant code
 - `read_file` - Read relevant files
 - `grep` - Search for patterns
 - `run_terminal_cmd` - Execute analysis commands
 
 **DO NOT:**
+
 - [Analysis-specific don'ts]
 - [Common analysis mistakes]
 
@@ -70,11 +72,13 @@ Before analyzing, think through:
 ## ANALYSIS STRATEGY
 
 ### 1. [Analysis Type 1]
+
 - ✅ [What to check]
 - ✅ [What to measure]
 - ✅ [What to compare]
 
 ### 2. [Analysis Type 2]
+
 - ✅ [What to check]
 - ✅ [What to measure]
 - ✅ [What to compare]
@@ -118,35 +122,42 @@ Provide comprehensive analysis report:
 **Status:** [COMPLETE/IN PROGRESS]
 
 ## Executive Summary
+
 - [Key findings]
 - [Main recommendations]
 
 ## Detailed Analysis
 
 ### [Section 1]
+
 - [Findings]
 - [Metrics]
 - [Comparisons]
 
 ### [Section 2]
+
 - [Findings]
 - [Metrics]
 - [Comparisons]
 
 ## Key Findings
+
 1. [Finding 1]
 2. [Finding 2]
 3. [Finding 3]
 
 ## Recommendations
+
 1. [Recommendation 1] - [Priority]
 2. [Recommendation 2] - [Priority]
 3. [Recommendation 3] - [Priority]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 ```
+````
 
 ## GUIDELINES
 
@@ -159,6 +170,7 @@ Provide comprehensive analysis report:
 ---
 
 **CRITICAL:** [Analysis-specific critical instruction]
+
 ```
 
 ## Notes
@@ -168,3 +180,4 @@ Provide comprehensive analysis report:
 - Provide actionable recommendations
 - Use structured output formats
 
+```

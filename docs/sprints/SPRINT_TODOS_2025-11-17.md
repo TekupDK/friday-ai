@@ -7,6 +7,7 @@
 ## High Priority Tasks (P1) - 8 Story Points
 
 ### 1. Supabase Storage Integration for DocumentUploader
+
 - [ ] **Setup Supabase Storage**
   - [ ] Verify Supabase Storage bucket exists
   - [ ] Configure bucket permissions
@@ -30,6 +31,7 @@
 **Total:** 6 hours / 5 story points
 
 ### 2. Team 2 Rapport - Test og Verificer Klage Detektion
+
 - [ ] **Test med Real Data**
   - [ ] Kør rapport script med november 1-15 data
   - [ ] Verificer events bliver fundet
@@ -51,6 +53,7 @@
 **Total:** 3 hours / 2 story points
 
 ### 3. Fix Remaining TypeScript Errors
+
 - [ ] **Find alle TypeScript Errors**
   - [ ] Kør `pnpm check`
   - [ ] Liste alle errors
@@ -66,6 +69,7 @@
 ## Medium Priority Tasks (P2) - 10 Story Points
 
 ### 4. Improve SegmentBuilder - Enhanced Rule Logic
+
 - [ ] **Add Complex Rule Support**
   - [ ] Support AND/OR logic between rules
   - [ ] Add rule groups
@@ -88,6 +92,7 @@
 **Total:** 4 hours / 3 story points
 
 ### 5. Enhance RelationshipGraph - Network Visualization
+
 - [ ] **Research Visualization Library**
   - [ ] Evaluate vis.js vs d3.js vs react-force-graph
   - [ ] Choose library
@@ -108,6 +113,7 @@
 **Total:** 5 hours / 4 story points (kan reduceres hvis graph ikke implementeres)
 
 ### 6. Add Update Segment Endpoint
+
 - [ ] **Backend: Update Segment Endpoint**
   - [ ] Create `updateSegment` procedure
   - [ ] Add validation
@@ -124,6 +130,7 @@
 ## Low Priority Tasks (P3) - 4 Story Points
 
 ### 7. Add Export Functionality to Reports
+
 - [ ] **PDF Export**
   - [ ] Install PDF library (jsPDF eller react-pdf)
   - [ ] Create PDF generation function
@@ -138,6 +145,7 @@
 **Total:** 3 hours / 2 story points
 
 ### 8. Improve RevenueChart Visualization
+
 - [ ] **Add Chart Library**
   - [ ] Install Recharts eller Chart.js
   - [ ] Setup chart component
@@ -154,6 +162,7 @@
 ## Task Selection Rationale
 
 **Selected Tasks:**
+
 - **P1 Tasks (8 SP):** Kritisk for production readiness
   - Supabase Storage er nødvendig for document management
   - Team 2 rapport skal være korrekt
@@ -165,53 +174,63 @@
   - Update Segment endpoint mangler
 
 **Not Selected (P3):**
+
 - Export functionality - Nice to have, kan vente
 - RevenueChart improvements - Allerede fungerer, kan forbedres senere
 
 ## Estimated Effort
 
 **Total Committed:** 18 story points
+
 - P1: 8 story points (44%)
 - P2: 10 story points (56%)
 
 **Total Hours:** ~25 timer
+
 - P1: ~11 timer
 - P2: ~14 timer
 
 ## Daily Breakdown
 
 ### Day 1 (2025-11-17) - Supabase Setup
+
 - [ ] Supabase Storage setup (1h)
 - [ ] File upload implementation (3h)
 - **Goal:** Upload fungerer
 
 ### Day 2 (2025-11-18) - Supabase Polish
+
 - [ ] Error handling og validation (1h)
 - [ ] Testing og polish (1h)
 - [ ] Start Team 2 rapport testing (1h)
 - **Goal:** DocumentUploader production-ready
 
 ### Day 3 (2025-11-19) - Team 2 Rapport
+
 - [ ] Test med real data (1h)
 - [ ] Verificer klage-detektion (1h)
 - [ ] Juster patterns (1h)
 - **Goal:** Rapport korrekt
 
 ### Day 4 (2025-11-20) - TypeScript & Code Quality
+
 - [ ] Fix TypeScript errors (2h)
 - [ ] Code review (1h)
 - **Goal:** Clean codebase
 
 ### Day 5 (2025-11-21) - Segment Improvements
+
 - [ ] SegmentBuilder enhancements (4h)
 - **Goal:** SegmentBuilder forbedret
 
 ### Day 6 (2025-11-22) - Backend & Graph
+
 - [ ] Update Segment endpoint (2h)
 - [ ] RelationshipGraph enhancements (3h)
 - **Goal:** Features complete
 
 ### Day 7 (2025-11-23) - Testing & Documentation
+
 - [ ] Integration testing (2h)
 - [ ] Documentation (1h)
 - [ ] Final review (1h)
@@ -233,4 +252,3 @@
 1. **Supabase Storage Setup** - Kan kræve ekstra konfiguration
 2. **Klage-detektion Accuracy** - Kan kræve flere iterationer
 3. **Network Visualization** - Kan blive kompleks, fallback til list view OK
-

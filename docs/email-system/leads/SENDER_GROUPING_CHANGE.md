@@ -9,7 +9,7 @@
 
 ### BEFORE (Gmail ThreadId Grouping)
 
-```text
+````text
 ❌ Emails grouped by Gmail's internal threadId
 ❌ Multiple separate threads from same customer
 ❌ Hard to see all conversations with one customer
@@ -345,7 +345,7 @@ User satisfaction:    Higher (intuitive grouping)
 "Love that I can see the full history at a glance!"
 "This makes so much more sense than before!"
 
-```
+````
 
 ---
 

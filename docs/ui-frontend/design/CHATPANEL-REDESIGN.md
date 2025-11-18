@@ -31,7 +31,7 @@ ChatPanel har undergået et komplet redesign med fokus på moderne UX/UI princip
 
 ### Header
 
-```tsx
+````tsx
 
 - Logo og titel venstre
 - Ny samtale knap
@@ -252,7 +252,7 @@ npm test -- ChatPanel
 ```bash
 npx playwright test --grep "chat"
 
-```
+````
 
 ## Support
 

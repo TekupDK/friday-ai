@@ -19,4 +19,3 @@ Use pnpm for all package management operations.
 ## OUTPUT
 
 Using pnpm as package manager (no migration needed).
-

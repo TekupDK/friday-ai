@@ -239,4 +239,3 @@
 - Team 2 rapport forbedringer baseret på bruger feedback
 - Fokus på polish og quality denne sprint
 - Test med real data er vigtigt
-

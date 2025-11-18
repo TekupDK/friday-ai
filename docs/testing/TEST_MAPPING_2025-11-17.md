@@ -7,12 +7,14 @@
 ## Executive Summary
 
 **Critical Changes:**
+
 - ✅ Login JSON parsing error fix (`client/src/main.tsx`)
 - ✅ CRM Standalone Debug Mode (`client/src/pages/crm/CRMStandalone.tsx`)
 - ✅ Route registration (`client/src/App.tsx`)
 - ✅ Navigation updates (`client/src/components/crm/CRMLayout.tsx`)
 
 **Test Coverage Status:**
+
 - ⚠️ **Auth refresh fix:** No existing tests - **NEW TESTS REQUIRED**
 - ⚠️ **CRM Standalone:** No existing tests - **NEW TESTS REQUIRED**
 - ⚠️ **Route registration:** No existing tests - **NEW TESTS REQUIRED**
@@ -25,11 +27,13 @@
 ### 1.1 Authentication Refresh (`client/src/main.tsx`)
 
 **Function:** `redirectToLoginIfUnauthorized`
+
 - **Lines Changed:** 117-137
 - **Change Type:** Bug fix (JSON parsing error handling)
 - **Impact:** Critical - Affects user login flow
 
 **Changed Logic:**
+
 ```typescript
 // OLD: Direct JSON parsing (could fail)
 const refreshData = await refreshResponse.json();
@@ -57,11 +61,13 @@ try {
 ### 1.2 CRM Standalone Page (`client/src/pages/crm/CRMStandalone.tsx`)
 
 **Component:** `CRMStandalone`
+
 - **Lines:** 1-207 (new file)
 - **Change Type:** New feature
 - **Impact:** High - New debugging capability
 
 **Key Components:**
+
 - `ErrorBoundary` class component
 - `ErrorFallback` functional component
 - `StandaloneCRMRouter` component
@@ -70,6 +76,7 @@ try {
 ### 1.3 Route Registration (`client/src/App.tsx`)
 
 **Routes Added:**
+
 - `/crm-standalone` → `CRMStandalone`
 - `/crm-standalone/:path*` → `CRMStandalone`
 - `/crm/debug` → `CRMStandalone`
@@ -80,11 +87,13 @@ try {
 ### 1.4 Navigation Updates (`client/src/components/crm/CRMLayout.tsx`)
 
 **Function:** `CRMLayout` component
+
 - **Lines Changed:** 34-85
 - **Change Type:** Feature enhancement
 - **Impact:** Medium - Navigation behavior
 
 **Changed Logic:**
+
 - Standalone mode detection
 - Path adjustment for standalone routes
 - Button text switching ("CRM Home" vs "Workspace")
@@ -92,6 +101,7 @@ try {
 ### 1.5 tRPC Client Export (`client/src/lib/trpc-client.ts`)
 
 **File:** New file
+
 - **Lines:** 1-45
 - **Change Type:** Infrastructure
 - **Impact:** Low - Internal refactoring
@@ -103,12 +113,14 @@ try {
 ### 2.1 Authentication Tests
 
 **Existing Tests:**
+
 - ✅ `client/src/pages/__tests__/LoginPage.test.tsx` - Login page UI tests
 - ✅ `client/src/__tests__/accessibility/LoginPage.a11y.test.tsx` - Accessibility tests
 - ✅ `client/src/__tests__/auth-helper.ts` - Test helper for login
 - ✅ `server/_core/oauth.ts` - Backend auth endpoint (has test mode)
 
 **Coverage Gaps:**
+
 - ❌ **No tests for `redirectToLoginIfUnauthorized` function**
 - ❌ **No tests for auth refresh JSON parsing**
 - ❌ **No tests for error handling in refresh flow**
@@ -116,11 +128,13 @@ try {
 ### 2.2 CRM Tests
 
 **Existing Tests:**
+
 - ✅ `server/__tests__/crm-workflow.test.ts` - Backend CRM workflow tests
 - ✅ `server/__tests__/crm-smoke.test.ts` - Backend CRM smoke tests
 - ✅ `server/__tests__/crm-status.test.ts` - Backend CRM status tests
 
 **Coverage Gaps:**
+
 - ❌ **No frontend CRM component tests**
 - ❌ **No CRM route tests**
 - ❌ **No CRM navigation tests**
@@ -129,6 +143,7 @@ try {
 ### 2.3 Routing Tests
 
 **Existing Tests:**
+
 - ❌ **No route registration tests**
 - ❌ **No route navigation tests**
 - ❌ **No lazy loading tests**
@@ -140,6 +155,7 @@ try {
 ### 3.1 Existing Tests to Re-run
 
 #### ✅ **MUST RUN: Authentication Tests**
+
 ```bash
 # Run all login-related tests
 pnpm test client/src/pages/__tests__/LoginPage.test.tsx
@@ -149,6 +165,7 @@ pnpm test client/src/__tests__/accessibility/LoginPage.a11y.test.tsx
 **Reason:** Verify login flow still works after JSON parsing fix
 
 #### ✅ **MUST RUN: Backend CRM Tests**
+
 ```bash
 # Run backend CRM tests
 pnpm test server/__tests__/crm-workflow.test.ts
@@ -170,6 +187,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
 **Test Cases Required:**
 
 1. **Test: Valid JSON Response**
+
    ```typescript
    it("should parse valid JSON response from refresh endpoint", async () => {
      // Mock fetch to return valid JSON
@@ -179,6 +197,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 2. **Test: Non-JSON Response**
+
    ```typescript
    it("should handle non-JSON response gracefully", async () => {
      // Mock fetch to return HTML/text response
@@ -189,6 +208,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 3. **Test: Empty Response**
+
    ```typescript
    it("should handle empty response gracefully", async () => {
      // Mock fetch to return empty response
@@ -198,6 +218,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 4. **Test: Invalid JSON Response**
+
    ```typescript
    it("should handle invalid JSON gracefully", async () => {
      // Mock fetch to return invalid JSON
@@ -208,6 +229,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 5. **Test: Network Error**
+
    ```typescript
    it("should handle network errors gracefully", async () => {
      // Mock fetch to throw network error
@@ -234,6 +256,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
 **Test Cases Required:**
 
 1. **Test: ErrorBoundary Catches Errors**
+
    ```typescript
    it("should catch and display errors in ErrorBoundary", () => {
      // Render component that throws error
@@ -243,6 +266,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 2. **Test: ErrorBoundary Reset**
+
    ```typescript
    it("should reset error boundary when resetErrorBoundary is called", () => {
      // Trigger error
@@ -252,6 +276,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 3. **Test: Standalone Routes Load**
+
    ```typescript
    it("should load all standalone CRM routes", () => {
      // Test each route:
@@ -265,6 +290,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 4. **Test: Lazy Loading Works**
+
    ```typescript
    it("should lazy load CRM components", async () => {
      // Verify components are lazy loaded
@@ -274,6 +300,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 5. **Test: Development Banner**
+
    ```typescript
    it("should show development banner in dev mode", () => {
      // Set NODE_ENV to development
@@ -298,6 +325,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
 **Test Cases Required:**
 
 1. **Test: Standalone Routes Registered**
+
    ```typescript
    it("should register /crm-standalone route", () => {
      // Navigate to /crm-standalone
@@ -306,6 +334,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 2. **Test: Standalone Catch-All Route**
+
    ```typescript
    it("should handle /crm-standalone/:path* routes", () => {
      // Navigate to /crm-standalone/customers
@@ -330,6 +359,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
 **Test Cases Required:**
 
 1. **Test: Standalone Mode Detection**
+
    ```typescript
    it("should detect standalone mode from pathname", () => {
      // Set pathname to /crm-standalone/dashboard
@@ -338,6 +368,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 2. **Test: Path Adjustment**
+
    ```typescript
    it("should adjust paths for standalone mode", () => {
      // In standalone mode, verify /crm/customers → /crm-standalone/customers
@@ -345,11 +376,12 @@ pnpm test server/__tests__/crm-smoke.test.ts
    ```
 
 3. **Test: Button Text Switching**
+
    ```typescript
    it("should show 'CRM Home' in standalone mode", () => {
      // In standalone mode, verify button text is "CRM Home"
    });
-   
+
    it("should show 'Workspace' in normal mode", () => {
      // In normal mode, verify button text is "Workspace"
    });
@@ -372,6 +404,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
 **Test Cases Required:**
 
 1. **Test: Client Export**
+
    ```typescript
    it("should export trpcClient", () => {
      // Verify trpcClient is exported
@@ -394,30 +427,35 @@ pnpm test server/__tests__/crm-smoke.test.ts
 ### Before Merge - MUST Complete
 
 - [ ] **Run existing login tests**
+
   ```bash
   pnpm test client/src/pages/__tests__/LoginPage.test.tsx
   pnpm test client/src/__tests__/accessibility/LoginPage.a11y.test.tsx
   ```
 
 - [ ] **Run existing CRM backend tests**
+
   ```bash
   pnpm test server/__tests__/crm-workflow.test.ts
   pnpm test server/__tests__/crm-smoke.test.ts
   ```
 
 - [ ] **Write and run auth refresh tests** (NEW - CRITICAL)
+
   ```bash
   # Create: client/src/__tests__/auth-refresh.test.ts
   pnpm test client/src/__tests__/auth-refresh.test.ts
   ```
 
 - [ ] **Write and run CRM Standalone tests** (NEW - HIGH)
+
   ```bash
   # Create: client/src/pages/crm/__tests__/CRMStandalone.test.tsx
   pnpm test client/src/pages/crm/__tests__/CRMStandalone.test.tsx
   ```
 
 - [ ] **Write and run route registration tests** (NEW - HIGH)
+
   ```bash
   # Create: client/src/__tests__/routing.test.tsx
   pnpm test client/src/__tests__/routing.test.tsx
@@ -442,16 +480,19 @@ pnpm test server/__tests__/crm-smoke.test.ts
 ## 6. Test Implementation Priority
 
 ### Phase 1: Critical (Before Merge)
+
 1. ✅ Auth refresh JSON parsing tests
 2. ✅ CRM Standalone basic tests
 3. ✅ Route registration tests
 
 ### Phase 2: High Priority (Before Production)
+
 4. ✅ Navigation tests
 5. ✅ Error boundary tests
 6. ✅ Lazy loading tests
 
 ### Phase 3: Nice to Have (Post-Merge)
+
 7. ⏳ tRPC client export tests
 8. ⏳ Performance tests
 9. ⏳ E2E tests
@@ -553,6 +594,7 @@ pnpm test server/__tests__/crm-smoke.test.ts
 **Status:** ⚠️ **TESTS REQUIRED BEFORE MERGE**
 
 **Critical Path:**
+
 1. Write auth refresh tests (2 hours)
 2. Write CRM Standalone basic tests (2 hours)
 3. Write route registration tests (2 hours)
@@ -561,4 +603,3 @@ pnpm test server/__tests__/crm-smoke.test.ts
 **Total Time to Test-Ready:** ~6 hours
 
 **Recommendation:** Block merge until critical tests are implemented and passing.
-

@@ -144,7 +144,7 @@
 
 **Nye ENV variabler:**
 
-```env
+````env
 # Enable documentation service
 DOCS_ENABLE=false                    # Set to true to activate
 
@@ -491,7 +491,7 @@ ws.on("doc:updated", doc => {
   console.log("Document updated:", doc);
 });
 
-```
+````
 
 ---
 

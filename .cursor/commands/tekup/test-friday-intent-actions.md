@@ -31,6 +31,7 @@ Test all 7 Friday AI intent actions to ensure they work correctly and follow bus
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find intent action code
 - `read_file` - Read intent action implementations
 - `grep` - Search for intent patterns
@@ -38,6 +39,7 @@ Test all 7 Friday AI intent actions to ensure they work correctly and follow bus
 - `read_lints` - Check for errors
 
 **DO NOT:**
+
 - Skip any intent actions
 - Ignore business rules
 - Miss edge cases
@@ -70,7 +72,7 @@ Before testing, think through:
 
 3. **Follow existing patterns:**
    - Use parseIntent() for intent detection
-   - Use execute* functions for execution
+   - Use execute\* functions for execution
    - Verify business rules from prompts
    - Check error handling
 
@@ -102,7 +104,7 @@ export type Intent =
 // server/intent-actions.ts
 export function parseIntent(message: string): ParsedIntent {
   const lowerMessage = message.toLowerCase();
-  
+
   // Check for each intent type
   // Return: { intent, params, confidence }
 }
@@ -175,6 +177,7 @@ Provide test results:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Test Summary
+
 - **Total Intents:** 7
 - **Tested:** [X]/7
 - **Passed:** [X]
@@ -183,55 +186,69 @@ Provide test results:
 ## Test Results
 
 ### create_lead
+
 - ✅ Happy path - [Result]
 - ✅ Error handling - [Result]
 - ✅ Business rules - [Result]
 
 ### create_task
+
 - ✅ Happy path - [Result]
 - ✅ Error handling - [Result]
 
 ### create_invoice
+
 - ✅ Happy path - [Result]
 - ✅ Business rules - [Result]
 - ⚠️ [Issue found] - [Description]
 
 ### book_meeting
+
 - ✅ Happy path - [Result]
 - ✅ Calendar integration - [Result]
 
 ### search_email
+
 - ✅ Happy path - [Result]
 - ✅ Gmail integration - [Result]
 
 ### list_tasks
+
 - ✅ Happy path - [Result]
 
 ### list_leads
+
 - ✅ Happy path - [Result]
 
 ### check_calendar
+
 - ✅ Happy path - [Result]
 - ✅ Calendar integration - [Result]
 
 ### request_flytter_photos
+
 - ✅ Happy path - [Result]
 
 ### job_completion
+
 - ✅ Happy path - [Result]
 - ✅ Checklist - [Result]
 
 ### ai_generate_summaries
+
 - ✅ Happy path - [Result]
 
 ### ai_suggest_labels
+
 - ✅ Happy path - [Result]
 
 ## Issues Found
+
 1. [Issue 1] - [Description] - [Severity]
 2. [Issue 2] - [Description] - [Severity]
 
 ## Recommendations
+
 1. [Recommendation 1]
 2. [Recommendation 2]
 ```
@@ -248,4 +265,3 @@ Provide test results:
 ---
 
 **CRITICAL:** Start by reading all intent action code, then create comprehensive test scenarios and execute them.
-

@@ -1,6 +1,6 @@
 /**
  * Pre-execution Hook: Validate Code Style
- * 
+ *
  * Validates code style before making changes
  */
 
@@ -26,4 +26,3 @@ export async function validateCodeStyle(): Promise<CodeStyleValidation> {
     warnings,
   };
 }
-

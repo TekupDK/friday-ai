@@ -252,9 +252,7 @@ class SDKServer {
     }
   }
 
-  async verifySessionWithExp(
-    cookieValue: string | undefined | null
-  ): Promise<{
+  async verifySessionWithExp(cookieValue: string | undefined | null): Promise<{
     openId: string;
     appId: string;
     name: string;

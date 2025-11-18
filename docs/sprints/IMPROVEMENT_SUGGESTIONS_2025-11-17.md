@@ -20,6 +20,7 @@
 **Benefit:** Bedre user experience, visuel feedback under upload
 
 **Current:**
+
 ```typescript
 const [uploading, setUploading] = useState(false);
 
@@ -30,6 +31,7 @@ const { data, error } = await supabase.storage
 ```
 
 **Improved:**
+
 ```typescript
 const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -46,7 +48,7 @@ const { data, error } = await supabase.storage
 // Display progress bar
 {uploading && (
   <div className="w-full bg-muted rounded-full h-2">
-    <div 
+    <div
       className="bg-primary h-2 rounded-full transition-all"
       style={{ width: `${uploadProgress}%` }}
     />
@@ -55,11 +57,13 @@ const { data, error } = await supabase.storage
 ```
 
 **Benefits:**
+
 - Bedre UX - brugeren kan se upload progress
 - Reducerer frustration ved store filer
 - Klar feedback om upload status
 
 **Implementation:**
+
 1. Tilføj `uploadProgress` state
 2. Brug `onUploadProgress` callback i Supabase upload
 3. Vis progress bar i UI
@@ -73,14 +77,17 @@ const { data, error } = await supabase.storage
 **Benefit:** Fleksibel konfiguration, nemmere at teste
 
 **Current:**
+
 ```typescript
 const bucketName = "customer-documents"; // Hardcoded
 ```
 
 **Improved:**
+
 ```typescript
 // Environment variable or config
-const bucketName = import.meta.env.VITE_SUPABASE_STORAGE_BUCKET || "customer-documents";
+const bucketName =
+  import.meta.env.VITE_SUPABASE_STORAGE_BUCKET || "customer-documents";
 
 // Or from config file
 import { STORAGE_CONFIG } from "@/config/storage";
@@ -88,11 +95,13 @@ const bucketName = STORAGE_CONFIG.customerDocumentsBucket;
 ```
 
 **Benefits:**
+
 - Nemmere at skifte bucket i forskellige miljøer
 - Test med forskellige buckets
 - Bedre konfiguration management
 
 **Implementation:**
+
 1. Tilføj environment variable `VITE_SUPABASE_STORAGE_BUCKET`
 2. Eller opret `config/storage.ts` med bucket konfiguration
 3. Opdater `DocumentUploader` til at bruge config
@@ -106,6 +115,7 @@ const bucketName = STORAGE_CONFIG.customerDocumentsBucket;
 **Benefit:** Sparer bandwidth, bedre UX
 
 **Current:**
+
 ```typescript
 // Validation happens in handleFileSelect
 if (file.size > 10 * 1024 * 1024) {
@@ -115,6 +125,7 @@ if (file.size > 10 * 1024 * 1024) {
 ```
 
 **Improved:**
+
 ```typescript
 // More comprehensive validation
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -145,6 +156,7 @@ if (error) {
 ```
 
 **Benefits:**
+
 - Bedre error messages
 - Type validation
 - Centraliseret validation logic
@@ -158,6 +170,7 @@ if (error) {
 **Benefit:** Bedre error recovery, bedre UX
 
 **Current:**
+
 ```typescript
 try {
   // Upload logic
@@ -169,6 +182,7 @@ try {
 ```
 
 **Improved:**
+
 ```typescript
 // Create error handler utility
 const handleUploadError = (error: unknown) => {
@@ -199,6 +213,7 @@ catch (error) {
 ```
 
 **Benefits:**
+
 - Bedre error messages
 - Centraliseret error handling
 - Logging til error tracking
@@ -212,6 +227,7 @@ catch (error) {
 **Benefit:** Bedre type safety, færre runtime errors
 
 **Current:**
+
 ```typescript
 const updateData: {
   name?: string;
@@ -223,14 +239,17 @@ const updateData: {
 ```
 
 **Improved:**
+
 ```typescript
 // Use Drizzle inferred types
 import type { customerSegments } from "@/drizzle/schema";
 
-type SegmentUpdate = Partial<Pick<
-  typeof customerSegments.$inferSelect,
-  "name" | "description" | "type" | "rules" | "color"
->>;
+type SegmentUpdate = Partial<
+  Pick<
+    typeof customerSegments.$inferSelect,
+    "name" | "description" | "type" | "rules" | "color"
+  >
+>;
 
 const updateData: SegmentUpdate = {};
 
@@ -241,6 +260,7 @@ type UpdateSegmentInput = {
 ```
 
 **Benefits:**
+
 - Type safety fra database schema
 - Automatisk type sync
 - Færre type errors
@@ -254,6 +274,7 @@ type UpdateSegmentInput = {
 **Benefit:** Bedre performance ved store rapporter
 
 **Current:**
+
 ```typescript
 // Calculations done in loop
 for (const task of tasks) {
@@ -266,6 +287,7 @@ for (const task of tasks) {
 ```
 
 **Improved:**
+
 ```typescript
 // Pre-calculate values
 const enrichedTasks = useMemo(() => {
@@ -276,7 +298,7 @@ const enrichedTasks = useMemo(() => {
     costPerPerson: task.calendarTime * 90,
     totalCost: task.calendarTime * task.numberOfPeople * 90,
     revenue: task.invoicedTime * 349,
-    profit: (task.invoicedTime * 349) - (task.invoicedTime * 90),
+    profit: task.invoicedTime * 349 - task.invoicedTime * 90,
   }));
 }, [tasks]);
 
@@ -284,6 +306,7 @@ const enrichedTasks = useMemo(() => {
 ```
 
 **Benefits:**
+
 - Bedre performance
 - Beregninger kun én gang
 - Nemmere at teste
@@ -297,6 +320,7 @@ const enrichedTasks = useMemo(() => {
 **Benefit:** Nemmere at vedligeholde, konsistent
 
 **Current:**
+
 ```typescript
 // Magic numbers scattered in code
 const hourlyRate = 349; // Standard rate
@@ -305,6 +329,7 @@ const maxFileSize = 10 * 1024 * 1024; // 10MB
 ```
 
 **Improved:**
+
 ```typescript
 // Create constants file
 // constants/pricing.ts
@@ -331,6 +356,7 @@ const revenue = task.invoicedTime * PRICING.HOURLY_RATE;
 ```
 
 **Benefits:**
+
 - Centraliseret konfiguration
 - Nemmere at opdatere
 - Konsistent brug
@@ -344,12 +370,14 @@ const revenue = task.invoicedTime * PRICING.HOURLY_RATE;
 **Benefit:** Komplet CRUD for dokumenter
 
 **Current:**
+
 ```typescript
 // Only metadata deleted, file remains in Supabase
 const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation();
 ```
 
 **Improved:**
+
 ```typescript
 // Delete both metadata and file
 const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation({
@@ -357,15 +385,14 @@ const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation({
     // Also delete from Supabase Storage
     if (supabase && variables.storageUrl) {
       const filePath = extractPathFromUrl(variables.storageUrl);
-      await supabase.storage
-        .from("customer-documents")
-        .remove([filePath]);
+      await supabase.storage.from("customer-documents").remove([filePath]);
     }
   },
 });
 ```
 
 **Benefits:**
+
 - Komplet cleanup
 - Sparer storage space
 - Bedre data management
@@ -379,6 +406,7 @@ const deleteMutation = trpc.crm.extensions.deleteDocument.useMutation({
 **Benefit:** Bedre performance ved mange dokumenter
 
 **Current:**
+
 ```typescript
 // Loads all documents at once
 const { data: documents } = trpc.crm.extensions.listDocuments.useQuery({
@@ -388,20 +416,26 @@ const { data: documents } = trpc.crm.extensions.listDocuments.useQuery({
 ```
 
 **Improved:**
+
 ```typescript
 // Pagination or virtual scrolling
-const { data: documents, fetchNextPage } = trpc.crm.extensions.listDocuments.useInfiniteQuery({
-  customerProfileId,
-  limit: 20,
-}, {
-  getNextPageParam: (lastPage) => lastPage.nextCursor,
-});
+const { data: documents, fetchNextPage } =
+  trpc.crm.extensions.listDocuments.useInfiniteQuery(
+    {
+      customerProfileId,
+      limit: 20,
+    },
+    {
+      getNextPageParam: lastPage => lastPage.nextCursor,
+    }
+  );
 
 // Or use virtual scrolling
 import { useVirtualizer } from "@tanstack/react-virtual";
 ```
 
 **Benefits:**
+
 - Bedre performance
 - Kan håndtere mange dokumenter
 - Bedre UX
@@ -436,12 +470,14 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 ## Code Quality Metrics
 
 **Current State:**
+
 - TypeScript Coverage: ~95%
 - Error Handling: Good (kan forbedres)
 - Code Organization: Excellent
 - Documentation: Good
 
 **After Improvements:**
+
 - TypeScript Coverage: ~98%
 - Error Handling: Excellent
 - Code Organization: Excellent
@@ -454,6 +490,7 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 ### Quick Wins (1-2 timer)
 
 1. **Extract Constants:**
+
    ```bash
    # Create constants files
    mkdir -p client/src/constants
@@ -502,10 +539,10 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 ## Conclusion
 
 Koden er generelt af høj kvalitet med god struktur og type safety. De foreslåede forbedringer fokuserer på:
+
 - UX forbedringer (progress indicator)
 - Code organization (constants)
 - Feature completion (file deletion)
 - Performance (lazy loading)
 
 De fleste forbedringer er "quick wins" med høj impact og lav effort.
-

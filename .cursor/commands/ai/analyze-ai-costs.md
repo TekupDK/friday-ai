@@ -13,6 +13,7 @@ You are a senior AI engineer analyzing AI costs for Friday AI Chat. You track us
 ## TASK
 
 Analyze AI costs by:
+
 - Tracking model usage
 - Calculating costs per model
 - Identifying cost drivers
@@ -37,12 +38,14 @@ Analyze AI costs by:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read usage logs
 - `codebase_search` - Find cost-related code
 - `grep` - Search for model usage
 - `run_terminal_cmd` - Analyze usage data
 
 **DO NOT:**
+
 - Miss cost optimization opportunities
 - Ignore usage patterns
 - Skip cost breakdowns
@@ -79,6 +82,7 @@ Before analyzing, think through:
 ## COST ANALYSIS AREAS
 
 ### Model Costs
+
 - GLM-4.5 Air Free: $0.00/request
 - Claude 3.5 Sonnet: ~$0.003/request
 - GPT-4o: ~$0.01/request
@@ -86,6 +90,7 @@ Before analyzing, think through:
 - DeepSeek Chat v3.1 Free: $0.00/request
 
 ### Task Type Costs
+
 - Chat tasks
 - Email tasks
 - Calendar tasks
@@ -93,6 +98,7 @@ Before analyzing, think through:
 - Analysis tasks
 
 ### Usage Patterns
+
 - Peak usage times
 - Average requests per day
 - Requests per user
@@ -101,24 +107,28 @@ Before analyzing, think through:
 ## ANALYSIS STRATEGY
 
 ### 1. Usage Tracking
+
 - ✅ Requests per model
 - ✅ Requests per task type
 - ✅ Requests per user
 - ✅ Requests per feature
 
 ### 2. Cost Calculation
+
 - ✅ Cost per model
 - ✅ Cost per task type
 - ✅ Total monthly costs
 - ✅ Cost per user
 
 ### 3. Cost Driver Analysis
+
 - ✅ Most expensive models
 - ✅ Most expensive tasks
 - ✅ Usage patterns
 - ✅ Optimization opportunities
 
 ### 4. Optimization Recommendations
+
 - ✅ Model selection improvements
 - ✅ Caching opportunities
 - ✅ Usage pattern changes
@@ -178,6 +188,7 @@ Provide a comprehensive cost analysis report:
 **Period:** [PERIOD]
 
 ## Summary
+
 - Total Requests: [NUMBER]
 - Total Cost: $[AMOUNT]
 - Average Cost/Request: $[AMOUNT]
@@ -185,23 +196,24 @@ Provide a comprehensive cost analysis report:
 
 ## Cost Breakdown by Model
 
-| Model | Requests | Cost/Request | Total Cost | % of Total |
-|-------|-----------|--------------|------------|------------|
-| GLM-4.5 Air Free | [NUMBER] | $0.00 | $0.00 | [PERCENTAGE]% |
-| Claude 3.5 Sonnet | [NUMBER] | $0.003 | $[AMOUNT] | [PERCENTAGE]% |
-| GPT-4o | [NUMBER] | $0.01 | $[AMOUNT] | [PERCENTAGE]% |
-| Gemini 2.5 Flash | [NUMBER] | $0.0001 | $[AMOUNT] | [PERCENTAGE]% |
+| Model             | Requests | Cost/Request | Total Cost | % of Total    |
+| ----------------- | -------- | ------------ | ---------- | ------------- |
+| GLM-4.5 Air Free  | [NUMBER] | $0.00        | $0.00      | [PERCENTAGE]% |
+| Claude 3.5 Sonnet | [NUMBER] | $0.003       | $[AMOUNT]  | [PERCENTAGE]% |
+| GPT-4o            | [NUMBER] | $0.01        | $[AMOUNT]  | [PERCENTAGE]% |
+| Gemini 2.5 Flash  | [NUMBER] | $0.0001      | $[AMOUNT]  | [PERCENTAGE]% |
 
 ## Cost Breakdown by Task Type
 
-| Task Type | Requests | Avg Cost/Request | Total Cost | % of Total |
-|-----------|-----------|------------------|------------|------------|
-| chat | [NUMBER] | $[AMOUNT] | $[AMOUNT] | [PERCENTAGE]% |
-| email-draft | [NUMBER] | $[AMOUNT] | $[AMOUNT] | [PERCENTAGE]% |
-| calendar | [NUMBER] | $[AMOUNT] | $[AMOUNT] | [PERCENTAGE]% |
-| invoice | [NUMBER] | $[AMOUNT] | $[AMOUNT] | [PERCENTAGE]% |
+| Task Type   | Requests | Avg Cost/Request | Total Cost | % of Total    |
+| ----------- | -------- | ---------------- | ---------- | ------------- |
+| chat        | [NUMBER] | $[AMOUNT]        | $[AMOUNT]  | [PERCENTAGE]% |
+| email-draft | [NUMBER] | $[AMOUNT]        | $[AMOUNT]  | [PERCENTAGE]% |
+| calendar    | [NUMBER] | $[AMOUNT]        | $[AMOUNT]  | [PERCENTAGE]% |
+| invoice     | [NUMBER] | $[AMOUNT]        | $[AMOUNT]  | [PERCENTAGE]% |
 
 ## Cost Drivers
+
 1. **[DRIVER 1]**
    - Cost: $[AMOUNT]/month
    - % of Total: [PERCENTAGE]%
@@ -215,29 +227,34 @@ Provide a comprehensive cost analysis report:
 ## Optimization Opportunities
 
 ### 1. [OPPORTUNITY 1]
+
 - Current Cost: $[AMOUNT]/month
 - Potential Savings: $[AMOUNT]/month ([PERCENTAGE]%)
 - Implementation: [EFFORT]
 - Risk: [LOW/MEDIUM/HIGH]
 
 ### 2. [OPPORTUNITY 2]
+
 - Current Cost: $[AMOUNT]/month
 - Potential Savings: $[AMOUNT]/month ([PERCENTAGE]%)
 - Implementation: [EFFORT]
 - Risk: [LOW/MEDIUM/HIGH]
 
 ## Cost Trends
+
 - Last Month: $[AMOUNT]
 - This Month: $[AMOUNT]
 - Change: [PERCENTAGE]%
 - Trend: [INCREASING/DECREASING/STABLE]
 
 ## Recommendations
+
 1. [RECOMMENDATION 1]
 2. [RECOMMENDATION 2]
 3. [RECOMMENDATION 3]
 
 ## Next Steps
+
 1. [NEXT STEP]
 2. [NEXT STEP]
 ```
@@ -254,6 +271,7 @@ Provide a comprehensive cost analysis report:
 ## ITERATIVE REFINEMENT
 
 After optimization:
+
 1. **Monitor results:** Track cost reductions
 2. **Analyze impact:** Measure optimization impact
 3. **Identify new opportunities:** Find additional optimizations
@@ -263,4 +281,3 @@ After optimization:
 ---
 
 **CRITICAL:** Analyze costs regularly to identify optimization opportunities and reduce expenses.
-

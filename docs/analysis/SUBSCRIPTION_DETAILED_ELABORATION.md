@@ -19,9 +19,10 @@ Brugeren spurgte om mulighederne for at lave en **abonnementsløsning** for Rend
 ✅ **Finansiel Projektion** - 253,000-541,000 kr/år potential  
 ✅ **Implementation Plan** - 28 konkrete tasks med prioritering  
 ✅ **AI Integration Strategi** - 6 AI-forbedringer med 723,780 kr/år potential  
-✅ **Marketing Strategi** - Lead generation, referral program, digital marketing  
+✅ **Marketing Strategi** - Lead generation, referral program, digital marketing
 
 **Status:**
+
 - ✅ Analyse dokumenteret (`SUBSCRIPTION_SOLUTION_ANALYSIS.md`)
 - ✅ Implementation TODOs oprettet (`SUBSCRIPTION_IMPLEMENTATION_TODOS.md`)
 - ✅ AI-forbedringer identificeret (`SUBSCRIPTION_AI_IDEAS.md`)
@@ -56,23 +57,27 @@ Brugeren spurgte om mulighederne for at lave en **abonnementsløsning** for Rend
 
 **Beskrivelse:**
 En dybdegående analyse baseret på faktiske data fra Friday AI Chat systemet, inkluderet:
+
 - 24 recurring kunder med 50,738 kr/måned revenue
 - 231 total leads med 224,132 kr total revenue
 - Lead acquisition costs (150-750 kr/lead)
 - Service type distribution og pricing
 
 **Tekniske Detaljer:**
+
 - Data source: `server/integrations/chromadb/` - V4.3.5 dataset
 - Pricing constants: `client/src/constants/pricing.ts` (349 kr/time)
 - Customer data: `drizzle/schema.ts` - `customerProfilesInFridayAi` table
 - Recurring patterns: Analyseret fra Google Calendar events
 
 **Implementation:**
+
 - Analyse dokumenteret i `docs/analysis/SUBSCRIPTION_SOLUTION_ANALYSIS.md`
 - Baseret på faktiske data fra juli-december 2025
 - Inkluderer finansiel projektion og ROI analyse
 
 **Features:**
+
 - 3 abonnementsmodeller (Fast, Flex, Erhverv)
 - 5 plan tiers (Tier 1-3, Flex Basis/Plus, Erhverv Basis/Plus)
 - Pricing fra 1,000-4,000 kr/måned
@@ -82,6 +87,7 @@ En dybdegående analyse baseret på faktiske data fra Friday AI Chat systemet, i
 
 **Beskrivelse:**
 En detaljeret TODO liste med 28 konkrete tasks opdelt i:
+
 - Backend (8 tasks)
 - Frontend (6 tasks)
 - Integration (4 tasks)
@@ -90,6 +96,7 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 - Documentation (2 tasks)
 
 **Tekniske Detaljer:**
+
 - Database schema design (3 tables: subscriptions, subscription_usage, subscription_history)
 - tRPC router med 6 endpoints
 - Billy.dk integration for monthly invoicing
@@ -97,12 +104,14 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 - Email automation templates
 
 **Implementation:**
+
 - Planlagt i `docs/analysis/SUBSCRIPTION_IMPLEMENTATION_TODOS.md`
 - Prioriteret (P1/P2/P3)
 - Timeline: 8 uger til MVP
 - Budget: 40,000 kr for MVP
 
 **Features:**
+
 - Complete database schema
 - Full tRPC API
 - React components
@@ -113,6 +122,7 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 
 **Beskrivelse:**
 6 AI-forbedringer der kan automatisere og optimere abonnementsløsningen:
+
 - Intelligent subscription recommendations
 - Predictive churn detection
 - Automated usage optimization
@@ -121,18 +131,21 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 - Automated customer success
 
 **Tekniske Detaljer:**
+
 - Vector search via ChromaDB (4 collections)
 - Friday AI tools (6 nye tools)
 - AI model routing (Gemini 2.5 Flash + Claude 3.5 Sonnet)
 - Integration med eksisterende AI infrastructure
 
 **Implementation:**
+
 - Dokumenteret i `docs/analysis/SUBSCRIPTION_AI_IDEAS.md`
 - Expected impact: 723,780 kr/år
 - ROI: 1,316%
 - Payback period: 1 måned
 
 **Features:**
+
 - Churn prediction (reducer fra 15% til <5%)
 - Plan recommendations (højere konvertering)
 - Usage optimization (reducer overage)
@@ -188,15 +201,18 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 **1. Database Schema Design**
 
 **Rationale:**
+
 - Separeret `subscriptions` table for core data
 - `subscription_usage` table for tracking timer brugt
 - `subscription_history` table for audit trail (P2)
 
 **Alternativer overvejet:**
+
 - Single table med JSONB for usage (afvist - for kompleks)
 - Separate tables per plan type (afvist - for rigid)
 
 **Trade-offs:**
+
 - ✅ Normaliseret design (bedre queries)
 - ✅ Fleksibel (nem at tilføje nye plan types)
 - ⚠️ Mere kompleks (3 tables vs. 1)
@@ -204,15 +220,18 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 **2. tRPC Router Design**
 
 **Rationale:**
+
 - Følger eksisterende pattern fra `server/routers/`
 - Protected procedures for security
 - Zod validation for type safety
 
 **Alternativer overvejet:**
+
 - REST API (afvist - tRPC er bedre for TypeScript)
 - GraphQL (afvist - overkill for dette use case)
 
 **Trade-offs:**
+
 - ✅ Type-safe end-to-end
 - ✅ Automatisk client generation
 - ⚠️ Kun TypeScript clients
@@ -220,15 +239,18 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 **3. Billy.dk Integration**
 
 **Rationale:**
+
 - Eksisterende integration i `server/integrations/billy/`
 - Reuse existing product IDs (REN-001 til REN-005)
 - Add new subscription product IDs (SUB-001 til SUB-005)
 
 **Alternativer overvejet:**
+
 - Egen fakturering (afvist - Billy.dk allerede i brug)
 - Stripe integration (afvist - ikke relevant for B2B)
 
 **Trade-offs:**
+
 - ✅ Konsistent med eksisterende system
 - ✅ Ingen ekstra payment provider
 - ⚠️ Afhængig af Billy.dk API
@@ -267,6 +289,7 @@ En detaljeret TODO liste med 28 konkrete tasks opdelt i:
 #### **Database Schema**
 
 **Files:**
+
 - `drizzle/schema.ts` - Add subscription tables
 
 **Key Components:**
@@ -365,7 +388,7 @@ export const subscriptionRouter = router({
 
       // Get plan configuration
       const planConfig = getPlanConfig(input.planType);
-      
+
       // Check if customer already has active subscription
       const existing = await db
         .select()
@@ -433,9 +456,7 @@ export const subscriptionRouter = router({
       }
 
       if (input?.customerId) {
-        conditions.push(
-          eq(subscriptions.customerProfileId, input.customerId)
-        );
+        conditions.push(eq(subscriptions.customerProfileId, input.customerId));
       }
 
       return await db
@@ -483,8 +504,7 @@ export const subscriptionRouter = router({
 
       // Calculate end date (end of current billing period)
       const endDate =
-        input.effectiveDate ||
-        calculatePeriodEnd(subscription.startDate);
+        input.effectiveDate || calculatePeriodEnd(subscription.startDate);
 
       // Update subscription
       await db
@@ -556,7 +576,7 @@ export const PLAN_CONFIG = {
 
 export function getPlanConfig(
   planType: keyof typeof PLAN_CONFIG
-): typeof PLAN_CONFIG[keyof typeof PLAN_CONFIG] {
+): (typeof PLAN_CONFIG)[keyof typeof PLAN_CONFIG] {
   return PLAN_CONFIG[planType];
 }
 
@@ -564,7 +584,7 @@ export function calculateMonthlyRevenue(
   subscriptions: Array<{ monthlyPrice: number; status: string }>
 ): number {
   return subscriptions
-    .filter((s) => s.status === "active")
+    .filter(s => s.status === "active")
     .reduce((sum, s) => sum + s.monthlyPrice, 0);
 }
 
@@ -580,6 +600,7 @@ export function calculateChurnRate(
 ### **Frontend Implementation**
 
 **Files:**
+
 - `client/src/components/subscription/SubscriptionPlanSelector.tsx`
 - `client/src/components/subscription/SubscriptionCard.tsx`
 - `client/src/components/subscription/SubscriptionManagement.tsx`
@@ -717,10 +738,12 @@ export function SubscriptionPlanSelector({
 #### **Billy.dk Integration**
 
 **Existing Integration:**
+
 - `server/integrations/billy/` - Existing Billy API client
 - `server/friday-prompts.ts` - BILLY_INVOICE_PROMPT with product IDs
 
 **New Requirements:**
+
 - Add subscription product IDs (SUB-001 til SUB-005)
 - Monthly invoice generation (cron job)
 - Payment tracking
@@ -776,10 +799,12 @@ export async function createMonthlyInvoice(
 #### **Google Calendar Integration**
 
 **Existing Integration:**
+
 - `server/integrations/google/calendar/` - Existing Calendar API client
 - `drizzle/schema.ts` - `calendarEventsInFridayAi` table
 
 **New Requirements:**
+
 - Recurring event creation based on subscription
 - Automatic event updates on subscription changes
 - Reminder emails 24h before booking
@@ -790,7 +815,7 @@ export async function createMonthlyInvoice(
 // server/integrations/google/calendar/subscription-bookings.ts
 export async function createRecurringBookings(
   subscriptionId: number,
-  planConfig: typeof PLAN_CONFIG[keyof typeof PLAN_CONFIG]
+  planConfig: (typeof PLAN_CONFIG)[keyof typeof PLAN_CONFIG]
 ): Promise<void> {
   const db = await getDb();
   if (!db) throw new Error("Database connection failed");
@@ -833,11 +858,12 @@ export async function createRecurringBookings(
         ).toISOString(),
         timeZone: "Europe/Copenhagen",
       },
-      recurrence: planConfig.frequency === "monthly" 
-        ? ["RRULE:FREQ=MONTHLY;COUNT=12"]
-        : planConfig.frequency === "biweekly"
-        ? ["RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=24"]
-        : undefined,
+      recurrence:
+        planConfig.frequency === "monthly"
+          ? ["RRULE:FREQ=MONTHLY;COUNT=12"]
+          : planConfig.frequency === "biweekly"
+            ? ["RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=24"]
+            : undefined,
     });
   }
 }
@@ -884,12 +910,15 @@ export async function createSubscription(
   }
 
   // Create subscription
-  const subscription = await db.insert(subscriptions).values({
-    userId,
-    customerProfileId: customerId,
-    planType,
-    // ... other fields
-  }).returning();
+  const subscription = await db
+    .insert(subscriptions)
+    .values({
+      userId,
+      customerProfileId: customerId,
+      planType,
+      // ... other fields
+    })
+    .returning();
 
   // Create related resources
   await createRecurringBookings(subscription[0].id, getPlanConfig(planType));
@@ -914,9 +943,12 @@ export async function trackUsage(
   // Check for overage
   const totalUsed = await getTotalUsageThisMonth(subscriptionId);
   const subscription = await getSubscription(subscriptionId);
-  
+
   if (totalUsed > subscription.includedHours) {
-    await sendOverageAlert(subscriptionId, totalUsed - subscription.includedHours);
+    await sendOverageAlert(
+      subscriptionId,
+      totalUsed - subscription.includedHours
+    );
   }
 }
 ```
@@ -954,6 +986,7 @@ export async function trackUsage(
 **Location:** `tests/subscription.test.ts`
 
 **Test Cases:**
+
 - Subscription creation
 - Plan configuration validation
 - Renewal logic
@@ -966,6 +999,7 @@ export async function trackUsage(
 **Location:** `tests/subscription-integration.test.ts`
 
 **Test Cases:**
+
 - Billy.dk invoice generation
 - Calendar event creation
 - Email sending
@@ -976,6 +1010,7 @@ export async function trackUsage(
 **Location:** `tests/e2e/subscription.test.ts`
 
 **Test Cases:**
+
 - Complete subscription signup flow
 - Monthly billing cycle
 - Subscription cancellation
@@ -1068,14 +1103,17 @@ export async function trackUsage(
 ## Technical Debt Status
 
 **Før:**
+
 - 0 subscription-related TODOs
 
 **Efter:**
+
 - 28 TODOs i `SUBSCRIPTION_IMPLEMENTATION_TODOS.md`
 - Alle prioriteret (P1/P2/P3)
 - Klar til implementation
 
 **Remaining High-Priority TODOs:**
+
 - Database schema (P1)
 - tRPC router (P1)
 - Billy.dk integration (P1)
@@ -1089,24 +1127,30 @@ export async function trackUsage(
 ### **Revenue Impact**
 
 **Scenario 1 (Konservativ):**
+
 - 21,100 kr/måned = 253,200 kr/år
 
 **Scenario 2 (Optimistisk):**
+
 - 45,100 kr/måned = 541,200 kr/år
 
 **Churn Reduction:**
+
 - Savings: 63,780 kr/år (fra 15% til 5% churn)
 
 **AI Features (Phase 2):**
+
 - Additional: 723,780 kr/år potential
 
 ### **Cost Impact**
 
 **Development:**
+
 - MVP: 40,000 kr (one-time)
 - Phase 2 (AI): 40,000 kr (one-time)
 
 **Ongoing:**
+
 - Marketing: 5,000 kr/måned
 - Maintenance: 2,000 kr/måned
 - AI Infrastructure: 5,000 kr/år
@@ -1114,12 +1158,14 @@ export async function trackUsage(
 ### **ROI**
 
 **MVP:**
+
 - Investment: 40,000 kr
 - Annual Revenue: 253,200-541,200 kr
 - ROI: 533-1,253% (År 1)
 - Payback Period: 3-4 måneder
 
 **With AI Features:**
+
 - Total Investment: 80,000 kr
 - Annual Revenue: 976,980-1,264,980 kr
 - ROI: 1,121-1,481% (År 1)
@@ -1132,11 +1178,13 @@ export async function trackUsage(
 ### **1. Start med MVP (HØJEST PRIORITET)**
 
 **Rationale:**
+
 - Valider koncept med faktiske kunder
 - Lavere risiko (40,000 kr vs. 80,000 kr)
 - Hurtigere time-to-market (8 uger vs. 12+ uger)
 
 **Action:**
+
 - Godkend budget denne uge
 - Start implementation næste uge
 - Beta test måned 2
@@ -1145,11 +1193,13 @@ export async function trackUsage(
 ### **2. Implementer AI Features i Phase 2**
 
 **Rationale:**
+
 - Høj ROI (1,316%)
 - Men kræver data fra MVP først
 - Bedre at validere grundlæggende funktionalitet først
 
 **Action:**
+
 - Start AI features efter MVP launch
 - Brug data fra første 3 måneder
 - Iterate baseret på feedback
@@ -1157,11 +1207,13 @@ export async function trackUsage(
 ### **3. Fokus på Churn Reduction**
 
 **Rationale:**
+
 - Største impact (63,780 kr/år)
 - Relativt nemt at implementere
 - Høj værdi for kunderne
 
 **Action:**
+
 - Implementer churn prediction tidligt
 - Proactive customer success
 - Loyalty rewards program
@@ -1186,5 +1238,3 @@ Jeg kan gå i dybden med:
 **Last Updated:** 2025-11-17  
 **Next Review:** 2025-11-24  
 **Status:** 📋 Ready for Implementation Approval
-
-

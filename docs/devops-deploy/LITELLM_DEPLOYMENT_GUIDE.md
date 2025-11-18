@@ -41,7 +41,7 @@ LiteLLM integration provides:
 
 ### Key Benefits
 
-```text
+````text
 Cost:          $0.00/month (FREE models only)
 Success Rate:  99.9% (with automatic retry)
 Cache Savings: 40% fewer API calls
@@ -996,7 +996,7 @@ import { rateLimiter, responseCache } from "./integrations/litellm";
 console.log("Rate Limiter:", rateLimiter.getStats());
 console.log("Cache:", responseCache.getStats());
 
-```
+````
 
 ---
 

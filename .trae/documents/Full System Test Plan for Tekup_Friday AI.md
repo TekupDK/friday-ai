@@ -67,7 +67,6 @@
 ## Step 6: Report Generation
 
 - Produce a Markdown report containing:
-
   - Test results: pass/fail per task
 
   - Performance metrics: bundle sizes, gzip sizes, top assets, chunk presence

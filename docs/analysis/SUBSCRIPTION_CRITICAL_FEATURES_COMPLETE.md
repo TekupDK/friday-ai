@@ -19,9 +19,11 @@ Alle kritiske manglende features er nu implementeret:
 ## 1. Background Job System
 
 ### Files Created:
+
 - `server/subscription-jobs.ts` - Background job processing
 
 ### Features:
+
 - `processMonthlyRenewals()` - Process all subscriptions due for billing
 - `processUserRenewals()` - Process renewals for specific user
 - Automatic invoice creation via Billy.dk
@@ -31,6 +33,7 @@ Alle kritiske manglende features er nu implementeret:
 ### Usage:
 
 **Manual Trigger (via tRPC):**
+
 ```typescript
 await trpc.subscription.processRenewals.mutate({
   userId: 123, // Optional: process for specific user
@@ -38,12 +41,14 @@ await trpc.subscription.processRenewals.mutate({
 ```
 
 **Cron Job Setup (recommended):**
+
 ```bash
 # Run daily at 9:00 AM
 0 9 * * * curl -X POST https://api.rendetalje.dk/trpc/subscription.processRenewals
 ```
 
 ### Integration:
+
 - ✅ Integrated with `processRenewal()` from `subscription-actions.ts`
 - ✅ Integrated with `sendSubscriptionEmail()` for renewal emails
 - ✅ Uses `getSubscriptionsDueForBilling()` for querying
@@ -53,9 +58,11 @@ await trpc.subscription.processRenewals.mutate({
 ## 2. Usage Tracking Integration
 
 ### Files Created:
+
 - `server/subscription-usage-tracker.ts` - Usage tracking logic
 
 ### Features:
+
 - `trackBookingUsage()` - Track usage from completed bookings
 - `calculateBookingHours()` - Calculate hours from booking times
 - `syncSubscriptionUsage()` - Backfill usage from existing bookings
@@ -64,23 +71,27 @@ await trpc.subscription.processRenewals.mutate({
 ### Integration Points:
 
 **Booking Creation:**
+
 - Automatically tracks usage if booking is created with `status: "completed"` or `"in_progress"`
 
 **Booking Status Update:**
+
 - Automatically tracks usage when status changes to `"completed"`
 
 **Manual Sync:**
+
 ```typescript
 // Backfill usage for a subscription
 await syncSubscriptionUsage(
   subscriptionId,
   userId,
   startDate, // Optional
-  endDate    // Optional
+  endDate // Optional
 );
 ```
 
 ### How It Works:
+
 1. When booking is completed, system checks if customer has active subscription
 2. Calculates hours worked from booking times (actual or scheduled)
 3. Creates `subscription_usage` entry with month/year for easy querying
@@ -91,9 +102,11 @@ await syncSubscriptionUsage(
 ## 3. Email Templates
 
 ### Files Created:
+
 - `server/subscription-email.ts` - Email templates and sending
 
 ### Email Types:
+
 1. **Welcome** - Sent when subscription is created
 2. **Renewal** - Sent when subscription is renewed (monthly)
 3. **Cancellation** - Sent when subscription is cancelled
@@ -103,11 +116,13 @@ await syncSubscriptionUsage(
 ### Integration:
 
 **Automatic Sending:**
+
 - ✅ Welcome email sent when subscription is created
 - ✅ Renewal email sent during monthly renewal process
 - ✅ Cancellation email sent when subscription is cancelled
 
 **Manual Sending:**
+
 ```typescript
 await sendSubscriptionEmail({
   type: "overage_warning",
@@ -123,6 +138,7 @@ await sendSubscriptionEmail({
 ```
 
 ### Email Content:
+
 - Professional Danish language templates
 - Includes subscription details (plan, price, hours)
 - Clear call-to-action when relevant
@@ -133,17 +149,20 @@ await sendSubscriptionEmail({
 ## Technical Details
 
 ### Error Handling:
+
 - All background jobs have comprehensive error handling
 - Failed renewals are logged but don't stop processing of other subscriptions
 - Email failures don't block subscription operations
 - Usage tracking failures don't block booking operations
 
 ### Performance:
+
 - Async processing for non-critical operations (emails, calendar events)
 - Database queries optimized with indexes
 - Batch processing for renewals
 
 ### Logging:
+
 - All operations logged with structured logging
 - Error details captured for debugging
 - Success metrics tracked
@@ -154,8 +173,8 @@ await sendSubscriptionEmail({
 
 ### New tRPC Endpoints:
 
-| Endpoint | Type | Description |
-|----------|------|-------------|
+| Endpoint                       | Type     | Description                               |
+| ------------------------------ | -------- | ----------------------------------------- |
 | `subscription.processRenewals` | Mutation | Process monthly renewals (background job) |
 
 ### Usage:
@@ -183,16 +202,19 @@ const result = await trpc.subscription.processRenewals.mutate({
 ## Next Steps
 
 ### Immediate (Production Ready):
+
 1. ✅ Background jobs - DONE
 2. ✅ Usage tracking - DONE
 3. ✅ Email templates - DONE
 
 ### Short-term (Week 1-2):
+
 4. ⏳ Set up cron job for daily renewal processing
 5. ⏳ Test email delivery (Gmail API)
 6. ⏳ Monitor first renewal cycle
 
 ### Medium-term (Month 1):
+
 7. ⏳ Add overage email automation (when usage > 80%)
 8. ⏳ Add upgrade reminder automation
 9. ⏳ Add usage analytics dashboard
@@ -202,16 +224,19 @@ const result = await trpc.subscription.processRenewals.mutate({
 ## Testing Recommendations
 
 ### Unit Tests:
+
 - [ ] `processMonthlyRenewals()` - Test renewal processing
 - [ ] `trackBookingUsage()` - Test usage tracking
 - [ ] `sendSubscriptionEmail()` - Test email sending
 
 ### Integration Tests:
+
 - [ ] End-to-end renewal flow
 - [ ] Usage tracking from booking completion
 - [ ] Email delivery verification
 
 ### Manual Testing:
+
 - [ ] Create subscription → verify welcome email
 - [ ] Complete booking → verify usage tracked
 - [ ] Trigger renewal → verify invoice + email
@@ -234,4 +259,3 @@ const result = await trpc.subscription.processRenewals.mutate({
 
 **Last Updated:** 2025-01-28  
 **Maintained by:** TekupDK Development Team
-

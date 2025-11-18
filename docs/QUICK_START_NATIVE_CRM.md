@@ -9,7 +9,7 @@
 ✅ **Hurtigere** - Ingen Docker build overhead  
 ✅ **Mindre ressource** - Ingen Docker Desktop overhead  
 ✅ **Bedre debugging** - Native tools og performance  
-✅ **Hurtigere hot-reload** - Direkte file watching  
+✅ **Hurtigere hot-reload** - Direkte file watching
 
 ## Quick Start (3 Steps)
 
@@ -83,6 +83,7 @@ DATABASE_URL=mysql://friday_user:friday_password@localhost:3307/friday_ai
 ## Performance
 
 **Startup Time:**
+
 - Database: ~30 sekunder (første gang)
 - Backend: ~5 sekunder
 - Frontend: ~3 sekunder
@@ -90,6 +91,7 @@ DATABASE_URL=mysql://friday_user:friday_password@localhost:3307/friday_ai
 **Total:** ~40 sekunder første gang, ~8 sekunder efterfølgende
 
 **Resource Usage:**
+
 - Database: ~200MB RAM
 - Backend: ~150MB RAM
 - Frontend: ~100MB RAM
@@ -98,6 +100,7 @@ DATABASE_URL=mysql://friday_user:friday_password@localhost:3307/friday_ai
 ## Troubleshooting
 
 **Port 3307 allerede i brug?**
+
 ```bash
 # Stop eksisterende container
 pnpm dev:db:down
@@ -106,6 +109,7 @@ pnpm dev:db:down
 ```
 
 **Database connection failed?**
+
 ```bash
 # Check database is running
 docker ps | grep friday-db-dev
@@ -116,10 +120,9 @@ pnpm dev:db:logs
 
 ## Sammenligning
 
-| Approach | Startup | Resource | Build Time |
-|----------|---------|----------|------------|
-| **Native + DB Docker** | ~40s | ~450MB | 0s |
-| Full Docker | ~5-10min | ~2-3GB | 5-10min |
+| Approach               | Startup  | Resource | Build Time |
+| ---------------------- | -------- | -------- | ---------- |
+| **Native + DB Docker** | ~40s     | ~450MB   | 0s         |
+| Full Docker            | ~5-10min | ~2-3GB   | 5-10min    |
 
 **Anbefaling:** Brug native + DB Docker for development! 🚀
-

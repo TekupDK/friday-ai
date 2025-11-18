@@ -24,7 +24,7 @@ We analyzed ChatGPT's detailed UX feedback and implemented **ALL 5 major improve
 
 **What was added:**
 
-```typescript
+````typescript
 // New component that appears when 1+ threads selected
 <EmailStickyActionBar
   selectedThreads={selectedThreadsList}
@@ -487,7 +487,7 @@ npm run deploy:prod
 # Or staging first
 npm run deploy:staging
 
-```
+````
 
 ---
 

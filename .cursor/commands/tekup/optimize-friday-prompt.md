@@ -31,6 +31,7 @@ Optimize Friday AI's system prompts to reduce token usage, improve accuracy, and
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find prompt usage
 - `read_file` - Read prompt definitions
 - `grep` - Search for prompt patterns
@@ -38,6 +39,7 @@ Optimize Friday AI's system prompts to reduce token usage, improve accuracy, and
 - `read_lints` - Check for errors
 
 **DO NOT:**
+
 - Break business rules
 - Remove critical information
 - Reduce accuracy
@@ -156,11 +158,13 @@ Provide optimization results:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Optimization Analysis
+
 - **Current Token Usage:** [X] tokens per request
 - **Optimized Token Usage:** [Y] tokens per request
 - **Reduction:** [Z]%
 
 ## Prompts Optimized
+
 - ✅ FRIDAY_MAIN_PROMPT - [X]% reduction
 - ✅ EMAIL_HANDLING_PROMPT - [X]% reduction
 - ✅ BILLY_INVOICE_PROMPT - [X]% reduction
@@ -169,6 +173,7 @@ Provide optimization results:
 - ✅ QUALITY_CONTROL_PROMPT - [X]% reduction
 
 ## Optimizations Applied
+
 - ✅ Removed duplicate rules
 - ✅ Consolidated similar prompts
 - ✅ Referenced memory rules
@@ -176,21 +181,25 @@ Provide optimization results:
 - ✅ Improved clarity
 
 ## Accuracy Verification
+
 - ✅ Business rules - [Result]
 - ✅ Friday personality - [Result]
 - ✅ Capabilities - [Result]
 
 ## Cost Reduction
+
 - **Before:** [X] tokens/day
 - **After:** [Y] tokens/day
 - **Savings:** [Z] tokens/day = [Cost] DKK/month
 
 ## Testing
+
 - ✅ Prompt accuracy - [Result]
 - ✅ Business rules - [Result]
 - ✅ Token usage - [Result]
 
 ## Recommendations
+
 1. [Recommendation 1]
 2. [Recommendation 2]
 ```
@@ -207,4 +216,3 @@ Provide optimization results:
 ---
 
 **CRITICAL:** Start by analyzing current prompts, then optimize systematically while preserving accuracy and business rules.
-

@@ -111,7 +111,7 @@ export default function EmailTabV2({
       toast.success("Email arkiveret");
       setSelectedThreadId(null);
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Fejl ved arkivering: ${error.message}`);
     },
   });
@@ -121,7 +121,7 @@ export default function EmailTabV2({
       utils.inbox.email.listPaged.invalidate();
       toast.success("Email markeret som stjerne");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Fejl ved markering: ${error.message}`);
     },
   });
@@ -132,7 +132,7 @@ export default function EmailTabV2({
       toast.success("Email slettet");
       setSelectedThreadId(null);
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Fejl ved sletning: ${error.message}`);
     },
   });
@@ -484,7 +484,8 @@ export default function EmailTabV2({
           (e: EnhancedEmailMessage) => e.threadId === selectedThreadId
         );
         // Use id or messageId - Gmail uses threadId for threads, but we need messageId for star
-        const messageId = (selectedEmail as any)?.id || (selectedEmail as any)?.messageId;
+        const messageId =
+          (selectedEmail as any)?.id || (selectedEmail as any)?.messageId;
         if (messageId) {
           starMutation.mutate({ messageId });
         } else {

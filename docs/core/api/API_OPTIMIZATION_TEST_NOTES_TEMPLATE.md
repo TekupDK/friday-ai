@@ -20,7 +20,7 @@
 
 **Observations:**
 
-```text
+````text
 [Indsæt notater her]
 
 ```text
@@ -267,7 +267,7 @@ Scroll Performance: _______ (subjektiv: Smooth/Slow)
 ```text
 [Kort sammenfatning af test resultater]
 
-```
+````
 
 **Recommendations:**
 

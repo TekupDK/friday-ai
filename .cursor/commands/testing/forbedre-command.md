@@ -12,6 +12,7 @@ Forbedre en command baseret på faktisk brug: læs chat historik, identificér p
 ## TASK
 
 Forbedre en command ved at:
+
 1. **Læs chat historik** - HELE samtalen hvor commanden bruges eller diskuteres
 2. **Identificér problemer** - Hvad virker ikke? Hvad mangler? Hvad er forvirrende?
 3. **Analysér brug** - Hvordan bruges commanden i praksis? Hvad er typiske use cases?
@@ -24,6 +25,7 @@ Forbedre en command ved at:
 **KRITISK:** Læs HELE chat sessionen systematisk:
 
 **I Cursor/Copilot:**
+
 - Du har adgang til hele chat historikken i denne session
 - Læs ALLE beskeder fra start af sessionen
 - Læs både brugerens beskeder OG agentens svar
@@ -31,6 +33,7 @@ Forbedre en command ved at:
 - Forstå problemer og issues nævnt i chatten
 
 **Hvad du skal læse:**
+
 - **Brugerens feedback:** Hvad siger brugeren om commanden?
 - **Problemer nævnt:** Hvilke problemer er identificeret?
 - **Brug eksempler:** Hvordan bruges commanden?
@@ -146,6 +149,7 @@ Before improving the command, think through:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Læs command filen og lignende commands
 - `codebase_search` - Find lignende commands og best practices
 - `grep` - Søg efter patterns i commands
@@ -155,6 +159,7 @@ Before improving the command, think through:
 - `run_terminal_cmd` - Kør git commands for status og commit organisering
 
 **DO NOT:**
+
 - Ignorere chat feedback
 - Antage problemer uden at læse chatten
 - Glem at sammenligne med lignende commands
@@ -191,13 +196,14 @@ Provide structured improvement report:
 
 ## Chat Historik Analyse
 
-**Samtale kontekst:** 
+**Samtale kontekst:**
 [Kort beskrivelse af samtalen hvor commanden blev brugt eller diskuteret]
 
-**Brugt i:** 
+**Brugt i:**
 [Beskrivelse af hvor commanden blev brugt - f.eks. "Brugt til at refactore hooks systemet"]
 
-**Problemer identificeret i chat:** 
+**Problemer identificeret i chat:**
+
 - [Problem 1] - [Fra chat besked X]
 - [Problem 2] - [Fra chat besked Y]
 
@@ -214,34 +220,41 @@ Provide structured improvement report:
 ## Brug Analyse
 
 **Typiske Use Cases (fra chat):**
+
 - [Use case 1] - [Fra chat besked X] - [Hvor ofte/hvordan]
 - [Use case 2] - [Fra chat besked Y] - [Hvor ofte/hvordan]
 
 **Edge Cases (fra chat):**
+
 - [Edge case 1] - [Fra chat besked Z] - [Hvordan håndteres det]
 
 **Forventninger (fra chat):**
+
 - [Forventning 1] - [Fra chat besked A] - [Hvad forventer brugeren]
 
 ## Sammenligning med Lignende Commands
 
 **Lignende commands analyseret:**
+
 - `[command1].md` - [Hvad virker godt] - [Hvad kan vi lære]
 - `[command2].md` - [Hvad virker godt] - [Hvad kan vi lære]
 
 **Best Practices identificeret:**
+
 - [Best practice 1] - [Hvorfor det virker]
 - [Best practice 2] - [Hvorfor det virker]
 
 ## Forbedringer Implementeret
 
 ### ✅ Forbedring 1: [Navn]
+
 - **Problem:** [Beskrivelse fra chat]
 - **Løsning:** [Hvad blev ændret - konkrete linjer/filer]
 - **Status:** ✅ Implementeret
 - **Valideret:** ✅ [TypeScript/Linting/Tests pass]
 
 ### ✅ Forbedring 2: [Navn]
+
 - **Problem:** [Beskrivelse fra chat]
 - **Løsning:** [Hvad blev ændret - konkrete linjer/filer]
 - **Status:** ✅ Implementeret
@@ -276,6 +289,7 @@ Provide structured improvement report:
 **Fra chat:** "Jeg er blevet overvældet af alle commands"
 
 **Forbedring:**
+
 - Tilføj "Quick Start" sektion
 - Tilføj "Most Used" sektion
 - Forbedre organisering
@@ -286,6 +300,7 @@ Provide structured improvement report:
 **Fra chat:** "Commands mangler struktur"
 
 **Forbedring:**
+
 - Tilføj fuld prompt engineering struktur
 - Tilføj TOOL USAGE sektion
 - Tilføj OUTPUT FORMAT sektion
@@ -296,10 +311,12 @@ Provide structured improvement report:
 **Fra chat:** "er der blevet lavet docs og notater om alt det nye udvikling og har vi fået commitet de enkelte ændringerne osv"
 
 **Brug:**
+
 - Commanden blev brugt til at organisere git commits
 - Processen involverede at analysere git status, gruppere filer, oprette commit plan
 
 **Forbedring:**
+
 - Tilføj git integration sektion
 - Tilføj automatisk commit gruppering
 - Tilføj commit review generation
@@ -327,12 +344,14 @@ Provide structured improvement report:
    - Foreslå fixes før merge
 
 **DO NOT:**
+
 - Merge forbedringer der introducerer TypeScript fejl
 - Påvirke systemet uden at validere først
 - Ignorere compilation errors
 - Skip validation steps
 
 **DO:**
+
 - Valider alle ændringer før completion
 - Test i isolation før merge
 - Rapporter validation status

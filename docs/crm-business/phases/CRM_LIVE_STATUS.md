@@ -8,7 +8,6 @@
 - `crm.stats.getSystemStatus`
 
   Returnerer:
-
   - `db.connected`
 
   - `billy.configured`, `billy.reachable`
@@ -18,7 +17,6 @@
 - `crm.stats.getEventMetrics`
 
   Returnerer:
-
   - `totalEvents` - Samlet antal events
 
   - `eventsByType` - Events grupperet efter type
@@ -58,7 +56,6 @@
 - Automatisk event counting og analytics
 
 - Events overvåget:
-
   - `workflow_complete` - Lead processing fuldført
 
   - `calendar_event_created` - Kalender integration events
@@ -99,7 +96,7 @@
 
 ## Eksempel på Logger Brug
 
-```typescript
+````typescript
 import logger, { createRequestLogger } from './logger';
 
 // Service-level logger
@@ -152,3 +149,4 @@ const topEvents = metricsService.getTopEvents(10);
 - Linkes fra `docs/FRIDAY_DOCS_INDEX.md` under "What's New"
 
 - Inkluderer nu observability features (logger + metrics)
+````

@@ -26,7 +26,6 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-
 export interface UserProfileData {
   id: string;
   name: string;

@@ -95,7 +95,6 @@ export function EmailAssistant3Panel({
     if (!isCollapsed) {
       analyzeEmail();
     }
-     
   }, [emailData, isCollapsed]); // Analyze email when data changes or panel expands
 
   const analyzeEmail = async () => {

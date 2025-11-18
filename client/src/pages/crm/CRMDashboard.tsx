@@ -39,7 +39,12 @@ export default function CRMDashboard() {
             <header>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold" data-testid="crm-dashboard-title">CRM Dashboard</h1>
+                  <h1
+                    className="text-3xl font-bold"
+                    data-testid="crm-dashboard-title"
+                  >
+                    CRM Dashboard
+                  </h1>
                   <p className="text-muted-foreground mt-1">
                     Overview of customers, leads, and bookings
                   </p>
@@ -70,7 +75,10 @@ export default function CRMDashboard() {
             {!isLoading && !isError && stats && (
               <>
                 {/* KPI Cards */}
-                <section aria-label="Key performance indicators" data-testid="crm-dashboard-stats">
+                <section
+                  aria-label="Key performance indicators"
+                  data-testid="crm-dashboard-stats"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <AppleCard variant="elevated">
                       <div className="p-6">

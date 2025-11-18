@@ -283,7 +283,7 @@
 
 **E2E Tests:**
 
-```bash
+````bash
 npx playwright test tests/phase-2-ai-integration.spec.ts
 
 ```text
@@ -301,7 +301,7 @@ pnpm test client/src/hooks/__tests__/useFridayChatSimple-phase2.test.ts
 npx playwright test tests/phase-2-ai-integration.spec.ts
 pnpm test useFridayChatSimple-phase2
 
-```
+````
 
 ---
 

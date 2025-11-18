@@ -1,6 +1,6 @@
 /**
  * Mock Timeout Hook
- * 
+ *
  * Times out - used for testing timeout handling
  */
 
@@ -10,9 +10,8 @@ export default async function timeoutHook(
   context: HookExecutionContext
 ): Promise<HookResult> {
   // Wait longer than typical timeout
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise(resolve => setTimeout(resolve, 5000));
   return {
     success: true,
   };
 }
-

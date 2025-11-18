@@ -20,7 +20,7 @@
 
 **Nu:**
 
-```tsx
+````tsx
 // Quick actions på hover - begge layouts
 
 <div className="opacity-0 group-hover:opacity-100 transition-opacity">
@@ -364,7 +364,7 @@ import EmailQuickActions from "./EmailQuickActions";
 
    - Maintain scroll position
 
-```
+````
 
 **Når Phase 2 er done:**
 

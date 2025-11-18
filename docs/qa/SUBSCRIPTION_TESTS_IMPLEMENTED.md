@@ -9,9 +9,11 @@
 ## Test Files Created
 
 ### 1. Unit Tests
+
 **File:** `server/__tests__/subscription.test.ts`
 
 **Coverage:**
+
 - ✅ Subscription Helpers (calculateMonthlyRevenue, getARPU, getChurnRate, checkOverage)
 - ✅ Subscription Plans (SUBSCRIPTION_PLANS validation)
 - ✅ Subscription Actions (createSubscription, processRenewal, processCancellation)
@@ -20,9 +22,11 @@
 **Test Count:** 12 tests
 
 ### 2. Integration Tests
+
 **File:** `server/__tests__/subscription-integration.test.ts`
 
 **Coverage:**
+
 - ✅ Billy.dk Invoice Integration
 - ✅ Google Calendar Integration
 - ✅ Email Integration
@@ -35,12 +39,14 @@
 ## Test Status
 
 ### ✅ Tests Written
+
 - All test files created
 - All test cases defined
 - Proper test structure with describe/it blocks
 - Mock setup for external dependencies
 
 ### ⚠️ Mock Issues
+
 - Drizzle ORM query builder mocking needs adjustment
 - Some tests failing due to mock chain not matching Drizzle pattern
 - Need to mock `getActiveSubscriptions` directly instead of database queries
@@ -51,26 +57,26 @@
 
 ### Unit Tests Coverage
 
-| Function | Tests | Status |
-|----------|-------|--------|
-| `calculateMonthlyRevenue` | 2 | ⚠️ Needs mock fix |
-| `getARPU` | 2 | ⚠️ Needs mock fix |
-| `getChurnRate` | 2 | ⚠️ Needs mock fix |
-| `checkOverage` | 3 | ✅ Working |
-| `SUBSCRIPTION_PLANS` | 3 | ✅ Working |
-| `calculateNextBillingDate` | 2 | ⚠️ Needs date fix |
-| `createSubscription` | 2 | ⚠️ Needs mock fix |
-| `processRenewal` | 1 | ⚠️ Needs mock fix |
-| `processCancellation` | 1 | ⚠️ Needs mock fix |
+| Function                   | Tests | Status            |
+| -------------------------- | ----- | ----------------- |
+| `calculateMonthlyRevenue`  | 2     | ⚠️ Needs mock fix |
+| `getARPU`                  | 2     | ⚠️ Needs mock fix |
+| `getChurnRate`             | 2     | ⚠️ Needs mock fix |
+| `checkOverage`             | 3     | ✅ Working        |
+| `SUBSCRIPTION_PLANS`       | 3     | ✅ Working        |
+| `calculateNextBillingDate` | 2     | ⚠️ Needs date fix |
+| `createSubscription`       | 2     | ⚠️ Needs mock fix |
+| `processRenewal`           | 1     | ⚠️ Needs mock fix |
+| `processCancellation`      | 1     | ⚠️ Needs mock fix |
 
 ### Integration Tests Coverage
 
-| Integration | Tests | Status |
-|-------------|-------|--------|
-| Billy.dk Invoice | 3 | ✅ Written |
-| Google Calendar | 2 | ✅ Written |
-| Email | 3 | ✅ Written |
-| E2E Flow | 1 | ✅ Written |
+| Integration      | Tests | Status     |
+| ---------------- | ----- | ---------- |
+| Billy.dk Invoice | 3     | ✅ Written |
+| Google Calendar  | 2     | ✅ Written |
+| Email            | 3     | ✅ Written |
+| E2E Flow         | 1     | ✅ Written |
 
 ---
 
@@ -113,16 +119,19 @@
 ## Test Execution
 
 ### Run Unit Tests
+
 ```bash
 pnpm test subscription.test.ts
 ```
 
 ### Run Integration Tests
+
 ```bash
 pnpm test subscription-integration.test.ts
 ```
 
 ### Run All Subscription Tests
+
 ```bash
 pnpm test subscription
 ```
@@ -143,4 +152,3 @@ pnpm test subscription
 
 **Last Updated:** 2025-01-28  
 **Next Review:** After mock fixes
-

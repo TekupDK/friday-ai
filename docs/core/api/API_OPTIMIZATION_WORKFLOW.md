@@ -9,7 +9,7 @@
 
 For at teste API optimeringer isoleret:
 
-```powershell
+````powershell
 cd C:\Users\empir\Tekup\services\tekup-ai-v2
 .\scripts\create-chat-branch.ps1
 
@@ -148,7 +148,7 @@ git rebase origin/email-tab-development-branch
 # Resolve conflicts
 git rebase --continue
 
-```
+````
 
 ### Issue: Tests fail
 

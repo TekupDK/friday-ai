@@ -4,7 +4,15 @@
  * Displays detailed lead information with ability to update status and convert to customer
  */
 
-import { ArrowLeft, Mail, Phone, Target, Calendar, CheckCircle, XCircle } from "lucide-react";
+import {
+  ArrowLeft,
+  Mail,
+  Phone,
+  Target,
+  Calendar,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { useLocation, useRoute } from "wouter";
@@ -26,20 +34,24 @@ export default function LeadDetail() {
 
   const utils = trpc.useUtils();
 
-  const { data: lead, isLoading, error, isError } = trpc.crm.lead.getLead.useQuery(
-    { id: leadId! },
-    { enabled: !!leadId }
-  );
-  
+  const {
+    data: lead,
+    isLoading,
+    error,
+    isError,
+  } = trpc.crm.lead.getLead.useQuery({ id: leadId! }, { enabled: !!leadId });
+
   // Type guard for lead object
-  const leadData = lead as {
-    id?: number;
-    name?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    status?: string;
-    [key: string]: any;
-  } | undefined;
+  const leadData = lead as
+    | {
+        id?: number;
+        name?: string | null;
+        email?: string | null;
+        phone?: string | null;
+        status?: string;
+        [key: string]: any;
+      }
+    | undefined;
 
   const updateStatusMutation = trpc.crm.lead.updateLeadStatus.useMutation({
     onSuccess: () => {
@@ -48,13 +60,13 @@ export default function LeadDetail() {
       toast.success("Lead status updated");
       setSelectedStatus("");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message || "Failed to update lead status");
     },
   });
 
   const convertMutation = trpc.crm.lead.convertLeadToCustomer.useMutation({
-    onSuccess: (result) => {
+    onSuccess: result => {
       toast.success(
         result.created
           ? "Lead converted to customer successfully"
@@ -64,7 +76,7 @@ export default function LeadDetail() {
         navigate(`/crm/customers/${result.customerProfileId}`);
       }
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message || "Failed to convert lead");
     },
   });
@@ -122,7 +134,9 @@ export default function LeadDetail() {
                 <header>
                   <div className="flex items-start justify-between">
                     <div>
-                      <h1 className="text-3xl font-bold">{leadData.name || "Unnamed Lead"}</h1>
+                      <h1 className="text-3xl font-bold">
+                        {leadData.name || "Unnamed Lead"}
+                      </h1>
                       <div className="flex items-center gap-4 mt-2 text-muted-foreground">
                         {leadData.email && (
                           <div className="flex items-center gap-2">
@@ -150,31 +164,41 @@ export default function LeadDetail() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <AppleCard variant="elevated">
                     <div className="p-6">
-                      <h2 className="text-xl font-semibold mb-4">Update Status</h2>
+                      <h2 className="text-xl font-semibold mb-4">
+                        Update Status
+                      </h2>
                       <div className="space-y-4">
                         <div>
-                          <label htmlFor="status-select" className="block text-sm font-medium mb-2">
+                          <label
+                            htmlFor="status-select"
+                            className="block text-sm font-medium mb-2"
+                          >
                             New Status
                           </label>
                           <select
                             id="status-select"
                             value={selectedStatus}
-                            onChange={(e) => setSelectedStatus(e.target.value)}
+                            onChange={e => setSelectedStatus(e.target.value)}
                             className="w-full px-3 py-2 border border-border rounded-md bg-background"
                           >
                             <option value="">Select status...</option>
-                            {LEAD_STATUSES.map((status) => (
+                            {LEAD_STATUSES.map(status => (
                               <option key={status} value={status}>
-                                {status.charAt(0).toUpperCase() + status.slice(1)}
+                                {status.charAt(0).toUpperCase() +
+                                  status.slice(1)}
                               </option>
                             ))}
                           </select>
                         </div>
                         <AppleButton
                           onClick={handleStatusUpdate}
-                          disabled={!selectedStatus || updateStatusMutation.isPending}
+                          disabled={
+                            !selectedStatus || updateStatusMutation.isPending
+                          }
                         >
-                          {updateStatusMutation.isPending ? "Updating..." : "Update Status"}
+                          {updateStatusMutation.isPending
+                            ? "Updating..."
+                            : "Update Status"}
                         </AppleButton>
                       </div>
                     </div>
@@ -182,17 +206,23 @@ export default function LeadDetail() {
 
                   <AppleCard variant="elevated">
                     <div className="p-6">
-                      <h2 className="text-xl font-semibold mb-4">Convert to Customer</h2>
+                      <h2 className="text-xl font-semibold mb-4">
+                        Convert to Customer
+                      </h2>
                       <p className="text-sm text-muted-foreground mb-4">
-                        Convert this lead to a customer profile to start managing bookings and
-                        invoices.
+                        Convert this lead to a customer profile to start
+                        managing bookings and invoices.
                       </p>
                       <AppleButton
                         onClick={handleConvert}
                         disabled={!leadData.email || convertMutation.isPending}
                         variant={leadData.email ? "primary" : "tertiary"}
                         loading={convertMutation.isPending}
-                        leftIcon={!convertMutation.isPending ? <CheckCircle className="w-4 h-4" /> : undefined}
+                        leftIcon={
+                          !convertMutation.isPending ? (
+                            <CheckCircle className="w-4 h-4" />
+                          ) : undefined
+                        }
                       >
                         Convert to Customer
                       </AppleButton>
@@ -209,31 +239,47 @@ export default function LeadDetail() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <AppleCard variant="elevated">
                     <div className="p-6">
-                      <h2 className="text-xl font-semibold mb-4">Lead Information</h2>
+                      <h2 className="text-xl font-semibold mb-4">
+                        Lead Information
+                      </h2>
                       <dl className="space-y-3">
                         <div>
-                          <dt className="text-sm text-muted-foreground">Name</dt>
-                          <dd className="text-base font-medium">{leadData?.name || "N/A"}</dd>
+                          <dt className="text-sm text-muted-foreground">
+                            Name
+                          </dt>
+                          <dd className="text-base font-medium">
+                            {leadData?.name || "N/A"}
+                          </dd>
                         </div>
                         {leadData?.email && (
                           <div>
-                            <dt className="text-sm text-muted-foreground">Email</dt>
+                            <dt className="text-sm text-muted-foreground">
+                              Email
+                            </dt>
                             <dd className="text-base">{leadData.email}</dd>
                           </div>
                         )}
                         {leadData?.phone && (
                           <div>
-                            <dt className="text-sm text-muted-foreground">Phone</dt>
+                            <dt className="text-sm text-muted-foreground">
+                              Phone
+                            </dt>
                             <dd className="text-base">{leadData.phone}</dd>
                           </div>
                         )}
                         <div>
-                          <dt className="text-sm text-muted-foreground">Status</dt>
-                          <dd className="text-base capitalize">{leadData?.status || "unknown"}</dd>
+                          <dt className="text-sm text-muted-foreground">
+                            Status
+                          </dt>
+                          <dd className="text-base capitalize">
+                            {leadData?.status || "unknown"}
+                          </dd>
                         </div>
                         {leadData?.source && (
                           <div>
-                            <dt className="text-sm text-muted-foreground">Source</dt>
+                            <dt className="text-sm text-muted-foreground">
+                              Source
+                            </dt>
                             <dd className="text-base">{leadData.source}</dd>
                           </div>
                         )}
@@ -247,20 +293,29 @@ export default function LeadDetail() {
                         <h2 className="text-xl font-semibold mb-4">Timeline</h2>
                         <dl className="space-y-3">
                           <div>
-                            <dt className="text-sm text-muted-foreground">Created</dt>
+                            <dt className="text-sm text-muted-foreground">
+                              Created
+                            </dt>
                             <dd className="text-base">
-                              {new Date(leadData.createdAt).toLocaleDateString("da-DK", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })}
+                              {new Date(leadData.createdAt).toLocaleDateString(
+                                "da-DK",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )}
                             </dd>
                           </div>
                           {leadData.updatedAt && (
                             <div>
-                              <dt className="text-sm text-muted-foreground">Last Updated</dt>
+                              <dt className="text-sm text-muted-foreground">
+                                Last Updated
+                              </dt>
                               <dd className="text-base">
-                                {new Date(leadData.updatedAt).toLocaleDateString("da-DK", {
+                                {new Date(
+                                  leadData.updatedAt
+                                ).toLocaleDateString("da-DK", {
                                   year: "numeric",
                                   month: "long",
                                   day: "numeric",
@@ -292,4 +347,3 @@ export default function LeadDetail() {
     </CRMLayout>
   );
 }
-

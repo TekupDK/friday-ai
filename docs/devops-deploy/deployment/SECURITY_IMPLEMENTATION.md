@@ -17,7 +17,7 @@ Comprehensive security hardening implemented across the Friday AI application, f
 
 #### Content Security Policy (CSP)
 
-```typescript
+````typescript
 {
   defaultSrc: ["'self'"],
   scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Vite dev needs unsafe-eval
@@ -407,7 +407,7 @@ pnpm update helmet
 # Run security tests
 pnpm test redaction
 
-```
+````
 
 ---
 

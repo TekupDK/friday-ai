@@ -19,4 +19,3 @@ Plan unit tests, integration tests, E2E tests, set coverage goals, create test p
 ## OUTPUT
 
 Test strategy designed with coverage goals and test plan.
-

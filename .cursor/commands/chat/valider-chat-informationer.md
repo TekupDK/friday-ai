@@ -12,6 +12,7 @@ Tjek om noget er modstridende eller mangler.
 ## TASK
 
 Tjek chat informationer:
+
 - Er noget modstridende?
 - Mangler der informationer?
 - Er filer korrekte?
@@ -24,16 +25,20 @@ Tjek chat informationer:
 ## Validering Resultat
 
 ### ✅ Korrekt
+
 - [Information 1] - ✅ Verified
 - [Information 2] - ✅ Verified
 
 ### ❌ Modstridende
+
 - [Information 1] vs [Information 2] - [Konflikt] - [Løsning]
 
 ### ⚠️ Mangler
+
 - [Information 1] - [Hvad mangler]
 
 ### ❌ Forkert
+
 - [Information 1] - [Forventet] vs [Faktisk] - [Fix]
 ```
 

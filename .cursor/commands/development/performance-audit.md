@@ -29,12 +29,14 @@ Identify performance risks and bottlenecks in the current changes, providing opt
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review code for performance issues
 - `codebase_search` - Find performance patterns
 - `grep` - Search for performance issues
 - `run_terminal_cmd` - Measure performance
 
 **DO NOT:**
+
 - Audit without measuring
 - Skip database analysis
 - Ignore bundle size
@@ -69,13 +71,13 @@ Before auditing, think through:
 
 ## STEPS
 
-1) Look for:
+1. Look for:
    - New loops over large collections
    - Nested loops
    - N+1 queries
    - Heavy computations on hot paths
    - Large data sent over network
-2) Suggest:
+2. Suggest:
    - Caching
    - Precomputation
    - Pagination
@@ -84,7 +86,7 @@ Before auditing, think through:
 ## OUTPUT
 
 Provide:
+
 - Potential performance issues
 - Proposed optimizations
 - Any trade-off commentary.
-

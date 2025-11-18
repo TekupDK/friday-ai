@@ -30,12 +30,14 @@ Based on the current file and folder, identify the most logical next things to b
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read current file
 - `list_dir` - Check folder structure
 - `codebase_search` - Find similar patterns
 - `grep` - Search for incomplete patterns
 
 **DO NOT:**
+
 - Miss incomplete parts
 - Skip validation needs
 - Ignore logical flow
@@ -107,26 +109,32 @@ Provide prioritized next steps:
 **Context:** [FILE/FOLDER PATH]
 
 ## Most Logical Next Thing to Build
+
 **[Priority 1]** [What to build] - [Why this first]
 
 ## Incomplete Functions
+
 1. **[Function 1]** - [What's missing] - [Priority]
 2. **[Function 2]** - [What's missing] - [Priority]
 3. **[Function 3]** - [What's missing] - [Priority]
 
 ## Parts Needing Validation
+
 1. **[Part 1]** - [What validation needed] - [Priority]
 2. **[Part 2]** - [What validation needed] - [Priority]
 
 ## Parts Needing Error Handling
+
 1. **[Part 1]** - [What error handling needed] - [Priority]
 2. **[Part 2]** - [What error handling needed] - [Priority]
 
 ## Parts Needing Types
+
 1. **[Part 1]** - [What types needed] - [Priority]
 2. **[Part 2]** - [What types needed] - [Priority]
 
 ## Recommended Sequence
+
 1. [Step 1] - [Why first]
 2. [Step 2] - [Why second]
 3. [Step 3] - [Why third]
@@ -143,4 +151,3 @@ Provide prioritized next steps:
 ---
 
 **CRITICAL:** Generate logical, prioritized next steps based on current state.
-

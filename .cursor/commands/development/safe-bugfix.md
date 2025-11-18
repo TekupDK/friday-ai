@@ -9,11 +9,13 @@ Apply the smallest safe change that fixes the bug and add protection against reg
 ## CRITICAL: START FIXING IMMEDIATELY
 
 **DO NOT:**
+
 - Just propose a fix without implementing
 - Wait for approval
 - Show a plan and wait
 
 **DO:**
+
 - Start investigating immediately
 - Find root cause
 - Implement the fix using tools
@@ -51,10 +53,10 @@ Apply the smallest safe change that fixes the bug and add protection against reg
 ## OUTPUT
 
 Return:
+
 - Root cause identified
 - Fix implemented (actual code changes)
 - Files changed
 - Regression test added
 - Test results (all passing)
 - Verification that bug is resolved
-

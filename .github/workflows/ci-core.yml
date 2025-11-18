@@ -2,14 +2,14 @@ name: Core CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
       - "**/*.md"
       - "**/.vscode/**"
       - "**/.idea/**"
       - "**/docs/**"
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   quality:

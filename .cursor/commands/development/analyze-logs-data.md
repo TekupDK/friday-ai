@@ -29,11 +29,13 @@ Analyze logs, CSV files, or datasets to identify trends, patterns, anomalies, an
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read data files
 - `codebase_search` - Understand data structure
 - `run_terminal_cmd` - Process data if needed
 
 **DO NOT:**
+
 - Analyze without understanding data structure
 - Skip visualization
 - Ignore anomalies
@@ -70,26 +72,32 @@ Before analyzing, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Data Analysis Structure
+
 ```markdown
 ## Data Analysis: [Dataset Name]
 
 ### Summary Statistics
+
 - Total Records: [count]
 - Time Range: [start] - [end]
 - Key Metrics: [metrics]
 
 ### Trends Identified
+
 1. [Trend 1] - [Description]
 2. [Trend 2] - [Description]
 
 ### Visualizations
+
 [Chart descriptions or ASCII charts]
 
 ### Key Insights
+
 - [Insight 1]
 - [Insight 2]
 
 ### Recommendations
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -130,6 +138,7 @@ Before analyzing, think through:
 ## VERIFICATION
 
 After analysis:
+
 - ✅ Statistics calculated
 - ✅ Trends identified
 - ✅ Visualizations created
@@ -142,15 +151,18 @@ After analysis:
 ### Data Analysis: [Dataset Name]
 
 **Dataset Overview:**
+
 - Records: [count]
 - Time Range: [start] - [end]
 - Columns: [list]
 
 **Summary Statistics:**
+
 - [Metric 1]: [value]
 - [Metric 2]: [value]
 
 **Trends Identified:**
+
 1. [Trend] - [Description] - [Impact]
 2. [Trend] - [Description] - [Impact]
 
@@ -158,13 +170,16 @@ After analysis:
 [Chart descriptions or ASCII charts]
 
 **Anomalies Found:**
+
 - [Anomaly] - [Description] - [Impact]
 
 **Key Insights:**
+
 - [Insight 1]
 - [Insight 2]
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -176,4 +191,3 @@ After analysis:
 - **Be actionable:** Provide clear recommendations
 - **Be accurate:** Verify calculations
 - **Be clear:** Explain findings clearly
-

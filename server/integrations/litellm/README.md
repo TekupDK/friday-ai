@@ -7,7 +7,7 @@
 
 ## 📁 Directory Structure
 
-```bash
+````bash
 server/integrations/litellm/
 ├── config/
 │   └── litellm.config.yaml       ✅ LiteLLM configuration (6 FREE models)
@@ -169,7 +169,7 @@ pnpm test tests/integrations/litellm/
 # Test with real LiteLLM proxy
 pnpm test:litellm
 
-```
+````
 
 ---
 

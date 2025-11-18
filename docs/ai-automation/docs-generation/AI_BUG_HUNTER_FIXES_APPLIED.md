@@ -23,6 +23,7 @@
 **Solution:** Lua script for atomiske operationer
 
 **Implementering:**
+
 ```typescript
 // FØR: Non-atomic operations
 await client.zremrangebyscore(key, 0, windowStart);
@@ -35,6 +36,7 @@ const result = await client.eval(RATE_LIMIT_SCRIPT, [key], [...]);
 ```
 
 **Fordele:**
+
 - ✅ Alle operationer er atomiske
 - ✅ Ingen race conditions
 - ✅ Konsistent behavior under concurrent load
@@ -50,6 +52,7 @@ const result = await client.eval(RATE_LIMIT_SCRIPT, [key], [...]);
 **Solution:** Periodisk cleanup interval
 
 **Implementering:**
+
 ```typescript
 // TILFØJET: Cleanup interval
 function startInMemoryCleanup(): void {
@@ -67,6 +70,7 @@ export function checkRateLimitInMemory(...) {
 ```
 
 **Fordele:**
+
 - ✅ Automatisk cleanup hvert minut
 - ✅ Forhindrer memory leaks
 - ✅ Ingen manuel intervention nødvendig
@@ -82,11 +86,12 @@ export function checkRateLimitInMemory(...) {
 **Solution:** Sanitize og valider input
 
 **Implementering:**
+
 ```typescript
 // TILFØJET: Input sanitization
 function sanitizeKeySuffix(keySuffix: string): string {
   return keySuffix
-    .replace(/[^a-zA-Z0-9_-]/g, '_') // Replace special chars
+    .replace(/[^a-zA-Z0-9_-]/g, "_") // Replace special chars
     .substring(0, 50); // Max 50 chars
 }
 
@@ -95,6 +100,7 @@ const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
 ```
 
 **Fordele:**
+
 - ✅ Forhindrer key collisions
 - ✅ Forhindrer injection attacks
 - ✅ Konsistent key format
@@ -124,10 +130,12 @@ const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
 ## 🧪 Test Status
 
 ### **Eksisterende Tests:**
+
 - ✅ `rate-limiter-bug.test.ts` - 7/7 passing
 - ✅ `rate-limiter-fallback-bug.test.ts` - 2/2 passing
 
 ### **Nye Tests Oprettet:**
+
 - ✅ `rate-limiter-race-condition.test.ts` - 3 tests
 - ✅ `rate-limiter-memory-leak.test.ts` - 3 tests
 
@@ -138,11 +146,13 @@ const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
 ## 📊 Impact Assessment
 
 ### **Før Fixes:**
+
 - ❌ Race conditions tillod overskridelse af rate limits
 - ❌ Memory leaks ved Redis downtime
 - ❌ Potential key collisions
 
 ### **Efter Fixes:**
+
 - ✅ Atomiske operationer forhindrer race conditions
 - ✅ Automatisk cleanup forhindrer memory leaks
 - ✅ Input validation forhindrer key collisions
@@ -155,6 +165,7 @@ const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
 **Status:** ✅ **READY**
 
 **Verificering:**
+
 - ✅ Alle kritiske bugs fixet
 - ✅ Regression tests består
 - ✅ Nye tests tilføjet
@@ -165,4 +176,3 @@ const sanitizedSuffix = keySuffix ? sanitizeKeySuffix(keySuffix) : undefined;
 
 **Fixes Implementeret:** 28. januar 2025  
 **Status:** ✅ **COMPLETE**
-

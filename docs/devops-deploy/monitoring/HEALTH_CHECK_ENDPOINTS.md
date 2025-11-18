@@ -24,6 +24,7 @@ Basic health check endpoint that always returns 200 if the server is running.
 **Response:** Always returns HTTP 200
 
 **Response Body:**
+
 ```json
 {
   "status": "healthy",
@@ -36,6 +37,7 @@ Basic health check endpoint that always returns 200 if the server is running.
 ```
 
 **Fields:**
+
 - `status` (string): Always `"healthy"` if server is running
 - `timestamp` (string): ISO 8601 timestamp of the check
 - `uptime` (number): Server uptime in seconds
@@ -44,6 +46,7 @@ Basic health check endpoint that always returns 200 if the server is running.
 - `responseTime` (string): Time taken to generate response (e.g., "2ms")
 
 **Example Usage:**
+
 ```bash
 # Basic health check
 curl http://localhost:3000/api/health
@@ -53,6 +56,7 @@ curl -s http://localhost:3000/api/health | jq
 ```
 
 **Use Cases:**
+
 - Load balancer health checks (every 5-10 seconds)
 - Basic uptime monitoring
 - Simple "is the server running?" checks
@@ -65,11 +69,13 @@ Readiness check endpoint that verifies all critical dependencies are available.
 
 **Purpose:** Used by Kubernetes readiness probes to determine if the pod should receive traffic.
 
-**Response:** 
+**Response:**
+
 - HTTP 200 if all dependencies are ready
 - HTTP 503 if any critical dependency is unavailable
 
 **Response Body (Ready):**
+
 ```json
 {
   "status": "ready",
@@ -88,6 +94,7 @@ Readiness check endpoint that verifies all critical dependencies are available.
 ```
 
 **Response Body (Not Ready):**
+
 ```json
 {
   "status": "not_ready",
@@ -108,15 +115,18 @@ Readiness check endpoint that verifies all critical dependencies are available.
 **Check Statuses:**
 
 **Database:**
+
 - `ok`: Database connection successful, query executed
 - `error`: Database unavailable or query failed
 
 **Redis:**
+
 - `ok`: Redis connection successful, ping successful
 - `not_configured`: Redis not configured (acceptable, uses in-memory fallback)
 - `error`: Redis configured but connection failed
 
 **Fields:**
+
 - `status` (string): `"ready"` or `"not_ready"`
 - `timestamp` (string): ISO 8601 timestamp of the check
 - `checks.database.status` (string): Database health status
@@ -127,6 +137,7 @@ Readiness check endpoint that verifies all critical dependencies are available.
 - `checks.redis.message` (string, optional): Status message
 
 **Readiness Logic:**
+
 - Returns `ready` if:
   - Database status is `ok`
   - Redis status is `ok` OR `not_configured` (Redis is optional)
@@ -135,6 +146,7 @@ Readiness check endpoint that verifies all critical dependencies are available.
   - Redis status is `error` (when configured but failing)
 
 **Example Usage:**
+
 ```bash
 # Readiness check
 curl http://localhost:3000/api/ready
@@ -147,6 +159,7 @@ curl -s http://localhost:3000/api/ready | jq '.checks.database'
 ```
 
 **Use Cases:**
+
 - Kubernetes readiness probes
 - Deployment verification
 - Dependency health monitoring
@@ -161,6 +174,7 @@ curl -s http://localhost:3000/api/ready | jq '.checks.database'
 **Location:** `server/routes/health.ts`
 
 **Integration:** Registered in `server/_core/index.ts`:
+
 ```typescript
 // Health check endpoints
 const healthApi = (await import("../routes/health")).default;
@@ -170,6 +184,7 @@ app.use("/api", healthApi);
 ### Dependency Checks
 
 **Database Check:**
+
 ```typescript
 const db = await getDb();
 if (db) {
@@ -184,6 +199,7 @@ if (db) {
 - Handles connection errors gracefully
 
 **Redis Check:**
+
 ```typescript
 const redis = getRedisClient();
 await redis.ping();
@@ -217,6 +233,7 @@ try {
 ### Kubernetes Deployment
 
 **Liveness Probe:**
+
 ```yaml
 livenessProbe:
   httpGet:
@@ -229,6 +246,7 @@ livenessProbe:
 ```
 
 **Readiness Probe:**
+
 ```yaml
 readinessProbe:
   httpGet:
@@ -243,6 +261,7 @@ readinessProbe:
 ### Load Balancer Configuration
 
 **AWS Application Load Balancer:**
+
 ```json
 {
   "HealthCheckPath": "/api/health",
@@ -256,6 +275,7 @@ readinessProbe:
 ### Monitoring Integration
 
 **Prometheus Alert:**
+
 ```yaml
 groups:
   - name: health_checks
@@ -268,6 +288,7 @@ groups:
 ```
 
 **Custom Monitoring Script:**
+
 ```bash
 #!/bin/bash
 HEALTH_URL="http://localhost:3000/api/health"
@@ -300,6 +321,7 @@ fi
 **Location:** `server/routes/__tests__/health.test.ts`
 
 **Test Coverage:**
+
 - ✅ Health endpoint returns 200
 - ✅ Health endpoint includes all required fields
 - ✅ Readiness endpoint returns 200 or 503
@@ -307,6 +329,7 @@ fi
 - ✅ Response times are included when checks pass
 
 **Run Tests:**
+
 ```bash
 pnpm test server/routes/__tests__/health.test.ts
 ```
@@ -314,12 +337,14 @@ pnpm test server/routes/__tests__/health.test.ts
 ### Manual Testing
 
 **Test Health Endpoint:**
+
 ```bash
 # Should return 200
 curl -v http://localhost:3000/api/health
 ```
 
 **Test Readiness Endpoint:**
+
 ```bash
 # Should return 200 if dependencies available
 curl -v http://localhost:3000/api/ready
@@ -337,6 +362,7 @@ curl -s http://localhost:3000/api/ready | jq '.checks.database'
 **Problem:** Server is crashing or endpoint has errors.
 
 **Solution:**
+
 1. Check server logs for errors
 2. Verify Express app is properly initialized
 3. Check if health route is registered correctly
@@ -346,6 +372,7 @@ curl -s http://localhost:3000/api/ready | jq '.checks.database'
 **Problem:** Critical dependencies are unavailable.
 
 **Diagnosis:**
+
 ```bash
 curl -s http://localhost:3000/api/ready | jq '.checks'
 ```
@@ -353,12 +380,14 @@ curl -s http://localhost:3000/api/ready | jq '.checks'
 **Common Issues:**
 
 **Database Error:**
+
 - Check `DATABASE_URL` environment variable
 - Verify database server is running
 - Check network connectivity
 - Review database connection logs
 
 **Redis Error (when configured):**
+
 - Check `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
 - Verify Redis service is accessible
 - Check network connectivity
@@ -369,12 +398,14 @@ curl -s http://localhost:3000/api/ready | jq '.checks'
 **Problem:** Health checks are taking too long.
 
 **Investigation:**
+
 ```bash
 # Check response times
 curl -s http://localhost:3000/api/ready | jq '.checks | to_entries | map({key, value: .value.responseTime})'
 ```
 
 **Solutions:**
+
 - Database: Check connection pool, query performance
 - Redis: Check network latency, Redis server performance
 - Consider increasing timeout in monitoring systems
@@ -384,6 +415,7 @@ curl -s http://localhost:3000/api/ready | jq '.checks | to_entries | map({key, v
 **Problem:** Health checks pass but service is actually down.
 
 **Solution:**
+
 - Use `/api/ready` instead of `/api/health` for critical checks
 - Implement additional application-level checks
 - Monitor application logs, not just health endpoints
@@ -460,4 +492,3 @@ curl -s http://localhost:3000/api/ready | jq '.checks | to_entries | map({key, v
 
 **Last Updated:** November 16, 2025  
 **Maintained by:** TekupDK Development Team
-

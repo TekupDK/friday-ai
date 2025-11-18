@@ -30,12 +30,14 @@ Analyze all work done in the current chat session by reviewing changes, conversa
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Check git status and diff
 - `read_file` - Review changed files
 - `codebase_search` - Understand context
 - `grep` - Find patterns in changes
 
 **DO NOT:**
+
 - Miss any changes
 - Ignore context
 - Skip analysis
@@ -72,30 +74,35 @@ Before analyzing, think through:
 ## ANALYSIS AREAS
 
 ### 1. Code Changes
+
 - Files modified
 - Lines added/removed
 - Patterns used
 - Quality assessment
 
 ### 2. Feature Progress
+
 - Features started
 - Features completed
 - Features in progress
 - Features blocked
 
 ### 3. Bug Fixes
+
 - Bugs identified
 - Bugs fixed
 - Bugs remaining
 - Root causes
 
 ### 4. Documentation
+
 - Docs created
 - Docs updated
 - Docs missing
 - Docs outdated
 
 ### 5. Testing
+
 - Tests written
 - Tests passing
 - Tests failing
@@ -149,6 +156,7 @@ Provide comprehensive session analysis:
 **Status:** [COMPLETE/IN PROGRESS]
 
 ## Executive Summary
+
 - **Files Changed:** [NUMBER]
 - **Lines Added:** [NUMBER]
 - **Lines Removed:** [NUMBER]
@@ -158,51 +166,61 @@ Provide comprehensive session analysis:
 ## Work Accomplished
 
 ### Code Changes
+
 - ✅ [Change 1] - [Impact]
 - ✅ [Change 2] - [Impact]
 - 🔄 [Change 3] - [Status]
 
 ### Features
+
 - ✅ [Feature 1] - [Status]
 - 🚧 [Feature 2] - [Progress %]
 - 📋 [Feature 3] - [Status]
 
 ### Bug Fixes
+
 - ✅ [Bug 1] - Fixed
 - ✅ [Bug 2] - Fixed
 - 🔄 [Bug 3] - In progress
 
 ## Quality Assessment
+
 - **Code Quality:** [RATING]
 - **Test Coverage:** [PERCENTAGE]%
 - **Documentation:** [RATING]
 - **Best Practices:** [RATING]
 
 ## Patterns Identified
+
 1. [Pattern 1] - [Assessment]
 2. [Pattern 2] - [Assessment]
 
 ## Issues Found
+
 1. [Issue 1] - [Severity] - [Recommendation]
 2. [Issue 2] - [Severity] - [Recommendation]
 
 ## Achievements
+
 - ✅ [Achievement 1]
 - ✅ [Achievement 2]
 - ✅ [Achievement 3]
 
 ## Current State
+
 - **Completed:** [LIST]
 - **In Progress:** [LIST]
 - **Blocked:** [LIST]
 - **Pending:** [LIST]
 
 ## Recommendations
+
 1. [Recommendation 1] - [Priority]
 2. [Recommendation 2] - [Priority]
 3. [Recommendation 3] - [Priority]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 3. [Next step 3]
@@ -219,4 +237,3 @@ Provide comprehensive session analysis:
 ---
 
 **CRITICAL:** Analyze all session work comprehensively. Don't miss any changes or context.
-

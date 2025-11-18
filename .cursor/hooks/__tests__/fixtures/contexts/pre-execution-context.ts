@@ -11,4 +11,3 @@ export const preExecutionContext: HookExecutionContext = {
   timestamp: new Date().toISOString(),
   category: "pre-execution",
 };
-

@@ -13,7 +13,7 @@
 
 **Core Functions:**
 
-```typescript
+````typescript
 export async function invokeLLM(params: InvokeParams): Promise<InvokeResult>
 export async function* streamResponse(messages, params): AsyncGenerator<string>
 
@@ -333,7 +333,7 @@ server/docs/ai/analyzer.ts          - Docs analyzer
 server/docs/ai/auto-create.ts       - Docs generator
 server/routers/chat-streaming.ts    - Chat
 
-```
+````
 
 ---
 

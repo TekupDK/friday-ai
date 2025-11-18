@@ -20,7 +20,7 @@
 
 **Events Tracked:**
 
-```typescript
+````typescript
 // Message sent
 {
   eventType: 'chat_message_sent',
@@ -214,7 +214,7 @@ chat: {
   sendMessage,
 }
 
-```
+````
 
 **To Add (Optional):**
 

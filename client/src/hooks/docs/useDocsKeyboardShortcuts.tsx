@@ -73,26 +73,27 @@ export function useDocsKeyboardShortcuts(config: KeyboardShortcutConfig) {
 /**
  * Show keyboard shortcuts hint
  */
-export const DocsKeyboardShortcutsHint = memo(function DocsKeyboardShortcutsHint() {
-  const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
-  const mod = isMac ? "⌘" : "Ctrl";
+export const DocsKeyboardShortcutsHint = memo(
+  function DocsKeyboardShortcutsHint() {
+    const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+    const mod = isMac ? "⌘" : "Ctrl";
 
-  return (
-    <div className="text-xs text-muted-foreground space-y-1">
-      <p className="font-semibold">Keyboard Shortcuts:</p>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-        <span>{mod}+S</span>
-        <span>Save</span>
-        <span>{mod}+K</span>
-        <span>Search</span>
-        <span>{mod}+N</span>
-        <span>New Doc</span>
-        <span>{mod}+P</span>
-        <span>Preview</span>
-        <span>Esc</span>
-        <span>Cancel</span>
+    return (
+      <div className="text-xs text-muted-foreground space-y-1">
+        <p className="font-semibold">Keyboard Shortcuts:</p>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+          <span>{mod}+S</span>
+          <span>Save</span>
+          <span>{mod}+K</span>
+          <span>Search</span>
+          <span>{mod}+N</span>
+          <span>New Doc</span>
+          <span>{mod}+P</span>
+          <span>Preview</span>
+          <span>Esc</span>
+          <span>Cancel</span>
+        </div>
       </div>
-    </div>
-  );
-});
-
+    );
+  }
+);

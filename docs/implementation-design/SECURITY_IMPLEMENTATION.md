@@ -18,7 +18,7 @@ Comprehensive security hardening implemented across the Friday AI application, f
 
 #### Content Security Policy (CSP)
 
-```typescript
+````typescript
 {
   defaultSrc: ["'self'"],
   scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Vite dev needs unsafe-eval
@@ -476,7 +476,7 @@ pnpm update helmet
 
 pnpm test redaction
 
-```
+````
 
 ---
 
@@ -484,21 +484,21 @@ pnpm test redaction
 
 ### Documentation
 
-- [Helmet.js](<https://helmetjs.github.io/>)
+- [Helmet.js](https://helmetjs.github.io/)
 
-- [CORS Best Practices](<https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>)
+- [CORS Best Practices](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
-- [OWASP Secure Headers](<https://owasp.org/www-project-secure-headers/>)
+- [OWASP Secure Headers](https://owasp.org/www-project-secure-headers/)
 
-- [Pino Logger](<https://getpino.io/>)
+- [Pino Logger](https://getpino.io/)
 
 ### Standards
 
-- [GDPR Compliance](<https://gdpr.eu/>)
+- [GDPR Compliance](https://gdpr.eu/)
 
-- [PCI DSS](<https://www.pcisecuritystandards.org/>)
+- [PCI DSS](https://www.pcisecuritystandards.org/)
 
-- [OWASP Top 10](<https://owasp.org/www-project-top-ten/>)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 
 ---
 

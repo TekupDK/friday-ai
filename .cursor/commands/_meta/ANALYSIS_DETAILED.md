@@ -8,6 +8,7 @@
 ## 📊 EXECUTIVE SUMMARY
 
 **Nuværende Status:**
+
 - ✅ **0 commands i root** - Alle commands er flyttet til mapper
 - ✅ **294 commands organiseret** i 8 mapper
 - ⚠️ **72 commands mangler paths** i COMMANDS_INDEX.md
@@ -20,6 +21,7 @@
 ### 1. MAPPER STATUS ✅
 
 **Faktiske commands i mapper:**
+
 - `core/`: 62 commands ✅
 - `development/`: 115 commands ✅
 - `testing/`: 35 commands ✅
@@ -38,13 +40,16 @@
 ### 2. COMMANDS_INDEX.MD STATUS
 
 **Most Used Commands:** ✅ OPDATERET
+
 - Alle paths er korrekte
 
 **A-Z Index:**
+
 - ✅ ~220 commands har paths
 - ⚠️ **72 commands mangler paths**
 
 **Identificerede commands uden paths:**
+
 1. `automate-system-monitoring.md`
 2. `api-versioning.md`
 3. `assert-invariants.md`
@@ -103,17 +108,20 @@
 ### 3. COMMANDS_BY_CATEGORY.MD STATUS
 
 **Most Used Commands:**
+
 - ⚠️ `ai/test-all-ai-tools.md` → Skal være `testing/test-all-ai-tools.md`
 - ⚠️ `ai/debug-ai-responses.md` → Skal være `debugging/debug-ai-responses.md`
 - ⚠️ `ai/test-ai-prompts.md` → Skal være `testing/test-ai-prompts.md`
 
 **AI & LLM Commands:**
+
 - ⚠️ `ai/test-ai-prompts.md` → Skal være `testing/test-ai-prompts.md`
 - ⚠️ `ai/test-all-ai-tools.md` → Skal være `testing/test-all-ai-tools.md`
 - ⚠️ `debugging/debug-friday-ai-agent.md` → Korrekt
 - ⚠️ `testing/test-ai-tool-handler.md` → Korrekt
 
 **Development Commands:**
+
 - ⚠️ `guide-feature-development.md` → Mangler path (skal være `development/guide-feature-development.md`)
 - ⚠️ `validate-implementation.md` → Mangler path (skal være `development/validate-implementation.md`)
 
@@ -124,6 +132,7 @@
 **Commands der skal kategoriseres:**
 
 **Development Commands (skal til `development/`):**
+
 - `automate-system-monitoring.md`
 - `api-versioning.md`
 - `assert-invariants.md`
@@ -176,12 +185,15 @@
 - ... (flere)
 
 **Core Commands (skal til `core/`):**
+
 - `estimate-todo-effort.md`
 
 **Testing Commands (skal til `testing/`):**
+
 - (Ingen identificeret - alle er allerede kategoriseret)
 
 **Debugging Commands (skal til `debugging/`):**
+
 - (Ingen identificeret - alle er allerede kategoriseret)
 
 ---
@@ -207,6 +219,7 @@
 ### 6. DUPLIKATIONER
 
 **Tjekket for duplikater:**
+
 - ✅ Ingen duplikater i mapper
 - ✅ Ingen duplikater i root
 - ⚠️ Nogle commands refererer til samme funktionalitet (f.eks. `bug-fix.md` → `development/fix-bug.md`)
@@ -254,6 +267,7 @@
 **Status:** ⚠️ **72 commands mangler paths** i COMMANDS_INDEX.md
 
 **Næste Skridt:**
+
 1. Tilføj paths til alle 72 commands
 2. Fix inkonsistenser i COMMANDS_BY_CATEGORY.md
 3. Verificer alle paths
@@ -261,4 +275,3 @@
 ---
 
 **Klar til at fixe!** 🚀
-

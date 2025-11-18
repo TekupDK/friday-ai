@@ -328,7 +328,7 @@ interface AuditTimelineProps {
 Bulk email actions component.
 
 ```typescript
-export type BulkAction = 
+export type BulkAction =
   | "archive"
   | "delete"
   | "mark_read"
@@ -397,5 +397,5 @@ export interface BillyInvoice {
 ---
 
 For detailed component documentation, see:
-- [Component Interfaces Detail](./interfaces.md)
 
+- [Component Interfaces Detail](./interfaces.md)

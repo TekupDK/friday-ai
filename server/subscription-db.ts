@@ -1,6 +1,6 @@
 /**
  * Subscription Database Helpers
- * 
+ *
  * Handles subscription data operations with proper user scoping and RBAC
  */
 
@@ -78,10 +78,7 @@ export async function getActiveSubscriptions(userId: number) {
     .select()
     .from(subscriptions)
     .where(
-      and(
-        eq(subscriptions.userId, userId),
-        eq(subscriptions.status, "active")
-      )
+      and(eq(subscriptions.userId, userId), eq(subscriptions.status, "active"))
     )
     .orderBy(desc(subscriptions.createdAt));
 }
@@ -243,10 +240,7 @@ export async function createSubscriptionUsage(
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const [created] = await db
-    .insert(subscriptionUsage)
-    .values(data)
-    .returning();
+  const [created] = await db.insert(subscriptionUsage).values(data).returning();
 
   return created.id;
 }
@@ -267,5 +261,3 @@ export async function addSubscriptionHistory(
 
   return created.id;
 }
-
-

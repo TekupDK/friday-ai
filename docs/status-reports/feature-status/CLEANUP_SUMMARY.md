@@ -11,7 +11,7 @@
 
 #### **1. Tomme Filer (11 stk, 0 bytes)**
 
-```text
+````text
 ❌ DEBUG_AKTUEL_STATUS.md
 ❌ FIX_500_ERROR.md
 ❌ LOGIN_FIXES_COMPLETE.md
@@ -234,7 +234,7 @@ git status
 git add .
 git commit -m "chore: cleanup workspace - remove 19 files, organize 18 tests"
 
-```
+````
 
 ---
 

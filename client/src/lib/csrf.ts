@@ -1,13 +1,13 @@
 /**
  * CSRF Token Helper
- * 
+ *
  * Utilities for reading and including CSRF tokens in requests.
  * Uses the double-submit cookie pattern.
  */
 
 /**
  * Get CSRF token from cookie
- * 
+ *
  * The token is set by the server in the __csrf_token cookie.
  * Frontend reads it and includes it in X-CSRF-Token header for mutations.
  */
@@ -30,7 +30,7 @@ export function getCsrfToken(): string | null {
 
 /**
  * Get CSRF token headers for fetch requests
- * 
+ *
  * Returns headers object with X-CSRF-Token if token is available.
  */
 export function getCsrfHeaders(): Record<string, string> {
@@ -43,4 +43,3 @@ export function getCsrfHeaders(): Record<string, string> {
     "X-CSRF-Token": token,
   };
 }
-

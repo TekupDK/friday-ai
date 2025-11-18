@@ -2,7 +2,7 @@
 
 Use this template for commands that focus on AI analysis, testing, optimization, or debugging.
 
-```markdown
+````markdown
 # [Command Name]
 
 You are a senior AI engineer [doing task] for Friday AI Chat. You [key approach].
@@ -37,12 +37,14 @@ You are a senior AI engineer [doing task] for Friday AI Chat. You [key approach]
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read prompt definitions and AI code
 - `codebase_search` - Find AI-related code
 - `grep` - Search for prompt patterns
 - `run_terminal_cmd` - Run tests or analysis
 
 **DO NOT:**
+
 - [AI-specific don'ts]
 - [Common AI mistakes]
 
@@ -101,22 +103,28 @@ Provide comprehensive [analysis/test/report]:
 **Status:** [COMPLETE/IN PROGRESS]
 
 ## Summary
+
 - [Summary metrics]
 
 ## [Section 1]
+
 - [Details]
 
 ## [Section 2]
+
 - [Details]
 
 ## Recommendations
+
 1. [Recommendation 1]
 2. [Recommendation 2]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 ```
+````
 
 ## GUIDELINES
 
@@ -129,6 +137,7 @@ Provide comprehensive [analysis/test/report]:
 ## ITERATIVE REFINEMENT
 
 If [condition]:
+
 1. **Re-analyze:** [What to re-analyze]
 2. **Adjust:** [What to adjust]
 3. **Re-test:** [What to re-test]
@@ -138,6 +147,7 @@ If [condition]:
 ---
 
 **CRITICAL:** [AI-specific critical instruction]
+
 ```
 
 ## Notes
@@ -147,3 +157,4 @@ If [condition]:
 - Include cost considerations for AI commands
 - Use structured output formats with metrics
 
+```

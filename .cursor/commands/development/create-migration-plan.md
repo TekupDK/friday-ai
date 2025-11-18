@@ -30,11 +30,13 @@ Create a detailed migration plan from one system/technology to another with step
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review current implementation
 - `codebase_search` - Find affected code
 - `grep` - Search for usage patterns
 
 **DO NOT:**
+
 - Skip risk assessment
 - Ignore rollback strategy
 - Miss affected areas
@@ -71,27 +73,33 @@ Before creating plan, think through:
 ## CODEBASE PATTERNS
 
 ### Example: Migration Plan Structure
+
 ```markdown
 ## Migration Plan: [From] → [To]
 
 ### Overview
+
 [Brief description]
 
 ### Prerequisites
+
 - [Prerequisite 1]
 - [Prerequisite 2]
 
 ### Migration Steps
+
 1. **Step 1:** [Description]
    - Action: [What to do]
    - Verification: [How to verify]
    - Rollback: [How to rollback]
 
 ### Risk Assessment
+
 - **High Risk:** [Risk] - [Mitigation]
 - **Medium Risk:** [Risk] - [Mitigation]
 
 ### Rollback Strategy
+
 [Detailed rollback procedure]
 ```
 
@@ -130,6 +138,7 @@ Before creating plan, think through:
 ## VERIFICATION
 
 After creating plan:
+
 - ✅ All steps defined
 - ✅ Risks assessed
 - ✅ Rollback strategy included
@@ -146,18 +155,21 @@ After creating plan:
 **Risk Level:** [Low / Medium / High]
 
 **Prerequisites:**
+
 - [Prerequisite 1]
 - [Prerequisite 2]
 
 **Migration Phases:**
 
 **Phase 1: [Name]**
+
 1. [Step 1]
    - Action: [Details]
    - Verification: [How to verify]
    - Rollback: [Rollback steps]
 
 **Risk Assessment:**
+
 - **High:** [Risk] - [Mitigation]
 - **Medium:** [Risk] - [Mitigation]
 - **Low:** [Risk] - [Mitigation]
@@ -166,10 +178,12 @@ After creating plan:
 [Detailed rollback procedure]
 
 **Success Criteria:**
+
 - [Criterion 1]
 - [Criterion 2]
 
 **Monitoring:**
+
 - [Metric 1]
 - [Metric 2]
 ```
@@ -181,4 +195,3 @@ After creating plan:
 - **Be practical:** Ensure rollback is possible
 - **Be verifiable:** Add checkpoints
 - **Be monitored:** Define success metrics
-

@@ -1,6 +1,6 @@
 /**
  * tRPC Client Export
- * 
+ *
  * Exports the tRPC client instance for use in standalone components.
  * This creates a client with the same configuration as the main app.
  */

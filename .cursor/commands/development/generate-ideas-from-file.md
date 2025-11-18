@@ -30,11 +30,13 @@ Analyze ONLY the file being edited and generate improvement ideas, edge cases, r
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read the current file
 - `codebase_search` - Find similar patterns
 - `grep` - Search for related code
 
 **DO NOT:**
+
 - Suggest breaking changes
 - Ignore existing patterns
 - Be unrealistic
@@ -100,6 +102,7 @@ Provide categorized ideas:
 **File:** [FILE PATH]
 
 ## Improvement Ideas (5)
+
 1. **[Idea 1]** - [Description] - [Impact: HIGH/MEDIUM/LOW]
 2. **[Idea 2]** - [Description] - [Impact: HIGH/MEDIUM/LOW]
 3. **[Idea 3]** - [Description] - [Impact: HIGH/MEDIUM/LOW]
@@ -107,21 +110,25 @@ Provide categorized ideas:
 5. **[Idea 5]** - [Description] - [Impact: HIGH/MEDIUM/LOW]
 
 ## Missing Edge Cases (3)
+
 1. **[Edge Case 1]** - [Description] - [Why important]
 2. **[Edge Case 2]** - [Description] - [Why important]
 3. **[Edge Case 3]** - [Description] - [Why important]
 
 ## Potential Refactors (3)
+
 1. **[Refactor 1]** - [Description] - [Benefit]
 2. **[Refactor 2]** - [Description] - [Benefit]
 3. **[Refactor 3]** - [Description] - [Benefit]
 
 ## Feature Extensions (3)
+
 1. **[Extension 1]** - [Description] - [Value]
 2. **[Extension 2]** - [Description] - [Value]
 3. **[Extension 3]** - [Description] - [Value]
 
 ## Priority Recommendations
+
 1. **[HIGH]** [Top priority idea] - [Reason]
 2. **[MEDIUM]** [Medium priority idea] - [Reason]
 3. **[LOW]** [Low priority idea] - [Reason]
@@ -138,4 +145,3 @@ Provide categorized ideas:
 ---
 
 **CRITICAL:** Generate ideas that are realistic and consistent with existing Friday AI Chat patterns.
-

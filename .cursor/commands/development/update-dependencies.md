@@ -19,4 +19,3 @@ Check for updates, review changelogs, update dependencies, test, fix breaking ch
 ## OUTPUT
 
 Dependencies updated with testing and verification.
-

@@ -14,11 +14,13 @@
 #### **A. In-Memory Rate Limiter (`server/rate-limiter.ts`)**
 
 **Brugt i:**
+
 - `server/rate-limit-middleware.ts` (linje 36)
 - `server/_core/trpc.ts` (linje 86-87)
 - `server/routers/inbox-router.ts` (9+ endpoints via `rateLimitedProcedure`)
 
 **Kritiske linjer:**
+
 ```30:52:server/rate-limiter.ts
   isRateLimited(key: string, config: RateLimitConfig): boolean {
     const now = Date.now();
@@ -48,12 +50,14 @@
 #### **B. Redis Rate Limiter (`server/rate-limiter-redis.ts`)**
 
 **Brugt i:**
+
 - `server/routers.ts` (linje 124) - Chat messages
 - `checkRateLimitUnified` - Fallback til in-memory
 
 #### **C. Express Rate Limiter (`server/_core/index.ts`)**
 
 **Brugt i:**
+
 - Linje 162-171 - IP-based rate limiting for alle `/api/` routes
 
 ### **Endpoints påvirket:**
@@ -74,14 +78,16 @@
 ### **Fejl #1: Count Increment Bug**
 
 **Forventet adfærd:**
+
 - Rate limit: 10 requests per 30 sekunder
 - Request 1-10: Tilladt
 - Request 11: Blokeret
 - Count skal aldrig overstige 10
 
 **Faktisk adfærd:**
+
 1. **Request 1-9:** `entry.count` = 1, 2, 3, ..., 9 → Tilladt ✅
-2. **Request 10:** 
+2. **Request 10:**
    - `entry.count` = 9 (før increment)
    - `entry.count++` → `entry.count` = 10
    - Check: `10 > 10` → `false` → Tilladt ✅
@@ -94,16 +100,19 @@
    - Nyt window starter med count = 1, men hvis cleanup fejler, kan count være forkert
 
 **Problemet:**
+
 - Count kan overstige `maxRequests` (11 i stedet for max 10)
 - Dette sker fordi increment sker FØR check, og count ikke nulstilles korrekt
 
 ### **Fejl #2: Inconsistent Rate Limiting**
 
 **Problem:**
+
 - `inbox-router.ts` bruger `rateLimitedProcedure` → `rate-limiter.ts` (in-memory)
 - `routers.ts` bruger `checkRateLimitUnified` → `rate-limiter-redis.ts` (Redis)
 
 **Konsekvenser:**
+
 1. **Server restart:** Inbox rate limits nulstilles, chat rate limits bevares (hvis Redis konfigureret)
 2. **Multi-instance:** Inbox rate limits deles ikke mellem servere, chat rate limits deles (hvis Redis)
 3. **Memory leak:** Inbox rate limits kan vokse ubegrænset, chat rate limits har automatisk cleanup
@@ -111,6 +120,7 @@
 ### **Fejl #3: Memory Leak Potential**
 
 **Problem i `rate-limiter.ts`:**
+
 ```77:88:server/rate-limiter.ts
   private cleanup(): void {
     const now = Date.now();
@@ -127,6 +137,7 @@
 ```
 
 **Scenarie hvor memory leak kan opstå:**
+
 1. Cleanup kører hvert 60. sekund
 2. Hvis mange brugere laver requests hurtigt, kan `this.limits` vokse hurtigt
 3. Hvis cleanup fejler eller ikke kører, vokser Map'en ubegrænset
@@ -137,6 +148,7 @@
 ### **Fejl #4: Lost on Server Restart**
 
 **Problem:**
+
 - In-memory rate limits gemmes i `Map<string, RateLimitEntry>`
 - Ved server restart nulstilles alle rate limits
 - Brugere kan omgå rate limits ved at vente på server restart
@@ -146,6 +158,7 @@
 ### **Fejl #5: Not Distributed**
 
 **Problem:**
+
 - Hvis flere server instances kører, deles rate limits ikke
 - En bruger kan lave 10 requests til server 1 og 10 requests til server 2
 - Total: 20 requests i stedet for 10
@@ -287,6 +300,7 @@ describe("Rate Limiter Memory Leak", () => {
 **Hypotese:** Count incrementeres FØR check, hvilket tillader count at overstige maxRequests.
 
 **Evidence:**
+
 ```44:48:server/rate-limiter.ts
     // Increment count
     entry.count++;
@@ -296,6 +310,7 @@ describe("Rate Limiter Memory Leak", () => {
 ```
 
 **Test:**
+
 - ✅ Count kan blive 11 når maxRequests = 10
 - ✅ Dette sker fordi increment sker før check
 
@@ -306,10 +321,12 @@ describe("Rate Limiter Memory Leak", () => {
 **Hypotese:** Forskellige endpoints bruger forskellige rate limiting implementeringer.
 
 **Evidence:**
+
 - `inbox-router.ts` linje 516: `rateLimitedProcedure` → `rate-limiter.ts`
 - `routers.ts` linje 124: `checkRateLimitUnified` → `rate-limiter-redis.ts`
 
 **Test:**
+
 - ✅ Forskellige implementeringer bruges
 - ✅ Forskellige opførsler ved restart/scaling
 
@@ -320,6 +337,7 @@ describe("Rate Limiter Memory Leak", () => {
 **Hypotese:** Cleanup kører kun hvert 60. sekund, hvilket kan tillade Map'en at vokse.
 
 **Evidence:**
+
 ```20:24:server/rate-limiter.ts
   constructor() {
     // Cleanup expired entries every minute
@@ -329,6 +347,7 @@ describe("Rate Limiter Memory Leak", () => {
 ```
 
 **Test:**
+
 - ⚠️ Cleanup virker, men ingen garanti mod edge cases
 - ⚠️ Hvis cleanup fejler, vokser Map'en
 
@@ -341,9 +360,11 @@ describe("Rate Limiter Memory Leak", () => {
 ### **Finding #1: Count Increment Bug** 🔴 CRITICAL
 
 **Problem:**
+
 - Count incrementeres før check, hvilket tillader count > maxRequests
 
 **Fix:**
+
 ```typescript
 // server/rate-limiter.ts - FIXED VERSION
 isRateLimited(key: string, config: RateLimitConfig): boolean {
@@ -371,6 +392,7 @@ isRateLimited(key: string, config: RateLimitConfig): boolean {
 ```
 
 **Test Coverage:**
+
 ```typescript
 it("should not increment count if limit already exceeded", () => {
   const key = "test:user:1";
@@ -394,10 +416,13 @@ it("should not increment count if limit already exceeded", () => {
 ### **Finding #2: Inconsistent Rate Limiting** 🔴 HIGH
 
 **Problem:**
+
 - Forskellige endpoints bruger forskellige implementeringer
 
 **Fix:**
+
 1. **Migrer alle endpoints til Redis-based rate limiting:**
+
 ```typescript
 // server/rate-limit-middleware.ts - UPDATED
 import { checkRateLimitUnified } from "./rate-limiter-redis";
@@ -438,6 +463,7 @@ export function createRateLimitMiddleware(
 ```
 
 **Test Coverage:**
+
 ```typescript
 it("should use Redis-based rate limiting consistently", async () => {
   const userId = 1;
@@ -463,15 +489,18 @@ it("should use Redis-based rate limiting consistently", async () => {
 ### **Finding #3: Memory Leak Potential** 🟡 MEDIUM
 
 **Problem:**
+
 - Cleanup kører kun hvert 60. sekund
 
 **Fix:**
+
 1. **Tilføj cleanup ved hver request:**
+
 ```typescript
 // server/rate-limiter.ts - IMPROVED
 isRateLimited(key: string, config: RateLimitConfig): boolean {
   const now = Date.now();
-  
+
   // Cleanup expired entries before checking (defensive)
   this.cleanup();
 
@@ -481,6 +510,7 @@ isRateLimited(key: string, config: RateLimitConfig): boolean {
 ```
 
 2. **Tilføj max size limit:**
+
 ```typescript
 private static readonly MAX_ENTRIES = 10000;
 
@@ -501,6 +531,7 @@ isRateLimited(key: string, config: RateLimitConfig): boolean {
 ```
 
 **Test Coverage:**
+
 ```typescript
 it("should cleanup expired entries on every request", () => {
   const config = { maxRequests: 10, windowMs: 100 };
@@ -529,6 +560,7 @@ it("should cleanup expired entries on every request", () => {
 ### **Regression Tests:**
 
 #### **Test #1: Existing Functionality**
+
 ```typescript
 it("should still allow requests within limit", () => {
   const key = "test:user:1";
@@ -541,6 +573,7 @@ it("should still allow requests within limit", () => {
 ```
 
 #### **Test #2: Rate Limiting Still Works**
+
 ```typescript
 it("should block requests over limit", () => {
   const key = "test:user:1";
@@ -555,6 +588,7 @@ it("should block requests over limit", () => {
 ```
 
 #### **Test #3: Window Reset**
+
 ```typescript
 it("should reset after window expires", async () => {
   const key = "test:user:1";
@@ -584,13 +618,13 @@ it("should reset after window expires", async () => {
 
 ## 📊 Sammenfattende Tabel
 
-| Fejl | Prioritet | Impact | Fix Kompleksitet | Status |
-|------|-----------|--------|------------------|--------|
-| Count Increment Bug | 🔴 CRITICAL | Count > maxRequests | 🟢 LOW | ⏳ Pending |
-| Inconsistent Implementation | 🔴 HIGH | Inconsistent behavior | 🟡 MEDIUM | ⏳ Pending |
-| Memory Leak Potential | 🟡 MEDIUM | Unbounded growth | 🟡 MEDIUM | ⏳ Pending |
-| Lost on Restart | 🟡 MEDIUM | Rate limits reset | 🟢 LOW | ✅ Fixed (Redis) |
-| Not Distributed | 🔴 HIGH | Bypass via multiple servers | 🟡 MEDIUM | ✅ Fixed (Redis) |
+| Fejl                        | Prioritet   | Impact                      | Fix Kompleksitet | Status           |
+| --------------------------- | ----------- | --------------------------- | ---------------- | ---------------- |
+| Count Increment Bug         | 🔴 CRITICAL | Count > maxRequests         | 🟢 LOW           | ⏳ Pending       |
+| Inconsistent Implementation | 🔴 HIGH     | Inconsistent behavior       | 🟡 MEDIUM        | ⏳ Pending       |
+| Memory Leak Potential       | 🟡 MEDIUM   | Unbounded growth            | 🟡 MEDIUM        | ⏳ Pending       |
+| Lost on Restart             | 🟡 MEDIUM   | Rate limits reset           | 🟢 LOW           | ✅ Fixed (Redis) |
+| Not Distributed             | 🔴 HIGH     | Bypass via multiple servers | 🟡 MEDIUM        | ✅ Fixed (Redis) |
 
 ---
 
@@ -605,4 +639,3 @@ it("should reset after window expires", async () => {
 
 **Rapport genereret:** 28. januar 2025  
 **Næste skridt:** Implementer fixes og kør regression tests
-

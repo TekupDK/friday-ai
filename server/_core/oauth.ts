@@ -22,7 +22,10 @@ export function registerOAuthRoutes(app: Express) {
   // Supports both browser redirect and test mode (JSON response)
   app.get("/api/auth/login", async (req: Request, res: Response) => {
     // ✅ SECURITY FIX: Use logger instead of console.log
-    logger.debug({ nodeEnv: process.env.NODE_ENV }, "[AUTH] Dev-login endpoint called");
+    logger.debug(
+      { nodeEnv: process.env.NODE_ENV },
+      "[AUTH] Dev-login endpoint called"
+    );
 
     // Check if test mode (return JSON instead of redirect)
     const isTestMode = req.query.mode === "test" || req.query.test === "true";
@@ -80,7 +83,8 @@ export function registerOAuthRoutes(app: Express) {
       // Create session token
       const sessionToken = await sdk.createSessionToken(ownerOpenId, {
         name: user.name || "Jonas",
-        expiresInMs: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        expiresInMs:
+          process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       });
 
       // Set cookie with proper options
@@ -88,20 +92,24 @@ export function registerOAuthRoutes(app: Express) {
       const cookieOptions = getSessionCookieOptions(req);
       const finalCookieOptions = {
         ...cookieOptions,
-        maxAge: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        maxAge:
+          process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       };
       res.cookie(COOKIE_NAME, sessionToken, finalCookieOptions);
 
       // ✅ SECURITY FIX: Use logger (redacts cookie value)
-      logger.info({
-        cookieName: COOKIE_NAME,
-        sameSite: finalCookieOptions.sameSite,
-        secure: finalCookieOptions.secure,
-        httpOnly: finalCookieOptions.httpOnly,
-        maxAge: finalCookieOptions.maxAge,
-        domain: finalCookieOptions.domain,
-        path: finalCookieOptions.path,
-      }, "[AUTH] Session cookie set successfully");
+      logger.info(
+        {
+          cookieName: COOKIE_NAME,
+          sameSite: finalCookieOptions.sameSite,
+          secure: finalCookieOptions.secure,
+          httpOnly: finalCookieOptions.httpOnly,
+          maxAge: finalCookieOptions.maxAge,
+          domain: finalCookieOptions.domain,
+          path: finalCookieOptions.path,
+        },
+        "[AUTH] Session cookie set successfully"
+      );
 
       // Return JSON in test mode, redirect otherwise
       if (isTestMode || isTestEnvironment) {
@@ -208,24 +216,29 @@ export function registerOAuthRoutes(app: Express) {
       // Create new session token
       const newSessionToken = await sdk.createSessionToken(sessionData.openId, {
         name: user.name || sessionData.name,
-        expiresInMs: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        expiresInMs:
+          process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       });
 
       // ✅ SECURITY FIX: Use getSessionCookieOptions for consistent security settings
       const cookieOptions = getSessionCookieOptions(req);
       const finalCookieOptions = {
         ...cookieOptions,
-        maxAge: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        maxAge:
+          process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       };
 
       res.cookie(COOKIE_NAME, newSessionToken, finalCookieOptions);
 
       // ✅ SECURITY FIX: Use logger (redacts openId if sensitive)
-      logger.info({
-        openId: sessionData.openId,
-        oldRemainingMs: sessionData.remainingMs,
-        newExpiry: "1 year",
-      }, "[Auth] Session refreshed successfully");
+      logger.info(
+        {
+          openId: sessionData.openId,
+          oldRemainingMs: sessionData.remainingMs,
+          newExpiry: "1 year",
+        },
+        "[Auth] Session refreshed successfully"
+      );
 
       return res.json({
         refreshed: true,

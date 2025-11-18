@@ -64,7 +64,12 @@ export function CreateSubscriptionModal({
   onSuccess,
 }: CreateSubscriptionModalProps) {
   const [formData, setFormData] = useState({
-    planType: "tier1" as "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus",
+    planType: "tier1" as
+      | "tier1"
+      | "tier2"
+      | "tier3"
+      | "flex_basis"
+      | "flex_plus",
     autoRenew: true,
     startDate: new Date().toISOString().split("T")[0], // Today's date
   });
@@ -72,19 +77,17 @@ export function CreateSubscriptionModal({
   const utils = trpc.useUtils();
 
   // Get AI recommendation
-  const {
-    data: recommendation,
-    isLoading: isLoadingRecommendation,
-  } = trpc.subscription.getRecommendation.useQuery(
-    {
-      customerProfileId,
-      includeReasoning: true,
-    },
-    {
-      enabled: isOpen && !!customerProfileId,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: recommendation, isLoading: isLoadingRecommendation } =
+    trpc.subscription.getRecommendation.useQuery(
+      {
+        customerProfileId,
+        includeReasoning: true,
+      },
+      {
+        enabled: isOpen && !!customerProfileId,
+        refetchOnWindowFocus: false,
+      }
+    );
 
   // Auto-select recommended plan when recommendation loads
   useEffect(() => {
@@ -262,10 +265,7 @@ export function CreateSubscriptionModal({
           >
             Cancel
           </AppleButton>
-          <AppleButton
-            type="submit"
-            loading={createMutation.isPending}
-          >
+          <AppleButton type="submit" loading={createMutation.isPending}>
             Create Subscription
           </AppleButton>
         </div>
@@ -273,4 +273,3 @@ export function CreateSubscriptionModal({
     </AppleModal>
   );
 }
-

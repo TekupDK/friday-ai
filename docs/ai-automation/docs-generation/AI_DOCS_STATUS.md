@@ -99,7 +99,6 @@ Lav en super simpel version der virker 100%:
 
 This lead has been active for 7 days.
 Recommended next action: Follow up meeting.
-
 ```
 
 Simpelt, men functional! Kan udvides senere.

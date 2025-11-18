@@ -8,9 +8,9 @@ Turn the conversation into an actionable engineering TODO list.
 
 ## STEPS
 
-1) Identify decisions and tasks mentioned.
-2) Group by area: backend, frontend, infra, tests, docs, AI.
-3) For each task:
+1. Identify decisions and tasks mentioned.
+2. Group by area: backend, frontend, infra, tests, docs, AI.
+3. For each task:
    - Write a short description
    - Add priority (P1/P2/P3)
    - Add owner if implied.
@@ -18,4 +18,3 @@ Turn the conversation into an actionable engineering TODO list.
 ## OUTPUT
 
 Return a Markdown checklist grouped by area.
-

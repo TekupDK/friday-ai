@@ -57,7 +57,9 @@ if (sentryEnabled && sentryDsn) {
   });
   console.log("[Sentry] Error tracking initialized");
 } else {
-  console.log("[Sentry] Error tracking disabled (VITE_SENTRY_ENABLED=false or VITE_SENTRY_DSN not set)");
+  console.log(
+    "[Sentry] Error tracking disabled (VITE_SENTRY_ENABLED=false or VITE_SENTRY_DSN not set)"
+  );
 }
 
 // Phase 7.2: Optimized QueryClient with intelligent cache strategy
@@ -153,13 +155,13 @@ const redirectToLoginIfUnauthorized = async (error: unknown) => {
         console.warn("[Auth] Refresh response is not JSON, skipping");
         return;
       }
-      
+
       const text = await refreshResponse.text();
       if (!text || text.trim().length === 0) {
         console.warn("[Auth] Refresh response is empty, skipping");
         return;
       }
-      
+
       let refreshData;
       try {
         refreshData = JSON.parse(text);
@@ -167,7 +169,7 @@ const redirectToLoginIfUnauthorized = async (error: unknown) => {
         console.error("[Auth] Failed to parse refresh response:", parseError);
         return;
       }
-      
+
       if (refreshData.refreshed) {
         console.log(
           "[Auth] Session refreshed successfully - avoiding login redirect"
@@ -370,7 +372,7 @@ root.render(
 
 // HMR: Preserve React state on hot reload
 if (import.meta.hot) {
-  import.meta.hot.accept("./App", (newModule) => {
+  import.meta.hot.accept("./App", newModule => {
     if (newModule) {
       root.render(
         <trpc.Provider client={trpcClient} queryClient={queryClient}>

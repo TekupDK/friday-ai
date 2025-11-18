@@ -7,25 +7,33 @@
 ## Hvad blev forbedret?
 
 ### ✅ 1. System Status Check (NY)
+
 **Tilføjet:** Check system status først
+
 - Tjekker ports, processer, services
 - Undgår duplicate work
 - Identificerer konflikter tidligt
 
 ### ✅ 2. Kontekst Review (NY)
+
 **Tilføjet:** Review chat historik og current state
+
 - Forstår tidligere arbejde
 - Identificerer dependencies
 - Undgår duplicate work
 
 ### ✅ 3. Error Recovery (FORBEDRET)
+
 **Tilføjet:** Graceful error handling
+
 - Fortsætter ved fejl når muligt
 - Rapporterer fejl tydeligt
 - Giver recovery actions
 
 ### ✅ 4. Bedre Output Format (FORBEDRET)
+
 **Tilføjet:** Struktureret output med:
+
 - System status sektion
 - Context review sektion
 - Progress tracking
@@ -33,7 +41,9 @@
 - Error reporting
 
 ### ✅ 5. Progress Tracking (NY)
+
 **Tilføjet:** Track progress tydeligt
+
 - Completed/In Progress/Remaining counts
 - Klar status for hver task
 - Progress percentage
@@ -41,6 +51,7 @@
 ## Baseret på faktisk brug
 
 **Fra chat:**
+
 - "se om den er online systemet" → System status check
 - "forsæt" → Context awareness
 - "hvad sagde testene" → Bedre output format
@@ -65,6 +76,7 @@
 ## Resultat
 
 Commanden er nu:
+
 - ✅ Mere kontekst-aware
 - ✅ Bedre error handling
 - ✅ Klarere output
@@ -72,4 +84,3 @@ Commanden er nu:
 - ✅ Undgår duplicate work
 
 **Status:** ✅ Forbedret og klar til brug
-

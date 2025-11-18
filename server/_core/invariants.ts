@@ -1,7 +1,7 @@
 /**
  * Invariant Assertions
  * Reusable runtime checks for critical business logic
- * 
+ *
  * ✅ SECURITY: Validates assumptions that must always be true
  * ✅ DEBUGGING: Fails fast with clear error messages
  * ✅ MONITORING: Logs violations for analysis
@@ -30,7 +30,10 @@ export function assertDefined<T>(
 /**
  * Assert that a user ID is valid (positive integer)
  */
-export function assertValidUserId(userId: unknown, context: string): asserts userId is number {
+export function assertValidUserId(
+  userId: unknown,
+  context: string
+): asserts userId is number {
   if (typeof userId !== "number" || !Number.isInteger(userId) || userId <= 0) {
     logger.error({ userId, context }, "[Invariant] Invalid user ID");
     throw new TRPCError({
@@ -75,12 +78,9 @@ export function assertOwnership(
 /**
  * Assert that a date is valid and in the future (for scheduling)
  */
-export function assertFutureDate(
-  date: string | Date,
-  fieldName: string
-): void {
+export function assertFutureDate(date: string | Date, fieldName: string): void {
   const dateObj = typeof date === "string" ? new Date(date) : date;
-  
+
   if (isNaN(dateObj.getTime())) {
     logger.error({ date, fieldName }, "[Invariant] Invalid date");
     throw new TRPCError({
@@ -101,10 +101,7 @@ export function assertFutureDate(
 /**
  * Assert that an amount is positive
  */
-export function assertPositiveAmount(
-  amount: number,
-  fieldName: string
-): void {
+export function assertPositiveAmount(amount: number, fieldName: string): void {
   if (!Number.isFinite(amount) || amount < 0) {
     logger.error({ amount, fieldName }, "[Invariant] Invalid amount");
     throw new TRPCError({
@@ -180,7 +177,9 @@ export function assertValidRateLimitResult(result: {
   }
 
   if (!Number.isFinite(result.remaining) || result.remaining < 0) {
-    throw new Error("Rate limit result 'remaining' must be a finite number >= 0");
+    throw new Error(
+      "Rate limit result 'remaining' must be a finite number >= 0"
+    );
   }
 
   if (!Number.isFinite(result.reset) || result.reset <= 0) {
@@ -209,11 +208,19 @@ export async function assertCustomerOwnership(
   const [customer] = await db
     .select()
     .from(customerProfiles)
-    .where(and(eq(customerProfiles.id, customerId), eq(customerProfiles.userId, userId)))
+    .where(
+      and(
+        eq(customerProfiles.id, customerId),
+        eq(customerProfiles.userId, userId)
+      )
+    )
     .limit(1);
 
   if (!customer) {
-    logger.warn({ customerId, userId }, "[Invariant] Customer ownership violation");
+    logger.warn(
+      { customerId, userId },
+      "[Invariant] Customer ownership violation"
+    );
     throw new TRPCError({
       code: "NOT_FOUND",
       message: "Customer profile not found",
@@ -236,4 +243,3 @@ export function isValidDateString(value: unknown): value is string {
 export function isPositiveInteger(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && value > 0;
 }
-

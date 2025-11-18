@@ -1,6 +1,6 @@
 /**
  * Loading Spinner Component
- * 
+ *
  * Reusable loading indicator for CRM pages.
  * Provides consistent loading UI across the application.
  */
@@ -18,7 +18,10 @@ const sizeClasses = {
   lg: "w-16 h-16",
 };
 
-export function LoadingSpinner({ message = "Loading...", size = "md" }: LoadingSpinnerProps) {
+export function LoadingSpinner({
+  message = "Loading...",
+  size = "md",
+}: LoadingSpinnerProps) {
   return (
     <div className="text-center py-12">
       <div
@@ -28,4 +31,3 @@ export function LoadingSpinner({ message = "Loading...", size = "md" }: LoadingS
     </div>
   );
 }
-

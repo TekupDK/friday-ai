@@ -19,4 +19,3 @@ Create migration, test on dev, backup production, apply migration, verify.
 ## OUTPUT
 
 Migration planned/executed with safety measures.
-

@@ -6,6 +6,7 @@
 ## Services Status
 
 ### ✅ Database (Docker)
+
 - **Status:** Running & Healthy
 - **Container:** friday-db-dev
 - **Port:** 3307
@@ -13,12 +14,14 @@
 - **Access:** http://localhost:8081 (Adminer)
 
 ### ✅ Backend (Native)
+
 - **Status:** Starting/Running
 - **Port:** 3000
 - **Command:** `pnpm dev`
 - **Health:** http://localhost:3000/health
 
 ### ✅ Frontend (Native)
+
 - **Status:** Running
 - **Port:** 5174 (5173 var optaget)
 - **Command:** `pnpm dev:vite`
@@ -27,6 +30,7 @@
 ## CRM Access Points
 
 ### Standard CRM Routes
+
 - **Dashboard:** http://localhost:5174/crm/dashboard
 - **Customers:** http://localhost:5174/crm/customers
 - **Leads:** http://localhost:5174/crm/leads
@@ -35,6 +39,7 @@
 - **Segments:** http://localhost:5174/crm/segments
 
 ### CRM Standalone Debug Mode
+
 - **Standalone Home:** http://localhost:5174/crm-standalone
 - **Standalone Dashboard:** http://localhost:5174/crm-standalone/dashboard
 - **Debug Mode:** http://localhost:5174/crm/debug
@@ -42,6 +47,7 @@
 ## Development Workflow
 
 ### Quick Commands
+
 ```bash
 # Start database
 pnpm dev:db
@@ -54,6 +60,7 @@ pnpm dev:vite
 ```
 
 ### Stop Services
+
 ```bash
 # Stop database
 pnpm dev:db:down
@@ -65,6 +72,7 @@ pnpm dev:db:down
 ## Next Steps for CRM Development
 
 ### 1. Test CRM Features
+
 - ✅ Access CRM Standalone mode
 - ✅ Test customer list
 - ✅ Test CSV export (customers)
@@ -72,11 +80,13 @@ pnpm dev:db:down
 - ⏳ Test opportunities pipeline
 
 ### 2. Implement Remaining Features
+
 - ⏳ CSV export for leads
 - ⏳ CSV export for opportunities
 - ⏳ Additional CRM improvements
 
 ### 3. Debugging
+
 - ✅ Error boundaries active
 - ✅ Isolated QueryClient for debugging
 - ✅ Development banner visible
@@ -84,10 +94,12 @@ pnpm dev:db:down
 ## Troubleshooting
 
 **Port 5173 optaget?**
+
 - Frontend starter automatisk på næste ledige port (5174)
 - Check browser for korrekt URL
 
 **Backend ikke tilgængelig?**
+
 ```bash
 # Check backend logs
 # Check port 3000
@@ -95,6 +107,7 @@ netstat -ano | findstr :3000
 ```
 
 **Database connection failed?**
+
 ```bash
 # Check database status
 docker ps | grep friday-db-dev
@@ -112,4 +125,3 @@ pnpm dev:db:logs
 ## Ready for Development! 🚀
 
 Systemet er nu klar til CRM udvikling og forbedringer.
-

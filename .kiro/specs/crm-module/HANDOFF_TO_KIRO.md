@@ -29,7 +29,7 @@
 
 ### 6️⃣ Opportunities/Deals Pipeline (`crm.extensions`)
 
-```typescript
+````typescript
 ✅ createOpportunity({ customerProfileId, title, value, probability, stage, ... })
 ✅ listOpportunities({ customerProfileId?, stage?, minValue?, maxValue?, ... })
 ✅ updateOpportunity({ id, stage?, value?, probability?, wonReason?, lostReason?, ... })
@@ -415,7 +415,7 @@ const customers = await db
   .from(customerProfiles)
   .where(eq(customerProfiles.userId, ctx.user.id));
 
-```
+````
 
 **Note:** Users can only access their own data. No cross-user data leakage.
 

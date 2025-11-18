@@ -18,8 +18,15 @@ type LogoConfig = {
   loraPath?: string;
 };
 
-export async function generateLogoWithQwen(config: LogoConfig): Promise<string> {
-  const script = path.join(process.cwd(), "scripts", "python", "generate_logo.py");
+export async function generateLogoWithQwen(
+  config: LogoConfig
+): Promise<string> {
+  const script = path.join(
+    process.cwd(),
+    "scripts",
+    "python",
+    "generate_logo.py"
+  );
   const outName = `${config.companyName.toLowerCase().replace(/\s+/g, "-")}-logo.png`;
   const args = [
     `--company "${config.companyName}"`,

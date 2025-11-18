@@ -711,7 +711,12 @@ export default function ComponentsShowcase() {
                 components={componentItems}
                 onSelect={handleNavigate}
               />
-              <Button variant="outline" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+              >
                 {theme === "light" ? (
                   <Moon className="h-5 w-5" aria-hidden="true" />
                 ) : (

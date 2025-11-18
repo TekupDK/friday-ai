@@ -12,6 +12,7 @@ Generér TODOs + tasks fra chat sessionen. Læs HELE chatten, identificér opgav
 ## TASK
 
 Generér TODOs:
+
 1. **Læs HELE chat sessionen** - ALLE beskeder fra bruger OG agent
 2. **Identificér opgaver** - Hvad blev nævnt i chatten? Hvad skal gøres?
 3. **Prioriter** - Høj/Medium/Lav baseret på chat diskussioner
@@ -21,6 +22,7 @@ Generér TODOs:
 ## CHAT SESSION READING
 
 **Læs HELE chat sessionen:**
+
 - Start fra første besked
 - Læs ALLE beskeder
 - Identificér opgaver nævnt
@@ -36,12 +38,15 @@ Generér TODOs:
 **Chat kontekst:** [Hvad blev diskuteret]
 
 ### Høj Prioritet (fra chat)
+
 - [ ] `[file path]` - [Action] - [Detalje] - [Fra chat besked X]
 
 ### Medium Prioritet (fra chat)
+
 - [ ] `[file path]` - [Action] - [Detalje] - [Fra chat besked Y]
 
 ### Lav Prioritet (fra chat)
+
 - [ ] `[file path]` - [Action] - [Detalje] - [Fra chat besked Z]
 ```
 

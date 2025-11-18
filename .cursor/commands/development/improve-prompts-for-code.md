@@ -5,6 +5,7 @@
 ## Quick Reference
 
 ### Prompt Structure Template
+
 ```
 ## ROLE
 [What is the AI's role and expertise?]
@@ -35,30 +36,36 @@
 ## Key Improvements Applied
 
 ### ✅ Role Definition
+
 - Clear role (senior engineer, bug hunter, TDD developer)
 - Expertise areas specified
 
 ### ✅ Task Clarity
+
 - Specific, actionable task
 - Clear scope and boundaries
 
 ### ✅ Context Provided
+
 - File paths, code structure
 - Known issues, test coverage
 - Environment details
 
 ### ✅ Constraints Defined
+
 - Time limits
 - Priority levels
 - Output formats
 - Code style requirements
 
 ### ✅ Concrete Output
+
 - Specific file names and locations
 - Code examples with line numbers
 - Verifiable deliverables
 
 ### ✅ Verification Criteria
+
 - Clear success metrics
 - Test requirements
 - Documentation standards
@@ -66,13 +73,16 @@
 ## Examples
 
 ### Improved Prompts Available:
+
 1. **Exploratory Debugging** - `docs/IMPROVED_CODE_PROMPTS.md#prompt-1`
 2. **AI Bug Hunter** - `docs/IMPROVED_CODE_PROMPTS.md#prompt-2`
 3. **Minimal Reproducible Test** - `docs/IMPROVED_CODE_PROMPTS.md#prompt-3`
 
 ### When to Use:
+
 - **Full Version:** Complex bugs, team documentation, learning points
 - **Minimal Version:** Quick fixes, familiar codebase, time-constrained
 
 ## See Full Documentation
+
 `docs/IMPROVED_CODE_PROMPTS.md` - Complete analysis and improved versions

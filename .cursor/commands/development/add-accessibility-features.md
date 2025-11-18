@@ -17,11 +17,13 @@ Add accessibility features to components/pages to meet WCAG 2.1 AA standards. ST
 ## CRITICAL: START IMPLEMENTING IMMEDIATELY
 
 **DO NOT:**
+
 - Just describe what needs to be done
 - Wait for approval
 - Show a plan without implementing
 
 **DO:**
+
 - Start adding accessibility features immediately
 - Use tools to make code changes
 - Test with screen reader
@@ -30,6 +32,7 @@ Add accessibility features to components/pages to meet WCAG 2.1 AA standards. ST
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Accessible Button
+
 ```typescript
 // ✅ Good: Accessible button
 <button
@@ -43,6 +46,7 @@ Add accessibility features to components/pages to meet WCAG 2.1 AA standards. ST
 ```
 
 ### Example: Accessible Form
+
 ```typescript
 // ✅ Good: Proper form labels
 <form onSubmit={handleSubmit}>
@@ -95,6 +99,7 @@ Add accessibility features to components/pages to meet WCAG 2.1 AA standards. ST
 ### Accessibility Features Added: [Component]
 
 **Features Added:**
+
 - Semantic HTML: [changes]
 - ARIA attributes: [added]
 - Keyboard navigation: [improvements]
@@ -111,8 +116,8 @@ Add accessibility features to components/pages to meet WCAG 2.1 AA standards. ST
 \`\`\`
 
 **Verification:**
+
 - ✅ WCAG 2.1 AA: PASSED
 - ✅ Screen reader: TESTED
 - ✅ Keyboard navigation: WORKING
 ```
-

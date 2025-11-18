@@ -39,6 +39,7 @@ The project has coverage thresholds configured in `vitest.config.ts`:
 ### Coverage Report Location
 
 Coverage reports are generated in the `coverage/` directory with:
+
 - **HTML Report:** `coverage/index.html` (interactive browser view)
 - **JSON Report:** `coverage/coverage-final.json` (machine-readable)
 - **Text Report:** Console output during test run
@@ -73,7 +74,7 @@ The following are excluded from coverage calculations (configured in `vitest.con
 
 ## Detailed Coverage Metrics
 
-*Note: Run `pnpm test:coverage` and open `coverage/index.html` in a browser for detailed per-file coverage metrics.*
+_Note: Run `pnpm test:coverage` and open `coverage/index.html` in a browser for detailed per-file coverage metrics._
 
 ### Coverage by Area (Estimated)
 

@@ -11,7 +11,6 @@ Dato: 22. November 2024
 **Status: KOMPLET**
 
 - ✅ Dependencies installeret:
-
   - framer-motion@12.23.22
 
   - gsap@3.12.0
@@ -21,7 +20,6 @@ Dato: 22. November 2024
   - @use-gesture/react@10.3.0
 
 - ✅ Filer oprettet:
-
   - `client/src/styles/apple-design-system/tokens.ts` (colors, typography, spacing, shadows)
 
   - `client/src/styles/apple-design-system/animations.ts` (spring configs, easings, durations)
@@ -105,7 +103,6 @@ Dato: 22. November 2024
 - ✅ Clear button (X) med fade animation
 
 - ✅ **Storybook stories:**
-
   - AppleInput.stories.tsx (6 stories)
 
   - AppleSearchField.stories.tsx (4 stories)
@@ -137,7 +134,6 @@ Dato: 22. November 2024
 - ✅ Focus trap implementeret
 
 - ✅ **Storybook stories:**
-
   - AppleModal.stories.tsx (3 stories)
 
   - AppleSheet.stories.tsx (3 stories)
@@ -165,7 +161,6 @@ Dato: 22. November 2024
 - ✅ Scroll-triggered animations
 
 - ✅ **Storybook stories:**
-
   - BlurView.stories.tsx (3 stories)
 
   - SpringTransition.stories.tsx (3 stories)
@@ -221,7 +216,6 @@ Dato: 22. November 2024
 - ✅ Custom color support (hex)
 
 - ✅ **Storybook stories:**
-
   - AppleBadge.stories.tsx (8 stories)
 
   - AppleTag.stories.tsx (8 stories)
@@ -345,7 +339,6 @@ Dato: 22. November 2024
 - ✅ Backdrop-filter fallbacks i materials.ts
 
 - ✅ Feature detection for:
-
   - backdrop-filter support
 
   - touch events

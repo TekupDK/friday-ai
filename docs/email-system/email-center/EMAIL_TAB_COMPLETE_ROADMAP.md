@@ -198,7 +198,7 @@ Dette dokument konsoliderer alle email tab features, issues, og implementation p
 
 ### Email Tables
 
-```sql
+````sql
 -- Emails (from SMTP webhook)
 CREATE TABLE emails (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -315,7 +315,7 @@ export async function POST(req: Request) {
 // client/src/components/inbox/EmailPipelineView.tsx
 // Column-based pipeline view med drag-and-drop
 
-```
+````
 
 ---
 

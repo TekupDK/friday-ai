@@ -18,12 +18,14 @@ Create a git commit containing only the files you modified in this chat session.
 ## CRITICAL: START COMMITTING IMMEDIATELY
 
 **DO NOT:**
+
 - Just list files without committing
 - Wait for approval
 - Commit files not modified in this session
 - Commit command files unless explicitly requested
 
 **DO:**
+
 - Identify session files immediately
 - Stage only session files
 - Create commit with conventional format
@@ -32,6 +34,7 @@ Create a git commit containing only the files you modified in this chat session.
 ## IDENTIFICATION PROCESS
 
 ### Step 1: Track Your Modifications
+
 1. **Review tool calls in conversation:**
    - `search_replace` → File was modified
    - `write` → File was created/modified
@@ -45,7 +48,9 @@ Create a git commit containing only the files you modified in this chat session.
    - Exclude `.cursor/commands/` files (unless requested)
 
 ### Step 2: Compare with Git Status
+
 1. **Run git status:**
+
    ```bash
    git status --short
    ```
@@ -56,7 +61,9 @@ Create a git commit containing only the files you modified in this chat session.
    - Exclude files that were already modified
 
 ### Step 3: Verify Changes
+
 1. **Review git diff for each file:**
+
    ```bash
    git diff path/to/file
    ```
@@ -104,6 +111,7 @@ Create a git commit containing only the files you modified in this chat session.
 ## CONVENTIONAL COMMIT FORMAT
 
 ### Commit Types
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `refactor:` - Code refactoring
@@ -114,6 +122,7 @@ Create a git commit containing only the files you modified in this chat session.
 - `perf:` - Performance improvements
 
 ### Examples
+
 ```bash
 # Single feature
 feat: add CRM opportunity creation endpoint
@@ -136,6 +145,7 @@ feat: implement email workflow automation
 ```
 
 ### Multi-line Commit (If Needed)
+
 ```bash
 git commit -m "feat: add CRM opportunity creation
 
@@ -148,6 +158,7 @@ git commit -m "feat: add CRM opportunity creation
 ## VERIFICATION
 
 After commit:
+
 - ✅ Only session files committed
 - ✅ No unrelated changes included
 - ✅ Commit message follows conventional format
@@ -160,9 +171,11 @@ After commit:
 ### Git Commit: Session Work
 
 **Session Changes:**
+
 - [Summary of work done in this session]
 
 **Files Committed:**
+
 - `file1.ts` - [what changed]
 - `file2.tsx` - [what changed]
 - `file3.md` - [what changed]
@@ -176,6 +189,7 @@ After commit:
 \`\`\`
 
 **Verification:**
+
 - ✅ Only session files committed
 - ✅ No unrelated changes
 - ✅ Commit message: CORRECT FORMAT
@@ -191,4 +205,3 @@ After commit:
 - **One logical commit:** Group related changes together
 - **Clear messages:** Describe what was accomplished, not how
 - **Start immediately:** Don't wait for approval, commit now
-

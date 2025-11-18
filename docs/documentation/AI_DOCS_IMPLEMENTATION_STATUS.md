@@ -139,7 +139,7 @@
 
 **1. Leads Page**
 
-```typescript
+````typescript
 // client/src/pages/LeadsPage.tsx (eller lignende)
 
 <Button onClick={() => generateLeadDoc.mutate({ leadId: lead.id })}>
@@ -391,7 +391,7 @@ Overall sentiment positive with increasing engagement levels.
 _Generated: 8. november 2024_
 _AI-powered weekly digest by Friday AI_
 
-```
+````
 
 ---
 

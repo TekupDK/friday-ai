@@ -1,6 +1,6 @@
 /**
  * Route Registration Tests
- * 
+ *
  * Tests for CRM Standalone route registration in App.tsx.
  * Verifies that routes are properly registered in the route configuration.
  */
@@ -35,7 +35,9 @@ describe("Route Registration", () => {
     });
 
     it("should use lazy loading for CRM Standalone", () => {
-      expect(appTsxContent).toContain('lazy(() => import("./pages/crm/CRMStandalone"))');
+      expect(appTsxContent).toContain(
+        'lazy(() => import("./pages/crm/CRMStandalone"))'
+      );
     });
 
     it("should have comment explaining standalone mode", () => {
@@ -63,9 +65,8 @@ describe("Route Registration", () => {
     it("should have standalone routes after regular CRM routes", () => {
       const crmRoutesIndex = appTsxContent.indexOf("/crm/dashboard");
       const standaloneRoutesIndex = appTsxContent.indexOf("/crm-standalone");
-      
+
       expect(crmRoutesIndex).toBeLessThan(standaloneRoutesIndex);
     });
   });
 });
-

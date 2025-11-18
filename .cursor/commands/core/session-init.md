@@ -12,6 +12,7 @@ Forstå projekt + kontekst. Læs HELE chat sessionen (alle beskeder), analysér 
 ## TASK
 
 Initialiser session:
+
 1. **Læs HELE chat sessionen** - ALLE beskeder fra bruger OG agent fra start
 2. **Forstå projekt** - Hvad er projektet baseret på chat?
 3. **Analysér kontekst** - Hvad arbejdes der på baseret på chat diskussioner?
@@ -21,6 +22,7 @@ Initialiser session:
 ## CHAT SESSION READING
 
 **Læs HELE chat sessionen:**
+
 - Start fra første besked
 - Læs ALLE beskeder fra brugeren
 - Læs ALLE svar fra agenten
@@ -40,9 +42,11 @@ Initialiser session:
 **Kontekst:** [Beskrivelse baseret på chat diskussioner]
 
 ## Filer i fokus (fra chat)
+
 - `[file path]` - [Status] - [Nævnt i chat]
 
 ## Næste skridt (baseret på chat flow)
+
 1. [Action 1]
 2. [Action 2]
 ```

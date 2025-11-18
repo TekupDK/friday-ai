@@ -77,12 +77,14 @@ client/
 ```
 
 **Vurdering:**
+
 - ✅ Feature-based component organisation
 - ✅ Klar separation: components/pages/hooks/lib
 - ✅ Subdirectory organisation (chat, crm, inbox)
 - ⚠️ Nogle store mapper (components/ har 411 filer - overvej yderligere opdeling)
 
 **Anbefalinger:**
+
 - Overvej at opdele `components/` i flere feature-mapper hvis den vokser
 - Overvej `components/common/` for shared components
 
@@ -105,6 +107,7 @@ server/
 ```
 
 **Vurdering:**
+
 - ✅ Klar router organisation
 - ✅ Integration separation
 - ✅ Test coverage
@@ -112,6 +115,7 @@ server/
 - ⚠️ `server/docs/` indeholder .md filer (skal flyttes til `docs/`)
 
 **Anbefalinger:**
+
 - Flyt `server/docs/*.md` til `docs/server/` eller `docs/integrations/`
 - Overvej feature-mapper for store features (f.eks. `server/subscription/`)
 
@@ -134,12 +138,14 @@ docs/
 ```
 
 **Vurdering:**
+
 - ✅ Velorganiseret efter feature/domain
 - ✅ Klar kategorisering
 - ✅ Nylig oprydning har hjulpet meget
 - ⚠️ Nogle filer i roden af `docs/` (overvej at flytte til undermapper)
 
 **Anbefalinger:**
+
 - Overvej at flytte root-level docs til undermapper
 - Opret `docs/root/` for root-level dokumentation hvis nødvendigt
 
@@ -155,6 +161,7 @@ tests/
 ```
 
 **Vurdering:**
+
 - ✅ Separeret test-mappe
 - ✅ Feature-based test organisation
 - ✅ E2E test coverage
@@ -170,11 +177,13 @@ scripts/
 ```
 
 **Vurdering:**
+
 - ⚠️ Alle scripts i én mappe (102 filer)
 - ⚠️ Ingen organisation efter formål
 - ⚠️ Mix af sprog (.mjs, .ts, .ps1)
 
 **Anbefalinger:**
+
 - Opret undermapper: `scripts/dev/`, `scripts/deploy/`, `scripts/migration/`
 - Organiser efter formål, ikke sprog
 
@@ -236,27 +245,32 @@ scripts/
 ## 💪 Strengths
 
 ### 1. Clean Architectural Separation
+
 - ✅ Klar monorepo struktur (client/server/shared)
 - ✅ TypeScript-first approach (87%+ coverage)
 - ✅ Feature-based organisation
 
 ### 2. Comprehensive Documentation
+
 - ✅ 867 dokumentationsfiler velorganiseret
 - ✅ Feature-based kategorisering
 - ✅ Nylig oprydning har hjulpet meget
 
 ### 3. Modern Tech Stack
+
 - ✅ React 19 + TypeScript
 - ✅ tRPC for type-safe APIs
 - ✅ Drizzle ORM for database
 - ✅ Vite for build tooling
 
 ### 4. Test Coverage
+
 - ✅ Separeret test-mappe
 - ✅ E2E test coverage
 - ✅ Integration tests
 
 ### 5. Development Tooling
+
 - ✅ Cursor AI integration (`.cursor/`)
 - ✅ Comprehensive scripts
 - ✅ Docker support
@@ -268,6 +282,7 @@ scripts/
 ### Immediate Actions (Priority 1)
 
 1. **Organize Root Config Files**
+
    ```bash
    # Opret config/ mappe
    mkdir config
@@ -281,6 +296,7 @@ scripts/
    ```
 
 2. **Move Server Docs**
+
    ```bash
    # Flyt server/docs/ til docs/server/
    mkdir -p docs/server
@@ -320,6 +336,7 @@ scripts/
 ## 📊 File Distribution
 
 ### By Type
+
 - **Markdown:** 1,332 filer (53%) - Dokumentation
 - **TypeScript:** 526 filer (21%) - Kode
 - **TSX:** 437 filer (17%) - React components
@@ -328,6 +345,7 @@ scripts/
 - **Andre:** 100+ filer (4.5%) - Config, assets, etc.
 
 ### By Location
+
 - **client/src:** 530 filer (Frontend)
 - **server:** 306 filer (Backend)
 - **docs:** 867 filer (Dokumentation)
@@ -339,17 +357,20 @@ scripts/
 ## 🎯 Action Items
 
 ### High Priority
+
 - [ ] Opret `config/` mappe og flyt alle config-filer
 - [ ] Flyt `server/docs/*.md` til `docs/server/`
 - [ ] Organiser `scripts/` i undermapper
 - [ ] Slet tomme mapper (`development-notes/`, `reports/`)
 
 ### Medium Priority
+
 - [ ] Konsolider root-filer (flyt .ps1, .py til scripts/)
 - [ ] Overvej component opdeling hvis nødvendigt
 - [ ] Tilføj README.md til vigtige mapper
 
 ### Low Priority
+
 - [ ] Overvej archive konsolidering
 - [ ] Overvej test-results flytning
 - [ ] Dokumenter struktur i `docs/ARCHITECTURE.md`
@@ -358,15 +379,15 @@ scripts/
 
 ## 📈 Structure Health Score
 
-| Category | Score | Notes |
-|----------|-------|-------|
-| **Architecture** | 9/10 | Klar monorepo struktur |
-| **Code Organization** | 8/10 | God feature-based organisation |
-| **Documentation** | 9/10 | Omfattende og velorganiseret |
-| **Test Structure** | 8/10 | God test coverage |
-| **Config Management** | 6/10 | Config-filer spredt i roden |
-| **Script Organization** | 5/10 | Mangler organisation |
-| **Overall** | **8.2/10** | **God struktur med optimeringspotentiale** |
+| Category                | Score      | Notes                                      |
+| ----------------------- | ---------- | ------------------------------------------ |
+| **Architecture**        | 9/10       | Klar monorepo struktur                     |
+| **Code Organization**   | 8/10       | God feature-based organisation             |
+| **Documentation**       | 9/10       | Omfattende og velorganiseret               |
+| **Test Structure**      | 8/10       | God test coverage                          |
+| **Config Management**   | 6/10       | Config-filer spredt i roden                |
+| **Script Organization** | 5/10       | Mangler organisation                       |
+| **Overall**             | **8.2/10** | **God struktur med optimeringspotentiale** |
 
 ---
 
@@ -377,19 +398,21 @@ scripts/
 ✅ **Feature-based Organisation** - Components organiseret efter funktion  
 ✅ **Comprehensive Documentation** - 867 dokumentationsfiler  
 ✅ **Test Coverage** - Separeret test-mappe med E2E tests  
-✅ **Modern Tooling** - Vite, tRPC, Drizzle ORM  
+✅ **Modern Tooling** - Vite, tRPC, Drizzle ORM
 
 ---
 
 ## 🔄 Comparison with Industry Standards
 
 ### ✅ Matches Industry Standards
+
 - Monorepo structure (Lerna, Nx pattern)
 - TypeScript-first approach
 - Feature-based component organisation
 - Comprehensive documentation
 
 ### ⚠️ Areas for Improvement
+
 - Config file organization (should be in `config/`)
 - Script organization (should have subdirectories)
 - Root directory cleanliness (too many files)
@@ -401,12 +424,14 @@ scripts/
 Tekup AI v2 har en **meget god workspace struktur** med klar arkitektonisk separation og omfattende dokumentation. Efter nylig dokumentationsoprydning er strukturen nu meget renere.
 
 **Hovedstyrker:**
+
 - Klar monorepo struktur
 - TypeScript-first approach
 - Feature-based organisation
 - Omfattende dokumentation
 
 **Hovedforbedringsmuligheder:**
+
 - Organiser config-filer i `config/` mappe
 - Organiser scripts i undermapper
 - Flyt server docs til `docs/server/`
@@ -416,7 +441,7 @@ Tekup AI v2 har en **meget god workspace struktur** med klar arkitektonisk separ
 ---
 
 **Næste Steps:**
+
 1. Implementer Priority 1 anbefalinger
 2. Review struktur efter implementering
 3. Dokumenter struktur i `docs/ARCHITECTURE.md`
-

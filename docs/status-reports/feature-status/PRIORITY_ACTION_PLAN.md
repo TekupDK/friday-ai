@@ -47,7 +47,7 @@
 
 #### A. Critical Path til Stability (2 timer)
 
-```powershell
+````powershell
 
 # 1. Check hvad der er broken lige nu
 
@@ -335,7 +335,7 @@ git commit -m "feat: completed [specific feature]"
 git push origin main
 pnpm build  # Verify production build works
 
-```
+````
 
 ---
 

@@ -4,7 +4,7 @@
 
 If you see this error:
 
-```text
+````text
 ❌ Google OAuth Failed:
 unauthorized_client: Client is unauthorized to retrieve access tokens using this method,
 or client not authorized for any of the scopes requested.
@@ -179,7 +179,7 @@ If you can't fix OAuth right now, you can convert existing V4.2 data:
 # Convert V4.2 → V4.3 format (preserves real data)
 npx tsx scripts/1-convert-v4_2-to-v4_3.ts
 
-```
+````
 
 This will:
 

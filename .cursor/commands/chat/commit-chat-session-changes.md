@@ -18,12 +18,14 @@ Identify files changed during this chat session and create a commit with only th
 ## CRITICAL: START COMMITTING IMMEDIATELY
 
 **DO NOT:**
+
 - Just list files without committing
 - Wait for approval
 - Commit files not modified in this session
 - Commit command files unless explicitly requested
 
 **DO:**
+
 - Identify session files immediately
 - Stage only session files
 - Create commit with conventional format
@@ -32,6 +34,7 @@ Identify files changed during this chat session and create a commit with only th
 ## IDENTIFYING SESSION CHANGES
 
 ### Step 1: Review Chat History
+
 1. **Check tool calls:**
    - `search_replace` → File was modified
    - `write` → File was created/modified
@@ -44,7 +47,9 @@ Identify files changed during this chat session and create a commit with only th
    - Exclude `.cursor/commands/` files (unless requested)
 
 ### Step 2: Check Git Status
+
 1. **Run git status:**
+
    ```bash
    git status
    ```
@@ -55,7 +60,9 @@ Identify files changed during this chat session and create a commit with only th
    - Note any files already modified (exclude these)
 
 ### Step 3: Verify Changes
+
 1. **Review git diff:**
+
    ```bash
    git diff path/to/file
    ```
@@ -98,6 +105,7 @@ Identify files changed during this chat session and create a commit with only th
 ## CONVENTIONAL COMMIT FORMAT
 
 ### Commit Types
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `refactor:` - Code refactoring
@@ -108,6 +116,7 @@ Identify files changed during this chat session and create a commit with only th
 - `perf:` - Performance improvements
 
 ### Examples
+
 ```bash
 feat: add CRM opportunity creation endpoint
 fix: resolve email sync rate limiting issue
@@ -118,6 +127,7 @@ test: add integration tests for CRM
 ```
 
 ### Multi-line Commit (If Needed)
+
 ```bash
 git commit -m "feat: add CRM opportunity creation
 
@@ -130,6 +140,7 @@ git commit -m "feat: add CRM opportunity creation
 ## VERIFICATION
 
 After commit:
+
 - ✅ Only session files committed
 - ✅ No unrelated changes included
 - ✅ Commit message follows conventional format
@@ -142,11 +153,13 @@ After commit:
 ### Committing Chat Session Changes
 
 **Files Modified in This Session:**
+
 - `path/to/file1.ts` - [what changed]
 - `path/to/file2.tsx` - [what changed]
 - `path/to/file3.md` - [what changed]
 
 **Staged Files:**
+
 - `path/to/file1.ts`
 - `path/to/file2.tsx`
 - `path/to/file3.md`
@@ -157,11 +170,13 @@ After commit:
 \`\`\`
 
 **Commit Created:**
+
 - Hash: [commit hash]
 - Files: [count] files
 - Changes: [summary of changes]
 
 **Verification:**
+
 - ✅ Only session files committed
 - ✅ No unrelated changes included
 - ✅ Commit message: CORRECT FORMAT
@@ -177,4 +192,3 @@ After commit:
 - **Clear message:** Describe what was done, not how
 - **One commit:** Group related changes together
 - **Start immediately:** Don't wait for approval, commit now
-

@@ -1,6 +1,6 @@
 /**
  * CRM Standalone Tests
- * 
+ *
  * Tests for the CRM Standalone Debug Mode component.
  * Verifies error boundaries, lazy loading, routing, and isolation.
  */
@@ -65,7 +65,9 @@ vi.mock("../LeadDetail", () => ({
 }));
 
 vi.mock("../OpportunityPipeline", () => ({
-  default: () => <div data-testid="opportunity-pipeline">Opportunity Pipeline</div>,
+  default: () => (
+    <div data-testid="opportunity-pipeline">Opportunity Pipeline</div>
+  ),
 }));
 
 vi.mock("../SegmentList", () => ({
@@ -174,4 +176,3 @@ describe("CRM Standalone", () => {
     });
   });
 });
-

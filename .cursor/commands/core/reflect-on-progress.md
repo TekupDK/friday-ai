@@ -30,12 +30,14 @@ Reflect on the development progress in this session, analyze what was accomplish
 ## TOOL USAGE
 
 **Use these tools:**
+
 - Review chat history - Understand work done
 - `run_terminal_cmd` - Check git status
 - `read_file` - Review key changes
 - `codebase_search` - Understand impact
 
 **DO NOT:**
+
 - Skip reflection
 - Ignore patterns
 - Miss improvement opportunities
@@ -95,6 +97,7 @@ Before reflecting, think through:
 ## VERIFICATION
 
 After reflection:
+
 - ✅ Accomplishments reviewed
 - ✅ Patterns identified
 - ✅ Efficiency analyzed
@@ -107,35 +110,43 @@ After reflection:
 ### Session Reflection - 2025-11-16
 
 **Accomplishments:**
+
 - ✅ [Achievement 1] - [Impact]
 - ✅ [Achievement 2] - [Impact]
 
 **What Worked Well:**
+
 - [Success 1] - [Why it worked]
 - [Success 2] - [Why it worked]
 
 **Challenges Encountered:**
+
 - [Challenge 1] - [How handled]
 - [Challenge 2] - [How handled]
 
 **Patterns Identified:**
+
 - [Pattern 1] - [Observation]
 - [Pattern 2] - [Observation]
 
 **Efficiency Analysis:**
+
 - Fast: [What was quick]
 - Slow: [What took time]
 - Blockers: [What blocked]
 
 **Key Learnings:**
+
 - [Learning 1]
 - [Learning 2]
 
 **Improvements for Next Session:**
+
 - [ ] [Improvement 1]
 - [ ] [Improvement 2]
 
 **Recommendations:**
+
 - [Recommendation 1]
 - [Recommendation 2]
 ```
@@ -147,4 +158,3 @@ After reflection:
 - **Be specific:** Give concrete examples
 - **Be actionable:** Suggest specific changes
 - **Be positive:** Highlight successes too
-

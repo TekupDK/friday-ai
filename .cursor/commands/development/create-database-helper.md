@@ -32,12 +32,14 @@ Create a new database helper file following Friday AI Chat patterns exactly.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing database helper files
 - `codebase_search` - Find similar patterns
 - `grep` - Search for database patterns
 - `search_replace` - Create new helper file
 
 **DO NOT:**
+
 - Create helpers without reviewing patterns
 - Skip user scoping
 - Ignore error handling
@@ -70,6 +72,7 @@ Before creating, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Get by ID Pattern
+
 ```typescript
 import { and, eq } from "drizzle-orm";
 import { customerProfiles } from "../drizzle/schema";
@@ -98,11 +101,9 @@ export async function getCustomerProfileById(
 ```
 
 ### Example: Get by Email Pattern
+
 ```typescript
-export async function getCustomerProfileByEmail(
-  email: string,
-  userId: number
-) {
+export async function getCustomerProfileByEmail(email: string, userId: number) {
   const db = await getDb();
   if (!db) return undefined;
 
@@ -122,6 +123,7 @@ export async function getCustomerProfileByEmail(
 ```
 
 ### Example: Create Pattern
+
 ```typescript
 import { InsertCustomerProfile } from "../drizzle/schema";
 
@@ -131,16 +133,14 @@ export async function createCustomerProfile(
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const [result] = await db
-    .insert(customerProfiles)
-    .values(data)
-    .returning();
+  const [result] = await db.insert(customerProfiles).values(data).returning();
 
   return result;
 }
 ```
 
 ### Example: List with Filters Pattern
+
 ```typescript
 export async function getUserLeads(
   userId: number,
@@ -154,7 +154,7 @@ export async function getUserLeads(
   if (!db) return [];
 
   const conditions = [eq(leads.userId, userId)];
-  
+
   if (filters?.status) {
     conditions.push(eq(leads.status, filters.status));
   }
@@ -173,6 +173,7 @@ export async function getUserLeads(
 ```
 
 ### Example: Update Pattern
+
 ```typescript
 export async function updateLeadStatus(
   leadId: number,
@@ -243,6 +244,7 @@ export async function updateLeadStatus(
 ## VERIFICATION
 
 After implementation:
+
 - ✅ All functions check database connection
 - ✅ User ownership verified for user-scoped queries
 - ✅ Proper return types (no `any`)
@@ -257,6 +259,7 @@ After implementation:
 **File:** `server/[feature]-db.ts`
 
 **Functions Created:**
+
 - `get[Entity]ById(id, userId)` - Get single record
 - `get[Entity]List(userId, filters?)` - List records
 - `create[Entity](data)` - Create record
@@ -272,12 +275,12 @@ export type Insert[Entity] = typeof [table].$inferInsert;
 \`\`\`typescript
 const profile = await getCustomerProfileById(input.id, ctx.user.id);
 if (!profile) {
-  throw new TRPCError({ code: "NOT_FOUND", message: "Profile not found" });
+throw new TRPCError({ code: "NOT_FOUND", message: "Profile not found" });
 }
 \`\`\`
 
 **Verification:**
+
 - ✅ Pattern match: PASSED
 - ✅ Typecheck: PASSED
 ```
-

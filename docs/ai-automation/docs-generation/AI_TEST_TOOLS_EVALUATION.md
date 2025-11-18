@@ -35,7 +35,7 @@ We need robust AI testing to ensure:
 
 #### **Installation:**
 
-```bash
+````bash
 npm i -g promptfoo
 # or
 pnpm add -D promptfoo
@@ -784,7 +784,7 @@ jobs:
           name: promptfoo-results
           path: promptfoo-results/
 
-```
+````
 
 ---
 

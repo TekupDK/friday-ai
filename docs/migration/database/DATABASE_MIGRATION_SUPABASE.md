@@ -52,7 +52,7 @@
 
 #### 1. Update Drizzle Config
 
-```typescript
+````typescript
 // drizzle.config.ts
 export default defineConfig({
   schema: "./drizzle/schema.ts",
@@ -96,7 +96,7 @@ export async function getDb() {
 # .env
 DATABASE_URL=postgresql://postgres:<PASSWORD@db.oaevagdgrasfppbrxbey.supabase.co>:5432/postgres?schema=friday_ai
 
-```
+````
 
 ## 🎯 Immediate Action
 

@@ -19,4 +19,3 @@ Set rate limits, configure Redis, handle fallback, test limits, monitor usage.
 ## OUTPUT
 
 Rate limiting configured with proper limits and monitoring.
-

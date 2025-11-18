@@ -11,7 +11,7 @@
 
 ### ✅ ALL CRITICAL TESTS PASSED
 
-```text
+````text
 ✅ EmailQuickActions imported correctly
 ✅ Badge conditional rendering (score >= 70)
 ✅ Quick Actions hover-activated
@@ -349,7 +349,7 @@ Cmd + Shift + R
 3. Check Network tab for failed requests
 4. Verify no critical errors
 
-```
+````
 
 ---
 

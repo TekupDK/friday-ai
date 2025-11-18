@@ -1,12 +1,15 @@
 /**
  * Integration Tests
- * 
+ *
  * Tests for complete hook execution flow
  */
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
-import { executePreExecutionHooks, executePostExecutionHooks } from "../executor";
+import {
+  executePreExecutionHooks,
+  executePostExecutionHooks,
+} from "../executor";
 import { expectAllHooksSuccess } from "../test-utils/assertions";
 import { ConfigBuilder } from "../test-utils/config-builder";
 import { ContextBuilder } from "../test-utils/context-builder";
@@ -14,7 +17,7 @@ import type { HookResult } from "../types";
 
 // Mock the loader
 vi.mock("../loader", () => ({
-  getHooksForCategory: vi.fn((category) => {
+  getHooksForCategory: vi.fn(category => {
     const config = ConfigBuilder.full();
     return config.hooks[category] || [];
   }),
@@ -76,4 +79,3 @@ describe("Hook Integration", () => {
     });
   });
 });
-

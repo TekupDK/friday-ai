@@ -23,6 +23,7 @@
 ## Overview
 
 Friday AI Chat is a business automation platform built with:
+
 - **Frontend:** React 19 + TypeScript + Tailwind CSS 4
 - **Backend:** Express 4 + tRPC 11 + Drizzle ORM
 - **Database:** Supabase PostgreSQL
@@ -119,7 +120,7 @@ appRouter = {
   },
   automation: automationRouter,
   chatStreaming: chatStreamingRouter,
-}
+};
 ```
 
 ---
@@ -164,8 +165,8 @@ Authenticate user and create session.
 
 ```typescript
 {
-  email: string;      // Valid email address
-  password: string;   // Minimum 1 character
+  email: string; // Valid email address
+  password: string; // Minimum 1 character
 }
 ```
 
@@ -173,9 +174,9 @@ Authenticate user and create session.
 
 ```typescript
 {
-  id: string;         // openId format: "email:user@example.com"
+  id: string; // openId format: "email:user@example.com"
   email: string;
-  name: string;      // Extracted from email
+  name: string; // Extracted from email
 }
 ```
 
@@ -222,7 +223,7 @@ Array<{
   title: string | null;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 #### `chat.getMessages`
@@ -376,7 +377,7 @@ List email threads with optional filtering.
 
 ```typescript
 Array<{
-  id: string;           // Gmail thread ID
+  id: string; // Gmail thread ID
   subject: string;
   from: string;
   snippet: string;
@@ -385,7 +386,7 @@ Array<{
   labels: string[];
   messageCount: number;
   lastMessageDate: Date;
-}>
+}>;
 ```
 
 **Example:**
@@ -406,7 +407,7 @@ Get full email thread with all messages.
 
 ```typescript
 {
-  threadId: string;     // Gmail thread ID
+  threadId: string; // Gmail thread ID
 }
 ```
 
@@ -465,7 +466,7 @@ Send an email via Gmail.
 
 ```typescript
 {
-  id: string;           // Gmail message ID
+  id: string; // Gmail message ID
   threadId: string;
 }
 ```
@@ -522,7 +523,7 @@ Get AI-generated email summary.
 
 ```typescript
 {
-  emailId: number;     // Internal email ID
+  emailId: number; // Internal email ID
 }
 ```
 
@@ -559,7 +560,7 @@ Get AI-suggested labels for email.
   suggestions: Array<{
     label: string;
     category: "lead" | "invoice" | "booking" | "general" | "spam";
-    confidence: number;  // 0-1
+    confidence: number; // 0-1
     reason: string;
   }>;
 }
@@ -599,7 +600,7 @@ Array<{
   notes?: string;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 #### `crm.lead.getLead`
@@ -686,7 +687,7 @@ Array<{
   address?: string;
   createdAt: Date;
   updatedAt: Date;
-}>
+}>;
 ```
 
 #### `crm.customer.get`
@@ -753,7 +754,7 @@ Array<{
   status: "planned" | "in_progress" | "completed" | "cancelled";
   notes?: string;
   createdAt: Date;
-}>
+}>;
 ```
 
 #### `crm.booking.create`
@@ -927,8 +928,8 @@ Get dashboard overview data.
 
 ```typescript
 {
-  id: number;                    // Primary key
-  openId: string;                // Unique identifier
+  id: number; // Primary key
+  openId: string; // Unique identifier
   name: string | null;
   email: string | null;
   role: "user" | "admin";
@@ -942,7 +943,7 @@ Get dashboard overview data.
 ```typescript
 {
   id: number;
-  userId: number;                 // Foreign key to users
+  userId: number; // Foreign key to users
   title: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -954,7 +955,7 @@ Get dashboard overview data.
 ```typescript
 {
   id: number;
-  conversationId: number;          // Foreign key to conversations
+  conversationId: number; // Foreign key to conversations
   role: "user" | "assistant" | "system";
   content: string;
   createdAt: Date;
@@ -967,7 +968,7 @@ Get dashboard overview data.
 {
   id: number;
   userId: number;
-  threadId: string;              // Gmail thread ID
+  threadId: string; // Gmail thread ID
   subject: string;
   fromEmail: string;
   toEmail: string;
@@ -1053,13 +1054,13 @@ interface BillyInvoice {
   organizationId: string;
   invoiceNo: string | null;
   contactId: string;
-  entryDate: string;              // YYYY-MM-DD
+  entryDate: string; // YYYY-MM-DD
   dueDate?: string | null;
   state: "draft" | "approved" | "sent" | "paid" | "overdue" | "voided";
-  amount: number;                  // Excl. tax
+  amount: number; // Excl. tax
   tax: number;
-  grossAmount: number;             // Incl. tax
-  balance: number;                 // Unpaid amount
+  grossAmount: number; // Incl. tax
+  balance: number; // Unpaid amount
   currencyId: string;
   lines?: BillyInvoiceLine[];
 }
@@ -1208,10 +1209,10 @@ Email Analysis (AI)
 
 ```json
 {
-  "@trpc/server": "^11.0.0",        // tRPC framework
-  "drizzle-orm": "^0.29.0",         // ORM
-  "zod": "^3.22.0",                 // Schema validation
-  "express": "^4.18.0",             // HTTP server
+  "@trpc/server": "^11.0.0", // tRPC framework
+  "drizzle-orm": "^0.29.0", // ORM
+  "zod": "^3.22.0", // Schema validation
+  "express": "^4.18.0", // HTTP server
   "@supabase/supabase-js": "^2.38.0" // Database client
 }
 ```
@@ -1221,8 +1222,8 @@ Email Analysis (AI)
 ```json
 {
   "@google/generative-ai": "^0.2.0", // Gemini
-  "@anthropic-ai/sdk": "^0.9.0",     // Claude
-  "openai": "^4.20.0"                 // GPT-4
+  "@anthropic-ai/sdk": "^0.9.0", // Claude
+  "openai": "^4.20.0" // GPT-4
 }
 ```
 
@@ -1230,8 +1231,8 @@ Email Analysis (AI)
 
 ```json
 {
-  "googleapis": "^126.0.0",         // Google Workspace APIs
-  "axios": "^1.6.0"                  // HTTP client
+  "googleapis": "^126.0.0", // Google Workspace APIs
+  "axios": "^1.6.0" // HTTP client
 }
 ```
 
@@ -1242,8 +1243,8 @@ Email Analysis (AI)
   "react": "^19.0.0",
   "typescript": "^5.3.0",
   "@tanstack/react-query": "^5.0.0", // Data fetching
-  "@trpc/client": "^11.0.0",         // tRPC client
-  "tailwindcss": "^4.0.0"            // Styling
+  "@trpc/client": "^11.0.0", // tRPC client
+  "tailwindcss": "^4.0.0" // Styling
 }
 ```
 
@@ -1654,7 +1655,7 @@ const stream = trpc.chatStreaming.sendMessage.useSubscription({
   content: "Hello",
 });
 
-stream.on("data", (chunk) => {
+stream.on("data", chunk => {
   // Handle streaming response
 });
 ```
@@ -1664,4 +1665,3 @@ stream.on("data", (chunk) => {
 **Documentation Generated:** 2025-01-28  
 **Last Code Scan:** 2025-01-28  
 **Maintained by:** Auto-generated from codebase
-

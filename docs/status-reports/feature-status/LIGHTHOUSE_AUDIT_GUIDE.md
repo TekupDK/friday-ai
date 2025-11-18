@@ -98,6 +98,7 @@ lhci autorun --collect.url=http://localhost:5173/ \
 For each page, document:
 
 ### 1. Basic Information
+
 - [ ] Page URL
 - [ ] Date of audit
 - [ ] Browser version
@@ -105,12 +106,14 @@ For each page, document:
 - [ ] Authentication state (Logged in/Out)
 
 ### 2. Accessibility Score
+
 - [ ] Overall score (0-100)
 - [ ] Target: ≥ 90 (WCAG AA)
 - [ ] Previous score (if available)
 - [ ] Score change from previous audit
 
 ### 3. Critical Issues
+
 - [ ] List all failed audits (red)
 - [ ] Priority level (P1/P2/P3)
 - [ ] WCAG criterion violated
@@ -118,11 +121,13 @@ For each page, document:
 - [ ] Screenshot (if helpful)
 
 ### 4. Manual Checks
+
 - [ ] Review manual checks (blue)
 - [ ] Document findings
 - [ ] Note any concerns
 
 ### 5. Recommendations
+
 - [ ] List recommended fixes
 - [ ] Estimate effort (S/M/L)
 - [ ] Assign priority
@@ -142,15 +147,16 @@ For each page, document:
 
 ## Scores
 
-| Category | Score | Target | Status |
-|----------|-------|--------|--------|
-| Accessibility | XX | ≥90 | ✅/⚠️/❌ |
-| Performance | XX | ≥90 | ✅/⚠️/❌ |
-| Best Practices | XX | ≥90 | ✅/⚠️/❌ |
+| Category       | Score | Target | Status   |
+| -------------- | ----- | ------ | -------- |
+| Accessibility  | XX    | ≥90    | ✅/⚠️/❌ |
+| Performance    | XX    | ≥90    | ✅/⚠️/❌ |
+| Best Practices | XX    | ≥90    | ✅/⚠️/❌ |
 
 ## Failed Audits
 
 ### [Issue Name]
+
 - **WCAG Criterion:** X.X.X (Level A/AA/AAA)
 - **Impact:** [Description]
 - **Priority:** P1/P2/P3
@@ -178,26 +184,31 @@ For each page, document:
 ## Common Issues & Fixes
 
 ### Low Contrast Text
+
 - **Issue:** Text doesn't meet 4.5:1 contrast ratio
 - **Fix:** Update color values in Tailwind config
 - **Reference:** `docs/ACCESSIBILITY_AUDIT.md` - Section 1.4
 
 ### Missing Alt Text
+
 - **Issue:** Images without alt attributes
 - **Fix:** Add descriptive alt text
 - **Reference:** Already fixed in P1 tasks
 
 ### Missing Form Labels
+
 - **Issue:** Form inputs without associated labels
 - **Fix:** Use `Label` component with `htmlFor`
 - **Reference:** Already fixed in P1 tasks
 
 ### Missing ARIA Attributes
+
 - **Issue:** Interactive elements without ARIA labels
 - **Fix:** Add `aria-label` or `aria-labelledby`
 - **Reference:** Already fixed in P1/P2 tasks
 
 ### Keyboard Navigation
+
 - **Issue:** Elements not keyboard accessible
 - **Fix:** Add `tabIndex={0}` and keyboard handlers
 - **Reference:** Already fixed in P1 tasks
@@ -207,16 +218,19 @@ For each page, document:
 ## Target Scores
 
 ### Accessibility
+
 - **Target:** ≥ 90 (WCAG AA compliance)
 - **Acceptable:** 85-89 (minor issues)
 - **Needs Work:** < 85 (significant issues)
 
 ### Performance
+
 - **Target:** ≥ 90
 - **Acceptable:** 80-89
 - **Needs Work:** < 80
 
 ### Best Practices
+
 - **Target:** ≥ 90
 - **Acceptable:** 80-89
 - **Needs Work:** < 80
@@ -235,14 +249,18 @@ For each page, document:
 ## Documenting Results
 
 ### Location
+
 Create audit results in: `docs/accessibility-audits/`
 
 ### Naming Convention
+
 - `YYYY-MM-DD-[page-name]-lighthouse.md`
 - Example: `2025-01-28-workspace-lighthouse.md`
 
 ### Summary Report
+
 Update `docs/ACCESSIBILITY_AUDIT_SUMMARY.md` with:
+
 - Overall scores
 - Common issues
 - Trends over time
@@ -263,7 +281,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: '0 0 * * 0' # Weekly
+    - cron: "0 0 * * 0" # Weekly
 
 jobs:
   lighthouse:
@@ -294,6 +312,7 @@ jobs:
 ## Contact
 
 For questions about Lighthouse audits:
+
 - **Development Team:** See project README
 - **Accessibility Lead:** [To be assigned]
 
@@ -301,4 +320,3 @@ For questions about Lighthouse audits:
 
 **Last Updated:** January 28, 2025  
 **Next Review:** After first audit cycle
-

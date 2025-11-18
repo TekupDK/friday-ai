@@ -18,26 +18,26 @@ CRM-systemet har en **komplet backend** med 51 tRPC endpoints (Phase 1-6), men *
 
 ### **Phase 1: Core CRM Routers** ✅ Complete
 
-| Router | Endpoints | Status | Fil |
-|--------|-----------|--------|-----|
-| `crm.customer` | 11 endpoints | ✅ Færdig | `server/routers/crm-customer-router.ts` |
-| `crm.lead` | 4 endpoints | ✅ Færdig | `server/routers/crm-lead-router.ts` |
-| `crm.booking` | 4 endpoints | ✅ Færdig | `server/routers/crm-booking-router.ts` |
-| `crm.serviceTemplate` | 5 endpoints | ✅ Færdig | `server/routers/crm-service-template-router.ts` |
-| `crm.stats` | 1 endpoint | ✅ Færdig | `server/routers/crm-stats-router.ts` |
-| `crm.activity` | 5 endpoints | ✅ Færdig | `server/routers/crm-activity-router.ts` |
+| Router                | Endpoints    | Status    | Fil                                             |
+| --------------------- | ------------ | --------- | ----------------------------------------------- |
+| `crm.customer`        | 11 endpoints | ✅ Færdig | `server/routers/crm-customer-router.ts`         |
+| `crm.lead`            | 4 endpoints  | ✅ Færdig | `server/routers/crm-lead-router.ts`             |
+| `crm.booking`         | 4 endpoints  | ✅ Færdig | `server/routers/crm-booking-router.ts`          |
+| `crm.serviceTemplate` | 5 endpoints  | ✅ Færdig | `server/routers/crm-service-template-router.ts` |
+| `crm.stats`           | 1 endpoint   | ✅ Færdig | `server/routers/crm-stats-router.ts`            |
+| `crm.activity`        | 5 endpoints  | ✅ Færdig | `server/routers/crm-activity-router.ts`         |
 
 **Total Phase 1:** 30 endpoints ✅
 
 ### **Phase 2-6: Extensions Router** ✅ Complete
 
-| Feature | Database Schema | Router Implementation | Status |
-|---------|----------------|----------------------|--------|
-| Opportunities | ✅ `opportunities` table | ✅ 6 endpoints | Complete ✅ |
-| Segments | ✅ `customer_segments` + `customer_segment_members` | ✅ 5 endpoints | Complete ✅ |
-| Documents | ✅ `customer_documents` table | ✅ 3 endpoints | Complete ✅ |
-| Audit Log | ✅ `audit_log` table | ✅ 2 endpoints | Complete ✅ |
-| Relationships | ✅ `customer_relationships` table | ✅ 3 endpoints | Complete ✅ |
+| Feature       | Database Schema                                     | Router Implementation | Status      |
+| ------------- | --------------------------------------------------- | --------------------- | ----------- |
+| Opportunities | ✅ `opportunities` table                            | ✅ 6 endpoints        | Complete ✅ |
+| Segments      | ✅ `customer_segments` + `customer_segment_members` | ✅ 5 endpoints        | Complete ✅ |
+| Documents     | ✅ `customer_documents` table                       | ✅ 3 endpoints        | Complete ✅ |
+| Audit Log     | ✅ `audit_log` table                                | ✅ 2 endpoints        | Complete ✅ |
+| Relationships | ✅ `customer_relationships` table                   | ✅ 3 endpoints        | Complete ✅ |
 
 **Status:** Database schema og router er komplet (12 CRM tables, 20 endpoints). Alle Phase 2-6 features er klar til brug fra frontend.
 
@@ -147,6 +147,7 @@ client/src/
 ```
 
 **Mangler:**
+
 - `client/src/pages/crm/CustomerList.tsx`
 - `client/src/pages/crm/LeadPipeline.tsx`
 - `client/src/pages/crm/BookingCalendar.tsx`
@@ -160,10 +161,12 @@ client/src/
 ### **1. Customer Management**
 
 **Backend:** ✅ Complete
+
 - `listProfiles`, `getProfile`, `listProperties`, `createProperty`, `updateProperty`, `deleteProperty`
 - `addNote`, `listNotes`, `updateNote`, `deleteNote`
 
 **Frontend:** ❌ Not Started
+
 - Ingen CustomerList page
 - Ingen CustomerProfile component
 - Ingen PropertyManager
@@ -172,9 +175,11 @@ client/src/
 ### **2. Lead Pipeline**
 
 **Backend:** ✅ Complete
+
 - `listLeads`, `getLead`, `updateLeadStatus`, `convertLeadToCustomer`
 
 **Frontend:** ❌ Not Started
+
 - Ingen LeadPipelineBoard (Kanban)
 - Ingen LeadCard components
 - Ingen Lead conversion UI
@@ -182,9 +187,11 @@ client/src/
 ### **3. Booking Management**
 
 **Backend:** ✅ Complete
+
 - `listBookings`, `createBooking`, `updateBookingStatus`, `deleteBooking`
 
 **Frontend:** ❌ Not Started
+
 - Ingen BookingCalendar
 - Ingen BookingForm wizard
 - Ingen Field worker mobile UI
@@ -192,39 +199,47 @@ client/src/
 ### **4. Service Templates**
 
 **Backend:** ✅ Complete
+
 - `list`, `get`, `create`, `update`, `delete`
 
 **Frontend:** ❌ Not Started
+
 - Ingen ServiceTemplates page
 - Ingen ServiceTemplateCard
 
 ### **5. Dashboard Stats**
 
 **Backend:** ✅ Complete
+
 - `getDashboardStats` → customers, revenue, bookings metrics
 
 **Frontend:** ❌ Not Started
+
 - Ingen CRMDashboard page
 - Ingen KPI widgets
 
 ### **6. Opportunities/Deals (Phase 2-6)**
 
 **Backend:** ⚠️ Database Ready, Router Missing
+
 - Database table `opportunities` eksisterer
 - `crm-extensions-router.ts` er tom
 - Test script tester database direkte
 
 **Frontend:** ❌ Not Started
+
 - Ingen OpportunityPipeline Kanban
 - Ingen RevenueChart
 
 ### **7-10. Segments, Documents, Audit, Relationships (Phase 2-6)**
 
 **Backend:** ⚠️ Database Ready, Router Missing
+
 - Alle database tables eksisterer
 - `crm-extensions-router.ts` er tom
 
 **Frontend:** ❌ Not Started
+
 - Ingen UI komponenter
 
 ---
@@ -236,6 +251,7 @@ client/src/
 **Status:** Alle 20 endpoints er nu implementeret i `crm-extensions-router.ts` (1055 linjer).
 
 **Implementeret:**
+
 - ✅ Opportunities: 6 endpoints (create, list, update, delete, pipelineStats, revenueForecast)
 - ✅ Segments: 5 endpoints (create, list, addToSegment, removeFromSegment, getSegmentMembers)
 - ✅ Documents: 3 endpoints (create, list, delete)
@@ -251,6 +267,7 @@ client/src/
 **Impact:** Brugere kan ikke tilgå CRM features.
 
 **Løsning:** Implementer Fase 1 frontend tasks:
+
 1. Setup CRM routes i `WorkspaceLayout.tsx`
 2. Create CustomerList page
 3. Create CustomerProfile drawer
@@ -263,7 +280,8 @@ client/src/
 
 **Impact:** Frontend kan ikke hente data fra backend.
 
-**Løsning:** 
+**Løsning:**
+
 - Verify `client/src/lib/trpc.ts` har korrekt AppRouter type
 - Start bruge `trpc.crm.customer.listProfiles.useQuery()` etc.
 
@@ -373,4 +391,3 @@ client/src/
 
 **Rapport genereret:** 28. januar 2025  
 **Næste opdatering:** Efter Phase 2-6 router completion eller Fase 1 frontend milestone
-

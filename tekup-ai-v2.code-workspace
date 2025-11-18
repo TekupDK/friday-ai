@@ -15,7 +15,7 @@
       "source.organizeImports": "explicit",
       "workbench.editor.enablePreview": "never",
       "workbench.editor.enablePreviewFromQuickOpen": "never",
-      "workbench.list.openMode": "doubleClick"
+      "workbench.list.openMode": "doubleClick",
     },
     "files.exclude": {
       "**/node_modules": true,

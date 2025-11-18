@@ -31,6 +31,7 @@ Track development progress on features, tasks, and development plans. Maintain c
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read progress files
 - `codebase_search` - Find feature implementations
 - `grep` - Search for TODO comments
@@ -39,6 +40,7 @@ Track development progress on features, tasks, and development plans. Maintain c
 - `run_terminal_cmd` - Check git progress
 
 **DO NOT:**
+
 - Miss progress updates
 - Use unclear progress indicators
 - Skip important features
@@ -71,6 +73,7 @@ Before tracking progress, think through:
 ## PROGRESS TRACKING AREAS
 
 ### Features
+
 - Feature name and description
 - Current status (Planning/Development/Testing/Complete)
 - Progress percentage
@@ -79,6 +82,7 @@ Before tracking progress, think through:
 - Blockers
 
 ### Tasks
+
 - Task description
 - Status (Todo/In Progress/Done)
 - Assigned to (if applicable)
@@ -86,6 +90,7 @@ Before tracking progress, think through:
 - Estimated completion
 
 ### Development Plans
+
 - Plan name and scope
 - Overall progress
 - Phase status
@@ -95,6 +100,7 @@ Before tracking progress, think through:
 ## PROGRESS INDICATORS
 
 ### Status
+
 - 📋 **Planned** - Planned but not started
 - 🚧 **In Progress** - Currently being worked on
 - ✅ **Complete** - Finished
@@ -103,6 +109,7 @@ Before tracking progress, think through:
 - 🧪 **Testing** - In testing phase
 
 ### Progress Percentage
+
 - 0-25%: Early stage
 - 26-50%: Mid development
 - 51-75%: Near completion
@@ -144,6 +151,7 @@ Before tracking progress, think through:
 ## VERIFICATION
 
 After tracking progress:
+
 - ✅ All items tracked
 - ✅ Progress accurate
 - ✅ Next steps clear
@@ -158,6 +166,7 @@ After tracking progress:
 ## Features in Progress
 
 ### [Feature Name]
+
 - **Status:** 🚧 In Progress (60%)
 - **Started:** 2025-11-16
 - **Milestones:**
@@ -173,16 +182,19 @@ After tracking progress:
 ## Tasks
 
 ### Active Tasks
+
 - [ ] [Task 1] - 🚧 In Progress - [Assigned]
 - [ ] [Task 2] - 📋 Planned - [Dependencies]
 
 ### Completed This Session
+
 - [x] [Task 3] - ✅ Complete
 - [x] [Task 4] - ✅ Complete
 
 ## Development Plans
 
 ### [Plan Name]
+
 - **Overall Progress:** 45%
 - **Current Phase:** Development
 - **Phase Progress:** 60%
@@ -195,12 +207,15 @@ After tracking progress:
 ## Ready to Continue
 
 ### Can Resume Immediately
+
 - [Feature/Task] - [What to do next]
 
 ### Needs Attention
+
 - [Feature/Task] - [What needs attention]
 
 ### Blocked
+
 - [Feature/Task] - [Blocker] - [Action needed]
 ```
 
@@ -211,4 +226,3 @@ After tracking progress:
 - **Be actionable:** Clear next steps
 - **Be current:** Update regularly
 - **Be comprehensive:** Track all active work
-

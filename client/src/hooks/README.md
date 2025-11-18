@@ -34,11 +34,12 @@ import { useAuth } from "@/_core/hooks/useAuth";
 
 const { user, isAuthenticated, loading, logout } = useAuth({
   redirectOnUnauthenticated: true,
-  redirectPath: "/login"
+  redirectPath: "/login",
 });
 ```
 
 **Returns:**
+
 - `user` - Current user object or null
 - `isAuthenticated` - Boolean authentication status
 - `loading` - Loading state
@@ -61,6 +62,7 @@ usePageTitle("Dashboard");
 ```
 
 **Parameters:**
+
 - `title: string` - Page title (optional, defaults to app title)
 
 **WCAG Compliance:** 2.4.2 (Level A) - Page Titled
@@ -95,14 +97,15 @@ useKeyboardShortcuts([
     ctrlKey: true,
     handler: () => openSearch(),
     description: "Open search",
-    category: "search"
-  }
+    category: "search",
+  },
 ]);
 ```
 
 **Categories:** `navigation`, `action`, `search`, `modal`, `help`
 
 **Helper Functions:**
+
 - `getAllKeyboardShortcuts()` - Get all registered shortcuts
 - `shouldIgnoreKeyboardEvent(event)` - Check if event should be ignored
 
@@ -125,6 +128,7 @@ const { data } = trpc.search.useQuery({ query: debouncedSearch });
 ```
 
 **Parameters:**
+
 - `value: T` - Value to debounce
 - `delay: number` - Delay in milliseconds (default: 300ms)
 
@@ -143,11 +147,12 @@ const { data, error, refetch } = useAdaptivePolling({
   query: trpc.emails.list.useQuery,
   baseInterval: 5000,
   maxInterval: 60000,
-  enabled: true
+  enabled: true,
 });
 ```
 
 **Parameters:**
+
 - `query` - tRPC query function
 - `baseInterval` - Base polling interval (ms)
 - `maxInterval` - Maximum polling interval (ms)
@@ -164,7 +169,7 @@ import { useRateLimit } from "@/hooks";
 
 const { canMakeRequest, waitTime } = useRateLimit({
   maxRequests: 10,
-  windowMs: 60000
+  windowMs: 60000,
 });
 ```
 
@@ -200,15 +205,16 @@ const {
   isStreaming,
   error,
   loadMoreMessages,
-  hasMoreMessages
+  hasMoreMessages,
 } = useFridayChat({
   conversationId: 123,
   context: { selectedEmails: ["1", "2"] },
-  maxMessages: 50
+  maxMessages: 50,
 });
 ```
 
 **Features:**
+
 - Message pagination
 - Streaming support
 - Context injection
@@ -225,7 +231,7 @@ Simplified chat hook for basic use cases.
 import { useFridayChatSimple } from "@/hooks";
 
 const { sendMessage, messages, isLoading } = useFridayChatSimple({
-  conversationId: 123
+  conversationId: 123,
 });
 ```
 
@@ -239,8 +245,8 @@ Streaming chat with fallback support.
 import { useStreamingChat, useFallbackStreaming } from "@/hooks";
 
 const { streamMessage, isStreaming } = useStreamingChat({
-  onComplete: (response) => console.log(response),
-  onError: (error) => console.error(error)
+  onComplete: response => console.log(response),
+  onError: error => console.error(error),
 });
 ```
 
@@ -253,14 +259,9 @@ Chat input management with composition support.
 ```typescript
 import { useChatInput } from "@/hooks";
 
-const {
-  input,
-  setInput,
-  handleSubmit,
-  isComposing
-} = useChatInput({
-  onSubmit: (message) => sendMessage(message),
-  disabled: false
+const { input, setInput, handleSubmit, isComposing } = useChatInput({
+  onSubmit: message => sendMessage(message),
+  disabled: false,
 });
 ```
 
@@ -275,7 +276,7 @@ import { useOpenRouter } from "@/hooks";
 
 const { generate, isLoading, error } = useOpenRouter({
   model: "gpt-4",
-  temperature: 0.7
+  temperature: 0.7,
 });
 ```
 
@@ -290,13 +291,7 @@ Email action handlers (reply, forward, archive, etc.).
 ```typescript
 import { useEmailActions } from "@/hooks";
 
-const {
-  reply,
-  forward,
-  archive,
-  deleteEmail,
-  markAsRead
-} = useEmailActions();
+const { reply, forward, archive, deleteEmail, markAsRead } = useEmailActions();
 ```
 
 ---
@@ -311,7 +306,7 @@ import { useEmailKeyboardShortcuts } from "@/hooks";
 useEmailKeyboardShortcuts({
   onReply: () => handleReply(),
   onForward: () => handleForward(),
-  onArchive: () => handleArchive()
+  onArchive: () => handleArchive(),
 });
 ```
 
@@ -333,7 +328,7 @@ const {
   enableBlur,
   enableShadows,
   imageQuality,
-  maxListItems
+  maxListItems,
 } = useAdaptiveRendering();
 ```
 
@@ -348,12 +343,8 @@ Detects browser features and capabilities.
 ```typescript
 import { useFeatureDetection } from "@/hooks/crm";
 
-const {
-  backdropFilter,
-  reducedMotion,
-  webGL,
-  webWorker
-} = useFeatureDetection();
+const { backdropFilter, reducedMotion, webGL, webWorker } =
+  useFeatureDetection();
 ```
 
 ---
@@ -392,7 +383,7 @@ import { useSmoothScroll } from "@/hooks/crm";
 
 const scrollTo = useSmoothScroll({
   behavior: "smooth",
-  block: "start"
+  block: "start",
 });
 ```
 
@@ -407,13 +398,17 @@ Located in `@/hooks/docs/` - Documentation system hooks.
 Document management with tRPC.
 
 ```typescript
-import { useDocuments, useDocument, useDocumentSearch } from "@/hooks/docs/useDocuments";
+import {
+  useDocuments,
+  useDocument,
+  useDocumentSearch,
+} from "@/hooks/docs/useDocuments";
 
 // List documents
 const { data, isLoading } = useDocuments({
   category: "leads",
   search: "query",
-  limit: 20
+  limit: 20,
 });
 
 // Single document
@@ -421,7 +416,7 @@ const { data: document } = useDocument(documentId);
 
 // Search
 const { data: results } = useDocumentSearch({
-  query: "search term"
+  query: "search term",
 });
 ```
 
@@ -446,11 +441,8 @@ AI-powered document generation.
 ```typescript
 import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 
-const {
-  generateLeadDoc,
-  generateWeeklyDigest,
-  isGenerating
-} = useAIGeneration();
+const { generateLeadDoc, generateWeeklyDigest, isGenerating } =
+  useAIGeneration();
 
 generateLeadDoc.mutate({ leadId: 123 });
 ```
@@ -469,11 +461,12 @@ useDocsKeyboardShortcuts({
   onSearch: () => openSearch(),
   onNew: () => createNew(),
   onPreview: () => togglePreview(),
-  onEscape: () => handleCancel()
+  onEscape: () => handleCancel(),
 });
 ```
 
 **Shortcuts:**
+
 - `Ctrl+S / Cmd+S` - Save
 - `Ctrl+K / Cmd+K` - Search
 - `Ctrl+N / Cmd+N` - New document
@@ -509,7 +502,7 @@ const {
   isComposing,
   compositionValue,
   handleCompositionStart,
-  handleCompositionEnd
+  handleCompositionEnd,
 } = useComposition<string>();
 ```
 
@@ -611,4 +604,3 @@ client/src/hooks/
 
 **Last Updated:** January 28, 2025  
 **Maintained by:** TekupDK Development Team
-

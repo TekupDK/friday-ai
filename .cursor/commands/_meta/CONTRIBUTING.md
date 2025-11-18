@@ -11,6 +11,7 @@ Copy `COMMAND_TEMPLATE.md` and fill in all sections following the structure exac
 ### 2. Follow Prompt Engineering Guide
 
 All commands must follow `PROMPT_ENGINEERING_GUIDE.md` v2.2.0 standards:
+
 - ROLE & CONTEXT
 - COMMUNICATION STYLE
 - REFERENCE MATERIALS
@@ -62,6 +63,7 @@ All commands must follow `PROMPT_ENGINEERING_GUIDE.md` v2.2.0 standards:
 ### Required Sections
 
 All commands must have:
+
 1. **ROLE & CONTEXT** - Clear role and project context
 2. **TASK** - Single-sentence objective
 3. **COMMUNICATION STYLE** - Tone, audience, format
@@ -103,27 +105,32 @@ All commands must have:
 ## CRITICAL: START NOW
 
 **DO NOT:**
+
 - Wait for approval
 - Just plan without implementing
 
 **DO:**
+
 - Start immediately
 - Make actual changes
 ```
 
 ### Code Example Pattern
 
-```markdown
+````markdown
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: [Pattern Name]
+
 ```typescript
 // Real code from codebase
 export async function example() {
   // ...
 }
 ```
-```
+````
+
+````
 
 ### Verification Pattern
 
@@ -134,7 +141,7 @@ After [action]:
 - ✅ [Check 1]
 - ✅ [Check 2]
 - ✅ [Check 3]
-```
+````
 
 ## Best Practices
 
@@ -147,6 +154,7 @@ After [action]:
 ## Review Process
 
 Before submitting:
+
 1. Self-review using this guide
 2. Check against `PROMPT_ENGINEERING_GUIDE.md`
 3. Verify examples work
@@ -159,4 +167,3 @@ Before submitting:
 - Check `COMMANDS_INDEX.md` for similar commands
 - Check `CHANGELOG.md` for recent patterns
 - Review existing updated commands for examples
-

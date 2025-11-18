@@ -28,7 +28,6 @@ import {
   generateQuickReplies,
 } from "../email-intelligence/response-generator";
 
-
 export const emailIntelligenceRouter = router({
   /**
    * Categorize an email thread

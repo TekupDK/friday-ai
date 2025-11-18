@@ -17,7 +17,6 @@ import WelcomeScreen from "./WelcomeScreen";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useFridayChatSimple } from "@/hooks/useFridayChatSimple";
 
-
 interface Message {
   id: string;
   role: "user" | "assistant";

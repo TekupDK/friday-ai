@@ -17,6 +17,7 @@ Set up or improve CI/CD pipeline for automated testing and deployment.
 ## CI/CD PIPELINE STRUCTURE
 
 ### Stage 1: Lint & Typecheck
+
 ```yaml
 - name: Lint
   run: pnpm lint
@@ -26,6 +27,7 @@ Set up or improve CI/CD pipeline for automated testing and deployment.
 ```
 
 ### Stage 2: Test
+
 ```yaml
 - name: Run Tests
   run: pnpm test
@@ -35,12 +37,14 @@ Set up or improve CI/CD pipeline for automated testing and deployment.
 ```
 
 ### Stage 3: Build
+
 ```yaml
 - name: Build
   run: pnpm build
 ```
 
 ### Stage 4: Deploy
+
 ```yaml
 - name: Deploy to Staging
   if: branch == 'develop'
@@ -87,23 +91,26 @@ Set up or improve CI/CD pipeline for automated testing and deployment.
 **Workflow:** `.github/workflows/[name].yml`
 
 **Stages:**
+
 1. Lint & Typecheck
 2. Tests
 3. Build
 4. Deploy
 
 **Environments:**
+
 - Dev: [trigger]
 - Staging: [trigger]
 - Production: [trigger]
 
 **Quality Gates:**
+
 - ✅ Typecheck: Required
 - ✅ Tests: Required
 - ✅ Build: Required
 
 **Status:**
+
 - ✅ Pipeline: CONFIGURED
 - ✅ Workflows: TESTED
 ```
-

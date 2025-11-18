@@ -19,4 +19,3 @@ Check Vite config, fix HMR issues, optimize reload speed, test HMR.
 ## OUTPUT
 
 HMR fixed with fast, reliable reload.
-

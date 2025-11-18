@@ -1,6 +1,6 @@
 /**
  * Subscription Email Templates and Sending
- * 
+ *
  * Handles email notifications for subscription events
  */
 
@@ -210,9 +210,7 @@ export async function sendSubscriptionEmail(
     }
 
     // Get plan config
-    const planConfig = getPlanConfig(
-      subscription.planType as any
-    );
+    const planConfig = getPlanConfig(subscription.planType as any);
 
     // Prepare email data
     const emailData = {
@@ -269,4 +267,3 @@ export async function sendSubscriptionEmail(
     };
   }
 }
-

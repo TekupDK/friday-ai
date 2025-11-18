@@ -1,6 +1,6 @@
 /**
  * UTCP Schema Validation
- * 
+ *
  * Validates tool inputs against JSON Schema using Ajv
  */
 
@@ -28,10 +28,12 @@ export function validateUTCPInput(
     const valid = validate(data);
 
     if (!valid) {
-      const errors = validate.errors?.map(e => {
-        const path = e.instancePath || e.schemaPath;
-        return `${path}: ${e.message}`;
-      }).join(", ");
+      const errors = validate.errors
+        ?.map(e => {
+          const path = e.instancePath || e.schemaPath;
+          return `${path}: ${e.message}`;
+        })
+        .join(", ");
 
       return {
         valid: false,
@@ -50,4 +52,3 @@ export function validateUTCPInput(
     };
   }
 }
-

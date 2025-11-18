@@ -19,4 +19,3 @@ Design search, implement backend, add UI, optimize queries, test search.
 ## OUTPUT
 
 Search implemented with backend and UI.
-

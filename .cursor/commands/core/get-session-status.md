@@ -29,11 +29,13 @@ Provide real-time status of the current chat session including work done, progre
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `run_terminal_cmd` - Check git status
 - `read_file` - Quick review of changes
 - `grep` - Find key patterns
 
 **DO NOT:**
+
 - Take too long
 - Provide unnecessary details
 - Miss current state
@@ -96,29 +98,35 @@ Provide quick status update:
 **Status:** [ACTIVE/PAUSED/COMPLETE]
 
 ## Current State
+
 - **Active Task:** [TASK]
 - **Progress:** [PERCENTAGE]%
 - **Files Changed:** [NUMBER]
 
 ## Work Done
+
 - ✅ [Item 1]
 - ✅ [Item 2]
 - ✅ [Item 3]
 
 ## In Progress
+
 - 🚧 [Item 1] - [Status]
 - 🚧 [Item 2] - [Status]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 3. [Next step 3]
 
 ## Blockers
+
 - [Blocker 1] - [Impact]
 - [Blocker 2] - [Impact]
 
 ## Quick Actions
+
 - [Action 1] - [Description]
 - [Action 2] - [Description]
 ```
@@ -134,4 +142,3 @@ Provide quick status update:
 ---
 
 **CRITICAL:** Provide status quickly. Don't analyze deeply, just current state.
-

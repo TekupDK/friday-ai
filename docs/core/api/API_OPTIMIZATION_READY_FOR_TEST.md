@@ -13,7 +13,7 @@ Alle features er implementeret, dokumenteret og klar til test.
 
 For isoleret testning:
 
-```powershell
+````powershell
 cd C:\Users\empir\Tekup\services\tekup-ai-v2
 .\scripts\create-chat-branch.ps1
 
@@ -160,7 +160,7 @@ Når testning er færdig, opdater:
 1. ***
 2. ***
 
-```
+````
 
 ---
 

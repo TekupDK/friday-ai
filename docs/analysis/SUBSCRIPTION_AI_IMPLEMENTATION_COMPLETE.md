@@ -13,6 +13,7 @@ Based on the chat summary from `SUBSCRIPTION_AI_IDEAS.md`, I have implemented th
 ### ✅ Completed Features
 
 #### 1. **Automated Usage Optimization** (#3)
+
 - **Status:** ✅ Complete
 - **Function:** `optimizeSubscriptionUsage()`
 - **Location:** `server/subscription-ai.ts`
@@ -20,6 +21,7 @@ Based on the chat summary from `SUBSCRIPTION_AI_IDEAS.md`, I have implemented th
 - **tRPC Endpoint:** `subscriptions.optimizeUsage`
 
 **Features:**
+
 - Analyzes subscription usage patterns (hours used vs. included hours)
 - Recommends optimal booking schedule for remaining month
 - Considers optimization goals: value, convenience, or efficiency
@@ -27,6 +29,7 @@ Based on the chat summary from `SUBSCRIPTION_AI_IDEAS.md`, I have implemented th
 - AI-enhanced recommendations for complex scenarios
 
 **Usage:**
+
 ```typescript
 // Via tRPC
 const optimization = await trpc.subscription.optimizeUsage.useQuery({
@@ -42,6 +45,7 @@ await fridayAI.callTool("optimize_subscription_usage", {
 ```
 
 #### 2. **Intelligent Upsell/Cross-sell** (#5)
+
 - **Status:** ✅ Complete
 - **Function:** `generateUpsellOpportunities()`
 - **Location:** `server/subscription-ai.ts`
@@ -49,6 +53,7 @@ await fridayAI.callTool("optimize_subscription_usage", {
 - **tRPC Endpoint:** `subscriptions.getUpsellOpportunities`
 
 **Features:**
+
 - Identifies upgrade opportunities based on usage patterns
 - Detects frequency increase opportunities (flex plans)
 - Cross-sell detection for multiple properties
@@ -57,6 +62,7 @@ await fridayAI.callTool("optimize_subscription_usage", {
 - Email template suggestions
 
 **Usage:**
+
 ```typescript
 // Via tRPC
 const opportunities = await trpc.subscription.getUpsellOpportunities.useQuery({
@@ -147,16 +153,19 @@ await fridayAI.callTool("generate_upsell_opportunities", {
 ## Integration Points
 
 ### AI Router Integration
+
 - Both tools are integrated in `server/ai-router.ts`
 - Handled in custom tool execution section
 - Proper error handling and logging
 
 ### tRPC API Integration
+
 - Both features exposed via `subscription-router.ts`
 - Proper input validation with Zod
 - User-scoped queries (always filters by userId)
 
 ### Friday AI Tool Integration
+
 - Tools available for Friday AI to call
 - Proper descriptions in Danish
 - Type-safe parameter definitions
@@ -175,11 +184,13 @@ await fridayAI.callTool("generate_upsell_opportunities", {
 ## Business Value
 
 ### Usage Optimization
+
 - **Value:** Reduces overage costs, improves customer satisfaction
 - **Impact:** Better resource utilization, higher customer value perception
 - **ROI:** Estimated 30,000 kr/year savings
 
 ### Upsell Opportunities
+
 - **Value:** Higher ARPU (+20%), better customer lifetime value
 - **Impact:** 90,000 kr/year additional revenue potential
 - **ROI:** High - automated detection vs. manual review
@@ -217,4 +228,3 @@ await fridayAI.callTool("generate_upsell_opportunities", {
 **Status:** ✅ **COMPLETE** - Ready for Testing  
 **Total Lines Added:** ~400 lines of production code  
 **Features Implemented:** 2/6 (all HIGH/MEDIUM priority complete)
-

@@ -1,10 +1,10 @@
 /**
  * Hook Type Definitions
- * 
+ *
  * Type definitions for Cursor Agent Hooks system
  */
 
-export type HookCategory = 
+export type HookCategory =
   | "pre-execution"
   | "post-execution"
   | "error"
@@ -86,4 +86,3 @@ export interface HookExecutionContext {
   timestamp: string;
   category: HookCategory;
 }
-

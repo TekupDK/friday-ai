@@ -31,12 +31,14 @@ Wrap a feature or change with feature flags to allow gradual rollout, A/B testin
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find existing feature flag system
 - `read_file` - Read current code and flag system
 - `grep` - Search for feature flag patterns
 - `search_replace` - Implement feature flags
 
 **DO NOT:**
+
 - Skip testing both paths
 - Forget cleanup plan
 - Ignore type safety
@@ -69,6 +71,7 @@ Before implementing, think through:
 ### 1. Identify Gated Code
 
 **Determine what to gate:**
+
 - New feature code
 - Changed behavior
 - Experimental functionality
@@ -76,6 +79,7 @@ Before implementing, think through:
 - UI changes
 
 **Identify boundaries:**
+
 - Where does feature start?
 - Where does feature end?
 - What are dependencies?
@@ -84,6 +88,7 @@ Before implementing, think through:
 ### 2. Design Flag
 
 **Flag shape:**
+
 ```typescript
 type FeatureFlag = {
   name: string;
@@ -95,11 +100,13 @@ type FeatureFlag = {
 ```
 
 **Flag naming:**
+
 - Descriptive: `ENABLE_NEW_INVOICE_WORKFLOW`
 - Consistent: `FEATURE_*` prefix
 - Clear: Indicates what it controls
 
 **Flag values:**
+
 - Boolean: Simple on/off
 - Percentage: Gradual rollout
 - User-based: Specific users
@@ -108,11 +115,13 @@ type FeatureFlag = {
 ### 3. Integrate Flag System
 
 **Check if system exists:**
+
 - Read `server/_core/feature-flags.ts`
 - Check environment variables
 - Look for existing flags
 
 **If system exists:**
+
 ```typescript
 import { isFeatureEnabled } from "@/server/_core/feature-flags";
 
@@ -124,6 +133,7 @@ if (isFeatureEnabled("NEW_FEATURE")) {
 ```
 
 **If system doesn't exist:**
+
 ```typescript
 // server/_core/feature-flags.ts
 export function isFeatureEnabled(flag: string): boolean {
@@ -135,6 +145,7 @@ export function isFeatureEnabled(flag: string): boolean {
 ### 4. Implement Gated Behavior
 
 **Both paths well-defined:**
+
 ```typescript
 if (isFeatureEnabled("NEW_FEATURE")) {
   // New implementation
@@ -146,6 +157,7 @@ if (isFeatureEnabled("NEW_FEATURE")) {
 ```
 
 **Type-safe:**
+
 ```typescript
 type FeatureFlag = "NEW_FEATURE" | "ANOTHER_FEATURE";
 
@@ -155,6 +167,7 @@ function isFeatureEnabled(flag: FeatureFlag): boolean {
 ```
 
 **Testable:**
+
 - Easy to toggle in tests
 - Both paths testable
 - Mock flag system
@@ -163,12 +176,14 @@ function isFeatureEnabled(flag: FeatureFlag): boolean {
 ### 5. Document and Plan
 
 **Flag documentation:**
+
 - What does it control?
 - Why was it added?
 - When to enable?
 - When to remove?
 
 **Cleanup plan:**
+
 - Remove flag after full rollout
 - Remove old code path
 - Update documentation
@@ -189,15 +204,18 @@ function isFeatureEnabled(flag: FeatureFlag): boolean {
 ## Implementation
 
 ### Files Changed
+
 - `server/routers/workflow-router.ts` - Added flag check
 - `client/src/pages/workflow.tsx` - Added flag check
 
 ### Code Snippets
+
 [Code showing flag usage]
 
 ## Testing
 
 ### Test Cases
+
 - [ ] Flag disabled: Old behavior works
 - [ ] Flag enabled: New behavior works
 - [ ] Flag toggle: Both paths work
@@ -232,6 +250,7 @@ function isFeatureEnabled(flag: FeatureFlag): boolean {
 ## VERIFICATION CHECKLIST
 
 After implementation:
+
 - ✅ Flag design clear and documented
 - ✅ Flag system integrated
 - ✅ Both code paths implemented

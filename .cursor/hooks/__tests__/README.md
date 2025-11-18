@@ -34,6 +34,7 @@ pnpm test:coverage .cursor/hooks
 ## Test Utilities
 
 Located in `test-utils/`:
+
 - `mock-hook-factory.ts` - Create mock hooks
 - `config-builder.ts` - Build test configurations
 - `context-builder.ts` - Build test contexts
@@ -44,7 +45,10 @@ Located in `test-utils/`:
 ### Using Mock Hooks
 
 ```typescript
-import { createSuccessHook, createFailureHook } from "../test-utils/mock-hook-factory";
+import {
+  createSuccessHook,
+  createFailureHook,
+} from "../test-utils/mock-hook-factory";
 
 const successHook = createSuccessHook();
 const failureHook = createFailureHook("Custom error");
@@ -90,4 +94,3 @@ expectHookFailure(result, "Expected error");
 - **Lines:** >80%
 - **Functions:** >80%
 - **Branches:** >70%
-

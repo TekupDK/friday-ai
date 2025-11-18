@@ -20,7 +20,7 @@ Get Friday AI's autonomous operations running in 5 minutes.
 
 Check your `.env` file has:
 
-```ini
+````ini
 DATABASE_URL=postgresql://...?schema=friday_ai
 OWNER_OPEN_ID=owner-friday-ai-dev
 JWT_SECRET=your-secure-secret
@@ -145,7 +145,7 @@ Get-ScheduledTask -TaskName "Friday-AI-*"
 # View recent actions
 psql $DATABASE_URL -c "SELECT * FROM friday_ai.tasks WHERE metadata->>'generatedBy' = 'action_handler' ORDER BY created_at DESC LIMIT 10;"
 
-```
+````
 
 ## 🎉 You're Done
 

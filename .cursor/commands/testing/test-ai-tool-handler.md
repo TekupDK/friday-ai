@@ -8,31 +8,31 @@ Create comprehensive tests for an AI tool handler.
 
 ## STEPS
 
-1) Understand the tool:
+1. Understand the tool:
    - Read tool definition in `server/friday-tools.ts`
    - Review handler in `server/friday-tool-handlers.ts`
    - Understand expected inputs/outputs
    - Check error cases
 
-2) Create test file:
+2. Create test file:
    - Create in `server/__tests__/` or appropriate location
    - Name: `friday-tool-[name].test.ts`
    - Follow existing test patterns
 
-3) Write test cases:
+3. Write test cases:
    - Happy path with valid inputs
    - Invalid input handling
    - Error scenarios
    - Edge cases
    - Authentication checks (if needed)
 
-4) Mock dependencies:
+4. Mock dependencies:
    - Mock external APIs (Gmail, Billy, etc.)
    - Mock database calls
    - Mock file system if needed
    - Use test fixtures
 
-5) Run tests:
+5. Run tests:
    - Execute test suite
    - Verify all pass
    - Check coverage
@@ -41,9 +41,9 @@ Create comprehensive tests for an AI tool handler.
 ## OUTPUT
 
 Provide:
+
 - Test file created
 - Test cases written
 - Coverage report
 - Test results
 - Any fixes needed
-

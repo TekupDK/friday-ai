@@ -1,6 +1,6 @@
 /**
  * Error Display Component
- * 
+ *
  * Reusable error display for CRM pages.
  * Provides consistent error UI across the application.
  */
@@ -41,4 +41,3 @@ export function ErrorDisplay({
     </AppleCard>
   );
 }
-

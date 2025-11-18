@@ -31,7 +31,7 @@ This enables accurate performance tracking and better quote estimation.
 
 **Example:**
 
-```json
+````json
 {
   "contactEmail": "<lars.joenstrup@live.dk>",
   "invoiceNo": "INV-2025-001",
@@ -465,4 +465,4 @@ interface TimeAccuracy {
   }
 }
 
-```
+````

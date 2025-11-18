@@ -31,6 +31,7 @@ Fix common problems that occur frequently in Friday AI Chat using Friday-specifi
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code to understand problem
 - `codebase_search` - Find related code
 - `grep` - Search for patterns
@@ -38,6 +39,7 @@ Fix common problems that occur frequently in Friday AI Chat using Friday-specifi
 - `search_replace` - Apply quick fixes
 
 **DO NOT:**
+
 - Skip Friday-specific knowledge
 - Ignore common patterns
 - Fix without understanding
@@ -65,40 +67,50 @@ Before fixing, think through:
 ## COMMON PROBLEMS & QUICK FIXES
 
 ### Problem 1: Build Failing (TypeScript Errors)
+
 **Symptoms:** `pnpm build` fails, TypeScript errors
 **Quick Fix:**
+
 1. Run: `pnpm check`
 2. Fix missing router exports
 3. Fix type mismatches
 4. Fix missing imports
 
 ### Problem 2: Rate Limiting Not Working
+
 **Symptoms:** Rate limits bypassed, memory leaks
 **Quick Fix:**
+
 1. Check Redis connection
 2. Fix race conditions (Lua script)
 3. Fix memory leaks (cleanup old entries)
 4. Test with concurrent requests
 
 ### Problem 3: AI Not Responding
+
 **Symptoms:** AI calls fail, no response
 **Quick Fix:**
+
 1. Check model routing
 2. Check tool handlers
 3. Check streaming setup
 4. Check API keys
 
 ### Problem 4: Email Sync Failing
+
 **Symptoms:** Emails not syncing, pipeline stuck
 **Quick Fix:**
+
 1. Check Gmail API connection
 2. Check rate limits
 3. Check pipeline stages
 4. Check thread parsing
 
 ### Problem 5: Database Queries Slow
+
 **Symptoms:** Slow queries, timeouts
 **Quick Fix:**
+
 1. Check for N+1 queries
 2. Add missing indexes
 3. Optimize queries
@@ -131,10 +143,11 @@ Before fixing, think through:
 **Fix Applied:** [what was fixed]
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Problem resolved: PASSED
 - ✅ Regression test: ADDED
 ```
-

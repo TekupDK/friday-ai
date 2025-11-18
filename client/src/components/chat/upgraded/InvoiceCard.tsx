@@ -24,7 +24,6 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
-
 export interface InvoiceData {
   id: string;
   invoiceNumber: string;

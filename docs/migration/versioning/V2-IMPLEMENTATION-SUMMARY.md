@@ -10,7 +10,7 @@
 
 ### ✅ CORE FUNCTIONALITY VIRKER
 
-```text
+````text
 User klikker email → EmailTab → setSelectedEmail()
                                       ↓
                             EmailContext opdateret
@@ -396,7 +396,7 @@ npm run type-check
 import ChatInterface from "./pages/ChatInterface";
 <Route path={"/"} component={ChatInterface} />
 
-```
+````
 
 ---
 

@@ -19,4 +19,3 @@ Identify legacy patterns, plan refactoring, implement incrementally, add tests, 
 ## OUTPUT
 
 Legacy code refactored with modern patterns and tests.
-

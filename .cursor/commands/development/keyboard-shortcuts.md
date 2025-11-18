@@ -19,4 +19,3 @@ Add shortcuts, handle conflicts, document shortcuts, add UI indicators.
 ## OUTPUT
 
 Keyboard shortcuts implemented with documentation.
-

@@ -12,7 +12,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
-
 export interface SubTask {
   id: string;
   title: string;

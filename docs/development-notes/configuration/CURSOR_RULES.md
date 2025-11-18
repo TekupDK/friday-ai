@@ -24,7 +24,7 @@ Friday AI Chat is a business automation platform for TekupDK (Rendetalje.dk clea
 
 **Example:**
 
-```typescript
+````typescript
 // Good
 const userName: string = `Hello, ${user.name}`;
 type Status = "pending" | "completed";
@@ -678,7 +678,7 @@ const debouncedSearch = useDebouncedCallback(query => {
   searchMutation.mutate({ query });
 }, 300); // 300ms delay
 
-```
+````
 
 ## Security Guidelines
 

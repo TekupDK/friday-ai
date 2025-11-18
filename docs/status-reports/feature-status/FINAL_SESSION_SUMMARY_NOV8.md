@@ -2,7 +2,7 @@
 
 ## 📊 SESSION OVERVIEW
 
-```text
+````text
 ⏱️  Total Time:            ~10 timer intenst arbejde
 ✅ Features Completed:     3 major systemer + 1 partial
 🧪 Tests Status:           58/58 passing (100%)
@@ -680,7 +680,7 @@ EMAIL_INTELLIGENCE_COMPLETE.md - Full feature docs
 EMAIL_CENTER_PHASE1_STATUS.md - Implementation guide
 COMPREHENSIVE_TEST_STATUS.md - Test reference
 
-```
+````
 
 ---
 

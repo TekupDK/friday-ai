@@ -4,7 +4,7 @@ Copy/paste disse blokke til din AI-assistent, når du fejlsøger lokale probleme
 
 ## 1. Miljø & manglende variabler
 
-```bash
+````bash
 Du er en Node.js DX-ekspert. Jeg kører pnpm dev i Friday AI repoet.
 Kør check-listen: 1) Gennemgå check-env.js krav. 2) Vis præcis hvilke env-keys
 jeg mangler i .env.dev og hvordan de udfyldes (format + kilde). 3) Bekræft om
@@ -52,4 +52,4 @@ Skriv en kort status til Slack med: 1) Kommando + resultat (OK/fejl). 2) Hvis
 tunnel, så URL og hvor den logges. 3) Eventuelle manglende env-vars eller warnings
 fra check-env. Kortfattet bulletliste.
 
-```
+````

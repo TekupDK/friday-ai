@@ -32,7 +32,7 @@
 
 ## ✅ Langfuse Now Running
 
-```bash
+````bash
 ✅ Docker Status:
 
    - friday-langfuse-db: Healthy
@@ -112,7 +112,7 @@ curl <http://localhost:3000>
 
 # Should return: Friday AI frontend
 
-```
+````
 
 ---
 

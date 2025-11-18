@@ -31,12 +31,14 @@ Add a new tRPC procedure (query or mutation) to an existing router, following ex
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing router files for patterns
 - `codebase_search` - Find similar procedures
 - `grep` - Search for validation patterns
 - `search_replace` - Add procedure to router
 
 **DO NOT:**
+
 - Create procedure without reviewing patterns
 - Skip validation
 - Ignore error handling
@@ -69,6 +71,7 @@ Before implementing, think through:
 ## CODEBASE PATTERNS (Follow These Exactly)
 
 ### Example: Mutation Pattern
+
 ```typescript
 createOpportunity: protectedProcedure
   .input(
@@ -116,6 +119,7 @@ createOpportunity: protectedProcedure
 ```
 
 ### Example: Query Pattern
+
 ```typescript
 listOpportunities: protectedProcedure
   .input(
@@ -193,6 +197,7 @@ listOpportunities: protectedProcedure
 ## VERIFICATION
 
 After implementation:
+
 - ✅ Typecheck passes: `pnpm check`
 - ✅ Follows existing patterns exactly
 - ✅ Uses shared validation schemas
@@ -227,11 +232,12 @@ await trpc.[router].[procedureName].mutate({ ... });
 \`\`\`
 
 **Files Modified:**
+
 - `server/routers/[router].ts` - Added procedure
 - `server/routers.ts` - Exported router (if new)
 
 **Verification:**
+
 - ✅ Typecheck: PASSED
 - ✅ Pattern match: PASSED
 ```
-

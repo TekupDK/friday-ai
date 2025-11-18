@@ -29,12 +29,14 @@ Resume work from a specific point in the current chat session by identifying whe
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Review current state
 - `codebase_search` - Understand context
 - `run_terminal_cmd` - Check status
 - `grep` - Find relevant code
 
 **DO NOT:**
+
 - Start over
 - Duplicate work
 - Miss context
@@ -108,26 +110,31 @@ Provide continuation plan:
 **Status:** [RESUMING/COMPLETE]
 
 ## Stopping Point Identified
+
 - **Last Action:** [ACTION]
 - **Incomplete Work:** [WORK]
 - **Context:** [CONTEXT]
 
 ## Current State
+
 - **Completed:** [LIST]
 - **In Progress:** [LIST]
 - **Pending:** [LIST]
 
 ## Continuation Plan
+
 1. [Step 1] - [Status]
 2. [Step 2] - [Status]
 3. [Step 3] - [Status]
 
 ## Resuming Work
+
 - ✅ [Work resumed]
 - 🚧 [Work in progress]
 - 📋 [Work pending]
 
 ## Next Steps
+
 1. [Next step 1]
 2. [Next step 2]
 ```
@@ -143,4 +150,3 @@ Provide continuation plan:
 ---
 
 **CRITICAL:** Resume from exact stopping point. Don't start over or duplicate work.
-

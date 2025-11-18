@@ -30,12 +30,14 @@ Provide 8 refactor ideas for the current file covering simplifications, naming i
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read current file
 - `codebase_search` - Find similar patterns
 - `grep` - Search for duplication
 - `read_lints` - Check for issues
 
 **DO NOT:**
+
 - Suggest breaking changes
 - Ignore patterns
 - Miss opportunities
@@ -94,29 +96,35 @@ After generating, verify:
 
 Provide refactor ideas:
 
-```markdown
+````markdown
 # Refactor Ideas: [FILE NAME]
 
 **Date:** 2025-11-16
 **File:** [FILE PATH]
 
 ## Simplifications (2)
+
 1. **[Simplification 1]** - [Description] - [Benefit]
    ```typescript
    // Before: [Complex code]
    // After: [Simplified code]
    ```
+````
+
 2. **[Simplification 2]** - [Description] - [Benefit]
 
 ## Naming Improvements (2)
+
 1. **[Improvement 1]** - [Current name] → [Better name] - [Why]
 2. **[Improvement 2]** - [Current name] → [Better name] - [Why]
 
 ## Separation of Concerns (2)
+
 1. **[Separation 1]** - [What to separate] - [Benefit]
 2. **[Separation 2]** - [What to separate] - [Benefit]
 
 ## Type Safety Upgrades (1)
+
 1. **[Upgrade 1]** - [What to improve] - [Benefit]
    ```typescript
    // Before: [Weak types]
@@ -124,15 +132,18 @@ Provide refactor ideas:
    ```
 
 ## Removing Duplication (1)
+
 1. **[Duplication 1]** - [What to extract] - [Benefit]
    ```typescript
    // Extract to: [New function/component]
    ```
 
 ## Priority Refactoring Order
+
 1. **[HIGH]** [Refactor 1] - [Impact] - [Effort]
 2. **[MEDIUM]** [Refactor 2] - [Impact] - [Effort]
 3. **[LOW]** [Refactor 3] - [Impact] - [Effort]
+
 ```
 
 ## GUIDELINES
@@ -147,3 +158,4 @@ Provide refactor ideas:
 
 **CRITICAL:** Generate actionable refactor ideas that improve code quality and maintainability.
 
+```

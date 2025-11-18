@@ -31,6 +31,7 @@ Create and run tests based on chat conversation summary to verify implementation
 ## TOOL USAGE
 
 **Use these tools:**
+
 - Review chat summary - Understand requirements
 - `read_file` - Read implemented code
 - `codebase_search` - Find test patterns
@@ -39,6 +40,7 @@ Create and run tests based on chat conversation summary to verify implementation
 - `run_terminal_cmd` - Run tests
 
 **DO NOT:**
+
 - Test things not discussed
 - Miss requirements
 - Skip edge cases
@@ -110,6 +112,7 @@ Before testing, think through:
 ## VERIFICATION
 
 After testing:
+
 - ✅ All requirements tested
 - ✅ Acceptance criteria verified
 - ✅ Edge cases covered
@@ -122,19 +125,23 @@ After testing:
 ### Test Plan from Chat Summary
 
 **Requirements from Chat:**
+
 - [Requirement 1]
 - [Requirement 2]
 
 **Test Cases Created:**
+
 - [ ] [Test case 1] - [Requirement covered]
 - [ ] [Test case 2] - [Requirement covered]
 
 **Test Results:**
+
 - ✅ Unit tests: PASSED
 - ✅ Integration tests: PASSED
 - ✅ E2E tests: PASSED
 
 **Verification:**
+
 - ✅ All requirements tested
 - ✅ Matches chat summary exactly
 ```
@@ -146,4 +153,3 @@ After testing:
 - **Include edge cases:** Test edge cases mentioned
 - **Follow patterns:** Use existing test patterns
 - **Verify thoroughly:** Ensure nothing missed
-

@@ -1,7 +1,7 @@
 /**
  * RBAC Integration Tests
  * Tests RBAC middleware integration with tRPC procedures and ownership verification
- * 
+ *
  * Based on chat summary requirements:
  * - permissionProcedure for invoice creation (owner-only)
  * - permissionProcedure for email deletion (admin-only)
@@ -29,7 +29,11 @@ afterEach(() => {
 });
 
 // Mock context creator
-function createMockContext(user: { id: number; role?: string; openId?: string }): TrpcContext {
+function createMockContext(user: {
+  id: number;
+  role?: string;
+  openId?: string;
+}): TrpcContext {
   return {
     req: {} as any,
     res: {} as any,
@@ -226,7 +230,7 @@ describe("RBAC Middleware Integration - permissionProcedure", () => {
 describe("RBAC Ownership Verification - verifyResourceOwnership", () => {
   // Note: These tests require database setup
   // They verify the pattern is correctly applied in endpoints
-  
+
   it("should verify customer ownership pattern is applied", async () => {
     // Verify that verifyResourceOwnership is imported and used
     const rbacModule = await import("../rbac");
@@ -245,7 +249,7 @@ describe("RBAC Ownership Verification - verifyResourceOwnership", () => {
     // This would require DB setup - testing the error path
     const { verifyResourceOwnership } = await import("../rbac");
     const dbConn = await db.getDb();
-    
+
     if (!dbConn) {
       // Skip if no DB connection
       expect(true).toBe(true);
@@ -253,7 +257,7 @@ describe("RBAC Ownership Verification - verifyResourceOwnership", () => {
     }
 
     const { customerProfiles } = await import("../../drizzle/schema");
-    
+
     // Try to access non-existent customer
     await expect(
       verifyResourceOwnership(
@@ -292,26 +296,25 @@ describe("RBAC Context Enhancement", () => {
 describe("RBAC Permission Matrix", () => {
   it("should enforce correct permission hierarchy", async () => {
     const { hasPermission } = await import("../rbac");
-    
+
     // Owner has all permissions
     expect(hasPermission("owner", "create_invoice")).toBe(true);
     expect(hasPermission("owner", "delete_email")).toBe(true);
     expect(hasPermission("owner", "create_task")).toBe(true);
-    
+
     // Admin has admin permissions but not owner-only
     expect(hasPermission("admin", "create_invoice")).toBe(false);
     expect(hasPermission("admin", "delete_email")).toBe(true);
     expect(hasPermission("admin", "create_task")).toBe(true);
-    
+
     // User has basic permissions only
     expect(hasPermission("user", "create_invoice")).toBe(false);
     expect(hasPermission("user", "delete_email")).toBe(false);
     expect(hasPermission("user", "create_task")).toBe(true);
-    
+
     // Guest has no permissions
     expect(hasPermission("guest", "create_invoice")).toBe(false);
     expect(hasPermission("guest", "delete_email")).toBe(false);
     expect(hasPermission("guest", "create_task")).toBe(false);
   });
 });
-

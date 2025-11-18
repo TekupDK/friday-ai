@@ -19,4 +19,3 @@ Create notification service, handle different types, queue notifications, add pr
 ## OUTPUT
 
 Notification system implemented with multiple channels.
-

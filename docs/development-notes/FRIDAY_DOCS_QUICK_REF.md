@@ -27,7 +27,6 @@ import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
 
 // API endpoints bruger "docs"
 trpc.docs.generateLeadDoc.mutate({ leadId });
-
 ```
 
 ### I URLs
@@ -40,24 +39,24 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 
 ## ⚡ Quick Facts
 
-| Hvad               | Værdi               |
-| ------------------ | ------------------- |
+| Hvad | Værdi |
+| ---- | ----- |
 
-| **Officielt Navn** | Friday Docs         |
+| **Officielt Navn** | Friday Docs |
 
-| **Version**        | 1.0.0               |
+| **Version** | 1.0.0 |
 
-| **Status**         | ✅ Production Ready |
+| **Status** | ✅ Production Ready |
 
-| **Udviklet**       | November 2025       |
+| **Udviklet** | November 2025 |
 
-| **Total Tid**      | 8+ timer            |
+| **Total Tid** | 8+ timer |
 
-| **Features**       | 43+                 |
+| **Features** | 43+ |
 
-| **Cost**           | $0.00/måned 🎉      |
+| **Cost** | $0.00/måned 🎉 |
 
-| **ROI**            | ∞ (infinite)        |
+| **ROI** | ∞ (infinite) |
 
 ---
 

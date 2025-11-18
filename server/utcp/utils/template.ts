@@ -1,12 +1,12 @@
 /**
  * Template Interpolation Utilities
- * 
+ *
  * Interpolates {{variable}} placeholders in strings with actual values
  */
 
 /**
  * Interpolate template string with variables
- * 
+ *
  * @example
  * interpolateTemplate("Hello {{name}}", { name: "World" })
  * // Returns: "Hello World"
@@ -34,11 +34,11 @@ export function interpolateTemplateObject(
   if (typeof template === "string") {
     return interpolateTemplate(template, variables);
   }
-  
+
   if (Array.isArray(template)) {
     return template.map(item => interpolateTemplateObject(item, variables));
   }
-  
+
   if (template && typeof template === "object") {
     const result: Record<string, any> = {};
     for (const [key, value] of Object.entries(template)) {
@@ -46,7 +46,6 @@ export function interpolateTemplateObject(
     }
     return result;
   }
-  
+
   return template;
 }
-

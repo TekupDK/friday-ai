@@ -50,6 +50,7 @@ This review evaluates the UI/UX of the CRM module frontend implementation. The m
 **Issue:** Lead cards have `role="button"` and `tabIndex={0}` but no `onClick` handler or keyboard event handlers. This creates false affordance - users expect them to be clickable.
 
 **Current Code:**
+
 ```typescript
 <div
   key={lead.id}
@@ -60,12 +61,14 @@ This review evaluates the UI/UX of the CRM module frontend implementation. The m
 >
 ```
 
-**Impact:** 
+**Impact:**
+
 - Users will try to click/activate these cards and nothing happens
 - Keyboard users can focus but cannot activate
 - Screen reader announces as button but it's not functional
 
 **Recommendation:**
+
 ```typescript
 // Option 1: Make them actually clickable
 <div
@@ -95,6 +98,7 @@ This review evaluates the UI/UX of the CRM module frontend implementation. The m
 **Issue:** Customer cards display information but are not clickable. Users likely expect to click to view/edit customer details.
 
 **Current Code:**
+
 ```typescript
 <AppleCard key={customer.id} variant="elevated">
   <div className="p-6">
@@ -104,13 +108,15 @@ This review evaluates the UI/UX of the CRM module frontend implementation. The m
 ```
 
 **Impact:**
+
 - No way to view customer details
 - Missing primary user action (view/edit customer)
 
 **Recommendation:**
+
 ```typescript
-<AppleCard 
-  key={customer.id} 
+<AppleCard
+  key={customer.id}
   variant="elevated"
   className="cursor-pointer hover:shadow-md transition-shadow"
   onClick={() => navigate(`/crm/customers/${customer.id}`)}
@@ -137,14 +143,17 @@ This review evaluates the UI/UX of the CRM module frontend implementation. The m
 **Issue:** Interactive elements (lead cards, navigation buttons) lack visible focus indicators for keyboard navigation.
 
 **Current State:**
+
 - Navigation buttons use shadcn Button (may have focus styles)
 - Lead cards have `tabIndex={0}` but no visible focus ring
 - Customer cards (if made clickable) need focus styles
 
 **Recommendation:**
+
 ```typescript
 // Add focus-visible styles
-className="... focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+className =
+  "... focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
 ```
 
 **Priority:** 🟠 **MEDIUM** - Accessibility requirement
@@ -158,6 +167,7 @@ className="... focus-visible:outline-none focus-visible:ring-2 focus-visible:rin
 **Issue:** Retry button uses plain `<button>` instead of the design system `Button` component.
 
 **Current Code:**
+
 ```typescript
 <button
   onClick={onRetry}
@@ -168,11 +178,13 @@ className="... focus-visible:outline-none focus-visible:ring-2 focus-visible:rin
 ```
 
 **Impact:**
+
 - Inconsistent styling with rest of app
 - May not match design system tokens
 - Missing focus states from Button component
 
 **Recommendation:**
+
 ```typescript
 import { Button } from "@/components/ui/button";
 
@@ -194,6 +206,7 @@ import { Button } from "@/components/ui/button";
 **Issue:** Pages show spinner during loading, but skeletons provide better perceived performance and context.
 
 **Current State:**
+
 ```typescript
 {isLoading ? (
   <LoadingSpinner message="Loading customers..." />
@@ -203,6 +216,7 @@ import { Button } from "@/components/ui/button";
 ```
 
 **Recommendation:**
+
 ```typescript
 {isLoading ? (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -231,6 +245,7 @@ import { Button } from "@/components/ui/button";
 **Issue:** Empty state is good but could include a call-to-action button.
 
 **Current State:**
+
 ```typescript
 <AppleCard variant="elevated">
   <div className="p-12 text-center">
@@ -244,6 +259,7 @@ import { Button } from "@/components/ui/button";
 ```
 
 **Recommendation:**
+
 ```typescript
 <AppleCard variant="elevated">
   <div className="p-12 text-center">
@@ -272,6 +288,7 @@ import { Button } from "@/components/ui/button";
 **Issue:** Kanban board would benefit from keyboard shortcuts for navigation between columns.
 
 **Recommendation:**
+
 ```typescript
 // Add arrow key navigation between columns
 useEffect(() => {
@@ -296,6 +313,7 @@ useEffect(() => {
 **Issue:** Search field doesn't show result count or clear button.
 
 **Recommendation:**
+
 ```typescript
 <div className="max-w-md relative">
   <AppleSearchField
@@ -333,6 +351,7 @@ useEffect(() => {
 **WCAG Violation:** 2.1.1 Keyboard (Level A)
 
 **Fix Required:**
+
 ```typescript
 onKeyDown={(e) => {
   if (e.key === "Enter" || e.key === " ") {
@@ -361,6 +380,7 @@ onKeyDown={(e) => {
 **WCAG Violation:** 4.1.3 Status Messages (Level AA)
 
 **Fix Required:**
+
 ```typescript
 <div
   role="region"
@@ -463,4 +483,3 @@ onKeyDown={(e) => {
 
 **Last Updated:** 2025-01-28  
 **Next Review:** After implementing recommended fixes
-

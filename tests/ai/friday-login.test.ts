@@ -259,9 +259,7 @@ test.describe("🔐 Friday AI Login + Testing", () => {
         await page.waitForTimeout(5000);
 
         // Check for AI response
-        const aiMessage = aiPanel
-          .locator('[data-testid="ai-message"]')
-          .last();
+        const aiMessage = aiPanel.locator('[data-testid="ai-message"]').last();
         const hasResponse = await aiMessage
           .isVisible({ timeout: 3000 })
           .catch(() => false);

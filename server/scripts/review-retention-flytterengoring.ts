@@ -20,7 +20,9 @@ function extractNameAndEmail(from: string): { navn: string; email: string } {
   return { navn, email };
 }
 
-function pickExternalLastMessage(messages: Array<{ from: string; bodyText?: string; body?: string }>) {
+function pickExternalLastMessage(
+  messages: Array<{ from: string; bodyText?: string; body?: string }>
+) {
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
     if (!m.from.toLowerCase().includes("@rendetalje.dk")) return m;
@@ -33,7 +35,9 @@ function summarizeThread(snippet: string, body: string | undefined): string {
   return text.length > 500 ? `${text.slice(0, 500)}…` : text;
 }
 
-function detectAddress(messages: Array<{ bodyText?: string; body?: string }>): string | null {
+function detectAddress(
+  messages: Array<{ bodyText?: string; body?: string }>
+): string | null {
   for (const m of messages) {
     const t = (m.bodyText || m.body || "").split(/\n|\r/);
     for (const line of t) {
@@ -66,7 +70,8 @@ function buildEmailBody(navn: string): string {
 }
 
 async function main() {
-  const query = "(label:Kunder OR label:\"Flytterengøring\" OR subject:flytterengøring OR \"move out cleaning\") AND -label:Retention AND -label:Marketing AND -label:Klager";
+  const query =
+    '(label:Kunder OR label:"Flytterengøring" OR subject:flytterengøring OR "move out cleaning") AND -label:Retention AND -label:Marketing AND -label:Klager';
   let threads: Array<any> = [];
   let draftEnabled = true;
   try {
@@ -82,10 +87,17 @@ async function main() {
     const ext = pickExternalLastMessage(t.messages || []);
     if (!ext) continue;
     const { navn, email } = extractNameAndEmail(ext.from);
-    const sammendrag = summarizeThread(t.snippet || "", ext.bodyText || ext.body || "");
+    const sammendrag = summarizeThread(
+      t.snippet || "",
+      ext.bodyText || ext.body || ""
+    );
     const foreslaaetEmail = buildEmailBody(navn);
     if (draftEnabled) {
-      await createGmailDraft({ to: email, subject: "Opfølgning efter flytterengøring", body: foreslaaetEmail });
+      await createGmailDraft({
+        to: email,
+        subject: "Opfølgning efter flytterengøring",
+        body: foreslaaetEmail,
+      });
     }
     batch.push({ navn, email, traadId: t.id, sammendrag, foreslaaetEmail });
   }
@@ -110,7 +122,8 @@ async function main() {
         navn: s.navn,
         email: s.email,
         traadId: `SIM-${i + 1}`,
-        sammendrag: "Kunde gennemførte flytterengøring. Ingen klager registreret. Sidste kontakt: bekræftelse på udført opgave.",
+        sammendrag:
+          "Kunde gennemførte flytterengøring. Ingen klager registreret. Sidste kontakt: bekræftelse på udført opgave.",
         foreslaaetEmail: body,
       });
     }
@@ -140,7 +153,11 @@ async function main() {
   console.log(reviewBody);
 
   if (draftEnabled) {
-    await createGmailDraft({ to: "jonasabde@icloud.com", subject: reviewSubject, body: reviewBody });
+    await createGmailDraft({
+      to: "jonasabde@icloud.com",
+      subject: reviewSubject,
+      body: reviewBody,
+    });
   }
 
   const json = {

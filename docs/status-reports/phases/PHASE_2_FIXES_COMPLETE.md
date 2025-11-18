@@ -69,16 +69,16 @@
 | ----------- | ------ | ----------- | -------------- |
 | Real AI E2E | 15     | 20-30s/test | Low (timeouts) |
 | Unit Tests  | 9      | Fast        | High           |
-| **Total**|**24**|**Slow**|**Mixed**      |
+| **Total**   | **24** | **Slow**    | **Mixed**      |
 
 ### After Fixes
 
 | Test Type      | Count  | Speed         | Reliability    |
 | -------------- | ------ | ------------- | -------------- |
 | Real AI E2E    | 15     | 20-30s/test   | Low (expected) |
-| **Mocked E2E**|**15**|**1-2s/test**|**High**       |
+| **Mocked E2E** | **15** | **1-2s/test** | **High**       |
 | Unit Tests     | 9      | Fast          | High           |
-| **Total**|**39**|**Fast**|**High**       |
+| **Total**      | **39** | **Fast**      | **High**       |
 
 ---
 
@@ -120,7 +120,7 @@
 
 ### Fast Feedback (Mocked)
 
-```bash
+````bash
 npx playwright test tests/phase-2-ai-integration-mocked.spec.ts
 
 ```text
@@ -143,7 +143,7 @@ npx playwright test tests/phase-2-ai-integration.spec.ts
 ```bash
 npx playwright test tests/phase-2-*.spec.ts
 
-```
+````
 
 ---
 

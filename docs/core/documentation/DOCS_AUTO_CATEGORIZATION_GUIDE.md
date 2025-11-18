@@ -38,6 +38,7 @@ Shows detailed information about each file being processed.
 The script organizes files into the following categories:
 
 ### Status Reports (`status-reports/`)
+
 - **sessions/** - Session status and summaries
 - **sprints/** - Sprint planning and todos
 - **phases/** - Phase completion reports
@@ -47,18 +48,21 @@ The script organizes files into the following categories:
 - **todos/** - TODO audits and completed todos
 
 ### AI & Automation (`ai-automation/`)
+
 - **docs-generation/** - AI documentation generation
 - **friday-ai/** - Friday AI system documentation
 - **agentic-rag/** - Agentic RAG implementation
 - **guides/** - AI-related guides
 
 ### Email System (`email-system/`)
+
 - **email-center/** - Email center features
 - **leads/** - Lead flow and management
 - **integrations/** - Email integrations (Gmail, Shortwave)
 - **guides/** - Email system guides
 
 ### Integrations (`integrations/`)
+
 - **langfuse/** - Langfuse integration
 - **litellm/** - LiteLLM integration
 - **chromadb/** - ChromaDB integration
@@ -66,21 +70,25 @@ The script organizes files into the following categories:
 - **general/** - General integration documentation
 
 ### CRM Business (`crm-business/`)
+
 - **phases/** - CRM phase implementations
 - **guides/** - CRM guides and analysis
 
 ### UI & Frontend (`ui-frontend/`)
+
 - **components/** - UI components documentation
 - **features/** - Frontend features (3-panel, virtual scrolling)
 - **branding/** - Branding and logo documentation
 - **guides/** - UI/UX guides
 
 ### DevOps & Deployment (`devops-deploy/`)
+
 - **deployment/** - Deployment documentation
 - **security/** - Security implementation and reviews
 - **monitoring/** - Health checks and performance
 
 ### Development Notes (`development-notes/`)
+
 - **fixes/** - Bug fixes and error handling
 - **debugging/** - Debugging guides and reports
 - **security/** - Security-related development notes
@@ -88,12 +96,14 @@ The script organizes files into the following categories:
 - **organization/** - Workspace organization
 
 ### Guides (`guides/`)
+
 - **general/** - General guides
 - **quick-start/** - Quick start guides
 - **showcases/** - Showcase documentation
 - **testing/** - Testing guides (accessibility, lighthouse, etc.)
 
 ### Core Documentation (`core/`)
+
 - **architecture/** - System architecture
 - **api/** - API reference and optimization
 - **development/** - Development guides
@@ -102,19 +112,23 @@ The script organizes files into the following categories:
 - **documentation/** - Documentation system docs
 
 ### Features (`features/`)
+
 - **realtime/** - Realtime features
 - **cursor-integration/** - Cursor integration
 - **ab-testing/** - A/B testing
 
 ### Migration (`migration/`)
+
 - **versioning/** - Version migration and updates
 
 ### Uncategorized (`uncategorized/`)
+
 - **general/** - Files that don't match any pattern
 
 ## Files Kept in Root
 
 These files remain in `docs/` root:
+
 - `README.md`
 - `ARCHITECTURE.md`
 - `API_REFERENCE.md`
@@ -141,6 +155,7 @@ Patterns are checked in priority order, so more specific rules take precedence.
 ## Examples
 
 ### Before
+
 ```
 docs/
 ├── SESSION_STATUS_2025-01-28.md
@@ -150,6 +165,7 @@ docs/
 ```
 
 ### After
+
 ```
 docs/
 ├── README.md (kept in root)
@@ -180,6 +196,7 @@ docs/
 ### Too Many Uncategorized Files
 
 If many files end up in `uncategorized/`, you can:
+
 1. Review the patterns in `scripts/auto-categorize-docs.ts`
 2. Add new category rules for common patterns
 3. Manually move files that need special handling
@@ -187,6 +204,7 @@ If many files end up in `uncategorized/`, you can:
 ### Files Not Moving
 
 Check:
+
 - Is the file already in the correct location?
 - Does the target file already exist?
 - Is the file in the `archive/` folder? (skipped by default)
@@ -194,6 +212,7 @@ Check:
 ### Broken Links
 
 After moving files, you may need to:
+
 1. Update internal markdown links
 2. Update code references to documentation
 3. Check for broken references
@@ -203,11 +222,11 @@ After moving files, you may need to:
 To add a new category, edit `scripts/auto-categorize-docs.ts`:
 
 ```typescript
-{ 
-  pattern: /^YOUR_PATTERN/i, 
-  category: "your-category", 
-  subcategory: "your-subcategory", 
-  priority: 100 
+{
+  pattern: /^YOUR_PATTERN/i,
+  category: "your-category",
+  subcategory: "your-subcategory",
+  priority: 100
 }
 ```
 
@@ -228,4 +247,3 @@ To add a new category, edit `scripts/auto-categorize-docs.ts`:
 ---
 
 **Last Updated:** 2025-01-28
-

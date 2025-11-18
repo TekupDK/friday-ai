@@ -40,7 +40,7 @@ Shortwave.ai er designet med fokus på **AI-drevet email intelligence**og**workf
 
 **Implementering for Tekup AI v2:**
 
-```typescript
+````typescript
 // Pseudocode
 interface EmailSummary {
   threadId: string;
@@ -309,7 +309,7 @@ CREATE TABLE label_patterns (
   last_updated TIMESTAMP
 );
 
-```
+````
 
 ---
 

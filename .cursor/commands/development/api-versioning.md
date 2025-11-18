@@ -19,4 +19,3 @@ Design versioning strategy, implement versioned endpoints, document migration, d
 ## OUTPUT
 
 API versioning implemented with migration path.
-

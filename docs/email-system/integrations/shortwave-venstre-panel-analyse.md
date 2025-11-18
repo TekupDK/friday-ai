@@ -4,7 +4,7 @@
 
 ### **🔍 **HVAD HAR SHORTWAVE I VENSTRE PANEL:\*\*
 
-```text
+````text
 ┌─────────────────────────────────┐
 │ 📧 INBOX                         │
 │ ⭐ Starred                       │
@@ -482,7 +482,7 @@
 - Data-driven decisions
 - Competitive edge
 
-```
+````
 
 **Shortwave's venstre panel er focused på email organization med bundles og shortcuts!** 🎯
 

@@ -9,6 +9,7 @@
 CRM Standalone Debug Mode provides isolated access to the CRM module for debugging, development, and testing purposes. This mode allows developers to access and test CRM features without the full application context, making it easier to debug issues and develop new features.
 
 **Key Features:**
+
 - ✅ Isolated CRM module access
 - ✅ Dedicated query client for debugging
 - ✅ Error boundaries for better error handling
@@ -23,11 +24,13 @@ CRM Standalone Debug Mode provides isolated access to the CRM module for debuggi
 Navigate directly to any of these URLs:
 
 **Main Entry Points:**
+
 - `http://localhost:3000/crm-standalone` - Standalone CRM home
 - `http://localhost:3000/crm-standalone/dashboard` - CRM Dashboard
 - `http://localhost:3000/crm/debug` - Alternative entry point
 
 **Specific CRM Routes:**
+
 - `http://localhost:3000/crm-standalone/customers` - Customer List
 - `http://localhost:3000/crm-standalone/customers/:id` - Customer Detail
 - `http://localhost:3000/crm-standalone/leads` - Lead Pipeline
@@ -87,9 +90,9 @@ The standalone mode uses a dedicated QueryClient with optimized settings for deb
 const standaloneQueryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 1,              // Reduced retries for faster error detection
-      staleTime: 30000,     // 30 seconds
-      gcTime: 300000,       // 5 minutes
+      retry: 1, // Reduced retries for faster error detection
+      staleTime: 30000, // 30 seconds
+      gcTime: 300000, // 5 minutes
     },
   },
 });
@@ -102,6 +105,7 @@ const standaloneQueryClient = new QueryClient({
 **Location:** `client/src/pages/crm/CRMStandalone.tsx`
 
 **Key Features:**
+
 - Dedicated QueryClient for isolation
 - Error boundaries for better error handling
 - Lazy-loaded components for performance
@@ -109,6 +113,7 @@ const standaloneQueryClient = new QueryClient({
 - Standalone routing
 
 **Code Structure:**
+
 ```typescript
 export default function CRMStandalone() {
   return (
@@ -156,12 +161,14 @@ Routes are added to the main router:
 ### Error Handling
 
 **Error Boundary:**
+
 - Catches React errors in CRM components
 - Displays user-friendly error message
 - Shows stack trace in development
 - Provides "Try Again" button
 
 **Error Fallback Component:**
+
 ```typescript
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -191,16 +198,19 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 ### Accessing CRM Standalone
 
 **1. Direct Navigation:**
+
 ```
 http://localhost:3000/crm-standalone/dashboard
 ```
 
 **2. From Browser Console:**
+
 ```javascript
-window.location.href = '/crm-standalone/customers';
+window.location.href = "/crm-standalone/customers";
 ```
 
 **3. Programmatic Navigation:**
+
 ```typescript
 import { useLocation } from "wouter";
 
@@ -211,17 +221,20 @@ navigate("/crm-standalone/opportunities");
 ### Testing Specific Features
 
 **Test Document Upload:**
+
 1. Navigate to `/crm-standalone/customers`
 2. Click on a customer
 3. Go to "Documents" tab
 4. Test upload functionality
 
 **Test Lead Conversion:**
+
 1. Navigate to `/crm-standalone/leads`
 2. Click on a lead
 3. Test "Convert to Customer" functionality
 
 **Test Opportunity Pipeline:**
+
 1. Navigate to `/crm-standalone/opportunities`
 2. Test drag-and-drop functionality
 3. Test opportunity creation/editing
@@ -269,6 +282,7 @@ navigate("/crm-standalone/opportunities");
 **Issue: "Cannot access /crm-standalone"**
 
 **Solution:**
+
 - Ensure backend server is running (`pnpm dev`)
 - Check that route is registered in `App.tsx`
 - Verify no authentication redirects are blocking access
@@ -276,6 +290,7 @@ navigate("/crm-standalone/opportunities");
 **Issue: "Components not loading"**
 
 **Solution:**
+
 - Check browser console for errors
 - Verify lazy loading is working
 - Check network tab for failed requests
@@ -283,6 +298,7 @@ navigate("/crm-standalone/opportunities");
 **Issue: "tRPC calls failing"**
 
 **Solution:**
+
 - Verify backend server is running
 - Check CORS settings
 - Verify authentication (if required)
@@ -303,10 +319,11 @@ navigate("/crm-standalone/opportunities");
 ### Development Workflow
 
 1. **Start Servers:**
+
    ```bash
    # Terminal 1
    pnpm dev
-   
+
    # Terminal 2
    pnpm dev:vite
    ```
@@ -372,7 +389,7 @@ Currently, standalone mode uses the same authentication as the main app. For tru
 All CRM components are lazy-loaded to reduce initial bundle size:
 
 ```typescript
-const CRMDashboardStandalone = React.lazy(() => 
+const CRMDashboardStandalone = React.lazy(() =>
   import("./CRMDashboard").then(m => ({ default: m.default }))
 );
 ```
@@ -380,6 +397,7 @@ const CRMDashboardStandalone = React.lazy(() =>
 ### Query Client Optimization
 
 Standalone mode uses optimized query client settings:
+
 - Reduced retries (faster error detection)
 - Shorter stale time (fresher data)
 - Longer cache time (better performance)
@@ -414,4 +432,3 @@ Standalone mode uses optimized query client settings:
    - Built-in performance metrics
    - Component render times
    - API call durations
-

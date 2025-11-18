@@ -23,6 +23,7 @@ Analysen identificerer **kritiske manglende dele** i Friday AI Chat projektet, i
 ### ✅ Implementeret
 
 **Core Features:**
+
 - ✅ Email management (list, read, send, archive)
 - ✅ Calendar integration (view, create, edit events)
 - ✅ Task management (CRUD operations)
@@ -34,6 +35,7 @@ Analysen identificerer **kritiske manglende dele** i Friday AI Chat projektet, i
 - ✅ Error handling framework (retry, circuit breakers)
 
 **Infrastructure:**
+
 - ✅ tRPC API layer (type-safe)
 - ✅ Drizzle ORM (database access)
 - ✅ Rate limiting (Redis-based)
@@ -43,17 +45,20 @@ Analysen identificerer **kritiske manglende dele** i Friday AI Chat projektet, i
 ### 🚧 Delvist Implementeret
 
 **Email Tab:**
+
 - 🚧 Pipeline workflow (UI exists, automation missing)
 - 🚧 Auto-labeling (partial implementation)
 - 🚧 Email templates (structure exists, content missing)
 - 🚧 Bulk operations (UI exists, backend incomplete)
 
 **AI Features:**
+
 - 🚧 Email summaries (generation works, caching incomplete)
 - 🚧 Label suggestions (generation works, auto-apply missing)
 - 🚧 Lead intelligence (data exists, AI integration incomplete)
 
 **CRM:**
+
 - 🚧 Segment management (UI exists, backend endpoint missing)
 - 🚧 Document upload (UI exists, Supabase Storage missing)
 - 🚧 Opportunity pipeline (UI exists, drag-drop incomplete)
@@ -61,6 +66,7 @@ Analysen identificerer **kritiske manglende dele** i Friday AI Chat projektet, i
 ### ❌ Ikke Implementeret
 
 **Critical Missing:**
+
 - ❌ SMTP inbound email server (Gmail rate limit workaround)
 - ❌ Email notification service (SendGrid/AWS SES)
 - ❌ SMS notification service (Twilio/AWS SNS)
@@ -69,6 +75,7 @@ Analysen identificerer **kritiske manglende dele** i Friday AI Chat projektet, i
 - ❌ Auto-invoice creation from calendar events
 
 **Important Missing:**
+
 - ❌ Email template system (complete)
 - ❌ Bulk email operations (complete)
 - ❌ Pipeline automation (auto-transitions)
@@ -87,19 +94,22 @@ Analysen identificerer **kritiske manglende dele** i Friday AI Chat projektet, i
 **Beskrivelse:**  
 Gmail API rate limits (429 errors) blokerer alle email features. Self-hosted SMTP server via `inbound-email` er nødvendig for at omgå rate limits.
 
-**Impact:**  
+**Impact:**
+
 - Blokerer alle email operations
 - Forhindrer production deployment
 - Påvirker user experience kritisk
 
-**Blocking:**  
+**Blocking:**
+
 - Email tab functionality
 - Lead import automation
 - Calendar event creation from emails
 
 **Estimated:** 1-2 dage
 
-**Dependencies:**  
+**Dependencies:**
+
 - Docker setup
 - DNS configuration (MX records)
 - Google Workspace forwarding setup
@@ -108,6 +118,7 @@ Gmail API rate limits (429 errors) blokerer alle email features. Self-hosted SMT
 **Status:** 🚧 Roadmap exists (`docs/email-system/email-center/EMAIL_TAB_COMPLETE_ROADMAP.md`)
 
 **Action Items:**
+
 - [ ] Clone `github.com/sendbetter/inbound-email`
 - [ ] Setup Docker container
 - [ ] Configure DNS (MX records for `parse.tekup.dk`)
@@ -122,19 +133,22 @@ Gmail API rate limits (429 errors) blokerer alle email features. Self-hosted SMT
 **Beskrivelse:**  
 Email notifications (SendGrid, AWS SES) er ikke implementeret. Users modtager ikke notifikationer om vigtige events.
 
-**Impact:**  
+**Impact:**
+
 - Users misser vigtige updates
 - Ingen alerts for errors
 - Manglende user engagement
 
-**Blocking:**  
+**Blocking:**
+
 - User notifications
 - Error alerts
 - Task reminders
 
 **Estimated:** 4-6 timer
 
-**Dependencies:**  
+**Dependencies:**
+
 - SendGrid eller AWS SES account
 - API keys configuration
 - Email templates
@@ -142,6 +156,7 @@ Email notifications (SendGrid, AWS SES) er ikke implementeret. Users modtager ik
 **Status:** ❌ TODO comment i `server/notification-service.ts:70`
 
 **Action Items:**
+
 - [ ] Choose provider (SendGrid recommended)
 - [ ] Setup account and API keys
 - [ ] Create email templates
@@ -156,19 +171,22 @@ Email notifications (SendGrid, AWS SES) er ikke implementeret. Users modtager ik
 **Beskrivelse:**  
 6 filer har TypeScript compilation errors der forhindrer clean builds.
 
-**Impact:**  
+**Impact:**
+
 - Build failures
 - Type safety issues
 - Development friction
 
-**Blocking:**  
+**Blocking:**
+
 - Production deployment
 - Type checking
 - Developer experience
 
 **Estimated:** 2-4 timer
 
-**Dependencies:**  
+**Dependencies:**
+
 - Code review
 - Type definitions
 - Schema updates
@@ -176,6 +194,7 @@ Email notifications (SendGrid, AWS SES) er ikke implementeret. Users modtager ik
 **Status:** ⚠️ Active errors identified
 
 **Files with Errors:**
+
 1. `client/src/pages/crm/CustomerList.tsx` - Type mismatch
 2. `server/__tests__/crm-workflow.test.ts` - Missing properties
 3. `client/src/pages/crm/OpportunityPipeline.tsx` - Export issues
@@ -184,6 +203,7 @@ Email notifications (SendGrid, AWS SES) er ikke implementeret. Users modtager ik
 6. `client/src/components/crm/SegmentActions.tsx` - Argument mismatch
 
 **Action Items:**
+
 - [ ] Fix CustomerList type mismatch
 - [ ] Fix CRM workflow test types
 - [ ] Export OpportunityCardData and OpportunityStage
@@ -198,18 +218,21 @@ Email notifications (SendGrid, AWS SES) er ikke implementeret. Users modtager ik
 **Beskrivelse:**  
 Calendar reminders er ikke implementeret. Users får ikke påmindelser om kommende events.
 
-**Impact:**  
+**Impact:**
+
 - Missed appointments
 - Poor user experience
 - Lost revenue opportunities
 
-**Blocking:**  
+**Blocking:**
+
 - Calendar feature completeness
 - User satisfaction
 
 **Estimated:** 4-6 timer
 
-**Dependencies:**  
+**Dependencies:**
+
 - Notification service (item #2)
 - Calendar event data
 - Scheduling system
@@ -217,6 +240,7 @@ Calendar reminders er ikke implementeret. Users får ikke påmindelser om kommen
 **Status:** ❌ TODO comment i `client/src/components/inbox/CalendarTab.tsx:1288`
 
 **Action Items:**
+
 - [ ] Design reminder system
 - [ ] Implement scheduling logic
 - [ ] Integrate with notification service
@@ -230,18 +254,21 @@ Calendar reminders er ikke implementeret. Users får ikke påmindelser om kommen
 **Beskrivelse:**  
 A/B test metrics bliver ikke gemt i database. Ingen historisk data for analysis.
 
-**Impact:**  
+**Impact:**
+
 - Ingen data-driven decisions
 - Manglende insights
 - Incomplete feature
 
-**Blocking:**  
+**Blocking:**
+
 - A/B testing effectiveness
 - Product decisions
 
 **Estimated:** 3-4 timer
 
-**Dependencies:**  
+**Dependencies:**
+
 - Database schema
 - Metrics storage logic
 - Analysis queries
@@ -249,6 +276,7 @@ A/B test metrics bliver ikke gemt i database. Ingen historisk data for analysis.
 **Status:** ❌ TODO comments i `server/_core/ab-testing.ts:156,190`
 
 **Action Items:**
+
 - [ ] Design metrics schema
 - [ ] Create database table
 - [ ] Implement storage logic
@@ -262,18 +290,21 @@ A/B test metrics bliver ikke gemt i database. Ingen historisk data for analysis.
 **Beskrivelse:**  
 Når "Finance" label tilføjes til email, skal der automatisk oprettes Billy invoice. Dette er ikke implementeret.
 
-**Impact:**  
+**Impact:**
+
 - Manual invoice creation
 - Lost revenue
 - Inefficient workflow
 
-**Blocking:**  
+**Blocking:**
+
 - Email pipeline automation
 - Revenue tracking
 
 **Estimated:** 6-8 timer
 
-**Dependencies:**  
+**Dependencies:**
+
 - Billy API integration (exists)
 - Email parsing logic
 - Invoice creation logic
@@ -282,6 +313,7 @@ Når "Finance" label tilføjes til email, skal der automatisk oprettes Billy inv
 **Status:** 🚧 Roadmap exists (`docs/email-system/email-center/EMAIL_TAB_COMPLETE_ROADMAP.md`)
 
 **Action Items:**
+
 - [ ] Parse email for task details
 - [ ] Extract hours and service type
 - [ ] Calculate price (349 kr/t incl. moms)
@@ -299,7 +331,8 @@ Når "Finance" label tilføjes til email, skal der automatisk oprettes Billy inv
 **Beskrivelse:**  
 Email templates for common scenarios (lead response, quote follow-up, payment reminder) mangler.
 
-**Impact:**  
+**Impact:**
+
 - Inconsistent communication
 - Time-consuming manual emails
 - Poor user experience
@@ -307,6 +340,7 @@ Email templates for common scenarios (lead response, quote follow-up, payment re
 **Estimated:** 6-8 timer
 
 **Action Items:**
+
 - [ ] Design template system
 - [ ] Create template storage
 - [ ] Implement variable substitution
@@ -320,7 +354,8 @@ Email templates for common scenarios (lead response, quote follow-up, payment re
 **Beskrivelse:**  
 `updateSegment` endpoint mangler i backend. Frontend har TODO comment.
 
-**Impact:**  
+**Impact:**
+
 - Incomplete feature
 - User frustration
 - Data inconsistency
@@ -330,6 +365,7 @@ Email templates for common scenarios (lead response, quote follow-up, payment re
 **Status:** ❌ TODO comment i `client/src/components/crm/SegmentForm.tsx:95`
 
 **Action Items:**
+
 - [ ] Implement updateSegment endpoint
 - [ ] Add validation
 - [ ] Test endpoint
@@ -342,7 +378,8 @@ Email templates for common scenarios (lead response, quote follow-up, payment re
 **Beskrivelse:**  
 Document upload UI eksisterer, men Supabase Storage integration mangler.
 
-**Impact:**  
+**Impact:**
+
 - Incomplete feature
 - User frustration
 - Missing functionality
@@ -352,6 +389,7 @@ Document upload UI eksisterer, men Supabase Storage integration mangler.
 **Status:** ❌ TODO comment i `client/src/components/crm/DocumentUploader.tsx:69`
 
 **Action Items:**
+
 - [ ] Setup Supabase Storage bucket
 - [ ] Implement upload logic
 - [ ] Add file validation
@@ -364,7 +402,8 @@ Document upload UI eksisterer, men Supabase Storage integration mangler.
 **Beskrivelse:**  
 Auto-transitions mellem pipeline stages baseret på actions mangler.
 
-**Impact:**  
+**Impact:**
+
 - Manual workflow
 - Inefficient process
 - User frustration
@@ -372,6 +411,7 @@ Auto-transitions mellem pipeline stages baseret på actions mangler.
 **Estimated:** 4-6 timer
 
 **Action Items:**
+
 - [ ] Design transition rules
 - [ ] Implement auto-transition logic
 - [ ] Add configuration UI
@@ -384,7 +424,8 @@ Auto-transitions mellem pipeline stages baseret på actions mangler.
 **Beskrivelse:**  
 Advanced search med multiple filters, date ranges, og complex queries mangler.
 
-**Impact:**  
+**Impact:**
+
 - Limited search capabilities
 - Poor user experience
 - Inefficient data access
@@ -392,6 +433,7 @@ Advanced search med multiple filters, date ranges, og complex queries mangler.
 **Estimated:** 6-8 timer
 
 **Action Items:**
+
 - [ ] Design filter system
 - [ ] Implement backend filters
 - [ ] Add UI components
@@ -404,7 +446,8 @@ Advanced search med multiple filters, date ranges, og complex queries mangler.
 **Beskrivelse:**  
 Email threading kan forbedres med bedre grouping og conversation view.
 
-**Impact:**  
+**Impact:**
+
 - Confusing email organization
 - Poor user experience
 - Lost context
@@ -412,6 +455,7 @@ Email threading kan forbedres med bedre grouping og conversation view.
 **Estimated:** 8-10 timer
 
 **Action Items:**
+
 - [ ] Analyze threading logic
 - [ ] Improve grouping algorithm
 - [ ] Enhance conversation view
@@ -424,7 +468,8 @@ Email threading kan forbedres med bedre grouping og conversation view.
 **Beskrivelse:**  
 Export af data til CSV og PDF mangler.
 
-**Impact:**  
+**Impact:**
+
 - Limited data portability
 - Manual reporting
 - User frustration
@@ -432,6 +477,7 @@ Export af data til CSV og PDF mangler.
 **Estimated:** 4-6 timer
 
 **Action Items:**
+
 - [ ] Implement CSV export
 - [ ] Implement PDF export
 - [ ] Add export UI
@@ -444,7 +490,8 @@ Export af data til CSV og PDF mangler.
 **Beskrivelse:**  
 Bulk operations (archive, delete, label) er delvist implementeret men mangler completion.
 
-**Impact:**  
+**Impact:**
+
 - Inefficient workflows
 - Time-consuming operations
 - User frustration
@@ -452,6 +499,7 @@ Bulk operations (archive, delete, label) er delvist implementeret men mangler co
 **Estimated:** 4-6 timer
 
 **Action Items:**
+
 - [ ] Complete bulk archive
 - [ ] Complete bulk delete
 - [ ] Complete bulk label
@@ -465,7 +513,8 @@ Bulk operations (archive, delete, label) er delvist implementeret men mangler co
 **Beskrivelse:**  
 SMS notifications (Twilio, AWS SNS) er ikke implementeret.
 
-**Impact:**  
+**Impact:**
+
 - Limited notification channels
 - Missed urgent alerts
 - Poor user experience
@@ -475,6 +524,7 @@ SMS notifications (Twilio, AWS SNS) er ikke implementeret.
 **Status:** ❌ TODO comment i `server/notification-service.ts:235`
 
 **Action Items:**
+
 - [ ] Choose provider (Twilio recommended)
 - [ ] Setup account
 - [ ] Implement sendSMS function
@@ -488,7 +538,8 @@ SMS notifications (Twilio, AWS SNS) er ikke implementeret.
 **Beskrivelse:**  
 Token usage tracking er ikke 100% accurate. Mangler extraction fra LLM response.
 
-**Impact:**  
+**Impact:**
+
 - Inaccurate cost tracking
 - Budget planning issues
 - Resource management
@@ -498,6 +549,7 @@ Token usage tracking er ikke 100% accurate. Mangler extraction fra LLM response.
 **Status:** ❌ TODO comment i `server/_core/streaming.ts:105`
 
 **Action Items:**
+
 - [ ] Extract usage from LLM response
 - [ ] Update tracking logic
 - [ ] Test accuracy
@@ -510,7 +562,8 @@ Token usage tracking er ikke 100% accurate. Mangler extraction fra LLM response.
 **Beskrivelse:**  
 Auto-actions for emails er delvist implementeret men mangler completion.
 
-**Impact:**  
+**Impact:**
+
 - Incomplete automation
 - Manual work required
 - Inefficient processes
@@ -520,6 +573,7 @@ Auto-actions for emails er delvist implementeret men mangler completion.
 **Status:** ❌ TODO comment i `server/email-monitor.ts:433`
 
 **Action Items:**
+
 - [ ] Complete auto-action rules
 - [ ] Implement action execution
 - [ ] Add configuration UI
@@ -532,7 +586,8 @@ Auto-actions for emails er delvist implementeret men mangler completion.
 **Beskrivelse:**  
 Manglende tests for validation errors, API failures, og error message verification.
 
-**Impact:**  
+**Impact:**
+
 - Unknown bugs
 - Poor code quality
 - Production risks
@@ -542,6 +597,7 @@ Manglende tests for validation errors, API failures, og error message verificati
 **Status:** ⚠️ Documented i `docs/development-notes/fixes/ERROR_HANDLING_TEST_COVERAGE.md`
 
 **Action Items:**
+
 - [ ] Add validation error tests
 - [ ] Add API failure tests
 - [ ] Add error message verification
@@ -743,4 +799,3 @@ SMS, calendar automation, og other channel integrations.
 
 **Last Updated:** 2025-01-28  
 **Next Review:** 2025-02-04
-

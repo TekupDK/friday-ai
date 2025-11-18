@@ -1,6 +1,6 @@
 /**
  * Pre-execution Hook: Check Dependencies
- * 
+ *
  * Checks if required dependencies are installed and up to date
  */
 
@@ -26,4 +26,3 @@ export async function checkDependencies(): Promise<DependencyCheck> {
     outdated,
   };
 }
-

@@ -22,6 +22,7 @@
 **Issue:** Missing return statement after null check
 
 **Current Code:**
+
 ```typescript
 if (!subscription) {
   return null;
@@ -33,6 +34,7 @@ return <SubscriptionStatusBadge status={subscription.status} />;
 **Issue:** There's a blank line between the return null and the next return, but more importantly, the component could be simplified.
 
 **Suggested Fix:**
+
 ```typescript
 function CustomerSubscriptionBadge({ customerId }: { customerId: number }) {
   const { data: subscription } = trpc.subscription.getByCustomer.useQuery(
@@ -56,6 +58,7 @@ function CustomerSubscriptionBadge({ customerId }: { customerId: number }) {
 **Issue:** Large inline CSV export logic should be extracted to a utility function
 
 **Current Code:**
+
 ```typescript
 onClick={() => {
   // CSV escape function
@@ -69,6 +72,7 @@ onClick={() => {
 **Impact:** Code duplication, harder to test, harder to maintain
 
 **Suggested Fix:**
+
 ```typescript
 // utils/csv-export.ts
 export function exportCustomersToCSV(customers: CustomerProfile[]) {
@@ -152,11 +156,13 @@ export function exportCustomersToCSV(customers: CustomerProfile[]) {
 **Issue:** Using `any` type for CSV escape function parameter
 
 **Current Code:**
+
 ```typescript
 const csvEscape = (value: any): string => {
 ```
 
 **Suggested Fix:**
+
 ```typescript
 const csvEscape = (value: unknown): string => {
 ```
@@ -171,6 +177,7 @@ const csvEscape = (value: unknown): string => {
 **Issue:** Basic validation, could use Zod schema
 
 **Current Code:**
+
 ```typescript
 const handleCreate = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -183,24 +190,27 @@ const handleCreate = async (e: React.FormEvent) => {
 ```
 
 **Suggested Fix:**
+
 ```typescript
 const createCustomerSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
-  status: z.enum(["new", "active", "inactive", "vip", "at_risk"]).default("new"),
+  status: z
+    .enum(["new", "active", "inactive", "vip", "at_risk"])
+    .default("new"),
   customerType: z.enum(["private", "erhverv"]).default("private"),
 });
 
 const handleCreate = async (e: React.FormEvent) => {
   e.preventDefault();
-  
+
   const result = createCustomerSchema.safeParse(formData);
   if (!result.success) {
     toast.error(result.error.errors[0].message);
     return;
   }
-  
+
   await createMutation.mutateAsync(result.data);
 };
 ```
@@ -215,17 +225,20 @@ const handleCreate = async (e: React.FormEvent) => {
 **Issue:** Long aria-label could be simplified
 
 **Current Code:**
+
 ```typescript
 aria-label={`Customer: ${customer.name}${customer.email ? `, ${customer.email}` : ""}${customer.phone ? `, ${customer.phone}` : ""}. Status: ${customer.status}. Click to view details.`}
 ```
 
 **Suggested Fix:**
+
 ```typescript
 aria-label={`View customer ${customer.name}`}
 aria-describedby={`customer-${customer.id}-description`}
 ```
 
 And add:
+
 ```typescript
 <div id={`customer-${customer.id}-description`} className="sr-only">
   {customer.email && `Email: ${customer.email}. `}
@@ -332,4 +345,3 @@ The code follows Friday AI Chat patterns and best practices. The suggested impro
 ---
 
 **Overall Code Quality:** 8.5/10
-

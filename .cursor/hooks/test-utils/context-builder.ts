@@ -1,6 +1,6 @@
 /**
  * Context Builder
- * 
+ *
  * Builder for creating test execution contexts
  */
 
@@ -99,4 +99,3 @@ export class ContextBuilder {
       .build(category);
   }
 }
-

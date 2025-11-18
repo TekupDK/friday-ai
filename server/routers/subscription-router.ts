@@ -1,6 +1,6 @@
 /**
  * Subscription Router
- * 
+ *
  * tRPC endpoints for subscription management
  */
 
@@ -77,7 +77,9 @@ export const subscriptionRouter = router({
   list: protectedProcedure
     .input(
       z.object({
-        status: z.enum(["active", "paused", "cancelled", "expired", "all"]).optional(),
+        status: z
+          .enum(["active", "paused", "cancelled", "expired", "all"])
+          .optional(),
         customerProfileId: z.number().int().positive().optional(),
       })
     )
@@ -136,7 +138,9 @@ export const subscriptionRouter = router({
   getByCustomer: protectedProcedure
     .input(z.object({ customerProfileId: z.number().int().positive() }))
     .query(async ({ ctx, input }) => {
-      const { getSubscriptionByCustomerId } = await import("../subscription-db");
+      const { getSubscriptionByCustomerId } = await import(
+        "../subscription-db"
+      );
       const subscription = await getSubscriptionByCustomerId(
         input.customerProfileId,
         ctx.user.id
@@ -461,7 +465,10 @@ export const subscriptionRouter = router({
     .input(
       z.object({
         subscriptionId: z.number().int().positive(),
-        optimizeFor: z.enum(["value", "convenience", "efficiency"]).optional().default("value"),
+        optimizeFor: z
+          .enum(["value", "convenience", "efficiency"])
+          .optional()
+          .default("value"),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -484,7 +491,9 @@ export const subscriptionRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      const { generateUpsellOpportunities } = await import("../subscription-ai");
+      const { generateUpsellOpportunities } = await import(
+        "../subscription-ai"
+      );
       return await generateUpsellOpportunities(
         input.customerProfileId,
         ctx.user.id,
@@ -528,5 +537,3 @@ export const subscriptionRouter = router({
       return await processMonthlyRenewals(input.userId || ctx.user.id);
     }),
 });
-
-

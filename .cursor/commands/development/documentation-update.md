@@ -31,6 +31,7 @@ Update or create documentation following Friday AI Chat documentation patterns e
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing documentation
 - `codebase_search` - Find code to document
 - `grep` - Search for patterns
@@ -38,6 +39,7 @@ Update or create documentation following Friday AI Chat documentation patterns e
 - `search_replace` - Update existing docs
 
 **DO NOT:**
+
 - Skip examples
 - Miss troubleshooting
 - Ignore patterns
@@ -70,6 +72,7 @@ Write clear, structured documentation with examples, code snippets, and troubles
 ## VERIFICATION
 
 After updating:
+
 - ✅ Documentation clear
 - ✅ Examples included
 - ✅ Structure correct
@@ -78,4 +81,3 @@ After updating:
 ## OUTPUT
 
 Documentation updated/created with proper structure and examples.
-

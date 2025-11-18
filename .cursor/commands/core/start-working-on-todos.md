@@ -30,6 +30,7 @@ Take a TODO list and START IMPLEMENTING the highest priority tasks RIGHT NOW. Be
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read code to understand tasks
 - `codebase_search` - Find patterns
 - `grep` - Search for related code
@@ -37,6 +38,7 @@ Take a TODO list and START IMPLEMENTING the highest priority tasks RIGHT NOW. Be
 - `run_terminal_cmd` - Run tests and checks
 
 **DO NOT:**
+
 - Wait for approval
 - Just plan without implementing
 - Skip tests
@@ -69,12 +71,14 @@ Before starting, think through:
 ## CRITICAL: START NOW
 
 **DO NOT:**
+
 - Show a list and wait for approval
 - Ask "should I start?"
 - Just plan without implementing
 - Wait for user confirmation
 
 **DO:**
+
 - Start implementing the first task immediately
 - Make actual code changes using tools
 - Complete tasks and move to next
@@ -82,19 +86,19 @@ Before starting, think through:
 
 ## STEPS
 
-1) **Quickly parse TODO list:**
+1. **Quickly parse TODO list:**
    - Read all tasks from context
    - Identify priorities (P1 > P2 > P3)
    - Note sizes (S/M/L/XL)
    - Check dependencies and blockers
 
-2) **Select first task NOW:**
+2. **Select first task NOW:**
    - Highest priority available
    - Smallest size if same priority
    - No blockers
    - Dependencies satisfied
 
-3) **START IMPLEMENTING IMMEDIATELY:**
+3. **START IMPLEMENTING IMMEDIATELY:**
    - Read task description
    - Check referenced files
    - **MAKE CODE CHANGES NOW** using tools
@@ -103,11 +107,11 @@ Before starting, think through:
    - Run typecheck: `pnpm check`
    - Run tests if applicable
 
-4) **Mark complete:**
+4. **Mark complete:**
    - Update TODO: `- [ ]` → `- [x]`
    - Note completion
 
-5) **Continue immediately:**
+5. **Continue immediately:**
    - Select next task
    - Implement without waiting
    - Repeat until several done or blocked
@@ -117,6 +121,7 @@ Before starting, think through:
 **Start immediately with:** "Starting implementation now. Beginning with [task name]..."
 
 For each task:
+
 - **Task:** [Name]
 - **Status:** ✅ Completed
 - **Files Modified:** [actual files changed]
@@ -125,6 +130,7 @@ For each task:
 - **Verification:** [typecheck/test results]
 
 **After completing tasks:**
+
 - Summary of all work completed
 - Updated TODO list with `- [x]` markers
 - Next tasks ready to implement
@@ -139,4 +145,3 @@ For each task:
 - **SHOW PROGRESS:** Report as you complete each task
 - **KEEP GOING:** Continue until several tasks done or truly blocked
 - **BE PROACTIVE:** If unclear, make reasonable assumptions and proceed
-

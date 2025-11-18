@@ -24,6 +24,7 @@ Added two new routes for subscription pages:
 ```
 
 **Routes:**
+
 - `/subscriptions` - Subscription Management Page
 - `/subscriptions/plans` - Subscription Landing Page (Plan Selection)
 
@@ -63,6 +64,7 @@ Added subscription menu item to user dropdown:
 ## Navigation Structure
 
 ### Header Navigation (Desktop)
+
 - Dashboard
 - Customers
 - Leads
@@ -70,6 +72,7 @@ Added subscription menu item to user dropdown:
 - **Subscriptions** ← NEW
 
 ### User Menu (Dropdown)
+
 - Profile
 - Settings
 - Documentation
@@ -118,4 +121,3 @@ Users can now access subscription pages from:
 
 **Last Updated:** January 28, 2025  
 **Status:** ✅ Complete - Routes and navigation added
-

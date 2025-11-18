@@ -14,7 +14,7 @@ services:
       MYSQL_USER: friday_user
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-friday_password}
     ports:
-      - "3307:3306"  # Use 3307 to avoid conflict with local MySQL
+      - "3307:3306" # Use 3307 to avoid conflict with local MySQL
     volumes:
       - mysql_dev_data:/var/lib/mysql
     networks:
@@ -59,4 +59,3 @@ networks:
 volumes:
   mysql_dev_data:
     name: friday-mysql-dev-data
-

@@ -19,4 +19,3 @@ Lazy load routes, lazy load components, lazy load images, optimize loading.
 ## OUTPUT
 
 Lazy loading implemented with performance improvements.
-

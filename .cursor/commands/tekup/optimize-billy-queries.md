@@ -31,6 +31,7 @@ Optimize Billy.dk API queries to reduce API calls, improve performance, and redu
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find Billy API calls
 - `read_file` - Read Billy integration files
 - `grep` - Search for API call patterns
@@ -38,6 +39,7 @@ Optimize Billy.dk API queries to reduce API calls, improve performance, and redu
 - `read_lints` - Check for errors
 
 **DO NOT:**
+
 - Break existing functionality
 - Skip caching opportunities
 - Ignore rate limits
@@ -73,7 +75,10 @@ Before optimizing, think through:
 
 ```typescript
 // server/billy.ts
-const customerCache = new Map<string, { customer: BillyContact; timestamp: number }>();
+const customerCache = new Map<
+  string,
+  { customer: BillyContact; timestamp: number }
+>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 export async function searchCustomerByEmail(
@@ -199,32 +204,38 @@ Provide optimization results:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Optimization Analysis
+
 - **Current API Calls:** [X] per [time period]
 - **Optimized API Calls:** [Y] per [time period]
 - **Reduction:** [Z]%
 
 ## Optimizations Applied
+
 - ✅ Caching layer added
 - ✅ Batch operations implemented
 - ✅ Request deduplication added
 - ✅ Query parameters optimized
 
 ## Performance Improvements
+
 - **Before:** [X] ms average response time
 - **After:** [Y] ms average response time
 - **Improvement:** [Z]%
 
 ## Cost Reduction
+
 - **Before:** [X] API calls/day
 - **After:** [Y] API calls/day
 - **Savings:** [Z] API calls/day
 
 ## Testing
+
 - ✅ Performance - [Result]
 - ✅ Data accuracy - [Result]
 - ✅ Rate limits - [Result]
 
 ## Recommendations
+
 1. [Recommendation 1]
 2. [Recommendation 2]
 ```
@@ -241,4 +252,3 @@ Provide optimization results:
 ---
 
 **CRITICAL:** Start by analyzing current API usage, then implement optimizations systematically.
-

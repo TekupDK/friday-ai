@@ -1,6 +1,6 @@
 /**
  * Mock Success Hook
- * 
+ *
  * Always succeeds - used for testing
  */
 
@@ -17,4 +17,3 @@ export default async function successHook(
     },
   };
 }
-

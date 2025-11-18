@@ -176,9 +176,7 @@ describe("EmailTabV2 - Error States", () => {
       renderComponent();
 
       // Check error UI elements
-      expect(
-        screen.getByText("Kunne ikke hente emails")
-      ).toBeInTheDocument();
+      expect(screen.getByText("Kunne ikke hente emails")).toBeInTheDocument();
       expect(
         screen.getByText("Der opstod en fejl. Prøv igen.")
       ).toBeInTheDocument();
@@ -198,7 +196,7 @@ describe("EmailTabV2 - Error States", () => {
       const { container } = renderComponent();
 
       // AlertCircle icon should be in the DOM
-      const icon = container.querySelector('svg');
+      const icon = container.querySelector("svg");
       expect(icon).toBeInTheDocument();
     });
 
@@ -303,9 +301,7 @@ describe("EmailTabV2 - Error States", () => {
       renderComponent();
 
       // Error UI should show even when fetching
-      expect(
-        screen.getByText("Kunne ikke hente emails")
-      ).toBeInTheDocument();
+      expect(screen.getByText("Kunne ikke hente emails")).toBeInTheDocument();
     });
 
     it("should disable retry button when fetching", () => {
@@ -374,7 +370,7 @@ describe("EmailTabV2 - Error States", () => {
 
       // Main email interface should be visible
       // Check for EmailSearchV2 presence (search input)
-      const searchElements = screen.queryAllByRole('textbox');
+      const searchElements = screen.queryAllByRole("textbox");
       expect(searchElements.length).toBeGreaterThan(0);
     });
   });

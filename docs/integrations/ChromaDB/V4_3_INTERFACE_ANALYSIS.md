@@ -28,7 +28,7 @@
 
 **Implementation:**
 
-```typescript
+````typescript
 const billy = await getInvoice(invoiceId);
 const invoicedHours = billy.lines.reduce((sum, line) => sum + line.quantity, 0);
 
@@ -332,7 +332,7 @@ interface V4_3_Lead {
   quoteRecommendation: QuoteRecommendation;
 }
 
-```
+````
 
 ---
 

@@ -1,6 +1,6 @@
 /**
  * Configuration Loader Tests
- * 
+ *
  * Tests for hook configuration loading
  */
 
@@ -18,7 +18,7 @@ import { ConfigBuilder } from "../test-utils/config-builder";
 import type { HookCategory } from "../types";
 
 // Mock fs module
-vi.mock("fs", async (importOriginal) => {
+vi.mock("fs", async importOriginal => {
   const actual = await importOriginal<typeof import("fs")>();
   return {
     ...actual,
@@ -28,7 +28,7 @@ vi.mock("fs", async (importOriginal) => {
 });
 
 // Mock url module to avoid import.meta.url issues in tests
-vi.mock("url", async (importOriginal) => {
+vi.mock("url", async importOriginal => {
   const actual = await importOriginal<typeof import("url")>();
   return {
     ...actual,
@@ -108,7 +108,7 @@ describe.skip("Configuration Loader", () => {
 
       const hooks = getHooksForCategory("pre-execution");
       expect(hooks.length).toBeGreaterThan(0);
-      hooks.forEach((hook) => {
+      hooks.forEach(hook => {
         expect(hook.enabled).toBe(true);
       });
     });
@@ -134,7 +134,9 @@ describe.skip("Configuration Loader", () => {
       vi.mocked(readFileSync).mockReturnValue(JSON.stringify(config));
 
       const hooks = getHooksForCategory("pre-execution");
-      expect(hooks[0].priority).toBeLessThanOrEqual(hooks[1]?.priority || Infinity);
+      expect(hooks[0].priority).toBeLessThanOrEqual(
+        hooks[1]?.priority || Infinity
+      );
     });
   });
 
@@ -173,4 +175,3 @@ describe.skip("Configuration Loader", () => {
     });
   });
 });
-

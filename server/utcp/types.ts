@@ -1,6 +1,6 @@
 /**
  * UTCP Type Definitions
- * 
+ *
  * TypeScript types for UTCP (Universal Tool Calling Protocol)
  * Follows UTCP specification: https://utcp.io/spec
  */
@@ -48,7 +48,10 @@ export interface UTCPDatabaseHandler {
   orderBy?: string;
 }
 
-export type UTCPHandler = UTCPHTTPHandler | UTCPCLIHandler | UTCPDatabaseHandler;
+export type UTCPHandler =
+  | UTCPHTTPHandler
+  | UTCPCLIHandler
+  | UTCPDatabaseHandler;
 
 /**
  * UTCP Tool Definition
@@ -94,4 +97,3 @@ export interface UTCPToolResult {
     correlationId?: string;
   };
 }
-

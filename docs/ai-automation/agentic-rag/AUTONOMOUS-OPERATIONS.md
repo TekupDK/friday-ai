@@ -36,7 +36,7 @@ The autonomous operations system enables Friday AI to automatically:
 
 ## Architecture
 
-```text
+````text
 ┌─────────────────────────────────────────────────────────────┐
 │                    v4.3.5 Lead Pipeline                      │
 │  (ChromaDB + AI Enhancement + Deduplication + Metrics)       │
@@ -507,7 +507,7 @@ OWNER_OPEN_ID=your-owner-openid
 
 # Or create user by logging into Friday AI once
 
-```
+````
 
 **Problem**: "Owner user not found"
 **Solution**: The script now auto-creates the user via `upsertUser` if missing.

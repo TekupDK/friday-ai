@@ -52,11 +52,17 @@ interface TaskAnalysis {
   invoiceId: number | null;
   emailThreadId: string | null;
   notes: string[];
-  
+
   // Klager og henvendelser
   complaints: Array<{
     date: string;
-    type: "klage" | "henvendelse" | "problem" | "forsinkelse" | "kvalitet" | "pris";
+    type:
+      | "klage"
+      | "henvendelse"
+      | "problem"
+      | "forsinkelse"
+      | "kvalitet"
+      | "pris";
     description: string;
     resolved: boolean;
     resolution?: string;
@@ -83,7 +89,8 @@ function parseTeamInfo(event: any): string | null {
   ];
 
   for (const pattern of teamPatterns) {
-    const match = desc.match(pattern) || summary.match(pattern) || combined.match(pattern);
+    const match =
+      desc.match(pattern) || summary.match(pattern) || combined.match(pattern);
     if (match) {
       const teamNum = match[1] || "2"; // Default to 2 if "Team to" matched
       return teamNum;
@@ -206,32 +213,78 @@ function extractCustomerEmail(event: any): string | null {
  * Detect complaints and issues from email text
  */
 function detectComplaints(emailText: string): Array<{
-  type: "klage" | "henvendelse" | "problem" | "forsinkelse" | "kvalitet" | "pris";
+  type:
+    | "klage"
+    | "henvendelse"
+    | "problem"
+    | "forsinkelse"
+    | "kvalitet"
+    | "pris";
   description: string;
 }> {
   const text = emailText.toLowerCase();
   const complaints: Array<{
-    type: "klage" | "henvendelse" | "problem" | "forsinkelse" | "kvalitet" | "pris";
+    type:
+      | "klage"
+      | "henvendelse"
+      | "problem"
+      | "forsinkelse"
+      | "kvalitet"
+      | "pris";
     description: string;
   }> = [];
 
   // Klage keywords
   const complaintPatterns = [
-    { type: "klage" as const, keywords: ["klage", "utilfreds", "dårlig", "ikke godt nok", "ikke tilfreds"] },
-    { type: "forsinkelse" as const, keywords: ["forsinket", "forsinkelse", "kom for sent", "anmod senere"] },
-    { type: "kvalitet" as const, keywords: ["ikke ren", "dårlig rengøring", "mangler", "ikke gjort", "glemt"] },
-    { type: "pris" as const, keywords: ["for dyrt", "pris", "faktura", "billigere", "rabat", "kompensation"] },
-    { type: "problem" as const, keywords: ["problem", "fejl", "gik galt", "ikke som aftalt"] },
+    {
+      type: "klage" as const,
+      keywords: [
+        "klage",
+        "utilfreds",
+        "dårlig",
+        "ikke godt nok",
+        "ikke tilfreds",
+      ],
+    },
+    {
+      type: "forsinkelse" as const,
+      keywords: ["forsinket", "forsinkelse", "kom for sent", "anmod senere"],
+    },
+    {
+      type: "kvalitet" as const,
+      keywords: [
+        "ikke ren",
+        "dårlig rengøring",
+        "mangler",
+        "ikke gjort",
+        "glemt",
+      ],
+    },
+    {
+      type: "pris" as const,
+      keywords: [
+        "for dyrt",
+        "pris",
+        "faktura",
+        "billigere",
+        "rabat",
+        "kompensation",
+      ],
+    },
+    {
+      type: "problem" as const,
+      keywords: ["problem", "fejl", "gik galt", "ikke som aftalt"],
+    },
   ];
 
   for (const pattern of complaintPatterns) {
     if (pattern.keywords.some(keyword => text.includes(keyword))) {
       // Extract relevant sentence
       const sentences = emailText.split(/[.!?]\s+/);
-      const relevantSentence = sentences.find(s => 
+      const relevantSentence = sentences.find(s =>
         pattern.keywords.some(k => s.toLowerCase().includes(k))
       );
-      
+
       if (relevantSentence) {
         complaints.push({
           type: pattern.type,
@@ -250,13 +303,13 @@ function detectComplaints(emailText: string): Array<{
 function extractCustomerName(event: any): string | null {
   const title = event?.title || "";
   const desc = event?.description || "";
-  
+
   // Try to extract name from title (usually first part before comma or dash)
   const nameMatch = title.match(/^([^,–-]+)/);
   if (nameMatch) {
     return nameMatch[1].trim();
   }
-  
+
   return null;
 }
 
@@ -302,7 +355,7 @@ function isFbRengoring(event: any): boolean {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^\w\s]/g, " ");
-  
+
   for (const pattern of patterns) {
     if (normalizedTitle.includes(pattern) || title.includes(pattern)) {
       return true;
@@ -424,22 +477,19 @@ export async function analyzeTeam2FbRengoring(
     const teamInfo = parseTeamInfo(event);
     const isTeam2 = teamInfo === "2" || teamInfo === "Team 2";
     const isFb = isFbRengoring(event);
-    
+
     // Debug logging for events that don't match
     if (!isTeam2 || !isFb) {
-      console.log(
-        `[Team2 Report] Event filtered out:`,
-        {
-          id: event.id,
-          title: event.title,
-          teamInfo,
-          isTeam2,
-          isFb,
-          reason: !isTeam2 ? "Not Team 2" : "Not FB rengøring",
-        }
-      );
+      console.log(`[Team2 Report] Event filtered out:`, {
+        id: event.id,
+        title: event.title,
+        teamInfo,
+        isTeam2,
+        isFb,
+        reason: !isTeam2 ? "Not Team 2" : "Not FB rengøring",
+      });
     }
-    
+
     return isTeam2 && isFb;
   });
 
@@ -462,21 +512,15 @@ export async function analyzeTeam2FbRengoring(
     console.warn(
       `[Team2 Report] WARNING: No Team 2 FB rengøring events found!`
     );
-    console.warn(
-      `[Team2 Report] This could indicate:`
-    );
+    console.warn(`[Team2 Report] This could indicate:`);
     console.warn(
       `  - No events match Team 2 criteria (check parseTeamInfo logic)`
     );
     console.warn(
       `  - No events match FB rengøring criteria (check isFbRengoring logic)`
     );
-    console.warn(
-      `  - Events exist but don't match both criteria`
-    );
-    console.warn(
-      `  - Date range might be incorrect`
-    );
+    console.warn(`  - Events exist but don't match both criteria`);
+    console.warn(`  - Date range might be incorrect`);
   }
 
   const tasks: TaskAnalysis[] = [];
@@ -539,7 +583,7 @@ export async function analyzeTeam2FbRengoring(
         // Extract agreed time, actual work time, and complaints from emails
         for (const email of relatedEmails) {
           const emailText = `${email.subject || ""} ${email.text || ""} ${email.body || ""}`;
-          const emailDate = email.receivedAt 
+          const emailDate = email.receivedAt
             ? new Date(email.receivedAt).toISOString().split("T")[0]
             : task.date;
 
@@ -565,11 +609,13 @@ export async function analyzeTeam2FbRengoring(
           const detectedComplaints = detectComplaints(emailText);
           for (const complaint of detectedComplaints) {
             // Check if we already have this complaint type
-            const existing = task.complaints.find(c => 
-              c.type === complaint.type && 
-              c.description.substring(0, 50) === complaint.description.substring(0, 50)
+            const existing = task.complaints.find(
+              c =>
+                c.type === complaint.type &&
+                c.description.substring(0, 50) ===
+                  complaint.description.substring(0, 50)
             );
-            
+
             if (!existing) {
               task.complaints.push({
                 date: emailDate,
@@ -583,13 +629,20 @@ export async function analyzeTeam2FbRengoring(
 
           // Check for resolution indicators
           const resolutionKeywords = [
-            "løst", "afklaret", "kompenseret", "rabat", "tilfreds", 
-            "accepteret", "godkendt", "betalt", "tak"
+            "løst",
+            "afklaret",
+            "kompenseret",
+            "rabat",
+            "tilfreds",
+            "accepteret",
+            "godkendt",
+            "betalt",
+            "tak",
           ];
-          const hasResolution = resolutionKeywords.some(keyword => 
+          const hasResolution = resolutionKeywords.some(keyword =>
             emailText.toLowerCase().includes(keyword)
           );
-          
+
           if (hasResolution && task.complaints.length > 0) {
             // Mark most recent complaint as resolved
             const latestComplaint = task.complaints[task.complaints.length - 1];
@@ -628,17 +681,22 @@ export async function analyzeTeam2FbRengoring(
     const eventDesc = event?.description || "";
     const eventTitle = event?.title || "";
     const combinedEventText = `${eventTitle} ${eventDesc}`.toLowerCase();
-    
+
     // Check for complaint indicators in calendar notes
-    if (combinedEventText.includes("klage") || 
-        combinedEventText.includes("problem") ||
-        combinedEventText.includes("forsinket") ||
-        combinedEventText.includes("overfladisk")) {
-      const complaintType = combinedEventText.includes("klage") ? "klage" as const :
-                            combinedEventText.includes("forsinket") ? "forsinkelse" as const :
-                            combinedEventText.includes("overfladisk") ? "kvalitet" as const :
-                            "problem" as const;
-      
+    if (
+      combinedEventText.includes("klage") ||
+      combinedEventText.includes("problem") ||
+      combinedEventText.includes("forsinket") ||
+      combinedEventText.includes("overfladisk")
+    ) {
+      const complaintType = combinedEventText.includes("klage")
+        ? ("klage" as const)
+        : combinedEventText.includes("forsinket")
+          ? ("forsinkelse" as const)
+          : combinedEventText.includes("overfladisk")
+            ? ("kvalitet" as const)
+            : ("problem" as const);
+
       task.complaints.push({
         date: task.date,
         type: complaintType,
@@ -697,7 +755,7 @@ export async function analyzeTeam2FbRengoring(
           // Pricing constants
           const HOURLY_RATE = 349; // DKK per hour (faktureret)
           const LABOR_COST = 90; // DKK per hour (løn)
-          
+
           for (const invoice of invoices) {
             // Try to extract hours from invoice amount
             // Or from description
@@ -803,7 +861,7 @@ function generateReport(
     `| Faktisk arbejdstid | ${summary.totalActualHours.toFixed(2)} | ${summary.totalActualCost > 0 ? summary.totalActualCost.toFixed(2) : "Ikke fundet"} |`
   );
   lines.push("");
-  
+
   // Indtjening og profit
   if (summary.totalInvoicedRevenue > 0) {
     lines.push("## Økonomi");
@@ -822,9 +880,7 @@ function generateReport(
     lines.push("");
     if (summary.totalInvoicedRevenue > 0) {
       const margin = (summary.totalProfit / summary.totalInvoicedRevenue) * 100;
-      lines.push(
-        `**Profit margin:** ${margin.toFixed(1)}%`
-      );
+      lines.push(`**Profit margin:** ${margin.toFixed(1)}%`);
     }
     lines.push("");
   }
@@ -876,19 +932,22 @@ function generateReport(
         task.title.length > 30
           ? task.title.substring(0, 30) + "..."
           : task.title;
-      
-      // Calculate time: 
+
+      // Calculate time:
       // - timePerPerson = fysisk tid på stedet (kalendertid)
       // - totalTime = fakturerbar tid (timer × antal personer)
-      const timePerPerson = task.calendarTime > 0 
-        ? task.calendarTime 
-        : (task.agreedTime > 0 ? task.agreedTime : task.actualWorkTime);
+      const timePerPerson =
+        task.calendarTime > 0
+          ? task.calendarTime
+          : task.agreedTime > 0
+            ? task.agreedTime
+            : task.actualWorkTime;
       const totalTime = timePerPerson * task.numberOfPeople; // Fakturerbar tid
-      
+
       // Calculate cost per person and total
       const costPerPerson = timePerPerson * 90; // Løn pr. person baseret på fysisk tid
       const totalCost = totalTime * 90; // Løn samlet baseret på fakturerbar tid
-      
+
       // Build notes column with complaints
       const notesParts: string[] = [];
       if (task.hasComplaints) {
@@ -910,36 +969,34 @@ function generateReport(
       }
       const notesColumn = notesParts.length > 0 ? notesParts.join("; ") : "-";
 
-      // Format time display: 
+      // Format time display:
       // - totalTime = fakturerbar tid (timer × personer)
       // - timePerPerson = fysisk tid på stedet
-      const timeDisplay = totalTime > 0 
-        ? `${totalTime.toFixed(2)}t` // Fakturerbar tid
-        : "-";
-      const timePerPersonDisplay = timePerPerson > 0
-        ? `${timePerPerson.toFixed(2)}t` // Fysisk tid på stedet
-        : "-";
-      
+      const timeDisplay =
+        totalTime > 0
+          ? `${totalTime.toFixed(2)}t` // Fakturerbar tid
+          : "-";
+      const timePerPersonDisplay =
+        timePerPerson > 0
+          ? `${timePerPerson.toFixed(2)}t` // Fysisk tid på stedet
+          : "-";
+
       // Format cost display
-      const costPerPersonDisplay = costPerPerson > 0
-        ? `${costPerPerson.toFixed(2)} kr`
-        : "-";
-      const totalCostDisplay = totalCost > 0
-        ? `${totalCost.toFixed(2)} kr`
-        : "-";
-      
+      const costPerPersonDisplay =
+        costPerPerson > 0 ? `${costPerPerson.toFixed(2)} kr` : "-";
+      const totalCostDisplay =
+        totalCost > 0 ? `${totalCost.toFixed(2)} kr` : "-";
+
       // Pricing constants
       const HOURLY_RATE = 349; // DKK per hour (faktureret)
-      
+
       // Calculate revenue and profit
-      const revenue = task.invoicedTime > 0 ? task.invoicedTime * HOURLY_RATE : 0;
-      const profit = task.profit || (revenue - totalCost);
-      const revenueDisplay = revenue > 0
-        ? `${revenue.toFixed(2)} kr`
-        : "-";
-      const profitDisplay = profit !== 0
-        ? `${profit > 0 ? "+" : ""}${profit.toFixed(2)} kr`
-        : "-";
+      const revenue =
+        task.invoicedTime > 0 ? task.invoicedTime * HOURLY_RATE : 0;
+      const profit = task.profit || revenue - totalCost;
+      const revenueDisplay = revenue > 0 ? `${revenue.toFixed(2)} kr` : "-";
+      const profitDisplay =
+        profit !== 0 ? `${profit > 0 ? "+" : ""}${profit.toFixed(2)} kr` : "-";
 
       lines.push(
         `| ${task.date} | ${customer} | ${title} | ${timeDisplay} | ${timePerPersonDisplay} | ${task.numberOfPeople} | ${costPerPersonDisplay} | ${totalCostDisplay} | ${revenueDisplay} | ${profitDisplay} | ${notesColumn} |`
@@ -960,7 +1017,7 @@ function generateReport(
       lines.push(`- **Antal personer:** ${task.numberOfPeople}`);
       lines.push("");
       lines.push("**Tidsdata:**");
-      
+
       // Show time breakdown:
       // - timePerPerson = fysisk tid på stedet (kalendertid)
       // - totalTime = fakturerbar tid (timer × antal personer)
@@ -972,14 +1029,18 @@ function generateReport(
       }
       if (task.agreedTime > 0) {
         const totalTime = task.agreedTime * task.numberOfPeople; // Fakturerbar tid
-        lines.push(`- Aftalt tid: ${task.agreedTime.toFixed(2)} timer pr. person, ${totalTime.toFixed(2)} timer samlet (fakturerbart)`);
+        lines.push(
+          `- Aftalt tid: ${task.agreedTime.toFixed(2)} timer pr. person, ${totalTime.toFixed(2)} timer samlet (fakturerbart)`
+        );
       } else {
         lines.push(`- Aftalt tid: Ikke fundet i Gmail tråde`);
       }
       if (task.invoicedTime > 0) {
         // invoicedTime er allerede fakturerbar tid, så divider med personer for at få pr. person
         const timePerPerson = task.invoicedTime / task.numberOfPeople;
-        lines.push(`- Faktureret tid: ${timePerPerson.toFixed(2)} timer pr. person, ${task.invoicedTime.toFixed(2)} timer samlet (fakturerbart)`);
+        lines.push(
+          `- Faktureret tid: ${timePerPerson.toFixed(2)} timer pr. person, ${task.invoicedTime.toFixed(2)} timer samlet (fakturerbart)`
+        );
       } else {
         lines.push(`- Faktureret tid: Ikke fundet i fakturaer`);
       }
@@ -993,40 +1054,58 @@ function generateReport(
       }
       lines.push("");
       lines.push("**Omkostninger (90 DKK/time pr. person):**");
-      
+
       // Show cost breakdown: per person and total
       if (task.calendarCost > 0) {
-        const costPerPerson = task.numberOfPeople > 0 
-          ? task.calendarCost / task.numberOfPeople 
-          : task.calendarCost;
-        lines.push(`- Kalendertid: ${costPerPerson.toFixed(2)} kr pr. person, ${task.calendarCost.toFixed(2)} kr samlet`);
+        const costPerPerson =
+          task.numberOfPeople > 0
+            ? task.calendarCost / task.numberOfPeople
+            : task.calendarCost;
+        lines.push(
+          `- Kalendertid: ${costPerPerson.toFixed(2)} kr pr. person, ${task.calendarCost.toFixed(2)} kr samlet`
+        );
       }
       if (task.agreedCost > 0) {
-        const costPerPerson = task.numberOfPeople > 0 
-          ? task.agreedCost / task.numberOfPeople 
-          : task.agreedCost;
-        lines.push(`- Aftalt tid: ${costPerPerson.toFixed(2)} kr pr. person, ${task.agreedCost.toFixed(2)} kr samlet`);
+        const costPerPerson =
+          task.numberOfPeople > 0
+            ? task.agreedCost / task.numberOfPeople
+            : task.agreedCost;
+        lines.push(
+          `- Aftalt tid: ${costPerPerson.toFixed(2)} kr pr. person, ${task.agreedCost.toFixed(2)} kr samlet`
+        );
       }
       if (task.actualCost > 0) {
-        const costPerPerson = task.numberOfPeople > 0 
-          ? task.actualCost / task.numberOfPeople 
-          : task.actualCost;
-        lines.push(`- Faktisk tid: ${costPerPerson.toFixed(2)} kr pr. person, ${task.actualCost.toFixed(2)} kr samlet`);
+        const costPerPerson =
+          task.numberOfPeople > 0
+            ? task.actualCost / task.numberOfPeople
+            : task.actualCost;
+        lines.push(
+          `- Faktisk tid: ${costPerPerson.toFixed(2)} kr pr. person, ${task.actualCost.toFixed(2)} kr samlet`
+        );
       }
       if (task.invoicedCost > 0) {
-        const costPerPerson = task.numberOfPeople > 0 
-          ? task.invoicedCost / task.numberOfPeople 
-          : task.invoicedCost;
-        lines.push(`- Faktureret tid (løn): ${costPerPerson.toFixed(2)} kr pr. person, ${task.invoicedCost.toFixed(2)} kr samlet`);
+        const costPerPerson =
+          task.numberOfPeople > 0
+            ? task.invoicedCost / task.numberOfPeople
+            : task.invoicedCost;
+        lines.push(
+          `- Faktureret tid (løn): ${costPerPerson.toFixed(2)} kr pr. person, ${task.invoicedCost.toFixed(2)} kr samlet`
+        );
       }
-      
+
       // Indtjening og profit
       if (task.invoicedRevenue > 0) {
         lines.push("");
         lines.push("**Økonomi:**");
-        lines.push(`- Indtjening: ${task.invoicedRevenue.toFixed(2)} kr (${task.invoicedTime.toFixed(2)} timer × 349 DKK/time)`);
-        lines.push(`- Løn: ${task.invoicedCost.toFixed(2)} kr (${task.invoicedTime.toFixed(2)} timer × 90 DKK/time)`);
-        lines.push(`- **Profit: ${task.profit > 0 ? "+" : ""}${task.profit.toFixed(2)} kr**`);
+        lines.push(
+          `- Indtjening: ${task.invoicedRevenue.toFixed(2)} kr (${task.invoicedTime.toFixed(2)} timer × 349 DKK/time)`
+        );
+        lines.push(
+          `- Løn: ${task.invoicedCost.toFixed(2)} kr (${task.invoicedTime.toFixed(2)} timer × 90 DKK/time)`
+        );
+        lines.push(
+          `- **Profit: ${task.profit > 0 ? "+" : ""}${task.profit.toFixed(2)} kr**`
+        );
         if (task.invoicedRevenue > 0) {
           const margin = (task.profit / task.invoicedRevenue) * 100;
           lines.push(`- Profit margin: ${margin.toFixed(1)}%`);
@@ -1105,16 +1184,19 @@ function generateReport(
     lines.push("");
     lines.push("## Klager og henvendelser - Oversigt");
     lines.push("");
-    lines.push(`**Total opgaver med klager/henvendelser:** ${tasksWithComplaints.length} af ${tasks.length}`);
+    lines.push(
+      `**Total opgaver med klager/henvendelser:** ${tasksWithComplaints.length} af ${tasks.length}`
+    );
     lines.push("");
-    
+
     const complaintCounts: Record<string, number> = {};
     let resolvedCount = 0;
     let unresolvedCount = 0;
-    
+
     for (const task of tasksWithComplaints) {
       for (const complaint of task.complaints) {
-        complaintCounts[complaint.type] = (complaintCounts[complaint.type] || 0) + 1;
+        complaintCounts[complaint.type] =
+          (complaintCounts[complaint.type] || 0) + 1;
         if (complaint.resolved) {
           resolvedCount++;
         } else {
@@ -1122,7 +1204,7 @@ function generateReport(
         }
       }
     }
-    
+
     lines.push("**Fordeling efter type:**");
     const typeLabels: Record<string, string> = {
       klage: "Klager",
@@ -1136,7 +1218,9 @@ function generateReport(
       lines.push(`- ${typeLabels[type] || type}: ${count}`);
     }
     lines.push("");
-    lines.push(`**Status:** ${resolvedCount} løst, ${unresolvedCount} uafklaret`);
+    lines.push(
+      `**Status:** ${resolvedCount} løst, ${unresolvedCount} uafklaret`
+    );
     lines.push("");
   }
 

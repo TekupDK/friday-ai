@@ -19,4 +19,3 @@ Configure tracing, set up metrics, configure logging, create dashboards.
 ## OUTPUT
 
 Observability configured with traces, metrics, and logs.
-

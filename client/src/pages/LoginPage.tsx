@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 
-
 import FuturisticAICanvas from "@/components/interactive/FuturisticAICanvas";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -331,7 +330,10 @@ export default function LoginPage({ preview = false }: LoginPageProps) {
                 >
                   {authStage === "loading" ? (
                     <>
-                      <div className="w-12 h-12 rounded-full border-2 border-white/20 border-t-white animate-spin" aria-hidden="true" />
+                      <div
+                        className="w-12 h-12 rounded-full border-2 border-white/20 border-t-white animate-spin"
+                        aria-hidden="true"
+                      />
                       <div className="text-center space-y-1">
                         <p className="text-base font-semibold tracking-wide">
                           Sikrer dit AI-arbejdsrum…
@@ -343,7 +345,10 @@ export default function LoginPage({ preview = false }: LoginPageProps) {
                     </>
                   ) : (
                     <>
-                      <div className="w-12 h-12 rounded-full bg-emerald-400/10 border border-emerald-300/40 flex items-center justify-center" aria-hidden="true">
+                      <div
+                        className="w-12 h-12 rounded-full bg-emerald-400/10 border border-emerald-300/40 flex items-center justify-center"
+                        aria-hidden="true"
+                      >
                         <svg
                           className="w-6 h-6 text-emerald-300"
                           viewBox="0 0 24 24"

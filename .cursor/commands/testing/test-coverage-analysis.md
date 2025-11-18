@@ -16,7 +16,9 @@ Analyze test coverage, identify gaps, and recommend improvements.
 ## COVERAGE ANALYSIS METHODOLOGY
 
 ### Step 1: Gather Coverage Data
+
 1. **Run coverage:**
+
    ```bash
    pnpm test --coverage
    pnpm test:playwright --coverage
@@ -29,6 +31,7 @@ Analyze test coverage, identify gaps, and recommend improvements.
    - Uncovered lines/functions
 
 ### Step 2: Identify Critical Areas
+
 1. **Business logic:**
    - Database helpers
    - tRPC procedures
@@ -45,6 +48,7 @@ Analyze test coverage, identify gaps, and recommend improvements.
    - Database operations
 
 ### Step 3: Identify Gaps
+
 1. **Low coverage files:**
    - List files with < 80% coverage
    - Prioritize by importance
@@ -61,6 +65,7 @@ Analyze test coverage, identify gaps, and recommend improvements.
    - Error conditions
 
 ### Step 4: Recommend Improvements
+
 1. **Priority 1 (Critical):**
    - Business logic with no tests
    - Error handling not tested
@@ -110,28 +115,32 @@ Analyze test coverage, identify gaps, and recommend improvements.
 ### Test Coverage Analysis
 
 **Overall Coverage:**
+
 - Unit tests: [percentage]%
 - Integration tests: [percentage]%
 - E2E tests: [percentage]%
 - Total: [percentage]%
 
 **Low Coverage Files (Priority):**
+
 1. `file1.ts` - [coverage]% - [why it's important]
 2. `file2.ts` - [coverage]% - [why it's important]
 
 **Missing Test Types:**
+
 - [Test type 1] - [where needed]
 - [Test type 2] - [where needed]
 
 **Recommendations:**
+
 - **P1 (Critical):** [specific tests to add]
 - **P2 (Important):** [specific tests to add]
 - **P3 (Nice to have):** [specific tests to add]
 
 **Coverage Goals:**
+
 - Business logic: 90%+
 - Error handling: 100%
 - Integration points: 80%+
 - Overall: 80%+
 ```
-

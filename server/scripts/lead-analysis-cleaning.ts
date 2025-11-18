@@ -25,7 +25,8 @@ type OutputRow = {
 
 function parseArgs() {
   const args = process.argv.slice(2);
-  const result: { months?: number; start?: Date; end?: Date; csv?: boolean } = {};
+  const result: { months?: number; start?: Date; end?: Date; csv?: boolean } =
+    {};
   for (let i = 0; i < args.length; i++) {
     const a = args[i];
     if (a === "--months" && args[i + 1]) {
@@ -62,7 +63,11 @@ function isOurAddress(addr: string): boolean {
   return (
     lower.includes("@rendetalje.dk") ||
     lower.includes("info@rendetalje.dk") ||
-    lower.includes((process.env.GOOGLE_IMPERSONATED_USER || "info@rendetalje.dk").toLowerCase())
+    lower.includes(
+      (
+        process.env.GOOGLE_IMPERSONATED_USER || "info@rendetalje.dk"
+      ).toLowerCase()
+    )
   );
 }
 
@@ -110,7 +115,9 @@ function extractLeadNameFromHeader(header: string): string {
 }
 
 function extractPhone(text: string): string | undefined {
-  const m = text.match(/\b(?:\+?45\s*)?(\d{2}\s?\d{2}\s?\d{2}\s?\d{2}|\d{8})\b/);
+  const m = text.match(
+    /\b(?:\+?45\s*)?(\d{2}\s?\d{2}\s?\d{2}\s?\d{2}|\d{8})\b/
+  );
   return m ? m[0].replace(/\s+/g, "") : undefined;
 }
 
@@ -127,7 +134,10 @@ function extractSquareMeters(text: string): string | undefined {
 function extractFrequency(text: string): string | undefined {
   const patterns = [
     { re: /(hver\s*uge|ugentlig)/i, val: "Ugentlig" },
-    { re: /(hver\s*14\s*dage|hver anden uge|biugentlig)/i, val: "Hver 14. dag" },
+    {
+      re: /(hver\s*14\s*dage|hver anden uge|biugentlig)/i,
+      val: "Hver 14. dag",
+    },
     { re: /(månedlig|hver\s*måned)/i, val: "Månedlig" },
     { re: /(engangs|one\-off|hovedrengøring)/i, val: "Engangs/Hovedrengøring" },
   ];
@@ -172,7 +182,7 @@ function daysSince(dateIso: string): number {
 
 function buildKeyInfo(thread: GmailThread): string {
   const texts = (thread.messages || [])
-    .map(m => (m.bodyText || m.body || ""))
+    .map(m => m.bodyText || m.body || "")
     .join("\n");
   const addr = extractAddress(texts);
   const m2 = extractSquareMeters(texts);
@@ -197,7 +207,10 @@ function buildOfferInfo(thread: GmailThread): string | undefined {
       const price = txt.match(/(\d+[\.,]?\d*)\s*(kr|dkk)/i)?.[0];
       const freq = extractFrequency(txt);
       if (price || freq) {
-        return [price ? `Pris: ${price}` : undefined, freq ? `Frekvens: ${freq}` : undefined]
+        return [
+          price ? `Pris: ${price}` : undefined,
+          freq ? `Frekvens: ${freq}` : undefined,
+        ]
           .filter(Boolean)
           .join("; ");
       }
@@ -225,7 +238,9 @@ function toRow(thread: GmailThread): OutputRow {
   return {
     name: name || "(Ukendt)",
     email: email || "",
-    type: ((t => (t === "Ukendt" ? ("Ukendt" as LeadType) : t))(determineType(thread))),
+    type: (t => (t === "Ukendt" ? ("Ukendt" as LeadType) : t))(
+      determineType(thread)
+    ),
     lastContact: lastDate,
     daysSince: daysSince(lastDate),
     keyInfo: buildKeyInfo(thread) || undefined,
@@ -234,7 +249,12 @@ function toRow(thread: GmailThread): OutputRow {
   };
 }
 
-function printTable(title: string, rows: OutputRow[], columns: (keyof OutputRow)[], extraNote?: string) {
+function printTable(
+  title: string,
+  rows: OutputRow[],
+  columns: (keyof OutputRow)[],
+  extraNote?: string
+) {
   console.log(`\n## ${title}`);
   const header = `| ${columns.map(c => formatHeader(c)).join(" | ")} |`;
   const sep = `| ${columns.map(() => "---").join(" | ")} |`;
@@ -250,15 +270,24 @@ function printTable(title: string, rows: OutputRow[], columns: (keyof OutputRow)
 
 function formatHeader(key: keyof OutputRow): string {
   switch (key) {
-    case "name": return "Navn";
-    case "email": return "Email";
-    case "type": return "Type";
-    case "lastContact": return "Sidste kontakt";
-    case "daysSince": return "Dage siden";
-    case "keyInfo": return "Nøgleinfo";
-    case "offerInfo": return "Hvad vi tilbød";
-    case "recommendation": return "Anbefaling";
-    default: return String(key);
+    case "name":
+      return "Navn";
+    case "email":
+      return "Email";
+    case "type":
+      return "Type";
+    case "lastContact":
+      return "Sidste kontakt";
+    case "daysSince":
+      return "Dage siden";
+    case "keyInfo":
+      return "Nøgleinfo";
+    case "offerInfo":
+      return "Hvad vi tilbød";
+    case "recommendation":
+      return "Anbefaling";
+    default:
+      return String(key);
   }
 }
 
@@ -310,7 +339,10 @@ async function main() {
   const p3 = rows
     .filter(r => r.daysSince > 14)
     .sort((a, b) => b.daysSince - a.daysSince)
-    .map(r => ({ ...r, recommendation: "Send høflig opfølgning eller arkiver" }));
+    .map(r => ({
+      ...r,
+      recommendation: "Send høflig opfølgning eller arkiver",
+    }));
 
   printTable("🔥 PRIORITET 1: Klar til opfølgning (de har skrevet sidst)", p1, [
     "name",
@@ -357,12 +389,26 @@ async function main() {
     };
     writeFileSync(
       `${outDir}/lead-analysis-priority1.csv`,
-      toCsv(p1, ["name", "email", "type", "lastContact", "daysSince", "keyInfo"]),
+      toCsv(p1, [
+        "name",
+        "email",
+        "type",
+        "lastContact",
+        "daysSince",
+        "keyInfo",
+      ]),
       "utf8"
     );
     writeFileSync(
       `${outDir}/lead-analysis-priority2.csv`,
-      toCsv(p2, ["name", "email", "type", "lastContact", "daysSince", "offerInfo"]),
+      toCsv(p2, [
+        "name",
+        "email",
+        "type",
+        "lastContact",
+        "daysSince",
+        "offerInfo",
+      ]),
       "utf8"
     );
     writeFileSync(
@@ -376,8 +422,9 @@ async function main() {
 
 // Only run main() and exit if this file is executed directly (not imported for tests)
 // Check if running as script (not imported) by comparing import.meta.url with process.argv[1]
-const isMainModule = import.meta.url.endsWith(process.argv[1]?.replace(/\\/g, "/") || "") || 
-                     process.argv[1]?.includes("lead-analysis-cleaning");
+const isMainModule =
+  import.meta.url.endsWith(process.argv[1]?.replace(/\\/g, "/") || "") ||
+  process.argv[1]?.includes("lead-analysis-cleaning");
 if (isMainModule && !process.env.VITEST) {
   main().catch(err => {
     console.error("❌ Fejl i lead-analyse:", err?.message || err);

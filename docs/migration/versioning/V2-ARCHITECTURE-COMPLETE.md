@@ -10,7 +10,7 @@ Vi har redesignet hele arkitekturen fra bunden med fokus på **Shortwave-inspire
 
 ### ❌ Gammel Arkitektur (V1)
 
-```bash
+````bash
 ChatInterface.tsx (forvirrende navn)
 ├── EmailCenterPanel
 │   └── InboxPanel (5 tabs: Email, Fakturaer, Kalender, Leads, Opgaver)
@@ -390,7 +390,7 @@ import WorkspaceLayout from "./pages/WorkspaceLayout";  // Ny
 // I routing
 <Route path={"/"} component={WorkspaceLayout} />
 
-```
+````
 
 ---
 

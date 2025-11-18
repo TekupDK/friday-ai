@@ -29,6 +29,7 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 ### Most Used Commands
 
 **Daily Development:**
+
 - `development/create-trpc-procedure.md` - Create tRPC API endpoints
 - `development/create-react-component.md` - Create React components
 - `development/create-react-page.md` - Create React pages
@@ -38,6 +39,7 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 - `core/start-work-immediately.md` - Start work immediately
 
 **AI & Friday:**
+
 - `ai/test-all-ai-tools.md` - Test all AI tools (Gmail, Calendar, Billy)
 - `ai/optimize-ai-model-selection.md` - Optimize AI costs and performance
 - `ai/debug-ai-responses.md` - Debug AI response issues
@@ -45,6 +47,7 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 - `ai/test-ai-prompts.md` - Test AI prompts
 
 **Session Management:**
+
 - `core/get-session-status.md` - Quick status check
 - `core/analyze-session-work.md` - See what's done in session
 - `core/get-project-status.md` - Get project status overview
@@ -52,6 +55,7 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 - `core/session-engine.md` - Master command: Autonom udviklingsassistent
 
 **Testing & Quality:**
+
 - `testing/write-unit-tests.md` - Write unit tests
 - `testing/create-playwright-test.md` - Create E2E tests
 - `testing/test-changed-files.md` - Test changed files
@@ -65,12 +69,14 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 ### `core/` - Core Commands (62 commands)
 
 **Session Management:**
+
 - Session Engine commands (session-engine, session-init, session-progress, etc.)
 - Continue commands (continue-from-prompt, continue-session, etc.)
 - Developer Mode
 - Status & Tracking
 
 **Task Management:**
+
 - TODO commands (update-todo-status, prioritize-todos, etc.)
 - Commit commands (commit-work, git-commit, etc.)
 - Sprint Management (create-sprint-plan, sprint-retrospective, etc.)
@@ -78,34 +84,42 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 ### `development/` - Development Commands (115 commands)
 
 **Create:**
+
 - Component creation (create-react-component, create-ui-component, etc.)
 - Backend creation (create-trpc-procedure, create-database-helper, etc.)
 - Feature setup (setup-new-feature, create-crm-feature, etc.)
 
 **Implement:**
+
 - Implementation scenarios (implement-scenario-fullstack, etc.)
 - Feature implementation (implement-feature, implement-iteratively, etc.)
 
 **Refactor & Improve:**
+
 - Code refactoring (refactor-code, refactor-legacy-code, etc.)
 - Code improvement (improve-code-quality, improve-error-handling, etc.)
 
 **Fix:**
+
 - Bug fixes (fix-bug, fix-typescript-errors, etc.)
 - Safe operations (safe-bugfix, safe-refactor)
 
 **Review & Audit:**
+
 - Code reviews (code-review, senior-code-review, etc.)
 - Security audits (security-audit, vulnerability-scan, etc.)
 - Performance audits (performance-audit, etc.)
 
 **Ideation:**
+
 - Generate ideas (generate-ideas-from-file, generate-next-steps, etc.)
 
 **Analysis:**
+
 - Codebase analysis (analyze-codebase-health, code-metrics-analysis, etc.)
 
 **Documentation:**
+
 - Documentation management (add-documentation, update-api-reference, etc.)
 
 ### `testing/` - Testing Commands (35 commands)
@@ -137,6 +151,7 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 ### `tekup/` - Tekup-Specific Commands (17 commands)
 
 **Workflows:**
+
 - Lead workflow (create-lead-workflow)
 - Invoice approval (create-invoice-approval-workflow)
 - Job completion (create-job-completion-checklist)
@@ -145,17 +160,20 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 - Recurring cleaning (create-recurring-cleaning-workflow)
 
 **Tools:**
+
 - Pricing calculator (create-pricing-calculator)
 - Job scheduling (create-job-scheduling)
 - Customer balance tracker (create-customer-balance-tracker)
 
 **Integration:**
+
 - Billy.dk (test-billy-integration, debug-billy-sync, optimize-billy-queries)
 - Friday AI (test-friday-intent-actions, debug-friday-memory-rules, optimize-friday-prompt)
 
 ### `chat/` - Chat Context Commands (21 commands)
 
 **Dansk:**
+
 - `laes-chat-samtale.md` - Læs chat samtale
 - `analyser-chat-kontekst.md` - Analyser chat kontekst
 - `brug-chat-informationer.md` - Brug chat informationer
@@ -174,6 +192,7 @@ Commands er nu organiseret i 8 mapper for nem navigation:
 - `uddyb-chat-kontekst.md` - Uddyb chat kontekst
 
 **Engelsk:**
+
 - `analyze-chat-prompt.md` - Analyze chat prompt
 - `convert-chat-to-docs.md` - Convert chat to docs
 - `convert-chat-to-feature.md` - Convert chat to feature
@@ -231,6 +250,7 @@ Brug `COMMANDS_INDEX.md` for alfabetisk søgning.
 ## 🌍 Sprog
 
 Commands er både på **dansk** og **engelsk**:
+
 - Dansk commands: Chat context, Explain, nogle Tekup workflows
 - Engelsk commands: Development, Testing, Debugging, AI
 
@@ -253,4 +273,3 @@ Begge sprog er understøttet og bevares.
 ---
 
 **Status:** ✅ Organiseret og klar til brug!
-

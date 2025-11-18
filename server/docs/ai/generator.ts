@@ -86,7 +86,9 @@ export function generateLeadDocument(
       });
 
       sections.push(`#### ${i + 1}. ${thread.subject}`);
-      sections.push(`**Date:** ${formatDate((thread as any).date)} (${timeAgo})`);
+      sections.push(
+        `**Date:** ${formatDate((thread as any).date)} (${timeAgo})`
+      );
       sections.push(`**From:** ${(thread as any).from_email}`);
       sections.push(`**To:** ${(thread as any).to_email}`);
       sections.push("");

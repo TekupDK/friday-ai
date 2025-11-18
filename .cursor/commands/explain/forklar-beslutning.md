@@ -12,6 +12,7 @@ Forklar en beslutning: kontekst, rationale, alternativer, og impact.
 ## TASK
 
 Forklar beslutning:
+
 1. **Kontekst** - Hvad var situationen?
 2. **Rationale** - Hvorfor blev denne beslutning taget?
 3. **Alternativer** - Hvad kunne være gjort anderledes?
@@ -54,4 +55,3 @@ Forklar beslutning:
 ---
 
 **CRITICAL:** Forstå beslutningen, identificér kontekst og rationale, og forklar på klar, struktureret måde.
-

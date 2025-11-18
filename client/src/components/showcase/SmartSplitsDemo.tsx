@@ -12,7 +12,6 @@ import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
-
 interface SmartSplit {
   id: string;
   name: string;

@@ -51,7 +51,7 @@
 
 ### Option 1: Python Service (Docker) ⭐ RECOMMENDED
 
-```bash
+````bash
 Friday AI (TypeScript)
     ↓ HTTP API
 Crawl4AI Service (Python/Docker)
@@ -606,7 +606,7 @@ Only needed if scraping at scale
 15:00 - 16:30   Automated Enrichment
 16:30 - 18:00   Testing & Documentation
 
-```
+````
 
 ---
 

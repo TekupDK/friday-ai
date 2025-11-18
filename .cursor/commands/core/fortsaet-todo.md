@@ -13,6 +13,7 @@ Du er en senior fullstack udvikler der fortsætter arbejde på TODO items. Du an
 ## TASK
 
 Fortsæt TODO arbejde ved at:
+
 - Analysere nuværende TODO items
 - Identificere næste TODO at arbejde på
 - Prioriterer efter impact og dependencies
@@ -36,6 +37,7 @@ Fortsæt TODO arbejde ved at:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `grep` - Find TODO kommentarer
 - `codebase_search` - Find TODO items
 - `read_file` - Læs relevante filer
@@ -43,6 +45,7 @@ Fortsæt TODO arbejde ved at:
 - `read_lints` - Tjek for fejl
 
 **DO NOT:**
+
 - Spring over vigtige TODOs
 - Ignorere dependencies
 - Glem prioritering
@@ -122,6 +125,7 @@ Provide TODO continuation summary:
 ## Nuværende TODO Status
 
 ### High Priority TODOs
+
 - [ ] **[TODO 1]** - [Beskrivelse]
   - **Status:** [Pending/In Progress]
   - **Dependencies:** [Dependencies]
@@ -133,6 +137,7 @@ Provide TODO continuation summary:
   - **Estimated:** [X] hours
 
 ### Medium Priority TODOs
+
 - [ ] **[TODO 1]** - [Beskrivelse]
   - **Status:** [Pending/In Progress]
   - **Estimated:** [X] hours
@@ -145,11 +150,13 @@ Provide TODO continuation summary:
 [Detaljeret beskrivelse]
 
 **Requirements:**
+
 - [Requirement 1]
 - [Requirement 2]
 - [Requirement 3]
 
 **Dependencies:**
+
 - [Dependency 1] - [Status]
 - [Dependency 2] - [Status]
 
@@ -160,10 +167,12 @@ Provide TODO continuation summary:
 ### TODO: [TODO Navn]
 
 **Implementation:**
+
 - ✅ [Feature 1] - [Beskrivelse]
 - ✅ [Feature 2] - [Beskrivelse]
 
 **Filer Ændret:**
+
 - `[file1].ts` - [Beskrivelse]
 - `[file2].tsx` - [Beskrivelse]
 
@@ -220,4 +229,3 @@ Efter fortsættelse, verificer:
 ---
 
 **CRITICAL:** Start med at finde og analysere TODOs, derefter prioriter og vælg næste TODO, og fortsæt arbejde systematisk.
-

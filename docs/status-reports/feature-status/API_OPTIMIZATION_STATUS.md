@@ -96,7 +96,7 @@
 
 ### Browser Console
 
-```javascript
+````javascript
 // Check request queue (development only)
 window.__requestQueue.getQueueSize();
 window.__requestQueue.isRateLimited();
@@ -181,7 +181,7 @@ Rate Limit Errors: _______
 Average Polling (aktiv): _______
 Average Polling (inaktiv): _______
 
-```
+````
 
 ## 🔄 Future Improvements
 

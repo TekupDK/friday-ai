@@ -12,6 +12,7 @@ Brug chatkonteksten til at løse opgaven uden at spørge yderligere. Læs HELE c
 ## TASK
 
 Læs HELE chat sessionen, forstå opgaven, og udfør den direkte:
+
 - Brug ALLE informationer fra HELE chatten
 - Spørg IKKE om yderligere informationer
 - Implementer/udfør baseret på chat kontekst
@@ -20,6 +21,7 @@ Læs HELE chat sessionen, forstå opgaven, og udfør den direkte:
 ## CHAT SESSION READING
 
 **KRITISK:** Læs HELE chat sessionen:
+
 - Start fra første besked
 - Læs ALLE beskeder fra brugeren
 - Læs ALLE svar fra agenten
@@ -31,16 +33,20 @@ Læs HELE chat sessionen, forstå opgaven, og udfør den direkte:
 
 ```markdown
 ## Opgave forstået (fra chat)
+
 [Kort beskrivelse af hvad der skal gøres baseret på HELE chatten]
 
 ## Udført (baseret på chat)
+
 - ✅ [Action 1] - [Fra chat diskussion]
 - ✅ [Action 2] - [Fra chat diskussion]
 
 ## Files ændret (baseret på chat)
+
 - `[file path]` - [Ændring] - [Fra chat besked X]
 
 ## Næste skridt (hvis relevant fra chat)
+
 [Hvis relevant fra chat diskussioner]
 ```
 

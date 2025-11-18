@@ -1,6 +1,6 @@
 /**
  * Subscription Helper Functions
- * 
+ *
  * Business logic helpers for subscription calculations and analytics
  */
 
@@ -65,9 +65,7 @@ export function getPlanConfig(planType: SubscriptionPlanType) {
  * Calculate Monthly Recurring Revenue (MRR)
  * Sum of all active subscription monthly prices
  */
-export async function calculateMonthlyRevenue(
-  userId: number
-): Promise<number> {
+export async function calculateMonthlyRevenue(userId: number): Promise<number> {
   const activeSubscriptions = await getActiveSubscriptions(userId);
 
   return activeSubscriptions.reduce((total, sub) => {
@@ -79,9 +77,7 @@ export async function calculateMonthlyRevenue(
  * Calculate Annual Recurring Revenue (ARR)
  * MRR × 12
  */
-export async function calculateAnnualRevenue(
-  userId: number
-): Promise<number> {
+export async function calculateAnnualRevenue(userId: number): Promise<number> {
   const mrr = await calculateMonthlyRevenue(userId);
   return mrr * 12;
 }
@@ -160,7 +156,12 @@ export async function checkOverage(
   year: number,
   month: number,
   userId: number
-): Promise<{ hasOverage: boolean; hoursUsed: number; includedHours: number; overageHours: number }> {
+): Promise<{
+  hasOverage: boolean;
+  hoursUsed: number;
+  includedHours: number;
+  overageHours: number;
+}> {
   const db = await getDb();
   if (!db) {
     throw new Error("Database not available");
@@ -224,7 +225,7 @@ export async function getTotalHoursUsed(
 
   // Get all active subscriptions for user
   const userSubscriptions = await getActiveSubscriptions(userId);
-  const subscriptionIds = userSubscriptions.map((s) => s.id);
+  const subscriptionIds = userSubscriptions.map(s => s.id);
 
   if (subscriptionIds.length === 0) {
     return 0;
@@ -270,4 +271,3 @@ export async function getSubscriptionStats(userId: number) {
     arpu, // Average Revenue Per User in øre
   };
 }
-

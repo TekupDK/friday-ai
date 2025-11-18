@@ -46,7 +46,7 @@ Friday AI er et **massivt full-stack TypeScript projekt**(160k+ lines of code) m
 
 #### ✅ **Core Directories (Production-Ready)**
 
-```text
+````text
 client/                    # Frontend React app (94k lines)
 ├── src/
 │   ├── components/        # 78+ UI komponenter (Chat showcase)
@@ -2246,7 +2246,7 @@ pnpm run migrate:emails       # Import historical emails
 pnpm run build                # Build for production
 pnpm start                    # Start production server
 
-```
+````
 
 ### Key Files Reference
 

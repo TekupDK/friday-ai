@@ -46,6 +46,7 @@ Fortsæt samtalen naturligt ved at:
 **CRITICAL - Chat Session Reading:**
 
 **In Cursor Context (THIS SESSION):**
+
 - **You have direct access to the ENTIRE Cursor chat session** in this conversation
 - Read ALL messages from the start of this Cursor session
 - Read BOTH user messages AND agent responses in chronological order
@@ -91,12 +92,14 @@ Before continuing, think through:
 **KRITISK:** Læs HELE chat sessionen i denne Cursor session:
 
 **I Cursor/Copilot:**
+
 - Du har adgang til hele chat historikken i denne session
 - Læs ALLE beskeder fra start af sessionen
 - Læs både brugerens beskeder OG agentens svar
 - Forstå diskussionens flow og progression
 
 **Hvad du skal læse:**
+
 - **Brugerens beskeder:** Hvad spørger brugeren om? Hvad vil de opnå?
 - **Agentens svar:** Hvad har agenten foreslået? Hvad er blevet besluttet?
 - **Diskussioner:** Hvilke emner er diskuteret? Hvilke beslutninger er taget?
@@ -105,6 +108,7 @@ Before continuing, think through:
 - **Opgaver:** Hvilke opgaver er identificeret eller påbegyndt?
 
 **Brug chat historikken til at:**
+
 - Forstå hvad brugeren prøver at opnå
 - Husk tidligere beslutninger og diskussioner
 - Fortsætte fra hvor I slap

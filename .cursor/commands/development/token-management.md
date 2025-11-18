@@ -19,4 +19,3 @@ Generate tokens, set expiration, implement refresh, handle revocation, secure st
 ## OUTPUT
 
 Token management implemented with security best practices.
-

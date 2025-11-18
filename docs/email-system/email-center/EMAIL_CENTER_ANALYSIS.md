@@ -9,7 +9,7 @@
 
 ### Email Center Struktur
 
-```text
+````text
 EmailCenterPanel (Middleware section - 60% width)
 ├── Email Header (Mall icon + title)
 ├── EmailTabV2 (Main component)
@@ -338,7 +338,7 @@ const sortEmails = (emails: Email[], sort: SortOption) => {
 │ [💰 Finance (3)] [📧 Marketing (12)] [+ More]    │
 └──────────────────────────────────────────────────┘
 
-```
+````
 
 ---
 

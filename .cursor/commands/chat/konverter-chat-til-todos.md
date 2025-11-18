@@ -12,6 +12,7 @@ Konverter chat samtale og kontekst til en konkret, prioriteret TODO-liste. Læs 
 ## TASK
 
 Konverter chat diskussion til TODO-liste:
+
 1. **Læs HELE chat sessionen** - ALLE beskeder fra bruger OG agent
 2. **Identificer alle opgaver** - Hvad skal gøres? Hvad blev nævnt?
 3. **Prioriter dem** - Høj/Medium/Lav baseret på chat diskussioner
@@ -21,6 +22,7 @@ Konverter chat diskussion til TODO-liste:
 ## CHAT SESSION READING
 
 **KRITISK:** Læs HELE chat sessionen:
+
 - Start fra første besked
 - Læs ALLE beskeder fra brugeren
 - Læs ALLE svar fra agenten
@@ -32,12 +34,14 @@ Konverter chat diskussion til TODO-liste:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Læs chat historik
 - `codebase_search` - Find relevante filer
 - `grep` - Find opgaver i chat
 - `todo_write` - Opret TODO-liste
 
 **DO NOT:**
+
 - Ignorere chat kontekst
 - Glem at prioritere
 - Skip strukturering
@@ -87,15 +91,19 @@ Konverter chat diskussion til TODO-liste:
 **Chat Kontekst:** [Kort beskrivelse af chat diskussion]
 
 ### Høj Prioritet (P1) - Fra Chat
+
 - [ ] `[file path]` - [Action] - [Detalje] - [Fra chat besked X]
 
 ### Medium Prioritet (P2) - Fra Chat
+
 - [ ] `[file path]` - [Action] - [Detalje] - [Fra chat besked Y]
 
 ### Lav Prioritet (P3) - Fra Chat
+
 - [ ] `[file path]` - [Action] - [Detalje] - [Fra chat besked Z]
 
 ## Summary
+
 - **Total Opgaver:** [X]
 - **Høj Prioritet:** [Y]
 - **Medium Prioritet:** [Z]

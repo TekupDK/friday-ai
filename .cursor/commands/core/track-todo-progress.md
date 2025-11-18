@@ -8,38 +8,38 @@ Review TODO list and provide a progress report on completion status.
 
 ## STEPS
 
-1) Read the TODO list:
+1. Read the TODO list:
    - Parse all tasks
    - Note status markers
    - Check completion indicators
 
-2) Categorize tasks:
+2. Categorize tasks:
    - Completed: `- [x]` or `✅`
    - In Progress: `- [~]` or `⏳`
    - Not Started: `- [ ]`
    - Blocked: `- [!]` or `⚠️`
 
-3) Calculate metrics:
+3. Calculate metrics:
    - Total tasks
    - Completed count
    - In progress count
    - Blocked count
    - Completion percentage
 
-4) Analyze by area:
+4. Analyze by area:
    - Backend progress
    - Frontend progress
    - Tests progress
    - Docs progress
    - Other areas
 
-5) Identify trends:
+5. Identify trends:
    - Tasks completed recently
    - Tasks stuck/blocked
    - Areas needing attention
    - Velocity indicators
 
-6) Provide recommendations:
+6. Provide recommendations:
    - Focus areas
    - Unblocking actions
    - Next priorities
@@ -48,10 +48,10 @@ Review TODO list and provide a progress report on completion status.
 ## OUTPUT
 
 Provide:
+
 - Progress summary with metrics
 - Breakdown by area
 - Status of each task
 - Trends and insights
 - Recommendations
 - Updated TODO list if statuses changed
-

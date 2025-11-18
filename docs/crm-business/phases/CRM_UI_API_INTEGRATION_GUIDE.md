@@ -58,12 +58,11 @@ User Action → Component → tRPC Hook → Backend API → Database
 import { trpc } from "@/lib/trpc";
 
 export default function CustomerList() {
-  const { data, isLoading, error, isError } = trpc.crm.customer.listProfiles.useQuery(
-    {
+  const { data, isLoading, error, isError } =
+    trpc.crm.customer.listProfiles.useQuery({
       search: debouncedSearch || undefined,
       limit: 50,
-    }
-  );
+    });
 
   // Component implementation...
 }
@@ -74,8 +73,12 @@ export default function CustomerList() {
 For queries that don't require input parameters:
 
 ```typescript
-const { data: stats, isLoading, error, isError } = 
-  trpc.crm.stats.getDashboardStats.useQuery();
+const {
+  data: stats,
+  isLoading,
+  error,
+  isError,
+} = trpc.crm.stats.getDashboardStats.useQuery();
 ```
 
 **Note:** When a query has no input, call `useQuery()` with no arguments. Do not pass `undefined` or an empty object.
@@ -107,7 +110,7 @@ const createMutation = trpc.crm.customer.createProfile.useMutation({
     utils.crm.customer.listProfiles.invalidate();
     toast.success("Customer created");
   },
-  onError: (error) => {
+  onError: error => {
     toast.error(error.message);
   },
 });
@@ -123,20 +126,22 @@ await createMutation.mutateAsync({
 
 ```typescript
 const updateMutation = trpc.crm.lead.updateLead.useMutation({
-  onMutate: async (newLead) => {
+  onMutate: async newLead => {
     // Cancel outgoing refetches
     await utils.crm.lead.listLeads.cancel();
-    
+
     // Snapshot previous value
     const previous = utils.crm.lead.listLeads.getData();
-    
+
     // Optimistically update
-    utils.crm.lead.listLeads.setData(undefined, (old) => {
-      return old?.map((lead) => 
-        lead.id === newLead.id ? { ...lead, ...newLead } : lead
-      ) ?? [];
+    utils.crm.lead.listLeads.setData(undefined, old => {
+      return (
+        old?.map(lead =>
+          lead.id === newLead.id ? { ...lead, ...newLead } : lead
+        ) ?? []
+      );
     });
-    
+
     return { previous };
   },
   onError: (err, newLead, context) => {
@@ -162,7 +167,7 @@ All CRM components must handle four states: **Loading**, **Error**, **Empty**, a
 
 ```typescript
 export default function CustomerList() {
-  const { data: customers, isLoading, error, isError } = 
+  const { data: customers, isLoading, error, isError } =
     trpc.crm.customer.listProfiles.useQuery({ limit: 50 });
 
   // Loading state
@@ -177,8 +182,8 @@ export default function CustomerList() {
   // Error state
   if (isError) {
     return (
-      <ErrorDisplay 
-        message="Failed to load customers" 
+      <ErrorDisplay
+        message="Failed to load customers"
         error={error}
       />
     );
@@ -229,13 +234,14 @@ import { LoadingSpinner } from "@/components/crm/LoadingSpinner";
 ```typescript
 import { ErrorDisplay } from "@/components/crm/ErrorDisplay";
 
-<ErrorDisplay 
-  message="Failed to load customers" 
+<ErrorDisplay
+  message="Failed to load customers"
   error={error}
 />
 ```
 
 **Features:**
+
 - Displays error message
 - Shows retry button
 - Handles network errors gracefully
@@ -257,11 +263,11 @@ Use proper HTML elements for structure:
     <h1>Customers</h1>
     <p>Manage your customer profiles</p>
   </header>
-  
+
   <section aria-label="Search customers">
     {/* Search input */}
   </section>
-  
+
   <section aria-label="Customer list">
     {/* Customer cards */}
   </section>
@@ -344,7 +350,8 @@ All interactive elements must be keyboard accessible:
 Always include visible focus indicators:
 
 ```typescript
-className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+className =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
 ```
 
 ---
@@ -356,6 +363,7 @@ className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pr
 **File:** `client/src/pages/crm/CRMDashboard.tsx`
 
 **Features:**
+
 - Fetches dashboard statistics from `trpc.crm.stats.getDashboardStats`
 - Displays KPIs: customers, leads, bookings, revenue
 - Handles all states (loading, error, success)
@@ -365,7 +373,7 @@ className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pr
 
 ```typescript
 export default function CRMDashboard() {
-  const { data: stats, isLoading, error, isError } = 
+  const { data: stats, isLoading, error, isError } =
     trpc.crm.stats.getDashboardStats.useQuery();
 
   const formatNumber = (num: number) => {
@@ -389,8 +397,8 @@ export default function CRMDashboard() {
 
         {/* Error state */}
         {isError && (
-          <ErrorDisplay 
-            message="Failed to load dashboard statistics" 
+          <ErrorDisplay
+            message="Failed to load dashboard statistics"
             error={error}
           />
         )}
@@ -412,6 +420,7 @@ export default function CRMDashboard() {
 **File:** `client/src/pages/crm/CustomerList.tsx`
 
 **Features:**
+
 - Debounced search input
 - Pagination support
 - Accessible customer cards
@@ -424,11 +433,15 @@ export default function CustomerList() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebouncedValue(search, 300);
 
-  const { data: customers, isLoading, error, isError } = 
-    trpc.crm.customer.listProfiles.useQuery({
-      search: debouncedSearch || undefined,
-      limit: 50,
-    });
+  const {
+    data: customers,
+    isLoading,
+    error,
+    isError,
+  } = trpc.crm.customer.listProfiles.useQuery({
+    search: debouncedSearch || undefined,
+    limit: 50,
+  });
 
   // State handling...
 }
@@ -439,6 +452,7 @@ export default function CustomerList() {
 **File:** `client/src/pages/crm/LeadPipeline.tsx`
 
 **Features:**
+
 - Kanban board layout
 - Lead filtering by stage
 - Accessible lead cards
@@ -448,14 +462,18 @@ export default function CustomerList() {
 
 ```typescript
 export default function LeadPipeline() {
-  const { data: leads, isLoading, error, isError } = 
-    trpc.crm.lead.listLeads.useQuery({ limit: 100 });
+  const {
+    data: leads,
+    isLoading,
+    error,
+    isError,
+  } = trpc.crm.lead.listLeads.useQuery({ limit: 100 });
 
   const leadsByStage = useMemo(() => {
     if (!leads) return {};
     const grouped: Record<string, typeof leads> = {};
-    stages.forEach((stage) => {
-      grouped[stage] = leads.filter((lead) => lead.status === stage);
+    stages.forEach(stage => {
+      grouped[stage] = leads.filter(lead => lead.status === stage);
     });
     return grouped;
   }, [leads, stages]);
@@ -471,6 +489,7 @@ export default function LeadPipeline() {
 ### 1. Always Handle All States
 
 ✅ **Good:**
+
 ```typescript
 if (isLoading) return <LoadingSpinner />;
 if (isError) return <ErrorDisplay error={error} />;
@@ -479,6 +498,7 @@ return <DataDisplay data={data} />;
 ```
 
 ❌ **Bad:**
+
 ```typescript
 return <DataDisplay data={data} />; // No state handling
 ```
@@ -486,6 +506,7 @@ return <DataDisplay data={data} />; // No state handling
 ### 2. Use Semantic HTML
 
 ✅ **Good:**
+
 ```typescript
 <main>
   <header>
@@ -498,6 +519,7 @@ return <DataDisplay data={data} />; // No state handling
 ```
 
 ❌ **Bad:**
+
 ```typescript
 <div>
   <div>
@@ -512,6 +534,7 @@ return <DataDisplay data={data} />; // No state handling
 ### 3. Provide ARIA Labels
 
 ✅ **Good:**
+
 ```typescript
 <button
   aria-label="Close dialog"
@@ -522,6 +545,7 @@ return <DataDisplay data={data} />; // No state handling
 ```
 
 ❌ **Bad:**
+
 ```typescript
 <button onClick={onClose}>
   <X className="w-4 h-4" />
@@ -531,6 +555,7 @@ return <DataDisplay data={data} />; // No state handling
 ### 4. Configure Caching Appropriately
 
 ✅ **Good:**
+
 ```typescript
 trpc.crm.customer.listProfiles.useQuery(
   { limit: 50 },
@@ -542,6 +567,7 @@ trpc.crm.customer.listProfiles.useQuery(
 ```
 
 ❌ **Bad:**
+
 ```typescript
 // No caching configuration - may cause unnecessary refetches
 trpc.crm.customer.listProfiles.useQuery({ limit: 50 });
@@ -550,6 +576,7 @@ trpc.crm.customer.listProfiles.useQuery({ limit: 50 });
 ### 5. Invalidate Queries After Mutations
 
 ✅ **Good:**
+
 ```typescript
 const createMutation = trpc.crm.customer.createProfile.useMutation({
   onSuccess: () => {
@@ -559,6 +586,7 @@ const createMutation = trpc.crm.customer.createProfile.useMutation({
 ```
 
 ❌ **Bad:**
+
 ```typescript
 // Mutation doesn't update the list
 const createMutation = trpc.crm.customer.createProfile.useMutation();
@@ -567,6 +595,7 @@ const createMutation = trpc.crm.customer.createProfile.useMutation();
 ### 6. Use Debouncing for Search
 
 ✅ **Good:**
+
 ```typescript
 const [search, setSearch] = useState("");
 const debouncedSearch = useDebouncedValue(search, 300);
@@ -577,6 +606,7 @@ trpc.crm.customer.listProfiles.useQuery({
 ```
 
 ❌ **Bad:**
+
 ```typescript
 // Triggers API call on every keystroke
 trpc.crm.customer.listProfiles.useQuery({
@@ -643,21 +673,22 @@ trpc.crm.customer.listProfiles.useQuery({
     active: number;
     vip: number;
     atRisk: number;
-  };
+  }
   revenue: {
     total: number;
     paid: number;
     outstanding: number;
-  };
+  }
   bookings: {
     planned: number;
     inProgress: number;
     completed: number;
-  };
+  }
 }
 ```
 
 **Usage:**
+
 ```typescript
 const { data: stats } = trpc.crm.stats.getDashboardStats.useQuery();
 ```
@@ -681,6 +712,7 @@ const { data: stats } = trpc.crm.stats.getDashboardStats.useQuery();
 **Output:** Array of customer profile objects
 
 **Usage:**
+
 ```typescript
 const { data: customers } = trpc.crm.customer.listProfiles.useQuery({
   search: "John",
@@ -706,6 +738,7 @@ const { data: customers } = trpc.crm.customer.listProfiles.useQuery({
 **Output:** Array of lead objects
 
 **Usage:**
+
 ```typescript
 const { data: leads } = trpc.crm.lead.listLeads.useQuery({
   limit: 100,
@@ -731,6 +764,7 @@ const { data: leads } = trpc.crm.lead.listLeads.useQuery({
 **Output:** Array of booking objects
 
 **Usage:**
+
 ```typescript
 const { data: bookings } = trpc.crm.booking.listBookings.useQuery({
   limit: 100,
@@ -812,4 +846,3 @@ test("has no accessibility violations", async () => {
 
 **Last Updated:** January 28, 2025  
 **Maintained by:** Development Team
-

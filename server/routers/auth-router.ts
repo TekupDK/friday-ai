@@ -11,8 +11,6 @@ import { checkRateLimitUnified } from "../rate-limiter-redis";
 
 import { COOKIE_NAME, ONE_YEAR_MS, SEVEN_DAYS_MS } from "@shared/const";
 
-
-
 const loginSchema = z.object({
   email: z.string().email().max(320), // RFC 5321 max email length
   password: z.string().min(1).max(128), // Reasonable password max length
@@ -62,7 +60,9 @@ export const authRouter = router({
     // Always return same error message for security
     if (!userRecords || userRecords.length === 0) {
       // Small delay to prevent timing attacks
-      await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 100));
+      await new Promise(resolve =>
+        setTimeout(resolve, 100 + Math.random() * 100)
+      );
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "Invalid email or password",
@@ -76,7 +76,8 @@ export const authRouter = router({
     if (user.loginMethod === "google" || user.loginMethod === "oauth") {
       throw new TRPCError({
         code: "UNAUTHORIZED",
-        message: "Please sign in with Google. This account uses OAuth authentication.",
+        message:
+          "Please sign in with Google. This account uses OAuth authentication.",
       });
     }
 
@@ -87,7 +88,8 @@ export const authRouter = router({
       // For now, reject password-based login in production
       throw new TRPCError({
         code: "UNAUTHORIZED",
-        message: "Password-based login is not available. Please use Google Sign-In.",
+        message:
+          "Password-based login is not available. Please use Google Sign-In.",
       });
     }
 
@@ -103,14 +105,18 @@ export const authRouter = router({
     // Create session using SDK so it matches verification
     const openId = user.openId || `email:${normalizedEmail}`;
     // ✅ SECURITY FIX: Use 7-day expiry in production, 1 year in development
-    const sessionExpiry = process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS;
+    const sessionExpiry =
+      process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS;
     const sessionToken = await sdk.createSessionToken(openId, {
       name: user.name || input.email.split("@")[0],
       expiresInMs: sessionExpiry,
     });
     const cookieOpts = getSessionCookieOptions(ctx.req);
-    ctx.res?.cookie(COOKIE_NAME, sessionToken, { ...cookieOpts, maxAge: sessionExpiry });
-    
+    ctx.res?.cookie(COOKIE_NAME, sessionToken, {
+      ...cookieOpts,
+      maxAge: sessionExpiry,
+    });
+
     return {
       id: openId,
       email: user.email || input.email,

@@ -220,7 +220,7 @@
 
 ### Architecture
 
-```text
+````text
 ┌─────────────────┐
 │  Google Workspace│
 │  info@rendetalje │
@@ -568,7 +568,7 @@ export async function POST(req: Request) {
   }
 }
 
-```
+````
 
 ---
 

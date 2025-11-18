@@ -32,7 +32,10 @@ vi.mock("@/lib/supabaseClient", () => ({ supabase: undefined }));
 beforeAll(() => {
   // @ts-ignore
   global.HTMLCanvasElement.prototype.getContext = () => ({
-    canvas: typeof document !== "undefined" ? document.createElement("canvas") : ({} as HTMLCanvasElement),
+    canvas:
+      typeof document !== "undefined"
+        ? document.createElement("canvas")
+        : ({} as HTMLCanvasElement),
     save: () => {},
     restore: () => {},
     clearRect: () => {},
@@ -78,7 +81,9 @@ describe("LoginPage Accessibility", () => {
     renderWithA11y(<LoginPage />);
     // Find submit button specifically by type, not just by name (to avoid matching "Log ind med Google")
     const buttons = screen.getAllByRole("button");
-    const submitButton = buttons.find(btn => btn.getAttribute("type") === "submit");
+    const submitButton = buttons.find(
+      btn => btn.getAttribute("type") === "submit"
+    );
     expect(submitButton).toBeInTheDocument();
     expect(submitButton).toHaveTextContent(/^log ind$/i);
   });
@@ -88,14 +93,14 @@ describe("LoginPage Accessibility", () => {
     // Verify form exists (may not have explicit role="form" but should be a form element)
     const form = document.querySelector("form");
     expect(form).toBeInTheDocument();
-    
+
     // Verify form has proper structure for error announcements
     // Form should have aria-live region or error container for screen readers
     const emailInput = screen.getByLabelText(/e-mail/i);
     const passwordInput = screen.getByLabelText(/adgangskode/i);
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
-    
+
     // Form inputs should have aria-invalid capability (even if not currently invalid)
     expect(emailInput).toHaveAttribute("type", "email");
     expect(passwordInput).toHaveAttribute("type", "password");
@@ -116,18 +121,19 @@ describe("LoginPage Accessibility", () => {
     const emailInput = screen.getByLabelText(/e-mail/i);
     const passwordInput = screen.getByLabelText(/adgangskode/i);
     const buttons = screen.getAllByRole("button");
-    const submitButton = buttons.find(btn => btn.getAttribute("type") === "submit");
+    const submitButton = buttons.find(
+      btn => btn.getAttribute("type") === "submit"
+    );
 
     // Form inputs are naturally focusable (don't need tabIndex)
     // Check that they're not disabled and can receive focus
     expect(emailInput).not.toBeDisabled();
     expect(passwordInput).not.toBeDisabled();
     expect(submitButton).not.toBeDisabled();
-    
+
     // Verify they're actually focusable elements
     expect(emailInput.tagName).toBe("INPUT");
     expect(passwordInput.tagName).toBe("INPUT");
     expect(submitButton?.tagName).toBe("BUTTON");
   });
 });
-

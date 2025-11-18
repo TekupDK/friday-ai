@@ -31,6 +31,7 @@ Implement a full feature from database to UI, including all layers. START NOW - 
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read existing patterns for each layer
 - `codebase_search` - Find similar implementations
 - `grep` - Search for patterns
@@ -38,6 +39,7 @@ Implement a full feature from database to UI, including all layers. START NOW - 
 - `run_terminal_cmd` - Run migrations and tests
 
 **DO NOT:**
+
 - Skip any layer
 - Implement without reviewing patterns
 - Ignore type safety
@@ -72,11 +74,13 @@ Before implementing, think through:
 ## CRITICAL: START IMPLEMENTING IMMEDIATELY
 
 **DO NOT:**
+
 - Show a plan and wait for approval
 - Ask "should I start?"
 - Just design without implementing
 
 **DO:**
+
 - Start implementing the first layer immediately
 - Make actual code changes using tools
 - Complete all layers systematically
@@ -85,6 +89,7 @@ Before implementing, think through:
 ## IMPLEMENTATION FLOW
 
 ### Layer 1: Database (START HERE)
+
 1. Update `drizzle/schema.ts` with new table
 2. Export types: `export type TableName = typeof table.$inferSelect`
 3. Run migration: `pnpm db:migrate:dev`
@@ -92,6 +97,7 @@ Before implementing, think through:
 5. Run typecheck: `pnpm check`
 
 ### Layer 2: Backend (CONTINUE)
+
 1. Create tRPC router in `server/routers/[feature]-router.ts`
 2. Add procedures (queries and mutations)
 3. Use database helpers
@@ -100,6 +106,7 @@ Before implementing, think through:
 6. Run typecheck: `pnpm check`
 
 ### Layer 3: Frontend (CONTINUE)
+
 1. Create components in `client/src/components/`
 2. Create page in `client/src/pages/`
 3. Add route in routing file
@@ -109,6 +116,7 @@ Before implementing, think through:
 7. Run typecheck: `pnpm check`
 
 ### Layer 4: Integration (COMPLETE)
+
 1. Test data flow end-to-end
 2. Verify error handling
 3. Test edge cases
@@ -167,6 +175,7 @@ Before implementing, think through:
 ## VERIFICATION CHECKLIST
 
 After each layer:
+
 - ✅ Typecheck passes: `pnpm check`
 - ✅ Follows existing patterns
 - ✅ No `any` types
@@ -179,28 +188,32 @@ After each layer:
 ## Fullstack Implementation: [Feature Name]
 
 ### Database Layer
+
 - Schema: [table added]
 - Migration: [file path]
 - Helpers: [functions created]
 
 ### Backend Layer
+
 - Router: [router file]
 - Procedures: [list]
 - Files: [list]
 
 ### Frontend Layer
+
 - Components: [list]
 - Pages: [list]
 - Routes: [list]
 
 ### Integration
+
 - Data flow: ✅ WORKING
 - Error handling: ✅ WORKING
 - Permissions: ✅ VERIFIED
 
 ### Verification
+
 - ✅ Typecheck: PASSED
 - ✅ Tests: PASSED
 - ✅ Pattern match: PASSED
 ```
-

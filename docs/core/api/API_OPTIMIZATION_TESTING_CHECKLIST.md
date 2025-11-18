@@ -58,7 +58,7 @@
 
 ## 📊 Metrics Collection Template
 
-```markdown
+`````markdown
 ## Test Metrics - [Date]
 
 ### API Calls (10 minutes)
@@ -91,7 +91,7 @@
 - Scroll Performance: Smooth/Slow
 - Rendering Performance: Good/Poor
 
-```bash
+````bash
 
 ---
 
@@ -143,6 +143,8 @@
 [ ] All tests passed
 [ ] Some tests failed (see details)
 [ ] Major issues found
+````
+`````
 
 ```
 
@@ -178,3 +180,4 @@
 
 **Ready for:** User Testing
 **Reference:** See `API_OPTIMIZATION_TEST_NOTES_TEMPLATE.md` for detailed notes
+```

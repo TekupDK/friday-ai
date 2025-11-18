@@ -3,6 +3,7 @@
 Complete index of all commands in Friday AI Chat, organized alphabetically.
 
 ## A
+
 - `add-accessibility-features.md` - Add WCAG 2.1 AA accessibility features
 - `add-ai-tool-handler.md` - Add new AI tool handler for Friday AI
 - `add-documentation.md` - Add documentation
@@ -22,6 +23,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `accessibility-audit.md` - Comprehensive accessibility audit
 
 ## B
+
 - `backup-database.md` - Create database backup
 - `batch-complete-todos.md` - Complete multiple TODO items
 - `batch-operations.md` - Implement batch operations
@@ -30,6 +32,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `bug-fix.md` - Fix bugs (see `fix-bug.md`)
 
 ## C
+
 - `cache-strategy.md` - Design caching strategy
 - `chain-of-thought-debugging.md` - Chain-of-thought debugging
 - `check-auth-flows.md` - Check authentication flows
@@ -72,6 +75,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `create-ui-component.md` - Create UI component
 
 ## D
+
 - `data-migration.md` - Perform data migration
 - `database-migration.md` - Database migration
 - `debug-email-sync.md` - Debug email sync
@@ -88,6 +92,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `documentation-update.md` - Update documentation
 
 ## E
+
 - `ensure-test-data-sanity.md` - Ensure test data sanity
 - `environment-setup.md` - Set up environment
 - `error-tracking.md` - Set up error tracking
@@ -95,6 +100,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `exploratory-debugging.md` - Exploratory debugging
 
 ## F
+
 - `feature-flag.md` - Implement feature flags
 - `find-blocked-todos.md` - Find blocked TODOs
 - `find-outdated-docs.md` - Find outdated documentation (Docs)
@@ -113,6 +119,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `forsaet-samtale.md` - Fortsæt samtale (Danish)
 
 ## G
+
 - `generate-ai-playbook.md` - Generate AI playbook
 - `generate-api-docs.md` - Generate API docs
 - `generate-pr-description.md` - Generate PR description
@@ -124,6 +131,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `google-integration-setup.md` - Set up Google integration
 
 ## H
+
 - `handle-ai-rate-limits.md` - Handle AI rate limits
 - `handle-build-failure.md` - Handle build failure
 - `health-check.md` - Implement health checks
@@ -131,6 +139,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `hot-reload-fix.md` - Fix hot module reload
 
 ## I
+
 - `improve-developer-experience.md` - Improve developer experience
 - `improve-error-handling.md` - Improve error handling
 - `improve-prompts-for-code.md` - Improve prompts for code
@@ -141,14 +150,17 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `integration-testing.md` - Write integration tests
 
 ## J
+
 - `json-schema-validation.md` - JSON schema validation
 - `jwt-authentication.md` - JWT authentication
 
 ## K
+
 - `keyboard-shortcuts.md` - Implement keyboard shortcuts
 - `kill-zombie-processes.md` - Kill zombie processes
 
 ## L
+
 - `lazy-loading.md` - Implement lazy loading
 - `light-review.md` - Light code review
 - `light-review-existing-diffs.md` - Light review existing diffs
@@ -157,6 +169,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `logging-setup.md` - Set up logging
 
 ## M
+
 - `maintain-context.md` - Maintain context throughout session (Session Management)
 - `map-changes-to-tests.md` - Map changes to tests
 - `migrate-database-schema.md` - Migrate database schema
@@ -168,10 +181,12 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `monitoring-setup.md` - Set up monitoring
 
 ## N
+
 - `naming-conventions.md` - Standardize naming conventions
 - `notification-system.md` - Implement notification system
 
 ## O
+
 - `observability-setup.md` - Set up observability
 - `onboard-new-developer.md` - Onboard new developer
 - `optimize-ai-prompt.md` - Optimize AI prompt
@@ -181,6 +196,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `optimize-bundle-size.md` - Optimize bundle size
 
 ## P
+
 - `pagination-implementation.md` - Implement pagination
 - `parse-chat-summary.md` - Parse chat summary
 - `performance-audit.md` - Performance audit
@@ -192,11 +208,13 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `prioritize-todos.md` - Prioritize TODOs
 
 ## Q
+
 - `qa-test-plan.md` - Create QA test plan
 - `quality-gates.md` - Set up quality gates
 - `query-optimization.md` - Optimize database queries
 
 ## R
+
 - `rate-limit-config.md` - Configure rate limiting
 - `refactor-code.md` - Refactor code
 - `refactor-large-files.md` - Refactor large files
@@ -213,6 +231,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `run-typecheck.md` - Run typecheck
 
 ## S
+
 - `safe-bugfix.md` - Safe bugfix
 - `safe-refactor.md` - Safe refactor
 - `search-implementation.md` - Implement search
@@ -237,6 +256,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `sync-docs-with-code.md` - Sync documentation with code changes (Docs)
 
 ## T
+
 - `test-ai-tool-handler.md` - Test AI tool handler
 - `test-changed-files.md` - Test changed files
 - `test-coverage-analysis.md` - Analyze test coverage
@@ -253,12 +273,14 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `type-safety-improvement.md` - Improve type safety
 
 ## U
+
 - `ui-ux-review.md` - UI/UX review
 - `unit-test-coverage.md` - Improve unit test coverage
 - `update-dependencies.md` - Update dependencies
 - `update-todo-status.md` - Update TODO status
 
 ## V
+
 - `validate-error-handling-tests.md` - Validate error handling tests
 - `validate-inputs.md` - Validate inputs
 - `verify-docs-accuracy.md` - Verify documentation accuracy (Docs)
@@ -266,19 +288,23 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `version-management.md` - Manage versions
 
 ## W
+
 - `webhook-handler.md` - Implement webhook handler
 - `wire-ui-to-api.md` - Wire UI to API
 - `write-unit-tests.md` - Write unit tests
 
 ## X
+
 - `xss-prevention.md` - XSS prevention
 - `xml-parsing.md` - XML parsing (if needed)
 
 ## Y
+
 - `yarn-migration.md` - Yarn migration (not needed - use pnpm)
 - `yield-patterns.md` - Async/await patterns
 
 ## Z
+
 - `zero-downtime-deployment.md` - Zero-downtime deployment
 - `zod-validation-patterns.md` - Zod validation patterns
 - `zoom-integration.md` - Zoom integration (if needed)
@@ -288,6 +314,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 **Total Commands:** 200+ commands covering all aspects of development
 
 **Categories:**
+
 - **Development:** Component creation, feature implementation
 - **Testing:** Unit, integration, E2E tests
 - **Debugging:** Issue resolution, troubleshooting
@@ -295,4 +322,3 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - **DevOps:** Deployment, monitoring, CI/CD
 - **Documentation:** Docs, guides, API reference
 - **Maintenance:** Cleanup, refactoring, updates
-

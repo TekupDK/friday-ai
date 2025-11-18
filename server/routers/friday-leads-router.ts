@@ -19,8 +19,6 @@ import { withDatabaseErrorHandling } from "../_core/error-handling";
 import { router, protectedProcedure } from "../_core/trpc";
 import { getDb } from "../db";
 
-
-
 /**
  * Customer lookup by name, email, or phone
  */
@@ -49,25 +47,22 @@ export const fridayLeadsRouter = router({
       // ✅ SECURITY FIX: Use parameterized queries with Drizzle's ilike for case-insensitive search
       // ilike properly parameterizes the search value, preventing SQL injection
       // ✅ ERROR HANDLING: Wrap database query with error handling
-      const matchingLeads = await withDatabaseErrorHandling(
-        async () => {
-          return await db
-            .select()
-            .from(leads)
-            .where(
-              and(
-                eq(leads.userId, userId),
-                or(
-                  ilike(leads.name, `%${input.query}%`),
-                  ilike(leads.email, `%${input.query}%`),
-                  ilike(leads.phone, `%${input.query}%`)
-                )!
-              )
+      const matchingLeads = await withDatabaseErrorHandling(async () => {
+        return await db
+          .select()
+          .from(leads)
+          .where(
+            and(
+              eq(leads.userId, userId),
+              or(
+                ilike(leads.name, `%${input.query}%`),
+                ilike(leads.email, `%${input.query}%`),
+                ilike(leads.phone, `%${input.query}%`)
+              )!
             )
-            .limit(10);
-        },
-        "Failed to search leads"
-      );
+          )
+          .limit(10);
+      }, "Failed to search leads");
 
       if (matchingLeads.length === 0) {
         return {
@@ -79,15 +74,12 @@ export const fridayLeadsRouter = router({
       // ✅ PERFORMANCE FIX: Use batch queries instead of N+1 queries
       // Get all customer profiles in one query
       const leadIds = matchingLeads.map(lead => lead.id);
-      const allProfiles = await withDatabaseErrorHandling(
-        async () => {
-          return await db
-            .select()
-            .from(customerProfiles)
-            .where(inArray(customerProfiles.leadId, leadIds));
-        },
-        "Failed to fetch customer profiles"
-      );
+      const allProfiles = await withDatabaseErrorHandling(async () => {
+        return await db
+          .select()
+          .from(customerProfiles)
+          .where(inArray(customerProfiles.leadId, leadIds));
+      }, "Failed to fetch customer profiles");
 
       // Create a map for quick lookup: leadId -> profile
       const profileMap = new Map(
@@ -98,16 +90,13 @@ export const fridayLeadsRouter = router({
       let invoicesMap = new Map<number, CustomerInvoice[]>();
       if (input.includeInvoices && allProfiles.length > 0) {
         const customerIds = allProfiles.map(profile => profile.id);
-        const allInvoices = await withDatabaseErrorHandling(
-          async () => {
-            return await db
-              .select()
-              .from(customerInvoices)
-              .where(inArray(customerInvoices.customerId, customerIds))
-              .orderBy(desc(customerInvoices.entryDate));
-          },
-          "Failed to fetch invoices"
-        );
+        const allInvoices = await withDatabaseErrorHandling(async () => {
+          return await db
+            .select()
+            .from(customerInvoices)
+            .where(inArray(customerInvoices.customerId, customerIds))
+            .orderBy(desc(customerInvoices.entryDate));
+        }, "Failed to fetch invoices");
 
         // Group invoices by customerId
         for (const invoice of allInvoices) {
@@ -122,7 +111,7 @@ export const fridayLeadsRouter = router({
       // Build results using the maps (O(1) lookups)
       const results = matchingLeads.map(lead => {
         const profile = profileMap.get(lead.id) || null;
-        const invoices = profile ? (invoicesMap.get(profile.id) || []) : [];
+        const invoices = profile ? invoicesMap.get(profile.id) || [] : [];
 
         return {
           lead,

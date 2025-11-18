@@ -1,6 +1,6 @@
 /**
  * Validation Tests
- * 
+ *
  * Tests for configuration and result validation
  */
 
@@ -93,10 +93,12 @@ describe("Result Validation", () => {
   it("should reject invalid result structure", () => {
     // Results must be objects (not null, undefined, primitives, or arrays)
     const invalidResults = [null, undefined, "string", 123, []];
-    invalidResults.forEach((invalid) => {
-      const isValidObject = typeof invalid === "object" && invalid !== null && !Array.isArray(invalid);
+    invalidResults.forEach(invalid => {
+      const isValidObject =
+        typeof invalid === "object" &&
+        invalid !== null &&
+        !Array.isArray(invalid);
       expect(isValidObject).toBe(false);
     });
   });
 });
-

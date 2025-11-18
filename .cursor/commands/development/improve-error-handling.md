@@ -30,12 +30,14 @@ Standardize error handling across the codebase using Friday AI Chat patterns.
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read error handling patterns
 - `codebase_search` - Find inconsistent patterns
 - `grep` - Search for error handling
 - `search_replace` - Standardize error handling
 
 **DO NOT:**
+
 - Skip reviewing existing patterns
 - Ignore logging
 - Miss error codes
@@ -68,6 +70,7 @@ Before improving, think through:
 ## STANDARD ERROR HANDLING PATTERN
 
 ### Pattern to Use (Standard)
+
 ```typescript
 import { TRPCError } from "@trpc/server";
 import { logger } from "./logger";
@@ -77,11 +80,11 @@ try {
   return result;
 } catch (error) {
   logger.error({ err: error, context }, "Operation failed");
-  
+
   if (error instanceof TRPCError) {
     throw error; // Re-throw TRPC errors
   }
-  
+
   throw new TRPCError({
     code: "INTERNAL_SERVER_ERROR",
     message: "Operation failed",
@@ -91,6 +94,7 @@ try {
 ```
 
 ### Error Codes to Use
+
 - `UNAUTHORIZED` - 401: Not authenticated
 - `FORBIDDEN` - 403: Not authorized
 - `NOT_FOUND` - 404: Resource not found
@@ -101,6 +105,7 @@ try {
 ## INCONSISTENT PATTERNS TO REPLACE
 
 ### Pattern 1: Silent Failure
+
 ```typescript
 // ❌ Bad: Silent failure
 const result = await operation();
@@ -119,6 +124,7 @@ if (!result) {
 ```
 
 ### Pattern 2: Return Error Object
+
 ```typescript
 // ❌ Bad: Return error object
 const result = await operation();
@@ -137,6 +143,7 @@ if (!result.success) {
 ```
 
 ### Pattern 3: Console.error
+
 ```typescript
 // ❌ Bad: console.error
 catch (error) {
@@ -179,20 +186,23 @@ catch (error) {
 ### Error Handling Standardization
 
 **Patterns Replaced:**
+
 - Silent failures: [count]
 - Return error objects: [count]
 - console.error: [count]
 
 **Files Modified:**
+
 - [list]
 
 **Standard Applied:**
+
 - TRPCError with proper codes
 - Logger for error tracking
 - Helpful error messages
 
 **Verification:**
+
 - ✅ Consistent: PASSED
 - ✅ Logging: IMPROVED
 ```
-

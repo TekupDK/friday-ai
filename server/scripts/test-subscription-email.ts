@@ -1,6 +1,6 @@
 /**
  * Subscription Email Test Script
- * 
+ *
  * Tests email delivery for subscription events
  * Run with: pnpm exec dotenv -e .env.dev -- tsx server/scripts/test-subscription-email.ts
  */
@@ -70,7 +70,7 @@ async function testSubscriptionEmails() {
         )
       )
       .limit(1)
-      .then((rows) => rows[0]);
+      .then(rows => rows[0]);
 
     if (!subscription) {
       console.log("📝 Creating test subscription...");
@@ -118,7 +118,9 @@ async function testSubscriptionEmails() {
     if (cancellationResult.success) {
       console.log("✅ Cancellation email sent successfully\n");
     } else {
-      console.error(`❌ Cancellation email failed: ${cancellationResult.error}\n`);
+      console.error(
+        `❌ Cancellation email failed: ${cancellationResult.error}\n`
+      );
     }
 
     // Test 4: Overage Warning Email
@@ -137,7 +139,9 @@ async function testSubscriptionEmails() {
     if (overageResult.success) {
       console.log("✅ Overage warning email sent successfully\n");
     } else {
-      console.error(`❌ Overage warning email failed: ${overageResult.error}\n`);
+      console.error(
+        `❌ Overage warning email failed: ${overageResult.error}\n`
+      );
     }
 
     console.log("✅ All email tests completed!");

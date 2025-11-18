@@ -14,6 +14,7 @@ All critical Sentry integration tasks have been completed. Remaining items are o
 ## ✅ Completed Tasks
 
 ### Core Implementation
+
 - [x] Server-side Sentry integration
 - [x] Client-side Sentry integration
 - [x] Error Boundary integration
@@ -22,6 +23,7 @@ All critical Sentry integration tasks have been completed. Remaining items are o
 - [x] Implementation validation
 
 ### Documentation
+
 - [x] Setup guide (SENTRY_SETUP.md)
 - [x] Environment setup guide (SENTRY_ENV_SETUP.md)
 - [x] Production setup guide (SENTRY_PRODUCTION_SETUP.md) - **NEW**
@@ -30,10 +32,12 @@ All critical Sentry integration tasks have been completed. Remaining items are o
 - [x] Completion checklist (SENTRY_COMPLETE.md)
 
 ### Scripts
+
 - [x] Development environment script (add-sentry-env.ps1)
 - [x] Production environment script (add-sentry-env-prod.ps1) - **NEW**
 
 ### Environment Configuration
+
 - [x] Development environment variables (.env.dev)
 - [x] Production environment script ready (.env.prod can be updated via script)
 
@@ -44,9 +48,11 @@ All critical Sentry integration tasks have been completed. Remaining items are o
 ### Before Production Deployment (P1)
 
 1. **Run Production Script:**
+
    ```powershell
    .\scripts\add-sentry-env-prod.ps1
    ```
+
    This will add Sentry variables to `.env.prod` if they don't already exist.
 
 2. **Configure Production Alerts:**
@@ -72,16 +78,19 @@ All critical Sentry integration tasks have been completed. Remaining items are o
 ## 🚀 Next Steps
 
 ### Immediate (Before Production)
+
 1. Run `.\scripts\add-sentry-env-prod.ps1` to add production variables
 2. Review production setup guide: `docs/devops-deploy/SENTRY_PRODUCTION_SETUP.md`
 3. Configure alerts in Sentry dashboard
 
 ### Before Deployment
+
 1. Test error tracking in development environment
 2. Verify Sentry initialization in logs
 3. Test error reporting end-to-end
 
 ### After Deployment
+
 1. Monitor Sentry dashboard for errors
 2. Review alert effectiveness
 3. Adjust sample rates if needed
@@ -115,4 +124,3 @@ Test documentation in `docs/testing/`:
 ---
 
 **Last Updated:** January 28, 2025
-

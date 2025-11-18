@@ -30,6 +30,7 @@
 **Status:** 🔴 Blocking production deployment
 
 **Acceptance Criteria:**
+
 - [ ] All 6 files compile without errors
 - [ ] Type checking passes (`tsc --noEmit`)
 - [ ] No type safety warnings
@@ -37,6 +38,7 @@
 - [ ] Tests pass
 
 **Files to Fix:**
+
 1. `client/src/pages/crm/CustomerList.tsx` - Type mismatch (`"private" | "erhverv"` vs `"private"`)
 2. `server/__tests__/crm-workflow.test.ts` - Missing `status` property
 3. `client/src/pages/crm/OpportunityPipeline.tsx` - Export `OpportunityCardData` and `OpportunityStage`
@@ -45,6 +47,7 @@
 6. `client/src/components/crm/SegmentActions.tsx` - Argument count mismatch
 
 **Tasks:**
+
 - [ ] Fix CustomerList customerType type definition
 - [ ] Add status property to CRM workflow test types
 - [ ] Export OpportunityCardData and OpportunityStage from OpportunityColumn
@@ -63,6 +66,7 @@
 **Status:** 🔴 Blocking all email features
 
 **Acceptance Criteria:**
+
 - [ ] SMTP server running in Docker
 - [ ] DNS MX records configured
 - [ ] Google Workspace auto-forward setup
@@ -72,6 +76,7 @@
 - [ ] No Gmail API rate limit errors
 
 **Tasks:**
+
 - [ ] Clone `github.com/sendbetter/inbound-email`
 - [ ] Setup Docker container and configuration
 - [ ] Configure DNS MX records for `parse.tekup.dk`
@@ -84,6 +89,7 @@
 - [ ] Document setup process
 
 **Dependencies:**
+
 - Docker environment
 - DNS access for MX records
 - Google Workspace admin access
@@ -100,6 +106,7 @@
 **Status:** 🔴 Required for user notifications
 
 **Acceptance Criteria:**
+
 - [ ] SendGrid or AWS SES account configured
 - [ ] API keys stored securely in environment
 - [ ] Email templates created (welcome, error, reminder)
@@ -109,6 +116,7 @@
 - [ ] Error handling for delivery failures
 
 **Tasks:**
+
 - [ ] Choose provider (SendGrid recommended - free tier available)
 - [ ] Create SendGrid account and verify domain
 - [ ] Add API key to environment variables
@@ -120,6 +128,7 @@
 - [ ] Update notification service documentation
 
 **Dependencies:**
+
 - SendGrid account (or AWS SES)
 - Domain verification (if required)
 
@@ -136,6 +145,7 @@
 **Status:** 🟡 Core calendar feature
 
 **Acceptance Criteria:**
+
 - [ ] Reminder scheduling system designed
 - [ ] Reminder logic implemented
 - [ ] Integration with notification service
@@ -144,6 +154,7 @@
 - [ ] Test reminder delivery
 
 **Tasks:**
+
 - [ ] Design reminder system architecture
 - [ ] Create database table for reminders (if needed)
 - [ ] Implement scheduling logic (calculate reminder times)
@@ -153,6 +164,7 @@
 - [ ] Handle edge cases (all-day events, recurring events)
 
 **Dependencies:**
+
 - Email notification service (item #3)
 
 ---
@@ -166,6 +178,7 @@
 **Status:** 🟡 Incomplete feature
 
 **Acceptance Criteria:**
+
 - [ ] `updateSegment` endpoint implemented
 - [ ] Input validation added
 - [ ] Database update logic
@@ -173,6 +186,7 @@
 - [ ] Tests passing
 
 **Tasks:**
+
 - [ ] Implement `updateSegment` in `server/routers/crm-extensions-router.ts`
 - [ ] Add Zod validation schema
 - [ ] Implement database update logic
@@ -192,6 +206,7 @@
 **Status:** 🟡 Incomplete feature
 
 **Acceptance Criteria:**
+
 - [ ] Supabase Storage bucket created
 - [ ] Upload logic implemented
 - [ ] File validation (size, type)
@@ -200,6 +215,7 @@
 - [ ] Test upload/download
 
 **Tasks:**
+
 - [ ] Create Supabase Storage bucket for documents
 - [ ] Setup bucket permissions
 - [ ] Implement upload function in `DocumentUploader.tsx`
@@ -222,6 +238,7 @@
 **Status:** 🟢 Feature enhancement
 
 **Acceptance Criteria:**
+
 - [ ] Metrics schema designed
 - [ ] Database table created
 - [ ] Storage logic implemented
@@ -230,6 +247,7 @@
 - [ ] Test metrics collection
 
 **Tasks:**
+
 - [ ] Design metrics schema (test_id, variant, user_id, metric_name, value, timestamp)
 - [ ] Create database migration
 - [ ] Implement storage logic in `server/_core/ab-testing.ts`
@@ -338,6 +356,7 @@
 ### Milestone 1: TypeScript Errors Fixed (Day 1, Morning)
 
 **Verification:**
+
 - [ ] `tsc --noEmit` passes with 0 errors
 - [ ] All 6 files compile successfully
 - [ ] Tests pass
@@ -349,6 +368,7 @@
 ### Milestone 2: SMTP Server Operational (Day 2, End)
 
 **Verification:**
+
 - [ ] SMTP server receiving emails
 - [ ] Webhook endpoint functional
 - [ ] Test email successfully processed
@@ -361,6 +381,7 @@
 ### Milestone 3: Notification Service Live (Day 3, Afternoon)
 
 **Verification:**
+
 - [ ] SendGrid account configured
 - [ ] Test email successfully sent
 - [ ] Notification service integrated
@@ -373,6 +394,7 @@
 ### Milestone 4: Sprint Complete (Day 5, End)
 
 **Verification:**
+
 - [ ] All high priority tasks completed
 - [ ] All medium priority tasks completed
 - [ ] All features tested
@@ -438,6 +460,7 @@
 **Buffer:** 0-5 timer (10% for unexpected work)
 
 **Breakdown:**
+
 - High Priority: 20-24 timer
 - Medium Priority: 8-12 timer
 - Low Priority: 4-6 timer (if time permits)
@@ -475,4 +498,3 @@
 
 **Last Updated:** 2025-01-28  
 **Next Sprint Review:** 2025-02-04
-

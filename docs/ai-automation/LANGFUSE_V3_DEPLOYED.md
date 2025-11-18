@@ -11,7 +11,6 @@
 ### 3 Docker Containers
 
 1. **friday-langfuse-db** (PostgreSQL 15)
-
    - Main database for Langfuse metadata
 
    - Port: 5433 → 5432
@@ -19,7 +18,6 @@
    - Status: Healthy ✅
 
 1. **friday-langfuse-clickhouse** (ClickHouse latest)
-
    - Analytics database for V3
 
    - Port: 8123 (HTTP), 9000 (Native)
@@ -27,7 +25,6 @@
    - Status: Healthy ✅
 
 1. **friday-langfuse** (Langfuse V3)
-
    - Main application
 
    - Port: 3001 → 3000
@@ -38,7 +35,7 @@
 
 ## 🌐 Access URLs
 
-```text
+````text
 Langfuse Dashboard:     <http://localhost:3001>
 ClickHouse HTTP API:    <http://localhost:8123>
 PostgreSQL:             localhost:5433
@@ -371,7 +368,7 @@ Still very efficient! 🚀
 ║                                                       ║
 ╚═══════════════════════════════════════════════════════╝
 
-```
+````
 
 ---
 

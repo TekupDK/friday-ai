@@ -1,6 +1,6 @@
 /**
  * Terminal Command Validation for Cursor Agent
- * 
+ *
  * Validates terminal commands before execution to prevent:
  * - Destructive operations
  * - Unauthorized commands
@@ -76,7 +76,7 @@ export function validateCommand(command: string): CommandValidation {
     "playwright",
   ];
 
-  const isWhitelisted = whitelist.some((safe) => command.startsWith(safe));
+  const isWhitelisted = whitelist.some(safe => command.startsWith(safe));
 
   if (!isWhitelisted && !command.startsWith("cd ")) {
     return {
@@ -135,4 +135,3 @@ export function parseCommandOutput(
     output,
   };
 }
-

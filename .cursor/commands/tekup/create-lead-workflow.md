@@ -33,6 +33,7 @@ Create or improve lead processing workflow automation that handles email monitor
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `codebase_search` - Find lead processing code
 - `read_file` - Read workflow automation files
 - `grep` - Search for lead-related patterns
@@ -40,6 +41,7 @@ Create or improve lead processing workflow automation that handles email monitor
 - `run_terminal_cmd` - Test workflow execution
 
 **DO NOT:**
+
 - Break existing workflow automation
 - Remove source detection logic
 - Skip error handling
@@ -190,20 +192,24 @@ Provide workflow implementation:
 **Status:** [COMPLETE / IN PROGRESS]
 
 ## Workflow Analysis
+
 - **Current Sources:** [List of 8 sources]
 - **Workflow Steps:** [List of steps]
 - **Improvements Made:** [List of improvements]
 
 ## Implementation
+
 - ✅ [Component 1] - [Status]
 - ✅ [Component 2] - [Status]
 - 🚧 [Component 3] - [In progress]
 
 ## Testing
+
 - ✅ [Test 1] - [Result]
 - ✅ [Test 2] - [Result]
 
 ## Next Steps
+
 1. [Next action 1]
 2. [Next action 2]
 ```
@@ -220,4 +226,3 @@ Provide workflow implementation:
 ---
 
 **CRITICAL:** Start by reading existing workflow code, then create or improve the workflow based on requirements.
-

@@ -36,12 +36,14 @@ The Error Handling System provides comprehensive error handling utilities for Fr
 ### Why It Exists
 
 Before this implementation:
+
 - Database errors could crash the application
 - External API failures had no retry logic
 - Error messages could leak sensitive information
 - No protection against cascading failures
 
 After this implementation:
+
 - ✅ Automatic recovery from transient failures
 - ✅ User-friendly error messages
 - ✅ Protection against information leakage
@@ -136,25 +138,25 @@ Retries a function with exponential backoff for transient failures.
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>,
   config?: RetryConfig
-): Promise<T>
+): Promise<T>;
 ```
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `fn` | `() => Promise<T>` | Yes | - | Function to retry |
-| `config` | `RetryConfig` | No | See below | Retry configuration |
+| Parameter | Type               | Required | Default   | Description         |
+| --------- | ------------------ | -------- | --------- | ------------------- |
+| `fn`      | `() => Promise<T>` | Yes      | -         | Function to retry   |
+| `config`  | `RetryConfig`      | No       | See below | Retry configuration |
 
 #### RetryConfig
 
 ```typescript
 interface RetryConfig {
-  maxAttempts?: number;        // Default: 3
-  initialDelayMs?: number;     // Default: 1000
-  maxDelayMs?: number;         // Default: 10000
-  backoffMultiplier?: number;  // Default: 2
-  retryableErrors?: string[];  // Default: common network errors
+  maxAttempts?: number; // Default: 3
+  initialDelayMs?: number; // Default: 1000
+  maxDelayMs?: number; // Default: 10000
+  backoffMultiplier?: number; // Default: 2
+  retryableErrors?: string[]; // Default: common network errors
 }
 ```
 
@@ -199,23 +201,23 @@ Creates a circuit breaker to prevent cascading failures.
 ```typescript
 export function createCircuitBreaker(
   config?: CircuitBreakerConfig
-): CircuitBreaker
+): CircuitBreaker;
 ```
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `config` | `CircuitBreakerConfig` | No | See below | Circuit breaker configuration |
+| Parameter | Type                   | Required | Default   | Description                   |
+| --------- | ---------------------- | -------- | --------- | ----------------------------- |
+| `config`  | `CircuitBreakerConfig` | No       | See below | Circuit breaker configuration |
 
 #### CircuitBreakerConfig
 
 ```typescript
 interface CircuitBreakerConfig {
-  failureThreshold?: number;  // Default: 5
-  successThreshold?: number;   // Default: 2
-  timeoutMs?: number;          // Default: 5000
-  resetTimeoutMs?: number;    // Default: 60000
+  failureThreshold?: number; // Default: 5
+  successThreshold?: number; // Default: 2
+  timeoutMs?: number; // Default: 5000
+  resetTimeoutMs?: number; // Default: 60000
 }
 ```
 
@@ -263,15 +265,15 @@ Wraps database operations with comprehensive error handling.
 export async function withDatabaseErrorHandling<T>(
   operation: () => Promise<T>,
   errorMessage?: string
-): Promise<T>
+): Promise<T>;
 ```
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `operation` | `() => Promise<T>` | Yes | - | Database operation to execute |
-| `errorMessage` | `string` | No | `"Database operation failed"` | Custom error message for logging |
+| Parameter      | Type               | Required | Default                       | Description                      |
+| -------------- | ------------------ | -------- | ----------------------------- | -------------------------------- |
+| `operation`    | `() => Promise<T>` | Yes      | -                             | Database operation to execute    |
+| `errorMessage` | `string`           | No       | `"Database operation failed"` | Custom error message for logging |
 
 #### Returns
 
@@ -280,28 +282,21 @@ export async function withDatabaseErrorHandling<T>(
 
 #### Error Handling
 
-| Error Type | Detection | Error Code | Message |
-|------------|-----------|------------|---------|
-| Connection Error | `connection`, `ECONNREFUSED`, `ETIMEDOUT` | `INTERNAL_SERVER_ERROR` | "Database connection failed. Please try again later." |
-| Query Error | `syntax`, `SQL`, `query` | `INTERNAL_SERVER_ERROR` | Sanitized error message |
-| Constraint Violation | `constraint`, `unique`, `duplicate` | `CONFLICT` | "A record with this information already exists." |
-| Generic Error | Other | `INTERNAL_SERVER_ERROR` | Sanitized error message |
+| Error Type           | Detection                                 | Error Code              | Message                                               |
+| -------------------- | ----------------------------------------- | ----------------------- | ----------------------------------------------------- |
+| Connection Error     | `connection`, `ECONNREFUSED`, `ETIMEDOUT` | `INTERNAL_SERVER_ERROR` | "Database connection failed. Please try again later." |
+| Query Error          | `syntax`, `SQL`, `query`                  | `INTERNAL_SERVER_ERROR` | Sanitized error message                               |
+| Constraint Violation | `constraint`, `unique`, `duplicate`       | `CONFLICT`              | "A record with this information already exists."      |
+| Generic Error        | Other                                     | `INTERNAL_SERVER_ERROR` | Sanitized error message                               |
 
 #### Example
 
 ```typescript
 import { withDatabaseErrorHandling } from "../_core/error-handling";
 
-const users = await withDatabaseErrorHandling(
-  async () => {
-    return await db
-      .select()
-      .from(users)
-      .where(eq(users.id, userId))
-      .limit(1);
-  },
-  "Failed to fetch user"
-);
+const users = await withDatabaseErrorHandling(async () => {
+  return await db.select().from(users).where(eq(users.id, userId)).limit(1);
+}, "Failed to fetch user");
 ```
 
 ---
@@ -316,15 +311,15 @@ Wraps external API calls with retry logic and error handling.
 export async function withApiErrorHandling<T>(
   operation: () => Promise<T>,
   config?: RetryConfig
-): Promise<T>
+): Promise<T>;
 ```
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `operation` | `() => Promise<T>` | Yes | - | API call to execute |
-| `config` | `RetryConfig` | No | Default retry config | Retry configuration |
+| Parameter   | Type               | Required | Default              | Description         |
+| ----------- | ------------------ | -------- | -------------------- | ------------------- |
+| `operation` | `() => Promise<T>` | Yes      | -                    | API call to execute |
+| `config`    | `RetryConfig`      | No       | Default retry config | Retry configuration |
 
 #### Returns
 
@@ -333,12 +328,12 @@ export async function withApiErrorHandling<T>(
 
 #### Error Handling
 
-| HTTP Status | Error Code | Message |
-|-------------|------------|---------|
-| 429 | `TOO_MANY_REQUESTS` | "Rate limit exceeded. Please try again later." |
-| 503, 502 | `SERVICE_UNAVAILABLE` | "External service is temporarily unavailable. Please try again later." |
-| 401, 403 | `UNAUTHORIZED` | "Authentication failed with external service." |
-| Other | `INTERNAL_SERVER_ERROR` | Sanitized error message |
+| HTTP Status | Error Code              | Message                                                                |
+| ----------- | ----------------------- | ---------------------------------------------------------------------- |
+| 429         | `TOO_MANY_REQUESTS`     | "Rate limit exceeded. Please try again later."                         |
+| 503, 502    | `SERVICE_UNAVAILABLE`   | "External service is temporarily unavailable. Please try again later." |
+| 401, 403    | `UNAUTHORIZED`          | "Authentication failed with external service."                         |
+| Other       | `INTERNAL_SERVER_ERROR` | Sanitized error message                                                |
 
 #### Example
 
@@ -369,15 +364,15 @@ Safe wrapper that catches all errors and converts to TRPCError.
 export async function safeAsync<T>(
   operation: () => Promise<T>,
   defaultCode?: TRPCError["code"]
-): Promise<T>
+): Promise<T>;
 ```
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `operation` | `() => Promise<T>` | Yes | - | Operation to execute |
-| `defaultCode` | `TRPCError["code"]` | No | `"INTERNAL_SERVER_ERROR"` | Default error code |
+| Parameter     | Type                | Required | Default                   | Description          |
+| ------------- | ------------------- | -------- | ------------------------- | -------------------- |
+| `operation`   | `() => Promise<T>`  | Yes      | -                         | Operation to execute |
+| `defaultCode` | `TRPCError["code"]` | No       | `"INTERNAL_SERVER_ERROR"` | Default error code   |
 
 #### Returns
 
@@ -389,10 +384,7 @@ export async function safeAsync<T>(
 ```typescript
 import { safeAsync } from "../_core/error-handling";
 
-const result = await safeAsync(
-  () => riskyOperation(),
-  "INTERNAL_SERVER_ERROR"
-);
+const result = await safeAsync(() => riskyOperation(), "INTERNAL_SERVER_ERROR");
 ```
 
 ---
@@ -428,12 +420,9 @@ if (!db) {
 }
 
 // ✅ Comprehensive error handling
-const users = await withDatabaseErrorHandling(
-  async () => {
-    return await db.select().from(users);
-  },
-  "Failed to fetch users"
-);
+const users = await withDatabaseErrorHandling(async () => {
+  return await db.select().from(users);
+}, "Failed to fetch users");
 ```
 
 ---
@@ -496,7 +485,14 @@ const response = await retryWithBackoff(
   {
     maxAttempts: 3,
     initialDelayMs: 1000,
-    retryableErrors: ["429", "503", "502", "timeout", "ECONNRESET", "ETIMEDOUT"],
+    retryableErrors: [
+      "429",
+      "503",
+      "502",
+      "timeout",
+      "ECONNRESET",
+      "ETIMEDOUT",
+    ],
   }
 );
 ```
@@ -580,16 +576,16 @@ Sanitization is handled by `sanitizeError()` from `server/_core/errors.ts`.
 
 ### TRPC Error Codes
 
-| Code | HTTP Status | Use Case | Example |
-|------|-------------|----------|---------|
-| `BAD_REQUEST` | 400 | Invalid input | Missing required field |
-| `UNAUTHORIZED` | 401 | Authentication required | Invalid credentials |
-| `FORBIDDEN` | 403 | Insufficient permissions | User not authorized |
-| `NOT_FOUND` | 404 | Resource not found | User ID doesn't exist |
-| `CONFLICT` | 409 | Resource conflict | Duplicate email |
-| `TOO_MANY_REQUESTS` | 429 | Rate limit exceeded | Too many API calls |
-| `INTERNAL_SERVER_ERROR` | 500 | Server error | Database connection failed |
-| `SERVICE_UNAVAILABLE` | 503 | External service down | Circuit breaker open |
+| Code                    | HTTP Status | Use Case                 | Example                    |
+| ----------------------- | ----------- | ------------------------ | -------------------------- |
+| `BAD_REQUEST`           | 400         | Invalid input            | Missing required field     |
+| `UNAUTHORIZED`          | 401         | Authentication required  | Invalid credentials        |
+| `FORBIDDEN`             | 403         | Insufficient permissions | User not authorized        |
+| `NOT_FOUND`             | 404         | Resource not found       | User ID doesn't exist      |
+| `CONFLICT`              | 409         | Resource conflict        | Duplicate email            |
+| `TOO_MANY_REQUESTS`     | 429         | Rate limit exceeded      | Too many API calls         |
+| `INTERNAL_SERVER_ERROR` | 500         | Server error             | Database connection failed |
+| `SERVICE_UNAVAILABLE`   | 503         | External service down    | Circuit breaker open       |
 
 ---
 
@@ -598,6 +594,7 @@ Sanitization is handled by `sanitizeError()` from `server/_core/errors.ts`.
 ### 1. Always Use Error Handling Wrappers
 
 ✅ **Good:**
+
 ```typescript
 const result = await withDatabaseErrorHandling(
   () => db.select().from(users),
@@ -606,6 +603,7 @@ const result = await withDatabaseErrorHandling(
 ```
 
 ❌ **Bad:**
+
 ```typescript
 const result = await db.select().from(users);
 ```
@@ -615,6 +613,7 @@ const result = await db.select().from(users);
 ### 2. Provide Meaningful Error Messages
 
 ✅ **Good:**
+
 ```typescript
 await withDatabaseErrorHandling(
   () => db.insert(users).values(data),
@@ -623,11 +622,9 @@ await withDatabaseErrorHandling(
 ```
 
 ❌ **Bad:**
+
 ```typescript
-await withDatabaseErrorHandling(
-  () => db.insert(users).values(data),
-  "Error"
-);
+await withDatabaseErrorHandling(() => db.insert(users).values(data), "Error");
 ```
 
 ---
@@ -635,14 +632,16 @@ await withDatabaseErrorHandling(
 ### 3. Use Retry Logic for Transient Failures
 
 ✅ **Good:**
+
 ```typescript
-const response = await retryWithBackoff(
-  () => fetchExternalApi(),
-  { maxAttempts: 3, retryableErrors: ["429", "503"] }
-);
+const response = await retryWithBackoff(() => fetchExternalApi(), {
+  maxAttempts: 3,
+  retryableErrors: ["429", "503"],
+});
 ```
 
 ❌ **Bad:**
+
 ```typescript
 const response = await fetchExternalApi();
 ```
@@ -652,15 +651,16 @@ const response = await fetchExternalApi();
 ### 4. Don't Retry Non-Retryable Errors
 
 ✅ **Good:**
+
 ```typescript
 // Retry logic automatically skips non-retryable errors
-const result = await retryWithBackoff(
-  () => operation(),
-  { retryableErrors: ["429", "503"] }
-);
+const result = await retryWithBackoff(() => operation(), {
+  retryableErrors: ["429", "503"],
+});
 ```
 
 ❌ **Bad:**
+
 ```typescript
 // Don't retry authentication errors
 for (let i = 0; i < 3; i++) {
@@ -677,12 +677,14 @@ for (let i = 0; i < 3; i++) {
 ### 5. Use Circuit Breakers for External Services
 
 ✅ **Good:**
+
 ```typescript
 const breaker = createCircuitBreaker({ failureThreshold: 5 });
 const result = await breaker.execute(() => callExternalService());
 ```
 
 ❌ **Bad:**
+
 ```typescript
 // No protection against cascading failures
 const result = await callExternalService();
@@ -723,10 +725,9 @@ const result = await withDatabaseErrorHandling(
 const response = await fetch(url);
 
 // After
-const response = await withApiErrorHandling(
-  () => fetch(url),
-  { maxAttempts: 3 }
-);
+const response = await withApiErrorHandling(() => fetch(url), {
+  maxAttempts: 3,
+});
 ```
 
 ### Step 4: Test Error Scenarios
@@ -902,4 +903,3 @@ For questions or issues:
 
 **Last Updated:** 2025-01-28  
 **Maintained by:** TekupDK Development Team
-

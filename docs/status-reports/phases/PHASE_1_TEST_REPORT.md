@@ -103,8 +103,9 @@
    // Message components
    <div data-testid="user-message">
    <div data-testid="ai-message">
+   ```
 
-```text
+````text
 
 1. **Mock AI Responses in Tests**
 
@@ -117,7 +118,7 @@
      })),
    }));
 
-   ```
+````
 
 1. **Update Test Selectors**
    - Use data-testid instead of text content

@@ -13,6 +13,7 @@ You are a senior AI engineer optimizing model selection for Friday AI Chat. You 
 ## TASK
 
 Optimize AI model selection by:
+
 - Analyzing current model routing
 - Comparing model performance per task type
 - Calculating costs per model
@@ -37,12 +38,14 @@ Optimize AI model selection by:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Read model routing code
 - `codebase_search` - Find model usage patterns
 - `grep` - Search for model references
 - `run_terminal_cmd` - Analyze usage data
 
 **DO NOT:**
+
 - Ignore cost implications
 - Skip performance analysis
 - Miss optimization opportunities
@@ -79,30 +82,35 @@ Before optimizing, think through:
 ## TASK TYPES TO OPTIMIZE
 
 ### Chat Tasks
+
 - General conversation
 - Customer support
 - Lead qualification
 - Task management
 
 ### Email Tasks
+
 - Email drafting
 - Email summarization
 - Email analysis
 - Email replies
 
 ### Calendar Tasks
+
 - Event creation
 - Calendar queries
 - Availability checks
 - Meeting scheduling
 
 ### Invoice Tasks
+
 - Invoice creation
 - Invoice analysis
 - Customer lookup
 - Data extraction
 
 ### Analysis Tasks
+
 - Lead analysis
 - Data analysis
 - Report generation
@@ -111,24 +119,28 @@ Before optimizing, think through:
 ## OPTIMIZATION STRATEGY
 
 ### 1. Performance Analysis
+
 - ✅ Response accuracy per model
 - ✅ Response time per model
 - ✅ Error rate per model
 - ✅ User satisfaction per model
 
 ### 2. Cost Analysis
+
 - ✅ Cost per request per model
 - ✅ Total monthly costs
 - ✅ Cost per task type
 - ✅ Cost reduction opportunities
 
 ### 3. Model Comparison
+
 - ✅ Accuracy comparison
 - ✅ Speed comparison
 - ✅ Cost comparison
 - ✅ Best model per task
 
 ### 4. Routing Optimization
+
 - ✅ Update model selection logic
 - ✅ Add fallback models
 - ✅ Implement caching
@@ -189,6 +201,7 @@ Provide a comprehensive optimization report:
 **Status:** [COMPLETE/IN PROGRESS]
 
 ## Current State
+
 - Total Requests/Month: [NUMBER]
 - Current Monthly Cost: $[AMOUNT]
 - Average Response Time: [TIME]ms
@@ -197,18 +210,21 @@ Provide a comprehensive optimization report:
 ## Model Performance Analysis
 
 ### GLM-4.5 Air Free
+
 - Accuracy: [PERCENTAGE]%
 - Cost/Request: $[AMOUNT]
 - Response Time: [TIME]ms
 - Best For: [TASK TYPES]
 
 ### Claude 3.5 Sonnet
+
 - Accuracy: [PERCENTAGE]%
 - Cost/Request: $[AMOUNT]
 - Response Time: [TIME]ms
 - Best For: [TASK TYPES]
 
 ### GPT-4o
+
 - Accuracy: [PERCENTAGE]%
 - Cost/Request: $[AMOUNT]
 - Response Time: [TIME]ms
@@ -217,35 +233,40 @@ Provide a comprehensive optimization report:
 ## Optimization Recommendations
 
 ### 1. [RECOMMENDATION]
+
 - Impact: [HIGH/MEDIUM/LOW]
 - Cost Savings: $[AMOUNT]/month
 - Implementation: [EFFORT]
 
 ### 2. [RECOMMENDATION]
+
 - Impact: [HIGH/MEDIUM/LOW]
 - Cost Savings: $[AMOUNT]/month
 - Implementation: [EFFORT]
 
 ## Proposed Model Routing
 
-| Task Type | Primary Model | Fallback Model | Cost/Request |
-|-----------|--------------|----------------|--------------|
-| chat | GLM-4.5 Air Free | GPT-4o | $0.00 |
-| email-draft | Claude 3.5 Sonnet | GPT-4o | $0.003 |
-| calendar | GLM-4.5 Air Free | GPT-4o | $0.00 |
-| invoice | GPT-4o | Claude 3.5 Sonnet | $0.01 |
+| Task Type   | Primary Model     | Fallback Model    | Cost/Request |
+| ----------- | ----------------- | ----------------- | ------------ |
+| chat        | GLM-4.5 Air Free  | GPT-4o            | $0.00        |
+| email-draft | Claude 3.5 Sonnet | GPT-4o            | $0.003       |
+| calendar    | GLM-4.5 Air Free  | GPT-4o            | $0.00        |
+| invoice     | GPT-4o            | Claude 3.5 Sonnet | $0.01        |
 
 ## Expected Improvements
+
 - Cost Reduction: [PERCENTAGE]% ($[AMOUNT]/month)
 - Performance: [IMPROVEMENT]
 - Accuracy: [IMPROVEMENT]
 
 ## Implementation Plan
+
 1. [STEP 1]
 2. [STEP 2]
 3. [STEP 3]
 
 ## Next Steps
+
 1. [NEXT STEP]
 2. [NEXT STEP]
 ```
@@ -262,6 +283,7 @@ Provide a comprehensive optimization report:
 ## ITERATIVE REFINEMENT
 
 After optimization:
+
 1. **Monitor results:** Track performance and costs
 2. **Analyze data:** Identify further improvements
 3. **Adjust routing:** Fine-tune model selection
@@ -271,4 +293,3 @@ After optimization:
 ---
 
 **CRITICAL:** Optimize model selection to reduce costs while maintaining quality.
-

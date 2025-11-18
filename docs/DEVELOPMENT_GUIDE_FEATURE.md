@@ -45,20 +45,24 @@ This guide provides a systematic approach to building features in Friday AI Chat
 ### Example: Subscription Recommendation Feature
 
 **Requirements:**
+
 - Analyze customer invoice history
 - Recommend subscription plan (tier1-3, flex_basis, flex_plus)
 - Return confidence score and reasoning
 
 **Database Tables:**
+
 - `customer_profiles` (existing)
 - `customer_invoices` (existing)
 - `subscriptions` (existing)
 
 **API Endpoints:**
+
 - `GET subscriptions.getRecommendation` - Get plan recommendation
 - `GET subscriptions.predictChurnRisk` - Get churn prediction
 
 **Dependencies:**
+
 - None (uses existing tables)
 
 ---
@@ -70,6 +74,7 @@ This guide provides a systematic approach to building features in Friday AI Chat
 **File:** `drizzle/schema.ts`
 
 **Pattern:**
+
 ```typescript
 export const myTableInFridayAi = fridayAi.table("my_table", {
   id: serial().primaryKey().notNull(),
@@ -86,12 +91,14 @@ export type InsertMyTable = typeof myTableInFridayAi.$inferInsert;
 ```
 
 **Best Practices:**
+
 - Always include `id`, `userId`, `createdAt`, `updatedAt`
 - Use camelCase for column names
 - Add indexes for foreign keys and frequently queried fields
 - Use appropriate types (varchar, integer, text, jsonb, timestamp)
 
 **Verification:**
+
 ```bash
 pnpm db:push:dev  # Push schema changes
 ```
@@ -101,6 +108,7 @@ pnpm db:push:dev  # Push schema changes
 **File:** `server/*-db.ts` (e.g., `server/subscription-db.ts`)
 
 **Pattern:**
+
 ```typescript
 import { getDb } from "./db";
 import { myTable, type MyTable, type InsertMyTable } from "../drizzle/schema";
@@ -127,9 +135,7 @@ export async function getUserItems(
 /**
  * Create new item
  */
-export async function createItem(
-  data: InsertMyTable
-): Promise<MyTable> {
+export async function createItem(data: InsertMyTable): Promise<MyTable> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
@@ -164,10 +170,7 @@ export async function updateItem(
 /**
  * Delete item
  */
-export async function deleteItem(
-  id: number,
-  userId: number
-): Promise<void> {
+export async function deleteItem(id: number, userId: number): Promise<void> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
@@ -178,6 +181,7 @@ export async function deleteItem(
 ```
 
 **Best Practices:**
+
 - Always check `getDb()` returns valid connection
 - Always filter by `userId` for user-scoped queries
 - Use `returning()` for INSERT/UPDATE to get created/updated record
@@ -185,6 +189,7 @@ export async function deleteItem(
 - Use Drizzle ORM query builder (not raw SQL unless necessary)
 
 **Verification:**
+
 - Test queries manually or write unit tests
 - Check TypeScript types are correct
 
@@ -197,6 +202,7 @@ export async function deleteItem(
 **File:** `server/routers/*-router.ts` (e.g., `server/routers/subscription-router.ts`)
 
 **Pattern:**
+
 ```typescript
 import { z } from "zod";
 import { router, protectedProcedure } from "../_core/trpc";
@@ -280,6 +286,7 @@ export const myRouter = router({
 ```
 
 **Best Practices:**
+
 - Always use `protectedProcedure` (requires authentication)
 - Use Zod for input validation
 - Use `.query()` for GET operations, `.mutation()` for POST/PUT/DELETE
@@ -289,6 +296,7 @@ export const myRouter = router({
 - Use descriptive procedure names (list, get, create, update, delete)
 
 **Verification:**
+
 ```bash
 pnpm check  # TypeScript check
 ```
@@ -298,6 +306,7 @@ pnpm check  # TypeScript check
 **File:** `server/routers.ts`
 
 **Pattern:**
+
 ```typescript
 import { myRouter } from "./routers/my-router";
 
@@ -312,6 +321,7 @@ export const appRouter = router({
 **File:** `server/*-actions.ts` or `server/*-ai.ts` (e.g., `server/subscription-ai.ts`)
 
 **Pattern:**
+
 ```typescript
 /**
  * Complex business logic function
@@ -339,6 +349,7 @@ export async function complexBusinessLogic(
 ```
 
 **Best Practices:**
+
 - Keep business logic separate from routers
 - Make functions pure when possible
 - Handle errors gracefully
@@ -351,6 +362,7 @@ export async function complexBusinessLogic(
 ### 4.1 tRPC Hooks Usage
 
 **Pattern:**
+
 ```typescript
 import { trpc } from "@/lib/trpc";
 
@@ -367,7 +379,7 @@ function MyComponent() {
       trpc.useUtils().my.list.invalidate();
       toast.success("Item created");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message);
     },
   });
@@ -384,6 +396,7 @@ function MyComponent() {
 ```
 
 **Best Practices:**
+
 - Use `useQuery` for fetching data
 - Use `useMutation` for creating/updating/deleting
 - Always invalidate queries after mutations
@@ -396,6 +409,7 @@ function MyComponent() {
 **File:** `client/src/components/my/MyComponent.tsx`
 
 **Pattern:**
+
 ```typescript
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
@@ -446,6 +460,7 @@ export default function MyComponent({ userId, onItemSelect }: MyComponentProps) 
 ```
 
 **Best Practices:**
+
 - Use TypeScript interfaces for props
 - Handle loading and error states
 - Use shadcn/ui components
@@ -458,6 +473,7 @@ export default function MyComponent({ userId, onItemSelect }: MyComponentProps) 
 **File:** `client/src/pages/my/MyPage.tsx`
 
 **Pattern:**
+
 ```typescript
 import { useRoute } from "wouter";
 import MyComponent from "@/components/my/MyComponent";
@@ -475,6 +491,7 @@ export default function MyPage() {
 ```
 
 **Best Practices:**
+
 - Use Wouter for routing
 - Keep pages simple (delegate to components)
 - Use consistent layout patterns
@@ -484,6 +501,7 @@ export default function MyPage() {
 **File:** `client/src/App.tsx`
 
 **Pattern:**
+
 ```typescript
 import MyPage from "./pages/my/MyPage";
 
@@ -500,6 +518,7 @@ import MyPage from "./pages/my/MyPage";
 **File:** `server/__tests__/my-db.test.ts`
 
 **Pattern:**
+
 ```typescript
 import { describe, it, expect, beforeEach } from "vitest";
 import { createItem, getUserItems } from "../my-db";
@@ -531,6 +550,7 @@ describe("my-db", () => {
 **File:** `server/__tests__/my-router.test.ts`
 
 **Pattern:**
+
 ```typescript
 import { describe, it, expect } from "vitest";
 import { appRouter } from "../routers";
@@ -552,6 +572,7 @@ describe("my router", () => {
 **File:** `tests/e2e/my-feature.spec.ts`
 
 **Pattern:**
+
 ```typescript
 import { test, expect } from "@playwright/test";
 
@@ -567,6 +588,7 @@ test.describe("My Feature", () => {
 ```
 
 **Verification:**
+
 ```bash
 pnpm test  # Run all tests
 ```
@@ -580,19 +602,23 @@ pnpm test  # Run all tests
 **File:** `docs/api/MY_FEATURE.md`
 
 **Pattern:**
-```markdown
+
+````markdown
 # My Feature API
 
 ## Endpoints
 
 ### `GET /api/trpc/my.list`
+
 List all items for current user.
 
 **Query Parameters:**
+
 - `limit` (number, optional): Max items to return (default: 20)
 - `offset` (number, optional): Pagination offset (default: 0)
 
 **Response:**
+
 ```json
 [
   {
@@ -602,11 +628,14 @@ List all items for current user.
   }
 ]
 ```
+````
 
 ### `POST /api/trpc/my.create`
+
 Create new item.
 
 **Request Body:**
+
 ```json
 {
   "name": "New Item",
@@ -615,6 +644,7 @@ Create new item.
 ```
 
 **Response:**
+
 ```json
 {
   "id": 1,
@@ -623,7 +653,8 @@ Create new item.
   "createdAt": "2025-01-28T10:00:00Z"
 }
 ```
-```
+
+````
 
 ### 6.2 Component Documentation
 
@@ -643,12 +674,13 @@ Component for displaying and managing items.
 ## Usage
 
 ```tsx
-<MyComponent 
-  userId={1} 
-  onItemSelect={(item) => console.log(item)} 
+<MyComponent
+  userId={1}
+  onItemSelect={(item) => console.log(item)}
 />
-```
-```
+````
+
+````
 
 ---
 
@@ -684,9 +716,10 @@ list: protectedProcedure
   .query(async ({ ctx, input }) => {
     return await getUserItems(ctx.user.id, input);
   }),
-```
+````
 
 **Frontend:**
+
 ```typescript
 const [page, setPage] = useState(0);
 const limit = 20;
@@ -700,21 +733,22 @@ const { data } = trpc.my.list.useQuery({
 ### Pattern: Create with Optimistic Update
 
 **Frontend:**
+
 ```typescript
 const createMutation = trpc.my.create.useMutation({
-  onMutate: async (newItem) => {
+  onMutate: async newItem => {
     // Cancel outgoing refetches
     await trpc.useUtils().my.list.cancel();
-    
+
     // Snapshot previous value
     const previous = trpc.useUtils().my.list.getData();
-    
+
     // Optimistically update
-    trpc.useUtils().my.list.setData(undefined, (old) => [
+    trpc.useUtils().my.list.setData(undefined, old => [
       ...(old || []),
       { ...newItem, id: Date.now() }, // Temporary ID
     ]);
-    
+
     return { previous };
   },
   onError: (err, newItem, context) => {
@@ -731,6 +765,7 @@ const createMutation = trpc.my.create.useMutation({
 ### Pattern: Error Handling
 
 **Backend:**
+
 ```typescript
 import { TRPCError } from "@trpc/server";
 
@@ -743,6 +778,7 @@ if (!item) {
 ```
 
 **Frontend:**
+
 ```typescript
 const { error } = trpc.my.get.useQuery({ id: 1 });
 
@@ -816,4 +852,3 @@ pnpm dev
 
 **Last Updated:** 2025-01-28  
 **Maintained by:** Friday AI Chat Development Team
-

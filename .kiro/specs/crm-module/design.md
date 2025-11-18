@@ -212,7 +212,7 @@ server/
 
 ### Key TypeScript Interfaces
 
-```typescript
+````typescript
 // Customer Profile (extends existing)
 interface CustomerProfile {
   id: number;
@@ -395,32 +395,33 @@ CREATE INDEX idx_service_templates_category ON friday_ai.service_templates(categ
 
 ### Data Relationships
 
-```
-users (existing)
-  ├── customer_profiles (existing, extend)
-  │   ├── customer_properties (NEW)
-  │   ├── bookings (NEW)
-  │   ├── customer_notes (existing)
-  │   ├── customer_invoices (existing)
-  │   └── customer_emails (existing)
-  │
-  ├── leads (existing, extend)
-  │   └── customer_profiles (conversion link)
-  │
-  ├── service_templates (NEW)
-  │   └── bookings (template reference)
-  │
-  ├── bookings (NEW)
-  │   ├── customer_profiles (customer link)
-  │   ├── customer_properties (property link)
-  │   ├── service_templates (template link)
-  │   └── users (assignee link)
-  │
-  └── tasks (existing, extend)
-      ├── customer_profiles (customer link)
-      └── leads (lead link)
+````
 
-```text
+users (existing)
+├── customer_profiles (existing, extend)
+│ ├── customer_properties (NEW)
+│ ├── bookings (NEW)
+│ ├── customer_notes (existing)
+│ ├── customer_invoices (existing)
+│ └── customer_emails (existing)
+│
+├── leads (existing, extend)
+│ └── customer_profiles (conversion link)
+│
+├── service_templates (NEW)
+│ └── bookings (template reference)
+│
+├── bookings (NEW)
+│ ├── customer_profiles (customer link)
+│ ├── customer_properties (property link)
+│ ├── service_templates (template link)
+│ └── users (assignee link)
+│
+└── tasks (existing, extend)
+├── customer_profiles (customer link)
+└── leads (lead link)
+
+````text
 
 ## Error Handling
 
@@ -4192,7 +4193,7 @@ export function AdaptiveButton({ children, onClick }: ButtonProps) {
   );
 }
 
-```
+````
 
 ### Platform Testing Matrix
 

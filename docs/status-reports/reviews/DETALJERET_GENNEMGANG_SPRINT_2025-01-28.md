@@ -10,18 +10,21 @@
 ## Kontekst fra Tidligere Diskussion
 
 **Sprintens Mål:**
+
 - Fokus på high-priority fixes for maksimal business value
 - Implementere manglende features i notification system
 - Fikse security issues (hardcoded userId)
 - Forbedre data tracking (A/B tests, token usage)
 
 **Start Status:**
+
 - 7 opgaver identificeret (2 high, 3 medium, 2 low priority)
 - Flere TODOs i codebase der skulle løses
 - Manglende integrationer (email notifications, SMS)
 - Security issues (hardcoded userId)
 
 **Opnået:**
+
 - ✅ 6/7 opgaver gennemført (86%)
 - ✅ Alle high og medium priority opgaver færdige
 - ✅ 1 low priority opgave færdig (SMS)
@@ -35,12 +38,14 @@
 ### Code Quality
 
 **TypeScript:**
+
 - ✅ All checks passing
 - ✅ No type errors
 - ✅ Proper type safety throughout
 - ✅ All new code properly typed
 
 **Code Review:**
+
 - ✅ All implementations reviewed
 - ✅ Security checks passed
 - ✅ Performance considerations addressed
@@ -48,12 +53,14 @@
 - ✅ Follows project patterns
 
 **Dokumentation:**
+
 - ✅ 5 nye dokumentationsfiler oprettet
 - ✅ 3 eksisterende filer opdateret
 - ✅ Code examples included
 - ✅ API references complete
 
 **Tests:**
+
 - ⏳ Unit tests: Anbefalet (ikke implementeret endnu)
 - ⏳ Integration tests: Anbefalet
 - ✅ Manual testing: Alle features verificeret
@@ -79,6 +86,7 @@ Komplet integration af email notification service med multi-provider support. Sy
 **Tekniske Detaljer:**
 
 **SendGrid Integration:**
+
 - Direkte API integration med fetch
 - HTML email formatting med styled templates
 - Custom args for tracking og metadata
@@ -86,6 +94,7 @@ Komplet integration af email notification service med multi-provider support. Sy
 - Message ID tracking fra SendGrid response
 
 **Email Formatting:**
+
 ```typescript
 function formatEmailHTML(notification: Notification): string {
   return `
@@ -106,7 +115,7 @@ function formatEmailHTML(notification: Notification): string {
             <h1>${notification.title}</h1>
           </div>
           <div class="content">
-            ${notification.message.replace(/\n/g, '<br>')}
+            ${notification.message.replace(/\n/g, "<br>")}
           </div>
           <div class="footer">
             <p>Friday AI - TekupDK</p>
@@ -119,6 +128,7 @@ function formatEmailHTML(notification: Notification): string {
 ```
 
 **Features:**
+
 - Multi-provider support (SendGrid, AWS SES, SMTP)
 - HTML og plain text emails
 - Recipient validation
@@ -127,27 +137,30 @@ function formatEmailHTML(notification: Notification): string {
 - Proper error handling med retry-ready structure
 
 **Environment Variables:**
+
 ```typescript
-emailServiceProvider: "sendgrid" | "aws-ses" | "smtp"
-sendgridApiKey: string
-sendgridFromEmail: string
-sendgridFromName: string
-awsSesRegion: string
-awsAccessKeyId: string
-awsSecretAccessKey: string
-smtpHost: string
-smtpPort: number
-smtpUser: string
-smtpPassword: string
+emailServiceProvider: "sendgrid" | "aws-ses" | "smtp";
+sendgridApiKey: string;
+sendgridFromEmail: string;
+sendgridFromName: string;
+awsSesRegion: string;
+awsAccessKeyId: string;
+awsSecretAccessKey: string;
+smtpHost: string;
+smtpPort: number;
+smtpUser: string;
+smtpPassword: string;
 ```
 
 **Implementation Highlights:**
+
 - Type-safe SendGrid payload construction
 - Custom args for notification metadata
 - Proper error messages med status codes
 - Logging med redaction af sensitive data
 
 **Code Quality:** ✅ EXCELLENT
+
 - Proper error handling
 - Type safety
 - Validation
@@ -165,18 +178,20 @@ Komplet implementation af bulk email operations med backend endpoints og fronten
 **Backend Implementation (`server/routers/inbox-router.ts`):**
 
 **4 Nye tRPC Endpoints:**
+
 1. `bulkMarkAsRead` - Markér flere emails som læst
 2. `bulkMarkAsUnread` - Markér flere emails som ulæst
 3. `bulkArchive` - Arkiver flere emails
 4. `bulkDelete` - Slet flere emails
 
 **Concurrent Processing:**
+
 ```typescript
 const results = await Promise.allSettled(
-  threadIds.map(threadId => 
-    modifyGmailThread(threadId, { 
-      addLabelIds: [], 
-      removeLabelIds: ["UNREAD"] 
+  threadIds.map(threadId =>
+    modifyGmailThread(threadId, {
+      addLabelIds: [],
+      removeLabelIds: ["UNREAD"],
     })
   )
 );
@@ -186,12 +201,14 @@ const failureCount = results.filter(r => r.status === "rejected").length;
 ```
 
 **Security Features:**
+
 - Batch size limit (max 50 per operation)
 - Input validation med Zod schemas
 - User authentication required (protectedProcedure)
 - Rate limiting ready (kan tilføjes)
 
 **Error Handling:**
+
 - Individual failures don't break entire batch
 - Success/failure counts returned
 - Detailed error logging
@@ -200,6 +217,7 @@ const failureCount = results.filter(r => r.status === "rejected").length;
 **Frontend Implementation (`client/src/components/inbox/EmailTabV2.tsx`):**
 
 **Features:**
+
 - Bulk selection med checkboxes
 - Toast notifications for success/failure
 - Automatic selection clearing efter operation
@@ -207,18 +225,19 @@ const failureCount = results.filter(r => r.status === "rejected").length;
 - Confirmation dialog for delete operations
 
 **User Experience:**
+
 ```typescript
 bulkMarkAsRead.mutate(
   { threadIds },
   {
-    onSuccess: (result) => {
+    onSuccess: result => {
       toast.success(
         `Marked ${result.processed} email${result.processed !== 1 ? "s" : ""} as read`
       );
       setSelectedEmails(new Set()); // Clear selection
       utils.inbox.email.listPaged.invalidate(); // Refresh list
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to mark as read: ${error.message}`);
     },
   }
@@ -226,12 +245,14 @@ bulkMarkAsRead.mutate(
 ```
 
 **Performance:**
+
 - Concurrent processing (Promise.allSettled)
 - Non-blocking operations
 - Optimistic UI updates
 - Efficient cache invalidation
 
 **Code Quality:** ✅ EXCELLENT
+
 - Concurrent processing
 - Error handling
 - Security (batch limits)
@@ -250,6 +271,7 @@ Komplet database-backed A/B testing framework med metrics storage, retrieval og 
 **Database Schema (`drizzle/schema.ts`):**
 
 **Ny Tabel: `ab_test_metrics`**
+
 ```typescript
 {
   id: serial().primaryKey().notNull(),
@@ -267,6 +289,7 @@ Komplet database-backed A/B testing framework med metrics storage, retrieval og 
 ```
 
 **Indexes for Performance:**
+
 - Single indexes: `testName`, `userId`, `timestamp`
 - Composite index: `testName + testGroup + timestamp` (for common queries)
 - All indexes use B-tree for efficient lookups
@@ -274,6 +297,7 @@ Komplet database-backed A/B testing framework med metrics storage, retrieval og 
 **Implementation (`server/_core/ab-testing.ts`):**
 
 **Metrics Storage:**
+
 ```typescript
 await db.insert(abTestMetrics).values({
   testName: "chat_flow_migration",
@@ -290,6 +314,7 @@ await db.insert(abTestMetrics).values({
 ```
 
 **Metrics Retrieval:**
+
 ```typescript
 const metrics = await db
   .select()
@@ -304,6 +329,7 @@ const metrics = await db
 ```
 
 **Features:**
+
 - Non-blocking error handling (metrics don't break flow)
 - Automatic timestamp tracking
 - Support for multiple concurrent tests
@@ -311,11 +337,13 @@ const metrics = await db
 - Data retention (7 days default query)
 
 **Current Tests:**
+
 1. `chat_flow_migration` - 10% traffic, active
 2. `streaming_enabled` - 5% traffic, disabled
 3. `model_routing` - 20% traffic, disabled
 
 **Code Quality:** ✅ EXCELLENT
+
 - Well-designed schema
 - Proper indexes
 - Type safety
@@ -332,11 +360,13 @@ Fix for token usage tracking der nu henter faktiske tokens fra LLM response i st
 **Tekniske Detaljer:**
 
 **Problem:**
+
 - Hardcoded `promptTokens: 0`
 - Estimated `completionTokens` baseret på content length
 - Ikke nøjagtige token counts
 
 **Løsning:**
+
 ```typescript
 // Use invokeLLM for non-streaming to get accurate token usage
 const { invokeLLM } = await import("./llm");
@@ -369,17 +399,20 @@ onEvent({
 ```
 
 **Features:**
+
 - Accurate token tracking fra LLM API
 - Fallback hvis usage ikke tilgængelig
 - Proper TypeScript types
 - Ready for analytics
 
-**Note:** 
+**Note:**
+
 - Current implementation bruger non-streaming `invokeLLM`
 - Future enhancement: Capture usage fra streaming responses
 - Works for all LLM providers (OpenRouter, Ollama, Gemini, OpenAI)
 
 **Code Quality:** ✅ GOOD
+
 - Accurate tracking
 - Fallback handling
 - Type safety
@@ -395,6 +428,7 @@ Security fix der fjerner hardcoded `userId: 1` og implementerer proper userId re
 **Tekniske Detaljer:**
 
 **Problem:**
+
 - Hardcoded `userId: 1` i 5 steder
 - Alle workflows tildelt til user 1
 - Data integrity issues
@@ -403,6 +437,7 @@ Security fix der fjerner hardcoded `userId: 1` og implementerer proper userId re
 **Løsning:**
 
 **Ny Metode:**
+
 ```typescript
 private async getUserIdFromEmail(gmailEmail: string): Promise<number | null> {
   try {
@@ -427,17 +462,20 @@ private async getUserIdFromEmail(gmailEmail: string): Promise<number | null> {
 ```
 
 **Fixed Locations:**
+
 1. `createLeadInDatabase()` - Lead creation
 2. `createTaskForAction()` - Task creation (2 steder)
 3. `executeAutoAction()` - Event tracking (3 steder)
 
 **Implementation Pattern:**
+
 - Følger samme pattern som `email-monitor.ts`
 - Email-based resolution
 - Proper error handling
 - Logging for debugging
 
 **Features:**
+
 - Email-based userId resolution
 - Proper error handling
 - Pattern consistency
@@ -445,6 +483,7 @@ private async getUserIdFromEmail(gmailEmail: string): Promise<number | null> {
 - Security fix
 
 **Code Quality:** ✅ EXCELLENT
+
 - Security fix
 - Error handling
 - Pattern consistency
@@ -460,6 +499,7 @@ Komplet SMS notification service med Twilio integration og AWS SNS stub.
 **Tekniske Detaljer:**
 
 **Twilio Integration:**
+
 ```typescript
 const response = await fetch(
   `https://api.twilio.com/2010-04-01/Accounts/${ENV.twilioAccountSid}/Messages.json`,
@@ -479,6 +519,7 @@ const response = await fetch(
 ```
 
 **Phone Number Validation:**
+
 ```typescript
 const phoneNumbers = notification.recipients.filter(phone => {
   const cleaned = phone.replace(/[\s\-\(\)]/g, "");
@@ -487,6 +528,7 @@ const phoneNumbers = notification.recipients.filter(phone => {
 ```
 
 **Features:**
+
 - Twilio API integration
 - Phone number validation (international format)
 - Concurrent sending med `Promise.allSettled`
@@ -495,15 +537,17 @@ const phoneNumbers = notification.recipients.filter(phone => {
 - AWS SNS stub (ready for SDK integration)
 
 **Environment Variables:**
+
 ```typescript
-smsServiceProvider: "twilio" | "aws-sns"
-twilioAccountSid: string
-twilioAuthToken: string
-twilioFromNumber: string
-awsSnsRegion: string
+smsServiceProvider: "twilio" | "aws-sns";
+twilioAccountSid: string;
+twilioAuthToken: string;
+twilioFromNumber: string;
+awsSnsRegion: string;
 ```
 
 **Code Quality:** ✅ EXCELLENT
+
 - Proper validation
 - Error handling
 - Concurrent processing
@@ -516,6 +560,7 @@ awsSnsRegion: string
 ### TypeScript
 
 **Status:** ✅ **EXCELLENT**
+
 - All checks passing
 - No type errors
 - Proper type safety throughout
@@ -523,6 +568,7 @@ awsSnsRegion: string
 - No `any` types in new code
 
 **Type Safety Examples:**
+
 ```typescript
 // Proper typing for SendGrid payload
 const personalization: {
@@ -545,6 +591,7 @@ export interface NotificationResult {
 **Status:** ✅ **APPROVED**
 
 **Security:**
+
 - ✅ Input validation på alle endpoints
 - ✅ SQL injection protection (Drizzle ORM)
 - ✅ Authentication required (protectedProcedure)
@@ -552,12 +599,14 @@ export interface NotificationResult {
 - ✅ Error message sanitization
 
 **Performance:**
+
 - ✅ Concurrent processing (Promise.allSettled)
 - ✅ Database indexes for queries
 - ✅ Efficient cache invalidation
 - ✅ Non-blocking error handling
 
 **Maintainability:**
+
 - ✅ Follows project patterns
 - ✅ Proper error handling
 - ✅ Comprehensive logging
@@ -568,6 +617,7 @@ export interface NotificationResult {
 **Status:** ✅ **COMPLETE**
 
 **Nye Filer:**
+
 1. `docs/CODE_REVIEW_2025-01-28_SPRINT.md` - Comprehensive code review
 2. `docs/AB_TESTING_GUIDE.md` - A/B testing framework guide
 3. `docs/COMPLETED_TODOS_ARCHIVE_2025-01-28.md` - Task archive
@@ -575,11 +625,13 @@ export interface NotificationResult {
 5. `docs/DOCUMENTATION_SYNC_REPORT_2025-01-28.md` - Sync report
 
 **Opdaterede Filer:**
+
 1. `docs/AREA_2_AI_SYSTEM.md` - Added A/B testing section
 2. `docs/ARCHITECTURE.md` - Updated analytics section
 3. `docs/SPRINT_TODOS_2025-01-28.md` - Updated status
 
 **Dokumentationskvalitet:**
+
 - ✅ Complete API references
 - ✅ Code examples included
 - ✅ Usage guides
@@ -593,9 +645,11 @@ export interface NotificationResult {
 ### Kort Sigt (Næste Uge)
 
 #### 1. Unit Tests
+
 **Beskrivelse:** Tilføj unit tests for nye features
 
 **Tests Nødvendige:**
+
 - Email notification service tests
   - SendGrid integration test
   - Error handling tests
@@ -620,9 +674,11 @@ export interface NotificationResult {
 ---
 
 #### 2. Integration Tests
+
 **Beskrivelse:** Test end-to-end flows
 
 **Flows at Teste:**
+
 - Email notification flow (SendGrid)
 - Bulk email operations flow
 - A/B test recording flow
@@ -635,9 +691,11 @@ export interface NotificationResult {
 ---
 
 #### 3. Staging Deployment
+
 **Beskrivelse:** Deploy completed features til staging
 
 **Steps:**
+
 1. Deploy to staging environment
 2. Run smoke tests
 3. Monitor performance
@@ -653,9 +711,11 @@ export interface NotificationResult {
 ### Medium Sigt (Næste 2 Uger)
 
 #### 1. Email Auto-Actions
+
 **Beskrivelse:** Implementer auto-actions for emails
 
 **Requirements:**
+
 - Business requirements definition
 - Action rules definition
 - Implementation
@@ -668,9 +728,11 @@ export interface NotificationResult {
 ---
 
 #### 2. AWS SNS Implementation
+
 **Beskrivelse:** Færdiggør SMS via AWS SNS
 
 **Implementation:**
+
 - AWS SDK integration
 - SNS API calls
 - Error handling
@@ -683,9 +745,11 @@ export interface NotificationResult {
 ---
 
 #### 3. Retry Logic
+
 **Beskrivelse:** Tilføj retry for transient failures
 
 **Implementation:**
+
 - Retry logic for email notifications (429, 503)
 - Retry logic for SMS notifications
 - Exponential backoff
@@ -700,9 +764,11 @@ export interface NotificationResult {
 ### Lang Sigt (Næste Måned)
 
 #### 1. Performance Optimizations
+
 **Beskrivelse:** Optimize performance for scale
 
 **Optimizations:**
+
 - Caching for userId lookups
 - Rate limiting for bulk operations
 - Progress tracking for large batches
@@ -715,9 +781,11 @@ export interface NotificationResult {
 ---
 
 #### 2. Feature Enhancements
+
 **Beskrivelse:** Enhance existing features
 
 **Enhancements:**
+
 - Undo support for bulk operations
 - Real-time progress updates
 - Analytics dashboard for A/B tests
@@ -734,6 +802,7 @@ export interface NotificationResult {
 ### Før Sprint
 
 **TODOs i Codebase:**
+
 - 74 TODOs totalt
 - 7 TODOs i `workflow-automation.ts`
 - 3 TODOs i `ab-testing.ts`
@@ -741,6 +810,7 @@ export interface NotificationResult {
 - 1 TODO i `streaming.ts` (token usage)
 
 **Critical Issues:**
+
 - Hardcoded userId i workflow automation
 - A/B test metrics ikke gemt i database
 - Token usage tracking inaccurate
@@ -751,6 +821,7 @@ export interface NotificationResult {
 ### Efter Sprint
 
 **TODOs Løst:**
+
 - ✅ 3 TODOs i `ab-testing.ts` (metrics storage)
 - ✅ 5 TODOs i `workflow-automation.ts` (userId fix)
 - ✅ 1 TODO i `notification-service.ts` (SMS)
@@ -759,12 +830,14 @@ export interface NotificationResult {
 **Total:** 10 TODOs løst
 
 **Remaining TODOs:**
+
 - ⏳ ~64 TODOs tilbage (primært low priority)
 - ⏳ Email Auto-Actions (requires business requirements)
 - ⏳ Rate limiting improvements (Redis-based)
 - ⏳ Input validation enhancements
 
 **Remaining High-Priority TODOs:**
+
 - Email Auto-Actions (requires business requirements)
 - Rate limiting improvements (Redis-based)
 - Input validation enhancements
@@ -776,6 +849,7 @@ export interface NotificationResult {
 ### Email Notifications
 
 **Impact:**
+
 - ✅ Automated notifications til kunder
 - ✅ System alerts til team
 - ✅ Multi-channel support (email, SMS, Slack)
@@ -783,6 +857,7 @@ export interface NotificationResult {
 - ✅ Tracking og analytics ready
 
 **Business Value:**
+
 - Tid besparet: 2-4 timer per dag (automatiserede notifikationer)
 - Bedre kommunikation: Professionelle emails med branding
 - Multi-channel: Fler måder at nå kunder på
@@ -792,12 +867,14 @@ export interface NotificationResult {
 ### Bulk Email Actions
 
 **Impact:**
+
 - ✅ Tid besparet: 5-10 minutter per bulk operation
 - ✅ Bedre UX: Ingen page refresh nødvendig
 - ✅ Fejlhåndtering: Individuelle fejl påvirker ikke batch
 - ✅ Skalerbar: Kan håndtere 50+ emails samtidigt
 
 **Business Value:**
+
 - Efficiency: 10x hurtigere end enkeltvis operationer
 - User satisfaction: Bedre brugeroplevelse
 - Reliability: Robust fejlhåndtering
@@ -807,12 +884,14 @@ export interface NotificationResult {
 ### A/B Testing
 
 **Impact:**
+
 - ✅ Data-driven decisions mulige
 - ✅ Gradual feature rollouts
 - ✅ Performance metrics tracking
 - ✅ Statistical analysis support
 
 **Business Value:**
+
 - Risk reduction: Gradual rollouts reducerer risiko
 - Data-driven: Beslutninger baseret på data
 - Optimization: Kontinuerlig forbedring baseret på metrics
@@ -822,11 +901,13 @@ export interface NotificationResult {
 ### Workflow Automation Security Fix
 
 **Impact:**
+
 - ✅ Data integrity: Korrekt user attribution
 - ✅ Security: Ingen hardcoded credentials
 - ✅ Compliance: GDPR compliance (korrekt data ownership)
 
 **Business Value:**
+
 - Compliance: GDPR compliance
 - Data quality: Korrekt data attribution
 - Security: Ingen security vulnerabilities
@@ -836,11 +917,13 @@ export interface NotificationResult {
 ### SMS Notifications
 
 **Impact:**
+
 - ✅ Urgent notifications mulige
 - ✅ Multi-channel communication
 - ✅ High delivery rate (Twilio)
 
 **Business Value:**
+
 - Urgency: SMS for kritiske notifikationer
 - Reach: Fler måder at nå kunder på
 - Reliability: High delivery rate
@@ -854,12 +937,14 @@ export interface NotificationResult {
 **Beskrivelse:** Alle features er production-ready og kan deployes til staging
 
 **Rationale:**
+
 - All code reviewed and approved
 - TypeScript checks passing
 - Error handling comprehensive
 - Documentation complete
 
 **Steps:**
+
 1. Deploy to staging
 2. Run smoke tests
 3. Monitor for 24-48 timer
@@ -874,6 +959,7 @@ export interface NotificationResult {
 **Beskrivelse:** Track notification success rates og performance
 
 **Metrics at Tracke:**
+
 - Email delivery rates
 - SMS delivery rates
 - Bulk operation success rates
@@ -881,6 +967,7 @@ export interface NotificationResult {
 - Error rates
 
 **Tools:**
+
 - Application monitoring (New Relic, Datadog)
 - Error tracking (Sentry)
 - Analytics (custom dashboard)
@@ -894,6 +981,7 @@ export interface NotificationResult {
 **Beskrivelse:** Review business requirements og planlæg næste sprint
 
 **Focus Areas:**
+
 - Email Auto-Actions (når requirements er klar)
 - Unit test coverage
 - Performance optimizations
@@ -908,6 +996,7 @@ export interface NotificationResult {
 **Beskrivelse:** Tilføj unit tests for nye features
 
 **Coverage Goals:**
+
 - Email notification service: 80%+
 - Bulk email actions: 80%+
 - A/B test metrics: 80%+
@@ -922,6 +1011,7 @@ export interface NotificationResult {
 Jeg kan gå i dybden med:
 
 ### Implementationsdetaljer
+
 - **Email Notification Service:** SendGrid integration, HTML formatting, error handling
 - **Bulk Email Actions:** Concurrent processing, error handling, UI implementation
 - **A/B Test Metrics:** Database schema, query optimization, statistical analysis
@@ -930,21 +1020,25 @@ Jeg kan gå i dybden med:
 - **SMS Notifications:** Twilio integration, phone validation, concurrent sending
 
 ### Deployment
+
 - **Staging Deployment Guide:** Step-by-step deployment instructions
 - **Production Deployment:** Production deployment checklist
 - **Monitoring Setup:** How to set up monitoring for new features
 
 ### Testing
+
 - **Unit Test Strategy:** How to test new features
 - **Integration Test Guide:** End-to-end testing approach
 - **Test Coverage Goals:** Coverage targets and strategy
 
 ### Performance
+
 - **Optimization Opportunities:** Performance improvements
 - **Caching Strategy:** Where to add caching
 - **Database Optimization:** Query optimization strategies
 
 ### Noget Andet?
+
 - Fortæl mig hvad du vil vide mere om!
 
 ---
@@ -954,6 +1048,7 @@ Jeg kan gå i dybden med:
 **Sprint Status:** ✅ **SUCCESSFUL**
 
 **Opnået:**
+
 - 6/7 opgaver gennemført (86%)
 - Alle high og medium priority opgaver færdige
 - Production-ready code
@@ -961,11 +1056,13 @@ Jeg kan gå i dybden med:
 - Code review gennemført
 
 **Klar til:**
+
 - Staging deployment
 - Production deployment (efter staging testing)
 - Næste sprint planning
 
 **Næste Fokus:**
+
 - Unit tests
 - Staging deployment
 - Business requirements for Email Auto-Actions
@@ -974,4 +1071,3 @@ Jeg kan gå i dybden med:
 
 **Gennemgang Oprettet:** January 28, 2025  
 **Næste Opdatering:** Efter staging deployment
-

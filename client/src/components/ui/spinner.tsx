@@ -3,7 +3,10 @@ import type { ComponentPropsWithoutRef } from "react";
 
 import { cn } from "@/lib/utils";
 
-function Spinner({ className, ...props }: ComponentPropsWithoutRef<typeof Loader2Icon>) {
+function Spinner({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<typeof Loader2Icon>) {
   return (
     <Loader2Icon
       role="status"

@@ -7,12 +7,7 @@ module.exports = {
     es2022: true,
   },
   parser: "@typescript-eslint/parser",
-  plugins: [
-    "@typescript-eslint",
-    "react",
-    "react-hooks",
-    "import",
-  ],
+  plugins: ["@typescript-eslint", "react", "react-hooks", "import"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -43,7 +38,13 @@ module.exports = {
     // Keep strict TS errors in tsc; use eslint for style and hooks/imports
     "react/react-in-jsx-scope": "off", // React 17+
     "react/prop-types": "off", // using TypeScript
-    "import/order": ["warn", { "alphabetize": { order: "asc", caseInsensitive: true }, "newlines-between": "always" }],
+    "import/order": [
+      "warn",
+      {
+        alphabetize: { order: "asc", caseInsensitive: true },
+        "newlines-between": "always",
+      },
+    ],
   },
   overrides: [
     {
@@ -52,14 +53,10 @@ module.exports = {
         "no-restricted-imports": [
           "error",
           {
-            patterns: [
-              "server/*",
-              "../server/*",
-              "**/server/*"
-            ]
-          }
-        ]
-      }
+            patterns: ["server/*", "../server/*", "**/server/*"],
+          },
+        ],
+      },
     },
     {
       files: ["server/**/*.{ts,tsx,js,jsx}"],
@@ -67,21 +64,11 @@ module.exports = {
         "no-restricted-imports": [
           "error",
           {
-            patterns: [
-              "client/*",
-              "../client/*",
-              "**/client/*"
-            ]
-          }
-        ]
-      }
-    }
+            patterns: ["client/*", "../client/*", "**/client/*"],
+          },
+        ],
+      },
+    },
   ],
-  ignorePatterns: [
-    "dist/",
-    "build/",
-    "node_modules/",
-    "cli/",
-    "**/*.d.ts",
-  ],
+  ignorePatterns: ["dist/", "build/", "node_modules/", "cli/", "**/*.d.ts"],
 };

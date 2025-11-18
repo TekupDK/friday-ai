@@ -24,10 +24,12 @@ All error handling utilities are located in `server/_core/error-handling.ts`.
 Retries a function with exponential backoff for transient failures.
 
 **Parameters:**
+
 - `fn: () => Promise<T>` - Function to retry
 - `config?: RetryConfig` - Retry configuration
 
 **RetryConfig:**
+
 ```typescript
 {
   maxAttempts?: number;        // Default: 3
@@ -39,16 +41,18 @@ Retries a function with exponential backoff for transient failures.
 ```
 
 **Example:**
+
 ```typescript
 import { retryWithBackoff } from "../_core/error-handling";
 
-const result = await retryWithBackoff(
-  async () => await fetchData(),
-  { maxAttempts: 3, initialDelayMs: 1000 }
-);
+const result = await retryWithBackoff(async () => await fetchData(), {
+  maxAttempts: 3,
+  initialDelayMs: 1000,
+});
 ```
 
 **Retryable Errors:**
+
 - Network errors: `ECONNRESET`, `ETIMEDOUT`, `ENOTFOUND`, `ECONNREFUSED`
 - HTTP errors: `429` (rate limit), `503` (service unavailable), `502` (bad gateway)
 - Generic: `timeout`, `network`
@@ -60,9 +64,11 @@ const result = await retryWithBackoff(
 Creates a circuit breaker to prevent cascading failures.
 
 **Parameters:**
+
 - `config?: CircuitBreakerConfig` - Circuit breaker configuration
 
 **CircuitBreakerConfig:**
+
 ```typescript
 {
   failureThreshold?: number;  // Default: 5
@@ -73,6 +79,7 @@ Creates a circuit breaker to prevent cascading failures.
 ```
 
 **Example:**
+
 ```typescript
 import { createCircuitBreaker } from "../_core/error-handling";
 
@@ -86,6 +93,7 @@ try {
 ```
 
 **Circuit States:**
+
 - **Closed:** Normal operation, requests pass through
 - **Open:** Too many failures, requests are rejected immediately
 - **Half-Open:** Testing if service recovered, allows limited requests
@@ -97,10 +105,12 @@ try {
 Wraps database operations with comprehensive error handling.
 
 **Parameters:**
+
 - `operation: () => Promise<T>` - Database operation
 - `errorMessage?: string` - Custom error message
 
 **Example:**
+
 ```typescript
 import { withDatabaseErrorHandling } from "../_core/error-handling";
 
@@ -111,6 +121,7 @@ const users = await withDatabaseErrorHandling(
 ```
 
 **Error Handling:**
+
 - Connection errors → `INTERNAL_SERVER_ERROR` with user-friendly message
 - Query errors → Sanitized error message
 - Constraint violations → `CONFLICT` error code
@@ -123,10 +134,12 @@ const users = await withDatabaseErrorHandling(
 Wraps external API calls with retry logic and error handling.
 
 **Parameters:**
+
 - `operation: () => Promise<T>` - API call
 - `config?: RetryConfig` - Retry configuration
 
 **Example:**
+
 ```typescript
 import { withApiErrorHandling } from "../_core/error-handling";
 
@@ -137,6 +150,7 @@ const data = await withApiErrorHandling(
 ```
 
 **Error Handling:**
+
 - Rate limiting (429) → `TOO_MANY_REQUESTS`
 - Service unavailable (503, 502) → `SERVICE_UNAVAILABLE`
 - Authentication errors (401, 403) → `UNAUTHORIZED`
@@ -149,17 +163,16 @@ const data = await withApiErrorHandling(
 Safe wrapper that catches all errors and converts to TRPCError.
 
 **Parameters:**
+
 - `operation: () => Promise<T>` - Operation to execute
 - `defaultCode?: TRPCError["code"]` - Default error code
 
 **Example:**
+
 ```typescript
 import { safeAsync } from "../_core/error-handling";
 
-const result = await safeAsync(
-  () => riskyOperation(),
-  "INTERNAL_SERVER_ERROR"
-);
+const result = await safeAsync(() => riskyOperation(), "INTERNAL_SERVER_ERROR");
 ```
 
 ---
@@ -169,6 +182,7 @@ const result = await safeAsync(
 ### Database Operations
 
 **Before:**
+
 ```typescript
 const db = await getDb();
 if (!db) {
@@ -182,6 +196,7 @@ const users = await db.select().from(users);
 ```
 
 **After:**
+
 ```typescript
 const db = await getDb();
 if (!db) {
@@ -202,6 +217,7 @@ const users = await withDatabaseErrorHandling(
 ### External API Calls
 
 **Before:**
+
 ```typescript
 const response = await fetch("https://api.example.com/data");
 if (!response.ok) {
@@ -210,6 +226,7 @@ if (!response.ok) {
 ```
 
 **After:**
+
 ```typescript
 const response = await withApiErrorHandling(
   async () => {
@@ -228,6 +245,7 @@ const response = await withApiErrorHandling(
 ### LLM API Calls
 
 **Before:**
+
 ```typescript
 const response = await fetch(apiUrl, {
   method: "POST",
@@ -236,6 +254,7 @@ const response = await fetch(apiUrl, {
 ```
 
 **After:**
+
 ```typescript
 const response = await retryWithBackoff(
   async () => {
@@ -261,16 +280,16 @@ const response = await retryWithBackoff(
 
 ### TRPC Error Codes
 
-| Code | HTTP Status | Use Case |
-|------|-------------|----------|
-| `BAD_REQUEST` | 400 | Invalid input |
-| `UNAUTHORIZED` | 401 | Authentication required |
-| `FORBIDDEN` | 403 | Insufficient permissions |
-| `NOT_FOUND` | 404 | Resource not found |
-| `CONFLICT` | 409 | Resource conflict (duplicate) |
-| `TOO_MANY_REQUESTS` | 429 | Rate limit exceeded |
-| `INTERNAL_SERVER_ERROR` | 500 | Server error |
-| `SERVICE_UNAVAILABLE` | 503 | External service unavailable |
+| Code                    | HTTP Status | Use Case                      |
+| ----------------------- | ----------- | ----------------------------- |
+| `BAD_REQUEST`           | 400         | Invalid input                 |
+| `UNAUTHORIZED`          | 401         | Authentication required       |
+| `FORBIDDEN`             | 403         | Insufficient permissions      |
+| `NOT_FOUND`             | 404         | Resource not found            |
+| `CONFLICT`              | 409         | Resource conflict (duplicate) |
+| `TOO_MANY_REQUESTS`     | 429         | Rate limit exceeded           |
+| `INTERNAL_SERVER_ERROR` | 500         | Server error                  |
+| `SERVICE_UNAVAILABLE`   | 503         | External service unavailable  |
 
 ---
 
@@ -279,6 +298,7 @@ const response = await retryWithBackoff(
 ### 1. Always Use Error Handling Utilities
 
 ✅ **Good:**
+
 ```typescript
 const result = await withDatabaseErrorHandling(
   () => db.select().from(users),
@@ -287,6 +307,7 @@ const result = await withDatabaseErrorHandling(
 ```
 
 ❌ **Bad:**
+
 ```typescript
 const result = await db.select().from(users);
 ```
@@ -296,6 +317,7 @@ const result = await db.select().from(users);
 ### 2. Provide Meaningful Error Messages
 
 ✅ **Good:**
+
 ```typescript
 await withDatabaseErrorHandling(
   () => db.insert(users).values(data),
@@ -304,11 +326,9 @@ await withDatabaseErrorHandling(
 ```
 
 ❌ **Bad:**
+
 ```typescript
-await withDatabaseErrorHandling(
-  () => db.insert(users).values(data),
-  "Error"
-);
+await withDatabaseErrorHandling(() => db.insert(users).values(data), "Error");
 ```
 
 ---
@@ -316,14 +336,16 @@ await withDatabaseErrorHandling(
 ### 3. Use Retry Logic for Transient Failures
 
 ✅ **Good:**
+
 ```typescript
-const response = await retryWithBackoff(
-  () => fetchExternalApi(),
-  { maxAttempts: 3, retryableErrors: ["429", "503"] }
-);
+const response = await retryWithBackoff(() => fetchExternalApi(), {
+  maxAttempts: 3,
+  retryableErrors: ["429", "503"],
+});
 ```
 
 ❌ **Bad:**
+
 ```typescript
 const response = await fetchExternalApi();
 ```
@@ -333,15 +355,16 @@ const response = await fetchExternalApi();
 ### 4. Don't Retry Non-Retryable Errors
 
 ✅ **Good:**
+
 ```typescript
 // Retry logic automatically skips non-retryable errors
-const result = await retryWithBackoff(
-  () => operation(),
-  { retryableErrors: ["429", "503"] }
-);
+const result = await retryWithBackoff(() => operation(), {
+  retryableErrors: ["429", "503"],
+});
 ```
 
 ❌ **Bad:**
+
 ```typescript
 // Don't retry authentication errors
 for (let i = 0; i < 3; i++) {
@@ -358,6 +381,7 @@ for (let i = 0; i < 3; i++) {
 ### 5. Use Circuit Breakers for External Services
 
 ✅ **Good:**
+
 ```typescript
 const breaker = createCircuitBreaker({ failureThreshold: 5 });
 
@@ -365,6 +389,7 @@ const result = await breaker.execute(() => callExternalService());
 ```
 
 ❌ **Bad:**
+
 ```typescript
 // No protection against cascading failures
 const result = await callExternalService();
@@ -380,6 +405,7 @@ All errors are automatically sanitized using `sanitizeError()` from `server/_cor
 - **Development:** Full error messages for debugging
 
 **Example:**
+
 ```typescript
 import { createSafeTRPCError } from "../_core/errors";
 
@@ -488,10 +514,9 @@ const result = await withDatabaseErrorHandling(
 const response = await fetch(url);
 
 // After
-const response = await withApiErrorHandling(
-  () => fetch(url),
-  { maxAttempts: 3 }
-);
+const response = await withApiErrorHandling(() => fetch(url), {
+  maxAttempts: 3,
+});
 ```
 
 ### Step 4: Test Error Scenarios
@@ -519,4 +544,3 @@ For questions or issues with error handling:
 2. Review error handling utilities in `server/_core/error-handling.ts`
 3. Check error logs for specific error patterns
 4. Contact the development team
-

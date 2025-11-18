@@ -89,7 +89,7 @@ appRouter = {
   chatStreaming: chatStreamingRouter, // Enhanced chat with streaming and unified flow
   reports: reportsRouter, // Business reports and analytics
   subscription: subscriptionRouter, // Subscription management (15+ endpoints)
-}
+};
 ```
 
 ## Authentication
@@ -225,6 +225,7 @@ Customer activity tracking.
 #### Extensions Router (`crm.extensions.*`)
 
 Advanced CRM features:
+
 - Opportunities/Deals Pipeline (6 endpoints)
 - Customer Segmentation (5 endpoints)
 - Documents & File Uploads (3 endpoints)
@@ -314,7 +315,12 @@ All endpoints use consistent error handling:
 
 ```typescript
 throw new TRPCError({
-  code: "NOT_FOUND" | "BAD_REQUEST" | "UNAUTHORIZED" | "FORBIDDEN" | "INTERNAL_SERVER_ERROR",
+  code:
+    "NOT_FOUND" |
+    "BAD_REQUEST" |
+    "UNAUTHORIZED" |
+    "FORBIDDEN" |
+    "INTERNAL_SERVER_ERROR",
   message: "Error message",
 });
 ```
@@ -322,6 +328,7 @@ throw new TRPCError({
 ## Rate Limiting
 
 Rate limiting is implemented using Redis and applies to:
+
 - AI/LLM endpoints
 - Email operations
 - Chat messages
@@ -331,6 +338,6 @@ See `server/rate-limiter-redis.ts` for implementation details.
 ---
 
 For detailed endpoint documentation, see:
+
 - [Routers Detail](./routers.md)
 - [Endpoints Detail](./endpoints.md)
-

@@ -18,7 +18,7 @@ Din Gmail/Calendar/Billy data indeholder:
 
 ### Step 1: Generate Customer Key
 
-```typescript
+````typescript
 // Priority: email > phone > name
 function generateCustomerKey(lead) {
   if (lead.email) return `email:${normalize(email)}`;
@@ -417,7 +417,7 @@ const wonDeals = filterLeads(leads, {
 const recurring = leads.filter(l => l.pipeline.status === "active_recurring");
 // → Track fast rengøring customers
 
-```
+````
 
 ---
 

@@ -60,9 +60,7 @@ export async function getAIDocMetrics(): Promise<AIDocMetrics> {
     const aiDocs = await db
       .select()
       .from(documents)
-      .where(
-        sql`${documents.tags} ? 'ai-generated'`
-      )
+      .where(sql`${documents.tags} ? 'ai-generated'`)
       .orderBy(desc(documents.createdAt));
 
     const totalGenerated = aiDocs.length;

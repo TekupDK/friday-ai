@@ -35,6 +35,7 @@ accessibility-audits/
 ## Summary Report
 
 See `summary.md` for:
+
 - Overall accessibility scores
 - Common issues across pages
 - Trends over time
@@ -43,4 +44,3 @@ See `summary.md` for:
 ---
 
 **Last Updated:** January 28, 2025
-

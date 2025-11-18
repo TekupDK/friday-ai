@@ -19,4 +19,3 @@ Sanitize HTML input, escape output, use DOMPurify, set CSP headers, test XSS att
 ## OUTPUT
 
 XSS prevention implemented with sanitization and CSP.
-

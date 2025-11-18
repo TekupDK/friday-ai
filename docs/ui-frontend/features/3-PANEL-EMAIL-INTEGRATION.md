@@ -6,7 +6,7 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
 
 ### 🔍 Oversigt over 3-Panel Integration
 
-```text
+````text
 ┌─────────────────┬─────────────────────────┬─────────────────┐
 │                 │                         │                 │
 │                 │                         │                 │
@@ -77,7 +77,7 @@ EmailTab er blevet fuldt tilpasset til at fungere optimalt i vores nye 3-panel l
   ```tsx
   <TabsContent className="overflow-hidden">
 
-  ```
+````
 
 - **Compact Layout**: Tilføjet density toggle for mere effektiv pladsudnyttelse i 3-panel
 

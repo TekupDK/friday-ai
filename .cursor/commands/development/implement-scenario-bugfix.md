@@ -9,11 +9,13 @@ Identify and fix a bug with minimal changes, ensuring no regressions. START NOW 
 ## CRITICAL: START FIXING IMMEDIATELY
 
 **DO NOT:**
+
 - Just describe the bug
 - Wait for approval to investigate
 - Show a plan without fixing
 
 **DO:**
+
 - Start investigating immediately
 - Find root cause
 - Fix the bug using tools
@@ -59,10 +61,10 @@ Identify and fix a bug with minimal changes, ensuring no regressions. START NOW 
 ## OUTPUT
 
 Provide:
+
 - Bug description
 - Root cause identified
 - Fix implemented
 - Regression test added
 - Verification results
 - Files modified
-

@@ -20,7 +20,7 @@ En **levende dokumentation** der:
 
 ### ❌ Gamle Tilgang (Path-Based)
 
-```text
+````text
 tasks/invoice-ui/PLAN.md → Category: "Tasks"
 .copilot/DEBUG.md → Category: "Development"
 
@@ -580,7 +580,7 @@ analytics.track({
   docsShared: count,
 });
 
-```
+````
 
 ### Monthly Review
 

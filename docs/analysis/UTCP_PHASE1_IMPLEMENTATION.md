@@ -12,6 +12,7 @@ Phase 1 prototype of UTCP (Universal Tool Calling Protocol) integration has been
 ### 1. Core UTCP Infrastructure
 
 #### Directory Structure
+
 ```
 server/utcp/
 ├── types.ts              # TypeScript type definitions
@@ -45,11 +46,13 @@ server/utcp/
 ### 3. Integration Points
 
 #### Feature Flag
+
 - Added `enableUTCP` flag to `server/_core/feature-flags.ts`
 - Default: `false` (disabled)
 - Enable via: `FORCE_UTCP=true` environment variable
 
 #### AI Router Integration
+
 - Modified `server/ai-router.ts` to support UTCP tools
 - Converts UTCP tools to LLM function format
 - Handles tool calls from LLM responses
@@ -80,6 +83,7 @@ FORCE_UTCP=true pnpm dev
 ### Production Rollout
 
 1. Set feature flag in environment:
+
    ```bash
    FORCE_UTCP=true
    ```
@@ -124,17 +128,20 @@ FORCE_UTCP=true pnpm dev
 ## Architecture Decisions
 
 ### Why Ajv for Validation?
+
 - Industry standard JSON Schema validator
 - Fast and efficient
 - Supports format validation (email, date, etc.)
 - Better error messages than manual validation
 
 ### Why Template Interpolation?
+
 - Allows dynamic handler configuration
 - Supports variable substitution in URLs, query params, body
 - Enables declarative tool definitions
 
 ### Why Feature Flag?
+
 - Allows gradual rollout
 - Easy to disable if issues found
 - Can A/B test performance
@@ -143,6 +150,7 @@ FORCE_UTCP=true pnpm dev
 ## Performance Expectations
 
 Based on analysis:
+
 - **Expected latency reduction:** 200-500ms per tool call (removes MCP overhead)
 - **Expected throughput:** 2-3x improvement
 - **Expected code reduction:** 43% less code per tool
@@ -174,4 +182,3 @@ Based on analysis:
 
 **Status:** ✅ Phase 1 Complete - Ready for Testing  
 **Next:** Phase 2 - Migrate Remaining Tools
-

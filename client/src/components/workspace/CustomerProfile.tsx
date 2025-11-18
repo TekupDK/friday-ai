@@ -23,7 +23,6 @@ import {
 } from "@/lib/business-logic";
 import { trpc } from "@/lib/trpc";
 
-
 interface CustomerProfileProps {
   context: {
     emailId?: string;

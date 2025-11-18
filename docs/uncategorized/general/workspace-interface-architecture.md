@@ -13,7 +13,7 @@
 
 ## 📁 **OVERORDNET MAPPE STRUKTUR**
 
-```bash
+````bash
 client/src/
 ├── App.tsx                    # Main app component
 ├── main.tsx                   # React entry point
@@ -529,7 +529,7 @@ export const emailCacheStrategy = {
 - Professional email automation
 - Immediate ROI potential
 
-```
+````
 
 **Workspace interface er en complete, AI-powered 3-panel email system!** 🎯
 

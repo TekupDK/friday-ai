@@ -130,7 +130,7 @@
      ```typescript
      {
        customerProfileId: number;
-       content: string;                   // Max: 5000
+       content: string; // Max: 5000
      }
      ```
    - **Output:** `CustomerNote`
@@ -252,6 +252,7 @@
 **Props:** None (page component)
 
 **State:**
+
 ```typescript
 {
   search: string;
@@ -262,11 +263,12 @@
     phone: string;
     status: "new";
     customerType: "private" | "erhverv";
-  };
+  }
 }
 ```
 
 **Hooks Used:**
+
 - `usePageTitle("Customers")`
 - `useLocation()` - Navigation
 - `useDebouncedValue(search, 300)` - Debounced search
@@ -280,16 +282,24 @@
 **Props:** None (page component with route params)
 
 **Route Params:**
+
 ```typescript
 {
-  id: string;  // Customer ID from URL
+  id: string; // Customer ID from URL
 }
 ```
 
 **State:**
+
 ```typescript
 {
-  activeTab: "overview" | "properties" | "notes" | "relationships" | "subscriptions" | "audit" | "activities";
+  activeTab: "overview" |
+    "properties" |
+    "notes" |
+    "relationships" |
+    "subscriptions" |
+    "audit" |
+    "activities";
   showNoteModal: boolean;
   showPropertyModal: boolean;
   editingNote: number | null;
@@ -301,11 +311,12 @@
     postalCode: string;
     isPrimary: boolean;
     notes: string;
-  };
+  }
 }
 ```
 
 **Hooks Used:**
+
 - `useRoute<{ id: string }>("/crm/customers/:id")`
 - `trpc.crm.customer.getProfile.useQuery()`
 - `trpc.crm.customer.listProperties.useQuery()`
@@ -317,6 +328,7 @@
 **File:** `client/src/pages/crm/CustomerList.tsx` (nested component)
 
 **Props:**
+
 ```typescript
 {
   customerId: number;
@@ -330,6 +342,7 @@
 **File:** `client/src/components/crm/CRMLayout.tsx`
 
 **Props:**
+
 ```typescript
 {
   children: React.ReactNode;
@@ -337,6 +350,7 @@
 ```
 
 **Features:**
+
 - Sidebar navigation
 - Responsive design
 - Active route highlighting
@@ -346,6 +360,7 @@
 **File:** `drizzle/schema.ts`
 
 **CustomerProfile:**
+
 ```typescript
 {
   id: number;
@@ -368,6 +383,7 @@
 ```
 
 **Lead:**
+
 ```typescript
 {
   id: number;
@@ -386,6 +402,7 @@
 ```
 
 **Opportunity:**
+
 ```typescript
 {
   id: number;
@@ -405,6 +422,7 @@
 ```
 
 **Subscription:**
+
 ```typescript
 {
   id: number;
@@ -496,46 +514,56 @@ CustomerList renders CustomerSubscriptionBadge
 ### Frontend Dependencies
 
 **Core:**
+
 - `react` ^19.1.1
 - `react-dom` ^19.1.1
 - `typescript` 5.9.3
 
 **Routing:**
+
 - `wouter` ^3.3.5
 
 **State Management:**
+
 - `@tanstack/react-query` ^5.90.2
 - `@trpc/react-query` ^11.6.0
 
 **UI Components:**
+
 - `@radix-ui/*` - UI primitives
 - `lucide-react` ^0.453.0 - Icons
 - `sonner` ^2.0.7 - Toast notifications
 - `tailwindcss` ^4.1.14 - Styling
 
 **Forms:**
+
 - `react-hook-form` ^7.64.0
 - `zod` ^4.1.12 - Validation
 
 ### Backend Dependencies
 
 **Core:**
+
 - `express` ^4.21.2
 - `@trpc/server` ^11.6.0
 - `typescript` 5.9.3
 
 **Database:**
+
 - `drizzle-orm` ^0.44.5
 - `pg` ^8.12.0
 - `postgres` ^3.4.5
 
 **Validation:**
+
 - `zod` ^4.1.12
 
 **Logging:**
+
 - `pino` ^9.4.0
 
 **Security:**
+
 - `helmet` ^8.1.0
 - `express-rate-limit` ^8.2.1
 - `jose` 6.1.0 - JWT
@@ -543,13 +571,16 @@ CustomerList renders CustomerSubscriptionBadge
 ### External Integrations
 
 **Google Workspace:**
+
 - `googleapis` ^165.0.0
 - `google-auth-library` ^10.5.0
 
 **Billy.dk:**
+
 - MCP server integration
 
 **AI Services:**
+
 - `@google/genai` ^1.29.1
 - `langfuse` ^3.38.6
 
@@ -560,14 +591,15 @@ CustomerList renders CustomerSubscriptionBadge
 ### Example: Create Customer
 
 **Frontend:**
+
 ```typescript
 const createMutation = trpc.crm.customer.createProfile.useMutation({
-  onSuccess: (customer) => {
+  onSuccess: customer => {
     utils.crm.customer.listProfiles.invalidate();
     toast.success("Customer created successfully");
     navigate(`/crm/customers/${customer.id}`);
   },
-  onError: (error) => {
+  onError: error => {
     toast.error(error.message || "Failed to create customer");
   },
 });
@@ -582,6 +614,7 @@ await createMutation.mutateAsync({
 ```
 
 **Backend:**
+
 ```typescript
 createProfile: protectedProcedure
   .input(
@@ -590,7 +623,9 @@ createProfile: protectedProcedure
       email: validationSchemas.email,
       phone: validationSchemas.phone.optional(),
       customerType: z.enum(["private", "erhverv"]).default("private"),
-      status: z.enum(["new", "active", "inactive", "vip", "at_risk"]).default("new"),
+      status: z
+        .enum(["new", "active", "inactive", "vip", "at_risk"])
+        .default("new"),
     })
   )
   .mutation(async ({ ctx, input }) => {
@@ -602,6 +637,7 @@ createProfile: protectedProcedure
 ### Example: Search Customers
 
 **Frontend:**
+
 ```typescript
 const [search, setSearch] = useState("");
 const debouncedSearch = useDebouncedValue(search, 300);
@@ -613,6 +649,7 @@ const { data: customers } = trpc.crm.customer.listProfiles.useQuery({
 ```
 
 **Backend:**
+
 ```typescript
 listProfiles: protectedProcedure
   .input(
@@ -632,7 +669,7 @@ listProfiles: protectedProcedure
           )!
         )
       : eq(customerProfiles.userId, ctx.user.id);
-    
+
     return await db
       .select()
       .from(customerProfiles)
@@ -658,7 +695,11 @@ const exportCustomersToCSV = (customers: CustomerProfile[]) => {
 
   const headers = ["ID", "Name", "Email", "Phone", "Status"];
   const rows = customers.map(c => [
-    c.id, c.name || "", c.email || "", c.phone || "", c.status || ""
+    c.id,
+    c.name || "",
+    c.email || "",
+    c.phone || "",
+    c.status || "",
   ]);
 
   const csvContent = [
@@ -858,4 +899,3 @@ This documentation was auto-generated from the codebase on January 28, 2025. It 
 
 **Last Updated:** January 28, 2025  
 **Maintained by:** Auto-generated from codebase
-

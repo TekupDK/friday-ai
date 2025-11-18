@@ -36,7 +36,7 @@ Successfully integrated LiteLLM into Friday AI's intelligent model routing syste
 
 #### File Modified: `server/model-router.ts`
 
-```typescript
+````typescript
 // Added imports (lines 9-10)
 import { ENV } from "./_core/env";
 import {
@@ -567,7 +567,7 @@ Week 1 Progress:
 
 On track for 2-3 week delivery! 🎯
 
-```
+````
 
 ---
 

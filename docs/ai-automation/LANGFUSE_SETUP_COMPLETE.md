@@ -9,7 +9,7 @@
 
 ### 1. Langfuse V2 Docker Deployed
 
-```text
+````text
 ✅ PostgreSQL:  Running (port 5433)
 ✅ Langfuse V2: Running (port 3001)
 ✅ Version:     2.95.11
@@ -302,7 +302,7 @@ Already Done (from morning):
 ║                                                        ║
 ╚════════════════════════════════════════════════════════╝
 
-```
+````
 
 ---
 

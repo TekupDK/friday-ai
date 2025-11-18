@@ -27,7 +27,7 @@
 
 ### 🎯 What You'll Build
 
-```bash
+````bash
 Day 9 (4-6 hours):
 ├── Crawl4AI Docker service
 ├── FastAPI endpoint
@@ -375,7 +375,7 @@ Sunday (Day 10):
 15:00 - 16:30   Automated enrichment
 16:30 - 18:00   Testing & docs
 
-```
+````
 
 ---
 

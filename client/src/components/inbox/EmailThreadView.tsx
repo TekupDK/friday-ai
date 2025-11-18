@@ -21,8 +21,6 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/lib/trpc";
 
-
-
 const EmailAISummary = lazy(() => import("./EmailAISummary"));
 const EmailLabelSuggestions = lazy(() => import("./EmailLabelSuggestions"));
 

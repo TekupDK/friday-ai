@@ -8,7 +8,7 @@
 
 ## 🎊 COMPLETION SUMMARY
 
-```bash
+````bash
 ╔═══════════════════════════════════════════════════════════╗
 ║     CHROMADB INTEGRATION - FULLY COMPLETE ✅             ║
 ╠═══════════════════════════════════════════════════════════╣
@@ -385,7 +385,7 @@ Look for: chromadb-embedding-generation traces
 ```bash
 curl <http://localhost:8000/api/v2/collections>
 
-```
+````
 
 ---
 

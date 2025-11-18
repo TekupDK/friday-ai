@@ -15,6 +15,7 @@ Implemented CSRF (Cross-Site Request Forgery) protection using the double-submit
 ### Backend (`server/_core/csrf.ts`)
 
 **Features:**
+
 - ✅ Cryptographically secure token generation (32 bytes = 64 hex characters)
 - ✅ Double-submit cookie pattern (token in both cookie and header)
 - ✅ Automatic token generation and cookie setting
@@ -24,12 +25,14 @@ Implemented CSRF (Cross-Site Request Forgery) protection using the double-submit
 - ✅ Proper error handling and logging
 
 **Key Functions:**
+
 - `getOrCreateCsrfToken()` - Generates token if missing, sets cookie
 - `validateCsrfToken()` - Validates token using double-submit pattern
 - `csrfMiddleware()` - Express middleware for automatic protection
 - `getCsrfToken()` - Helper to get token from request
 
 **Security Features:**
+
 - Token stored in cookie with `SameSite=strict` in production
 - Token sent in `X-CSRF-Token` header
 - Both must match for validation to pass
@@ -39,11 +42,13 @@ Implemented CSRF (Cross-Site Request Forgery) protection using the double-submit
 ### Frontend (`client/src/lib/csrf.ts`)
 
 **Features:**
+
 - ✅ Reads CSRF token from cookie
 - ✅ Automatically includes token in all tRPC requests
 - ✅ Helper functions for manual token access
 
 **Integration:**
+
 - Integrated into `client/src/main.tsx` tRPC client configuration
 - Automatically adds `X-CSRF-Token` header to all requests
 - Works with both `httpLink` and `httpBatchLink`
@@ -77,6 +82,7 @@ Implemented CSRF (Cross-Site Request Forgery) protection using the double-submit
 ### Why Not HMAC Signing?
 
 The double-submit pattern doesn't require HMAC signing because:
+
 - The token is random and unpredictable (32 bytes)
 - SameSite=strict prevents cross-site cookie access
 - Both cookie and header must match (attacker can't set both)
@@ -93,6 +99,7 @@ The double-submit pattern doesn't require HMAC signing because:
 ### Backend
 
 **File:** `server/_core/index.ts`
+
 - CSRF middleware added to `/api/` routes
 - Placed after rate limiting, before body parsing
 - CORS headers updated to allow `X-CSRF-Token` header
@@ -100,6 +107,7 @@ The double-submit pattern doesn't require HMAC signing because:
 ### Frontend
 
 **File:** `client/src/main.tsx`
+
 - CSRF token helper imported
 - Token automatically added to all tRPC requests
 - Works transparently with existing code
@@ -170,24 +178,28 @@ The CSRF middleware includes comprehensive error handling:
 ### Error Scenarios
 
 **Missing Token Cookie:**
+
 - Error: "CSRF token missing. Please refresh the page."
 - Status: 403 Forbidden
 - Action: User should refresh page to get new token
 - Logged: Yes (warn level)
 
 **Missing Token Header:**
+
 - Error: "CSRF token missing in request header."
 - Status: 403 Forbidden
 - Action: Frontend should include token in header
 - Logged: Yes (warn level)
 
 **Token Mismatch:**
+
 - Error: "CSRF token validation failed. Tokens do not match."
 - Status: 403 Forbidden
 - Action: User should refresh page
 - Logged: Yes (warn level)
 
 **Invalid Token Format:**
+
 - Error: "CSRF token has invalid format."
 - Status: 403 Forbidden
 - Action: User should refresh page
@@ -196,10 +208,12 @@ The CSRF middleware includes comprehensive error handling:
 ## Files Modified
 
 ### Backend
+
 - `server/_core/csrf.ts` - CSRF protection implementation (NEW)
 - `server/_core/index.ts` - CSRF middleware integration, CORS header updates
 
 ### Frontend
+
 - `client/src/lib/csrf.ts` - CSRF token helper (NEW)
 - `client/src/main.tsx` - CSRF token integration in tRPC client
 
@@ -210,25 +224,35 @@ The CSRF middleware includes comprehensive error handling:
 The CSRF middleware uses comprehensive error handling:
 
 ```typescript
-export function csrfMiddleware(req: Request, res: Response, next: () => void): void {
+export function csrfMiddleware(
+  req: Request,
+  res: Response,
+  next: () => void
+): void {
   try {
     getOrCreateCsrfToken(req, res);
     validateCsrfToken(req);
     next();
   } catch (error) {
     // Log with security context
-    logger.warn({
-      err: error,
-      path: req.path,
-      method: req.method,
-      ip: req.ip || req.socket.remoteAddress,
-      userAgent: req.headers["user-agent"],
-    }, "CSRF validation failed");
+    logger.warn(
+      {
+        err: error,
+        path: req.path,
+        method: req.method,
+        ip: req.ip || req.socket.remoteAddress,
+        userAgent: req.headers["user-agent"],
+      },
+      "CSRF validation failed"
+    );
 
     // Return safe error message
     res.status(403).json({
       error: "CSRF validation failed",
-      message: error instanceof Error ? error.message : "CSRF validation failed. Please refresh the page and try again.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "CSRF validation failed. Please refresh the page and try again.",
     });
   }
 }
@@ -258,4 +282,3 @@ export function csrfMiddleware(req: Request, res: Response, next: () => void): v
 
 **Last Updated:** 2025-01-28  
 **Status:** ✅ CSRF Protection Implemented
-

@@ -13,7 +13,7 @@
 
 ## 📋 **NUVÆRENDE STATUS:**
 
-```typescript
+````typescript
 📧 VENSTRE PANEL (Nuværende):
 
 - Standard Gmail email list
@@ -168,7 +168,7 @@
 - Conversion rate improvement
 - User satisfaction scores
 
-```
+````
 
 ---
 

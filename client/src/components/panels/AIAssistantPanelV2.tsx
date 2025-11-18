@@ -29,7 +29,6 @@ const AIAssistantPanelV2 = memo(function AIAssistantPanelV2() {
   useEffect(() => {
     // Create conversation only once when component mounts
     createConversation.mutate({ title: "Friday AI Chat" });
-     
   }, []); // Intentionally empty - run once on mount
 
   // TODO: Add real context when EmailContext is available

@@ -119,7 +119,7 @@
 
 **New Endpoints:**
 
-```typescript
+````typescript
 // Get comprehensive metrics
 docs.getAIMetrics();
 
@@ -409,7 +409,7 @@ AI omkostninger:      0 kr
 ────────────────────
 Net savings:          10,300 kr 💰
 
-```
+````
 
 ---
 

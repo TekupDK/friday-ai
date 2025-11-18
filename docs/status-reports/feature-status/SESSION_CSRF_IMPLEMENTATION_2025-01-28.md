@@ -17,6 +17,7 @@ The application lacked CSRF protection, leaving it vulnerable to cross-site requ
 ## Solution
 
 Implemented CSRF protection using the **double-submit cookie pattern**, which is:
+
 - Stateless (no server-side session storage needed)
 - Simple to implement and maintain
 - Effective at preventing CSRF attacks
@@ -25,6 +26,7 @@ Implemented CSRF protection using the **double-submit cookie pattern**, which is
 ### Architecture
 
 **Backend (`server/_core/csrf.ts`):**
+
 - Cryptographically secure token generation (32 bytes = 64 hex characters)
 - Automatic token generation and cookie setting
 - Validation for state-changing operations (POST, PUT, DELETE, PATCH)
@@ -32,11 +34,13 @@ Implemented CSRF protection using the **double-submit cookie pattern**, which is
 - Skips validation for public endpoints (auth, health checks)
 
 **Frontend (`client/src/lib/csrf.ts`):**
+
 - Reads CSRF token from cookie
 - Automatically includes token in all tRPC requests
 - Helper functions for manual token access
 
 **Integration:**
+
 - CSRF middleware added to `/api/` routes in `server/_core/index.ts`
 - CORS headers updated to allow `X-CSRF-Token` header
 - tRPC client configured to include CSRF tokens in all requests
@@ -64,7 +68,7 @@ function generateToken(): string {
 ### Cookie Configuration
 
 - **Name:** `__csrf_token`
-- **HttpOnly:** `false`** (frontend needs to read it)
+- **HttpOnly:** `false`\*\* (frontend needs to read it)
 - **Secure:** `true` in production (HTTPS required)
 - **SameSite:** `strict` in production, `lax` in development
 - **Path:** `/`
@@ -88,21 +92,25 @@ The CSRF middleware includes comprehensive error handling:
 ### Error Scenarios
 
 **Missing Token Cookie:**
+
 - Error: "CSRF token missing. Please refresh the page."
 - Status: 403 Forbidden
 - Action: User should refresh page to get new token
 
 **Missing Token Header:**
+
 - Error: "CSRF token missing in request header."
 - Status: 403 Forbidden
 - Action: Frontend should include token in header
 
 **Token Mismatch:**
+
 - Error: "CSRF token validation failed. Tokens do not match."
 - Status: 403 Forbidden
 - Action: User should refresh page
 
 **Invalid Token Format:**
+
 - Error: "CSRF token has invalid format."
 - Status: 403 Forbidden
 - Action: User should refresh page
@@ -110,6 +118,7 @@ The CSRF middleware includes comprehensive error handling:
 ## Files Created/Modified
 
 ### Backend
+
 - **`server/_core/csrf.ts`** (NEW) - CSRF protection implementation
   - Token generation and validation
   - Express middleware
@@ -122,6 +131,7 @@ The CSRF middleware includes comprehensive error handling:
   - Placed middleware after rate limiting, before body parsing
 
 ### Frontend
+
 - **`client/src/lib/csrf.ts`** (NEW) - CSRF token helper
   - `getCsrfToken()` - Reads token from cookie
   - `getCsrfHeaders()` - Returns headers object with token
@@ -131,6 +141,7 @@ The CSRF middleware includes comprehensive error handling:
   - Added CSRF token to all tRPC requests (httpLink and httpBatchLink)
 
 ### Documentation
+
 - **`docs/CSRF_IMPLEMENTATION_2025-01-28.md`** (NEW) - Comprehensive documentation
   - Overview and architecture
   - Implementation details
@@ -144,6 +155,7 @@ The CSRF middleware includes comprehensive error handling:
   - Updated status and notes
 
 ### Configuration
+
 - **`tsconfig.json`** (MODIFIED)
   - Added `@testing-library/jest-dom` to types array
   - Fixed TypeScript errors in accessibility tests
@@ -160,6 +172,7 @@ The CSRF middleware includes comprehensive error handling:
 ### Why Not HMAC Signing?
 
 The double-submit pattern doesn't require HMAC signing because:
+
 - The token is random and unpredictable (32 bytes)
 - SameSite=strict prevents cross-site cookie access
 - Both cookie and header must match (attacker can't set both)
@@ -195,6 +208,7 @@ The double-submit pattern doesn't require HMAC signing because:
 ### Automated Tests
 
 TODO: Add CSRF tests
+
 - Test token generation
 - Test token validation
 - Test missing token rejection
@@ -223,4 +237,3 @@ TODO: Add CSRF tests
 
 **Last Updated:** 2025-01-28  
 **Status:** ✅ CSRF Protection Implemented and Documented
-

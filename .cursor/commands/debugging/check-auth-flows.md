@@ -8,17 +8,17 @@ Ensure that auth and permissions are handled correctly.
 
 ## STEPS
 
-1) Identify endpoints and operations that require auth.
-2) Verify:
+1. Identify endpoints and operations that require auth.
+2. Verify:
    - Authentication checks
    - Role/permission checks
    - Access control for sensitive data
-3) Look for privilege escalation risks.
+3. Look for privilege escalation risks.
 
 ## OUTPUT
 
 Return:
+
 - Auth flows reviewed
 - Potential vulnerabilities
 - Suggested fixes or improvements.
-

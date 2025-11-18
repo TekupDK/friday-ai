@@ -22,7 +22,7 @@ After analyzing the workspace, I've identified several categories of files that 
 
 ### **1. Empty Files (0 bytes)**
 
-```text
+````text
 Root Level:
 ├── DEBUG_AKTUEL_STATUS.md (0 bytes) ❌ DELETE
 ├── FIX_500_ERROR.md (0 bytes) ❌ DELETE
@@ -522,6 +522,6 @@ git checkout -b cleanup/workspace-organization
 git add .
 git commit -m "chore: cleanup empty and deprecated files"
 
-```
+````
 
 Vil du have mig til at lave cleanup scripts? 🧹

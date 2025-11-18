@@ -29,6 +29,7 @@ Identify and fix code quality issues systematically, improving maintainability a
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `grep` - Find `any` types, console.logs
 - `read_file` - Read files with issues
 - `codebase_search` - Find patterns
@@ -36,6 +37,7 @@ Identify and fix code quality issues systematically, improving maintainability a
 - `run_terminal_cmd` - Run checks
 
 **DO NOT:**
+
 - Skip reviewing patterns
 - Ignore type safety
 - Miss console.logs
@@ -68,6 +70,7 @@ Before fixing, think through:
 ## CODE QUALITY ISSUES TO FIX
 
 ### 1. Remove `any` Types
+
 ```typescript
 // ❌ Bad: Using any
 function process(data: any) {
@@ -81,6 +84,7 @@ function process(data: { value: string }) {
 ```
 
 ### 2. Replace console.log with Logger
+
 ```typescript
 // ❌ Bad: console.log
 console.log("Processing:", data);
@@ -93,6 +97,7 @@ logger.error({ err: error }, "Error occurred");
 ```
 
 ### 3. Standardize Error Handling
+
 ```typescript
 // ❌ Bad: Inconsistent patterns
 try {
@@ -114,6 +119,7 @@ try {
 ```
 
 ### 4. Remove @ts-ignore/@ts-expect-error
+
 ```typescript
 // ❌ Bad: Suppressing errors
 // @ts-ignore
@@ -149,17 +155,19 @@ const value = problematicCode() as ProperType;
 ### Code Quality Improvements
 
 **Issues Fixed:**
+
 - `any` types: [count] replaced
 - console.log: [count] replaced with logger
 - Error handling: [count] standardized
 - @ts-ignore: [count] removed
 
 **Files Modified:**
+
 - [list]
 
 **Verification:**
+
 - ✅ Typecheck: PASSED
 - ✅ Tests: PASSED
 - ✅ Code quality: IMPROVED
 ```
-

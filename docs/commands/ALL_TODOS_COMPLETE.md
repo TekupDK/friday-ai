@@ -6,11 +6,13 @@
 ## TODOs Opdateret
 
 ### ✅ 1. Verificer Test-Forbedringer
+
 - **Status:** ⏳ Pending (kræver test execution)
 - **Action:** Kør E2E tests for at bekræfte data-testid selectors virker
 - **Note:** Tests er opdateret, men kræver execution for verificering
 
 ### ✅ 2. Commit CRM-Forbedringer
+
 - **Status:** ⏳ Pending (klar til commit)
 - **Action:** Commit alle CRM-forbedringer
 - **Files Ready:**
@@ -20,11 +22,13 @@
   - Documentation updates
 
 ### ⏳ 3. Fix Test Authentication
+
 - **Status:** Pending
 - **Action:** Forbedre login helper i tests
 - **Note:** Kræver test execution først for at identificere problemer
 
 ### ✅ 4. Tilføj Flere data-testid Attributes
+
 - **Status:** ✅ COMPLETED
 - **Added:**
   - `export-csv-button` - CustomerList
@@ -38,10 +42,12 @@
   - `create-opportunity-button` - OpportunityPipeline
 
 ### ✅ 5. Opdater Test Dokumentation
+
 - **Status:** ✅ COMPLETED
 - **Updated:** `docs/qa/CRM_TEST_STATUS.md` med alle nye data-testid attributes
 
 ### ⏳ 6. Verificer CSV Exports
+
 - **Status:** Pending (manual test)
 - **Action:** Manuelt test CSV export i UI
 - **Note:** Kan testes manuelt i browser
@@ -51,6 +57,7 @@
 ### Data-TestID Attributes Tilføjet
 
 **Page Titles:**
+
 - ✅ `crm-dashboard-title` - CRMDashboard
 - ✅ `crm-dashboard-stats` - CRMDashboard
 - ✅ `customers-page-title` - CustomerList
@@ -58,6 +65,7 @@
 - ✅ `opportunities-page-title` - OpportunityPipeline
 
 **Buttons:**
+
 - ✅ `export-csv-button` - CustomerList
 - ✅ `create-customer-button` - CustomerList
 - ✅ `export-leads-csv-button` - LeadPipeline
@@ -66,15 +74,18 @@
 - ✅ `create-opportunity-button` - OpportunityPipeline
 
 **Modals:**
+
 - ✅ `create-customer-modal` - CustomerList
 - ✅ `create-lead-modal` - LeadPipeline
 
 **Inputs:**
+
 - ✅ `customer-search-input` - CustomerList
 
 ### Tests Opdateret
 
 **Updated Tests:**
+
 - ✅ Dashboard load test - bruger nu `data-testid="crm-dashboard-title"`
 - ✅ Dashboard stats test - bruger nu `data-testid="crm-dashboard-stats"`
 - ✅ Customer list load test - bruger nu `data-testid="customers-page-title"`
@@ -101,4 +112,3 @@
 **Pending:** 2/6 TODOs (kræver test execution eller manual testing)
 
 **Overall:** ✅ Alle implementerbare TODOs er færdige!
-

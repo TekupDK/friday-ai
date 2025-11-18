@@ -10,6 +10,7 @@
 ### ✅ Dokumentation Status
 
 **Godt dokumenteret:**
+
 - ✅ **Subscription System** - Komplet dokumentation i `docs/qa/` og `docs/development-notes/subscription/`
 - ✅ **Hooks System Refactoring** - Dokumenteret i `docs/development-notes/hooks/`
 - ✅ **Commands System** - Dokumenteret i `docs/development-notes/commands/`
@@ -18,6 +19,7 @@
 - ✅ **Status Reports** - Feature status i `docs/status-reports/feature-status/`
 
 **Manglende eller ufuldstændig dokumentation:**
+
 - ⚠️ **Cursor Hooks System** - Delvist dokumenteret, men nye hooks mangler dokumentation
 - ⚠️ **Subscription Frontend Components** - Implementeret men mangler usage guide
 - ⚠️ **Recent Command Improvements** - Nye commands i `.cursor/commands/` mangler dokumentation
@@ -29,6 +31,7 @@
 ### Committed (31 commits ahead of origin/main)
 
 **Recent commits:**
+
 - ✅ Memory rules enforcement system
 - ✅ Sprint tasks (notifications, bulk actions, A/B testing, security fixes)
 - ✅ Cursor hooks testing system
@@ -41,23 +44,27 @@
 ### Staged Changes (Ready to commit)
 
 **Deleted test-data files:**
+
 - ✅ 23 test-data JSON files fra `server/integrations/chromadb/test-data/`
 - **Status:** ✅ Staged, klar til commit
 
 ### Unstaged Changes (Modified files)
 
 **Commands system cleanup:**
+
 - ⚠️ 100+ commands slettet (flyttet til nye strukturer)
 - ⚠️ Commands metadata opdateret
 - **Status:** ⚠️ Ikke committet - skal organiseres
 
 **Code changes:**
+
 - ⚠️ Mange modificerede filer (client, server, docs)
 - **Status:** ⚠️ Ikke committet - skal organiseres i logiske commits
 
 ### Untracked Files (New files)
 
 **New features:**
+
 - ✅ Subscription system (frontend + backend)
 - ✅ Cursor hooks system
 - ✅ New commands structure
@@ -72,6 +79,7 @@
 ### ✅ Komplet Dokumentation
 
 #### 1. Subscription System
+
 - **Location:** `docs/qa/SUBSCRIPTION_*.md`, `docs/development-notes/subscription/`
 - **Status:** ✅ Komplet
 - **Files:**
@@ -82,6 +90,7 @@
 - **Coverage:** Backend, frontend, testing, setup scripts
 
 #### 2. Hooks System Refactoring
+
 - **Location:** `docs/development-notes/hooks/`
 - **Status:** ✅ Komplet
 - **Files:**
@@ -92,6 +101,7 @@
 - **Coverage:** Refactoring process, issues resolved, remaining TODOs
 
 #### 3. Commands System
+
 - **Location:** `docs/development-notes/commands/`
 - **Status:** ✅ Delvist komplet
 - **Files:**
@@ -99,11 +109,13 @@
 - **Coverage:** Forbedre-command dokumenteret, men nye commands mangler dokumentation
 
 #### 4. Friday Docs System
+
 - **Location:** `docs/development-notes/FRIDAY_DOCS_SYSTEM.md`
 - **Status:** ✅ Komplet
 - **Coverage:** Komplet system dokumentation
 
 #### 5. QA Test Reports
+
 - **Location:** `docs/qa/`
 - **Status:** ✅ Komplet
 - **Files:**
@@ -117,6 +129,7 @@
 ## ⚠️ Manglende Dokumentation
 
 ### 1. Cursor Hooks System
+
 - **Status:** ⚠️ Delvist dokumenteret
 - **Mangler:**
   - Usage guide for nye hooks
@@ -125,6 +138,7 @@
 - **Location:** `.cursor/hooks/` (nye filer)
 
 ### 2. Subscription Frontend Components
+
 - **Status:** ⚠️ Implementeret men mangler usage guide
 - **Mangler:**
   - Component usage examples
@@ -133,6 +147,7 @@
 - **Location:** `client/src/components/subscription/`
 
 ### 3. New Commands Structure
+
 - **Status:** ⚠️ Struktur ændret men mangler dokumentation
 - **Mangler:**
   - Migration guide (gammel → ny struktur)
@@ -141,6 +156,7 @@
 - **Location:** `.cursor/commands/` (nye kategorier)
 
 ### 4. Recent Code Changes
+
 - **Status:** ⚠️ Mange ændringer men mangler changelog
 - **Mangler:**
   - Changelog for recent changes
@@ -156,24 +172,26 @@
 **Problem:** Mange uncommitted changes, svært at se hvad der er lavet
 
 **Løsning:**
+
 1. **Organiser commits i logiske grupper:**
+
    ```bash
    # Subscription system
    git add client/src/components/subscription/ server/subscription-*.ts
    git commit -m "feat(subscription): add frontend components and backend logic"
-   
+
    # Cursor hooks
    git add .cursor/hooks/
    git commit -m "feat(cursor): add hooks system for command execution"
-   
+
    # Commands cleanup
    git add .cursor/commands/
    git commit -m "refactor(commands): reorganize commands into categories"
-   
+
    # Documentation
    git add docs/
    git commit -m "docs: add comprehensive documentation for recent features"
-   
+
    # Test data cleanup
    git commit -m "chore: remove old test-data files"
    ```
@@ -190,6 +208,7 @@
 **Problem:** Nogle features mangler dokumentation
 
 **Løsning:**
+
 1. **Cursor Hooks Usage Guide:**
    - Opret `docs/development-notes/hooks/USAGE_GUIDE.md`
    - Dokumenter alle hooks med eksempler
@@ -209,6 +228,7 @@
 **Problem:** Mangler central changelog for recent changes
 
 **Løsning:**
+
 - Opdater `docs/development-notes/changelog/CHANGELOG.md`
 - Tilføj alle recent features og changes
 
@@ -258,6 +278,7 @@ chore(area): description
 ```
 
 **Eksempler:**
+
 - `feat(subscription): add frontend components and backend logic`
 - `feat(cursor): add hooks system for command execution`
 - `refactor(commands): reorganize commands into categories`
@@ -340,4 +361,3 @@ chore(area): description
 **Status:** ✅ Oversigt oprettet  
 **Næste skridt:** Organiser commits og fill documentation gaps  
 **Last Updated:** 2025-01-28
-

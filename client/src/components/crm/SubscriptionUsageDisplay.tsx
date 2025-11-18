@@ -69,10 +69,13 @@ export function SubscriptionUsageDisplay({
         <div className="flex items-center justify-between">
           <h3 className="font-semibold text-lg">Usage Tracking</h3>
           <span className="text-sm text-muted-foreground">
-            {new Date(currentYear, currentMonth - 1).toLocaleDateString("da-DK", {
-              month: "long",
-              year: "numeric",
-            })}
+            {new Date(currentYear, currentMonth - 1).toLocaleDateString(
+              "da-DK",
+              {
+                month: "long",
+                year: "numeric",
+              }
+            )}
           </span>
         </div>
 
@@ -116,11 +119,12 @@ export function SubscriptionUsageDisplay({
                   Overage Detected
                 </h4>
                 <p className="text-sm text-muted-foreground mb-2">
-                  Kunden har brugt {overageHours.toFixed(1)} timer mere end inkluderet i
-                  abonnementet.
+                  Kunden har brugt {overageHours.toFixed(1)} timer mere end
+                  inkluderet i abonnementet.
                 </p>
                 <div className="text-sm font-medium">
-                  Estimeret ekstra kost: {overageCost.toLocaleString("da-DK")} kr
+                  Estimeret ekstra kost: {overageCost.toLocaleString("da-DK")}{" "}
+                  kr
                 </div>
               </div>
             </div>
@@ -137,8 +141,8 @@ export function SubscriptionUsageDisplay({
                   Nær Overage
                 </h4>
                 <p className="text-sm text-muted-foreground">
-                  Kunden har brugt {Math.round(usagePercentage)}% af inkluderede timer. Overvej
-                  at opgradere plan hvis dette fortsætter.
+                  Kunden har brugt {Math.round(usagePercentage)}% af inkluderede
+                  timer. Overvej at opgradere plan hvis dette fortsætter.
                 </p>
               </div>
             </div>
@@ -173,4 +177,3 @@ export function SubscriptionUsageDisplay({
     </AppleCard>
   );
 }
-

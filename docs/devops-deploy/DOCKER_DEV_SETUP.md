@@ -11,10 +11,12 @@ Docker development setup provides an isolated environment for CRM debugging and 
 ## Architecture
 
 **Hybrid Approach:**
+
 - ✅ **Backend + Database in Docker** - Isolation, consistency, port management
 - ✅ **Frontend Native** - Performance, hot-reload, debugging tools
 
 **Benefits:**
+
 - Port isolation (no conflicts)
 - Consistent environment across team
 - Easy database reset and migration
@@ -97,6 +99,7 @@ GOOGLE_IMPERSONATED_USER=info@rendetalje.dk
 ### Port Configuration
 
 **Default Ports:**
+
 - Backend: `3000`
 - Frontend: `5173` (native)
 - MySQL: `3307` (to avoid conflicts)
@@ -109,7 +112,7 @@ GOOGLE_IMPERSONATED_USER=info@rendetalje.dk
 services:
   backend-dev:
     ports:
-      - "3001:3000"  # Change host port
+      - "3001:3000" # Change host port
 ```
 
 ## Database Setup
@@ -140,6 +143,7 @@ docker-compose -f docker-compose.dev.yml exec backend-dev pnpm db:push
 ### Access Database
 
 **Using Adminer:**
+
 1. Open http://localhost:8081
 2. Server: `db-dev`
 3. Username: `friday_user`
@@ -147,6 +151,7 @@ docker-compose -f docker-compose.dev.yml exec backend-dev pnpm db:push
 5. Database: `friday_ai`
 
 **Using MySQL CLI:**
+
 ```bash
 docker-compose -f docker-compose.dev.yml exec db-dev mysql -u friday_user -pfriday_password friday_ai
 ```
@@ -166,18 +171,21 @@ pnpm dev:vite
 ### 2. Make Code Changes (Live Editing)
 
 **Backend Changes:**
+
 - Edit files in `server/` directory directly
 - Backend auto-reloads (tsx watch detects changes)
 - Changes are reflected immediately
 - Check logs: `docker-compose -f docker-compose.dev.yml logs -f backend-dev`
 
 **Frontend Changes:**
+
 - Edit files in `client/` directory directly
 - Vite HMR (Hot Module Replacement) updates browser automatically
 - No page refresh needed for most changes
 - Check browser console for errors
 
 **Live Fixing:**
+
 - ✅ All volumes are mounted read-write
 - ✅ Changes are detected automatically
 - ✅ No need to restart containers
@@ -186,11 +194,13 @@ pnpm dev:vite
 ### 3. Debug CRM
 
 **Access CRM Standalone:**
+
 ```
 http://localhost:5173/crm-standalone/dashboard
 ```
 
 **Debug Features:**
+
 - Error boundaries catch React errors
 - Network tab shows all tRPC calls
 - React DevTools for component inspection
@@ -212,6 +222,7 @@ docker-compose -f docker-compose.dev.yml down
 **Error:** `Port 3000 is already in use`
 
 **Solution:**
+
 ```bash
 # Find process using port
 netstat -ano | findstr :3000
@@ -227,6 +238,7 @@ taskkill /PID <process_id> /F
 **Error:** `Cannot connect to database`
 
 **Solution:**
+
 ```bash
 # Check database is running
 docker-compose -f docker-compose.dev.yml ps db-dev
@@ -243,6 +255,7 @@ docker-compose -f docker-compose.dev.yml restart db-dev
 **Issue:** Code changes not reflected
 
 **Solution:**
+
 ```bash
 # Check volume mounts
 docker-compose -f docker-compose.dev.yml config
@@ -259,6 +272,7 @@ docker-compose -f docker-compose.dev.yml logs backend-dev
 **Error:** `ERR_CONNECTION_REFUSED` or CORS errors
 
 **Solution:**
+
 1. Verify backend is running: `docker-compose -f docker-compose.dev.yml ps`
 2. Check backend logs: `docker-compose -f docker-compose.dev.yml logs backend-dev`
 3. Verify CORS settings in backend code
@@ -310,6 +324,7 @@ docker-compose -f docker-compose.dev.yml down --rmi all
 ### Docker Development (Backend)
 
 **Pros:**
+
 - ✅ Port isolation
 - ✅ Consistent environment
 - ✅ Easy database reset
@@ -317,6 +332,7 @@ docker-compose -f docker-compose.dev.yml down --rmi all
 - ✅ Team consistency
 
 **Cons:**
+
 - ⚠️ Slower file watching
 - ⚠️ Higher memory usage
 - ⚠️ Docker knowledge required
@@ -324,12 +340,14 @@ docker-compose -f docker-compose.dev.yml down --rmi all
 ### Native Development (Frontend)
 
 **Pros:**
+
 - ✅ Fast hot-reload
 - ✅ Better performance
 - ✅ Native debugging tools
 - ✅ Lower memory usage
 
 **Cons:**
+
 - ⚠️ Port conflicts possible
 - ⚠️ Environment differences
 
@@ -351,6 +369,7 @@ docker-compose -f docker-compose.dev.yml down --rmi all
    - Never commit secrets
 
 4. **Regular Database Backups:**
+
    ```bash
    # Export database
    docker-compose -f docker-compose.dev.yml exec db-dev mysqldump -u friday_user -pfriday_password friday_ai > backup.sql
@@ -370,8 +389,8 @@ docker-compose -f docker-compose.dev.yml down --rmi all
 ## Support
 
 For issues or questions:
+
 1. Check logs: `docker-compose -f docker-compose.dev.yml logs`
 2. Review troubleshooting section
 3. Check GitHub issues
 4. Contact development team
-

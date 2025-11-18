@@ -11,10 +11,10 @@ const LAST_UPDATED = "January 28, 2025";
 
 /**
  * Accessibility Statement Page
- * 
+ *
  * Public-facing page documenting WCAG compliance level,
  * known issues, and contact information for accessibility concerns.
- * 
+ *
  * WCAG 2.1 Level AA target compliance
  */
 export default function AccessibilityStatement() {
@@ -41,13 +41,17 @@ export default function AccessibilityStatement() {
           <CardContent className="space-y-8">
             {/* Introduction */}
             <section aria-labelledby="introduction-heading">
-              <h2 id="introduction-heading" className="text-2xl font-semibold mb-4">
+              <h2
+                id="introduction-heading"
+                className="text-2xl font-semibold mb-4"
+              >
                 Our Commitment
               </h2>
               <p className="text-foreground/90 leading-relaxed mb-4">
-                {APP_TITLE || "Friday AI Chat"} is committed to ensuring digital accessibility for people with
-                disabilities. We are continually improving the user experience for everyone
-                and applying the relevant accessibility standards to achieve these goals.
+                {APP_TITLE || "Friday AI Chat"} is committed to ensuring digital
+                accessibility for people with disabilities. We are continually
+                improving the user experience for everyone and applying the
+                relevant accessibility standards to achieve these goals.
               </p>
               <p className="text-foreground/90 leading-relaxed">
                 We aim to conform to the{" "}
@@ -59,7 +63,10 @@ export default function AccessibilityStatement() {
                   className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                 >
                   Web Content Accessibility Guidelines (WCAG) 2.1
-                  <ExternalLink className="inline-block w-4 h-4 ml-1" aria-hidden="true" />
+                  <ExternalLink
+                    className="inline-block w-4 h-4 ml-1"
+                    aria-hidden="true"
+                  />
                 </a>{" "}
                 at Level AA.
               </p>
@@ -69,7 +76,10 @@ export default function AccessibilityStatement() {
 
             {/* Compliance Status */}
             <section aria-labelledby="compliance-heading">
-              <h2 id="compliance-heading" className="text-2xl font-semibold mb-4">
+              <h2
+                id="compliance-heading"
+                className="text-2xl font-semibold mb-4"
+              >
                 Compliance Status
               </h2>
               <div className="space-y-4">
@@ -80,9 +90,9 @@ export default function AccessibilityStatement() {
                       WCAG 2.1 Level AA
                     </h3>
                     <p className="text-sm text-green-800 dark:text-green-200">
-                      We are actively working towards full compliance with WCAG 2.1 Level
-                      AA standards. Most features are currently compliant, with ongoing
-                      improvements being made.
+                      We are actively working towards full compliance with WCAG
+                      2.1 Level AA standards. Most features are currently
+                      compliant, with ongoing improvements being made.
                     </p>
                   </div>
                 </div>
@@ -123,7 +133,10 @@ export default function AccessibilityStatement() {
 
             {/* Known Issues */}
             <section aria-labelledby="known-issues-heading">
-              <h2 id="known-issues-heading" className="text-2xl font-semibold mb-4">
+              <h2
+                id="known-issues-heading"
+                className="text-2xl font-semibold mb-4"
+              >
                 Known Issues
               </h2>
               <div className="space-y-3">
@@ -134,9 +147,9 @@ export default function AccessibilityStatement() {
                       Color Contrast (Priority: Medium)
                     </h3>
                     <p className="text-sm text-amber-800 dark:text-amber-200">
-                      Some muted text colors may not meet the 4.5:1 contrast ratio
-                      requirement. We are actively reviewing and updating color
-                      combinations to ensure full compliance.
+                      Some muted text colors may not meet the 4.5:1 contrast
+                      ratio requirement. We are actively reviewing and updating
+                      color combinations to ensure full compliance.
                     </p>
                     <Badge variant="outline" className="mt-2">
                       Expected fix: Q2 2025
@@ -151,9 +164,10 @@ export default function AccessibilityStatement() {
                       Third-Party Content
                     </h3>
                     <p className="text-sm text-blue-800 dark:text-blue-200">
-                      Some third-party integrations may not fully comply with accessibility
-                      standards. We work with our partners to improve accessibility, but
-                      cannot guarantee compliance for all external content.
+                      Some third-party integrations may not fully comply with
+                      accessibility standards. We work with our partners to
+                      improve accessibility, but cannot guarantee compliance for
+                      all external content.
                     </p>
                   </div>
                 </div>
@@ -168,8 +182,9 @@ export default function AccessibilityStatement() {
                 Feedback & Contact
               </h2>
               <p className="text-foreground/90 leading-relaxed mb-4">
-                We welcome your feedback on the accessibility of {APP_TITLE || "Friday AI Chat"}. If you
-                encounter accessibility barriers, please let us know:
+                We welcome your feedback on the accessibility of{" "}
+                {APP_TITLE || "Friday AI Chat"}. If you encounter accessibility
+                barriers, please let us know:
               </p>
               <div className="space-y-2">
                 <p className="text-foreground/90">
@@ -186,7 +201,8 @@ export default function AccessibilityStatement() {
                 </p>
               </div>
               <p className="text-sm text-muted-foreground mt-4">
-                We aim to respond to accessibility feedback within 5 business days.
+                We aim to respond to accessibility feedback within 5 business
+                days.
               </p>
             </section>
 
@@ -214,12 +230,16 @@ export default function AccessibilityStatement() {
 
             {/* Standards Reference */}
             <section aria-labelledby="standards-heading">
-              <h2 id="standards-heading" className="text-2xl font-semibold mb-4">
+              <h2
+                id="standards-heading"
+                className="text-2xl font-semibold mb-4"
+              >
                 Standards & Guidelines
               </h2>
               <div className="space-y-3">
                 <p className="text-foreground/90">
-                  This statement is based on the following standards and guidelines:
+                  This statement is based on the following standards and
+                  guidelines:
                 </p>
                 <ul className="space-y-2 text-foreground/90 list-disc list-inside ml-4">
                   <li>
@@ -231,7 +251,10 @@ export default function AccessibilityStatement() {
                       className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                     >
                       WCAG 2.1 Guidelines
-                      <ExternalLink className="inline-block w-4 h-4 ml-1" aria-hidden="true" />
+                      <ExternalLink
+                        className="inline-block w-4 h-4 ml-1"
+                        aria-hidden="true"
+                      />
                     </a>
                   </li>
                   <li>
@@ -243,7 +266,10 @@ export default function AccessibilityStatement() {
                       className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                     >
                       ARIA Authoring Practices Guide
-                      <ExternalLink className="inline-block w-4 h-4 ml-1" aria-hidden="true" />
+                      <ExternalLink
+                        className="inline-block w-4 h-4 ml-1"
+                        aria-hidden="true"
+                      />
                     </a>
                   </li>
                   <li>
@@ -255,7 +281,10 @@ export default function AccessibilityStatement() {
                       className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                     >
                       WebAIM Resources
-                      <ExternalLink className="inline-block w-4 h-4 ml-1" aria-hidden="true" />
+                      <ExternalLink
+                        className="inline-block w-4 h-4 ml-1"
+                        aria-hidden="true"
+                      />
                     </a>
                   </li>
                 </ul>
@@ -270,9 +299,9 @@ export default function AccessibilityStatement() {
                 Updates to This Statement
               </h2>
               <p className="text-foreground/90 leading-relaxed">
-                We will review and update this accessibility statement regularly as we
-                continue to improve accessibility. This statement was last updated on{" "}
-                {LAST_UPDATED}.
+                We will review and update this accessibility statement regularly
+                as we continue to improve accessibility. This statement was last
+                updated on {LAST_UPDATED}.
               </p>
             </section>
           </CardContent>
@@ -281,4 +310,3 @@ export default function AccessibilityStatement() {
     </div>
   );
 }
-

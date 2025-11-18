@@ -33,7 +33,7 @@
 
 ### **Step 1: Commit All Work** (2 min) 🔴 CRITICAL
 
-```bash
+````bash
 git add .
 git commit -m "feat: comprehensive workspace review, critical fixes, and AI test tools research
 
@@ -582,7 +582,7 @@ pnpm db:migrate:dev
    .\scripts\cleanup-phase1.ps1
    .\scripts\organize-test-files.ps1
 
-   ```
+````
 
 1. **Review docs** (10 min)
    - Read FINAL_SESSION_SUMMARY.md

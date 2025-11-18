@@ -60,6 +60,7 @@
 ### Identificerede Duplikationer
 
 **TODO Management (12+ commands):**
+
 - `complete-todo-task.md`
 - `batch-complete-todos.md`
 - `cleanup-completed-todos.md`
@@ -77,6 +78,7 @@
 - `konverter-chat-til-todos.md` ⚠️ DUPLIKAT
 
 **Session Management (15+ commands):**
+
 - `session-engine.md`
 - `session-init.md`
 - `session-progress.md`
@@ -97,6 +99,7 @@
 - `maintain-context.md`
 
 **Chat Context (13+ commands):**
+
 - `laes-chat-samtale.md`
 - `analyser-chat-kontekst.md`
 - `brug-chat-informationer.md`
@@ -114,6 +117,7 @@
 - `laes-chat-fra-database.md`
 
 **Implementation (10+ commands):**
+
 - `implement-feature.md`
 - `implement-feature-fullstack.md`
 - `implement-from-chat-summary.md`
@@ -128,6 +132,7 @@
 - `implement-trpc-router.md`
 
 **Commit (5+ commands):**
+
 - `commit-arbejde.md`
 - `commit-chat-session-changes.md`
 - `commit-only-my-changes.md`
@@ -137,6 +142,7 @@
 - `auto-commit.md`
 
 **Create Component (5+ commands):**
+
 - `create-react-component.md`
 - `create-react-page.md`
 - `create-ui-component.md`
@@ -150,9 +156,11 @@
 ### Commands Med Problemer
 
 **Tomme/Fejlagtige:**
+
 - `fors.md` - 0 bytes (TOM FIL)
 
 **Korte Commands (< 50 lines):**
+
 - `sammenfat-chat-samtale.md` - 45 lines
 - `konverter-chat-til-todos.md` - 46 lines
 - `forklar-kode.md` - 49 lines
@@ -161,6 +169,7 @@
 - `valider-chat-informationer.md` - 50 lines
 
 **Mangler Prompt Engineering Struktur:**
+
 - Mange korte commands mangler fuld struktur
 - Nogle commands har kun TASK, mangler ROLE & CONTEXT
 - Nogle commands mangler TOOL USAGE
@@ -193,12 +202,14 @@
 ### Problemer
 
 **Dansk vs Engelsk:**
+
 - `afslut-session.md` (Dansk)
 - `session-summary.md` (Engelsk)
 - `opdater-todo-status.md` (Dansk)
 - `update-todo-status.md` (Engelsk) ⚠️ DUPLIKAT
 
 **Inconsistent Naming:**
+
 - `create-trpc-procedure.md` vs `implement-trpc-router.md`
 - `fix-bug.md` vs `bug-fix.md`
 - `test-changed-files.md` vs `test-from-chat-summary.md`
@@ -277,4 +288,3 @@
 ---
 
 **Status:** 🔄 UNDER ANALYSE - Vent på godkendelse før implementation
-

@@ -46,7 +46,6 @@
 ```typescript
 import { useDocuments } from "@/hooks/docs/useDocuments";
 trpc.docs.generateLeadDoc.mutate({ leadId });
-
 ```
 
 ---
