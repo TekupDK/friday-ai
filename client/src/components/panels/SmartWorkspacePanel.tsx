@@ -192,7 +192,28 @@ const SmartWorkspacePanel = memo(function SmartWorkspacePanel() {
         context: context.type,
         activeTab: activeTab,
       });
-      // TODO: Send to error tracking service (Sentry, etc.)
+      
+      // Send to Sentry error tracking service (async, non-blocking)
+      import("@sentry/react")
+        .then(Sentry => {
+          Sentry.captureException(error, {
+            contexts: {
+              workspace: {
+                contextType: context.type,
+                activeTab: activeTab,
+                confidence: context.confidence
+              }
+            },
+            tags: {
+              component: "SmartWorkspacePanel",
+              context_type: context.type
+            }
+          });
+        })
+        .catch(sentryError => {
+          // Sentry not available or failed to import - ignore
+          console.warn("[SmartWorkspacePanel] Failed to send error to Sentry:", sentryError);
+        });
 
       // Production-ready error fallback
       return (
