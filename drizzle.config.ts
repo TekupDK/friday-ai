@@ -1,7 +1,8 @@
-import * as dotenv from "dotenv";
-import { defineConfig } from "drizzle-kit";
 import * as fs from "fs";
 import * as path from "path";
+
+import * as dotenv from "dotenv";
+import { defineConfig } from "drizzle-kit";
 
 // Prefer environment provided by caller (dotenv-cli). Fallback to local files if missing.
 if (!process.env.DATABASE_URL) {

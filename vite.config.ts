@@ -1,9 +1,10 @@
+import path from "path";
+
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import path from "path";
-import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig } from "vite";
 
 // React Fast Refresh is enabled by default in @vitejs/plugin-react
 const plugins = [

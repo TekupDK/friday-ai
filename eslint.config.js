@@ -1,10 +1,10 @@
 // Flat ESLint config for ESLint v9+
 // Mirrors previous .eslintrc.cjs settings and adds import boundaries
-import tsParser from "@typescript-eslint/parser";
 import tseslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import importPlugin from "eslint-plugin-import";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
-import importPlugin from "eslint-plugin-import";
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
 export default [
