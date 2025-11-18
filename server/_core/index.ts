@@ -119,8 +119,7 @@ async function startServer() {
   if (ENV.sentryEnabled && ENV.sentryDsn) {
     // In Sentry v10, Express integration is automatically enabled via Sentry.init()
     // Request handler must be first middleware
-    app.use(Sentry.Handlers.requestHandler());
-    app.use(Sentry.Handlers.tracingHandler());
+    app.use(Sentry.setupExpressErrorHandler());
   }
 
   // Security headers via Helmet
