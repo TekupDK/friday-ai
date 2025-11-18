@@ -294,7 +294,9 @@
     "overrides": {
       "tailwindcss>nanoid": "3.3.7",
       "esbuild": "^0.25.12",
-      "debug": ">=4.4.0"
+      "debug": ">=4.4.0",
+      "glob": "^11.1.0",
+      "js-yaml": ">=4.1.1"
     }
   }
 }
