@@ -143,14 +143,18 @@ function parseDate(dateStr: string): Date | null {
   const ddmmyyyy = dateStr.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
   if (ddmmyyyy) {
     const [, day, month, year] = ddmmyyyy;
-    return new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
+    return new Date(
+      `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`
+    );
   }
 
   // Try YYYY-MM-DD
   const yyyymmdd = dateStr.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
   if (yyyymmdd) {
     const [, year, month, day] = yyyymmdd;
-    return new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
+    return new Date(
+      `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`
+    );
   }
 
   return null;
@@ -189,6 +193,8 @@ export function importBankStatement(filePath: string): Transaction[] {
     case "csv":
       return parseCSV(filePath);
     default:
-      throw new Error(`Unsupported file format: ${ext}. Supported: xls, xlsx, csv`);
+      throw new Error(
+        `Unsupported file format: ${ext}. Supported: xls, xlsx, csv`
+      );
   }
 }

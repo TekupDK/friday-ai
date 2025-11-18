@@ -116,7 +116,10 @@ export class GmailClient implements IGmailClient {
 
       return attachments;
     } catch (error: any) {
-      console.error(`Error getting attachments for message ${messageId}:`, error.message);
+      console.error(
+        `Error getting attachments for message ${messageId}:`,
+        error.message
+      );
       throw error;
     }
   }
@@ -150,7 +153,10 @@ export class GmailClient implements IGmailClient {
         snippet: message.data.snippet || "",
       };
     } catch (error: any) {
-      console.error(`Error getting message details for ${messageId}:`, error.message);
+      console.error(
+        `Error getting message details for ${messageId}:`,
+        error.message
+      );
       throw error;
     }
   }

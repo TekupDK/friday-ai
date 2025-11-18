@@ -69,13 +69,19 @@ export function generateSummary(results: MatchResult[]): {
   total: number;
   found: number;
   missing: number;
-  bySupplier: Record<string, { total: number; found: number; missing: number }>;
+  bySupplier: Record<
+    string,
+    { total: number; found: number; missing: number }
+  >;
 } {
   const summary = {
     total: results.length,
     found: 0,
     missing: 0,
-    bySupplier: {} as Record<string, { total: number; found: number; missing: number }>,
+    bySupplier: {} as Record<
+      string,
+      { total: number; found: number; missing: number }
+    >,
   };
 
   for (const result of results) {

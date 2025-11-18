@@ -14,7 +14,11 @@ import {
 import { GmailClient } from "./gmailClient.js";
 import { importBankStatement } from "./bankImport.js";
 import { matchAttachmentsForTransaction } from "./matcher.js";
-import { generateJSONReport, generateCSVReport, generateSummary } from "./report.js";
+import {
+  generateJSONReport,
+  generateCSVReport,
+  generateSummary,
+} from "./report.js";
 import {
   calculateHash,
   loadDedupeCache,
@@ -53,7 +57,9 @@ async function main() {
     let auth: any;
     if (options.authCode) {
       auth = await authorizeWithCode(config, options.authCode);
-      console.log("\n✅ Authorization complete. Run again without --auth-code to process transactions.\n");
+      console.log(
+        "\n✅ Authorization complete. Run again without --auth-code to process transactions.\n"
+      );
       return;
     }
 
@@ -228,8 +234,12 @@ async function main() {
     const summary = generateSummary(results);
     console.log("\n📈 Summary:");
     console.log(`   Total transactions: ${summary.total}`);
-    console.log(`   Found: ${summary.found} (${((summary.found / summary.total) * 100).toFixed(1)}%)`);
-    console.log(`   Missing: ${summary.missing} (${((summary.missing / summary.total) * 100).toFixed(1)}%)`);
+    console.log(
+      `   Found: ${summary.found} (${((summary.found / summary.total) * 100).toFixed(1)}%)`
+    );
+    console.log(
+      `   Missing: ${summary.missing} (${((summary.missing / summary.total) * 100).toFixed(1)}%)`
+    );
 
     console.log("\n📦 By Supplier:");
     for (const [supplier, stats] of Object.entries(summary.bySupplier)) {

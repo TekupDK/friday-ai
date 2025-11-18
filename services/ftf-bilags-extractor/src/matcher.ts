@@ -18,7 +18,12 @@ import { GmailClient as GmailClientImpl } from "./gmailClient.js";
 function calculateMatchScore(
   transaction: Transaction,
   attachment: GmailMessageAttachment,
-  messageDetails: { subject: string; from: string; date: string; snippet: string }
+  messageDetails: {
+    subject: string;
+    from: string;
+    date: string;
+    snippet: string;
+  }
 ): number {
   let score = 0;
 
@@ -48,9 +53,11 @@ function calculateMatchScore(
   try {
     const transactionDate = new Date(transaction.date);
     const messageDate = new Date(messageDetails.date);
-    const daysDiff = Math.abs(
-      (transactionDate.getTime() - messageDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
+    const daysDiff =
+      Math.abs(
+        (transactionDate.getTime() - messageDate.getTime()) /
+          (1000 * 60 * 60 * 24)
+      );
 
     if (daysDiff <= 7) {
       score += 0.3 - (daysDiff / 7) * 0.1; // Decay with distance
@@ -125,7 +132,11 @@ export async function matchAttachmentsForTransaction(
           continue;
         }
 
-        const matchScore = calculateMatchScore(transaction, attachment, messageDetails);
+        const matchScore = calculateMatchScore(
+          transaction,
+          attachment,
+          messageDetails
+        );
 
         // Only include matches with score > 0.3
         if (matchScore > 0.3) {
