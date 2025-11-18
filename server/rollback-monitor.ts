@@ -185,7 +185,7 @@ async function evaluateRollbackConditions(
 
   // Check rollout config thresholds
   const chatPhase = getCurrentRolloutPhase("chat_flow");
-  if (chatPhase && shouldTriggerRollback("chat_flow")) {
+  if (chatPhase && (await shouldTriggerRollback("chat_flow"))) {
     return { should: true, reason: "manual_trigger" };
   }
 

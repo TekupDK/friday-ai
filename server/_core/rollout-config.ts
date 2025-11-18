@@ -265,31 +265,62 @@ function getNextPhaseDate(
 /**
  * Check if rollback should be triggered
  */
-export function shouldTriggerRollback(
+export async function shouldTriggerRollback(
   feature: "chat_flow" | "streaming"
-): boolean {
+): Promise<boolean> {
+  const { logger } = await import("./logger");
   const phase = getCurrentRolloutPhase(feature);
   if (!phase) return false;
 
   // Check emergency rollback conditions
   const emergencyRollback = process.env.EMERGENCY_ROLLBACK === "true";
   if (emergencyRollback) {
-    // ✅ SECURITY FIX: Use logger instead of console.warn
-    // Use dynamic import synchronously (logger is already available)
-    import("./logger").then(({ logger }) => {
-      logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
-    }).catch(() => {
-      // Fallback if logger import fails - use logger import again as last resort
-      import("./logger").then(({ logger }) => {
-        logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
-      });
-    });
+    logger.warn({ feature }, "[Rollout] Emergency rollback triggered");
     return true;
   }
 
-  // TODO: Check actual metrics against rollback triggers
-  // For now, return false
-  return false;
+  // Check actual metrics against rollback triggers
+  try {
+    const { getMetricsSummary } = await import("../ai-metrics");
+    const metrics = getMetricsSummary(60); // Last 60 minutes
+
+    const triggers = phase.rollbackTriggers;
+
+    // Check error rate threshold
+    if (metrics.errorRate > triggers.errorRateThreshold) {
+      logger.warn(
+        {
+          feature,
+          errorRate: metrics.errorRate,
+          threshold: triggers.errorRateThreshold,
+        },
+        "[Rollout] Error rate threshold exceeded - triggering rollback"
+      );
+      return true;
+    }
+
+    // Check response time threshold (P95)
+    if (metrics.p95ResponseTime > triggers.responseTimeThreshold) {
+      logger.warn(
+        {
+          feature,
+          p95ResponseTime: metrics.p95ResponseTime,
+          threshold: triggers.responseTimeThreshold,
+        },
+        "[Rollout] Response time threshold exceeded - triggering rollback"
+      );
+      return true;
+    }
+
+    // All metrics within acceptable ranges
+    return false;
+  } catch (error) {
+    logger.error(
+      { feature, error },
+      "[Rollout] Error checking rollback triggers - defaulting to no rollback"
+    );
+    return false;
+  }
 }
 
 /**
