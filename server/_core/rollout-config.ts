@@ -189,9 +189,13 @@ export function getCurrentRolloutPhase(
 /**
  * Get rollout status for monitoring
  */
-export function getRolloutStatus(): Record<string, RolloutStatus> {
+export async function getRolloutStatus(): Promise<Record<string, RolloutStatus>> {
   const now = new Date();
   const status: Record<string, RolloutStatus> = {};
+
+  // Get metrics from monitoring system
+  const { getMetricsSummary } = await import("../ai-metrics");
+  const metricsSummary = getMetricsSummary(60); // Last 60 minutes
 
   // Chat flow status
   const chatPhase = getCurrentRolloutPhase("chat_flow");
@@ -203,10 +207,10 @@ export function getRolloutStatus(): Record<string, RolloutStatus> {
       canRollback: true,
       emergencyRollback: false,
       metrics: {
-        errorRate: 0, // TODO: Get from monitoring
-        avgResponseTime: 0,
-        satisfactionScore: 0,
-        userCount: 0,
+        errorRate: metricsSummary.errorRate || 0,
+        avgResponseTime: metricsSummary.avgResponseTime || 0,
+        satisfactionScore: 0, // Not tracked in AI metrics
+        userCount: metricsSummary.totalRequests || 0,
       },
       nextPhaseDate: getNextPhaseDate("chat_flow"),
     };
@@ -222,10 +226,10 @@ export function getRolloutStatus(): Record<string, RolloutStatus> {
       canRollback: true,
       emergencyRollback: false,
       metrics: {
-        errorRate: 0,
-        avgResponseTime: 0,
-        satisfactionScore: 0,
-        userCount: 0,
+        errorRate: metricsSummary.errorRate || 0,
+        avgResponseTime: metricsSummary.avgResponseTime || 0,
+        satisfactionScore: 0, // Not tracked in AI metrics
+        userCount: metricsSummary.totalRequests || 0,
       },
       nextPhaseDate: getNextPhaseDate("streaming"),
     };
@@ -390,11 +394,11 @@ export async function setManualRolloutOverride(
 /**
  * Get all rollout configurations
  */
-export function getRolloutConfigurations() {
+export async function getRolloutConfigurations() {
   return {
     chat_flow: CHAT_FLOW_ROLLOUT_PHASES,
     streaming: STREAMING_ROLLOUT_PHASES,
-    current_status: getRolloutStatus(),
+    current_status: await getRolloutStatus(),
     ab_tests: getABTestStatus(),
   };
 }
