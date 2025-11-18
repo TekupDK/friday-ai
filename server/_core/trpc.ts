@@ -4,6 +4,9 @@ import superjson from "superjson";
 import {
   createRateLimitMiddleware,
   INBOX_CRM_RATE_LIMIT,
+  STATS_RATE_LIMIT,
+  EXPORT_RATE_LIMIT,
+  BULK_OPERATION_RATE_LIMIT,
 } from "../rate-limit-middleware";
 
 import type { TrpcContext } from "./context";
@@ -202,4 +205,28 @@ export const ownerProcedure = roleProcedure("owner");
  */
 export const rateLimitedProcedure = protectedProcedure.use(
   createRateLimitMiddleware(INBOX_CRM_RATE_LIMIT, "inbox-crm")
+);
+
+/**
+ * Rate-limited procedure for expensive stats/aggregation queries
+ * Limits: 20 requests per 15 minutes per user
+ */
+export const statsRateLimitedProcedure = protectedProcedure.use(
+  createRateLimitMiddleware(STATS_RATE_LIMIT, "crm-stats")
+);
+
+/**
+ * Rate-limited procedure for export operations
+ * Limits: 10 requests per 15 minutes per user
+ */
+export const exportRateLimitedProcedure = protectedProcedure.use(
+  createRateLimitMiddleware(EXPORT_RATE_LIMIT, "crm-export")
+);
+
+/**
+ * Rate-limited procedure for bulk/pipeline operations
+ * Limits: 30 requests per 15 minutes per user
+ */
+export const bulkOperationRateLimitedProcedure = protectedProcedure.use(
+  createRateLimitMiddleware(BULK_OPERATION_RATE_LIMIT, "crm-bulk")
 );

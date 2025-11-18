@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { protectedProcedure, router } from "../../_core/trpc";
+import { bulkOperationRateLimitedProcedure, protectedProcedure, router } from "../../_core/trpc";
 import {
   bulkDeleteTasks,
   bulkUpdateTaskOrder,
@@ -81,7 +81,8 @@ export const tasksRouter = router({
       await deleteTask(input.taskId);
       return { success: true };
     }),
-  bulkDelete: protectedProcedure
+  // ✅ SECURITY: Rate limited bulk operation - 30 requests per 15 minutes
+  bulkDelete: bulkOperationRateLimitedProcedure
     .input(z.object({ taskIds: z.array(z.number()) }))
     .mutation(async ({ ctx, input }) => {
       const userTasks = await getUserTasks(ctx.user.id);
@@ -94,7 +95,8 @@ export const tasksRouter = router({
       const count = await bulkDeleteTasks(validIds);
       return { success: true, deletedCount: count };
     }),
-  bulkUpdateStatus: protectedProcedure
+  // ✅ SECURITY: Rate limited bulk operation - 30 requests per 15 minutes
+  bulkUpdateStatus: bulkOperationRateLimitedProcedure
     .input(
       z.object({
         taskIds: z.array(z.number()),
@@ -112,7 +114,8 @@ export const tasksRouter = router({
       const count = await bulkUpdateTaskStatus(validIds, input.status);
       return { success: true, updatedCount: count };
     }),
-  bulkUpdatePriority: protectedProcedure
+  // ✅ SECURITY: Rate limited bulk operation - 30 requests per 15 minutes
+  bulkUpdatePriority: bulkOperationRateLimitedProcedure
     .input(
       z.object({
         taskIds: z.array(z.number()),
@@ -145,7 +148,8 @@ export const tasksRouter = router({
       await updateTaskOrder(input.taskId, input.orderIndex);
       return { success: true };
     }),
-  bulkUpdateOrder: protectedProcedure
+  // ✅ SECURITY: Rate limited bulk operation - 30 requests per 15 minutes
+  bulkUpdateOrder: bulkOperationRateLimitedProcedure
     .input(
       z.array(
         z.object({
