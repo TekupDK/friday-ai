@@ -526,6 +526,7 @@ export const crmExtensionsRouter = router({
 
   /**
    * List all segments for user
+   * ✅ PERFORMANCE: Single query with LEFT JOIN instead of N+1 queries
    */
   listSegments: protectedProcedure.query(async ({ ctx }) => {
     const db = await getDb();
@@ -538,28 +539,28 @@ export const crmExtensionsRouter = router({
 
     const userId = ctx.user.id;
 
-    const segments = await db
-      .select()
-      .from(customerSegments)
-      .where(eq(customerSegments.userId, userId))
-      .orderBy(desc(customerSegments.createdAt));
-
-    // Get member counts for each segment
-    const segmentsWithCounts = await Promise.all(
-      segments.map(async segment => {
-        const [countResult] = await db
-          .select({
-            count: sql<number>`cast(count(*) as integer)`,
-          })
-          .from(customerSegmentMembers)
-          .where(eq(customerSegmentMembers.segmentId, segment.id));
-
-        return {
-          ...segment,
-          memberCount: countResult?.count || 0,
-        };
+    // Single query with LEFT JOIN and GROUP BY to get member counts
+    // This replaces N+1 queries (1 for segments + N for each segment's count)
+    const segmentsWithCounts = await db
+      .select({
+        id: customerSegments.id,
+        userId: customerSegments.userId,
+        name: customerSegments.name,
+        type: customerSegments.type,
+        rules: customerSegments.rules,
+        color: customerSegments.color,
+        createdAt: customerSegments.createdAt,
+        updatedAt: customerSegments.updatedAt,
+        memberCount: sql<number>`cast(count(${customerSegmentMembers.customerId}) as integer)`,
       })
-    );
+      .from(customerSegments)
+      .leftJoin(
+        customerSegmentMembers,
+        eq(customerSegments.id, customerSegmentMembers.segmentId)
+      )
+      .where(eq(customerSegments.userId, userId))
+      .groupBy(customerSegments.id)
+      .orderBy(desc(customerSegments.createdAt));
 
     return segmentsWithCounts;
   }),

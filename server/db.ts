@@ -166,30 +166,28 @@ export async function getUserConversations(
   const db = await getDb();
   if (!db) return [];
 
-  const conversationsList = await db
-    .select()
+  // ✅ PERFORMANCE: Use subquery to get last message in single query
+  // This replaces N+1 queries (1 for conversations + N for each conversation's last message)
+  const conversationsWithLastMessage = await db
+    .select({
+      id: conversations.id,
+      userId: conversations.userId,
+      title: conversations.title,
+      createdAt: conversations.createdAt,
+      updatedAt: conversations.updatedAt,
+      lastMessage: sql<string | null>`(
+        SELECT substring(content, 1, 40)
+        FROM ${messages}
+        WHERE ${messages.conversationId} = ${conversations.id}
+        ORDER BY ${messages.createdAt} DESC
+        LIMIT 1
+      )`,
+    })
     .from(conversations)
     .where(eq(conversations.userId, userId))
     .orderBy(desc(conversations.updatedAt));
 
-  // Fetch last message for each conversation
-  const conversationsWithLastMessage = await Promise.all(
-    conversationsList.map(async conv => {
-      const lastMsg = await db
-        .select()
-        .from(messages)
-        .where(eq(messages.conversationId, conv.id))
-        .orderBy(desc(messages.createdAt))
-        .limit(1);
-
-      return {
-        ...conv,
-        lastMessage: lastMsg[0]?.content?.substring(0, 40) || undefined,
-      };
-    })
-  );
-
-  return conversationsWithLastMessage;
+  return conversationsWithLastMessage as (Conversation & { lastMessage?: string })[];
 }
 
 export async function getConversation(
