@@ -3,7 +3,6 @@
  * Provides real-time streaming to frontend with proper error handling
  */
 
-import { invokeLLM, streamResponse } from "./llm";
 import { getFeatureFlags } from "./feature-flags";
 
 export interface StreamEvent {

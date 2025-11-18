@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
 import { z } from "zod";
-import { withDatabaseErrorHandling } from "../_core/error-handling";
+
 import {
   auditLog,
   customerDocuments,
@@ -11,9 +11,10 @@ import {
   customerSegments,
   opportunities,
 } from "../../drizzle/schema";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
 import { protectedProcedure, router } from "../_core/trpc";
-import { getDb } from "../db";
 import { validationSchemas } from "../_core/validation";
+import { getDb } from "../db";
 
 /**
  * CRM Extensions Router - Phase 2-6
@@ -46,9 +47,9 @@ export const crmExtensionsRouter = router({
           .default("lead"),
         value: z.number().int().min(0).optional(),
         probability: z.number().int().min(0).max(100).optional(),
-        expectedCloseDate: z.string().datetime().optional(),
-        nextSteps: z.string().optional(),
-        metadata: z.record(z.string(), z.any()).optional(),
+        expectedCloseDate: validationSchemas.dateTime.optional(),
+        nextSteps: validationSchemas.shortText.optional(),
+        metadata: z.record(z.string().max(100), z.any()).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -133,7 +134,9 @@ export const crmExtensionsRouter = router({
       const conditions = [eq(opportunities.userId, userId)];
 
       if (input.customerProfileId !== undefined) {
-        conditions.push(eq(opportunities.customerProfileId, input.customerProfileId));
+        conditions.push(
+          eq(opportunities.customerProfileId, input.customerProfileId)
+        );
       }
 
       if (input.stage !== undefined) {
@@ -148,21 +151,19 @@ export const crmExtensionsRouter = router({
         conditions.push(lte(opportunities.value, input.maxValue));
       }
 
-      const whereClause = conditions.length === 1 ? conditions[0] : and(...conditions);
+      const whereClause =
+        conditions.length === 1 ? conditions[0] : and(...conditions);
 
       // ✅ ERROR HANDLING: Wrap database query with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          return await db
-            .select()
-            .from(opportunities)
-            .where(whereClause)
-            .orderBy(desc(opportunities.updatedAt))
-            .limit(input.limit)
-            .offset(input.offset);
-        },
-        "Failed to list opportunities"
-      );
+      return await withDatabaseErrorHandling(async () => {
+        return await db
+          .select()
+          .from(opportunities)
+          .where(whereClause)
+          .orderBy(desc(opportunities.updatedAt))
+          .limit(input.limit)
+          .offset(input.offset);
+      }, "Failed to list opportunities");
     }),
 
   /**
@@ -172,19 +173,19 @@ export const crmExtensionsRouter = router({
     .input(
       z.object({
         id: z.number(),
-        title: z.string().min(1).max(500).optional(),
-        description: z.string().optional(),
+        title: validationSchemas.title.optional(),
+        description: validationSchemas.description,
         stage: z
           .enum(["lead", "qualified", "proposal", "negotiation", "won", "lost"])
           .optional(),
-        value: z.number().int().min(0).optional(),
+        value: validationSchemas.amount.optional(),
         probability: z.number().int().min(0).max(100).optional(),
-        expectedCloseDate: z.string().datetime().optional(),
-        actualCloseDate: z.string().datetime().optional(),
-        wonReason: z.string().optional(),
-        lostReason: z.string().optional(),
-        nextSteps: z.string().optional(),
-        metadata: z.record(z.string(), z.any()).optional(),
+        expectedCloseDate: validationSchemas.dateTime.optional(),
+        actualCloseDate: validationSchemas.dateTime.optional(),
+        wonReason: validationSchemas.wonReason,
+        lostReason: validationSchemas.lostReason,
+        nextSteps: validationSchemas.shortText.optional(),
+        metadata: z.record(z.string().max(100), z.any()).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -251,28 +252,30 @@ export const crmExtensionsRouter = router({
       const userId = ctx.user.id;
 
       // ✅ ERROR HANDLING: Wrap database operations with error handling
-      return await withDatabaseErrorHandling(
-        async () => {
-          // Verify ownership
-          const [existing] = await db
-            .select()
-            .from(opportunities)
-            .where(and(eq(opportunities.id, input.id), eq(opportunities.userId, userId)))
-            .limit(1);
+      return await withDatabaseErrorHandling(async () => {
+        // Verify ownership
+        const [existing] = await db
+          .select()
+          .from(opportunities)
+          .where(
+            and(
+              eq(opportunities.id, input.id),
+              eq(opportunities.userId, userId)
+            )
+          )
+          .limit(1);
 
-          if (!existing) {
-            throw new TRPCError({
-              code: "NOT_FOUND",
-              message: "Opportunity not found",
-            });
-          }
+        if (!existing) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Opportunity not found",
+          });
+        }
 
-          await db.delete(opportunities).where(eq(opportunities.id, input.id));
+        await db.delete(opportunities).where(eq(opportunities.id, input.id));
 
-          return { success: true };
-        },
-        "Failed to delete opportunity"
-      );
+        return { success: true };
+      }, "Failed to delete opportunity");
     }),
 
   /**
@@ -290,21 +293,18 @@ export const crmExtensionsRouter = router({
     const userId = ctx.user.id;
 
     // ✅ ERROR HANDLING: Wrap database query with error handling
-    return await withDatabaseErrorHandling(
-      async () => {
-        return await db
-          .select({
-            stage: opportunities.stage,
-            count: sql<number>`cast(count(*) as integer)`,
-            totalValue: sql<number>`cast(sum(coalesce(${opportunities.value}, 0)) as integer)`,
-            avgProbability: sql<number>`cast(avg(coalesce(${opportunities.probability}, 0)) as integer)`,
-          })
-          .from(opportunities)
-          .where(eq(opportunities.userId, userId))
-          .groupBy(opportunities.stage);
-      },
-      "Failed to get pipeline statistics"
-    );
+    return await withDatabaseErrorHandling(async () => {
+      return await db
+        .select({
+          stage: opportunities.stage,
+          count: sql<number>`cast(count(*) as integer)`,
+          totalValue: sql<number>`cast(sum(coalesce(${opportunities.value}, 0)) as integer)`,
+          avgProbability: sql<number>`cast(avg(coalesce(${opportunities.probability}, 0)) as integer)`,
+        })
+        .from(opportunities)
+        .where(eq(opportunities.userId, userId))
+        .groupBy(opportunities.stage);
+    }, "Failed to get pipeline statistics");
   }),
 
   /**
@@ -322,25 +322,22 @@ export const crmExtensionsRouter = router({
     const userId = ctx.user.id;
 
     // ✅ ERROR HANDLING: Wrap database query with error handling
-    const forecast = await withDatabaseErrorHandling(
-      async () => {
-        const [result] = await db
-          .select({
-            totalValue: sql<number>`cast(sum(coalesce(${opportunities.value}, 0)) as integer)`,
-            weightedValue: sql<number>`cast(sum(coalesce(${opportunities.value}, 0) * coalesce(${opportunities.probability}, 0) / 100.0) as integer)`,
-            count: sql<number>`cast(count(*) as integer)`,
-          })
-          .from(opportunities)
-          .where(
-            and(
-              eq(opportunities.userId, userId),
-              sql`${opportunities.stage} NOT IN ('won', 'lost')`
-            )
-          );
-        return result;
-      },
-      "Failed to get revenue forecast"
-    );
+    const forecast = await withDatabaseErrorHandling(async () => {
+      const [result] = await db
+        .select({
+          totalValue: sql<number>`cast(sum(coalesce(${opportunities.value}, 0)) as integer)`,
+          weightedValue: sql<number>`cast(sum(coalesce(${opportunities.value}, 0) * coalesce(${opportunities.probability}, 0) / 100.0) as integer)`,
+          count: sql<number>`cast(count(*) as integer)`,
+        })
+        .from(opportunities)
+        .where(
+          and(
+            eq(opportunities.userId, userId),
+            sql`${opportunities.stage} NOT IN ('won', 'lost')`
+          )
+        );
+      return result;
+    }, "Failed to get revenue forecast");
 
     return {
       totalValue: forecast?.totalValue || 0,
@@ -359,11 +356,11 @@ export const crmExtensionsRouter = router({
   createSegment: protectedProcedure
     .input(
       z.object({
-        name: z.string().min(1).max(255),
-        description: z.string().optional(),
+        name: validationSchemas.name,
+        description: validationSchemas.description,
         type: z.enum(["manual", "automatic"]).default("manual"),
-        rules: z.record(z.string(), z.any()).optional(), // For automatic: { healthScore: { lt: 50 } }
-        color: z.string().optional(), // UI color hex
+        rules: z.record(z.string().max(100), z.any()).optional(), // For automatic: { healthScore: { lt: 50 } }
+        color: validationSchemas.color,
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -393,6 +390,137 @@ export const crmExtensionsRouter = router({
     }),
 
   /**
+   * Update a segment
+   */
+  updateSegment: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        name: validationSchemas.name.optional(),
+        description: validationSchemas.description.optional(),
+        type: z.enum(["manual", "automatic"]).optional(),
+        rules: z.record(z.string().max(100), z.any()).optional(),
+        color: validationSchemas.color.optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database connection failed",
+        });
+      }
+
+      const userId = ctx.user.id;
+
+      // Verify segment ownership
+      const [existing] = await db
+        .select()
+        .from(customerSegments)
+        .where(
+          and(
+            eq(customerSegments.id, input.id),
+            eq(customerSegments.userId, userId)
+          )
+        )
+        .limit(1);
+
+      if (!existing) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Segment not found",
+        });
+      }
+
+      // Build update object with only provided fields
+      const updateData: {
+        name?: string;
+        description?: string | null;
+        type?: "manual" | "automatic";
+        rules?: Record<string, any> | null;
+        color?: string | null;
+      } = {};
+
+      if (input.name !== undefined) {
+        updateData.name = input.name;
+      }
+      if (input.description !== undefined) {
+        updateData.description = input.description ?? null;
+      }
+      if (input.type !== undefined) {
+        updateData.type = input.type;
+      }
+      if (input.rules !== undefined) {
+        updateData.rules = input.rules ?? null;
+      }
+      if (input.color !== undefined) {
+        updateData.color = input.color ?? null;
+      }
+
+      const [updated] = await db
+        .update(customerSegments)
+        .set(updateData)
+        .where(
+          and(
+            eq(customerSegments.id, input.id),
+            eq(customerSegments.userId, userId)
+          )
+        )
+        .returning();
+
+      return updated;
+    }),
+
+  /**
+   * Delete a segment
+   */
+  deleteSegment: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database connection failed",
+        });
+      }
+
+      const userId = ctx.user.id;
+
+      // Verify segment ownership
+      const [segment] = await db
+        .select()
+        .from(customerSegments)
+        .where(
+          and(
+            eq(customerSegments.id, input.id),
+            eq(customerSegments.userId, userId)
+          )
+        )
+        .limit(1);
+
+      if (!segment) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Segment not found",
+        });
+      }
+
+      // Delete segment members first (cascade)
+      await db
+        .delete(customerSegmentMembers)
+        .where(eq(customerSegmentMembers.segmentId, input.id));
+
+      // Delete segment
+      await db
+        .delete(customerSegments)
+        .where(eq(customerSegments.id, input.id));
+
+      return { success: true };
+    }),
+
+  /**
    * List all segments for user
    */
   listSegments: protectedProcedure.query(async ({ ctx }) => {
@@ -414,7 +542,7 @@ export const crmExtensionsRouter = router({
 
     // Get member counts for each segment
     const segmentsWithCounts = await Promise.all(
-      segments.map(async (segment) => {
+      segments.map(async segment => {
         const [countResult] = await db
           .select({
             count: sql<number>`cast(count(*) as integer)`,
@@ -491,7 +619,7 @@ export const crmExtensionsRouter = router({
       }
 
       // Insert members (ignore duplicates)
-      const members = input.customerProfileIds.map((customerId) => ({
+      const members = input.customerProfileIds.map(customerId => ({
         segmentId: input.segmentId,
         customerProfileId: customerId,
       }));
@@ -503,16 +631,19 @@ export const crmExtensionsRouter = router({
         .where(
           and(
             eq(customerSegmentMembers.segmentId, input.segmentId),
-            inArray(customerSegmentMembers.customerProfileId, input.customerProfileIds)
+            inArray(
+              customerSegmentMembers.customerProfileId,
+              input.customerProfileIds
+            )
           )
         );
 
       const existingIds = new Set(
-        existing.map((e) => `${e.segmentId}-${e.customerProfileId}`)
+        existing.map(e => `${e.segmentId}-${e.customerProfileId}`)
       );
 
       const newMembers = members.filter(
-        (m) => !existingIds.has(`${m.segmentId}-${m.customerProfileId}`)
+        m => !existingIds.has(`${m.segmentId}-${m.customerProfileId}`)
       );
 
       if (newMembers.length > 0) {
@@ -571,7 +702,10 @@ export const crmExtensionsRouter = router({
         .where(
           and(
             eq(customerSegmentMembers.segmentId, input.segmentId),
-            inArray(customerSegmentMembers.customerProfileId, input.customerProfileIds)
+            inArray(
+              customerSegmentMembers.customerProfileId,
+              input.customerProfileIds
+            )
           )
         );
 
@@ -651,13 +785,13 @@ export const crmExtensionsRouter = router({
     .input(
       z.object({
         customerProfileId: z.number(),
-        filename: z.string().min(1),
-        storageUrl: z.string().url(),
+        filename: validationSchemas.filename,
+        storageUrl: validationSchemas.storageUrl,
         filesize: z.number().int().min(0).optional(),
-        mimeType: z.string().optional(),
-        category: z.string().optional(), // contract, invoice, photo, other
-        description: z.string().optional(),
-        tags: z.array(z.string()).optional(),
+        mimeType: validationSchemas.mimeType,
+        category: validationSchemas.category,
+        description: validationSchemas.description,
+        tags: z.array(z.string().max(100)).max(50).optional(),
         version: z.number().int().min(1).optional().default(1),
       })
     )
@@ -717,7 +851,7 @@ export const crmExtensionsRouter = router({
     .input(
       z.object({
         customerProfileId: z.number(),
-        category: z.string().optional(),
+        category: validationSchemas.category,
         limit: z.number().min(1).max(100).optional().default(50),
         offset: z.number().min(0).optional().default(0),
       })
@@ -793,7 +927,10 @@ export const crmExtensionsRouter = router({
         .select()
         .from(customerDocuments)
         .where(
-          and(eq(customerDocuments.id, input.id), eq(customerDocuments.userId, userId))
+          and(
+            eq(customerDocuments.id, input.id),
+            eq(customerDocuments.userId, userId)
+          )
         )
         .limit(1);
 
@@ -804,7 +941,9 @@ export const crmExtensionsRouter = router({
         });
       }
 
-      await db.delete(customerDocuments).where(eq(customerDocuments.id, input.id));
+      await db
+        .delete(customerDocuments)
+        .where(eq(customerDocuments.id, input.id));
 
       return { success: true, storageUrl: existing.storageUrl };
     }),
@@ -819,12 +958,12 @@ export const crmExtensionsRouter = router({
   logAudit: protectedProcedure
     .input(
       z.object({
-        entityType: z.string().min(1), // customer, opportunity, document, etc.
+        entityType: validationSchemas.entityType,
         entityId: z.number(),
-        action: z.string().min(1), // created, updated, deleted, exported, consent_given, consent_revoked
-        changes: z.record(z.string(), z.any()).optional(), // { field: { old: "value1", new: "value2" } }
-        ipAddress: z.string().optional(),
-        userAgent: z.string().optional(),
+        action: validationSchemas.action,
+        changes: z.record(z.string().max(100), z.any()).optional(), // { field: { old: "value1", new: "value2" } }
+        ipAddress: validationSchemas.ipAddress,
+        userAgent: validationSchemas.userAgent,
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -860,9 +999,9 @@ export const crmExtensionsRouter = router({
   getAuditLog: protectedProcedure
     .input(
       z.object({
-        entityType: z.string().optional(),
+        entityType: validationSchemas.entityType.optional(),
         entityId: z.number().optional(),
-        action: z.string().optional(),
+        action: validationSchemas.action.optional(),
         limit: z.number().min(1).max(100).optional().default(50),
         offset: z.number().min(0).optional().default(0),
       })
@@ -892,7 +1031,8 @@ export const crmExtensionsRouter = router({
         conditions.push(eq(auditLog.action, input.action));
       }
 
-      const whereClause = conditions.length === 1 ? conditions[0] : and(...conditions);
+      const whereClause =
+        conditions.length === 1 ? conditions[0] : and(...conditions);
 
       const entries = await db
         .select()
@@ -917,8 +1057,8 @@ export const crmExtensionsRouter = router({
       z.object({
         customerProfileId: z.number(),
         relatedCustomerProfileId: z.number(),
-        relationshipType: z.string().min(1), // parent_company, subsidiary, referrer, referred_by, partner, competitor
-        description: z.string().optional(),
+        relationshipType: validationSchemas.relationshipType,
+        description: validationSchemas.description,
         strength: z.number().int().min(1).max(10).optional(),
       })
     )
@@ -983,7 +1123,7 @@ export const crmExtensionsRouter = router({
     .input(
       z.object({
         customerProfileId: z.number(),
-        relationshipType: z.string().optional(),
+        relationshipType: validationSchemas.relationshipType.optional(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -1022,10 +1162,13 @@ export const crmExtensionsRouter = router({
       ];
 
       if (input.relationshipType) {
-        conditions.push(eq(customerRelationships.relationshipType, input.relationshipType));
+        conditions.push(
+          eq(customerRelationships.relationshipType, input.relationshipType)
+        );
       }
 
-      const whereClause = conditions.length === 1 ? conditions[0] : and(...conditions);
+      const whereClause =
+        conditions.length === 1 ? conditions[0] : and(...conditions);
 
       const relationships = await db
         .select({

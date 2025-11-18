@@ -191,7 +191,10 @@ export async function recordTestMetrics(
   } catch (error) {
     // ✅ SECURITY FIX: Use logger instead of console.error
     const { logger } = await import("../_core/logger");
-    logger.error({ err: error }, "[A/B Testing] Failed to record A/B test metrics");
+    logger.error(
+      { err: error },
+      "[A/B Testing] Failed to record A/B test metrics"
+    );
   }
 }
 
@@ -214,7 +217,7 @@ export async function calculateTestResults(
   if (db) {
     try {
       const { logger } = await import("../_core/logger");
-      
+
       // Fetch metrics from last 7 days
       const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
       const metrics = await db

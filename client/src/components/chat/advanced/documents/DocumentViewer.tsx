@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { sanitizeHtml } from "@/lib/sanitize";
 import {
   FileText,
   Image,
@@ -367,7 +368,8 @@ export function DocumentViewer({
                 transformOrigin: "center",
                 transition: "transform 0.2s ease-in-out",
               }}
-              dangerouslySetInnerHTML={{ __html: content }}
+              // ✅ SECURITY FIX: Sanitize content before rendering to prevent XSS
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
             />
           </ScrollArea>
         ) : (

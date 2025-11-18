@@ -18,10 +18,10 @@ This folder contains documentation for CRM features, lead management, and busine
 
 ## 🔗 Related Documentation
 
-- [Customer Profile Features](../CUSTOMER_PROFILE_CRM_FEATURES.md)
+- [Customer Profile Features](../features/implementation/CUSTOMER_PROFILE_CRM_FEATURES.md)
 
-- [CRM Live Status](../CRM_LIVE_STATUS.md)
+- [CRM Live Status](./phases/CRM_LIVE_STATUS.md)
 
-- [Email Pipeline Board](../EMAIL_PIPELINE_BOARD_COMPLETE.md)
+- [Email Pipeline Board](../status-reports/feature-status/EMAIL_PIPELINE_BOARD_COMPLETE.md)
 
 - [Main Documentation Index](../README.md)

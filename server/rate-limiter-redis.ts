@@ -9,7 +9,7 @@ import { logger } from "./logger";
 // Initialize Redis client (will use env vars)
 let redis: Redis | null = null;
 
-function getRedisClient(): Redis {
+export function getRedisClient(): Redis {
   if (!redis) {
     const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
     const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;

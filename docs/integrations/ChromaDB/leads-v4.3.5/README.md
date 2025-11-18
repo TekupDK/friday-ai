@@ -25,21 +25,19 @@ The V4.3.5 Lead Data Pipeline uses **AI-enhanced parsing** to automatically extr
 
 ### **For Management**
 
-- [Executive Summary for RenDetalje](./EXECUTIVE-SUMMARY.md) - Business impact and ROI
-- [Business Insights Report](./BUSINESS-INSIGHTS.md) - Detailed customer analysis
-- [Implementation Log](./IMPLEMENTATION-LOG.md) - Complete development history
+- [Executive Summary for RenDetalje](../../../uncategorized/general/EXECUTIVE-SUMMARY.md) - Business impact and ROI
+- [Business Insights Report](../../../uncategorized/general/BUSINESS-INSIGHTS.md) - Detailed customer analysis
+- [Implementation Log](../../../uncategorized/general/IMPLEMENTATION-LOG.md) - Complete development history
 
 ### **For Developers**
 
-- [Technical Guide](./TECHNICAL-GUIDE.md) - Implementation details
-- [API Reference](./API-REFERENCE.md) - Code examples and schemas
+- Technical details and API reference are documented in the main ChromaDB README
 - [Version History](./CHANGELOG.md) - Complete changelog v4.3.0 → v4.3.5
 
 ### **For Operations**
 
-- [User Guide](./USER-GUIDE.md) - How to use the system
-- [Troubleshooting](./TROUBLESHOOTING.md) - Common issues and fixes
-- [Data Quality Report](./DATA-QUALITY.md) - Coverage and accuracy metrics
+- User guide and troubleshooting information is available in the main ChromaDB documentation
+- Data quality metrics are tracked in the implementation logs
 
 ---
 
@@ -47,7 +45,7 @@ The V4.3.5 Lead Data Pipeline uses **AI-enhanced parsing** to automatically extr
 
 ### **Run Complete Pipeline:**
 
-```bash
+````bash
 # Navigate to project root
 cd c:\Users\empir\Tekup\services\tekup-ai-v2
 
@@ -237,7 +235,7 @@ docs/integrations/ChromaDB/leads-v4.3.5/  # ← You are here
 ├── API-REFERENCE.md                      # Code reference
 └── TROUBLESHOOTING.md                    # Common issues
 
-```
+````
 
 ---
 
@@ -302,14 +300,14 @@ docs/integrations/ChromaDB/leads-v4.3.5/  # ← You are here
 
 ### **Technical Issues:**
 
-- Check [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
-- Review [IMPLEMENTATION-LOG.md](./IMPLEMENTATION-LOG.md)
+- Check [Main ChromaDB README](../README.md)
+- Review [IMPLEMENTATION-LOG.md](../../../uncategorized/general/IMPLEMENTATION-LOG.md)
 - Contact: Development Team
 
 ### **Business Questions:**
 
-- Review [BUSINESS-INSIGHTS.md](./BUSINESS-INSIGHTS.md)
-- See [EXECUTIVE-SUMMARY.md](./EXECUTIVE-SUMMARY.md)
+- Review [BUSINESS-INSIGHTS.md](../../../uncategorized/general/BUSINESS-INSIGHTS.md)
+- See [EXECUTIVE-SUMMARY.md](../../../uncategorized/general/EXECUTIVE-SUMMARY.md)
 - Contact: Project Manager
 
 ---
@@ -331,7 +329,7 @@ See [CHANGELOG.md](./CHANGELOG.md) for complete history.
 
 ### **Immediate (Week 1-2):**
 
-1. Review [EXECUTIVE-SUMMARY.md](./EXECUTIVE-SUMMARY.md) with management
+1. Review [EXECUTIVE-SUMMARY.md](../../../uncategorized/general/EXECUTIVE-SUMMARY.md) with management
 1. Audit missing bookings flagged by AI
 1. Contact problematic customers
 1. Implement payment collection

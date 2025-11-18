@@ -22,6 +22,15 @@ import {
   type AIModel,
   type TaskType,
 } from "./model-router";
+import { executeUTCPTool } from "./utcp/handler";
+import { getAllUTCPTools, hasUTCPTool } from "./utcp/manifest";
+import { FRIDAY_TOOLS } from "./friday-tools";
+import {
+  recommendSubscriptionPlan,
+  predictChurnRisk,
+  optimizeSubscriptionUsage,
+  generateUpsellOpportunities,
+} from "./subscription-ai";
 
 // Re-export types from model-router for backward compatibility
 export type { AIModel, TaskType } from "./model-router";
@@ -761,6 +770,39 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
       "[AI Router] [routeAI]: Calling LLM"
     );
 
+    // Prepare tools (UTCP or legacy)
+    let toolsToUse = options.tools || FRIDAY_TOOLS;
+    if (flags.enableUTCP) {
+      // Convert UTCP tools to LLM function format
+      const utcpTools = getAllUTCPTools();
+      const utcpToolsForLLM = utcpTools.map(tool => ({
+        type: "function" as const,
+        function: {
+          name: tool.name,
+          description: tool.description,
+          parameters: tool.inputSchema,
+        },
+      }));
+
+      // Use UTCP tools for prototype tools, fallback to FRIDAY_TOOLS for others
+      const utcpToolNames = new Set(utcpTools.map(t => t.name));
+      const legacyTools = (options.tools || FRIDAY_TOOLS).filter(
+        (t: any) => !utcpToolNames.has(t.function?.name)
+      );
+
+      toolsToUse = [...utcpToolsForLLM, ...legacyTools];
+
+      logger.debug(
+        {
+          utcpToolCount: utcpToolsForLLM.length,
+          legacyToolCount: legacyTools.length,
+          totalToolCount: toolsToUse.length,
+          correlationId,
+        },
+        "[AI Router] [routeAI]: Using UTCP tools (prototype)"
+      );
+    }
+
     let response;
     if (flags.enableModelRouting && !explicitModel && !preferredModel) {
       // Use new model routing system with fallbacks
@@ -791,6 +833,7 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
       response = await invokeLLM({
         messages: finalMessages,
         model: selectedModel,
+        tools: toolsToUse,
       });
     }
 
@@ -835,27 +878,322 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
       const messageContent = response.choices[0]?.message?.content;
       let content = typeof messageContent === "string" ? messageContent : "";
 
-      // If action was executed successfully, prepend action confirmation
-      if (actionResult && actionResult.success) {
-        content = actionResult.message + "\n\n" + content;
-      }
+      // Handle tool calls from LLM response (UTCP or legacy)
+      const toolCalls = response.choices[0]?.message?.tool_calls;
+      if (toolCalls && toolCalls.length > 0) {
+        logger.debug(
+          {
+            toolCallCount: toolCalls.length,
+            correlationId,
+          },
+          "[AI Router] [routeAI]: Processing tool calls"
+        );
 
-      aiResponse = {
-        content,
-        model: selectedModel,
-        usage: response.usage
-          ? {
-              promptTokens: response.usage.prompt_tokens,
-              completionTokens: response.usage.completion_tokens,
-              totalTokens: response.usage.total_tokens,
-            }
-          : {
-              promptTokens: 0,
-              completionTokens: content.length,
-              totalTokens: content.length,
+        const flags = getFeatureFlags(userId);
+        const toolResults: Array<{ role: "tool"; content: string; tool_call_id: string }> = [];
+
+        for (const toolCall of toolCalls) {
+          const toolName = toolCall.function?.name;
+          const toolArgs = toolCall.function?.arguments
+            ? JSON.parse(toolCall.function.arguments)
+            : {};
+
+          logger.debug(
+            {
+              toolName,
+              toolArgs,
+              correlationId,
             },
-        pendingAction, // Include pending action if created
-      };
+            "[AI Router] [routeAI]: Executing tool call"
+          );
+
+          // Check if this is a UTCP tool
+          if (flags.enableUTCP && hasUTCPTool(toolName)) {
+            try {
+              const utcpResult = await executeUTCPTool(
+                toolName,
+                toolArgs,
+                userId!,
+                { correlationId, approved: !requireApproval }
+              );
+
+              toolResults.push({
+                role: "tool",
+                content: utcpResult.success
+                  ? JSON.stringify(utcpResult.data)
+                  : JSON.stringify({ error: utcpResult.error }),
+                tool_call_id: toolCall.id,
+              });
+
+              logger.info(
+                {
+                  toolName,
+                  success: utcpResult.success,
+                  cached: utcpResult.metadata?.cached,
+                  executionTimeMs: utcpResult.metadata?.executionTimeMs,
+                  correlationId,
+                },
+                "[AI Router] [routeAI]: UTCP tool executed"
+              );
+            } catch (error) {
+              logger.error(
+                {
+                  toolName,
+                  error: error instanceof Error ? error.message : String(error),
+                  correlationId,
+                },
+                "[AI Router] [routeAI]: UTCP tool execution failed"
+              );
+
+              toolResults.push({
+                role: "tool",
+                content: JSON.stringify({
+                  error: error instanceof Error ? error.message : "Unknown error",
+                }),
+                tool_call_id: toolCall.id,
+              });
+            }
+          } else {
+            // Fallback to legacy tool execution or custom handlers
+            logger.debug(
+              {
+                toolName,
+                correlationId,
+              },
+              "[AI Router] [routeAI]: Using legacy/custom tool execution"
+            );
+
+            // Custom subscription tool handlers
+            if (toolName === "recommend_subscription_plan") {
+              try {
+                const recommendation = await recommendSubscriptionPlan(
+                  toolArgs.customerId,
+                  userId!,
+                  toolArgs.includeReasoning ?? true
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify(recommendation),
+                  tool_call_id: toolCall.id,
+                });
+              } catch (error) {
+                logger.error(
+                  {
+                    toolName,
+                    error: error instanceof Error ? error.message : String(error),
+                    correlationId,
+                  },
+                  "[AI Router] [routeAI]: Subscription recommendation failed"
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify({
+                    error: error instanceof Error ? error.message : "Unknown error",
+                  }),
+                  tool_call_id: toolCall.id,
+                });
+              }
+            } else if (toolName === "predict_churn_risk") {
+              try {
+                const prediction = await predictChurnRisk(
+                  toolArgs.customerId,
+                  userId!,
+                  toolArgs.lookbackDays || 90
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify(prediction),
+                  tool_call_id: toolCall.id,
+                });
+              } catch (error) {
+                logger.error(
+                  {
+                    toolName,
+                    error: error instanceof Error ? error.message : String(error),
+                    correlationId,
+                  },
+                  "[AI Router] [routeAI]: Churn prediction failed"
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify({
+                    error: error instanceof Error ? error.message : "Unknown error",
+                  }),
+                  tool_call_id: toolCall.id,
+                });
+              }
+            } else if (toolName === "optimize_subscription_usage") {
+              try {
+                const optimization = await optimizeSubscriptionUsage(
+                  toolArgs.subscriptionId,
+                  userId!,
+                  toolArgs.optimizeFor || "value"
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify(optimization),
+                  tool_call_id: toolCall.id,
+                });
+              } catch (error) {
+                logger.error(
+                  {
+                    toolName,
+                    error: error instanceof Error ? error.message : String(error),
+                    correlationId,
+                  },
+                  "[AI Router] [routeAI]: Usage optimization failed"
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify({
+                    error: error instanceof Error ? error.message : "Unknown error",
+                  }),
+                  tool_call_id: toolCall.id,
+                });
+              }
+            } else if (toolName === "generate_upsell_opportunities") {
+              try {
+                const opportunities = await generateUpsellOpportunities(
+                  toolArgs.customerId,
+                  userId!,
+                  toolArgs.includeCrossSell ?? true
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify(opportunities),
+                  tool_call_id: toolCall.id,
+                });
+              } catch (error) {
+                logger.error(
+                  {
+                    toolName,
+                    error: error instanceof Error ? error.message : String(error),
+                    correlationId,
+                  },
+                  "[AI Router] [routeAI]: Upsell opportunities failed"
+                );
+                toolResults.push({
+                  role: "tool",
+                  content: JSON.stringify({
+                    error: error instanceof Error ? error.message : "Unknown error",
+                  }),
+                  tool_call_id: toolCall.id,
+                });
+              }
+            } else if (flags.enableUTCP) {
+              // Legacy tool execution would go here
+              toolResults.push({
+                role: "tool",
+                content: JSON.stringify({
+                  error: `Tool ${toolName} not yet migrated to UTCP`,
+                }),
+                tool_call_id: toolCall.id,
+              });
+            }
+          }
+        }
+
+        // If we have tool results, make another LLM call with results
+        if (toolResults.length > 0) {
+          const messagesWithToolResults = [
+            ...finalMessages,
+            {
+              role: "assistant" as const,
+              content: "",
+              tool_calls: toolCalls,
+            },
+            ...toolResults,
+          ];
+
+          logger.debug(
+            {
+              toolResultCount: toolResults.length,
+              correlationId,
+            },
+            "[AI Router] [routeAI]: Making follow-up LLM call with tool results"
+          );
+
+          const followUpResponse = await invokeLLM({
+            messages: messagesWithToolResults,
+            model: selectedModel,
+            tools: toolsToUse,
+          });
+
+          const followUpContent =
+            followUpResponse.choices[0]?.message?.content || "";
+          content = typeof followUpContent === "string" ? followUpContent : "";
+
+          aiResponse = {
+            content,
+            model: selectedModel,
+            usage: followUpResponse.usage
+              ? {
+                  promptTokens: followUpResponse.usage.prompt_tokens,
+                  completionTokens: followUpResponse.usage.completion_tokens,
+                  totalTokens: followUpResponse.usage.total_tokens,
+                }
+              : {
+                  promptTokens: 0,
+                  completionTokens: content.length,
+                  totalTokens: content.length,
+                },
+            pendingAction,
+            toolCalls: toolCalls.map(tc => ({
+              name: tc.function?.name || "",
+              arguments: tc.function?.arguments || "",
+            })),
+          };
+        } else {
+          // No tool results, use original response
+          if (actionResult && actionResult.success) {
+            content = actionResult.message + "\n\n" + content;
+          }
+
+          aiResponse = {
+            content,
+            model: selectedModel,
+            usage: response.usage
+              ? {
+                  promptTokens: response.usage.prompt_tokens,
+                  completionTokens: response.usage.completion_tokens,
+                  totalTokens: response.usage.total_tokens,
+                }
+              : {
+                  promptTokens: 0,
+                  completionTokens: content.length,
+                  totalTokens: content.length,
+                },
+            pendingAction,
+            toolCalls: toolCalls?.map(tc => ({
+              name: tc.function?.name || "",
+              arguments: tc.function?.arguments || "",
+            })),
+          };
+        }
+      } else {
+        // No tool calls, use original response
+        // If action was executed successfully, prepend action confirmation
+        if (actionResult && actionResult.success) {
+          content = actionResult.message + "\n\n" + content;
+        }
+
+        aiResponse = {
+          content,
+          model: selectedModel,
+          usage: response.usage
+            ? {
+                promptTokens: response.usage.prompt_tokens,
+                completionTokens: response.usage.completion_tokens,
+                totalTokens: response.usage.total_tokens,
+              }
+            : {
+                promptTokens: 0,
+                completionTokens: content.length,
+                totalTokens: content.length,
+              },
+          pendingAction, // Include pending action if created
+        };
+      }
     }
 
     // ✅ PERFORMANCE: Cache the final response if no actions were executed

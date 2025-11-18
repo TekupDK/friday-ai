@@ -4,7 +4,15 @@
  * Shared constants for CRM module
  */
 
-import { BarChart3, Users, Target, Calendar, type LucideIcon } from "lucide-react";
+import {
+  BarChart3,
+  Calendar,
+  Tags,
+  Target,
+  TrendingUp,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 
 /**
  * Lead status values matching database enum
@@ -23,7 +31,7 @@ export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
 /**
  * CRM Navigation Items
- * 
+ *
  * Centralized navigation configuration for CRM module.
  * Used by CRMLayout component for consistent navigation.
  */
@@ -37,5 +45,7 @@ export const CRM_NAV_ITEMS: readonly CRMNavItem[] = [
   { path: "/crm/dashboard", label: "Dashboard", icon: BarChart3 },
   { path: "/crm/customers", label: "Customers", icon: Users },
   { path: "/crm/leads", label: "Leads", icon: Target },
+  { path: "/crm/opportunities", label: "Opportunities", icon: TrendingUp },
+  { path: "/crm/segments", label: "Segments", icon: Tags },
   { path: "/crm/bookings", label: "Bookings", icon: Calendar },
 ] as const;

@@ -2,6 +2,7 @@ import "dotenv/config";
 import { createServer } from "http";
 import net from "net";
 
+import * as Sentry from "@sentry/node";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import cors from "cors";
 import express from "express";
@@ -18,6 +19,22 @@ import { ENV } from "./env";
 import { logger } from "./logger";
 import { registerOAuthRoutes } from "./oauth";
 import { serveStatic, setupVite } from "./vite";
+
+// Initialize Sentry error tracking (before any other imports)
+if (ENV.sentryEnabled && ENV.sentryDsn) {
+  Sentry.init({
+    dsn: ENV.sentryDsn,
+    environment: ENV.sentryEnvironment,
+    tracesSampleRate: ENV.sentryTracesSampleRate,
+    // Capture unhandled promise rejections
+    captureUnhandledRejections: true,
+    // Capture uncaught exceptions
+    captureUncaughtExceptions: true,
+  });
+  logger.info("[Sentry] Error tracking initialized");
+} else {
+  logger.info("[Sentry] Error tracking disabled (SENTRY_ENABLED=false or SENTRY_DSN not set)");
+}
 
 /**
  * Check if historical data import is needed and run it automatically
@@ -96,6 +113,12 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+
+  // Sentry request handler (must be first middleware)
+  if (ENV.sentryEnabled && ENV.sentryDsn) {
+    app.use(Sentry.Handlers.requestHandler());
+    app.use(Sentry.Handlers.tracingHandler());
+  }
 
   // Security headers via Helmet
   app.use(
@@ -236,6 +259,9 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  // Health check endpoints
+  const healthApi = (await import("../routes/health")).default;
+  app.use("/api", healthApi);
   // Leads API for ChromaDB integration
   const leadsApi = (await import("../routes/leads-api")).default;
   app.use("/api/leads", leadsApi);
@@ -258,6 +284,11 @@ async function startServer() {
     await setupVite(app, server);
   } else {
     await serveStatic(app);
+  }
+
+  // Sentry error handler (must be last middleware, before routes)
+  if (ENV.sentryEnabled && ENV.sentryDsn) {
+    app.use(Sentry.Handlers.errorHandler());
   }
 
   const preferredPort = parseInt(process.env.PORT || "3000");

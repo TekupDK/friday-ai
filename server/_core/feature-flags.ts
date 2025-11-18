@@ -10,6 +10,7 @@ export interface FeatureFlags {
   enableAuditTrail: boolean; // Enable action audit logging
   enableOpenRouterModels: boolean; // Use new OpenRouter models (GLM-4.5, GPT-OSS)
   openRouterRolloutPercentage: number; // 0-100: Percentage of users with OpenRouter enabled
+  enableUTCP: boolean; // Enable UTCP tool calling (Phase 1 prototype)
 }
 
 const DEFAULT_FLAGS: FeatureFlags = {
@@ -19,6 +20,7 @@ const DEFAULT_FLAGS: FeatureFlags = {
   enableAuditTrail: true, // Always enabled for safety
   enableOpenRouterModels: false, // Start disabled, enable gradually
   openRouterRolloutPercentage: 0, // Start at 0%, then 10% → 50% → 100%
+  enableUTCP: false, // Phase 1 prototype - disabled by default
 };
 
 export function getFeatureFlags(userId?: number): FeatureFlags {
@@ -56,6 +58,8 @@ export function getFeatureFlags(userId?: number): FeatureFlags {
       DEFAULT_FLAGS.enableModelRouting,
     enableOpenRouterModels: enableOpenRouterForUser,
     openRouterRolloutPercentage: rolloutPercentage,
+    enableUTCP:
+      process.env.FORCE_UTCP === "true" || DEFAULT_FLAGS.enableUTCP,
   };
 }
 

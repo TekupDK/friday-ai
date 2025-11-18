@@ -534,6 +534,96 @@ export const FRIDAY_TOOLS = [
       },
     },
   },
+  // Subscription Tools
+  {
+    type: "function" as const,
+    function: {
+      name: "recommend_subscription_plan",
+      description:
+        "Analysér kundeprofil og anbefal optimal subscription plan baseret på kundens historik, betalingsadfærd og type. Brug dette når kunder spørger om abonnement eller når du skal anbefale en plan.",
+      parameters: {
+        type: "object",
+        properties: {
+          customerId: {
+            type: "number",
+            description: "Customer profile ID",
+          },
+          includeReasoning: {
+            type: "boolean",
+            description: "Include detailed reasoning for recommendation (default: true)",
+          },
+        },
+        required: ["customerId"],
+      },
+    },
+  },
+  {
+    type: "function" as const,
+    function: {
+      name: "predict_churn_risk",
+      description:
+        "Forudsig churn risk for en kunde baseret på engagement, betalingsadfærd og usage patterns. Brug dette til at identificere at-risk kunder der skal retention actions.",
+      parameters: {
+        type: "object",
+        properties: {
+          customerId: {
+            type: "number",
+            description: "Customer profile ID",
+          },
+          lookbackDays: {
+            type: "number",
+            description: "Number of days to look back for analysis (default: 90)",
+          },
+        },
+        required: ["customerId"],
+      },
+    },
+  },
+  {
+    type: "function" as const,
+    function: {
+      name: "optimize_subscription_usage",
+      description:
+        "Analysér subscription usage patterns og anbefal optimal booking schedule for at maksimere værdi og undgå overage costs. Brug dette når kunder spørger om booking planlægning eller når usage er lav.",
+      parameters: {
+        type: "object",
+        properties: {
+          subscriptionId: {
+            type: "number",
+            description: "Subscription ID",
+          },
+          optimizeFor: {
+            type: "string",
+            enum: ["value", "convenience", "efficiency"],
+            description: "Optimization goal (default: value)",
+          },
+        },
+        required: ["subscriptionId"],
+      },
+    },
+  },
+  {
+    type: "function" as const,
+    function: {
+      name: "generate_upsell_opportunities",
+      description:
+        "Identificér upsell og cross-sell muligheder for en kunde baseret på deres usage, plan type, og kundeprofil. Brug dette til at finde revenue growth muligheder.",
+      parameters: {
+        type: "object",
+        properties: {
+          customerId: {
+            type: "number",
+            description: "Customer profile ID",
+          },
+          includeCrossSell: {
+            type: "boolean",
+            description: "Include cross-sell opportunities (default: true)",
+          },
+        },
+        required: ["customerId"],
+      },
+    },
+  },
 ];
 
 /**
@@ -557,4 +647,8 @@ export type ToolName =
   | "create_lead"
   | "update_lead_status"
   | "list_tasks"
-  | "create_task";
+  | "create_task"
+  | "recommend_subscription_plan"
+  | "predict_churn_risk"
+  | "optimize_subscription_usage"
+  | "generate_upsell_opportunities";

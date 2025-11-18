@@ -49,7 +49,7 @@
 
 Tilføj template selector når ny doc oprettes:
 
-```typescript
+````typescript
 // client/src/pages/DocsPage.tsx
 const templates = [
   { id: 'feature', name: 'Feature Spec', icon: '🎯' },
@@ -321,7 +321,7 @@ const metrics = {
   avgResultsClicked: 1.8,
 };
 
-```
+````
 
 ---
 
@@ -453,11 +453,11 @@ const metrics = {
 
 ## 📚 Resources
 
-- [DOCS_STRATEGY.md](./docs/DOCS_STRATEGY.md) - Komplet strategi
+- [DOCS_STRATEGY.md](../core/documentation/DOCS_STRATEGY.md) - Komplet strategi
 
-- [DOCS_SYSTEM_STATUS.md](./DOCS_SYSTEM_STATUS.md) - Status rapport
+- [DOCS_SYSTEM_STATUS.md](../../archive/root/DOCS_SYSTEM_STATUS.md) - Status rapport (archived)
 
-- [Templates README](./server/docs/templates/README.md) - Template guide
+- [Templates README](../accessibility-audits/README.md) - Template guide
 
 ---
 

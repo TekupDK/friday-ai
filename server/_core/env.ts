@@ -104,6 +104,11 @@ export const ENV = {
   twilioFromNumber: process.env.TWILIO_FROM_NUMBER ?? "",
   // AWS SNS (alternative to Twilio)
   awsSnsRegion: process.env.AWS_SNS_REGION ?? "us-east-1",
+  // Sentry Error Tracking
+  sentryDsn: process.env.SENTRY_DSN ?? "",
+  sentryEnabled: process.env.SENTRY_ENABLED === "true",
+  sentryEnvironment: process.env.NODE_ENV ?? "development",
+  sentryTracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || "0.1"),
 };
 
 // Validate required environment variables
@@ -119,18 +124,22 @@ function validateEnv() {
   if (missing.length > 0) {
     // ✅ SECURITY FIX: Use logger instead of console.warn (redacts sensitive env values)
     // Note: Can't use await in non-async function, so use dynamic import with then
-    import("./logger").then(({ logger }) => {
-      logger.warn(
-        { missingVars: missing },
-        "[ENV] Missing required environment variables"
-      );
-      logger.info("[ENV] Copy env.template.txt to .env and fill in your values");
-    }).catch(() => {
-      // Fallback if logger not available (shouldn't happen)
-      console.warn(
-        `⚠️ [ENV] Missing required environment variables: ${missing.join(", ")}`
-      );
-    });
+    import("./logger")
+      .then(({ logger }) => {
+        logger.warn(
+          { missingVars: missing },
+          "[ENV] Missing required environment variables"
+        );
+        logger.info(
+          "[ENV] Copy env.template.txt to .env and fill in your values"
+        );
+      })
+      .catch(() => {
+        // Fallback if logger not available (shouldn't happen)
+        console.warn(
+          `⚠️ [ENV] Missing required environment variables: ${missing.join(", ")}`
+        );
+      });
   }
 }
 

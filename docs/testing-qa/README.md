@@ -24,12 +24,12 @@ This folder contains testing documentation, test guides, test results, and quali
 
 ## 🔗 Related Documentation
 
-- [Email Tab Tests](../EMAIL_TAB_TEST_REPORT.md)
+- [Email Tab Tests](../email-system/email-center/EMAIL_TAB_TEST_REPORT.md)
 
-- [Friday AI Testing](../FRIDAY_AI_TESTING_GUIDE.md)
+- [Friday AI Testing](../ai-automation/friday-ai/FRIDAY_AI_TESTING_GUIDE.md)
 
-- [AI Testing Complete Guide](../AI_TESTING_COMPLETE_GUIDE.md)
+- [AI Testing Complete Guide](../ai-automation/docs-generation/AI_TESTING_COMPLETE_GUIDE.md)
 
-- [Phase Test Reports](../PHASE_1_TEST_REPORT.md)
+- [Phase Test Reports](../status-reports/phases/PHASE_1_TEST_REPORT.md)
 
 - [Main Documentation Index](../README.md)

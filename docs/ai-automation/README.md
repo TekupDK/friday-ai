@@ -34,6 +34,6 @@ This folder contains documentation related to AI systems, automation, Friday AI,
 
 - [AI Testing Guide](../testing-qa/AI_DOCS_TEST_GUIDE.md)
 
-- [AI Model Selection Guide](../AI_MODEL_SELECTION_GUIDE.md)
+- [AI Model Selection Guide](./docs-generation/AI_MODEL_SELECTION_GUIDE.md)
 
 - [Main Documentation Index](../README.md)

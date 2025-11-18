@@ -8,10 +8,9 @@
 
 ## 📚 Documentation
 
-- **[SETUP.md](./SETUP.md)** - Day 4-5: Docker deployment & TypeScript client
-- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - System architecture & design
-- **[INTEGRATION.md](./INTEGRATION.md)** - Day 6-8: Lead & email integration
-- **[API.md](./API.md)** - Client API reference
+- **[SETUP.md](../../uncategorized/general/SETUP.md)** - Day 4-5: Docker deployment & TypeScript client
+- **[ARCHITECTURE.md](../../ARCHITECTURE.md)** - System architecture & design
+- Integration details and API reference are documented in the main README above
 
 ---
 
@@ -34,12 +33,11 @@ ChromaDB is an open-source vector database that enables:
 ```bash
 cd server/integrations/chromadb
 npm run start
-
-```text
+```
 
 ### 2. Verify Running
 
-```bash
+````bash
 curl <http://localhost:8000/api/v2/heartbeat>
 # Expected: {"nanosecond heartbeat":...}
 
@@ -151,7 +149,7 @@ const relevantDocs = await searchSimilar("friday_docs", question, 3);
 
 - **Langfuse:** [../langfuse/](../langfuse/) - LLM Observability
 - **LiteLLM:** [../litellm/](../litellm/) - LLM Gateway
-- **Implementation Roadmap:** [../open-source-stack/IMPLEMENTATION_ROADMAP.md](../open-source-stack/IMPLEMENTATION_ROADMAP.md)
+- **Implementation Roadmap:** [../open-source-stack/IMPLEMENTATION_ROADMAP.md](../../uncategorized/general/IMPLEMENTATION_ROADMAP.md)
 
 ---
 
@@ -175,7 +173,7 @@ Scalability:       Millions of vectors
 ```bash
 docker compose -f server/integrations/chromadb/docker/docker-compose.chromadb.yml logs
 
-```
+````
 
 ### Can't connect
 

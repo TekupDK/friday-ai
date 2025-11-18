@@ -64,11 +64,11 @@ This folder contains daily progress notes, phase completion reports, session sum
 
 ## 🔗 Related Documentation
 
-- [Phase Documentation](../PHASE_0_STATUS.md)
+- [Phase Documentation](../status-reports/phases/PHASE_0_STATUS.md)
 
-- [Session Progress](../SESSION_2_PROGRESS.md)
+- [Session Progress](../uncategorized/general/SESSION_2_PROGRESS.md)
 
-- [Week Progress](../WEEK1_PROGRESS.md)
+- [Week Progress](../uncategorized/general/WEEK1_PROGRESS.md)
 
 - [Main Documentation Index](../README.md)
 

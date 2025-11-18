@@ -4,9 +4,10 @@
  */
 
 import { protectedProcedure, router } from "../_core/trpc";
-import { routeAI, type AIRouterOptions } from "../ai-router";
+import { routeAI, type AIRouterOptions, type PendingAction } from "../ai-router";
 import { streamResponse } from "../_core/llm";
 import { getFeatureFlags } from "../_core/feature-flags";
+import { logger } from "../_core/logger";
 import { z } from "zod";
 import { EventEmitter } from "events";
 
@@ -14,12 +15,12 @@ export interface ChatMessage {
   role: "user" | "assistant" | "system";
   content: string;
   timestamp?: string;
-  pendingAction?: any;
+  pendingAction?: PendingAction;
 }
 
 export interface StreamingChatResponse {
   type: "start" | "chunk" | "complete" | "error" | "action";
-  data: any;
+  data: string | { content?: string; pendingAction?: PendingAction; [key: string]: unknown };
 }
 
 export const chatStreamingRouter = router({
@@ -77,7 +78,11 @@ export const chatStreamingRouter = router({
           },
         };
       } catch (error) {
-        console.error("Chat streaming error:", error);
+        // ✅ SECURITY FIX: Use logger instead of console.error (redacts sensitive data)
+        logger.error(
+          { err: error },
+          "[Chat Streaming] Failed to process message"
+        );
         throw new Error(
           `Failed to process message: ${error instanceof Error ? error.message : "Unknown error"}`
         );

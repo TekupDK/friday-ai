@@ -373,10 +373,16 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error("❌ Fejl i lead-analyse:", err?.message || err);
-  process.exit(1);
-});
+// Only run main() and exit if this file is executed directly (not imported for tests)
+// Check if running as script (not imported) by comparing import.meta.url with process.argv[1]
+const isMainModule = import.meta.url.endsWith(process.argv[1]?.replace(/\\/g, "/") || "") || 
+                     process.argv[1]?.includes("lead-analysis-cleaning");
+if (isMainModule && !process.env.VITEST) {
+  main().catch(err => {
+    console.error("❌ Fejl i lead-analyse:", err?.message || err);
+    process.exit(1);
+  });
+}
 
 export {
   determineType,

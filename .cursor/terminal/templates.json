@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Terminal command templates for Cursor Agent",
+  "templates": {
+    "typecheck": {
+      "command": "pnpm tsc --noEmit",
+      "description": "Run TypeScript type checking",
+      "category": "validation",
+      "safe": true,
+      "output": "text"
+    },
+    "lint": {
+      "command": "pnpm lint",
+      "description": "Run ESLint",
+      "category": "validation",
+      "safe": true,
+      "output": "text"
+    },
+    "test": {
+      "command": "pnpm test",
+      "description": "Run tests",
+      "category": "testing",
+      "safe": true,
+      "output": "text"
+    },
+    "db-push": {
+      "command": "pnpm db:push",
+      "description": "Push database schema changes",
+      "category": "database",
+      "safe": false,
+      "requiresConfirmation": true,
+      "output": "text"
+    },
+    "db-generate": {
+      "command": "pnpm db:generate",
+      "description": "Generate database migrations",
+      "category": "database",
+      "safe": true,
+      "output": "text"
+    },
+    "dev": {
+      "command": "pnpm dev",
+      "description": "Start development server",
+      "category": "development",
+      "safe": true,
+      "background": true,
+      "output": "text"
+    },
+    "build": {
+      "command": "pnpm build",
+      "description": "Build production bundle",
+      "category": "build",
+      "safe": true,
+      "output": "text"
+    },
+    "format": {
+      "command": "pnpm format",
+      "description": "Format code with Prettier",
+      "category": "formatting",
+      "safe": true,
+      "output": "text"
+    }
+  },
+  "validation": {
+    "blacklist": [
+      "rm -rf",
+      "rm -r",
+      "sudo rm",
+      "format C:",
+      "del /f",
+      "rmdir /s"
+    ],
+    "whitelist": [
+      "pnpm",
+      "npm",
+      "node",
+      "tsc",
+      "eslint",
+      "prettier",
+      "git",
+      "drizzle-kit"
+    ],
+    "requireConfirmation": [
+      "db:push",
+      "db:migrate",
+      "db:seed",
+      "git push --force",
+      "git reset --hard"
+    ]
+  }
+}
+

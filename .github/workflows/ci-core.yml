@@ -38,8 +38,25 @@ jobs:
       - name: TypeScript check
         run: pnpm run check
 
-      - name: Unit tests
-        run: pnpm run test
+      - name: Unit tests with coverage
+        run: pnpm run test:coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: coverage/
+          retention-days: 30
 
       - name: Generate AI docs (artifact only)
         run: pnpm run docs:ai-components

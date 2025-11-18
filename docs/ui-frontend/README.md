@@ -32,10 +32,10 @@ This folder contains documentation for UI components, frontend features, animati
 
 ## 🔗 Related Documentation
 
-- [Virtual Scrolling Integration](../VIRTUAL_SCROLLING_INTEGRATION.md)
+- [Virtual Scrolling Integration](./features/VIRTUAL_SCROLLING_INTEGRATION.md)
 
-- [UI Evaluation](../UI_VURDERING.md)
+- [UI Evaluation](./components/UI_VURDERING.md)
 
-- [3-Panel Design](../3-panel-email-assistant-design.md)
+- [3-Panel Design](./features/3-panel-email-assistant-design.md)
 
 - [Main Documentation Index](../README.md)

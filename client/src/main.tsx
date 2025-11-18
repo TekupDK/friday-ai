@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/react";
+import React from "react";
 import { trpc } from "@/lib/trpc";
 import { UNAUTHED_ERR_MSG } from "@shared/const";
 import {
@@ -27,6 +29,37 @@ import {
   getCacheConfig,
 } from "./lib/cacheStrategy";
 import { getCsrfHeaders } from "./lib/csrf";
+
+// Initialize Sentry error tracking (before React app)
+const sentryDsn = import.meta.env.VITE_SENTRY_DSN;
+const sentryEnabled = import.meta.env.VITE_SENTRY_ENABLED === "true";
+const sentryEnvironment = import.meta.env.MODE || "development";
+const sentryTracesSampleRate = parseFloat(
+  import.meta.env.VITE_SENTRY_TRACES_SAMPLE_RATE || "0.1"
+);
+
+if (sentryEnabled && sentryDsn) {
+  Sentry.init({
+    dsn: sentryDsn,
+    environment: sentryEnvironment,
+    tracesSampleRate: sentryTracesSampleRate,
+    integrations: [
+      // Automatically instrument browser performance
+      Sentry.browserTracingIntegration(),
+      // Capture React component errors
+      Sentry.reactRouterV6BrowserTracingIntegration({
+        useEffect: React.useEffect,
+      }),
+    ],
+    // Capture unhandled promise rejections
+    captureUnhandledRejections: true,
+    // Capture uncaught exceptions
+    captureUncaughtExceptions: true,
+  });
+  console.log("[Sentry] Error tracking initialized");
+} else {
+  console.log("[Sentry] Error tracking disabled (VITE_SENTRY_ENABLED=false or VITE_SENTRY_DSN not set)");
+}
 
 // Phase 7.2: Optimized QueryClient with intelligent cache strategy
 const queryClient = createOptimizedQueryClient();
@@ -115,7 +148,27 @@ const redirectToLoginIfUnauthorized = async (error: unknown) => {
     });
 
     if (refreshResponse.ok) {
-      const refreshData = await refreshResponse.json();
+      // Check if response has content before parsing JSON
+      const contentType = refreshResponse.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        console.warn("[Auth] Refresh response is not JSON, skipping");
+        return;
+      }
+      
+      const text = await refreshResponse.text();
+      if (!text || text.trim().length === 0) {
+        console.warn("[Auth] Refresh response is empty, skipping");
+        return;
+      }
+      
+      let refreshData;
+      try {
+        refreshData = JSON.parse(text);
+      } catch (parseError) {
+        console.error("[Auth] Failed to parse refresh response:", parseError);
+        return;
+      }
+      
       if (refreshData.refreshed) {
         console.log(
           "[Auth] Session refreshed successfully - avoiding login redirect"

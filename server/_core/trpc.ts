@@ -80,6 +80,121 @@ export const adminProcedure = t.procedure.use(
 );
 
 /**
+ * Role-based procedure middleware
+ * Requires user to have a specific role or higher
+ *
+ * @param requiredRole - Minimum role required (user, admin, or owner)
+ * @returns tRPC procedure middleware
+ *
+ * @example
+ * ```ts
+ * export const appRouter = router({
+ *   deleteUser: roleProcedure("admin")
+ *     .input(z.object({ userId: z.number() }))
+ *     .mutation(async ({ ctx, input }) => {
+ *       // Only admin or owner can access
+ *     }),
+ * });
+ * ```
+ */
+export function roleProcedure(requiredRole: "user" | "admin" | "owner") {
+  return protectedProcedure.use(
+    t.middleware(async opts => {
+      const { ctx, next } = opts;
+
+      if (!ctx.user) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: UNAUTHED_ERR_MSG,
+        });
+      }
+
+      // Get user role from RBAC system
+      const { getUserRole, requireRoleOrHigher } = await import("../rbac");
+      const userRole = await getUserRole(ctx.user.id);
+
+      // Check if user has required role or higher
+      requireRoleOrHigher(userRole, requiredRole);
+
+      return next({
+        ctx: {
+          ...ctx,
+          user: ctx.user,
+          userRole, // Add userRole to context for convenience
+        },
+      });
+    })
+  );
+}
+
+/**
+ * Permission-based procedure middleware
+ * Requires user to have a specific permission
+ *
+ * @param permission - Permission required (e.g., "create_invoice", "delete_email")
+ * @returns tRPC procedure middleware
+ *
+ * @example
+ * ```ts
+ * export const appRouter = router({
+ *   createInvoice: permissionProcedure("create_invoice")
+ *     .input(z.object({ amount: z.number() }))
+ *     .mutation(async ({ ctx, input }) => {
+ *       // Only users with create_invoice permission can access
+ *     }),
+ * });
+ * ```
+ */
+export function permissionProcedure(
+  permission: import("../rbac").ActionPermission
+) {
+  return protectedProcedure.use(
+    t.middleware(async opts => {
+      const { ctx, next } = opts;
+
+      if (!ctx.user) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: UNAUTHED_ERR_MSG,
+        });
+      }
+
+      // Get user role and check permission
+      const { getUserRole, requirePermission } = await import("../rbac");
+      const userRole = await getUserRole(ctx.user.id);
+
+      // Check if user has required permission
+      requirePermission(userRole, permission);
+
+      return next({
+        ctx: {
+          ...ctx,
+          user: ctx.user,
+          userRole, // Add userRole to context for convenience
+        },
+      });
+    })
+  );
+}
+
+/**
+ * Owner-only procedure middleware
+ * Requires user to be the owner (highest privilege)
+ *
+ * @example
+ * ```ts
+ * export const appRouter = router({
+ *   systemSettings: ownerProcedure
+ *     .input(z.object({ setting: z.string() }))
+ *     .mutation(async ({ ctx, input }) => {
+ *       // Only owner can access
+ *     }),
+ * });
+ * ```
+ */
+export const ownerProcedure = roleProcedure("owner");
+
+/**
  * Rate-limited protected procedure for inbox/CRM operations
  * Limits: 10 requests per 30 seconds per user
  */

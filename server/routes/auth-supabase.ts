@@ -5,6 +5,8 @@ import { getSessionCookieOptions } from "../_core/cookies";
 import { ENV } from "../_core/env";
 import { sdk } from "../_core/sdk";
 import * as db from "../db";
+import { users } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 const router = express.Router();
 
@@ -45,13 +47,50 @@ router.post("/complete", async (req: Request, res: Response) => {
       user.email ||
       "Google User";
 
-    await db.upsertUser({
-      openId,
-      name,
-      email: user.email || null,
-      loginMethod: "google",
-      lastSignedIn: new Date().toISOString(),
-    });
+    // Check if there's a pre-created user with pending:email format
+    const normalizedEmail = user.email?.toLowerCase() || null;
+    if (normalizedEmail) {
+      const pendingOpenId = `pending:${normalizedEmail}`;
+      const existingUser = await db.getUserByOpenId(pendingOpenId);
+      
+      if (existingUser) {
+        // User was pre-created by admin - update with actual Google openId
+        // Delete the pending user and create/update with real openId
+        const dbInstance = await db.getDb();
+        if (dbInstance) {
+          // Delete pending user
+          await dbInstance.delete(users).where(eq(users.openId, pendingOpenId));
+        }
+        
+        // Create user with actual Google openId, preserving role and other settings
+        await db.upsertUser({
+          openId,
+          name: existingUser.name || name,
+          email: normalizedEmail,
+          loginMethod: "google",
+          role: existingUser.role, // Preserve role set by admin
+          lastSignedIn: new Date().toISOString(),
+        });
+      } else {
+        // Normal flow - user logging in for first time
+        await db.upsertUser({
+          openId,
+          name,
+          email: normalizedEmail,
+          loginMethod: "google",
+          lastSignedIn: new Date().toISOString(),
+        });
+      }
+    } else {
+      // No email - fallback to normal flow
+      await db.upsertUser({
+        openId,
+        name,
+        email: null,
+        loginMethod: "google",
+        lastSignedIn: new Date().toISOString(),
+      });
+    }
 
     const sessionToken = await sdk.createSessionToken(openId, {
       name,

@@ -8,13 +8,13 @@
 import { eq } from "drizzle-orm";
 import { leads, tasks, users } from "../drizzle/schema";
 
+import { logger } from "./_core/logger";
 import { billyAutomation } from "./billy-automation";
 import { getDb, trackEvent } from "./db";
 import { emailMonitor } from "./email-monitor";
 import { detectLeadSourceIntelligent } from "./lead-source-detector";
 import { getWorkflowFromDetection } from "./lead-source-workflows";
 import { createCalendarEvent } from "./mcp";
-import { logger } from "./_core/logger";
 
 interface AutomationConfig {
   enableEmailMonitoring: boolean;
@@ -214,7 +214,12 @@ export class WorkflowAutomationService {
       }
 
       // Step 5: Execute immediate workflow actions
-      await this.executeImmediateActions(leadId, sourceDetection, workflow, userId);
+      await this.executeImmediateActions(
+        leadId,
+        sourceDetection,
+        workflow,
+        userId
+      );
 
       // Step 6: Create calendar event if enabled
       let calendarEventId: string | null = null;

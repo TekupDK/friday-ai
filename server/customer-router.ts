@@ -1,4 +1,7 @@
 import { z } from "zod";
+
+import { customerProfiles } from "../drizzle/schema";
+
 import { invokeLLM } from "./_core/llm";
 import { protectedProcedure, router } from "./_core/trpc";
 import { analyzeCasePattern } from "./analysis/case-analyzer";
@@ -23,9 +26,10 @@ import {
   updateCustomerEmailCount,
   updateCustomerNote,
 } from "./customer-db";
-import { createConversation } from "./db";
+import { createConversation, getDb } from "./db";
 import { getUserLeads } from "./lead-db";
 import { searchGmailThreadsByEmail } from "./mcp";
+import { verifyResourceOwnership } from "./rbac";
 import type { CustomerCaseAnalysis } from "./types/case-analysis";
 
 /**
@@ -159,6 +163,15 @@ export const customerRouter = router({
   getInvoices: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .query(async ({ ctx, input }) => {
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      await verifyResourceOwnership(
+        db,
+        customerProfiles,
+        input.customerId,
+        ctx.user.id,
+        "customer profile"
+      );
       return await getCustomerInvoices(input.customerId, ctx.user.id);
     }),
 
@@ -168,6 +181,15 @@ export const customerRouter = router({
   getEmails: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .query(async ({ ctx, input }) => {
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      await verifyResourceOwnership(
+        db,
+        customerProfiles,
+        input.customerId,
+        ctx.user.id,
+        "customer profile"
+      );
       const emails = await getCustomerEmails(input.customerId, ctx.user.id);
       // Ensure gmailThreadId is included for clickable navigation
       return emails.map(email => ({
@@ -313,13 +335,15 @@ export const customerRouter = router({
   syncBillyInvoices: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const customer = await getCustomerProfileById(
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      const customer = (await verifyResourceOwnership(
+        db,
+        customerProfiles,
         input.customerId,
-        ctx.user.id
-      );
-      if (!customer) {
-        throw new Error("Customer not found");
-      }
+        ctx.user.id,
+        "customer profile"
+      )) as typeof customerProfiles.$inferSelect;
 
       // Sync invoices from Billy
       const invoices = await syncBillyInvoicesForCustomer(
@@ -349,8 +373,6 @@ export const customerRouter = router({
       const balance = await updateCustomerBalance(input.customerId);
 
       // Update last sync date
-      const { getDb } = await import("./db");
-      const db = await getDb();
       if (db) {
         const { customerProfiles } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
@@ -373,16 +395,43 @@ export const customerRouter = router({
   syncGmailEmails: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const customer = await getCustomerProfileById(
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      const customer = (await verifyResourceOwnership(
+        db,
+        customerProfiles,
         input.customerId,
-        ctx.user.id
-      );
-      if (!customer) {
-        throw new Error("Customer not found");
-      }
+        ctx.user.id,
+        "customer profile"
+      )) as typeof customerProfiles.$inferSelect;
 
-      // Search Gmail for threads with customer email
-      const threads = await searchGmailThreadsByEmail(customer.email);
+      // Search Gmail for threads with customer email (with retry logic)
+      const threads = await searchGmailThreadsByEmail(customer.email).catch(
+        async (error: any) => {
+          const { logger } = await import("./_core/logger");
+          const isRateLimit =
+            error?.code === 429 ||
+            error?.message?.includes("429") ||
+            error?.message?.includes("rate limit") ||
+            error?.message?.includes("RESOURCE_EXHAUSTED");
+
+          if (isRateLimit) {
+            logger.warn(
+              { err: error, customerEmail: customer.email },
+              "[Customer Sync] Gmail rate limit exceeded"
+            );
+            throw new Error(
+              "Gmail API rate limit exceeded. Please try again in a few minutes."
+            );
+          }
+
+          logger.error(
+            { err: error, customerEmail: customer.email },
+            "[Customer Sync] Error searching Gmail threads"
+          );
+          throw error;
+        }
+      );
 
       // Add/update email threads in database
       for (const thread of threads) {
@@ -411,13 +460,15 @@ export const customerRouter = router({
   generateResume: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const customer = await getCustomerProfileById(
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      const customer = (await verifyResourceOwnership(
+        db,
+        customerProfiles,
         input.customerId,
-        ctx.user.id
-      );
-      if (!customer) {
-        throw new Error("Customer not found");
-      }
+        ctx.user.id,
+        "customer profile"
+      )) as typeof customerProfiles.$inferSelect;
 
       // Get customer data
       const invoices = await getCustomerInvoices(input.customerId, ctx.user.id);
@@ -484,8 +535,6 @@ Format as clear, concise bullet points in Danish.`;
           : "Failed to generate resume";
 
       // Update customer profile with AI resume
-      const { getDb } = await import("./db");
-      const db = await getDb();
       if (db) {
         const { customerProfiles } = await import("../drizzle/schema");
         const { eq } = await import("drizzle-orm");
@@ -519,13 +568,15 @@ Format as clear, concise bullet points in Danish.`;
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const customer = await getCustomerProfileById(
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      const customer = (await verifyResourceOwnership(
+        db,
+        customerProfiles,
         input.customerId,
-        ctx.user.id
-      );
-      if (!customer) {
-        throw new Error("Customer not found");
-      }
+        ctx.user.id,
+        "customer profile"
+      )) as typeof customerProfiles.$inferSelect;
 
       await createOrUpdateCustomerProfile({
         ...customer,
@@ -546,12 +597,30 @@ Format as clear, concise bullet points in Danish.`;
   getNotes: protectedProcedure
     .input(z.object({ customerId: z.number() }))
     .query(async ({ ctx, input }) => {
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      await verifyResourceOwnership(
+        db,
+        customerProfiles,
+        input.customerId,
+        ctx.user.id,
+        "customer profile"
+      );
       return await getCustomerNotes(input.customerId, ctx.user.id);
     }),
 
   addNote: protectedProcedure
     .input(z.object({ customerId: z.number(), note: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
+      // ✅ RBAC: Verify customer ownership
+      const db = await getDb();
+      await verifyResourceOwnership(
+        db,
+        customerProfiles,
+        input.customerId,
+        ctx.user.id,
+        "customer profile"
+      );
       const result = await addCustomerNote(
         input.customerId,
         ctx.user.id,

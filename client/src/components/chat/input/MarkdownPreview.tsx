@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { sanitizeHtml } from "@/lib/sanitize";
 import {
   FileText,
   Eye,
@@ -97,7 +98,8 @@ export function MarkdownPreview({
     html = html.replace(/\n\n/g, '</p><p class="mb-3">');
     html = '<p class="mb-3">' + html + "</p>";
 
-    return html;
+    // ✅ SECURITY FIX: Sanitize HTML before rendering to prevent XSS
+    return sanitizeHtml(html);
   };
 
   const getWordCount = () => {

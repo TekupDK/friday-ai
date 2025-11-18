@@ -1,6 +1,7 @@
 /**
  * Response Cache for LiteLLM
  * Caches identical requests to avoid rate limits
+ * ✅ FIXED: Added cleanup interval management to prevent memory leaks
  */
 
 interface CacheEntry {
@@ -13,6 +14,7 @@ export class LiteLLMCache {
   private cache = new Map<string, CacheEntry>();
   private maxAge = 5 * 60 * 1000; // 5 minutes
   private maxSize = 100;
+  private cleanupInterval: NodeJS.Timeout | null = null;
 
   /**
    * Generate cache key from request
@@ -106,10 +108,48 @@ export class LiteLLMCache {
   clear(): void {
     this.cache.clear();
   }
+
+  /**
+   * Start cleanup interval
+   * ✅ FIXED: Properly manages cleanup interval to prevent memory leaks
+   */
+  startCleanup(): void {
+    if (this.cleanupInterval) return; // Already started
+
+    this.cleanupInterval = setInterval(() => {
+      this.cleanup();
+    }, 5 * 60 * 1000); // Every 5 minutes
+  }
+
+  /**
+   * Stop cleanup interval (for graceful shutdown)
+   * ✅ FIXED: Prevents memory leaks in test environment and on process exit
+   */
+  stopCleanup(): void {
+    if (this.cleanupInterval) {
+      clearInterval(this.cleanupInterval);
+      this.cleanupInterval = null;
+    }
+  }
+
+  /**
+   * Destroy the cache instance
+   * Clears cache and stops cleanup interval
+   */
+  destroy(): void {
+    this.stopCleanup();
+    this.cache.clear();
+  }
 }
 
 // Singleton instance
 export const responseCache = new LiteLLMCache();
 
-// Cleanup every 5 minutes
-setInterval(() => responseCache.cleanup(), 5 * 60 * 1000);
+// Start cleanup interval
+responseCache.startCleanup();
+
+// ✅ FIXED: Cleanup on process exit to prevent memory leaks
+if (typeof process !== 'undefined') {
+  process.on('SIGTERM', () => responseCache.stopCleanup());
+  process.on('SIGINT', () => responseCache.stopCleanup());
+}

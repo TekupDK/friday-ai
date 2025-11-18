@@ -291,6 +291,15 @@ function WorkspaceLayout() {
                 <Calendar className="w-4 h-4 mr-2" />
                 Bookings
               </DropdownMenuItem>
+              {user && (user.role === "admin" || user.openId === import.meta.env.VITE_OWNER_OPEN_ID) && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate("/admin/users")}>
+                    <Users className="w-4 h-4 mr-2" />
+                    Team Members
+                  </DropdownMenuItem>
+                </>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />

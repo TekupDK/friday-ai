@@ -6,7 +6,7 @@ This folder contains meta-documentation about the documentation system itself, i
 
 ### Documentation Strategy
 
-See main docs folder for [DOCS_STRATEGY.md](../DOCS_STRATEGY.md)
+See main docs folder for [DOCS_STRATEGY.md](../core/documentation/DOCS_STRATEGY.md)
 
 ### AI Documentation Generator
 
@@ -34,10 +34,10 @@ See main docs folder for [DOCS_STRATEGY.md](../DOCS_STRATEGY.md)
 
 ## 🔗 Related Documentation
 
-- [Documentation Strategy](../DOCS_STRATEGY.md)
+- [Documentation Strategy](../core/documentation/DOCS_STRATEGY.md)
 
-- [Realtime Docs System](../REALTIME_DOCS_SYSTEM_ARCHITECTURE.md)
+- [Realtime Docs System](../features/realtime/REALTIME_DOCS_SYSTEM_ARCHITECTURE.md)
 
-- [Friday Docs Index](../FRIDAY_DOCS_INDEX.md)
+- [Friday Docs Index](../ai-automation/friday-ai/FRIDAY_DOCS_INDEX.md)
 
 - [Main Documentation Index](../README.md)

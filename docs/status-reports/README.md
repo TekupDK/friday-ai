@@ -18,9 +18,9 @@ This folder contains status reports, technical issue tracking, debugging documen
 
 ## 🔗 Related Documentation
 
-- [Email Tab Status](../EMAIL_TAB_STATUS.md)
+- [Email Tab Status](../email-system/email-center/EMAIL_TAB_STATUS.md)
 
-- [API Optimization Status](../API_OPTIMIZATION_STATUS.md)
+- [API Optimization Status](./feature-status/API_OPTIMIZATION_STATUS.md)
 
 - [Build Status](../devops-deploy/BUILD_STATUS_59.md)
 

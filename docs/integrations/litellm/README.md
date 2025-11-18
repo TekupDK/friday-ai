@@ -10,15 +10,15 @@
 
 ### Quick Start
 
-- **[EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md)** ⭐ START HERE - 5 min read
-- **[MIGRATION_PLAN.md](./MIGRATION_PLAN.md)** - Day-by-day implementation guide
+- **[EXECUTIVE_SUMMARY.md](../../status-reports/feature-status/EXECUTIVE_SUMMARY.md)** ⭐ START HERE - 5 min read
+- **[MIGRATION_PLAN.md](../../migration/versioning/MIGRATION_PLAN.md)** - Day-by-day implementation guide
 
 ### Planning Documents
 
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)** - System design & architecture
-- **[DECISIONS.md](./DECISIONS.md)** - Technical decisions & rationale
-- **[FRIDAY_AI_CURRENT_STATE.md](./FRIDAY_AI_CURRENT_STATE.md)** - Current system analysis
-- **[ADDENDUM_MODEL_ROUTER.md](./ADDENDUM_MODEL_ROUTER.md)** 🔥 CRITICAL - Model router integration
+- **[DECISIONS.md](../../uncategorized/general/DECISIONS.md)** - Technical decisions & rationale
+- **[FRIDAY_AI_CURRENT_STATE.md](../../ai-automation/friday-ai/FRIDAY_AI_CURRENT_STATE.md)** - Current system analysis
+- **[ADDENDUM_MODEL_ROUTER.md](../../uncategorized/general/ADDENDUM_MODEL_ROUTER.md)** 🔥 CRITICAL - Model router integration
 
 ### Implementation Docs (To Be Created)
 
@@ -54,14 +54,14 @@ We use ONLY FREE OpenRouter models!
 
 ### For Team Review
 
-1. Read [EXECUTIVE_SUMMARY.md](./EXECUTIVE_SUMMARY.md) (5 min)
-1. Read [ADDENDUM_MODEL_ROUTER.md](./ADDENDUM_MODEL_ROUTER.md) (10 min) - CRITICAL!
+1. Read [EXECUTIVE_SUMMARY.md](../../status-reports/feature-status/EXECUTIVE_SUMMARY.md) (5 min)
+1. Read [ADDENDUM_MODEL_ROUTER.md](../../uncategorized/general/ADDENDUM_MODEL_ROUTER.md) (10 min) - CRITICAL!
 1. Review success criteria
 1. Approve for implementation
 
 ### For Implementation
 
-1. Follow [MIGRATION_PLAN.md](./MIGRATION_PLAN.md) Day 1
+1. Follow [MIGRATION_PLAN.md](../../migration/versioning/MIGRATION_PLAN.md) Day 1
 1. Install LiteLLM: `pip install 'litellm[proxy]'`
 1. Create Docker setup
 1. Configure 5 FREE models
@@ -102,7 +102,7 @@ We use ONLY FREE OpenRouter models!
 1. **Testing:** Multi-layer (unit, integration, E2E, >80% coverage)
 1. **Rollback:** 4 levels (30s to 15min)
 
-See [DECISIONS.md](./DECISIONS.md) for full rationale.
+See [DECISIONS.md](../../uncategorized/general/DECISIONS.md) for full rationale.
 
 ---
 

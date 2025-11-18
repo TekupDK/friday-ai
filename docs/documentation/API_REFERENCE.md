@@ -14,7 +14,7 @@
 
 **Purpose:** Hent liste af customer profiles med søgning og pagination
 
-```typescript
+````typescript
 // Input
 {
   search?: string;       // Søg i name, email, phone
@@ -724,7 +724,7 @@ deleteNote.mutate({ id: 456 });
 
 ### 1. TRPC Client Setup
 
-````typescript
+```typescript
 // client/src/lib/trpc.ts
 import { createTRPCReact } from "@trpc/react-query";
 import type { AppRouter } from "../../../server/routers";
@@ -1205,7 +1205,7 @@ pnpm run crm:test:staging:chroma
 
 pnpm run crm:test:staging:watch
 
-```
+````
 
 ---
 

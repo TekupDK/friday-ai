@@ -1,0 +1,121 @@
+# Friday AI Chat - Development Docker Compose
+# Hybrid approach: Backend + Database in Docker, Frontend runs native
+# Usage: docker-compose -f docker-compose.dev.yml up
+
+services:
+  # Backend Development Server
+  backend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: friday-backend-dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.dev
+    environment:
+      - NODE_ENV=development
+      # Override DATABASE_URL to use local MySQL container
+      - DATABASE_URL=mysql://friday_user:friday_password@db-dev:3306/friday_ai
+      # Hot-reload support
+      - WATCH=true
+    volumes:
+      # Mount source code for hot-reload
+      - ./server:/app/server:ro
+      - ./shared:/app/shared:ro
+      - ./drizzle:/app/drizzle:ro
+      # Exclude node_modules for performance
+      - /app/node_modules
+    depends_on:
+      db-dev:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - tekup-dev-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })",
+        ]
+      interval: 30s
+      timeout: 10s
+      start_period: 40s
+      retries: 3
+
+  # MySQL Database for Development
+  db-dev:
+    image: mysql:8.0
+    container_name: friday-db-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: friday_ai
+      MYSQL_USER: friday_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-friday_password}
+    ports:
+      - "3307:3306"  # Use 3307 to avoid conflict with local MySQL
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+      # Optional: Mount init scripts
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - tekup-dev-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD:-root_password}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    command: --default-authentication-plugin=mysql_native_password
+
+  # Redis Cache (Optional - for development)
+  redis-dev:
+    image: redis:7-alpine
+    container_name: friday-redis-dev
+    restart: unless-stopped
+    ports:
+      - "6380:6379"  # Use 6380 to avoid conflict with local Redis
+    networks:
+      - tekup-dev-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # Database Admin Tool (Optional - for development)
+  adminer-dev:
+    image: adminer
+    container_name: friday-adminer-dev
+    restart: unless-stopped
+    ports:
+      - "8081:8080"  # Use 8081 to avoid conflict
+    environment:
+      - ADMINER_DEFAULT_SERVER=db-dev
+    networks:
+      - tekup-dev-network
+    depends_on:
+      - db-dev
+
+networks:
+  tekup-dev-network:
+    name: tekup-dev-network
+    driver: bridge
+
+volumes:
+  mysql_dev_data:
+    name: friday-mysql-dev-data
+

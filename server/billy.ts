@@ -19,7 +19,7 @@ const BILLY_API_KEY = process.env.BILLY_API_KEY || "";
 const BILLY_ORGANIZATION_ID = process.env.BILLY_ORGANIZATION_ID || "";
 const BILLY_API_BASE = "https://api.billysbilling.com/v2";
 
-interface BillyContact {
+export interface BillyContact {
   id: string;
   name: string;
   email?: string;

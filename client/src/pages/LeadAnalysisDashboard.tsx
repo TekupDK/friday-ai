@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from "recharts";
+import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 
 type Thread = {
   id: string;
@@ -171,7 +172,8 @@ export default function LeadAnalysisDashboard() {
   const colors = ["#3b82f6", "#ef4444", "#22c55e", "#a855f7", "#f59e0b", "#14b8a6"]; 
 
   return (
-    <div className="p-6 space-y-6">
+    <PanelErrorBoundary name="Lead Analysis Dashboard">
+      <div className="p-6 space-y-6">
       <div className="flex items-end gap-3">
         <div className="space-y-2">
           <p className="text-sm">Måneder</p>
@@ -243,7 +245,8 @@ export default function LeadAnalysisDashboard() {
           </ChartContainer>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </PanelErrorBoundary>
   );
 }
 

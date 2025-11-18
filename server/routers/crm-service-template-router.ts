@@ -1,9 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
+import { validationSchemas } from "../_core/validation";
 import { serviceTemplates } from "../../drizzle/schema";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
 
 /**
  * CRM Service Template Router
@@ -48,14 +50,19 @@ export const crmServiceTemplateRouter = router({
         where = and(where, eq(serviceTemplates.isActive, input.isActive))!;
       }
 
-      const rows = await db
-        .select()
-        .from(serviceTemplates)
-        .where(where)
-        .orderBy(desc(serviceTemplates.createdAt))
-        .limit(input.limit)
-        .offset(input.offset);
-      return rows;
+      // ✅ ERROR HANDLING: Wrap database query with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          return await db
+            .select()
+            .from(serviceTemplates)
+            .where(where)
+            .orderBy(desc(serviceTemplates.createdAt))
+            .limit(input.limit)
+            .offset(input.offset);
+        },
+        "Failed to list service templates"
+      );
     }),
 
   // Get a single service template by id
@@ -70,16 +77,22 @@ export const crmServiceTemplateRouter = router({
         });
 
       const userId = ctx.user.id;
-      const rows = await db
-        .select()
-        .from(serviceTemplates)
-        .where(
-          and(
-            eq(serviceTemplates.userId, userId),
-            eq(serviceTemplates.id, input.id)
-          )
-        )
-        .limit(1);
+      // ✅ ERROR HANDLING: Wrap database query with error handling
+      const rows = await withDatabaseErrorHandling(
+        async () => {
+          return await db
+            .select()
+            .from(serviceTemplates)
+            .where(
+              and(
+                eq(serviceTemplates.userId, userId),
+                eq(serviceTemplates.id, input.id)
+              )
+            )
+            .limit(1);
+        },
+        "Failed to get service template"
+      );
       if (rows.length === 0) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -93,8 +106,8 @@ export const crmServiceTemplateRouter = router({
   create: protectedProcedure
     .input(
       z.object({
-        title: z.string().min(3).max(100),
-        description: z.string().optional(),
+        title: validationSchemas.shortTitle.min(3),
+        description: validationSchemas.description,
         category: z
           .enum([
             "general",
@@ -119,22 +132,28 @@ export const crmServiceTemplateRouter = router({
           message: "Database connection failed",
         });
 
-      const [created] = await db
-        .insert(serviceTemplates)
-        .values({
-          userId: ctx.user.id,
-          title: input.title,
-          description: input.description,
-          category: input.category,
-          durationMinutes: input.durationMinutes,
-          priceDkk: input.priceDkk,
-          isActive: input.isActive ?? true,
-          metadata: input.metadata ?? {},
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        })
-        .returning();
-      return created;
+      // ✅ ERROR HANDLING: Wrap database operation with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          const [created] = await db
+            .insert(serviceTemplates)
+            .values({
+              userId: ctx.user.id,
+              title: input.title,
+              description: input.description,
+              category: input.category,
+              durationMinutes: input.durationMinutes,
+              priceDkk: input.priceDkk,
+              isActive: input.isActive ?? true,
+              metadata: input.metadata ?? {},
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            })
+            .returning();
+          return created;
+        },
+        "Failed to create service template"
+      );
     }),
 
   // Update an existing service template
@@ -170,42 +189,59 @@ export const crmServiceTemplateRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify ownership
-      const rows = await db
-        .select()
-        .from(serviceTemplates)
-        .where(
-          and(
-            eq(serviceTemplates.userId, userId),
-            eq(serviceTemplates.id, input.id)
-          )
-        )
-        .limit(1);
-      if (rows.length === 0)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Service template not found",
-        });
+      // ✅ ERROR HANDLING: Wrap database operations with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          // Verify ownership
+          const rows = await db
+            .select()
+            .from(serviceTemplates)
+            .where(
+              and(
+                eq(serviceTemplates.userId, userId),
+                eq(serviceTemplates.id, input.id)
+              )
+            )
+            .limit(1);
+          if (rows.length === 0)
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Service template not found",
+            });
 
-      const updates: Record<string, any> = {
-        updatedAt: new Date().toISOString(),
-      };
-      if (input.title !== undefined) updates.title = input.title;
-      if (input.description !== undefined)
-        updates.description = input.description;
-      if (input.category !== undefined) updates.category = input.category;
-      if (input.durationMinutes !== undefined)
-        updates.durationMinutes = input.durationMinutes;
-      if (input.priceDkk !== undefined) updates.priceDkk = input.priceDkk;
-      if (input.isActive !== undefined) updates.isActive = input.isActive;
-      if (input.metadata !== undefined) updates.metadata = input.metadata;
+          const updates: {
+            updatedAt: string;
+            title?: string;
+            description?: string | null;
+            category?: "general" | "vinduespolering" | "facaderens" | "tagrens" | "graffiti" | "other";
+            durationMinutes?: number;
+            priceDkk?: number;
+            isActive?: boolean;
+            metadata?: Record<string, unknown>;
+          } = {
+            updatedAt: new Date().toISOString(),
+          };
+          if (input.title !== undefined) updates.title = input.title;
+          if (input.description !== undefined)
+            updates.description = input.description;
+          if (input.category !== undefined) updates.category = input.category;
+          // Only include if not null/undefined (Drizzle doesn't accept null for optional fields)
+          if (input.durationMinutes !== undefined && input.durationMinutes !== null)
+            updates.durationMinutes = input.durationMinutes;
+          if (input.priceDkk !== undefined && input.priceDkk !== null)
+            updates.priceDkk = input.priceDkk;
+          if (input.isActive !== undefined) updates.isActive = input.isActive;
+          if (input.metadata !== undefined) updates.metadata = input.metadata;
 
-      const updated = await db
-        .update(serviceTemplates)
-        .set(updates)
-        .where(eq(serviceTemplates.id, input.id))
-        .returning();
-      return updated[0];
+          const updated = await db
+            .update(serviceTemplates)
+            .set(updates)
+            .where(eq(serviceTemplates.id, input.id))
+            .returning();
+          return updated[0];
+        },
+        "Failed to update service template"
+      );
     }),
 
   // Soft delete (set isActive to false)
@@ -220,23 +256,29 @@ export const crmServiceTemplateRouter = router({
         });
 
       const userId = ctx.user.id;
-      const rows = await db
-        .select()
-        .from(serviceTemplates)
-        .where(
-          and(
-            eq(serviceTemplates.userId, userId),
-            eq(serviceTemplates.id, input.id)
-          )
-        )
-        .limit(1);
-      if (rows.length === 0) return { success: true };
+      // ✅ ERROR HANDLING: Wrap database operations with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          const rows = await db
+            .select()
+            .from(serviceTemplates)
+            .where(
+              and(
+                eq(serviceTemplates.userId, userId),
+                eq(serviceTemplates.id, input.id)
+              )
+            )
+            .limit(1);
+          if (rows.length === 0) return { success: true };
 
-      // Soft delete - set isActive to false instead of deleting
-      await db
-        .update(serviceTemplates)
-        .set({ isActive: false, updatedAt: new Date().toISOString() })
-        .where(eq(serviceTemplates.id, input.id));
-      return { success: true };
+          // Soft delete - set isActive to false instead of deleting
+          await db
+            .update(serviceTemplates)
+            .set({ isActive: false, updatedAt: new Date().toISOString() })
+            .where(eq(serviceTemplates.id, input.id));
+          return { success: true };
+        },
+        "Failed to delete service template"
+      );
     }),
 });

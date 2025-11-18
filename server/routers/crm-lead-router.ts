@@ -1,9 +1,12 @@
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { router, protectedProcedure } from "../_core/trpc";
-import { getDb } from "../db";
-import { leads, customerProfiles } from "../../drizzle/schema";
 import { and, desc, eq } from "drizzle-orm";
+import { z } from "zod";
+
+import { customerProfiles, leads, type Lead } from "../../drizzle/schema";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
+import { protectedProcedure, router } from "../_core/trpc";
+import { getDb } from "../db";
+import { verifyResourceOwnership } from "../rbac";
 
 /**
  * CRM Lead Router
@@ -12,6 +15,53 @@ import { and, desc, eq } from "drizzle-orm";
  * - Convert lead to customer profile
  */
 export const crmLeadRouter = router({
+  // Create lead
+  createLead: protectedProcedure
+    .input(
+      z.object({
+        name: z.string().min(1).max(255),
+        email: z.string().email().optional(),
+        phone: z.string().max(50).optional(),
+        company: z.string().max(255).optional(),
+        source: z.string().max(100).optional(),
+        notes: z.string().optional(),
+        status: z
+          .enum(["new", "contacted", "qualified", "proposal", "won", "lost"])
+          .optional()
+          .default("new"),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database connection failed",
+        });
+      }
+
+      const userId = ctx.user.id;
+
+      const [created] = await db
+        .insert(leads)
+        .values({
+          userId,
+          name: input.name,
+          email: input.email,
+          phone: input.phone,
+          company: input.company,
+          source: input.source || "manual",
+          notes: input.notes,
+          status: input.status,
+          score: 0,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        })
+        .returning();
+
+      return created;
+    }),
+
   listLeads: protectedProcedure
     .input(
       z.object({
@@ -31,18 +81,20 @@ export const crmLeadRouter = router({
         });
 
       const userId = ctx.user.id;
-      const rows = await db
-        .select()
-        .from(leads)
-        .where(
-          input.status
-            ? and(eq(leads.userId, userId), eq(leads.status, input.status))
-            : eq(leads.userId, userId)
-        )
-        .orderBy(desc(leads.updatedAt))
-        .limit(input.limit)
-        .offset(input.offset);
-      return rows;
+      // ✅ ERROR HANDLING: Wrap database query with error handling
+      return await withDatabaseErrorHandling(async () => {
+        return await db
+          .select()
+          .from(leads)
+          .where(
+            input.status
+              ? and(eq(leads.userId, userId), eq(leads.status, input.status))
+              : eq(leads.userId, userId)
+          )
+          .orderBy(desc(leads.updatedAt))
+          .limit(input.limit)
+          .offset(input.offset);
+      }, "Failed to list leads");
     }),
 
   getLead: protectedProcedure
@@ -55,15 +107,14 @@ export const crmLeadRouter = router({
           message: "Database connection failed",
         });
 
-      const userId = ctx.user.id;
-      const rows = await db
-        .select()
-        .from(leads)
-        .where(and(eq(leads.userId, userId), eq(leads.id, input.id)))
-        .limit(1);
-      if (rows.length === 0)
-        throw new TRPCError({ code: "NOT_FOUND", message: "Lead not found" });
-      return rows[0];
+      // ✅ RBAC: Verify lead ownership
+      return await verifyResourceOwnership<Lead>(
+        db,
+        leads,
+        input.id,
+        ctx.user.id,
+        "lead"
+      );
     }),
 
   updateLeadStatus: protectedProcedure
@@ -88,23 +139,16 @@ export const crmLeadRouter = router({
           message: "Database connection failed",
         });
 
-      // Validate ownership
-      const userId = ctx.user.id;
-      const rows = await db
-        .select()
-        .from(leads)
-        .where(and(eq(leads.userId, userId), eq(leads.id, input.id)))
-        .limit(1);
-      if (rows.length === 0)
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Lead not accessible",
-        });
+      // ✅ RBAC: Verify lead ownership
+      await verifyResourceOwnership(db, leads, input.id, ctx.user.id, "lead");
 
-      await db
-        .update(leads)
-        .set({ status: input.status, updatedAt: new Date().toISOString() })
-        .where(eq(leads.id, input.id));
+      // Update lead status
+      await withDatabaseErrorHandling(async () => {
+        await db
+          .update(leads)
+          .set({ status: input.status, updatedAt: new Date().toISOString() })
+          .where(eq(leads.id, input.id));
+      }, "Failed to update lead status");
       return { success: true };
     }),
 
@@ -123,62 +167,72 @@ export const crmLeadRouter = router({
         });
 
       const userId = ctx.user.id;
+      // ✅ RBAC: Verify lead ownership and get full lead data
       const leadRows = await db
         .select()
         .from(leads)
-        .where(and(eq(leads.userId, userId), eq(leads.id, input.id)))
+        .where(and(eq(leads.id, input.id), eq(leads.userId, userId)))
         .limit(1);
-      const lead = leadRows[0];
-      if (!lead)
-        throw new TRPCError({ code: "NOT_FOUND", message: "Lead not found" });
 
-      if (!lead.email) {
+      if (leadRows.length === 0) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Lead must have an email to convert",
+          code: "NOT_FOUND",
+          message: "Lead not found",
         });
       }
 
-      // Check if profile already exists
-      const existing = await db
-        .select()
-        .from(customerProfiles)
-        .where(
-          and(
-            eq(customerProfiles.userId, userId),
-            eq(customerProfiles.email, lead.email)
+      const lead = leadRows[0];
+
+      // ✅ ERROR HANDLING: Wrap all database operations with error handling
+      return await withDatabaseErrorHandling(async () => {
+        if (!lead.email) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Lead must have an email to convert",
+          });
+        }
+
+        // Check if profile already exists
+        const existing = await db
+          .select()
+          .from(customerProfiles)
+          .where(
+            and(
+              eq(customerProfiles.userId, userId),
+              eq(customerProfiles.email, lead.email)
+            )
           )
-        )
-        .limit(1);
-      if (existing[0]) {
-        return {
-          success: true,
-          customerProfileId: existing[0].id,
-          created: false,
-        };
-      }
+          .limit(1);
+        if (existing[0]) {
+          return {
+            success: true,
+            customerProfileId: existing[0].id,
+            created: false,
+          };
+        }
 
-      const [created] = await db
-        .insert(customerProfiles)
-        .values({
-          userId,
-          leadId: lead.id,
-          email: lead.email,
-          name: lead.name,
-          phone: lead.phone,
-          status: "new",
-          tags: [],
-          customerType: "private",
-          totalInvoiced: 0,
-          totalPaid: 0,
-          balance: 0,
-          invoiceCount: 0,
-          emailCount: 0,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        })
-        .returning();
+        const [created] = await db
+          .insert(customerProfiles)
+          .values({
+            userId,
+            leadId: lead.id,
+            email: lead.email,
+            name: lead.name,
+            phone: lead.phone,
+            status: "new",
+            tags: [],
+            customerType: "private",
+            totalInvoiced: 0,
+            totalPaid: 0,
+            balance: 0,
+            invoiceCount: 0,
+            emailCount: 0,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          })
+          .returning();
 
-      return { success: true, customerProfileId: created.id, created: true };
+        return { success: true, customerProfileId: created.id, created: true };
+      }, "Failed to convert lead to customer");
     }),
 });

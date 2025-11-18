@@ -77,7 +77,9 @@ async function sendEmailNotification(
 
   // Validate recipients
   if (!notification.recipients || notification.recipients.length === 0) {
-    logger.warn("[Notifications] No recipients specified for email notification");
+    logger.warn(
+      "[Notifications] No recipients specified for email notification"
+    );
     return {
       success: false,
       channel: "email",
@@ -156,13 +158,14 @@ async function sendEmailViaSendGrid(
 
   // Add metadata as custom fields if available
   if (notification.metadata && Object.keys(notification.metadata).length > 0) {
-    personalization.custom_args = Object.entries(
-      notification.metadata
-    ).reduce((acc, [key, value]) => {
-      acc[`notification_${key.toLowerCase().replace(/\s+/g, "_")}`] =
-        String(value);
-      return acc;
-    }, {} as Record<string, string>);
+    personalization.custom_args = Object.entries(notification.metadata).reduce(
+      (acc, [key, value]) => {
+        acc[`notification_${key.toLowerCase().replace(/\s+/g, "_")}`] =
+          String(value);
+        return acc;
+      },
+      {} as Record<string, string>
+    );
   }
 
   const emailData = {
@@ -200,7 +203,8 @@ async function sendEmailViaSendGrid(
       );
     }
 
-    const messageId = response.headers.get("x-message-id") || `sg-${Date.now()}`;
+    const messageId =
+      response.headers.get("x-message-id") || `sg-${Date.now()}`;
 
     logger.info(
       {
@@ -584,7 +588,8 @@ async function sendSMSViaTwilio(
 
   try {
     // Build SMS message (SMS has 160 character limit per segment)
-    const smsMessage = `${notification.title}: ${notification.message}`.substring(0, 1600); // Max 10 segments
+    const smsMessage =
+      `${notification.title}: ${notification.message}`.substring(0, 1600); // Max 10 segments
 
     // Send SMS to all recipients
     const results = await Promise.allSettled(

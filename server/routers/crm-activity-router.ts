@@ -1,9 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { z } from "zod";
+import { validationSchemas } from "../_core/validation";
 import { customerActivities, customerProfiles } from "../../drizzle/schema";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
 
 /**
  * CRM Activity Router
@@ -25,15 +27,15 @@ export const crmActivityRouter = router({
           "status_change",
           "property_added",
         ]),
-        subject: z.string().min(1).max(255),
-        description: z.string().optional(),
-        durationMinutes: z.number().optional(),
-        outcome: z.string().optional(),
-        nextSteps: z.string().optional(),
+        subject: validationSchemas.shortTitle,
+        description: validationSchemas.description,
+        durationMinutes: z.number().int().min(0).max(1440).optional(), // Max 24 hours
+        outcome: validationSchemas.shortText.optional(),
+        nextSteps: validationSchemas.shortText.optional(),
         relatedEmailId: z.number().optional(),
         relatedTaskId: z.number().optional(),
         relatedBookingId: z.number().optional(),
-        metadata: z.record(z.string(), z.any()).optional(),
+        metadata: z.record(z.string().max(100), z.any()).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -47,44 +49,50 @@ export const crmActivityRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify customer belongs to user
-      const customer = await db
-        .select()
-        .from(customerProfiles)
-        .where(
-          and(
-            eq(customerProfiles.id, input.customerProfileId),
-            eq(customerProfiles.userId, userId)
-          )
-        )
-        .limit(1);
+      // ✅ ERROR HANDLING: Wrap all database operations with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          // Verify customer belongs to user
+          const customer = await db
+            .select()
+            .from(customerProfiles)
+            .where(
+              and(
+                eq(customerProfiles.id, input.customerProfileId),
+                eq(customerProfiles.userId, userId)
+              )
+            )
+            .limit(1);
 
-      if (customer.length === 0) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Customer not found",
-        });
-      }
+          if (customer.length === 0) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Customer not found",
+            });
+          }
 
-      const [activity] = await db
-        .insert(customerActivities)
-        .values({
-          userId,
-          customerProfileId: input.customerProfileId,
-          activityType: input.activityType,
-          subject: input.subject,
-          description: input.description,
-          durationMinutes: input.durationMinutes,
-          outcome: input.outcome,
-          nextSteps: input.nextSteps,
-          relatedEmailId: input.relatedEmailId,
-          relatedTaskId: input.relatedTaskId,
-          relatedBookingId: input.relatedBookingId,
-          metadata: input.metadata,
-        })
-        .returning();
+          const [activity] = await db
+            .insert(customerActivities)
+            .values({
+              userId,
+              customerProfileId: input.customerProfileId,
+              activityType: input.activityType,
+              subject: input.subject,
+              description: input.description,
+              durationMinutes: input.durationMinutes,
+              outcome: input.outcome,
+              nextSteps: input.nextSteps,
+              relatedEmailId: input.relatedEmailId,
+              relatedTaskId: input.relatedTaskId,
+              relatedBookingId: input.relatedBookingId,
+              metadata: input.metadata,
+            })
+            .returning();
 
-      return activity;
+          return activity;
+        },
+        "Failed to log activity"
+      );
     }),
 
   // List activities for a customer
@@ -118,41 +126,45 @@ export const crmActivityRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify customer belongs to user
-      const customer = await db
-        .select()
-        .from(customerProfiles)
-        .where(
-          and(
-            eq(customerProfiles.id, input.customerProfileId),
-            eq(customerProfiles.userId, userId)
-          )
-        )
-        .limit(1);
+      // ✅ ERROR HANDLING: Wrap database operations with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          // Verify customer belongs to user
+          const customer = await db
+            .select()
+            .from(customerProfiles)
+            .where(
+              and(
+                eq(customerProfiles.id, input.customerProfileId),
+                eq(customerProfiles.userId, userId)
+              )
+            )
+            .limit(1);
 
-      if (customer.length === 0) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Customer not found",
-        });
-      }
+          if (customer.length === 0) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Customer not found",
+            });
+          }
 
-      const whereClause = input.activityType
-        ? and(
-            eq(customerActivities.customerProfileId, input.customerProfileId),
-            eq(customerActivities.activityType, input.activityType)
-          )
-        : eq(customerActivities.customerProfileId, input.customerProfileId);
+          const whereClause = input.activityType
+            ? and(
+                eq(customerActivities.customerProfileId, input.customerProfileId),
+                eq(customerActivities.activityType, input.activityType)
+              )
+            : eq(customerActivities.customerProfileId, input.customerProfileId);
 
-      const activities = await db
-        .select()
-        .from(customerActivities)
-        .where(whereClause)
-        .orderBy(desc(customerActivities.createdAt))
-        .limit(input.limit)
-        .offset(input.offset);
-
-      return activities;
+          return await db
+            .select()
+            .from(customerActivities)
+            .where(whereClause)
+            .orderBy(desc(customerActivities.createdAt))
+            .limit(input.limit)
+            .offset(input.offset);
+        },
+        "Failed to list activities"
+      );
     }),
 
   // Get activity statistics for a customer
@@ -169,55 +181,61 @@ export const crmActivityRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify customer belongs to user
-      const customer = await db
-        .select()
-        .from(customerProfiles)
-        .where(
-          and(
-            eq(customerProfiles.id, input.customerProfileId),
-            eq(customerProfiles.userId, userId)
-          )
-        )
-        .limit(1);
+      // ✅ ERROR HANDLING: Wrap database operations with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          // Verify customer belongs to user
+          const customer = await db
+            .select()
+            .from(customerProfiles)
+            .where(
+              and(
+                eq(customerProfiles.id, input.customerProfileId),
+                eq(customerProfiles.userId, userId)
+              )
+            )
+            .limit(1);
 
-      if (customer.length === 0) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Customer not found",
-        });
-      }
+          if (customer.length === 0) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Customer not found",
+            });
+          }
 
-      // Get activity counts by type
-      const stats = await db
-        .select({
-          activityType: customerActivities.activityType,
-          count: sql<number>`count(*)::int`,
-          totalDuration: sql<number>`sum(${customerActivities.durationMinutes})::int`,
-        })
-        .from(customerActivities)
-        .where(
-          eq(customerActivities.customerProfileId, input.customerProfileId)
-        )
-        .groupBy(customerActivities.activityType);
+          // Get activity counts by type
+          const stats = await db
+            .select({
+              activityType: customerActivities.activityType,
+              count: sql<number>`count(*)::int`,
+              totalDuration: sql<number>`sum(${customerActivities.durationMinutes})::int`,
+            })
+            .from(customerActivities)
+            .where(
+              eq(customerActivities.customerProfileId, input.customerProfileId)
+            )
+            .groupBy(customerActivities.activityType);
 
-      // Get last activity date
-      const [lastActivity] = await db
-        .select({
-          lastActivityDate: customerActivities.createdAt,
-        })
-        .from(customerActivities)
-        .where(
-          eq(customerActivities.customerProfileId, input.customerProfileId)
-        )
-        .orderBy(desc(customerActivities.createdAt))
-        .limit(1);
+          // Get last activity date
+          const [lastActivity] = await db
+            .select({
+              lastActivityDate: customerActivities.createdAt,
+            })
+            .from(customerActivities)
+            .where(
+              eq(customerActivities.customerProfileId, input.customerProfileId)
+            )
+            .orderBy(desc(customerActivities.createdAt))
+            .limit(1);
 
-      return {
-        byType: stats,
-        lastActivityDate: lastActivity?.lastActivityDate || null,
-        totalActivities: stats.reduce((sum, s) => sum + s.count, 0),
-      };
+          return {
+            byType: stats,
+            lastActivityDate: lastActivity?.lastActivityDate || null,
+            totalActivities: stats.reduce((sum, s) => sum + s.count, 0),
+          };
+        },
+        "Failed to get activity statistics"
+      );
     }),
 
   // Delete an activity
@@ -234,30 +252,36 @@ export const crmActivityRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify activity belongs to user
-      const [activity] = await db
-        .select()
-        .from(customerActivities)
-        .where(
-          and(
-            eq(customerActivities.id, input.id),
-            eq(customerActivities.userId, userId)
-          )
-        )
-        .limit(1);
+      // ✅ ERROR HANDLING: Wrap database operations with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          // Verify activity belongs to user
+          const [activity] = await db
+            .select()
+            .from(customerActivities)
+            .where(
+              and(
+                eq(customerActivities.id, input.id),
+                eq(customerActivities.userId, userId)
+              )
+            )
+            .limit(1);
 
-      if (!activity) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Activity not found",
-        });
-      }
+          if (!activity) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Activity not found",
+            });
+          }
 
-      await db
-        .delete(customerActivities)
-        .where(eq(customerActivities.id, input.id));
+          await db
+            .delete(customerActivities)
+            .where(eq(customerActivities.id, input.id));
 
-      return { success: true };
+          return { success: true };
+        },
+        "Failed to delete activity"
+      );
     }),
 
   // Update an activity
@@ -283,43 +307,56 @@ export const crmActivityRouter = router({
 
       const userId = ctx.user.id;
 
-      // Verify activity belongs to user
-      const [activity] = await db
-        .select()
-        .from(customerActivities)
-        .where(
-          and(
-            eq(customerActivities.id, input.id),
-            eq(customerActivities.userId, userId)
-          )
-        )
-        .limit(1);
+      // ✅ ERROR HANDLING: Wrap database operations with error handling
+      return await withDatabaseErrorHandling(
+        async () => {
+          // Verify activity belongs to user
+          const [activity] = await db
+            .select()
+            .from(customerActivities)
+            .where(
+              and(
+                eq(customerActivities.id, input.id),
+                eq(customerActivities.userId, userId)
+              )
+            )
+            .limit(1);
 
-      if (!activity) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Activity not found",
-        });
-      }
+          if (!activity) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Activity not found",
+            });
+          }
 
-      const updateData: any = {
-        updatedAt: new Date().toISOString(),
-      };
+          const updateData: {
+            updatedAt: string;
+            subject?: string;
+            description?: string | null;
+            outcome?: string | null;
+            nextSteps?: string | null;
+            durationMinutes?: number | null;
+          } = {
+            updatedAt: new Date().toISOString(),
+          };
 
-      if (input.subject !== undefined) updateData.subject = input.subject;
-      if (input.description !== undefined)
-        updateData.description = input.description;
-      if (input.outcome !== undefined) updateData.outcome = input.outcome;
-      if (input.nextSteps !== undefined) updateData.nextSteps = input.nextSteps;
-      if (input.durationMinutes !== undefined)
-        updateData.durationMinutes = input.durationMinutes;
+          if (input.subject !== undefined) updateData.subject = input.subject;
+          if (input.description !== undefined)
+            updateData.description = input.description;
+          if (input.outcome !== undefined) updateData.outcome = input.outcome;
+          if (input.nextSteps !== undefined) updateData.nextSteps = input.nextSteps;
+          if (input.durationMinutes !== undefined)
+            updateData.durationMinutes = input.durationMinutes;
 
-      const [updated] = await db
-        .update(customerActivities)
-        .set(updateData)
-        .where(eq(customerActivities.id, input.id))
-        .returning();
+          const [updated] = await db
+            .update(customerActivities)
+            .set(updateData)
+            .where(eq(customerActivities.id, input.id))
+            .returning();
 
-      return updated;
+          return updated;
+        },
+        "Failed to update activity"
+      );
     }),
 });

@@ -20,8 +20,8 @@ This folder contains deployment documentation, infrastructure setup, build confi
 
 - [Docker Configuration](../../docker-compose.yml)
 
-- [Phase 0 SMTP Setup](../PHASE_0_SMTP_SETUP.md)
+- [Phase 0 SMTP Setup](../status-reports/phases/PHASE_0_SMTP_SETUP.md)
 
-- [Database Migration](../DATABASE_MIGRATION_SUPABASE.md)
+- [Database Migration](../migration/database/DATABASE_MIGRATION_SUPABASE.md)
 
 - [Main Documentation Index](../README.md)

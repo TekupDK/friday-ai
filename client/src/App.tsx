@@ -1,11 +1,6 @@
-import { lazy, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Switch, useLocation } from "wouter";
-
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-
-import { useAuth } from "@/_core/hooks/useAuth";
 
 import ErrorBoundary from "./components/ErrorBoundary";
 import { SkipLinks } from "./components/SkipLinks";
@@ -13,12 +8,19 @@ import { EmailContextProvider } from "./contexts/EmailContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { WorkflowContextProvider } from "./contexts/WorkflowContext";
 import { warmupCache } from "./lib/cacheStrategy";
-import ChatComponentsShowcase from "./pages/ChatComponentsShowcase";
-import ComponentShowcase from "./pages/ComponentShowcase";
-import LoginPage from "./pages/LoginPage";
-import NotFound from "@/pages/NotFound";
-import WorkspaceLayout from "./pages/WorkspaceLayout";
 import DocsPage from "./pages/docs/DocsPage";
+import LoginPage from "./pages/LoginPage";
+import WorkspaceLayout from "./pages/WorkspaceLayout";
+// Lazy load showcase components to reduce bundle size (~250 KB savings)
+const ComponentShowcase = lazy(() => import("./pages/ComponentShowcase"));
+const ChatComponentsShowcase = lazy(
+  () => import("./pages/ChatComponentsShowcase")
+);
+
+import { useAuth } from "@/_core/hooks/useAuth";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NotFound from "@/pages/NotFound";
 
 function Router() {
   const [path] = useLocation();
@@ -49,8 +51,34 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={WorkspaceLayout} />
-      <Route path={"/showcase"} component={ComponentShowcase} />
-      <Route path={"/chat-components"} component={ChatComponentsShowcase} />
+      <Route
+        path={"/showcase"}
+        component={() => (
+          <Suspense
+            fallback={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
+              </div>
+            }
+          >
+            <ComponentShowcase />
+          </Suspense>
+        )}
+      />
+      <Route
+        path={"/chat-components"}
+        component={() => (
+          <Suspense
+            fallback={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
+              </div>
+            }
+          >
+            <ChatComponentsShowcase />
+          </Suspense>
+        )}
+      />
       <Route
         path={"/lead-analysis"}
         component={lazy(() => import("./pages/LeadAnalysisDashboard"))}
@@ -70,12 +98,50 @@ function Router() {
         component={lazy(() => import("./pages/crm/CustomerList"))}
       />
       <Route
+        path={"/crm/customers/:id"}
+        component={lazy(() => import("./pages/crm/CustomerDetail"))}
+      />
+      <Route
         path={"/crm/leads"}
         component={lazy(() => import("./pages/crm/LeadPipeline"))}
       />
       <Route
+        path={"/crm/leads/:id"}
+        component={lazy(() => import("./pages/crm/LeadDetail"))}
+      />
+      <Route
         path={"/crm/bookings"}
         component={lazy(() => import("./pages/crm/BookingCalendar"))}
+      />
+      <Route
+        path={"/crm/opportunities"}
+        component={lazy(() => import("./pages/crm/OpportunityPipeline"))}
+      />
+      <Route
+        path={"/crm/segments"}
+        component={lazy(() => import("./pages/crm/SegmentList"))}
+      />
+      <Route
+        path={"/crm/segments/:id"}
+        component={lazy(() => import("./pages/crm/SegmentDetail"))}
+      />
+      {/* Admin Routes */}
+      <Route
+        path={"/admin/users"}
+        component={lazy(() => import("./pages/admin/UserList"))}
+      />
+      {/* CRM Standalone Debug Mode - Isolated CRM access for debugging */}
+      <Route
+        path={"/crm-standalone"}
+        component={lazy(() => import("./pages/crm/CRMStandalone"))}
+      />
+      <Route
+        path={"/crm-standalone/:path*"}
+        component={lazy(() => import("./pages/crm/CRMStandalone"))}
+      />
+      <Route
+        path={"/crm/debug"}
+        component={lazy(() => import("./pages/crm/CRMStandalone"))}
       />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
@@ -112,7 +178,6 @@ function CacheWarmer() {
       }
     }
     // queryClient is stable and doesn't need to be in dependencies
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, user?.id]);
 
   return null;

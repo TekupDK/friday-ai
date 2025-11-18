@@ -59,7 +59,7 @@ trpc.docs.generateLeadDoc.mutate({ leadId });
 
 **For Overview:** [FRIDAY_DOCS_SYSTEM.md](FRIDAY_DOCS_SYSTEM.md)
 **For Quick Ref:** [FRIDAY_DOCS_QUICK_REF.md](FRIDAY_DOCS_QUICK_REF.md)
-**For Index:** [docs/FRIDAY_DOCS_INDEX.md](docs/FRIDAY_DOCS_INDEX.md)
+**For Index:** [docs/FRIDAY_DOCS_INDEX.md](./FRIDAY_DOCS_INDEX.md)
 
 ---
 

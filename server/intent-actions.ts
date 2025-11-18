@@ -4,7 +4,7 @@
  * This replaces tool calling which doesn't work with Gemini via Forge API
  */
 
-import { createInvoice, getCustomers } from "./billy";
+import { createInvoice, getCustomers, type BillyContact } from "./billy";
 import { checkIdempotency, storeIdempotencyRecord } from "./idempotency";
 import { createTask, getUserTasks } from "./db";
 import { createLead, getUserLeads } from "./lead-db";
@@ -697,7 +697,7 @@ async function executeCreateInvoice(
   }
 
   // STEP 1: Search for customer in Billy
-  let allCustomers: any[];
+  let allCustomers: BillyContact[];
   try {
     allCustomers = await getCustomers();
   } catch (error) {
@@ -708,7 +708,7 @@ async function executeCreateInvoice(
     };
   }
 
-  const customers = allCustomers.filter((c: any) =>
+  const customers = allCustomers.filter((c) =>
     c.name.toLowerCase().includes(customerName.toLowerCase())
   );
 

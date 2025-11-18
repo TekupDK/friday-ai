@@ -26,10 +26,10 @@ This folder contains documentation for the email center, email intelligence, and
 
 ## 🔗 Related Documentation
 
-- [Email Tab UI Documentation](../EMAIL_TAB_STATUS.md)
+- [Email Tab UI Documentation](./email-center/EMAIL_TAB_STATUS.md)
 
-- [Gmail Rate Limit Solutions](../GMAIL_RATE_LIMIT_ALTERNATIVES.md)
+- [Gmail Rate Limit Solutions](./integrations/GMAIL_RATE_LIMIT_ALTERNATIVES.md)
 
-- [Shortwave Integration](../SHORTWAVE_AI_FEATURES_ANALYSIS.md)
+- [Shortwave Integration](./integrations/SHORTWAVE_AI_FEATURES_ANALYSIS.md)
 
 - [Main Documentation Index](../README.md)

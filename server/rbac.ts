@@ -166,26 +166,26 @@ export function getRoleName(role: UserRole): string {
 
 /**
  * ✅ SECURITY FIX: Require ownership of a resource
- * 
+ *
  * This helper ensures that a user can only access resources they own.
  * Use this in tRPC procedures to verify resource ownership before allowing access.
- * 
+ *
  * @param userId - The ID of the user making the request
  * @param resourceUserId - The userId field from the resource (e.g., customerProfile.userId)
  * @param resourceType - Human-readable resource type for error messages (e.g., "customer profile", "lead")
  * @param resourceId - Optional resource ID for error messages
  * @throws TRPCError with code FORBIDDEN if user doesn't own the resource
- * 
+ *
  * @example
  * ```ts
  * const customer = await db.select().from(customerProfiles)
  *   .where(eq(customerProfiles.id, input.customerId))
  *   .limit(1);
- * 
+ *
  * if (!customer[0]) {
  *   throw new TRPCError({ code: "NOT_FOUND", message: "Customer not found" });
  * }
- * 
+ *
  * requireOwnership(ctx.user.id, customer[0].userId, "customer profile", input.customerId);
  * ```
  */
@@ -218,28 +218,266 @@ export function requireOwnership(
 
 /**
  * ✅ SECURITY FIX: Require ownership of multiple resources (batch check)
- * 
+ *
  * Useful when checking ownership of multiple resources at once.
- * 
+ *
  * @param userId - The ID of the user making the request
  * @param resources - Array of resources with userId fields
  * @param resourceType - Human-readable resource type for error messages
  * @throws TRPCError with code FORBIDDEN if user doesn't own any resource
- * 
+ *
  * @example
  * ```ts
  * const customers = await db.select().from(customerProfiles)
  *   .where(inArray(customerProfiles.id, input.customerIds));
- * 
+ *
  * requireOwnershipBatch(ctx.user.id, customers, "customer profile");
  * ```
  */
-export function requireOwnershipBatch<T extends { userId: number | null | undefined }>(
-  userId: number,
-  resources: T[],
-  resourceType: string
-): void {
+export function requireOwnershipBatch<
+  T extends { userId: number | null | undefined },
+>(userId: number, resources: T[], resourceType: string): void {
   for (const resource of resources) {
     requireOwnership(userId, resource.userId, resourceType);
   }
+}
+
+/**
+ * Check if a user has a specific role or higher
+ *
+ * @param userRole - The user's current role
+ * @param requiredRole - The minimum role required
+ * @returns true if user has the required role or higher
+ *
+ * @example
+ * ```ts
+ * hasRoleOrHigher("user", "admin"); // false
+ * hasRoleOrHigher("admin", "admin"); // true
+ * hasRoleOrHigher("owner", "admin"); // true
+ * ```
+ */
+export function hasRoleOrHigher(
+  userRole: UserRole,
+  requiredRole: UserRole
+): boolean {
+  const userLevel = ROLE_HIERARCHY[userRole];
+  const requiredLevel = ROLE_HIERARCHY[requiredRole];
+  return userLevel >= requiredLevel;
+}
+
+/**
+ * Check if a user has a specific role (exact match)
+ *
+ * @param userRole - The user's current role
+ * @param requiredRole - The exact role required
+ * @returns true if user has the exact role
+ *
+ * @example
+ * ```ts
+ * hasExactRole("admin", "admin"); // true
+ * hasExactRole("owner", "admin"); // false
+ * ```
+ */
+export function hasExactRole(
+  userRole: UserRole,
+  requiredRole: UserRole
+): boolean {
+  return userRole === requiredRole;
+}
+
+/**
+ * Require a specific role or higher
+ *
+ * @param userRole - The user's current role
+ * @param requiredRole - The minimum role required
+ * @param action - Optional action name for error message
+ * @throws TRPCError with code FORBIDDEN if user doesn't have required role
+ *
+ * @example
+ * ```ts
+ * requireRoleOrHigher(ctx.userRole, "admin", "delete user");
+ * ```
+ */
+export function requireRoleOrHigher(
+  userRole: UserRole,
+  requiredRole: UserRole,
+  action?: string
+): void {
+  if (!hasRoleOrHigher(userRole, requiredRole)) {
+    const actionMsg = action ? ` to ${action}` : "";
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: `This action requires ${getRoleName(requiredRole)} role or higher${actionMsg}`,
+    });
+  }
+}
+
+/**
+ * Require a specific permission
+ *
+ * @param userRole - The user's current role
+ * @param permission - The permission required
+ * @throws TRPCError with code FORBIDDEN if user doesn't have permission
+ *
+ * @example
+ * ```ts
+ * requirePermission(ctx.userRole, "create_invoice");
+ * ```
+ */
+export function requirePermission(
+  userRole: UserRole,
+  permission: ActionPermission
+): void {
+  if (!hasPermission(userRole, permission)) {
+    const requiredRole = ACTION_PERMISSIONS[permission];
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: `This action requires ${getRoleName(requiredRole)} role. You need permission: ${permission}`,
+    });
+  }
+}
+
+/**
+ * Verify ownership of a resource by ID
+ * Fetches the resource from the database and checks ownership
+ *
+ * @param db - Database instance
+ * @param table - Drizzle table to query
+ * @param resourceId - ID of the resource to check
+ * @param userId - ID of the user making the request
+ * @param resourceType - Human-readable resource type for error messages
+ * @returns The resource if found and owned by user
+ * @throws TRPCError with code NOT_FOUND if resource doesn't exist
+ * @throws TRPCError with code FORBIDDEN if user doesn't own the resource
+ *
+ * @example
+ * ```ts
+ * const lead = await verifyResourceOwnership(
+ *   db,
+ *   leads,
+ *   input.leadId,
+ *   ctx.user.id,
+ *   "lead"
+ * );
+ * ```
+ */
+export async function verifyResourceOwnership<
+  T extends { userId: number | null | undefined },
+>(
+  db: Awaited<ReturnType<typeof import("./db").getDb>>,
+  table: any,
+  resourceId: number | string,
+  userId: number,
+  resourceType: string
+): Promise<T> {
+  if (!db) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Database connection failed",
+    });
+  }
+
+  const { eq } = await import("drizzle-orm");
+
+  const result = await db
+    .select()
+    .from(table)
+    .where(eq(table.id, resourceId))
+    .limit(1);
+
+  const resource = result[0] as T | undefined;
+
+  if (!resource) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: `${resourceType} not found`,
+    });
+  }
+
+  requireOwnership(userId, resource.userId, resourceType, resourceId);
+
+  return resource;
+}
+
+/**
+ * Verify ownership of multiple resources by IDs
+ * Fetches resources from the database and checks ownership
+ *
+ * @param db - Database instance
+ * @param table - Drizzle table to query
+ * @param resourceIds - Array of resource IDs to check
+ * @param userId - ID of the user making the request
+ * @param resourceType - Human-readable resource type for error messages
+ * @returns Array of resources that are found and owned by user
+ * @throws TRPCError with code NOT_FOUND if any resource doesn't exist
+ * @throws TRPCError with code FORBIDDEN if user doesn't own any resource
+ *
+ * @example
+ * ```ts
+ * const customers = await verifyResourcesOwnership(
+ *   db,
+ *   customerProfiles,
+ *   input.customerIds,
+ *   ctx.user.id,
+ *   "customer profile"
+ * );
+ * ```
+ */
+export async function verifyResourcesOwnership<
+  T extends { userId: number | null | undefined },
+>(
+  db: Awaited<ReturnType<typeof import("./db").getDb>>,
+  table: any,
+  resourceIds: (number | string)[],
+  userId: number,
+  resourceType: string
+): Promise<T[]> {
+  if (!db) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Database connection failed",
+    });
+  }
+
+  if (resourceIds.length === 0) {
+    return [];
+  }
+
+  const { inArray } = await import("drizzle-orm");
+
+  const results = await db
+    .select()
+    .from(table)
+    .where(inArray(table.id, resourceIds));
+
+  if (results.length !== resourceIds.length) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: `Some ${resourceType}s were not found`,
+    });
+  }
+
+  requireOwnershipBatch(userId, results as T[], resourceType);
+
+  return results as T[];
+}
+
+/**
+ * Check if user is owner (highest privilege level)
+ *
+ * @param userRole - The user's current role
+ * @returns true if user is owner
+ */
+export function isOwner(userRole: UserRole): boolean {
+  return userRole === "owner";
+}
+
+/**
+ * Check if user is admin or owner
+ *
+ * @param userRole - The user's current role
+ * @returns true if user is admin or owner
+ */
+export function isAdminOrOwner(userRole: UserRole): boolean {
+  return userRole === "admin" || userRole === "owner";
 }

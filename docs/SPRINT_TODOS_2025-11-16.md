@@ -121,13 +121,15 @@ All completed tasks have been moved to `docs/COMPLETED_TODOS_ARCHIVE_2025-11-16.
 **File:** `server/email-monitor.ts:470`  
 **Priority:** 🟢 LOW  
 **Estimated Time:** 8-12 hours  
-**Status:** Pending
+**Status:** ⏳ Pending
 
 **Task:**
 
 - Complete auto-action implementation
 - Define business requirements
 - Add tests
+
+**Note:** Requires business requirements definition before implementation
 
 ---
 

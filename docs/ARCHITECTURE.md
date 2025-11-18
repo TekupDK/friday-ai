@@ -1,8 +1,8 @@
 # Friday AI Chat - System Architecture
 
 **Author:** Manus AI  
-**Last Updated:** November 16, 2025  
-**Version:** 1.0.0
+**Last Updated:** January 28, 2025  
+**Version:** 1.1.0
 
 ## Executive Summary
 
@@ -42,7 +42,7 @@ The application is built on the following core technologies:
 
 ### Architecture Diagram
 
-```text
+````text
 ┌─────────────────────────────────────────────────────────────┐
 │                        Frontend Layer                        │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
@@ -72,9 +72,9 @@ The application is built on the following core technologies:
 │  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐       │  │
 │  │  │  auth  │ │  chat  │ │ inbox  │ │customer│       │  │
 │  │  └────────┘ └────────┘ └────────┘ └────────┘       │  │
-│  │  ┌────────┐ ┌────────┐ ┌────────┐                  │  │
-│  │  │ system │ │calendar│ │  ai    │                  │  │
-│  │  └────────┘ └────────┘ └────────┘                  │  │
+│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐       │  │
+│  │  │ system │ │   crm  │ │subscript│ │  ai    │       │  │
+│  │  └────────┘ └────────┘ └────────┘ └────────┘       │  │
 │  └──────────────────┬───────────────────────────────────┘  │
 │                     │                                      │
 │  ┌──────────────────▼───────────────────────────────────┐  │
@@ -372,16 +372,34 @@ Built-in services provided by Manus platform:
 
 ### Authorization Model
 
-**Role-based Access Control:**
+**Role-based Access Control (RBAC):**
 
-- `user`: Standard user access
-- `admin`: Full system access (owner only)
+The system implements a comprehensive RBAC system with four role levels:
+
+- `guest`: Unauthenticated or unknown users (lowest privilege)
+- `user`: Standard authenticated users
+- `admin`: Administrators with elevated privileges
+- `owner`: System owner with full access (highest privilege)
+
+Higher roles inherit permissions from lower roles. Owner check takes precedence over database role.
 
 **Procedure Protection:**
 
 - `publicProcedure`: No authentication required
 - `protectedProcedure`: Requires valid user session
-- `adminProcedure`: Requires admin role (not yet implemented)
+- `adminProcedure`: Requires admin role (checks `ctx.user.role === "admin"`)
+- `roleProcedure(role)`: Requires minimum role level (user/admin/owner)
+- `permissionProcedure(permission)`: Requires specific permission (e.g., "create_invoice")
+- `ownerProcedure`: Shorthand for owner-only endpoints
+
+**Ownership Verification:**
+
+All resource access endpoints verify ownership using:
+- `requireOwnership()` - Verify single resource ownership
+- `verifyResourceOwnership()` - Fetch and verify resource ownership
+- `requireOwnershipBatch()` - Verify multiple resources ownership
+
+**See Also:** [RBAC_GUIDE.md](./core/guides/RBAC_GUIDE.md) for comprehensive RBAC documentation.
 
 ### Data Security
 
@@ -480,7 +498,7 @@ pnpm db:push  # Generates and applies migrations
 ```bash
 pnpm build    # Builds frontend and backend
 
-```
+````
 
 ## Monitoring & Observability
 
@@ -489,23 +507,27 @@ pnpm build    # Builds frontend and backend
 Friday AI Chat provides health check endpoints for monitoring and deployment verification:
 
 **GET `/api/health`** - Basic health check
+
 - Always returns HTTP 200 if server is running
 - Used by load balancers for basic liveness checks
 - Returns: status, timestamp, uptime, version, environment
 
 **GET `/api/ready`** - Readiness check
+
 - Verifies all critical dependencies (Database, Redis)
 - Returns HTTP 200 if ready, HTTP 503 if not ready
 - Used by Kubernetes readiness probes
 - Includes response times for each dependency check
 
 **Implementation:**
+
 - Location: `server/routes/health.ts`
 - Database check: Verifies connection with `SELECT 1` query
 - Redis check: Optional (falls back to in-memory if not configured)
 - Error handling: Graceful degradation with detailed status
 
 **Usage:**
+
 ```bash
 # Basic health check
 curl http://localhost:3000/api/health
@@ -514,7 +536,7 @@ curl http://localhost:3000/api/health
 curl http://localhost:3000/api/ready
 ```
 
-**See Also:** [Health Check Endpoints Documentation](./HEALTH_CHECK_ENDPOINTS.md) for detailed usage, Kubernetes configuration, and troubleshooting.
+**See Also:** [Health Check Endpoints Documentation](./devops-deploy/monitoring/HEALTH_CHECK_ENDPOINTS.md) for detailed usage, Kubernetes configuration, and troubleshooting.
 
 ### Logging
 
@@ -523,12 +545,14 @@ All application logging uses structured logging via Pino:
 **Location:** `server/_core/logger.ts`
 
 **Log Levels:**
+
 - `logger.error()` - Errors requiring attention
 - `logger.warn()` - Warnings and non-critical issues
 - `logger.info()` - Informational messages
 - `logger.debug()` - Debug information (development only)
 
 **Structured Logging Format:**
+
 ```typescript
 import { logger } from "./_core/logger";
 
@@ -542,11 +566,12 @@ console.log("User logged in"); // Don't use
 ```
 
 **Recent Improvements:**
+
 - Replaced all `console.log/error/warn` calls with structured logger
 - Consistent error logging format across all modules
 - Error context included in all log entries
 
-**See Also:** [Error Handling Guide](./ERROR_HANDLING_GUIDE.md) for error logging best practices.
+**See Also:** [Error Handling Guide](./development-notes/fixes/ERROR_HANDLING_GUIDE.md) for error logging best practices.
 
 ### Analytics Tracking
 

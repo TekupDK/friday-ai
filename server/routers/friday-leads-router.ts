@@ -13,8 +13,9 @@ import {
   leads,
   customerProfiles,
   customerInvoices,
+  type CustomerInvoice,
 } from "../../drizzle/schema";
-import { eq, and, desc, sql, or, ilike } from "drizzle-orm";
+import { eq, and, desc, sql, or, ilike, inArray } from "drizzle-orm";
 import { withDatabaseErrorHandling } from "../_core/error-handling";
 
 /**
@@ -72,31 +73,60 @@ export const fridayLeadsRouter = router({
         };
       }
 
-      // Get customer profiles and optionally invoices
-      const results = await Promise.all(
-        matchingLeads.map(async lead => {
-          const profile = await db
+      // ✅ PERFORMANCE FIX: Use batch queries instead of N+1 queries
+      // Get all customer profiles in one query
+      const leadIds = matchingLeads.map(lead => lead.id);
+      const allProfiles = await withDatabaseErrorHandling(
+        async () => {
+          return await db
             .select()
             .from(customerProfiles)
-            .where(eq(customerProfiles.leadId, lead.id))
-            .limit(1);
+            .where(inArray(customerProfiles.leadId, leadIds));
+        },
+        "Failed to fetch customer profiles"
+      );
 
-          let invoices: any[] = [];
-          if (input.includeInvoices && profile.length > 0 && profile[0]) {
-            invoices = await db
+      // Create a map for quick lookup: leadId -> profile
+      const profileMap = new Map(
+        allProfiles.map(profile => [profile.leadId, profile])
+      );
+
+      // ✅ PERFORMANCE FIX: Batch fetch all invoices if requested
+      let invoicesMap = new Map<number, CustomerInvoice[]>();
+      if (input.includeInvoices && allProfiles.length > 0) {
+        const customerIds = allProfiles.map(profile => profile.id);
+        const allInvoices = await withDatabaseErrorHandling(
+          async () => {
+            return await db
               .select()
               .from(customerInvoices)
-              .where(eq(customerInvoices.customerId, profile[0].id))
+              .where(inArray(customerInvoices.customerId, customerIds))
               .orderBy(desc(customerInvoices.entryDate));
-          }
+          },
+          "Failed to fetch invoices"
+        );
 
-          return {
-            lead,
-            profile: profile[0] || null,
-            invoices,
-          };
-        })
-      );
+        // Group invoices by customerId
+        for (const invoice of allInvoices) {
+          if (invoice.customerId) {
+            const existing = invoicesMap.get(invoice.customerId) || [];
+            existing.push(invoice);
+            invoicesMap.set(invoice.customerId, existing);
+          }
+        }
+      }
+
+      // Build results using the maps (O(1) lookups)
+      const results = matchingLeads.map(lead => {
+        const profile = profileMap.get(lead.id) || null;
+        const invoices = profile ? (invoicesMap.get(profile.id) || []) : [];
+
+        return {
+          lead,
+          profile,
+          invoices,
+        };
+      });
 
       return {
         found: true,

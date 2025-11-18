@@ -36,9 +36,9 @@ import { AIAnalyticsDashboard } from "@/components/docs/AIAnalyticsDashboard";
 import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
 import {
-  useKeyboardShortcuts,
-  KeyboardShortcutsHint,
-} from "@/hooks/docs/useKeyboardShortcuts";
+  useDocsKeyboardShortcuts,
+  DocsKeyboardShortcutsHint,
+} from "@/hooks/docs/useDocsKeyboardShortcuts";
 import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
 import {
   Dialog,
@@ -120,7 +120,7 @@ export default function DocsPage() {
     useAIGeneration();
 
   // Keyboard shortcuts
-  useKeyboardShortcuts({
+  useDocsKeyboardShortcuts({
     onSearch: () => {
       if (view === "list") {
         searchInputRef.current?.focus();
@@ -193,7 +193,7 @@ export default function DocsPage() {
                   <DialogHeader>
                     <DialogTitle>Keyboard Shortcuts</DialogTitle>
                   </DialogHeader>
-                  <KeyboardShortcutsHint />
+                  <DocsKeyboardShortcutsHint />
                 </DialogContent>
               </Dialog>
 

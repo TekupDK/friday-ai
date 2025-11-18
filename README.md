@@ -286,8 +286,8 @@ Critical business logic embedded in AI system prompt:
 1. **Clone repository**
 
    ```bash
-   git clone <https://github.com/TekupDK/tekup-friday.git>
-   cd tekup-friday
+   git clone https://github.com/TekupDK/friday-ai.git
+   cd friday-ai
    ```
 
 ````text

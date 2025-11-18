@@ -1,18 +1,21 @@
 import { TRPCError } from "@trpc/server";
-import { and, desc, eq, sql, or, ilike } from "drizzle-orm";
+import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
 import { z } from "zod";
-import { withDatabaseErrorHandling } from "../_core/error-handling";
+
 import {
   customerNotesInFridayAi,
   customerProfiles,
   customerProperties,
 } from "../../drizzle/schema";
+import { withDatabaseErrorHandling } from "../_core/error-handling";
 import { protectedProcedure, router } from "../_core/trpc";
+import { validationSchemas } from "../_core/validation";
 import {
   getCustomerHealthScore,
   updateCustomerHealthScore,
 } from "../customer-health-score";
 import { getDb } from "../db";
+import { getCachedQuery, invalidateCache } from "../db-cache";
 
 /**
  * CRM Customer Router
@@ -20,11 +23,85 @@ import { getDb } from "../db";
  * - Customer Properties (Ejendomme): list/create/update/delete
  */
 export const crmCustomerRouter = router({
+  // Create customer profile
+  createProfile: protectedProcedure
+    .input(
+      z.object({
+        name: validationSchemas.name,
+        email: validationSchemas.email,
+        phone: validationSchemas.phone.optional(),
+        status: z
+          .enum(["new", "active", "inactive", "vip", "at_risk"])
+          .optional()
+          .default("new"),
+        customerType: z
+          .enum(["private", "erhverv"])
+          .optional()
+          .default("private"),
+        tags: z.array(z.string()).optional().default([]),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database connection failed",
+        });
+      }
+
+      const userId = ctx.user.id;
+
+      // Check if profile already exists
+      const existing = await db
+        .select()
+        .from(customerProfiles)
+        .where(
+          and(
+            eq(customerProfiles.userId, userId),
+            eq(customerProfiles.email, input.email)
+          )
+        )
+        .limit(1);
+
+      if (existing.length > 0) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "Customer profile with this email already exists",
+        });
+      }
+
+      const [created] = await db
+        .insert(customerProfiles)
+        .values({
+          userId,
+          email: input.email,
+          name: input.name,
+          phone: input.phone,
+          status: input.status,
+          customerType: input.customerType,
+          tags: input.tags,
+          totalInvoiced: 0,
+          totalPaid: 0,
+          balance: 0,
+          invoiceCount: 0,
+          emailCount: 0,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        })
+        .returning();
+
+      // Invalidate cache
+      await invalidateCache("crm-customer-list").catch(() => {});
+
+      return created;
+    }),
+
   // List customer profiles with optional search and pagination
   listProfiles: protectedProcedure
     .input(
       z.object({
-        search: z.string().optional(),
+        search: validationSchemas.searchQuery.optional(),
         limit: z.number().min(1).max(100).optional().default(20),
         offset: z.number().min(0).optional().default(0),
       })
@@ -40,31 +117,42 @@ export const crmCustomerRouter = router({
 
       const userId = ctx.user.id;
 
-      // ✅ SECURITY FIX: Use parameterized queries with Drizzle's ilike for case-insensitive search
-      // ilike properly parameterizes the search value, preventing SQL injection
-      const whereClause = input.search
-        ? and(
-            eq(customerProfiles.userId, userId),
-            or(
-              ilike(customerProfiles.name, `%${input.search}%`),
-              ilike(customerProfiles.email, `%${input.search}%`),
-              ilike(customerProfiles.phone, `%${input.search}%`)
-            )!
-          )
-        : eq(customerProfiles.userId, userId);
-
-      // ✅ ERROR HANDLING: Wrap database query with error handling
-      return await withDatabaseErrorHandling(
+      // ✅ PERFORMANCE: Cache customer list queries (5 minute TTL)
+      // Cache key includes search, limit, offset to ensure correct results
+      return await getCachedQuery(
+        "crm-customer-list",
         async () => {
-          return await db
-            .select()
-            .from(customerProfiles)
-            .where(whereClause)
-            .orderBy(desc(customerProfiles.updatedAt))
-            .limit(input.limit)
-            .offset(input.offset);
+          // ✅ SECURITY FIX: Use parameterized queries with Drizzle's ilike for case-insensitive search
+          // ilike properly parameterizes the search value, preventing SQL injection
+          const whereClause = input.search
+            ? and(
+                eq(customerProfiles.userId, userId),
+                or(
+                  ilike(customerProfiles.name, `%${input.search}%`),
+                  ilike(customerProfiles.email, `%${input.search}%`),
+                  ilike(customerProfiles.phone, `%${input.search}%`)
+                )!
+              )
+            : eq(customerProfiles.userId, userId);
+
+          // ✅ ERROR HANDLING: Wrap database query with error handling
+          return await withDatabaseErrorHandling(async () => {
+            return await db
+              .select()
+              .from(customerProfiles)
+              .where(whereClause)
+              .orderBy(desc(customerProfiles.updatedAt))
+              .limit(input.limit)
+              .offset(input.offset);
+          }, "Failed to list customer profiles");
         },
-        "Failed to list customer profiles"
+        {
+          userId,
+          search: input.search || "",
+          limit: input.limit,
+          offset: input.offset,
+        },
+        { ttl: 300 } // 5 minutes cache
       );
     }),
 
@@ -127,12 +215,12 @@ export const crmCustomerRouter = router({
     .input(
       z.object({
         customerProfileId: z.number(),
-        address: z.string().min(3),
-        city: z.string().optional(),
-        postalCode: z.string().optional(),
+        address: validationSchemas.address,
+        city: validationSchemas.city.optional(),
+        postalCode: validationSchemas.postalCode.optional(),
         isPrimary: z.boolean().optional().default(false),
-        attributes: z.record(z.string(), z.any()).optional(),
-        notes: z.string().optional(),
+        attributes: z.record(z.string().max(100), z.any()).optional(),
+        notes: validationSchemas.notes,
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -174,6 +262,12 @@ export const crmCustomerRouter = router({
           updatedAt: new Date().toISOString(),
         })
         .returning();
+
+      // ✅ PERFORMANCE: Invalidate customer list cache when properties change
+      await invalidateCache("crm-customer-list").catch(() => {
+        // Ignore cache invalidation errors
+      });
+
       return created;
     }),
 
@@ -182,12 +276,12 @@ export const crmCustomerRouter = router({
     .input(
       z.object({
         id: z.number(),
-        address: z.string().optional(),
-        city: z.string().optional(),
-        postalCode: z.string().optional(),
+        address: validationSchemas.address.optional(),
+        city: validationSchemas.city.optional(),
+        postalCode: validationSchemas.postalCode.optional(),
         isPrimary: z.boolean().optional(),
-        attributes: z.record(z.string(), z.any()).optional(),
-        notes: z.string().optional(),
+        attributes: z.record(z.string().max(100), z.any()).optional(),
+        notes: validationSchemas.notes,
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -242,6 +336,12 @@ export const crmCustomerRouter = router({
         .set(updates)
         .where(eq(customerProperties.id, input.id))
         .returning();
+
+      // ✅ PERFORMANCE: Invalidate customer list cache when properties change
+      await invalidateCache("crm-customer-list").catch(() => {
+        // Ignore cache invalidation errors
+      });
+
       return updated[0];
     }),
 
@@ -283,6 +383,12 @@ export const crmCustomerRouter = router({
       await db
         .delete(customerProperties)
         .where(eq(customerProperties.id, input.id));
+
+      // ✅ PERFORMANCE: Invalidate customer list cache when properties change
+      await invalidateCache("crm-customer-list").catch(() => {
+        // Ignore cache invalidation errors
+      });
+
       return { success: true };
     }),
 
@@ -293,7 +399,7 @@ export const crmCustomerRouter = router({
     .input(
       z.object({
         customerProfileId: z.number(),
-        content: z.string().min(1).max(5000),
+        content: validationSchemas.content.min(1),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -381,7 +487,7 @@ export const crmCustomerRouter = router({
     .input(
       z.object({
         id: z.number(),
-        content: z.string().min(1).max(5000),
+        content: validationSchemas.content.min(1),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -516,7 +622,7 @@ export const crmCustomerRouter = router({
     .input(
       z.object({
         customerProfileId: z.number(),
-        threadId: z.string(),
+        threadId: validationSchemas.threadId,
       })
     )
     .mutation(async ({ ctx, input }) => {

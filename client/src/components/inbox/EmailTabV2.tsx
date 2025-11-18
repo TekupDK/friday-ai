@@ -102,6 +102,39 @@ export default function EmailTabV2({
   const bulkArchive = trpc.inbox.email.bulkArchive.useMutation();
   const bulkDelete = trpc.inbox.email.bulkDelete.useMutation();
 
+  // Individual email action mutations
+  const archiveMutation = trpc.inbox.email.archive.useMutation({
+    onSuccess: () => {
+      utils.inbox.email.listPaged.invalidate();
+      toast.success("Email arkiveret");
+      setSelectedThreadId(null);
+    },
+    onError: (error) => {
+      toast.error(`Fejl ved arkivering: ${error.message}`);
+    },
+  });
+
+  const starMutation = trpc.inbox.email.star.useMutation({
+    onSuccess: () => {
+      utils.inbox.email.listPaged.invalidate();
+      toast.success("Email markeret som stjerne");
+    },
+    onError: (error) => {
+      toast.error(`Fejl ved markering: ${error.message}`);
+    },
+  });
+
+  const deleteMutation = trpc.inbox.email.delete.useMutation({
+    onSuccess: () => {
+      utils.inbox.email.listPaged.invalidate();
+      toast.success("Email slettet");
+      setSelectedThreadId(null);
+    },
+    onError: (error) => {
+      toast.error(`Fejl ved sletning: ${error.message}`);
+    },
+  });
+
   // API call with optimized configuration
   const {
     data: emailData,
@@ -299,11 +332,11 @@ export default function EmailTabV2({
         case "markAsRead": {
           const threadIds = Array.from(selectedEmails);
           if (threadIds.length === 0) break;
-          
+
           bulkMarkAsRead.mutate(
             { threadIds },
             {
-              onSuccess: (result) => {
+              onSuccess: result => {
                 toast.success(
                   `Marked ${result.processed} email${result.processed !== 1 ? "s" : ""} as read`
                 );
@@ -311,7 +344,7 @@ export default function EmailTabV2({
                 // Invalidate query to refresh list
                 utils.inbox.email.listPaged.invalidate();
               },
-              onError: (error) => {
+              onError: error => {
                 toast.error(`Failed to mark as read: ${error.message}`);
               },
             }
@@ -321,11 +354,11 @@ export default function EmailTabV2({
         case "markAsUnread": {
           const threadIds = Array.from(selectedEmails);
           if (threadIds.length === 0) break;
-          
+
           bulkMarkAsUnread.mutate(
             { threadIds },
             {
-              onSuccess: (result) => {
+              onSuccess: result => {
                 toast.success(
                   `Marked ${result.processed} email${result.processed !== 1 ? "s" : ""} as unread`
                 );
@@ -333,7 +366,7 @@ export default function EmailTabV2({
                 // Invalidate query to refresh list
                 utils.inbox.email.listPaged.invalidate();
               },
-              onError: (error) => {
+              onError: error => {
                 toast.error(`Failed to mark as unread: ${error.message}`);
               },
             }
@@ -343,11 +376,11 @@ export default function EmailTabV2({
         case "archive": {
           const threadIds = Array.from(selectedEmails);
           if (threadIds.length === 0) break;
-          
+
           bulkArchive.mutate(
             { threadIds },
             {
-              onSuccess: (result) => {
+              onSuccess: result => {
                 toast.success(
                   `Archived ${result.processed} email${result.processed !== 1 ? "s" : ""}`
                 );
@@ -355,7 +388,7 @@ export default function EmailTabV2({
                 // Invalidate query to refresh list
                 utils.inbox.email.listPaged.invalidate();
               },
-              onError: (error) => {
+              onError: error => {
                 toast.error(`Failed to archive: ${error.message}`);
               },
             }
@@ -365,7 +398,7 @@ export default function EmailTabV2({
         case "delete": {
           const threadIds = Array.from(selectedEmails);
           if (threadIds.length === 0) break;
-          
+
           // Confirm before deleting
           if (
             !confirm(
@@ -374,11 +407,11 @@ export default function EmailTabV2({
           ) {
             break;
           }
-          
+
           bulkDelete.mutate(
             { threadIds },
             {
-              onSuccess: (result) => {
+              onSuccess: result => {
                 toast.success(
                   `Deleted ${result.processed} email${result.processed !== 1 ? "s" : ""}`
                 );
@@ -386,7 +419,7 @@ export default function EmailTabV2({
                 // Invalidate query to refresh list
                 utils.inbox.email.listPaged.invalidate();
               },
-              onError: (error) => {
+              onError: error => {
                 toast.error(`Failed to delete: ${error.message}`);
               },
             }
@@ -403,7 +436,16 @@ export default function EmailTabV2({
           console.log("Bulk action:", action, params);
       }
     },
-    [selectedEmails, emails, handleCreateLead, bulkMarkAsRead, bulkMarkAsUnread, bulkArchive, bulkDelete, utils]
+    [
+      selectedEmails,
+      emails,
+      handleCreateLead,
+      bulkMarkAsRead,
+      bulkMarkAsUnread,
+      bulkArchive,
+      bulkDelete,
+      utils,
+    ]
   );
 
   // Handle search changes
@@ -430,20 +472,27 @@ export default function EmailTabV2({
     selectedThreadId,
     onArchive: () => {
       if (selectedThreadId) {
-        console.log("Archive:", selectedThreadId);
-        // TODO: Implement archive via TRPC
+        archiveMutation.mutate({ threadId: selectedThreadId });
       }
     },
     onStar: () => {
       if (selectedThreadId) {
-        console.log("Star:", selectedThreadId);
-        // TODO: Implement star via TRPC
+        // Find the selected email to get messageId
+        const selectedEmail = emails.find(
+          (e: EnhancedEmailMessage) => e.threadId === selectedThreadId
+        );
+        // Use id or messageId - Gmail uses threadId for threads, but we need messageId for star
+        const messageId = (selectedEmail as any)?.id || (selectedEmail as any)?.messageId;
+        if (messageId) {
+          starMutation.mutate({ messageId });
+        } else {
+          toast.error("Kunne ikke finde email ID");
+        }
       }
     },
     onDelete: () => {
       if (selectedThreadId) {
-        console.log("Delete:", selectedThreadId);
-        // TODO: Implement delete via TRPC
+        deleteMutation.mutate({ threadId: selectedThreadId });
       }
     },
     onClearSelection: () => {

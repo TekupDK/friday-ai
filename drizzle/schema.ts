@@ -105,6 +105,24 @@ export const activityTypeInFridayAi = fridayAi.enum("activity_type", [
   "property_added",
 ]);
 
+// =============================================================================
+// SUBSCRIPTION: Enums for subscription system
+// =============================================================================
+export const subscriptionStatusInFridayAi = fridayAi.enum("subscription_status", [
+  "active",
+  "paused",
+  "cancelled",
+  "expired",
+]);
+
+export const subscriptionPlanTypeInFridayAi = fridayAi.enum("subscription_plan_type", [
+  "tier1",      // Basis Abonnement (1,200 kr/måned)
+  "tier2",      // Premium Abonnement (1,800 kr/måned)
+  "tier3",      // VIP Abonnement (2,500 kr/måned)
+  "flex_basis", // Flex Basis (1,000 kr/måned)
+  "flex_plus",  // Flex Plus (1,500 kr/måned)
+]);
+
 export const riskLevelInFridayAi = fridayAi.enum("risk_level", [
   "low",
   "medium",
@@ -629,6 +647,128 @@ export const bookingsInFridayAi = fridayAi.table(
       table.scheduledStart.asc().nullsLast()
     ),
     index("idx_bookings_status").using("btree", table.status.asc().nullsLast()),
+  ]
+);
+
+// =============================================================================
+// SUBSCRIPTION: Subscription Tables
+// =============================================================================
+export const subscriptionsInFridayAi = fridayAi.table(
+  "subscriptions",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    customerProfileId: integer().notNull(),
+    planType: subscriptionPlanTypeInFridayAi().notNull(),
+    monthlyPrice: integer().notNull(), // Price in øre (e.g., 120000 = 1,200 kr)
+    includedHours: numeric({ precision: 5, scale: 2 }).notNull(), // Hours included per month
+    startDate: timestamp({ mode: "string" }).notNull(),
+    endDate: timestamp({ mode: "string" }), // null = no end date (ongoing)
+    status: subscriptionStatusInFridayAi().default("active").notNull(),
+    autoRenew: boolean().default(true).notNull(),
+    nextBillingDate: timestamp({ mode: "string" }), // Next billing date
+    cancelledAt: timestamp({ mode: "string" }), // When subscription was cancelled
+    cancellationReason: text(), // Reason for cancellation
+    metadata: jsonb(), // Additional subscription data (discounts, referrals, etc.)
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    // ✅ PERFORMANCE: Index for user-scoped queries
+    index("idx_subscriptions_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for customer lookups
+    index("idx_subscriptions_customer_profile_id").using(
+      "btree",
+      table.customerProfileId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for status filtering
+    index("idx_subscriptions_status").using(
+      "btree",
+      table.status.asc().nullsLast()
+    ),
+    // ✅ PERFORMANCE: Index for next billing date (used in billing jobs)
+    index("idx_subscriptions_next_billing_date").using(
+      "btree",
+      table.nextBillingDate.asc().nullsLast()
+    ),
+    // ✅ PERFORMANCE: Index for end date (used in expiration queries)
+    index("idx_subscriptions_end_date").using(
+      "btree",
+      table.endDate.asc().nullsLast()
+    ),
+  ]
+);
+
+export const subscriptionUsageInFridayAi = fridayAi.table(
+  "subscription_usage",
+  {
+    id: serial().primaryKey().notNull(),
+    subscriptionId: integer().notNull(),
+    bookingId: integer(), // Optional: link to specific booking
+    hoursUsed: numeric({ precision: 5, scale: 2 }).notNull(),
+    date: timestamp({ mode: "string" }).notNull(), // Date of usage
+    month: integer().notNull(), // Month (1-12) for quick filtering
+    year: integer().notNull(), // Year for quick filtering
+    metadata: jsonb(), // Additional usage data
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    // ✅ PERFORMANCE: Index for subscription lookups
+    index("idx_subscription_usage_subscription_id").using(
+      "btree",
+      table.subscriptionId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for booking lookups
+    index("idx_subscription_usage_booking_id").using(
+      "btree",
+      table.bookingId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Composite index for monthly usage queries
+    index("idx_subscription_usage_subscription_month_year").using(
+      "btree",
+      table.subscriptionId.asc().nullsLast().op("int4_ops"),
+      table.year.asc().nullsLast().op("int4_ops"),
+      table.month.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for date filtering
+    index("idx_subscription_usage_date").using(
+      "btree",
+      table.date.asc().nullsLast()
+    ),
+  ]
+);
+
+export const subscriptionHistoryInFridayAi = fridayAi.table(
+  "subscription_history",
+  {
+    id: serial().primaryKey().notNull(),
+    subscriptionId: integer().notNull(),
+    action: varchar({ length: 100 }).notNull(), // e.g., "created", "updated", "cancelled", "renewed", "plan_changed"
+    oldValue: jsonb(), // Previous state
+    newValue: jsonb(), // New state
+    changedBy: integer(), // userId who made the change (null = system)
+    timestamp: timestamp({ mode: "string" }).defaultNow().notNull(),
+    metadata: jsonb(), // Additional context
+  },
+  table => [
+    // ✅ PERFORMANCE: Index for subscription lookups
+    index("idx_subscription_history_subscription_id").using(
+      "btree",
+      table.subscriptionId.asc().nullsLast().op("int4_ops")
+    ),
+    // ✅ PERFORMANCE: Index for timestamp (used in audit queries)
+    index("idx_subscription_history_timestamp").using(
+      "btree",
+      table.timestamp.desc().nullsLast()
+    ),
+    // ✅ PERFORMANCE: Index for action filtering
+    index("idx_subscription_history_action").using(
+      "btree",
+      table.action.asc().nullsLast().op("text_ops")
+    ),
   ]
 );
 
@@ -1170,6 +1310,9 @@ export const customerSegmentMembers = customerSegmentMembersInFridayAi;
 export const customerDocuments = customerDocumentsInFridayAi;
 export const auditLog = auditLogInFridayAi;
 export const customerRelationships = customerRelationshipsInFridayAi;
+export const subscriptions = subscriptionsInFridayAi;
+export const subscriptionUsage = subscriptionUsageInFridayAi;
+export const subscriptionHistory = subscriptionHistoryInFridayAi;
 
 // =============================================================================
 // DOCUMENTATION SYSTEM TABLES
@@ -1272,8 +1415,7 @@ export type AnalyticsEvent = typeof analyticsEventsInFridayAi.$inferSelect;
 export type InsertAnalyticsEvent =
   typeof analyticsEventsInFridayAi.$inferInsert;
 export type ABTestMetric = typeof abTestMetricsInFridayAi.$inferSelect;
-export type InsertABTestMetric =
-  typeof abTestMetricsInFridayAi.$inferInsert;
+export type InsertABTestMetric = typeof abTestMetricsInFridayAi.$inferInsert;
 export type UserPreferences = typeof userPreferencesInFridayAi.$inferSelect;
 export type InsertUserPreferences =
   typeof userPreferencesInFridayAi.$inferInsert;
@@ -1432,4 +1574,12 @@ export type CustomerRelationship =
   typeof customerRelationshipsInFridayAi.$inferSelect;
 export type InsertCustomerRelationship =
   typeof customerRelationshipsInFridayAi.$inferInsert;
-typeof responseSuggestionsInFridayAi.$inferInsert;
+export type Subscription = typeof subscriptionsInFridayAi.$inferSelect;
+export type InsertSubscription = typeof subscriptionsInFridayAi.$inferInsert;
+export type SubscriptionUsage = typeof subscriptionUsageInFridayAi.$inferSelect;
+export type InsertSubscriptionUsage =
+  typeof subscriptionUsageInFridayAi.$inferInsert;
+export type SubscriptionHistory =
+  typeof subscriptionHistoryInFridayAi.$inferSelect;
+export type InsertSubscriptionHistory =
+  typeof subscriptionHistoryInFridayAi.$inferInsert;

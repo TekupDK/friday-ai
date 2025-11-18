@@ -1,0 +1,42 @@
+version: 2
+updates:
+  # Enable version updates for npm (pnpm)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    # Group updates to reduce PR noise
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+    # Ignore major version updates (require manual review)
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+    # Labels for PRs
+    labels:
+      - "dependencies"
+      - "automated"
+    # Commit message
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    # Reviewers (optional)
+    reviewers:
+      - "TekupDK"
+    # Assignees (optional)
+    assignees:
+      - "TekupDK"
+

@@ -1,8 +1,8 @@
 # Friday AI Chat - API Reference
 
-**Author:** Manus AI
-**Last Updated:** January 28, 2025
-**Version:** 1.0.0
+**Author:** Manus AI  
+**Last Updated:** January 28, 2025  
+**Version:** 1.1.0
 
 ## Overview
 
@@ -10,9 +10,10 @@ This document provides a complete reference for all tRPC API endpoints, database
 
 ## Error Handling
 
-All API endpoints use error sanitization to prevent information leakage in production. See [Error Sanitization Guide](../docs/ERROR_SANITIZATION_GUIDE.md) for details.
+All API endpoints use error sanitization to prevent information leakage in production. See [Error Sanitization Guide](./development-notes/fixes/ERROR_SANITIZATION_GUIDE.md) for details.
 
 **Quick Reference:**
+
 ```typescript
 import { sanitizeError, createSafeTRPCError } from "../_core/errors";
 
@@ -44,17 +45,169 @@ All `protectedProcedure` endpoints require a valid session cookie. The cookie is
 **Cookie Name:** `friday_session` (defined in `COOKIE_NAME` constant)
 **Cookie Options:** HTTP-only, Secure (production), SameSite=Lax
 
+### Authorization & RBAC
+
+The system implements Role-Based Access Control (RBAC) with four role levels:
+
+- **guest** - Unauthenticated users (lowest privilege)
+- **user** - Standard authenticated users
+- **admin** - Administrators with elevated privileges
+- **owner** - System owner with full access (highest privilege)
+
+**Procedure Types:**
+
+- `publicProcedure` - No authentication required
+- `protectedProcedure` - Requires authentication (any logged-in user)
+- `adminProcedure` - Requires admin role
+- `roleProcedure(role)` - Requires minimum role level (user/admin/owner)
+- `permissionProcedure(permission)` - Requires specific permission
+- `ownerProcedure` - Owner-only access
+
+**RBAC-Protected Endpoints:**
+
+- `inbox.invoices.create` - Requires `create_invoice` permission (owner-only)
+- `automation.createInvoiceFromJob` - Requires `create_invoice` permission (owner-only)
+- `inbox.email.bulkDelete` - Requires `delete_email` permission (admin-only)
+
+**Ownership Verification:**
+
+All resource endpoints verify ownership:
+
+- Customer endpoints verify `customerId` ownership
+- Lead endpoints verify `leadId` ownership
+- Conversation endpoints verify `conversationId` ownership
+
+**See Also:** [RBAC_GUIDE.md](./core/guides/RBAC_GUIDE.md) for comprehensive RBAC documentation.
+
+### Rate Limiting
+
+Rate limiting is implemented using Redis-based sliding window rate limiting with in-memory fallback. Rate limits are enforced per endpoint and per user/IP.
+
+**Rate Limited Endpoints:**
+
+- **`auth.login`**: 5 attempts per 15 minutes per IP address
+  - Error: `TOO_MANY_REQUESTS` with message indicating retry time
+- **`chat.sendMessage`**: 10 messages per minute per user
+  - Error: `TOO_MANY_REQUESTS` with message indicating retry time
+
+**Rate Limit Error Response:**
+
+```typescript
+{
+  code: "TOO_MANY_REQUESTS",
+  message: "Too many requests. Please try again in X seconds."
+}
+```
+
+---
+
+## REST API Endpoints
+
+### Health Check Endpoints
+
+Health check endpoints provide monitoring and deployment verification capabilities. See [Health Check Endpoints Documentation](./devops-deploy/monitoring/HEALTH_CHECK_ENDPOINTS.md) for complete details.
+
+#### GET `/api/health`
+
+Basic health check endpoint that always returns 200 if the server is running.
+
+**Purpose:** Used by load balancers and basic monitoring to verify the server process is alive.
+
+**Response:** HTTP 200
+
+**Response Body:**
+
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-11-16T11:00:00.000Z",
+  "uptime": 3600,
+  "version": "2.0.0",
+  "environment": "production",
+  "responseTime": "2ms"
+}
+```
+
+**Example:**
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+#### GET `/api/ready`
+
+Readiness check endpoint that verifies all critical dependencies are available.
+
+**Purpose:** Used by Kubernetes readiness probes to determine if the pod should receive traffic.
+
+**Response:**
+
+- HTTP 200 if all dependencies are ready
+- HTTP 503 if any critical dependency is unavailable
+
+**Response Body (Ready):**
+
+```json
+{
+  "status": "ready",
+  "timestamp": "2025-11-16T11:00:00.000Z",
+  "checks": {
+    "database": {
+      "status": "ok",
+      "responseTime": 15
+    },
+    "redis": {
+      "status": "ok",
+      "responseTime": 8
+    }
+  }
+}
+```
+
+**Response Body (Not Ready):**
+
+```json
+{
+  "status": "not_ready",
+  "timestamp": "2025-11-16T11:00:00.000Z",
+  "checks": {
+    "database": {
+      "status": "error",
+      "message": "Database connection not available"
+    },
+    "redis": {
+      "status": "not_configured",
+      "message": "Redis not configured (using in-memory fallback)"
+    }
+  }
+}
+```
+
+**Dependencies Checked:**
+
+- **Database:** Verifies connection with `SELECT 1` query
+- **Redis:** Optional check (falls back to in-memory if not configured)
+
+**Example:**
+
+```bash
+curl http://localhost:3000/api/ready
+```
+
+**See Also:** [Health Check Endpoints Documentation](./devops-deploy/monitoring/HEALTH_CHECK_ENDPOINTS.md) for detailed usage, troubleshooting, and Kubernetes configuration examples.
+
 ---
 
 ## Error Handling
 
-All API endpoints use comprehensive error handling including error sanitization, retry logic, and circuit breakers. See [Error Handling Guide](./ERROR_HANDLING_GUIDE.md) and [Error Handling Implementation](./ERROR_HANDLING_IMPLEMENTATION.md) for complete documentation.
+All API endpoints use comprehensive error handling including error sanitization, retry logic, and circuit breakers. See [Error Handling Guide](./development-notes/fixes/ERROR_HANDLING_GUIDE.md) and [Error Handling Implementation](./development-notes/fixes/ERROR_HANDLING_IMPLEMENTATION.md) for complete documentation.
 
 ### Error Sanitization
 
 **Location:** `server/_core/errors.ts`
 
 Error messages are automatically sanitized based on the environment:
+
 - **Production:** Generic messages: `"An error occurred. Please try again later."`
 - **Development:** Full error messages for debugging
 
@@ -63,6 +216,7 @@ Error messages are automatically sanitized based on the environment:
 Sanitizes error messages to prevent exposing sensitive information.
 
 **Example:**
+
 ```typescript
 import { sanitizeError } from "../_core/errors";
 import { TRPCError } from "@trpc/server";
@@ -82,6 +236,7 @@ try {
 Convenience function that sanitizes and creates a TRPCError.
 
 **Example:**
+
 ```typescript
 import { createSafeTRPCError } from "../_core/errors";
 
@@ -101,13 +256,14 @@ try {
 Retries a function with exponential backoff for transient failures.
 
 **Example:**
+
 ```typescript
 import { retryWithBackoff } from "../_core/error-handling";
 
-const result = await retryWithBackoff(
-  async () => await fetchData(),
-  { maxAttempts: 3, initialDelayMs: 1000 }
-);
+const result = await retryWithBackoff(async () => await fetchData(), {
+  maxAttempts: 3,
+  initialDelayMs: 1000,
+});
 ```
 
 #### `createCircuitBreaker(config?): CircuitBreaker`
@@ -115,6 +271,7 @@ const result = await retryWithBackoff(
 Creates a circuit breaker to prevent cascading failures.
 
 **Example:**
+
 ```typescript
 import { createCircuitBreaker } from "../_core/error-handling";
 
@@ -127,6 +284,7 @@ const result = await breaker.execute(() => callExternalService());
 Wraps database operations with comprehensive error handling.
 
 **Example:**
+
 ```typescript
 import { withDatabaseErrorHandling } from "../_core/error-handling";
 
@@ -141,6 +299,7 @@ const users = await withDatabaseErrorHandling(
 Wraps external API calls with retry logic and error handling.
 
 **Example:**
+
 ```typescript
 import { withApiErrorHandling } from "../_core/error-handling";
 
@@ -151,9 +310,10 @@ const data = await withApiErrorHandling(
 ```
 
 **See Also:**
-- [Error Sanitization Guide](./ERROR_SANITIZATION_GUIDE.md) - Error message sanitization
-- [Error Handling Guide](./ERROR_HANDLING_GUIDE.md) - Usage guide
-- [Error Handling Implementation](./ERROR_HANDLING_IMPLEMENTATION.md) - Complete API reference
+
+- [Error Sanitization Guide](./development-notes/fixes/ERROR_SANITIZATION_GUIDE.md) - Error message sanitization
+- [Error Handling Guide](./development-notes/fixes/ERROR_HANDLING_GUIDE.md) - Usage guide
+- [Error Handling Implementation](./development-notes/fixes/ERROR_HANDLING_IMPLEMENTATION.md) - Complete API reference
 
 ---
 
@@ -167,7 +327,7 @@ Get current authenticated user information.
 **Input:** None
 **Output:**
 
-```typescript
+````typescript
 {
   id: number;
   openId: string;
@@ -185,6 +345,8 @@ Get current authenticated user information.
 ```typescript
 const { data: user } = trpc.auth.me.useQuery();
 if (user) {
+  // Frontend: Use browser console for debugging
+  // Backend: Use structured logger (see DEVELOPMENT_GUIDE.md)
   console.log(`Logged in as ${user.name}`);
 }
 
@@ -217,7 +379,7 @@ await logoutMutation.mutateAsync();
 
 ## Chat Router (`chat`)
 
-### `chat.conversations.list`
+### `chat.getConversations`
 
 Get all conversations for current user.
 
@@ -324,18 +486,25 @@ Array<{
 Send message and get AI response.
 
 **Type:** Mutation (Protected)
+
+**Rate Limit:** 10 messages per minute per user
+
 **Input:**
 
 ```typescript
 {
-  conversationId: number;
-  content: string;
-  model?: "gemini-2.5-flash" | "claude-3-5-sonnet" | "gpt-4o" | "manus-ai";
-  attachments?: Array<{
-    url: string;
-    name: string;
-    type: string;
-  }>;
+  conversationId: number; // Positive integer, required
+  content: string; // Required, min 1 char, max 5000 chars, cannot be only whitespace
+  model?: string; // Optional, max 100 chars
+  context?: {
+    selectedEmails?: string[]; // Optional, max 50 items, each string max 100 chars
+    calendarEvents?: any[]; // Optional, max 100 items
+    searchQuery?: string; // Optional, max 500 chars
+    hasEmails?: boolean; // Optional
+    hasCalendar?: boolean; // Optional
+    hasInvoices?: boolean; // Optional
+    page?: string; // Optional, max 100 chars
+  };
 }
 
 ```text
@@ -1076,6 +1245,369 @@ Send notification to project owner.
 
 ---
 
+## Subscription Router (`subscription`)
+
+Subscription management for recurring service plans.
+
+### `subscription.create`
+
+Create a new subscription for a customer.
+
+**Type:** Mutation (Protected)
+
+**Input:**
+
+```typescript
+{
+  customerProfileId: number;  // Positive integer
+  planType: "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus";
+  startDate?: string;        // ISO date string (optional)
+  autoRenew?: boolean;        // Default: true
+  metadata?: Record<string, any>;  // Optional metadata
+}
+```
+
+**Output:**
+
+```typescript
+Subscription {
+  id: number;
+  userId: number;
+  customerProfileId: number;
+  planType: string;
+  status: "active" | "paused" | "cancelled" | "expired";
+  monthlyPrice: number;
+  includedHours: string;
+  startDate: string;
+  endDate: string | null;
+  nextBillingDate: string;
+  autoRenew: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+```
+
+**Example:**
+
+```typescript
+const subscription = await trpc.subscription.create.mutate({
+  customerProfileId: 123,
+  planType: "tier1",
+  autoRenew: true,
+});
+```
+
+### `subscription.list`
+
+List subscriptions with optional filters.
+
+**Type:** Query (Protected)
+
+**Input:**
+
+```typescript
+{
+  status?: "active" | "paused" | "cancelled" | "expired" | "all";
+  customerProfileId?: number;  // Filter by customer
+}
+```
+
+**Output:**
+
+```typescript
+Subscription[]
+```
+
+**Example:**
+
+```typescript
+const { data } = trpc.subscription.list.useQuery({
+  status: "active",
+  customerProfileId: 123,
+});
+```
+
+### `subscription.get`
+
+Get a single subscription by ID.
+
+**Type:** Query (Protected)
+
+**Input:**
+
+```typescript
+{
+  subscriptionId: number;  // Positive integer
+}
+```
+
+**Output:**
+
+```typescript
+Subscription
+```
+
+**Errors:**
+
+- `NOT_FOUND` - Subscription not found or not accessible
+
+### `subscription.getByCustomer`
+
+Get subscription by customer profile ID.
+
+**Type:** Query (Protected)
+
+**Input:**
+
+```typescript
+{
+  customerProfileId: number;  // Positive integer
+}
+```
+
+**Output:**
+
+```typescript
+Subscription | null
+```
+
+### `subscription.update`
+
+Update subscription (plan change, pause, etc.).
+
+**Type:** Mutation (Protected)
+
+**Input:**
+
+```typescript
+{
+  subscriptionId: number;
+  planType?: "tier1" | "tier2" | "tier3" | "flex_basis" | "flex_plus";
+  status?: "active" | "paused" | "cancelled";
+  autoRenew?: boolean;
+  metadata?: Record<string, any>;
+}
+```
+
+**Output:**
+
+```typescript
+Subscription
+```
+
+**Errors:**
+
+- `NOT_FOUND` - Subscription not found
+
+### `subscription.cancel`
+
+Cancel a subscription.
+
+**Type:** Mutation (Protected)
+
+**Input:**
+
+```typescript
+{
+  subscriptionId: number;
+  reason?: string;
+  effectiveDate?: string;  // ISO date string
+}
+```
+
+**Output:**
+
+```typescript
+{
+  success: boolean;
+}
+```
+
+### `subscription.getUsage`
+
+Get usage statistics for a subscription.
+
+**Type:** Query (Protected)
+
+**Input:**
+
+```typescript
+{
+  subscriptionId: number;
+  year?: number;  // Default: current year
+  month?: number;  // Default: current month (1-12)
+}
+```
+
+**Output:**
+
+```typescript
+{
+  subscription: Subscription;
+  usage: {
+    hoursUsed: number;
+    hoursRemaining: number;
+    overage: boolean;
+    overageHours?: number;
+  };
+  totalUsage: number;
+}
+```
+
+### `subscription.getHistory`
+
+Get subscription history (audit trail).
+
+**Type:** Query (Protected)
+
+**Input:**
+
+```typescript
+{
+  subscriptionId: number;
+  limit?: number;  // Default: 50
+  offset?: number;  // Default: 0
+}
+```
+
+**Output:**
+
+```typescript
+SubscriptionHistory[]
+```
+
+### `subscription.stats`
+
+Get subscription statistics.
+
+**Type:** Query (Protected)
+
+**Input:** None
+
+**Output:**
+
+```typescript
+{
+  totalSubscriptions: number;
+  activeSubscriptions: number;
+  pausedSubscriptions: number;
+  cancelledSubscriptions: number;
+  expiredSubscriptions: number;
+}
+```
+
+### `subscription.getMRR`
+
+Calculate Monthly Recurring Revenue.
+
+**Type:** Query (Protected)
+
+**Input:** None
+
+**Output:**
+
+```typescript
+{
+  mrr: number;  // Monthly Recurring Revenue in øre
+  currency: string;  // "DKK"
+}
+```
+
+### `subscription.getChurnRate`
+
+Calculate churn rate for a period.
+
+**Type:** Query (Protected)
+
+**Input:**
+
+```typescript
+{
+  startDate: string;  // ISO date string
+  endDate: string;   // ISO date string
+}
+```
+
+**Output:**
+
+```typescript
+{
+  churnRate: number;  // Percentage (0-100)
+  period: {
+    startDate: string;
+    endDate: string;
+  };
+}
+```
+
+### `subscription.getARPU`
+
+Calculate Average Revenue Per User.
+
+**Type:** Query (Protected)
+
+**Input:** None
+
+**Output:**
+
+```typescript
+{
+  arpu: number;  // Average Revenue Per User in øre
+  currency: string;  // "DKK"
+}
+```
+
+### `subscription.applyDiscount`
+
+Apply discount to a subscription.
+
+**Type:** Mutation (Protected)
+
+**Input:**
+
+```typescript
+{
+  subscriptionId: number;
+  discountPercent: number;  // 0-100
+  discountAmount?: number;  // In øre (optional)
+  reason?: string;
+  validUntil?: string;  // ISO date string
+}
+```
+
+**Output:**
+
+```typescript
+Subscription
+```
+
+### `subscription.renew`
+
+Manually trigger subscription renewal (admin).
+
+**Type:** Mutation (Protected)
+
+**Input:**
+
+```typescript
+{
+  subscriptionId: number;
+}
+```
+
+**Output:**
+
+```typescript
+{
+  success: boolean;
+  nextBillingDate: string;
+}
+```
+
+**See Also:** [Subscription Implementation Documentation](./analysis/SUBSCRIPTION_FEATURE_IMPLEMENTATION_DETAILED.md) for detailed feature documentation.
+
+---
+
 ## Database Schema
 
 ### users
@@ -1587,7 +2119,7 @@ const limiter = rateLimit({
 
 app.use("/api/trpc", limiter);
 
-```
+````
 
 ---
 
@@ -1609,10 +2141,14 @@ app.use("/api/trpc", limiter);
 
 ## References
 
-This API reference is based on the codebase at <https://github.com/TekupDK/tekup-friday,> specifically the tRPC router definitions in `server/routers.ts`, `server/customer-router.ts`, and database schema in `drizzle/schema.ts`.
+This API reference is based on the codebase at <https://github.com/TekupDK/friday-ai>, specifically the tRPC router definitions in `server/routers.ts`, `server/customer-router.ts`, and database schema in `drizzle/schema.ts`.
 
 ---
 
 **Document Version:** 1.0.0
 **Last Updated:** November 1, 2025
 **Maintained by:** TekupDK Development Team
+
+```
+
+```

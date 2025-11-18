@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UI_CONSTANTS } from "@/constants/business";
 import { useCallback, useMemo, useState } from "react";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import {
   Archive,
   ChevronDown,
@@ -64,7 +64,7 @@ export default function EmailSearchV2({
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
 
   // Debounced search to avoid excessive API calls
-  const debouncedSearchQuery = useDebounce(
+  const debouncedSearchQuery = useDebouncedValue(
     localSearchQuery,
     UI_CONSTANTS.SEARCH_DEBOUNCE
   );

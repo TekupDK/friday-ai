@@ -10,8 +10,11 @@ import { JWT } from "google-auth-library";
 import { detectLeadSourceIntelligent } from "./lead-source-detector";
 import { getWorkflowFromDetection } from "./lead-source-workflows";
 import { enrichEmailFromSources } from "./email-enrichment";
-import { emailThreads } from "../drizzle/schema";
+import { emailThreads, users } from "../drizzle/schema";
 import { getDb } from "./db";
+import { eq } from "drizzle-orm";
+import { logger } from "./_core/logger";
+import { retryWithBackoff } from "./_core/error-handling";
 
 interface EmailMonitorConfig {
   pollInterval: number; // milliseconds
@@ -63,7 +66,7 @@ export class EmailMonitorService {
 
       return google.gmail({ version: "v1", auth });
     } catch (error) {
-      console.error("[EmailMonitor] Failed to initialize Gmail client:", error);
+      logger.error({ err: error }, "[EmailMonitor] Failed to initialize Gmail client");
       throw error;
     }
   }
@@ -73,11 +76,11 @@ export class EmailMonitorService {
    */
   async startMonitoring(): Promise<void> {
     if (this.isRunning) {
-      console.log("[EmailMonitor] Monitoring already running");
+      logger.info("[EmailMonitor] Monitoring already running");
       return;
     }
 
-    console.log("[EmailMonitor] 🚀 Starting real-time email monitoring...");
+    logger.info("[EmailMonitor] 🚀 Starting real-time email monitoring...");
     this.isRunning = true;
 
     // Initial scan
@@ -88,11 +91,12 @@ export class EmailMonitorService {
       try {
         await this.processNewEmails();
       } catch (error) {
-        console.error("[EmailMonitor] Error in polling cycle:", error);
+        logger.error({ err: error }, "[EmailMonitor] Error in polling cycle");
       }
     }, this.config.pollInterval);
 
-    console.log(
+    logger.info(
+      { pollInterval: this.config.pollInterval / 1000 },
       `[EmailMonitor] ✅ Monitoring started (polling every ${this.config.pollInterval / 1000}s)`
     );
   }
@@ -102,11 +106,11 @@ export class EmailMonitorService {
    */
   stopMonitoring(): void {
     if (!this.isRunning) {
-      console.log("[EmailMonitor] Monitoring not running");
+      logger.info("[EmailMonitor] Monitoring not running");
       return;
     }
 
-    console.log("[EmailMonitor] 🛑 Stopping email monitoring...");
+    logger.info("[EmailMonitor] 🛑 Stopping email monitoring...");
     this.isRunning = false;
 
     if (this.pollTimer) {
@@ -114,7 +118,7 @@ export class EmailMonitorService {
       this.pollTimer = null;
     }
 
-    console.log("[EmailMonitor] ✅ Monitoring stopped");
+    logger.info("[EmailMonitor] ✅ Monitoring stopped");
   }
 
   /**
@@ -122,20 +126,30 @@ export class EmailMonitorService {
    */
   private async processNewEmails(): Promise<NewEmailNotification[]> {
     try {
-      console.log("[EmailMonitor] 🔍 Scanning for new emails...");
+      logger.debug("[EmailMonitor] 🔍 Scanning for new emails...");
 
-      // Get unread emails
-      const response = await this.gmail.users.messages.list({
-        userId: "me",
-        labelIds: this.config.watchedLabels,
-        maxResults: this.config.maxEmailsPerPoll,
-        q: "is:unread", // Only unread emails
-      });
+      // Get unread emails with retry logic for rate limits
+      const response = await retryWithBackoff(
+        async () => {
+          return await this.gmail.users.messages.list({
+            userId: "me",
+            labelIds: this.config.watchedLabels,
+            maxResults: this.config.maxEmailsPerPoll,
+            q: "is:unread", // Only unread emails
+          });
+        },
+        {
+          maxAttempts: 3,
+          initialDelayMs: 2000,
+          maxDelayMs: 30000,
+          retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+        }
+      );
 
       const messages = response.data.messages || [];
       const newEmails: NewEmailNotification[] = [];
 
-      console.log(`[EmailMonitor] Found ${messages.length} unread emails`);
+      logger.debug({ count: messages.length }, `[EmailMonitor] Found ${messages.length} unread emails`);
 
       for (const message of messages) {
         const emailId = message.id;
@@ -152,27 +166,49 @@ export class EmailMonitorService {
             this.processedEmails.add(emailId);
           }
         } catch (error) {
-          console.error(
-            `[EmailMonitor] Error processing email ${emailId}:`,
-            error
+          logger.error(
+            { err: error, emailId },
+            `[EmailMonitor] Error processing email ${emailId}`
           );
         }
       }
 
       if (newEmails.length > 0) {
-        console.log(
-          `[EmailMonitor] 🎯 Processed ${newEmails.length} new emails:`
+        logger.info(
+          { count: newEmails.length },
+          `[EmailMonitor] 🎯 Processed ${newEmails.length} new emails`
         );
         newEmails.forEach(email => {
-          console.log(
-            `  - ${email.sourceDetection.source} (${email.sourceDetection.confidence}% confidence): ${email.subject}`
+          logger.debug(
+            {
+              source: email.sourceDetection.source,
+              confidence: email.sourceDetection.confidence,
+              subject: email.subject,
+            },
+            `[EmailMonitor] Processed: ${email.sourceDetection.source} (${email.sourceDetection.confidence}% confidence)`
           );
         });
       }
 
       return newEmails;
-    } catch (error) {
-      console.error("[EmailMonitor] Error processing new emails:", error);
+    } catch (error: any) {
+      const isRateLimit =
+        error?.code === 429 ||
+        error?.message?.includes("429") ||
+        error?.message?.includes("rate limit") ||
+        error?.message?.includes("RESOURCE_EXHAUSTED");
+      
+      if (isRateLimit) {
+        logger.warn(
+          { err: error },
+          "[EmailMonitor] Rate limit exceeded while processing new emails"
+        );
+      } else {
+        logger.error(
+          { err: error },
+          "[EmailMonitor] Error processing new emails"
+        );
+      }
       return [];
     }
   }
@@ -184,12 +220,22 @@ export class EmailMonitorService {
     message: any
   ): Promise<NewEmailNotification | null> {
     try {
-      // Get full email details
-      const emailDetail = await this.gmail.users.messages.get({
-        userId: "me",
-        id: message.id,
-        format: "full",
-      });
+      // Get full email details with retry logic
+      const emailDetail = await retryWithBackoff(
+        async () => {
+          return await this.gmail.users.messages.get({
+            userId: "me",
+            id: message.id,
+            format: "full",
+          });
+        },
+        {
+          maxAttempts: 3,
+          initialDelayMs: 1000,
+          maxDelayMs: 10000,
+          retryableErrors: ["429", "rate limit", "RESOURCE_EXHAUSTED", "503", "502"],
+        }
+      );
 
       const headers = emailDetail.data.payload.headers;
       const subject =
@@ -216,7 +262,7 @@ export class EmailMonitorService {
       const isLead = this.isLeadEmail(subject, from);
 
       if (!isLead) {
-        console.log(`[EmailMonitor] Skipping non-lead email: ${subject}`);
+        logger.debug({ subject }, `[EmailMonitor] Skipping non-lead email: ${subject}`);
         return null;
       }
 
@@ -261,11 +307,24 @@ export class EmailMonitorService {
         workflow,
         autoProcessed,
       };
-    } catch (error) {
-      console.error(
-        `[EmailMonitor] Error processing email ${message.id}:`,
-        error
-      );
+    } catch (error: any) {
+      const isRateLimit =
+        error?.code === 429 ||
+        error?.message?.includes("429") ||
+        error?.message?.includes("rate limit") ||
+        error?.message?.includes("RESOURCE_EXHAUSTED");
+      
+      if (isRateLimit) {
+        logger.warn(
+          { err: error, messageId: message.id },
+          "[EmailMonitor] Rate limit exceeded while processing email"
+        );
+      } else {
+        logger.error(
+          { err: error, messageId: message.id },
+          `[EmailMonitor] Error processing email ${message.id}`
+        );
+      }
       return null;
     }
   }
@@ -310,19 +369,55 @@ export class EmailMonitorService {
   }
 
   /**
+   * Get userId from Gmail email address
+   * ✅ SECURITY FIX: Resolve userId from email instead of hardcoded fallback
+   */
+  private async getUserIdFromEmail(gmailEmail: string): Promise<number | null> {
+    try {
+      const db = await getDb();
+      if (!db) return null;
+
+      // Find user by email address
+      const userRows = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.email, gmailEmail))
+        .limit(1);
+
+      return userRows.length > 0 ? userRows[0].id : null;
+    } catch (error) {
+      logger.error({ err: error, email: gmailEmail }, "[EmailMonitor] Failed to resolve userId from email");
+      return null;
+    }
+  }
+
+  /**
    * Store email in database
    */
   private async storeEmailInDatabase(emailData: any): Promise<void> {
     try {
       const db = await getDb();
       if (!db) {
-        console.error("[EmailMonitor] Database not available");
+        logger.error("[EmailMonitor] Database not available");
+        return;
+      }
+
+      // ✅ SECURITY FIX: Resolve userId from Gmail email address
+      // Get the "to" email address (our Gmail account)
+      const gmailEmail = emailData.to?.split(",")[0]?.trim() || process.env.GOOGLE_IMPERSONATED_USER;
+      const userId = await this.getUserIdFromEmail(gmailEmail || "");
+
+      if (!userId) {
+        logger.warn(
+          { to: emailData.to, gmailEmail },
+          "[EmailMonitor] Could not resolve userId for email, skipping database storage"
+        );
         return;
       }
 
       // Store in email_threads table
       await db.insert(emailThreads).values({
-        userId: emailData.userId ?? 1, // TODO: get from user context
+        userId: userId,
         gmailThreadId: emailData.threadId,
         subject: emailData.subject,
         participants: JSON.stringify({
@@ -335,11 +430,15 @@ export class EmailMonitorService {
         isRead: false,
       });
 
-      console.log(
+      logger.info(
+        { subject: emailData.subject },
         `[EmailMonitor] ✅ Stored email in database: ${emailData.subject}`
       );
     } catch (error) {
-      console.error("[EmailMonitor] Error storing email in database:", error);
+      logger.error(
+        { err: error, subject: emailData.subject },
+        "[EmailMonitor] Error storing email in database"
+      );
     }
   }
 
@@ -352,7 +451,11 @@ export class EmailMonitorService {
     workflow: any
   ): Promise<void> {
     try {
-      console.log(
+      logger.info(
+        {
+          source: sourceDetection.source,
+          confidence: sourceDetection.confidence,
+        },
         `[EmailMonitor] 🤖 Auto-processing ${sourceDetection.source} lead (${sourceDetection.confidence}% confidence)`
       );
 
@@ -360,7 +463,8 @@ export class EmailMonitorService {
       if (workflow.workflow.autoActions) {
         for (const action of workflow.workflow.autoActions) {
           if (action.trigger === "immediate") {
-            console.log(
+            logger.info(
+              { action: action.title },
               `[EmailMonitor] ⚡ Executing auto-action: ${action.title}`
             );
             // TODO: Implement specific auto-actions
@@ -371,7 +475,7 @@ export class EmailMonitorService {
         }
       }
     } catch (error) {
-      console.error("[EmailMonitor] Error in auto-processing:", error);
+      logger.error({ err: error, emailId }, "[EmailMonitor] Error in auto-processing");
     }
   }
 
@@ -395,7 +499,7 @@ export class EmailMonitorService {
    */
   clearCache(): void {
     this.processedEmails.clear();
-    console.log("[EmailMonitor] 🗑️ Cleared processed emails cache");
+    logger.info("[EmailMonitor] 🗑️ Cleared processed emails cache");
   }
 }
 

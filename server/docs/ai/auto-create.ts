@@ -8,17 +8,19 @@
  * 4. Create doc in database
  */
 
+import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { getDb } from "../../db";
+
 import { documents, documentChanges, leads } from "../../../drizzle/schema";
-import { collectLeadData, collectWeeklyData } from "./data-collector";
+import { logger } from "../../_core/logger";
+import { getDb } from "../../db";
+
 import { analyzeLeadData, analyzeWeeklyData } from "./analyzer";
+import { collectLeadData, collectWeeklyData } from "./data-collector";
 import {
   generateLeadDocument,
   generateWeeklyDigest as generateWeeklyDigestMarkdown,
 } from "./generator";
-import { logger } from "../../_core/logger";
-import { eq } from "drizzle-orm";
 
 /**
  * Auto-generate and create lead documentation
@@ -87,7 +89,8 @@ export async function autoCreateLeadDoc(
     );
 
     return { success: true, docId, retries: retryCount };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     logger.error(
       { error, leadId, retryCount },
       "[AI Auto-Create] Failed to create lead doc"
@@ -96,9 +99,9 @@ export async function autoCreateLeadDoc(
     // Retry on AI failures
     if (
       retryCount < MAX_RETRIES &&
-      (error.message?.includes("AI") ||
-        error.message?.includes("OpenRouter") ||
-        error.message?.includes("timeout"))
+      (errorMessage.includes("AI") ||
+        errorMessage.includes("OpenRouter") ||
+        errorMessage.includes("timeout"))
     ) {
       logger.info(
         { leadId, retryCount },
@@ -108,7 +111,7 @@ export async function autoCreateLeadDoc(
       return autoCreateLeadDoc(leadId, retryCount + 1);
     }
 
-    return { success: false, error: error.message, retries: retryCount };
+    return { success: false, error: errorMessage, retries: retryCount };
   }
 }
 
@@ -174,12 +177,13 @@ export async function updateLeadDoc(
     );
 
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     logger.error(
       { error, leadId, docId },
       "[AI Auto-Create] Failed to update lead doc"
     );
-    return { success: false, error: error.message };
+    return { success: false, error: errorMessage };
   }
 }
 
@@ -238,9 +242,10 @@ export async function generateWeeklyDigest(): Promise<{
     );
 
     return { success: true, docId };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     logger.error({ error }, "[AI Auto-Create] Failed to create weekly digest");
-    return { success: false, error: error.message };
+    return { success: false, error: errorMessage };
   }
 }
 
@@ -288,7 +293,8 @@ export async function bulkGenerateLeadDocs(): Promise<{
     logger.info(results, "[AI Auto-Create] Bulk generation complete");
 
     return results;
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     logger.error({ error }, "[AI Auto-Create] Bulk generation failed");
     return {
       success: false,

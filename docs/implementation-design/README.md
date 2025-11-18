@@ -22,11 +22,11 @@ This folder contains implementation plans, technical design documents, integrati
 
 - [Architecture Documentation](../ARCHITECTURE.md)
 
-- [System Redesign Options](../ARCHITECTURE-REDESIGN-OPTIONS.md)
+- [System Redesign Options](../ui-frontend/design/ARCHITECTURE-REDESIGN-OPTIONS.md)
 
 - [API Reference](../API_REFERENCE.md)
 
-- [Email Design](../email-system/EMAIL_INTELLIGENCE_DESIGN.md)
+- [Email Design](../email-system/email-center/EMAIL_INTELLIGENCE_DESIGN.md)
 
 - [Main Documentation Index](../README.md)
 

@@ -52,20 +52,27 @@ export class PanelErrorBoundary extends Component<Props, State> {
     };
     console.info("[Panel Breadcrumb]", breadcrumb);
 
-    // TODO: Send to error tracking service when available
-    // Sentry.captureException(error, {
-    //   contexts: {
-    //     panel: {
-    //       name: this.props.name,
-    //       errorInfo,
-    //       timestamp: logData.timestamp
-    //     }
-    //   },
-    //   tags: {
-    //     component: "panel",
-    //     panel_name: this.props.name
-    //   }
-    // });
+    // Send to Sentry error tracking service (async, non-blocking)
+    import("@sentry/react")
+      .then(Sentry => {
+        Sentry.captureException(error, {
+          contexts: {
+            panel: {
+              name: this.props.name,
+              errorInfo,
+              timestamp: logData.timestamp
+            }
+          },
+          tags: {
+            component: "panel",
+            panel_name: this.props.name
+          }
+        });
+      })
+      .catch(sentryError => {
+        // Sentry not available or failed to import - ignore
+        console.warn("[PanelErrorBoundary] Failed to send error to Sentry:", sentryError);
+      });
   }
 
   handleReset = () => {

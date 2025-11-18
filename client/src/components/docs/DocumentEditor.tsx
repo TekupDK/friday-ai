@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Save, X, Eye, Code } from "lucide-react";
 import { useDocument, useDocuments } from "@/hooks/docs/useDocuments";
 import ReactMarkdown from "react-markdown";
-import { useKeyboardShortcuts } from "@/hooks/docs/useKeyboardShortcuts";
+import { useDocsKeyboardShortcuts } from "@/hooks/docs/useDocsKeyboardShortcuts";
 import { toast } from "sonner";
 
 interface DocumentEditorProps {
@@ -229,7 +229,7 @@ export function DocumentEditor({
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
 
   // Keyboard shortcuts
-  useKeyboardShortcuts({
+  useDocsKeyboardShortcuts({
     onSave: () => {
       if (title && content) {
         handleSave();

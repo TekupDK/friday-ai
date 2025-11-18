@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Cursor Agent Hooks Configuration for tekup-ai-v2",
+  "hooks": {
+    "pre-execution": [
+      {
+        "name": "validate-environment",
+        "file": ".cursor/hooks/pre-execution/validate-environment.ts",
+        "description": "Validates environment variables and configuration before execution",
+        "enabled": true,
+        "priority": 1
+      },
+      {
+        "name": "check-dependencies",
+        "file": ".cursor/hooks/pre-execution/check-dependencies.ts",
+        "description": "Checks if required dependencies are installed",
+        "enabled": true,
+        "priority": 2
+      },
+      {
+        "name": "validate-code-style",
+        "file": ".cursor/hooks/pre-execution/validate-code-style.ts",
+        "description": "Validates code style before making changes",
+        "enabled": true,
+        "priority": 3
+      }
+    ],
+    "post-execution": [
+      {
+        "name": "run-typecheck",
+        "file": ".cursor/hooks/post-execution/run-typecheck.ts",
+        "description": "Runs TypeScript type checking after code changes",
+        "enabled": true,
+        "priority": 1
+      },
+      {
+        "name": "run-linter",
+        "file": ".cursor/hooks/post-execution/run-linter.ts",
+        "description": "Runs ESLint after code changes",
+        "enabled": true,
+        "priority": 2
+      },
+      {
+        "name": "update-documentation",
+        "file": ".cursor/hooks/post-execution/update-documentation.ts",
+        "description": "Updates relevant documentation after feature changes",
+        "enabled": false,
+        "priority": 3
+      }
+    ],
+    "error": [
+      {
+        "name": "error-logger",
+        "file": ".cursor/hooks/error/error-logger.ts",
+        "description": "Logs errors with context for debugging",
+        "enabled": true,
+        "priority": 1
+      },
+      {
+        "name": "error-recovery",
+        "file": ".cursor/hooks/error/error-recovery.ts",
+        "description": "Attempts automatic error recovery",
+        "enabled": true,
+        "priority": 2
+      }
+    ],
+    "context": [
+      {
+        "name": "load-project-context",
+        "file": ".cursor/hooks/context/load-project-context.ts",
+        "description": "Loads project-specific context for agent",
+        "enabled": true,
+        "priority": 1
+      },
+      {
+        "name": "load-codebase-context",
+        "file": ".cursor/hooks/context/load-codebase-context.ts",
+        "description": "Loads relevant codebase context based on task",
+        "enabled": true,
+        "priority": 2
+      }
+    ]
+  },
+  "execution": {
+    "parallel": false,
+    "stopOnError": false,
+    "timeout": 30000
+  }
+}

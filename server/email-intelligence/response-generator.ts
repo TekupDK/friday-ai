@@ -97,7 +97,16 @@ export async function generateResponseSuggestions(
       tools: [],
     });
 
-    // Parse response
+    // Parse response - handle case where response might not have content
+    if (!response || !response.content) {
+      const { logger } = await import("../_core/logger");
+      logger.warn(
+        { emailId: email.id, emailSubject: email.subject },
+        "[ResponseGenerator] No content in response, using template fallback"
+      );
+      return generateTemplateResponses(email, context);
+    }
+
     const suggestions = parseResponseSuggestions(response.content, email);
 
     return suggestions;

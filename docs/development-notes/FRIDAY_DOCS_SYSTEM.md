@@ -73,7 +73,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
 **Features:**
 
 - ✅ AI Lead Documentation
-
   - Automatisk dataindsamling fra leads, emails, chat
 
   - AI analyse med sentiment, priority, action items
@@ -83,7 +82,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
   - Auto-tagging (ai-generated, auto-analysis)
 
 - ✅ Weekly Digest Generation
-
   - Ugentlig rapport over alle leads
 
   - Trend analysis
@@ -91,7 +89,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
   - Key insights & recommendations
 
 - ✅ Bulk Generation
-
   - Mass-generering af docs for alle leads
 
   - Queue-based processing
@@ -121,7 +118,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
 **Features:**
 
 - ✅ Comprehensive metrics tracking
-
   - Total docs generated
 
   - Success rate (currently 100%)
@@ -133,7 +129,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
   - Recent activity feed
 
 - ✅ Savings Calculator
-
   - Manual time saved (29.5 min/doc)
 
   - Cost savings (DKK)
@@ -143,7 +138,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
   - Net savings & ROI
 
 - ✅ Visual Dashboard
-
   - 4 metric cards
 
   - Time period chart
@@ -171,7 +165,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
 **Integrations:**
 
 - ✅ Docs Page (`/docs`)
-
   - Main document hub
 
   - AI generation buttons
@@ -179,7 +172,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
   - Analytics dashboard tab
 
 - ✅ Leads/Inbox Integration
-
   - "Generer AI Dok" i lead dropdown
 
   - Context-aware generation
@@ -187,7 +179,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
   - Seamless UX
 
 - ✅ Email Threading
-
   - Email analysis for lead docs
 
   - Participant tracking
@@ -195,7 +186,6 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
   - Sentiment analysis
 
 - ✅ Chat Analysis
-
   - Conversation history
 
   - Key discussion points
@@ -206,7 +196,7 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
 
 ## 📊 System Architecture
 
-```text
+````text
 ┌─────────────────────────────────────────────────────────────┐
 │                      Friday Docs System                      │
 └─────────────────────────────────────────────────────────────┘
@@ -537,7 +527,7 @@ const { data: metrics } = trpc.docs.getAIMetrics.useQuery();
 console.log(metrics.totalGenerated);
 console.log(metrics.successRate);
 
-```
+````
 
 ---
 
@@ -597,19 +587,19 @@ console.log(metrics.successRate);
 
 ### User Guides
 
-- [Usage Guide](client/src/components/docs/AI_DOCS_USAGE.md)
+- [Usage Guide](../../../../client/src/components/docs/AI_DOCS_USAGE.md)
 
-- [Test Guide](AI_DOCS_TEST_GUIDE.md)
+- [Test Guide](../ai-automation/docs-generation/AI_DOCS_TEST_GUIDE.md)
 
-- [Deployment Checklist](AI_DOCS_DEPLOYMENT_CHECKLIST.md)
+- [Deployment Checklist](../ai-automation/docs-generation/AI_DOCS_DEPLOYMENT_CHECKLIST.md)
 
 ### Technical Docs
 
-- [Implementation Status](AI_DOCS_IMPLEMENTATION_STATUS.md)
+- [Implementation Status](../ai-automation/docs-generation/AI_DOCS_IMPLEMENTATION_STATUS.md)
 
-- [Final Status](AI_DOCS_FINAL_STATUS.md)
+- [Final Status](../ai-automation/docs-generation/AI_DOCS_FINAL_STATUS.md)
 
-- [Step 3 Complete](AI_DOCS_STEP3_COMPLETE.md)
+- [Step 3 Complete](../ai-automation/docs-generation/AI_DOCS_STEP3_COMPLETE.md)
 
 ### Quick Reference
 

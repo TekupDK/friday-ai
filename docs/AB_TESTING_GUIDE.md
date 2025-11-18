@@ -70,15 +70,18 @@ export const abTestMetricsInFridayAi = fridayAi.table(
 Determines which test group a user belongs to based on consistent hashing.
 
 **Parameters:**
+
 - `userId` - User ID for assignment
 - `testName` - Name of the test
 
 **Returns:**
+
 - `"control"` - User in control group
 - `"variant"` - User in variant group
 - `"excluded"` - User not in test
 
 **Example:**
+
 ```typescript
 const group = getTestGroup(userId, "chat_flow_migration");
 if (group === "variant") {
@@ -95,10 +98,12 @@ if (group === "variant") {
 Records A/B test metrics to the database.
 
 **Parameters:**
+
 - `metrics` - Test metrics object
 - `db` - Optional database connection
 
 **Metrics Object:**
+
 ```typescript
 interface TestMetrics {
   userId: number;
@@ -113,17 +118,21 @@ interface TestMetrics {
 ```
 
 **Example:**
+
 ```typescript
-await recordTestMetrics({
-  userId: 1,
-  testGroup: "variant",
-  responseTime: 250,
-  userSatisfaction: 5,
-  errorCount: 0,
-  messageCount: 1,
-  completionRate: 100,
-  timestamp: new Date()
-}, db);
+await recordTestMetrics(
+  {
+    userId: 1,
+    testGroup: "variant",
+    responseTime: 250,
+    userSatisfaction: 5,
+    errorCount: 0,
+    messageCount: 1,
+    completionRate: 100,
+    timestamp: new Date(),
+  },
+  db
+);
 ```
 
 ---
@@ -133,10 +142,12 @@ await recordTestMetrics({
 Calculates test results and provides recommendations.
 
 **Parameters:**
+
 - `testName` - Name of the test
 - `db` - Optional database connection
 
 **Returns:**
+
 ```typescript
 interface ABTestResult {
   testName: string;
@@ -148,6 +159,7 @@ interface ABTestResult {
 ```
 
 **Example:**
+
 ```typescript
 const results = await calculateTestResults("chat_flow_migration", db);
 if (results?.recommendation === "deploy_variant") {
@@ -167,6 +179,7 @@ if (results?.recommendation === "deploy_variant") {
 **Purpose:** Rollout server-side chat flow
 
 **Metrics Tracked:**
+
 - Response time
 - Error rate
 - User satisfaction
@@ -182,6 +195,7 @@ if (results?.recommendation === "deploy_variant") {
 **Purpose:** Test streaming response performance
 
 **Metrics Tracked:**
+
 - Perceived response time
 - User satisfaction
 - Engagement
@@ -196,6 +210,7 @@ if (results?.recommendation === "deploy_variant") {
 **Purpose:** Optimize model selection
 
 **Metrics Tracked:**
+
 - Response quality
 - Cost efficiency
 - Task completion rate
@@ -222,15 +237,18 @@ if (group === "variant") {
 }
 
 // Record metrics
-await recordTestMetrics({
-  userId,
-  testGroup: group,
-  responseTime: result.responseTime,
-  errorCount: result.errors,
-  messageCount: 1,
-  completionRate: result.success ? 100 : 0,
-  timestamp: new Date()
-}, db);
+await recordTestMetrics(
+  {
+    userId,
+    testGroup: group,
+    responseTime: result.responseTime,
+    errorCount: result.errors,
+    messageCount: 1,
+    completionRate: result.success ? 100 : 0,
+    timestamp: new Date(),
+  },
+  db
+);
 ```
 
 ### Feature Flags Integration
@@ -266,6 +284,7 @@ if (flags.useServerSideChat) {
 **Problem:** Metrics not appearing in database
 
 **Solutions:**
+
 - Check database connection is passed to `recordTestMetrics`
 - Verify test name matches configuration
 - Check error logs for database errors
@@ -275,6 +294,7 @@ if (flags.useServerSideChat) {
 **Problem:** User assigned to different groups on different requests
 
 **Solutions:**
+
 - Ensure `userId` is consistent
 - Verify test name is spelled correctly
 - Check test configuration is not changing
@@ -284,6 +304,7 @@ if (flags.useServerSideChat) {
 **Problem:** Test results show low significance
 
 **Solutions:**
+
 - Wait for more data
 - Increase traffic split
 - Check for data quality issues
@@ -295,6 +316,7 @@ if (flags.useServerSideChat) {
 ### Adding a New Test
 
 1. **Add test configuration:**
+
 ```typescript
 const AB_TESTS: Record<string, ABTestConfig> = {
   my_new_test: {
@@ -308,6 +330,7 @@ const AB_TESTS: Record<string, ABTestConfig> = {
 ```
 
 2. **Use test group in code:**
+
 ```typescript
 const group = getTestGroup(userId, "my_new_test");
 if (group === "variant") {
@@ -316,12 +339,16 @@ if (group === "variant") {
 ```
 
 3. **Record metrics:**
+
 ```typescript
-await recordTestMetrics({
-  userId,
-  testGroup: group,
-  // ... metrics
-}, db);
+await recordTestMetrics(
+  {
+    userId,
+    testGroup: group,
+    // ... metrics
+  },
+  db
+);
 ```
 
 ---
@@ -336,4 +363,3 @@ await recordTestMetrics({
 
 **Last Updated:** January 28, 2025  
 **Maintained by:** TekupDK Development Team
-

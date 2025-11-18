@@ -4,14 +4,14 @@
  * REST endpoints to control and monitor the automation system
  */
 
-import { router, protectedProcedure } from "../_core/trpc";
-import { eq, sql, and, gte, lte } from "drizzle-orm";
 import { z } from "zod";
-import { workflowAutomation } from "../workflow-automation";
-import { emailMonitor } from "../email-monitor";
+
+import { permissionProcedure, protectedProcedure, router } from "../_core/trpc";
 import { billyAutomation } from "../billy-automation";
-import { generateSourceAnalytics } from "../lead-source-analytics";
 import { emailAnalysisEngine } from "../email-analysis-engine";
+import { emailMonitor } from "../email-monitor";
+import { generateSourceAnalytics } from "../lead-source-analytics";
+import { workflowAutomation } from "../workflow-automation";
 
 /**
  * Phase 9.8: Automation control router
@@ -103,7 +103,7 @@ export const automationRouter = router({
       }
     }),
 
-  createInvoiceFromJob: protectedProcedure
+  createInvoiceFromJob: permissionProcedure("create_invoice")
     .input(
       z.object({
         leadId: z.number(),
@@ -116,6 +116,7 @@ export const automationRouter = router({
       })
     )
     .mutation(async ({ input }) => {
+      // ✅ RBAC: Only owner can create invoices (enforced by permissionProcedure)
       try {
         const result = await billyAutomation.createInvoiceFromJob(input);
         return {

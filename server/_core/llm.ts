@@ -324,6 +324,9 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
 
   // ✅ ERROR HANDLING: Import error handling utilities
   const { withApiErrorHandling, retryWithBackoff } = await import("./error-handling");
+  
+  // ✅ CACHE: Import Redis cache (with in-memory fallback)
+  const { responseCacheRedis } = await import("../integrations/litellm/response-cache-redis");
 
   const {
     messages,
@@ -383,6 +386,54 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
   });
 
   const startTime = Date.now();
+
+  // ✅ CACHE: Check cache before making API call
+  const cacheKey = {
+    messages: messages?.map(m => ({
+      role: m.role,
+      content: typeof m.content === "string" ? m.content : JSON.stringify(m.content),
+    })) || [],
+    model: modelName,
+    tools: tools ? JSON.stringify(tools) : undefined,
+    toolChoice: toolChoice || tool_choice,
+    outputSchema: outputSchema || output_schema,
+    responseFormat: responseFormat || response_format,
+  };
+
+  // Try to get from cache
+  const cachedResponse = await responseCacheRedis.get(
+    cacheKey.messages,
+    cacheKey.model
+  );
+
+  if (cachedResponse) {
+    const { logger } = await import("./logger");
+    logger.info({ model: modelName }, "[LLM] Cache hit - returning cached response");
+    
+    // Type guard: ensure cached response is valid InvokeResult
+    const result = cachedResponse as InvokeResult;
+    
+    // Track cache hit in Langfuse
+    // Extract text content safely
+    const content = result.choices?.[0]?.message?.content;
+    const outputText = 
+      typeof content === "string" 
+        ? content
+        : content || "Cached response";
+    
+    generation?.end({
+      output: outputText,
+      metadata: {
+        cached: true,
+        responseTime: Date.now() - startTime,
+      },
+    });
+    
+    const { flushLangfuse } = await import("../integrations/langfuse/client");
+    await flushLangfuse();
+
+    return result;
+  }
 
   let payload: Record<string, unknown>;
 
@@ -515,7 +566,15 @@ export async function invokeLLM(params: InvokeParams): Promise<InvokeResult> {
         responseTime,
         hasToolCalls: !!result.choices?.[0]?.message?.tool_calls,
         finishReason: result.choices?.[0]?.finish_reason,
+        cached: false,
       },
+    });
+
+    // ✅ CACHE: Store response in cache for future requests
+    await responseCacheRedis.set(cacheKey.messages, cacheKey.model, result).catch(async err => {
+      // Log but don't fail if cache write fails
+      const { logger } = await import("./logger");
+      logger.warn({ err }, "[LLM] Failed to cache response");
     });
 
     // Flush to Langfuse
@@ -641,18 +700,49 @@ export async function* streamResponse(
     headers.authorization = `Bearer ${ENV.openAiApiKey}`;
   }
 
-  const response = await fetch(resolveApiUrl(), {
-    method: "POST",
-    headers,
-    body: JSON.stringify(payload),
-  });
+  // ✅ ERROR HANDLING: Use retry logic for transient failures in streaming
+  const { retryWithBackoff } = await import("./error-handling");
+  const { logger } = await import("./logger");
+  
+  const response = await retryWithBackoff(
+    async () => {
+      const res = await fetch(resolveApiUrl(), {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload),
+      });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(
-      `LLM stream failed: ${response.status} ${response.statusText} – ${errorText}`
-    );
-  }
+      if (!res.ok) {
+        const errorText = await res.text();
+        const error = new Error(
+          `LLM stream failed: ${res.status} ${res.statusText} – ${errorText}`
+        );
+        // Attach status code for rate limit detection
+        (error as any).status = res.status;
+        throw error;
+      }
+
+      return res;
+    },
+    {
+      maxAttempts: 3,
+      initialDelayMs: 1000,
+      retryableErrors: ["429", "503", "502", "timeout", "ECONNRESET", "ETIMEDOUT"],
+    }
+  ).catch((error: any) => {
+    // Enhanced error handling for rate limits
+    const isRateLimit = error?.status === 429 || 
+                       error?.message?.includes("429") ||
+                       error?.message?.includes("rate limit");
+    
+    if (isRateLimit) {
+      logger.warn({ err: error }, "[LLM Stream] Rate limit exceeded");
+      throw new Error("AI API rate limit exceeded. Please try again in a moment.");
+    }
+    
+    logger.error({ err: error }, "[LLM Stream] Stream request failed");
+    throw error;
+  });
 
   if (!response.body) {
     throw new Error("Response body is null");

@@ -139,7 +139,7 @@ Friday Docs er et komplet dokumentationssystem med AI-integration, bygget som en
 
 ## 📊 System Architecture
 
-```text
+````text
 ┌─────────────────────────────────────────────────────────────┐
 │                      Friday Docs System                      │
 └─────────────────────────────────────────────────────────────┘
@@ -451,7 +451,7 @@ const { data: metrics } = trpc.docs.getAIMetrics.useQuery();
 console.log(metrics.totalGenerated);
 console.log(metrics.successRate);
 
-```
+````
 
 ---
 
@@ -493,15 +493,15 @@ console.log(metrics.successRate);
 
 ### User Guides
 
-- [Usage Guide](client/src/components/docs/AI_DOCS_USAGE.md)
-- [Test Guide](AI_DOCS_TEST_GUIDE.md)
-- [Deployment Checklist](AI_DOCS_DEPLOYMENT_CHECKLIST.md)
+- [Usage Guide](../../../../client/src/components/docs/AI_DOCS_USAGE.md)
+- [Test Guide](../docs-generation/AI_DOCS_TEST_GUIDE.md)
+- [Deployment Checklist](../docs-generation/AI_DOCS_DEPLOYMENT_CHECKLIST.md)
 
 ### Technical Docs
 
-- [Implementation Status](AI_DOCS_IMPLEMENTATION_STATUS.md)
-- [Final Status](AI_DOCS_FINAL_STATUS.md)
-- [Step 3 Complete](AI_DOCS_STEP3_COMPLETE.md)
+- [Implementation Status](../docs-generation/AI_DOCS_IMPLEMENTATION_STATUS.md)
+- [Final Status](../docs-generation/AI_DOCS_FINAL_STATUS.md)
+- [Step 3 Complete](../docs-generation/AI_DOCS_STEP3_COMPLETE.md)
 
 ### Quick Reference
 

@@ -12,6 +12,11 @@ describe("LiteLLMCache", () => {
     cache = new LiteLLMCache();
   });
 
+  afterEach(() => {
+    // ✅ FIXED: Cleanup interval to prevent memory leaks in tests
+    cache.destroy();
+  });
+
   describe("Cache Get/Set", () => {
     it("should store and retrieve responses", () => {
       const messages = [{ role: "user", content: "test" }];

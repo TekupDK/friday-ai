@@ -284,6 +284,70 @@ const TOOL_REGISTRY: Record<ToolName, ToolRegistryEntry> = {
       return handleCreateTask(userId, args, correlationId);
     },
   },
+  recommend_subscription_plan: {
+    schema: z.object({
+      customerId: z.number().int().positive(),
+      includeReasoning: z.boolean().optional().default(true),
+    }),
+    requiresApproval: false,
+    requiresUser: true,
+    handler: async (args: any, userId: number, correlationId?: string) => {
+      // Handled in ai-router.ts custom handlers
+      return {
+        success: false,
+        error: "This tool is handled by AI router custom handlers",
+        code: "INTERNAL_ERROR" as const,
+      };
+    },
+  },
+  predict_churn_risk: {
+    schema: z.object({
+      customerId: z.number().int().positive(),
+      lookbackDays: z.number().int().min(1).max(365).optional().default(90),
+    }),
+    requiresApproval: false,
+    requiresUser: true,
+    handler: async (args: any, userId: number, correlationId?: string) => {
+      // Handled in ai-router.ts custom handlers
+      return {
+        success: false,
+        error: "This tool is handled by AI router custom handlers",
+        code: "INTERNAL_ERROR" as const,
+      };
+    },
+  },
+  optimize_subscription_usage: {
+    schema: z.object({
+      subscriptionId: z.number().int().positive(),
+      optimizeFor: z.enum(["value", "convenience", "efficiency"]).optional().default("value"),
+    }),
+    requiresApproval: false,
+    requiresUser: true,
+    handler: async (args: any, userId: number, correlationId?: string) => {
+      // Handled in ai-router.ts custom handlers
+      return {
+        success: false,
+        error: "This tool is handled by AI router custom handlers",
+        code: "INTERNAL_ERROR" as const,
+      };
+    },
+  },
+  generate_upsell_opportunities: {
+    schema: z.object({
+      customerId: z.number().int().positive(),
+      includeCrossSell: z.boolean().optional().default(true),
+    }),
+    requiresApproval: false,
+    requiresUser: true,
+    handler: async (args: any, userId: number, correlationId?: string) => {
+      // Handled in ai-router.ts custom handlers
+      return {
+        success: false,
+        error: "This tool is handled by AI router custom handlers",
+        code: "INTERNAL_ERROR" as const,
+      };
+    },
+  },
 };
 
 async function callWithRetry<T>(
