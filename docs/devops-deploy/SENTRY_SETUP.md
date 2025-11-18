@@ -1,11 +1,12 @@
 # Sentry Error Tracking Setup
 
-**Status:** ✅ Implemented  
-**Date:** January 28, 2025
+**Status:** ✅ Implemented (Sentry v10)  
+**Date:** January 28, 2025  
+**Version:** @sentry/node 10.25.0, @sentry/react 10.25.0
 
 ## Overview
 
-Sentry error tracking has been integrated into both the server and client to capture and monitor errors in production.
+Sentry error tracking has been integrated into both the server and client to capture and monitor errors in production. This setup uses **Sentry v10** with the new integration APIs.
 
 ## Configuration
 
@@ -23,23 +24,54 @@ VITE_SENTRY_ENABLED=true
 VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 ```
 
-### Server Configuration
+### Server Configuration (Sentry v10)
 
 Sentry is initialized in `server/_core/index.ts` before any other imports:
 
 ```typescript
+// Initialize Sentry v10
 if (ENV.sentryEnabled && ENV.sentryDsn) {
   Sentry.init({
     dsn: ENV.sentryDsn,
     environment: ENV.sentryEnvironment,
     tracesSampleRate: ENV.sentryTracesSampleRate,
-    captureUnhandledRejections: true,
-    captureUncaughtExceptions: true,
+    // Note: captureUnhandledRejections and captureUncaughtExceptions 
+    // are enabled by default in v10
   });
+  logger.info("[Sentry] Error tracking initialized");
 }
 ```
 
-### Client Configuration
+**Express Integration (v10):**
+
+In `startServer()` function, after creating the Express app:
+
+```typescript
+// Sentry Express integration (must be first middleware)
+if (ENV.sentryEnabled && ENV.sentryDsn) {
+  // Add expressIntegration dynamically after app is created
+  const expressIntegration = Sentry.expressIntegration();
+  Sentry.addIntegration(expressIntegration);
+  if (expressIntegration.setupOnce) {
+    expressIntegration.setupOnce();
+  }
+}
+
+// ... other middleware ...
+
+// Sentry error handler (must be last middleware)
+if (ENV.sentryEnabled && ENV.sentryDsn) {
+  Sentry.setupExpressErrorHandler(app);
+}
+```
+
+**Key Changes in v10:**
+- ❌ Removed: `Sentry.Handlers.requestHandler()` and `Sentry.Handlers.tracingHandler()`
+- ✅ New: `Sentry.expressIntegration()` for automatic instrumentation
+- ✅ New: `Sentry.setupExpressErrorHandler(app)` for error handling
+- ✅ Automatic: Unhandled rejections/exceptions captured by default
+
+### Client Configuration (Sentry v10)
 
 Sentry is initialized in `client/src/main.tsx` before React app:
 
@@ -50,12 +82,21 @@ if (sentryEnabled && sentryDsn) {
     environment: sentryEnvironment,
     tracesSampleRate: sentryTracesSampleRate,
     integrations: [
+      // Automatically instrument browser performance
       Sentry.browserTracingIntegration(),
-      Sentry.reactRouterV6BrowserTracingIntegration(),
+      // Note: We use wouter (not react-router), so only browserTracingIntegration is needed
     ],
+    // Note: captureUnhandledRejections and captureUncaughtExceptions 
+    // are enabled by default in v10
   });
+  console.log("[Sentry] Error tracking initialized");
 }
 ```
+
+**Key Changes in v10:**
+- ✅ New: `browserTracingIntegration()` replaces old performance integration
+- ❌ Removed: `reactRouterV6BrowserTracingIntegration()` (we use wouter, not react-router)
+- ✅ Automatic: Unhandled rejections/exceptions captured by default
 
 ## Features
 
@@ -216,8 +257,31 @@ VITE_SENTRY_TRACES_SAMPLE_RATE=0.1
 - Reduce `SENTRY_TRACES_SAMPLE_RATE` (default: 0.1 = 10%)
 - Disable tracing in development: `SENTRY_TRACES_SAMPLE_RATE=0`
 
+## Migration Notes (v8 → v10)
+
+### Breaking Changes Fixed
+
+1. **Express Middleware:**
+   - Old (v8): `Sentry.Handlers.requestHandler()` and `Sentry.Handlers.tracingHandler()`
+   - New (v10): `Sentry.expressIntegration()` with `Sentry.addIntegration()`
+
+2. **Error Handler:**
+   - Old (v8): `Sentry.Handlers.errorHandler()`
+   - New (v10): `Sentry.setupExpressErrorHandler(app)`
+
+3. **Init Options:**
+   - Removed: `captureUnhandledRejections` and `captureUncaughtExceptions` (auto-enabled)
+   - Changed: Integration APIs updated
+
+### Files Modified for v10
+- `server/_core/index.ts` - Updated Sentry initialization and middleware
+- `client/src/main.tsx` - Updated React integration
+- `client/src/hooks/__tests__/useKeyboardShortcuts.test.tsx` - Fixed test mocks
+
 ## Resources
 
 - [Sentry Documentation](https://docs.sentry.io/)
+- [Sentry v10 Migration Guide](https://docs.sentry.io/platforms/javascript/migration/)
 - [Node.js Integration](https://docs.sentry.io/platforms/javascript/guides/node/)
 - [React Integration](https://docs.sentry.io/platforms/javascript/guides/react/)
+- [Express Integration](https://docs.sentry.io/platforms/javascript/guides/express/)

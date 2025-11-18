@@ -74,6 +74,8 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
       
       // Mock main query result - need to handle both with and without where clause
+      // The chain is: select().from(users).orderBy().limit().offset()
+      // When no whereClause: select().from(users).orderBy().limit().offset()
       const mockUsers = [
         { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
         { id: 2, name: "User 2", email: "user2@example.com", role: "admin" },
@@ -82,27 +84,32 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-      // from() can return either where() or orderBy() depending on whether whereClause exists
-      // Create a mock object that has both methods as functions
+      // from() must return an object with both where() and orderBy() methods
+      // This allows the code to call either .where() or .orderBy() directly after .from()
       const mockFromResult = {
         where: mockWhere,
         orderBy: mockOrderBy,
       };
+      // from() is a function that takes the table as argument and returns the query builder
       const mockFrom = vi.fn().mockReturnValue(mockFromResult);
+      // select() returns an object with from() method
       const mockSelectResult = { from: mockFrom };
       const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
       
       // Setup getDb to return different mocks for count and main query
+      // We need to handle multiple calls: count query, then main query
       let callCount = 0;
       vi.spyOn(dbModule, "getDb").mockImplementation(async () => {
         callCount++;
         if (callCount === 1) {
-          // First call: count query
+          // First call: count query - returns db with select method
           return {
             select: mockCountSelect,
           } as any;
         } else {
-          // Second call: main query - return db with select method
+          // Second call: main query - returns db with select method
+          // The select() method returns an object with from() method
+          // The from() method returns an object with orderBy() method
           return {
             select: mockSelect,
           } as any;
@@ -157,12 +164,13 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
       
       // Mock main query result - need to handle both with and without where clause
+      // The chain is: select().from(users).orderBy().limit().offset()
       const mockUsers: any[] = [];
       const mockOffset = vi.fn().mockResolvedValue(mockUsers);
       const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-      // from() can return either where() or orderBy() depending on whether whereClause exists
+      // from() must return an object with both where() and orderBy() methods
       const mockFromResult = {
         where: mockWhere,
         orderBy: mockOrderBy,
@@ -172,16 +180,19 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
       
       // Setup getDb to return different mocks for count and main query
+      // We need to handle multiple calls: count query, then main query
       let callCount = 0;
       vi.spyOn(dbModule, "getDb").mockImplementation(async () => {
         callCount++;
         if (callCount === 1) {
-          // First call: count query
+          // First call: count query - returns db with select method
           return {
             select: mockCountSelect,
           } as any;
         } else {
-          // Second call: main query - return db with select method
+          // Second call: main query - returns db with select method
+          // The select() method returns an object with from() method
+          // The from() method returns an object with orderBy() method
           return {
             select: mockSelect,
           } as any;
@@ -974,13 +985,12 @@ describe("Admin User Router - Edge Cases", () => {
         return {
           select: mockCountSelect,
         } as any;
-      } else {
-        // Second call: main query
-        return {
-          select: mockSelect,
-          from: mockFrom,
-        } as any;
-      }
+        } else {
+          // Second call: main query - return db with select method
+          return {
+            select: mockSelect,
+          } as any;
+        }
     });
 
     await caller.admin.users.list({ 

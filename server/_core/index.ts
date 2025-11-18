@@ -119,6 +119,7 @@ async function startServer() {
   if (ENV.sentryEnabled && ENV.sentryDsn) {
     // In Sentry v10, Express integration is automatically enabled via Sentry.init()
     // Request handler must be first middleware
+    // Note: setupExpressErrorHandler() doesn't take arguments - it returns middleware
     app.use(Sentry.setupExpressErrorHandler());
   }
 
@@ -291,7 +292,8 @@ async function startServer() {
   // Sentry error handler (must be last middleware)
   if (ENV.sentryEnabled && ENV.sentryDsn) {
     // In Sentry v10, use setupExpressErrorHandler() for error handling
-    Sentry.setupExpressErrorHandler(app);
+    // Note: setupExpressErrorHandler() returns middleware, doesn't take arguments
+    app.use(Sentry.setupExpressErrorHandler());
   }
 
   const preferredPort = parseInt(process.env.PORT || "3000");

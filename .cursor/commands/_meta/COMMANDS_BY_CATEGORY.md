@@ -20,11 +20,11 @@ Quick reference to commands organized by category for easy discovery.
 
 ### AI & Friday
 
-- `ai/test-all-ai-tools.md` - Test all AI tools (Gmail, Calendar, Billy)
+- `testing/test-all-ai-tools.md` - Test all AI tools (Gmail, Calendar, Billy)
 - `ai/optimize-ai-model-selection.md` - Optimize AI costs and performance
-- `ai/debug-ai-responses.md` - Debug AI response issues
+- `debugging/debug-ai-responses.md` - Debug AI response issues
 - `ai/analyze-ai-costs.md` - Analyze AI costs
-- `ai/test-ai-prompts.md` - Test AI prompts
+- `testing/test-ai-prompts.md` - Test AI prompts
 
 ### Session Management
 
@@ -46,8 +46,8 @@ Quick reference to commands organized by category for easy discovery.
 
 ### AI Testing & Optimization
 
-- `ai/test-ai-prompts.md` - Test AI prompts for accuracy
-- `ai/test-all-ai-tools.md` - Test all AI tools
+- `testing/test-ai-prompts.md` - Test AI prompts for accuracy
+- `testing/test-all-ai-tools.md` - Test all AI tools
 - `ai/optimize-ai-model-selection.md` - Optimize model selection
 - `ai/analyze-ai-costs.md` - Analyze AI costs
 - `ai/improve-ai-accuracy.md` - Improve AI accuracy
@@ -55,7 +55,7 @@ Quick reference to commands organized by category for easy discovery.
 
 ### AI Debugging
 
-- `ai/debug-ai-responses.md` - Debug AI responses
+- `debugging/debug-ai-responses.md` - Debug AI responses
 - `debugging/debug-friday-ai-agent.md` - Debug Friday AI agent
 - `ai/handle-ai-rate-limits.md` - Handle rate limits
 
@@ -101,11 +101,11 @@ Quick reference to commands organized by category for easy discovery.
 ### Development Assistance
 
 - `development/improve-code-quality.md` - Improve code quality
-- `guide-feature-development.md` - Guide feature development
+- `development/guide-feature-development.md` - Guide feature development
 - `development/review-code-under-development.md` - Review code while coding
 - `development/suggest-improvements.md` - Suggest improvements
 - `development/ensure-best-practices.md` - Ensure best practices
-- `validate-implementation.md` - Validate implementation
+- `development/validate-implementation.md` - Validate implementation
 
 ---
 

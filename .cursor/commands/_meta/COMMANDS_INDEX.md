@@ -73,31 +73,31 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `core/analyze-session-work.md` - Analyze all work done in current chat session (Session)
 - `ai/analyze-user-intent.md` - Deeply analyze user intent including implicit requirements (AI)
 - `development/analyze-workspace-structure.md` - Analyze workspace/repository structure
-- `automate-system-monitoring.md` - Create automated monitoring scripts (IT)
+- `development/automate-system-monitoring.md` - Create automated monitoring scripts (IT)
 - `development/api-contract-review.md` - Review API contracts
-- `api-versioning.md` - Implement API versioning
-- `assert-invariants.md` - Assert code invariants
+- `development/api-versioning.md` - Implement API versioning
+- `development/assert-invariants.md` - Assert code invariants
 - `development/audit-security.md` - Perform security audit
 - `development/accessibility-audit.md` - Comprehensive accessibility audit
 
 ## B
 
-- `backup-database.md` - Create database backup
+- `development/backup-database.md` - Create database backup
 - `core/batch-complete-todos.md` - Complete multiple TODO items
-- `batch-operations.md` - Implement batch operations
-- `benchmark-technology.md` - Benchmark technologies and tools (Engineers)
-- `build-optimization.md` - Optimize build process
+- `development/batch-operations.md` - Implement batch operations
+- `development/benchmark-technology.md` - Benchmark technologies and tools (Engineers)
+- `development/build-optimization.md` - Optimize build process
 - `chat/brug-chat-informationer.md` - Brug informationer fra chat samtalen til at udføre opgaver (Chat Context)
-- `bug-fix.md` - Fix bugs (see `development/fix-bug.md`)
+- `development/bug-fix.md` - Fix bugs (see `development/fix-bug.md`)
 
 ## C
 
-- `cache-strategy.md` - Design caching strategy
+- `development/cache-strategy.md` - Design caching strategy
 - `debugging/chain-of-thought-debugging.md` - Chain-of-thought debugging
-- `check-auth-flows.md` - Check authentication flows
-- `ci-cd-pipeline.md` - Set up CI/CD pipeline
+- `development/check-auth-flows.md` - Check authentication flows
+- `development/ci-cd-pipeline.md` - Set up CI/CD pipeline
 - `core/cleanup-completed-todos.md` - Clean up completed TODOs
-- `cleanup-dead-code.md` - Clean up dead code
+- `development/cleanup-dead-code.md` - Clean up dead code
 - `core/cleanup-todos.md` - Clean up TODO comments (Updated to v2.2.0)
 - `development/code-review.md` - Perform code review
 - `core/continue-conversation.md` - Continue conversation naturally (Updated to v2.2.0)
@@ -148,8 +148,8 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 
 ## D
 
-- `data-migration.md` - Perform data migration
-- `database-migration.md` - Database migration
+- `development/data-migration.md` - Perform data migration
+- `development/database-migration.md` - Database migration
 - `debugging/debug-billy-sync.md` - Debug Billy.dk synchronization (Tekup)
 - `debugging/debug-calendar-sync.md` - Debug Google Calendar sync issues (Integration)
 - `debugging/debug-google-oauth.md` - Debug Google OAuth issues (Integration)
@@ -163,8 +163,8 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `debugging/debug-vector-search.md` - Debug vector search
 - `debugging/debug-with-logging.md` - Debug with strategic logging
 - `debugging/debug.md` - General debugging
-- `deploy-to-production.md` - Deploy to production
-- `deploy-to-staging.md` - Deploy to staging
+- `development/deploy-to-production.md` - Deploy to production
+- `development/deploy-to-staging.md` - Deploy to staging
 - `development/dependency-audit.md` - Audit dependencies
 - `development/documentation-update.md` - Update documentation
 
@@ -173,13 +173,13 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `development/ensure-best-practices.md` - Ensure best practices are followed during development (Development Assistance)
 - `testing/ensure-test-data-sanity.md` - Ensure test data sanity
 - `development/environment-setup.md` - Set up environment
-- `error-tracking.md` - Set up error tracking
-- `estimate-todo-effort.md` - Estimate TODO effort
+- `development/error-tracking.md` - Set up error tracking
+- `core/estimate-todo-effort.md` - Estimate TODO effort
 - `debugging/exploratory-debugging.md` - Exploratory debugging
 
 ## F
 
-- `feature-flag.md` - Implement feature flags
+- `development/feature-flag.md` - Implement feature flags
 - `core/find-blocked-todos.md` - Find blocked TODOs
 - `development/find-outdated-docs.md` - Find outdated documentation (Docs)
 - `debugging/find-root-cause.md` - Find root cause
@@ -211,7 +211,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 
 - `ai/generate-ai-playbook.md` - Generate AI playbook
 - `development/generate-api-docs.md` - Generate API docs
-- `generate-pr-description.md` - Generate PR description
+- `development/generate-pr-description.md` - Generate PR description
 - `testing/generate-test-suite.md` - Generate test suite
 - `ai/generate-ai-ideas-for-code.md` - Generate AI augmentation ideas for code (Ideation)
 - `development/generate-api-ideas.md` - Generate API ideas from router/procedure (Ideation)
@@ -229,14 +229,14 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `core/get-session-status.md` - Get real-time status of current chat session (Session)
 - `core/git-commit-my-work.md` - Git commit my work
 - `core/git-commit-session.md` - Git commit session
-- `git-workflow.md` - Git workflow
+- `development/git-workflow.md` - Git workflow
 - `development/google-integration-setup.md` - Set up Google integration
 
 ## H
 
 - `ai/handle-ai-rate-limits.md` - Handle AI rate limits
 - `debugging/handle-build-failure.md` - Handle build failure
-- `health-check.md` - Implement health checks
+- `development/health-check.md` - Implement health checks
 - `debugging/help-me-fix-this.md` - Help me fix this (immediate help)
 - `debugging/hot-reload-fix.md` - Fix hot module reload
 - `core/hvad-nu.md` - Identificer næste skridt og prioriter opgaver (Next Steps)
@@ -249,64 +249,64 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `development/improve-developer-experience.md` - Improve developer experience
 - `ai/improve-ai-accuracy.md` - Improve AI accuracy and response quality (AI)
 - `development/improve-error-handling.md` - Improve error handling
-- `improve-prompts-for-code.md` - Improve prompts for code
+- `development/improve-prompts-for-code.md` - Improve prompts for code
 - `development/improve-typescript.md` - Improve TypeScript
 - `development/improve-ui-accessibility.md` - Improve UI accessibility
-- `input-sanitization.md` - Implement input sanitization
+- `development/input-sanitization.md` - Implement input sanitization
 - `debugging/inspect-logs-and-traces.md` - Inspect logs and traces
 - `testing/integration-testing.md` - Write integration tests
 
 ## J
 
-- `json-schema-validation.md` - JSON schema validation
-- `jwt-authentication.md` - JWT authentication
+- `development/json-schema-validation.md` - JSON schema validation
+- `development/jwt-authentication.md` - JWT authentication
 
 ## K
 
-- `keyboard-shortcuts.md` - Implement keyboard shortcuts
-- `kill-zombie-processes.md` - Kill zombie processes
+- `development/keyboard-shortcuts.md` - Implement keyboard shortcuts
+- `development/kill-zombie-processes.md` - Kill zombie processes
 
 ## L
 
 - `chat/laes-chat-samtale.md` - Læs chat samtale igennem og ekstraher informationer (Chat Context)
 - `chat/laes-chat-fra-database.md` - Læs faktiske chat samtaler fra databasen (Chat Analysis)
-- `lazy-loading.md` - Implement lazy loading
+- `development/lazy-loading.md` - Implement lazy loading
 - `development/light-review.md` - Light code review (Updated to v2.2.0)
 - `development/light-review-existing-diffs.md` - Light review existing diffs
-- `lint-fix.md` - Fix linting issues
-- `lint-suite.md` - Run linting suite
-- `logging-setup.md` - Set up logging
+- `development/lint-fix.md` - Fix linting issues
+- `development/lint-suite.md` - Run linting suite
+- `development/logging-setup.md` - Set up logging
 
 ## M
 
 - `core/maintain-context.md` - Maintain context throughout session (Session Management)
 - `testing/map-changes-to-tests.md` - Map changes to tests
-- `migrate-database-schema.md` - Migrate database schema
-- `migration-strategy.md` - Plan migration strategy
+- `development/migrate-database-schema.md` - Migrate database schema
+- `development/migration-strategy.md` - Plan migration strategy
 - `testing/minimal-repro-test.md` - Create minimal reproduction test
-- `middleware-setup.md` - Set up middleware
+- `development/middleware-setup.md` - Set up middleware
 - `ai/monitor-ai-usage.md` - Monitor AI usage
-- `monitor-api-performance.md` - Monitor API performance
-- `monitoring-setup.md` - Set up monitoring
+- `development/monitor-api-performance.md` - Monitor API performance
+- `development/monitoring-setup.md` - Set up monitoring
 
 ## N
 
-- `naming-conventions.md` - Standardize naming conventions
-- `notification-system.md` - Implement notification system
+- `development/naming-conventions.md` - Standardize naming conventions
+- `development/notification-system.md` - Implement notification system
 
 ## O
 
-- `observability-setup.md` - Set up observability
-- `onboard-new-developer.md` - Onboard new developer
+- `development/observability-setup.md` - Set up observability
+- `development/onboard-new-developer.md` - Onboard new developer
 - `ai/optimize-ai-model-selection.md` - Optimize AI model selection for cost and performance (AI)
 - `ai/optimize-ai-prompt.md` - Optimize AI prompt
 - `tekup/optimize-billy-queries.md` - Optimize Billy.dk API queries (Tekup)
-- `optimize-chromadb-queries.md` - Optimize ChromaDB vector queries (Integration)
+- `development/optimize-chromadb-queries.md` - Optimize ChromaDB vector queries (Integration)
 - `tekup/optimize-friday-prompt.md` - Optimize Friday AI system prompts (Tekup)
-- `optimize-performance.md` - Optimize performance
-- `optimize-trpc-query.md` - Optimize tRPC query
-- `optimize-ui-performance.md` - Optimize UI performance
-- `optimize-bundle-size.md` - Optimize bundle size
+- `development/optimize-performance.md` - Optimize performance
+- `development/optimize-trpc-query.md` - Optimize tRPC query
+- `development/optimize-ui-performance.md` - Optimize UI performance
+- `development/optimize-bundle-size.md` - Optimize bundle size
 - `core/opdater-sprint.md` - Opdater sprint med nye tasks baseret på fuldførte opgaver (Sprint Management)
 - `chat/opdater-chat-summary.md` - Opdater eksisterende chat summary (Chat Context)
 - `core/opdater-todo-status.md` - Opdater TODO status systematisk (Task Management)
@@ -314,12 +314,12 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 
 ## P
 
-- `pagination-implementation.md` - Implement pagination
+- `development/pagination-implementation.md` - Implement pagination
 - `core/parse-and-execute.md` - Parse entire prompt and execute all tasks immediately (Immediate Action)
 - `chat/parse-chat-summary.md` - Parse chat summary
 - `development/performance-audit.md` - Performance audit
-- `permissions-system.md` - Implement permissions system
-- `plan-feature.md` - Plan feature
+- `development/permissions-system.md` - Implement permissions system
+- `development/plan-feature.md` - Plan feature
 - `core/plan-next-steps.md` - Plan next development steps (Session Management)
 - `testing/playwright-scope.md` - Playwright test scope
 - `PROMPT_ENGINEERING_GUIDE.md` - Prompt engineering techniques guide
@@ -329,11 +329,11 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 
 - `testing/qa-test-plan.md` - Create QA test plan
 - `development/quality-gates.md` - Set up quality gates
-- `query-optimization.md` - Optimize database queries
+- `development/query-optimization.md` - Optimize database queries
 
 ## R
 
-- `rate-limit-config.md` - Configure rate limiting
+- `development/rate-limit-config.md` - Configure rate limiting
 - `development/refactor-code.md` - Refactor code
 - `development/refactor-large-files.md` - Refactor large files
 - `development/refactor-legacy-code.md` - Refactor legacy code
@@ -345,7 +345,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `ai/review-ai-prompt.md` - Review AI prompt
 - `development/review-change.md` - Review change
 - `development/review-code-under-development.md` - Review code while being developed (Development Assistance)
-- `risk-analysis.md` - Risk analysis
+- `development/risk-analysis.md` - Risk analysis
 - `debugging/root-cause-analysis.md` - Root cause analysis
 - `testing/run-all-tests-and-fix.md` - Run all tests and fix
 - `testing/run-tests.md` - Run tests
@@ -356,15 +356,15 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `development/safe-bugfix.md` - Safe bugfix
 - `development/safe-refactor.md` - Safe refactor
 - `chat/sammenfat-chat-samtale.md` - Sammenfat chat samtale til struktureret summary (Chat Context)
-- `search-implementation.md` - Implement search
+- `development/search-implementation.md` - Implement search
 - `development/secret-audit.md` - Audit secrets
 - `development/security-audit.md` - Security audit
-- `security-headers.md` - Configure security headers
 - `development/security-review.md` - Security review
 - `development/security-scan.md` - Security scan
 - `development/select-implementation-scenario.md` - Select implementation scenario
 - `development/senior-code-review.md` - Senior code review
-- `session-summary.md` - Create session summary (Session Management)
+- `development/security-headers.md` - Configure security headers
+- `core/session-summary.md` - Create session summary (Session Management)
 - `core/session-engine.md` - Master command: Autonom udviklingsassistent der arbejder med dig i realtime (Session Engine)
 - `core/session-init.md` - Forstå projekt + kontekst, initialiser session (Session Engine)
 - `core/session-progress.md` - Analysér hvad der er gjort + hvad der mangler (Session Engine)
@@ -377,16 +377,16 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `development/suggest-improvements.md` - Suggest improvements to code during development (Development Assistance)
 - `development/setup-google-integration.md` - Set up Google integration
 - `development/setup-new-feature.md` - Set up new feature
-- `split-large-file.md` - Split large file
+- `development/split-large-file.md` - Split large file
 - `core/split-large-todo.md` - Split large TODO
 - `ai/start-analysis-from-prompt.md` - Immediately start analysis from user prompt (AI)
 - `core/start-todos-from-list.md` - Start TODOs from list
 - `core/start-working-on-todos.md` - Start working on TODOs
-- `state-management.md` - Implement state management
+- `development/state-management.md` - Implement state management
 - `core/sprint-burndown.md` - Sprint burndown analysis (Sprint Management)
 - `core/sprint-retrospective.md` - Sprint retrospective (Sprint Management)
 - `core/sprint-velocity.md` - Sprint velocity tracking (Sprint Management)
-- `summarize-diff.md` - Summarize diff
+- `development/summarize-diff.md` - Summarize diff
 - `development/sync-docs-with-code.md` - Sync documentation with code changes (Docs)
 
 ## T
@@ -410,12 +410,12 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `testing/test-strategy.md` - Design test strategy
 - `testing/test-samtale.md` - Test denne samtale og commands i praksis (Testing & Improvement)
 - `testing/test.md` - General testing
-- `token-management.md` - Manage authentication tokens
+- `development/token-management.md` - Manage authentication tokens
 - `core/track-development-progress.md` - Track development progress (Status Tracking)
 - `core/track-system-status.md` - Track system status (Status Tracking)
 - `core/track-todo-progress.md` - Track TODO progress
 - `debugging/troubleshoot-friday-issue.md` - Troubleshoot Friday issue
-- `type-safety-improvement.md` - Improve type safety
+- `development/type-safety-improvement.md` - Improve type safety
 
 ## U
 
@@ -427,7 +427,7 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 - `testing/udvikle-test.md` - Udvikle test kode for funktionalitet (Testing & Improvement)
 - `development/ui-ux-review.md` - UI/UX review
 - `testing/unit-test-coverage.md` - Improve unit test coverage
-- `update-dependencies.md` - Update dependencies
+- `development/update-dependencies.md` - Update dependencies
 - `development/update-doc-examples.md` - Update code examples in docs (Docs)
 - `development/update-api-reference.md` - Update API reference documentation from tRPC routers (Docs)
 - `core/update-feature-status.md` - Update feature status (Status Tracking)
@@ -437,32 +437,32 @@ Complete index of all commands in Friday AI Chat, organized alphabetically.
 
 - `testing/validate-error-handling-tests.md` - Validate error handling tests
 - `development/validate-implementation.md` - Validate implementation during development (Development Assistance)
-- `validate-inputs.md` - Validate inputs
+- `development/validate-inputs.md` - Validate inputs
 - `development/verify-docs-accuracy.md` - Verify documentation accuracy (Docs)
 - `chat/verify-implementation-against-summary.md` - Verify implementation
-- `version-management.md` - Manage versions
+- `development/version-management.md` - Manage versions
 
 ## W
 
-- `webhook-handler.md` - Implement webhook handler
+- `development/webhook-handler.md` - Implement webhook handler
 - `development/wire-ui-to-api.md` - Wire UI to API
 - `testing/write-unit-tests.md` - Write unit tests
 
 ## X
 
-- `xss-prevention.md` - XSS prevention
-- `xml-parsing.md` - XML parsing (if needed)
+- `development/xss-prevention.md` - XSS prevention
+- `development/xml-parsing.md` - XML parsing (if needed)
 
 ## Y
 
-- `yarn-migration.md` - Yarn migration (not needed - use pnpm)
-- `yield-patterns.md` - Async/await patterns
+- `development/yarn-migration.md` - Yarn migration (not needed - use pnpm)
+- `development/yield-patterns.md` - Async/await patterns
 
 ## Z
 
-- `zero-downtime-deployment.md` - Zero-downtime deployment
-- `zod-validation-patterns.md` - Zod validation patterns
-- `zoom-integration.md` - Zoom integration (if needed)
+- `development/zero-downtime-deployment.md` - Zero-downtime deployment
+- `development/zod-validation-patterns.md` - Zod validation patterns
+- `development/zoom-integration.md` - Zoom integration (if needed)
 
 ---
 
