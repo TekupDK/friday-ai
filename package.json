@@ -270,7 +270,6 @@
     "pnpm": "^10.22.0",
     "postcss": "^8.4.47",
     "prettier": "^3.6.2",
-    "promptfoo": "^0.119.4",
     "rollup-plugin-visualizer": "^6.0.5",
     "storybook": "^10.0.8",
     "supertest": "^7.1.4",
