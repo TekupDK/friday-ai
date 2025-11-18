@@ -56,6 +56,7 @@ export async function createSubscription(
     startDate?: string;
     autoRenew?: boolean;
     metadata?: Record<string, any>;
+    referralCode?: string;
   }
 ): Promise<Subscription> {
   const db = await getDb();
@@ -99,20 +100,70 @@ export async function createSubscription(
   const startDate = options?.startDate || new Date().toISOString();
   const nextBillingDate = calculateNextBillingDate(startDate);
 
+  // Handle referral code if provided
+  let referralInfo: {
+    referralCodeId?: number;
+    referralRewardId?: number;
+    discountAmount?: number;
+    originalPrice?: number;
+  } | null = null;
+
+  let finalMonthlyPrice = planConfig.monthlyPrice;
+
+  if (options?.referralCode) {
+    const { validateReferralCode, calculateReferralDiscount } = await import("./referral-helpers");
+    const { applyReferralCode } = await import("./referral-actions");
+
+    // Validate referral code
+    const validation = await validateReferralCode(options.referralCode);
+    if (!validation.valid) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: validation.reason || "Invalid referral code",
+      });
+    }
+
+    // Calculate discount
+    const discountAmount = calculateReferralDiscount(
+      validation.referralCode,
+      planConfig.monthlyPrice
+    );
+
+    // Apply discounted price
+    finalMonthlyPrice = Math.max(0, planConfig.monthlyPrice - discountAmount);
+
+    // Store referral info for later (after subscription is created)
+    referralInfo = {
+      referralCodeId: validation.referralCode.id,
+      discountAmount,
+      originalPrice: planConfig.monthlyPrice,
+    };
+  }
+
   // Create subscription
+  const metadata = options?.metadata || {};
+  if (referralInfo) {
+    metadata.referral = {
+      codeId: referralInfo.referralCodeId,
+      discountAmount: referralInfo.discountAmount,
+      originalPrice: referralInfo.originalPrice,
+      appliedAt: new Date().toISOString(),
+    };
+  }
+
   const [subscription] = await db
     .insert(subscriptions)
     .values({
       userId,
       customerProfileId,
       planType,
-      monthlyPrice: planConfig.monthlyPrice,
+      monthlyPrice: finalMonthlyPrice,
       includedHours: planConfig.includedHours.toString(),
       startDate,
       status: "active",
       autoRenew: options?.autoRenew ?? true,
       nextBillingDate,
-      metadata: options?.metadata || {},
+      metadata,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
@@ -127,6 +178,41 @@ export async function createSubscription(
     changedBy: userId,
     timestamp: new Date().toISOString(),
   });
+
+  // Apply referral code if provided
+  if (options?.referralCode && referralInfo) {
+    const { applyReferralCode } = await import("./referral-actions");
+
+    try {
+      const result = await applyReferralCode({
+        code: options.referralCode,
+        referredCustomerId: customerProfileId,
+        referredSubscriptionId: subscription.id,
+      });
+
+      if (result.success && result.reward) {
+        // Update referral info with reward ID
+        referralInfo.referralRewardId = result.reward.id;
+
+        // Update subscription metadata with reward ID
+        await db
+          .update(subscriptions)
+          .set({
+            metadata: {
+              ...metadata,
+              referral: {
+                ...metadata.referral,
+                rewardId: result.reward.id,
+              },
+            },
+          })
+          .where(eq(subscriptions.id, subscription.id));
+      }
+    } catch (error) {
+      console.error("Error applying referral code:", error);
+      // Don't fail subscription creation if referral fails
+    }
+  }
 
   // Create recurring calendar events (async, don't wait)
   createRecurringBookings(subscription.id, planConfig, customer.name || customer.email).catch(

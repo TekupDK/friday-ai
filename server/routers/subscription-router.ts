@@ -56,6 +56,7 @@ export const subscriptionRouter = router({
         startDate: z.string().optional(),
         autoRenew: z.boolean().default(true),
         metadata: z.record(z.string(), z.any()).optional(),
+        referralCode: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -67,6 +68,7 @@ export const subscriptionRouter = router({
           startDate: input.startDate,
           autoRenew: input.autoRenew,
           metadata: input.metadata,
+          referralCode: input.referralCode,
         }
       );
     }),

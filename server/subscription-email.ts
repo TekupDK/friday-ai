@@ -1,7 +1,9 @@
 /**
- * Subscription Email Templates and Sending
- * 
- * Handles email notifications for subscription events
+ * Subscription Email and SMS Templates
+ *
+ * Handles email and SMS notifications for subscription events
+ * - Email: Sent via SendGrid for all subscription events
+ * - SMS: Sent via Twilio for critical overage warnings (optional)
  */
 
 import { eq, and } from "drizzle-orm";
@@ -10,7 +12,7 @@ import { customerProfiles, subscriptions } from "../drizzle/schema";
 
 import { logger } from "./_core/logger";
 import { getDb } from "./db";
-import { sendGmailMessage } from "./google-api";
+import { sendNotification } from "./notification-service";
 import { getSubscriptionById } from "./subscription-db";
 import { getPlanConfig } from "./subscription-helpers";
 
@@ -26,6 +28,8 @@ export interface SendSubscriptionEmailParams {
   subscriptionId: number;
   userId: number;
   additionalData?: Record<string, any>;
+  /** Send SMS for critical notifications (optional) */
+  sendSMS?: boolean;
 }
 
 /**
@@ -234,12 +238,37 @@ export async function sendSubscriptionEmail(
 
     const { subject, body } = template(emailData);
 
-    // Send email
-    await sendGmailMessage({
-      to: customer.email,
-      subject,
-      body,
+    // Send email via notification service (SendGrid)
+    // This provides better deliverability, tracking, and analytics
+    const result = await sendNotification({
+      channel: "email",
+      priority: params.type === "overage_warning" ? "high" : "normal",
+      title: subject,
+      message: body,
+      recipients: [customer.email],
+      metadata: {
+        subscriptionId: params.subscriptionId.toString(),
+        emailType: params.type,
+        planType: subscription.planType,
+        customerId: customer.id.toString(),
+      },
     });
+
+    if (!result.success) {
+      logger.warn(
+        {
+          subscriptionId: params.subscriptionId,
+          userId: params.userId,
+          emailType: params.type,
+          error: result.error,
+        },
+        "[Subscription Email] Email notification failed"
+      );
+      return {
+        success: false,
+        error: result.error || "Failed to send email notification",
+      };
+    }
 
     logger.info(
       {
@@ -247,9 +276,50 @@ export async function sendSubscriptionEmail(
         userId: params.userId,
         emailType: params.type,
         customerEmail: customer.email,
+        messageId: result.messageId,
       },
       "[Subscription Email] Successfully sent email"
     );
+
+    // Send SMS for critical overage warnings (if phone number available and SMS enabled)
+    if (
+      params.sendSMS &&
+      params.type === "overage_warning" &&
+      customer.phone
+    ) {
+      const smsMessage = `Rendetalje: Du har overskredet dine inkluderede timer. Se email for detaljer.`;
+
+      const smsResult = await sendNotification({
+        channel: "sms",
+        priority: "high",
+        title: "Overskridelse af timer",
+        message: smsMessage,
+        recipients: [customer.phone],
+        metadata: {
+          subscriptionId: params.subscriptionId.toString(),
+          emailType: params.type,
+        },
+      });
+
+      if (smsResult.success) {
+        logger.info(
+          {
+            subscriptionId: params.subscriptionId,
+            customerPhone: customer.phone,
+            messageId: smsResult.messageId,
+          },
+          "[Subscription Email] Successfully sent SMS notification"
+        );
+      } else {
+        logger.warn(
+          {
+            subscriptionId: params.subscriptionId,
+            error: smsResult.error,
+          },
+          "[Subscription Email] Failed to send SMS notification (non-critical)"
+        );
+      }
+    }
 
     return { success: true };
   } catch (error) {
