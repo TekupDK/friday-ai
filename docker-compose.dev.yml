@@ -124,8 +124,6 @@ services:
       - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
       - ./vite.config.ts:/app/vite.config.ts
       - ./tsconfig.json:/app/tsconfig.json
-      - ./tsconfig.app.json:/app/tsconfig.app.json
-      - ./tsconfig.node.json:/app/tsconfig.node.json
       # Exclude node_modules for performance
       - /app/node_modules
       - /app/client/node_modules

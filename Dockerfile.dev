@@ -19,17 +19,20 @@ COPY package.json pnpm-lock.yaml ./
 # This layer will be cached unless package files change
 RUN pnpm install --frozen-lockfile
 
-# Copy minimal required files (rest comes via volume mounts)
+# Copy minimal required files (rest comes via volume mounts for hot-reload)
+# These are fallbacks - actual source is mounted as volumes
 COPY server/_core ./server/_core
 COPY shared ./shared
 COPY drizzle ./drizzle
 COPY check-env.js ./
+COPY tsconfig.json ./
 
-# Expose port
-EXPOSE 3000
+# Expose ports (backend and frontend)
+EXPOSE 3000 5173
 
 # Development command with hot-reload
 # Uses tsx watch for automatic reloading on file changes
 # Source code is mounted as volume, so no need to copy everything
+# Default command runs backend - frontend uses override in docker-compose
 CMD ["pnpm", "dev"]
 

@@ -163,17 +163,25 @@ docker-compose -f docker-compose.dev.yml up
 pnpm dev:vite
 ```
 
-### 2. Make Code Changes
+### 2. Make Code Changes (Live Editing)
 
 **Backend Changes:**
-- Edit files in `server/` directory
-- Backend auto-reloads (tsx watch)
+- Edit files in `server/` directory directly
+- Backend auto-reloads (tsx watch detects changes)
+- Changes are reflected immediately
 - Check logs: `docker-compose -f docker-compose.dev.yml logs -f backend-dev`
 
 **Frontend Changes:**
-- Edit files in `client/` directory
-- Vite hot-reloads automatically
+- Edit files in `client/` directory directly
+- Vite HMR (Hot Module Replacement) updates browser automatically
+- No page refresh needed for most changes
 - Check browser console for errors
+
+**Live Fixing:**
+- ✅ All volumes are mounted read-write
+- ✅ Changes are detected automatically
+- ✅ No need to restart containers
+- ✅ Edit → Save → See result immediately
 
 ### 3. Debug CRM
 
