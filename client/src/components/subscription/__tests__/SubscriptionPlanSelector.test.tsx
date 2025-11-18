@@ -18,6 +18,9 @@ vi.mock("@/lib/trpc", () => ({
       create: {
         useMutation: vi.fn(),
       },
+      getRecommendation: {
+        useQuery: vi.fn(),
+      },
     },
   },
   trpcClient: {},
@@ -50,6 +53,13 @@ describe("SubscriptionPlanSelector", () => {
       mutate: mockMutate,
       mutateAsync: mockMutateAsync,
       isPending: false,
+      isError: false,
+      error: null,
+    });
+
+    (trpc.subscription.getRecommendation.useQuery as ReturnType<typeof vi.fn>).mockReturnValue({
+      data: undefined,
+      isLoading: false,
       isError: false,
       error: null,
     });

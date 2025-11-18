@@ -74,6 +74,7 @@ describe("Admin User Router - Role-Based Access Control", () => {
       });
 
       // Mock main query result - chain: select().from(users).orderBy().limit().offset()
+      // When no where clause: select().from(users).orderBy().limit().offset()
       const mockUsers = [
         { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
         { id: 2, name: "User 2", email: "user2@example.com", role: "admin" },
@@ -82,12 +83,17 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-      // from() returns object with both where() and orderBy() methods
-      const mockFromResult = {
+      // from() must return object that has orderBy() method directly accessible
+      // Drizzle allows: from().orderBy() OR from().where().orderBy()
+      const mockFromResult = vi.fn().mockReturnValue({
         where: mockWhere,
-        orderBy: mockOrderBy, // Direct access to orderBy (no where clause path)
-      };
-      const mockFrom = vi.fn().mockReturnValue(mockFromResult);
+        orderBy: mockOrderBy,
+      });
+      // Actually, from() should return an object, not a function
+      const mockFrom = vi.fn().mockReturnValue({
+        where: mockWhere,
+        orderBy: mockOrderBy,
+      });
 
       // Single db instance – select() decides between count vs main query based on args
       // Need to handle multiple calls: count query first, then main query
