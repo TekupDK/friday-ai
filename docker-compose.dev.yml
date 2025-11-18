@@ -1,5 +1,6 @@
 # Friday AI Chat - Development Docker Compose
-# Hybrid approach: Backend + Database in Docker, Frontend runs native
+# Full Docker setup with hot-reload support for live editing
+# Backend + Frontend + Database in Docker with volume mounts for live fixes
 # Usage: docker-compose -f docker-compose.dev.yml up
 
 services:
@@ -20,12 +21,18 @@ services:
       # Hot-reload support
       - WATCH=true
     volumes:
-      # Mount source code for hot-reload
-      - ./server:/app/server:ro
-      - ./shared:/app/shared:ro
-      - ./drizzle:/app/drizzle:ro
-      # Exclude node_modules for performance
+      # Mount source code for hot-reload (read-write for live editing)
+      - ./server:/app/server
+      - ./shared:/app/shared
+      - ./drizzle:/app/drizzle
+      - ./package.json:/app/package.json
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./check-env.js:/app/check-env.js
+      - ./tsconfig.json:/app/tsconfig.json
+      # Exclude node_modules for performance (use container's node_modules)
       - /app/node_modules
+      # Exclude dist for performance
+      - /app/dist
     depends_on:
       db-dev:
         condition: service_healthy
@@ -95,6 +102,42 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+
+  # Frontend Development Server (Vite with hot-reload)
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: friday-frontend-dev
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env.dev
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
+    volumes:
+      # Mount client source for hot-reload (read-write for live editing)
+      - ./client:/app/client
+      - ./shared:/app/shared
+      - ./package.json:/app/package.json
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.app.json:/app/tsconfig.app.json
+      - ./tsconfig.node.json:/app/tsconfig.node.json
+      # Exclude node_modules for performance
+      - /app/node_modules
+      - /app/client/node_modules
+      # Exclude dist for performance
+      - /app/dist
+      - /app/client/dist
+    command: pnpm dev:vite
+    depends_on:
+      - backend-dev
+    restart: unless-stopped
+    networks:
+      - tekup-dev-network
 
   # Database Admin Tool (Optional - for development)
   adminer-dev:

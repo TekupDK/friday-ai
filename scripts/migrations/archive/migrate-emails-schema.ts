@@ -5,8 +5,8 @@
  * Tilføjer manglende kolonner
  */
 
-import postgres from "postgres";
 import * as dotenv from "dotenv";
+import postgres from "postgres";
 
 dotenv.config({ path: ".env.supabase" });
 

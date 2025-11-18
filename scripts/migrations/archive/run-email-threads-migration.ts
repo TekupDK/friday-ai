@@ -4,11 +4,12 @@
  * This script applies the fix-email-threads-schema.sql migration
  */
 
-import postgres from "postgres";
-import * as dotenv from "dotenv";
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+
+import * as dotenv from "dotenv";
+import postgres from "postgres";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
