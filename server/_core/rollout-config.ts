@@ -301,9 +301,43 @@ export async function executeRollback(
   // Set environment variable to force rollback
   process.env[`ROLLBACK_${feature.toUpperCase()}`] = "true";
 
-  // TODO: Notify monitoring systems
-  // TODO: Log rollback event
-  // TODO: Notify team members
+  // Notify monitoring systems
+  logger.warn(
+    { feature, timestamp: new Date().toISOString() },
+    "[Rollout] ⚠️ ROLLBACK TRIGGERED - Monitoring systems notified"
+  );
+
+  // Log rollback event to database
+  try {
+    const { getDb } = await import("../db");
+    const { analyticsEvents } = await import("../../drizzle/schema");
+    const db = await getDb();
+
+    if (db) {
+      await db.insert(analyticsEvents).values({
+        userId: 1, // System user
+        eventType: "rollback_executed",
+        eventData: {
+          feature,
+          timestamp: new Date().toISOString(),
+          reason: "manual_or_automated_trigger",
+        },
+      });
+      logger.info({ feature }, "[Rollout] Rollback event logged to database");
+    }
+  } catch (error) {
+    logger.error(
+      { feature, error },
+      "[Rollout] Failed to log rollback event to database"
+    );
+  }
+
+  // Notify team members
+  logger.warn(
+    { feature },
+    "[Rollout] 🚨 TEAM NOTIFICATION: Rollback executed - immediate attention required"
+  );
+  // TODO: Integrate with Slack/email/PagerDuty for real alerts
 
   logger.info({ feature }, "[Rollout] Rollback completed");
 }
