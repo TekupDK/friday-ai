@@ -16,7 +16,7 @@ const plugins = [
   jsxLocPlugin(),
 ];
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     ...plugins,
     visualizer({
@@ -27,6 +27,10 @@ export default defineConfig({
       template: "treemap", // Better visualization
     }),
   ],
+  // Define compile-time constants
+  define: {
+    __ENABLE_SHOWCASE__: mode === "development",
+  },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -46,23 +50,78 @@ export default defineConfig({
     cssCodeSplit: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          "react-vendor": ["react", "react-dom"],
-          "ui-vendor": [
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu",
-            "@radix-ui/react-select",
-          ],
-          "trpc-vendor": ["@trpc/client", "@trpc/react-query", "@trpc/server"],
-          // Split workspace components to reduce main bundle size
-          "workspace-lead": ["@/components/workspace/LeadAnalyzer"],
-          "workspace-booking": ["@/components/workspace/BookingManager"],
-          "workspace-invoice": ["@/components/workspace/InvoiceTracker"],
-          "workspace-customer": ["@/components/workspace/CustomerProfile"],
-          "workspace-dashboard": ["@/components/workspace/BusinessDashboard"],
-          // Split large UI components
-          "email-components": ["@/components/inbox/EmailTabV2"],
-          "ai-components": ["@/components/panels/AIAssistantPanelV2"],
+        manualChunks(id) {
+          // Node modules chunking strategy
+          if (id.includes("node_modules")) {
+            // React ecosystem - small, frequently used
+            if (id.includes("react") || id.includes("react-dom")) {
+              return "react-vendor";
+            }
+
+            // Radix UI - split all into one vendor chunk
+            if (id.includes("@radix-ui")) {
+              return "radix-vendor";
+            }
+
+            // tRPC - API layer
+            if (id.includes("@trpc") || id.includes("@tanstack/react-query")) {
+              return "trpc-vendor";
+            }
+
+            // Large animation libraries
+            if (id.includes("framer-motion") || id.includes("gsap")) {
+              return "animation-vendor";
+            }
+
+            // Charts and data visualization
+            if (id.includes("recharts") || id.includes("d3")) {
+              return "charts-vendor";
+            }
+
+            // FullCalendar - large calendar library
+            if (id.includes("@fullcalendar")) {
+              return "calendar-vendor";
+            }
+
+            // Markdown and syntax highlighting
+            if (id.includes("react-markdown") || id.includes("react-syntax-highlighter")) {
+              return "markdown-vendor";
+            }
+
+            // AI/LLM libraries
+            if (id.includes("@google/generative-ai") || id.includes("langfuse")) {
+              return "ai-vendor";
+            }
+
+            // Other large vendors
+            if (id.includes("lucide-react")) {
+              return "icons-vendor";
+            }
+
+            // All other node_modules go into common vendor
+            return "vendor";
+          }
+
+          // App code chunking
+          // CRM pages - lazy loaded
+          if (id.includes("/pages/crm/")) {
+            return "crm-pages";
+          }
+
+          // Workspace components - lazy loaded
+          if (id.includes("/components/workspace/")) {
+            return "workspace";
+          }
+
+          // Email/Inbox components
+          if (id.includes("/components/inbox/")) {
+            return "inbox";
+          }
+
+          // AI/Chat components
+          if (id.includes("/components/panels/") || id.includes("/components/chat/")) {
+            return "chat";
+          }
         },
         compact: true,
       },
@@ -130,4 +189,4 @@ export default defineConfig({
     // Preserve names for better HMR
     keepNames: true,
   },
-});
+}));
