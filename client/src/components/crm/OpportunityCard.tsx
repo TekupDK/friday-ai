@@ -11,6 +11,7 @@ import { Calendar, DollarSign, Percent, User } from "lucide-react";
 import { AppleCard } from "./apple-ui";
 
 import { cn } from "@/lib/utils";
+import { sanitizeText } from "@/utils/sanitize";
 
 export type OpportunityStage =
   | "lead"
@@ -124,14 +125,14 @@ export function OpportunityCard({
         <div className="space-y-2">
           {/* Title */}
           <h4 className="font-semibold text-sm leading-tight">
-            {opportunity.title}
+            {sanitizeText(opportunity.title)}
           </h4>
 
           {/* Customer Name */}
           {opportunity.customerName && (
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <User className="w-3 h-3" />
-              <span className="truncate">{opportunity.customerName}</span>
+              <span className="truncate">{sanitizeText(opportunity.customerName)}</span>
             </div>
           )}
 
@@ -164,7 +165,7 @@ export function OpportunityCard({
           {/* Next Steps */}
           {opportunity.nextSteps && (
             <p className="text-xs text-muted-foreground line-clamp-2">
-              {opportunity.nextSteps}
+              {sanitizeText(opportunity.nextSteps)}
             </p>
           )}
 

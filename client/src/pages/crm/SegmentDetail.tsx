@@ -15,6 +15,7 @@ import { SegmentActions } from "@/components/crm/SegmentActions";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { trpc } from "@/lib/trpc";
+import { sanitizeText } from "@/utils/sanitize";
 
 export default function SegmentDetail() {
   const [, params] = useRoute("/crm/segments/:id");
@@ -112,9 +113,9 @@ export default function SegmentDetail() {
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
                               <p className="font-medium">
-                                {customer.name ||
+                                {sanitizeText(customer.name ||
                                   customer.email ||
-                                  `Customer ${customer.id}`}
+                                  `Customer ${customer.id}`)}
                               </p>
                               {customer.email && customer.name && (
                                 <p className="text-sm text-muted-foreground">

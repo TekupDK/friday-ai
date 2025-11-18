@@ -18,6 +18,7 @@ import { LEAD_STATUSES } from "@/const/crm";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { trpc } from "@/lib/trpc";
 import { exportLeadsToCSV } from "@/utils/csv-export";
+import { sanitizeText } from "@/utils/sanitize";
 
 export default function LeadPipeline() {
   usePageTitle("Lead Pipeline");
@@ -177,7 +178,7 @@ export default function LeadPipeline() {
                                   }}
                                 >
                                   <p className="font-medium text-sm">
-                                    {lead.name}
+                                    {sanitizeText(lead.name)}
                                   </p>
                                   {lead.email && (
                                     <p className="text-xs text-muted-foreground mt-1">
