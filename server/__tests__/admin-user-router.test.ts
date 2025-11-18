@@ -60,9 +60,6 @@ describe("Admin User Router - Role-Based Access Control", () => {
 
       const ctx = createMockContext({ id: 2, role: "admin" });
       const caller = appRouter.createCaller(ctx);
-      
-      // Increase timeout for this test
-    }, { timeout: 10000 });
 
       // Mock database with proper query builder chain
       const dbModule = await import("../db");
@@ -71,28 +68,26 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockCountResult = [{ count: 2 }];
       const mockCountResolve = vi.fn().mockResolvedValue(mockCountResult);
       const mockCountWhere = vi.fn().mockReturnValue({ then: mockCountResolve });
-      // from() for count can return either where() or directly resolve (no where clause)
       const mockCountFrom = vi.fn().mockReturnValue({
         where: mockCountWhere,
         then: mockCountResolve,
       });
 
-    // Mock main query result - need to handle both with and without where clause
-    // The chain in router: select().from(users).orderBy().limit().offset()
-    const mockUsers = [
-      { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
-      { id: 2, name: "User 2", email: "user2@example.com", role: "admin" },
-    ];
-    const mockOffset = vi.fn().mockResolvedValue(mockUsers);
-    const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
-    const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
-    const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-    // from() must return object with orderBy() method directly (not nested in where)
-    const mockFromResult = {
-      where: mockWhere,
-      orderBy: mockOrderBy, // Direct access to orderBy
-    };
-    const mockFrom = vi.fn().mockReturnValue(mockFromResult);
+      // Mock main query result - chain: select().from(users).orderBy().limit().offset()
+      const mockUsers = [
+        { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
+        { id: 2, name: "User 2", email: "user2@example.com", role: "admin" },
+      ];
+      const mockOffset = vi.fn().mockResolvedValue(mockUsers);
+      const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
+      const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
+      const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
+      // from() returns object with both where() and orderBy() methods
+      const mockFromResult = {
+        where: mockWhere,
+        orderBy: mockOrderBy, // Direct access to orderBy (no where clause path)
+      };
+      const mockFrom = vi.fn().mockReturnValue(mockFromResult);
 
       // Single db instance – select() decides between count vs main query based on args
       // Need to handle multiple calls: count query first, then main query
@@ -116,7 +111,7 @@ describe("Admin User Router - Role-Based Access Control", () => {
       expect(result).toBeDefined();
       expect(result.users).toBeDefined();
       expect(Array.isArray(result.users)).toBe(true);
-    });
+    }, { timeout: 10000 });
 
     it("should deny regular user from listing users", async () => {
       const rbacModule = await import("../rbac");

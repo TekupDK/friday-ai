@@ -67,6 +67,7 @@ if (ENV.sentryEnabled && ENV.sentryDsn) {
 **In `startServer()` function:**
 
 No additional middleware setup is needed! The `expressIntegration()` in `Sentry.init()` automatically:
+
 - ✅ Instruments Express requests/responses
 - ✅ Captures unhandled errors
 - ✅ Tracks performance
