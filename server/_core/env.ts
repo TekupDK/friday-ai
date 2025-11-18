@@ -53,6 +53,13 @@ export const ENV = {
   // Billy.dk
   billyApiKey: process.env.BILLY_API_KEY ?? "",
   billyOrganizationId: process.env.BILLY_ORGANIZATION_ID ?? "",
+  // Billy.dk Subscription Product IDs
+  // These IDs should be created in Billy.dk admin panel and added to .env
+  billySubscriptionTier1ProductId: process.env.BILLY_SUBSCRIPTION_TIER1_PRODUCT_ID ?? "",
+  billySubscriptionTier2ProductId: process.env.BILLY_SUBSCRIPTION_TIER2_PRODUCT_ID ?? "",
+  billySubscriptionTier3ProductId: process.env.BILLY_SUBSCRIPTION_TIER3_PRODUCT_ID ?? "",
+  billySubscriptionFlexBasisProductId: process.env.BILLY_SUBSCRIPTION_FLEX_BASIS_PRODUCT_ID ?? "",
+  billySubscriptionFlexPlusProductId: process.env.BILLY_SUBSCRIPTION_FLEX_PLUS_PRODUCT_ID ?? "",
   // Inbound email webhook/server integration
   INBOUND_STORAGE_PATH: process.env.INBOUND_STORAGE_PATH ?? "",
   INBOUND_EMAIL_WEBHOOK_SECRET: process.env.INBOUND_EMAIL_WEBHOOK_SECRET ?? "",
