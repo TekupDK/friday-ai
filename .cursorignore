@@ -1,0 +1,119 @@
+# Cursor AI Context Exclusions
+# Excludes files/folders from AI context to optimize performance
+
+# Build outputs and generated files
+dist/
+build/
+coverage/
+storybook-static/
+.next/
+.nuxt/
+.vuepress/dist/
+
+# Test artifacts and reports
+test-results/
+.nyc_output/
+junit.xml
+test-report.xml
+playwright-report/
+ai-screenshots/
+ai-traces/
+ai-videos/
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+.tmp/
+*.tmp
+*.temp
+
+# Large data files and models
+data/*.json
+data/*.csv
+data/*.db
+models/
+*.safetensors
+*.bin
+*.model
+*.pkl
+*.h5
+
+# Generated documentation
+doc-auto/generated/
+auto-generated/
+.docusaurus/
+_site/
+
+# Development artifacts
+.cache/
+.parcel-cache/
+.vscode/settings.json
+.idea/
+
+# Package manager files
+node_modules/
+.pnpm-store/
+.yarn/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Database and environment
+*.db
+*.sqlite
+*.db-journal
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Large binary assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.webp
+*.avif
+*.mp4
+*.webm
+*.avi
+
+# Compiled and minified files
+*.min.js
+*.min.css
+*.bundle.js
+*.chunk.js
+*.wasm
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Git and version control
+.git/
+.gitignore
+.gitattributes
+
+# Performance and monitoring
+stats.html
+bundle-analyzer-report.html
+lighthouse-report.html
+
+# Patches and diffs
+patches/
+*.patch
+*.diff
+
+# Large config files
+*.config.js.map
+*.config.ts.map
+components.json

@@ -1,7 +1,7 @@
 # Friday AI Chat - Documentation Index
 
-**Last Updated:** November 3, 2025
-**Total Documents:** 39
+**Last Updated:** January 28, 2025
+**Total Documents:** 45+
 
 ---
 
@@ -17,6 +17,13 @@
 ### Database & Infrastructure
 
 - **[DATABASE_MIGRATION_SUPABASE.md](./migration/database/DATABASE_MIGRATION_SUPABASE.md)** - MySQL to Supabase PostgreSQL migration guide
+
+### DevOps & Monitoring
+
+- **[SENTRY_SETUP.md](./devops-deploy/SENTRY_SETUP.md)** - Sentry error tracking setup guide
+- **[SENTRY_PRODUCTION_SETUP.md](./devops-deploy/SENTRY_PRODUCTION_SETUP.md)** - Production deployment guide
+- **[SECURITY_SCANNING.md](./devops-deploy/SECURITY_SCANNING.md)** - Security scanning (npm audit + Snyk)
+- **[IMPLEMENTATION_SUMMARY.md](./devops-deploy/IMPLEMENTATION_SUMMARY.md)** - Critical features implementation status
 
 ---
 

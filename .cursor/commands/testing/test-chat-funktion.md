@@ -12,6 +12,7 @@ Test chat funktionalitet: send besked, verificer response, test conversation flo
 ## TASK
 
 Test chat funktion:
+
 1. **Forstå chat system** - Læs `server/routers/chat-router.ts` og `server/db.ts`
 2. **Test sendMessage** - Send test besked via tRPC
 3. **Verificer response** - Tjek at response er korrekt
@@ -22,10 +23,20 @@ Test chat funktion:
 ## TOOL USAGE
 
 **Use these tools:**
+
 - `read_file` - Læs chat router og database funktioner
 - `codebase_search` - Find test eksempler
 - `grep` - Søg efter eksisterende tests
 - `run_terminal_cmd` - Kør test script
+
+**CRITICAL - Chat Session Reading:**
+
+**In Cursor Context (THIS SESSION):**
+
+- **You have direct access to the ENTIRE Cursor chat session** in this conversation
+- Read ALL messages from the start of this Cursor session
+- Read BOTH user messages AND agent responses in chronological order
+- Use this full context to understand what chat functions need testing
 
 ## IMPLEMENTATION STEPS
 
@@ -75,18 +86,21 @@ Test chat funktion:
 ## Test Cases
 
 ### ✅ Test 1: Send Message
+
 - **Input:** [Test besked]
 - **Expected:** Message gemmes, AI response returneres
 - **Actual:** [Resultat]
 - **Status:** ✅ Pass / ❌ Fail
 
 ### ✅ Test 2: Conversation History
+
 - **Input:** [Flere beskeder]
 - **Expected:** History bevares korrekt
 - **Actual:** [Resultat]
 - **Status:** ✅ Pass / ❌ Fail
 
 ### ✅ Test 3: Rate Limit
+
 - **Input:** [11 beskeder i 1 minut]
 - **Expected:** Rate limit error ved 11. besked
 - **Actual:** [Resultat]
@@ -120,4 +134,3 @@ Test chat funktion:
 ---
 
 **CRITICAL:** Forstå chat system, test sendMessage end-to-end, verificer responses, test conversation flow, valider database, og test edge cases.
-

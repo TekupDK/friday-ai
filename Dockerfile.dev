@@ -13,11 +13,12 @@ RUN npm install -g pnpm@10.20.0
 RUN apk add --no-cache git
 
 # Copy ONLY package files first (for better caching)
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 
 # Install dependencies (including dev dependencies)
 # This layer will be cached unless package files change
-RUN pnpm install --frozen-lockfile
+# Note: If pnpm-lock.yaml exists, it should be copied separately for --frozen-lockfile
+RUN pnpm install
 
 # Copy minimal required files (rest comes via volume mounts for hot-reload)
 # These are fallbacks - actual source is mounted as volumes

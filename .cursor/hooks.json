@@ -24,6 +24,20 @@
         "description": "Validates code style before making changes",
         "enabled": true,
         "priority": 3
+      },
+      {
+        "name": "validate-friday-rules",
+        "file": ".cursor/hooks/pre-execution/validate-friday-rules.ts",
+        "description": "Validates code changes against Friday AI's 25 memory business rules",
+        "enabled": true,
+        "priority": 4
+      },
+      {
+        "name": "create-backup",
+        "file": ".cursor/hooks/pre-execution/create-backup.ts",
+        "description": "Creates backups before potentially destructive operations",
+        "enabled": true,
+        "priority": 5
       }
     ],
     "post-execution": [
@@ -45,7 +59,7 @@
         "name": "update-documentation",
         "file": ".cursor/hooks/post-execution/update-documentation.ts",
         "description": "Updates relevant documentation after feature changes",
-        "enabled": false,
+        "enabled": true,
         "priority": 3
       }
     ],
@@ -63,6 +77,13 @@
         "description": "Attempts automatic error recovery",
         "enabled": true,
         "priority": 2
+      },
+      {
+        "name": "rollback-changes",
+        "file": ".cursor/hooks/error/rollback-changes.ts",
+        "description": "Attempts to rollback changes when operations fail",
+        "enabled": true,
+        "priority": 3
       }
     ],
     "context": [

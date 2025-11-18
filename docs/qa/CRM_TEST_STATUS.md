@@ -1,7 +1,9 @@
 # CRM Test Status
 
-**Date:** 2025-11-17  
+**Date:** 2025-01-28  
 **Status:** ✅ Tests Improved & Ready
+
+> **Related Documentation:** See [`LOGIN_TEST_STATUS.md`](./LOGIN_TEST_STATUS.md) for login system test status and QA scenarios.
 
 ## Current Status
 

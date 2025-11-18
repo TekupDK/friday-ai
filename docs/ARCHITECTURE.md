@@ -2,7 +2,7 @@
 
 **Author:** Manus AI  
 **Last Updated:** January 28, 2025  
-**Version:** 1.1.0
+**Version:** 1.2.0
 
 ## Executive Summary
 
@@ -127,6 +127,16 @@ The application is built on the following core technologies:
 │  │ - Gmail    │  │ - Invoices │  │ - LLM      │          │
 │  │ - Calendar │  │ - Contacts │  │ - Storage  │          │
 │  │ - OAuth    │  │ - MCP      │  │ - OAuth    │          │
+│  └────────────┘  └────────────┘  └────────────┘          │
+│                                                           │
+│  ┌────────────┐  ┌────────────┐  ┌────────────┐          │
+│  │ Sentry     │  │ Dependabot │  │ Codecov    │          │
+│  │ Error      │  │ Dependency │  │ Coverage   │          │
+│  │ Tracking   │  │ Updates    │  │ Reporting  │          │
+│  │            │  │            │  │            │          │
+│  │ - Server   │  │ - Weekly   │  │ - CI       │          │
+│  │ - Client   │  │ - Auto PR │  │ - Trends   │          │
+│  │ - Tracing  │  │ - Security │  │ - Reports  │          │
 │  └────────────┘  └────────────┘  └────────────┘          │
 └───────────────────────────────────────────────────────────┘
 
@@ -616,7 +626,12 @@ console.log("User logged in"); // Don't use
 **Client Logs:**
 
 - Browser console for development
-- Error tracking (not yet implemented)
+- Error tracking: **Sentry v10** integrated (server + client)
+  - Automatic error capture (unhandled rejections, exceptions)
+  - React Error Boundary integration
+  - Express.js error tracking
+  - Performance tracing (10% sample rate)
+  - See: [Sentry Setup Guide](./devops-deploy/SENTRY_SETUP.md)
 
 ## Scalability Considerations
 
@@ -738,7 +753,7 @@ console.log("User logged in"); // Don't use
 **Current Known Issues:**
 
 1. No automated testing (unit/integration/e2e)
-1. No error tracking service integration
+1. ✅ **Error tracking**: Sentry v10 integrated (server + client)
 1. No performance monitoring
 1. Limited input sanitization
 1. No rate limiting on API endpoints
@@ -746,7 +761,7 @@ console.log("User logged in"); // Don't use
 **Recommended Fixes:**
 
 1. Add Vitest for unit testing
-1. Integrate Sentry for error tracking
+1. ✅ **Sentry error tracking** - Implemented (v10)
 1. Add performance monitoring (e.g., New Relic)
 1. Implement DOMPurify for XSS prevention
 1. Add express-rate-limit middleware

@@ -47,6 +47,29 @@ Bemærk: `.env.staging` peger aktuelt på produktions-Supabase. Seed/tests opret
 - **Business Focused**: Realistic mock data from `complete-leads-v4.3.3.json`
 - **Modular Architecture**: Easy to customize and extend for your applications
 
+### 🆕 What's New in v1.7.0 (January 28, 2025)
+
+- **🔍 Error Tracking & Monitoring** (Production Ready):
+  - **Sentry v10 Integration**: Complete error tracking for server and client
+    - Automatic error capture (unhandled rejections, exceptions)
+    - React Error Boundary integration with Sentry reporting
+    - Express.js error tracking and performance tracing
+    - Environment-based configuration (dev/prod)
+    - 22 comprehensive tests (18 server + 4 client) - 100% passing
+  - **Documentation**: Complete setup guides, production deployment, and troubleshooting
+  - **See**: [Sentry Setup Guide](docs/devops-deploy/SENTRY_SETUP.md)
+
+- **🔄 DevOps Automation**:
+  - **Dependabot**: Automated dependency updates (weekly schedule)
+  - **Security Scanning**: npm audit + Snyk integration in CI/CD
+  - **Test Coverage Reporting**: Codecov integration with coverage thresholds
+  - **See**: [DevOps Features Index](docs/devops-deploy/DEVOPS_FEATURES_INDEX.md)
+
+- **📚 Documentation Updates**:
+  - Updated architecture documentation with Sentry integration
+  - Enhanced development guide with monitoring and DevOps sections
+  - Complete implementation status and validation reports
+
 ### 🆕 What's New in v1.6.0
 
 - **🎨 Complete Chat Components Showcase** (78+ Components):
@@ -254,6 +277,8 @@ Critical business logic embedded in AI system prompt:
 - **Supabase PostgreSQL** - Production database (schema: `friday_ai`)
 - **Security**: DOMPurify (XSS protection), express-rate-limit, helmet
 - **Monitoring**: API monitoring, request queue, retry strategies
+- **Error Tracking**: Sentry v10 (server + client) with automatic error capture
+- **DevOps**: Dependabot (automated dependency updates), Security scanning (npm audit + Snyk), Test coverage reporting (Codecov)
 
 ### Integrations
 

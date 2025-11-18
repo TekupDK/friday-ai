@@ -6,12 +6,12 @@ import "dotenv/config";
 
 import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
-import { beforeAll, afterAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import {
-  leads,
   customerProfiles,
   customerProperties,
+  leads,
 } from "../../drizzle/schema";
 import type { TrpcContext } from "../_core/context";
 import { ENV } from "../_core/env";
@@ -431,9 +431,10 @@ describe("CRM smoke tests", () => {
     };
     const otherCaller = testRouter.createCaller(otherCtx);
     // Try to modify lead owned by owner user
+    // verifyResourceOwnership throws: "You don't have permission to access this lead (ID: ...)"
     await expect(
       otherCaller.crm.lead.updateLeadStatus({ id: leadId, status: "contacted" })
-    ).rejects.toThrow(/Lead not accessible/i);
+    ).rejects.toThrow(/don't have permission to access this lead/i);
   });
 
   it("rejects invalid booking status and non-existent booking delete", async () => {

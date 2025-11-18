@@ -1,0 +1,247 @@
+# Friday AI Chat Project Rules
+
+**Project:** Friday AI Chat (TekupDK/Rendetalje.dk)  
+**Version:** 2025-11-18  
+**Purpose:** Cursor AI project-specific development rules
+
+---
+
+## 📋 CODING STANDARDS
+
+### TypeScript & React Rules
+
+- **ALWAYS use TypeScript strict mode** - No `any` types allowed
+- **Use React 19 functional components** - No class components
+- **Follow existing codebase patterns** exactly
+- **Use React hooks properly** - useState, useEffect, useMemo, useCallback
+- **Implement proper error boundaries** for all major components
+
+### API & Backend Rules
+
+- **Use tRPC for ALL API calls** - No direct fetch() calls
+- **Follow tRPC router patterns** in `server/routers/`
+- **Use Drizzle ORM for database** - No raw SQL unless necessary
+- **Implement proper error handling** in all API endpoints
+- **Use protectedProcedure for authenticated routes**
+
+### Database Rules
+
+- **Use database helpers** from `server/db.ts` and `server/*-db.ts`
+- **All database operations MUST be transactional** when multiple tables involved
+- **Follow camelCase naming** for database columns (not snake_case)
+- **Include createdAt and updatedAt** for mutable tables
+- **Use proper foreign key relationships** with Drizzle relations
+
+---
+
+## 🧠 FRIDAY AI BUSINESS RULES
+
+### Memory Rules Compliance (25 Rules)
+
+- **ALWAYS follow Friday AI's 25 MEMORY rules** for business logic
+- **Invoice processing MUST be draft-only** (MEMORY_16)
+- **Moving cleaning requires photos** (MEMORY_15)
+- **Round booking hours to nearest 15 min** (MEMORY_24)
+- **No calendar attendees for bookings** (MEMORY_17)
+- **Job completion checklist required** (MEMORY_19)
+
+### Tekup Cleaning Business Rules
+
+- **Follow cleaning industry workflows** exactly
+- **Integrate with Billy.dk** for invoicing (use existing patterns)
+- **Sync with Google Calendar** for scheduling
+- **Maintain customer communication standards**
+- **Follow flytterengøring (moving cleaning) protocols**
+
+### AI Integration Rules
+
+- **Use Friday AI tools** from `server/friday-tools.ts`
+- **Follow AI routing patterns** from `server/ai-router.ts`
+- **Implement proper AI error handling**
+- **Use appropriate AI models** for different tasks
+- **Test AI integrations thoroughly**
+
+---
+
+## 📁 FILE ORGANIZATION RULES
+
+### Component Structure
+
+```
+client/src/components/
+├── ui/              # shadcn/ui components (auto-generated)
+├── [feature]/       # Feature-specific components
+└── shared/          # Shared/reusable components
+```
+
+### Backend Structure
+
+```
+server/
+├── routers/         # tRPC API endpoints
+├── *-db.ts          # Database helpers per feature
+├── *-actions.ts     # Business logic per feature
+└── friday-*.ts      # Friday AI related files
+```
+
+### Commands Structure
+
+```
+.cursor/commands/
+├── core/            # Session, TODOs, Git commands
+├── development/     # Create, Implement, Fix commands
+├── testing/         # Test creation and management
+├── debugging/       # Debug and troubleshoot
+├── ai/              # AI tools and analysis
+├── tekup/           # Tekup business workflows
+├── chat/            # Chat context commands
+└── explain/         # Explanation commands
+```
+
+---
+
+## 🔧 DEVELOPMENT WORKFLOW RULES
+
+### Pre-Development
+
+- **Read existing patterns** before implementing new features
+- **Check similar components** for consistency
+- **Validate against Friday AI memory rules**
+- **Ensure TypeScript types are defined**
+
+### During Development
+
+- **Follow existing code patterns** exactly
+- **Use hooks system** for validation and quality checks
+- **Test components thoroughly** before committing
+- **Update documentation** when adding new features
+
+### Post-Development
+
+- **Run TypeScript checking** (automatic via hooks)
+- **Run ESLint** (automatic via hooks)
+- **Verify Friday AI rule compliance**
+- **Update relevant documentation**
+
+---
+
+## 🛡️ SECURITY & QUALITY RULES
+
+### Security Requirements
+
+- **Validate all user inputs** with Zod schemas
+- **Use protectedProcedure** for authenticated API calls
+- **Sanitize database inputs** to prevent SQL injection
+- **Implement rate limiting** for public endpoints
+- **Follow OWASP security guidelines**
+
+### Code Quality Standards
+
+- **All functions MUST have TypeScript types**
+- **All React components MUST handle loading states**
+- **All API calls MUST have error handling**
+- **All database operations MUST be error-safe**
+- **Write unit tests** for critical business logic
+
+### Performance Requirements
+
+- **Use React.memo** for expensive components
+- **Implement proper code splitting** for large bundles
+- **Optimize database queries** (use proper indexes)
+- **Cache expensive operations** appropriately
+- **Monitor bundle sizes** and performance metrics
+
+---
+
+## 🎯 BUSINESS LOGIC RULES
+
+### Customer Management
+
+- **Follow CRM patterns** in existing codebase
+- **Maintain customer data integrity**
+- **Implement proper customer communication workflows**
+- **Track customer interaction history**
+
+### Service Delivery
+
+- **Follow cleaning service workflows** exactly
+- **Implement quality checkpoints**
+- **Maintain service history and feedback**
+- **Track job completion and billing**
+
+### Integration Requirements
+
+- **Billy.dk integration** must follow existing patterns
+- **Google Calendar sync** must maintain consistency
+- **Friday AI integration** must respect memory rules
+- **All integrations** must have error recovery
+
+---
+
+## ⚠️ FORBIDDEN PATTERNS
+
+### What NOT to Do
+
+- ❌ **No direct database access** outside of helpers
+- ❌ **No raw SQL queries** without proper escaping
+- ❌ **No `any` types** in TypeScript
+- ❌ **No class components** in React
+- ❌ **No direct fetch() calls** (use tRPC)
+- ❌ **No hardcoded values** (use constants/env vars)
+- ❌ **No breaking changes** without discussion
+- ❌ **No skipping Friday AI memory rule validation**
+
+### Code Smells to Avoid
+
+- ❌ Large components (>300 lines)
+- ❌ Deeply nested conditionals (>3 levels)
+- ❌ Missing error handling
+- ❌ Inconsistent naming conventions
+- ❌ Unused imports or variables
+- ❌ Magic numbers or strings
+
+---
+
+## 🚀 CURSOR AI INTEGRATION
+
+### How to Use These Rules
+
+- **Reference these rules** when asking Cursor AI for code
+- **Validate AI suggestions** against these rules
+- **Use commands system** for consistent workflows
+- **Follow hooks system** for automatic validation
+
+### AI Prompt Guidelines
+
+- **Be specific** about which patterns to follow
+- **Reference existing code** for consistency
+- **Mention Friday AI memory rules** when relevant
+- **Ask for TypeScript types** explicitly
+- **Request error handling** implementation
+
+---
+
+## 📚 REFERENCE DOCUMENTATION
+
+### Key Files to Reference
+
+- `docs/ARCHITECTURE.md` - System architecture
+- `docs/DEVELOPMENT_GUIDE.md` - Development workflow
+- `docs/API_REFERENCE.md` - API documentation
+- `server/friday-prompts.ts` - Friday AI system prompts
+- `client/src/lib/ai-memory-rules.ts` - 25 Memory rules
+- `.cursor/commands/README.md` - Commands system guide
+
+### When in Doubt
+
+1. **Check existing patterns** in similar components
+2. **Read related documentation** in `docs/` folder
+3. **Follow TypeScript compiler** suggestions
+4. **Test thoroughly** before implementing
+5. **Ask for code review** when uncertain
+
+---
+
+**Last Updated:** 2025-11-18  
+**Maintained by:** Friday AI Chat Development Team  
+**Status:** ✅ Active - Follow these rules for all development

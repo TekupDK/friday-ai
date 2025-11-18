@@ -18,6 +18,7 @@ CRM systemet kræver login før adgang. Hvis du ser en blank side, skal du logge
 ### Option 2: CRM Standalone Mode (Måske uden login)
 
 **Prøv denne URL:**
+
 ```
 http://localhost:5174/crm-standalone
 ```
@@ -78,4 +79,3 @@ Standalone mode kan have mindre authentication requirements.
 ---
 
 **Næste skridt:** Log ind på http://localhost:5174 og derefter naviger til CRM Dashboard!
-

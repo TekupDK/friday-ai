@@ -16,22 +16,24 @@ All subscription integration tests are now passing. Fixed mock chains, expectati
 ## Test Results
 
 ### Unit Tests (`subscription.test.ts`)
+
 **Status:** ✅ ALL PASSING (20/20)
 
-| Test Suite | Tests | Status |
-|------------|-------|--------|
-| Subscription Helpers | 8 | ✅ All pass |
-| Subscription Plans | 3 | ✅ All pass |
-| Subscription Actions | 9 | ✅ All pass |
+| Test Suite           | Tests | Status      |
+| -------------------- | ----- | ----------- |
+| Subscription Helpers | 8     | ✅ All pass |
+| Subscription Plans   | 3     | ✅ All pass |
+| Subscription Actions | 9     | ✅ All pass |
 
 ### Integration Tests (`subscription-integration.test.ts`)
+
 **Status:** ✅ ALL PASSING (8/8)
 
-| Test Suite | Tests | Status |
-|------------|-------|--------|
-| Billy.dk Integration | 3 | ✅ All pass |
-| Google Calendar | 2 | ✅ All pass |
-| Email Integration | 3 | ✅ All pass |
+| Test Suite           | Tests | Status      |
+| -------------------- | ----- | ----------- |
+| Billy.dk Integration | 3     | ✅ All pass |
+| Google Calendar      | 2     | ✅ All pass |
+| Email Integration    | 3     | ✅ All pass |
 
 **Total:** 28/28 tests passing (100%) ✅
 
@@ -40,23 +42,28 @@ All subscription integration tests are now passing. Fixed mock chains, expectati
 ## Fixes Applied
 
 ### 1. Mock Chain Fixes
+
 - Fixed Drizzle ORM query builder chains (`.select().from().where().limit()`)
 - Fixed insert chains (`.insert().values().returning()`)
 - Fixed update chains (`.update().set().where()`)
 
 ### 2. createInvoice Expectations
+
 - Changed from `{ customerId, amount }` to `{ contactId, lines: [{ unitPrice }] }`
 - Updated price conversion (øre to DKK: `/100`)
 
 ### 3. Required Fields
+
 - Added `billyCustomerId` to customer mocks for renewal tests
 - Added `startDate` to subscription mocks for `calculatePeriodEnd`
 
 ### 4. Error Handling
+
 - Updated `processRenewal` error test to expect `{ success: false }` instead of thrown error
 - Updated async function expectations (email/calendar sent async, not synchronously)
 
 ### 5. Import Order
+
 - Fixed `createCalendarEvent` import before mock setup
 - Ensured all imports happen before mocking
 
@@ -65,6 +72,7 @@ All subscription integration tests are now passing. Fixed mock chains, expectati
 ## Test Coverage
 
 **Subscription Features:**
+
 - ✅ Helper functions (calculations, validations)
 - ✅ Subscription plans (config, validation)
 - ✅ Core actions (create, renew, cancel)
@@ -85,4 +93,3 @@ All subscription integration tests are now passing. Fixed mock chains, expectati
 
 **Last Updated:** January 28, 2025  
 **Test Status:** ✅ COMPLETE
-

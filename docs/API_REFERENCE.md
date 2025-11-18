@@ -2,7 +2,7 @@
 
 **Author:** Manus AI  
 **Last Updated:** January 28, 2025  
-**Version:** 1.1.0
+**Version:** 1.2.0
 
 ## Overview
 
@@ -106,6 +106,8 @@ Rate limiting is implemented using Redis-based sliding window rate limiting with
 ### Health Check Endpoints
 
 Health check endpoints provide monitoring and deployment verification capabilities. See [Health Check Endpoints Documentation](./devops-deploy/monitoring/HEALTH_CHECK_ENDPOINTS.md) for complete details.
+
+**Note:** All errors are automatically tracked via Sentry v10. See [Sentry Setup Guide](./devops-deploy/SENTRY_SETUP.md) for error tracking configuration.
 
 #### GET `/api/health`
 

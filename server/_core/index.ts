@@ -35,7 +35,9 @@ if (ENV.sentryEnabled && ENV.sentryDsn) {
   });
   logger.info("[Sentry] Error tracking initialized");
 } else {
-  logger.info("[Sentry] Error tracking disabled (SENTRY_ENABLED=false or SENTRY_DSN not set)");
+  logger.info(
+    "[Sentry] Error tracking disabled (SENTRY_ENABLED=false or SENTRY_DSN not set)"
+  );
 }
 
 /**
@@ -175,24 +177,30 @@ async function startServer() {
   // This runs before the cors() middleware to set headers for public endpoints
   app.use((req, res, next) => {
     // Check if this is a public endpoint that can accept no-origin
-    const isPublicEndpoint = 
+    const isPublicEndpoint =
       req.path?.startsWith("/api/auth/") ||
       req.path?.startsWith("/api/health") ||
       req.path === "/api/health" ||
       req.path === "/api/oauth/callback";
-    
+
     // Store flag for cors middleware to use
     (req as any).isPublicEndpoint = isPublicEndpoint;
-    
+
     // For public endpoints in production, allow no-origin by setting CORS headers manually
     if (isPublicEndpoint && ENV.isProduction && !req.headers.origin) {
       // Allow no-origin for public endpoints
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Access-Control-Allow-Credentials", "true");
-      res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Cookie, X-CSRF-Token");
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS"
+      );
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, Cookie, X-CSRF-Token"
+      );
     }
-    
+
     next();
   });
 
@@ -208,7 +216,7 @@ async function startServer() {
             callback(null, true);
             return;
           }
-          
+
           // ✅ SECURITY FIX: Block no-origin in production (public endpoints handled above)
           logger.warn("CORS: Blocked no-origin request in production");
           callback(new Error("Origin required in production"));
@@ -232,7 +240,12 @@ async function startServer() {
       },
       credentials: true, // CRITICAL: Allow cookies to be sent
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization", "Cookie", "X-CSRF-Token"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Cookie",
+        "X-CSRF-Token",
+      ],
       exposedHeaders: ["Set-Cookie"],
       maxAge: 86400, // 24 hours preflight cache
     })
@@ -305,6 +318,20 @@ async function startServer() {
       { port, env: process.env.NODE_ENV },
       `Server running on http://localhost:${port}/`
     );
+
+    // Start subscription job schedulers
+    try {
+      const { startSubscriptionSchedulers } = await import(
+        "../subscription-scheduler"
+      );
+      startSubscriptionSchedulers();
+      logger.info("[Server] Subscription schedulers started");
+    } catch (error) {
+      logger.error(
+        { err: error },
+        "[Server] Failed to start subscription schedulers"
+      );
+    }
 
     // Run automatic historical data import if needed (non-blocking)
     // This only runs if no leads exist in the database

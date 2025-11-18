@@ -44,9 +44,10 @@
 ## 🔄 Remaining Tasks
 
 ### Infrastructure (P1 - High Priority)
-- [ ] Add Sentry environment variables to .env.prod
-  - Same DSNs or separate production projects
-  - Required for production deployment
+- [x] Add Sentry environment variables to .env.prod ✅
+  - Script executed: `scripts/add-sentry-env-prod.ps1`
+  - Variables added to .env.prod
+  - Production setup guide created
 
 ### Configuration (P2 - Medium Priority)
 - [ ] Configure Sentry alerts in Sentry dashboard
@@ -64,10 +65,9 @@
   - Test both server and client errors
 
 ### Documentation (P3 - Low Priority)
-- [ ] Add production deployment guide
-  - How to set up production Sentry projects
-  - How to configure production alerts
-  - Best practices for production monitoring
+- [x] Add production deployment guide ✅
+  - Created: `docs/devops-deploy/SENTRY_PRODUCTION_SETUP.md`
+  - Includes: Production projects setup, alerts configuration, monitoring best practices
 
 ---
 

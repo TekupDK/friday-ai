@@ -53,14 +53,14 @@ thresholds: {
 
 ### Target Coverage by Area
 
-| Area | Unit Tests | Integration Tests | E2E Tests | Total Coverage |
-|------|-----------|-------------------|-----------|----------------|
-| **Business Logic** | 90% | 80% | 70% | **85%** |
-| **API Endpoints** | 85% | 85% | 75% | **85%** |
-| **UI Components** | 80% | 70% | 80% | **80%** |
-| **Hooks** | 85% | 70% | 60% | **80%** |
-| **Utilities** | 90% | 70% | 50% | **85%** |
-| **Critical Paths** | 95% | 90% | 90% | **95%** |
+| Area               | Unit Tests | Integration Tests | E2E Tests | Total Coverage |
+| ------------------ | ---------- | ----------------- | --------- | -------------- |
+| **Business Logic** | 90%        | 80%               | 70%       | **85%**        |
+| **API Endpoints**  | 85%        | 85%               | 75%       | **85%**        |
+| **UI Components**  | 80%        | 70%               | 80%       | **80%**        |
+| **Hooks**          | 85%        | 70%               | 60%       | **80%**        |
+| **Utilities**      | 90%        | 70%               | 50%       | **85%**        |
+| **Critical Paths** | 95%        | 90%               | 90%       | **95%**        |
 
 ### Critical Paths (95% Coverage Required)
 
@@ -85,6 +85,7 @@ thresholds: {
 #### Backend Unit Tests
 
 **Focus Areas:**
+
 - Business logic functions
 - Database helpers
 - Utility functions
@@ -92,15 +93,16 @@ thresholds: {
 - Validation logic
 
 **Example Patterns:**
+
 ```typescript
 describe("createSubscription", () => {
   it("should create subscription with valid input", async () => {
     // Arrange
     const input = { customerProfileId: 1, planType: "tier1" };
-    
+
     // Act
     const result = await createSubscription(userId, input);
-    
+
     // Assert
     expect(result).toMatchObject({
       planType: "tier1",
@@ -111,6 +113,7 @@ describe("createSubscription", () => {
 ```
 
 **Coverage Goals:**
+
 - Business logic: 90%
 - Database helpers: 85%
 - Utilities: 90%
@@ -118,6 +121,7 @@ describe("createSubscription", () => {
 #### Frontend Unit Tests
 
 **Focus Areas:**
+
 - React hooks
 - Utility functions
 - Component logic (non-UI)
@@ -125,6 +129,7 @@ describe("createSubscription", () => {
 - Data transformations
 
 **Example Patterns:**
+
 ```typescript
 describe("useDebouncedValue", () => {
   it("should debounce value updates", async () => {
@@ -135,6 +140,7 @@ describe("useDebouncedValue", () => {
 ```
 
 **Coverage Goals:**
+
 - Hooks: 85%
 - Components (logic): 80%
 - Utilities: 90%
@@ -150,6 +156,7 @@ describe("useDebouncedValue", () => {
 #### Backend Integration Tests
 
 **Focus Areas:**
+
 - tRPC endpoints (full request/response cycle)
 - Database operations (with real DB or test DB)
 - External API integrations (mocked)
@@ -157,6 +164,7 @@ describe("useDebouncedValue", () => {
 - Error handling across layers
 
 **Example Patterns:**
+
 ```typescript
 describe("subscription.create", () => {
   it("should create subscription and generate invoice", async () => {
@@ -166,6 +174,7 @@ describe("subscription.create", () => {
 ```
 
 **Coverage Goals:**
+
 - API endpoints: 85%
 - Workflows: 80%
 - Integrations: 75%
@@ -173,6 +182,7 @@ describe("subscription.create", () => {
 #### Frontend Integration Tests
 
 **Focus Areas:**
+
 - Component interactions
 - tRPC client usage
 - State management flows
@@ -180,6 +190,7 @@ describe("subscription.create", () => {
 - Navigation flows
 
 **Coverage Goals:**
+
 - Component interactions: 70%
 - API integration: 75%
 
@@ -194,6 +205,7 @@ describe("subscription.create", () => {
 #### E2E Test Categories
 
 **1. Critical User Flows (P1)**
+
 - User authentication
 - Subscription creation/management
 - Lead creation from email
@@ -201,29 +213,34 @@ describe("subscription.create", () => {
 - Calendar booking creation
 
 **2. Feature-Specific (P2)**
+
 - CRM workflows
 - Email management
 - Document management
 - AI assistant interactions
 
 **3. Cross-Browser (P2)**
+
 - Chrome/Chromium
 - Firefox
 - Safari (if applicable)
 
 **4. Performance (P3)**
+
 - Page load times
 - API response times
 - Memory usage
 - Bundle size
 
 **5. Accessibility (P2)**
+
 - WCAG 2.1 AA compliance
 - Keyboard navigation
 - Screen reader compatibility
 - ARIA attributes
 
 **Coverage Goals:**
+
 - Critical paths: 90%
 - Feature workflows: 80%
 - Cross-browser: 70%
@@ -237,6 +254,7 @@ describe("subscription.create", () => {
 #### Unit Tests (Priority: P1)
 
 **Backend:**
+
 - [ ] `createSubscription` - All plan types, edge cases
 - [ ] `processRenewal` - Renewal logic, invoice generation
 - [ ] `processCancellation` - Cancellation logic, end date calculation
@@ -249,11 +267,12 @@ describe("subscription.create", () => {
 - [ ] `applyDiscount` - Discount application logic
 
 **Frontend:**
-- [ ] `SubscriptionPlanSelector` - Plan selection, recommendation
-- [ ] `SubscriptionManagement` - List, filter, actions (pause/resume/upgrade/downgrade)
-- [ ] `UsageChart` - Data visualization, overage warnings
-- [ ] `SubscriptionManagement` page - Dashboard metrics
-- [ ] `SubscriptionLanding` page - Plan comparison
+
+- [x] `SubscriptionPlanSelector` - Plan selection, recommendation ✅ (11/11 tests passing)
+- [x] `SubscriptionManagement` - List, filter, actions (pause/resume/upgrade/downgrade) ✅ (13/13 tests passing)
+- [x] `UsageChart` - Data visualization, overage warnings ✅ (9/9 tests passing)
+- [x] `SubscriptionManagement` page - Dashboard metrics ✅ (9/9 tests passing)
+- [x] `SubscriptionLanding` page - Plan comparison ✅ (7/7 tests passing)
 
 **Coverage Goal:** 85%
 
@@ -351,17 +370,20 @@ describe("subscription.create", () => {
 ### Pre-Commit Checks
 
 **Required:**
+
 - TypeScript compilation (`pnpm check`)
 - Linting (`pnpm lint`)
 - Unit tests for changed files (`pnpm test --changed`)
 
 **Recommended:**
+
 - Integration tests for affected areas
 - Quick E2E smoke test
 
 ### Pre-Merge Checks
 
 **Required:**
+
 - All unit tests pass (`pnpm test`)
 - All integration tests pass
 - TypeScript compilation pass
@@ -369,6 +391,7 @@ describe("subscription.create", () => {
 - Coverage thresholds met
 
 **Recommended:**
+
 - E2E tests for critical paths
 - Performance benchmarks
 - Accessibility audit
@@ -376,6 +399,7 @@ describe("subscription.create", () => {
 ### Pre-Deployment Checks
 
 **Required:**
+
 - Full test suite pass
 - E2E tests for all critical paths
 - Performance benchmarks pass
@@ -389,17 +413,20 @@ describe("subscription.create", () => {
 ### Test Data Strategy
 
 **Unit Tests:**
+
 - Use mocks and fixtures
 - No database required
 - Fast execution
 
 **Integration Tests:**
+
 - Use test database
 - Seed test data before tests
 - Clean up after tests
 - Isolated test data per test
 
 **E2E Tests:**
+
 - Use staging/test environment
 - Seed realistic test data
 - Clean up after test run
@@ -408,18 +435,21 @@ describe("subscription.create", () => {
 ### Test Data Requirements
 
 **Subscription Tests:**
+
 - 5+ test subscriptions (various plans, statuses)
 - Test customer profiles
 - Test invoices
 - Test usage records
 
 **CRM Tests:**
+
 - 10+ test customers
 - 10+ test leads
 - 5+ test opportunities
 - 3+ test segments
 
 **Email Tests:**
+
 - Test email threads
 - Test email labels
 - Test email attachments
@@ -431,12 +461,14 @@ describe("subscription.create", () => {
 ### Development
 
 **Requirements:**
+
 - Node.js 22+
 - pnpm
 - Docker (for database)
 - Test database (separate from dev)
 
 **Setup:**
+
 ```bash
 # Start test database
 pnpm dev:db
@@ -451,6 +483,7 @@ pnpm test:coverage
 ### CI/CD
 
 **GitHub Actions:**
+
 - Run on every PR
 - Run on merge to main
 - Run full test suite
@@ -458,6 +491,7 @@ pnpm test:coverage
 - Upload test results
 
 **Configuration:**
+
 - `.github/workflows/ci.yml` (exists)
 
 ---
@@ -467,12 +501,14 @@ pnpm test:coverage
 ### Test Review Process
 
 **When to Review:**
+
 - After major refactorings
 - When tests become flaky
 - When coverage drops
 - Quarterly review
 
 **Review Checklist:**
+
 - [ ] All tests pass
 - [ ] Coverage goals met
 - [ ] No flaky tests
@@ -483,6 +519,7 @@ pnpm test:coverage
 ### Test Refactoring
 
 **Signs Tests Need Refactoring:**
+
 - Tests are flaky
 - Tests are slow (>5s per test)
 - Tests are hard to understand
@@ -490,6 +527,7 @@ pnpm test:coverage
 - Tests don't catch real bugs
 
 **Refactoring Strategy:**
+
 - Extract common test utilities
 - Create test fixtures
 - Improve test data setup
@@ -503,18 +541,21 @@ pnpm test:coverage
 ### Key Metrics
 
 **Coverage Metrics:**
+
 - Lines coverage
 - Statements coverage
 - Functions coverage
 - Branches coverage
 
 **Quality Metrics:**
+
 - Test execution time
 - Test pass rate
 - Flaky test count
 - Test maintenance time
 
 **Business Metrics:**
+
 - Bugs caught by tests
 - Bugs missed by tests
 - Test ROI (time saved vs. time spent)
@@ -522,11 +563,13 @@ pnpm test:coverage
 ### Reporting
 
 **Coverage Reports:**
+
 - HTML coverage report (`coverage/index.html`)
 - JSON coverage report (`coverage/coverage-final.json`)
 - CI/CD coverage badges
 
 **Test Results:**
+
 - Playwright HTML report (`test-results/`)
 - Vitest console output
 - CI/CD test summaries
@@ -538,16 +581,19 @@ pnpm test:coverage
 ### Subscription System (Current Priority)
 
 **Phase 1: Unit Tests (Week 1)**
+
 - [ ] Backend subscription functions
 - [ ] Frontend subscription components
 - [ ] Subscription hooks (if any)
 
 **Phase 2: Integration Tests (Week 2)**
+
 - [ ] Subscription creation flow
 - [ ] Subscription management flow
 - [ ] Subscription renewal flow
 
 **Phase 3: E2E Tests (Week 3)**
+
 - [ ] Critical subscription workflows
 - [ ] Cross-browser testing
 - [ ] Performance testing
@@ -559,11 +605,13 @@ pnpm test:coverage
 ### Hooks System (Next Priority)
 
 **Phase 1: Unit Tests (Week 1)**
+
 - [ ] All hooks individually
 - [ ] Hook edge cases
 - [ ] Hook error handling
 
 **Phase 2: Integration Tests (Week 2)**
+
 - [ ] Hook composition
 - [ ] Hook with tRPC
 - [ ] Hook with state management
@@ -579,6 +627,7 @@ pnpm test:coverage
 **Location:** `client/src/__tests__/test-utils.tsx`, `tests/helpers/`
 
 **Available:**
+
 - `renderWithProviders` - React component rendering with providers
 - `mockTrpc` - tRPC client mocking
 - `mockAuth` - Authentication mocking
@@ -589,6 +638,7 @@ pnpm test:coverage
 **Location:** `tests/fixtures/` (to be created)
 
 **Planned:**
+
 - Subscription fixtures
 - Customer fixtures
 - Lead fixtures
@@ -633,21 +683,25 @@ pnpm test:coverage
 ### Current Gaps Identified
 
 **Subscription System:**
+
 - ⏳ Frontend component tests (0% coverage)
 - ⏳ Subscription action tests (pause/resume/upgrade/downgrade)
 - ⏳ Usage chart tests
 - ✅ Backend unit tests (partial coverage)
 
 **Hooks System:**
+
 - ⏳ Most hooks lack tests
 - ⏳ Hook composition tests
 - ✅ `useKeyboardShortcuts` has tests
 
 **CRM System:**
+
 - ✅ Good coverage (smoke tests exist)
 - ⏳ Component tests could be improved
 
 **Email System:**
+
 - ✅ Good coverage (integration tests exist)
 - ⏳ Component tests could be improved
 
@@ -658,12 +712,14 @@ pnpm test:coverage
 ### Phase 1: Foundation (Week 1-2)
 
 **Goals:**
+
 - Set up test infrastructure
 - Create test utilities
 - Establish test patterns
 - Document test strategy
 
 **Deliverables:**
+
 - Test strategy document (this document)
 - Test utilities
 - Test fixtures
@@ -672,12 +728,14 @@ pnpm test:coverage
 ### Phase 2: Critical Paths (Week 3-4)
 
 **Goals:**
+
 - Achieve 95% coverage on critical paths
 - Subscription system tests
 - Authentication tests
 - Payment processing tests
 
 **Deliverables:**
+
 - Subscription test suite
 - Authentication test suite
 - Payment processing test suite
@@ -685,12 +743,14 @@ pnpm test:coverage
 ### Phase 3: Feature Coverage (Week 5-8)
 
 **Goals:**
+
 - Achieve 80% coverage on all features
 - Hooks system tests
 - CRM component tests
 - Email component tests
 
 **Deliverables:**
+
 - Hooks test suite
 - CRM component test suite
 - Email component test suite
@@ -698,12 +758,14 @@ pnpm test:coverage
 ### Phase 4: E2E Coverage (Week 9-12)
 
 **Goals:**
+
 - Achieve 90% E2E coverage on critical paths
 - 80% E2E coverage on feature workflows
 - Cross-browser testing
 - Performance testing
 
 **Deliverables:**
+
 - E2E test suite
 - Performance benchmarks
 - Cross-browser test results
@@ -808,6 +870,7 @@ pnpm test:ai:accessibility
 This test strategy provides a comprehensive framework for testing Friday AI Chat. The strategy balances coverage goals with practical implementation, focusing on critical paths while maintaining high quality standards.
 
 **Next Steps:**
+
 1. Review and approve test strategy
 2. Set up test infrastructure
 3. Begin Phase 1 implementation
@@ -818,4 +881,3 @@ This test strategy provides a comprehensive framework for testing Friday AI Chat
 **Last Updated:** January 28, 2025  
 **Status:** ✅ Complete  
 **Next Review:** February 28, 2025
-

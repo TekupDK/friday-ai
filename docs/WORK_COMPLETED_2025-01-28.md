@@ -11,6 +11,7 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 ## System Status
 
 ### Before Work
+
 - ❌ Outdated dependencies (50+ packages)
 - ❌ Security vulnerabilities (4 total: glob, js-yaml, smol-toml, esbuild)
 - ❌ Deprecated @types/helmet
@@ -18,6 +19,7 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 - ⚠️ Vitest v2 (outdated)
 
 ### After Work
+
 - ✅ Dependencies updated (50+ packages)
 - ✅ Security fixes (2 resolved: smol-toml, esbuild)
 - ✅ Sentry v10 migrated (breaking changes fixed)
@@ -35,6 +37,7 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 **Created:** `doc-auto/` directory structure with comprehensive docs
 
 **Files Created:**
+
 - `doc-auto/README.md` - Main index with overview
 - `doc-auto/api/README.md` - Complete API reference (18 tRPC routers)
 - `doc-auto/schema/README.md` - Database schema (28 tables, 15+ enums)
@@ -43,6 +46,7 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 - `doc-auto/dependencies/README.md` - All dependencies (104 prod, 79 dev)
 
 **Features:**
+
 - Table of contents in all docs
 - ASCII diagrams for architecture
 - Code examples for all endpoints
@@ -52,13 +56,16 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 ### 2. Dependency Updates ✅
 
 **Security Updates:**
+
 - `markdownlint-cli`: `0.41.0` → `0.45.0` (fixes smol-toml DoS)
 - `esbuild`: Already at `0.25.0` (patched version)
 
 **UI Components (Radix UI):**
+
 - 6 packages updated to latest patch versions
 
 **Testing & Development:**
+
 - `@tanstack/react-query`: `5.90.2` → `5.90.10`
 - `vitest`: `2.1.4` → `4.0.10` ⚠️ **Major update**
 - `@vitest/coverage-v8`: `2.1.9` → `4.0.10` ⚠️ **Major update**
@@ -66,9 +73,11 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 - Multiple TypeScript types updated
 
 **Storybook:**
+
 - All Storybook packages: `10.0.7` → `10.0.8`
 
 **Infrastructure:**
+
 - `@sentry/node`: `8.45.0` → `10.25.0` ⚠️ **Major update**
 - `@sentry/react`: `8.45.0` → `10.25.0` ⚠️ **Major update**
 - `@aws-sdk/client-s3`: `3.693.0` → `3.933.0`
@@ -78,6 +87,7 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 - 20+ other packages
 
 **Removed:**
+
 - `@types/helmet` (deprecated - helmet provides own types)
 
 ### 3. Sentry v10 Migration ✅
@@ -85,30 +95,41 @@ Successfully updated 50+ dependencies including 2 major version updates with bre
 **Breaking Changes Fixed:**
 
 **Server (`server/_core/index.ts`):**
+
 ```typescript
 // Before (v8)
-Sentry.Handlers.requestHandler()
-Sentry.Handlers.tracingHandler()
-Sentry.Handlers.errorHandler()
+Sentry.Handlers.requestHandler();
+Sentry.Handlers.tracingHandler();
+Sentry.Handlers.errorHandler();
 
-// After (v10)
-const expressIntegration = Sentry.expressIntegration();
-Sentry.addIntegration(expressIntegration);
-Sentry.setupExpressErrorHandler(app);
+// After (v10) - Faktisk implementation
+if (ENV.sentryEnabled && ENV.sentryDsn) {
+  Sentry.init({
+    dsn: ENV.sentryDsn,
+    environment: ENV.sentryEnvironment,
+    tracesSampleRate: ENV.sentryTracesSampleRate,
+    integrations: [
+      Sentry.expressIntegration(), // Handles everything automatically
+    ],
+  });
+}
+// No additional middleware needed in startServer() - expressIntegration() handles it all
 ```
 
 **Client (`client/src/main.tsx`):**
+
 ```typescript
 // Before (v8)
-Sentry.reactRouterV6BrowserTracingIntegration()
-captureUnhandledRejections: true
+Sentry.reactRouterV6BrowserTracingIntegration();
+captureUnhandledRejections: true;
 
 // After (v10)
-Sentry.browserTracingIntegration()
+Sentry.browserTracingIntegration();
 // Auto-enabled by default
 ```
 
 **Documentation Updated:**
+
 - `docs/devops-deploy/SENTRY_SETUP.md` - Fully updated for v10
 - Added migration notes section
 - Updated all code examples
@@ -119,6 +140,7 @@ Sentry.browserTracingIntegration()
 **Breaking Changes Fixed:**
 
 **Test Files (`client/src/hooks/__tests__/useKeyboardShortcuts.test.tsx`):**
+
 ```typescript
 // Before (v2)
 const mock = vi.fn();
@@ -128,6 +150,7 @@ const mock = vi.fn() as (event: KeyboardEvent) => void;
 ```
 
 **Results:**
+
 - 112+ tests passing
 - Mock types updated
 - No test failures
@@ -135,12 +158,14 @@ const mock = vi.fn() as (event: KeyboardEvent) => void;
 ### 5. Verification ✅
 
 **TypeScript Check:**
+
 ```bash
 pnpm check
 ✅ PASSED - No type errors
 ```
 
 **Build:**
+
 ```bash
 pnpm build
 ✅ PASSED - Dist generated (1009.2kb)
@@ -148,6 +173,7 @@ pnpm build
 ```
 
 **Tests:**
+
 ```bash
 pnpm test
 ✅ PASSED - 112+ tests passing
@@ -158,6 +184,7 @@ pnpm test
 ```
 
 **Lint:**
+
 ```bash
 pnpm lint
 ✅ PASSED - Only minor import order warnings
@@ -165,6 +192,7 @@ pnpm lint
 ```
 
 **Runtime:**
+
 ```bash
 ✅ Backend running: Port 3000
 ✅ Frontend running: Port 5173
@@ -174,6 +202,7 @@ pnpm lint
 ## Files Modified
 
 ### Documentation Generated
+
 - `doc-auto/README.md`
 - `doc-auto/api/README.md`
 - `doc-auto/schema/README.md`
@@ -182,15 +211,18 @@ pnpm lint
 - `doc-auto/dependencies/README.md`
 
 ### Code Changes
+
 - `server/_core/index.ts` - Sentry v10 migration
 - `client/src/main.tsx` - Sentry React v10 migration
 - `client/src/hooks/__tests__/useKeyboardShortcuts.test.tsx` - Vitest 4 mock types
 
 ### Configuration
+
 - `package.json` - 50+ dependency versions updated
 - `pnpm-lock.yaml` - Lockfile updated
 
 ### Documentation Updates
+
 - `docs/devops-deploy/SENTRY_SETUP.md` - Updated for Sentry v10
 - `docs/DEPENDENCY_UPDATE_REPORT_2025-01-28.md` - Comprehensive report
 - `docs/WORK_COMPLETED_2025-01-28.md` - This file
@@ -217,7 +249,6 @@ The following major version updates were identified but **NOT applied** (require
 
 1. **glob** (High) - Command injection via promptfoo
    - Status: Requires promptfoo update or override
-   
 2. **js-yaml** (Moderate) - Prototype pollution via commitlint
    - Status: Requires commitlint update or override
 
@@ -225,7 +256,6 @@ The following major version updates were identified but **NOT applied** (require
 
 1. `@builder.io/vite-plugin-jsx-loc` - Expects vite ^4 or ^5, we have v7
    - Impact: Low - Build-time only
-   
 2. `promptfoo` → `nunjucks` → `chokidar` - Version mismatch
    - Impact: Low - Dev dependency
 
@@ -237,16 +267,19 @@ The following major version updates were identified but **NOT applied** (require
 ## Next Steps
 
 ### Immediate (Recommended)
+
 1. ✅ **Deploy to staging** - Test Sentry v10 in real environment
 2. ✅ **Monitor Sentry dashboard** - Verify error tracking works
 3. ⏳ **Run E2E tests** - `pnpm test:playwright` (comprehensive testing)
 
 ### Short-term (This Week)
+
 4. ⏳ **Fix security vulnerabilities** - Add overrides for glob and js-yaml
 5. ⏳ **Review chunk sizes** - Optimize large bundles (1.5MB+)
 6. ⏳ **Test user flows** - Manual testing of key features
 
 ### Medium-term (This Month)
+
 7. ⏳ **Plan Express 5 migration** - Review breaking changes, create migration plan
 8. ⏳ **Update other major versions** - Prioritize based on risk/benefit
 9. ⏳ **Performance optimization** - Address bundle size warnings
@@ -266,6 +299,7 @@ The following major version updates were identified but **NOT applied** (require
 ## Conclusion
 
 ✅ **All primary objectives completed:**
+
 - Dependencies updated safely
 - Major breaking changes migrated and tested
 - Documentation comprehensively updated
@@ -273,6 +307,7 @@ The following major version updates were identified but **NOT applied** (require
 - System operational
 
 ⚠️ **Minor issues remain:**
+
 - 2 security vulnerabilities (non-critical)
 - Peer dependency warnings (non-critical)
 - Build optimization opportunities
@@ -285,4 +320,3 @@ The following major version updates were identified but **NOT applied** (require
 **Date:** January 28, 2025  
 **Duration:** ~2 hours  
 **Status:** ✅ Success
-

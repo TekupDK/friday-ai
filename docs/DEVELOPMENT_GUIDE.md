@@ -30,7 +30,7 @@ Before starting development, ensure you have the following installed on your loc
 
 ### 1. Clone Repository
 
-```bash
+````bash
 git clone https://github.com/TekupDK/friday-ai.git
 cd tekup-friday
 
@@ -1342,7 +1342,7 @@ const debouncedSearch = useDebouncedCallback(query => {
   searchMutation.mutate({ query });
 }, 300);
 
-```
+````
 
 ### Security
 
@@ -1363,6 +1363,61 @@ For Cursor AI assistance, refer to `docs/CURSOR_RULES.md` which contains:
 - Anti-patterns to avoid
 - Project-specific conventions
 
+## Error Tracking & Monitoring
+
+### Sentry Integration
+
+Friday AI Chat uses **Sentry v10** for error tracking and monitoring:
+
+**Server-Side:**
+
+- Automatic error capture (unhandled rejections, exceptions)
+- Express.js request/response tracking
+- Performance tracing (10% sample rate)
+- Environment-based configuration
+
+**Client-Side:**
+
+- Browser error tracking
+- React Error Boundary integration
+- Performance monitoring
+- User context tracking
+
+**Setup:**
+
+1. Add Sentry DSNs to `.env.dev` and `.env.prod`
+2. Configure `SENTRY_ENABLED=true`
+3. Errors are automatically captured and sent to Sentry dashboard
+
+**Documentation:**
+
+- [Sentry Setup Guide](./devops-deploy/SENTRY_SETUP.md) - Complete setup instructions
+- [Sentry Production Guide](./devops-deploy/SENTRY_PRODUCTION_SETUP.md) - Production deployment
+- [Sentry Environment Setup](./devops-deploy/SENTRY_ENV_SETUP.md) - Environment variables
+
+### DevOps Tools
+
+**Dependabot:**
+
+- Automated dependency updates
+- Weekly schedule (Mondays 9 AM)
+- Grouped updates for less noise
+- Configuration: `.github/dependabot.yml`
+
+**Security Scanning:**
+
+- npm audit on every push/PR
+- Snyk integration (optional)
+- Weekly scheduled scans
+- Workflow: `.github/workflows/security.yml`
+
+**Test Coverage:**
+
+- Codecov integration
+- Coverage thresholds: 80% lines, 80% statements, 80% functions, 70% branches
+- Automatic reporting in CI
+- Workflow: `.github/workflows/ci-core.yml`
+
 ## Additional Resources
 
 **Documentation:**
@@ -1370,6 +1425,12 @@ For Cursor AI assistance, refer to `docs/CURSOR_RULES.md` which contains:
 - [ARCHITECTURE.md](./ARCHITECTURE.md) - System architecture overview
 - [API_REFERENCE.md](./API_REFERENCE.md) - Complete API documentation
 - [README.md](../README.md) - Project overview
+
+**DevOps & Deployment:**
+
+- [Sentry Setup](./devops-deploy/SENTRY_SETUP.md) - Error tracking setup
+- [Security Scanning](./devops-deploy/SECURITY_SCANNING.md) - Security scanning guide
+- [Implementation Summary](./devops-deploy/IMPLEMENTATION_SUMMARY.md) - Feature implementation status
 
 **External Documentation:**
 
@@ -1384,6 +1445,6 @@ For Cursor AI assistance, refer to `docs/CURSOR_RULES.md` which contains:
 
 ---
 
-**Document Version:** 1.0.0
-**Last Updated:** November 1, 2025
+**Document Version:** 1.1.0
+**Last Updated:** January 28, 2025
 **Maintained by:** TekupDK Development Team

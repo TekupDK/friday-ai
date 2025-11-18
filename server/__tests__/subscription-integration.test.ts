@@ -1,10 +1,10 @@
 /**
  * Subscription Integration Tests
- * 
+ *
  * Tests for subscription integration with Billy.dk, Google Calendar, and email
  */
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createInvoice } from "../billy";
 import { getDb } from "../db";
@@ -64,26 +64,32 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription check (no existing) - via getSubscriptionByCustomerId
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(undefined);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        undefined
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock insert - needs proper chain
       mockDb.insert = vi.fn().mockReturnValue({
         values: vi.fn().mockReturnValue({
-          returning: vi.fn().mockResolvedValue([{
-            id: 1,
-            userId: 1,
-            customerProfileId: 1,
-            planType: "tier1",
-            monthlyPrice: 120000,
-            includedHours: "3.0",
-            startDate: new Date().toISOString(),
-            status: "active",
-            autoRenew: true,
-            nextBillingDate: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }]),
+          returning: vi.fn().mockResolvedValue([
+            {
+              id: 1,
+              userId: 1,
+              customerProfileId: 1,
+              planType: "tier1",
+              monthlyPrice: 120000,
+              includedHours: "3.0",
+              startDate: new Date().toISOString(),
+              status: "active",
+              autoRenew: true,
+              nextBillingDate: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
         }),
       });
 
@@ -91,7 +97,9 @@ describe("Subscription Integration Tests", () => {
       (createCalendarEvent as any).mockResolvedValue({ id: "event-123" });
       (sendSubscriptionEmail as any).mockResolvedValue({ success: true });
 
-      const result = await createSubscription(1, 1, "tier1", { autoRenew: true });
+      const result = await createSubscription(1, 1, "tier1", {
+        autoRenew: true,
+      });
 
       expect(result.id).toBeDefined();
       // Note: createInvoice is not called during subscription creation, only during renewal
@@ -122,8 +130,12 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription lookup via getSubscriptionById
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(mockSubscription as any);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(
+        mockSubscription as any
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock customer lookup
       mockDb.select.mockReturnValueOnce({
@@ -184,8 +196,12 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription lookup via getSubscriptionById
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(mockSubscription as any);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(
+        mockSubscription as any
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock customer lookup
       mockDb.select.mockReturnValueOnce({
@@ -205,9 +221,7 @@ describe("Subscription Integration Tests", () => {
 
       // Mock Billy.dk error
       const { createInvoice } = await import("../billy");
-      (createInvoice as any).mockRejectedValue(
-        new Error("Billy.dk API error")
-      );
+      (createInvoice as any).mockRejectedValue(new Error("Billy.dk API error"));
 
       // processRenewal returns { success: false } on error, doesn't throw
       const result = await processRenewal(1, 1);
@@ -236,26 +250,32 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription check (no existing) - via getSubscriptionByCustomerId
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(undefined);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        undefined
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock insert - needs proper chain
       mockDb.insert = vi.fn().mockReturnValue({
         values: vi.fn().mockReturnValue({
-          returning: vi.fn().mockResolvedValue([{
-            id: 1,
-            userId: 1,
-            customerProfileId: 1,
-            planType: "tier1",
-            monthlyPrice: 120000,
-            includedHours: "3.0",
-            startDate: new Date().toISOString(),
-            status: "active",
-            autoRenew: true,
-            nextBillingDate: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }]),
+          returning: vi.fn().mockResolvedValue([
+            {
+              id: 1,
+              userId: 1,
+              customerProfileId: 1,
+              planType: "tier1",
+              monthlyPrice: 120000,
+              includedHours: "3.0",
+              startDate: new Date().toISOString(),
+              status: "active",
+              autoRenew: true,
+              nextBillingDate: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
         }),
       });
 
@@ -267,7 +287,9 @@ describe("Subscription Integration Tests", () => {
       (createCalendarEvent as any).mockResolvedValue({ id: "event-123" });
       (sendSubscriptionEmail as any).mockResolvedValue({ success: true });
 
-      const result = await createSubscription(1, 1, "tier1", { autoRenew: true });
+      const result = await createSubscription(1, 1, "tier1", {
+        autoRenew: true,
+      });
 
       expect(result.id).toBeDefined();
       // Calendar is called async via createRecurringBookings, so we verify it's set up
@@ -293,26 +315,32 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription check (no existing) - via getSubscriptionByCustomerId
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(undefined);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        undefined
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock insert - needs proper chain
       mockDb.insert = vi.fn().mockReturnValue({
         values: vi.fn().mockReturnValue({
-          returning: vi.fn().mockResolvedValue([{
-            id: 1,
-            userId: 1,
-            customerProfileId: 1,
-            planType: "tier1",
-            monthlyPrice: 120000,
-            includedHours: "3.0",
-            startDate: new Date().toISOString(),
-            status: "active",
-            autoRenew: true,
-            nextBillingDate: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }]),
+          returning: vi.fn().mockResolvedValue([
+            {
+              id: 1,
+              userId: 1,
+              customerProfileId: 1,
+              planType: "tier1",
+              monthlyPrice: 120000,
+              includedHours: "3.0",
+              startDate: new Date().toISOString(),
+              status: "active",
+              autoRenew: true,
+              nextBillingDate: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
         }),
       });
 
@@ -323,7 +351,9 @@ describe("Subscription Integration Tests", () => {
       (sendSubscriptionEmail as any).mockResolvedValue({ success: true });
 
       // Should still succeed even if calendar fails
-      const result = await createSubscription(1, 1, "tier1", { autoRenew: true });
+      const result = await createSubscription(1, 1, "tier1", {
+        autoRenew: true,
+      });
 
       // Subscription should be created even if calendar fails
       expect(mockDb.insert).toHaveBeenCalled();
@@ -350,26 +380,32 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription check (no existing) - via getSubscriptionByCustomerId
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(undefined);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        undefined
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock insert - needs proper chain
       mockDb.insert = vi.fn().mockReturnValue({
         values: vi.fn().mockReturnValue({
-          returning: vi.fn().mockResolvedValue([{
-            id: 1,
-            userId: 1,
-            customerProfileId: 1,
-            planType: "tier1",
-            monthlyPrice: 120000,
-            includedHours: "3.0",
-            startDate: new Date().toISOString(),
-            status: "active",
-            autoRenew: true,
-            nextBillingDate: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }]),
+          returning: vi.fn().mockResolvedValue([
+            {
+              id: 1,
+              userId: 1,
+              customerProfileId: 1,
+              planType: "tier1",
+              monthlyPrice: 120000,
+              includedHours: "3.0",
+              startDate: new Date().toISOString(),
+              status: "active",
+              autoRenew: true,
+              nextBillingDate: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
         }),
       });
 
@@ -377,7 +413,9 @@ describe("Subscription Integration Tests", () => {
       (createCalendarEvent as any).mockResolvedValue({ id: "event-123" });
       (sendSubscriptionEmail as any).mockResolvedValue({ success: true });
 
-      const result = await createSubscription(1, 1, "tier1", { autoRenew: true });
+      const result = await createSubscription(1, 1, "tier1", {
+        autoRenew: true,
+      });
 
       expect(result.id).toBeDefined();
       // Email is sent async, so we verify it's set up (not necessarily called synchronously)
@@ -406,8 +444,12 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription lookup via getSubscriptionById
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(mockSubscription as any);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionById").mockResolvedValue(
+        mockSubscription as any
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock customer lookup
       mockDb.select.mockReturnValueOnce({
@@ -457,26 +499,32 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription check (no existing) - via getSubscriptionByCustomerId
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(undefined);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        undefined
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock insert - needs proper chain
       mockDb.insert = vi.fn().mockReturnValue({
         values: vi.fn().mockReturnValue({
-          returning: vi.fn().mockResolvedValue([{
-            id: 1,
-            userId: 1,
-            customerProfileId: 1,
-            planType: "tier1",
-            monthlyPrice: 120000,
-            includedHours: "3.0",
-            startDate: new Date().toISOString(),
-            status: "active",
-            autoRenew: true,
-            nextBillingDate: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }]),
+          returning: vi.fn().mockResolvedValue([
+            {
+              id: 1,
+              userId: 1,
+              customerProfileId: 1,
+              planType: "tier1",
+              monthlyPrice: 120000,
+              includedHours: "3.0",
+              startDate: new Date().toISOString(),
+              status: "active",
+              autoRenew: true,
+              nextBillingDate: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
         }),
       });
 
@@ -487,7 +535,9 @@ describe("Subscription Integration Tests", () => {
       );
 
       // Should still succeed even if email fails
-      const result = await createSubscription(1, 1, "tier1", { autoRenew: true });
+      const result = await createSubscription(1, 1, "tier1", {
+        autoRenew: true,
+      });
 
       // Subscription should be created even if email fails
       expect(mockDb.insert).toHaveBeenCalled();
@@ -514,26 +564,32 @@ describe("Subscription Integration Tests", () => {
 
       // Mock subscription check (no existing) - via getSubscriptionByCustomerId
       const subscriptionDb = await import("../subscription-db");
-      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(undefined);
-      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(undefined);
+      vi.spyOn(subscriptionDb, "getSubscriptionByCustomerId").mockResolvedValue(
+        undefined
+      );
+      vi.spyOn(subscriptionDb, "addSubscriptionHistory").mockResolvedValue(
+        undefined
+      );
 
       // Mock insert - needs proper chain
       mockDb.insert = vi.fn().mockReturnValue({
         values: vi.fn().mockReturnValue({
-          returning: vi.fn().mockResolvedValue([{
-            id: 1,
-            userId: 1,
-            customerProfileId: 1,
-            planType: "tier1",
-            monthlyPrice: 120000,
-            includedHours: "3.0",
-            startDate: new Date().toISOString(),
-            status: "active",
-            autoRenew: true,
-            nextBillingDate: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }]),
+          returning: vi.fn().mockResolvedValue([
+            {
+              id: 1,
+              userId: 1,
+              customerProfileId: 1,
+              planType: "tier1",
+              monthlyPrice: 120000,
+              includedHours: "3.0",
+              startDate: new Date().toISOString(),
+              status: "active",
+              autoRenew: true,
+              nextBillingDate: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+          ]),
         }),
       });
 
@@ -545,7 +601,9 @@ describe("Subscription Integration Tests", () => {
       (createCalendarEvent as any).mockResolvedValue({ id: "event-123" });
       (sendSubscriptionEmail as any).mockResolvedValue({ success: true });
 
-      const result = await createSubscription(1, 1, "tier1", { autoRenew: true });
+      const result = await createSubscription(1, 1, "tier1", {
+        autoRenew: true,
+      });
 
       // Verify subscription was created
       expect(result.id).toBeDefined();
@@ -556,4 +614,3 @@ describe("Subscription Integration Tests", () => {
     });
   });
 });
-

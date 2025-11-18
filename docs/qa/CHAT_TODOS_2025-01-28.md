@@ -8,6 +8,7 @@
 ## ✅ Completed Tasks (Fra Chat)
 
 ### Subscription Features
+
 - ✅ Subscription AI features implemented (recommend, churn, optimize, upsell)
 - ✅ Subscription unit tests (20/20 passing)
 - ✅ Subscription integration tests (8/8 passing)
@@ -276,44 +277,47 @@
 
 ### Total Opgaver: 35
 
-| Priority | Count | Estimated Time |
-|----------|-------|----------------|
-| **P1 - High** | 13 | ~15-20 dage |
-| **P2 - Medium** | 18 | ~20-30 dage |
-| **P3 - Low** | 4 | ~3-5 dage |
-| **Total** | **35** | **~38-55 dage** |
+| Priority        | Count  | Estimated Time  |
+| --------------- | ------ | --------------- |
+| **P1 - High**   | 13     | ~15-20 dage     |
+| **P2 - Medium** | 18     | ~20-30 dage     |
+| **P3 - Low**    | 4      | ~3-5 dage       |
+| **Total**       | **35** | **~38-55 dage** |
 
 ### Kategorier
 
-| Kategori | Count |
-|----------|-------|
-| Test Fixes | 4 |
-| Security Audit | 4 |
-| Frontend Subscription | 5 |
-| Background Jobs | 3 |
-| Integration | 5 |
-| Performance | 3 |
-| Test Coverage | 3 |
-| Code Documentation | 2 |
-| Documentation | 1 |
-| Technical Debt | 2 |
-| Beta Testing | 3 |
+| Kategori              | Count |
+| --------------------- | ----- |
+| Test Fixes            | 4     |
+| Security Audit        | 4     |
+| Frontend Subscription | 5     |
+| Background Jobs       | 3     |
+| Integration           | 5     |
+| Performance           | 3     |
+| Test Coverage         | 3     |
+| Code Documentation    | 2     |
+| Documentation         | 1     |
+| Technical Debt        | 2     |
+| Beta Testing          | 3     |
 
 ---
 
 ## 🎯 Næste Skridt
 
 ### Immediate (Denne Uge)
+
 1. Fix 4 failing tests (P1)
 2. Start security audit (P1)
 3. Begin frontend subscription components (P1)
 
 ### Næste Uge
+
 4. Complete security audit (P1)
 5. Continue frontend subscription development (P1)
 6. Start background jobs implementation (P1)
 
 ### Næste Måned
+
 7. Performance optimization (P2)
 8. Test coverage improvements (P2)
 9. Code documentation (P2)
@@ -323,4 +327,3 @@
 **Genereret:** January 28, 2025  
 **Baseret på:** Chat session fra start til nu  
 **Næste Review:** February 4, 2025
-

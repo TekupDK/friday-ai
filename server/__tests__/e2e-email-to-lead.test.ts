@@ -174,8 +174,9 @@ describe("Email → Lead E2E Flow", () => {
 
     const caller = testRouter.createCaller(mockContext);
 
-    // Email without name
-    const testEmail = `john.doe-smith@example.com`;
+    // Email without name - use unique email to avoid conflicts
+    const uniqueId = nanoid();
+    const testEmail = `john.doe-smith-${uniqueId}@example.com`;
 
     const result = await caller.inbox.email.createLeadFromEmail({
       email: testEmail,
@@ -184,8 +185,11 @@ describe("Email → Lead E2E Flow", () => {
 
     expect(result.created).toBe(true);
     expect(result.lead.email).toBe(testEmail);
-    // Name should be extracted from email: "John Doe Smith"
-    expect(result.lead.name).toBe("John Doe Smith");
+    // Name should be extracted from email: "John Doe Smith {uniqueId}"
+    // The extraction splits on [._-] so "john.doe-smith-{uniqueId}" becomes "John Doe Smith {uniqueId}"
+    expect(result.lead.name).toContain("John");
+    expect(result.lead.name).toContain("Doe");
+    expect(result.lead.name).toContain("Smith");
 
     createdLeadIds.push(result.lead.id);
   });

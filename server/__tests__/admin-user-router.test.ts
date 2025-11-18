@@ -1,21 +1,17 @@
 /**
  * Admin User Router Tests
- * 
+ *
  * Comprehensive test suite for admin user management endpoints
  * Tests: list, get, create, update, delete operations
  * Security: Role-based access control, owner protection, self-protection
  */
 
 import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
-import { describe, it, expect, vi, beforeAll, afterEach, beforeEach } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
-import { users } from "../../drizzle/schema";
 import type { TrpcContext } from "../_core/context";
 import { ENV } from "../_core/env";
-import * as db from "../db";
 import { appRouter } from "../routers";
-
 
 // Ensure DATABASE_URL is unset for unit tests (fallback mode)
 beforeAll(() => {
@@ -29,9 +25,9 @@ afterEach(() => {
 });
 
 // Mock context creator
-function createMockContext(user: { 
-  id: number; 
-  role?: string; 
+function createMockContext(user: {
+  id: number;
+  role?: string;
   openId?: string;
   email?: string;
   name?: string;
@@ -66,15 +62,16 @@ describe("Admin User Router - Role-Based Access Control", () => {
 
       // Mock count query result
       const mockCountResult = [{ count: 2 }];
-      const mockCountResolve = vi.fn().mockResolvedValue(mockCountResult);
-      const mockCountWhere = vi.fn().mockReturnValue({ then: mockCountResolve });
+      const mockCountPromise = Promise.resolve(mockCountResult);
+      const mockCountWhere = vi.fn().mockResolvedValue(mockCountResult);
       const mockCountFrom = vi.fn().mockReturnValue({
         where: mockCountWhere,
-        then: mockCountResolve,
+        then: mockCountPromise.then.bind(mockCountPromise),
+        catch: mockCountPromise.catch.bind(mockCountPromise),
+        finally: mockCountPromise.finally.bind(mockCountPromise),
       });
 
-      // Mock main query result - chain: select().from(users).orderBy().limit().offset()
-      // When no where clause: select().from(users).orderBy().limit().offset()
+      // Mock main query result
       const mockUsers = [
         { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
         { id: 2, name: "User 2", email: "user2@example.com", role: "admin" },
@@ -83,20 +80,15 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-      // from() must return object that has orderBy() method directly accessible
-      // Drizzle allows: from().orderBy() OR from().where().orderBy()
       const mockFromResult = {
         where: mockWhere,
-        orderBy: mockOrderBy, // Direct method on the object
+        orderBy: mockOrderBy,
       };
       const mockFrom = vi.fn().mockReturnValue(mockFromResult);
 
-      // Single db instance – select() decides between count vs main query based on args
-      // Need to handle multiple calls: count query first, then main query
-      let callCount = 0;
+      // Single db instance - select() handles both count and main query
       const dbInstance = {
         select: vi.fn((arg?: any) => {
-          callCount++;
           // Count query uses select({ count: ... })
           if (arg && Object.prototype.hasOwnProperty.call(arg, "count")) {
             return { from: mockCountFrom };
@@ -113,6 +105,7 @@ describe("Admin User Router - Role-Based Access Control", () => {
       expect(result).toBeDefined();
       expect(result.users).toBeDefined();
       expect(Array.isArray(result.users)).toBe(true);
+      expect(result.total).toBe(2);
     });
 
     it("should deny regular user from listing users", async () => {
@@ -122,9 +115,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const ctx = createMockContext({ id: 3, role: "user" });
       const caller = appRouter.createCaller(ctx);
 
-      await expect(
-        caller.admin.users.list({ limit: 50 })
-      ).rejects.toThrow(TRPCError);
+      await expect(caller.admin.users.list({ limit: 50 })).rejects.toThrow(
+        TRPCError
+      );
 
       try {
         await caller.admin.users.list({ limit: 50 });
@@ -138,19 +131,24 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const rbacModule = await import("../rbac");
       vi.spyOn(rbacModule, "getUserRole").mockResolvedValue("owner");
 
-      const ctx = createMockContext({ id: 1, openId: ENV.ownerOpenId || "owner-openid" });
+      const ctx = createMockContext({
+        id: 1,
+        openId: ENV.ownerOpenId || "owner-openid",
+      });
       const caller = appRouter.createCaller(ctx);
 
       // Mock database with proper query builder chain
       const dbModule = await import("../db");
-      
+
       // Mock count query result
       const mockCountResult = [{ count: 0 }];
-      const mockCountResolve = vi.fn().mockResolvedValue(mockCountResult);
-      const mockCountWhere = vi.fn().mockReturnValue({ then: mockCountResolve });
+      const mockCountPromise = Promise.resolve(mockCountResult);
+      const mockCountWhere = vi.fn().mockResolvedValue(mockCountResult);
       const mockCountFrom = vi.fn().mockReturnValue({
         where: mockCountWhere,
-        then: mockCountResolve,
+        then: mockCountPromise.then.bind(mockCountPromise),
+        catch: mockCountPromise.catch.bind(mockCountPromise),
+        finally: mockCountPromise.finally.bind(mockCountPromise),
       });
 
       // Mock main query result - owner listing may return empty set
@@ -159,10 +157,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
       const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
       const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-      // from() returns object with orderBy() method
       const mockFromResult = {
         where: mockWhere,
-        orderBy: mockOrderBy, // Direct method on the object
+        orderBy: mockOrderBy,
       };
       const mockFrom = vi.fn().mockReturnValue(mockFromResult);
 
@@ -180,6 +177,8 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const result = await caller.admin.users.list({ limit: 50 });
 
       expect(result).toBeDefined();
+      expect(result.users).toEqual(mockUsers);
+      expect(result.total).toBe(0);
     });
   });
 
@@ -197,9 +196,11 @@ describe("Admin User Router - Role-Based Access Control", () => {
         select: vi.fn().mockReturnThis(),
         from: vi.fn().mockReturnThis(),
         where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
-        ]),
+        limit: vi
+          .fn()
+          .mockResolvedValue([
+            { id: 1, name: "User 1", email: "user1@example.com", role: "user" },
+          ]),
       } as any);
 
       const result = await caller.admin.users.get({ userId: 1 });
@@ -224,9 +225,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
         limit: vi.fn().mockResolvedValue([]),
       } as any);
 
-      await expect(
-        caller.admin.users.get({ userId: 999 })
-      ).rejects.toThrow(TRPCError);
+      await expect(caller.admin.users.get({ userId: 999 })).rejects.toThrow(
+        TRPCError
+      );
 
       try {
         await caller.admin.users.get({ userId: 999 });
@@ -315,7 +316,10 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const rbacModule = await import("../rbac");
       vi.spyOn(rbacModule, "getUserRole").mockResolvedValue("owner");
 
-      const ctx = createMockContext({ id: 1, openId: ENV.ownerOpenId || "owner-openid" });
+      const ctx = createMockContext({
+        id: 1,
+        openId: ENV.ownerOpenId || "owner-openid",
+      });
       const caller = appRouter.createCaller(ctx);
 
       // Mock database - need to handle TWO queries for email sending
@@ -516,9 +520,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
         select: vi.fn().mockReturnThis(),
         from: vi.fn().mockReturnThis(),
         where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 1, email: "existing@example.com" },
-        ]),
+        limit: vi
+          .fn()
+          .mockResolvedValue([{ id: 1, email: "existing@example.com" }]),
       } as any);
 
       await expect(
@@ -557,7 +561,13 @@ describe("Admin User Router - Role-Based Access Control", () => {
         from: vi.fn().mockReturnThis(),
         where: vi.fn().mockReturnThis(),
         limit: vi.fn().mockResolvedValue([
-          { id: 3, openId: "openid-3", name: "User 3", email: "user3@example.com", role: "user" },
+          {
+            id: 3,
+            openId: "openid-3",
+            name: "User 3",
+            email: "user3@example.com",
+            role: "user",
+          },
         ]),
       };
       vi.spyOn(dbModule, "getDb").mockResolvedValue(mockDb as any);
@@ -583,7 +593,7 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const dbModule = await import("../db");
       // Use actual ENV.ownerOpenId value, or a test value that matches what the code checks
       const ownerOpenId = ENV.ownerOpenId || "test-owner-openid";
-      
+
       // Mock ENV.ownerOpenId to ensure the check works
       const envModule = await import("../_core/env");
       const originalOwnerOpenId = envModule.ENV.ownerOpenId;
@@ -599,7 +609,13 @@ describe("Admin User Router - Role-Based Access Control", () => {
           from: vi.fn().mockReturnThis(),
           where: vi.fn().mockReturnThis(),
           limit: vi.fn().mockResolvedValue([
-            { id: 1, openId: ownerOpenId, role: "admin", name: "Owner", email: "owner@example.com" },
+            {
+              id: 1,
+              openId: ownerOpenId,
+              role: "admin",
+              name: "Owner",
+              email: "owner@example.com",
+            },
           ]),
         } as any);
         // Don't mock upsertUser - update should fail before reaching it due to owner check
@@ -642,9 +658,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
         select: vi.fn().mockReturnThis(),
         from: vi.fn().mockReturnThis(),
         where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 2, openId: "openid-2", role: "admin" },
-        ]),
+        limit: vi
+          .fn()
+          .mockResolvedValue([{ id: 2, openId: "openid-2", role: "admin" }]),
       } as any);
 
       await expect(
@@ -678,9 +694,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
         select: vi.fn().mockReturnThis(),
         from: vi.fn().mockReturnThis(),
         where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 3, openId: "openid-3", role: "user" },
-        ]),
+        limit: vi
+          .fn()
+          .mockResolvedValue([{ id: 3, openId: "openid-3", role: "user" }]),
       } as any);
 
       await expect(
@@ -697,7 +713,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
         });
       } catch (error: any) {
         expect(error.code).toBe("FORBIDDEN");
-        expect(error.message).toContain("Only owner can promote users to admin");
+        expect(error.message).toContain(
+          "Only owner can promote users to admin"
+        );
       }
     });
   });
@@ -716,9 +734,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
         select: vi.fn().mockReturnThis(),
         from: vi.fn().mockReturnThis(),
         where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 3, openId: "openid-3", role: "user" },
-        ]),
+        limit: vi
+          .fn()
+          .mockResolvedValue([{ id: 3, openId: "openid-3", role: "user" }]),
         delete: vi.fn().mockReturnThis(),
       };
       vi.spyOn(dbModule, "getDb").mockResolvedValue(mockDb as any);
@@ -740,7 +758,7 @@ describe("Admin User Router - Role-Based Access Control", () => {
       const dbModule = await import("../db");
       // Use actual ENV.ownerOpenId value, or a test value that matches what the code checks
       const ownerOpenId = ENV.ownerOpenId || "test-owner-openid";
-      
+
       // Mock ENV.ownerOpenId to ensure the check works
       const envModule = await import("../_core/env");
       const originalOwnerOpenId = envModule.ENV.ownerOpenId;
@@ -756,15 +774,21 @@ describe("Admin User Router - Role-Based Access Control", () => {
           from: vi.fn().mockReturnThis(),
           where: vi.fn().mockReturnThis(),
           limit: vi.fn().mockResolvedValue([
-            { id: 1, openId: ownerOpenId, role: "admin", name: "Owner", email: "owner@example.com" },
+            {
+              id: 1,
+              openId: ownerOpenId,
+              role: "admin",
+              name: "Owner",
+              email: "owner@example.com",
+            },
           ]),
           delete: vi.fn().mockReturnThis(),
         } as any);
         // Don't mock delete execution - delete should fail before reaching it due to owner check
 
-        await expect(
-          caller.admin.users.delete({ userId: 1 })
-        ).rejects.toThrow(TRPCError);
+        await expect(caller.admin.users.delete({ userId: 1 })).rejects.toThrow(
+          TRPCError
+        );
 
         try {
           await caller.admin.users.delete({ userId: 1 });
@@ -794,14 +818,14 @@ describe("Admin User Router - Role-Based Access Control", () => {
         select: vi.fn().mockReturnThis(),
         from: vi.fn().mockReturnThis(),
         where: vi.fn().mockReturnThis(),
-        limit: vi.fn().mockResolvedValue([
-          { id: 2, openId: "openid-2", role: "admin" },
-        ]),
+        limit: vi
+          .fn()
+          .mockResolvedValue([{ id: 2, openId: "openid-2", role: "admin" }]),
       } as any);
 
-      await expect(
-        caller.admin.users.delete({ userId: 2 })
-      ).rejects.toThrow(TRPCError);
+      await expect(caller.admin.users.delete({ userId: 2 })).rejects.toThrow(
+        TRPCError
+      );
 
       try {
         await caller.admin.users.delete({ userId: 2 });
@@ -827,9 +851,9 @@ describe("Admin User Router - Role-Based Access Control", () => {
         limit: vi.fn().mockResolvedValue([]),
       } as any);
 
-      await expect(
-        caller.admin.users.delete({ userId: 999 })
-      ).rejects.toThrow(TRPCError);
+      await expect(caller.admin.users.delete({ userId: 999 })).rejects.toThrow(
+        TRPCError
+      );
 
       try {
         await caller.admin.users.delete({ userId: 999 });
@@ -853,9 +877,9 @@ describe("Admin User Router - Edge Cases", () => {
     const dbModule = await import("../db");
     vi.spyOn(dbModule, "getDb").mockResolvedValue(null);
 
-    await expect(
-      caller.admin.users.list({ limit: 50 })
-    ).rejects.toThrow(TRPCError);
+    await expect(caller.admin.users.list({ limit: 50 })).rejects.toThrow(
+      TRPCError
+    );
 
     try {
       await caller.admin.users.list({ limit: 50 });
@@ -865,62 +889,62 @@ describe("Admin User Router - Edge Cases", () => {
     }
   });
 
-    it("should handle search with empty string", async () => {
-      const rbacModule = await import("../rbac");
-      vi.spyOn(rbacModule, "getUserRole").mockResolvedValue("admin");
+  it("should handle search with empty string", async () => {
+    const rbacModule = await import("../rbac");
+    vi.spyOn(rbacModule, "getUserRole").mockResolvedValue("admin");
 
-      const ctx = createMockContext({ id: 2, role: "admin" });
-      const caller = appRouter.createCaller(ctx);
+    const ctx = createMockContext({ id: 2, role: "admin" });
+    const caller = appRouter.createCaller(ctx);
 
-      // Mock database with proper query builder chain
-      const dbModule = await import("../db");
-      
-      // Mock count query result
-      const mockCountResult = [{ count: 0 }];
-      const mockCountResolve = vi.fn().mockResolvedValue(mockCountResult);
-      const mockCountWhere = vi.fn().mockReturnValue({ then: mockCountResolve });
-      const mockCountFrom = vi.fn().mockReturnValue({ where: mockCountWhere });
-      const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
-      
-      // Mock main query result - empty search means no where clause
-      const mockUsers: any[] = [];
-      const mockOffset = vi.fn().mockResolvedValue(mockUsers);
-      const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
-      const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
-      const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-      // from() returns object with orderBy() method
-      const mockFromResult = {
-        where: mockWhere,
-        orderBy: mockOrderBy, // Direct method on the object
-      };
-      const mockFrom = vi.fn().mockReturnValue(mockFromResult);
-      const mockSelectResult = { from: mockFrom };
-      const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
-      
-      // Setup getDb to return different mocks for count and main query
-      let callCount = 0;
-      vi.spyOn(dbModule, "getDb").mockImplementation(async () => {
-        callCount++;
-        if (callCount === 1) {
-          // First call: count query
-          return {
-            select: mockCountSelect,
-          } as any;
-        } else {
-          // Second call: main query - return db with select method
-          return {
-            select: mockSelect,
-          } as any;
-        }
-      });
+    // Mock database with proper query builder chain
+    const dbModule = await import("../db");
 
-      const result = await caller.admin.users.list({ 
-        search: "", // Empty string should be ignored
-        limit: 50 
-      });
-
-      expect(result).toBeDefined();
+    // Mock count query result (empty search means no where clause)
+    const mockCountResult = [{ count: 0 }];
+    const mockCountPromise = Promise.resolve(mockCountResult);
+    const mockCountWhere = vi.fn().mockResolvedValue(mockCountResult);
+    const mockCountFrom = vi.fn().mockReturnValue({
+      where: mockCountWhere,
+      then: mockCountPromise.then.bind(mockCountPromise),
+      catch: mockCountPromise.catch.bind(mockCountPromise),
+      finally: mockCountPromise.finally.bind(mockCountPromise),
     });
+
+    // Mock main query result - empty search means no where clause, so from().orderBy()
+    const mockUsers: any[] = [];
+    const mockOffset = vi.fn().mockResolvedValue(mockUsers);
+    const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
+    const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
+    const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
+    const mockFromResult = {
+      where: mockWhere,
+      orderBy: mockOrderBy, // Direct method on the object
+    };
+    const mockFrom = vi.fn().mockReturnValue(mockFromResult);
+
+    // Single db instance - select() handles both count and main query
+    const dbInstance = {
+      select: vi.fn((arg?: any) => {
+        // Count query uses select({ count: ... })
+        if (arg && Object.prototype.hasOwnProperty.call(arg, "count")) {
+          return { from: mockCountFrom };
+        }
+        // Main list query uses select() with no args
+        return { from: mockFrom };
+      }),
+    };
+
+    vi.spyOn(dbModule, "getDb").mockResolvedValue(dbInstance as any);
+
+    const result = await caller.admin.users.list({
+      search: "", // Empty string should be ignored
+      limit: 50,
+    });
+
+    expect(result).toBeDefined();
+    expect(result.users).toEqual(mockUsers);
+    expect(result.total).toBe(0);
+  });
 
   it("should handle pagination correctly", async () => {
     const rbacModule = await import("../rbac");
@@ -931,53 +955,50 @@ describe("Admin User Router - Edge Cases", () => {
 
     // Mock database with proper query builder chain
     const dbModule = await import("../db");
-    
+
     // Mock count query result
     const mockCountResult = [{ count: 0 }];
-    const mockCountResolve = vi.fn().mockResolvedValue(mockCountResult);
-    const mockCountWhere = vi.fn().mockReturnValue({ then: mockCountResolve });
-    const mockCountFrom = vi.fn().mockReturnValue({ where: mockCountWhere });
-    const mockCountSelect = vi.fn().mockReturnValue({ from: mockCountFrom });
-    
+    const mockCountPromise = Promise.resolve(mockCountResult);
+    const mockCountWhere = vi.fn().mockResolvedValue(mockCountResult);
+    const mockCountFrom = vi.fn().mockReturnValue({
+      where: mockCountWhere,
+      then: mockCountPromise.then.bind(mockCountPromise),
+      catch: mockCountPromise.catch.bind(mockCountPromise),
+      finally: mockCountPromise.finally.bind(mockCountPromise),
+    });
+
     // Mock main query with pagination tracking
     const mockUsers: any[] = [];
     const mockOffset = vi.fn().mockResolvedValue(mockUsers);
     const mockLimit = vi.fn().mockReturnValue({ offset: mockOffset });
     const mockOrderBy = vi.fn().mockReturnValue({ limit: mockLimit });
     const mockWhere = vi.fn().mockReturnValue({ orderBy: mockOrderBy });
-    // from() returns object with orderBy() method
     const mockFromResult = {
       where: mockWhere,
       orderBy: mockOrderBy, // Direct method on the object
     };
     const mockFrom = vi.fn().mockReturnValue(mockFromResult);
-    const mockSelectResult = { from: mockFrom };
-    const mockSelect = vi.fn().mockReturnValue(mockSelectResult);
-    
-    // Setup getDb to return different mocks for count and main query
-    let callCount = 0;
-    vi.spyOn(dbModule, "getDb").mockImplementation(async () => {
-      callCount++;
-      if (callCount === 1) {
-        // First call: count query
-        return {
-          select: mockCountSelect,
-        } as any;
-        } else {
-          // Second call: main query - return db with select method
-          return {
-            select: mockSelect,
-          } as any;
-        }
-    });
 
-    await caller.admin.users.list({ 
+    // Single db instance - select() handles both count and main query
+    const dbInstance = {
+      select: vi.fn((arg?: any) => {
+        // Count query uses select({ count: ... })
+        if (arg && Object.prototype.hasOwnProperty.call(arg, "count")) {
+          return { from: mockCountFrom };
+        }
+        // Main list query uses select() with no args
+        return { from: mockFrom };
+      }),
+    };
+
+    vi.spyOn(dbModule, "getDb").mockResolvedValue(dbInstance as any);
+
+    await caller.admin.users.list({
       limit: 10,
-      offset: 20 
+      offset: 20,
     });
 
     expect(mockLimit).toHaveBeenCalledWith(10);
     expect(mockOffset).toHaveBeenCalledWith(20);
   });
 });
-

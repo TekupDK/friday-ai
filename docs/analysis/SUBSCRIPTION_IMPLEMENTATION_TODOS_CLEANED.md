@@ -8,14 +8,14 @@
 
 ## 📊 TODO Overview
 
-| Area          | Tasks | Completed | Remaining | Status     |
-| ------------- | ----- | --------- | --------- | ---------- |
+| Area          | Tasks | Completed | Remaining | Status      |
+| ------------- | ----- | --------- | --------- | ----------- |
 | Backend       | 8     | 8         | 0         | ✅ Complete |
-| Frontend      | 6     | 0         | 6         | ⏳ Pending |
-| Integration   | 4     | 2         | 2         | 🚧 Partial |
-| Marketing     | 5     | 0         | 5         | ⏳ Pending |
-| Testing       | 3     | 0         | 3         | ⏳ Pending |
-| Documentation | 2     | 1         | 1         | 🚧 Partial |
+| Frontend      | 6     | 0         | 6         | ⏳ Pending  |
+| Integration   | 4     | 2         | 2         | 🚧 Partial  |
+| Marketing     | 5     | 0         | 5         | ⏳ Pending  |
+| Testing       | 3     | 0         | 3         | ⏳ Pending  |
+| Documentation | 2     | 1         | 1         | 🚧 Partial  |
 
 **Completion Rate:** 18/28 tasks (64%)
 
@@ -282,6 +282,7 @@
 ### **P1 - Must Have (MVP)** - 11 tasks remaining
 
 **Frontend (6 tasks):**
+
 1. SubscriptionPlanSelector component
 2. SubscriptionCard component (enhance existing)
 3. SubscriptionManagement component
@@ -290,13 +291,16 @@
 6. Unit tests
 
 **Integration (1 task):**
+
 1. Add subscription product IDs to Billy.dk
 
 **Background Jobs (2 tasks):**
+
 1. Monthly billing job
 2. Usage tracking job
 
 **Testing (2 tasks):**
+
 1. Unit tests
 2. Integration tests
 
@@ -305,14 +309,17 @@
 ### **P2 - Should Have (Phase 2)** - 10 tasks remaining
 
 **Frontend (2 tasks):**
+
 1. UsageChart component
 2. BillingHistory component
 3. Subscription landing page
 
 **Integration (1 task):**
+
 1. Subscription reminder emails
 
 **Marketing (5 tasks):**
+
 1. Landing page copy
 2. Email campaign
 3. Facebook/Google Ads
@@ -320,9 +327,11 @@
 5. Social media content
 
 **Background Jobs (1 task):**
+
 1. Renewal reminder job
 
 **Documentation (1 task):**
+
 1. User guide
 
 **Timeline:** 1-2 måneder
@@ -374,4 +383,3 @@
 
 **Last Updated:** 2025-01-28  
 **Next Review:** 2025-02-04
-

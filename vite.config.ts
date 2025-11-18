@@ -17,13 +17,16 @@ const plugins = [
 ];
 
 export default defineConfig({
-  plugins: [...plugins, visualizer({ 
-    filename: "stats.html", 
-    open: false, // Don't auto-open in CI
-    gzipSize: true,
-    brotliSize: true,
-    template: "treemap" // Better visualization
-  })],
+  plugins: [
+    ...plugins,
+    visualizer({
+      filename: "stats.html",
+      open: false, // Don't auto-open in CI
+      gzipSize: true,
+      brotliSize: true,
+      template: "treemap", // Better visualization
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -82,11 +85,18 @@ export default defineConfig({
       },
     },
     // Optimize HMR for faster reload
+    // Note: port and clientPort are omitted to use the same port as the dev server
+    // This prevents WebSocket connection errors when port changes (e.g., 5173 -> 5174)
+    // In Docker, HMR host/port can be overridden via environment variables
     hmr: {
       protocol: "ws",
-      host: "localhost",
-      port: 5173,
-      clientPort: 5173,
+      host: process.env.VITE_HMR_HOST || "localhost",
+      // port and clientPort will automatically match the dev server port
+      // Can be overridden via VITE_HMR_PORT env var in Docker
+      ...(process.env.VITE_HMR_PORT && {
+        port: parseInt(process.env.VITE_HMR_PORT, 10),
+        clientPort: parseInt(process.env.VITE_HMR_PORT, 10),
+      }),
       // Reduce latency
       overlay: true,
     },
