@@ -116,14 +116,12 @@ const FEATURES = [
   {
     icon: "solar:bill-list-bold-duotone",
     title: "Billy.dk Fakturering",
-    description:
-      "Opret fakturaer direkte fra chat - 349 kr/time standard",
+    description: "Opret fakturaer direkte fra chat - 349 kr/time standard",
   },
   {
     icon: "solar:users-group-rounded-bold-duotone",
     title: "CRM & Lead Pipeline",
-    description:
-      "Hold styr på leads, kunder og opportunities i ét system",
+    description: "Hold styr på leads, kunder og opportunities i ét system",
   },
   {
     icon: "solar:checklist-bold-duotone",
@@ -174,22 +172,19 @@ const HOW_IT_WORKS_STEPS = [
     step: "2",
     icon: "solar:magic-stick-bold-duotone",
     title: "AI Behandler",
-    description:
-      "Lead oprettes, kalender tjekkes, forslag genereres",
+    description: "Lead oprettes, kalender tjekkes, forslag genereres",
   },
   {
     step: "3",
     icon: "solar:chat-round-check-bold-duotone",
     title: "Du Godkender",
-    description:
-      "Gennemgå og godkend AI's forslag med ét klik",
+    description: "Gennemgå og godkend AI's forslag med ét klik",
   },
   {
     step: "4",
     icon: "solar:check-circle-bold-duotone",
     title: "Automatisk Udførelse",
-    description:
-      "Booking sendes, faktura oprettes, CRM opdateres",
+    description: "Booking sendes, faktura oprettes, CRM opdateres",
   },
 ] as const;
 
@@ -245,8 +240,7 @@ const PRICING_PLANS = [
 
 const FAQ_ITEMS = [
   {
-    question:
-      "Hvordan integrerer Friday AI med mine eksisterende systemer?",
+    question: "Hvordan integrerer Friday AI med mine eksisterende systemer?",
     answer:
       "Friday AI integrerer seamløst med Gmail, Google Calendar og Billy.dk via officielle APIs. Setup tager under 10 minutter med vores guide.",
   },
@@ -261,8 +255,7 @@ const FAQ_ITEMS = [
       "Ja, du kan opsige eller pause dit abonnement når som helst. Dine ubrugte timer gemmes ved pause, og der er ingen binding.",
   },
   {
-    question:
-      "Hvad sker der hvis jeg bruger flere timer end mit abonnement?",
+    question: "Hvad sker der hvis jeg bruger flere timer end mit abonnement?",
     answer:
       "Ekstra timer faktureres til 349 kr/time. Vi giver dig besked når du nærmer dig grænsen, så der ikke er overraskelser.",
   },
