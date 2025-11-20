@@ -1,7 +1,8 @@
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings, Shield, User } from "lucide-react";
 import { useMemo } from "react";
 
 import { useAuth } from "@/_core/hooks/useAuth";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { getLoginUrl } from "@/const";
 import { useI18n } from "@/lib/i18n";
+import { trpc } from "@/lib/trpc";
 
 interface MobileUserMenuSheetProps {
   open: boolean;
@@ -30,6 +32,15 @@ export function MobileUserMenuSheet({
   const t = useI18n();
 
   const userInitial = useMemo(() => user?.name?.charAt(0) || "U", [user?.name]);
+
+  // Fetch 2FA status
+  const { data: twoFactorStatus } = (trpc as any).twoFactor.getStatus.useQuery(
+    undefined,
+    {
+      enabled: open,
+      staleTime: 5 * 60 * 1000,
+    }
+  );
 
   const handleLogout = () => {
     window.location.href = getLoginUrl();
@@ -62,9 +73,17 @@ export function MobileUserMenuSheet({
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">
-                {user?.name || "User"}
-              </p>
+              <div className="flex items-center gap-2 mb-1">
+                <p className="text-sm font-medium truncate">
+                  {user?.name || "User"}
+                </p>
+                {twoFactorStatus?.enabled && (
+                  <Badge variant="outline" className="text-xs bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800">
+                    <Shield className="w-3 h-3 mr-1" />
+                    2FA
+                  </Badge>
+                )}
+              </div>
               <p className="text-xs text-muted-foreground truncate">
                 {user?.email}
               </p>

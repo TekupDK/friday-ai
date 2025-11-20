@@ -3,6 +3,7 @@ import {
   LogOut,
   Menu,
   Settings,
+  Shield,
   User,
   BookOpen,
   BarChart3,
@@ -48,6 +49,7 @@ import { InvoiceProvider } from "@/context/InvoiceContext";
 import { useEmailContext } from "@/contexts/EmailContext";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import { trpc } from "@/lib/trpc";
 
 // Lazy load panels for code splitting optimization
 const AIAssistantPanel = lazy(
@@ -98,6 +100,15 @@ function WorkspaceLayout() {
   const [showSettingsDialog, setShowSettingsDialog] = useState(false);
   const [showMobileUserMenu, setShowMobileUserMenu] = useState(false);
   const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
+
+  // Fetch 2FA status for badge display
+  const { data: twoFactorStatus } = (trpc as any).twoFactor.getStatus.useQuery(
+    undefined,
+    {
+      enabled: isAuthenticated,
+      staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    }
+  );
 
   // Panel refs for focus management
   const aiPanelRef = useRef<HTMLDivElement>(null);
@@ -271,7 +282,23 @@ function WorkspaceLayout() {
                 <User className="w-5 h-5" aria-hidden="true" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-64">
+              {/* User info header */}
+              <div className="px-2 py-2 mb-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col space-y-0.5">
+                    <p className="text-sm font-medium">{user?.name || "User"}</p>
+                    <p className="text-xs text-muted-foreground">{user?.email}</p>
+                  </div>
+                  {twoFactorStatus?.enabled && (
+                    <Badge variant="outline" className="ml-2 text-xs bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800">
+                      <Shield className="w-3 h-3 mr-1" />
+                      2FA
+                    </Badge>
+                  )}
+                </div>
+              </div>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setShowProfileDialog(true)}>
                 <User className="w-4 h-4 mr-2" />
                 Profile
