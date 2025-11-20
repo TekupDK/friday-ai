@@ -507,8 +507,8 @@ export function BusinessDashboard() {
       <SmartActionBar
         context={{ type: "dashboard" }}
         workspaceData={dashboardData}
-        onAction={async (actionId: string, data: any) => {
-          // Handle smart actions
+        onAction={async (actionId: string, data: unknown) => {
+          // FIXED: Issue #7 - Use unknown instead of any for type safety
           logger.debug("Smart action executed", { actionId, data });
 
           switch (actionId) {

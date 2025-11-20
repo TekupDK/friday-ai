@@ -14,6 +14,7 @@ import { WorkspaceSkeleton } from "./WorkspaceSkeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { logger } from "@/lib/logger";
 import { trpc } from "@/lib/trpc";
 
 
@@ -351,33 +352,41 @@ export function InvoiceTracker({ context }: InvoiceTrackerProps) {
       <SmartActionBar
         context={{ ...context, type: "invoice" }}
         workspaceData={invoiceData}
-        onAction={async (actionId: string, data: any) => {
-          // Handle smart actions
-          console.log("Smart action executed:", actionId, data);
+        onAction={async (actionId: string, data: unknown) => {
+          // FIXED: Issue #6 - Use logger instead of console.log
+          logger.debug("Smart action executed", { actionId, data });
 
-          switch (actionId) {
-            case "sendReminder":
-              // Send payment reminder email
-              console.log("Sending payment reminder to:", invoiceData.customer);
-              break;
-            case "callCustomer":
-              // Initiate call to customer
-              console.log("Calling customer:", invoiceData.customer);
-              break;
-            case "sendReceipt":
-              // Send payment receipt
-              console.log("Sending receipt to:", invoiceData.customer);
-              break;
-            case "editInvoice":
-              // Open invoice edit dialog
-              console.log("Editing invoice:", invoiceData.invoiceId);
-              break;
-            case "viewHistory":
-              // View customer payment history
-              console.log("Viewing history for:", invoiceData.customer);
-              break;
-            default:
-              console.log("Unknown action:", actionId);
+          try {
+            switch (actionId) {
+              case "sendReminder":
+                logger.info("Sending payment reminder", { customer: invoiceData.customer });
+                // TODO: Implement email sending via tRPC
+                break;
+              case "callCustomer":
+                const phone = invoiceData.phone;
+                if (phone && phone !== "Ikke angivet") {
+                  window.location.href = `tel:${phone}`;
+                } else {
+                  logger.warn("No phone number found", { customer: invoiceData.customer });
+                }
+                break;
+              case "sendReceipt":
+                logger.info("Sending receipt", { customer: invoiceData.customer });
+                // TODO: Implement email sending via tRPC
+                break;
+              case "editInvoice":
+                logger.info("Editing invoice", { invoiceId: invoiceData.invoiceId });
+                // TODO: Open invoice edit dialog
+                break;
+              case "viewHistory":
+                logger.debug("Viewing history", { customer: invoiceData.customer });
+                // TODO: Navigate to payment history
+                break;
+              default:
+                logger.debug("Unknown action", { actionId });
+            }
+          } catch (error) {
+            logger.error("Failed to execute smart action", { actionId }, error);
           }
         }}
       />

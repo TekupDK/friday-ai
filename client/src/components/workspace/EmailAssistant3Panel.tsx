@@ -30,6 +30,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { logger } from "@/lib/logger";
 import { trpc } from "@/lib/trpc";
 
 interface EmailSuggestion {
@@ -117,7 +118,7 @@ export function EmailAssistant3Panel({
         setEditedContent(result.suggestions[0].content);
       }
     } catch (error) {
-      console.error("Error analyzing email:", error);
+      logger.error("Error analyzing email", {}, error);
     } finally {
       setIsAnalyzing(false);
     }
@@ -145,7 +146,7 @@ export function EmailAssistant3Panel({
         });
       }
     } catch (error) {
-      console.error("Error inserting reply:", error);
+      logger.error("Error inserting reply", {}, error);
     } finally {
       setIsInserting(false);
     }
@@ -168,7 +169,7 @@ export function EmailAssistant3Panel({
         });
       }
     } catch (error) {
-      console.error("Error sending email:", error);
+      logger.error("Error sending email", {}, error);
     } finally {
       setIsInserting(false);
     }

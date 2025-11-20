@@ -38,6 +38,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BUSINESS_CONSTANTS, UI_CONSTANTS } from "@/constants/business";
+import { logger } from "@/lib/logger";
 import {
   EmailContextData,
   WorkspaceContext,
@@ -150,7 +151,7 @@ const generateLeadActions = (
       priority: "high",
       badge: "Auto-fill",
       category: "communication",
-      handler: () => console.log("Send standard offer to", data.customerEmail),
+      handler: () => logger.debug("Send standard offer", { email: data.customerEmail }),
     },
     {
       id: "book-directly",
@@ -159,7 +160,7 @@ const generateLeadActions = (
       variant: "outline",
       priority: "high",
       category: "scheduling",
-      handler: () => console.log("Book directly for", data.customerName),
+      handler: () => logger.debug("Book directly", { customer: data.customerName }),
     },
     {
       id: "call-customer",
@@ -168,7 +169,7 @@ const generateLeadActions = (
       variant: "outline",
       priority: "medium",
       category: "communication",
-      handler: () => console.log("Call customer"),
+      handler: () => logger.debug("Call customer"),
     },
     {
       id: "create-custom-offer",
@@ -178,7 +179,7 @@ const generateLeadActions = (
       priority: "medium",
       badge: "Premium",
       category: "financial",
-      handler: () => console.log("Create custom offer"),
+      handler: () => logger.debug("Create custom offer"),
     },
   ];
 
@@ -191,7 +192,7 @@ const generateLeadActions = (
       variant: "ghost",
       priority: "low",
       category: "analytics",
-      handler: () => console.log("Export lead data"),
+      handler: () => logger.debug("Export lead data"),
     });
   }
 
@@ -215,7 +216,7 @@ const generateBookingActions = (
           variant: "default",
           priority: "high",
           category: "communication",
-          handler: () => console.log("Send confirmation to", data.email),
+          handler: () => logger.debug("Send confirmation", { email: data.email }),
         },
         {
           id: "update-calendar",
@@ -224,7 +225,7 @@ const generateBookingActions = (
           variant: "outline",
           priority: "medium",
           category: "scheduling",
-          handler: () => console.log("Update calendar event"),
+          handler: () => logger.debug("Update calendar event"),
         },
         {
           id: "call-customer",
@@ -233,7 +234,7 @@ const generateBookingActions = (
           variant: "outline",
           priority: "medium",
           category: "communication",
-          handler: () => console.log("Call customer:", data.phone),
+          handler: () => logger.debug("Call customer", { phone: data.phone }),
         }
       );
       break;
@@ -247,7 +248,7 @@ const generateBookingActions = (
           variant: "default",
           priority: "high",
           category: "communication",
-          handler: () => console.log("Send thank you email"),
+          handler: () => logger.debug("Send thank you email"),
         },
         {
           id: "create-invoice",
@@ -257,7 +258,7 @@ const generateBookingActions = (
           priority: "high",
           badge: `${data.price} kr`,
           category: "financial",
-          handler: () => console.log("Create invoice for", data.price),
+          handler: () => logger.debug("Create invoice", { price: data.price }),
         },
         {
           id: "book-next",
@@ -266,7 +267,7 @@ const generateBookingActions = (
           variant: "outline",
           priority: "medium",
           category: "scheduling",
-          handler: () => console.log("Book next job"),
+          handler: () => logger.debug("Book next job"),
         }
       );
       break;
@@ -280,7 +281,7 @@ const generateBookingActions = (
           variant: "default",
           priority: "high",
           category: "scheduling",
-          handler: () => console.log("Create calendar event"),
+          handler: () => logger.debug("Create calendar event"),
         },
         {
           id: "send-confirmation",
@@ -289,7 +290,7 @@ const generateBookingActions = (
           variant: "outline",
           priority: "medium",
           category: "communication",
-          handler: () => console.log("Send confirmation"),
+          handler: () => logger.debug("Send confirmation"),
         },
         {
           id: "call-customer",
@@ -298,7 +299,7 @@ const generateBookingActions = (
           variant: "outline",
           priority: "medium",
           category: "communication",
-          handler: () => console.log("Call customer:", data.phone),
+          handler: () => logger.debug("Call customer", { phone: data.phone }),
         }
       );
       break;
@@ -312,7 +313,7 @@ const generateBookingActions = (
     variant: "secondary",
     priority: "low",
     category: "analytics",
-    handler: () => console.log("View customer history"),
+    handler: () => logger.debug("View customer history"),
   });
 
   return actions;
@@ -337,7 +338,7 @@ const generateInvoiceActions = (
         priority: data.status === "overdue" ? "high" : "medium",
         badge: data.status === "overdue" ? "Forsinket" : undefined,
         category: "financial",
-        handler: () => console.log("Send payment reminder"),
+        handler: () => logger.debug("Send payment reminder"),
       },
       {
         id: "edit-invoice",
@@ -346,7 +347,7 @@ const generateInvoiceActions = (
         variant: "outline",
         priority: "medium",
         category: "administrative",
-        handler: () => console.log("Edit invoice"),
+        handler: () => logger.debug("Edit invoice"),
       }
     );
   }
@@ -359,7 +360,7 @@ const generateInvoiceActions = (
       variant: "outline",
       priority: "low",
       category: "communication",
-      handler: () => console.log("Send receipt"),
+      handler: () => logger.debug("Send receipt"),
     });
   }
 
@@ -371,7 +372,7 @@ const generateInvoiceActions = (
     variant: "secondary",
     priority: "low",
     category: "analytics",
-    handler: () => console.log("View customer history"),
+    handler: () => logger.debug("View customer history"),
   });
 
   return actions;
@@ -389,7 +390,7 @@ const generateCustomerActions = (
       variant: "default",
       priority: "high",
       category: "communication",
-      handler: () => console.log("Send email to", data.email),
+      handler: () => logger.debug("Send email", { email: data.email }),
     },
     {
       id: "schedule-booking",
@@ -398,7 +399,7 @@ const generateCustomerActions = (
       variant: "outline",
       priority: "high",
       category: "scheduling",
-      handler: () => console.log("Schedule new booking"),
+      handler: () => logger.debug("Schedule new booking"),
     },
     {
       id: "call-customer",
@@ -407,7 +408,7 @@ const generateCustomerActions = (
       variant: "outline",
       priority: "medium",
       category: "communication",
-      handler: () => console.log("Call customer:", data.phone),
+      handler: () => logger.debug("Call customer", { phone: data.phone }),
     },
     {
       id: "view-analytics",
@@ -417,7 +418,7 @@ const generateCustomerActions = (
       priority: "medium",
       badge: `${data.totalBookings} bookinger`,
       category: "analytics",
-      handler: () => console.log("View customer analytics"),
+      handler: () => logger.debug("View customer analytics"),
     },
   ];
 
@@ -431,7 +432,7 @@ const generateCustomerActions = (
       priority: "high",
       badge: "VIP",
       category: "financial",
-      handler: () => console.log("Create VIP special offer"),
+      handler: () => logger.debug("Create VIP special offer"),
     });
   }
 
@@ -451,7 +452,7 @@ const generateDashboardActions = (
       priority: "medium",
       badge: `${data.todayBookings} i dag`,
       category: "scheduling",
-      handler: () => console.log("View all bookings"),
+      handler: () => logger.debug("View all bookings"),
     },
     {
       id: "handle-unpaid-invoices",
@@ -461,7 +462,7 @@ const generateDashboardActions = (
       priority: data.unpaidCount > 0 ? "high" : "low",
       badge: data.unpaidCount > 0 ? `${data.unpaidCount}` : undefined,
       category: "financial",
-      handler: () => console.log("Handle unpaid invoices"),
+      handler: () => logger.debug("Handle unpaid invoices"),
     },
     {
       id: "address-urgent-actions",
@@ -471,7 +472,7 @@ const generateDashboardActions = (
       priority: data.urgentActions > 0 ? "high" : "low",
       badge: data.urgentActions > 0 ? `${data.urgentActions}` : undefined,
       category: "administrative",
-      handler: () => console.log("Address urgent actions"),
+      handler: () => logger.debug("Address urgent actions"),
     },
     {
       id: "weekly-report",
@@ -481,7 +482,7 @@ const generateDashboardActions = (
       priority: "low",
       badge: `${data.weeklyRevenue} kr`,
       category: "analytics",
-      handler: () => console.log("Generate weekly report"),
+      handler: () => logger.debug("Generate weekly report"),
     },
   ];
 
@@ -494,7 +495,7 @@ const generateDashboardActions = (
       variant: "ghost",
       priority: "low",
       category: "administrative",
-      handler: () => console.log("Open system settings"),
+      handler: () => logger.debug("Open system settings"),
     });
   }
 
@@ -560,7 +561,7 @@ export default function SmartActionBar({
         await action.handler();
         await onAction(action.id, { context, workspaceData, action });
       } catch (error) {
-        console.error("Smart action failed:", error);
+        logger.error("Smart action failed", { actionId: action.id }, error);
       }
     },
     [onAction, context, workspaceData, isLoading]
