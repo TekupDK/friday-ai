@@ -15,6 +15,7 @@ import { getDb } from "../db";
 import { routeAI } from "../ai-router";
 import { generateCorrelationId } from "../action-audit";
 import { logger } from "../_core/logger";
+import { getUserEmail } from "./utils";
 
 export interface WritingStylePatterns {
   tone: string; // "professional", "friendly", "formal", etc.
@@ -432,25 +433,4 @@ function extractLearningPoints(changes: {
   };
 }
 
-/**
- * Get user's email address (helper)
- */
-async function getUserEmail(userId: number): Promise<string | null> {
-  try {
-    const db = await getDb();
-    if (!db) return null;
 
-    const { users } = await import("../../drizzle/schema");
-    const [user] = await db
-      .select({ email: users.email })
-      .from(users)
-      .where(eq(users.id, userId))
-      .limit(1)
-      .execute();
-
-    return user?.email || null;
-  } catch (error) {
-    logger.warn({ err: error, userId }, "[Ghostwriter] Could not get user email");
-    return null;
-  }
-}
