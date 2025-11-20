@@ -158,3 +158,4 @@ Alle 7 fixes er:
 
 **Verificeret:** 2025-01-28  
 **Status:** ✅ Godkendt
+

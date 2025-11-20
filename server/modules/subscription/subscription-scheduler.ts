@@ -10,7 +10,7 @@
 import { and, eq, gte, lte } from "drizzle-orm";
 import cron from "node-cron";
 
-import { subscriptions } from "../drizzle/schema";
+import { subscriptions } from "../../../drizzle/schema";
 
 import { logger } from "./_core/logger";
 import { getDb } from "./db";

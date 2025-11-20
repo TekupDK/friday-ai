@@ -110,3 +110,4 @@ Alle login-relaterede issues er rettet, testet og valideret. Systemet opfylder a
 **Afsluttet:** 2025-01-28  
 **Status:** ✅ Komplet
 
+

@@ -13,7 +13,7 @@ import {
   emailPipelineState,
   emails,
   emailThreads,
-} from "../drizzle/schema";
+} from "../../../drizzle/schema";
 
 import { searchCustomerByEmail } from "./billy";
 import { getDb } from "./db";

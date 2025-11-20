@@ -13,11 +13,11 @@
 
 import { and, eq } from "drizzle-orm";
 
-import { emailsInFridayAi } from "../drizzle/schema";
+import { emailsInFridayAi } from "../../../drizzle/schema";
 
-import { invokeLLM, type Message } from "./_core/llm";
-import { getDb } from "./db";
-import { logger } from "./logger";
+import { invokeLLM, type Message } from "../../_core/llm";
+import { getDb } from "../../db";
+import { logger } from "../../_core/logger";
 
 const SUMMARY_MIN_WORDS = 200;
 const SUMMARY_MAX_CHARS = 150;

@@ -102,3 +102,4 @@ Encoding problemet påvirker **kun visningen** i terminalen. Test resultaterne e
 **Dato:** 2025-01-28  
 **Status:** ✅ Implementeret og testet
 
+

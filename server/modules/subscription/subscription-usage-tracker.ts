@@ -6,7 +6,7 @@
 
 import { eq, and, gte, lte } from "drizzle-orm";
 
-import { bookings, subscriptions, subscriptionUsage } from "../drizzle/schema";
+import { bookings, subscriptions, subscriptionUsage } from "../../../drizzle/schema";
 
 import { logger } from "./_core/logger";
 import { getDb } from "./db";

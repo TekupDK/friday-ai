@@ -247,3 +247,4 @@ pnpm dev
 **Oprettet:** 2025-01-28  
 **Status:** 🔄 Review i gang - Step 3 pending
 
+

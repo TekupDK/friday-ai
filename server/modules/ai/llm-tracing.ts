@@ -5,7 +5,7 @@
  * Alternative to LangSmith/LangFuse - fully custom, no dependencies
  */
 
-import { Message } from "./_core/llm";
+import { Message } from "../../_core/llm";
 
 export interface LLMTrace {
   id: string;

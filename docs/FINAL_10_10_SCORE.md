@@ -153,3 +153,4 @@ Vores login-system opnår **10/10** ved at:
 **Dato:** 2025-01-28  
 **Status:** ✅ **10/10 - PERFEKT SCORE**
 
+

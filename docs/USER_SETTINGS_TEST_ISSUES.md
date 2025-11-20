@@ -140,3 +140,4 @@ Error: Failed to resolve import "./gmail-labels" from "server/google-api.ts"
 **Oprettet:** 2025-01-28  
 **Status:** ⚠️ Test issues - klar til fix
 
+

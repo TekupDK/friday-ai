@@ -236,3 +236,4 @@ Efter automatiseret test:
 **Oprettet:** 2025-01-28  
 **Status:** ✅ Automatiseret test klar til brug
 
+

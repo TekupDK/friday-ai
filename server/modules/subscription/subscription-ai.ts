@@ -13,7 +13,7 @@ import {
   customerProperties,
   bookings,
   subscriptionUsage,
-} from "../drizzle/schema";
+} from "../../../drizzle/schema";
 
 import { routeAI } from "./ai-router";
 import { getDb } from "./db";

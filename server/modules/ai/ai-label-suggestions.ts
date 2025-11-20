@@ -14,16 +14,27 @@
 
 import { and, eq } from "drizzle-orm";
 
-import { emailsInFridayAi } from "../drizzle/schema";
+import { emailsInFridayAi } from "../../../drizzle/schema";
+import { invokeLLM, type Message } from "../../_core/llm";
+import { logger } from "../../_core/logger";
+import { getDb } from "../../db";
 
-import { invokeLLM, type Message } from "./_core/llm";
-import { getDb } from "./db";
-import { logger } from "./logger";
+import { extractJSON } from "./prompt-utils";
 
 // Permanent cache - email content never changes, so cache indefinitely
 // Only regenerate if manually requested or if suggestions are missing
 const CACHE_TTL_HOURS = Infinity;
 const HIGH_CONFIDENCE_THRESHOLD = 85;
+const EMAIL_BODY_MAX_CHARS = 1500;
+
+// Valid label categories - single source of truth
+const VALID_LABELS: readonly LabelCategory[] = [
+  "Lead",
+  "Booking",
+  "Finance",
+  "Support",
+  "Newsletter",
+] as const;
 
 export type LabelCategory =
   | "Lead"
@@ -47,16 +58,71 @@ export interface LabelSuggestionsResult {
 }
 
 /**
+ * Type for raw AI response (before validation)
+ */
+interface RawLabelSuggestion {
+  label?: string;
+  confidence?: number;
+  reasoning?: string;
+}
+
+/**
+ * Type for parsed AI response (can be array or object with suggestions property)
+ */
+type ParsedAIResponse =
+  | RawLabelSuggestion[]
+  | { suggestions?: RawLabelSuggestion[] };
+
+/**
  * Check if cached suggestions are still valid
  */
 function isCacheValid(generatedAt: string | null): boolean {
   if (!generatedAt) return false;
+
+  // With Infinity TTL, cache is always valid if generatedAt exists
+  if (CACHE_TTL_HOURS === Infinity) {
+    return true;
+  }
 
   const cacheTime = new Date(generatedAt);
   const now = new Date();
   const hoursDiff = (now.getTime() - cacheTime.getTime()) / (1000 * 60 * 60);
 
   return hoursDiff < CACHE_TTL_HOURS;
+}
+
+/**
+ * Validate input parameters
+ */
+function validateInputs(emailId: number, userId: number): void {
+  if (!Number.isInteger(emailId) || emailId <= 0) {
+    throw new Error(`Invalid emailId: ${emailId}`);
+  }
+  if (!Number.isInteger(userId) || userId <= 0) {
+    throw new Error(`Invalid userId: ${userId}`);
+  }
+}
+
+/**
+ * Validate and transform raw suggestion to LabelSuggestion
+ */
+function validateSuggestion(s: RawLabelSuggestion): LabelSuggestion | null {
+  if (
+    !s.label ||
+    !VALID_LABELS.includes(s.label as LabelCategory) ||
+    typeof s.confidence !== "number" ||
+    s.confidence < 0 ||
+    s.confidence > 100
+  ) {
+    return null;
+  }
+
+  return {
+    label: s.label as LabelCategory,
+    confidence: Math.round(s.confidence),
+    emoji: getLabelEmoji(s.label as LabelCategory),
+    reasoning: s.reasoning || "Ingen begrundelse",
+  };
 }
 
 /**
@@ -123,7 +189,7 @@ Returner KUN et gyldigt JSON array, intet andet tekst:
 Fra: ${fromEmail}
 Emne: ${emailSubject}
 
-${emailBody.slice(0, 1500)}
+${emailBody.slice(0, EMAIL_BODY_MAX_CHARS)}
 
 Returner KUN et JSON array, ingen ekstra tekst:`,
       },
@@ -137,59 +203,25 @@ Returner KUN et JSON array, ingen ekstra tekst:`,
 
     const content = response.choices[0]?.message?.content;
     if (typeof content !== "string") {
-      throw new Error("Invalid response from AI");
+      throw new Error("Invalid response from AI: missing content");
     }
 
-    // Parse JSON response
-    let parsed: any;
-    try {
-      parsed = JSON.parse(content);
-    } catch {
-      // Sometimes AI returns array directly, sometimes wrapped in object
-      logger.warn(
-        "Failed to parse AI response as JSON, trying to extract array"
-      );
-      // Try to extract array from text
-      const arrayMatch = content.match(/\[[\s\S]*\]/);
-      if (arrayMatch) {
-        parsed = JSON.parse(arrayMatch[0]);
-      } else {
-        throw new Error("Could not extract label suggestions from AI response");
-      }
+    // Parse JSON response using utility function
+    const parsed = extractJSON(content) as ParsedAIResponse | null;
+    if (!parsed) {
+      throw new Error("Could not extract label suggestions from AI response");
     }
 
     // Handle both array and object responses
-    const suggestionsArray = Array.isArray(parsed)
+    const suggestionsArray: RawLabelSuggestion[] = Array.isArray(parsed)
       ? parsed
       : parsed.suggestions || [];
 
     // Validate and transform suggestions
     const suggestions: LabelSuggestion[] = suggestionsArray
-      .filter((s: any) => {
-        const validLabels: LabelCategory[] = [
-          "Lead",
-          "Booking",
-          "Finance",
-          "Support",
-          "Newsletter",
-        ];
-        return (
-          s.label &&
-          validLabels.includes(s.label) &&
-          typeof s.confidence === "number" &&
-          s.confidence >= 0 &&
-          s.confidence <= 100
-        );
-      })
-      .map((s: any) => ({
-        label: s.label as LabelCategory,
-        confidence: Math.round(s.confidence),
-        emoji: getLabelEmoji(s.label),
-        reasoning: s.reasoning || "Ingen begrundelse",
-      }))
-      .sort(
-        (a: LabelSuggestion, b: LabelSuggestion) => b.confidence - a.confidence
-      ); // Sort by confidence (highest first)
+      .map(validateSuggestion)
+      .filter((s): s is LabelSuggestion => s !== null)
+      .sort((a, b) => b.confidence - a.confidence); // Sort by confidence (highest first)
 
     logger.info(
       `Generated ${suggestions.length} label suggestions with avg confidence ${
@@ -212,6 +244,8 @@ export async function getEmailLabelSuggestions(
   emailId: number,
   userId: number
 ): Promise<LabelSuggestionsResult> {
+  validateInputs(emailId, userId);
+
   try {
     const db = await getDb();
     if (!db) {
@@ -246,9 +280,14 @@ export async function getEmailLabelSuggestions(
     // Check for valid cached suggestions
     if (email.aiLabelSuggestions && isCacheValid(email.aiLabelsGeneratedAt)) {
       logger.debug(`Using cached label suggestions for emailId=${emailId}`);
-      const cached = email.aiLabelSuggestions as any;
+      const cached = email.aiLabelSuggestions as
+        | LabelSuggestion[]
+        | { suggestions?: LabelSuggestion[] };
+      const suggestions: LabelSuggestion[] = Array.isArray(cached)
+        ? cached
+        : cached.suggestions || [];
       return {
-        suggestions: Array.isArray(cached) ? cached : cached.suggestions || [],
+        suggestions,
         generatedAt: email.aiLabelsGeneratedAt!,
         cached: true,
         autoApplied: [],
@@ -314,6 +353,16 @@ export async function applyLabelSuggestion(
   label: LabelCategory,
   confidence: number
 ): Promise<{ success: boolean; currentLabels: string[] }> {
+  validateInputs(emailId, userId);
+
+  if (!VALID_LABELS.includes(label)) {
+    throw new Error(`Invalid label: ${label}`);
+  }
+
+  if (typeof confidence !== "number" || confidence < 0 || confidence > 100) {
+    throw new Error(`Invalid confidence: ${confidence} (must be 0-100)`);
+  }
+
   try {
     const db = await getDb();
     if (!db) {
@@ -386,6 +435,12 @@ export async function autoApplyHighConfidenceLabels(
   userId: number,
   suggestions: LabelSuggestion[]
 ): Promise<LabelCategory[]> {
+  validateInputs(emailId, userId);
+
+  if (!Array.isArray(suggestions)) {
+    throw new Error("Suggestions must be an array");
+  }
+
   const appliedLabels: LabelCategory[] = [];
 
   for (const suggestion of suggestions) {
@@ -514,8 +569,9 @@ export async function batchGenerateLabelSuggestions(
       })
     );
 
-    // Process batch results
-    batchResults.forEach(result => {
+    // Process batch results - use index directly to avoid indexOf bug
+    batchResults.forEach((result, index) => {
+      const emailId = batch[index];
       if (result.status === "fulfilled") {
         results.push(result.value);
         if (result.value.success) {
@@ -532,9 +588,12 @@ export async function batchGenerateLabelSuggestions(
       } else {
         summary.failed++;
         results.push({
-          emailId: batch[batchResults.indexOf(result)],
+          emailId,
           success: false,
-          error: result.reason?.message || String(result.reason),
+          error:
+            result.reason instanceof Error
+              ? result.reason.message
+              : String(result.reason),
         });
       }
     });

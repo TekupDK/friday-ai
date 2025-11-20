@@ -8,7 +8,7 @@
 
 import { eq, and } from "drizzle-orm";
 
-import { customerProfiles, subscriptions } from "../drizzle/schema";
+import { customerProfiles, subscriptions } from "../../../drizzle/schema";
 
 import { logger } from "./_core/logger";
 import { getDb } from "./db";

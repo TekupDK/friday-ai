@@ -3,15 +3,15 @@
  * Routes different intents to optimal AI models
  */
 
-import { ENV } from "./_core/env";
-import { getFeatureFlags } from "./_core/feature-flags";
-import { invokeLLM, streamResponse } from "./_core/llm";
+import { ENV } from "../../_core/env";
+import { getFeatureFlags } from "../../_core/feature-flags";
+import { invokeLLM, streamResponse } from "../../_core/llm";
 import { trackAIMetric, getMetricsSummary } from "./ai-metrics";
 import {
   litellmClient,
   mapToLiteLLMModel,
   getFallbackModels,
-} from "./integrations/litellm";
+} from "../../integrations/litellm";
 
 export type AIModel =
   // FREE TIER - 100% Accuracy Models (Recommended)

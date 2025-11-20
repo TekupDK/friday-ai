@@ -369,3 +369,4 @@ export const usersInFridayAi = fridayAi.table("users", {
 **Sidst Opdateret:** 2025-01-28  
 **Vedligeholdt af:** TekupDK Development Team
 
+

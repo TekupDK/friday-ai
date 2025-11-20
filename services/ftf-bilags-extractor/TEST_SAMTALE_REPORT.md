@@ -168,3 +168,4 @@
 **Konklusion:** Systemet er fuldt funktionelt og klar til brug. Alle kritiske bugs er rettet, og edge cases håndteres korrekt.
 
 
+
