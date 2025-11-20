@@ -8,6 +8,10 @@ import React from "react";
 
 import { AppleButton, AppleCard } from "./crm/apple-ui";
 
+// Timing constants
+const SUCCESS_MESSAGE_RESET_MS = 5000;
+const API_CALL_TIMEOUT_MS = 1000;
+
 export function NewsletterSignup() {
   const [email, setEmail] = React.useState("");
   const [status, setStatus] = React.useState<
@@ -15,13 +19,13 @@ export function NewsletterSignup() {
   >("idle");
   const [message, setMessage] = React.useState("");
 
-  // Auto-reset success/error state after 5 seconds with cleanup
+  // Auto-reset success/error state with cleanup
   React.useEffect(() => {
     if (status === "success" || status === "error") {
       const timer = setTimeout(() => {
         setStatus("idle");
         setMessage("");
-      }, 5000);
+      }, SUCCESS_MESSAGE_RESET_MS);
 
       return () => clearTimeout(timer);
     }
@@ -49,7 +53,7 @@ export function NewsletterSignup() {
       // });
 
       // Simulated API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, API_CALL_TIMEOUT_MS));
 
       // Store in localStorage for now (replace with actual API)
       try {

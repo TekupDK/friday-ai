@@ -7,7 +7,7 @@
 import { Icon } from "@iconify/react";
 import { motion, useInView, type Variants } from "framer-motion";
 import React, { useRef } from "react";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 
 import { CookieConsent } from "@/components/CookieConsent";
 import { AppleButton, AppleCard } from "@/components/crm/apple-ui";
@@ -15,6 +15,11 @@ import CRMLayout from "@/components/crm/CRMLayout";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { usePageTitle } from "@/hooks/usePageTitle";
+
+// Timing constants
+const COOKIE_BANNER_DELAY_MS = 2000;
+const SUCCESS_MESSAGE_TIMEOUT_MS = 5000;
+const SCROLL_THRESHOLD_PX = 100;
 
 // Animation variants
 const fadeInUp: Variants = {
@@ -430,11 +435,8 @@ export default function FridayInboxLanding() {
           );
         }
 
-        // TODO: Send to analytics service
-        // trackEvent('page_performance', {
-        //   page_load_time: pageLoadTime,
-        //   dom_content_loaded: domContentLoadedTime,
-        // });
+        // Analytics tracking can be added when analytics service is configured
+        // Example: trackEvent('page_performance', { page_load_time: pageLoadTime });
       }
     }
 
@@ -1380,36 +1382,36 @@ export default function FridayInboxLanding() {
                   </h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a
+                      <Link
                         href="/"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Workspace
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/subscriptions/plans"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Priser
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/docs"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Dokumentation
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/chat-components"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Komponenter
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -1421,36 +1423,36 @@ export default function FridayInboxLanding() {
                   </h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a
+                      <Link
                         href="/"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Email AI
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/crm/dashboard"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         CRM Dashboard
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/crm/leads"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Lead Pipeline
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/crm/bookings"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Kalender Booking
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -1462,24 +1464,26 @@ export default function FridayInboxLanding() {
                   </h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a
+                      <Link
                         href="/docs"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Hjælp Center
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         href="/accessibility"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         Tilgængelighed
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <a
                         href="https://github.com/TekupDK/friday-ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         GitHub

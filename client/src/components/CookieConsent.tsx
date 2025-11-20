@@ -5,8 +5,12 @@
 import { Icon } from "@iconify/react";
 import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
+import { Link } from "wouter";
 
 import { AppleButton } from "./crm/apple-ui";
+
+// Timing constant
+const BANNER_SHOW_DELAY_MS = 2000;
 
 export function CookieConsent() {
   const [showBanner, setShowBanner] = React.useState(false);
@@ -17,7 +21,7 @@ export function CookieConsent() {
       const consent = localStorage.getItem("friday-ai-cookie-consent");
       if (!consent) {
         // Show banner after 2 seconds
-        const timer = setTimeout(() => setShowBanner(true), 2000);
+        const timer = setTimeout(() => setShowBanner(true), BANNER_SHOW_DELAY_MS);
         return () => clearTimeout(timer);
       }
     } catch (error) {
@@ -80,9 +84,9 @@ export function CookieConsent() {
                     anonyme analyseformål. Ved at klikke &quot;Acceptér&quot;
                     giver du samtykke til vores brug af cookies i
                     overensstemmelse med vores{" "}
-                    <a href="/privacy" className="text-primary hover:underline">
+                    <Link href="/privacy" className="text-primary hover:underline">
                       privatlivspolitik
-                    </a>
+                    </Link>
                     . Du kan til enhver tid ændre dine præferencer.
                   </p>
                 </div>
