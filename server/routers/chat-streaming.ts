@@ -11,7 +11,7 @@ import { getFeatureFlags } from "../_core/feature-flags";
 import { streamResponse } from "../_core/llm";
 import { logger } from "../_core/logger";
 import { protectedProcedure, router } from "../_core/trpc";
-import { routeAI, type AIRouterOptions, type PendingAction } from "../ai-router";
+import { routeAI, type AIRouterOptions, type PendingAction } from '../modules/ai/ai-router';
 
 
 

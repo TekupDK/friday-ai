@@ -5,10 +5,10 @@
 
 import { z } from "zod";
 
-import { createInvoice, getInvoices, searchCustomerByEmail } from "./billy";
-import { createTask, getUserTasks, trackEvent } from "./db";
+import { createInvoice, getInvoices, searchCustomerByEmail } from '../billing/billy';
+import { createTask, getUserTasks, trackEvent } from "../../db";
 import { ToolName } from "./friday-tools";
-import { createLead, getUserLeads, updateLeadStatus } from "./lead-db";
+import { createLead, getUserLeads, updateLeadStatus } from '../crm/lead-db';
 import {
   createCalendarEvent,
   createGmailDraft,
@@ -16,7 +16,7 @@ import {
   getGmailThread,
   listCalendarEvents,
   searchGmail,
-} from "./mcp";
+} from "../../mcp";
 
 export interface ToolCallResult {
   success: boolean;

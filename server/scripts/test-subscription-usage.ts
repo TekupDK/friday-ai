@@ -10,9 +10,9 @@ import { eq, and } from "drizzle-orm";
 import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
 import { getDb } from "../db";
-import { createSubscription } from "../subscription-actions";
-import { getSubscriptionUsageForMonth } from "../subscription-db";
-import { trackBookingUsage, calculateBookingHours, syncSubscriptionUsage } from "../subscription-usage-tracker";
+import { createSubscription } from "../modules/subscription/subscription-actions";
+import { getSubscriptionUsageForMonth } from '../modules/subscription/subscription-db';
+import { trackBookingUsage, calculateBookingHours, syncSubscriptionUsage } from '../modules/subscription/subscription-usage-tracker';
 
 async function testSubscriptionUsage() {
   console.log("🧪 Starting Subscription Usage Tracking Tests...\n");

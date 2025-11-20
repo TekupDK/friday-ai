@@ -10,10 +10,10 @@ import { eq, and } from "drizzle-orm";
 
 import { customerProfiles, subscriptions } from "../../../drizzle/schema";
 
-import { logger } from "./_core/logger";
-import { getDb } from "./db";
-import { sendNotification } from "./notification-service";
-import { getSubscriptionById } from "./subscription-db";
+import { logger } from "../../_core/logger";
+import { getDb } from "../../db";
+import { sendNotification } from "../../notification-service";
+import { getSubscriptionById } from './subscription-db';
 import { getPlanConfig } from "./subscription-helpers";
 
 export type SubscriptionEmailType =

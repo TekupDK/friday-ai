@@ -10,7 +10,7 @@ import { eq } from "drizzle-orm";
 
 import { emails, emailThreads } from "../../../drizzle/schema";
 
-import type { GmailThread } from "./google-api";
+import type { GmailThread } from "../../google-api";
 
 /**
  * Generate threadKey from email metadata (same as webhook)

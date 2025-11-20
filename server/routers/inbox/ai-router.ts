@@ -7,14 +7,14 @@ import { protectedProcedure, router } from "../../_core/trpc";
 import {
   batchGenerateSummaries,
   getEmailSummary,
-} from "../../ai-email-summary";
+} from "../../modules/ai/ai-email-summary";
 import {
   applyLabelSuggestion,
   autoApplyHighConfidenceLabels,
   batchGenerateLabelSuggestions,
   getEmailLabelSuggestions,
   type LabelCategory,
-} from "../../ai-label-suggestions";
+} from "../../modules/ai/ai-label-suggestions";
 import { getDb } from "../../db";
 
 export const aiRouter = router({

@@ -12,7 +12,7 @@ import { leads } from "../../drizzle/schema";
 import type { TrpcContext } from "../_core/context";
 import { router } from "../_core/trpc";
 import { getDb } from "../db";
-import { getUserLeads } from "../lead-db";
+import { getUserLeads } from '../modules/crm/lead-db';
 import { inboxRouter } from "../routers/inbox-router";
 
 // Normalize DATABASE_URL for postgres.js and Supabase (ensure sslmode=no-verify)

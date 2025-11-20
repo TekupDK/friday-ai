@@ -1,4 +1,4 @@
-import type { BillyInvoice } from "../billy";
+import type { BillyInvoice } from '../modules/billing/billy';
 
 export interface InvoiceStats {
   total: number;

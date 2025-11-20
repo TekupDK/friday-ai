@@ -4,12 +4,12 @@
  * Cache Billy invoices to database in background
  */
 
-import type { BillyInvoice } from "./billy";
-import { getCustomer } from "./billy";
+import type { BillyInvoice } from './billy';
+import { getCustomer } from './billy';
 import {
   addCustomerInvoice,
   createOrUpdateCustomerProfile,
-} from "./customer-db";
+} from '../crm/customer-db';
 
 /**
  * Map Billy invoice state to customer_invoice_status enum

@@ -11,8 +11,8 @@ import {
   router,
 } from "../../_core/trpc";
 import { validationSchemas } from "../../_core/validation";
-import { searchCustomerByEmail } from "../../billy";
-import { createOrUpdateCustomerProfile } from "../../customer-db";
+import { searchCustomerByEmail } from "../../modules/billing/billy";
+import { createOrUpdateCustomerProfile } from "../../modules/crm/customer-db";
 import {
   getDb,
   getPipelineState,
@@ -36,7 +36,7 @@ import {
   searchGmailThreads,
   sendGmailMessage,
 } from "../../google-api";
-import { createLead, getUserLeads } from "../../lead-db";
+import { createLead, getUserLeads } from "../../modules/crm/lead-db";
 import {
   createRateLimitMiddleware,
   INBOX_CRM_RATE_LIMIT,

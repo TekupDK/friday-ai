@@ -3,7 +3,7 @@
  * Maps Friday AI model names to LiteLLM/OpenRouter model IDs
  */
 
-import type { AIModel } from "../../model-router";
+import type { AIModel } from "../../modules/ai/model-router";
 
 /**
  * Friday AI model name → LiteLLM model ID

@@ -4,7 +4,7 @@
  * Maps subscription plan types to Billy.dk product IDs and defines subscription plans
  */
 
-import { ENV } from "./_core/env";
+import { ENV } from "../../_core/env";
 
 export type SubscriptionPlanType =
   | "tier1"

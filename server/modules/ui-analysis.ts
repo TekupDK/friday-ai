@@ -4,7 +4,7 @@
  */
 
 import { invokeLLM } from "../_core/llm";
-import type { AIModel } from "../model-router";
+import type { AIModel } from './ai/model-router';
 
 interface UIAnalysisInput {
   uiConcept: string;

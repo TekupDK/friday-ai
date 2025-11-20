@@ -12,10 +12,10 @@ import cron from "node-cron";
 
 import { subscriptions } from "../../../drizzle/schema";
 
-import { logger } from "./_core/logger";
-import { getDb } from "./db";
+import { logger } from "../../_core/logger";
+import { getDb } from "../../db";
 import { sendSubscriptionEmail } from "./subscription-email";
-import { processMonthlyRenewals } from "./subscription-jobs";
+import { processMonthlyRenewals } from './subscription-jobs';
 
 let isSchedulerRunning = false;
 

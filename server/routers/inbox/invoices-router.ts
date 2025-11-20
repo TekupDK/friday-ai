@@ -9,13 +9,13 @@ import {
   protectedProcedure,
   router,
 } from "../../_core/trpc";
-import type { BillyInvoice } from "../../billy";
+import type { BillyInvoice } from "../../modules/billing/billy";
 import {
   createInvoice as createBillyInvoice,
   getInvoices as getBillyInvoices,
-} from "../../billy";
+} from "../../modules/billing/billy";
 import { getDb } from "../../db";
-import { cacheInvoicesToDatabase } from "../../invoice-cache";
+import { cacheInvoicesToDatabase } from "../../modules/billing/invoice-cache";
 import { computeInvoiceStats } from "../../utils/invoice-stats";
 
 export const invoicesRouter = router({

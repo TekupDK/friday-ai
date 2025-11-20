@@ -15,7 +15,7 @@ import {
   createInvoice,
   getInvoices,
   searchCustomerByEmail,
-} from "./billy";
+} from './billy';
 
 interface BillyCustomer {
   id: string;

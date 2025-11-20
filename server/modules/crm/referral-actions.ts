@@ -25,7 +25,7 @@ import {
   calculateReferralDiscount,
   logReferralHistory,
   REFERRAL_CONFIG,
-} from "./referral-helpers";
+} from "../../referral-helpers";
 
 /**
  * Create a new referral code for a user

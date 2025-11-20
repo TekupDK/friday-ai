@@ -32,7 +32,7 @@ vi.mock("../action-audit", () => ({
   generateCorrelationId: vi.fn(() => "test-correlation-id"),
 }));
 
-import { routeAI } from "../ai-router";
+import { routeAI } from '../modules/ai/ai-router';
 import {
   getUserConversations,
   getConversationMessages,

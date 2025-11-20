@@ -6,7 +6,7 @@
 import { ENV } from "../../_core/env";
 import { getFeatureFlags } from "../../_core/feature-flags";
 import { invokeLLM, streamResponse } from "../../_core/llm";
-import { trackAIMetric, getMetricsSummary } from "./ai-metrics";
+import { trackAIMetric, getMetricsSummary } from './ai-metrics';
 import {
   litellmClient,
   mapToLiteLLMModel,

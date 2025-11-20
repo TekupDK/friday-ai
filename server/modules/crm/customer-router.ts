@@ -29,8 +29,8 @@ import {
     updateCustomerBalance,
     updateCustomerEmailCount,
     updateCustomerNote,
-} from "./customer-db";
-import { getUserLeads } from "./lead-db";
+} from './customer-db';
+import { getUserLeads } from './lead-db';
 
 /**
  * Customer Profile Router

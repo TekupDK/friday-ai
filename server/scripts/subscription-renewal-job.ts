@@ -5,7 +5,7 @@
  */
 
 import { logger } from "../_core/logger";
-import { processMonthlyRenewals } from "../subscription-jobs";
+import { processMonthlyRenewals } from '../modules/subscription/subscription-jobs';
 
 async function runRenewalJob() {
   try {

@@ -6,11 +6,11 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createInvoice } from "../billy";
+import { createInvoice } from '../modules/billing/billy';
 import { getDb } from "../db";
 import { createCalendarEvent } from "../google-api";
-import { createSubscription, processRenewal } from "../subscription-actions";
-import { sendSubscriptionEmail } from "../subscription-email";
+import { createSubscription, processRenewal } from "../modules/subscription/subscription-actions";
+import { sendSubscriptionEmail } from "../modules/subscription/subscription-email";
 
 // Mock database
 vi.mock("../db", () => ({

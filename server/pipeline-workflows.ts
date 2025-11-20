@@ -10,16 +10,16 @@ import { and, eq } from "drizzle-orm";
 import { emails, emailThreads } from "../drizzle/schema";
 
 import { logger } from "./_core/logger";
-import { createInvoice } from "./billy";
+import { createInvoice } from './modules/billing/billy';
 import { getDb, getPipelineState } from "./db";
 import {
   detectLeadSource,
   detectLeadSourceIntelligent,
-} from "./lead-source-detector";
+} from './modules/crm/lead-source-detector';
 import {
   getSourceWorkflow,
   getWorkflowFromDetection,
-} from "./lead-source-workflows";
+} from './modules/crm/lead-source-workflows';
 import { createCalendarEvent } from "./mcp";
 
 /**
@@ -238,7 +238,7 @@ async function handleFinanceStage(
     }
 
     // Get customer from Billy API
-    const { searchCustomerByEmail } = await import("./billy");
+    const { searchCustomerByEmail } = await import("./modules/billing/billy");
 
     if (!email.fromEmail) {
       // ✅ FIXED: Use logger instead of console.warn

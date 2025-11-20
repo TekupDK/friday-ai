@@ -9,7 +9,7 @@ import {
   emailThreads,
 } from "../../../drizzle/schema";
 
-import { getDb } from "./db";
+import { getDb } from "../../db";
 
 /**
  * Customer Health Score Calculator

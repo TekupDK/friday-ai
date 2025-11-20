@@ -126,7 +126,7 @@ export async function getBillyCustomerIdByEmail(
 export async function syncAllBillyCustomers(userId: number): Promise<number> {
   try {
     const { execSync } = await import("child_process");
-    const { createOrUpdateCustomerProfile } = await import("./customer-db");
+    const { createOrUpdateCustomerProfile } = await import("../crm/customer-db");
     const { addCustomerInvoice, updateCustomerBalance } = await import(
       "./customer-db"
     );

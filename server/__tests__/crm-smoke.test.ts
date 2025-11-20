@@ -17,7 +17,7 @@ import type { TrpcContext } from "../_core/context";
 import { ENV } from "../_core/env";
 import { router } from "../_core/trpc";
 import * as db from "../db";
-import * as leadDb from "../lead-db";
+import * as leadDb from '../modules/crm/lead-db';
 import { crmBookingRouter } from "../routers/crm-booking-router";
 import { crmCustomerRouter } from "../routers/crm-customer-router";
 import { crmLeadRouter } from "../routers/crm-lead-router";

@@ -26,7 +26,7 @@ import {
 import {
   getCustomerHealthScore,
   updateCustomerHealthScore,
-} from "../customer-health-score";
+} from '../modules/crm/customer-health-score';
 
 // ES module __dirname fix
 import { dirname } from "path";

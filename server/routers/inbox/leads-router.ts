@@ -8,7 +8,7 @@ import {
   getUserLeads,
   updateLeadScore,
   updateLeadStatus,
-} from "../../lead-db";
+} from "../../modules/crm/lead-db";
 
 export const leadsRouter = router({
   list: protectedProcedure

@@ -23,7 +23,7 @@ import {
   getSubscriptionById,
   getSubscriptionByCustomerId,
   addSubscriptionHistory,
-} from "./subscription-db";
+} from './subscription-db';
 import { getPlanConfig, type SubscriptionPlanType } from "./subscription-helpers";
 
 /**
@@ -111,8 +111,8 @@ export async function createSubscription(
   let finalMonthlyPrice: number = planConfig.monthlyPrice;
 
   if (options?.referralCode) {
-    const { validateReferralCode, calculateReferralDiscount } = await import("./referral-helpers");
-    const { applyReferralCode } = await import("./referral-actions");
+    const { validateReferralCode, calculateReferralDiscount } = await import("../../referral-helpers");
+    const { applyReferralCode } = await import("../../referral-actions");
 
     // Validate referral code
     const validation = await validateReferralCode(options.referralCode);
@@ -181,7 +181,7 @@ export async function createSubscription(
 
   // Apply referral code if provided
   if (options?.referralCode && referralInfo) {
-    const { applyReferralCode } = await import("./referral-actions");
+    const { applyReferralCode } = await import("../../referral-actions");
 
     try {
       const result = await applyReferralCode({

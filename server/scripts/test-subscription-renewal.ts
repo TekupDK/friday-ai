@@ -10,8 +10,8 @@ import { eq, and } from "drizzle-orm";
 import { customerProfiles, subscriptions } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
 import { getDb } from "../db";
-import { createSubscription, processRenewal } from "../subscription-actions";
-import { processMonthlyRenewals } from "../subscription-jobs";
+import { createSubscription, processRenewal } from "../modules/subscription/subscription-actions";
+import { processMonthlyRenewals } from '../modules/subscription/subscription-jobs';
 
 async function testSubscriptionRenewal() {
   console.log("🧪 Starting Subscription Renewal Tests...\n");

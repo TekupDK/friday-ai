@@ -322,7 +322,7 @@ async function startServer() {
     // Start subscription job schedulers
     try {
       const { startSubscriptionSchedulers } = await import(
-        "../subscription-scheduler"
+        "../modules/subscription/subscription-scheduler"
       );
       startSubscriptionSchedulers();
       logger.info("[Server] Subscription schedulers started");
