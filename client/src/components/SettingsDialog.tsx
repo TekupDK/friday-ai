@@ -1,7 +1,9 @@
-import { Bell, Globe, Moon, Palette, Sun } from "lucide-react";
+import { Bell, Globe, Moon, Palette, Shield, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { TwoFactorSetupModal } from "@/components/TwoFactorSetupModal";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -36,12 +38,31 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     useState<Language>(getLanguage());
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [pushNotifications, setPushNotifications] = useState(false);
+  const [show2FASetup, setShow2FASetup] = useState(false);
 
   // Fetch preferences
   const { data: preferences, refetch } = (
     trpc as any
   ).auth.getPreferences.useQuery(undefined, {
     enabled: open,
+  });
+
+  // Fetch 2FA status
+  const { data: twoFactorStatus, refetch: refetch2FAStatus } = (
+    trpc as any
+  ).twoFactor.getStatus.useQuery(undefined, {
+    enabled: open,
+  });
+
+  // Disable 2FA mutation
+  const disable2FAMutation = (trpc as any).twoFactor.disable.useMutation({
+    onSuccess: () => {
+      toast.success("To-faktor autentificering deaktiveret");
+      refetch2FAStatus();
+    },
+    onError: (error: any) => {
+      toast.error("Fejl ved deaktivering: " + error.message);
+    },
   });
 
   // Sync preferences when data is loaded
@@ -222,6 +243,61 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 
           <Separator />
 
+          {/* Security Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Shield className="w-5 h-5 text-primary" />
+              <h2 className="text-base font-semibold">Sikkerhed</h2>
+            </div>
+            <div className="pl-8 space-y-3">
+              <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/50">
+                <div className="flex-1">
+                  <p className="text-sm font-medium flex items-center gap-2">
+                    To-Faktor Autentificering (2FA)
+                    {twoFactorStatus?.enabled && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                        Aktiveret
+                      </span>
+                    )}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {twoFactorStatus?.enabled
+                      ? `Ekstra sikkerhedslag aktiveret. ${twoFactorStatus.backupCodesRemaining} backup koder tilbage.`
+                      : "Tilføj et ekstra sikkerhedslag til din konto"}
+                  </p>
+                </div>
+                {twoFactorStatus?.enabled ? (
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => {
+                      if (
+                        confirm(
+                          "Er du sikker på at du vil deaktivere to-faktor autentificering?"
+                        )
+                      ) {
+                        disable2FAMutation.mutate({});
+                      }
+                    }}
+                    disabled={disable2FAMutation.isPending}
+                  >
+                    Deaktivér
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShow2FASetup(true)}
+                  >
+                    Aktivér
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <Separator />
+
           {/* Language Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -261,6 +337,15 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
           </div>
         </div>
       </DialogContent>
+
+      {/* 2FA Setup Modal */}
+      <TwoFactorSetupModal
+        open={show2FASetup}
+        onOpenChange={setShow2FASetup}
+        onSuccess={() => {
+          refetch2FAStatus();
+        }}
+      />
     </Dialog>
   );
 }
