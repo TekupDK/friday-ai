@@ -28,6 +28,7 @@ import { UI_CONSTANTS } from "@/constants/business";
 import { useEmailContext } from "@/contexts/EmailContext";
 import { useEmailKeyboardShortcuts } from "@/hooks/useEmailKeyboardShortcuts";
 import { useRateLimit } from "@/hooks/useRateLimit";
+import { logger } from "@/lib/logger";
 import { trpc } from "@/lib/trpc";
 import type { EnhancedEmailMessage } from "@/types/enhanced-email";
 
@@ -269,12 +270,17 @@ export default function EmailTabV2({
   // Handle email selection
   const handleEmailSelect = useCallback(
     (email: EnhancedEmailMessage) => {
-      console.log("[EmailTabV2] Email selected:", email);
+      logger.debug("Email selected", { emailId: email.id, threadId: email.threadId });
       setSelectedThreadId(email.threadId);
 
       // Add clicked email to selection for bulk actions
       setSelectedEmails(new Set([email.threadId]));
-      console.log("[EmailTabV2] Selected emails updated:", [email.threadId]);
+      logger.debug("Selected emails updated", { threadIds: [email.threadId] });
+
+      // FIXED: Issue #2 - Calculate actual thread length from emails array
+      const threadLength = emails.filter(
+        e => e.threadId === email.threadId
+      ).length;
 
       // Update EmailContext for SmartWorkspacePanel
       emailContext.setSelectedEmail({
@@ -284,10 +290,10 @@ export default function EmailTabV2({
         from: email.from,
         snippet: email.snippet,
         labels: email.labels || [],
-        threadLength: 1, // Would be updated with real thread data
+        threadLength: threadLength || 1, // Use actual thread length, fallback to 1
       });
     },
-    [emailContext]
+    [emailContext, emails]
   );
 
   // Handle Create Lead from selected email
@@ -435,7 +441,7 @@ export default function EmailTabV2({
           setSelectedEmails(allThreadIds);
           break;
         default:
-          console.log("Bulk action:", action, params);
+          logger.debug("Bulk action", { action, params });
       }
     },
     [

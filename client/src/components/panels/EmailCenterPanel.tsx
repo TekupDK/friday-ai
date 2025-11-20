@@ -1,6 +1,8 @@
 import { Mail } from "lucide-react";
 import { lazy, Suspense } from "react";
 
+import { EmailCenterSkeleton } from "@/components/skeletons/EmailCenterSkeleton";
+
 /**
  * Email Center Panel - Dedicated Email Workspace
  *
@@ -15,15 +17,6 @@ import { lazy, Suspense } from "react";
  */
 
 const EmailTabV2 = lazy(() => import("@/components/inbox/EmailTabV2"));
-
-const EmailSkeleton = () => (
-  <div className="space-y-4 p-4">
-    <div className="h-8 bg-muted rounded w-full animate-pulse"></div>
-    <div className="h-24 bg-muted rounded w-full animate-pulse"></div>
-    <div className="h-24 bg-muted rounded w-full animate-pulse"></div>
-    <div className="h-24 bg-muted rounded w-full animate-pulse"></div>
-  </div>
-);
 
 export default function EmailCenterPanel() {
   return (
@@ -41,7 +34,7 @@ export default function EmailCenterPanel() {
 
       {/* Email Content - Full focus on emails */}
       <div className="flex-1 overflow-hidden">
-        <Suspense fallback={<EmailSkeleton />}>
+        <Suspense fallback={<EmailCenterSkeleton />}>
           <EmailTabV2 />
         </Suspense>
       </div>

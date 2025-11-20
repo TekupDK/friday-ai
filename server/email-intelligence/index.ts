@@ -6,3 +6,5 @@
 export * from "./categorizer";
 export * from "./response-generator";
 export * from "./priority-scorer";
+export * from "./followup";
+export * from "./ghostwriter";
