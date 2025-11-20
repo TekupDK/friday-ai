@@ -12,7 +12,7 @@ import {
   checkHealthThresholds,
   getRolloutRecommendation,
   logMetricsSummary,
-} from "../ai-metrics";
+} from "../modules/ai/ai-metrics";
 
 export const aiMetricsRouter = router({
   /**

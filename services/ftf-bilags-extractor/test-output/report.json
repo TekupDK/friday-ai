@@ -5,36 +5,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -9986.14,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-17",
-        "messageId": "197216f7e19ef247",
-        "attachmentId": "ANGjdJ-Mk1e1xHTqaqFgp8zyDnWfYm-K9Z5OF79Ljjd5PYW7MEkG1fbMODNJeJy53goq-HTp8ErejD7xYLSnFOBZvEwDeQ7vN8stStb8uvYbF1WqzNEmXaIFv03LIhpVcyZeZRW4HfNh_EmzAA1tynM_COfVskzAohO999AxafnoLGn-dKVZAaJLmAp1TorXDgtIT1KOz0scSWiyNvhiRRly0wnyg1qa6zq2hg5Kkdxn2kjfrPNiXSl48d-wW70i7bmK2UHMDlLTNfA9N4WKRgtpZyP8oCryfOI37ptKJ4o2dYk1fTpUiTPXH31lxa6fmfrJqbaLNDkDHZOk5TzGsSN_LsLK-82-KZl58iBOWQRS0-GshbDD8FulM8ICaa6PZtC_Nnq09wzixVHN0Apt",
-        "filename": "Kontoudtog 42610226-30-05-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-197216f7_att-ANGjdJ-M.PDF",
-        "matchScore": 0.8510319113756614,
-        "hash": "e30b7af05a12e08f4c96e6b8af6527800322b2a3e47182afd2a8fe9b44ae6ccf"
-      },
-      {
-        "transactionId": "tx-17",
-        "messageId": "1975455426a894eb",
-        "attachmentId": "ANGjdJ9ngPq0hknsjrs7e-nPc6wRLOKcZDiYG0nbBiOtOqD54TXSYUrQ0IgMDXcp37TLps7j4VJYaX4SpkuBZHnFpC6VPYpNVcmJzWfsMIwGhXEAysqtCxAuRB_TbqQ5vJWnNWjaPzeTERN-YZ2MGIOD_qIHdZmM7Q8q2ggVQr8LbNAkvDpiWRWgisxPewMDNAVzMeGaSAlpo_sqcfr8pbQZOGA-iYf7tfcox83ADjBNxItcYLJCx_w92Ah9Wr9m2-8rgl52qFTZitO6ajd1VY-KEeStis6kv6dFGm-LtnEXkbCSyRc4EWjmu9hcBW_2L5JZcDPNuaZRxncOuRwjX-5Lsvv7120YudqgSlzPRYJqLsta67XWap3BWdrBb_HIX7J6Sm28XcmoV8xH9-a1",
-        "filename": "Kontoudtog 42610226-09-06-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF",
-        "matchScore": 0.8077781084656085,
-        "hash": "1e504c2fa88efb8baba9d00b591e036606128a6bde5934a55d23d78076e3db30"
-      },
-      {
-        "transactionId": "tx-17",
-        "messageId": "1975481196ba3859",
-        "attachmentId": "ANGjdJ-gnXFO7oZDs8j2xQ88L7lsa1szRH79cfcr8vMeCU410jZIfBjZDQun_BNm_lbny9pgQJAmGahoxK2phYbu2AN8L0ruw2H7dWECwUVYylcegUpPu4u_iJECL5A-bKXucq_21pFBEU3aAeGjIi1AP_Q1x6-yEWrxfnmcEziYRKDv-fxGWxQoUVcT2kH8s2m_A9OblL7a-eYBdJDqIYA9tJbtLS_jNZS0N1ECVhIGbVVhQoZG7zyV2Ed5_N-zuXbphB9ZMlgVFF-EADdkdA77A81gJAlu0PQMZ1eD1x0X40dsmFdde__2lpoCZ8vMdudNOphNCamO5D3f8rVo8yESCXwgmZkliK3lRWTV5l2aRbeLudqcRB8Tt8PbRjE7Qbsn158wOB8ASwMDbF-A",
-        "filename": "Kontoudtog 42610226-09-06-25v2.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF",
-        "matchScore": 0.8073030753968253,
-        "hash": "1bd40fcd52d9a0ee3c37ce1993a116917da26c82432366da64d1b12ce45b9e21"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-20",
@@ -42,36 +14,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -3497.84,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-20",
-        "messageId": "197216f7e19ef247",
-        "attachmentId": "ANGjdJ-GfNu2ivjcMEEiP-O19VaaFqEt0a07EDIFi3YHgdRsgQgGfrsXnajMDHKhqKY8MutGrfj5Av_L-9Ejw9X5nZlZ7STCtcGApmSyf3GPCbOdOgG_aV2YdliJgZth8Dy-XhDEdhUfMEfHKAjcwTobL-_hv8hTlRGmEdVRA7lZbW-0qNFfyaVDm66OO7m5aObOw42fP7W3E8zaPQCvPVzRluGgyBQqV7dgWcym6bqr9xGAl6KiC6IITz_X2H1xHNmMCFwniIRW8xGyVo-kOw_ziVcULAhSKQ7wN9ezHxA_P3sz5dLlg6S_Up97j--0Y416C9EC-BnQqJQ2ZWvVjHu4eLl6eb6rE1N-L9UzO4pK93v4Smerz0sk9kDTdwlvlqxwoXfVnf_P9k_6H2MC",
-        "filename": "Kontoudtog 42610226-30-05-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-197216f7_att-ANGjdJ-M.PDF",
-        "matchScore": 0.836746197089947,
-        "hash": "e30b7af05a12e08f4c96e6b8af6527800322b2a3e47182afd2a8fe9b44ae6ccf"
-      },
-      {
-        "transactionId": "tx-20",
-        "messageId": "1975455426a894eb",
-        "attachmentId": "ANGjdJ_ED87n7-V-5o3ltfIyY9HR7zzRBGAvZ2tM_s83t7_nBnq3YPoxhtdBmOnAW7VhLU-u4MbKMBfNbR0FIdTBSXLKQghUhuvO1v7DjLScQ81pH9AMzoEZN5JrmxhXGAz9sMJ46Bl5TtU4avWV5hVsPMsKC_YIhtMKvP7ccjLkD0BYLHVdNHIghlQTH-vGkjua48KuqIX0nIEnmNGetTY66ZbJvo7iIypxEKYiAwEA37ZC-I4KVxXf3cowQJJBtfMkdgjjq6CvcEn_R2KXBmaLhp6eH0UUcYcRsIavd7Mq_twHxMAxJK5TmiX0m02pEola8McXfDRVDDAh5JFVrSHVaGrkkL1ljW6B0gjDS6kCrswYs0UlaVrigzurxiNXyPOMvKl4hpRk-FFBrt4e",
-        "filename": "Kontoudtog 42610226-09-06-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF",
-        "matchScore": 0.8220638227513227,
-        "hash": "1e504c2fa88efb8baba9d00b591e036606128a6bde5934a55d23d78076e3db30"
-      },
-      {
-        "transactionId": "tx-20",
-        "messageId": "1975481196ba3859",
-        "attachmentId": "ANGjdJ_-YdY4UndWuo625xIIPfMiIJ9XhIhSz9_OJIxtyNolXQe4FuD62VHPappGfyucvZZKO6StSHwF1b0A3zTGTwRxVRmkxuJeH-MUm2aaYx9JMfMgx6-GUXon2v7EIz5C4gIdzPQXMAdlMnOXQ2Y4CPztW8OyiHeqUtV4wjNkUqv_LnqJ7aCCOXrzcl4DNdBv9m21JS8NMmOX2R9TpcqpWvAUHf1aRcV9kUVT86yqVbb3RmS7YOoF7flDeSmaznvSYouQ0wDJX0Jt9cTfmhl1ojuW6GG5mIrs4bJLy-faepVr2ch42s5em3yUSvZyB7DcOT1g5EbF9XuV1k9xQtR7AGXEjE1xFhvymUruOAxNBt_jK4D6xnKBYi86VfUULpp4txsIg4YRi_gJK_Jq",
-        "filename": "Kontoudtog 42610226-09-06-25v2.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF",
-        "matchScore": 0.8215887896825397,
-        "hash": "1bd40fcd52d9a0ee3c37ce1993a116917da26c82432366da64d1b12ce45b9e21"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-39",
@@ -79,36 +23,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -1428.55,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-39",
-        "messageId": "197549423f729027",
-        "attachmentId": "ANGjdJ8nKM23OkJdZGIc3k4scB3eoo2NjbxeSBhYTiXvCcdTH-QBqfTdqaABdLiGwvORhCh6NmPbUSTH2_gIAV98xq__gL7J9ukSKFW_613_RFLOVdYKoOyY_Cl9NeU19tBx7tdRnMRpdh74t-PwNtLQeYC1EzZjBE5mLsC-qc99PIqV9TWIWBXhSDePVWNuV4Ds3RFiuDEK3u0nScEK15u0eEZLH7VNoNXH-duHLaFRQQ4xFMSgOyCFajNjR2MbtS3SZnMRcoE1Z8TBxMcszIcCNzdt3VKUJ9mSLhgg40EZxgjk_Tg7HG7HbPAOaVK5t84XNl0LGMb6FcqLBmBwa5nzDSxKLk5t5EpU986W8w4bkBJBe2zG4dG_NzilfMAfa4u_tQ7KtlP_RE6r17nU",
-        "filename": "Kontoudtog 42610226-09-06-25v3.PDF",
-        "path": "test-output\\Danfoods\\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF",
-        "matchScore": 0.8929027777777777,
-        "hash": "54b4c960946cfc2386124edeab90c950ac455397593d9706e7e26913575e805d"
-      },
-      {
-        "transactionId": "tx-39",
-        "messageId": "1975481196ba3859",
-        "attachmentId": "ANGjdJ-tijSoQakLxfRCYT5n1JwbC18j-k_lDkpn1r2SfFNFbBMZBa-mIQVDq9RPxuUROY1VoR3QM82xCDI04A5BmjdUZu1BnFKVjLEy2ZfdNxcYlP0Bjp0W7vB9pMCvbWtKvJaITGSWxwPZ9-cbWSuP7OCf81ZdPXCTZ2b6iJD9HMUBivSt7s8r1Br9rkOd97eIeDayuZJ1nCKIqNwEtlJggneRdqaUqxVC4TDhKQ_8uA-TjB9MmXkLEOw71R-Ot60m7M9bZxGhyiO4ntacUMoZSD8VRIAgM9xtQnBu2R4gYS6CA5w4SRiUkPZxLgkG6M_1tYV8Gx01BuEL9tF6lnsDGOCVOnHWfMww16Q30cb-_rVNo9BisGZk7BK-1eczWA8j4BK3a4DJq9oqc2te",
-        "filename": "Kontoudtog 42610226-09-06-25v2.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF",
-        "matchScore": 0.8926969246031745,
-        "hash": "1bd40fcd52d9a0ee3c37ce1993a116917da26c82432366da64d1b12ce45b9e21"
-      },
-      {
-        "transactionId": "tx-39",
-        "messageId": "1975455426a894eb",
-        "attachmentId": "ANGjdJ-cTKn2V8M3VSq6UcPiB96BychTKjan9y4iI2FTm7__-Xy4oZL7-Vzyn5jG_zCNi8MVNLGWXx5dQvfTa3D-45IIasFF21PSzgRfaoOp8Lg_5zz6JUM7jco9AakNHDjrQAmD3c0WqBQDqoWst9URhJc1I-ckR30kWDgfA-EDz68Yd3BzbxMmumddgwd8bWcV4EZLWbi95YXBsZNUqSU0RQBLJKDaYecMaZpYtpeo0th40z1W7oVcJ5FaojWlmbGCWSO94QmryM-jrosMEbFeUP_E63AAQFMJAGRvwYFkSdTHlAHboSOH3wmjkwMZWPXyV87e5f28B14zQUpLHyg3gc5Qb3hHHQtKuuX5-4EDqN8VOopv99V6xQNYvBZuA7JfKWdEFWUp-TiPW-LE",
-        "filename": "Kontoudtog 42610226-09-06-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF",
-        "matchScore": 0.8922218915343915,
-        "hash": "1e504c2fa88efb8baba9d00b591e036606128a6bde5934a55d23d78076e3db30"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-42",
@@ -116,36 +32,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -7647.12,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-42",
-        "messageId": "197549423f729027",
-        "attachmentId": "ANGjdJ9EJ8f13Uu5QP03Bhew3_gBnQaBMBeTW0Pw0M5RPJhRS-5wRRY7sPl07Y_2FCEP9pxFalj70HqtpyDFFdpVZpddsdMp96D7qVpjGp6HKXpqTwT12eLPpUxLCKtJTDqDT_gxWZiooLCOHuimqD3Onxn1cXlOlwBPej0X8Q3ue2qLATjFb6G_KkMJBUI4ZG7S9hnxE_EtwDHd0bQvKtKC3mlLgwzDi3obDaMJTtcE5uoHGoP2UVVCanS-rDGzptHUHTzrpjXaVVJJUlwnuhf_SeuoGutXr67WVi6aDstx4MlFHmmn7_1rVFXzD7ld-a_nmRkJ3GvEeFFrUhZkFePhLRqatIXsZQsLhFRd2slwzujy32YESzu5fALqYQWkZ282Kve3jRVNJEnpsJBN",
-        "filename": "Kontoudtog 42610226-09-06-25v3.PDF",
-        "path": "test-output\\Danfoods\\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF",
-        "matchScore": 0.8786170634920635,
-        "hash": "54b4c960946cfc2386124edeab90c950ac455397593d9706e7e26913575e805d"
-      },
-      {
-        "transactionId": "tx-42",
-        "messageId": "1975481196ba3859",
-        "attachmentId": "ANGjdJ92dYBVD3MLc4M0dVRIoXYfKb5pglVR0mbQIoWG9XR2hTLA0Sz-9Cd9iZOMYbrnV1LoQ5MQdXhQClaU_ebQNbBnx23DWuKDQOSzsTmolM35E75HaoTaSouL5n_Ml87fE-oDU9S-vV7KUFPferqLWDO0u4O0faxn-IvJahUb268KpcJ-cwXxXI31KDH8kKa25o92_PDE_Auv-7STvqvobq3ffYf5Be-p0Sre91TjcFF-9P2sSfmcSMAW4KIYG3xtciHFM4Q44MzKkmgApiqW8nuZcPSzK-QKUTJcfACehxfINCKlEXQTbIfxRsfyNfzb3AeTnyMNOqyF3nHu_lhLOMwOIBq-a6sCYaKBRsPVDE4oAycFNoba1x9iazQJHFzdFqEwwFaZpJEPhhRa",
-        "filename": "Kontoudtog 42610226-09-06-25v2.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF",
-        "matchScore": 0.8784112103174603,
-        "hash": "1bd40fcd52d9a0ee3c37ce1993a116917da26c82432366da64d1b12ce45b9e21"
-      },
-      {
-        "transactionId": "tx-42",
-        "messageId": "1975455426a894eb",
-        "attachmentId": "ANGjdJ9_VxxQGUD92c-I4U_7f3uGxh7GmAfnKCorsaUyz1zEE9lGmKTFF7z19_T9TzcCjlpCnf6wtYz-lmozJEecAX4KwmXn60o1feOIEFKa3IdEz0ZMBdpF7RfR8K4QD_2ueH7ubD36y20RYvvatjQZV3tSlMIZ6gKMSS3m8DWKHn9tUOC4U5OfeXi5I7tyMdbY8gPsW6R-x1W6Kz4CI5F9LSL8zCk8e_4Mgo8cjqb_YxQCY2J4WaM_fWHDjPFNgXMURhJDUSZPIVKVRXG-1NMAJpS12SMyehR3QUXhJlzU05SSb5YLUIridFU7ISZnRo5X5cV9OM-rbcjEmivC_5XERS2hoQE9nZAn04u87HCIzBHcMJCaD72Ix9LDKC8r_9buyMQ40yzCIr6K4hEU",
-        "filename": "Kontoudtog 42610226-09-06-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF",
-        "matchScore": 0.8779361772486772,
-        "hash": "1e504c2fa88efb8baba9d00b591e036606128a6bde5934a55d23d78076e3db30"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-46",
@@ -153,36 +41,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -2199,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-46",
-        "messageId": "197549423f729027",
-        "attachmentId": "ANGjdJ-mDV9PphTdR3gxbinfsZ1thpij3QPEJvogxmC_QUu65hPaQKbian2HLcPYqLeXGmJN7F325gVZiucujUqinTA6IcDj3yAW4wKkwYgh1wzWe-yqreS7I34s_U1xHIStxYZKeAUpwD1bcIHuKXrP9dMvC_DdVs_2T7kslSTE7RQ6oaN0T2F80YdJ_WLtnn9unwOhSyZ6nsu2Q4l0WgfRxV7uyNehqIVpIAlDp0GJieDQEGOtnx2umJMoX2L3r-K5OommIsp0dgS1UpWkUkPR7rnHz7eOwUbf3WSZ5w4IkbdqmUZWZfCEFXcrJSzKVH-TYlgQHBv-OUwCCVboCr4m7xYaG3QDlnuV4P3sbsAArDOkP1tPIC--Rq1xciDNT8I8ZGzPQdfbkEu-7PeK",
-        "filename": "Kontoudtog 42610226-09-06-25v3.PDF",
-        "path": "test-output\\Danfoods\\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF",
-        "matchScore": 0.8643313492063492,
-        "hash": "54b4c960946cfc2386124edeab90c950ac455397593d9706e7e26913575e805d"
-      },
-      {
-        "transactionId": "tx-46",
-        "messageId": "1975481196ba3859",
-        "attachmentId": "ANGjdJ-mRPHaTdw8dgQYr0bj2IBSjOsLl9Qu7A94O_uG9mhXTm6kSTXb1OOiOXRMxtC_QOluWGbVTOiLerNXX8iAQOcvjjcCwWFND0qH-wGCr8-uek_H56pt9YBV3Sw81SfmPX8BFoS4k5bpVINdKAx7wTSQb8B-BdC0i5QzduHwB5DSzpBSB3uu6IHVTOYB48orKhRYuLHkcMVNINobIucQAWH-SKSnLOYBPNenyggDiFeh0NxHV6V-yH_lHLLNtMCPR8oXkhb9YcyRGbnlJiIM-z0zoxc2ECk__yK7u1uKZHSteN7EcV237ZTnEa2nVl7nTR5sQyBXF0NdNEkpfsQSzZbIXHRqBCQnzznKl0Kk-jbTvuOsmZXrHDoFTiip_NKGTezGjRmUq-pfhHIF",
-        "filename": "Kontoudtog 42610226-09-06-25v2.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF",
-        "matchScore": 0.864125496031746,
-        "hash": "1bd40fcd52d9a0ee3c37ce1993a116917da26c82432366da64d1b12ce45b9e21"
-      },
-      {
-        "transactionId": "tx-46",
-        "messageId": "1975455426a894eb",
-        "attachmentId": "ANGjdJ9WrM-9DtQRSncPZqkv0WhTEKpUqNcXhbwFuOOrGFQhWlYrLWWs3jcVqRQ-2aM9U1hp0MTvFhTP_jRNLhgYT8HZG-Kr0upMjwTVU4PHdoqYz9UGtlDKKx3f9JPhK2bnQXEkTAckozAcCHDJ-RbyBwDvvwV5VMDO2ZYlmVQziJZWX1lW0MhLJ_1Besx0OGUxeMi1qBVJouOnBI_n6HM8E58OoAXeXk1Oya0pqxCmmY6YQPkyEDHDVmNBS6GuRtEWM-2Xu5Hj-s9gEsIe3bF9x7PQd5JgwBgLOXX6WWbvkdnVL7c4e6nIdNnuay_Bufu3UQe2YrE2AgBZaN9faMRJiQAUfFkyOe-1Pnv4BDDsv8SqRwCpBDdL-rLmQvOQO4Oa6bPo9AQpa4RiQ1Td",
-        "filename": "Kontoudtog 42610226-09-06-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF",
-        "matchScore": 0.863650462962963,
-        "hash": "1e504c2fa88efb8baba9d00b591e036606128a6bde5934a55d23d78076e3db30"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-50",
@@ -190,36 +50,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -8874.07,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-50",
-        "messageId": "197549423f729027",
-        "attachmentId": "ANGjdJ_vzQbq44xjQOSWzw_r_Tbh8QYsZfvJFfQI8iJz8DdrEJCRKccFATHcF8LTYoW-EDzrQGX8uucUEG_LftOWbk1wyblolpZPOEpMAbNaCg4opEa2LKrrSy0gcFq4g98yL7LES9VVmbhWGeOU1cf89MWTWRe3i6Dw_JzpY9ABGuhyzv1o7zRV48p4f8vmo27_s_eflvNKrhC8aNMovpvKiJnpNYMduxMq_cRQ1RP_yICAkJljtTP7l0yROcgaVp4Bvm7wUu3LvtxFP5lYMhicCotCf2B-hYC-vE1BU437bZ7OrGHFAwd4hH72RGVtitlHaqkTkDYxTD_mQ4hIBoC52gJzqTMACjDPjs_DwWJbZ1ZIDVuvqgI62M5XQpdfzwSJfE14WAweKvZmMeDz",
-        "filename": "Kontoudtog 42610226-09-06-25v3.PDF",
-        "path": "test-output\\Danfoods\\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF",
-        "matchScore": 0.8500456349206349,
-        "hash": "54b4c960946cfc2386124edeab90c950ac455397593d9706e7e26913575e805d"
-      },
-      {
-        "transactionId": "tx-50",
-        "messageId": "1975481196ba3859",
-        "attachmentId": "ANGjdJ-643sFKkqWCpwb6CEuMtzyPZRzb-SP6ACS2FDP1L3tpIIDRmcP0uxqIDftL4cEFsG_5zz08XEZHaE7RREC52Wo_kle8SomHs3gtksqrawzboVACqfEKOcaRIl7admJNdukomRt7ncajffOVAHmuOgOCne_3tEwWajpYcsnTLhHwRlBVuYTI-DWAq_vjVNj6GMg1HQlBMHbZnRoQCbf6pEHeYAUUwx9HTWshogT0f-kh4EGi92MoiMjqLm9WKs1PW9mvYkp1ayOK5F1N_TsRHhx4qGiXL87U9OP-l9LoNi-dAKGyw_MUnLooMT1HdGCZV_-tGLYFB7112gGfLs9-5LV0X_VkwS43CzkIzmlHJcg5ydmVfEN71m1gvD25eLuL3-w2sHNkLTB9ivg",
-        "filename": "Kontoudtog 42610226-09-06-25v2.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754811_att-ANGjdJ-g.PDF",
-        "matchScore": 0.8498397817460317,
-        "hash": "1bd40fcd52d9a0ee3c37ce1993a116917da26c82432366da64d1b12ce45b9e21"
-      },
-      {
-        "transactionId": "tx-50",
-        "messageId": "1975455426a894eb",
-        "attachmentId": "ANGjdJ_Gwwd9qvmS7H5cIO6s0CIGrGT4nwWwaGelf8ngCej-UVDVsR0crPzCdzA5Pg9hO2JLeiBEiiR_LEBKeK13qynwxuZPunZAK6BPYBRV8_A1JHzfzc_7jD1EgGSiulbutRU8I0QvH9iATq0ZWiqNB3pKai5VPTqhr6zZ7XLvQ6SQuNbl99u47JbhS0Pl_jaYSn_VSGQqWP7zJa5F6B5NEYC9pxv0n1e7VqvIqgbjlGCCJBwFPCU28wHr-GjvZbAsz9VR6bdG79KLST0h3SZTaP4uH_y2-01uQJk3-U78BGPOqiVgGkYq5UxonpAYvMxTuFrx1girUQl5-ov2Zg--NVt3ZTGKy_bNEEF9oUB9khWK5hZqQFu4TjmvhI5OLz1oBHuv23iNUz7zxl3M",
-        "filename": "Kontoudtog 42610226-09-06-25.PDF",
-        "path": "test-output\\Danfoods\\20250603_danfoods_9986.14_msg-19754554_att-ANGjdJ9n.PDF",
-        "matchScore": 0.8493647486772486,
-        "hash": "1e504c2fa88efb8baba9d00b591e036606128a6bde5934a55d23d78076e3db30"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-64",
@@ -227,18 +59,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -3396,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-64",
-        "messageId": "197549423f729027",
-        "attachmentId": "ANGjdJ-1mya0_tbn-OIjfXVUyzjAICHjZLd3qWj9lNh0J599j013dXvX9X102bAypveudK7qL6XYjj5E21q5zC6eJ5I_u_jE9F0WYx_1ioo8HtjbtsMs0apiQbnQS4ghJrRL2bmI_PWTLAOe8IML97hICBgu3Ro6Xrh8kSiPTrnjoq1SXtsRc3WU0IRD8xUnJZ7EAH7b9yqM7xEjlhez7nWRuLtPdLUuFNQhJkXOyLPHTzoJX1kawuTU-IjPmRZEHkk2z9CM_QD6GvXgCzwJzbEPh4mo3nnY8nyFTe0CzLPefwGRPD8h_g0cSAkDV7WgrjkGn5uCU4d18aSeLpl-xmDhfiKbgwg_PKLNaFx0D6d7oaRJkKCHaJlkkJzs5zmV8iOJ4UWJAZp-1WbHRBDE",
-        "filename": "Kontoudtog 42610226-09-06-25v3.PDF",
-        "path": "test-output\\Danfoods\\20250610_danfoods_1428.55_msg-19754942_att-ANGjdJ8n.PDF",
-        "matchScore": 0.8071884920634921,
-        "hash": "54b4c960946cfc2386124edeab90c950ac455397593d9706e7e26913575e805d"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-71",
@@ -300,18 +122,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -3690.95,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-97",
-        "messageId": "197cd057a33f1e1d",
-        "attachmentId": "ANGjdJ_U6oGQGd2v9TydEsqL-hU03frv859t84yy1ieLoD8yafuFKMdvLHR_vIJEilii37cHNZ3o0YfCsijZBDLS39t4Lb7RnSJIbhgGGWTLJEEyac-G9qEe4JQ9EOHIJ84W1IMeGrmAn1_MUMPEsT6qbDuglztalsevT0MmbmGJZGIFCNUzO3FzjN9g6d3MlUSYVESOGdoRhIdhWl7qGelcwsn3JbXI8IkLggo7QmwCfQhu-LmhlU5ulKWcOjyLs_dQRVDiVC_WX99SyD6Qmw1unJJqhcd2i04Wl8JHamn0zsU8n2tuIibrk7rG3Dy4GUEZXfyFfRZWgH-3MUH2cfVFkNw6wwyfekqzQ8ngDN4-PqDroITCpbmaEpD6Fwq4BynUn5a3xbrwmK5jPrgv",
-        "filename": "Kontoudtog 42610226-02-07-25.PDF",
-        "path": "test-output\\Danfoods\\20250626_danfoods_3690.95_msg-197cd057_att-ANGjdJ_U.PDF",
-        "matchScore": 0.8015583664021163,
-        "hash": "287fc660e3af07303c2f1e822f9030965078ff595b6d25b07d5c65c367b7a1c0"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-101",
@@ -319,18 +131,8 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -2141.16,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-101",
-        "messageId": "197cd057a33f1e1d",
-        "attachmentId": "ANGjdJ_Nz3vLO_A_7R6tzVPy8CkKymN2oCuqoj-Rfl271nhkPelwDiPpRtYNCUhFKRRKp-FPMnIDTA0vOZ4rRTh8FLRzxdzXeoPyROj5jA9D5tQIhSnBH6N0-Cxv8XclHKE2Gd9n4aJne1serzUJZam_Dsu6gJnjHLqN2_qFCa5mhzVzbEdanBCJk40hVP-hzB7oX610aQyKQ_s-Sp8WEKND9pMwCnuML58oc0kQc-U9BZsVZP5QG9ZEDsJckqa4cXo8HSp_G6i2X-iKCBDQl4UEpVh0UsZ_bnoRrD9C6hoOegZj6WB1NtuuqF48dET7xuqeAl_G34aIhFStNrW_Uob8DVuLPgZ3yfOT3uFnP21OFA3sZmAKmkP5ElQ-7RXroze8f5EVPG2ZcG-qg3vX",
-        "filename": "Kontoudtog 42610226-02-07-25.PDF",
-        "path": "test-output\\Danfoods\\20250626_danfoods_3690.95_msg-197cd057_att-ANGjdJ_U.PDF",
-        "matchScore": 0.8158440806878307,
-        "hash": "287fc660e3af07303c2f1e822f9030965078ff595b6d25b07d5c65c367b7a1c0"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   },
   {
     "transactionId": "tx-110",
@@ -338,17 +140,7 @@
     "text": "LS 38393 DANFOODS APS",
     "amount": -1855.69,
     "supplier": "Danfoods",
-    "status": "FOUND",
-    "matchedAttachments": [
-      {
-        "transactionId": "tx-110",
-        "messageId": "197cd057a33f1e1d",
-        "attachmentId": "ANGjdJ-pATTcbXYZg7f_0AdYyTcd8sJWxtGuvK0SmwfhF0omjqSDsvEBquq8LU5_NxtNpKVJ3r_gb3E-CSx1IbnGQqku-4dURtPcbqz91r67HJ3ZKxb-p8UpksGbw9CgKDw16ULMF2kXd2kLnBaCbQxIOs7Cq0KXPmpyo1mKSHsrcXe80sh7iSiMjffEDtuUFISFsL-BCVzSZW1rmIrvwAEEBYACIRwTGucniJwbrxVJTQ2uidku_maJQgynTEmU6WfqlDROXk7_H1XJfdeXh5bE_2y6bTuXWcPmbMp6ErHMVdXfBARe77rb5g2FIhvb1_WRuIfaJcJKIv90dQNnWdq5ZL_Z1DSu0aPIJSZjH4pv_f1gebrlZ_jzpvJ7hN7hjiM0LsSGgZR9Iz28fdct",
-        "filename": "Kontoudtog 42610226-02-07-25.PDF",
-        "path": "test-output\\Danfoods\\20250626_danfoods_3690.95_msg-197cd057_att-ANGjdJ_U.PDF",
-        "matchScore": 0.8587012235449735,
-        "hash": "287fc660e3af07303c2f1e822f9030965078ff595b6d25b07d5c65c367b7a1c0"
-      }
-    ]
+    "status": "MISSING",
+    "matchedAttachments": []
   }
 ]

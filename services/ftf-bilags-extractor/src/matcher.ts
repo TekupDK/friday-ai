@@ -2,6 +2,8 @@
  * Transaction-to-email matching logic
  */
 
+import { GmailClient as GmailClientImpl } from "./gmailClient.js";
+import { buildSupplierGmailQuery } from "./supplierMapping.js";
 import type {
   Transaction,
   SupplierKey,
@@ -9,8 +11,6 @@ import type {
   GmailMessageAttachment,
   AttachmentMatch,
 } from "./types.js";
-import { buildSupplierGmailQuery } from "./supplierMapping.js";
-import { GmailClient as GmailClientImpl } from "./gmailClient.js";
 
 /**
  * Calculate match score for an attachment

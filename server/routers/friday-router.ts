@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { protectedProcedure, router } from "../_core/trpc";
-import { getCustomers, searchCustomerByEmail } from "../billy";
+import { getCustomers, searchCustomerByEmail } from "../modules/billing/billy";
 import { searchGmailThreads } from "../google-api";
 
 /**

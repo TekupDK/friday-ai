@@ -7,10 +7,11 @@
  * - Configure AI test environment
  */
 
-import { chromium, FullConfig } from "@playwright/test";
 import { execSync } from "child_process";
 import { existsSync, mkdirSync } from "fs";
 import { join } from "path";
+
+import { chromium, FullConfig } from "@playwright/test";
 
 async function globalSetup(config: FullConfig) {
   console.log("🚀 Setting up Friday AI Test Environment...");

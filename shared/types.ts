@@ -7,6 +7,17 @@ export type * from "../drizzle/schema";
 export * from "./_core/errors";
 
 /**
+ * Login Method Type
+ * 
+ * Defines the authentication methods supported by the system.
+ * - "google": Google OAuth authentication
+ * - "oauth": Alias for Google OAuth (legacy)
+ * - "email": Email/password authentication (development only)
+ * - "dev": Development auto-login (development only)
+ */
+export type LoginMethod = "google" | "oauth" | "email" | "dev" | null;
+
+/**
  * Billy.dk Invoice Types (matches Billy API v2 response exactly)
  * Used by InvoicesTab component
  * Based on actual API response - see test-billy-invoice-response.mjs

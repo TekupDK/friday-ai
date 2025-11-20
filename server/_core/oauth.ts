@@ -22,7 +22,15 @@ export function registerOAuthRoutes(app: Express) {
   // Supports both browser redirect and test mode (JSON response)
   app.get("/api/auth/login", async (req: Request, res: Response) => {
     // ✅ SECURITY FIX: Use logger instead of console.log
-    logger.debug({ nodeEnv: process.env.NODE_ENV }, "[AUTH] Dev-login endpoint called");
+    logger.debug({ isProduction: ENV.isProduction }, "[AUTH] Dev-login endpoint called");
+
+    // ✅ SECURITY FIX: Disable dev login endpoint in production
+    // This endpoint allows unauthenticated access and should only be used in development
+    if (ENV.isProduction) {
+      logger.warn("[AUTH] Dev login endpoint blocked in production");
+      res.status(404).json({ error: "Not found" });
+      return;
+    }
 
     // Check if test mode (return JSON instead of redirect)
     const isTestMode = req.query.mode === "test" || req.query.test === "true";
@@ -31,12 +39,6 @@ export function registerOAuthRoutes(app: Express) {
       userAgent.includes("vitest") ||
       userAgent.includes("jsdom") ||
       req.headers["x-test-mode"] === "true";
-
-    // Allow in development AND production for now (we can disable later)
-    // if (ENV.isProduction) {
-    //   res.status(404).json({ error: "Not found" });
-    //   return;
-    // }
 
     const ownerOpenId = ENV.ownerOpenId || "owner-friday-ai-dev";
 
@@ -80,7 +82,7 @@ export function registerOAuthRoutes(app: Express) {
       // Create session token
       const sessionToken = await sdk.createSessionToken(ownerOpenId, {
         name: user.name || "Jonas",
-        expiresInMs: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        expiresInMs: ENV.isProduction ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       });
 
       // Set cookie with proper options
@@ -88,7 +90,7 @@ export function registerOAuthRoutes(app: Express) {
       const cookieOptions = getSessionCookieOptions(req);
       const finalCookieOptions = {
         ...cookieOptions,
-        maxAge: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        maxAge: ENV.isProduction ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       };
       res.cookie(COOKIE_NAME, sessionToken, finalCookieOptions);
 
@@ -144,7 +146,7 @@ export function registerOAuthRoutes(app: Express) {
       res.status(statusCode).json({
         error: "Login failed",
         details:
-          process.env.NODE_ENV === "development" ? errorMessage : undefined,
+          !ENV.isProduction ? errorMessage : undefined,
       });
     }
   });
@@ -208,14 +210,14 @@ export function registerOAuthRoutes(app: Express) {
       // Create new session token
       const newSessionToken = await sdk.createSessionToken(sessionData.openId, {
         name: user.name || sessionData.name,
-        expiresInMs: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        expiresInMs: ENV.isProduction ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       });
 
       // ✅ SECURITY FIX: Use getSessionCookieOptions for consistent security settings
       const cookieOptions = getSessionCookieOptions(req);
       const finalCookieOptions = {
         ...cookieOptions,
-        maxAge: process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS,
+        maxAge: ENV.isProduction ? SEVEN_DAYS_MS : ONE_YEAR_MS,
       };
 
       res.cookie(COOKIE_NAME, newSessionToken, finalCookieOptions);

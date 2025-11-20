@@ -3,6 +3,8 @@
  * Provides real-time streaming to frontend with proper error handling
  */
 
+import type { Response } from "express";
+
 import { getFeatureFlags } from "./feature-flags";
 
 export interface StreamEvent {
@@ -164,8 +166,6 @@ export function createSSEHandler(req: any, res: any) {
 /**
  * Send event through SSE
  */
-import type { Response } from "express";
-
 export function sendSSEEvent(res: Response, event: StreamEvent) {
   const eventData = JSON.stringify(event);
   res.write(`event: ${event.type}\n`);

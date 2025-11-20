@@ -19,10 +19,52 @@ import {
 } from "@/components/chat/AIMemoryPanel";
 import { AIThinking } from "@/components/chat/AIThinking";
 import {
+  CalendarEventCard,
+  type CalendarEventData,
+} from "@/components/chat/CalendarEventCard";
+import { ChatFlowDemo } from "@/components/chat/ChatFlowDemo";
+import {
+  EmailThreadCard,
+  type EmailThreadData,
+} from "@/components/chat/EmailThreadCard";
+import {
   InvoiceCards,
   type InvoiceCardData,
 } from "@/components/chat/InvoiceCards";
+import {
+  ResponseCard,
+  type ResponseCardData,
+} from "@/components/chat/ResponseCards";
+import {
+  SearchResultsCard,
+  type SearchResult,
+} from "@/components/chat/SearchResultsCard";
 import { ToolExecutionBox } from "@/components/chat/ToolExecutionBox";
+import { WeatherCard } from "@/components/chat/WeatherCard";
+import { CustomerCard } from "@/components/leads/CustomerCardClean";
+import { AIEmailAssistantDemo } from "@/components/showcase/AIEmailAssistantDemo";
+import { AnimatedStatsCard } from "@/components/showcase/AnimatedStatsCard";
+import { AnimatedTimeline } from "@/components/showcase/AnimatedTimeline";
+import { BusinessMetricsCard } from "@/components/showcase/BusinessMetricsCard";
+import { CalendarEventCardDemo } from "@/components/showcase/CalendarEventCardDemo";
+import { CalendarFullDemo } from "@/components/showcase/CalendarFullDemo";
+import { CategorySidebar } from "@/components/showcase/CategorySidebar";
+import { ChatDemoComplete } from "@/components/showcase/ChatDemoComplete";
+import { ChatPanelUIShowcase } from "@/components/showcase/ChatPanelUIShowcase";
+import { ChatPanelUIUpgradedShowcase } from "@/components/showcase/ChatPanelUIUpgradedShowcase";
+import { ChatSuggestionsPanel } from "@/components/showcase/ChatSuggestionsPanel";
+import { CodeBlock } from "@/components/showcase/CodeBlock";
+import { ComponentSearch } from "@/components/showcase/ComponentSearch";
+import { CustomerCardV5 } from "@/components/showcase/CustomerCardV5";
+import { EmailCenterAIFirst } from "@/components/showcase/EmailCenterAIFirst";
+import { EmailCenterAppleStyle } from "@/components/showcase/EmailCenterAppleStyle";
+import { EmailCenterArcStyle } from "@/components/showcase/EmailCenterArcStyle";
+import { EmailCenterFridayPro } from "@/components/showcase/EmailCenterFridayPro";
+import { EmailCenterGmailStyle } from "@/components/showcase/EmailCenterGmailStyle";
+import { EmailCenterShowcaseV2 } from "@/components/showcase/EmailCenterShowcaseV2";
+import { EmailListDemo } from "@/components/showcase/EmailListItem";
+import { HeaderDemo } from "@/components/showcase/HeaderDemo";
+import { ThreePanelDemo } from "@/components/showcase/ThreePanelDemo";
 import {
   Accordion,
   AccordionContent,
@@ -184,71 +226,29 @@ import {
 } from "@/components/ui/tooltip";
 import { useTheme } from "@/contexts/ThemeContext";
 
-import { WeatherCard } from "@/components/chat/WeatherCard";
-import {
-  ResponseCard,
-  type ResponseCardData,
-} from "@/components/chat/ResponseCards";
-import {
-  EmailThreadCard,
-  type EmailThreadData,
-} from "@/components/chat/EmailThreadCard";
-import {
-  CalendarEventCard,
-  type CalendarEventData,
-} from "@/components/chat/CalendarEventCard";
-import {
-  SearchResultsCard,
-  type SearchResult,
-} from "@/components/chat/SearchResultsCard";
-import { ChatFlowDemo } from "@/components/chat/ChatFlowDemo";
-import { ThreePanelDemo } from "@/components/showcase/ThreePanelDemo";
-import { HeaderDemo } from "@/components/showcase/HeaderDemo";
-import { AIEmailAssistantDemo } from "@/components/showcase/AIEmailAssistantDemo";
-import { CodeBlock } from "@/components/showcase/CodeBlock";
-import { ComponentSearch } from "@/components/showcase/ComponentSearch";
-import { CategorySidebar } from "@/components/showcase/CategorySidebar";
 import { SettingsPanelDemo } from "@/components/showcase/SettingsPanelDemo";
 import { NotificationsDemo } from "@/components/showcase/NotificationsDemo";
 import { LeadCardDemo } from "@/components/showcase/LeadCardDemo";
 import { SmartSplitsDemo } from "@/components/showcase/SmartSplitsDemo";
-import { BusinessMetricsCard } from "@/components/showcase/BusinessMetricsCard";
-import { EmailListDemo } from "@/components/showcase/EmailListItem";
 import { TaskListCompact } from "@/components/showcase/TaskListCompact";
-import { ChatSuggestionsPanel } from "@/components/showcase/ChatSuggestionsPanel";
-import { AnimatedStatsCard } from "@/components/showcase/AnimatedStatsCard";
 import { SkeletonDemo } from "@/components/showcase/SkeletonDemo";
 import { InteractiveHoverCard } from "@/components/showcase/InteractiveHoverCard";
-import { AnimatedTimeline } from "@/components/showcase/AnimatedTimeline";
 import { ProgressRingDemo } from "@/components/showcase/ProgressRingDemo";
 import { ToastNotificationDemo } from "@/components/showcase/ToastNotificationDemo";
 import { KanbanBoardDemo } from "@/components/showcase/KanbanBoardDemo";
-import { CalendarFullDemo } from "@/components/showcase/CalendarFullDemo";
 import { LeadProfileCard } from "@/components/showcase/LeadProfileCard";
-import { CustomerCardV5 } from "@/components/showcase/CustomerCardV5";
-import { ChatPanelUIShowcase } from "@/components/showcase/ChatPanelUIShowcase";
 import { PropsTable } from "@/components/showcase/PropsTable";
 import { ToolExecutionPlayground } from "@/components/showcase/ToolExecutionPlayground";
-import { EmailCenterShowcaseV2 } from "@/components/showcase/EmailCenterShowcaseV2";
-import { EmailCenterGmailStyle } from "@/components/showcase/EmailCenterGmailStyle";
 import { EmailCenterLinearStyle } from "@/components/showcase/EmailCenterLinearStyle";
 import { EmailCenterKanbanStyle } from "@/components/showcase/EmailCenterKanbanStyle";
-import { EmailCenterArcStyle } from "@/components/showcase/EmailCenterArcStyle";
-import { EmailCenterAppleStyle } from "@/components/showcase/EmailCenterAppleStyle";
 import { EmailCenterSlackStyle } from "@/components/showcase/EmailCenterSlackStyle";
-import { EmailCenterAIFirst } from "@/components/showcase/EmailCenterAIFirst";
 import { EmailCenterPipelineOptimized } from "@/components/showcase/EmailCenterPipelineOptimized";
 import { EmailCenterLeadCRM } from "@/components/showcase/EmailCenterLeadCRM";
 import { EmailCenterUnified } from "@/components/showcase/EmailCenterUnified";
 import { EmailCenterShortwavePremium } from "@/components/showcase/EmailCenterShortwavePremium";
 import { EmailCenterJaceModern } from "@/components/showcase/EmailCenterJaceModern";
-import { EmailCenterFridayPro } from "@/components/showcase/EmailCenterFridayPro";
 import { EmailCenterProV2 } from "@/components/showcase/EmailCenterProV2";
 import { EmailCenterShowcase } from "@/components/showcase/EmailCenterShowcase";
-import { CalendarEventCardDemo } from "@/components/showcase/CalendarEventCardDemo";
-import { ChatDemoComplete } from "@/components/showcase/ChatDemoComplete";
-import { ChatPanelUIUpgradedShowcase } from "@/components/showcase/ChatPanelUIUpgradedShowcase";
-import { CustomerCard } from "@/components/leads/CustomerCardClean";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
 export default function ComponentsShowcase() {

@@ -1,6 +1,9 @@
 import { systemRouter } from "./_core/systemRouter";
 import { router } from "./_core/trpc";
-import { customerRouter } from "./customer-router";
+import { fridayRouter } from "./routers/friday-router";
+import { customerRouter } from "./modules/crm/customer-router";
+import { referralRouter } from "./routers/referral-router";
+import { subscriptionRouter } from "./routers/subscription-router";
 import { adminUserRouter } from "./routers/admin-user-router";
 import { aiMetricsRouter } from "./routers/ai-metrics-router";
 import { authRouter } from "./routers/auth-router";
@@ -17,11 +20,8 @@ import { crmStatsRouter } from "./routers/crm-stats-router";
 import { docsRouter } from "./routers/docs-router";
 import { emailIntelligenceRouter } from "./routers/email-intelligence-router";
 import { fridayLeadsRouter } from "./routers/friday-leads-router";
-import { fridayRouter } from "./routers/friday-router";
 import { inboxRouter } from "./routers/inbox-router";
-import { referralRouter } from "./routers/referral-router";
 import { reportsRouter } from "./routers/reports-router";
-import { subscriptionRouter } from "./routers/subscription-router";
 import { uiAnalysisRouter } from "./routers/ui-analysis-router";
 import { workspaceRouter } from "./routers/workspace-router";
 

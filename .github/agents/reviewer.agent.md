@@ -15,8 +15,11 @@ handoffs:
     prompt: Apply the requested fixes and improvements.
     send: false
 ---
+
 # Review instructions
+
 Perform a pragmatic review:
+
 - Correctness, readability, maintainability
 - Security (XSS, injection), error handling, logging
 - Performance hotspots
@@ -24,6 +27,7 @@ Perform a pragmatic review:
 - API contracts (tRPC + Zod)
 
 Output:
+
 - Summary
 - Blockers (with file paths and suggested diffs)
 - Nice-to-haves

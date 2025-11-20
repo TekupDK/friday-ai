@@ -1,0 +1,28 @@
+# Friday AI
+
+> Intelligent Email Management & Automation System - A production-ready AI assistant with unified inbox, automated email handling, and business process automation.
+
+## Documentation
+
+- [Main README](README.md): Primary project documentation, setup, and stack overview.
+- [Copilot Guide](docs/COPILOT_GUIDE.md): Guide for using custom agents (@) and prompts (/).
+- [Development Guide](docs/DEVELOPMENT_GUIDE.md): Detailed setup, workflow, and contribution guide.
+- [Environment Setup](docs/ENV_SETUP_GUIDE.md): Full guide for configuring the development environment.
+
+## Architecture & Specs
+
+- [Architecture](docs/ARCHITECTURE.md): System architecture and design decisions.
+- [API Reference](docs/API_REFERENCE.md): API documentation and endpoints.
+- [CRM System](docs/CRM_SYSTEM_DIAGRAMS.md): Diagrams and flows for the CRM module.
+- [AI System](docs/AREA_2_AI_SYSTEM.md): Documentation for the AI assistant and automation features.
+
+## Examples & Guides
+
+- [Quick Start](docs/QUICK_START_CRM.md): Quick start guide for the CRM features.
+- [Testing Guide](docs/CRM_WORKFLOW_TEST_REPORT.md): Information on testing workflows.
+
+## Configuration
+
+- [Package Config](package.json): Dependencies and scripts.
+- [Copilot Instructions](.github/copilot-instructions.md): Custom instructions for AI behavior.
+- [Agents](.github/agents/): Custom agent definitions (@Planner, @Implementer, etc.).

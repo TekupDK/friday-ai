@@ -11,9 +11,10 @@ import {
 } from "../email-intelligence";
 import EmailIframeView from "../EmailIframeView";
 import { SafeStreamdown } from "../SafeStreamdown";
-
 import { EmailAssistant3Panel } from "../workspace/EmailAssistant3Panel";
+
 import EmailActions from "./EmailActions";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

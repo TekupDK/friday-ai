@@ -3,8 +3,10 @@
  * TRPC routes for A/B test metrics and analysis
  */
 
-import { z } from "zod";
 import { and, eq, gte, sql } from "drizzle-orm";
+import { z } from "zod";
+
+import { abTestMetricsInFridayAi } from "../drizzle/schema";
 
 import {
   recordTestMetrics,
@@ -14,7 +16,6 @@ import {
   type TestMetrics,
 } from "./_core/ab-testing";
 import { publicProcedure, router } from "./_core/trpc";
-import { abTestMetricsInFridayAi } from "../drizzle/schema";
 import { getDb } from "./db";
 
 export const abTestAnalyticsRouter = router({

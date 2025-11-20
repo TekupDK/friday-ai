@@ -3,10 +3,12 @@
  * Handles OAuth flow and token storage for ftfiestaa@gmail.com
  */
 
-import { google } from "googleapis";
-import { OAuth2Client } from "google-auth-library";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
+
+import { OAuth2Client } from "google-auth-library";
+import { google } from "googleapis";
+
 import { Config } from "./config.js";
 
 const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];

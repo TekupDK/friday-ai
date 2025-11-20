@@ -3,6 +3,7 @@ updates:
   # Enable version updates for npm (pnpm)
   - package-ecosystem: "npm"
     directory: "/"
+    target-branch: "main"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -34,3 +35,16 @@ updates:
       prefix: "chore"
       include: "scope"
 
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "chore"
+      include: "scope"

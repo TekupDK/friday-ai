@@ -3,8 +3,9 @@
  * Tests for error reporting to Sentry in error boundary
  */
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render } from "@testing-library/react";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+
 import { PanelErrorBoundary } from "../PanelErrorBoundary";
 
 // Mock Sentry

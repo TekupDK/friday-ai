@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { APP_LOGO, APP_LOGO_FULL, APP_TITLE } from "@/const";
+import { LOGIN_REDIRECT_DELAY_MS } from "@shared/const";
 import { useTheme } from "@/contexts/ThemeContext";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { supabase } from "@/lib/supabaseClient";
@@ -34,6 +35,24 @@ export default function LoginPage({ preview = false }: LoginPageProps) {
     "idle"
   );
   const { theme } = useTheme();
+
+  // Clear corrupted localStorage on mount to prevent JSON parsing errors
+  useEffect(() => {
+    try {
+      const persisted = localStorage.getItem("rq:dehydrated:v1");
+      if (persisted) {
+        // Try to parse to validate it's not corrupted
+        JSON.parse(persisted);
+      }
+    } catch {
+      // Corrupted - clear it
+      localStorage.removeItem("rq:dehydrated:v1");
+      // Note: Using console.log here as this is client-side cleanup
+      if (process.env.NODE_ENV === "development") {
+        console.log("[Login] Cleared corrupted localStorage cache");
+      }
+    }
+  }, []);
 
   // Simple Browser/Preview friendly mode: disable heavy canvases and auth side-effects
   const isSimpleEnv = (() => {
@@ -53,11 +72,51 @@ export default function LoginPage({ preview = false }: LoginPageProps) {
   })();
 
   const [, navigate] = useLocation();
+  
+  // Get redirect destination from URL params, sessionStorage, or default to original path
+  const getRedirectPath = () => {
+    // First check URL params
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get("redirect");
+    if (redirect && redirect.startsWith("/")) {
+      sessionStorage.removeItem("loginRedirect"); // Clean up
+      return redirect;
+    }
+    
+    // Then check sessionStorage (backup)
+    const storedRedirect = sessionStorage.getItem("loginRedirect");
+    if (storedRedirect && storedRedirect.startsWith("/")) {
+      sessionStorage.removeItem("loginRedirect"); // Clean up
+      return storedRedirect;
+    }
+    
+    // If we're on a specific path (not just /login), go back there
+    const currentPath = window.location.pathname;
+    if (currentPath && currentPath !== "/login" && currentPath !== "/" && currentPath !== "/preview/login") {
+      // Make sure path is valid (doesn't contain "Page Not Found" or other invalid strings)
+      if (!currentPath.toLowerCase().includes("not found") && !currentPath.toLowerCase().includes("404")) {
+        return currentPath;
+      }
+    }
+    
+    return "/";
+  };
+  
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: () => {
       setAuthStage("success");
       toast.success("Velkommen tilbage! Forbereder din workspace...");
-      setTimeout(() => navigate("/"), 650);
+      const redirectPath = getRedirectPath();
+      // Note: Using console.log here for debugging redirect path
+      if (process.env.NODE_ENV === "development") {
+        console.log("[Login] Redirecting to:", redirectPath);
+      }
+      setTimeout(() => {
+        // Use window.location for full page reload to ensure auth state is fresh
+        // Ensure path starts with / and is valid
+        const cleanPath = redirectPath.startsWith("/") ? redirectPath : `/${redirectPath}`;
+        window.location.href = cleanPath;
+      }, LOGIN_REDIRECT_DELAY_MS);
     },
     onError: error => {
       setError(error.message || "Login failed");
@@ -96,6 +155,17 @@ export default function LoginPage({ preview = false }: LoginPageProps) {
       toast.success("Login gennemført");
     } catch (err) {
       setAuthStage("idle");
+      // Log error for debugging
+      if (err instanceof Error) {
+        // Note: Using console.error here for client-side error logging
+        if (process.env.NODE_ENV === "development") {
+          console.error("[Login] Error:", err.message, err);
+        }
+        // Check if it's a JSON parsing error
+        if (err.message.includes("JSON") || err.message.includes("Unexpected")) {
+          setError("Server response error. Please try again or refresh the page.");
+        }
+      }
     } finally {
       setIsLoading(false);
     }

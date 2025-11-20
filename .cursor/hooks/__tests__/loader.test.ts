@@ -13,6 +13,8 @@ import {
   getHooksForCategory,
   getAllEnabledHooks,
   hookExists,
+  __setTestConfig,
+  __clearHookConfigCache,
 } from "../loader";
 import { ConfigBuilder } from "../test-utils/config-builder";
 import type { HookCategory } from "../types";
@@ -23,12 +25,14 @@ vi.mock("fs", async () => {
   return {
     ...actual,
     readFileSync: vi.fn(),
+    default: actual,
   };
 });
 
 describe("Configuration Loader", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    __clearHookConfigCache();
   });
 
   describe("Load Configuration", () => {
@@ -91,7 +95,7 @@ describe("Configuration Loader", () => {
         })
         .build();
 
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(config));
+      __setTestConfig(config as any);
 
       const hooks = getHooksForCategory("pre-execution");
       expect(hooks.length).toBeGreaterThan(0);
@@ -118,7 +122,7 @@ describe("Configuration Loader", () => {
       config.hooks["pre-execution"][0].priority = 2;
       config.hooks["pre-execution"][1].priority = 1;
 
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(config));
+      __setTestConfig(config as any);
 
       const hooks = getHooksForCategory("pre-execution");
       expect(hooks[0].priority).toBeLessThanOrEqual(hooks[1]?.priority || Infinity);
@@ -128,7 +132,7 @@ describe("Configuration Loader", () => {
   describe("Get All Enabled Hooks", () => {
     it("should return all enabled hooks from all categories", () => {
       const config = ConfigBuilder.full();
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(config));
+      __setTestConfig(config as any);
 
       const allHooks = getAllEnabledHooks();
       expect(allHooks.length).toBeGreaterThan(0);
@@ -145,7 +149,7 @@ describe("Configuration Loader", () => {
         })
         .build();
 
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(config));
+      __setTestConfig(config as any);
 
       const exists = hookExists("test-hook", "pre-execution");
       expect(exists).toBe(true);
@@ -153,7 +157,7 @@ describe("Configuration Loader", () => {
 
     it("should return false for non-existent hook", () => {
       const config = ConfigBuilder.minimal();
-      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(config));
+      __setTestConfig(config as any);
 
       const exists = hookExists("non-existent", "pre-execution");
       expect(exists).toBe(false);

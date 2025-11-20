@@ -1,5 +1,6 @@
-import { logger } from "../_core/logger";
 import net from "net";
+
+import { logger } from "../_core/logger";
 
 import { GitSyncEngine, type GitSyncConfig } from "./sync/git-sync-engine";
 import { WebSocketHub } from "./ws/websocket-hub";
@@ -83,7 +84,7 @@ async function findAvailablePort(startPort: number, maxTries = 10): Promise<numb
 
   for (let i = 0; i < maxTries; i++) {
     const port = startPort + i;
-    // eslint-disable-next-line no-await-in-loop
+     
     const ok = await tryPort(port);
     if (ok) {
       if (i > 0) {

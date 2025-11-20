@@ -4,6 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+
 import { ENV } from "../_core/env";
 
 describe("Sentry Integration Tests", () => {

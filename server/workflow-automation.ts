@@ -10,11 +10,11 @@ import { eq } from "drizzle-orm";
 import { leads, tasks, users } from "../drizzle/schema";
 
 import { logger } from "./_core/logger";
-import { billyAutomation } from "./billy-automation";
+import { billyAutomation } from "./modules/billing/billy-automation";
 import { getDb, trackEvent } from "./db";
-import { emailMonitor } from "./email-monitor";
-import { detectLeadSourceIntelligent } from "./lead-source-detector";
-import { getWorkflowFromDetection } from "./lead-source-workflows";
+import { emailMonitor } from "./modules/email/email-monitor";
+import { detectLeadSourceIntelligent } from "./modules/crm/lead-source-detector";
+import { getWorkflowFromDetection } from "./modules/crm/lead-source-workflows";
 import { createCalendarEvent } from "./mcp";
 
 interface AutomationConfig {

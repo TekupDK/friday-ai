@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { withTransaction, withRetryableTransaction, isDatabaseAvailable } from "../db/transaction-utils";
+
 import { getDb } from "../db";
+import { withTransaction, withRetryableTransaction, isDatabaseAvailable } from "../db/transaction-utils";
 
 // Mock the database module
 vi.mock("../db", () => ({

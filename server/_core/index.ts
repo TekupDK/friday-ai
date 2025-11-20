@@ -11,7 +11,7 @@ import helmet from "helmet";
 
 import * as db from "../db";
 import { startDocsService } from "../docs/service";
-import * as leadDb from "../lead-db";
+import * as leadDb from "../modules/crm/lead-db";
 import { appRouter } from "../routers";
 
 import { createContext } from "./context";

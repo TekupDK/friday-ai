@@ -9,6 +9,7 @@ import type { ChatInputProps } from "./ChatInput.types";
 import ChatInputActions from "./ChatInputActions";
 import ChatInputField from "./ChatInputField";
 
+import { ChatCommands } from "@/components/chat/advanced/ChatCommands";
 import { AI_CONFIG } from "@/config/ai-config";
 import { useChatInput } from "@/hooks/useChatInput";
 
@@ -29,8 +30,19 @@ export default function ChatInput(props: ChatInputProps) {
   return (
     <div
       data-testid="friday-chat-input-container"
-      className="border-t border-border/20 p-3"
+      className="border-t border-border/20 p-3 relative"
     >
+      <ChatCommands
+        input={props.value}
+        onSelectCommand={(cmd) => {
+          props.onChange(cmd.name + " ");
+          inputRef.current?.focus();
+        }}
+        onClose={() => {
+          // Just let user keep typing
+          inputRef.current?.focus();
+        }}
+      />
       <div className="w-full">
         <ChatInputField
           ref={inputRef}

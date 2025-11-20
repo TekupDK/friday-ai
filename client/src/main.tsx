@@ -2,19 +2,13 @@ import * as Sentry from "@sentry/react";
 
 import { trpc } from "@/lib/trpc";
 
-import {
-  QueryClient,
-  QueryClientProvider,
-  dehydrate,
-  hydrate,
-} from "@tanstack/react-query";
+import { dehydrate, hydrate, QueryClientProvider } from "@tanstack/react-query";
 import {
   httpBatchLink,
   httpLink,
   splitLink,
   TRPCClientError,
 } from "@trpc/client";
-import React from "react";
 import { createRoot } from "react-dom/client";
 import superjson from "superjson";
 
@@ -25,12 +19,9 @@ import { chatSendAbort } from "./lib/abortSignals";
 import {
   createOptimizedQueryClient,
   invalidateAuthQueries,
-  warmupCache,
-  getCacheConfig,
 } from "./lib/cacheStrategy";
 import { getCsrfHeaders } from "./lib/csrf";
 import { requestQueue } from "./lib/requestQueue";
-import { intelligentRetryDelay, shouldRetry } from "./lib/retryStrategy";
 
 import { UNAUTHED_ERR_MSG } from "@shared/const";
 
@@ -43,6 +34,9 @@ const sentryTracesSampleRate = parseFloat(
 );
 
 if (sentryEnabled && sentryDsn) {
+  if (import.meta.env.DEV) {
+    console.log("[Sentry] Error tracking initialized");
+  }
   Sentry.init({
     dsn: sentryDsn,
     environment: sentryEnvironment,
@@ -55,9 +49,12 @@ if (sentryEnabled && sentryDsn) {
     ],
     // Note: captureUnhandledRejections and captureUncaughtExceptions are enabled by default in v10
   });
-  console.log("[Sentry] Error tracking initialized");
 } else {
-  console.log("[Sentry] Error tracking disabled (VITE_SENTRY_ENABLED=false or VITE_SENTRY_DSN not set)");
+  if (import.meta.env.DEV) {
+    console.log(
+      "[Sentry] Error tracking disabled (VITE_SENTRY_ENABLED=false or VITE_SENTRY_DSN not set)"
+    );
+  }
 }
 
 // Phase 7.2: Optimized QueryClient with intelligent cache strategy
@@ -70,13 +67,60 @@ function safeLoadPersistedState() {
   try {
     if (typeof window === "undefined" || !window.localStorage) return null;
     const raw = localStorage.getItem(PERSIST_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as { ts: number; state: unknown } | null;
+    if (!raw || raw.trim().length === 0) return null;
+
+    // Validate JSON before parsing to avoid "Unexpected end of JSON input"
+    let parsed: { ts: number; state: unknown } | null = null;
+    try {
+      parsed = JSON.parse(raw) as { ts: number; state: unknown } | null;
+    } catch (parseError) {
+      // Corrupted JSON - clear it
+      if (import.meta.env.DEV) {
+        console.warn(
+          "[Cache] Corrupted localStorage state, clearing:",
+          parseError
+        );
+      }
+      localStorage.removeItem(PERSIST_KEY);
+      return null;
+    }
     // Only reuse if not too old (5 minutes)
     if (!parsed || !parsed.state || !parsed.ts) return null;
-    if (Date.now() - parsed.ts > 5 * 60 * 1000) return null;
+    if (Date.now() - parsed.ts > 5 * 60 * 1000) {
+      // Clear old state
+      localStorage.removeItem(PERSIST_KEY);
+      return null;
+    }
+
+    // Filter out queries that might cause hydration issues (tRPC queries need fresh queryFn)
+    const state = parsed.state as { queries?: Array<{ queryKey: unknown[] }> };
+    if (state?.queries) {
+      // Only keep non-tRPC queries for hydration (tRPC queries will be re-fetched)
+      const filteredQueries = state.queries.filter((q: any) => {
+        const key = Array.isArray(q.queryKey) ? q.queryKey : [];
+        // Skip tRPC queries - they need fresh queryFn
+        if (key.length > 0 && typeof key[0] === "string") {
+          // tRPC queries have structure like ["auth", "me"] or ["workspace", ...]
+          return false; // Don't hydrate tRPC queries
+        }
+        return true;
+      });
+
+      if (filteredQueries.length === 0) {
+        // No valid queries to hydrate, clear state
+        localStorage.removeItem(PERSIST_KEY);
+        return null;
+      }
+
+      return { ...state, queries: filteredQueries };
+    }
+
     return parsed.state as unknown;
   } catch {
+    // On error, clear corrupted state
+    try {
+      localStorage.removeItem(PERSIST_KEY);
+    } catch {}
     return null;
   }
 }
@@ -92,8 +136,15 @@ function persistNow() {
   try {
     if (typeof window === "undefined" || !window.localStorage) return;
     const state = dehydrate(queryClient, {
-      // Persist all queries for simplicity; adjust later if needed
-      shouldDehydrateQuery: () => true,
+      // Don't persist tRPC queries - they need fresh queryFn on hydration
+      shouldDehydrateQuery: query => {
+        const key = Array.isArray(query.queryKey) ? query.queryKey : [];
+        // Skip tRPC queries (they have string array keys like ["auth", "me"])
+        if (key.length > 0 && typeof key[0] === "string") {
+          return false; // Don't dehydrate tRPC queries
+        }
+        return true; // Dehydrate other queries
+      },
     });
     localStorage.setItem(
       PERSIST_KEY,
@@ -135,9 +186,11 @@ const redirectToLoginIfUnauthorized = async (error: unknown) => {
 
   // Phase 7.1: Try silent refresh before redirecting
   try {
-    console.log(
-      "[Auth] Attempting silent session refresh before login redirect"
-    );
+    if (import.meta.env.DEV) {
+      console.log(
+        "[Auth] Attempting silent session refresh before login redirect"
+      );
+    }
     const refreshResponse = await fetch("/api/auth/refresh", {
       method: "POST",
       credentials: "include",
@@ -150,38 +203,48 @@ const redirectToLoginIfUnauthorized = async (error: unknown) => {
       // Check if response has content before parsing JSON
       const contentType = refreshResponse.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        console.warn("[Auth] Refresh response is not JSON, skipping");
+        if (import.meta.env.DEV) {
+          console.warn("[Auth] Refresh response is not JSON, skipping");
+        }
         return;
       }
-      
+
       const text = await refreshResponse.text();
       if (!text || text.trim().length === 0) {
-        console.warn("[Auth] Refresh response is empty, skipping");
+        if (import.meta.env.DEV) {
+          console.warn("[Auth] Refresh response is empty, skipping");
+        }
         return;
       }
-      
+
       let refreshData;
       try {
         refreshData = JSON.parse(text);
       } catch (parseError) {
-        console.error("[Auth] Failed to parse refresh response:", parseError);
+        if (import.meta.env.DEV) {
+          console.error("[Auth] Failed to parse refresh response:", parseError);
+        }
         return;
       }
-      
+
       if (refreshData.refreshed) {
-        console.log(
-          "[Auth] Session refreshed successfully - avoiding login redirect"
-        );
+        if (import.meta.env.DEV) {
+          console.log(
+            "[Auth] Session refreshed successfully - avoiding login redirect"
+          );
+        }
         // Phase 7.2: Intelligent auth-aware cache invalidation
         invalidateAuthQueries(queryClient);
         return;
       }
     }
   } catch (refreshError) {
-    console.warn(
-      "[Auth] Silent refresh failed, proceeding with login redirect",
-      refreshError
-    );
+    if (import.meta.env.DEV) {
+      console.warn(
+        "[Auth] Silent refresh failed, proceeding with login redirect",
+        refreshError
+      );
+    }
   }
 
   // If refresh failed or wasn't needed, redirect to login
@@ -264,15 +327,19 @@ queryClient.getQueryCache().subscribe(event => {
         };
         // Update request queue with rate limit
         requestQueue.setRateLimitUntil(retryAfter);
-        console.warn("[Rate Limit]", {
-          retryAfter: retryAfter.toISOString(),
-          message: error.message,
-          queueSize: requestQueue.getQueueSize(),
-        });
+        if (import.meta.env.DEV) {
+          console.warn("[Rate Limit]", {
+            retryAfter: retryAfter.toISOString(),
+            message: error.message,
+            queueSize: requestQueue.getQueueSize(),
+          });
+        }
       }
     }
 
-    console.error("[API Query Error]", error);
+    if (import.meta.env.DEV) {
+      console.error("[API Query Error]", error);
+    }
   }
 });
 
@@ -291,15 +358,19 @@ queryClient.getMutationCache().subscribe(event => {
         };
         // Update request queue with rate limit
         requestQueue.setRateLimitUntil(retryAfter);
-        console.warn("[Rate Limit]", {
-          retryAfter: retryAfter.toISOString(),
-          message: error.message,
-          queueSize: requestQueue.getQueueSize(),
-        });
+        if (import.meta.env.DEV) {
+          console.warn("[Rate Limit]", {
+            retryAfter: retryAfter.toISOString(),
+            message: error.message,
+            queueSize: requestQueue.getQueueSize(),
+          });
+        }
       }
     }
 
-    console.error("[API Mutation Error]", error);
+    if (import.meta.env.DEV) {
+      console.error("[API Mutation Error]", error);
+    }
   }
 });
 
@@ -343,14 +414,39 @@ const trpcClient = trpc.createClient({
         url: "/api/trpc",
         transformer: superjson,
         fetch(input, init) {
-          return globalThis.fetch(input, {
-            ...(init ?? {}),
-            credentials: "include",
-            headers: {
-              ...(init?.headers ?? {}),
-              ...getCsrfHeaders(),
-            },
-          });
+          return globalThis
+            .fetch(input, {
+              ...(init ?? {}),
+              credentials: "include",
+              headers: {
+                ...(init?.headers ?? {}),
+                ...getCsrfHeaders(),
+              },
+            })
+            .then(async response => {
+              // Validate response has content before tRPC tries to parse it
+              if (!response.ok) {
+                // For error responses, ensure we have valid JSON
+                const contentType = response.headers.get("content-type");
+                if (contentType?.includes("application/json")) {
+                  const text = await response.clone().text();
+                  if (!text || text.trim().length === 0) {
+                    // Empty JSON response - return a proper error response
+                    return new Response(
+                      JSON.stringify({
+                        error: { message: "Empty response from server" },
+                      }),
+                      {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: { "Content-Type": "application/json" },
+                      }
+                    );
+                  }
+                }
+              }
+              return response;
+            });
         },
       }),
     }),
@@ -370,7 +466,7 @@ root.render(
 
 // HMR: Preserve React state on hot reload
 if (import.meta.hot) {
-  import.meta.hot.accept("./App", (newModule) => {
+  import.meta.hot.accept("./App", newModule => {
     if (newModule) {
       root.render(
         <trpc.Provider client={trpcClient} queryClient={queryClient}>

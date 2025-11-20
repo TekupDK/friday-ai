@@ -5,10 +5,12 @@
 
 import { readFileSync } from "fs";
 import { createRequire } from "module";
-import * as XLSX from "xlsx";
+
 import { parse } from "csv-parse/sync";
-import type { Transaction } from "./types.js";
+import * as XLSX from "xlsx";
+
 import { guessSupplier } from "./supplierMapping.js";
+import type { Transaction } from "./types.js";
 
 // Dynamically import pdf-parse to handle ESM/CommonJS compatibility
 async function getPdfParse() {

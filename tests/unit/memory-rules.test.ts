@@ -5,10 +5,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import {
-  AI_MEMORY_RULES,
-  applyMemoryRules,
-} from "../../client/src/lib/ai-memory-rules";
+import { AI_MEMORY_RULES, applyMemoryRules } from "../../shared/ai/memory-rules";
 
 describe("Memory Rules", () => {
   describe("MEMORY_15 - Round hours only", () => {
