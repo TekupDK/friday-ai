@@ -20,7 +20,6 @@ import { fridayRouter } from "./routers/friday-router";
 import { inboxRouter } from "./routers/inbox-router";
 import { referralRouter } from "./routers/referral-router";
 import { reportsRouter } from "./routers/reports-router";
-import { subscriptionRouter } from "./routers/subscription-router";
 import { uiAnalysisRouter } from "./routers/ui-analysis-router";
 import { workspaceRouter } from "./routers/workspace-router";
 
@@ -73,7 +72,6 @@ export const appRouter = router({
   automation: automationRouter,
   chatStreaming: chatStreamingRouter, // Enhanced chat with streaming and unified flow
   reports: reportsRouter, // Business reports and analytics
-  subscription: subscriptionRouter, // Subscription management
   referral: referralRouter, // Referral program management
 });
 
