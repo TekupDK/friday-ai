@@ -68,8 +68,25 @@ function AnimatedSection({ children, delay = 0 }: { children: React.ReactNode; d
 }
 
 export default function FridayInboxLanding() {
-  usePageTitle("Friday AI Inbox");
+  usePageTitle("Friday AI Inbox - Din Intelligente Forretningsassistent");
   const [, navigate] = useLocation();
+  const [showStickyButton, setShowStickyButton] = React.useState(false);
+  const [showScrollTop, setShowScrollTop] = React.useState(false);
+
+  // Show sticky button and scroll to top after scrolling
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setShowStickyButton(window.scrollY > 800);
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <CRMLayout>
@@ -391,6 +408,152 @@ export default function FridayInboxLanding() {
               </section>
             </AnimatedSection>
 
+            {/* Stats Section */}
+            <AnimatedSection>
+              <section className="relative">
+                <AppleCard
+                  variant="elevated"
+                  padding="lg"
+                  className="bg-gradient-to-r from-primary/5 via-purple-500/5 to-pink-500/5"
+                >
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
+                    <motion.div
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">2.500+</div>
+                      <div className="text-sm text-muted-foreground">Emails behandlet</div>
+                    </motion.div>
+
+                    <motion.div
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">231</div>
+                      <div className="text-sm text-muted-foreground">AI-enrichede leads</div>
+                    </motion.div>
+
+                    <motion.div
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">2t+</div>
+                      <div className="text-sm text-muted-foreground">Sparet dagligt</div>
+                    </motion.div>
+
+                    <motion.div
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">99.9%</div>
+                      <div className="text-sm text-muted-foreground">Uptime garanti</div>
+                    </motion.div>
+                  </div>
+                </AppleCard>
+              </section>
+            </AnimatedSection>
+
+            {/* How It Works Section */}
+            <AnimatedSection>
+              <section className="relative">
+                <div className="text-center mb-16">
+                  <motion.h2
+                    className="text-4xl md:text-5xl font-bold mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    Sådan Virker Det
+                  </motion.h2>
+                  <motion.p
+                    className="text-xl text-muted-foreground max-w-2xl mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    Fra email til faktura på få minutter
+                  </motion.p>
+                </div>
+
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-4 gap-6"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                >
+                  {[
+                    {
+                      step: "1",
+                      icon: "solar:inbox-in-bold-duotone",
+                      title: "Email Modtages",
+                      description: "AI analyserer og kategoriserer automatisk",
+                    },
+                    {
+                      step: "2",
+                      icon: "solar:magic-stick-bold-duotone",
+                      title: "AI Behandler",
+                      description: "Lead oprettes, kalender tjekkes, forslag genereres",
+                    },
+                    {
+                      step: "3",
+                      icon: "solar:chat-round-check-bold-duotone",
+                      title: "Du Godkender",
+                      description: "Gennemgå og godkend AI's forslag med ét klik",
+                    },
+                    {
+                      step: "4",
+                      icon: "solar:check-circle-bold-duotone",
+                      title: "Automatisk Udførelse",
+                      description: "Booking sendes, faktura oprettes, CRM opdateres",
+                    },
+                  ].map((step, index) => (
+                    <motion.div key={step.step} variants={scaleIn} className="relative">
+                      <AppleCard
+                        variant="elevated"
+                        padding="lg"
+                        className="h-full text-center hover:scale-105 transition-transform duration-300"
+                      >
+                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold">
+                          {step.step}
+                        </div>
+                        <div className="space-y-4 pt-4">
+                          <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl flex items-center justify-center mx-auto">
+                            <Icon icon={step.icon} className="w-8 h-8 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
+                            <p className="text-sm text-muted-foreground">{step.description}</p>
+                          </div>
+                        </div>
+                      </AppleCard>
+                      {index < 3 && (
+                        <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
+                          <Icon
+                            icon="solar:arrow-right-bold-duotone"
+                            className="w-6 h-6 text-primary/40"
+                          />
+                        </div>
+                      )}
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </section>
+            </AnimatedSection>
+
             {/* Pricing Section */}
             <AnimatedSection>
               <section className="relative">
@@ -529,6 +692,120 @@ export default function FridayInboxLanding() {
               </section>
             </AnimatedSection>
 
+            {/* FAQ Section */}
+            <AnimatedSection>
+              <section className="relative">
+                <div className="text-center mb-16">
+                  <motion.h2
+                    className="text-4xl md:text-5xl font-bold mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  >
+                    Ofte Stillede Spørgsmål
+                  </motion.h2>
+                  <motion.p
+                    className="text-xl text-muted-foreground max-w-2xl mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    Få svar på dine spørgsmål
+                  </motion.p>
+                </div>
+
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                >
+                  {[
+                    {
+                      question: "Hvordan integrerer Friday AI med mine eksisterende systemer?",
+                      answer:
+                        "Friday AI integrerer seamløst med Gmail, Google Calendar og Billy.dk via officielle APIs. Setup tager under 10 minutter med vores guide.",
+                    },
+                    {
+                      question: "Er mine data sikre?",
+                      answer:
+                        "Ja! Vi bruger enterprise-grade sikkerhed med end-to-end kryptering. Data gemmes i Supabase PostgreSQL med row-level security. Vi følger GDPR.",
+                    },
+                    {
+                      question: "Kan jeg opsige mit abonnement når som helst?",
+                      answer:
+                        "Ja, du kan opsige eller pause dit abonnement når som helst. Dine ubrugte timer gemmes ved pause, og der er ingen binding.",
+                    },
+                    {
+                      question: "Hvad sker der hvis jeg bruger flere timer end mit abonnement?",
+                      answer:
+                        "Ekstra timer faktureres til 349 kr/time. Vi giver dig besked når du nærmer dig grænsen, så der ikke er overraskelser.",
+                    },
+                    {
+                      question: "Hvilke AI-modeller bruger Friday AI?",
+                      answer:
+                        "Vi bruger Gemini 2.5 Flash til email summaries, Claude 3.5 Sonnet til komplekse opgaver, og GPT-4o til visse automationer. Du får det bedste fra hver model.",
+                    },
+                    {
+                      question: "Kan Friday AI håndtere danske emails?",
+                      answer:
+                        "Absolut! Friday AI er optimeret til dansk sprog og forstår danske forretningstermer, datoer og adresser perfekt.",
+                    },
+                    {
+                      question: "Hvordan fungerer AI-kategoriseringen?",
+                      answer:
+                        "AI analyserer hver email og tildeler automatisk labels: Leads 🟢 (potentielle kunder), Booking 🔵 (kalendermøder), Finance 🟡 (fakturaer), Support 🔴.",
+                    },
+                    {
+                      question: "Får jeg support hvis jeg sidder fast?",
+                      answer:
+                        "Ja! Premium og VIP abonnementer inkluderer prioriteret email support. Vi svarer typisk inden for 2 timer på hverdage.",
+                    },
+                  ].map((faq, index) => (
+                    <motion.div key={index} variants={scaleIn}>
+                      <AppleCard variant="elevated" padding="lg" className="h-full">
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-3">
+                            <Icon
+                              icon="solar:question-circle-bold-duotone"
+                              className="w-6 h-6 text-primary flex-shrink-0 mt-1"
+                            />
+                            <div>
+                              <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
+                              <p className="text-sm text-muted-foreground leading-relaxed">
+                                {faq.answer}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </AppleCard>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                <motion.div
+                  className="text-center mt-12"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <p className="text-muted-foreground mb-4">
+                    Har du flere spørgsmål?
+                  </p>
+                  <AppleButton
+                    variant="secondary"
+                    onClick={() => navigate("/docs")}
+                    className="flex items-center gap-2 mx-auto"
+                  >
+                    <Icon icon="solar:book-bold-duotone" className="w-5 h-5" />
+                    Læs Fuld Dokumentation
+                  </AppleButton>
+                </motion.div>
+              </section>
+            </AnimatedSection>
+
             {/* CTA Section */}
             <AnimatedSection>
               <section className="relative">
@@ -587,6 +864,51 @@ export default function FridayInboxLanding() {
                 </AppleCard>
               </section>
             </AnimatedSection>
+
+            {/* Sticky Buttons */}
+            <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-3">
+              {/* Scroll to Top Button */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{
+                  opacity: showScrollTop ? 1 : 0,
+                  scale: showScrollTop ? 1 : 0.8,
+                  y: showScrollTop ? 0 : 20,
+                }}
+                transition={{ duration: 0.3 }}
+                style={{ pointerEvents: showScrollTop ? "auto" : "none" }}
+              >
+                <button
+                  onClick={scrollToTop}
+                  className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                  aria-label="Scroll to top"
+                >
+                  <Icon icon="solar:arrow-up-bold-duotone" className="w-5 h-5 text-primary" />
+                </button>
+              </motion.div>
+
+              {/* Sticky CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{
+                  opacity: showStickyButton ? 1 : 0,
+                  scale: showStickyButton ? 1 : 0.8,
+                  y: showStickyButton ? 0 : 20,
+                }}
+                transition={{ duration: 0.3 }}
+                style={{ pointerEvents: showStickyButton ? "auto" : "none" }}
+              >
+                <AppleButton
+                  variant="primary"
+                  size="lg"
+                  onClick={() => navigate("/")}
+                  className="shadow-2xl shadow-primary/50 flex items-center gap-2"
+                >
+                  <Icon icon="solar:rocket-2-bold-duotone" className="w-5 h-5" />
+                  Kom i gang
+                </AppleButton>
+              </motion.div>
+            </div>
 
             {/* Footer */}
             <footer className="relative border-t border-border/50 pt-16 pb-8">
