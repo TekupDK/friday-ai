@@ -41,7 +41,7 @@ export interface E2ETestContext {
   createdFeedbackIds: number[];
   testThreadId: string;
   getMockContext: () => TrpcContext;
-  getCaller: () => ReturnType<typeof router.createCaller>;
+  getCaller: () => ReturnType<ReturnType<typeof router>["createCaller"]>;
   cleanup: () => Promise<void>;
 }
 
@@ -102,11 +102,14 @@ export async function createE2ETestContext(): Promise<E2ETestContext> {
       req: {} as any,
       res: {} as any,
     }),
-    getCaller: () => testRouter.createCaller({
-      user,
-      req: {} as any,
-      res: {} as any,
-    }),
+    getCaller: () => {
+      const mockContext: TrpcContext = {
+        user,
+        req: {} as any,
+        res: {} as any,
+      };
+      return testRouter.createCaller(mockContext);
+    },
     cleanup,
   };
 }

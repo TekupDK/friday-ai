@@ -15,7 +15,7 @@ const results: Record<string, boolean> = {};
 // Test 1: Check if files exist
 console.log("Test 1: Checking if files exist...");
 const files = [
-  "server/email-intelligence/followup-reminders.ts",
+  "server/email-intelligence/followup/",
   "server/email-intelligence/ghostwriter.ts",
   "server/modules/email/followup-scheduler.ts",
   "client/src/components/inbox/FollowupReminders.tsx",
@@ -32,7 +32,7 @@ files.forEach(file => {
 console.log("\nTest 2: Checking function exports...");
 
 try {
-  const followupContent = readFileSync("server/email-intelligence/followup-reminders.ts", "utf-8");
+  const followupContent = readFileSync("server/email-intelligence/followup/index.ts", "utf-8");
   const followupFunctions = [
     "createFollowupReminder",
     "listFollowupReminders",
@@ -48,7 +48,7 @@ try {
     console.log(`${exists ? "✓" : "✗"} ${func}`);
   });
 } catch (error) {
-  console.error("Error reading followup-reminders.ts:", error);
+    console.error("Error reading followup/index.ts:", error);
 }
 
 try {
