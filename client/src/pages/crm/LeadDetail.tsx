@@ -42,14 +42,37 @@ export default function LeadDetail() {
   } | undefined;
 
   const updateStatusMutation = trpc.crm.lead.updateLeadStatus.useMutation({
-    onSuccess: () => {
-      utils.crm.lead.getLead.invalidate({ id: leadId! });
+    onMutate: async ({ id, status }) => {
+      // Cancel any outgoing refetches
+      await utils.crm.lead.getLead.cancel({ id });
+
+      // Snapshot the previous value
+      const previousLead = utils.crm.lead.getLead.getData({ id });
+
+      // Optimistically update to the new value
+      utils.crm.lead.getLead.setData({ id }, (old) => {
+        if (!old) return undefined;
+        return { ...old, status };
+      });
+
+      // Return a context object with the snapshotted value
+      return { previousLead };
+    },
+    onError: (err, { id }, context) => {
+      // Rollback to the previous value
+      if (context?.previousLead) {
+        utils.crm.lead.getLead.setData({ id }, context.previousLead);
+      }
+      toast.error(err.message || "Failed to update lead status");
+    },
+    onSettled: (data, error, { id }) => {
+      // Always refetch after error or success
+      utils.crm.lead.getLead.invalidate({ id });
       utils.crm.lead.listLeads.invalidate();
+    },
+    onSuccess: () => {
       toast.success("Lead status updated");
       setSelectedStatus("");
-    },
-    onError: (error) => {
-      toast.error(error.message || "Failed to update lead status");
     },
   });
 

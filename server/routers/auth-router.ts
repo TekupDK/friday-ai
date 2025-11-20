@@ -4,12 +4,20 @@ import { z } from "zod";
 
 import { users } from "../../drizzle/schema";
 import { getSessionCookieOptions } from "../_core/cookies";
+import { ENV } from "../_core/env";
 import { sdk } from "../_core/sdk";
-import { router, publicProcedure } from "../_core/trpc";
-import { getDb } from "../db";
+import { router, publicProcedure, protectedProcedure } from "../_core/trpc";
+import { getDb, getUserPreferences, updateUserPreferences } from "../db";
 import { checkRateLimitUnified } from "../rate-limiter-redis";
 
-import { COOKIE_NAME, ONE_YEAR_MS, SEVEN_DAYS_MS } from "@shared/const";
+import {
+  COOKIE_NAME,
+  LOGIN_RATE_LIMIT_ATTEMPTS,
+  LOGIN_RATE_LIMIT_WINDOW_MS,
+  ONE_YEAR_MS,
+  SEVEN_DAYS_MS,
+} from "@shared/const";
+import type { LoginMethod } from "@shared/types";
 
 
 
@@ -31,7 +39,7 @@ export const authRouter = router({
       .reduce((acc, char) => ((acc << 5) - acc + char.charCodeAt(0)) | 0, 0);
     const rateLimit = await checkRateLimitUnified(
       Math.abs(ipHash) || 1,
-      { limit: 5, windowMs: 15 * 60 * 1000 }, // 5 attempts per 15 minutes
+      { limit: LOGIN_RATE_LIMIT_ATTEMPTS, windowMs: LOGIN_RATE_LIMIT_WINDOW_MS },
       "login"
     );
 
@@ -73,7 +81,8 @@ export const authRouter = router({
 
     // ✅ SECURITY FIX: Check login method
     // If user uses OAuth (Google), redirect to OAuth flow instead
-    if (user.loginMethod === "google" || user.loginMethod === "oauth") {
+    const loginMethod = user.loginMethod as LoginMethod;
+    if (loginMethod === "google" || loginMethod === "oauth") {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "Please sign in with Google. This account uses OAuth authentication.",
@@ -82,7 +91,7 @@ export const authRouter = router({
 
     // ✅ SECURITY FIX: For demo/dev mode, only allow in development
     // In production, this should require proper password hashing
-    if (process.env.NODE_ENV === "production") {
+    if (ENV.isProduction) {
       // In production, we should have password hashing
       // For now, reject password-based login in production
       throw new TRPCError({
@@ -103,7 +112,7 @@ export const authRouter = router({
     // Create session using SDK so it matches verification
     const openId = user.openId || `email:${normalizedEmail}`;
     // ✅ SECURITY FIX: Use 7-day expiry in production, 1 year in development
-    const sessionExpiry = process.env.NODE_ENV === "production" ? SEVEN_DAYS_MS : ONE_YEAR_MS;
+    const sessionExpiry = ENV.isProduction ? SEVEN_DAYS_MS : ONE_YEAR_MS;
     const sessionToken = await sdk.createSessionToken(openId, {
       name: user.name || input.email.split("@")[0],
       expiresInMs: sessionExpiry,
@@ -124,8 +133,114 @@ export const authRouter = router({
       httpOnly: true,
       path: "/",
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: ENV.isProduction,
     });
     return { success: true };
   }),
+
+  /**
+   * Get user preferences
+   * Returns user's saved preferences (theme, notifications, etc.)
+   */
+  getPreferences: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.user?.id) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Must be logged in",
+      });
+    }
+
+    const preferences = await getUserPreferences(ctx.user.id);
+    if (!preferences) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to load preferences",
+      });
+    }
+
+    // Map desktopNotifications to pushNotifications for frontend compatibility
+    // Also extract language from preferences JSONB if it exists
+    const prefsJson = preferences.preferences as Record<string, unknown> | null;
+    return {
+      ...preferences,
+      pushNotifications: preferences.desktopNotifications,
+      language: (prefsJson?.language as string) || null,
+    };
+  }),
+
+  /**
+   * Update user preferences
+   * Updates user's saved preferences (theme, notifications, language, etc.)
+   */
+  updatePreferences: protectedProcedure
+    .input(
+      z.object({
+        theme: z.enum(["light", "dark"]).optional(),
+        emailNotifications: z.boolean().optional(),
+        desktopNotifications: z.boolean().optional(),
+        pushNotifications: z.boolean().optional(), // Maps to desktopNotifications
+        language: z.string().optional(), // Stored in preferences JSONB
+        preferences: z.record(z.any()).optional(), // For additional JSONB data
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.user?.id) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Must be logged in",
+        });
+      }
+
+      // Map pushNotifications to desktopNotifications if provided
+      const updateData: Parameters<typeof updateUserPreferences>[1] = {};
+
+      if (input.theme !== undefined) {
+        updateData.theme = input.theme;
+      }
+
+      if (input.emailNotifications !== undefined) {
+        updateData.emailNotifications = input.emailNotifications;
+      }
+
+      // Handle pushNotifications -> desktopNotifications mapping
+      if (input.pushNotifications !== undefined) {
+        updateData.desktopNotifications = input.pushNotifications;
+      } else if (input.desktopNotifications !== undefined) {
+        updateData.desktopNotifications = input.desktopNotifications;
+      }
+
+      // Handle language and other preferences in JSONB field
+      if (input.language !== undefined || input.preferences !== undefined) {
+        // Get existing preferences to merge
+        const existing = await getUserPreferences(ctx.user.id);
+        const existingPrefs = (existing?.preferences as Record<string, unknown>) || {};
+
+        const newPrefs: Record<string, unknown> = {
+          ...existingPrefs,
+          ...(input.preferences || {}),
+        };
+
+        if (input.language !== undefined) {
+          newPrefs.language = input.language;
+        }
+
+        updateData.preferences = newPrefs;
+      }
+
+      const updated = await updateUserPreferences(ctx.user.id, updateData);
+      if (!updated) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to update preferences",
+        });
+      }
+
+      // Return in same format as getPreferences
+      const prefsJson = updated.preferences as Record<string, unknown> | null;
+      return {
+        ...updated,
+        pushNotifications: updated.desktopNotifications,
+        language: (prefsJson?.language as string) || null,
+      };
+    }),
 });

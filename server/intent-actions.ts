@@ -4,8 +4,21 @@
  * This replaces tool calling which doesn't work with Gemini via Forge API
  */
 
-import { createInvoice, getCustomers, type BillyContact } from "./billy";
+import { desc, eq } from "drizzle-orm";
+
+import { emailsInFridayAi } from "../drizzle/schema";
+
+import { batchGenerateSummaries } from "./modules/ai/ai-email-summary";
+import { batchGenerateLabelSuggestions } from "./modules/ai/ai-label-suggestions";
+import { createInvoice, getCustomers, type BillyContact } from "./modules/billing/billy";
+import { createTask, getUserTasks, getDb } from "./db";
 import { checkIdempotency, storeIdempotencyRecord } from "./idempotency";
+import { createLead, getUserLeads } from "./modules/crm/lead-db";
+import {
+  createCalendarEvent,
+  listCalendarEvents,
+  searchGmailThreads,
+} from "./mcp";
 
 export type Intent =
   | "create_lead"
@@ -485,20 +498,6 @@ export async function executeAction(
 }
 
 // --- Inbox AI helpers ---
-import { desc, eq } from "drizzle-orm";
-
-import { emailsInFridayAi } from "../drizzle/schema";
-
-import { batchGenerateSummaries } from "./ai-email-summary";
-import { batchGenerateLabelSuggestions } from "./ai-label-suggestions";
-import { createTask, getUserTasks } from "./db";
-import { getDb } from "./db";
-import { createLead, getUserLeads } from "./lead-db";
-import {
-  createCalendarEvent,
-  listCalendarEvents,
-  searchGmailThreads,
-} from "./mcp";
 
 async function getDefaultInboxEmailIds(userId: number, limit = 25) {
   const db = await getDb();

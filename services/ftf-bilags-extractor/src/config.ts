@@ -3,8 +3,8 @@
  */
 
 import { readFileSync, existsSync } from "fs";
-import { join } from "path";
 import { homedir } from "os";
+import { join } from "path";
 
 export interface Config {
   gmail: {

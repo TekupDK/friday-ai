@@ -466,7 +466,7 @@ export async function searchGmailThreads(params: {
           : [];
 
       // Map label IDs to label names
-      const { mapLabelIdsToNames } = await import("./gmail-labels");
+      const { mapLabelIdsToNames } = await import("./modules/email/gmail-labels");
       const labels = await mapLabelIdsToNames(labelIds);
 
       threads.push({
@@ -634,7 +634,7 @@ export async function searchGmailThreadsPaged(params: {
       lastMsg && Array.isArray(lastMsg.labelIds)
         ? (lastMsg.labelIds as string[])
         : [];
-    const { mapLabelIdsToNames } = await import("./gmail-labels");
+    const { mapLabelIdsToNames } = await import("./modules/email/gmail-labels");
     const labels = await mapLabelIdsToNames(labelIds);
 
     threads.push({

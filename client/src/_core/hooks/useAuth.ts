@@ -41,8 +41,22 @@ export function useAuth(options?: UseAuthOptions) {
     }
   }, [logoutMutation, utils]);
 
+  // Sync user info to localStorage when it changes
+  useEffect(() => {
+    if (meQuery.data) {
+      try {
+        localStorage.setItem("friday-user-info", JSON.stringify(meQuery.data));
+      } catch (error) {
+        // Ignore localStorage errors (e.g., quota exceeded, private browsing)
+        // Note: Using console.warn here as logger might not be available in client hooks
+        if (process.env.NODE_ENV === "development") {
+          console.warn("[useAuth] Failed to save user info to localStorage:", error);
+        }
+      }
+    }
+  }, [meQuery.data]);
+
   const state = useMemo(() => {
-    localStorage.setItem("friday-user-info", JSON.stringify(meQuery.data));
     return {
       user: meQuery.data ?? null,
       loading: meQuery.isLoading || logoutMutation.isPending,

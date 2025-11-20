@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { protectedProcedure, router } from "../_core/trpc";
 import { generateCorrelationId } from "../action-audit";
-import { routeAI } from "../ai-router";
+import { routeAI } from "../modules/ai/ai-router";
 import {
   createConversation,
   createMessage,
@@ -13,7 +13,7 @@ import {
   getUserConversations,
   trackEvent,
 } from "../db";
-import { FRIDAY_TOOLS } from "../friday-tools";
+import { FRIDAY_TOOLS } from "../modules/ai/friday-tools";
 import { checkRateLimitUnified } from "../rate-limiter-redis";
 import { requireOwnership } from "../rbac";
 

@@ -3,8 +3,9 @@
  * Uses OAuth2 to access ftfiestaa@gmail.com inbox
  */
 
-import { google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
+import { google } from "googleapis";
+
 import type {
   GmailClient as IGmailClient,
   GmailMessageAttachment,

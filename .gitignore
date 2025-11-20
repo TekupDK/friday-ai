@@ -142,3 +142,11 @@ server/integrations/chromadb/test-data/*.md
 models/
 
 test-results/
+
+# Archives and AI command meta
+docs/archive/
+.cursor/commands/_meta/archive/
+
+# Local logs and scratch files
+server-log.txt
+"foodtruck fiesta"/

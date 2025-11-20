@@ -259,6 +259,31 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
               </div>
             </div>
           </div>
+
+          <Separator />
+
+          {/* Debug Section (Only for testing Sentry) */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <h2 className="text-base font-semibold text-muted-foreground">Debug</h2>
+            </div>
+            <div className="pl-8 space-y-3">
+               <div className="flex items-center justify-between p-3 rounded-lg border border-dashed border-yellow-500/50 bg-yellow-500/5">
+                 <div className="flex-1">
+                   <p className="text-sm font-medium text-yellow-600 dark:text-yellow-400">Sentry Test</p>
+                   <p className="text-xs text-muted-foreground">Triggers a client-side error to verify Sentry integration.</p>
+                 </div>
+                 <button
+                   onClick={() => {
+                     throw new Error("Sentry Verification Test Error (Frontend Button)");
+                   }}
+                   className="px-3 py-1.5 text-xs font-medium bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-500/20 rounded border border-yellow-500/20 transition-colors"
+                 >
+                   Trigger Error
+                 </button>
+               </div>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

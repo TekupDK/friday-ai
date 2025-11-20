@@ -121,23 +121,73 @@ export default function OpportunityPipeline() {
 
   // Update opportunity mutation
   const updateMutation = trpc.crm.extensions.updateOpportunity.useMutation({
-    onSuccess: () => {
-      utils.crm.extensions.listOpportunities.invalidate();
-      toast.success("Opportunity updated");
+    onMutate: async (newOpportunity) => {
+      // Cancel any outgoing refetches
+      await utils.crm.extensions.listOpportunities.cancel({ limit: 100 });
+
+      // Snapshot the previous value
+      const previousOpportunities = utils.crm.extensions.listOpportunities.getData({ limit: 100 });
+
+      // Optimistically update to the new value
+      utils.crm.extensions.listOpportunities.setData({ limit: 100 }, (old) => {
+        if (!old) return [];
+        return old.map((opp) =>
+          opp.id === newOpportunity.id
+            ? { ...opp, ...newOpportunity }
+            : opp
+        );
+      });
+
+      // Return a context object with the snapshotted value
+      return { previousOpportunities };
     },
-    onError: error => {
-      toast.error(error.message || "Failed to update opportunity");
+    onError: (err, newOpportunity, context) => {
+      // Rollback to the previous value
+      if (context?.previousOpportunities) {
+        utils.crm.extensions.listOpportunities.setData({ limit: 100 }, context.previousOpportunities);
+      }
+      toast.error(err.message || "Failed to update opportunity");
+    },
+    onSettled: () => {
+      // Always refetch after error or success
+      utils.crm.extensions.listOpportunities.invalidate({ limit: 100 });
+    },
+    onSuccess: () => {
+      toast.success("Opportunity updated");
     },
   });
 
   // Delete opportunity mutation
   const deleteMutation = trpc.crm.extensions.deleteOpportunity.useMutation({
-    onSuccess: () => {
-      utils.crm.extensions.listOpportunities.invalidate();
-      toast.success("Opportunity deleted");
+    onMutate: async ({ id }) => {
+      // Cancel any outgoing refetches
+      await utils.crm.extensions.listOpportunities.cancel({ limit: 100 });
+
+      // Snapshot the previous value
+      const previousOpportunities = utils.crm.extensions.listOpportunities.getData({ limit: 100 });
+
+      // Optimistically update to the new value
+      utils.crm.extensions.listOpportunities.setData({ limit: 100 }, (old) => {
+        if (!old) return [];
+        return old.filter((opp) => opp.id !== id);
+      });
+
+      // Return a context object with the snapshotted value
+      return { previousOpportunities };
     },
-    onError: error => {
-      toast.error(error.message || "Failed to delete opportunity");
+    onError: (err, id, context) => {
+      // Rollback to the previous value
+      if (context?.previousOpportunities) {
+        utils.crm.extensions.listOpportunities.setData({ limit: 100 }, context.previousOpportunities);
+      }
+      toast.error(err.message || "Failed to delete opportunity");
+    },
+    onSettled: () => {
+      // Always refetch after error or success
+      utils.crm.extensions.listOpportunities.invalidate({ limit: 100 });
+    },
+    onSuccess: () => {
+      toast.success("Opportunity deleted");
     },
   });
 

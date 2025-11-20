@@ -5,6 +5,7 @@
 import { createHash } from "crypto";
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
+
 import type { AttachmentMatch } from "./types.js";
 
 interface DedupeCache {

@@ -3,6 +3,8 @@
  * Automatically monitors A/B tests and triggers rollback if metrics degrade
  */
 
+import { analyticsEvents } from "../drizzle/schema";
+
 import {
   calculateTestResults,
   getABTestStatus,
@@ -14,7 +16,6 @@ import {
   getCurrentRolloutPhase,
   type RolloutPhase,
 } from "./_core/rollout-config";
-import { analyticsEvents } from "../drizzle/schema";
 import { getDb } from "./db";
 
 /**

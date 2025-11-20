@@ -9,9 +9,9 @@
  *   dotenv -e .env.dev -- tsx server/scripts/test-email-integration.ts
  */
 
-import { sendNotification } from "../notification-service";
-import { logger } from "../_core/logger";
 import { ENV } from "../_core/env";
+import { logger } from "../_core/logger";
+import { sendNotification } from "../notification-service";
 
 async function testEmailIntegration() {
   logger.info("[Email Integration Test] Starting email integration tests");

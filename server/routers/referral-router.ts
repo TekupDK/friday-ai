@@ -19,7 +19,7 @@ import {
   getUserReferralCodes,
   getUserReferralRewards,
   deactivateReferralCode,
-} from "../referral-actions";
+} from "../modules/crm/referral-actions";
 import {
   validateReferralCode,
   getReferralStats,
@@ -27,7 +27,7 @@ import {
   getReferralConversionRate,
   calculateReferralROI,
   REFERRAL_CONFIG,
-} from "../referral-helpers";
+} from "../modules/crm/referral-helpers";
 
 export const referralRouter = router({
   /**

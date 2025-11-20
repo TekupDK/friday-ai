@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-import { promises as fs } from 'fs';
-import path from 'path';
+import { promises as fs } from "fs";
+import path from "path";
 
 const ROOT = path.resolve(process.cwd());
-const SRC_ROOT = path.join(ROOT, '.cursor', 'commands');
-const DEST_ROOT = path.join(ROOT, '.github', 'prompts');
+const SRC_ROOT = path.join(ROOT, ".cursor", "commands");
+const DEST_ROOT = path.join(ROOT, ".github", "prompts");
 
 // Ignore meta and archived materials; only sync actionable command prompts
-const IGNORE_DIRS = new Set(['archive', '_meta']);
+const IGNORE_DIRS = new Set(["archive", "_meta"]);
 const IGNORE_FILES_REGEX = /^(README|COMMANDS_.*)\.md$/i; // Ignore indices/readmes in source
 
 async function ensureDir(dir) {
@@ -17,7 +17,7 @@ async function ensureDir(dir) {
 function toPromptName(fileBase) {
   // Convert file base name (without extension) to a simple prompt name
   // keep hyphens, remove underscores, allow spaces for readability
-  const name = fileBase.replace(/_/g, ' ');
+  const name = fileBase.replace(/_/g, " ");
   return name;
 }
 
@@ -32,29 +32,36 @@ function firstParagraph(markdown) {
   let i = 0;
   // skip until after the first heading
   for (; i < lines.length; i++) {
-    if (/^#\s+/.test(lines[i])) { i++; break; }
+    if (/^#\s+/.test(lines[i])) {
+      i++;
+      break;
+    }
   }
   // skip blank lines
-  while (i < lines.length && lines[i].trim() === '') i++;
+  while (i < lines.length && lines[i].trim() === "") i++;
   const paras = [];
   for (; i < lines.length; i++) {
     const line = lines[i];
-    if (line.trim() === '') break;
+    if (line.trim() === "") break;
     if (/^#\s+/.test(line)) break;
     paras.push(line);
   }
-  return paras.join(' ').trim();
+  return paras.join(" ").trim();
 }
 
 async function writePromptFile(srcPath, destPath, category) {
-  const raw = await fs.readFile(srcPath, 'utf8');
+  const raw = await fs.readFile(srcPath, "utf8");
   const title = extractTitle(raw);
   const base = path.basename(srcPath, path.extname(srcPath));
   const name = toPromptName(base);
   const descFromDoc = firstParagraph(raw);
-  const description = [category ? `[${category}]` : null, title || base, descFromDoc ? `- ${descFromDoc}` : null]
+  const description = [
+    category ? `[${category}]` : null,
+    title || base,
+    descFromDoc ? `- ${descFromDoc}` : null,
+  ]
     .filter(Boolean)
-    .join(' ')
+    .join(" ")
     .trim()
     .slice(0, 300);
 
@@ -64,10 +71,10 @@ async function writePromptFile(srcPath, destPath, category) {
   const content = frontmatter + body;
 
   await ensureDir(path.dirname(destPath));
-  await fs.writeFile(destPath, content, 'utf8');
+  await fs.writeFile(destPath, content, "utf8");
 }
 
-async function syncDir(srcDir, destDir, relative = '') {
+async function syncDir(srcDir, destDir, relative = "") {
   const entries = await fs.readdir(srcDir, { withFileTypes: true });
   for (const entry of entries) {
     const srcPath = path.join(srcDir, entry.name);
@@ -80,11 +87,11 @@ async function syncDir(srcDir, destDir, relative = '') {
       await syncDir(srcPath, destPath, relPath);
     } else if (entry.isFile()) {
       // Only convert markdown files to .prompt.md
-      if (entry.name.toLowerCase().endsWith('.md')) {
+      if (entry.name.toLowerCase().endsWith(".md")) {
         // Skip readme/index-like files in source
         if (IGNORE_FILES_REGEX.test(entry.name)) continue;
-        const category = relative.split(path.sep)[0] || '';
-        const outName = entry.name.replace(/\.md$/i, '.prompt.md');
+        const category = relative.split(path.sep)[0] || "";
+        const outName = entry.name.replace(/\.md$/i, ".prompt.md");
         const outPath = path.join(destDir, outName);
         await writePromptFile(srcPath, outPath, category);
       }
@@ -100,7 +107,7 @@ async function main() {
   await syncDir(SRC_ROOT, DEST_ROOT);
 
   // Write a README for prompts directory if it doesn't exist
-  const readmePath = path.join(DEST_ROOT, 'README.md');
+  const readmePath = path.join(DEST_ROOT, "README.md");
   try {
     await fs.access(readmePath);
   } catch {
@@ -117,7 +124,7 @@ Notes:
   - Markdown command files are converted to Copilot Chat prompt files with extension \`*.prompt.md\`.
 - Structure is preserved.
 `;
-    await fs.writeFile(readmePath, readme, 'utf8');
+    await fs.writeFile(readmePath, readme, "utf8");
   }
 
   // Cleanup: remove prompt files at root that were previously created from ignored sources
@@ -137,7 +144,7 @@ Notes:
   } catch {}
 }
 
-main().catch((err) => {
-  console.error('Failed to sync prompts:', err);
+main().catch(err => {
+  console.error("Failed to sync prompts:", err);
   process.exit(1);
 });

@@ -8,11 +8,11 @@ import { z } from "zod";
 
 import { analyticsEvents } from "../../drizzle/schema";
 import { permissionProcedure, protectedProcedure, router } from "../_core/trpc";
-import { billyAutomation } from "../billy-automation";
+import { billyAutomation } from "../modules/billing/billy-automation";
 import { getDb } from "../db";
-import { emailAnalysisEngine } from "../email-analysis-engine";
-import { emailMonitor } from "../email-monitor";
-import { generateSourceAnalytics } from "../lead-source-analytics";
+import { emailAnalysisEngine } from "../modules/email/email-analysis-engine";
+import { emailMonitor } from "../modules/email/email-monitor";
+import { generateSourceAnalytics } from "../modules/crm/lead-source-analytics";
 import { workflowAutomation } from "../workflow-automation";
 
 /**

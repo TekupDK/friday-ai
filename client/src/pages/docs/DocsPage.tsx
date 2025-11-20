@@ -25,24 +25,6 @@ import { DocumentList } from "@/components/docs/DocumentList";
 import { DocumentViewer } from "@/components/docs/DocumentViewer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-
-import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
-import {
-  useDocsKeyboardShortcuts,
-  DocsKeyboardShortcutsHint,
-} from "@/hooks/docs/useDocsKeyboardShortcuts";
-import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
-import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import {
   Dialog,
   DialogContent,
@@ -50,6 +32,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAIGeneration } from "@/hooks/docs/useAIGeneration";
+import {
+  useDocsKeyboardShortcuts,
+  DocsKeyboardShortcutsHint,
+} from "@/hooks/docs/useDocsKeyboardShortcuts";
+import { useDocsWebSocket } from "@/hooks/docs/useDocsWebSocket";
+import { useDocuments, useConflicts } from "@/hooks/docs/useDocuments";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
 

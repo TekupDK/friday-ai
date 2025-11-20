@@ -10,13 +10,9 @@ import { fileURLToPath } from "url";
 
 import type { HookConfig, HookCategory } from "./types";
 
-// Get current directory (works in both CommonJS and ESM)
-const __filename =
-  typeof __filename !== "undefined"
-    ? __filename
-    : fileURLToPath(import.meta.url);
-const __dirname =
-  typeof __dirname !== "undefined" ? __dirname : dirname(__filename);
+// Get current directory (ESM-compatible)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 interface HooksConfig {
   hooks: {
@@ -33,12 +29,34 @@ interface HooksConfig {
 }
 
 let cachedConfig: HooksConfig | null = null;
+let testConfigOverride: HooksConfig | null = null;
+const useCache = process.env.NODE_ENV === "production";
+
+/**
+ * Test-only: inject a config override for deterministic behavior
+ */
+export function __setTestConfig(config: HooksConfig | null): void {
+  testConfigOverride = config;
+  cachedConfig = null;
+}
+
+/**
+ * Test-only: clear cache and test override
+ */
+export function __clearHookConfigCache(): void {
+  cachedConfig = null;
+  testConfigOverride = null;
+}
 
 /**
  * Load hook configuration with error handling
  */
 export function loadHookConfig(): HooksConfig {
-  if (cachedConfig) {
+  if (testConfigOverride) {
+    return testConfigOverride;
+  }
+
+  if (cachedConfig && useCache) {
     return cachedConfig;
   }
 
@@ -66,7 +84,9 @@ export function loadHookConfig(): HooksConfig {
       }
     }
 
-    cachedConfig = config;
+    if (useCache) {
+      cachedConfig = config;
+    }
     return config;
   } catch (error) {
     console.warn(
@@ -89,7 +109,9 @@ export function loadHookConfig(): HooksConfig {
       },
     };
 
-    cachedConfig = defaultConfig;
+    if (useCache) {
+      cachedConfig = defaultConfig;
+    }
     return defaultConfig;
   }
 }

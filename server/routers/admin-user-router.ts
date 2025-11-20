@@ -7,6 +7,8 @@ import { ENV } from "../_core/env";
 import { router, roleProcedure } from "../_core/trpc";
 import { getDb, upsertUser } from "../db";
 
+import type { LoginMethod } from "@shared/types";
+
 /**
  * Admin User Management Router
  * 
@@ -152,7 +154,7 @@ export const adminUserRouter = router({
         email: z.string().email().max(320),
         name: z.string().min(1).max(255),
         role: z.enum(["user", "admin"]).default("user"),
-        loginMethod: z.enum(["google"]).default("google"), // Only Google OAuth supported for now
+        loginMethod: z.enum(["google"]).default("google") as z.ZodType<LoginMethod | null>, // Only Google OAuth supported for now
       })
     )
     .mutation(async ({ input, ctx }) => {

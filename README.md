@@ -7,7 +7,7 @@
 [![Database](https://img.shields.io/badge/database-Supabase_PostgreSQL-green.svg)](https://supabase.com)
 
 > **⚡ Quick Start:** Copy `.env.dev.template` → `.env.dev`, fill secrets, run `pnpm dev`
-> **🔧 Environment Guide:**[QUICK_ENV_REFERENCE.md](QUICK_ENV_REFERENCE.md) |**📘 Full Setup:** [ENV_SETUP_GUIDE.md](ENV_SETUP_GUIDE.md)
+> **🔧 Environment Guide:**[QUICK_ENV_REFERENCE.md](QUICK_ENV_REFERENCE.md) |**📘 Full Setup:** [ENV_SETUP_GUIDE.md](ENV_SETUP_GUIDE.md) | **🤖 Copilot Guide:** [docs/COPILOT_GUIDE.md](docs/COPILOT_GUIDE.md)
 
 Friday AI is an intelligent email management system inspired by Shortwave.ai. It combines AI-powered conversation with real-time inbox management, calendar bookings, invoice handling, and lead tracking.
 

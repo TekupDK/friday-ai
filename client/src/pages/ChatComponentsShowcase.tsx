@@ -9,98 +9,9 @@ import { ChatDialogType, DialogHost } from "./ChatDialogsHost";
 
 import { AdvancedComposer } from "@/components/chat/advanced/AdvancedComposer";
 import { CodeBlockHighlight } from "@/components/chat/advanced/CodeBlockHighlight";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Import all components
 // Basic Chat Cards (12)
-import { CalendarCard } from "@/components/chat/cards/CalendarCard";
-import { ContactCard } from "@/components/chat/cards/ContactCard";
-import { DocumentCard } from "@/components/chat/cards/DocumentCard";
-import { EmailCard } from "@/components/chat/cards/EmailCard";
-import { FileCard } from "@/components/chat/cards/FileCard";
-import { InvoiceCard } from "@/components/chat/cards/InvoiceCard";
-import { MessageCard } from "@/components/chat/cards/MessageCard";
-import { NotificationCard } from "@/components/chat/cards/NotificationCard";
-import { QuickReplyCard } from "@/components/chat/cards/QuickReplyCard";
-import { StatusCard } from "@/components/chat/cards/StatusCard";
-import { TaskCard } from "@/components/chat/cards/TaskCard";
-
-// Email & Shortwave Cards
-import { BillyAnalyticsCard } from "@/components/chat/cards/BillyAnalyticsCard";
-import { BillyCustomerCard } from "@/components/chat/cards/BillyCustomerCard";
-import { BillyProductCard } from "@/components/chat/cards/BillyProductCard";
-import { CalendarEventEditCard } from "@/components/chat/cards/CalendarEventEditCard";
-import { ConflictCheckCard } from "@/components/chat/cards/ConflictCheckCard";
-import { EmailSearchCard } from "@/components/chat/cards/EmailSearchCard";
-import { FreeBusyCard } from "@/components/chat/cards/FreeBusyCard";
-import { LabelManagementCard } from "@/components/chat/cards/LabelManagementCard";
-import { TodoFromEmailCard } from "@/components/chat/cards/TodoFromEmailCard";
-import { UnsubscribeCard } from "@/components/chat/cards/UnsubscribeCard";
-
-// Intelligens & Analyse
-import { AnomalyDetectionCard } from "@/components/chat/cards/AnomalyDetectionCard";
-import { CrossReferenceCard } from "@/components/chat/cards/CrossReferenceCard";
-import { CustomerHistoryCard } from "@/components/chat/cards/CustomerHistoryCard";
-import { DataVerificationCard } from "@/components/chat/cards/DataVerificationCard";
-import { LeadTrackingCard } from "@/components/chat/cards/LeadTrackingCard";
-import { PatternRecognitionCard } from "@/components/chat/cards/PatternRecognitionCard";
-import { PredictiveInsightsCard } from "@/components/chat/cards/PredictiveInsightsCard";
-import { RecommendationEngineCard } from "@/components/chat/cards/RecommendationEngineCard";
-import { RiskAssessmentCard } from "@/components/chat/cards/RiskAssessmentCard";
-import { SentimentAnalysisCard } from "@/components/chat/cards/SentimentAnalysisCard";
-
-// Advanced Chat (4)
-import { MentionSystem } from "@/components/chat/advanced/MentionSystem";
-import { MessageHistory } from "@/components/chat/advanced/MessageHistory";
-import { RichTextEditor } from "@/components/chat/advanced/RichTextEditor";
-
-// Input (4)
-import { AttachmentPreview } from "@/components/chat/input/AttachmentPreview";
-import { MarkdownPreview } from "@/components/chat/input/MarkdownPreview";
-import { MentionAutocomplete } from "@/components/chat/input/MentionAutocomplete";
-import { SlashCommandsMenu } from "@/components/chat/input/SlashCommandsMenu";
-
-// Smart (5)
-import { AIAssistant } from "@/components/chat/smart/AIAssistant";
-import { AutoComplete } from "@/components/chat/smart/AutoComplete";
-import { ContextAwareness } from "@/components/chat/smart/ContextAwareness";
-import { ContextualHelpCard } from "@/components/chat/smart/ContextualHelpCard";
-import { SmartSuggestions } from "@/components/chat/smart/SmartSuggestions";
-
-// Realtime (4)
-import { LiveActivityFeed } from "@/components/chat/realtime/LiveActivityFeed";
-import { LiveCollaboration } from "@/components/chat/realtime/LiveCollaboration";
-import { LiveTypingIndicators } from "@/components/chat/realtime/LiveTypingIndicators";
-import { RealtimeNotifications } from "@/components/chat/realtime/RealtimeNotifications";
-
-// Other (10)
-import { AboutInfo } from "@/components/chat/other/AboutInfo";
-import { CommandPalette } from "@/components/chat/other/CommandPalette";
-import { ExportImportCard } from "@/components/chat/other/ExportImportCard";
-import { HelpCenter } from "@/components/chat/other/HelpCenter";
-import { KeyboardShortcutsCard } from "@/components/chat/other/KeyboardShortcutsCard";
-import { QuickActions } from "@/components/chat/other/QuickActions";
-import { SearchEverywhere } from "@/components/chat/other/SearchEverywhere";
-import { SettingsPanel } from "@/components/chat/other/SettingsPanel";
-import { ThemeCustomizerCard } from "@/components/chat/other/ThemeCustomizerCard";
-import { UserProfile } from "@/components/chat/other/UserProfile";
-
-// Dialog host to power all modals
-
-// Interactive components
-import { ActionButtonsGroup } from "@/components/chat/interactive/ActionButtonsGroup";
-import { ApprovalCard } from "@/components/chat/interactive/ApprovalCard";
-import { PhaseTracker } from "@/components/chat/interactive/PhaseTracker";
-import { SyncStatusCard } from "@/components/chat/interactive/SyncStatusCard";
-import { ThinkingIndicator } from "@/components/chat/interactive/ThinkingIndicator";
-
-// ChatGPT-style Advanced components
-import { MemoryManager } from "@/components/chat/advanced/MemoryManager";
-import { SourcesPanel } from "@/components/chat/advanced/SourcesPanel";
-import { StreamingMessage } from "@/components/chat/advanced/StreamingMessage";
-import { ToolsPanel } from "@/components/chat/advanced/ToolsPanel";
-
-// New Advanced Layout & Messaging components
 import { MessageToolbar } from "@/components/chat/advanced/controls/MessageToolbar";
 import { NotificationSystem } from "@/components/chat/advanced/controls/NotificationSystem";
 import { DocumentViewer } from "@/components/chat/advanced/documents/DocumentViewer";
@@ -113,15 +24,104 @@ import {
   MessageSkeleton,
   SearchResultsSkeleton,
 } from "@/components/chat/advanced/loaders/ChatSkeleton";
+import { MemoryManager } from "@/components/chat/advanced/MemoryManager";
+import { MentionSystem } from "@/components/chat/advanced/MentionSystem";
+import { MessageHistory } from "@/components/chat/advanced/MessageHistory";
 import { MessageThread } from "@/components/chat/advanced/messaging/MessageThread";
+import { RichTextEditor } from "@/components/chat/advanced/RichTextEditor";
+import { SourcesPanel } from "@/components/chat/advanced/SourcesPanel";
+import { StreamingMessage } from "@/components/chat/advanced/StreamingMessage";
+import { ToolsPanel } from "@/components/chat/advanced/ToolsPanel";
 import { AnalyticsCard } from "@/components/chat/cards/AnalyticsCard";
+import { AnomalyDetectionCard } from "@/components/chat/cards/AnomalyDetectionCard";
+import { BillyAnalyticsCard } from "@/components/chat/cards/BillyAnalyticsCard";
+import { BillyCustomerCard } from "@/components/chat/cards/BillyCustomerCard";
+import { BillyProductCard } from "@/components/chat/cards/BillyProductCard";
+import { CalendarCard } from "@/components/chat/cards/CalendarCard";
+import { CalendarEventEditCard } from "@/components/chat/cards/CalendarEventEditCard";
+import { ConflictCheckCard } from "@/components/chat/cards/ConflictCheckCard";
+import { ContactCard } from "@/components/chat/cards/ContactCard";
+import { CrossReferenceCard } from "@/components/chat/cards/CrossReferenceCard";
+import { CustomerHistoryCard } from "@/components/chat/cards/CustomerHistoryCard";
+import { DataVerificationCard } from "@/components/chat/cards/DataVerificationCard";
+import { DocumentCard } from "@/components/chat/cards/DocumentCard";
+import { EmailCard } from "@/components/chat/cards/EmailCard";
+import { NotificationCard } from "@/components/chat/cards/NotificationCard";
+import { QuickReplyCard } from "@/components/chat/cards/QuickReplyCard";
+import { StatusCard } from "@/components/chat/cards/StatusCard";
+import { TaskCard } from "@/components/chat/cards/TaskCard";
 
-// New Data Visualization components
+// Email & Shortwave Cards
+import { EmailSearchCard } from "@/components/chat/cards/EmailSearchCard";
+import { FileCard } from "@/components/chat/cards/FileCard";
+import { FreeBusyCard } from "@/components/chat/cards/FreeBusyCard";
+import { InvoiceCard } from "@/components/chat/cards/InvoiceCard";
+import { LabelManagementCard } from "@/components/chat/cards/LabelManagementCard";
+
+// Intelligens & Analyse
+import { LeadTrackingCard } from "@/components/chat/cards/LeadTrackingCard";
+import { MessageCard } from "@/components/chat/cards/MessageCard";
+import { PatternRecognitionCard } from "@/components/chat/cards/PatternRecognitionCard";
+import { PredictiveInsightsCard } from "@/components/chat/cards/PredictiveInsightsCard";
+import { RecommendationEngineCard } from "@/components/chat/cards/RecommendationEngineCard";
+import { RiskAssessmentCard } from "@/components/chat/cards/RiskAssessmentCard";
+import { SentimentAnalysisCard } from "@/components/chat/cards/SentimentAnalysisCard";
+import { TodoFromEmailCard } from "@/components/chat/cards/TodoFromEmailCard";
+import { UnsubscribeCard } from "@/components/chat/cards/UnsubscribeCard";
+
+// Advanced Chat (4)
+
+// Input (4)
 import { ChartComponent } from "@/components/chat/data-visualization/ChartComponent";
 import { DataTable } from "@/components/chat/data-visualization/DataTable";
 import { MetricsDashboard } from "@/components/chat/data-visualization/MetricsDashboard";
+import { AttachmentPreview } from "@/components/chat/input/AttachmentPreview";
+import { MarkdownPreview } from "@/components/chat/input/MarkdownPreview";
+import { MentionAutocomplete } from "@/components/chat/input/MentionAutocomplete";
+import { SlashCommandsMenu } from "@/components/chat/input/SlashCommandsMenu";
+
+// Smart (5)
+import { ActionButtonsGroup } from "@/components/chat/interactive/ActionButtonsGroup";
+import { ApprovalCard } from "@/components/chat/interactive/ApprovalCard";
+import { PhaseTracker } from "@/components/chat/interactive/PhaseTracker";
+import { SyncStatusCard } from "@/components/chat/interactive/SyncStatusCard";
+import { ThinkingIndicator } from "@/components/chat/interactive/ThinkingIndicator";
+import { AboutInfo } from "@/components/chat/other/AboutInfo";
+import { CommandPalette } from "@/components/chat/other/CommandPalette";
+import { ExportImportCard } from "@/components/chat/other/ExportImportCard";
+import { ContextAwareness } from "@/components/chat/smart/ContextAwareness";
+import { ContextualHelpCard } from "@/components/chat/smart/ContextualHelpCard";
+import { SmartSuggestions } from "@/components/chat/smart/SmartSuggestions";
+
+// Realtime (4)
+import { LiveCollaboration } from "@/components/chat/realtime/LiveCollaboration";
+import { LiveTypingIndicators } from "@/components/chat/realtime/LiveTypingIndicators";
+import { RealtimeNotifications } from "@/components/chat/realtime/RealtimeNotifications";
+
+// Other (10)
+import { HelpCenter } from "@/components/chat/other/HelpCenter";
+import { KeyboardShortcutsCard } from "@/components/chat/other/KeyboardShortcutsCard";
+import { QuickActions } from "@/components/chat/other/QuickActions";
+import { SearchEverywhere } from "@/components/chat/other/SearchEverywhere";
+import { SettingsPanel } from "@/components/chat/other/SettingsPanel";
+import { ThemeCustomizerCard } from "@/components/chat/other/ThemeCustomizerCard";
+import { UserProfile } from "@/components/chat/other/UserProfile";
+import { LiveActivityFeed } from "@/components/chat/realtime/LiveActivityFeed";
+import { AIAssistant } from "@/components/chat/smart/AIAssistant";
+import { AutoComplete } from "@/components/chat/smart/AutoComplete";
+
+// Dialog host to power all modals
+
+// Interactive components
+
+// ChatGPT-style Advanced components
+
+// New Advanced Layout & Messaging components
+
+// New Data Visualization components
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
 export default function ChatComponentsShowcase() {

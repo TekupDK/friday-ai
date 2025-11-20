@@ -1,0 +1,31 @@
+name: Sync Prompts
+
+on:
+  push:
+    paths:
+      - '.cursor/commands/**'
+      - 'scripts/sync-prompts.mjs'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Run Sync Script
+        run: node scripts/sync-prompts.mjs
+        
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .github/prompts
+          git diff --quiet && git diff --staged --quiet || (git commit -m 'chore: sync copilot prompts from cursor commands' && git push)

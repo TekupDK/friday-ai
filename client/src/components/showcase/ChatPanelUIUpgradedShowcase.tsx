@@ -20,16 +20,16 @@ import { ChatMessage } from "@/components/chat/upgraded/ChatMessage";
 import { EmailThreadCardUpgraded } from "@/components/chat/upgraded/EmailThreadCard";
 import { FileUpload } from "@/components/chat/upgraded/FileUpload";
 import { InvoiceCardUpgraded } from "@/components/chat/upgraded/InvoiceCard";
-import { SearchResultsCardUpgraded } from "@/components/chat/upgraded/SearchResultsCard";
-import {
-  ToastProvider,
-  useToast,
-} from "@/components/chat/upgraded/ToastNotification";
 import {
   QuickActions,
   presetActions,
 } from "@/components/chat/upgraded/QuickActions";
+import { SearchResultsCardUpgraded } from "@/components/chat/upgraded/SearchResultsCard";
 import { ThinkingIndicator } from "@/components/chat/upgraded/ThinkingIndicator";
+import {
+  ToastProvider,
+  useToast,
+} from "@/components/chat/upgraded/ToastNotification";
 import { VoiceInput } from "@/components/chat/upgraded/VoiceInput";
 import { WeatherCardUpgraded } from "@/components/chat/upgraded/WeatherCard";
 import { WelcomeScreenUpgraded } from "@/components/chat/upgraded/WelcomeScreen";

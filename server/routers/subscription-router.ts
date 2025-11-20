@@ -17,7 +17,7 @@ import {
   processCancellation,
   applyDiscount,
   calculateNextBillingDate,
-} from "../subscription-actions";
+} from "../modules/subscription/subscription-actions";
 import {
   getSubscriptionById,
   getSubscriptionByCustomerId,
@@ -27,7 +27,7 @@ import {
   getSubscriptionUsageForMonth,
   getTotalUsageForMonth,
   getSubscriptionHistory,
-} from "../subscription-db";
+} from "../modules/subscription/subscription-db";
 import {
   getPlanConfig,
   calculateMonthlyRevenue,
@@ -36,7 +36,7 @@ import {
   checkOverage,
   getSubscriptionStats,
   type SubscriptionPlanType,
-} from "../subscription-helpers";
+} from "../modules/subscription/subscription-helpers";
 
 export const subscriptionRouter = router({
   /**

@@ -4,7 +4,9 @@
 
 import { writeFileSync } from "fs";
 import { join } from "path";
+
 import { stringify } from "csv-stringify/sync";
+
 import type { MatchResult } from "./types.js";
 
 /**

@@ -43,7 +43,16 @@ function Router() {
   }
 
   // Redirect to login if not authenticated
+  // Save current path so we can redirect back after login
   if (!isAuthenticated) {
+    // Only save path if it's not already the login page
+    if (path !== "/login" && path !== "/preview/login") {
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set("redirect", path);
+      // Store in sessionStorage as backup
+      sessionStorage.setItem("loginRedirect", path);
+    }
+    // Render LoginPage only once - handle /login route explicitly
     return <LoginPage />;
   }
 

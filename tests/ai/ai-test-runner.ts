@@ -15,6 +15,7 @@ import {
   type BrowserContext,
   type Page,
 } from "@playwright/test";
+
 import FridayAITestDataGenerator from "./test-data-generator";
 
 // AI Test fixture with enhanced capabilities

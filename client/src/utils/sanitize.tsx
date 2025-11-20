@@ -71,7 +71,10 @@ export function sanitizeHtml(
  * ```
  */
 export function sanitizeText(dirty: string): string {
-  return DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] });
+  const sanitized = DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] }) as string;
+  // Preserve literal ampersands while still escaping angle brackets
+  // DOMPurify encodes & to &amp; by default when stripping all tags; tests expect & to remain
+  return sanitized.replace(/&amp;/g, "&");
 }
 
 /**
