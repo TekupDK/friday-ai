@@ -46,6 +46,7 @@
     "test:email-smoke": "dotenv -e .env.dev -- tsx server/scripts/email-smoke-test.ts",
     "test:followup-reminders": "dotenv -e .env.dev -- tsx server/scripts/test-followup-reminders.ts",
     "test:ghostwriter": "dotenv -e .env.dev -- tsx server/scripts/test-ghostwriter.ts",
+    "test:e2e-followup-ghostwriter": "dotenv -e .env.dev -- tsx server/scripts/test-e2e-followup-ghostwriter.ts",
     "test:subscription": "vitest run server/__tests__/subscription-smoke.test.ts",
     "test:subscription:email": "dotenv -e .env.dev -- tsx server/scripts/test-subscription-email.ts",
     "test:subscription:renewal": "dotenv -e .env.dev -- tsx server/scripts/test-subscription-renewal-flow.ts",
