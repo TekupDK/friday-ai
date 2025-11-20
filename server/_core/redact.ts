@@ -1,7 +1,11 @@
 /**
  * Data Redaction Utility
  * ✅ SECURITY: Redacts sensitive information from logs and error messages
+ *
+ * Enhanced with PII masking for better debugging while maintaining security
  */
+
+import { maskEmail, maskPhoneNumber, maskCreditCard, maskCPR } from "./pii-masking";
 
 /**
  * List of sensitive field names (case-insensitive matching)
@@ -183,39 +187,55 @@ export function redact(obj: any, depth: number = 0): any {
 
 /**
  * Redact sensitive data from a string (for simple log messages)
- * ✅ FIXED: Updated to match test expectations
+ * ✅ SECURITY: Enhanced with PII masking for better debugging while maintaining security
  */
 export function redactString(str: string): string {
   // Redact common patterns
   let redacted = str;
-  
+
   // Redact database connection strings (postgres://, mysql://, etc.)
   redacted = redacted.replace(/[a-z]+:\/\/[^@]+@[^\s]+/gi, "[DB_CONNECTION_STRING]");
-  
+
   // Redact JWT tokens (3 parts separated by dots)
   redacted = redacted.replace(/[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g, "[JWT_TOKEN]");
-  
+
   // Redact Bearer tokens
   redacted = redacted.replace(/Bearer\s+[A-Za-z0-9_-]+/gi, "Bearer [TOKEN]");
-  
+
   // Redact long alphanumeric strings (likely tokens, API keys)
   redacted = redacted.replace(/\b[A-Za-z0-9_-]{32,}\b/g, "[TOKEN]");
-  
-  // Redact email addresses
-  redacted = redacted.replace(/\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b/gi, "[EMAIL]");
-  
-  // Redact credit card numbers (16 digits, may have dashes/spaces)
-  redacted = redacted.replace(/\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b/g, "[CREDIT_CARD]");
-  
-  // Redact Danish CPR numbers (DDMMYY-XXXX or DDMMYYXXXX)
-  redacted = redacted.replace(/\b\d{6}-?\d{4}\b/g, "[CPR]");
-  
+
+  // ✅ SECURITY: Use PII masking for partial redaction (better for debugging)
+  // Mask email addresses (shows partial info: t**t@e****e.com)
+  redacted = redacted.replace(
+    /\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b/gi,
+    match => maskEmail(match, { preserveFormat: true })
+  );
+
+  // Mask credit card numbers (shows first 4 and last 4 digits)
+  redacted = redacted.replace(
+    /\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4,7}\b/g,
+    match => maskCreditCard(match, { preserveFormat: true })
+  );
+
+  // Mask Danish CPR numbers (shows birthdate, masks last 4 digits)
+  redacted = redacted.replace(
+    /\b\d{6}-?\d{4}\b/g,
+    match => maskCPR(match, { preserveFormat: true })
+  );
+
+  // Mask Danish phone numbers (shows first 2 and last 2 digits)
+  redacted = redacted.replace(
+    /(\+45[\s]?)?(\d{2}[\s]?\d{2}[\s]?\d{2}[\s]?\d{2})/g,
+    match => maskPhoneNumber(match, { preserveFormat: true })
+  );
+
   // Redact auth codes in URLs
   redacted = redacted.replace(/code=[A-Za-z0-9_-]+/gi, "code=[REDACTED]");
-  
+
   // Redact password fields in JSON strings
   redacted = redacted.replace(/"password"\s*:\s*"[^"]*"/gi, '"password":"[REDACTED]"');
-  
+
   return redacted;
 }
 

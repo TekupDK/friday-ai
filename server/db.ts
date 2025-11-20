@@ -56,7 +56,16 @@ export async function getDb() {
 
       // Create client without schema in connection string
       const connectionString = dbUrl.toString();
-      const client = postgres(connectionString);
+
+      // ✅ SECURITY: Configure query timeout limits to prevent long-running queries
+      const client = postgres(connectionString, {
+        max: 10, // Maximum number of connections in pool
+        idle_timeout: 30, // Close idle connections after 30 seconds
+        connect_timeout: 10, // Connection timeout in seconds
+        // Query timeout: 30 seconds for normal queries
+        // This prevents resource exhaustion from slow/hanging queries
+        statement_timeout: 30000, // milliseconds (30 seconds)
+      });
 
       // If schema is specified, set search_path after connection
       if (schema) {
