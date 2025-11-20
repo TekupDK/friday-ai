@@ -122,13 +122,13 @@ export default function FridayInboxLanding() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
                     <Icon icon="solar:star-bold-duotone" className="w-5 h-5" />
-                    Introducing Friday AI Inbox
+                    Powered by AI
                   </motion.div>
 
                   <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                    Your Intelligent
+                    Din Intelligente
                     <br />
-                    Email Assistant
+                    Forretningsassistent
                   </h1>
                 </motion.div>
 
@@ -136,8 +136,8 @@ export default function FridayInboxLanding() {
                   variants={fadeInUp}
                   className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
                 >
-                  Transform your inbox into a productivity powerhouse. Friday AI automatically
-                  organizes, prioritizes, and responds to your emails using advanced AI.
+                  Email, kalender, fakturering og CRM - alt samlet i ét intelligent system.
+                  Friday AI automatiserer din daglige workflow med avanceret kunstig intelligens.
                 </motion.p>
 
                 <motion.div
@@ -147,12 +147,12 @@ export default function FridayInboxLanding() {
                   <AppleButton
                     variant="primary"
                     size="lg"
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/")}
                     className="group relative overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center gap-2">
                       <Icon icon="solar:rocket-2-bold-duotone" className="w-5 h-5" />
-                      Get Started Free
+                      Kom i gang
                     </span>
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100"
@@ -163,11 +163,11 @@ export default function FridayInboxLanding() {
                   <AppleButton
                     variant="secondary"
                     size="lg"
-                    onClick={() => navigate("/demo")}
+                    onClick={() => navigate("/docs")}
                     className="flex items-center gap-2"
                   >
-                    <Icon icon="solar:play-circle-bold-duotone" className="w-5 h-5" />
-                    Watch Demo
+                    <Icon icon="solar:book-bold-duotone" className="w-5 h-5" />
+                    Læs Dokumentation
                   </AppleButton>
                 </motion.div>
 
@@ -179,18 +179,18 @@ export default function FridayInboxLanding() {
                   {[
                     {
                       icon: "solar:inbox-line-bold-duotone",
-                      title: "Smart Inbox",
-                      description: "AI-powered email categorization",
+                      title: "Smart Email",
+                      description: "AI-kategorisering af leads og bookinger",
                     },
                     {
-                      icon: "solar:lightning-bold-duotone",
-                      title: "Lightning Fast",
-                      description: "Instant AI-generated responses",
+                      icon: "solar:calendar-bold-duotone",
+                      title: "Kalender Integration",
+                      description: "Automatisk booking med Google Calendar",
                     },
                     {
-                      icon: "solar:shield-check-bold-duotone",
-                      title: "Secure & Private",
-                      description: "Enterprise-grade security",
+                      icon: "solar:bill-list-bold-duotone",
+                      title: "Billy Fakturering",
+                      description: "Nem fakturahåndtering via Billy.dk",
                     },
                   ].map((feature, index) => (
                     <motion.div
@@ -219,7 +219,7 @@ export default function FridayInboxLanding() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                   >
-                    Powerful Features
+                    Kraftfulde Funktioner
                   </motion.h2>
                   <motion.p
                     className="text-xl text-muted-foreground max-w-2xl mx-auto"
@@ -228,7 +228,7 @@ export default function FridayInboxLanding() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
                   >
-                    Everything you need to manage your inbox efficiently
+                    Alt du har brug for til at drive din forretning effektivt
                   </motion.p>
                 </div>
 
@@ -242,34 +242,34 @@ export default function FridayInboxLanding() {
                   {[
                     {
                       icon: "solar:letter-opened-bold-duotone",
-                      title: "Smart Sorting",
+                      title: "AI Email Summaries",
                       description:
-                        "Automatically categorize emails into priority, social, and promotional",
+                        "150-tegns danske resuméer med Gemini AI - spar tid på lange emails",
                     },
                     {
-                      icon: "solar:chat-round-dots-bold-duotone",
-                      title: "AI Responses",
-                      description: "Generate contextual email responses with one click",
+                      icon: "solar:tag-bold-duotone",
+                      title: "Smart Auto-Labeling",
+                      description: "Automatisk kategorisering: Leads 🟢, Booking 🔵, Finance 🟡, Support 🔴",
                     },
                     {
                       icon: "solar:calendar-bold-duotone",
-                      title: "Schedule Assistant",
-                      description: "Automatically detect and schedule meetings from emails",
+                      title: "Google Calendar Integration",
+                      description: "Book møder direkte fra emails - synkroniseret med din kalender",
                     },
                     {
-                      icon: "solar:document-text-bold-duotone",
-                      title: "Smart Summaries",
-                      description: "Get AI-generated summaries of long email threads",
+                      icon: "solar:bill-list-bold-duotone",
+                      title: "Billy.dk Fakturering",
+                      description: "Opret fakturaer direkte fra chat - 349 kr/time standard",
                     },
                     {
-                      icon: "solar:bell-bold-duotone",
-                      title: "Priority Alerts",
-                      description: "Never miss important emails with smart notifications",
+                      icon: "solar:users-group-rounded-bold-duotone",
+                      title: "CRM & Lead Pipeline",
+                      description: "Hold styr på leads, kunder og opportunities i ét system",
                     },
                     {
-                      icon: "solar:graph-bold-duotone",
-                      title: "Analytics",
-                      description: "Track email patterns and productivity metrics",
+                      icon: "solar:checklist-bold-duotone",
+                      title: "Task Management",
+                      description: "AI-genererede opgaver fra emails med prioritering og deadlines",
                     },
                   ].map((feature, index) => (
                     <motion.div key={feature.title} variants={scaleIn}>
@@ -304,7 +304,7 @@ export default function FridayInboxLanding() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                   >
-                    Loved by Professionals
+                    Elsket af Danske Virksomheder
                   </motion.h2>
                   <motion.p
                     className="text-xl text-muted-foreground max-w-2xl mx-auto"
@@ -313,7 +313,7 @@ export default function FridayInboxLanding() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
                   >
-                    See what our users have to say
+                    Se hvad vores kunder siger
                   </motion.p>
                 </div>
 
@@ -326,30 +326,30 @@ export default function FridayInboxLanding() {
                 >
                   {[
                     {
-                      name: "Sarah Chen",
-                      role: "Product Manager",
-                      company: "TechCorp",
+                      name: "Lars Nielsen",
+                      role: "Ejer",
+                      company: "Rendetalje ApS",
                       image: "solar:user-bold-duotone",
                       quote:
-                        "Friday AI has transformed how I manage my inbox. I save at least 2 hours every day!",
+                        "Friday AI har forvandlet vores email-håndtering. Vi sparer mindst 2 timer hver dag på booking og fakturering!",
                       rating: 5,
                     },
                     {
-                      name: "Michael Rodriguez",
-                      role: "CEO",
-                      company: "StartupXYZ",
+                      name: "Mette Hansen",
+                      role: "Administrerende Direktør",
+                      company: "VVS Service København",
                       image: "solar:user-bold-duotone",
                       quote:
-                        "The AI responses are incredibly accurate. It's like having a personal assistant.",
+                        "AI-kategoriseringen er utrolig præcis. Vi mister ikke længere vigtige leads i indbakken.",
                       rating: 5,
                     },
                     {
-                      name: "Emma Thompson",
-                      role: "Marketing Director",
-                      company: "GrowthCo",
+                      name: "Thomas Andersen",
+                      role: "Indehaver",
+                      company: "Elektrikeren.dk",
                       image: "solar:user-bold-duotone",
                       quote:
-                        "Finally, an email tool that actually understands context. Absolutely game-changing!",
+                        "Billy integration er genial. Fakturaer oprettes automatisk og min økonomi er altid up-to-date!",
                       rating: 5,
                     },
                   ].map((testimonial, index) => (
@@ -401,7 +401,7 @@ export default function FridayInboxLanding() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                   >
-                    Simple, Transparent Pricing
+                    Vælg Din Plan
                   </motion.h2>
                   <motion.p
                     className="text-xl text-muted-foreground max-w-2xl mx-auto"
@@ -410,7 +410,7 @@ export default function FridayInboxLanding() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
                   >
-                    Choose the plan that works for you
+                    Abonnementer til danske service-virksomheder
                   </motion.p>
                 </div>
 
@@ -423,48 +423,48 @@ export default function FridayInboxLanding() {
                 >
                   {[
                     {
-                      name: "Starter",
-                      price: "$9",
-                      period: "/month",
-                      description: "Perfect for individuals",
+                      name: "Basis",
+                      price: "1.200",
+                      period: "kr/måned",
+                      description: "Perfekt til mindre virksomheder",
                       features: [
-                        "1,000 emails/month",
-                        "Basic AI responses",
-                        "Email categorization",
-                        "Mobile app access",
-                        "Email support",
+                        "3 timer rengøring inkluderet",
+                        "Månedlig rengøring",
+                        "Gmail & Kalender integration",
+                        "Billy fakturering",
+                        "Grundlæggende support",
                       ],
                       icon: "solar:leaf-bold-duotone",
                       popular: false,
                     },
                     {
-                      name: "Professional",
-                      price: "$29",
-                      period: "/month",
-                      description: "For busy professionals",
+                      name: "Premium",
+                      price: "1.800",
+                      period: "kr/måned",
+                      description: "Til travle virksomheder",
                       features: [
-                        "10,000 emails/month",
-                        "Advanced AI responses",
-                        "Smart scheduling",
-                        "Priority support",
-                        "Analytics dashboard",
-                        "Custom workflows",
+                        "4 timer rengøring inkluderet",
+                        "Månedlig rengøring + hovedrengøring",
+                        "AI Email Summaries",
+                        "Smart Auto-Labeling",
+                        "CRM & Lead Pipeline",
+                        "Prioriteret support",
                       ],
                       icon: "solar:crown-bold-duotone",
                       popular: true,
                     },
                     {
-                      name: "Enterprise",
-                      price: "$99",
-                      period: "/month",
-                      description: "For teams and organizations",
+                      name: "VIP",
+                      price: "2.500",
+                      period: "kr/måned",
+                      description: "For professionelle teams",
                       features: [
-                        "Unlimited emails",
-                        "Custom AI training",
-                        "Team collaboration",
-                        "Dedicated support",
-                        "SSO & Advanced security",
-                        "API access",
+                        "6 timer rengøring (2x månedlig)",
+                        "Hovedrengøring inkluderet",
+                        "Fuld AI automatisering",
+                        "Autonomous Lead Intelligence",
+                        "VIP support 24/7",
+                        "Prioriteret booking",
                       ],
                       icon: "solar:rocket-2-bold-duotone",
                       popular: false,
@@ -517,9 +517,9 @@ export default function FridayInboxLanding() {
                           <AppleButton
                             variant={plan.popular ? "primary" : "secondary"}
                             className="w-full"
-                            onClick={() => navigate(`/signup?plan=${plan.name.toLowerCase()}`)}
+                            onClick={() => navigate(`/subscriptions/plans`)}
                           >
-                            {plan.popular ? "Start Free Trial" : "Get Started"}
+                            {plan.popular ? "Vælg Plan" : "Læs Mere"}
                           </AppleButton>
                         </div>
                       </AppleCard>
@@ -551,37 +551,37 @@ export default function FridayInboxLanding() {
                     </motion.div>
 
                     <h2 className="text-3xl md:text-4xl font-bold">
-                      Ready to Transform Your Inbox?
+                      Klar til at Automatisere Din Forretning?
                     </h2>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                      Join thousands of professionals who have already revolutionized their email
-                      workflow with Friday AI.
+                      Få den intelligente assistent der håndterer emails, bookinger og fakturering
+                      automatisk - så du kan fokusere på din forretning.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
                       <AppleButton
                         variant="primary"
                         size="lg"
-                        onClick={() => navigate("/signup")}
+                        onClick={() => navigate("/")}
                         className="flex items-center gap-2"
                       >
                         <Icon icon="solar:rocket-2-bold-duotone" className="w-5 h-5" />
-                        Start Your Free Trial
+                        Kom i Gang Nu
                       </AppleButton>
 
                       <AppleButton
                         variant="secondary"
                         size="lg"
-                        onClick={() => navigate("/contact")}
+                        onClick={() => navigate("/docs")}
                         className="flex items-center gap-2"
                       >
-                        <Icon icon="solar:phone-bold-duotone" className="w-5 h-5" />
-                        Contact Sales
+                        <Icon icon="solar:book-bold-duotone" className="w-5 h-5" />
+                        Se Dokumentation
                       </AppleButton>
                     </div>
 
                     <p className="text-sm text-muted-foreground pt-4">
-                      No credit card required • 14-day free trial • Cancel anytime
+                      Fuld integration med Gmail, Google Calendar og Billy.dk
                     </p>
                   </div>
                 </AppleCard>
@@ -598,104 +598,104 @@ export default function FridayInboxLanding() {
                     <span className="text-xl font-bold">Friday AI</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    The intelligent email assistant that helps you stay productive and organized.
+                    Din intelligente forretningsassistent til email, kalender, fakturering og CRM.
                   </p>
                 </div>
 
                 {/* Product */}
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-sm uppercase tracking-wider">Product</h4>
+                  <h4 className="font-semibold text-sm uppercase tracking-wider">Produkt</h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a href="#features" className="text-muted-foreground hover:text-primary transition-colors">
-                        Features
+                      <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                        Workspace
                       </a>
                     </li>
                     <li>
-                      <a href="#pricing" className="text-muted-foreground hover:text-primary transition-colors">
-                        Pricing
+                      <a href="/subscriptions/plans" className="text-muted-foreground hover:text-primary transition-colors">
+                        Priser
                       </a>
                     </li>
                     <li>
-                      <a href="#integrations" className="text-muted-foreground hover:text-primary transition-colors">
-                        Integrations
+                      <a href="/docs" className="text-muted-foreground hover:text-primary transition-colors">
+                        Dokumentation
                       </a>
                     </li>
                     <li>
-                      <a href="#changelog" className="text-muted-foreground hover:text-primary transition-colors">
-                        Changelog
+                      <a href="/chat-components" className="text-muted-foreground hover:text-primary transition-colors">
+                        Komponenter
                       </a>
                     </li>
                   </ul>
                 </div>
 
-                {/* Company */}
+                {/* Features */}
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-sm uppercase tracking-wider">Company</h4>
+                  <h4 className="font-semibold text-sm uppercase tracking-wider">Features</h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">
-                        About Us
+                      <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                        Email AI
                       </a>
                     </li>
                     <li>
-                      <a href="#blog" className="text-muted-foreground hover:text-primary transition-colors">
-                        Blog
+                      <a href="/crm/dashboard" className="text-muted-foreground hover:text-primary transition-colors">
+                        CRM Dashboard
                       </a>
                     </li>
                     <li>
-                      <a href="#careers" className="text-muted-foreground hover:text-primary transition-colors">
-                        Careers
+                      <a href="/crm/leads" className="text-muted-foreground hover:text-primary transition-colors">
+                        Lead Pipeline
                       </a>
                     </li>
                     <li>
-                      <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">
-                        Contact
+                      <a href="/crm/bookings" className="text-muted-foreground hover:text-primary transition-colors">
+                        Kalender Booking
                       </a>
                     </li>
                   </ul>
                 </div>
 
-                {/* Legal */}
+                {/* Support */}
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-sm uppercase tracking-wider">Legal</h4>
+                  <h4 className="font-semibold text-sm uppercase tracking-wider">Support</h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a href="#privacy" className="text-muted-foreground hover:text-primary transition-colors">
-                        Privacy Policy
+                      <a href="/docs" className="text-muted-foreground hover:text-primary transition-colors">
+                        Hjælp Center
                       </a>
                     </li>
                     <li>
-                      <a href="#terms" className="text-muted-foreground hover:text-primary transition-colors">
-                        Terms of Service
+                      <a href="/accessibility" className="text-muted-foreground hover:text-primary transition-colors">
+                        Tilgængelighed
                       </a>
                     </li>
                     <li>
-                      <a href="#security" className="text-muted-foreground hover:text-primary transition-colors">
-                        Security
+                      <a href="https://github.com/TekupDK/friday-ai" className="text-muted-foreground hover:text-primary transition-colors">
+                        GitHub
                       </a>
                     </li>
                     <li>
-                      <a href="#gdpr" className="text-muted-foreground hover:text-primary transition-colors">
-                        GDPR
+                      <a href="mailto:support@tekup.dk" className="text-muted-foreground hover:text-primary transition-colors">
+                        Kontakt
                       </a>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              {/* Trusted By */}
+              {/* Integrations */}
               <div className="mb-12">
                 <p className="text-center text-sm text-muted-foreground mb-8">
-                  Trusted by teams at
+                  Integreret med
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-12 opacity-60">
+                  <Icon icon="logos:google-gmail" className="w-8 h-8" />
+                  <Icon icon="logos:google-calendar" className="w-8 h-8" />
+                  <Icon icon="solar:document-text-bold-duotone" className="w-8 h-8 text-primary" />
+                  <Icon icon="logos:anthropic-icon" className="w-8 h-8" />
+                  <Icon icon="logos:openai-icon" className="w-8 h-8" />
                   <Icon icon="logos:google-icon" className="w-8 h-8" />
-                  <Icon icon="logos:microsoft-icon" className="w-8 h-8" />
-                  <Icon icon="logos:slack-icon" className="w-8 h-8" />
-                  <Icon icon="logos:dropbox" className="w-8 h-8" />
-                  <Icon icon="logos:spotify-icon" className="w-8 h-8" />
-                  <Icon icon="logos:netflix-icon" className="w-8 h-8" />
                 </div>
               </div>
 
@@ -703,27 +703,32 @@ export default function FridayInboxLanding() {
               <div className="border-t border-border/50 pt-8">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                   <p className="text-sm text-muted-foreground">
-                    © 2025 Friday AI. All rights reserved.
+                    © 2025 Friday AI by TekupDK. Bygget til Rendetalje.dk
                   </p>
 
                   <div className="flex items-center gap-6">
                     <a
-                      href="#twitter"
+                      href="mailto:support@tekup.dk"
                       className="text-muted-foreground hover:text-primary transition-colors"
+                      title="Email Support"
                     >
                       <Icon icon="solar:letter-bold-duotone" className="w-5 h-5" />
                     </a>
                     <a
-                      href="#github"
+                      href="https://github.com/TekupDK/friday-ai"
                       className="text-muted-foreground hover:text-primary transition-colors"
+                      title="GitHub"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Icon icon="solar:code-bold-duotone" className="w-5 h-5" />
                     </a>
                     <a
-                      href="#linkedin"
+                      href="/docs"
                       className="text-muted-foreground hover:text-primary transition-colors"
+                      title="Dokumentation"
                     >
-                      <Icon icon="solar:link-bold-duotone" className="w-5 h-5" />
+                      <Icon icon="solar:book-bold-duotone" className="w-5 h-5" />
                     </a>
                   </div>
                 </div>
