@@ -14,7 +14,6 @@ import { crmExtensionsRouter } from "./routers/crm-extensions-router";
 import { crmLeadRouter } from "./routers/crm-lead-router";
 import { crmServiceTemplateRouter } from "./routers/crm-service-template-router";
 import { crmStatsRouter } from "./routers/crm-stats-router";
-import { docsRouter } from "./routers/docs-router";
 import { emailIntelligenceRouter } from "./routers/email-intelligence-router";
 import { fridayLeadsRouter } from "./routers/friday-leads-router";
 import { fridayRouter } from "./routers/friday-router";
@@ -37,7 +36,6 @@ import { workspaceRouter } from "./routers/workspace-router";
  * - auth: Authentication
  * - workspace: Workspace management
  * - inbox: Email, calendar, leads, tasks, invoices
- * - docs: Documentation
  * - aiMetrics: AI metrics and analytics
  * - emailIntelligence: Email intelligence features
  * - fridayLeads: Friday AI leads integration
@@ -54,7 +52,6 @@ export const appRouter = router({
   auth: authRouter,
   workspace: workspaceRouter,
   inbox: inboxRouter,
-  docs: docsRouter,
   aiMetrics: aiMetricsRouter,
   emailIntelligence: emailIntelligenceRouter,
   fridayLeads: fridayLeadsRouter,
