@@ -276,6 +276,9 @@ export default function EmailListV2({
                               minute: "2-digit",
                             })}
                           </span>
+                          {email.hasAttachment && (
+                            <Paperclip className="w-3 h-3 text-muted-foreground shrink-0" />
+                          )}
                         </div>
                         <h3 className="text-sm text-foreground/90 mb-1">
                           {email.subject}

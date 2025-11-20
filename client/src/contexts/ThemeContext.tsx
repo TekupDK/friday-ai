@@ -25,7 +25,14 @@ export function ThemeProvider({
   const [theme, setTheme] = useState<Theme>(() => {
     if (switchable) {
       const stored = localStorage.getItem("theme");
-      return (stored as Theme) || defaultTheme;
+      if (stored) {
+        return stored as Theme;
+      }
+
+      // Auto-detect from system preferences if no stored preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return "dark";
+      }
     }
     return defaultTheme;
   });
@@ -42,6 +49,19 @@ export function ThemeProvider({
       localStorage.setItem("theme", theme);
     }
   }, [theme, switchable]); // Apply theme to DOM and persist to localStorage
+
+  // Listen for system theme changes (only if no stored preference)
+  useEffect(() => {
+    if (!switchable || localStorage.getItem("theme")) return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setTheme(e.matches ? "dark" : "light");
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [switchable]); // Auto-update theme when system preferences change
 
   const toggleTheme = switchable
     ? () => {

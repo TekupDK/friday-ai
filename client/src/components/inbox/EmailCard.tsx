@@ -12,7 +12,7 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Mail, Star } from "lucide-react";
+import { Mail, Paperclip, Star } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Badge } from "../ui/badge";
@@ -29,6 +29,7 @@ export interface EmailCardData {
   snippet: string;
   isUnread: boolean;
   isStarred: boolean;
+  hasAttachment?: boolean;
   timestamp: string; // ISO 8601
   labels?: string[];
 }
@@ -129,6 +130,9 @@ export function EmailCard({ email, onClick }: EmailCardProps) {
             >
               {email.subject || "(Ingen emne)"}
             </h4>
+            {email.hasAttachment && (
+              <Paperclip className="h-3 w-3 text-muted-foreground shrink-0" />
+            )}
             {email.isStarred && (
               <Star className="h-3 w-3 text-yellow-500 fill-yellow-500 shrink-0" />
             )}

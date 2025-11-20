@@ -22,11 +22,13 @@ import EmailListAI from "./EmailListAI";
 import EmailListV2, { type EmailMessage } from "./EmailListV2";
 import EmailSearchV2, { type FolderType } from "./EmailSearchV2";
 import EmailSplits, { type SplitId } from "./EmailSplits";
+import KeyboardShortcutsHelp from "./KeyboardShortcutsHelp";
 
 import { Button } from "@/components/ui/button";
 import { UI_CONSTANTS } from "@/constants/business";
 import { useEmailContext } from "@/contexts/EmailContext";
 import { useEmailKeyboardShortcuts } from "@/hooks/useEmailKeyboardShortcuts";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useRateLimit } from "@/hooks/useRateLimit";
 import { trpc } from "@/lib/trpc";
 import type { EnhancedEmailMessage } from "@/types/enhanced-email";
@@ -52,6 +54,9 @@ export default function EmailTabV2({
   const [selectedEmails, setSelectedEmails] = useState<Set<string>>(new Set());
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
   const [activeSplit, setActiveSplit] = useState<SplitId>("all");
+
+  // Keyboard Shortcuts Help Modal state
+  const [isKeyboardHelpOpen, setIsKeyboardHelpOpen] = useState(false);
 
   // Create Lead Modal state
   const [isCreateLeadModalOpen, setIsCreateLeadModalOpen] = useState(false);
@@ -509,6 +514,19 @@ export default function EmailTabV2({
     },
   });
 
+  // Keyboard shortcut to open help dialog (?)
+  useKeyboardShortcuts(
+    [
+      {
+        key: "?",
+        handler: () => setIsKeyboardHelpOpen(true),
+        description: "Vis keyboard genveje",
+        category: "help",
+      },
+    ],
+    true
+  );
+
   // Error state
   if (isError) {
     return (
@@ -607,6 +625,12 @@ export default function EmailTabV2({
           setSelectedEmailForLead(null);
         }}
         defaults={selectedEmailForLead || undefined}
+      />
+
+      {/* Keyboard Shortcuts Help Modal */}
+      <KeyboardShortcutsHelp
+        open={isKeyboardHelpOpen}
+        onClose={() => setIsKeyboardHelpOpen(false)}
       />
     </div>
   );
