@@ -28,9 +28,25 @@ function Router() {
     redirectOnUnauthenticated: false,
   });
 
-  // Public preview route: render LoginPage without auth/side-effects
+  // Public preview routes: render without auth/side-effects
   if (path === "/preview/login") {
     return <LoginPage preview />;
+  }
+
+  // Public landing page for Friday AI Inbox
+  if (path === "/inbox-landing") {
+    const FridayInboxLanding = lazy(() => import("./pages/FridayInboxLanding"));
+    return (
+      <Suspense
+        fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
+          </div>
+        }
+      >
+        <FridayInboxLanding />
+      </Suspense>
+    );
   }
 
   // Show loading spinner while checking auth
