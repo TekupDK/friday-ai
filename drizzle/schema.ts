@@ -1437,9 +1437,7 @@ export const subscriptionHistory = subscriptionHistoryInFridayAi;
 export const referralCodes = referralCodesInFridayAi;
 export const referralRewards = referralRewardsInFridayAi;
 export const referralHistory = referralHistoryInFridayAi;
-export const emailFollowups = emailFollowupsInFridayAi;
-export const userWritingStyles = userWritingStylesInFridayAi;
-export const emailResponseFeedback = emailResponseFeedbackInFridayAi;
+// emailFollowups, userWritingStyles, emailResponseFeedback exported after definition below
 
 // =============================================================================
 // DOCUMENTATION SYSTEM TABLES
@@ -1792,6 +1790,11 @@ export const emailResponseFeedbackInFridayAi = fridayAi.table(
     ),
   ]
 );
+
+// Export Email Intelligence tables (after definition)
+export const emailFollowups = emailFollowupsInFridayAi;
+export const userWritingStyles = userWritingStylesInFridayAi;
+export const emailResponseFeedback = emailResponseFeedbackInFridayAi;
 
 // Email Intelligence Types
 export type EmailCategory = typeof emailCategoriesInFridayAi.$inferSelect;
