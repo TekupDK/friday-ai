@@ -204,7 +204,7 @@ describe("Follow-up Reminders & Ghostwriter E2E", () => {
 
       const caller = testRouter.createCaller(mockContext);
 
-      const completed = await caller.email.listFollowupReminders({
+      const completed = await caller.inbox.email.listFollowupReminders({
         status: "completed",
       });
 
