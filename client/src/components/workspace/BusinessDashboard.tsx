@@ -24,6 +24,7 @@ import {
   formatTimeRange,
   calculateTotalRevenue,
 } from "@/lib/business-logic";
+import { logger } from "@/lib/logger";
 import { trpc } from "@/lib/trpc";
 
 
@@ -221,34 +222,6 @@ export function BusinessDashboard() {
     if (leadsError) return ERROR_MESSAGES.BUSINESS_DATA;
     return null;
   }, [invoicesError, calendarError, leadsError]);
-
-  // DISABLED: Causes infinite loop - setIsLoading triggers re-render (REMOVED - FIXED)
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   setError(null);
-  //
-  //   try {
-  //     // Calculate real leads needing reply
-  //     const leadsNeedingReply = leads ? leads.filter(lead =>
-  //       lead.status === "new" || lead.status === "contacted"
-  //     ).length : 0;
-
-  //     // Set state with real data
-  //     setTodayBookings(todayEvents);
-  //     setUrgentActions({
-  //       unpaidInvoices: unpaidCount,
-  //       leadsNeedingReply: leadsNeedingReply, // Real data from API
-  //       upcomingReminders: tomorrowEventsCount,
-  //     });
-  //     setWeekStats(weekStatsData);
-  //     setIsLoading(false);
-  //   } catch (err) {
-  //     // TODO: Replace with proper logging service
-  //     // console.error('Business data error:', err);
-  //     setError(ERROR_MESSAGES.BUSINESS_DATA);
-  //     setIsLoading(false);
-  //   }
-  // }, [todayEvents, unpaidCount, tomorrowEventsCount, weekStatsData, leads]);
 
   // Loading state
   if (isLoading) {
@@ -536,27 +509,27 @@ export function BusinessDashboard() {
         workspaceData={dashboardData}
         onAction={async (actionId: string, data: any) => {
           // Handle smart actions
-          console.log("Smart action executed:", actionId, data);
+          logger.debug("Smart action executed", { actionId, data });
 
           switch (actionId) {
             case "view-all-bookings":
               // View all bookings
-              console.log("Viewing all bookings");
+              logger.debug("Viewing all bookings");
               break;
             case "follow-up-leads":
               // Follow up on leads
-              console.log("Following up on leads");
+              logger.debug("Following up on leads");
               break;
             case "chase-payments":
               // Chase unpaid invoices
-              console.log("Chasing payments");
+              logger.debug("Chasing payments");
               break;
             case "generate-report":
               // Generate business report
-              console.log("Generating report");
+              logger.debug("Generating report");
               break;
             default:
-              console.log("Unknown action:", actionId);
+              logger.debug("Unknown action", { actionId });
           }
         }}
       />

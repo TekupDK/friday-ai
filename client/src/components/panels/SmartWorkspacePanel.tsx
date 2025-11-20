@@ -116,7 +116,7 @@ const SmartWorkspacePanel = memo(function SmartWorkspacePanel() {
     // Phase 7.2: Intelligent cache invalidation on context change
     const previousContext = previousContextRef.current;
     if (previousContext && previousContext !== detectedContext.type) {
-      console.log("[Cache] Context changed, invalidating workspace cache", {
+      logger.debug("Context changed, invalidating workspace cache", {
         from: previousContext,
         to: detectedContext.type,
       });
@@ -126,7 +126,7 @@ const SmartWorkspacePanel = memo(function SmartWorkspacePanel() {
 
     // Log if confidence is low for debugging
     if (detectedContext.confidence && detectedContext.confidence < 0.5) {
-      console.warn("Low confidence context detection:", {
+      logger.warn("Low confidence context detection", {
         type: detectedContext.type,
         confidence: detectedContext.confidence,
         reason: detectedContext.reason,
