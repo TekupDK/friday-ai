@@ -21,6 +21,7 @@ import {
   formatTimeRange,
   calculateTotalRevenue,
 } from "@/lib/business-logic";
+import { logger } from "@/lib/logger";
 import { trpc } from "@/lib/trpc";
 
 
@@ -447,33 +448,41 @@ export function CustomerProfile({ context }: CustomerProfileProps) {
       <SmartActionBar
         context={{ ...context, type: "customer" }}
         workspaceData={customerData}
-        onAction={async (actionId: string, data: any) => {
-          // Handle smart actions
-          console.log("Smart action executed:", actionId, data);
+        onAction={async (actionId: string, data: unknown) => {
+          // FIXED: Issue #6 - Use logger instead of console.log
+          logger.debug("Smart action executed", { actionId, data });
 
-          switch (actionId) {
-            case "sendEmail":
-              // Send email to customer
-              console.log("Sending email to:", customerData.name);
-              break;
-            case "scheduleBooking":
-              // Schedule new booking
-              console.log("Scheduling booking for:", customerData.name);
-              break;
-            case "viewInvoices":
-              // View customer invoices
-              console.log("Viewing invoices for:", customerData.name);
-              break;
-            case "callCustomer":
-              // Call customer
-              console.log("Calling customer:", customerData.name);
-              break;
-            case "sendPromotion":
-              // Send promotion offer
-              console.log("Sending promotion to:", customerData.name);
-              break;
-            default:
-              console.log("Unknown action:", actionId);
+          try {
+            switch (actionId) {
+              case "sendEmail":
+                logger.info("Sending email", { customer: customerData.name });
+                // TODO: Implement email sending via tRPC
+                break;
+              case "scheduleBooking":
+                logger.info("Scheduling booking", { customer: customerData.name });
+                // TODO: Implement booking scheduling via tRPC
+                break;
+              case "viewInvoices":
+                logger.debug("Viewing invoices", { customer: customerData.name });
+                // TODO: Navigate to invoices view
+                break;
+              case "callCustomer":
+                const phone = customerData.phone;
+                if (phone && phone !== "Ikke angivet") {
+                  window.location.href = `tel:${phone}`;
+                } else {
+                  logger.warn("No phone number found", { customer: customerData.name });
+                }
+                break;
+              case "sendPromotion":
+                logger.info("Sending promotion", { customer: customerData.name });
+                // TODO: Implement promotion sending via tRPC
+                break;
+              default:
+                logger.debug("Unknown action", { actionId });
+            }
+          } catch (error) {
+            logger.error("Failed to execute smart action", { actionId }, error);
           }
         }}
       />

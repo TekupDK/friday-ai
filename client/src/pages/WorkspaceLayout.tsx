@@ -27,6 +27,10 @@ import { KeyboardShortcutsDialog } from "@/components/KeyboardShortcutsDialog";
 import { MobileUserMenuSheet } from "@/components/MobileUserMenuSheet";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { SettingsDialog } from "@/components/SettingsDialog";
+import { AIAssistantSkeleton } from "@/components/skeletons/AIAssistantSkeleton";
+import { EmailCenterSkeleton } from "@/components/skeletons/EmailCenterSkeleton";
+import { SmartWorkspaceSkeleton } from "@/components/skeletons/SmartWorkspaceSkeleton";
+import { WorkspaceLayoutSkeleton } from "@/components/skeletons/WorkspaceLayoutSkeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -58,16 +62,6 @@ const EmailCenterPanel = lazy(
 );
 const WorkflowPanelV2 = lazy(
   () => import("@/components/panels/SmartWorkspacePanel")
-);
-
-// Loading skeleton component
-const PanelSkeleton = ({ name }: { name: string }) => (
-  <div className="h-full flex items-center justify-center bg-muted/10">
-    <div className="space-y-3 text-center">
-      <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 animate-pulse" />
-      <p className="text-sm text-muted-foreground">Loading {name}...</p>
-    </div>
-  </div>
 );
 
 /**
@@ -168,16 +162,9 @@ function WorkspaceLayout() {
 
   const WorkflowPanelMemo = useMemo(() => <WorkflowPanelV2 />, []);
 
-  // Auth check
+  // Auth check - Show 3-panel preview skeleton
   if (loading) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <div className="text-center space-y-3">
-          <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 animate-pulse" />
-          <p className="text-sm text-muted-foreground">Loading workspace...</p>
-        </div>
-      </div>
-    );
+    return <WorkspaceLayoutSkeleton />;
   }
 
   if (!isAuthenticated || !user) {
@@ -256,7 +243,7 @@ function WorkspaceLayout() {
             <SheetContent side="right" className="w-full sm:w-[400px] p-0">
               <div className="h-full">
                 <PanelErrorBoundary name="Email Center">
-                  <Suspense fallback={<PanelSkeleton name="Email Center" />}>
+                  <Suspense fallback={<EmailCenterSkeleton />}>
                     <EmailCenterPanel />
                   </Suspense>
                 </PanelErrorBoundary>
@@ -338,7 +325,7 @@ function WorkspaceLayout() {
                 className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
               >
                 <PanelErrorBoundary name="AI Assistant">
-                  <Suspense fallback={<PanelSkeleton name="AI Assistant" />}>
+                  <Suspense fallback={<AIAssistantSkeleton />}>
                     {AIAssistantPanelMemo}
                   </Suspense>
                 </PanelErrorBoundary>
@@ -356,7 +343,7 @@ function WorkspaceLayout() {
                 className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
               >
                 <PanelErrorBoundary name="Email Center">
-                  <Suspense fallback={<PanelSkeleton name="Email Center" />}>
+                  <Suspense fallback={<EmailCenterSkeleton />}>
                     {EmailCenterPanelMemo}
                   </Suspense>
                 </PanelErrorBoundary>
@@ -374,7 +361,7 @@ function WorkspaceLayout() {
                 className="h-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-inset"
               >
                 <PanelErrorBoundary name="Smart Workspace">
-                  <Suspense fallback={<PanelSkeleton name="Smart Workspace" />}>
+                  <Suspense fallback={<SmartWorkspaceSkeleton />}>
                     {WorkflowPanelMemo}
                   </Suspense>
                 </PanelErrorBoundary>
@@ -386,7 +373,7 @@ function WorkspaceLayout() {
           {/* Mobile: Single column */}
           <div className="md:hidden h-full">
           <PanelErrorBoundary name="AI Assistant">
-            <Suspense fallback={<PanelSkeleton name="AI Assistant" />}>
+            <Suspense fallback={<AIAssistantSkeleton />}>
               {AIAssistantPanelMemo}
             </Suspense>
           </PanelErrorBoundary>
