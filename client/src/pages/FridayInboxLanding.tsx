@@ -75,11 +75,238 @@ function AnimatedSection({
   );
 }
 
+// Static data constants (moved outside component to prevent re-creation on render)
+const HERO_FEATURES = [
+  {
+    icon: "solar:inbox-line-bold-duotone",
+    title: "Smart Email",
+    description: "AI-kategorisering af leads og bookinger",
+  },
+  {
+    icon: "solar:calendar-bold-duotone",
+    title: "Kalender Integration",
+    description: "Automatisk booking med Google Calendar",
+  },
+  {
+    icon: "solar:bill-list-bold-duotone",
+    title: "Billy Fakturering",
+    description: "Nem fakturahåndtering via Billy.dk",
+  },
+] as const;
+
+const FEATURES = [
+  {
+    icon: "solar:letter-opened-bold-duotone",
+    title: "AI Email Summaries",
+    description:
+      "150-tegns danske resuméer med Gemini AI - spar tid på lange emails",
+  },
+  {
+    icon: "solar:tag-bold-duotone",
+    title: "Smart Auto-Labeling",
+    description:
+      "Automatisk kategorisering: Leads 🟢, Booking 🔵, Finance 🟡, Support 🔴",
+  },
+  {
+    icon: "solar:calendar-bold-duotone",
+    title: "Google Calendar Integration",
+    description:
+      "Book møder direkte fra emails - synkroniseret med din kalender",
+  },
+  {
+    icon: "solar:bill-list-bold-duotone",
+    title: "Billy.dk Fakturering",
+    description:
+      "Opret fakturaer direkte fra chat - 349 kr/time standard",
+  },
+  {
+    icon: "solar:users-group-rounded-bold-duotone",
+    title: "CRM & Lead Pipeline",
+    description:
+      "Hold styr på leads, kunder og opportunities i ét system",
+  },
+  {
+    icon: "solar:checklist-bold-duotone",
+    title: "Task Management",
+    description:
+      "AI-genererede opgaver fra emails med prioritering og deadlines",
+  },
+] as const;
+
+const TESTIMONIALS = [
+  {
+    name: "Lars Nielsen",
+    role: "Ejer",
+    company: "Rendetalje ApS",
+    image: "solar:user-bold-duotone",
+    quote:
+      "Friday AI har forvandlet vores email-håndtering. Vi sparer mindst 2 timer hver dag på booking og fakturering!",
+    rating: 5,
+  },
+  {
+    name: "Mette Hansen",
+    role: "Administrerende Direktør",
+    company: "VVS Service København",
+    image: "solar:user-bold-duotone",
+    quote:
+      "AI-kategoriseringen er utrolig præcis. Vi mister ikke længere vigtige leads i indbakken.",
+    rating: 5,
+  },
+  {
+    name: "Thomas Andersen",
+    role: "Indehaver",
+    company: "Elektrikeren.dk",
+    image: "solar:user-bold-duotone",
+    quote:
+      "Billy integration er genial. Fakturaer oprettes automatisk og min økonomi er altid up-to-date!",
+    rating: 5,
+  },
+] as const;
+
+const HOW_IT_WORKS_STEPS = [
+  {
+    step: "1",
+    icon: "solar:inbox-in-bold-duotone",
+    title: "Email Modtages",
+    description: "AI analyserer og kategoriserer automatisk",
+  },
+  {
+    step: "2",
+    icon: "solar:magic-stick-bold-duotone",
+    title: "AI Behandler",
+    description:
+      "Lead oprettes, kalender tjekkes, forslag genereres",
+  },
+  {
+    step: "3",
+    icon: "solar:chat-round-check-bold-duotone",
+    title: "Du Godkender",
+    description:
+      "Gennemgå og godkend AI's forslag med ét klik",
+  },
+  {
+    step: "4",
+    icon: "solar:check-circle-bold-duotone",
+    title: "Automatisk Udførelse",
+    description:
+      "Booking sendes, faktura oprettes, CRM opdateres",
+  },
+] as const;
+
+const PRICING_PLANS = [
+  {
+    name: "Basis",
+    price: "1.200",
+    period: "kr/måned",
+    description: "Perfekt til mindre virksomheder",
+    features: [
+      "3 timer rengøring inkluderet",
+      "Månedlig rengøring",
+      "Gmail & Kalender integration",
+      "Billy fakturering",
+      "Grundlæggende support",
+    ],
+    icon: "solar:leaf-bold-duotone",
+    popular: false,
+  },
+  {
+    name: "Premium",
+    price: "1.800",
+    period: "kr/måned",
+    description: "Til travle virksomheder",
+    features: [
+      "4 timer rengøring inkluderet",
+      "Månedlig rengøring + hovedrengøring",
+      "AI Email Summaries",
+      "Smart Auto-Labeling",
+      "CRM & Lead Pipeline",
+      "Prioriteret support",
+    ],
+    icon: "solar:crown-bold-duotone",
+    popular: true,
+  },
+  {
+    name: "VIP",
+    price: "2.500",
+    period: "kr/måned",
+    description: "For professionelle teams",
+    features: [
+      "6 timer rengøring (2x månedlig)",
+      "Hovedrengøring inkluderet",
+      "Fuld AI automatisering",
+      "Autonomous Lead Intelligence",
+      "VIP support 24/7",
+      "Prioriteret booking",
+    ],
+    icon: "solar:rocket-2-bold-duotone",
+    popular: false,
+  },
+] as const;
+
+const FAQ_ITEMS = [
+  {
+    question:
+      "Hvordan integrerer Friday AI med mine eksisterende systemer?",
+    answer:
+      "Friday AI integrerer seamløst med Gmail, Google Calendar og Billy.dk via officielle APIs. Setup tager under 10 minutter med vores guide.",
+  },
+  {
+    question: "Er mine data sikre?",
+    answer:
+      "Ja! Vi bruger enterprise-grade sikkerhed med end-to-end kryptering. Data gemmes i Supabase PostgreSQL med row-level security. Vi følger GDPR.",
+  },
+  {
+    question: "Kan jeg opsige mit abonnement når som helst?",
+    answer:
+      "Ja, du kan opsige eller pause dit abonnement når som helst. Dine ubrugte timer gemmes ved pause, og der er ingen binding.",
+  },
+  {
+    question:
+      "Hvad sker der hvis jeg bruger flere timer end mit abonnement?",
+    answer:
+      "Ekstra timer faktureres til 349 kr/time. Vi giver dig besked når du nærmer dig grænsen, så der ikke er overraskelser.",
+  },
+  {
+    question: "Hvilke AI-modeller bruger Friday AI?",
+    answer:
+      "Vi bruger Gemini 2.5 Flash til email summaries, Claude 3.5 Sonnet til komplekse opgaver, og GPT-4o til visse automationer. Du får det bedste fra hver model.",
+  },
+  {
+    question: "Kan Friday AI håndtere danske emails?",
+    answer:
+      "Absolut! Friday AI er optimeret til dansk sprog og forstår danske forretningstermer, datoer og adresser perfekt.",
+  },
+  {
+    question: "Hvordan fungerer AI-kategoriseringen?",
+    answer:
+      "AI analyserer hver email og tildeler automatisk labels: Leads 🟢 (potentielle kunder), Booking 🔵 (kalendermøder), Finance 🟡 (fakturaer), Support 🔴.",
+  },
+  {
+    question: "Får jeg support hvis jeg sidder fast?",
+    answer:
+      "Ja! Premium og VIP abonnementer inkluderer prioriteret email support. Vi svarer typisk inden for 2 timer på hverdage.",
+  },
+] as const;
+
 export default function FridayInboxLanding() {
   usePageTitle("Friday AI Inbox - Din Intelligente Forretningsassistent");
   const [, navigate] = useLocation();
   const [showStickyButton, setShowStickyButton] = React.useState(false);
   const [showScrollTop, setShowScrollTop] = React.useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+
+  // Detect user's motion preference (accessibility)
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handler = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
 
   // SEO Meta Tags
   React.useEffect(() => {
@@ -179,11 +406,21 @@ export default function FridayInboxLanding() {
   React.useEffect(() => {
     // Track page load performance
     if (typeof window !== "undefined" && window.performance) {
-      const perfData = window.performance.getEntriesByType(
-        "navigation"
-      )[0] as PerformanceNavigationTiming;
+      const entries = window.performance.getEntriesByType("navigation");
 
-      if (perfData) {
+      // Type-safe check for array length before accessing
+      if (entries.length === 0) return;
+
+      const perfData = entries[0] as PerformanceNavigationTiming;
+
+      // Ensure all required properties exist before using
+      if (
+        perfData &&
+        typeof perfData.loadEventEnd === "number" &&
+        typeof perfData.fetchStart === "number" &&
+        typeof perfData.domContentLoadedEventEnd === "number" &&
+        typeof perfData.domInteractive === "number"
+      ) {
         const pageLoadTime = perfData.loadEventEnd - perfData.fetchStart;
         const domContentLoadedTime =
           perfData.domContentLoadedEventEnd - perfData.fetchStart;
@@ -243,29 +480,45 @@ export default function FridayInboxLanding() {
           <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
             <motion.div
               className="absolute top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
-              animate={{
-                x: [0, 50, 0],
-                y: [0, 30, 0],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              animate={
+                prefersReducedMotion
+                  ? {}
+                  : {
+                      x: [0, 50, 0],
+                      y: [0, 30, 0],
+                      scale: [1, 1.1, 1],
+                    }
+              }
+              transition={
+                prefersReducedMotion
+                  ? {}
+                  : {
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+              }
             />
             <motion.div
               className="absolute top-1/2 -right-48 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
-              animate={{
-                x: [0, -50, 0],
-                y: [0, -30, 0],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              animate={
+                prefersReducedMotion
+                  ? {}
+                  : {
+                      x: [0, -50, 0],
+                      y: [0, -30, 0],
+                      scale: [1, 1.2, 1],
+                    }
+              }
+              transition={
+                prefersReducedMotion
+                  ? {}
+                  : {
+                      duration: 25,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+              }
             />
           </div>
 
@@ -344,23 +597,7 @@ export default function FridayInboxLanding() {
                   variants={fadeInUp}
                   className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 max-w-4xl mx-auto"
                 >
-                  {[
-                    {
-                      icon: "solar:inbox-line-bold-duotone",
-                      title: "Smart Email",
-                      description: "AI-kategorisering af leads og bookinger",
-                    },
-                    {
-                      icon: "solar:calendar-bold-duotone",
-                      title: "Kalender Integration",
-                      description: "Automatisk booking med Google Calendar",
-                    },
-                    {
-                      icon: "solar:bill-list-bold-duotone",
-                      title: "Billy Fakturering",
-                      description: "Nem fakturahåndtering via Billy.dk",
-                    },
-                  ].map((feature, index) => (
+                  {HERO_FEATURES.map((feature, index) => (
                     <motion.div
                       key={feature.title}
                       variants={scaleIn}
@@ -412,44 +649,7 @@ export default function FridayInboxLanding() {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                 >
-                  {[
-                    {
-                      icon: "solar:letter-opened-bold-duotone",
-                      title: "AI Email Summaries",
-                      description:
-                        "150-tegns danske resuméer med Gemini AI - spar tid på lange emails",
-                    },
-                    {
-                      icon: "solar:tag-bold-duotone",
-                      title: "Smart Auto-Labeling",
-                      description:
-                        "Automatisk kategorisering: Leads 🟢, Booking 🔵, Finance 🟡, Support 🔴",
-                    },
-                    {
-                      icon: "solar:calendar-bold-duotone",
-                      title: "Google Calendar Integration",
-                      description:
-                        "Book møder direkte fra emails - synkroniseret med din kalender",
-                    },
-                    {
-                      icon: "solar:bill-list-bold-duotone",
-                      title: "Billy.dk Fakturering",
-                      description:
-                        "Opret fakturaer direkte fra chat - 349 kr/time standard",
-                    },
-                    {
-                      icon: "solar:users-group-rounded-bold-duotone",
-                      title: "CRM & Lead Pipeline",
-                      description:
-                        "Hold styr på leads, kunder og opportunities i ét system",
-                    },
-                    {
-                      icon: "solar:checklist-bold-duotone",
-                      title: "Task Management",
-                      description:
-                        "AI-genererede opgaver fra emails med prioritering og deadlines",
-                    },
-                  ].map((feature, index) => (
+                  {FEATURES.map((feature, index) => (
                     <motion.div key={feature.title} variants={scaleIn}>
                       <AppleCard
                         variant="elevated"
