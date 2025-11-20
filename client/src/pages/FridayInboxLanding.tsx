@@ -11,6 +11,8 @@ import { useLocation } from "wouter";
 
 import { AppleButton, AppleCard } from "@/components/crm/apple-ui";
 import CRMLayout from "@/components/crm/CRMLayout";
+import { CookieConsent } from "@/components/CookieConsent";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
@@ -72,6 +74,124 @@ export default function FridayInboxLanding() {
   const [, navigate] = useLocation();
   const [showStickyButton, setShowStickyButton] = React.useState(false);
   const [showScrollTop, setShowScrollTop] = React.useState(false);
+
+  // SEO Meta Tags
+  React.useEffect(() => {
+    // Update meta tags for SEO
+    const updateMetaTags = () => {
+      // Description
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          "content",
+          "Friday AI Inbox - Din intelligente forretningsassistent til email, kalender, fakturering og CRM. AI-powered automatisering med Gmail, Google Calendar og Billy.dk integration."
+        );
+      }
+
+      // Open Graph tags
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute("content", "Friday AI Inbox - Din Intelligente Forretningsassistent");
+
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      if (ogDescription) {
+        ogDescription.setAttribute(
+          "content",
+          "Automatisér din email-håndtering, booking og fakturering med AI. Spar 2+ timer dagligt med Friday AI."
+        );
+      }
+
+      const ogType = document.querySelector('meta[property="og:type"]');
+      if (ogType) ogType.setAttribute("content", "website");
+
+      // Twitter Card
+      const twitterCard = document.querySelector('meta[name="twitter:card"]');
+      if (twitterCard) twitterCard.setAttribute("content", "summary_large_image");
+
+      // Keywords
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) {
+        metaKeywords.setAttribute(
+          "content",
+          "AI email, forretningsassistent, automatisering, Gmail, Billy.dk, CRM, dansk AI, email automation, kalender booking"
+        );
+      }
+    };
+
+    updateMetaTags();
+
+    // Structured Data (Schema.org JSON-LD)
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "Friday AI Inbox",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      offers: {
+        "@type": "AggregateOffer",
+        lowPrice: "1200",
+        highPrice: "2500",
+        priceCurrency: "DKK",
+        offerCount: "3",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5",
+        ratingCount: "3",
+      },
+      description:
+        "Intelligent forretningsassistent til email, kalender, fakturering og CRM med AI-automatisering",
+      provider: {
+        "@type": "Organization",
+        name: "TekupDK",
+        url: "https://github.com/TekupDK/friday-ai",
+      },
+    };
+
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  // Performance monitoring
+  React.useEffect(() => {
+    // Track page load performance
+    if (typeof window !== "undefined" && window.performance) {
+      const perfData = window.performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+
+      if (perfData) {
+        const pageLoadTime = perfData.loadEventEnd - perfData.fetchStart;
+        const domContentLoadedTime = perfData.domContentLoadedEventEnd - perfData.fetchStart;
+
+        // Log to console in development
+        if (process.env.NODE_ENV === "development") {
+          console.log("📊 Page Performance Metrics:");
+          console.log(`  Page Load Time: ${Math.round(pageLoadTime)}ms`);
+          console.log(`  DOM Content Loaded: ${Math.round(domContentLoadedTime)}ms`);
+          console.log(`  Time to Interactive: ${Math.round(perfData.domInteractive - perfData.fetchStart)}ms`);
+        }
+
+        // TODO: Send to analytics service
+        // trackEvent('page_performance', {
+        //   page_load_time: pageLoadTime,
+        //   dom_content_loaded: domContentLoadedTime,
+        // });
+      }
+    }
+
+    // Track time on page
+    const startTime = Date.now();
+    return () => {
+      const timeOnPage = Date.now() - startTime;
+      if (process.env.NODE_ENV === "development") {
+        console.log(`⏱️  Time on landing page: ${Math.round(timeOnPage / 1000)}s`);
+      }
+    };
+  }, []);
 
   // Show sticky button and scroll to top after scrolling
   React.useEffect(() => {
@@ -806,6 +926,13 @@ export default function FridayInboxLanding() {
               </section>
             </AnimatedSection>
 
+            {/* Newsletter Section */}
+            <AnimatedSection>
+              <section className="relative">
+                <NewsletterSignup />
+              </section>
+            </AnimatedSection>
+
             {/* CTA Section */}
             <AnimatedSection>
               <section className="relative">
@@ -1057,6 +1184,9 @@ export default function FridayInboxLanding() {
               </div>
             </footer>
           </div>
+
+          {/* Cookie Consent Banner */}
+          <CookieConsent />
         </main>
       </PanelErrorBoundary>
     </CRMLayout>
