@@ -11,11 +11,6 @@ import { warmupCache } from "./lib/cacheStrategy";
 import DocsPage from "./pages/docs/DocsPage";
 import LoginPage from "./pages/LoginPage";
 import WorkspaceLayout from "./pages/WorkspaceLayout";
-// Lazy load showcase components to reduce bundle size (~250 KB savings)
-const ComponentShowcase = lazy(() => import("./pages/ComponentShowcase"));
-const ChatComponentsShowcase = lazy(
-  () => import("./pages/ChatComponentsShowcase")
-);
 
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Toaster } from "@/components/ui/sonner";
@@ -51,34 +46,6 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={WorkspaceLayout} />
-      <Route
-        path={"/showcase"}
-        component={() => (
-          <Suspense
-            fallback={
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
-              </div>
-            }
-          >
-            <ComponentShowcase />
-          </Suspense>
-        )}
-      />
-      <Route
-        path={"/chat-components"}
-        component={() => (
-          <Suspense
-            fallback={
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
-              </div>
-            }
-          >
-            <ChatComponentsShowcase />
-          </Suspense>
-        )}
-      />
       <Route
         path={"/lead-analysis"}
         component={lazy(() => import("./pages/LeadAnalysisDashboard"))}
