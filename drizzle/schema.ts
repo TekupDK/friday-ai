@@ -105,14 +105,6 @@ export const activityTypeInFridayAi = fridayAi.enum("activity_type", [
   "property_added",
 ]);
 
-export const referralStatusInFridayAi = fridayAi.enum("referral_status", [
-  "pending",    // Referred customer signed up but hasn't completed action
-  "completed",  // Referral completed (e.g., subscription created)
-  "rewarded",   // Reward has been given to referrer
-  "expired",    // Referral expired without completion
-  "cancelled",  // Referral was cancelled
-]);
-
 // =============================================================================
 export const riskLevelInFridayAi = fridayAi.enum("risk_level", [
   "low",
@@ -641,119 +633,6 @@ export const bookingsInFridayAi = fridayAi.table(
   ]
 );
 
-// =============================================================================
-// REFERRAL: Referral Program Tables
-// =============================================================================
-export const referralCodesInFridayAi = fridayAi.table(
-  "referral_codes",
-  {
-    id: serial().primaryKey().notNull(),
-    userId: integer().notNull(), // User who owns the referral code
-    customerProfileId: integer(), // Optional: specific customer profile
-    code: varchar({ length: 50 }).notNull().unique(), // Unique referral code (e.g., "MARIA2025")
-    discountAmount: integer().notNull(), // Discount in øre (e.g., 20000 = 200 kr)
-    discountType: varchar({ length: 20 }).default("fixed").notNull(), // "fixed" or "percentage"
-    maxUses: integer(), // null = unlimited uses
-    currentUses: integer().default(0).notNull(), // How many times code has been used
-    validFrom: timestamp({ mode: "string" }).defaultNow().notNull(),
-    validUntil: timestamp({ mode: "string" }), // null = no expiration
-    isActive: boolean().default(true).notNull(),
-    metadata: jsonb(), // Additional data (campaign info, etc.)
-    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-  },
-  table => [
-    // ✅ PERFORMANCE: Index for user lookups
-    index("idx_referral_codes_user_id").using(
-      "btree",
-      table.userId.asc().nullsLast().op("int4_ops")
-    ),
-    // ✅ PERFORMANCE: Index for code lookups (unique, so very fast)
-    index("idx_referral_codes_code").using(
-      "btree",
-      table.code.asc().nullsLast().op("text_ops")
-    ),
-    // ✅ PERFORMANCE: Index for active codes
-    index("idx_referral_codes_is_active").using(
-      "btree",
-      table.isActive.asc().nullsLast()
-    ),
-  ]
-);
-
-export const referralRewardsInFridayAi = fridayAi.table(
-  "referral_rewards",
-  {
-    id: serial().primaryKey().notNull(),
-    referralCodeId: integer().notNull(), // FK to referral_codes
-    referrerId: integer().notNull(), // User who referred (gets reward)
-    referredCustomerId: integer().notNull(), // New customer who was referred
-    referredSubscriptionId: integer(), // Optional: subscription created by referred customer
-    status: referralStatusInFridayAi().default("pending").notNull(),
-    rewardAmount: integer().notNull(), // Reward in øre (e.g., 20000 = 200 kr)
-    rewardType: varchar({ length: 20 }).default("discount").notNull(), // "discount", "credit", "cash"
-    rewardAppliedAt: timestamp({ mode: "string" }), // When reward was applied
-    completedAt: timestamp({ mode: "string" }), // When referral action was completed
-    metadata: jsonb(), // Additional data
-    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
-  },
-  table => [
-    // ✅ PERFORMANCE: Index for referral code lookups
-    index("idx_referral_rewards_referral_code_id").using(
-      "btree",
-      table.referralCodeId.asc().nullsLast().op("int4_ops")
-    ),
-    // ✅ PERFORMANCE: Index for referrer lookups
-    index("idx_referral_rewards_referrer_id").using(
-      "btree",
-      table.referrerId.asc().nullsLast().op("int4_ops")
-    ),
-    // ✅ PERFORMANCE: Index for referred customer lookups
-    index("idx_referral_rewards_referred_customer_id").using(
-      "btree",
-      table.referredCustomerId.asc().nullsLast().op("int4_ops")
-    ),
-    // ✅ PERFORMANCE: Index for status filtering
-    index("idx_referral_rewards_status").using(
-      "btree",
-      table.status.asc().nullsLast()
-    ),
-  ]
-);
-
-export const referralHistoryInFridayAi = fridayAi.table(
-  "referral_history",
-  {
-    id: serial().primaryKey().notNull(),
-    referralCodeId: integer().notNull(),
-    referralRewardId: integer(), // Optional: if this history is related to a reward
-    action: varchar({ length: 100 }).notNull(), // e.g., "code_created", "code_used", "reward_given"
-    oldValue: jsonb(), // Previous state
-    newValue: jsonb(), // New state
-    performedBy: integer(), // userId who performed action (null = system)
-    timestamp: timestamp({ mode: "string" }).defaultNow().notNull(),
-    metadata: jsonb(),
-  },
-  table => [
-    // ✅ PERFORMANCE: Index for referral code lookups
-    index("idx_referral_history_referral_code_id").using(
-      "btree",
-      table.referralCodeId.asc().nullsLast().op("int4_ops")
-    ),
-    // ✅ PERFORMANCE: Index for timestamp (used in audit queries)
-    index("idx_referral_history_timestamp").using(
-      "btree",
-      table.timestamp.desc().nullsLast()
-    ),
-    // ✅ PERFORMANCE: Index for action filtering
-    index("idx_referral_history_action").using(
-      "btree",
-      table.action.asc().nullsLast().op("text_ops")
-    ),
-  ]
-);
-
 export const emailThreadsInFridayAi = fridayAi.table(
   "email_threads",
   {
@@ -1209,47 +1088,6 @@ export const userPreferencesInFridayAi = fridayAi.table(
   table => [unique("user_preferences_userId_key").on(table.userId)]
 );
 
-// =============================================================================
-// A/B Testing: Metrics Storage
-// =============================================================================
-export const abTestMetricsInFridayAi = fridayAi.table(
-  "ab_test_metrics",
-  {
-    id: serial().primaryKey().notNull(),
-    testName: varchar({ length: 100 }).notNull(),
-    userId: integer().notNull(),
-    testGroup: varchar({ length: 20 }).notNull(), // "control" | "variant"
-    responseTime: integer().notNull(), // milliseconds
-    userSatisfaction: integer(), // 1-5 rating, optional
-    errorCount: integer().default(0).notNull(),
-    messageCount: integer().default(0).notNull(),
-    completionRate: numeric({ precision: 5, scale: 2 }).notNull(), // 0-100 percentage
-    metadata: jsonb(), // Additional test-specific data
-    timestamp: timestamp({ mode: "string" }).defaultNow().notNull(),
-  },
-  table => [
-    index("idx_ab_test_metrics_test_name").using(
-      "btree",
-      table.testName.asc().nullsLast().op("text_ops")
-    ),
-    index("idx_ab_test_metrics_user_id").using(
-      "btree",
-      table.userId.asc().nullsLast().op("int4_ops")
-    ),
-    index("idx_ab_test_metrics_timestamp").using(
-      "btree",
-      table.timestamp.desc().nullsLast()
-    ),
-    // Composite index for common query pattern (testName + testGroup + timestamp)
-    index("idx_ab_test_metrics_test_group").using(
-      "btree",
-      table.testName.asc().nullsLast().op("text_ops"),
-      table.testGroup.asc().nullsLast().op("text_ops"),
-      table.timestamp.desc().nullsLast()
-    ),
-  ]
-);
-
 // Backward compatibility aliases for db.ts imports
 export const emailPipelineState = emailPipelineStateInFridayAi;
 export const emailPipelineTransitions = emailPipelineTransitionsInFridayAi;
@@ -1292,9 +1130,6 @@ export const customerSegmentMembers = customerSegmentMembersInFridayAi;
 export const customerDocuments = customerDocumentsInFridayAi;
 export const auditLog = auditLogInFridayAi;
 export const customerRelationships = customerRelationshipsInFridayAi;
-export const referralCodes = referralCodesInFridayAi;
-export const referralRewards = referralRewardsInFridayAi;
-export const referralHistory = referralHistoryInFridayAi;
 
 // =============================================================================
 // TYPE ALIASES
@@ -1310,8 +1145,6 @@ export type InsertEmailPipelineTransition =
 export type AnalyticsEvent = typeof analyticsEventsInFridayAi.$inferSelect;
 export type InsertAnalyticsEvent =
   typeof analyticsEventsInFridayAi.$inferInsert;
-export type ABTestMetric = typeof abTestMetricsInFridayAi.$inferSelect;
-export type InsertABTestMetric = typeof abTestMetricsInFridayAi.$inferInsert;
 export type UserPreferences = typeof userPreferencesInFridayAi.$inferSelect;
 export type InsertUserPreferences =
   typeof userPreferencesInFridayAi.$inferInsert;
@@ -1459,10 +1292,3 @@ export type CustomerRelationship =
   typeof customerRelationshipsInFridayAi.$inferSelect;
 export type InsertCustomerRelationship =
   typeof customerRelationshipsInFridayAi.$inferInsert;
-export type ReferralCode = typeof referralCodesInFridayAi.$inferSelect;
-export type InsertReferralCode = typeof referralCodesInFridayAi.$inferInsert;
-export type ReferralReward = typeof referralRewardsInFridayAi.$inferSelect;
-export type InsertReferralReward = typeof referralRewardsInFridayAi.$inferInsert;
-export type ReferralHistory = typeof referralHistoryInFridayAi.$inferSelect;
-export type InsertReferralHistory =
-  typeof referralHistoryInFridayAi.$inferInsert;
