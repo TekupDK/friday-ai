@@ -7,7 +7,7 @@
  * - Document search
  */
 
-import { ChromaClient, Collection, IEmbeddingFunction } from "chromadb";
+import { ChromaClient, Collection, EmbeddingFunction } from "chromadb";
 
 import { ENV } from "../../_core/env";
 
@@ -20,7 +20,7 @@ let chromaClient: ChromaClient | null = null;
  * Custom embedding function using OpenRouter
  * Uses real embeddings API for semantic search
  */
-class OpenRouterEmbeddings implements IEmbeddingFunction {
+class OpenRouterEmbeddings implements EmbeddingFunction {
   async generate(texts: string[]): Promise<number[][]> {
     // Use real embeddings from OpenRouter
     return await generateEmbeddings(texts);

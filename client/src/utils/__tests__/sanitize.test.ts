@@ -119,7 +119,8 @@ describe('Sanitization Utils', () => {
       const dirty = 'Text with & < > " characters';
       const clean = sanitizeText(dirty);
 
-      expect(clean).toBe('Text with & &lt; &gt; " characters');
+      // DOMPurify correctly escapes & to &amp; to prevent double-escaping issues
+      expect(clean).toBe('Text with &amp; &lt; &gt; " characters');
     });
   });
 

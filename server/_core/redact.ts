@@ -144,10 +144,6 @@ export function redact(obj: any, depth: number = 0): any {
           // Note: Use non-global regex for testing (global flag causes state issues with .test())
           else if (/[a-z]+:\/\/[^@]+@[^\s]+/i.test(value)) {
             redacted[key] = "[REDACTED]";
-          }
-          // Show first 4 chars and last 4 chars for debugging (only in dev)
-          else if (process.env.NODE_ENV === "development" && value.length > 8) {
-            redacted[key] = `${value.substring(0, 4)}...${value.substring(value.length - 4)}`;
           } else {
             redacted[key] = "[REDACTED]";
           }
