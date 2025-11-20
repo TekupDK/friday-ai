@@ -6,6 +6,7 @@
 dist/
 build/
 *.dist
+stats.html
 
 # Environment variables (with secrets - never commit)
 .env
