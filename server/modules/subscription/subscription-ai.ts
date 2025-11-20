@@ -15,12 +15,12 @@ import {
   subscriptionUsage,
 } from "../../../drizzle/schema";
 
-import { routeAI } from "./ai-router";
-import { getDb } from "./db";
+import { routeAI } from '../ai/ai-router';
+import { getDb } from "../../db";
 import {
   getSubscriptionByCustomerId,
   getSubscriptionById,
-} from "./subscription-db";
+} from './subscription-db';
 import { SUBSCRIPTION_PLANS, type SubscriptionPlanType } from "./subscription-helpers";
 
 export interface SubscriptionRecommendation {

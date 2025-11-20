@@ -10,8 +10,8 @@ import { eq, and } from "drizzle-orm";
 import { customerProfiles, subscriptions } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
 import { getDb } from "../db";
-import { createSubscription } from "../subscription-actions";
-import { sendSubscriptionEmail } from "../subscription-email";
+import { createSubscription } from "../modules/subscription/subscription-actions";
+import { sendSubscriptionEmail } from "../modules/subscription/subscription-email";
 
 async function testSubscriptionEmails() {
   console.log("🧪 Starting Subscription Email Tests...\n");

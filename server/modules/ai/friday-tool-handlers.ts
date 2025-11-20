@@ -5,10 +5,10 @@
 
 import { z } from "zod";
 
-import { createInvoice, getInvoices, searchCustomerByEmail } from "./billy";
-import { createTask, getUserTasks, trackEvent } from "./db";
+import { createInvoice, getInvoices, searchCustomerByEmail } from '../billing/billy';
+import { createTask, getUserTasks, trackEvent } from "../../db";
 import { ToolName } from "./friday-tools";
-import { createLead, getUserLeads, updateLeadStatus } from "./lead-db";
+import { createLead, getUserLeads, updateLeadStatus } from '../crm/lead-db';
 import {
   createCalendarEvent,
   createGmailDraft,
@@ -16,7 +16,7 @@ import {
   getGmailThread,
   listCalendarEvents,
   searchGmail,
-} from "./mcp";
+} from "../../mcp";
 
 export interface ToolCallResult {
   success: boolean;
@@ -917,7 +917,7 @@ async function handleSearchCustomerCalendarHistory(
     correlationId,
   });
   const { listCalendarEvents: listGoogleCalendarEvents } = await import(
-    "./google-api"
+    "../../google-api"
   );
 
   const monthsBack = args.monthsBack || 6;
@@ -1018,7 +1018,7 @@ async function handleUpdateCalendarEvent(
   });
   try {
     const { updateCalendarEvent: updateGoogleEvent } = await import(
-      "./google-api"
+      "../../google-api"
     );
 
     const updatedEvent = await callWithRetry(() =>
@@ -1072,7 +1072,7 @@ async function handleDeleteCalendarEvent(
   });
   try {
     const { deleteCalendarEvent: deleteGoogleEvent } = await import(
-      "./google-api"
+      "../../google-api"
     );
 
     await callWithRetry(() =>
@@ -1123,7 +1123,7 @@ async function handleCheckCalendarConflicts(
   });
   try {
     const { listCalendarEvents: listGoogleCalendarEvents } = await import(
-      "./google-api"
+      "../../google-api"
     );
 
     // Fetch events in the time range

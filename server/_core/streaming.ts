@@ -180,7 +180,7 @@ export async function createStreamingResponseWithRouting(
   onEvent: (event: StreamEvent) => void
 ) {
   // Import model router to avoid circular dependency
-  const { invokeLLMWithRouting } = await import("../model-router");
+  const { invokeLLMWithRouting } = await import("../modules/ai/model-router");
 
   const { taskType = "chat", ...restOptions } = options;
 

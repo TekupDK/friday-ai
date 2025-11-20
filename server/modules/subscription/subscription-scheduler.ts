@@ -12,10 +12,10 @@ import cron from "node-cron";
 
 import { subscriptions } from "../../../drizzle/schema";
 
-import { logger } from "./_core/logger";
-import { getDb } from "./db";
+import { logger } from "../../_core/logger";
+import { getDb } from "../../db";
 import { sendSubscriptionEmail } from "./subscription-email";
-import { processMonthlyRenewals } from "./subscription-jobs";
+import { processMonthlyRenewals } from './subscription-jobs';
 
 let isSchedulerRunning = false;
 
@@ -54,7 +54,7 @@ async function getSubscriptionsNeedingReminder(): Promise<
   }
 
   // Check subscription history to see if reminder was already sent for this billing period
-  const { subscriptionHistory } = await import("../drizzle/schema");
+  const { subscriptionHistory } = await import("../../../drizzle/schema");
   const { getSubscriptionHistory } = await import("./subscription-db");
 
   const subscriptionsNeedingReminder: (typeof subscriptions.$inferSelect)[] =

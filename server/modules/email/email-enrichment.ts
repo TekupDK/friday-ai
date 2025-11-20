@@ -15,13 +15,13 @@ import {
   emailThreads,
 } from "../../../drizzle/schema";
 
-import { searchCustomerByEmail } from "./billy";
-import { getDb } from "./db";
-import { addLabelToThread } from "./gmail-labels";
+import { searchCustomerByEmail } from '../billing/billy';
+import { getDb } from "../../db";
+import { addLabelToThread } from "../../modules/email/gmail-labels";
 import {
   detectLeadSource,
   detectLeadSourceIntelligent,
-} from "./lead-source-detector";
+} from '../crm/lead-source-detector';
 
 /**
  * Enrich email with customer data, lead source, and auto-labeling

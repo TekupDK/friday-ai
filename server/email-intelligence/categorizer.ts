@@ -4,7 +4,7 @@
  */
 
 import { generateCorrelationId } from "../action-audit";
-import { routeAI } from "../ai-router";
+import { routeAI } from '../modules/ai/ai-router';
 
 export interface EmailCategory {
   category:

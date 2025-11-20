@@ -13,7 +13,7 @@ import {
   getActiveSubscriptions,
   getSubscriptionsByStatus,
   getAllSubscriptions,
-} from "./subscription-db";
+} from './subscription-db';
 
 /**
  * Subscription Plan Configuration

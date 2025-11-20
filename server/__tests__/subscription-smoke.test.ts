@@ -21,11 +21,11 @@ import { customerProfiles, subscriptions, bookings, subscriptionUsage } from "..
 import { ENV } from "../_core/env";
 import { getDb } from "../db";
 import * as db from "../db";
-import { createSubscription, processRenewal, processCancellation } from "../subscription-actions";
-import { getSubscriptionByCustomerId } from "../subscription-db";
-import { sendSubscriptionEmail } from "../subscription-email";
-import { processMonthlyRenewals } from "../subscription-jobs";
-import { trackBookingUsage, calculateBookingHours } from "../subscription-usage-tracker";
+import { createSubscription, processRenewal, processCancellation } from "../modules/subscription/subscription-actions";
+import { getSubscriptionByCustomerId } from '../modules/subscription/subscription-db';
+import { sendSubscriptionEmail } from "../modules/subscription/subscription-email";
+import { processMonthlyRenewals } from '../modules/subscription/subscription-jobs';
+import { trackBookingUsage, calculateBookingHours } from '../modules/subscription/subscription-usage-tracker';
 
 // Normalize DATABASE_URL for postgres.js and Supabase
 function normalizeDatabaseUrl(url: string | undefined): string | undefined {

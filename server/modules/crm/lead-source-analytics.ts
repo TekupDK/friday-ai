@@ -5,8 +5,8 @@
  * Business intelligence for lead source optimization.
  */
 
-import type { LeadSource, SourceDetection } from "./lead-source-detector";
-import type { SourceWorkflow } from "./lead-source-workflows";
+import type { LeadSource, SourceDetection } from './lead-source-detector';
+import type { SourceWorkflow } from './lead-source-workflows';
 
 export interface SourceMetrics {
   source: LeadSource;

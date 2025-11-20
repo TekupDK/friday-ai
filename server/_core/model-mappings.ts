@@ -3,7 +3,7 @@
  * OpenRouter Documentation: https://openrouter.ai/docs
  */
 
-import type { AIModel } from "../model-router";
+import type { AIModel } from '../modules/ai/model-router';
 
 /**
  * Maps internal model names to actual OpenRouter model IDs

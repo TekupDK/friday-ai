@@ -14,7 +14,7 @@ import { emailThreads, users } from "../../../drizzle/schema";
 import { retryWithBackoff } from "../../_core/error-handling";
 import { logger } from "../../_core/logger";
 import { getDb } from "../../db";
-import { enrichEmailFromSources } from "./email-enrichment";
+import { enrichEmailFromSources } from './email-enrichment';
 import { detectLeadSourceIntelligent } from "../crm/lead-source-detector";
 import { getWorkflowFromDetection } from "../crm/lead-source-workflows";
 

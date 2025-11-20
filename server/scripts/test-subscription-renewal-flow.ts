@@ -9,7 +9,7 @@ import { eq, and, gte } from "drizzle-orm";
 import { subscriptions } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
 import { getDb } from "../db";
-import { processMonthlyRenewals } from "../subscription-jobs";
+import { processMonthlyRenewals } from '../modules/subscription/subscription-jobs';
 
 async function testRenewalFlow() {
   const db = await getDb();

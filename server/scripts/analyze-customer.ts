@@ -2,7 +2,7 @@ import "dotenv/config";
 import type { TrpcContext } from "../_core/context";
 import { ENV } from "../_core/env";
 import * as db from "../db";
-import * as leadDb from "../lead-db";
+import * as leadDb from '../modules/crm/lead-db';
 import { appRouter } from "../routers";
 
 async function main() {

@@ -15,7 +15,7 @@ import { Request, Response } from "express";
 
 import { attachments, emails, emailThreads, users } from "../../drizzle/schema";
 import { getDb } from "../db";
-import { enrichEmailFromSources } from "../email-enrichment";
+import { enrichEmailFromSources } from '../modules/email/email-enrichment';
 
 const ENV = process.env;
 const STORAGE_PATH = ENV.INBOUND_STORAGE_PATH || "./storage/attachments";

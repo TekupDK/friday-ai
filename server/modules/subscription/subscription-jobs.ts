@@ -4,9 +4,9 @@
  * Handles automated subscription tasks like monthly renewals
  */
 
-import { logger } from "./_core/logger";
+import { logger } from "../../_core/logger";
 import { processRenewal } from "./subscription-actions";
-import { getSubscriptionsDueForBilling } from "./subscription-db";
+import { getSubscriptionsDueForBilling } from './subscription-db';
 import { sendSubscriptionEmail } from "./subscription-email";
 
 export interface JobResult {

@@ -12,7 +12,7 @@ import { eq } from "drizzle-orm";
 
 import { emails, emailThreads } from "../../drizzle/schema";
 import { getDb } from "../db";
-import { enrichEmailFromSources } from "../email-enrichment";
+import { enrichEmailFromSources } from '../modules/email/email-enrichment';
 import { getGmailThread, searchGmailThreads } from "../google-api";
 
 // Load environment variables from .env.supabase if available, otherwise .env

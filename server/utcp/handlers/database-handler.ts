@@ -8,7 +8,7 @@ import { eq, and } from "drizzle-orm";
 
 import { leads } from "../../../drizzle/schema";
 import { getDb } from "../../db";
-import { getUserLeads, createLead } from "../../lead-db";
+import { getUserLeads, createLead } from "../../modules/crm/lead-db";
 import type { UTCPTool, UTCPDatabaseHandler, UTCPToolResult } from "../types";
 import { interpolateTemplateObject } from "../utils/template";
 

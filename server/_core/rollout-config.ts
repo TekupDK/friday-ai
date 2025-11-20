@@ -194,7 +194,7 @@ export async function getRolloutStatus(): Promise<Record<string, RolloutStatus>>
   const status: Record<string, RolloutStatus> = {};
 
   // Get metrics from monitoring system
-  const { getMetricsSummary } = await import("../ai-metrics");
+  const { getMetricsSummary } = await import("../modules/ai/ai-metrics");
   const metricsSummary = getMetricsSummary(60); // Last 60 minutes
 
   // Chat flow status
@@ -281,7 +281,7 @@ export async function shouldTriggerRollback(
 
   // Check actual metrics against rollback triggers
   try {
-    const { getMetricsSummary } = await import("../ai-metrics");
+    const { getMetricsSummary } = await import("../modules/ai/ai-metrics");
     const metrics = getMetricsSummary(60); // Last 60 minutes
 
     const triggers = phase.rollbackTriggers;

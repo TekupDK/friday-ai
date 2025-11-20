@@ -9,7 +9,7 @@ import { eq, and } from "drizzle-orm";
 import { bookings, subscriptions, customerProfiles } from "../../drizzle/schema";
 import { logger } from "../_core/logger";
 import { getDb } from "../db";
-import { trackBookingUsage, calculateBookingHours } from "../subscription-usage-tracker";
+import { trackBookingUsage, calculateBookingHours } from '../modules/subscription/subscription-usage-tracker';
 
 async function testUsageTracking() {
   const db = await getDb();

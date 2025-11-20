@@ -4,10 +4,10 @@
  * Date range: July 2025 to present
  */
 
-import { getInvoices } from "./billy";
-import { createOrUpdateCustomerProfile } from "./customer-db";
+import { getInvoices } from './modules/billing/billy';
+import { createOrUpdateCustomerProfile } from './modules/crm/customer-db';
 import { getHistoricalCalendarEvents } from "./db";
-import { createLead, getUserLeads } from "./lead-db";
+import { createLead, getUserLeads } from './modules/crm/lead-db';
 
 interface ImportResult {
   leadsCreated: number;
@@ -138,7 +138,7 @@ async function importLeadsFromInvoices(
           | undefined;
         if ((inv as any).contactId) {
           try {
-            const { getCustomer } = await import("./billy");
+            const { getCustomer } = await import("./modules/billing/billy");
             const contact = await getCustomer((inv as any).contactId);
             if (contact) {
               contactInfo = {

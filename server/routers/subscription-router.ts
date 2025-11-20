@@ -138,7 +138,7 @@ export const subscriptionRouter = router({
   getByCustomer: protectedProcedure
     .input(z.object({ customerProfileId: z.number().int().positive() }))
     .query(async ({ ctx, input }) => {
-      const { getSubscriptionByCustomerId } = await import("../subscription-db");
+      const { getSubscriptionByCustomerId } = await import("../modules/subscription/subscription-db");
       const subscription = await getSubscriptionByCustomerId(
         input.customerProfileId,
         ctx.user.id
@@ -429,7 +429,7 @@ export const subscriptionRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      const { recommendSubscriptionPlan } = await import("../subscription-ai");
+      const { recommendSubscriptionPlan } = await import("../modules/subscription/subscription-ai");
       return await recommendSubscriptionPlan(
         input.customerProfileId,
         ctx.user.id,
@@ -448,7 +448,7 @@ export const subscriptionRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      const { predictChurnRisk } = await import("../subscription-ai");
+      const { predictChurnRisk } = await import("../modules/subscription/subscription-ai");
       return await predictChurnRisk(
         input.customerProfileId,
         ctx.user.id,
@@ -467,7 +467,7 @@ export const subscriptionRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      const { optimizeSubscriptionUsage } = await import("../subscription-ai");
+      const { optimizeSubscriptionUsage } = await import("../modules/subscription/subscription-ai");
       return await optimizeSubscriptionUsage(
         input.subscriptionId,
         ctx.user.id,
@@ -486,7 +486,7 @@ export const subscriptionRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      const { generateUpsellOpportunities } = await import("../subscription-ai");
+      const { generateUpsellOpportunities } = await import("../modules/subscription/subscription-ai");
       return await generateUpsellOpportunities(
         input.customerProfileId,
         ctx.user.id,
@@ -526,7 +526,7 @@ export const subscriptionRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { processMonthlyRenewals } = await import("../subscription-jobs");
+      const { processMonthlyRenewals } = await import("../modules/subscription/subscription-jobs");
       return await processMonthlyRenewals(input.userId || ctx.user.id);
     }),
 });

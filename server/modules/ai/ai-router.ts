@@ -22,18 +22,18 @@ import {
   selectModel,
   type AIModel,
   type TaskType,
-} from "./model-router";
+} from './model-router';
 import {
   recommendSubscriptionPlan,
   predictChurnRisk,
   optimizeSubscriptionUsage,
   generateUpsellOpportunities,
-} from "./subscription-ai";
-import { executeUTCPTool } from "./utcp/handler";
-import { getAllUTCPTools, hasUTCPTool } from "./utcp/manifest";
+} from '../subscription/subscription-ai';
+import { executeUTCPTool } from "../../utcp/handler";
+import { getAllUTCPTools, hasUTCPTool } from "../../utcp/manifest";
 
 // Re-export types from model-router for backward compatibility
-export type { AIModel, TaskType } from "./model-router";
+export type { AIModel, TaskType } from './model-router';
 
 export interface EmailContext {
   page?: string; // Current page/tab
@@ -333,7 +333,7 @@ export async function routeAI(
     ? `[AI Router][${correlationId}]`
     : `[AI Router]`;
 
-  const { logger } = await import("./_core/logger");
+  const { logger } = await import("../../_core/logger");
 
   logger.debug(
     {

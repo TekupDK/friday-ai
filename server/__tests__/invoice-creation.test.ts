@@ -5,7 +5,7 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createInvoice, type BillyInvoice } from "../billy";
+import { createInvoice, type BillyInvoice } from '../modules/billing/billy';
 
 // Mock fetch for Billy API calls
 const fetchMock = vi.fn();

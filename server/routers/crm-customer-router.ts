@@ -13,7 +13,7 @@ import { validationSchemas } from "../_core/validation";
 import {
   getCustomerHealthScore,
   updateCustomerHealthScore,
-} from "../customer-health-score";
+} from '../modules/crm/customer-health-score';
 import { getDb } from "../db";
 import { getCachedQuery, invalidateCache } from "../db-cache";
 

@@ -14,14 +14,14 @@ import {
   processRenewal,
   processCancellation,
   calculateNextBillingDate,
-} from "../subscription-actions";
+} from "../modules/subscription/subscription-actions";
 import {
   calculateMonthlyRevenue,
   getARPU,
   getChurnRate,
   checkOverage,
   SUBSCRIPTION_PLANS,
-} from "../subscription-helpers";
+} from "../modules/subscription/subscription-helpers";
 
 // Mock database
 vi.mock("../db", () => ({

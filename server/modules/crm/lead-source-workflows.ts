@@ -5,7 +5,7 @@
  * Intelligent automation tailored to source characteristics.
  */
 
-import type { LeadSource, SourceDetection } from "./lead-source-detector";
+import type { LeadSource, SourceDetection } from './lead-source-detector';
 
 export interface SourceWorkflow {
   source: LeadSource;

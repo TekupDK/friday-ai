@@ -595,7 +595,7 @@ export class WorkflowAutomationService {
       addLabelToThread,
       getOrCreateLabel,
       archiveThread,
-    } = await import("./gmail-labels");
+    } = await import("./modules/email/gmail-labels");
 
     await ensureStandardLabels();
 
