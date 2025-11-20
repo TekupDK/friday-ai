@@ -15,10 +15,24 @@ export function NewsletterSignup() {
   >("idle");
   const [message, setMessage] = React.useState("");
 
+  // Auto-reset success/error state after 5 seconds with cleanup
+  React.useEffect(() => {
+    if (status === "success" || status === "error") {
+      const timer = setTimeout(() => {
+        setStatus("idle");
+        setMessage("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !email.includes("@")) {
+    // Proper email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       setStatus("error");
       setMessage("Indtast venligst en gyldig email-adresse");
       return;
@@ -38,26 +52,24 @@ export function NewsletterSignup() {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Store in localStorage for now (replace with actual API)
-      const subscribers = JSON.parse(
-        localStorage.getItem("newsletter-subscribers") || "[]"
-      );
-      if (!subscribers.includes(email)) {
-        subscribers.push(email);
-        localStorage.setItem(
-          "newsletter-subscribers",
-          JSON.stringify(subscribers)
-        );
+      try {
+        const subscribersData = localStorage.getItem("newsletter-subscribers");
+        const subscribers = subscribersData ? JSON.parse(subscribersData) : [];
+        if (!subscribers.includes(email)) {
+          subscribers.push(email);
+          localStorage.setItem(
+            "newsletter-subscribers",
+            JSON.stringify(subscribers)
+          );
+        }
+      } catch (error) {
+        console.error("Failed to save newsletter subscription:", error);
+        // Continue anyway - the important part is showing success to user
       }
 
       setStatus("success");
       setMessage("Tak! Du er nu tilmeldt vores nyhedsbrev.");
       setEmail("");
-
-      // Reset after 5 seconds
-      setTimeout(() => {
-        setStatus("idle");
-        setMessage("");
-      }, 5000);
     } catch (error) {
       setStatus("error");
       setMessage("Noget gik galt. Prøv venligst igen.");

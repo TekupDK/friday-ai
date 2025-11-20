@@ -13,16 +13,28 @@ export function CookieConsent() {
 
   React.useEffect(() => {
     // Check if user has already consented
-    const consent = localStorage.getItem("friday-ai-cookie-consent");
-    if (!consent) {
-      // Show banner after 2 seconds
+    try {
+      const consent = localStorage.getItem("friday-ai-cookie-consent");
+      if (!consent) {
+        // Show banner after 2 seconds
+        const timer = setTimeout(() => setShowBanner(true), 2000);
+        return () => clearTimeout(timer);
+      }
+    } catch (error) {
+      // LocalStorage not available (privacy mode, SSR, etc.)
+      console.error("LocalStorage not available:", error);
+      // Show banner anyway if localStorage fails
       const timer = setTimeout(() => setShowBanner(true), 2000);
       return () => clearTimeout(timer);
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("friday-ai-cookie-consent", "accepted");
+    try {
+      localStorage.setItem("friday-ai-cookie-consent", "accepted");
+    } catch (error) {
+      console.error("Failed to save cookie consent:", error);
+    }
     setShowBanner(false);
 
     // Enable analytics here if needed
@@ -34,7 +46,11 @@ export function CookieConsent() {
   };
 
   const handleDecline = () => {
-    localStorage.setItem("friday-ai-cookie-consent", "declined");
+    try {
+      localStorage.setItem("friday-ai-cookie-consent", "declined");
+    } catch (error) {
+      console.error("Failed to save cookie consent:", error);
+    }
     setShowBanner(false);
   };
 

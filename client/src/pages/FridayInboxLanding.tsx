@@ -168,7 +168,10 @@ export default function FridayInboxLanding() {
     document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script);
+      // Safely remove script only if it's still in the DOM
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
     };
   }, []);
 
