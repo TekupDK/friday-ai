@@ -1150,4 +1150,139 @@ export const emailRouter = router({
     .query(async ({ ctx, input }) => {
       return getUserPipelineStates(ctx.user.id, input.stage);
     }),
+  // Follow-up Reminders Endpoints
+  createFollowupReminder: protectedProcedure
+    .input(
+      z.object({
+        threadId: z.string().min(1),
+        emailId: z.number().optional(),
+        reminderDate: z.string(), // ISO timestamp
+        priority: z.enum(["low", "normal", "high", "urgent"]).optional(),
+        notes: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { createFollowupReminder } = await import(
+        "../../email-intelligence/followup-reminders"
+      );
+      return createFollowupReminder(ctx.user.id, {
+        threadId: input.threadId,
+        emailId: input.emailId,
+        reminderDate: input.reminderDate,
+        priority: input.priority,
+        notes: input.notes,
+        autoCreated: false,
+      });
+    }),
+  listFollowupReminders: protectedProcedure
+    .input(
+      z.object({
+        status: z
+          .enum(["pending", "completed", "cancelled", "overdue"])
+          .optional(),
+        priority: z.enum(["low", "normal", "high", "urgent"]).optional(),
+        limit: z.number().optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { listFollowupReminders } = await import(
+        "../../email-intelligence/followup-reminders"
+      );
+      return listFollowupReminders(ctx.user.id, {
+        status: input.status,
+        priority: input.priority,
+        limit: input.limit,
+      });
+    }),
+  markFollowupComplete: protectedProcedure
+    .input(z.object({ followupId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const { markFollowupComplete } = await import(
+        "../../email-intelligence/followup-reminders"
+      );
+      return markFollowupComplete(ctx.user.id, input.followupId);
+    }),
+  updateFollowupDate: protectedProcedure
+    .input(
+      z.object({
+        followupId: z.number(),
+        reminderDate: z.string(), // ISO timestamp
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { updateFollowupDate } = await import(
+        "../../email-intelligence/followup-reminders"
+      );
+      return updateFollowupDate(
+        ctx.user.id,
+        input.followupId,
+        input.reminderDate
+      );
+    }),
+  cancelFollowup: protectedProcedure
+    .input(z.object({ followupId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const { cancelFollowup } = await import(
+        "../../email-intelligence/followup-reminders"
+      );
+      return cancelFollowup(ctx.user.id, input.followupId);
+    }),
+  // Ghostwriter Endpoints
+  generateGhostwriterReply: protectedProcedure
+    .input(
+      z.object({
+        threadId: z.string().min(1),
+        subject: z.string(),
+        from: z.string(),
+        body: z.string(),
+        previousMessages: z.array(z.string()).optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { generateGhostwriterReply } = await import(
+        "../../email-intelligence/ghostwriter"
+      );
+      return generateGhostwriterReply(ctx.user.id, {
+        threadId: input.threadId,
+        subject: input.subject,
+        from: input.from,
+        body: input.body,
+        previousMessages: input.previousMessages,
+      });
+    }),
+  getWritingStyle: protectedProcedure.query(async ({ ctx }) => {
+    const { getWritingStyle } = await import(
+      "../../email-intelligence/ghostwriter"
+    );
+    return getWritingStyle(ctx.user.id);
+  }),
+  analyzeWritingStyle: protectedProcedure
+    .input(z.object({ sampleSize: z.number().optional().default(20) }))
+    .mutation(async ({ ctx, input }) => {
+      const { analyzeWritingStyle } = await import(
+        "../../email-intelligence/ghostwriter"
+      );
+      return analyzeWritingStyle(ctx.user.id, input.sampleSize);
+    }),
+  updateWritingStyleFromFeedback: protectedProcedure
+    .input(
+      z.object({
+        originalSuggestion: z.string(),
+        editedResponse: z.string(),
+        threadId: z.string(),
+        suggestionId: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { learnFromFeedback } = await import(
+        "../../email-intelligence/ghostwriter"
+      );
+      await learnFromFeedback(ctx.user.id, {
+        originalSuggestion: input.originalSuggestion,
+        editedResponse: input.editedResponse,
+        threadId: input.threadId,
+        suggestionId: input.suggestionId,
+      });
+      return { success: true };
+    }),
 });

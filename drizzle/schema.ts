@@ -1437,6 +1437,9 @@ export const subscriptionHistory = subscriptionHistoryInFridayAi;
 export const referralCodes = referralCodesInFridayAi;
 export const referralRewards = referralRewardsInFridayAi;
 export const referralHistory = referralHistoryInFridayAi;
+export const emailFollowups = emailFollowupsInFridayAi;
+export const userWritingStyles = userWritingStylesInFridayAi;
+export const emailResponseFeedback = emailResponseFeedbackInFridayAi;
 
 // =============================================================================
 // DOCUMENTATION SYSTEM TABLES
@@ -1628,6 +1631,21 @@ export const responseToneInFridayAi = fridayAi.enum("response_tone", [
   "formal",
 ]);
 
+// Follow-up Reminders Enums
+export const followupStatusInFridayAi = fridayAi.enum("followup_status", [
+  "pending",
+  "completed",
+  "cancelled",
+  "overdue",
+]);
+
+export const followupPriorityInFridayAi = fridayAi.enum("followup_priority", [
+  "low",
+  "normal",
+  "high",
+  "urgent",
+]);
+
 // Email Intelligence Tables
 export const emailCategoriesInFridayAi = fridayAi.table("email_categories", {
   id: serial().primaryKey().notNull(),
@@ -1669,6 +1687,112 @@ export const responseSuggestionsInFridayAi = fridayAi.table(
   }
 );
 
+// Follow-up Reminders Table
+export const emailFollowupsInFridayAi = fridayAi.table(
+  "email_followups",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    threadId: varchar({ length: 255 }).notNull(),
+    emailId: integer(), // Optional: link to specific email
+    sentAt: timestamp({ mode: "string" }).notNull(), // When the original email was sent
+    reminderDate: timestamp({ mode: "string" }).notNull(), // When to remind
+    status: followupStatusInFridayAi().default("pending").notNull(),
+    priority: followupPriorityInFridayAi().default("normal").notNull(),
+    subject: text(), // Email subject for quick reference
+    fromEmail: varchar({ length: 320 }), // Sender email
+    notes: text(), // User notes about the follow-up
+    autoCreated: boolean().default(false).notNull(), // Whether created automatically or manually
+    completedAt: timestamp({ mode: "string" }), // When follow-up was completed
+    cancelledAt: timestamp({ mode: "string" }), // When follow-up was cancelled
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_email_followups_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_email_followups_thread_id").using(
+      "btree",
+      table.threadId.asc().nullsLast().op("text_ops")
+    ),
+    index("idx_email_followups_status").using(
+      "btree",
+      table.status.asc().nullsLast()
+    ),
+    index("idx_email_followups_reminder_date").using(
+      "btree",
+      table.reminderDate.asc().nullsLast()
+    ),
+    // Composite index for common query: user + status + reminderDate
+    index("idx_email_followups_user_status_date").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops"),
+      table.status.asc().nullsLast(),
+      table.reminderDate.asc().nullsLast()
+    ),
+  ]
+);
+
+// Ghostwriter: Writing Style Learning Tables
+export const userWritingStylesInFridayAi = fridayAi.table(
+  "user_writing_styles",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull().unique(), // One style profile per user
+    tone: varchar({ length: 50 }), // "professional", "friendly", "formal", etc.
+    averageLength: integer(), // Average email length in characters
+    formalityLevel: varchar({ length: 50 }), // "formal", "semi-formal", "casual"
+    commonPhrases: jsonb(), // Array of commonly used phrases
+    signature: text(), // Common signature pattern
+    openingPatterns: jsonb(), // Common opening phrases
+    closingPatterns: jsonb(), // Common closing phrases
+    language: varchar({ length: 10 }).default("da"), // Language preference
+    metadata: jsonb(), // Additional style patterns
+    sampleCount: integer().default(0).notNull(), // Number of emails analyzed
+    lastAnalyzedAt: timestamp({ mode: "string" }),
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+    updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_user_writing_styles_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+  ]
+);
+
+export const emailResponseFeedbackInFridayAi = fridayAi.table(
+  "email_response_feedback",
+  {
+    id: serial().primaryKey().notNull(),
+    userId: integer().notNull(),
+    originalSuggestionId: varchar({ length: 255 }), // ID of the AI suggestion
+    threadId: varchar({ length: 255 }).notNull(),
+    originalSuggestion: text().notNull(), // The AI-generated suggestion
+    editedResponse: text().notNull(), // What the user actually sent
+    changes: jsonb(), // Detailed changes: { added: [], removed: [], modified: [] }
+    feedbackType: varchar({ length: 50 }), // "accepted", "edited", "rejected"
+    learningPoints: jsonb(), // Extracted patterns to learn from
+    createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
+  },
+  table => [
+    index("idx_email_response_feedback_user_id").using(
+      "btree",
+      table.userId.asc().nullsLast().op("int4_ops")
+    ),
+    index("idx_email_response_feedback_thread_id").using(
+      "btree",
+      table.threadId.asc().nullsLast().op("text_ops")
+    ),
+    index("idx_email_response_feedback_created_at").using(
+      "btree",
+      table.createdAt.desc().nullsLast()
+    ),
+  ]
+);
+
 // Email Intelligence Types
 export type EmailCategory = typeof emailCategoriesInFridayAi.$inferSelect;
 export type InsertEmailCategory = typeof emailCategoriesInFridayAi.$inferInsert;
@@ -1678,6 +1802,19 @@ export type ResponseSuggestion =
   typeof responseSuggestionsInFridayAi.$inferSelect;
 export type InsertResponseSuggestion =
   typeof responseSuggestionsInFridayAi.$inferInsert;
+
+// Follow-up Reminders Types
+export type EmailFollowup = typeof emailFollowupsInFridayAi.$inferSelect;
+export type InsertEmailFollowup = typeof emailFollowupsInFridayAi.$inferInsert;
+
+// Ghostwriter Types
+export type UserWritingStyle = typeof userWritingStylesInFridayAi.$inferSelect;
+export type InsertUserWritingStyle =
+  typeof userWritingStylesInFridayAi.$inferInsert;
+export type EmailResponseFeedback =
+  typeof emailResponseFeedbackInFridayAi.$inferSelect;
+export type InsertEmailResponseFeedback =
+  typeof emailResponseFeedbackInFridayAi.$inferInsert;
 
 // CRM Phase 2-6 Types
 export type Opportunity = typeof opportunitiesInFridayAi.$inferSelect;

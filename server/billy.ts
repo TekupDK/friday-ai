@@ -132,11 +132,12 @@ interface BillyProduct {
 }
 
 /**
- * Make authenticated request to Billy API
+ * Make authenticated request to Billy API with retry logic and better error handling
  */
 async function billyRequest<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  retries: number = 3
 ): Promise<T> {
   const url = `${BILLY_API_BASE}${endpoint}`;
 
@@ -146,17 +147,45 @@ async function billyRequest<T>(
     ...options.headers,
   };
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  });
+  let lastError: Error | null = null;
 
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Billy API error: ${response.status} - ${error}`);
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers,
+      });
+
+      if (!response.ok) {
+        // Retry on 5xx errors or rate limits
+        if (
+          (response.status >= 500 && response.status < 600) ||
+          response.status === 429
+        ) {
+          if (attempt < retries) {
+            const delay = Math.min(1000 * Math.pow(2, attempt - 1), 10000); // Exponential backoff, max 10s
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+        }
+
+        const error = await response.text().catch(() => "Unknown error");
+        throw new Error(`Billy API error: ${response.status} - ${error}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      lastError = error as Error;
+      if (attempt === retries) {
+        throw lastError;
+      }
+      // Exponential backoff for network errors
+      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 10000);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
   }
 
-  return response.json();
+  throw lastError || new Error("Billy API request failed");
 }
 
 function withOrgQuery(base: string): string {

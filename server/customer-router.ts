@@ -292,6 +292,45 @@ export const customerRouter = router({
     }),
 
   /**
+   * Quick actions for customer profile
+   */
+  getQuickActions: protectedProcedure
+    .input(z.object({ customerId: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const profile = await getCustomerProfileById(
+        input.customerId,
+        ctx.user.id
+      );
+      if (!profile) {
+        throw new Error("Customer not found");
+      }
+
+      const [emails, invoices, calendarEvents] = await Promise.all([
+        getCustomerEmails(input.customerId, ctx.user.id),
+        getCustomerInvoices(input.customerId, ctx.user.id),
+        getCustomerCalendarEvents(input.customerId, ctx.user.id),
+      ]);
+
+      return {
+        hasEmails: emails.length > 0,
+        emailCount: emails.length,
+        hasInvoices: invoices.length > 0,
+        invoiceCount: invoices.length,
+        unpaidInvoices: invoices.filter(
+          inv => inv.status === "sent" || inv.status === "overdue"
+        ).length,
+        hasCalendarEvents: calendarEvents.length > 0,
+        upcomingEvents: calendarEvents.filter(event => {
+          const startTime = (event as any).startTime;
+          if (!startTime) return false;
+          return new Date(startTime) > new Date();
+        }).length,
+        profileEmail: profile.email,
+        profilePhone: profile.phone,
+      };
+    }),
+
+  /**
    * Get or create customer conversation
    */
   getConversation: protectedProcedure
