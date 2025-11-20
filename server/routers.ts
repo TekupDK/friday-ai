@@ -19,6 +19,7 @@ import { fridayLeadsRouter } from "./routers/friday-leads-router";
 import { fridayRouter } from "./routers/friday-router";
 import { inboxRouter } from "./routers/inbox-router";
 import { reportsRouter } from "./routers/reports-router";
+import { twoFactorRouter } from "./routers/two-factor-router";
 import { uiAnalysisRouter } from "./routers/ui-analysis-router";
 import { workspaceRouter } from "./routers/workspace-router";
 
@@ -43,6 +44,7 @@ import { workspaceRouter } from "./routers/workspace-router";
  * - friday: Legacy Friday AI helper endpoints
  * - automation: Automation features
  * - chatStreaming: Enhanced chat with streaming
+ * - twoFactor: Two-factor authentication (2FA) management
  */
 export const appRouter = router({
   system: systemRouter,
@@ -71,6 +73,7 @@ export const appRouter = router({
   automation: automationRouter,
   chatStreaming: chatStreamingRouter, // Enhanced chat with streaming and unified flow
   reports: reportsRouter, // Business reports and analytics
+  twoFactor: twoFactorRouter, // ✅ SECURITY: Two-factor authentication management
 });
 
 export type AppRouter = typeof appRouter;

@@ -527,6 +527,10 @@ export const usersInFridayAi = fridayAi.table(
     createdAt: timestamp({ mode: "string" }).defaultNow().notNull(),
     updatedAt: timestamp({ mode: "string" }).defaultNow().notNull(),
     lastSignedIn: timestamp({ mode: "string" }).defaultNow().notNull(),
+    // ✅ SECURITY: Two-Factor Authentication (2FA) fields
+    twoFactorEnabled: boolean().default(false).notNull(),
+    twoFactorSecret: text(), // Encrypted TOTP secret
+    backupCodes: jsonb(), // Array of hashed backup codes for account recovery
   },
   table => [unique("users_openId_key").on(table.openId)]
 );
