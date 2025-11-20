@@ -3,6 +3,7 @@
  */
 
 import { describe, expect, it, vi, beforeEach } from "vitest";
+import type { GmailThread } from "../google-api";
 import { getDb } from "../db";
 import {
   createFollowupReminder,
@@ -36,8 +37,9 @@ describe("Follow-up Reminders", () => {
   describe("shouldCreateFollowup", () => {
     it("should return true for emails with questions", async () => {
       const { getGmailThread } = await import("../google-api");
-      vi.mocked(getGmailThread).mockResolvedValue({
+      const mockThread: GmailThread = {
         id: mockThreadId,
+        snippet: "Test Email",
         subject: "Test Email",
         messages: [
           {
@@ -50,7 +52,8 @@ describe("Follow-up Reminders", () => {
             date: new Date().toISOString(),
           },
         ],
-      } as any);
+      };
+      vi.mocked(getGmailThread).mockResolvedValue(mockThread);
 
       const db = await getDb();
       if (db) {
@@ -75,8 +78,9 @@ describe("Follow-up Reminders", () => {
 
     it("should return false if user sent last message", async () => {
       const { getGmailThread } = await import("../google-api");
-      vi.mocked(getGmailThread).mockResolvedValue({
+      const mockThread: GmailThread = {
         id: mockThreadId,
+        snippet: "Test Email",
         subject: "Test Email",
         messages: [
           {
@@ -89,7 +93,8 @@ describe("Follow-up Reminders", () => {
             date: new Date().toISOString(),
           },
         ],
-      } as any);
+      };
+      vi.mocked(getGmailThread).mockResolvedValue(mockThread);
 
       const db = await getDb();
       if (db) {
