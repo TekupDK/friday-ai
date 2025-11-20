@@ -374,7 +374,7 @@ export const customerRouter = router({
 
       // Update last sync date
       if (db) {
-        const { customerProfiles } = await import("../../drizzle/schema");
+        const { customerProfiles } = await import("../../../drizzle/schema");
         const { eq } = await import("drizzle-orm");
         await db
           .update(customerProfiles)
@@ -536,7 +536,7 @@ Format as clear, concise bullet points in Danish.`;
 
       // Update customer profile with AI resume
       if (db) {
-        const { customerProfiles } = await import("../../drizzle/schema");
+        const { customerProfiles } = await import("../../../drizzle/schema");
         const { eq } = await import("drizzle-orm");
         await db
           .update(customerProfiles)

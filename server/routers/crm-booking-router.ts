@@ -150,7 +150,7 @@ export const crmBookingRouter = router({
 
           // Track subscription usage if booking is for subscription customer (async)
           if (created.status === "completed" || created.status === "in_progress") {
-            import("../subscription-usage-tracker")
+            import("../modules/subscription/subscription-usage-tracker")
               .then(({ trackBookingUsage, calculateBookingHours }) => {
                 const hoursWorked = calculateBookingHours(created);
                 return trackBookingUsage(created.id, userId, hoursWorked);
@@ -199,7 +199,7 @@ export const crmBookingRouter = router({
 
         if (booking && booking.customerProfileId) {
           // Track usage asynchronously (don't block status update)
-          import("../subscription-usage-tracker")
+          import("../modules/subscription/subscription-usage-tracker")
             .then(({ trackBookingUsage, calculateBookingHours }) => {
               const hoursWorked = calculateBookingHours(booking);
               return trackBookingUsage(booking.id, userId, hoursWorked);

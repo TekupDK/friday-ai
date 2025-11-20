@@ -17,7 +17,7 @@ import {
 
 import { searchCustomerByEmail } from '../billing/billy';
 import { getDb } from "../../db";
-import { addLabelToThread } from "../../gmail-labels";
+import { addLabelToThread } from "../../modules/email/gmail-labels";
 import {
   detectLeadSource,
   detectLeadSourceIntelligent,

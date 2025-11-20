@@ -29,7 +29,7 @@ export async function createLead(data: InsertLead): Promise<Lead> {
     console.log("[ChromaDB] Starting duplicate detection...");
     try {
       const { searchSimilar, formatLeadForEmbedding } = await import(
-        "./integrations/chromadb"
+        "../../integrations/chromadb"
       );
 
       const leadText = formatLeadForEmbedding({
@@ -85,7 +85,7 @@ export async function createLead(data: InsertLead): Promise<Lead> {
   if (ENV.chromaEnabled && newLead) {
     try {
       const { addDocuments, formatLeadForEmbedding } = await import(
-        "./integrations/chromadb"
+        "../../integrations/chromadb"
       );
 
       const leadText = formatLeadForEmbedding({

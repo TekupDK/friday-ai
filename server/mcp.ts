@@ -382,7 +382,7 @@ export async function getGmailLabels(): Promise<
 > {
   try {
     // Labels might not be available via MCP, use direct Google API
-    const { getGmailLabels: directGetLabels } = await import("./gmail-labels");
+    const { getGmailLabels: directGetLabels } = await import("./modules/email/gmail-labels");
     return await directGetLabels();
   } catch (error) {
     console.error("Error getting Gmail labels:", error);

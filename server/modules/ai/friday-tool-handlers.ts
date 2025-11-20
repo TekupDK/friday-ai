@@ -917,7 +917,7 @@ async function handleSearchCustomerCalendarHistory(
     correlationId,
   });
   const { listCalendarEvents: listGoogleCalendarEvents } = await import(
-    "./google-api"
+    "../../google-api"
   );
 
   const monthsBack = args.monthsBack || 6;
@@ -1018,7 +1018,7 @@ async function handleUpdateCalendarEvent(
   });
   try {
     const { updateCalendarEvent: updateGoogleEvent } = await import(
-      "./google-api"
+      "../../google-api"
     );
 
     const updatedEvent = await callWithRetry(() =>
@@ -1072,7 +1072,7 @@ async function handleDeleteCalendarEvent(
   });
   try {
     const { deleteCalendarEvent: deleteGoogleEvent } = await import(
-      "./google-api"
+      "../../google-api"
     );
 
     await callWithRetry(() =>
@@ -1123,7 +1123,7 @@ async function handleCheckCalendarConflicts(
   });
   try {
     const { listCalendarEvents: listGoogleCalendarEvents } = await import(
-      "./google-api"
+      "../../google-api"
     );
 
     // Fetch events in the time range

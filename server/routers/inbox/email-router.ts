@@ -26,7 +26,7 @@ import {
   archiveThread,
   getGmailLabels,
   removeLabelFromThread,
-} from "../../gmail-labels";
+} from "../../modules/email/gmail-labels";
 import {
   getGmailThread,
   markGmailMessageAsRead as googleMarkAsRead,
@@ -247,7 +247,7 @@ export const emailRouter = router({
 
       // Cache to database in background (don't await to speed up response)
       if (db && threads.length > 0) {
-        const { cacheEmailsToDatabase } = await import("../../email-cache");
+        const { cacheEmailsToDatabase } = await import("../../modules/email/email-cache");
         cacheEmailsToDatabase(threads, ctx.user.id, db).catch(error => {
           logger.error({ err: error }, "[Email List] Background cache failed");
         });
