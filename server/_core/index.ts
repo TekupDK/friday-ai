@@ -10,7 +10,6 @@ import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
 import * as db from "../db";
-import { startDocsService } from "../docs/service";
 import * as leadDb from "../lead-db";
 import { appRouter } from "../routers";
 
@@ -319,20 +318,6 @@ async function startServer() {
       `Server running on http://localhost:${port}/`
     );
 
-    // Start subscription job schedulers
-    try {
-      const { startSubscriptionSchedulers } = await import(
-        "../subscription-scheduler"
-      );
-      startSubscriptionSchedulers();
-      logger.info("[Server] Subscription schedulers started");
-    } catch (error) {
-      logger.error(
-        { err: error },
-        "[Server] Failed to start subscription schedulers"
-      );
-    }
-
     // Run automatic historical data import if needed (non-blocking)
     // This only runs if no leads exist in the database
     runAutoImportIfNeeded().catch(error => {
@@ -341,23 +326,6 @@ async function startServer() {
         "[Auto-Import] Failed to run automatic import"
       );
     });
-
-    // Start Documentation service (optional)
-    logger.info(
-      { docsEnable: process.env.DOCS_ENABLE },
-      "[Server] Checking DOCS_ENABLE"
-    );
-    if (process.env.DOCS_ENABLE === "true") {
-      try {
-        logger.info("[Server] Starting docs service...");
-        await startDocsService();
-        logger.info("[Server] Docs service started successfully");
-      } catch (err) {
-        logger.error({ err }, "[Docs] Failed to start docs service");
-      }
-    } else {
-      logger.info("[Docs] DOCS_ENABLE is not 'true', skipping docs service");
-    }
   });
 }
 

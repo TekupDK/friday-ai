@@ -18,7 +18,6 @@ import { emailIntelligenceRouter } from "./routers/email-intelligence-router";
 import { fridayLeadsRouter } from "./routers/friday-leads-router";
 import { fridayRouter } from "./routers/friday-router";
 import { inboxRouter } from "./routers/inbox-router";
-import { referralRouter } from "./routers/referral-router";
 import { reportsRouter } from "./routers/reports-router";
 import { uiAnalysisRouter } from "./routers/ui-analysis-router";
 import { workspaceRouter } from "./routers/workspace-router";
@@ -72,7 +71,6 @@ export const appRouter = router({
   automation: automationRouter,
   chatStreaming: chatStreamingRouter, // Enhanced chat with streaming and unified flow
   reports: reportsRouter, // Business reports and analytics
-  referral: referralRouter, // Referral program management
 });
 
 export type AppRouter = typeof appRouter;

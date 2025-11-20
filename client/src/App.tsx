@@ -92,15 +92,6 @@ function Router() {
         path={"/crm/segments/:id"}
         component={lazy(() => import("./pages/crm/SegmentDetail"))}
       />
-      {/* Subscription Routes */}
-      <Route
-        path={"/subscriptions"}
-        component={lazy(() => import("./pages/SubscriptionManagement"))}
-      />
-      <Route
-        path={"/subscriptions/plans"}
-        component={lazy(() => import("./pages/SubscriptionLanding"))}
-      />
       {/* Admin Routes */}
       <Route
         path={"/admin/users"}

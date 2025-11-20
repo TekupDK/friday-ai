@@ -23,12 +23,6 @@ import {
   type AIModel,
   type TaskType,
 } from "./model-router";
-import {
-  recommendSubscriptionPlan,
-  predictChurnRisk,
-  optimizeSubscriptionUsage,
-  generateUpsellOpportunities,
-} from "./subscription-ai";
 import { executeUTCPTool } from "./utcp/handler";
 import { getAllUTCPTools, hasUTCPTool } from "./utcp/manifest";
 
@@ -963,124 +957,8 @@ Eksempel: "Jeg tjekker din kalender for dagens aftaler nu." (UDEN at skrive [Pen
               "[AI Router] [routeAI]: Using legacy/custom tool execution"
             );
 
-            // Custom subscription tool handlers
-            if (toolName === "recommend_subscription_plan") {
-              try {
-                const recommendation = await recommendSubscriptionPlan(
-                  toolArgs.customerId,
-                  userId!,
-                  toolArgs.includeReasoning ?? true
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify(recommendation),
-                  tool_call_id: toolCall.id,
-                });
-              } catch (error) {
-                logger.error(
-                  {
-                    toolName,
-                    error: error instanceof Error ? error.message : String(error),
-                    correlationId,
-                  },
-                  "[AI Router] [routeAI]: Subscription recommendation failed"
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
-                  }),
-                  tool_call_id: toolCall.id,
-                });
-              }
-            } else if (toolName === "predict_churn_risk") {
-              try {
-                const prediction = await predictChurnRisk(
-                  toolArgs.customerId,
-                  userId!,
-                  toolArgs.lookbackDays || 90
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify(prediction),
-                  tool_call_id: toolCall.id,
-                });
-              } catch (error) {
-                logger.error(
-                  {
-                    toolName,
-                    error: error instanceof Error ? error.message : String(error),
-                    correlationId,
-                  },
-                  "[AI Router] [routeAI]: Churn prediction failed"
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
-                  }),
-                  tool_call_id: toolCall.id,
-                });
-              }
-            } else if (toolName === "optimize_subscription_usage") {
-              try {
-                const optimization = await optimizeSubscriptionUsage(
-                  toolArgs.subscriptionId,
-                  userId!,
-                  toolArgs.optimizeFor || "value"
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify(optimization),
-                  tool_call_id: toolCall.id,
-                });
-              } catch (error) {
-                logger.error(
-                  {
-                    toolName,
-                    error: error instanceof Error ? error.message : String(error),
-                    correlationId,
-                  },
-                  "[AI Router] [routeAI]: Usage optimization failed"
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
-                  }),
-                  tool_call_id: toolCall.id,
-                });
-              }
-            } else if (toolName === "generate_upsell_opportunities") {
-              try {
-                const opportunities = await generateUpsellOpportunities(
-                  toolArgs.customerId,
-                  userId!,
-                  toolArgs.includeCrossSell ?? true
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify(opportunities),
-                  tool_call_id: toolCall.id,
-                });
-              } catch (error) {
-                logger.error(
-                  {
-                    toolName,
-                    error: error instanceof Error ? error.message : String(error),
-                    correlationId,
-                  },
-                  "[AI Router] [routeAI]: Upsell opportunities failed"
-                );
-                toolResults.push({
-                  role: "tool",
-                  content: JSON.stringify({
-                    error: error instanceof Error ? error.message : "Unknown error",
-                  }),
-                  tool_call_id: toolCall.id,
-                });
-              }
-            } else if (flags.enableUTCP) {
+            // Legacy tool execution
+            if (flags.enableUTCP) {
               // Legacy tool execution would go here
               toolResults.push({
                 role: "tool",

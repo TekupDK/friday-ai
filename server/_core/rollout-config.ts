@@ -3,7 +3,6 @@
  * Controls gradual rollout and emergency rollback procedures
  */
 
-import { getABTestStatus } from "./ab-testing";
 import { getFeatureFlags } from "./feature-flags";
 
 export interface RolloutPhase {
@@ -430,6 +429,5 @@ export async function getRolloutConfigurations() {
     chat_flow: CHAT_FLOW_ROLLOUT_PHASES,
     streaming: STREAMING_ROLLOUT_PHASES,
     current_status: await getRolloutStatus(),
-    ab_tests: getABTestStatus(),
   };
 }
