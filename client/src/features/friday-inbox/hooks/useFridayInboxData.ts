@@ -106,34 +106,34 @@ export function useFridayInboxData(
 
   const emails = useMemo<EnhancedEmailMessage[]>(() => {
     const rawEmails = (emailData as any)?.threads || [];
-    return rawEmails.map(
-      (email: EnhancedEmailMessage): EnhancedEmailMessage => ({
+    return rawEmails.map((email: EnhancedEmailMessage): EnhancedEmailMessage => {
+      const normalizedSubject = email.subject?.toLowerCase() ?? "";
+
+      const jobType = normalizedSubject.includes("hovedrengøring")
+        ? "Hovedrengøring"
+        : normalizedSubject.includes("flytterengøring")
+          ? "Flytterengøring"
+          : "Anden";
+
+      const location = normalizedSubject.includes("aarhus")
+        ? "Aarhus"
+        : normalizedSubject.includes("københavn")
+          ? "København"
+          : "Anden";
+
+      return {
         ...email,
         aiAnalysis: {
           leadScore: email.aiAnalysis?.leadScore ?? 70,
           source: email.aiAnalysis?.source ?? null,
           estimatedValue: email.aiAnalysis?.estimatedValue ?? 2500,
           urgency: email.unread ? "high" : "medium",
-          jobType:
-            email.subject?.toLowerCase().includes("hovedrengøring") ??
-            false
-              ? "Hovedrengøring"
-              : email.subject?.toLowerCase().includes("flytterengøring") ??
-                  false
-                ? "Flytterengøring"
-                : "Anden",
-          location:
-            email.subject?.toLowerCase().includes("aarhus") ??
-            false
-              ? "Aarhus"
-              : email.subject?.toLowerCase().includes("københavn") ??
-                  false
-                ? "København"
-                : "Anden",
+          jobType,
+          location,
           confidence: email.aiAnalysis?.confidence ?? 80,
         },
-      })
-    );
+      };
+    });
   }, [emailData]);
 
   const visibleThreadIds = useMemo(
@@ -172,22 +172,23 @@ export function useFridayInboxData(
 
     emails.forEach(email => {
       const intel = batchIntelligence[email.threadId];
-      const hasSentOffer =
-        email.labels?.some(label => label.includes("sent-offer")) ?? false;
-      const replied =
-      email.labels?.includes("replied") ||
-      email.labels?.includes("done");
+      const normalizedLabels = email.labels?.map(label => label.toLowerCase()) ?? [];
+      const hasSentOffer = normalizedLabels.some(label => label.includes("sent-offer"));
+      const replied = normalizedLabels.some(
+        label => label.includes("replied") || label.includes("done")
+      );
       const isFinance =
         intel?.category?.category === "finance" ||
-        email.labels?.some(label => label.toLowerCase().includes("invoice"));
-      const isCompleted =
-        email.labels?.includes("archived") ||
-        email.labels?.includes("done") ||
-        email.labels?.includes("completed");
+        normalizedLabels.some(label => label.includes("invoice") || label.includes("finance"));
+      const isCompleted = normalizedLabels.some(
+        label =>
+          label.includes("archived") ||
+          label.includes("done") ||
+          label.includes("completed")
+      );
 
       const priorityScore =
-        intel?.priority?.score ??
-        (email.unread ? 80 : email.aiAnalysis?.leadScore ?? 60);
+        intel?.priority?.score ?? (email.unread ? 80 : email.aiAnalysis?.leadScore ?? 60);
 
       if (isCompleted) {
         buckets.done.push(email);
@@ -273,11 +274,27 @@ export function useFridayInboxData(
 
     return emails.slice(0, 10).map(email => {
       const intel = batchIntelligence[email.threadId];
+      const priorityLevel = intel?.priority?.level as
+        | FridayInboxSuggestion["priority"]
+        | undefined;
+      const allowedPriorities: FridayInboxSuggestion["priority"][] = [
+        "urgent",
+        "high",
+        "medium",
+        "low",
+      ];
+      const candidatePriority =
+        priorityLevel && allowedPriorities.includes(priorityLevel)
+          ? priorityLevel
+          : email.unread
+            ? "high"
+            : "medium";
+
       return {
         threadId: email.threadId,
         contactName: getContactName(email.from),
         subject: email.subject,
-        priority: (intel?.priority?.level as FridayInboxSuggestion["priority"]) ?? (email.unread ? "high" : "medium"),
+        priority: candidatePriority,
         action: deriveAction(email, intel),
         reason: deriveReason(email, intel),
         estimatedValue: email.aiAnalysis?.estimatedValue,
