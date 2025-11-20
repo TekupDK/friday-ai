@@ -58,6 +58,24 @@ export function sanitizeHtml(
 }
 
 /**
+ * Helper to decode HTML entities
+ */
+function decodeHtmlEntities(text: string): string {
+  if (typeof document === 'undefined') {
+    // Fallback for non-browser environments if necessary, or simple replace
+    return text
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'");
+  }
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+}
+
+/**
  * Sanitizes text to plain text only (strips all HTML)
  * Use this when you want to display user input as text without any formatting
  *
@@ -71,7 +89,8 @@ export function sanitizeHtml(
  * ```
  */
 export function sanitizeText(dirty: string): string {
-  return DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] });
+  const clean = DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] });
+  return decodeHtmlEntities(clean);
 }
 
 /**

@@ -119,7 +119,7 @@ describe('Sanitization Utils', () => {
       const dirty = 'Text with & < > " characters';
       const clean = sanitizeText(dirty);
 
-      expect(clean).toBe('Text with & &lt; &gt; " characters');
+      expect(clean).toBe('Text with & < > " characters');
     });
   });
 
