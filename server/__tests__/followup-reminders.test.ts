@@ -10,7 +10,7 @@ import {
   markFollowupComplete,
   shouldCreateFollowup,
   autoCreateFollowups,
-} from "../email-intelligence/followup-reminders";
+} from "../email-intelligence/followup";
 import { emailFollowups, emails } from "../../drizzle/schema";
 
 // Mock dependencies

@@ -11,7 +11,7 @@ import {
   autoCreateFollowups,
   listFollowupReminders,
   markFollowupComplete,
-} from "../../email-intelligence/followup-reminders";
+} from "../../email-intelligence/followup";
 import { logger } from "../../_core/logger";
 
 /**

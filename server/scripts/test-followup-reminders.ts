@@ -13,7 +13,7 @@ import {
   markFollowupComplete,
   shouldCreateFollowup,
   autoCreateFollowups,
-} from "../email-intelligence/followup-reminders";
+} from "../email-intelligence/followup";
 import { emailFollowups } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 

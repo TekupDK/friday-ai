@@ -1163,7 +1163,7 @@ export const emailRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { createFollowupReminder } = await import(
-        "../../email-intelligence/followup-reminders"
+        "../../email-intelligence/followup"
       );
       return createFollowupReminder(ctx.user.id, {
         threadId: input.threadId,
@@ -1186,7 +1186,7 @@ export const emailRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const { listFollowupReminders } = await import(
-        "../../email-intelligence/followup-reminders"
+        "../../email-intelligence/followup"
       );
       return listFollowupReminders(ctx.user.id, {
         status: input.status,
@@ -1198,7 +1198,7 @@ export const emailRouter = router({
     .input(z.object({ followupId: z.number() }))
     .mutation(async ({ ctx, input }) => {
       const { markFollowupComplete } = await import(
-        "../../email-intelligence/followup-reminders"
+        "../../email-intelligence/followup"
       );
       return markFollowupComplete(ctx.user.id, input.followupId);
     }),
@@ -1211,7 +1211,7 @@ export const emailRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { updateFollowupDate } = await import(
-        "../../email-intelligence/followup-reminders"
+        "../../email-intelligence/followup"
       );
       return updateFollowupDate(
         ctx.user.id,
@@ -1223,7 +1223,7 @@ export const emailRouter = router({
     .input(z.object({ followupId: z.number() }))
     .mutation(async ({ ctx, input }) => {
       const { cancelFollowup } = await import(
-        "../../email-intelligence/followup-reminders"
+        "../../email-intelligence/followup"
       );
       return cancelFollowup(ctx.user.id, input.followupId);
     }),
