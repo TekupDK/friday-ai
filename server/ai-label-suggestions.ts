@@ -99,8 +99,8 @@ Analyser emailen og foreslå relevante labels med confidence score (0-100%):
 
 **Retningslinjer:**
 - Confidence >85%: Auto-apply (meget sikker)
-- Confidence 70-85%: Foreslå til manual review
-- Confidence <70%: Ikke relevant nok
+- Confidence 75-85%: Foreslå til manual review
+- Confidence <75%: Ikke relevant nok (returner ikke)
 
 Returner KUN et gyldigt JSON array, intet andet tekst:
 [
