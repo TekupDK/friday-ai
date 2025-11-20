@@ -5,19 +5,19 @@
  */
 
 import { Icon } from "@iconify/react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, type Variants } from "framer-motion";
 import React, { useRef } from "react";
 import { useLocation } from "wouter";
 
+import { CookieConsent } from "@/components/CookieConsent";
 import { AppleButton, AppleCard } from "@/components/crm/apple-ui";
 import CRMLayout from "@/components/crm/CRMLayout";
-import { CookieConsent } from "@/components/CookieConsent";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PanelErrorBoundary } from "@/components/PanelErrorBoundary";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
 // Animation variants
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
@@ -29,7 +29,7 @@ const fadeInUp = {
   },
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -39,7 +39,7 @@ const staggerContainer = {
   },
 };
 
-const scaleIn = {
+const scaleIn: Variants = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: {
     opacity: 1,
@@ -52,7 +52,13 @@ const scaleIn = {
 };
 
 // Animation wrapper component
-function AnimatedSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+function AnimatedSection({
+  children,
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -80,7 +86,9 @@ export default function FridayInboxLanding() {
     // Update meta tags for SEO
     const updateMetaTags = () => {
       // Description
-      const metaDescription = document.querySelector('meta[name="description"]');
+      const metaDescription = document.querySelector(
+        'meta[name="description"]'
+      );
       if (metaDescription) {
         metaDescription.setAttribute(
           "content",
@@ -90,9 +98,15 @@ export default function FridayInboxLanding() {
 
       // Open Graph tags
       const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute("content", "Friday AI Inbox - Din Intelligente Forretningsassistent");
+      if (ogTitle)
+        ogTitle.setAttribute(
+          "content",
+          "Friday AI Inbox - Din Intelligente Forretningsassistent"
+        );
 
-      const ogDescription = document.querySelector('meta[property="og:description"]');
+      const ogDescription = document.querySelector(
+        'meta[property="og:description"]'
+      );
       if (ogDescription) {
         ogDescription.setAttribute(
           "content",
@@ -105,7 +119,8 @@ export default function FridayInboxLanding() {
 
       // Twitter Card
       const twitterCard = document.querySelector('meta[name="twitter:card"]');
-      if (twitterCard) twitterCard.setAttribute("content", "summary_large_image");
+      if (twitterCard)
+        twitterCard.setAttribute("content", "summary_large_image");
 
       // Keywords
       const metaKeywords = document.querySelector('meta[name="keywords"]');
@@ -161,18 +176,25 @@ export default function FridayInboxLanding() {
   React.useEffect(() => {
     // Track page load performance
     if (typeof window !== "undefined" && window.performance) {
-      const perfData = window.performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+      const perfData = window.performance.getEntriesByType(
+        "navigation"
+      )[0] as PerformanceNavigationTiming;
 
       if (perfData) {
         const pageLoadTime = perfData.loadEventEnd - perfData.fetchStart;
-        const domContentLoadedTime = perfData.domContentLoadedEventEnd - perfData.fetchStart;
+        const domContentLoadedTime =
+          perfData.domContentLoadedEventEnd - perfData.fetchStart;
 
         // Log to console in development
         if (process.env.NODE_ENV === "development") {
           console.log("📊 Page Performance Metrics:");
           console.log(`  Page Load Time: ${Math.round(pageLoadTime)}ms`);
-          console.log(`  DOM Content Loaded: ${Math.round(domContentLoadedTime)}ms`);
-          console.log(`  Time to Interactive: ${Math.round(perfData.domInteractive - perfData.fetchStart)}ms`);
+          console.log(
+            `  DOM Content Loaded: ${Math.round(domContentLoadedTime)}ms`
+          );
+          console.log(
+            `  Time to Interactive: ${Math.round(perfData.domInteractive - perfData.fetchStart)}ms`
+          );
         }
 
         // TODO: Send to analytics service
@@ -188,7 +210,9 @@ export default function FridayInboxLanding() {
     return () => {
       const timeOnPage = Date.now() - startTime;
       if (process.env.NODE_ENV === "development") {
-        console.log(`⏱️  Time on landing page: ${Math.round(timeOnPage / 1000)}s`);
+        console.log(
+          `⏱️  Time on landing page: ${Math.round(timeOnPage / 1000)}s`
+        );
       }
     };
   }, []);
@@ -273,8 +297,9 @@ export default function FridayInboxLanding() {
                   variants={fadeInUp}
                   className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
                 >
-                  Email, kalender, fakturering og CRM - alt samlet i ét intelligent system.
-                  Friday AI automatiserer din daglige workflow med avanceret kunstig intelligens.
+                  Email, kalender, fakturering og CRM - alt samlet i ét
+                  intelligent system. Friday AI automatiserer din daglige
+                  workflow med avanceret kunstig intelligens.
                 </motion.p>
 
                 <motion.div
@@ -288,7 +313,10 @@ export default function FridayInboxLanding() {
                     className="group relative overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      <Icon icon="solar:rocket-2-bold-duotone" className="w-5 h-5" />
+                      <Icon
+                        icon="solar:rocket-2-bold-duotone"
+                        className="w-5 h-5"
+                      />
                       Kom i gang
                     </span>
                     <motion.div
@@ -336,10 +364,15 @@ export default function FridayInboxLanding() {
                       className="flex flex-col items-center text-center gap-3"
                     >
                       <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl flex items-center justify-center">
-                        <Icon icon={feature.icon} className="w-8 h-8 text-primary" />
+                        <Icon
+                          icon={feature.icon}
+                          className="w-8 h-8 text-primary"
+                        />
                       </div>
                       <h3 className="font-semibold text-lg">{feature.title}</h3>
-                      <p className="text-sm text-muted-foreground">{feature.description}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {feature.description}
+                      </p>
                     </motion.div>
                   ))}
                 </motion.div>
@@ -386,27 +419,32 @@ export default function FridayInboxLanding() {
                     {
                       icon: "solar:tag-bold-duotone",
                       title: "Smart Auto-Labeling",
-                      description: "Automatisk kategorisering: Leads 🟢, Booking 🔵, Finance 🟡, Support 🔴",
+                      description:
+                        "Automatisk kategorisering: Leads 🟢, Booking 🔵, Finance 🟡, Support 🔴",
                     },
                     {
                       icon: "solar:calendar-bold-duotone",
                       title: "Google Calendar Integration",
-                      description: "Book møder direkte fra emails - synkroniseret med din kalender",
+                      description:
+                        "Book møder direkte fra emails - synkroniseret med din kalender",
                     },
                     {
                       icon: "solar:bill-list-bold-duotone",
                       title: "Billy.dk Fakturering",
-                      description: "Opret fakturaer direkte fra chat - 349 kr/time standard",
+                      description:
+                        "Opret fakturaer direkte fra chat - 349 kr/time standard",
                     },
                     {
                       icon: "solar:users-group-rounded-bold-duotone",
                       title: "CRM & Lead Pipeline",
-                      description: "Hold styr på leads, kunder og opportunities i ét system",
+                      description:
+                        "Hold styr på leads, kunder og opportunities i ét system",
                     },
                     {
                       icon: "solar:checklist-bold-duotone",
                       title: "Task Management",
-                      description: "AI-genererede opgaver fra emails med prioritering og deadlines",
+                      description:
+                        "AI-genererede opgaver fra emails med prioritering og deadlines",
                     },
                   ].map((feature, index) => (
                     <motion.div key={feature.title} variants={scaleIn}>
@@ -417,11 +455,18 @@ export default function FridayInboxLanding() {
                       >
                         <div className="space-y-4">
                           <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl flex items-center justify-center">
-                            <Icon icon={feature.icon} className="w-7 h-7 text-primary" />
+                            <Icon
+                              icon={feature.icon}
+                              className="w-7 h-7 text-primary"
+                            />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-xl mb-2">{feature.title}</h3>
-                            <p className="text-muted-foreground">{feature.description}</p>
+                            <h3 className="font-semibold text-xl mb-2">
+                              {feature.title}
+                            </h3>
+                            <p className="text-muted-foreground">
+                              {feature.description}
+                            </p>
                           </div>
                         </div>
                       </AppleCard>
@@ -498,23 +543,32 @@ export default function FridayInboxLanding() {
                       >
                         <div className="space-y-4">
                           <div className="flex items-center gap-1">
-                            {Array.from({ length: testimonial.rating }).map((_, i) => (
-                              <Icon
-                                key={i}
-                                icon="solar:star-bold"
-                                className="w-5 h-5 text-yellow-500"
-                              />
-                            ))}
+                            {Array.from({ length: testimonial.rating }).map(
+                              (_, i) => (
+                                <Icon
+                                  key={i}
+                                  icon="solar:star-bold"
+                                  className="w-5 h-5 text-yellow-500"
+                                />
+                              )
+                            )}
                           </div>
 
-                          <p className="text-muted-foreground italic">&quot;{testimonial.quote}&quot;</p>
+                          <p className="text-muted-foreground italic">
+                            &quot;{testimonial.quote}&quot;
+                          </p>
 
                           <div className="flex items-center gap-3 pt-4 border-t border-border/50">
                             <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-full flex items-center justify-center">
-                              <Icon icon={testimonial.image} className="w-6 h-6 text-primary" />
+                              <Icon
+                                icon={testimonial.image}
+                                className="w-6 h-6 text-primary"
+                              />
                             </div>
                             <div>
-                              <div className="font-semibold">{testimonial.name}</div>
+                              <div className="font-semibold">
+                                {testimonial.name}
+                              </div>
                               <div className="text-sm text-muted-foreground">
                                 {testimonial.role} at {testimonial.company}
                               </div>
@@ -544,8 +598,12 @@ export default function FridayInboxLanding() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 }}
                     >
-                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">2.500+</div>
-                      <div className="text-sm text-muted-foreground">Emails behandlet</div>
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+                        2.500+
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Emails behandlet
+                      </div>
                     </motion.div>
 
                     <motion.div
@@ -555,8 +613,12 @@ export default function FridayInboxLanding() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.2 }}
                     >
-                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">231</div>
-                      <div className="text-sm text-muted-foreground">AI-enrichede leads</div>
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+                        231
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        AI-enrichede leads
+                      </div>
                     </motion.div>
 
                     <motion.div
@@ -566,8 +628,12 @@ export default function FridayInboxLanding() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.3 }}
                     >
-                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">2t+</div>
-                      <div className="text-sm text-muted-foreground">Sparet dagligt</div>
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+                        2t+
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Sparet dagligt
+                      </div>
                     </motion.div>
 
                     <motion.div
@@ -577,8 +643,12 @@ export default function FridayInboxLanding() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.4 }}
                     >
-                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">99.9%</div>
-                      <div className="text-sm text-muted-foreground">Uptime garanti</div>
+                      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+                        99.9%
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Uptime garanti
+                      </div>
                     </motion.div>
                   </div>
                 </AppleCard>
@@ -626,22 +696,29 @@ export default function FridayInboxLanding() {
                       step: "2",
                       icon: "solar:magic-stick-bold-duotone",
                       title: "AI Behandler",
-                      description: "Lead oprettes, kalender tjekkes, forslag genereres",
+                      description:
+                        "Lead oprettes, kalender tjekkes, forslag genereres",
                     },
                     {
                       step: "3",
                       icon: "solar:chat-round-check-bold-duotone",
                       title: "Du Godkender",
-                      description: "Gennemgå og godkend AI's forslag med ét klik",
+                      description:
+                        "Gennemgå og godkend AI's forslag med ét klik",
                     },
                     {
                       step: "4",
                       icon: "solar:check-circle-bold-duotone",
                       title: "Automatisk Udførelse",
-                      description: "Booking sendes, faktura oprettes, CRM opdateres",
+                      description:
+                        "Booking sendes, faktura oprettes, CRM opdateres",
                     },
                   ].map((step, index) => (
-                    <motion.div key={step.step} variants={scaleIn} className="relative">
+                    <motion.div
+                      key={step.step}
+                      variants={scaleIn}
+                      className="relative"
+                    >
                       <AppleCard
                         variant="elevated"
                         padding="lg"
@@ -652,11 +729,18 @@ export default function FridayInboxLanding() {
                         </div>
                         <div className="space-y-4 pt-4">
                           <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                            <Icon icon={step.icon} className="w-8 h-8 text-primary" />
+                            <Icon
+                              icon={step.icon}
+                              className="w-8 h-8 text-primary"
+                            />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
-                            <p className="text-sm text-muted-foreground">{step.description}</p>
+                            <h3 className="font-semibold text-lg mb-2">
+                              {step.title}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {step.description}
+                            </p>
                           </div>
                         </div>
                       </AppleCard>
@@ -766,7 +850,10 @@ export default function FridayInboxLanding() {
                         {plan.popular && (
                           <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                             <div className="bg-gradient-to-r from-primary to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                              <Icon icon="solar:star-bold" className="w-4 h-4" />
+                              <Icon
+                                icon="solar:star-bold"
+                                className="w-4 h-4"
+                              />
                               Most Popular
                             </div>
                           </div>
@@ -775,19 +862,33 @@ export default function FridayInboxLanding() {
                         <div className="space-y-6">
                           <div>
                             <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl flex items-center justify-center mb-4">
-                              <Icon icon={plan.icon} className="w-7 h-7 text-primary" />
+                              <Icon
+                                icon={plan.icon}
+                                className="w-7 h-7 text-primary"
+                              />
                             </div>
-                            <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                            <p className="text-muted-foreground mb-4">{plan.description}</p>
+                            <h3 className="text-2xl font-bold mb-2">
+                              {plan.name}
+                            </h3>
+                            <p className="text-muted-foreground mb-4">
+                              {plan.description}
+                            </p>
                             <div className="flex items-baseline gap-1">
-                              <span className="text-4xl font-bold">{plan.price}</span>
-                              <span className="text-muted-foreground">{plan.period}</span>
+                              <span className="text-4xl font-bold">
+                                {plan.price}
+                              </span>
+                              <span className="text-muted-foreground">
+                                {plan.period}
+                              </span>
                             </div>
                           </div>
 
                           <ul className="space-y-3">
-                            {plan.features.map((feature) => (
-                              <li key={feature} className="flex items-start gap-2">
+                            {plan.features.map(feature => (
+                              <li
+                                key={feature}
+                                className="flex items-start gap-2"
+                              >
                                 <Icon
                                   icon="solar:check-circle-bold-duotone"
                                   className="w-5 h-5 text-primary mt-0.5 flex-shrink-0"
@@ -844,7 +945,8 @@ export default function FridayInboxLanding() {
                 >
                   {[
                     {
-                      question: "Hvordan integrerer Friday AI med mine eksisterende systemer?",
+                      question:
+                        "Hvordan integrerer Friday AI med mine eksisterende systemer?",
                       answer:
                         "Friday AI integrerer seamløst med Gmail, Google Calendar og Billy.dk via officielle APIs. Setup tager under 10 minutter med vores guide.",
                     },
@@ -859,7 +961,8 @@ export default function FridayInboxLanding() {
                         "Ja, du kan opsige eller pause dit abonnement når som helst. Dine ubrugte timer gemmes ved pause, og der er ingen binding.",
                     },
                     {
-                      question: "Hvad sker der hvis jeg bruger flere timer end mit abonnement?",
+                      question:
+                        "Hvad sker der hvis jeg bruger flere timer end mit abonnement?",
                       answer:
                         "Ekstra timer faktureres til 349 kr/time. Vi giver dig besked når du nærmer dig grænsen, så der ikke er overraskelser.",
                     },
@@ -885,7 +988,11 @@ export default function FridayInboxLanding() {
                     },
                   ].map((faq, index) => (
                     <motion.div key={index} variants={scaleIn}>
-                      <AppleCard variant="elevated" padding="lg" className="h-full">
+                      <AppleCard
+                        variant="elevated"
+                        padding="lg"
+                        className="h-full"
+                      >
                         <div className="space-y-3">
                           <div className="flex items-start gap-3">
                             <Icon
@@ -893,7 +1000,9 @@ export default function FridayInboxLanding() {
                               className="w-6 h-6 text-primary flex-shrink-0 mt-1"
                             />
                             <div>
-                              <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
+                              <h3 className="font-semibold text-lg mb-2">
+                                {faq.question}
+                              </h3>
                               <p className="text-sm text-muted-foreground leading-relaxed">
                                 {faq.answer}
                               </p>
@@ -958,8 +1067,9 @@ export default function FridayInboxLanding() {
                       Klar til at Automatisere Din Forretning?
                     </h2>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                      Få den intelligente assistent der håndterer emails, bookinger og fakturering
-                      automatisk - så du kan fokusere på din forretning.
+                      Få den intelligente assistent der håndterer emails,
+                      bookinger og fakturering automatisk - så du kan fokusere
+                      på din forretning.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
@@ -969,7 +1079,10 @@ export default function FridayInboxLanding() {
                         onClick={() => navigate("/")}
                         className="flex items-center gap-2"
                       >
-                        <Icon icon="solar:rocket-2-bold-duotone" className="w-5 h-5" />
+                        <Icon
+                          icon="solar:rocket-2-bold-duotone"
+                          className="w-5 h-5"
+                        />
                         Kom i Gang Nu
                       </AppleButton>
 
@@ -979,7 +1092,10 @@ export default function FridayInboxLanding() {
                         onClick={() => navigate("/docs")}
                         className="flex items-center gap-2"
                       >
-                        <Icon icon="solar:book-bold-duotone" className="w-5 h-5" />
+                        <Icon
+                          icon="solar:book-bold-duotone"
+                          className="w-5 h-5"
+                        />
                         Se Dokumentation
                       </AppleButton>
                     </div>
@@ -1010,7 +1126,10 @@ export default function FridayInboxLanding() {
                   className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center"
                   aria-label="Scroll to top"
                 >
-                  <Icon icon="solar:arrow-up-bold-duotone" className="w-5 h-5 text-primary" />
+                  <Icon
+                    icon="solar:arrow-up-bold-duotone"
+                    className="w-5 h-5 text-primary"
+                  />
                 </button>
               </motion.div>
 
@@ -1031,7 +1150,10 @@ export default function FridayInboxLanding() {
                   onClick={() => navigate("/")}
                   className="shadow-2xl shadow-primary/50 flex items-center gap-2"
                 >
-                  <Icon icon="solar:rocket-2-bold-duotone" className="w-5 h-5" />
+                  <Icon
+                    icon="solar:rocket-2-bold-duotone"
+                    className="w-5 h-5"
+                  />
                   Kom i gang
                 </AppleButton>
               </motion.div>
@@ -1043,35 +1165,53 @@ export default function FridayInboxLanding() {
                 {/* Brand */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <Icon icon="solar:mailbox-bold-duotone" className="w-8 h-8 text-primary" />
+                    <Icon
+                      icon="solar:mailbox-bold-duotone"
+                      className="w-8 h-8 text-primary"
+                    />
                     <span className="text-xl font-bold">Friday AI</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Din intelligente forretningsassistent til email, kalender, fakturering og CRM.
+                    Din intelligente forretningsassistent til email, kalender,
+                    fakturering og CRM.
                   </p>
                 </div>
 
                 {/* Product */}
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-sm uppercase tracking-wider">Produkt</h4>
+                  <h4 className="font-semibold text-sm uppercase tracking-wider">
+                    Produkt
+                  </h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Workspace
                       </a>
                     </li>
                     <li>
-                      <a href="/subscriptions/plans" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/subscriptions/plans"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Priser
                       </a>
                     </li>
                     <li>
-                      <a href="/docs" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/docs"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Dokumentation
                       </a>
                     </li>
                     <li>
-                      <a href="/chat-components" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/chat-components"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Komponenter
                       </a>
                     </li>
@@ -1080,25 +1220,39 @@ export default function FridayInboxLanding() {
 
                 {/* Features */}
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-sm uppercase tracking-wider">Features</h4>
+                  <h4 className="font-semibold text-sm uppercase tracking-wider">
+                    Features
+                  </h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Email AI
                       </a>
                     </li>
                     <li>
-                      <a href="/crm/dashboard" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/crm/dashboard"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         CRM Dashboard
                       </a>
                     </li>
                     <li>
-                      <a href="/crm/leads" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/crm/leads"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Lead Pipeline
                       </a>
                     </li>
                     <li>
-                      <a href="/crm/bookings" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/crm/bookings"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Kalender Booking
                       </a>
                     </li>
@@ -1107,25 +1261,39 @@ export default function FridayInboxLanding() {
 
                 {/* Support */}
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-sm uppercase tracking-wider">Support</h4>
+                  <h4 className="font-semibold text-sm uppercase tracking-wider">
+                    Support
+                  </h4>
                   <ul className="space-y-2 text-sm">
                     <li>
-                      <a href="/docs" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/docs"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Hjælp Center
                       </a>
                     </li>
                     <li>
-                      <a href="/accessibility" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="/accessibility"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Tilgængelighed
                       </a>
                     </li>
                     <li>
-                      <a href="https://github.com/TekupDK/friday-ai" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="https://github.com/TekupDK/friday-ai"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         GitHub
                       </a>
                     </li>
                     <li>
-                      <a href="mailto:support@tekup.dk" className="text-muted-foreground hover:text-primary transition-colors">
+                      <a
+                        href="mailto:support@tekup.dk"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         Kontakt
                       </a>
                     </li>
@@ -1141,7 +1309,10 @@ export default function FridayInboxLanding() {
                 <div className="flex flex-wrap items-center justify-center gap-12 opacity-60">
                   <Icon icon="logos:google-gmail" className="w-8 h-8" />
                   <Icon icon="logos:google-calendar" className="w-8 h-8" />
-                  <Icon icon="solar:document-text-bold-duotone" className="w-8 h-8 text-primary" />
+                  <Icon
+                    icon="solar:document-text-bold-duotone"
+                    className="w-8 h-8 text-primary"
+                  />
                   <Icon icon="logos:anthropic-icon" className="w-8 h-8" />
                   <Icon icon="logos:openai-icon" className="w-8 h-8" />
                   <Icon icon="logos:google-icon" className="w-8 h-8" />
@@ -1161,7 +1332,10 @@ export default function FridayInboxLanding() {
                       className="text-muted-foreground hover:text-primary transition-colors"
                       title="Email Support"
                     >
-                      <Icon icon="solar:letter-bold-duotone" className="w-5 h-5" />
+                      <Icon
+                        icon="solar:letter-bold-duotone"
+                        className="w-5 h-5"
+                      />
                     </a>
                     <a
                       href="https://github.com/TekupDK/friday-ai"
@@ -1170,14 +1344,20 @@ export default function FridayInboxLanding() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Icon icon="solar:code-bold-duotone" className="w-5 h-5" />
+                      <Icon
+                        icon="solar:code-bold-duotone"
+                        className="w-5 h-5"
+                      />
                     </a>
                     <a
                       href="/docs"
                       className="text-muted-foreground hover:text-primary transition-colors"
                       title="Dokumentation"
                     >
-                      <Icon icon="solar:book-bold-duotone" className="w-5 h-5" />
+                      <Icon
+                        icon="solar:book-bold-duotone"
+                        className="w-5 h-5"
+                      />
                     </a>
                   </div>
                 </div>

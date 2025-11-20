@@ -56,11 +56,14 @@ export function CookieConsent() {
                   className="w-6 h-6 text-primary flex-shrink-0 mt-1"
                 />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-2">Vi respekterer dit privatliv</h3>
+                  <h3 className="font-semibold text-lg mb-2">
+                    Vi respekterer dit privatliv
+                  </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Vi bruger cookies til at forbedre din oplevelse og til anonyme analyseformål. Ved at
-                    klikke &quot;Acceptér&quot; giver du samtykke til vores brug af cookies i overensstemmelse med
-                    vores{" "}
+                    Vi bruger cookies til at forbedre din oplevelse og til
+                    anonyme analyseformål. Ved at klikke &quot;Acceptér&quot;
+                    giver du samtykke til vores brug af cookies i
+                    overensstemmelse med vores{" "}
                     <a href="/privacy" className="text-primary hover:underline">
                       privatlivspolitik
                     </a>
@@ -82,7 +85,10 @@ export function CookieConsent() {
                   onClick={handleAccept}
                   className="text-sm whitespace-nowrap"
                 >
-                  <Icon icon="solar:check-circle-bold-duotone" className="w-4 h-4 mr-2" />
+                  <Icon
+                    icon="solar:check-circle-bold-duotone"
+                    className="w-4 h-4 mr-2"
+                  />
                   Acceptér alle
                 </AppleButton>
               </div>
