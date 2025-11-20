@@ -29,6 +29,7 @@ import {
   getCacheConfig,
   invalidateWorkspaceQueries,
 } from "@/lib/cacheStrategy";
+import { logger } from "@/lib/logger";
 import { trpc } from "@/lib/trpc";
 import {
   detectEmailContext,
@@ -186,13 +187,11 @@ const SmartWorkspacePanel = memo(function SmartWorkspacePanel() {
           return <BusinessDashboard context={context} />;
       }
     } catch (error) {
-      // Log error for debugging and monitoring
-      console.error("SmartWorkspacePanel render error:", {
-        error: error instanceof Error ? error.message : String(error),
+      // FIXED: Issue #3 - Use proper logging service
+      logger.error("SmartWorkspacePanel render error", {
         context: context.type,
         activeTab: activeTab,
-      });
-      // TODO: Send to error tracking service (Sentry, etc.)
+      }, error);
 
       // Production-ready error fallback
       return (

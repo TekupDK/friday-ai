@@ -276,6 +276,11 @@ export default function EmailTabV2({
       setSelectedEmails(new Set([email.threadId]));
       console.log("[EmailTabV2] Selected emails updated:", [email.threadId]);
 
+      // FIXED: Issue #2 - Calculate actual thread length from emails array
+      const threadLength = emails.filter(
+        e => e.threadId === email.threadId
+      ).length;
+
       // Update EmailContext for SmartWorkspacePanel
       emailContext.setSelectedEmail({
         id: email.id,
@@ -284,10 +289,10 @@ export default function EmailTabV2({
         from: email.from,
         snippet: email.snippet,
         labels: email.labels || [],
-        threadLength: 1, // Would be updated with real thread data
+        threadLength: threadLength || 1, // Use actual thread length, fallback to 1
       });
     },
-    [emailContext]
+    [emailContext, emails]
   );
 
   // Handle Create Lead from selected email

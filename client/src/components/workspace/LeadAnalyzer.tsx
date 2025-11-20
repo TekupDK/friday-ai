@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BUSINESS_CONSTANTS, ERROR_MESSAGES } from "@/constants/business";
+import { logger } from "@/lib/logger";
 import { trpc } from "@/lib/trpc";
 
 // Lead source types based on Rendetalje workflow
@@ -228,8 +229,11 @@ export function LeadAnalyzer({ context }: LeadAnalyzerProps) {
           },
         ]);
       } catch (error) {
-        // TODO: Replace with proper logging service
-        // console.error("[LeadAnalyzer] Error analyzing lead:", error);
+        // FIXED: Issue #3 - Use proper logging service
+        logger.error("LeadAnalyzer: Error analyzing lead", {
+          emailId: context.emailId,
+          threadId: context.threadId,
+        }, error);
         // Fallback to basic estimate using real business logic
         const fallbackHours = BUSINESS_CONSTANTS.DEFAULT_HOURS;
         const fallbackMinPrice = fallbackHours * BUSINESS_CONSTANTS.HOURLY_RATE;

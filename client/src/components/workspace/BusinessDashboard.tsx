@@ -68,23 +68,6 @@ export function BusinessDashboard() {
     year: "numeric",
   });
 
-  // State for business data
-  const [todayBookings, setTodayBookings] = useState<any[]>([]);
-  const [urgentActions, setUrgentActions] = useState({
-    unpaidInvoices: 0,
-    leadsNeedingReply: 0,
-    upcomingReminders: 0,
-  });
-  const [weekStats, setWeekStats] = useState({
-    bookings: 0,
-    revenue: 0,
-    profit: 0,
-    newLeads: 0,
-    conversion: 0,
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   // Fetch real business data
   const {
     data: invoices,
@@ -202,7 +185,44 @@ export function BusinessDashboard() {
     };
   }, [weekEvents, today]);
 
-  // DISABLED: Causes infinite loop - setIsLoading triggers re-render
+  // FIXED: Issue #1 - Derived state using useMemo (no more disabled useEffect)
+  // Calculate today's bookings from memoized todayEvents
+  const todayBookings = useMemo(() => {
+    return todayEvents;
+  }, [todayEvents]);
+
+  // Calculate urgent actions from memoized data
+  const urgentActions = useMemo(() => {
+    // Calculate real leads needing reply
+    const leadsNeedingReply = leads
+      ? leads.filter(
+          lead => lead.status === "new" || lead.status === "contacted"
+        ).length
+      : 0;
+
+    return {
+      unpaidInvoices: unpaidCount,
+      leadsNeedingReply: leadsNeedingReply,
+      upcomingReminders: tomorrowEventsCount,
+    };
+  }, [unpaidCount, tomorrowEventsCount, leads]);
+
+  // Week stats already memoized above
+  const weekStats = weekStatsData;
+
+  // Loading state from React Query (fixes infinite loop issue)
+  const isLoading =
+    isInvoicesLoading || isCalendarLoading || isWeekLoading || isLeadsLoading;
+
+  // Error state from React Query
+  const error = useMemo(() => {
+    if (invoicesError) return ERROR_MESSAGES.BUSINESS_DATA;
+    if (calendarError) return ERROR_MESSAGES.BUSINESS_DATA;
+    if (leadsError) return ERROR_MESSAGES.BUSINESS_DATA;
+    return null;
+  }, [invoicesError, calendarError, leadsError]);
+
+  // DISABLED: Causes infinite loop - setIsLoading triggers re-render (REMOVED - FIXED)
   // useEffect(() => {
   //   setIsLoading(true);
   //   setError(null);
