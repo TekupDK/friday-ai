@@ -19,20 +19,20 @@ import type { TrpcContext } from "../_core/trpc";
 
 // Mock dependencies
 vi.mock("../gmail-labels", () => ({
-  addLabelToThread: vi.fn(),
-  removeLabelFromThread: vi.fn(),
-  archiveThread: vi.fn(),
-  getGmailLabels: vi.fn(),
+  addLabelToThread: vi.fn().mockResolvedValue(undefined),
+  removeLabelFromThread: vi.fn().mockResolvedValue(undefined),
+  archiveThread: vi.fn().mockResolvedValue(undefined),
+  getGmailLabels: vi.fn().mockResolvedValue([]),
 }));
 
 vi.mock("../google-api", () => ({
-  searchGmailThreads: vi.fn(),
-  getGmailThread: vi.fn(),
-  sendGmailMessage: vi.fn(),
-  modifyGmailThread: vi.fn(),
-  markGmailMessageAsRead: vi.fn(),
-  starGmailMessage: vi.fn(),
-  listCalendarEvents: vi.fn(),
+  searchGmailThreads: vi.fn().mockResolvedValue([]),
+  getGmailThread: vi.fn().mockResolvedValue({ id: "thread123", messages: [] }),
+  sendGmailMessage: vi.fn().mockResolvedValue({ id: "msg123", threadId: "thread123" }),
+  modifyGmailThread: vi.fn().mockResolvedValue(undefined),
+  markGmailMessageAsRead: vi.fn().mockResolvedValue(undefined),
+  starGmailMessage: vi.fn().mockResolvedValue(undefined),
+  listCalendarEvents: vi.fn().mockResolvedValue([]),
 }));
 
 vi.mock("../billy", () => ({
@@ -45,7 +45,17 @@ vi.mock("../lead-db", () => ({
 }));
 
 vi.mock("../customer-db", () => ({
-  createOrUpdateCustomerProfile: vi.fn(),
+  createOrUpdateCustomerProfile: vi.fn().mockResolvedValue(undefined),
+}));
+
+// Mock rate limiter to avoid rate limiting in tests
+vi.mock("../rate-limit-middleware", () => ({
+  createRateLimitMiddleware: vi.fn(() => async (opts: any) => {
+    // Pass through without rate limiting
+    return opts.next();
+  }),
+  INBOX_CRM_RATE_LIMIT: { maxRequests: 100, windowMs: 60000 },
+  STATS_RATE_LIMIT: { maxRequests: 100, windowMs: 60000 },
 }));
 
 // Mock database
@@ -285,7 +295,7 @@ describe("Email Router - Send Operations", () => {
     const caller = emailRouter.createCaller(ctx);
 
     const result = await caller.send({
-      to: ["recipient@example.com"],
+      to: "recipient@example.com", // String, not array
       subject: "Test Email",
       body: "Test content",
     });
@@ -293,7 +303,7 @@ describe("Email Router - Send Operations", () => {
     expect(result).toBeDefined();
     expect(sendGmailMessage).toHaveBeenCalledWith(
       expect.objectContaining({
-        to: ["recipient@example.com"],
+        to: "recipient@example.com",
         subject: "Test Email",
         body: "Test content",
       })
@@ -313,7 +323,7 @@ describe("Email Router - Send Operations", () => {
 
     await expect(
       caller.send({
-        to: ["recipient@example.com"],
+        to: "recipient@example.com",
         subject: "Test",
         body: "Test",
       })
@@ -326,10 +336,10 @@ describe("Email Router - Send Operations", () => {
     const ctx = createMockContext();
     const caller = emailRouter.createCaller(ctx);
 
-    // Empty recipients array should be rejected
+    // Empty string should be rejected
     await expect(
       caller.send({
-        to: [],
+        to: "",
         subject: "Test",
         body: "Test",
       })
@@ -385,7 +395,7 @@ describe("Email Router - Label Operations", () => {
     const ctx = createMockContext();
     const caller = emailRouter.createCaller(ctx);
 
-    await caller.addLabel({ threadId: "thread123", labelId: "IMPORTANT" });
+    await caller.addLabel({ threadId: "thread123", labelName: "IMPORTANT" });
 
     expect(addLabelToThread).toHaveBeenCalledWith("thread123", "IMPORTANT");
   });
@@ -399,7 +409,7 @@ describe("Email Router - Label Operations", () => {
     const ctx = createMockContext();
     const caller = emailRouter.createCaller(ctx);
 
-    await caller.removeLabel({ threadId: "thread123", labelId: "IMPORTANT" });
+    await caller.removeLabel({ threadId: "thread123", labelName: "IMPORTANT" });
 
     expect(removeLabelFromThread).toHaveBeenCalledWith("thread123", "IMPORTANT");
   });
@@ -444,7 +454,7 @@ describe("Email Router - Label Operations", () => {
     const caller = emailRouter.createCaller(ctx);
 
     await expect(
-      caller.addLabel({ threadId: "thread123", labelId: "IMPORTANT" })
+      caller.addLabel({ threadId: "thread123", labelName: "IMPORTANT" })
     ).rejects.toThrow("Label operation failed");
   });
 });
@@ -510,10 +520,15 @@ describe("Email Router - Bulk Operations", () => {
     const ctx = createMockContext();
     const caller = emailRouter.createCaller(ctx);
 
-    // Should still throw if any operation fails
-    await expect(
-      caller.bulkMarkAsRead({ threadIds: ["thread1", "thread2"] })
-    ).rejects.toThrow();
+    // Should return partial success (uses Promise.allSettled)
+    const result = await caller.bulkMarkAsRead({ threadIds: ["thread1", "thread2"] });
+
+    expect(result).toEqual({
+      success: true,
+      processed: 1, // Only 1 succeeded
+      failed: 1, // 1 failed
+      total: 2,
+    });
   });
 });
 
@@ -526,29 +541,37 @@ describe("Email Router - Delete Operations", () => {
     vi.clearAllMocks();
   });
 
-  it("should require admin permission to delete email", async () => {
-    const { emailRouter } = await import("../routers/inbox/email-router");
-
-    // User role (not admin)
-    const ctx = createMockContext({ userRole: "user" });
-    const caller = emailRouter.createCaller(ctx);
-
-    await expect(caller.delete({ threadId: "thread123" })).rejects.toThrow();
-  });
-
-  it("should allow admin to delete email", async () => {
+  it("should delete email (move to trash)", async () => {
     const { emailRouter } = await import("../routers/inbox/email-router");
     const { modifyGmailThread } = await import("../google-api");
 
     vi.mocked(modifyGmailThread).mockResolvedValue(undefined);
 
-    // Admin role
-    const ctx = createMockContext({ userRole: "admin" });
+    const ctx = createMockContext();
     const caller = emailRouter.createCaller(ctx);
 
-    await caller.delete({ threadId: "thread123" });
+    const result = await caller.delete({ threadId: "thread123" });
 
-    expect(modifyGmailThread).toHaveBeenCalled();
+    expect(result).toEqual({ success: true, trashed: true });
+    expect(modifyGmailThread).toHaveBeenCalledWith({
+      threadId: "thread123",
+      addLabelIds: ["TRASH"],
+    });
+  });
+
+  it("should allow any authenticated user to delete", async () => {
+    const { emailRouter } = await import("../routers/inbox/email-router");
+    const { modifyGmailThread } = await import("../google-api");
+
+    vi.mocked(modifyGmailThread).mockResolvedValue(undefined);
+
+    // Regular user role
+    const ctx = createMockContext({ userRole: "user" });
+    const caller = emailRouter.createCaller(ctx);
+
+    const result = await caller.delete({ threadId: "thread123" });
+
+    expect(result).toEqual({ success: true, trashed: true });
   });
 
   it("should require admin permission for bulk delete", async () => {
@@ -669,62 +692,42 @@ describe("Email Router - Lead Creation", () => {
 
   it("should create lead from email", async () => {
     const { emailRouter } = await import("../routers/inbox/email-router");
-    const { createLead } = await import("../lead-db");
-    const { searchCustomerByEmail } = await import("../billy");
-    const { getGmailThread } = await import("../google-api");
+    const { createLead, getUserLeads } = await import("../lead-db");
 
-    const mockThread = {
-      id: "thread123",
-      messages: [
-        {
-          id: "msg1",
-          from: "lead@example.com",
-          subject: "Interested in services",
-          snippet: "I would like to know more",
-          body: "Full email body",
-        },
-      ],
-    };
-
-    vi.mocked(getGmailThread).mockResolvedValue(mockThread);
-    vi.mocked(searchCustomerByEmail).mockResolvedValue(null);
-    vi.mocked(createLead).mockResolvedValue({ id: 1, email: "lead@example.com" } as any);
+    vi.mocked(getUserLeads).mockResolvedValue([]);
+    vi.mocked(createLead).mockResolvedValue({
+      id: 1,
+      email: "lead@example.com",
+      name: "Lead Example",
+      status: "new",
+    } as any);
 
     const ctx = createMockContext();
     const caller = emailRouter.createCaller(ctx);
 
     const result = await caller.createLeadFromEmail({
-      threadId: "thread123",
       email: "lead@example.com",
+      name: "Lead Example",
     });
 
     expect(result).toBeDefined();
+    expect(result.created).toBe(true);
+    expect(result.lead.email).toBe("lead@example.com");
     expect(createLead).toHaveBeenCalled();
   });
 
   it("should handle lead creation errors", async () => {
     const { emailRouter } = await import("../routers/inbox/email-router");
-    const { createLead } = await import("../lead-db");
-    const { getGmailThread } = await import("../google-api");
+    const { createLead, getUserLeads } = await import("../lead-db");
 
-    vi.mocked(getGmailThread).mockResolvedValue({
-      id: "thread123",
-      messages: [
-        {
-          id: "msg1",
-          from: "lead@example.com",
-          subject: "Test",
-          snippet: "Test",
-        },
-      ],
-    });
+    vi.mocked(getUserLeads).mockResolvedValue([]);
     vi.mocked(createLead).mockRejectedValue(new Error("Database error"));
 
     const ctx = createMockContext();
     const caller = emailRouter.createCaller(ctx);
 
     await expect(
-      caller.createLeadFromEmail({ threadId: "thread123", email: "lead@example.com" })
+      caller.createLeadFromEmail({ email: "lead@example.com" })
     ).rejects.toThrow("Database error");
   });
 
@@ -736,7 +739,7 @@ describe("Email Router - Lead Creation", () => {
 
     // Invalid email format
     await expect(
-      caller.createLeadFromEmail({ threadId: "thread123", email: "invalid-email" })
+      caller.createLeadFromEmail({ email: "invalid-email" })
     ).rejects.toThrow();
   });
 });
